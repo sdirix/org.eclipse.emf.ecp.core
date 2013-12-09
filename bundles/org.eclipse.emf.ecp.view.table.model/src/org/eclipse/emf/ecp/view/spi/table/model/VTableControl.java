@@ -9,7 +9,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
-package org.eclipse.emf.ecp.view.table.model;
+package org.eclipse.emf.ecp.view.spi.table.model;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
@@ -22,12 +22,12 @@ import org.eclipse.emf.ecp.view.spi.model.VControl;
  * <p>
  * The following features are supported:
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.table.model.VTableControl#getColumns <em>Columns</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.table.model.VTableControl#isAddRemoveDisabled <em>Add Remove Disabled</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl#getColumns <em>Columns</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl#isAddRemoveDisabled <em>Add Remove Disabled</em>}</li>
  * </ul>
  * </p>
  * 
- * @see org.eclipse.emf.ecp.view.table.model.VTablePackage#getTableControl()
+ * @see org.eclipse.emf.ecp.view.spi.table.model.VTablePackage#getTableControl()
  * @model
  * @generated
  */
@@ -35,7 +35,7 @@ public interface VTableControl extends VControl
 {
 	/**
 	 * Returns the value of the '<em><b>Columns</b></em>' containment reference list.
-	 * The list contents are of type {@link org.eclipse.emf.ecp.view.table.model.VTableColumn}.
+	 * The list contents are of type {@link org.eclipse.emf.ecp.view.spi.table.model.VTableColumn}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Columns</em>' containment reference list isn't clear, there really should be more of a
@@ -44,7 +44,7 @@ public interface VTableControl extends VControl
 	 * <!-- end-user-doc -->
 	 * 
 	 * @return the value of the '<em>Columns</em>' containment reference list.
-	 * @see org.eclipse.emf.ecp.view.table.model.VTablePackage#getTableControl_Columns()
+	 * @see org.eclipse.emf.ecp.view.spi.table.model.VTablePackage#getTableControl_Columns()
 	 * @model containment="true" required="true"
 	 * @generated
 	 */
@@ -62,14 +62,14 @@ public interface VTableControl extends VControl
 	 * 
 	 * @return the value of the '<em>Add Remove Disabled</em>' attribute.
 	 * @see #setAddRemoveDisabled(boolean)
-	 * @see org.eclipse.emf.ecp.view.table.model.VTablePackage#getTableControl_AddRemoveDisabled()
+	 * @see org.eclipse.emf.ecp.view.spi.table.model.VTablePackage#getTableControl_AddRemoveDisabled()
 	 * @model default="false" required="true"
 	 * @generated
 	 */
 	boolean isAddRemoveDisabled();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.table.model.VTableControl#isAddRemoveDisabled
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl#isAddRemoveDisabled
 	 * <em>Add Remove Disabled</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

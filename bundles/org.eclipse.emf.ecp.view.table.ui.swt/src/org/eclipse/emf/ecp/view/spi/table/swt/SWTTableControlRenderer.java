@@ -9,7 +9,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.internal.table.ui.swt;
+package org.eclipse.emf.ecp.view.spi.table.swt;
 
 import java.util.Iterator;
 import java.util.List;
@@ -24,8 +24,8 @@ import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.ui.view.swt.internal.AbstractSWTRenderer;
 import org.eclipse.emf.ecp.view.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.table.model.VTableColumn;
-import org.eclipse.emf.ecp.view.table.model.VTableControl;
+import org.eclipse.emf.ecp.view.spi.table.model.VTableColumn;
+import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
@@ -38,8 +38,6 @@ import org.eclipse.swt.widgets.Label;
  * @author Eugen Neufeld
  * 
  */
-// APITODO
-@SuppressWarnings("restriction")
 public class SWTTableControlRenderer extends AbstractSWTRenderer<VTableControl> {
 
 	/**
@@ -73,9 +71,9 @@ public class SWTTableControlRenderer extends AbstractSWTRenderer<VTableControl> 
 		Label label = null;
 		if (control.showLabel()) {
 			label = new Label(parent, SWT.NONE);
-			label.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_label");
+			label.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_label"); //$NON-NLS-1$
 			label.setBackground(parent.getBackground());
-			String extra = "";
+			String extra = ""; //$NON-NLS-1$
 			final Setting setting = control.getFirstSetting();
 			final IItemPropertyDescriptor itemPropertyDescriptor = control.getItemPropertyDescriptor(setting);
 
@@ -83,7 +81,7 @@ public class SWTTableControlRenderer extends AbstractSWTRenderer<VTableControl> 
 				throw new NoPropertyDescriptorFoundExeption(setting.getEObject(), setting.getEStructuralFeature());
 			}
 			if (((EStructuralFeature) itemPropertyDescriptor.getFeature(null)).getLowerBound() > 0) {
-				extra = "*";
+				extra = "*"; //$NON-NLS-1$
 			}
 
 			label.setText(itemPropertyDescriptor.getDisplayName(null)

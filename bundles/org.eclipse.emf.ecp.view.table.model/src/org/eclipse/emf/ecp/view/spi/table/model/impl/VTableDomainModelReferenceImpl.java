@@ -9,7 +9,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
-package org.eclipse.emf.ecp.view.table.model.impl;
+package org.eclipse.emf.ecp.view.spi.table.model.impl;
 
 import java.util.Collections;
 import java.util.Iterator;
@@ -22,9 +22,9 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecp.view.spi.model.impl.VFeaturePathDomainModelReferenceImpl;
-import org.eclipse.emf.ecp.view.table.model.VTableControl;
-import org.eclipse.emf.ecp.view.table.model.VTableDomainModelReference;
-import org.eclipse.emf.ecp.view.table.model.VTablePackage;
+import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
+import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.table.model.VTablePackage;
 
 /**
  * <!-- begin-user-doc -->

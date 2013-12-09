@@ -9,7 +9,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
-package org.eclipse.emf.ecp.view.table.model.provider;
+package org.eclipse.emf.ecp.view.spi.table.model.provider;
 
 import java.util.Collection;
 import java.util.List;
@@ -25,7 +25,7 @@ import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 
 /**
- * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.table.model.VTableDomainModelReference}
+ * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference}
  * object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
@@ -81,7 +81,7 @@ public class TableDomainModelReferenceItemProvider
 	@Override
 	public Object getImage(Object object)
 	{
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/TableDomainModelReference"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/TableDomainModelReference")); //$NON-NLS-1$
 	}
 
 	/**
@@ -94,7 +94,7 @@ public class TableDomainModelReferenceItemProvider
 	@Override
 	public String getText(Object object)
 	{
-		return getString("_UI_TableDomainModelReference_type");
+		return getString("_UI_TableDomainModelReference_type"); //$NON-NLS-1$
 	}
 
 	/**

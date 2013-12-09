@@ -9,7 +9,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
-package org.eclipse.emf.ecp.view.table.model;
+package org.eclipse.emf.ecp.view.spi.table.model;
 
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 
@@ -19,7 +19,7 @@ import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
  * <!-- end-user-doc -->
  * 
  * 
- * @see org.eclipse.emf.ecp.view.table.model.VTablePackage#getTableDomainModelReference()
+ * @see org.eclipse.emf.ecp.view.spi.table.model.VTablePackage#getTableDomainModelReference()
  * @model
  * @generated
  */

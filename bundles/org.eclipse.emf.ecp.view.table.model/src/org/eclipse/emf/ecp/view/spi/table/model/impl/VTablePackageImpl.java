@@ -9,7 +9,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
-package org.eclipse.emf.ecp.view.table.model.impl;
+package org.eclipse.emf.ecp.view.spi.table.model.impl;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -18,11 +18,11 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
-import org.eclipse.emf.ecp.view.table.model.VTableColumn;
-import org.eclipse.emf.ecp.view.table.model.VTableControl;
-import org.eclipse.emf.ecp.view.table.model.VTableDomainModelReference;
-import org.eclipse.emf.ecp.view.table.model.VTableFactory;
-import org.eclipse.emf.ecp.view.table.model.VTablePackage;
+import org.eclipse.emf.ecp.view.spi.table.model.VTableColumn;
+import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
+import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.table.model.VTableFactory;
+import org.eclipse.emf.ecp.view.spi.table.model.VTablePackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -67,7 +67,7 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage
 	 * begin-user-doc --> <!-- end-user-doc -->
 	 * 
 	 * @see org.eclipse.emf.ecore.EPackage.Registry
-	 * @see org.eclipse.emf.ecp.view.table.model.VTablePackage#eNS_URI
+	 * @see org.eclipse.emf.ecp.view.spi.table.model.VTablePackage#eNS_URI
 	 * @see #init()
 	 * @generated
 	 */
@@ -287,26 +287,32 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage
 		tableDomainModelReferenceEClass.getESuperTypes().add(theViewPackage.getFeaturePathDomainModelReference());
 
 		// Initialize classes and features; add operations and parameters
-		initEClass(tableControlEClass, VTableControl.class, "TableControl", !IS_ABSTRACT, !IS_INTERFACE,
-			IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getTableControl_Columns(), this.getTableColumn(), null, "columns", null, 1, -1,
-			VTableControl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
-			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getTableControl_AddRemoveDisabled(), ecorePackage.getEBoolean(), "addRemoveDisabled", "false",
-			1, 1, VTableControl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-			!IS_DERIVED, IS_ORDERED);
+		initEClass(tableControlEClass, VTableControl.class,
+			"TableControl", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(
+			getTableControl_Columns(),
+			this.getTableColumn(),
+			null,
+			"columns", null, 1, -1, VTableControl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(
+			getTableControl_AddRemoveDisabled(),
+			ecorePackage.getEBoolean(),
+			"addRemoveDisabled", "false", 1, 1, VTableControl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 
-		initEClass(tableColumnEClass, VTableColumn.class, "TableColumn", !IS_ABSTRACT, !IS_INTERFACE,
-			IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getTableColumn_Attribute(), theEcorePackage.getEAttribute(), null, "attribute", null, 1, 1,
-			VTableColumn.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
-			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getTableColumn_ReadOnly(), ecorePackage.getEBoolean(), "readOnly", "false", 1, 1,
-			VTableColumn.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-			!IS_DERIVED, IS_ORDERED);
+		initEClass(tableColumnEClass, VTableColumn.class,
+			"TableColumn", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(
+			getTableColumn_Attribute(),
+			theEcorePackage.getEAttribute(),
+			null,
+			"attribute", null, 1, 1, VTableColumn.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(
+			getTableColumn_ReadOnly(),
+			ecorePackage.getEBoolean(),
+			"readOnly", "false", 1, 1, VTableColumn.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 
-		initEClass(tableDomainModelReferenceEClass, VTableDomainModelReference.class, "TableDomainModelReference",
-			!IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEClass(tableDomainModelReferenceEClass, VTableDomainModelReference.class,
+			"TableDomainModelReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
 		// Create resource
 		createResource(eNS_URI);

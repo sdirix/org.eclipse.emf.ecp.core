@@ -9,7 +9,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
-package org.eclipse.emf.ecp.view.table.model.provider;
+package org.eclipse.emf.ecp.view.spi.table.model.provider;
 
 import java.util.Collection;
 import java.util.List;
@@ -19,9 +19,9 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.model.provider.ControlItemProvider;
-import org.eclipse.emf.ecp.view.table.model.VTableControl;
-import org.eclipse.emf.ecp.view.table.model.VTableFactory;
-import org.eclipse.emf.ecp.view.table.model.VTablePackage;
+import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
+import org.eclipse.emf.ecp.view.spi.table.model.VTableFactory;
+import org.eclipse.emf.ecp.view.spi.table.model.VTablePackage;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -33,7 +33,7 @@ import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
- * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.table.model.VTableControl} object.
+ * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * 
@@ -79,13 +79,14 @@ public class TableControlItemProvider
 	 * @generated
 	 */
 	protected void addAddRemoveDisabledPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
+		itemPropertyDescriptors
+			.add
 			(createItemPropertyDescriptor
 			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
-				getString("_UI_TableControl_addRemoveDisabled_feature"),
-				getString("_UI_PropertyDescriptor_description", "_UI_TableControl_addRemoveDisabled_feature",
-					"_UI_TableControl_type"),
+				getString("_UI_TableControl_addRemoveDisabled_feature"), //$NON-NLS-1$
+				getString(
+					"_UI_PropertyDescriptor_description", "_UI_TableControl_addRemoveDisabled_feature", "_UI_TableControl_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				VTablePackage.Literals.TABLE_CONTROL__ADD_REMOVE_DISABLED,
 				true,
 				false,
@@ -137,7 +138,7 @@ public class TableControlItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/TableControl"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/TableControl")); //$NON-NLS-1$
 	}
 
 	/**
@@ -151,8 +152,8 @@ public class TableControlItemProvider
 	public String getText(Object object) {
 		String label = ((VTableControl) object).getName();
 		return label == null || label.length() == 0 ?
-			getString("_UI_TableControl_type") :
-			getString("_UI_TableControl_type") + " " + label;
+			getString("_UI_TableControl_type") : //$NON-NLS-1$
+			getString("_UI_TableControl_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

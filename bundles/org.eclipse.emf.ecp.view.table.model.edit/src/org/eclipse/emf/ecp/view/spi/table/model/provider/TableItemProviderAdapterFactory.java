@@ -9,7 +9,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
-package org.eclipse.emf.ecp.view.table.model.provider;
+package org.eclipse.emf.ecp.view.spi.table.model.provider;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -25,9 +25,9 @@ import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.model.util.ViewSwitch;
-import org.eclipse.emf.ecp.view.table.model.VTableFactory;
-import org.eclipse.emf.ecp.view.table.model.VTablePackage;
-import org.eclipse.emf.ecp.view.table.model.util.TableAdapterFactory;
+import org.eclipse.emf.ecp.view.spi.table.model.VTableFactory;
+import org.eclipse.emf.ecp.view.spi.table.model.VTablePackage;
+import org.eclipse.emf.ecp.view.spi.table.model.util.TableAdapterFactory;
 import org.eclipse.emf.edit.command.CommandParameter;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ChangeNotifier;
@@ -110,7 +110,7 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.view.table.model.VTableControl}
+	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl}
 	 * instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -120,7 +120,7 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 	protected TableControlItemProvider tableControlItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.table.model.VTableControl}.
+	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
@@ -137,7 +137,7 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.view.table.model.VTableColumn}
+	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.view.spi.table.model.VTableColumn}
 	 * instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -147,7 +147,7 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 	protected TableColumnItemProvider tableColumnItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.table.model.VTableColumn}.
+	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.spi.table.model.VTableColumn}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
@@ -165,7 +165,7 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 
 	/**
 	 * This keeps track of the one adapter used for all
-	 * {@link org.eclipse.emf.ecp.view.table.model.VTableDomainModelReference} instances.
+	 * {@link org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
@@ -174,7 +174,7 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 	protected TableDomainModelReferenceItemProvider tableDomainModelReferenceItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.table.model.VTableDomainModelReference}.
+	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 

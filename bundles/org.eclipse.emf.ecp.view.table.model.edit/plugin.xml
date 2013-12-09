@@ -18,7 +18,7 @@
    <extension point="org.eclipse.emf.edit.itemProviderAdapterFactories">
       <factory
             uri="http://org/eclipse/emf/ecp/view/table/model"
-            class="org.eclipse.emf.ecp.view.table.model.provider.TableItemProviderAdapterFactory"
+            class="org.eclipse.emf.ecp.view.spi.table.model.provider.TableItemProviderAdapterFactory"
             supportedTypes=
               "org.eclipse.emf.edit.provider.IEditingDomainItemProvider
                org.eclipse.emf.edit.provider.IStructuredItemContentProvider
@@ -30,7 +30,7 @@
    <extension point="org.eclipse.emf.edit.childCreationExtenders">
       <extender
             uri="http://org/eclipse/emf/ecp/view/model"
-            class="org.eclipse.emf.ecp.view.table.model.provider.TableItemProviderAdapterFactory$ViewChildCreationExtender"/>
+            class="org.eclipse.emf.ecp.view.spi.table.model.provider.TableItemProviderAdapterFactory$ViewChildCreationExtender"/>
    </extension>
 
 </plugin>

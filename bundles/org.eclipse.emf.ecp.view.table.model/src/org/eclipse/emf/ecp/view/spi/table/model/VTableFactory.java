@@ -9,7 +9,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
-package org.eclipse.emf.ecp.view.table.model;
+package org.eclipse.emf.ecp.view.spi.table.model;
 
 import org.eclipse.emf.ecore.EFactory;
 
@@ -19,7 +19,7 @@ import org.eclipse.emf.ecore.EFactory;
  * It provides a create method for each non-abstract class of the model.
  * <!-- end-user-doc -->
  * 
- * @see org.eclipse.emf.ecp.view.table.model.VTablePackage
+ * @see org.eclipse.emf.ecp.view.spi.table.model.VTablePackage
  * @generated
  */
 public interface VTableFactory extends EFactory
@@ -31,7 +31,7 @@ public interface VTableFactory extends EFactory
 	 * 
 	 * @generated
 	 */
-	VTableFactory eINSTANCE = org.eclipse.emf.ecp.view.table.model.impl.VTableFactoryImpl.init();
+	VTableFactory eINSTANCE = org.eclipse.emf.ecp.view.spi.table.model.impl.VTableFactoryImpl.init();
 
 	/**
 	 * Returns a new object of class '<em>Control</em>'.

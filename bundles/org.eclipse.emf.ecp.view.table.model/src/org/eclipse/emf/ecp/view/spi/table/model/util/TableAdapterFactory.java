@@ -9,7 +9,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
-package org.eclipse.emf.ecp.view.table.model.util;
+package org.eclipse.emf.ecp.view.spi.table.model.util;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
@@ -20,10 +20,10 @@ import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
-import org.eclipse.emf.ecp.view.table.model.VTableColumn;
-import org.eclipse.emf.ecp.view.table.model.VTableControl;
-import org.eclipse.emf.ecp.view.table.model.VTableDomainModelReference;
-import org.eclipse.emf.ecp.view.table.model.VTablePackage;
+import org.eclipse.emf.ecp.view.spi.table.model.VTableColumn;
+import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
+import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.table.model.VTablePackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -31,7 +31,7 @@ import org.eclipse.emf.ecp.view.table.model.VTablePackage;
  * It provides an adapter <code>createXXX</code> method for each class of the model.
  * <!-- end-user-doc -->
  * 
- * @see org.eclipse.emf.ecp.view.table.model.VTablePackage
+ * @see org.eclipse.emf.ecp.view.spi.table.model.VTablePackage
  * @generated
  */
 public class TableAdapterFactory extends AdapterFactoryImpl {
@@ -161,7 +161,7 @@ public class TableAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.table.model.VTableControl
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl
 	 * <em>Control</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -169,7 +169,7 @@ public class TableAdapterFactory extends AdapterFactoryImpl {
 	 * <!-- end-user-doc -->
 	 * 
 	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.table.model.VTableControl
+	 * @see org.eclipse.emf.ecp.view.spi.table.model.VTableControl
 	 * @generated
 	 */
 	public Adapter createTableControlAdapter() {
@@ -177,7 +177,7 @@ public class TableAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.table.model.VTableColumn
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.spi.table.model.VTableColumn
 	 * <em>Column</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -185,7 +185,7 @@ public class TableAdapterFactory extends AdapterFactoryImpl {
 	 * <!-- end-user-doc -->
 	 * 
 	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.table.model.VTableColumn
+	 * @see org.eclipse.emf.ecp.view.spi.table.model.VTableColumn
 	 * @generated
 	 */
 	public Adapter createTableColumnAdapter() {
@@ -194,14 +194,14 @@ public class TableAdapterFactory extends AdapterFactoryImpl {
 
 	/**
 	 * Creates a new adapter for an object of class '
-	 * {@link org.eclipse.emf.ecp.view.table.model.VTableDomainModelReference <em>Domain Model Reference</em>}'.
+	 * {@link org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference <em>Domain Model Reference</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * 
 	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.table.model.VTableDomainModelReference
+	 * @see org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference
 	 * @generated
 	 */
 	public Adapter createTableDomainModelReferenceAdapter()
@@ -210,7 +210,8 @@ public class TableAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.spi.model.VElement <em>Element</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.spi.model.VElement
+	 * <em>Element</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
@@ -243,7 +244,8 @@ public class TableAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.spi.model.VControl <em>Control</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.spi.model.VControl
+	 * <em>Control</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.

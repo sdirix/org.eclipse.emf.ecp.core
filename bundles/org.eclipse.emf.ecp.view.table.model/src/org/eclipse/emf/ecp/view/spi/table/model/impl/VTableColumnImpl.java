@@ -9,7 +9,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
-package org.eclipse.emf.ecp.view.table.model.impl;
+package org.eclipse.emf.ecp.view.spi.table.model.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EAttribute;
@@ -17,8 +17,8 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.eclipse.emf.ecp.view.table.model.VTableColumn;
-import org.eclipse.emf.ecp.view.table.model.VTablePackage;
+import org.eclipse.emf.ecp.view.spi.table.model.VTableColumn;
+import org.eclipse.emf.ecp.view.spi.table.model.VTablePackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -27,8 +27,8 @@ import org.eclipse.emf.ecp.view.table.model.VTablePackage;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.table.model.impl.VTableColumnImpl#getAttribute <em>Attribute</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.table.model.impl.VTableColumnImpl#isReadOnly <em>Read Only</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.impl.VTableColumnImpl#getAttribute <em>Attribute</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.impl.VTableColumnImpl#isReadOnly <em>Read Only</em>}</li>
  * </ul>
  * </p>
  * 
@@ -261,7 +261,7 @@ public class VTableColumnImpl extends EObjectImpl implements VTableColumn
 			return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (readOnly: ");
+		result.append(" (readOnly: "); //$NON-NLS-1$
 		result.append(readOnly);
 		result.append(')');
 		return result.toString();

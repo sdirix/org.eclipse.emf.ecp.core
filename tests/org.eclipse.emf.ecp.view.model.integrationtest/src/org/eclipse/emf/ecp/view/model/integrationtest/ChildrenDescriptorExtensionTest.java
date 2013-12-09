@@ -23,7 +23,7 @@ import org.eclipse.emf.ecp.view.separator.model.VSeparatorPackage;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage;
 import org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
-import org.eclipse.emf.ecp.view.table.model.VTablePackage;
+import org.eclipse.emf.ecp.view.spi.table.model.VTablePackage;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.junit.Test;

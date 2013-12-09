@@ -11,8 +11,8 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.table.ui.swt.test;
 
-import org.eclipse.emf.ecp.view.table.model.VTableColumn;
-import org.eclipse.emf.ecp.view.table.model.VTableControl;
+import org.eclipse.emf.ecp.view.spi.table.model.VTableColumn;
+import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 
 /**
  * @author Jonas

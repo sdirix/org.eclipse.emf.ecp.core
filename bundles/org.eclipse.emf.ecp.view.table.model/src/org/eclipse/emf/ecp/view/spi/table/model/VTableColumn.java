@@ -9,7 +9,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
-package org.eclipse.emf.ecp.view.table.model;
+package org.eclipse.emf.ecp.view.spi.table.model;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
@@ -22,12 +22,12 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.table.model.VTableColumn#getAttribute <em>Attribute</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.table.model.VTableColumn#isReadOnly <em>Read Only</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.VTableColumn#getAttribute <em>Attribute</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.VTableColumn#isReadOnly <em>Read Only</em>}</li>
  * </ul>
  * </p>
  * 
- * @see org.eclipse.emf.ecp.view.table.model.VTablePackage#getTableColumn()
+ * @see org.eclipse.emf.ecp.view.spi.table.model.VTablePackage#getTableColumn()
  * @model
  * @generated
  */
@@ -44,15 +44,15 @@ public interface VTableColumn extends EObject
 	 * 
 	 * @return the value of the '<em>Attribute</em>' reference.
 	 * @see #setAttribute(EAttribute)
-	 * @see org.eclipse.emf.ecp.view.table.model.VTablePackage#getTableColumn_Attribute()
+	 * @see org.eclipse.emf.ecp.view.spi.table.model.VTablePackage#getTableColumn_Attribute()
 	 * @model required="true"
 	 * @generated
 	 */
 	EAttribute getAttribute();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.table.model.VTableColumn#getAttribute <em>Attribute</em>}'
-	 * reference.
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.spi.table.model.VTableColumn#getAttribute
+	 * <em>Attribute</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
@@ -74,15 +74,15 @@ public interface VTableColumn extends EObject
 	 * 
 	 * @return the value of the '<em>Read Only</em>' attribute.
 	 * @see #setReadOnly(boolean)
-	 * @see org.eclipse.emf.ecp.view.table.model.VTablePackage#getTableColumn_ReadOnly()
+	 * @see org.eclipse.emf.ecp.view.spi.table.model.VTablePackage#getTableColumn_ReadOnly()
 	 * @model default="false" required="true"
 	 * @generated
 	 */
 	boolean isReadOnly();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.table.model.VTableColumn#isReadOnly <em>Read Only</em>}'
-	 * attribute.
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.spi.table.model.VTableColumn#isReadOnly
+	 * <em>Read Only</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 

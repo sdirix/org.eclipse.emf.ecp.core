@@ -9,7 +9,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
-package org.eclipse.emf.ecp.view.table.model.provider;
+package org.eclipse.emf.ecp.view.spi.table.model.provider;
 
 import java.util.Collection;
 import java.util.List;
@@ -17,8 +17,8 @@ import java.util.List;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.ResourceLocator;
-import org.eclipse.emf.ecp.view.table.model.VTableColumn;
-import org.eclipse.emf.ecp.view.table.model.VTablePackage;
+import org.eclipse.emf.ecp.view.spi.table.model.VTableColumn;
+import org.eclipse.emf.ecp.view.spi.table.model.VTablePackage;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IChildCreationExtender;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
@@ -32,7 +32,7 @@ import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
- * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.table.model.VTableColumn} object.
+ * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.spi.table.model.VTableColumn} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * 
@@ -85,9 +85,9 @@ public class TableColumnItemProvider
 			(createItemPropertyDescriptor
 			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
-				getString("_UI_TableColumn_attribute_feature"),
-				getString("_UI_PropertyDescriptor_description", "_UI_TableColumn_attribute_feature",
-					"_UI_TableColumn_type"),
+				getString("_UI_TableColumn_attribute_feature"), //$NON-NLS-1$
+				getString(
+					"_UI_PropertyDescriptor_description", "_UI_TableColumn_attribute_feature", "_UI_TableColumn_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				VTablePackage.Literals.TABLE_COLUMN__ATTRIBUTE,
 				true,
 				false,
@@ -109,9 +109,9 @@ public class TableColumnItemProvider
 			(createItemPropertyDescriptor
 			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
-				getString("_UI_TableColumn_readOnly_feature"),
-				getString("_UI_PropertyDescriptor_description", "_UI_TableColumn_readOnly_feature",
-					"_UI_TableColumn_type"),
+				getString("_UI_TableColumn_readOnly_feature"), //$NON-NLS-1$
+				getString(
+					"_UI_PropertyDescriptor_description", "_UI_TableColumn_readOnly_feature", "_UI_TableColumn_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				VTablePackage.Literals.TABLE_COLUMN__READ_ONLY,
 				true,
 				false,
@@ -130,7 +130,7 @@ public class TableColumnItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/TableColumn"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/TableColumn")); //$NON-NLS-1$
 	}
 
 	/**
@@ -143,7 +143,7 @@ public class TableColumnItemProvider
 	@Override
 	public String getText(Object object) {
 		VTableColumn tableColumn = (VTableColumn) object;
-		return getString("_UI_TableColumn_type") + " " + tableColumn.isReadOnly();
+		return getString("_UI_TableColumn_type") + " " + tableColumn.isReadOnly(); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

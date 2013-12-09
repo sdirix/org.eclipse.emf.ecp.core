@@ -9,18 +9,18 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
-package org.eclipse.emf.ecp.view.table.model.impl;
+package org.eclipse.emf.ecp.view.spi.table.model.impl;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-import org.eclipse.emf.ecp.view.table.model.VTableColumn;
-import org.eclipse.emf.ecp.view.table.model.VTableControl;
-import org.eclipse.emf.ecp.view.table.model.VTableDomainModelReference;
-import org.eclipse.emf.ecp.view.table.model.VTableFactory;
-import org.eclipse.emf.ecp.view.table.model.VTablePackage;
+import org.eclipse.emf.ecp.view.spi.table.model.VTableColumn;
+import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
+import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.table.model.VTableFactory;
+import org.eclipse.emf.ecp.view.spi.table.model.VTablePackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -85,7 +85,7 @@ public class VTableFactoryImpl extends EFactoryImpl implements VTableFactory
 		case VTablePackage.TABLE_DOMAIN_MODEL_REFERENCE:
 			return createTableDomainModelReference();
 		default:
-			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 	}
 

@@ -9,7 +9,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
-package org.eclipse.emf.ecp.view.table.model.impl;
+package org.eclipse.emf.ecp.view.spi.table.model.impl;
 
 import java.util.Collection;
 
@@ -22,9 +22,9 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecp.view.spi.model.impl.VControlImpl;
-import org.eclipse.emf.ecp.view.table.model.VTableColumn;
-import org.eclipse.emf.ecp.view.table.model.VTableControl;
-import org.eclipse.emf.ecp.view.table.model.VTablePackage;
+import org.eclipse.emf.ecp.view.spi.table.model.VTableColumn;
+import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
+import org.eclipse.emf.ecp.view.spi.table.model.VTablePackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -33,9 +33,9 @@ import org.eclipse.emf.ecp.view.table.model.VTablePackage;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.table.model.impl.VTableControlImpl#getColumns <em>Columns</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.table.model.impl.VTableControlImpl#isAddRemoveDisabled <em>Add Remove Disabled
- * </em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.impl.VTableControlImpl#getColumns <em>Columns</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.impl.VTableControlImpl#isAddRemoveDisabled <em>Add Remove
+ * Disabled</em>}</li>
  * </ul>
  * </p>
  * 
@@ -253,7 +253,7 @@ public class VTableControlImpl extends VControlImpl implements VTableControl
 			return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (addRemoveDisabled: ");
+		result.append(" (addRemoveDisabled: "); //$NON-NLS-1$
 		result.append(addRemoveDisabled);
 		result.append(')');
 		return result.toString();

@@ -9,7 +9,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
-package org.eclipse.emf.ecp.view.table.model;
+package org.eclipse.emf.ecp.view.spi.table.model;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -29,7 +29,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * </ul>
  * <!-- end-user-doc -->
  * 
- * @see org.eclipse.emf.ecp.view.table.model.VTableFactory
+ * @see org.eclipse.emf.ecp.view.spi.table.model.VTableFactory
  * @model kind="package"
  * @generated
  */
@@ -42,7 +42,7 @@ public interface VTablePackage extends EPackage
 	 * 
 	 * @generated
 	 */
-	String eNAME = "model";
+	String eNAME = "table";
 
 	/**
 	 * The package namespace URI.
@@ -69,16 +69,16 @@ public interface VTablePackage extends EPackage
 	 * 
 	 * @generated
 	 */
-	VTablePackage eINSTANCE = org.eclipse.emf.ecp.view.table.model.impl.VTablePackageImpl.init();
+	VTablePackage eINSTANCE = org.eclipse.emf.ecp.view.spi.table.model.impl.VTablePackageImpl.init();
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.table.model.impl.VTableControlImpl <em>Control</em>}'
-	 * class.
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.table.model.impl.VTableControlImpl
+	 * <em>Control</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
-	 * @see org.eclipse.emf.ecp.view.table.model.impl.VTableControlImpl
-	 * @see org.eclipse.emf.ecp.view.table.model.impl.VTablePackageImpl#getTableControl()
+	 * @see org.eclipse.emf.ecp.view.spi.table.model.impl.VTableControlImpl
+	 * @see org.eclipse.emf.ecp.view.spi.table.model.impl.VTablePackageImpl#getTableControl()
 	 * @generated
 	 */
 	int TABLE_CONTROL = 0;
@@ -194,13 +194,13 @@ public interface VTablePackage extends EPackage
 	int TABLE_CONTROL_FEATURE_COUNT = VViewPackage.CONTROL_FEATURE_COUNT + 2;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.table.model.impl.VTableColumnImpl <em>Column</em>}'
-	 * class.
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.table.model.impl.VTableColumnImpl
+	 * <em>Column</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
-	 * @see org.eclipse.emf.ecp.view.table.model.impl.VTableColumnImpl
-	 * @see org.eclipse.emf.ecp.view.table.model.impl.VTablePackageImpl#getTableColumn()
+	 * @see org.eclipse.emf.ecp.view.spi.table.model.impl.VTableColumnImpl
+	 * @see org.eclipse.emf.ecp.view.spi.table.model.impl.VTablePackageImpl#getTableColumn()
 	 * @generated
 	 */
 	int TABLE_COLUMN = 1;
@@ -236,13 +236,13 @@ public interface VTablePackage extends EPackage
 	int TABLE_COLUMN_FEATURE_COUNT = 2;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.table.model.impl.VTableDomainModelReferenceImpl
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.table.model.impl.VTableDomainModelReferenceImpl
 	 * <em>Domain Model Reference</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
-	 * @see org.eclipse.emf.ecp.view.table.model.impl.VTableDomainModelReferenceImpl
-	 * @see org.eclipse.emf.ecp.view.table.model.impl.VTablePackageImpl#getTableDomainModelReference()
+	 * @see org.eclipse.emf.ecp.view.spi.table.model.impl.VTableDomainModelReferenceImpl
+	 * @see org.eclipse.emf.ecp.view.spi.table.model.impl.VTablePackageImpl#getTableDomainModelReference()
 	 * @generated
 	 */
 	int TABLE_DOMAIN_MODEL_REFERENCE = 2;
@@ -278,24 +278,25 @@ public interface VTablePackage extends EPackage
 	int TABLE_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT = VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 0;
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.table.model.VTableControl <em>Control</em>}'.
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl
+	 * <em>Control</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @return the meta object for class '<em>Control</em>'.
-	 * @see org.eclipse.emf.ecp.view.table.model.VTableControl
+	 * @see org.eclipse.emf.ecp.view.spi.table.model.VTableControl
 	 * @generated
 	 */
 	EClass getTableControl();
 
 	/**
 	 * Returns the meta object for the containment reference list '
-	 * {@link org.eclipse.emf.ecp.view.table.model.VTableControl#getColumns <em>Columns</em>}'.
+	 * {@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl#getColumns <em>Columns</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @return the meta object for the containment reference list '<em>Columns</em>'.
-	 * @see org.eclipse.emf.ecp.view.table.model.VTableControl#getColumns()
+	 * @see org.eclipse.emf.ecp.view.spi.table.model.VTableControl#getColumns()
 	 * @see #getTableControl()
 	 * @generated
 	 */
@@ -303,62 +304,63 @@ public interface VTablePackage extends EPackage
 
 	/**
 	 * Returns the meta object for the attribute '
-	 * {@link org.eclipse.emf.ecp.view.table.model.VTableControl#isAddRemoveDisabled <em>Add Remove Disabled</em>}'.
+	 * {@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl#isAddRemoveDisabled <em>Add Remove Disabled</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @return the meta object for the attribute '<em>Add Remove Disabled</em>'.
-	 * @see org.eclipse.emf.ecp.view.table.model.VTableControl#isAddRemoveDisabled()
+	 * @see org.eclipse.emf.ecp.view.spi.table.model.VTableControl#isAddRemoveDisabled()
 	 * @see #getTableControl()
 	 * @generated
 	 */
 	EAttribute getTableControl_AddRemoveDisabled();
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.table.model.VTableColumn <em>Column</em>}'.
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.table.model.VTableColumn <em>Column</em>}
+	 * '.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @return the meta object for class '<em>Column</em>'.
-	 * @see org.eclipse.emf.ecp.view.table.model.VTableColumn
+	 * @see org.eclipse.emf.ecp.view.spi.table.model.VTableColumn
 	 * @generated
 	 */
 	EClass getTableColumn();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.eclipse.emf.ecp.view.table.model.VTableColumn#getAttribute
-	 * <em>Attribute</em>}'.
+	 * Returns the meta object for the reference '
+	 * {@link org.eclipse.emf.ecp.view.spi.table.model.VTableColumn#getAttribute <em>Attribute</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @return the meta object for the reference '<em>Attribute</em>'.
-	 * @see org.eclipse.emf.ecp.view.table.model.VTableColumn#getAttribute()
+	 * @see org.eclipse.emf.ecp.view.spi.table.model.VTableColumn#getAttribute()
 	 * @see #getTableColumn()
 	 * @generated
 	 */
 	EReference getTableColumn_Attribute();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecp.view.table.model.VTableColumn#isReadOnly
-	 * <em>Read Only</em>}'.
+	 * Returns the meta object for the attribute '
+	 * {@link org.eclipse.emf.ecp.view.spi.table.model.VTableColumn#isReadOnly <em>Read Only</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @return the meta object for the attribute '<em>Read Only</em>'.
-	 * @see org.eclipse.emf.ecp.view.table.model.VTableColumn#isReadOnly()
+	 * @see org.eclipse.emf.ecp.view.spi.table.model.VTableColumn#isReadOnly()
 	 * @see #getTableColumn()
 	 * @generated
 	 */
 	EAttribute getTableColumn_ReadOnly();
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.table.model.VTableDomainModelReference
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference
 	 * <em>Domain Model Reference</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @return the meta object for class '<em>Domain Model Reference</em>'.
-	 * @see org.eclipse.emf.ecp.view.table.model.VTableDomainModelReference
+	 * @see org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference
 	 * @generated
 	 */
 	EClass getTableDomainModelReference();
@@ -389,13 +391,13 @@ public interface VTablePackage extends EPackage
 	interface Literals
 	{
 		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.table.model.impl.VTableControlImpl
+		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.table.model.impl.VTableControlImpl
 		 * <em>Control</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * 
-		 * @see org.eclipse.emf.ecp.view.table.model.impl.VTableControlImpl
-		 * @see org.eclipse.emf.ecp.view.table.model.impl.VTablePackageImpl#getTableControl()
+		 * @see org.eclipse.emf.ecp.view.spi.table.model.impl.VTableControlImpl
+		 * @see org.eclipse.emf.ecp.view.spi.table.model.impl.VTablePackageImpl#getTableControl()
 		 * @generated
 		 */
 		EClass TABLE_CONTROL = eINSTANCE.getTableControl();
@@ -419,13 +421,13 @@ public interface VTablePackage extends EPackage
 		EAttribute TABLE_CONTROL__ADD_REMOVE_DISABLED = eINSTANCE.getTableControl_AddRemoveDisabled();
 
 		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.table.model.impl.VTableColumnImpl
+		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.table.model.impl.VTableColumnImpl
 		 * <em>Column</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * 
-		 * @see org.eclipse.emf.ecp.view.table.model.impl.VTableColumnImpl
-		 * @see org.eclipse.emf.ecp.view.table.model.impl.VTablePackageImpl#getTableColumn()
+		 * @see org.eclipse.emf.ecp.view.spi.table.model.impl.VTableColumnImpl
+		 * @see org.eclipse.emf.ecp.view.spi.table.model.impl.VTablePackageImpl#getTableColumn()
 		 * @generated
 		 */
 		EClass TABLE_COLUMN = eINSTANCE.getTableColumn();
@@ -450,13 +452,13 @@ public interface VTablePackage extends EPackage
 
 		/**
 		 * The meta object literal for the '
-		 * {@link org.eclipse.emf.ecp.view.table.model.impl.VTableDomainModelReferenceImpl
+		 * {@link org.eclipse.emf.ecp.view.spi.table.model.impl.VTableDomainModelReferenceImpl
 		 * <em>Domain Model Reference</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * 
-		 * @see org.eclipse.emf.ecp.view.table.model.impl.VTableDomainModelReferenceImpl
-		 * @see org.eclipse.emf.ecp.view.table.model.impl.VTablePackageImpl#getTableDomainModelReference()
+		 * @see org.eclipse.emf.ecp.view.spi.table.model.impl.VTableDomainModelReferenceImpl
+		 * @see org.eclipse.emf.ecp.view.spi.table.model.impl.VTablePackageImpl#getTableDomainModelReference()
 		 * @generated
 		 */
 		EClass TABLE_DOMAIN_MODEL_REFERENCE = eINSTANCE.getTableDomainModelReference();
