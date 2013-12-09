@@ -9,7 +9,7 @@
  * Contributors:
  * EclipseSource Munich GmbH - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.separator.model.provider;
+package org.eclipse.emf.ecp.view.spi.separator.model.provider;
 
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.ResourceLocator;

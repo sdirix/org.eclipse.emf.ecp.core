@@ -9,15 +9,15 @@
  * Contributors:
  * EclipseSource Munich GmbH - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.separator.model.impl;
+package org.eclipse.emf.ecp.view.spi.separator.model.impl;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-import org.eclipse.emf.ecp.view.separator.model.VSeparator;
-import org.eclipse.emf.ecp.view.separator.model.VSeparatorFactory;
-import org.eclipse.emf.ecp.view.separator.model.VSeparatorPackage;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
+import org.eclipse.emf.ecp.view.spi.separator.model.VSeparator;
+import org.eclipse.emf.ecp.view.spi.separator.model.VSeparatorFactory;
+import org.eclipse.emf.ecp.view.spi.separator.model.VSeparatorPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -43,7 +43,7 @@ public class VSeparatorPackageImpl extends EPackageImpl implements VSeparatorPac
 	 * begin-user-doc --> <!-- end-user-doc -->
 	 * 
 	 * @see org.eclipse.emf.ecore.EPackage.Registry
-	 * @see org.eclipse.emf.ecp.view.separator.model.VSeparatorPackage#eNS_URI
+	 * @see org.eclipse.emf.ecp.view.spi.separator.model.VSeparatorPackage#eNS_URI
 	 * @see #init()
 	 * @generated
 	 */
@@ -170,7 +170,7 @@ public class VSeparatorPackageImpl extends EPackageImpl implements VSeparatorPac
 		separatorEClass.getESuperTypes().add(theViewPackage.getContainedElement());
 
 		// Initialize classes and features; add operations and parameters
-		initEClass(separatorEClass, VSeparator.class, "Separator", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEClass(separatorEClass, VSeparator.class, "Separator", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
 		// Create resource
 		createResource(eNS_URI);

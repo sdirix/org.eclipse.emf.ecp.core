@@ -9,23 +9,24 @@
  * Contributors:
  * EclipseSource Munich GmbH - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.separator.model.util;
+package org.eclipse.emf.ecp.view.spi.separator.model.util;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.view.separator.model.VSeparator;
-import org.eclipse.emf.ecp.view.separator.model.VSeparatorPackage;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.spi.separator.model.*;
+import org.eclipse.emf.ecp.view.spi.separator.model.VSeparator;
+import org.eclipse.emf.ecp.view.spi.separator.model.VSeparatorPackage;
 
 /**
  * <!-- begin-user-doc -->
  * The <b>Adapter Factory</b> for the model.
  * It provides an adapter <code>createXXX</code> method for each class of the model.
  * <!-- end-user-doc -->
- * @see org.eclipse.emf.ecp.view.separator.model.VSeparatorPackage
+ * @see org.eclipse.emf.ecp.view.spi.separator.model.VSeparatorPackage
  * @generated
  */
 public class SeparatorAdapterFactory extends AdapterFactoryImpl {
@@ -109,13 +110,13 @@ public class SeparatorAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.separator.model.VSeparator <em>Separator</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.spi.separator.model.VSeparator <em>Separator</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.separator.model.VSeparator
+	 * @see org.eclipse.emf.ecp.view.spi.separator.model.VSeparator
 	 * @generated
 	 */
 	public Adapter createSeparatorAdapter() {

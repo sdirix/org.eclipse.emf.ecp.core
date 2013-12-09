@@ -9,7 +9,7 @@
  * Contributors:
  * EclipseSource Munich GmbH - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.separator.model;
+package org.eclipse.emf.ecp.view.spi.separator.model;
 
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 
@@ -19,7 +19,7 @@ import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
  * <!-- end-user-doc -->
  *
  *
- * @see org.eclipse.emf.ecp.view.separator.model.VSeparatorPackage#getSeparator()
+ * @see org.eclipse.emf.ecp.view.spi.separator.model.VSeparatorPackage#getSeparator()
  * @model
  * @generated
  */

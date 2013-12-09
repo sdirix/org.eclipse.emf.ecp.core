@@ -9,7 +9,7 @@
  * Contributors:
  * EclipseSource Munich GmbH - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.separator.model;
+package org.eclipse.emf.ecp.view.spi.separator.model;
 
 import org.eclipse.emf.ecore.EFactory;
 
@@ -18,7 +18,7 @@ import org.eclipse.emf.ecore.EFactory;
  * The <b>Factory</b> for the model.
  * It provides a create method for each non-abstract class of the model.
  * <!-- end-user-doc -->
- * @see org.eclipse.emf.ecp.view.separator.model.VSeparatorPackage
+ * @see org.eclipse.emf.ecp.view.spi.separator.model.VSeparatorPackage
  * @generated
  */
 public interface VSeparatorFactory extends EFactory {
@@ -28,7 +28,7 @@ public interface VSeparatorFactory extends EFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	VSeparatorFactory eINSTANCE = org.eclipse.emf.ecp.view.separator.model.impl.VSeparatorFactoryImpl.init();
+	VSeparatorFactory eINSTANCE = org.eclipse.emf.ecp.view.spi.separator.model.impl.VSeparatorFactoryImpl.init();
 
 	/**
 	 * Returns a new object of class '<em>Separator</em>'.

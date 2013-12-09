@@ -9,7 +9,7 @@
  * Contributors:
  * EclipseSource Munich GmbH - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.separator.model;
+package org.eclipse.emf.ecp.view.spi.separator.model;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
@@ -26,7 +26,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * <li>and each data type</li>
  * </ul>
  * <!-- end-user-doc -->
- * @see org.eclipse.emf.ecp.view.separator.model.VSeparatorFactory
+ * @see org.eclipse.emf.ecp.view.spi.separator.model.VSeparatorFactory
  * @model kind="package"
  * @generated
  */
@@ -37,7 +37,7 @@ public interface VSeparatorPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNAME = "model";
+	String eNAME = "separator";
 
 	/**
 	 * The package namespace URI.
@@ -61,14 +61,14 @@ public interface VSeparatorPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	VSeparatorPackage eINSTANCE = org.eclipse.emf.ecp.view.separator.model.impl.VSeparatorPackageImpl.init();
+	VSeparatorPackage eINSTANCE = org.eclipse.emf.ecp.view.spi.separator.model.impl.VSeparatorPackageImpl.init();
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.separator.model.impl.VSeparatorImpl <em>Separator</em>}' class.
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.separator.model.impl.VSeparatorImpl <em>Separator</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.eclipse.emf.ecp.view.separator.model.impl.VSeparatorImpl
-	 * @see org.eclipse.emf.ecp.view.separator.model.impl.VSeparatorPackageImpl#getSeparator()
+	 * @see org.eclipse.emf.ecp.view.spi.separator.model.impl.VSeparatorImpl
+	 * @see org.eclipse.emf.ecp.view.spi.separator.model.impl.VSeparatorPackageImpl#getSeparator()
 	 * @generated
 	 */
 	int SEPARATOR = 0;
@@ -137,11 +137,11 @@ public interface VSeparatorPackage extends EPackage {
 	int SEPARATOR_FEATURE_COUNT = VViewPackage.CONTAINED_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.separator.model.VSeparator <em>Separator</em>}'.
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.separator.model.VSeparator <em>Separator</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Separator</em>'.
-	 * @see org.eclipse.emf.ecp.view.separator.model.VSeparator
+	 * @see org.eclipse.emf.ecp.view.spi.separator.model.VSeparator
 	 * @generated
 	 */
 	EClass getSeparator();
@@ -169,11 +169,11 @@ public interface VSeparatorPackage extends EPackage {
 	 */
 	interface Literals {
 		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.separator.model.impl.VSeparatorImpl <em>Separator</em>}' class.
+		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.separator.model.impl.VSeparatorImpl <em>Separator</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.eclipse.emf.ecp.view.separator.model.impl.VSeparatorImpl
-		 * @see org.eclipse.emf.ecp.view.separator.model.impl.VSeparatorPackageImpl#getSeparator()
+		 * @see org.eclipse.emf.ecp.view.spi.separator.model.impl.VSeparatorImpl
+		 * @see org.eclipse.emf.ecp.view.spi.separator.model.impl.VSeparatorPackageImpl#getSeparator()
 		 * @generated
 		 */
 		EClass SEPARATOR = eINSTANCE.getSeparator();

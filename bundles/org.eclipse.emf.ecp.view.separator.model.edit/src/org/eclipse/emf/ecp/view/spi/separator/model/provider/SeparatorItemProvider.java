@@ -9,15 +9,15 @@
  * Contributors:
  * EclipseSource Munich GmbH - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.separator.model.provider;
+package org.eclipse.emf.ecp.view.spi.separator.model.provider;
 
 import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.ecp.view.separator.model.VSeparator;
 import org.eclipse.emf.ecp.view.spi.model.provider.ContainedElementItemProvider;
+import org.eclipse.emf.ecp.view.spi.separator.model.VSeparator;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -26,7 +26,7 @@ import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 
 /**
- * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.separator.model.VSeparator} object.
+ * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.spi.separator.model.VSeparator} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
@@ -66,7 +66,7 @@ public class SeparatorItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/Separator"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/Separator")); //$NON-NLS-1$
 	}
 
 	/**
@@ -79,8 +79,8 @@ public class SeparatorItemProvider
 	public String getText(Object object) {
 		String label = ((VSeparator)object).getName();
 		return label == null || label.length() == 0 ?
-			getString("_UI_Separator_type") :
-			getString("_UI_Separator_type") + " " + label;
+			getString("_UI_Separator_type") : //$NON-NLS-1$
+			getString("_UI_Separator_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

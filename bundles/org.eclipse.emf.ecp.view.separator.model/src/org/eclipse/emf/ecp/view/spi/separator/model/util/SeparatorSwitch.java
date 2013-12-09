@@ -9,15 +9,16 @@
  * Contributors:
  * EclipseSource Munich GmbH - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.separator.model.util;
+package org.eclipse.emf.ecp.view.spi.separator.model.util;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
-import org.eclipse.emf.ecp.view.separator.model.VSeparator;
-import org.eclipse.emf.ecp.view.separator.model.VSeparatorPackage;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.spi.separator.model.*;
+import org.eclipse.emf.ecp.view.spi.separator.model.VSeparator;
+import org.eclipse.emf.ecp.view.spi.separator.model.VSeparatorPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -29,7 +30,7 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
  * until a non-null result is returned,
  * which is the result of the switch.
  * <!-- end-user-doc -->
- * @see org.eclipse.emf.ecp.view.separator.model.VSeparatorPackage
+ * @see org.eclipse.emf.ecp.view.spi.separator.model.VSeparatorPackage
  * @generated
  */
 public class SeparatorSwitch<T> extends Switch<T> {

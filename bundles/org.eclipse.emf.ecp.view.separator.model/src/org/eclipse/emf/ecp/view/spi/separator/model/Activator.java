@@ -9,7 +9,7 @@
  * Contributors:
  * EclipseSource Munich GmbH - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.separator.model;
+package org.eclipse.emf.ecp.view.spi.separator.model;
 
 import org.eclipse.core.runtime.Plugin;
 import org.osgi.framework.BundleContext;

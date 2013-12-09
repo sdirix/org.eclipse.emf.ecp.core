@@ -9,7 +9,7 @@
  * Contributors:
  * EclipseSource Munich GmbH - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.separator.model.provider;
+package org.eclipse.emf.ecp.view.spi.separator.model.provider;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -20,13 +20,13 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.view.separator.model.VSeparatorFactory;
-import org.eclipse.emf.ecp.view.separator.model.VSeparatorPackage;
-import org.eclipse.emf.ecp.view.separator.model.util.SeparatorAdapterFactory;
 import org.eclipse.emf.ecp.view.spi.model.VContainer;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.model.util.ViewSwitch;
+import org.eclipse.emf.ecp.view.spi.separator.model.VSeparatorFactory;
+import org.eclipse.emf.ecp.view.spi.separator.model.VSeparatorPackage;
+import org.eclipse.emf.ecp.view.spi.separator.model.util.SeparatorAdapterFactory;
 import org.eclipse.emf.edit.command.CommandParameter;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ChangeNotifier;
@@ -101,7 +101,7 @@ public class SeparatorItemProviderAdapterFactory extends SeparatorAdapterFactory
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.view.separator.model.VSeparator} instances.
+	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.view.spi.separator.model.VSeparator} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -109,7 +109,7 @@ public class SeparatorItemProviderAdapterFactory extends SeparatorAdapterFactory
 	protected SeparatorItemProvider separatorItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.separator.model.VSeparator}.
+	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.spi.separator.model.VSeparator}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated

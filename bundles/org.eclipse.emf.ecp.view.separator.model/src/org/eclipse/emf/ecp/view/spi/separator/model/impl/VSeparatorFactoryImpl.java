@@ -9,16 +9,17 @@
  * Contributors:
  * EclipseSource Munich GmbH - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.separator.model.impl;
+package org.eclipse.emf.ecp.view.spi.separator.model.impl;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-import org.eclipse.emf.ecp.view.separator.model.VSeparator;
-import org.eclipse.emf.ecp.view.separator.model.VSeparatorFactory;
-import org.eclipse.emf.ecp.view.separator.model.VSeparatorPackage;
+import org.eclipse.emf.ecp.view.spi.separator.model.*;
+import org.eclipse.emf.ecp.view.spi.separator.model.VSeparator;
+import org.eclipse.emf.ecp.view.spi.separator.model.VSeparatorFactory;
+import org.eclipse.emf.ecp.view.spi.separator.model.VSeparatorPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -66,7 +67,7 @@ public class VSeparatorFactoryImpl extends EFactoryImpl implements VSeparatorFac
 		switch (eClass.getClassifierID()) {
 			case VSeparatorPackage.SEPARATOR: return createSeparator();
 			default:
-				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 	}
 

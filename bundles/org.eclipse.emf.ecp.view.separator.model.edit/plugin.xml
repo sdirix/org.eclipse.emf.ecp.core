@@ -9,7 +9,7 @@
    <extension point="org.eclipse.emf.edit.itemProviderAdapterFactories">
       <factory
             uri="http://org/eclipse/emf/ecp/view/separator/model"
-            class="org.eclipse.emf.ecp.view.separator.model.provider.SeparatorItemProviderAdapterFactory"
+            class="org.eclipse.emf.ecp.view.spi.separator.model.provider.SeparatorItemProviderAdapterFactory"
             supportedTypes=
               "org.eclipse.emf.edit.provider.IEditingDomainItemProvider
                org.eclipse.emf.edit.provider.IStructuredItemContentProvider
@@ -21,7 +21,7 @@
    <extension point="org.eclipse.emf.edit.childCreationExtenders">
       <extender
             uri="http://org/eclipse/emf/ecp/view/model"
-            class="org.eclipse.emf.ecp.view.separator.model.provider.SeparatorItemProviderAdapterFactory$ViewChildCreationExtender"/>
+            class="org.eclipse.emf.ecp.view.spi.separator.model.provider.SeparatorItemProviderAdapterFactory$ViewChildCreationExtender"/>
    </extension>
 
 </plugin>
