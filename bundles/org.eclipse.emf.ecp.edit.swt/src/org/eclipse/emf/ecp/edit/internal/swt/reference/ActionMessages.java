@@ -15,7 +15,7 @@ import org.eclipse.osgi.util.NLS;
 
 public class ActionMessages extends NLS {
 
-	private static final String BUNDLE_NAME = "org.eclipse.emf.ecp.controls.link.swt.messages"; //$NON-NLS-1$
+	private static final String BUNDLE_NAME = "org.eclipse.emf.ecp.edit.internal.swt.reference.messages"; //$NON-NLS-1$
 
 	public static String AddReferenceAction_Link;
 
