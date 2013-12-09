@@ -9,14 +9,14 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
-package org.eclipse.emf.ecp.view.label.model.util;
+package org.eclipse.emf.ecp.view.spi.label.model.util;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.view.label.model.VLabel;
-import org.eclipse.emf.ecp.view.label.model.VLabelPackage;
+import org.eclipse.emf.ecp.view.spi.label.model.VLabel;
+import org.eclipse.emf.ecp.view.spi.label.model.VLabelPackage;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 
@@ -26,7 +26,7 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
  * It provides an adapter <code>createXXX</code> method for each class of the model.
  * <!-- end-user-doc -->
  * 
- * @see org.eclipse.emf.ecp.view.label.model.VLabelPackage
+ * @see org.eclipse.emf.ecp.view.spi.label.model.VLabelPackage
  * @generated
  */
 public class LabelAdapterFactory extends AdapterFactoryImpl
@@ -130,15 +130,15 @@ public class LabelAdapterFactory extends AdapterFactoryImpl
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.label.model.VLabel <em>Label</em>}
-	 * '.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.spi.label.model.VLabel
+	 * <em>Label</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * 
 	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.label.model.VLabel
+	 * @see org.eclipse.emf.ecp.view.spi.label.model.VLabel
 	 * @generated
 	 */
 	public Adapter createLabelAdapter()
@@ -147,7 +147,8 @@ public class LabelAdapterFactory extends AdapterFactoryImpl
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.spi.model.VElement <em>Element</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.spi.model.VElement
+	 * <em>Element</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.

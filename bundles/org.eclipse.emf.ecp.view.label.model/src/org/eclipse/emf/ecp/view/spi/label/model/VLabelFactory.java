@@ -9,7 +9,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
-package org.eclipse.emf.ecp.view.label.model;
+package org.eclipse.emf.ecp.view.spi.label.model;
 
 import org.eclipse.emf.ecore.EFactory;
 
@@ -19,7 +19,7 @@ import org.eclipse.emf.ecore.EFactory;
  * It provides a create method for each non-abstract class of the model.
  * <!-- end-user-doc -->
  * 
- * @see org.eclipse.emf.ecp.view.label.model.VLabelPackage
+ * @see org.eclipse.emf.ecp.view.spi.label.model.VLabelPackage
  * @generated
  */
 public interface VLabelFactory extends EFactory
@@ -31,7 +31,7 @@ public interface VLabelFactory extends EFactory
 	 * 
 	 * @generated
 	 */
-	VLabelFactory eINSTANCE = org.eclipse.emf.ecp.view.label.model.impl.VLabelFactoryImpl.init();
+	VLabelFactory eINSTANCE = org.eclipse.emf.ecp.view.spi.label.model.impl.VLabelFactoryImpl.init();
 
 	/**
 	 * Returns a new object of class '<em>Label</em>'.

@@ -9,7 +9,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
-package org.eclipse.emf.ecp.view.label.model;
+package org.eclipse.emf.ecp.view.spi.label.model;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -23,7 +23,7 @@ import org.eclipse.emf.common.util.Enumerator;
  * and utility methods for working with them.
  * <!-- end-user-doc -->
  * 
- * @see org.eclipse.emf.ecp.view.label.model.VLabelPackage#getVLabelStyle()
+ * @see org.eclipse.emf.ecp.view.spi.label.model.VLabelPackage#getVLabelStyle()
  * @model
  * @generated
  */

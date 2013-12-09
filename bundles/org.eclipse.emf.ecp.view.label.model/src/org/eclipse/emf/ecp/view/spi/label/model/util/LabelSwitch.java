@@ -9,13 +9,13 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
-package org.eclipse.emf.ecp.view.label.model.util;
+package org.eclipse.emf.ecp.view.spi.label.model.util;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
-import org.eclipse.emf.ecp.view.label.model.VLabel;
-import org.eclipse.emf.ecp.view.label.model.VLabelPackage;
+import org.eclipse.emf.ecp.view.spi.label.model.VLabel;
+import org.eclipse.emf.ecp.view.spi.label.model.VLabelPackage;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 
@@ -30,7 +30,7 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
  * which is the result of the switch.
  * <!-- end-user-doc -->
  * 
- * @see org.eclipse.emf.ecp.view.label.model.VLabelPackage
+ * @see org.eclipse.emf.ecp.view.spi.label.model.VLabelPackage
  * @generated
  */
 public class LabelSwitch<T> extends Switch<T>

@@ -9,15 +9,15 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
-package org.eclipse.emf.ecp.view.label.model.provider;
+package org.eclipse.emf.ecp.view.spi.label.model.provider;
 
 import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.ecp.view.label.model.VLabel;
-import org.eclipse.emf.ecp.view.label.model.VLabelPackage;
+import org.eclipse.emf.ecp.view.spi.label.model.VLabel;
+import org.eclipse.emf.ecp.view.spi.label.model.VLabelPackage;
 import org.eclipse.emf.ecp.view.spi.model.provider.ContainedElementItemProvider;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
@@ -30,7 +30,7 @@ import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
- * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.label.model.VLabel} object.
+ * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.spi.label.model.VLabel} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * 

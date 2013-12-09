@@ -9,7 +9,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
-package org.eclipse.emf.ecp.view.label.model.impl;
+package org.eclipse.emf.ecp.view.spi.label.model.impl;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
@@ -17,10 +17,10 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-import org.eclipse.emf.ecp.view.label.model.VLabel;
-import org.eclipse.emf.ecp.view.label.model.VLabelFactory;
-import org.eclipse.emf.ecp.view.label.model.VLabelPackage;
-import org.eclipse.emf.ecp.view.label.model.VLabelStyle;
+import org.eclipse.emf.ecp.view.spi.label.model.VLabel;
+import org.eclipse.emf.ecp.view.spi.label.model.VLabelFactory;
+import org.eclipse.emf.ecp.view.spi.label.model.VLabelPackage;
+import org.eclipse.emf.ecp.view.spi.label.model.VLabelStyle;
 
 /**
  * <!-- begin-user-doc -->

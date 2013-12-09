@@ -9,7 +9,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
-package org.eclipse.emf.ecp.view.label.model.provider;
+package org.eclipse.emf.ecp.view.spi.label.model.provider;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -20,9 +20,9 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.view.label.model.VLabelFactory;
-import org.eclipse.emf.ecp.view.label.model.VLabelPackage;
-import org.eclipse.emf.ecp.view.label.model.util.LabelAdapterFactory;
+import org.eclipse.emf.ecp.view.spi.label.model.VLabelFactory;
+import org.eclipse.emf.ecp.view.spi.label.model.VLabelPackage;
+import org.eclipse.emf.ecp.view.spi.label.model.util.LabelAdapterFactory;
 import org.eclipse.emf.ecp.view.spi.model.VContainer;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
@@ -111,7 +111,8 @@ public class LabelItemProviderAdapterFactory extends LabelAdapterFactory impleme
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.view.label.model.VLabel} instances.
+	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.view.spi.label.model.VLabel}
+	 * instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
@@ -120,7 +121,7 @@ public class LabelItemProviderAdapterFactory extends LabelAdapterFactory impleme
 	protected LabelItemProvider labelItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.label.model.VLabel}.
+	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.spi.label.model.VLabel}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 

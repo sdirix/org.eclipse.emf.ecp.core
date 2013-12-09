@@ -9,14 +9,14 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
-package org.eclipse.emf.ecp.view.label.model.impl;
+package org.eclipse.emf.ecp.view.spi.label.model.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecp.view.label.model.VLabel;
-import org.eclipse.emf.ecp.view.label.model.VLabelPackage;
-import org.eclipse.emf.ecp.view.label.model.VLabelStyle;
+import org.eclipse.emf.ecp.view.spi.label.model.VLabel;
+import org.eclipse.emf.ecp.view.spi.label.model.VLabelPackage;
+import org.eclipse.emf.ecp.view.spi.label.model.VLabelStyle;
 import org.eclipse.emf.ecp.view.spi.model.impl.VContainedElementImpl;
 
 /**
@@ -26,7 +26,7 @@ import org.eclipse.emf.ecp.view.spi.model.impl.VContainedElementImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.label.model.impl.VLabelImpl#getStyle <em>Style</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.label.model.impl.VLabelImpl#getStyle <em>Style</em>}</li>
  * </ul>
  * </p>
  * 

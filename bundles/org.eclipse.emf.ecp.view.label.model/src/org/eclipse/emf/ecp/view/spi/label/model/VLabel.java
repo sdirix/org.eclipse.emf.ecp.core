@@ -9,7 +9,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
-package org.eclipse.emf.ecp.view.label.model;
+package org.eclipse.emf.ecp.view.spi.label.model;
 
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 
@@ -21,11 +21,11 @@ import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
  * <p>
  * The following features are supported:
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.label.model.VLabel#getStyle <em>Style</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.label.model.VLabel#getStyle <em>Style</em>}</li>
  * </ul>
  * </p>
  * 
- * @see org.eclipse.emf.ecp.view.label.model.VLabelPackage#getLabel()
+ * @see org.eclipse.emf.ecp.view.spi.label.model.VLabelPackage#getLabel()
  * @model
  * @generated
  */
@@ -33,7 +33,7 @@ public interface VLabel extends VContainedElement
 {
 	/**
 	 * Returns the value of the '<em><b>Style</b></em>' attribute.
-	 * The literals are from the enumeration {@link org.eclipse.emf.ecp.view.label.model.VLabelStyle}.
+	 * The literals are from the enumeration {@link org.eclipse.emf.ecp.view.spi.label.model.VLabelStyle}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Style</em>' attribute isn't clear, there really should be more of a description
@@ -42,21 +42,22 @@ public interface VLabel extends VContainedElement
 	 * <!-- end-user-doc -->
 	 * 
 	 * @return the value of the '<em>Style</em>' attribute.
-	 * @see org.eclipse.emf.ecp.view.label.model.VLabelStyle
+	 * @see org.eclipse.emf.ecp.view.spi.label.model.VLabelStyle
 	 * @see #setStyle(VLabelStyle)
-	 * @see org.eclipse.emf.ecp.view.label.model.VLabelPackage#getLabel_Style()
+	 * @see org.eclipse.emf.ecp.view.spi.label.model.VLabelPackage#getLabel_Style()
 	 * @model
 	 * @generated
 	 */
 	VLabelStyle getStyle();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.label.model.VLabel#getStyle <em>Style</em>}' attribute.
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.spi.label.model.VLabel#getStyle <em>Style</em>}'
+	 * attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @param value the new value of the '<em>Style</em>' attribute.
-	 * @see org.eclipse.emf.ecp.view.label.model.VLabelStyle
+	 * @see org.eclipse.emf.ecp.view.spi.label.model.VLabelStyle
 	 * @see #getStyle()
 	 * @generated
 	 */

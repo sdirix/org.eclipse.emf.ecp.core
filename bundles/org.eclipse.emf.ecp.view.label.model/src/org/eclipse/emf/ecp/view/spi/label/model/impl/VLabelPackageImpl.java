@@ -9,17 +9,17 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
-package org.eclipse.emf.ecp.view.label.model.impl;
+package org.eclipse.emf.ecp.view.spi.label.model.impl;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-import org.eclipse.emf.ecp.view.label.model.VLabel;
-import org.eclipse.emf.ecp.view.label.model.VLabelFactory;
-import org.eclipse.emf.ecp.view.label.model.VLabelPackage;
-import org.eclipse.emf.ecp.view.label.model.VLabelStyle;
+import org.eclipse.emf.ecp.view.spi.label.model.VLabel;
+import org.eclipse.emf.ecp.view.spi.label.model.VLabelFactory;
+import org.eclipse.emf.ecp.view.spi.label.model.VLabelPackage;
+import org.eclipse.emf.ecp.view.spi.label.model.VLabelStyle;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 
 /**
@@ -57,7 +57,7 @@ public class VLabelPackageImpl extends EPackageImpl implements VLabelPackage
 	 * begin-user-doc --> <!-- end-user-doc -->
 	 * 
 	 * @see org.eclipse.emf.ecore.EPackage.Registry
-	 * @see org.eclipse.emf.ecp.view.label.model.VLabelPackage#eNS_URI
+	 * @see org.eclipse.emf.ecp.view.spi.label.model.VLabelPackage#eNS_URI
 	 * @see #init()
 	 * @generated
 	 */
