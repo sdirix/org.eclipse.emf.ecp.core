@@ -13,7 +13,7 @@
 package org.eclipse.emf.ecp.internal.ui.view;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.view.model.VView;
+import org.eclipse.emf.ecp.view.spi.model.VView;
 
 public interface IViewProvider {
 

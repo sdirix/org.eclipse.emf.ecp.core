@@ -13,7 +13,7 @@ package org.eclipse.emf.ecp.ui.view.swt.internal;
 
 import java.util.Map;
 
-import org.eclipse.emf.ecp.view.model.VElement;
+import org.eclipse.emf.ecp.view.spi.model.VElement;
 
 /**
  * Interface for contributing custom SWT renderers.

@@ -18,7 +18,7 @@ import java.util.PriorityQueue;
 import java.util.Set;
 
 import org.eclipse.emf.ecp.common.UniqueSetting;
-import org.eclipse.emf.ecp.view.model.VElement;
+import org.eclipse.emf.ecp.view.spi.model.VElement;
 
 /**
  * <p>

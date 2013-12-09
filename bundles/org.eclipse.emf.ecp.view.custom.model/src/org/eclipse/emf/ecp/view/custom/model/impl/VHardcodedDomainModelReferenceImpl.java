@@ -32,7 +32,7 @@ import org.eclipse.emf.ecp.edit.spi.ECPControlFactory;
 import org.eclipse.emf.ecp.view.custom.model.ECPHardcodedReferences;
 import org.eclipse.emf.ecp.view.custom.model.VCustomPackage;
 import org.eclipse.emf.ecp.view.custom.model.VHardcodedDomainModelReference;
-import org.eclipse.emf.ecp.view.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 
 /**
  * <!-- begin-user-doc -->
@@ -320,7 +320,7 @@ public class VHardcodedDomainModelReferenceImpl extends EObjectImpl implements V
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.model.VDomainModelReference#resolve(org.eclipse.emf.ecore.EObject)
+	 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReference#resolve(org.eclipse.emf.ecore.EObject)
 	 * @generated NOT
 	 */
 	public boolean resolve(EObject eObject) {
@@ -352,7 +352,7 @@ public class VHardcodedDomainModelReferenceImpl extends EObjectImpl implements V
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.model.VDomainModelReference#getIterator()
+	 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReference#getIterator()
 	 * @generated NOT
 	 */
 	public Iterator<Setting> getIterator() {
@@ -367,7 +367,7 @@ public class VHardcodedDomainModelReferenceImpl extends EObjectImpl implements V
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.model.VDomainModelReference#getEStructuralFeatureIterator()
+	 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReference#getEStructuralFeatureIterator()
 	 * @generated NOT
 	 */
 	public Iterator<EStructuralFeature> getEStructuralFeatureIterator() {

@@ -18,7 +18,7 @@ import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.edit.internal.swt.reference.DeleteReferenceAction;
 import org.eclipse.emf.ecp.edit.internal.swt.reference.LinkControl;
 import org.eclipse.emf.ecp.edit.spi.ReferenceService;
-import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.table.model.VTableColumn;
 import org.eclipse.emf.ecp.view.table.model.VTableControl;
 import org.eclipse.emf.edit.command.ChangeCommand;

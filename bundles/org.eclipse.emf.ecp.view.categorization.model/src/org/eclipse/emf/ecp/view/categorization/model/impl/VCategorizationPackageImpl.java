@@ -25,7 +25,7 @@ import org.eclipse.emf.ecp.view.categorization.model.VCategorizationElement;
 import org.eclipse.emf.ecp.view.categorization.model.VCategorizationFactory;
 import org.eclipse.emf.ecp.view.categorization.model.VCategorizationPackage;
 import org.eclipse.emf.ecp.view.categorization.model.VCategory;
-import org.eclipse.emf.ecp.view.model.VViewPackage;
+import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 
 /**
  * <!-- begin-user-doc -->

@@ -12,9 +12,9 @@
 package org.eclipse.emf.ecp.view.separator.model.impl;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecp.view.model.impl.VContainedElementImpl;
 import org.eclipse.emf.ecp.view.separator.model.VSeparator;
 import org.eclipse.emf.ecp.view.separator.model.VSeparatorPackage;
+import org.eclipse.emf.ecp.view.spi.model.impl.VContainedElementImpl;
 
 /**
  * <!-- begin-user-doc -->

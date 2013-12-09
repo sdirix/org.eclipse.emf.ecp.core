@@ -20,9 +20,9 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
-import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
-import org.eclipse.emf.ecp.view.model.VView;
-import org.eclipse.emf.ecp.view.model.VViewFactory;
+import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.test.common.swt.DatabindingClassRunner;
 import org.eclipse.emf.ecp.view.test.common.swt.SWTViewTestHelper;
 import org.eclipse.emf.ecp.view.vertical.model.VVerticalFactory;
@@ -84,7 +84,7 @@ public class ECPSWTViewRendererTest {
 
 	@Test
 	public void testViewWithControls() throws ECPRendererException {
-		final org.eclipse.emf.ecp.view.model.VControl control = VViewFactory.eINSTANCE.createControl();
+		final org.eclipse.emf.ecp.view.spi.model.VControl control = VViewFactory.eINSTANCE.createControl();
 		assignPlayerNameFeature(control);
 		view.getChildren().add(control);
 
@@ -96,7 +96,7 @@ public class ECPSWTViewRendererTest {
 		assertTrue(SWTViewTestHelper.checkIfThereIsATextControlWithLabel(composite));
 	}
 
-	private void assignPlayerNameFeature(final org.eclipse.emf.ecp.view.model.VControl control) {
+	private void assignPlayerNameFeature(final org.eclipse.emf.ecp.view.spi.model.VControl control) {
 		final VFeaturePathDomainModelReference domainModelReference = VViewFactory.eINSTANCE
 			.createFeaturePathDomainModelReference();
 		domainModelReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Name());
@@ -108,9 +108,9 @@ public class ECPSWTViewRendererTest {
 	 * Adds 2 controls and set them as readonly
 	 */
 	public void testAllReadOnly() throws ECPRendererException {
-		final org.eclipse.emf.ecp.view.model.VControl control = VViewFactory.eINSTANCE.createControl();
+		final org.eclipse.emf.ecp.view.spi.model.VControl control = VViewFactory.eINSTANCE.createControl();
 		assignPlayerNameFeature(control);
-		final org.eclipse.emf.ecp.view.model.VControl control1 = VViewFactory.eINSTANCE.createControl();
+		final org.eclipse.emf.ecp.view.spi.model.VControl control1 = VViewFactory.eINSTANCE.createControl();
 		assignPlayerNameFeature(control1);
 
 		final VVerticalLayout column = VVerticalFactory.eINSTANCE.createVerticalLayout();

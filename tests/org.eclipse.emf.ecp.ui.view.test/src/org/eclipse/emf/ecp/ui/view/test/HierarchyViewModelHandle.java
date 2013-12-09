@@ -11,10 +11,10 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.ui.view.test;
 
-import org.eclipse.emf.ecp.view.model.VContainedElement;
-import org.eclipse.emf.ecp.view.model.VContainer;
-import org.eclipse.emf.ecp.view.model.VControl;
-import org.eclipse.emf.ecp.view.model.VElement;
+import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
+import org.eclipse.emf.ecp.view.spi.model.VContainer;
+import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.spi.model.VElement;
 
 /**
  * @author Jonas

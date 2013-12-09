@@ -21,7 +21,7 @@ import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
 import org.eclipse.emf.ecp.view.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
-import org.eclipse.emf.ecp.view.model.VView;
+import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
@@ -47,7 +47,7 @@ public class ECPSWTViewRendererImpl implements ECPSWTViewRenderer {
 	 * {@inheritDoc}
 	 * 
 	 * @see org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer#render(org.eclipse.swt.widgets.Composite,
-	 *      org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecp.view.model.VView)
+	 *      org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecp.view.spi.model.VView)
 	 */
 	public ECPSWTView render(Composite parent, EObject domainObject, VView viewModel) throws ECPRendererException {
 		final ViewModelContext viewContext = new ViewModelContextImpl(viewModel, domainObject);

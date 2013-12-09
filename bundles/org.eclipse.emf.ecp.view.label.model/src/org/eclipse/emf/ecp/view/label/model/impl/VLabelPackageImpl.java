@@ -20,7 +20,7 @@ import org.eclipse.emf.ecp.view.label.model.VLabel;
 import org.eclipse.emf.ecp.view.label.model.VLabelFactory;
 import org.eclipse.emf.ecp.view.label.model.VLabelPackage;
 import org.eclipse.emf.ecp.view.label.model.VLabelStyle;
-import org.eclipse.emf.ecp.view.model.VViewPackage;
+import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 
 /**
  * <!-- begin-user-doc -->

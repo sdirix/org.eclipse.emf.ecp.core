@@ -14,7 +14,7 @@ package org.eclipse.emf.ecp.edit.spi;
 
 import java.util.Set;
 
-import org.eclipse.emf.ecp.view.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
 /**

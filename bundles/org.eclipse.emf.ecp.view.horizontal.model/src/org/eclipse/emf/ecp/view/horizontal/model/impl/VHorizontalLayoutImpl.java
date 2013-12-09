@@ -14,7 +14,7 @@ package org.eclipse.emf.ecp.view.horizontal.model.impl;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecp.view.horizontal.model.VHorizontalLayout;
 import org.eclipse.emf.ecp.view.horizontal.model.VHorizontalPackage;
-import org.eclipse.emf.ecp.view.model.impl.VContainerImpl;
+import org.eclipse.emf.ecp.view.spi.model.impl.VContainerImpl;
 
 /**
  * <!-- begin-user-doc -->

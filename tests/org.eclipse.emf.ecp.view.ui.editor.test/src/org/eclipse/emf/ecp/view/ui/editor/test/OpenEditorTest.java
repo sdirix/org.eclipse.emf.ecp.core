@@ -21,10 +21,10 @@ import org.eclipse.emf.ecp.view.categorization.model.VCategorization;
 import org.eclipse.emf.ecp.view.categorization.model.VCategorizationElement;
 import org.eclipse.emf.ecp.view.categorization.model.VCategorizationFactory;
 import org.eclipse.emf.ecp.view.categorization.model.VCategory;
-import org.eclipse.emf.ecp.view.model.VControl;
-import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
-import org.eclipse.emf.ecp.view.model.VView;
-import org.eclipse.emf.ecp.view.model.VViewFactory;
+import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.test.common.GCCollectable;
 import org.eclipse.emf.emfstore.bowling.BowlingFactory;
 import org.eclipse.emf.emfstore.bowling.BowlingPackage;
@@ -163,7 +163,7 @@ public class OpenEditorTest extends ECPCommonSWTBotTest {
 	}
 
 	private VControl createControl(EStructuralFeature feature) {
-		final org.eclipse.emf.ecp.view.model.VControl control = VViewFactory.eINSTANCE
+		final org.eclipse.emf.ecp.view.spi.model.VControl control = VViewFactory.eINSTANCE
 			.createControl();
 		final VFeaturePathDomainModelReference domainModelReference = VViewFactory.eINSTANCE
 			.createFeaturePathDomainModelReference();
@@ -173,10 +173,10 @@ public class OpenEditorTest extends ECPCommonSWTBotTest {
 	}
 
 	private VCategorizationElement createCategorizations(
-		org.eclipse.emf.ecp.view.model.VContainedElement composite1,
-		org.eclipse.emf.ecp.view.model.VContainedElement composite2,
-		org.eclipse.emf.ecp.view.model.VContainedElement composite3,
-		org.eclipse.emf.ecp.view.model.VContainedElement composite4) {
+		org.eclipse.emf.ecp.view.spi.model.VContainedElement composite1,
+		org.eclipse.emf.ecp.view.spi.model.VContainedElement composite2,
+		org.eclipse.emf.ecp.view.spi.model.VContainedElement composite3,
+		org.eclipse.emf.ecp.view.spi.model.VContainedElement composite4) {
 
 		final VCategorizationElement categorizationElement = VCategorizationFactory.eINSTANCE
 			.createCategorizationElement();

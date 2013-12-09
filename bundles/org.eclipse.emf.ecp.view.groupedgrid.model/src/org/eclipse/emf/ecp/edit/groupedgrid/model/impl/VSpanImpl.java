@@ -16,7 +16,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGridPackage;
 import org.eclipse.emf.ecp.edit.groupedgrid.model.VSpan;
-import org.eclipse.emf.ecp.view.model.impl.VAttachmentImpl;
+import org.eclipse.emf.ecp.view.spi.model.impl.VAttachmentImpl;
 
 /**
  * <!-- begin-user-doc -->

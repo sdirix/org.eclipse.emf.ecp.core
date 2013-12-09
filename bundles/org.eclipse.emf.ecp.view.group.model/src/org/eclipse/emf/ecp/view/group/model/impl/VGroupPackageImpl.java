@@ -17,7 +17,7 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecp.view.group.model.VGroup;
 import org.eclipse.emf.ecp.view.group.model.VGroupFactory;
 import org.eclipse.emf.ecp.view.group.model.VGroupPackage;
-import org.eclipse.emf.ecp.view.model.VViewPackage;
+import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 
 /**
  * <!-- begin-user-doc -->

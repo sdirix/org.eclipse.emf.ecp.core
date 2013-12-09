@@ -17,7 +17,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.categorization.model.DerivedAttributeAdapter;
 import org.eclipse.emf.ecp.view.categorization.model.VCategorizableElement;
 import org.eclipse.emf.ecp.view.categorization.model.VCategorizationPackage;
-import org.eclipse.emf.ecp.view.model.impl.VElementImpl;
+import org.eclipse.emf.ecp.view.spi.model.impl.VElementImpl;
 
 /**
  * <!-- begin-user-doc -->

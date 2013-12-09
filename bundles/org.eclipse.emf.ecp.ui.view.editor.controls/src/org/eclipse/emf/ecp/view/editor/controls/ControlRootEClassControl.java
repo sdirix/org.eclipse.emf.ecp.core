@@ -26,7 +26,7 @@ import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.edit.internal.swt.reference.DeleteReferenceAction;
 import org.eclipse.emf.ecp.edit.internal.swt.reference.LinkControl;
 import org.eclipse.emf.ecp.edit.spi.ReferenceService;
-import org.eclipse.emf.ecp.view.model.VView;
+import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.edit.command.ChangeCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;

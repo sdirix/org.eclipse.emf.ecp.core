@@ -13,7 +13,7 @@ package org.eclipse.emf.ecp.view.model.provider.xmi;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.internal.ui.view.IViewProvider;
-import org.eclipse.emf.ecp.view.model.VView;
+import org.eclipse.emf.ecp.view.spi.model.VView;
 
 /**
  * @author Jonas

@@ -26,7 +26,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem;
 import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTreeDomainModelReference;
 import org.eclipse.emf.ecp.view.dynamictree.model.ModelPackage;
-import org.eclipse.emf.ecp.view.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 
 /**
  * <!-- begin-user-doc -->
@@ -257,7 +257,7 @@ public class DynamicContainmentTreeDomainModelReferenceImpl extends EObjectImpl 
 	 * 
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.model.VDomainModelReference#resolve(org.eclipse.emf.ecore.EObject)
+	 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReference#resolve(org.eclipse.emf.ecore.EObject)
 	 * 
 	 * @generated NOT
 	 */
@@ -281,7 +281,7 @@ public class DynamicContainmentTreeDomainModelReferenceImpl extends EObjectImpl 
 	 * 
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.model.VDomainModelReference#getIterator()
+	 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReference#getIterator()
 	 * 
 	 * @generated NOT
 	 */
@@ -293,7 +293,7 @@ public class DynamicContainmentTreeDomainModelReferenceImpl extends EObjectImpl 
 	 * 
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.model.VDomainModelReference#getEStructuralFeatureIterator()
+	 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReference#getEStructuralFeatureIterator()
 	 * 
 	 * @generated NOT
 	 */

@@ -11,7 +11,7 @@
  */
 package org.eclipse.emf.ecp.view.label.model;
 
-import org.eclipse.emf.ecp.view.model.VContainedElement;
+import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 
 /**
  * <!-- begin-user-doc -->

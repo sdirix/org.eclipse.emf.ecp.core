@@ -12,8 +12,9 @@
 package org.eclipse.emf.ecp.view.categorization.model;
 
 import java.util.List;
+
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.view.model.VElement;
+import org.eclipse.emf.ecp.view.spi.model.VElement;
 
 /**
  * <!-- begin-user-doc -->

@@ -13,7 +13,7 @@ package org.eclipse.emf.ecp.edit.groupedgrid.model;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.view.model.VContainedElement;
+import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 
 /**
  * <!-- begin-user-doc -->
@@ -35,7 +35,7 @@ public interface VRow extends EObject
 {
 	/**
 	 * Returns the value of the '<em><b>Children</b></em>' containment reference list.
-	 * The list contents are of type {@link org.eclipse.emf.ecp.view.model.VContainedElement}.
+	 * The list contents are of type {@link org.eclipse.emf.ecp.view.spi.model.VContainedElement}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Children</em>' containment reference list isn't clear, there really should be more of

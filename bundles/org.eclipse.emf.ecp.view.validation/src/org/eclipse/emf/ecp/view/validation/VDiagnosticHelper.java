@@ -12,7 +12,7 @@
 package org.eclipse.emf.ecp.view.validation;
 
 import org.eclipse.emf.common.util.Diagnostic;
-import org.eclipse.emf.ecp.view.model.VDiagnostic;
+import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 
 /**
  * This class compares to {@link VDiagnostic} elements for equality.

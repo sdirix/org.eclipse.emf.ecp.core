@@ -23,8 +23,8 @@ import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.ui.view.swt.internal.AbstractSWTRenderer;
 import org.eclipse.emf.ecp.ui.view.swt.internal.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.model.LabelAlignment;
-import org.eclipse.emf.ecp.view.model.VAttachment;
+import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
+import org.eclipse.emf.ecp.view.spi.model.VAttachment;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
@@ -76,7 +76,7 @@ public class GroupedGridSWTRenderer extends AbstractSWTRenderer<VGroupedGrid> {
 			// Content
 			for (final VRow row : group.getRows()) {
 				int spanned = 0;
-				for (final org.eclipse.emf.ecp.view.model.VContainedElement child : row.getChildren()) {
+				for (final org.eclipse.emf.ecp.view.spi.model.VContainedElement child : row.getChildren()) {
 
 					final int hSpan = getHSpanOfComposite(child);
 					final List<RenderingResultRow<Control>> resultRows = SWTRendererFactory.INSTANCE.render(
@@ -95,8 +95,8 @@ public class GroupedGridSWTRenderer extends AbstractSWTRenderer<VGroupedGrid> {
 					GridDataFactory.createFrom((GridData) childRender.getLayoutData()).indent(10, 0)
 						.applyTo(childRender);
 					spanned += hSpan;
-					if (org.eclipse.emf.ecp.view.model.VControl.class.isInstance(child)) {
-						final org.eclipse.emf.ecp.view.model.VControl control = (org.eclipse.emf.ecp.view.model.VControl) child;
+					if (org.eclipse.emf.ecp.view.spi.model.VControl.class.isInstance(child)) {
+						final org.eclipse.emf.ecp.view.spi.model.VControl control = (org.eclipse.emf.ecp.view.spi.model.VControl) child;
 						if (control.getLabelAlignment() == LabelAlignment.LEFT) {
 							spanned++;
 						}
@@ -124,7 +124,7 @@ public class GroupedGridSWTRenderer extends AbstractSWTRenderer<VGroupedGrid> {
 		for (final VGroup group : renderable.getGroups()) {
 			for (final VRow row : group.getRows()) {
 				int columns = 0;
-				for (final org.eclipse.emf.ecp.view.model.VContainedElement composite : row.getChildren()) {
+				for (final org.eclipse.emf.ecp.view.spi.model.VContainedElement composite : row.getChildren()) {
 					columns += getHSpanOfComposite(composite) + getExtraColumnForLabel(composite);
 				}
 				if (columns > maxColumns) {
@@ -139,7 +139,7 @@ public class GroupedGridSWTRenderer extends AbstractSWTRenderer<VGroupedGrid> {
 	 * @param composite
 	 * @return
 	 */
-	private int getHSpanOfComposite(org.eclipse.emf.ecp.view.model.VContainedElement composite) {
+	private int getHSpanOfComposite(org.eclipse.emf.ecp.view.spi.model.VContainedElement composite) {
 		for (final VAttachment attachment : composite.getAttachments()) {
 			if (VSpan.class.isInstance(attachment)) {
 				final VSpan span = (VSpan) attachment;
@@ -149,9 +149,9 @@ public class GroupedGridSWTRenderer extends AbstractSWTRenderer<VGroupedGrid> {
 		return 1;
 	}
 
-	private int getExtraColumnForLabel(org.eclipse.emf.ecp.view.model.VContainedElement child) {
-		if (org.eclipse.emf.ecp.view.model.VControl.class.isInstance(child)) {
-			final org.eclipse.emf.ecp.view.model.VControl control = (org.eclipse.emf.ecp.view.model.VControl) child;
+	private int getExtraColumnForLabel(org.eclipse.emf.ecp.view.spi.model.VContainedElement child) {
+		if (org.eclipse.emf.ecp.view.spi.model.VControl.class.isInstance(child)) {
+			final org.eclipse.emf.ecp.view.spi.model.VControl control = (org.eclipse.emf.ecp.view.spi.model.VControl) child;
 			return control.getLabelAlignment() == LabelAlignment.LEFT ? 1 : 0;
 		}
 		return 0;

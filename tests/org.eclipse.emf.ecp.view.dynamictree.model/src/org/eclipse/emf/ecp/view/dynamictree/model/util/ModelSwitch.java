@@ -18,16 +18,8 @@ import org.eclipse.emf.ecp.view.categorization.model.VAbstractCategorization;
 import org.eclipse.emf.ecp.view.categorization.model.VCategorizableElement;
 import org.eclipse.emf.ecp.view.categorization.model.VCategory;
 import org.eclipse.emf.ecp.view.dynamictree.model.*;
-import org.eclipse.emf.ecp.view.dynamictree.model.DomainIntermediate;
-import org.eclipse.emf.ecp.view.dynamictree.model.DomainRoot;
-import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem;
-import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree;
-import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTreeDomainModelReference;
-import org.eclipse.emf.ecp.view.dynamictree.model.ModelPackage;
-import org.eclipse.emf.ecp.view.dynamictree.model.TestElement;
-import org.eclipse.emf.ecp.view.dynamictree.model.TestElementContainer;
-import org.eclipse.emf.ecp.view.model.VDomainModelReference;
-import org.eclipse.emf.ecp.view.model.VElement;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VElement;
 
 /**
  * <!-- begin-user-doc -->

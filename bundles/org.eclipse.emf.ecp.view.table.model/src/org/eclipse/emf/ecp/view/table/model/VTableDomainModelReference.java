@@ -11,7 +11,7 @@
  */
 package org.eclipse.emf.ecp.view.table.model;
 
-import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 
 /**
  * <!-- begin-user-doc -->

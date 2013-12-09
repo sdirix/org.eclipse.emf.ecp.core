@@ -13,7 +13,7 @@ package org.eclipse.emf.ecp.view.context;
 
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.view.model.VElement;
+import org.eclipse.emf.ecp.view.spi.model.VElement;
 
 // TODO: Auto-generated Javadoc
 /**

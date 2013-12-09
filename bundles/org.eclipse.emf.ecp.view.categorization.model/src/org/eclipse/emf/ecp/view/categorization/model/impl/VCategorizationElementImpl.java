@@ -25,7 +25,7 @@ import org.eclipse.emf.ecp.view.categorization.model.VAbstractCategorization;
 import org.eclipse.emf.ecp.view.categorization.model.VCategorizableElement;
 import org.eclipse.emf.ecp.view.categorization.model.VCategorizationElement;
 import org.eclipse.emf.ecp.view.categorization.model.VCategorizationPackage;
-import org.eclipse.emf.ecp.view.model.impl.VContainedElementImpl;
+import org.eclipse.emf.ecp.view.spi.model.impl.VContainedElementImpl;
 
 /**
  * <!-- begin-user-doc -->

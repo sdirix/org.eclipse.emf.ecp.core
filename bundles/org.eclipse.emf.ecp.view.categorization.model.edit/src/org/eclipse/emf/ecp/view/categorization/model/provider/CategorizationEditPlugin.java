@@ -14,7 +14,7 @@ package org.eclipse.emf.ecp.view.categorization.model.provider;
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.provider.EcoreEditPlugin;
-import org.eclipse.emf.ecp.view.model.provider.ViewEditPlugin;
+import org.eclipse.emf.ecp.view.spi.model.provider.ViewEditPlugin;
 
 /**
  * This is the central singleton for the Categorization edit plugin.

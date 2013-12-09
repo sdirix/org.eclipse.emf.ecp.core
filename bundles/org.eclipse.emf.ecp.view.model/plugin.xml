@@ -10,7 +10,7 @@
       <!-- @generated view -->
       <package
             uri="http://org/eclipse/emf/ecp/view/model"
-            class="org.eclipse.emf.ecp.view.model.VViewPackage"
+            class="org.eclipse.emf.ecp.view.spi.model.VViewPackage"
             genModel="model/view.genmodel"/>
    </extension>
 

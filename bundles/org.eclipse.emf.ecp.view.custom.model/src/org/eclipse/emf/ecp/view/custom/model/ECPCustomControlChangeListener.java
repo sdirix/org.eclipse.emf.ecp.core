@@ -13,7 +13,7 @@ package org.eclipse.emf.ecp.view.custom.model;
 
 /**
  * {@link ECPCustomControlChangeListener} will get informed the value of a
- * {@link org.eclipse.emf.ecp.view.model.VDomainModelReference VDomainModelReference} changes.
+ * {@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReference VDomainModelReference} changes.
  * 
  * @author eneufeld
  * 
@@ -21,7 +21,7 @@ package org.eclipse.emf.ecp.view.custom.model;
 public interface ECPCustomControlChangeListener {
 
 	/**
-	 * When a change on the registered {@link org.eclipse.emf.ecp.view.model.VDomainModelReference
+	 * When a change on the registered {@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReference
 	 * VDomainModelReference} is noticed listeners will be notified.
 	 */
 	void notifyChanged();

@@ -11,7 +11,7 @@
  */
 package org.eclipse.emf.ecp.edit.groupedgrid.model;
 
-import org.eclipse.emf.ecp.view.model.VAttachment;
+import org.eclipse.emf.ecp.view.spi.model.VAttachment;
 
 /**
  * <!-- begin-user-doc -->

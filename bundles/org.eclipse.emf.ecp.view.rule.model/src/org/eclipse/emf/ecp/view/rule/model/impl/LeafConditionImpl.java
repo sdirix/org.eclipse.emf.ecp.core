@@ -23,10 +23,10 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecp.view.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.rule.model.LeafCondition;
 import org.eclipse.emf.ecp.view.rule.model.NotApplicableForEvaluationException;
 import org.eclipse.emf.ecp.view.rule.model.RulePackage;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 
 /**
  * <!-- begin-user-doc -->

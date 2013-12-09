@@ -17,7 +17,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecp.view.label.model.VLabel;
 import org.eclipse.emf.ecp.view.label.model.VLabelPackage;
 import org.eclipse.emf.ecp.view.label.model.VLabelStyle;
-import org.eclipse.emf.ecp.view.model.impl.VContainedElementImpl;
+import org.eclipse.emf.ecp.view.spi.model.impl.VContainedElementImpl;
 
 /**
  * <!-- begin-user-doc -->

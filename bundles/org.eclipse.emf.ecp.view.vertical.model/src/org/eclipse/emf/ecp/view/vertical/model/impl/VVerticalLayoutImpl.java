@@ -12,7 +12,7 @@
 package org.eclipse.emf.ecp.view.vertical.model.impl;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecp.view.model.impl.VContainerImpl;
+import org.eclipse.emf.ecp.view.spi.model.impl.VContainerImpl;
 import org.eclipse.emf.ecp.view.vertical.model.VVerticalLayout;
 import org.eclipse.emf.ecp.view.vertical.model.VVerticalPackage;
 

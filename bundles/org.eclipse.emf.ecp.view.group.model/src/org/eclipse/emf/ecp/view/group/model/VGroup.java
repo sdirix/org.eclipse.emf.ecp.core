@@ -11,7 +11,7 @@
  */
 package org.eclipse.emf.ecp.view.group.model;
 
-import org.eclipse.emf.ecp.view.model.VContainer;
+import org.eclipse.emf.ecp.view.spi.model.VContainer;
 
 /**
  * <!-- begin-user-doc -->

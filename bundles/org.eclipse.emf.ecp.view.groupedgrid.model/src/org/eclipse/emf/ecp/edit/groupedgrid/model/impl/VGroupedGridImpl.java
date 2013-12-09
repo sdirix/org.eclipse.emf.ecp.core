@@ -22,7 +22,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecp.edit.groupedgrid.model.VGroup;
 import org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGrid;
 import org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGridPackage;
-import org.eclipse.emf.ecp.view.model.impl.VContainedElementImpl;
+import org.eclipse.emf.ecp.view.spi.model.impl.VContainedElementImpl;
 
 /**
  * <!-- begin-user-doc -->

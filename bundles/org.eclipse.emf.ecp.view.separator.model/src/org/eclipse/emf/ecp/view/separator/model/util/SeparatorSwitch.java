@@ -14,10 +14,10 @@ package org.eclipse.emf.ecp.view.separator.model.util;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
-import org.eclipse.emf.ecp.view.model.VContainedElement;
-import org.eclipse.emf.ecp.view.model.VElement;
 import org.eclipse.emf.ecp.view.separator.model.VSeparator;
 import org.eclipse.emf.ecp.view.separator.model.VSeparatorPackage;
+import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
+import org.eclipse.emf.ecp.view.spi.model.VElement;
 
 /**
  * <!-- begin-user-doc -->

@@ -27,7 +27,7 @@ import org.eclipse.emf.ecp.view.categorization.model.ECPAction;
 import org.eclipse.emf.ecp.view.categorization.model.impl.VCategorizableElementImpl;
 import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem;
 import org.eclipse.emf.ecp.view.dynamictree.model.ModelPackage;
-import org.eclipse.emf.ecp.view.model.VContainedElement;
+import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 
 /**
  * <!-- begin-user-doc -->

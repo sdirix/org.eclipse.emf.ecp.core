@@ -12,7 +12,7 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.internal.ui.view;
 
-import org.eclipse.emf.ecp.view.model.VElement;
+import org.eclipse.emf.ecp.view.spi.model.VElement;
 
 public interface SelectedNodeChangedListener {
 

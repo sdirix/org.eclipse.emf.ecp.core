@@ -25,7 +25,7 @@ import org.eclipse.emf.ecp.edit.spi.ECPControlDescription;
 import org.eclipse.emf.ecp.edit.spi.ECPControlFactory;
 import org.eclipse.emf.ecp.edit.spi.util.ECPApplicableTester;
 import org.eclipse.emf.ecp.edit.spi.util.ECPStaticApplicableTester;
-import org.eclipse.emf.ecp.view.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.osgi.framework.Bundle;
 
 /**
@@ -134,7 +134,7 @@ public final class ControlFactoryImpl implements ECPControlFactory {
 	 * {@inheritDoc}
 	 * 
 	 * @see org.eclipse.emf.ecp.edit.spi.ECPControlFactory#createControl(java.lang.Class,
-	 *      org.eclipse.emf.ecp.view.model.VDomainModelReference)
+	 *      org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)
 	 */
 	public <T> T createControl(Class<T> controlType, VDomainModelReference domainModelReference) {
 

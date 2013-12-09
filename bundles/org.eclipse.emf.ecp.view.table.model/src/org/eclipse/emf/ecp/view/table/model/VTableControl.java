@@ -12,7 +12,7 @@
 package org.eclipse.emf.ecp.view.table.model;
 
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecp.view.model.VControl;
+import org.eclipse.emf.ecp.view.spi.model.VControl;
 
 /**
  * <!-- begin-user-doc -->

@@ -17,10 +17,10 @@ import static org.junit.Assert.assertTrue;
 
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
-import org.eclipse.emf.ecp.view.model.VControl;
-import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
-import org.eclipse.emf.ecp.view.model.VView;
-import org.eclipse.emf.ecp.view.model.VViewFactory;
+import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.test.common.GCCollectable;
 import org.eclipse.emf.ecp.view.test.common.Tuple;
 import org.eclipse.emf.ecp.view.validation.test.model.Computer;
@@ -36,7 +36,7 @@ import org.junit.Test;
 /**
  * Tests for checking whether the {@link org.eclipse.emf.ecp.view.validation.ValidationRegistry ValidationRegistry} &
  * the {@link org.eclipse.emf.ecp.view.validation.ValidationService ValidationService} correctly behave if domain
- * objects and/or {@link org.eclipse.emf.ecp.view.model.VElement Renderable}s are removed.
+ * objects and/or {@link org.eclipse.emf.ecp.view.spi.model.VElement Renderable}s are removed.
  * 
  * @author emueller
  */

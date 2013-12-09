@@ -14,10 +14,10 @@ package org.eclipse.emf.ecp.view.separator.model.impl;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-import org.eclipse.emf.ecp.view.model.VViewPackage;
 import org.eclipse.emf.ecp.view.separator.model.VSeparator;
 import org.eclipse.emf.ecp.view.separator.model.VSeparatorFactory;
 import org.eclipse.emf.ecp.view.separator.model.VSeparatorPackage;
+import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 
 /**
  * <!-- begin-user-doc -->

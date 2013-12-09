@@ -11,7 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.rule.model;
 
-import org.eclipse.emf.ecp.view.model.VAttachment;
+import org.eclipse.emf.ecp.view.spi.model.VAttachment;
 
 /**
  * <!-- begin-user-doc -->

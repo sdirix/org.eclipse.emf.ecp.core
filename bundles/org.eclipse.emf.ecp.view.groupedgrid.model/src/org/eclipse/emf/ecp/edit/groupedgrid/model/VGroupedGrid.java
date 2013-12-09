@@ -12,7 +12,7 @@
 package org.eclipse.emf.ecp.edit.groupedgrid.model;
 
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecp.view.model.VContainedElement;
+import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 
 /**
  * <!-- begin-user-doc -->

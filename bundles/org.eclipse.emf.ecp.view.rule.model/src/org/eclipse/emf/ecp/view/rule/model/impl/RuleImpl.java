@@ -16,10 +16,10 @@ import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecp.view.model.impl.VAttachmentImpl;
 import org.eclipse.emf.ecp.view.rule.model.Condition;
 import org.eclipse.emf.ecp.view.rule.model.Rule;
 import org.eclipse.emf.ecp.view.rule.model.RulePackage;
+import org.eclipse.emf.ecp.view.spi.model.impl.VAttachmentImpl;
 
 /**
  * <!-- begin-user-doc -->

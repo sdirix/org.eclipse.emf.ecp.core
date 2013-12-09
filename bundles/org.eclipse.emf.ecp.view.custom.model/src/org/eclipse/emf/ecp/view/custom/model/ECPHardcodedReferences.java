@@ -13,7 +13,7 @@ package org.eclipse.emf.ecp.view.custom.model;
 
 import java.util.Set;
 
-import org.eclipse.emf.ecp.view.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 
 /**
  * A class implementing {@link ECPHardcodedReferences} indicates, that it provides the set of the

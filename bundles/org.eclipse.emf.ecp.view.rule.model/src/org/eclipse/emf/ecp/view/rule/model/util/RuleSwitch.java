@@ -14,7 +14,6 @@ package org.eclipse.emf.ecp.view.rule.model.util;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
-import org.eclipse.emf.ecp.view.model.VAttachment;
 import org.eclipse.emf.ecp.view.rule.model.AndCondition;
 import org.eclipse.emf.ecp.view.rule.model.Condition;
 import org.eclipse.emf.ecp.view.rule.model.EnableRule;
@@ -23,6 +22,7 @@ import org.eclipse.emf.ecp.view.rule.model.OrCondition;
 import org.eclipse.emf.ecp.view.rule.model.Rule;
 import org.eclipse.emf.ecp.view.rule.model.RulePackage;
 import org.eclipse.emf.ecp.view.rule.model.ShowRule;
+import org.eclipse.emf.ecp.view.spi.model.VAttachment;
 
 /**
  * <!-- begin-user-doc -->

@@ -21,7 +21,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecp.view.model.impl.VFeaturePathDomainModelReferenceImpl;
+import org.eclipse.emf.ecp.view.spi.model.impl.VFeaturePathDomainModelReferenceImpl;
 import org.eclipse.emf.ecp.view.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.table.model.VTablePackage;
@@ -123,7 +123,7 @@ public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.model.impl.VFeaturePathDomainModelReferenceImpl#getEStructuralFeatureIterator()
+	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VFeaturePathDomainModelReferenceImpl#getEStructuralFeatureIterator()
 	 */
 	@Override
 	public Iterator<EStructuralFeature> getEStructuralFeatureIterator() {

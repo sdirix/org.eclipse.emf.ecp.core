@@ -26,10 +26,10 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecp.view.model.VControl;
-import org.eclipse.emf.ecp.view.model.VDomainModelReference;
-import org.eclipse.emf.ecp.view.model.VElement;
-import org.eclipse.emf.ecp.view.model.VViewFactory;
+import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 
 /**
  * This registry maps eObjects in a domain model to their corresponding renderables.
@@ -76,7 +76,7 @@ public class ValidationRegistry {
 	 * This method walks down the containment tree of the renderable and collects the EObject to Control mapping.
 	 * All renderables are added to the {@link #processedRenderables} set, which contains all {@link VElement
 	 * Renderables} which were parsed.
-	 * Furthermore this method adds a default {@link org.eclipse.emf.ecp.view.model.VDiagnostic VDiagnostic} to each
+	 * Furthermore this method adds a default {@link org.eclipse.emf.ecp.view.spi.model.VDiagnostic VDiagnostic} to each
 	 * {@link VElement} if it was not set before.
 	 * 3 cases are differentiated:
 	 * <ul>
