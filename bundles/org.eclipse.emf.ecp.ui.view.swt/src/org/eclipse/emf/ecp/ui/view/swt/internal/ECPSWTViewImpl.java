@@ -12,7 +12,7 @@
 package org.eclipse.emf.ecp.ui.view.swt.internal;
 
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
-import org.eclipse.emf.ecp.view.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 

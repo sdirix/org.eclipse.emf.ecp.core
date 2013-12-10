@@ -21,8 +21,8 @@ import java.util.List;
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.view.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
@@ -70,7 +70,7 @@ public class ValidationProviderTest {
 		final PowerBlock powerBlock = TestFactory.eINSTANCE.createPowerBlock();
 		// powerBlock.setName("powerblock");
 		computer.setPowerBlock(powerBlock);
-		final ViewModelContext vmc = new ViewModelContextImpl(view, computer);
+		final ViewModelContext vmc = ViewModelContextFactory.INSTANCE.createViewModelContext(view, computer);
 		validationService = vmc.getService(ValidationService.class);
 
 	}

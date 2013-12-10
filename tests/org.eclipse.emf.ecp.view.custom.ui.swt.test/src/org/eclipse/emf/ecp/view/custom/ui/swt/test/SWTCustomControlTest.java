@@ -17,7 +17,7 @@ import static org.junit.Assert.assertSame;
 
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.custom.model.VCustomFactory;
 import org.eclipse.emf.ecp.view.spi.custom.model.VHardcodedDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
@@ -141,7 +141,7 @@ public class SWTCustomControlTest {
 		customControl.setDomainModelReference(domainModelReference);
 
 		final Fan domainModel = BowlingFactory.eINSTANCE.createFan();
-		new ViewModelContextImpl(view, domainModel);
+		ViewModelContextFactory.INSTANCE.createViewModelContext(view, domainModel);
 
 		assertNotNull(domainModel.getFavouriteMerchandise());
 	}

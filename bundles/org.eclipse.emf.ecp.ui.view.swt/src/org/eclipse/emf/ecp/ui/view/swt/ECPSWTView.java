@@ -11,7 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.ui.view.swt;
 
-import org.eclipse.emf.ecp.view.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.swt.widgets.Control;
 
 /**

@@ -19,7 +19,8 @@ import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundEx
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.ui.view.swt.internal.SWTRendererFactory;
-import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.swt.layout.FillLayout;
@@ -46,7 +47,7 @@ public final class SWTViewTestHelper {
 
 	public static Control render(VElement renderable, EObject input, Shell shell) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
-		final ViewModelContextImpl viewContext = new ViewModelContextImpl(renderable, input);
+		final ViewModelContext viewContext = ViewModelContextFactory.INSTANCE.createViewModelContext(renderable, input);
 
 		final List<RenderingResultRow<Control>> resultRows = SWTRendererFactory.INSTANCE.render(shell, renderable,
 			viewContext);

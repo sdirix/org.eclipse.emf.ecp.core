@@ -9,7 +9,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.context;
+package org.eclipse.emf.ecp.view.spi.context;
 
 /**
  * The AbstractViewService is a common super type for all View Services. This way the {@link ViewModelContext} is

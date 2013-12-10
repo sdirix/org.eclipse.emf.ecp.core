@@ -38,7 +38,7 @@ import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.custom.model.ECPCustomControlChangeListener;
 import org.eclipse.emf.ecp.view.spi.custom.model.VCustomFactory;
 import org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage;
@@ -95,7 +95,8 @@ public class ECPAbstractCustomControlSWTTest {
 		controlModel.setDomainModelReference(domainModelReference);
 		// customControl.init(ViewTestHelper.createECPControlContext(domainObject,
 		// SWTViewTestHelper.createShell()), null);
-		customControl.init(new ViewModelContextImpl(controlModel, domainObject), controlModel);
+		customControl.init(ViewModelContextFactory.INSTANCE.createViewModelContext(controlModel, domainObject),
+			controlModel);
 		testComposite = new Composite(SWTViewTestHelper.createShell(), SWT.NONE);
 
 		// for (final VDomainModelReference modelReference : allFeatures) {
@@ -309,7 +310,8 @@ public class ECPAbstractCustomControlSWTTest {
 		Diagnostic validate = new Diagnostician().validate(domainObject);
 		// customControl.init(ViewTestHelper.createECPControlContext(domainObject,
 		// SWTViewTestHelper.createShell()), null);
-		customControl.init(new ViewModelContextImpl(controlModel, domainObject), controlModel);
+		customControl.init(ViewModelContextFactory.INSTANCE.createViewModelContext(controlModel, domainObject),
+			controlModel);
 		customControl.createControls(testComposite);
 		customControl.handleValidation(validate.getChildren().get(0));
 		// Check Label, Check Image
@@ -367,7 +369,8 @@ public class ECPAbstractCustomControlSWTTest {
 
 	@Test
 	public void testInit() {
-		customControl.init(new ViewModelContextImpl(controlModel, domainObject), controlModel);
+		customControl.init(ViewModelContextFactory.INSTANCE.createViewModelContext(controlModel, domainObject),
+			controlModel);
 	}
 
 	/**

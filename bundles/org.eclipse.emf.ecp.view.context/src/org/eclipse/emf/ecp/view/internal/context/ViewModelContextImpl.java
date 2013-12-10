@@ -9,7 +9,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.context;
+package org.eclipse.emf.ecp.view.internal.context;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -26,7 +26,9 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EContentAdapter;
-import org.eclipse.emf.ecp.view.context.internal.Activator;
+import org.eclipse.emf.ecp.view.spi.context.ModelChangeNotification;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.util.ViewModelUtil;
 
@@ -36,6 +38,12 @@ import org.eclipse.emf.ecp.view.spi.model.util.ViewModelUtil;
  * @author Eugen Neufeld
  */
 public class ViewModelContextImpl implements ViewModelContext {
+
+	private static final String NO_VIEW_SERVICE_OF_TYPE_FOUND = "No view service of type '%1$s' found."; //$NON-NLS-1$
+
+	private static final String MODEL_CHANGE_LISTENER_MUST_NOT_BE_NULL = "ModelChangeListener must not be null."; //$NON-NLS-1$
+
+	private static final String THE_VIEW_MODEL_CONTEXT_WAS_ALREADY_DISPOSED = "The ViewModelContext was already disposed."; //$NON-NLS-1$
 
 	/** The view. */
 	private final VElement view;
@@ -92,6 +100,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 	 * 
 	 * @param view the view
 	 * @param domainObject the domain object
+	 * @param modelServices an array of services to use in the {@link ViewModelContext}
 	 */
 	public ViewModelContextImpl(VElement view, EObject domainObject, ViewModelService... modelServices) {
 		this.view = view;
@@ -114,8 +123,6 @@ public class ViewModelContextImpl implements ViewModelContext {
 
 		view.eAdapters().add(viewModelContentAdapter);
 
-		// TODO extract contentadapter into shared class for both models
-
 		domainModelContentAdapter = new DomainModelContentAdapter();
 		domainObject.eAdapters().add(domainModelContentAdapter);
 
@@ -135,11 +142,11 @@ public class ViewModelContextImpl implements ViewModelContext {
 		if (extensionRegistry == null) {
 			return;
 		}
-		final IConfigurationElement[] controls = extensionRegistry.getConfigurationElementsFor(
-			"org.eclipse.emf.ecp.view.context.viewServices");
+		final IConfigurationElement[] controls = extensionRegistry
+			.getConfigurationElementsFor("org.eclipse.emf.ecp.view.context.viewServices"); //$NON-NLS-1$
 		for (final IConfigurationElement e : controls) {
 			try {
-				final ViewModelService viewService = (ViewModelService) e.createExecutableExtension("class");
+				final ViewModelService viewService = (ViewModelService) e.createExecutableExtension("class"); //$NON-NLS-1$
 				viewServices.add(viewService);
 			} catch (final CoreException e1) {
 				Activator.log(e1);
@@ -150,11 +157,11 @@ public class ViewModelContextImpl implements ViewModelContext {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.context.ViewModelContext#getViewModel()
+	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getViewModel()
 	 */
 	public VElement getViewModel() {
 		if (isDisposed) {
-			throw new IllegalStateException("The ViewModelContext was already disposed.");
+			throw new IllegalStateException(THE_VIEW_MODEL_CONTEXT_WAS_ALREADY_DISPOSED);
 		}
 		return view;
 	}
@@ -162,11 +169,11 @@ public class ViewModelContextImpl implements ViewModelContext {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.context.ViewModelContext#getDomainModel()
+	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getDomainModel()
 	 */
 	public EObject getDomainModel() {
 		if (isDisposed) {
-			throw new IllegalStateException("The ViewModelContext was already disposed.");
+			throw new IllegalStateException(THE_VIEW_MODEL_CONTEXT_WAS_ALREADY_DISPOSED);
 		}
 		return domainObject;
 	}
@@ -194,14 +201,14 @@ public class ViewModelContextImpl implements ViewModelContext {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.context.ViewModelContext#registerViewChangeListener(org.eclipse.emf.ecp.view.context.ViewModelContext.ModelChangeListener)
+	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#registerViewChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener)
 	 */
 	public void registerViewChangeListener(ModelChangeListener modelChangeListener) {
 		if (isDisposed) {
-			throw new IllegalStateException("The ViewModelContext was already disposed.");
+			throw new IllegalStateException(THE_VIEW_MODEL_CONTEXT_WAS_ALREADY_DISPOSED);
 		}
 		if (modelChangeListener == null) {
-			throw new IllegalArgumentException("ModelChangeListener must not be null.");
+			throw new IllegalArgumentException(MODEL_CHANGE_LISTENER_MUST_NOT_BE_NULL);
 		}
 		viewModelChangeListener.add(modelChangeListener);
 	}
@@ -209,7 +216,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.context.ViewModelContext#unregisterViewChangeListener(org.eclipse.emf.ecp.view.context.ViewModelContext.ModelChangeListener)
+	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#unregisterViewChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener)
 	 */
 	public void unregisterViewChangeListener(ModelChangeListener modelChangeListener) {
 		// if (isDisposed) {
@@ -221,14 +228,14 @@ public class ViewModelContextImpl implements ViewModelContext {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.context.ViewModelContext#registerDomainChangeListener(org.eclipse.emf.ecp.view.context.ViewModelContext.ModelChangeListener)
+	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#registerDomainChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener)
 	 */
 	public void registerDomainChangeListener(ModelChangeListener modelChangeListener) {
 		if (isDisposed) {
-			throw new IllegalStateException("The ViewModelContext was already disposed.");
+			throw new IllegalStateException(THE_VIEW_MODEL_CONTEXT_WAS_ALREADY_DISPOSED);
 		}
 		if (modelChangeListener == null) {
-			throw new IllegalArgumentException("ModelChangeListener must not be null.");
+			throw new IllegalArgumentException(MODEL_CHANGE_LISTENER_MUST_NOT_BE_NULL);
 		}
 		domainModelChangeListener.add(modelChangeListener);
 	}
@@ -236,7 +243,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.context.ViewModelContext#unregisterDomainChangeListener(org.eclipse.emf.ecp.view.context.ViewModelContext.ModelChangeListener)
+	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#unregisterDomainChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener)
 	 */
 	public void unregisterDomainChangeListener(ModelChangeListener modelChangeListener) {
 		// if (isDisposed) {
@@ -248,7 +255,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.context.ViewModelContext#hasService(java.lang.Class)
+	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#hasService(java.lang.Class)
 	 */
 	public <T> boolean hasService(Class<T> serviceType) {
 		for (final ViewModelService service : viewServices) {
@@ -262,7 +269,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.context.ViewModelContext#getService(java.lang.Class)
+	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getService(java.lang.Class)
 	 */
 	@SuppressWarnings("unchecked")
 	public <T> T getService(Class<T> serviceType) {
@@ -271,8 +278,9 @@ public class ViewModelContextImpl implements ViewModelContext {
 				return (T) service;
 			}
 		}
-		Activator.log(new IllegalArgumentException("No view service of type " + serviceType.getCanonicalName()
-			+ " found"));
+
+		Activator.log(new IllegalArgumentException(String.format(NO_VIEW_SERVICE_OF_TYPE_FOUND,
+			serviceType.getCanonicalName())));
 		return null;
 	}
 

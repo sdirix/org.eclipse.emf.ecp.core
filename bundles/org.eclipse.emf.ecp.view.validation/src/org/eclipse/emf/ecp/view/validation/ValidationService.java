@@ -33,10 +33,10 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecp.view.context.ModelChangeNotification;
-import org.eclipse.emf.ecp.view.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.context.ViewModelContext.ModelChangeListener;
-import org.eclipse.emf.ecp.view.context.ViewModelService;
+import org.eclipse.emf.ecp.view.spi.context.ModelChangeNotification;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
@@ -94,7 +94,7 @@ public class ValidationService implements ViewModelService {
 		 * 
 		 * {@inheritDoc}
 		 * 
-		 * @see org.eclipse.emf.ecp.view.context.ViewModelContext.ModelChangeListener#notifyChange(org.eclipse.emf.ecp.view.context.ModelChangeNotification)
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener#notifyChange(org.eclipse.emf.ecp.view.spi.context.ModelChangeNotification)
 		 */
 		public void notifyChange(ModelChangeNotification notification) {
 			// do nothing for now, not supported
@@ -130,7 +130,7 @@ public class ValidationService implements ViewModelService {
 		 * 
 		 * {@inheritDoc}
 		 * 
-		 * @see org.eclipse.emf.ecp.view.context.ViewModelContext.ModelChangeListener#notifyAdd(org.eclipse.emf.common.notify.Notifier)
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener#notifyAdd(org.eclipse.emf.common.notify.Notifier)
 		 */
 		public void notifyAdd(Notifier notifier) {
 			if (VElement.class.isInstance(notifier)) {
@@ -151,7 +151,7 @@ public class ValidationService implements ViewModelService {
 		 * 
 		 * {@inheritDoc}
 		 * 
-		 * @see org.eclipse.emf.ecp.view.context.ViewModelContext.ModelChangeListener#notifyRemove(org.eclipse.emf.common.notify.Notifier)
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener#notifyRemove(org.eclipse.emf.common.notify.Notifier)
 		 */
 		public void notifyRemove(Notifier notifier) {
 			if (VElement.class.isInstance(notifier)) {
@@ -183,7 +183,7 @@ public class ValidationService implements ViewModelService {
 		 * 
 		 * {@inheritDoc}
 		 * 
-		 * @see org.eclipse.emf.ecp.view.context.ViewModelContext.ModelChangeListener#notifyChange(org.eclipse.emf.ecp.view.context.ModelChangeNotification)
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener#notifyChange(org.eclipse.emf.ecp.view.spi.context.ModelChangeNotification)
 		 */
 		public void notifyChange(ModelChangeNotification notification) {
 			if (viewValidationGraph == null) {
@@ -214,7 +214,7 @@ public class ValidationService implements ViewModelService {
 		 * 
 		 * {@inheritDoc}
 		 * 
-		 * @see org.eclipse.emf.ecp.view.context.ViewModelContext.ModelChangeListener#notifyAdd(org.eclipse.emf.common.notify.Notifier)
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener#notifyAdd(org.eclipse.emf.common.notify.Notifier)
 		 */
 		public void notifyAdd(Notifier notifier) {
 			// maybe null while init
@@ -227,7 +227,7 @@ public class ValidationService implements ViewModelService {
 		 * 
 		 * {@inheritDoc}
 		 * 
-		 * @see org.eclipse.emf.ecp.view.context.ViewModelContext.ModelChangeListener#notifyRemove(org.eclipse.emf.common.notify.Notifier)
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener#notifyRemove(org.eclipse.emf.common.notify.Notifier)
 		 */
 		public void notifyRemove(Notifier notifier) {
 			final EObject eObject = (EObject) notifier;
@@ -239,7 +239,7 @@ public class ValidationService implements ViewModelService {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.context.ViewModelService#instantiate(org.eclipse.emf.ecp.view.context.ViewModelContext)
+	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#instantiate(org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
 	public void instantiate(final ViewModelContext context) {
 		this.context = context;
@@ -359,7 +359,7 @@ public class ValidationService implements ViewModelService {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.context.ViewModelService#dispose()
+	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#dispose()
 	 */
 	public void dispose() {
 		context.unregisterDomainChangeListener(domainChangeListener);
@@ -391,7 +391,7 @@ public class ValidationService implements ViewModelService {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.context.ViewModelService#getPriority()
+	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#getPriority()
 	 */
 	public int getPriority() {
 		return 3;

@@ -20,7 +20,7 @@ import java.util.List;
 
 import org.eclipse.emf.ecp.edit.internal.swt.util.DoubleColumnRow;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
-import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.custom.model.VCustomFactory;
 import org.eclipse.emf.ecp.view.spi.custom.model.VHardcodedDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
@@ -67,7 +67,7 @@ public class CustomControlTwoRowWithViewerTest {
 		control.setDomainModelReference(hardcodedDomainModelRef);
 
 		customControl = new CustomControlStub3();
-		customControl.init(new ViewModelContextImpl(control, league), control);
+		customControl.init(ViewModelContextFactory.INSTANCE.createViewModelContext(control, league), control);
 		parent = new Composite(SWTViewTestHelper.createShell(), SWT.NONE);
 
 		// for (final VDomainModelReference modelReference : customControl.getNeededDomainModelReferences()) {

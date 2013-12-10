@@ -9,7 +9,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.context;
+package org.eclipse.emf.ecp.view.spi.context;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 
 /**
  * The Class ModelChangeNotification.
+ * Such a notification is issued by the {@link ViewModelContext} when a change in the domain or the view model occurs.
  * 
  * @author Eugen Neufeld
  */

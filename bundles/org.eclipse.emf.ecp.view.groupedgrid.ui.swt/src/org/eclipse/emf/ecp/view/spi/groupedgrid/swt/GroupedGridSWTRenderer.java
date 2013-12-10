@@ -18,7 +18,7 @@ import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.ui.view.swt.internal.AbstractSWTRenderer;
 import org.eclipse.emf.ecp.ui.view.swt.internal.SWTRendererFactory;
-import org.eclipse.emf.ecp.view.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.groupedgrid.model.VGroup;
 import org.eclipse.emf.ecp.view.spi.groupedgrid.model.VGroupedGrid;
 import org.eclipse.emf.ecp.view.spi.groupedgrid.model.VRow;

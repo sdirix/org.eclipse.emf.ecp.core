@@ -24,7 +24,7 @@ import org.eclipse.emf.ecp.internal.ui.view.Activator;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
-import org.eclipse.emf.ecp.view.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -49,7 +49,7 @@ public class SWTControlRenderer extends AbstractSWTRenderer<VControl> {
 	 * {@inheritDoc}
 	 * 
 	 * @see org.eclipse.emf.ecp.ui.view.swt.internal.AbstractSWTRenderer#render(org.eclipse.swt.widgets.Composite,
-	 *      org.eclipse.emf.ecp.view.model.VElement, org.eclipse.emf.ecp.view.context.ViewModelContext)
+	 *      org.eclipse.emf.ecp.view.model.VElement, org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
 	@Override
 	public List<RenderingResultRow<Control>> render(Composite parent, final VControl vControl,
@@ -63,7 +63,7 @@ public class SWTControlRenderer extends AbstractSWTRenderer<VControl> {
 	 * {@inheritDoc}
 	 * 
 	 * @see org.eclipse.emf.ecp.ui.view.swt.internal.AbstractSWTRenderer#renderModel(org.eclipse.swt.widgets.Composite,
-	 *      org.eclipse.emf.ecp.view.model.VElement, org.eclipse.emf.ecp.view.context.ViewModelContext)
+	 *      org.eclipse.emf.ecp.view.model.VElement, org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
 	@Override
 	protected List<RenderingResultRow<Control>> renderModel(Composite parent, VControl vControl,
