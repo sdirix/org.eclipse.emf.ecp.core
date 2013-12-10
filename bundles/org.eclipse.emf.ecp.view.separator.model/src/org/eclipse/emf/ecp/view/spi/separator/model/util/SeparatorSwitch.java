@@ -16,7 +16,6 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
-import org.eclipse.emf.ecp.view.spi.separator.model.*;
 import org.eclipse.emf.ecp.view.spi.separator.model.VSeparator;
 import org.eclipse.emf.ecp.view.spi.separator.model.VSeparatorPackage;
 

@@ -24,7 +24,6 @@ import org.eclipse.emf.ecp.view.dynamictree.model.ModelPackage;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationFactory;
 import org.eclipse.emf.ecp.view.spi.categorization.model.provider.CategorizableElementItemProvider;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
-import org.eclipse.emf.ecp.view.spi.model.provider.ElementItemProvider;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;

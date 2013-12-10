@@ -17,7 +17,6 @@ import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
-import org.eclipse.emf.ecp.view.spi.separator.model.*;
 import org.eclipse.emf.ecp.view.spi.separator.model.VSeparator;
 import org.eclipse.emf.ecp.view.spi.separator.model.VSeparatorPackage;
 
