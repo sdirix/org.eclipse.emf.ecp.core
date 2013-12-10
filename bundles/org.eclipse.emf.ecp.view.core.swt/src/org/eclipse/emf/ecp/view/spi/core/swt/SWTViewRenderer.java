@@ -11,7 +11,7 @@
  * Eugen Neufeld - Refactoring
  * Johannes Falterimeier - Refactoring
  ******************************************************************************/
-package org.eclipse.emf.ecp.ui.view.swt.internal;
+package org.eclipse.emf.ecp.view.spi.core.swt;
 
 import java.util.List;
 
@@ -22,6 +22,9 @@ import org.eclipse.emf.ecp.edit.internal.swt.util.SingleColumnRow;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
+import org.eclipse.emf.ecp.ui.view.swt.internal.AbstractSWTRenderer;
+import org.eclipse.emf.ecp.ui.view.swt.internal.Activator;
+import org.eclipse.emf.ecp.ui.view.swt.internal.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
@@ -31,7 +34,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class SWTViewRenderer.
  */

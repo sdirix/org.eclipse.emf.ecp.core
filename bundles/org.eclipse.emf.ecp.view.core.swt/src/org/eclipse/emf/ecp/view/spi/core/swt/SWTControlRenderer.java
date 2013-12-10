@@ -10,7 +10,7 @@
  * Edagr Mueller - initial API and implementation
  * Eugen Neufeld - Refactoring
  ******************************************************************************/
-package org.eclipse.emf.ecp.ui.view.swt.internal;
+package org.eclipse.emf.ecp.view.spi.core.swt;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +24,7 @@ import org.eclipse.emf.ecp.internal.ui.view.Activator;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
+import org.eclipse.emf.ecp.ui.view.swt.internal.AbstractSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
@@ -63,7 +64,7 @@ public class SWTControlRenderer extends AbstractSWTRenderer<VControl> {
 	 * {@inheritDoc}
 	 * 
 	 * @see org.eclipse.emf.ecp.ui.view.swt.internal.AbstractSWTRenderer#renderModel(org.eclipse.swt.widgets.Composite,
-	 *      org.eclipse.emf.ecp.view.model.VElement, org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
+	 *      org.eclipse.emf.ecp.view.spi.model.VElement, org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
 	@Override
 	protected List<RenderingResultRow<Control>> renderModel(Composite parent, VControl vControl,
