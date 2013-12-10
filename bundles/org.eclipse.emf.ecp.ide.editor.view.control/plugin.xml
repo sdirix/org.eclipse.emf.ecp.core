@@ -10,7 +10,7 @@
                priority="8"
                singleValue="true"
                supportedClassType="org.eclipse.emf.ecore.EClass"
-               supportedEObject="org.eclipse.emf.ecp.view.model.VView"
+               supportedEObject="org.eclipse.emf.ecp.view.spi.model.VView"
                supportedFeature="rootEClass">
          </staticTest>
       </control>
