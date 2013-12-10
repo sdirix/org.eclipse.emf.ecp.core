@@ -10,9 +10,9 @@
  * Edagr Mueller - initial API and implementation
  * Eugen Neufeld - Refactoring
  ******************************************************************************/
-package org.eclipse.emf.ecp.ui.view.swt.internal;
+package org.eclipse.emf.ecp.view.spi.swt;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.emf.common.notify.Notifier;
@@ -56,8 +56,8 @@ public abstract class AbstractSWTRenderer<R extends VElement> {
 	 * @param vElement the {@link VElement} to render
 	 * @param viewContext the {@link ViewModelContext} to use
 	 * @return a list of {@link RenderingResultRow}
-	 * @throws NoRendererFoundException
-	 * @throws NoPropertyDescriptorFoundExeption
+	 * @throws NoRendererFoundException this is thrown when a renderer cannot be found
+	 * @throws NoPropertyDescriptorFoundExeption this is thrown when no property descriptor can be found
 	 */
 	public List<RenderingResultRow<Control>> render(Composite parent, final R vElement,
 		final ViewModelContext viewContext)
@@ -144,14 +144,16 @@ public abstract class AbstractSWTRenderer<R extends VElement> {
 	 * @param vElement the {@link VElement} to render
 	 * @param viewContext the {@link ViewModelContext} to use
 	 * @return a list of {@link RenderingResultRow}
-	 * @throws NoRendererFoundException
-	 * @throws NoPropertyDescriptorFoundExeption
+	 * @throws NoRendererFoundException this is thrown when a renderer cannot be found
+	 * @throws NoPropertyDescriptorFoundExeption this is thrown when no property descriptor can be found
 	 */
 	protected abstract List<RenderingResultRow<Control>> renderModel(Composite parent, R vElement,
 		ViewModelContext viewContext) throws NoRendererFoundException, NoPropertyDescriptorFoundExeption;
 
 	/**
-	 * @param resultRows
+	 * Using the LayoutHelper this method sets the default layout data for a single or a doublecolumn row.
+	 * 
+	 * @param resultRows the list or {@link RenderingResultRow RenderingResultRows} to set the layout data to
 	 */
 	protected void setLayoutDataForResultRows(final List<RenderingResultRow<Control>> resultRows) {
 		for (final RenderingResultRow<Control> row : resultRows) {
@@ -166,19 +168,23 @@ public abstract class AbstractSWTRenderer<R extends VElement> {
 	}
 
 	/**
-	 * @param categoryComposite
-	 * @param rowFactory
-	 * @return
+	 * Helper Method to create a list containing a single {@link RenderingResultRow} based on the provided list of
+	 * {@link Control Controls}.
+	 * 
+	 * @param controls the list of controls to add into one {@link RenderingResultRow}
+	 * @return a list containing a single {@link RenderingResultRow}
 	 */
 	protected List<RenderingResultRow<Control>> createResult(
 		final Control... controls) {
-		final List<RenderingResultRow<Control>> result = new ArrayList<RenderingResultRow<Control>>();
-
-		result.add(SWTRenderingHelper.INSTANCE.getResultRowFactory()
+		return Collections.singletonList(SWTRenderingHelper.INSTANCE.getResultRowFactory()
 			.createRenderingResultRow(controls));
-		return result;
 	}
 
+	/**
+	 * Return the {@link LayoutHelper} allowing to set layout data manually.
+	 * 
+	 * @return the {@link LayoutHelper}
+	 */
 	protected LayoutHelper<Layout> getLayoutHelper() {
 		return SWTRenderingHelper.INSTANCE.getLayoutHelper();
 	}

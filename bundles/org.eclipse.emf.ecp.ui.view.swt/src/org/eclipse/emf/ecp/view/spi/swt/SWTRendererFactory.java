@@ -10,7 +10,7 @@
  * Edagr Mueller - initial API and implementation
  * Eugen Neufeld - Refactoring
  ******************************************************************************/
-package org.eclipse.emf.ecp.ui.view.swt.internal;
+package org.eclipse.emf.ecp.view.spi.swt;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -94,6 +94,7 @@ public final class SWTRendererFactory {
 
 	}
 
+	@SuppressWarnings("unchecked")
 	private void readCustomRenderers() {
 		final IExtensionPoint extensionPoint = Platform.getExtensionRegistry().getExtensionPoint(
 			"org.eclipse.emf.ecp.ui.view.swt.customSWTRenderers"); //$NON-NLS-1$

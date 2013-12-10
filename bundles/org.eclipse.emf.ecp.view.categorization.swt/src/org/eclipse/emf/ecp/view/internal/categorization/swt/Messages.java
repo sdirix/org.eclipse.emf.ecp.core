@@ -10,7 +10,7 @@
  * Edgar Mueller - initial API and implementation
  * 
  *******************************************************************************/
-package org.eclipse.emf.ecp.ui.view.swt.internal;
+package org.eclipse.emf.ecp.view.internal.categorization.swt;
 
 import org.eclipse.osgi.util.NLS;
 
