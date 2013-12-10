@@ -9,7 +9,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.internal.ui.view.renderer;
+package org.eclipse.emf.ecp.view.spi.renderer;
 
 import java.util.Set;
 

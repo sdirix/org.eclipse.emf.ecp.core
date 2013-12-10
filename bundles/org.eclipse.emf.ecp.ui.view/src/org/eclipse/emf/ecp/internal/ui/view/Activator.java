@@ -30,10 +30,6 @@ public class Activator extends Plugin {
 	// The shared instance
 	private static Activator plugin;
 
-	// TODO: can we reuse the validation service here?
-	// private IValidationServiceProvider validationServiceProvider;
-	// private BundleContext context;
-
 	/**
 	 * The constructor.
 	 */
@@ -84,6 +80,11 @@ public class Activator extends Plugin {
 
 	private ServiceReference<ECPControlFactory> controlFactoryReference;
 
+	/**
+	 * Returns the {@link ECPControlFactory}.
+	 * 
+	 * @return the {@link ECPControlFactory}
+	 */
 	public ECPControlFactory getECPControlFactory() {
 		if (controlFactoryReference == null) {
 			controlFactoryReference = plugin.getBundle().getBundleContext()
@@ -92,6 +93,9 @@ public class Activator extends Plugin {
 		return plugin.getBundle().getBundleContext().getService(controlFactoryReference);
 	}
 
+	/**
+	 * Frees the {@link ECPControlFactory} from use, allowing the OSGi Bundle to be shutdown.
+	 */
 	public void ungetECPControlFactory() {
 		if (controlFactoryReference == null) {
 			return;

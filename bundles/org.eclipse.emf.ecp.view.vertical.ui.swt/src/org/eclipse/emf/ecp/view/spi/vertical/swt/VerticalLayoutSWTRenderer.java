@@ -14,11 +14,11 @@ package org.eclipse.emf.ecp.view.spi.vertical.swt;
 
 import java.util.List;
 
-import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
+import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
+import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
+import org.eclipse.emf.ecp.view.spi.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalLayout;

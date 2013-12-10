@@ -11,7 +11,9 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.ui.view.swt.internal;
 
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Plugin;
+import org.eclipse.core.runtime.Status;
 import org.osgi.framework.BundleContext;
 
 /**
@@ -60,4 +62,15 @@ public class Activator extends Plugin {
 		return plugin;
 	}
 
+	/**
+	 * Logs exception.
+	 * 
+	 * @param e
+	 *            the {@link Exception} to log
+	 */
+	public static void log(Exception e) {
+		getDefault().getLog().log(
+			new Status(IStatus.ERROR, Activator.getDefault().getBundle().getSymbolicName(), e
+				.getMessage(), e));
+	}
 }

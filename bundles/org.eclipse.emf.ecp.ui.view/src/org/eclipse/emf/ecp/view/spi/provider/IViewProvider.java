@@ -10,12 +10,16 @@
  * EclipseSource Muenchen - initial API and implementation
  * 
  *******************************************************************************/
-package org.eclipse.emf.ecp.internal.ui.view;
+package org.eclipse.emf.ecp.view.spi.provider;
 
-import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecp.view.spi.model.VView;
 
-public interface SelectedNodeChangedListener {
+public interface IViewProvider {
 
-	<T extends VElement> void selectionChanged(T selectedRenderable);
+	int NOT_APPLICABLE = -1;
 
+	int canRender(EObject eObject);
+
+	VView generate(EObject eObject);
 }

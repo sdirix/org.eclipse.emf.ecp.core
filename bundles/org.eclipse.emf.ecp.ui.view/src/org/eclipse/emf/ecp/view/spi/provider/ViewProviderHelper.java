@@ -10,7 +10,7 @@
  * EclipseSource Muenchen - initial API and implementation
  * 
  *******************************************************************************/
-package org.eclipse.emf.ecp.internal.ui.view;
+package org.eclipse.emf.ecp.view.spi.provider;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -20,6 +20,7 @@ import java.util.Set;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecp.internal.ui.view.Activator;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.osgi.framework.Bundle;
 

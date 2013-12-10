@@ -9,7 +9,7 @@
  * Contributors:
  * Edgar Mueller - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.internal.ui.view.renderer;
+package org.eclipse.emf.ecp.view.spi.renderer;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;

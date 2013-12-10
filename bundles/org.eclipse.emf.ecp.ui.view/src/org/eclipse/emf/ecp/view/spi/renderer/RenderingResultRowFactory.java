@@ -9,7 +9,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.internal.ui.view.renderer;
+package org.eclipse.emf.ecp.view.spi.renderer;
 
 /**
  * A Factory for creating RenderingResultRow. By providing an own implementation the layout can be extended.

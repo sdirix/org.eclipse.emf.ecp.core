@@ -7,18 +7,21 @@
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- * Edgar Mueller - initial API and implementation
+ * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.internal.ui.view.renderer;
+package org.eclipse.emf.ecp.view.spi.renderer;
 
-import org.eclipse.emf.ecp.ui.view.ECPRendererException;
+/**
+ * @author Eugen Neufeld
+ * 
+ */
+public interface LayoutHelper<LAYOUT> {
 
-public class NoRendererFoundException extends ECPRendererException {
+	LAYOUT getColumnLayout(int numColumns, boolean equalWidth);
 
-	private static final long serialVersionUID = -8540544811118107575L;
+	Object getSpanningLayoutData(int xSpan, int ySpan);
 
-	public NoRendererFoundException(String string) {
-		super(string);
-	}
+	Object getLeftColumnLayoutData();
 
+	Object getRightColumnLayoutData();
 }

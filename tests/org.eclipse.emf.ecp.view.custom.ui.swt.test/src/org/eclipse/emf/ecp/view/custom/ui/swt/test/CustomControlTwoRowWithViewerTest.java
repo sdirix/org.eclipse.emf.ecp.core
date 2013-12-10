@@ -19,12 +19,12 @@ import java.util.Date;
 import java.util.List;
 
 import org.eclipse.emf.ecp.edit.internal.swt.util.DoubleColumnRow;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.custom.model.VCustomFactory;
 import org.eclipse.emf.ecp.view.spi.custom.model.VHardcodedDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
+import org.eclipse.emf.ecp.view.spi.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.view.test.common.swt.DatabindingClassRunner;
 import org.eclipse.emf.ecp.view.test.common.swt.SWTViewTestHelper;
 import org.eclipse.emf.emfstore.bowling.BowlingFactory;
