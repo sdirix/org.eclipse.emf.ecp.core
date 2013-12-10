@@ -4,12 +4,12 @@
    <extension
          point="org.eclipse.emf.ecp.ui.view.swt.renderers">
       <renderer
-            element="org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGrid"
-            renderer="org.eclipse.emf.ecp.view.groupedgrid.ui.swt.internal.GroupedGridSWTRenderer">
+            element="org.eclipse.emf.ecp.view.spi.groupedgrid.model.VGroupedGrid"
+            renderer="org.eclipse.emf.ecp.view.spi.groupedgrid.swt.GroupedGridSWTRenderer">
       </renderer>
       <renderer
-            element="org.eclipse.emf.ecp.view.model.VControl"
-            renderer="org.eclipse.emf.ecp.view.groupedgrid.ui.swt.internal.SWTControlRenderer">
+            element="org.eclipse.emf.ecp.view.spi.model.VControl"
+            renderer="org.eclipse.emf.ecp.view.spi.groupedgrid.swt.SWTControlRenderer">
       </renderer>
    </extension>
 

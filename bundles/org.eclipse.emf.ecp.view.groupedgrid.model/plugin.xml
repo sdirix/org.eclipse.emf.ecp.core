@@ -20,7 +20,7 @@
       <!-- @generated groupedGrid -->
       <package
             uri="http://org/eclipse/emf/ecp/view/groupedgrid/model"
-            class="org.eclipse.emf.ecp.edit.groupedgrid.model.VGroupedGridPackage"
+            class="org.eclipse.emf.ecp.view.spi.groupedgrid.model.VGroupedGridPackage"
             genModel="model/groupedGrid.genmodel"/>
    </extension>
 
