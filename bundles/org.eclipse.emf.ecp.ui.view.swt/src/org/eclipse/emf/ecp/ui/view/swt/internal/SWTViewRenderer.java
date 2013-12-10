@@ -15,6 +15,8 @@ package org.eclipse.emf.ecp.ui.view.swt.internal;
 
 import java.util.List;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecp.edit.internal.swt.util.DoubleColumnRow;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SingleColumnRow;
 import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
@@ -47,7 +49,7 @@ public class SWTViewRenderer extends AbstractSWTRenderer<VView> {
 	@Override
 	protected List<RenderingResultRow<Control>> renderModel(Composite parent, final VView vView,
 		final ViewModelContext viewContext)
-		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		throws NoPropertyDescriptorFoundExeption, NoRendererFoundException {
 
 		final Composite columnComposite = new Composite(parent, SWT.NONE);
 		columnComposite.setBackground(parent.getBackground());
@@ -59,7 +61,11 @@ public class SWTViewRenderer extends AbstractSWTRenderer<VView> {
 			List<RenderingResultRow<Control>> resultRows;
 			try {
 				resultRows = SWTRendererFactory.INSTANCE.render(columnComposite, child, viewContext);
-			} catch (final NoPropertyDescriptorFoundExeption e) {
+			} catch (final NoPropertyDescriptorFoundExeption ex) {
+				Activator.getDefault().getLog().log(new Status(IStatus.INFO, Activator.PLUGIN_ID, ex.getMessage(), ex));
+				continue;
+			} catch (final NoRendererFoundException ex) {
+				Activator.getDefault().getLog().log(new Status(IStatus.INFO, Activator.PLUGIN_ID, ex.getMessage(), ex));
 				continue;
 			}
 
