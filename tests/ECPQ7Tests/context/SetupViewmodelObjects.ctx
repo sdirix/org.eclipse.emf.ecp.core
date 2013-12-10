@@ -7,7 +7,7 @@ Element-Type: context
 Element-Version: 2.0
 Id: _T7Yg8DstEeOHj9Cw0T_k4Q
 Q7-Runtime-Version: 1.3.9.201310250528
-Save-Time: 11/26/13 5:31 PM
+Save-Time: 12/10/13 5:57 PM
 
 ------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998
 Content-Type: text/ecl
@@ -55,6 +55,19 @@ with [get-view "Model Explorer" | get-tree] {
 get-editor Game | get-button "Link Player" | click
 get-window "Select Elements" | get-table | select "Player John" | double-click
 with [get-view "Model Explorer"] {
-    try { get-button "Save Project" | click } -catch{wait 1000 | try { get-button "Save Project" | click } -catch{ wait 1000 | get-button "Save Project" | click }}
+	try {
+		get-tree | select TestProject
+    	get-button "Save Project" | click
+    } -catch {
+    	wait 1000
+    	try {
+    		get-tree | select "TestProject/Tournament Amateur"
+    		get-button "Save Project" | click
+    	} -catch {
+    		wait 1000
+    		get-tree | select TestProject
+    		get-button "Save Project" | click
+    	}
+    }
 }
 ------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998--
