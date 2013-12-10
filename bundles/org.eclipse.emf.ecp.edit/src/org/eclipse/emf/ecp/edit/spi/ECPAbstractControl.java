@@ -33,6 +33,7 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.swt.widgets.Display;
 
 /**
  * The {@link ECPAbstractControl} is the abstract class describing a control.
@@ -340,10 +341,14 @@ public abstract class ECPAbstractControl {
 		if (diagnostic == null) {
 			return;
 		}
-		resetValidation();
-		for (final Object object : diagnostic.getDiagnostics()) {
-			handleValidation((Diagnostic) object);
-		}
+		Display.getDefault().syncExec(new Runnable() {
+			public void run() {
+				resetValidation();
+				for (final Object object : diagnostic.getDiagnostics()) {
+					handleValidation((Diagnostic) object);
+				}
+			}
+		});
 	}
 
 	/**

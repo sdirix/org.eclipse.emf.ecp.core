@@ -16,6 +16,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -42,8 +43,8 @@ public class ViewModelContextImpl implements ViewModelContext {
 	/** The domain object. */
 	private final EObject domainObject;
 
-	/** The view model change listener. */
-	private final List<ModelChangeListener> viewModelChangeListener = new ArrayList<ModelChangeListener>();
+	/** The view model change listener. Needs to be thread safe. */
+	private final List<ModelChangeListener> viewModelChangeListener = new CopyOnWriteArrayList<ModelChangeListener>();
 
 	/** The domain model change listener. */
 	private final List<ModelChangeListener> domainModelChangeListener = new ArrayList<ModelChangeListener>();
