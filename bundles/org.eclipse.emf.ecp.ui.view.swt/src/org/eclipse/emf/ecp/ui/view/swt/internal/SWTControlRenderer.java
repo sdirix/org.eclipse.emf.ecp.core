@@ -48,14 +48,26 @@ public class SWTControlRenderer extends AbstractSWTRenderer<VControl> {
 	/**
 	 * {@inheritDoc}
 	 * 
+	 * @see org.eclipse.emf.ecp.ui.view.swt.internal.AbstractSWTRenderer#render(org.eclipse.swt.widgets.Composite,
+	 *      org.eclipse.emf.ecp.view.model.VElement, org.eclipse.emf.ecp.view.context.ViewModelContext)
+	 */
+	@Override
+	public List<RenderingResultRow<Control>> render(Composite parent, final VControl vControl,
+		final ViewModelContext viewContext)
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+
+		return renderModel(parent, vControl, viewContext);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
 	 * @see org.eclipse.emf.ecp.ui.view.swt.internal.AbstractSWTRenderer#renderModel(org.eclipse.swt.widgets.Composite,
-	 *      org.eclipse.emf.ecp.view.spi.model.VElement, org.eclipse.emf.ecp.view.context.ViewModelContext)
+	 *      org.eclipse.emf.ecp.view.model.VElement, org.eclipse.emf.ecp.view.context.ViewModelContext)
 	 */
 	@Override
 	protected List<RenderingResultRow<Control>> renderModel(Composite parent, VControl vControl,
-		ViewModelContext viewContext)
-		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
-
+		ViewModelContext viewContext) throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		final ECPControlFactory controlFactory = Activator.getDefault().getECPControlFactory();
 
 		if (controlFactory == null) {

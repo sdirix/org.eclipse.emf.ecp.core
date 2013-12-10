@@ -59,7 +59,7 @@ public abstract class AbstractSWTRenderer<R extends VElement> {
 	 * @throws NoRendererFoundException
 	 * @throws NoPropertyDescriptorFoundExeption
 	 */
-	public final List<RenderingResultRow<Control>> render(Composite parent, final R vElement,
+	public List<RenderingResultRow<Control>> render(Composite parent, final R vElement,
 		final ViewModelContext viewContext)
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		final List<RenderingResultRow<Control>> result = renderModel(parent, vElement, viewContext);
