@@ -94,6 +94,11 @@
 		<module>../../bundles/org.eclipse.emf.ecp.view.model.generator</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.context</module>
 		<module>../../features/org.eclipse.emf.ecp.view.model.feature</module>
+		
+		<!-- Ecore Support -->
+		<module>../../bundles/org.eclipse.emf.ecp.edit.ecore.swt</module>
+		<module>../../features/org.eclipse.emf.ecp.ecore.feature</module>
+		
 		<!-- Editor controls -->
 		<module>../../bundles/org.eclipse.emf.ecp.ui.view.editor.controls</module>
 		<module>../../features/org.eclipse.emf.ecp.view.model.editor.feature</module>
