@@ -9,7 +9,7 @@
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.validation;
+package org.eclipse.emf.ecp.view.internal.validation;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Plugin;

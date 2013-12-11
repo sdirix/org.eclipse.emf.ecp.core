@@ -10,7 +10,7 @@
  * Johannes Faltermeier - initial API and implementation
  * Edgar Mueller - adoptions in order to avoid memory leaks
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.validation;
+package org.eclipse.emf.ecp.view.internal.validation;
 
 import java.util.ArrayList;
 import java.util.Collection;

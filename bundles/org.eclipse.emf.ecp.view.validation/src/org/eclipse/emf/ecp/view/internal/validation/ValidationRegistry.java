@@ -10,7 +10,7 @@
  * Johannes Faltermeier - initial API and implementation
  * Edgar Mueller - added remove methods to avoid leaks, removed subprocessors
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.validation;
+package org.eclipse.emf.ecp.view.internal.validation;
 
 import java.util.Collections;
 import java.util.Iterator;

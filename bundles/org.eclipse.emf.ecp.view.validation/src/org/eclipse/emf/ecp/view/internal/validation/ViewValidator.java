@@ -10,7 +10,7 @@
  * Johannes Faltermeier - initial API and implementation
  * Edgar Mueller - refactorings for the validation graph
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.validation;
+package org.eclipse.emf.ecp.view.internal.validation;
 
 import java.util.Collection;
 import java.util.Comparator;
