@@ -32,8 +32,6 @@ import org.eclipse.swt.widgets.Control;
  * @author Eugen Neufeld
  * 
  */
-@SuppressWarnings("restriction")
-// TODO no API
 public class HorizontalLayoutSWTRenderer extends AbstractSWTRenderer<VHorizontalLayout> {
 
 	private static final String CONTROL_COLUMN_COMPOSITE = "org_eclipse_emf_ecp_ui_layout_horizontal"; //$NON-NLS-1$

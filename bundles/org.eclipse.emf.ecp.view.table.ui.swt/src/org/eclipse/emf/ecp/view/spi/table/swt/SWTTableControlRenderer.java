@@ -44,7 +44,7 @@ public class SWTTableControlRenderer extends AbstractSWTRenderer<VTableControl> 
 	 * {@inheritDoc}
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#render(org.eclipse.swt.widgets.Composite,
-	 *      org.eclipse.emf.ecp.view.model.VElement, org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
+	 *      org.eclipse.emf.ecp.view.spi.model.VElement, org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
 	@Override
 	public List<RenderingResultRow<Control>> render(Composite parent, final VTableControl vTableControl,

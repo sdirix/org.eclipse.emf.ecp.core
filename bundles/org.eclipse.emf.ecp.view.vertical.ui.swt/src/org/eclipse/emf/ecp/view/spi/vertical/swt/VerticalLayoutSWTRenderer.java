@@ -32,8 +32,6 @@ import org.eclipse.swt.widgets.Control;
  * @author Eugen Neufeld
  * 
  */
-@SuppressWarnings("restriction")
-// TODO no API
 public class VerticalLayoutSWTRenderer extends AbstractSWTRenderer<VVerticalLayout> {
 
 	private static final Object CONTROL_COLUMN = "org_eclipse_emf_ecp_ui_layout_vertical"; //$NON-NLS-1$

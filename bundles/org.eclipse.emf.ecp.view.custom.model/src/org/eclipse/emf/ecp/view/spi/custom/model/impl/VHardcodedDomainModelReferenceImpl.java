@@ -149,12 +149,11 @@ public class VHardcodedDomainModelReferenceImpl extends EObjectImpl implements V
 	 * @generated
 	 */
 	public void setControlId(String newControlId) {
-		final String oldControlId = controlId;
+		String oldControlId = controlId;
 		controlId = newControlId;
-		if (eNotificationRequired()) {
+		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				VCustomPackage.HARDCODED_DOMAIN_MODEL_REFERENCE__CONTROL_ID, oldControlId, controlId));
-		}
 	}
 
 	/**
@@ -188,12 +187,11 @@ public class VHardcodedDomainModelReferenceImpl extends EObjectImpl implements V
 	 * @generated
 	 */
 	public void setControlChecked(boolean newControlChecked) {
-		final boolean oldControlChecked = controlChecked;
+		boolean oldControlChecked = controlChecked;
 		controlChecked = newControlChecked;
-		if (eNotificationRequired()) {
+		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				VCustomPackage.HARDCODED_DOMAIN_MODEL_REFERENCE__CONTROL_CHECKED, oldControlChecked, controlChecked));
-		}
 	}
 
 	/**
@@ -303,14 +301,13 @@ public class VHardcodedDomainModelReferenceImpl extends EObjectImpl implements V
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy()) {
+		if (eIsProxy())
 			return super.toString();
-		}
 
-		final StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (controlId: ");
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (controlId: "); //$NON-NLS-1$
 		result.append(controlId);
-		result.append(", controlChecked: ");
+		result.append(", controlChecked: "); //$NON-NLS-1$
 		result.append(controlChecked);
 		result.append(')');
 		return result.toString();

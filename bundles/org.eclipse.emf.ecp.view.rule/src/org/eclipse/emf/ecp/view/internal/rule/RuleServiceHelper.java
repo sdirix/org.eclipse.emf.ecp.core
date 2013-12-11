@@ -51,6 +51,7 @@ public class RuleServiceHelper implements ViewModelService {
 	 *            the setting
 	 * @param newValue
 	 *            the new value
+	 * @param attribute the {@link EAttribute} to find involved {@link VElement VElements} for
 	 * @param renderableClass
 	 *            the class type that has to be matched. Used for filtering the result set
 	 * @return the involved {@link VElement}s that match the given type {@code T}

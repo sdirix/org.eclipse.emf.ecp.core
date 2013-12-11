@@ -27,8 +27,8 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.view.spi.context.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
 import org.eclipse.emf.ecp.view.spi.model.VAttachment;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.rule.model.Condition;
@@ -44,6 +44,8 @@ import org.eclipse.emf.ecp.view.spi.rule.model.ShowRule;
  */
 public class RuleService implements ViewModelService {
 
+	private static final String DOMAIN_MODEL_NULL_EXCEPTION = "Domain model must not be null."; //$NON-NLS-1$
+	private static final String VIEW_MODEL_NULL_EXCEPTION = "View model must not be null."; //$NON-NLS-1$
 	private ViewModelContext context;
 	private ModelChangeListener domainChangeListener;
 	private ModelChangeListener viewChangeListener;
@@ -122,13 +124,13 @@ public class RuleService implements ViewModelService {
 		context.registerViewChangeListener(viewChangeListener);
 
 		if (view == null) {
-			throw new IllegalStateException("View model must not be null");
+			throw new IllegalStateException(VIEW_MODEL_NULL_EXCEPTION);
 		}
 
 		final EObject domainModel = context.getDomainModel();
 
 		if (domainModel == null) {
-			throw new IllegalStateException("Domain model must not be null");
+			throw new IllegalStateException(DOMAIN_MODEL_NULL_EXCEPTION);
 		}
 
 		init(enableRuleRegistry, EnableRule.class, view, domainModel);

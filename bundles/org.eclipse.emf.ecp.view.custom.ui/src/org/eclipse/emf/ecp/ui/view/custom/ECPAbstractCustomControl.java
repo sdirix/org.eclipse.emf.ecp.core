@@ -243,11 +243,11 @@ public abstract class ECPAbstractCustomControl extends ECPAbstractControl implem
 			numElments++;
 		}
 		if (numElments == 0) {
-			throw new IllegalStateException("The VDomainModelReference was not initialised.");
+			throw new IllegalStateException("The VDomainModelReference was not initialised."); //$NON-NLS-1$
 		}
 		else if (numElments > 1) {
 			throw new IllegalStateException(
-				"The VDomainModelReference is ambigous, please use VDomainModelReference which resolve to exactly one setting.");
+				"The VDomainModelReference is ambigous, please use VDomainModelReference which resolve to exactly one setting."); //$NON-NLS-1$
 		}
 		// if (!isEditable()) {
 		// throw new IllegalArgumentException("Feature is not registered as editable");
@@ -269,14 +269,14 @@ public abstract class ECPAbstractCustomControl extends ECPAbstractControl implem
 
 	private String getHelp(VDomainModelReference domainModelReference) {
 		if (!getResolvedDomainModelReferences().contains(domainModelReference)) {
-			throw new IllegalArgumentException("The feature must have been registered before!");
+			throw new IllegalArgumentException("The feature must have been registered before!"); //$NON-NLS-1$
 		}
 		return getItemPropertyDescriptor(domainModelReference).getDescription(null);
 	}
 
 	private String getLabel(VDomainModelReference domainModelReference) {
 		if (!getResolvedDomainModelReferences().contains(domainModelReference)) {
-			throw new IllegalArgumentException("The feature must have been registered before!");
+			throw new IllegalArgumentException("The feature must have been registered before!"); //$NON-NLS-1$
 		}
 		return getItemPropertyDescriptor(domainModelReference).getDisplayName(null);
 	}
