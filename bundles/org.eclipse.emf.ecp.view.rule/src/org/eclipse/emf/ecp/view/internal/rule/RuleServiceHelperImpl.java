@@ -23,16 +23,17 @@ import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.spi.rule.RuleServiceHelper;
 
 /**
  * @author emueller
  * 
  */
-public class RuleServiceHelper implements ViewModelService {
+public class RuleServiceHelperImpl implements ViewModelService, RuleServiceHelper {
 
 	/**
 	 * A predicate that is used to determine the set of {@link VElement}s
-	 * if {@link RuleServiceHelper#getInvolvedEObjects(Setting, Object, Class)} is called.
+	 * if {@link RuleServiceHelperImpl#getInvolvedEObjects(Setting, Object, Class)} is called.
 	 */
 	private interface RenderablePredicate {
 		boolean checkCurrentState(VElement renderable);
@@ -41,20 +42,10 @@ public class RuleServiceHelper implements ViewModelService {
 	private ViewModelContext context;
 
 	/**
-	 * Gets the involved {@link org.eclipse.emf.ecore.EObject EObject}s that would be hidden
-	 * or disabled if {@code newValue} would be set.
+	 * {@inheritDoc}
 	 * 
-	 * @param <T>
-	 *            the type of the returned {@link EObject}s
-	 * 
-	 * @param setting
-	 *            the setting
-	 * @param newValue
-	 *            the new value
-	 * @param attribute the {@link EAttribute} to find involved {@link VElement VElements} for
-	 * @param renderableClass
-	 *            the class type that has to be matched. Used for filtering the result set
-	 * @return the involved {@link VElement}s that match the given type {@code T}
+	 * @see org.eclipse.emf.ecp.view.spi.rule.RuleServiceHelper#getInvolvedEObjects(org.eclipse.emf.ecore.EStructuralFeature.Setting,
+	 *      java.lang.Object, org.eclipse.emf.ecore.EAttribute, java.lang.Class)
 	 */
 	public <T extends VElement> Set<T> getInvolvedEObjects(Setting setting, Object newValue, EAttribute attribute,
 		Class<T> renderableClass) {
@@ -99,18 +90,10 @@ public class RuleServiceHelper implements ViewModelService {
 	}
 
 	/**
-	 * Gets the involved {@link org.eclipse.emf.ecore.EObject EObject}s that would be hidden
-	 * or disabled if {@code possibleNewValues} would be set.
+	 * {@inheritDoc}
 	 * 
-	 * @param <T>
-	 *            the type of the returned {@link EObject}s
-	 * 
-	 * @param possibleNewValues
-	 *            a mapping of settings to their would-be new value
-	 * @param renderableClass
-	 *            the class type that has to be matched. Used for filtering the result set
-	 * @param changedAttribute the attribute that was changed
-	 * @return the involved {@link VElement}s that match the given type {@code T}
+	 * @see org.eclipse.emf.ecp.view.spi.rule.RuleServiceHelper#getInvolvedEObjects(java.util.Map,
+	 *      org.eclipse.emf.ecore.EAttribute, java.lang.Class)
 	 */
 	public <T extends VElement> Set<T> getInvolvedEObjects(Map<Setting, Object> possibleNewValues,
 		EAttribute changedAttribute,

@@ -30,7 +30,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.impl.BasicEObjectImpl;
 import org.eclipse.emf.ecp.view.internal.rule.RuleService;
-import org.eclipse.emf.ecp.view.internal.rule.RuleServiceHelper;
+import org.eclipse.emf.ecp.view.internal.rule.RuleServiceHelperImpl;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.model.VAttachment;
@@ -39,6 +39,7 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
+import org.eclipse.emf.ecp.view.spi.rule.RuleServiceHelper;
 import org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition;
 import org.eclipse.emf.ecp.view.spi.rule.model.Rule;
 import org.eclipse.emf.ecp.view.spi.rule.model.RuleFactory;
@@ -217,7 +218,7 @@ public class RuleServiceTest extends CommonRuleTest {
 	 */
 	private RuleService instantiateRuleService(final EObject domainModel) {
 		final RuleService ruleService = new RuleService();
-		final RuleServiceHelper ruleServiceHelper = new RuleServiceHelper();
+		final RuleServiceHelperImpl ruleServiceHelper = new RuleServiceHelperImpl();
 		context = ViewModelContextFactory.INSTANCE.createViewModelContext(view, domainModel);
 		ruleService.instantiate(context);
 		ruleServiceHelper.instantiate(context);

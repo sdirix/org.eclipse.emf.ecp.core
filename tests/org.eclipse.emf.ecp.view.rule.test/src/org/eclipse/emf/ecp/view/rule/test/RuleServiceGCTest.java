@@ -16,7 +16,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.internal.rule.RuleService;
-import org.eclipse.emf.ecp.view.internal.rule.RuleServiceHelper;
+import org.eclipse.emf.ecp.view.internal.rule.RuleServiceHelperImpl;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
@@ -85,7 +85,7 @@ public class RuleServiceGCTest extends CommonRuleTest {
 	 */
 	private RuleService instantiateRuleService(VView view, final EObject domainModel) {
 		final RuleService ruleService = new RuleService();
-		final RuleServiceHelper ruleServiceHelper = new RuleServiceHelper();
+		final RuleServiceHelperImpl ruleServiceHelper = new RuleServiceHelperImpl();
 		context = ViewModelContextFactory.INSTANCE.createViewModelContext(view, domainModel);
 		ruleService.instantiate(context);
 		ruleServiceHelper.instantiate(context);

@@ -20,7 +20,7 @@ import java.math.BigDecimal;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.internal.rule.RuleService;
-import org.eclipse.emf.ecp.view.internal.rule.RuleServiceHelper;
+import org.eclipse.emf.ecp.view.internal.rule.RuleServiceHelperImpl;
 import org.eclipse.emf.ecp.view.internal.unset.UnsetService;
 import org.eclipse.emf.ecp.view.rule.test.CommonRuleTest;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
@@ -147,7 +147,7 @@ public class UnsetRuleIntegrationTest extends CommonRuleTest {
 		unsetService.instantiate(context);
 
 		final RuleService ruleService = new RuleService();
-		final RuleServiceHelper ruleServiceHelper = new RuleServiceHelper();
+		final RuleServiceHelperImpl ruleServiceHelper = new RuleServiceHelperImpl();
 		ruleService.instantiate(context);
 		ruleServiceHelper.instantiate(context);
 	}
