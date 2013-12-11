@@ -12,7 +12,6 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.swt;
 
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +23,7 @@ import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.InvalidRegistryObjectException;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.emf.ecp.internal.ui.view.Activator;
+import org.eclipse.emf.ecp.view.internal.swt.Activator;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
@@ -130,7 +129,7 @@ public final class SWTRendererFactory {
 		NoPropertyDescriptorFoundExeption {
 		final AbstractSWTRenderer<VElement> renderer = rendererMapping.get(vElement.getClass().getInterfaces()[0]);
 		if (renderer == null) {
-			return Collections.emptyList();
+			throw new NoRendererFoundException(vElement);
 		}
 		return renderer.render(parent, vElement, viewContext);
 	}

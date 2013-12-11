@@ -9,7 +9,7 @@
  * Contributors:
  * Edagr Mueller - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.ui.view.swt.internal;
+package org.eclipse.emf.ecp.view.internal.swt;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Plugin;

@@ -20,7 +20,7 @@ import org.eclipse.emf.ecp.edit.internal.swt.util.ECPControlSWT;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTRenderingHelper;
 import org.eclipse.emf.ecp.edit.spi.ECPAbstractControl;
 import org.eclipse.emf.ecp.edit.spi.ECPControlFactory;
-import org.eclipse.emf.ecp.internal.ui.view.Activator;
+import org.eclipse.emf.ecp.view.internal.ui.Activator;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.VControl;

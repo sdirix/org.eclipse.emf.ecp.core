@@ -9,7 +9,7 @@
  * Contributors:
  * Jonas - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.ui.view.swt.internal;
+package org.eclipse.emf.ecp.view.internal.swt;
 
 import java.util.List;
 

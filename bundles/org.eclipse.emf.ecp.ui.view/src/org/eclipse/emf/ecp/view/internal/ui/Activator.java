@@ -10,7 +10,7 @@
  * EclipseSource Muenchen - initial API and implementation
  * 
  *******************************************************************************/
-package org.eclipse.emf.ecp.internal.ui.view;
+package org.eclipse.emf.ecp.view.internal.ui;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Plugin;

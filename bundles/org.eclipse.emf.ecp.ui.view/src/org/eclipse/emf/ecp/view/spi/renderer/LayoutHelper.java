@@ -12,16 +12,42 @@
 package org.eclipse.emf.ecp.view.spi.renderer;
 
 /**
+ * By providing an own implementation, the layout of the application can be influenced.
+ * 
  * @author Eugen Neufeld
  * 
  */
 public interface LayoutHelper<LAYOUT> {
 
+	/**
+	 * The Layout for aligning controls vertically in columns.
+	 * 
+	 * @param numColumns the number of columns to create
+	 * @param equalWidth whether the columns should be equal width
+	 * @return the layout to use
+	 */
 	LAYOUT getColumnLayout(int numColumns, boolean equalWidth);
 
+	/**
+	 * The Layout data to use to set a spanning on an element.
+	 * 
+	 * @param xSpan the horizontal span
+	 * @param ySpan the vertical span
+	 * @return the layout data to set
+	 */
 	Object getSpanningLayoutData(int xSpan, int ySpan);
 
+	/**
+	 * The Layout data to use to set for a left column.
+	 * 
+	 * @return the layout data to set
+	 */
 	Object getLeftColumnLayoutData();
 
+	/**
+	 * The Layout data to use to set for a right column.
+	 * 
+	 * @return the layout data to set
+	 */
 	Object getRightColumnLayoutData();
 }

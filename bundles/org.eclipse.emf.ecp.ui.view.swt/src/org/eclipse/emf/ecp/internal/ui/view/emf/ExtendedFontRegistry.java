@@ -15,7 +15,7 @@ import java.util.Collection;
 import java.util.HashMap;
 
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecp.ui.view.swt.internal.Activator;
+import org.eclipse.emf.ecp.view.internal.swt.Activator;
 import org.eclipse.emf.edit.provider.IItemFontProvider;
 import org.eclipse.jface.resource.DeviceResourceException;
 import org.eclipse.jface.resource.FontDescriptor;
