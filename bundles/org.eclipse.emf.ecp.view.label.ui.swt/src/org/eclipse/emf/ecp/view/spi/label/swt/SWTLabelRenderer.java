@@ -9,7 +9,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
-package org.eclipse.emf.ecp.view.spi.label.swt.internal;
+package org.eclipse.emf.ecp.view.spi.label.swt;
 
 import java.util.List;
 

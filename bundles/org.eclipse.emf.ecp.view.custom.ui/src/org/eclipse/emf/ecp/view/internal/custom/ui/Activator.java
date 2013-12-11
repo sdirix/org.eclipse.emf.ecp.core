@@ -9,7 +9,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.custom.internal.ui;
+package org.eclipse.emf.ecp.view.internal.custom.ui;
 
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.emf.ecp.edit.spi.ECPControlFactory;

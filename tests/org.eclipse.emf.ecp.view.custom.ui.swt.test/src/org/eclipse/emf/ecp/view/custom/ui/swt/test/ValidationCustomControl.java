@@ -85,7 +85,7 @@ public class ValidationCustomControl extends ECPAbstractCustomControlSWT impleme
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.ui.view.custom.ECPAbstractCustomControl#disposeCustomControl()
+	 * @see org.eclipse.emf.ecp.view.spi.custom.ui.ECPAbstractCustomControl#disposeCustomControl()
 	 */
 	@Override
 	protected void disposeCustomControl() {

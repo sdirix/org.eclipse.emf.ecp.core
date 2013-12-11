@@ -374,7 +374,7 @@ public class ECPAbstractCustomControlSWTTest {
 	}
 
 	/**
-	 * Test method for {@link org.eclipse.emf.ecp.ui.view.custom.ECPAbstractCustomControl#getECPCustomControlFeatures()}
+	 * Test method for {@link org.eclipse.emf.ecp.view.spi.custom.ui.ECPAbstractCustomControl#getECPCustomControlFeatures()}
 	 * .
 	 */
 	@Test
@@ -385,7 +385,7 @@ public class ECPAbstractCustomControlSWTTest {
 	}
 
 	/**
-	 * Test method for {@link org.eclipse.emf.ecp.ui.view.custom.ECPAbstractCustomControl#showLabel()}.
+	 * Test method for {@link org.eclipse.emf.ecp.view.spi.custom.ui.ECPAbstractCustomControl#showLabel()}.
 	 */
 	@Test
 	public void testShowLabel() {
@@ -393,7 +393,7 @@ public class ECPAbstractCustomControlSWTTest {
 	}
 
 	/**
-	 * Test method for {@link org.eclipse.emf.ecp.ui.view.custom.ECPAbstractCustomControl#dispose()}.
+	 * Test method for {@link org.eclipse.emf.ecp.view.spi.custom.ui.ECPAbstractCustomControl#dispose()}.
 	 */
 	@Test
 	public void testDispose() {
@@ -408,7 +408,7 @@ public class ECPAbstractCustomControlSWTTest {
 	}
 
 	/**
-	 * Test method for {@link org.eclipse.emf.ecp.ui.view.custom.ECPAbstractCustomControl#disposeCustomControl()}.
+	 * Test method for {@link org.eclipse.emf.ecp.view.spi.custom.ui.ECPAbstractCustomControl#disposeCustomControl()}.
 	 */
 	@Test
 	public void testDisposeCustomControl() {
@@ -416,7 +416,7 @@ public class ECPAbstractCustomControlSWTTest {
 	}
 
 	/**
-	 * Test method for {@link org.eclipse.emf.ecp.ui.view.custom.ECPAbstractCustomControl#getHelper()}.
+	 * Test method for {@link org.eclipse.emf.ecp.view.spi.custom.ui.ECPAbstractCustomControl#getHelper()}.
 	 */
 	@Test
 	public void testGetHelper() {

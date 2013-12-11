@@ -10,7 +10,7 @@
  * Edagr Mueller - initial API and implementation
  * Eugen Neufeld - Refactoring
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.spi.horizontal.swt.internal;
+package org.eclipse.emf.ecp.view.spi.horizontal.swt;
 
 import java.util.List;
 

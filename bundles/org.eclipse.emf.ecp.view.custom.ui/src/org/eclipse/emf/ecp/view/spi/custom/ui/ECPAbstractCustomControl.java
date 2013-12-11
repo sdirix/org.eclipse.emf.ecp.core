@@ -10,7 +10,7 @@
  * Edagr Mueller - initial API and implementation
  * Eugen Neufeld - Refactoring
  ******************************************************************************/
-package org.eclipse.emf.ecp.ui.view.custom;
+package org.eclipse.emf.ecp.view.spi.custom.ui;
 
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -30,7 +30,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.edit.spi.ECPAbstractControl;
 import org.eclipse.emf.ecp.edit.spi.ECPControlFactory;
-import org.eclipse.emf.ecp.view.custom.internal.ui.Activator;
+import org.eclipse.emf.ecp.view.internal.custom.ui.Activator;
 import org.eclipse.emf.ecp.view.spi.custom.model.ECPCustomControlChangeListener;
 import org.eclipse.emf.ecp.view.spi.custom.model.ECPHardcodedReferences;
 import org.eclipse.emf.ecp.view.spi.custom.model.VHardcodedDomainModelReference;
