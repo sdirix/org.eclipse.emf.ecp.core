@@ -17,6 +17,7 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.edit.internal.swt.util.ECPControlSWT;
+import org.eclipse.emf.ecp.edit.internal.swt.util.SWTRenderingHelper;
 import org.eclipse.emf.ecp.edit.spi.ECPAbstractControl;
 import org.eclipse.emf.ecp.edit.spi.ECPControlFactory;
 import org.eclipse.emf.ecp.view.internal.core.swt.Activator;
@@ -25,7 +26,6 @@ import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.view.spi.renderer.RenderingConfiguration;
 import org.eclipse.emf.ecp.view.spi.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -122,7 +122,7 @@ public class SWTControlRenderer extends AbstractSWTRenderer<VControl> {
 			List<RenderingResultRow<org.eclipse.swt.widgets.Control>> result = new ArrayList<RenderingResultRow<org.eclipse.swt.widgets.Control>>();
 			final Control next = createControls.iterator().next().getControls().iterator().next();
 			if (label != null) {
-				result.add(RenderingConfiguration.getCurrent().getRenderingRowFactory(Control.class)
+				result.add(SWTRenderingHelper.INSTANCE.getResultRowFactory()
 					.createRenderingResultRow(label, next));
 			}
 			else {
