@@ -17,7 +17,6 @@ import java.util.List;
 
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecp.edit.internal.swt.util.DoubleColumnRow;
-import org.eclipse.emf.ecp.edit.internal.swt.util.SWTRenderingHelper;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SingleColumnRow;
 import org.eclipse.emf.ecp.view.spi.context.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
@@ -27,6 +26,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.renderer.LayoutHelper;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
+import org.eclipse.emf.ecp.view.spi.renderer.RenderingConfiguration;
 import org.eclipse.emf.ecp.view.spi.renderer.RenderingResultRow;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
@@ -176,7 +176,7 @@ public abstract class AbstractSWTRenderer<R extends VElement> {
 	 */
 	protected List<RenderingResultRow<Control>> createResult(
 		final Control... controls) {
-		return Collections.singletonList(SWTRenderingHelper.INSTANCE.getResultRowFactory()
+		return Collections.singletonList(RenderingConfiguration.getCurrent().getRenderingRowFactory(Control.class)
 			.createRenderingResultRow(controls));
 	}
 
@@ -186,7 +186,7 @@ public abstract class AbstractSWTRenderer<R extends VElement> {
 	 * @return the {@link LayoutHelper}
 	 */
 	protected LayoutHelper<Layout> getLayoutHelper() {
-		return SWTRenderingHelper.INSTANCE.getLayoutHelper();
+		return RenderingConfiguration.getCurrent().getLayoutHelper(Layout.class);
 	}
 
 }

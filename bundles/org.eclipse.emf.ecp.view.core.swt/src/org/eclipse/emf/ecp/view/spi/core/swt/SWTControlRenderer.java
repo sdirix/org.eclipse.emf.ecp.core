@@ -17,15 +17,15 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.edit.internal.swt.util.ECPControlSWT;
-import org.eclipse.emf.ecp.edit.internal.swt.util.SWTRenderingHelper;
 import org.eclipse.emf.ecp.edit.spi.ECPAbstractControl;
 import org.eclipse.emf.ecp.edit.spi.ECPControlFactory;
-import org.eclipse.emf.ecp.view.internal.ui.Activator;
+import org.eclipse.emf.ecp.view.internal.core.swt.Activator;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
+import org.eclipse.emf.ecp.view.spi.renderer.RenderingConfiguration;
 import org.eclipse.emf.ecp.view.spi.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -50,7 +50,7 @@ public class SWTControlRenderer extends AbstractSWTRenderer<VControl> {
 	 * {@inheritDoc}
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#render(org.eclipse.swt.widgets.Composite,
-	 *      org.eclipse.emf.ecp.view.model.VElement, org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
+	 *      org.eclipse.emf.ecp.view.spi.model.VElement, org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
 	@Override
 	public List<RenderingResultRow<Control>> render(Composite parent, final VControl vControl,
@@ -113,6 +113,7 @@ public class SWTControlRenderer extends AbstractSWTRenderer<VControl> {
 			if (createControls == null) {
 				return null;
 			}
+			// TODO discuss whether to call from here or checked by control
 			control.setEditable(!vControl.isReadonly());
 			if (!vControl.isReadonly()) {
 				control.setEditable(vControl.isEnabled());
@@ -121,7 +122,7 @@ public class SWTControlRenderer extends AbstractSWTRenderer<VControl> {
 			List<RenderingResultRow<org.eclipse.swt.widgets.Control>> result = new ArrayList<RenderingResultRow<org.eclipse.swt.widgets.Control>>();
 			final Control next = createControls.iterator().next().getControls().iterator().next();
 			if (label != null) {
-				result.add(SWTRenderingHelper.INSTANCE.getResultRowFactory()
+				result.add(RenderingConfiguration.getCurrent().getRenderingRowFactory(Control.class)
 					.createRenderingResultRow(label, next));
 			}
 			else {

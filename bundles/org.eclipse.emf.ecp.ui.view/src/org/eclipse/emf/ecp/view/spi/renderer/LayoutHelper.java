@@ -15,7 +15,7 @@ package org.eclipse.emf.ecp.view.spi.renderer;
  * By providing an own implementation, the layout of the application can be influenced.
  * 
  * @author Eugen Neufeld
- * 
+ * @param <LAYOUT> the type of layout object this helper provides.
  */
 public interface LayoutHelper<LAYOUT> {
 

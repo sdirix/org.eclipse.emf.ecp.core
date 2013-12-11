@@ -12,7 +12,9 @@
 package org.eclipse.emf.ecp.view.internal.core.swt;
 
 import org.eclipse.core.runtime.Plugin;
+import org.eclipse.emf.ecp.edit.spi.ECPControlFactory;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 
 /**
  * The activator class controls the plug-in life cycle.
@@ -60,4 +62,29 @@ public class Activator extends Plugin {
 		return plugin;
 	}
 
+	private ServiceReference<ECPControlFactory> controlFactoryReference;
+
+	/**
+	 * Returns the {@link ECPControlFactory}.
+	 * 
+	 * @return the {@link ECPControlFactory}
+	 */
+	public ECPControlFactory getECPControlFactory() {
+		if (controlFactoryReference == null) {
+			controlFactoryReference = plugin.getBundle().getBundleContext()
+				.getServiceReference(ECPControlFactory.class);
+		}
+		return plugin.getBundle().getBundleContext().getService(controlFactoryReference);
+	}
+
+	/**
+	 * Frees the {@link ECPControlFactory} from use, allowing the OSGi Bundle to be shutdown.
+	 */
+	public void ungetECPControlFactory() {
+		if (controlFactoryReference == null) {
+			return;
+		}
+		plugin.getBundle().getBundleContext().ungetService(controlFactoryReference);
+		controlFactoryReference = null;
+	}
 }

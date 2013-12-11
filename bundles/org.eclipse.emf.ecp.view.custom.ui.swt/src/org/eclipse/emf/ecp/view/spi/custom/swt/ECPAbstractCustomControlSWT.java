@@ -153,7 +153,7 @@ public abstract class ECPAbstractCustomControlSWT extends
 	 * 
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.edit.spi.ECPControl#setEditable(boolean)
+	 * @see org.eclipse.emf.ecp.edit.spi.ECPAbstractControl#setEditable(boolean)
 	 */
 	@Override
 	public void setEditable(boolean isEditable) {
@@ -174,7 +174,7 @@ public abstract class ECPAbstractCustomControlSWT extends
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.edit.spi.ECPControl#handleValidation(org.eclipse.emf.common.util.Diagnostic)
+	 * @see org.eclipse.emf.ecp.edit.spi.ECPAbstractControl#handleValidation(org.eclipse.emf.common.util.Diagnostic)
 	 */
 	@Override
 	public final void handleValidation(Diagnostic diagnostic) {
@@ -265,7 +265,7 @@ public abstract class ECPAbstractCustomControlSWT extends
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.edit.spi.ECPControl#resetValidation()
+	 * @see org.eclipse.emf.ecp.edit.spi.ECPAbstractControl#resetValidation()
 	 */
 	@Override
 	public final void resetValidation() {

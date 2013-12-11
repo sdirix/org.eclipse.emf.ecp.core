@@ -26,6 +26,11 @@ public class NoRendererFoundException extends ECPRendererException {
 	private static final long serialVersionUID = -8540544811118107575L;
 	private final VElement vElement;
 
+	/**
+	 * Constructor for an {@link Exception} indicating that a {@link VElement} is missing a renderer.
+	 * 
+	 * @param vElement the {@link VElement} missing a renderer
+	 */
 	public NoRendererFoundException(VElement vElement) {
 		super(String.format(NO_RENDERER_FOUND, vElement.eClass().getName()));
 		this.vElement = vElement;

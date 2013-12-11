@@ -68,11 +68,23 @@ public abstract class ECPAbstractCustomControl extends ECPAbstractControl implem
 		controlFactory = Activator.getECPControlFactory();
 	}
 
+	/**
+	 * Returns a list of all {@link VDomainModelReference VDomainModelReferences} which were already resolved and thus
+	 * can be used for binding etc.
+	 * 
+	 * @return the List of {@link VDomainModelReference VDomainModelReferences}
+	 */
 	protected final List<VDomainModelReference> getResolvedDomainModelReferences() {
 		final VHardcodedDomainModelReference hardcodedDomainModelReference = (VHardcodedDomainModelReference) getDomainModelReference();
 		return hardcodedDomainModelReference.getDomainModelReferences();
 	}
 
+	/**
+	 * Finds the {@link VDomainModelReference} which provides a specific {@link EStructuralFeature}.
+	 * 
+	 * @param feature the {@link EStructuralFeature} to find the {@link VDomainModelReference} for
+	 * @return the {@link VDomainModelReference} or null
+	 */
 	protected final VDomainModelReference getResolvedDomainModelReference(EStructuralFeature feature) {
 		final VHardcodedDomainModelReference hardcodedDomainModelReference = (VHardcodedDomainModelReference) getDomainModelReference();
 		for (final VDomainModelReference domainModelReference : hardcodedDomainModelReference

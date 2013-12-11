@@ -32,6 +32,15 @@ public class NoPropertyDescriptorFoundExeption extends ECPRendererException {
 	private final EObject modelElement;
 	private final EStructuralFeature targetFeature;
 
+	/**
+	 * Constructor for an {@link Exception} which indicates, that no
+	 * {@link org.eclipse.emf.edit.provider.ItemPropertyDescriptor ItemPropertyDescriptor} was found.
+	 * 
+	 * @param modelElement the {@link EObject} the {@link org.eclipse.emf.edit.provider.ItemPropertyDescriptor
+	 *            ItemPropertyDescriptor} was not found for
+	 * @param targetFeature the {@link EStructuralFeature} the
+	 *            {@link org.eclipse.emf.edit.provider.ItemPropertyDescriptor ItemPropertyDescriptor} was not found for
+	 */
 	public NoPropertyDescriptorFoundExeption(EObject modelElement,
 		EStructuralFeature targetFeature) {
 		super(NO_PROPERTY_DESCRIPTOR_FOUND);
@@ -39,10 +48,22 @@ public class NoPropertyDescriptorFoundExeption extends ECPRendererException {
 		this.targetFeature = targetFeature;
 	}
 
+	/**
+	 * The {@link EObject} which has a missing {@link org.eclipse.emf.edit.provider.ItemPropertyDescriptor
+	 * ItemPropertyDescriptor}.
+	 * 
+	 * @return the {@link EObject}
+	 */
 	public EObject getModelElement() {
 		return modelElement;
 	}
 
+	/**
+	 * The {@link EStructuralFeature} which misses a {@link org.eclipse.emf.edit.provider.ItemPropertyDescriptor
+	 * ItemPropertyDescriptor}.
+	 * 
+	 * @return the {@link EStructuralFeature}
+	 */
 	public EStructuralFeature getTargetFeature() {
 		return targetFeature;
 	}

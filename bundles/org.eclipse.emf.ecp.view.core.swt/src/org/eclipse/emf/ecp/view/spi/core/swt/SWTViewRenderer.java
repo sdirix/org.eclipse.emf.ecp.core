@@ -19,7 +19,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecp.edit.internal.swt.util.DoubleColumnRow;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SingleColumnRow;
-import org.eclipse.emf.ecp.view.internal.swt.Activator;
+import org.eclipse.emf.ecp.view.internal.core.swt.Activator;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;

@@ -155,9 +155,9 @@ public class SWTCategorizationElementRenderer extends AbstractSWTRenderer<VCateg
 	 * Configures the passed tree viewer.
 	 * 
 	 * @param treeViewer the {@link TreeViewer} to configure
-	 * @param adapterFactoryItemDelegator the adapter factory item delegator
-	 * @param viewNode the view node
+	 * @param vCategorizationElement the {@link VCategorizationElement}
 	 * @param editorComposite the composite of the editor
+	 * @param viewModelContext the {@link ViewModelContext} to use
 	 */
 	protected void setupTreeViewer(final TreeViewer treeViewer,
 		final VCategorizationElement vCategorizationElement,
@@ -278,7 +278,7 @@ public class SWTCategorizationElementRenderer extends AbstractSWTRenderer<VCateg
 	 * Inits the tree viewer.
 	 * 
 	 * @param treeViewer the tree viewer
-	 * @param viewNode the view node
+	 * @param vCategorizationElement the {@link VCategorizationElement}
 	 */
 	protected void initTreeViewer(final TreeViewer treeViewer, VCategorizationElement vCategorizationElement) {
 
@@ -376,7 +376,6 @@ public class SWTCategorizationElementRenderer extends AbstractSWTRenderer<VCateg
 	 * 
 	 * @param treeViewer the tree viewer
 	 * @param treeSelection the tree selection
-	 * @param modelElement the model element
 	 * @param editors the list of tree editors
 	 */
 	protected void addButtons(final TreeViewer treeViewer, TreeSelection treeSelection,

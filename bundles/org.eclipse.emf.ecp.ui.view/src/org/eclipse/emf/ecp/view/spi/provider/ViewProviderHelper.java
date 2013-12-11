@@ -24,11 +24,25 @@ import org.eclipse.emf.ecp.view.internal.ui.Activator;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.osgi.framework.Bundle;
 
-public class ViewProviderHelper {
+/**
+ * Util class for retrieving a {@link VView} based on an {@link EObject}.
+ * 
+ * @author Eugen Neufeld
+ * 
+ */
+public final class ViewProviderHelper {
+
+	private static final String CLASS_CANNOT_BE_RESOLVED = "%1$s cannot be loaded because bundle %2$s cannot be resolved."; //$NON-NLS-1$
+	private static final String CLASS = "class"; //$NON-NLS-1$
+	private static final String EXTENSION_POINT_ID = "org.eclipse.emf.ecp.ui.view.viewModelProviders"; //$NON-NLS-1$
+
+	private ViewProviderHelper() {
+
+	}
 
 	private static Set<IViewProvider> viewProviders = new HashSet<IViewProvider>();
 
-	public static Set<IViewProvider> getViewProviders() {
+	private static Set<IViewProvider> getViewProviders() {
 		if (viewProviders == null || viewProviders.isEmpty()) {
 			readViewProviders();
 		}
@@ -38,10 +52,10 @@ public class ViewProviderHelper {
 	private static void readViewProviders() {
 		final IConfigurationElement[] controls = Platform.getExtensionRegistry()
 			.getConfigurationElementsFor(
-				"org.eclipse.emf.ecp.ui.view.viewModelProviders");
+				EXTENSION_POINT_ID);
 		for (final IConfigurationElement e : controls) {
 			try {
-				final String clazz = e.getAttribute("class");
+				final String clazz = e.getAttribute(CLASS);
 				final Class<? extends IViewProvider> resolvedClass = loadClass(e
 					.getContributor().getName(), clazz);
 				final Constructor<? extends IViewProvider> controlConstructor = resolvedClass
@@ -73,17 +87,20 @@ public class ViewProviderHelper {
 		throws ClassNotFoundException {
 		final Bundle bundle = Platform.getBundle(bundleName);
 		if (bundle == null) {
-			// TODO externalize strings
-			throw new ClassNotFoundException(clazz
-				+ " cannot be loaded because bundle " + bundleName //$NON-NLS-1$
-				+ " cannot be resolved"); //$NON-NLS-1$
+			throw new ClassNotFoundException(String.format(
+				CLASS_CANNOT_BE_RESOLVED, clazz, bundleName));
 		}
 		return (Class<T>) bundle.loadClass(clazz);
 
 	}
 
 	/**
-	 * @return a view model for the given {@link EObject}
+	 * This allows to retrieve a {@link VView} based on an {@link EObject}. This method reads all {@link IViewProvider
+	 * IViewProviders} and searches for the best fitting. If none can be found, then null is returned.
+	 * .
+	 * 
+	 * @param eObject the {@link EObject} to find a {@link VView} for
+	 * @return a view model for the given {@link EObject} or null if no suited provider could be found
 	 */
 	public static VView getView(EObject eObject) {
 		int highestPrio = IViewProvider.NOT_APPLICABLE;
