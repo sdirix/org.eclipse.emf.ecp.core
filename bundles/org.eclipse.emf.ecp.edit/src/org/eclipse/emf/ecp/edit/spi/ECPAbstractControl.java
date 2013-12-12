@@ -341,7 +341,7 @@ public abstract class ECPAbstractControl {
 		if (diagnostic == null) {
 			return;
 		}
-		Display.getDefault().syncExec(new Runnable() {
+		Display.getDefault().asyncExec(new Runnable() {
 			public void run() {
 				resetValidation();
 				for (final Object object : diagnostic.getDiagnostics()) {
