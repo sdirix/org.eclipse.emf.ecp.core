@@ -1,5 +1,7 @@
 package org.eclipse.emf.ecp.ui.e4.editor;
 
+import javax.inject.Inject;
+
 import org.eclipse.e4.core.contexts.IContextFunction;
 import org.eclipse.e4.ui.internal.workbench.E4Workbench;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
