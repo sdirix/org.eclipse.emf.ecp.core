@@ -4,7 +4,7 @@
     <children xsi:type="basic:PartSashContainer" xmi:id="_AErb0JgUEeKJoJcmiy2C6w" elementId="org.eclipse.emf.ecp.e4.application.partsashcontainer.1" selectedElement="_lM0okJgTEeKJoJcmiy2C6w">
       <children xsi:type="basic:PartSashContainer" xmi:id="_lM0okJgTEeKJoJcmiy2C6w" elementId="org.eclipse.emf.ecp.e4.application.partsashcontainer.0" horizontal="true">
         <children xsi:type="basic:PartStack" xmi:id="_8GAbsJoUEeKJoJcmiy2C6w" elementId="org.eclipse.emf.ecp.e4.application.partstack.2">
-          <children xsi:type="basic:Part" xmi:id="_nOXCgJgTEeKJoJcmiy2C6w" elementId="org.eclipse.emf.ecp.e4.application.part.navigator" contributionURI="bundleclass://org.eclipse.emf.ecp.application.e4/org.eclipse.emf.ecp.e4.view.ECPModelView" label="Model Navigator" closeable="true">
+          <children xsi:type="basic:Part" xmi:id="_nOXCgJgTEeKJoJcmiy2C6w" elementId="org.eclipse.emf.ecp.e4.application.part.navigator" contributionURI="bundleclass://org.eclipse.emf.ecp.ui.e4/org.eclipse.emf.ecp.ui.e4.view.ECPModelView" label="Model Navigator" closeable="true">
             <menus xsi:type="menu:PopupMenu" xmi:id="_dAsF4JgZEeKJoJcmiy2C6w" elementId="org.eclipse.emf.ecp.e4.application.popupmenu.navigator" label="Navigator menu">
               <children xsi:type="menu:HandledMenuItem" xmi:id="_ibQRIJgZEeKJoJcmiy2C6w" elementId="org.eclipse.emf.ecp.e4.application.handledmenuitem.newProject" label="New Project" command="_ogB3AJgZEeKJoJcmiy2C6w"/>
               <children xsi:type="menu:HandledMenuItem" xmi:id="_c1wWwJoSEeKJoJcmiy2C6w" elementId="org.eclipse.emf.ecp.e4.application.handledmenuitem.project.newModelElement" label="New Model Element" command="_StwzEJoSEeKJoJcmiy2C6w"/>
@@ -19,7 +19,7 @@
         </children>
       </children>
       <children xsi:type="basic:PartStack" xmi:id="_wpiYYJoUEeKJoJcmiy2C6w" elementId="org.eclipse.emf.ecp.e4.application.partstack.1">
-        <children xsi:type="basic:Part" xmi:id="_CJd-EJgUEeKJoJcmiy2C6w" elementId="org.eclipse.emf.ecp.e4.application.part.repository" contributionURI="bundleclass://org.eclipse.emf.ecp.application.e4/org.eclipse.emf.ecp.e4.view.ECPRepositoryView" label="Repository View">
+        <children xsi:type="basic:Part" xmi:id="_CJd-EJgUEeKJoJcmiy2C6w" elementId="org.eclipse.emf.ecp.e4.application.part.repository" contributionURI="bundleclass://org.eclipse.emf.ecp.ui.e4/org.eclipse.emf.ecp.ui.e4.view.ECPRepositoryView" label="Repository View">
           <menus xsi:type="menu:PopupMenu" xmi:id="_WzCwgJgcEeKJoJcmiy2C6w" elementId="org.eclipse.emf.ecp.e4.application.popupmenu.repository" label="Repo Popup">
             <children xsi:type="menu:HandledMenuItem" xmi:id="_bKyM0JgcEeKJoJcmiy2C6w" elementId="org.eclipse.emf.ecp.e4.application.handledmenuitem.checkout" label="Checkout" iconURI="platform:/plugin/org.eclipse.emf.ecp.application.e4/icons/sample.gif" command="_eOWrgJgcEeKJoJcmiy2C6w"/>
           </menus>
@@ -44,6 +44,7 @@
   <addons xmi:id="_0JoRA5gREeKJoJcmiy2C6w" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
   <addons xmi:id="_0JoRBJgREeKJoJcmiy2C6w" elementId="org.eclipse.e4.ui.bindings.service" contributionURI="bundleclass://org.eclipse.e4.ui.bindings/org.eclipse.e4.ui.bindings.BindingServiceAddon"/>
   <addons xmi:id="_0JoRBZgREeKJoJcmiy2C6w" elementId="org.eclipse.e4.ui.workbench.commands.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.CommandProcessingAddon"/>
+  <addons xmi:id="_uoddMGdDEeOCMcJ61jhHBQ" elementId="org.eclipse.e4.ui.workbench.commands.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.HandlerProcessingAddon"/>
   <addons xmi:id="_0JoRBpgREeKJoJcmiy2C6w" elementId="org.eclipse.e4.ui.workbench.contexts.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.ContextProcessingAddon"/>
   <addons xmi:id="_0JoRB5gREeKJoJcmiy2C6w" elementId="org.eclipse.e4.ui.workbench.bindings.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench.swt/org.eclipse.e4.ui.workbench.swt.util.BindingProcessingAddon"/>
 </application:Application>

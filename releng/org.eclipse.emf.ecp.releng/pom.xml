@@ -250,6 +250,12 @@
 		<!-- SDK Feature -->
 
 		<module>../../features/org.eclipse.emf.ecp.sdk.feature</module>
+		
+		<!-- e4 demo application -->
+		<module>../../bundles/org.eclipse.emf.ecp.application.e4</module>
+		<module>../../bundles/org.eclipse.emf.ecp.ui.e4</module>
+		<module>../../features/org.eclipse.emf.ecp.e4.feature</module>
+		
 	</modules>
 	<!-- <repositories> <repository> <id>emfstore-repository</id> <layout>p2</layout> 
 		<url>http://hudson.eclipse.org/hudson/job/emf-emfstore-integration-tycho/lastSuccessfulBuild/artifact/git/releng/org.eclipse.emf.emfstore.p2repository/target/repository/</url> 

@@ -9,7 +9,7 @@
     <relativePath>../../releng/org.eclipse.emf.ecp.releng/</relativePath>
   </parent>
   <groupId>org.eclipse.emf.ecp</groupId>
-  <artifactId>org.eclipse.emf.ecp.e3.feature</artifactId>
+  <artifactId>org.eclipse.emf.ecp.e4.feature</artifactId>
   <version>1.1.1-SNAPSHOT</version>
   <packaging>eclipse-feature</packaging>
 </project>
