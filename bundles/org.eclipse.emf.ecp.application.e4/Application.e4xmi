@@ -8,6 +8,7 @@
             <menus xsi:type="menu:PopupMenu" xmi:id="_dAsF4JgZEeKJoJcmiy2C6w" elementId="org.eclipse.emf.ecp.e4.application.popupmenu.navigator" label="Navigator menu">
               <children xsi:type="menu:HandledMenuItem" xmi:id="_ibQRIJgZEeKJoJcmiy2C6w" elementId="org.eclipse.emf.ecp.e4.application.handledmenuitem.newProject" label="New Project" command="_ogB3AJgZEeKJoJcmiy2C6w"/>
               <children xsi:type="menu:HandledMenuItem" xmi:id="_c1wWwJoSEeKJoJcmiy2C6w" elementId="org.eclipse.emf.ecp.e4.application.handledmenuitem.project.newModelElement" label="New Model Element" command="_StwzEJoSEeKJoJcmiy2C6w"/>
+              <children xsi:type="menu:DynamicMenuContribution" xmi:id="_amzu4ErKEeOavfZiWcfdwA" elementId="org.eclipse.emf.ecp.application.e4.childrenDescriptorElements" contributionURI="bundleclass://org.eclipse.emf.ecp.ui.e4/org.eclipse.emf.ecp.e4.view.DynamicCreateChildrenElementsMenuContribution"/>
             </menus>
             <toolbar xmi:id="_uWMcwJoUEeKJoJcmiy2C6w" elementId="org.eclipse.emf.ecp.e4.application.toolbar.0">
               <children xsi:type="menu:HandledToolItem" xmi:id="_CPQPoJrKEeKJoJcmiy2C6w" elementId="org.eclipse.emf.ecp.e4.application.handledtoolitem.1" command="_ogB3AJgZEeKJoJcmiy2C6w"/>
