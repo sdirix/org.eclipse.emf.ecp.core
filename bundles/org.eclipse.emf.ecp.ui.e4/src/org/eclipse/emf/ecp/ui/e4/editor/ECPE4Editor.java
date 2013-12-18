@@ -25,6 +25,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 
 public class ECPE4Editor {
 
@@ -32,14 +33,13 @@ public class ECPE4Editor {
 	private MPart part;
 	private EObject modelElement;
 	private Adapter adapter;
-	private final Composite composite;
-	private final ScrolledComposite sc;
+	private final ScrolledComposite parent;
 
 	@Inject
-	public ECPE4Editor(Composite composite) {
-		this.composite = composite;
-		sc = new ScrolledComposite(composite, SWT.V_SCROLL
+	public ECPE4Editor(Composite composite, Shell shell) {
+		parent = new ScrolledComposite(composite, SWT.V_SCROLL
 			| SWT.H_SCROLL);
+		parent.setBackground(shell.getDisplay().getSystemColor(SWT.COLOR_WHITE));
 	}
 
 	@Inject
@@ -51,12 +51,12 @@ public class ECPE4Editor {
 		this.modelElement = modelElement;
 		ECPSWTView render;
 		try {
-			render = ECPSWTViewRenderer.INSTANCE.render(sc, modelElement);
+			render = ECPSWTViewRenderer.INSTANCE.render(parent, modelElement);
 
-			sc.setExpandHorizontal(true);
-			sc.setExpandVertical(true);
-			sc.setContent(render.getSWTControl());
-			sc.setMinSize(render.getSWTControl().computeSize(SWT.DEFAULT, SWT.DEFAULT));
+			parent.setExpandHorizontal(true);
+			parent.setExpandVertical(true);
+			parent.setContent(render.getSWTControl());
+			parent.setMinSize(render.getSWTControl().computeSize(SWT.DEFAULT, SWT.DEFAULT));
 
 		} catch (final ECPRendererException ex) {
 			ex.printStackTrace();
@@ -104,8 +104,8 @@ public class ECPE4Editor {
 
 	@Focus
 	void setFocus() {
-		if (sc != null) {
-			sc.setFocus();
+		if (parent != null) {
+			parent.setFocus();
 		}
 	}
 }
