@@ -103,5 +103,5 @@
    <category-def name="org.eclipse.emf.ecp.sdk.category" label="SDK"/>
    <category-def name="org.eclipse.emf.ecp.view" label="View Models"/>
    <category-def name="org.eclipse.emf.ecp.view.editor" label="View Model Editor"/>
-   <category-def name="org.eclipse.emf.ecp.e4.category" label="New Category 1"/>
+   <category-def name="org.eclipse.emf.ecp.e4.category" label="ECP E4"/>
 </site>
