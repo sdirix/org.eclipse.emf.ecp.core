@@ -1,7 +1,5 @@
 package org.eclipse.emf.ecp.ui.e4.editor;
 
-import java.net.URL;
-
 import javax.annotation.PreDestroy;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -12,6 +10,7 @@ import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.internal.ui.view.emf.AdapterFactoryLabelProvider;
@@ -98,8 +97,11 @@ public class ECPE4Editor {
 		final IItemLabelProvider itemLabelProvider = (IItemLabelProvider) provider.getAdapterFactory().adapt(
 			modelElement, IItemLabelProvider.class);
 
-		final URL url = (URL) itemLabelProvider.getImage(modelElement);
-		part.setIconURI(url.toString());
+		Object image = itemLabelProvider.getImage(modelElement);
+		if (URI.class.isInstance(image)) {
+			URI uri = (URI) image;
+			part.setIconURI(uri.toString());
+		} 
 	}
 
 	@Focus
