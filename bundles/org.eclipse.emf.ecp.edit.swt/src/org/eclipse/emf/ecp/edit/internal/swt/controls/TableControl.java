@@ -106,7 +106,7 @@ public class TableControl extends SWTControl {
 
 	private static final String FIXED_COLUMNS = "org.eclipse.rap.rwt.fixedColumns"; //$NON-NLS-1$
 
-	private static final String ICON_ADD = "icons/add.png";
+	private static final String ICON_ADD = "icons/add.png"; //$NON-NLS-1$
 
 	private TableViewer tableViewer;
 	private ComposedAdapterFactory composedAdapterFactory;
@@ -565,7 +565,10 @@ public class TableControl extends SWTControl {
 
 	/**
 	 * {@inheritDoc}
+	 * 
+	 * @deprecated
 	 */
+	@Deprecated
 	@Override
 	public void handleValidation(Diagnostic diagnostic) {
 		if (diagnostic.getData().isEmpty()) {
@@ -580,7 +583,10 @@ public class TableControl extends SWTControl {
 
 	/**
 	 * {@inheritDoc}
+	 * 
+	 * @deprecated
 	 */
+	@Deprecated
 	@Override
 	public void resetValidation() {
 		if (validationLabel == null || validationLabel.isDisposed()) {
@@ -592,7 +598,10 @@ public class TableControl extends SWTControl {
 
 	/**
 	 * {@inheritDoc}
+	 * 
+	 * @deprecated
 	 */
+	@Deprecated
 	@Override
 	public void setEditable(boolean isEditable) {
 		if (addButton != null) {
@@ -808,20 +817,22 @@ public class TableControl extends SWTControl {
 	}
 
 	private VDiagnostic getDiagnosticForFeature(EObject domainObject, EStructuralFeature feature) {
-		if (getControl().isReadonly()) {
+		final ValidationService validationService = getViewModelContext().getService(ValidationService.class);
+		if (getControl().isReadonly() || validationService == null) {
 			return null;
 		}
-		final Map<EStructuralFeature, VDiagnostic> diagnosticPerFeature =
-			getViewModelContext().getService(ValidationService.class).getDiagnosticPerFeature(domainObject);
+		final Map<EStructuralFeature, VDiagnostic> diagnosticPerFeature = validationService
+			.getDiagnosticPerFeature(domainObject);
 		return diagnosticPerFeature.get(feature);
 	}
 
 	private Set<VDiagnostic> getAllDiagnostics(EObject domainObject, List<EStructuralFeature> features) {
-		if (getControl().isReadonly()) {
+		final ValidationService validationService = getViewModelContext().getService(ValidationService.class);
+		if (getControl().isReadonly() || validationService == null) {
 			return Collections.emptySet();
 		}
 		final Map<EStructuralFeature, VDiagnostic> diagnosticPerFeature =
-			getViewModelContext().getService(ValidationService.class).getDiagnosticPerFeature(domainObject);
+			validationService.getDiagnosticPerFeature(domainObject);
 		final Set<VDiagnostic> result = new LinkedHashSet<VDiagnostic>();
 		for (final EStructuralFeature feature : features) {
 			if (diagnosticPerFeature.containsKey(feature)) {
