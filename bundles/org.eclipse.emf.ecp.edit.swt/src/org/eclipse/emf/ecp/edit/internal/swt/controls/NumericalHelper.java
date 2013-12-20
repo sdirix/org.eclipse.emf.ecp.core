@@ -23,7 +23,7 @@ import org.eclipse.emf.ecp.edit.internal.swt.Activator;
  * @author Eugen Neufeld
  * 
  */
-public class NumericalHelper {
+public final class NumericalHelper {
 
 	private NumericalHelper() {
 

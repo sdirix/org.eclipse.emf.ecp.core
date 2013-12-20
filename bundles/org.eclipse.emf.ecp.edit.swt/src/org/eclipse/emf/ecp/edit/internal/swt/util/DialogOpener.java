@@ -22,7 +22,7 @@ import org.eclipse.jface.dialogs.Dialog;
  * @author Eugen Neufeld
  * 
  */
-public class DialogOpener {
+public final class DialogOpener {
 
 	private DialogOpener() {
 

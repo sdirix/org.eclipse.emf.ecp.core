@@ -28,7 +28,7 @@ import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 
-public class ControlGenerator {
+public final class ControlGenerator {
 
 	private ControlGenerator() {
 
