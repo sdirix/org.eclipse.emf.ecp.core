@@ -514,7 +514,7 @@ public class TableControl extends SWTControl {
 	private Button addButton;
 	private Setting mainSetting;
 
-	private boolean isDisposing = false;
+	private boolean isDisposing;
 
 	private void createAddRowButton(final EClass clazz, final Composite buttonComposite) {
 		addButton = new Button(buttonComposite, SWT.None);

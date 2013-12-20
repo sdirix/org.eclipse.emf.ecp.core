@@ -24,15 +24,19 @@ import org.eclipse.jface.dialogs.Dialog;
  */
 public class DialogOpener {
 
+	private DialogOpener() {
+
+	}
+
 	public static void openDialog(Dialog dialog, ECPDialogExecutor callBack) {
 		DialogWrapper wrapper = null;
-		IConfigurationElement[] controls = Platform.getExtensionRegistry().getConfigurationElementsFor(
+		final IConfigurationElement[] controls = Platform.getExtensionRegistry().getConfigurationElementsFor(
 			"org.eclipse.emf.ecp.edit.swt.dialogWrapper"); //$NON-NLS-1$
-		for (IConfigurationElement e : controls) {
+		for (final IConfigurationElement e : controls) {
 			try {
 				wrapper = (DialogWrapper) e.createExecutableExtension("class"); //$NON-NLS-1$
 				break;
-			} catch (CoreException e1) {
+			} catch (final CoreException e1) {
 				Activator.logException(e1);
 			}
 		}

@@ -30,6 +30,10 @@ import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 
 public class ControlGenerator {
 
+	private ControlGenerator() {
+
+	}
+
 	public static void addControls(ECPProject project, VContainer compositeToFill,
 		EClass datasegment, Set<EStructuralFeature> features) {
 

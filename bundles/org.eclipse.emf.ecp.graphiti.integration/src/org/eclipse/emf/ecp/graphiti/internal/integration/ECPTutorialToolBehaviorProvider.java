@@ -11,37 +11,37 @@ import org.eclipse.graphiti.tb.DefaultToolBehaviorProvider;
 import org.eclipse.graphiti.tb.IDecorator;
 import org.eclipse.graphiti.util.IColorConstant;
 
-public class ECPTutorialToolBehaviorProvider extends DefaultToolBehaviorProvider{
+public class ECPTutorialToolBehaviorProvider extends DefaultToolBehaviorProvider {
 
-	private EObject allowedEObject=null;
+	private EObject allowedEObject;
 
 	public ECPTutorialToolBehaviorProvider(
-			IDiagramTypeProvider diagramTypeProvider) {
+		IDiagramTypeProvider diagramTypeProvider) {
 		super(diagramTypeProvider);
 	}
-	
+
 	@Override
-    public ICustomFeature getDoubleClickFeature(IDoubleClickContext context) {
-        ICustomFeature customFeature =
-            new ECPDoubleClickFeature(getFeatureProvider());
-        // canExecute() tests especially if the context contains a EClass
-        if (customFeature.canExecute(context)) {
-            return customFeature;
-        }
- 
-        return super.getDoubleClickFeature(context);
-    }
-	
+	public ICustomFeature getDoubleClickFeature(IDoubleClickContext context) {
+		final ICustomFeature customFeature =
+			new ECPDoubleClickFeature(getFeatureProvider());
+		// canExecute() tests especially if the context contains a EClass
+		if (customFeature.canExecute(context)) {
+			return customFeature;
+		}
+
+		return super.getDoubleClickFeature(context);
+	}
+
 	@Override
 	public IDecorator[] getDecorators(PictogramElement pe) {
-		Object object = getFeatureProvider().getBusinessObjectForPictogramElement(pe);
+		final Object object = getFeatureProvider().getBusinessObjectForPictogramElement(pe);
 		// Check if the business object of the given pictogram element (the
 		// square) is one of the allowed squares (see CreateChessMoveFeature)
 		// for a move in progress
 		if (object instanceof EObject) {
 			if (object.equals(allowedEObject)) {
 				// Yes --> decorate with an orange border
-				BorderDecorator decorator = new BorderDecorator();
+				final BorderDecorator decorator = new BorderDecorator();
 				decorator.setBorderColor(IColorConstant.ORANGE);
 				decorator.setBorderWidth(2);
 				return new IDecorator[] { decorator };
@@ -51,6 +51,6 @@ public class ECPTutorialToolBehaviorProvider extends DefaultToolBehaviorProvider
 	}
 
 	public void allowEObject(EObject eObject) {
-		allowedEObject=eObject;
+		allowedEObject = eObject;
 	}
 }

@@ -75,17 +75,17 @@ public class UpdateBehavior extends DefaultUpdateBehavior {
 	/**
 	 * Closes editor if model object is deleted.
 	 */
-	private ElementDeleteListener elementDeleteListener = null;
+	private ElementDeleteListener elementDeleteListener;
 
 	/**
 	 * Is toggled by {@link DefaultUpdateBehavior#updateAdapter}.
 	 */
-	private boolean resourceDeleted = false;
+	private boolean resourceDeleted;
 
 	/**
 	 * Is toggled by {@link DefaultUpdateBehavior#updateAdapter}.
 	 */
-	private boolean resourceChanged = false;
+	private boolean resourceChanged;
 
 	/**
 	 * Flag that indicates if the {@link #updateAdapter} shall be active or not.
