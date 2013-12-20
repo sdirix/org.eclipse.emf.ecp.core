@@ -592,6 +592,7 @@ public class TableControl extends SWTControl {
 		if (validationLabel == null || validationLabel.isDisposed()) {
 			return;
 		}
+		validationLabel.setToolTipText(""); //$NON-NLS-1$
 		validationLabel.setImage(null);
 
 	}
