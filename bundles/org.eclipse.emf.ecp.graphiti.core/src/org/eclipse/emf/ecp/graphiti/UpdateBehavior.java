@@ -167,8 +167,8 @@ public class UpdateBehavior extends DefaultUpdateBehavior {
 	 * Creates a new {@link DefaultUpdateBehavior} instance associated with the
 	 * given {@link DiagramBehavior}.
 	 * 
-	 * @param diagramEditor
-	 *            the part this model editor works on
+	 * @param diagramBehavior
+	 *            the diagram behavior
 	 * @since 0.10
 	 */
 	public UpdateBehavior(ECPDiagramBehavior diagramBehavior) {
