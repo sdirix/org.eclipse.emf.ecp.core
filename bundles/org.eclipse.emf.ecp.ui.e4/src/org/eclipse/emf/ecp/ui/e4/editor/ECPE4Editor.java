@@ -45,13 +45,21 @@ import org.eclipse.swt.widgets.Shell;
  * 
  */
 public class ECPE4Editor {
-
-	public static final java.lang.String INPUT = "ecpEditorInput";
+	/**
+	 * Key to set the input of the editor into the {@link org.eclipse.e4.core.contexts.IEclipseContext}.
+	 */
+	public static final java.lang.String INPUT = "ecpEditorInput"; //$NON-NLS-1$
 	private MPart part;
 	private EObject modelElement;
 	private Adapter adapter;
 	private final ScrolledComposite parent;
 
+	/**
+	 * Default constructor.
+	 * 
+	 * @param composite the parent composite.
+	 * @param shell to retrieve the display from. Used to retrieve the system colors.
+	 */
 	@Inject
 	public ECPE4Editor(Composite composite, Shell shell) {
 		parent = new ScrolledComposite(composite, SWT.V_SCROLL
@@ -78,7 +86,6 @@ public class ECPE4Editor {
 		} catch (final ECPRendererException ex) {
 			ex.printStackTrace();
 		}
-		// composite.layout();
 
 		updateImageAndText();
 		adapter = new AdapterImpl() {
@@ -101,6 +108,9 @@ public class ECPE4Editor {
 		modelElement.eAdapters().add(adapter);
 	}
 
+	/**
+	 * removes listener.
+	 */
 	@PreDestroy
 	void dispose() {
 		modelElement.eAdapters().remove(adapter);
