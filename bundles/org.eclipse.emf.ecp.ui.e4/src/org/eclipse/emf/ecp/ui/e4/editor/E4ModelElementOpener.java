@@ -24,10 +24,22 @@ import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
 
+/**
+ * Opens a model element in {@link ECPE4Editor}.
+ * 
+ * @author Jonas
+ * 
+ */
 public class E4ModelElementOpener implements ECPModelElementOpener {
 
 	private final String partId = "org.eclipse.emf.ecp.e4.application.partdescriptor.editor"; //$NON-NLS-1$
 
+	/**
+	 * Opens a model element in {@link ECPE4Editor}. {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.ui.util.ECPModelElementOpener#openModelElement(java.lang.Object,
+	 *      org.eclipse.emf.ecp.core.ECPProject)
+	 */
 	public void openModelElement(Object modelElement, ECPProject ecpProject) {
 		final EPartService partService = getEPartService();
 		for (final MPart existingPart : partService.getParts()) {

@@ -12,20 +12,26 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.ui.e4.handlers;
 
-import org.eclipse.e4.core.di.annotations.CanExecute;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.emf.ecp.internal.ui.util.ECPHandlerHelper;
 import org.eclipse.swt.widgets.Shell;
 
+/**
+ * Handler to create a new {@link org.eclipse.emf.ecp.core.ECPProject}.
+ * 
+ * @author Jonas
+ * 
+ */
 public class NewProjectHandler {
 
+	/**
+	 * Creates a new project.
+	 * 
+	 * @param shell shell to display a dialog
+	 */
 	@Execute
 	public void execute(Shell shell) {
 		ECPHandlerHelper.createProject(shell);
 	}
 
-	@CanExecute
-	public boolean canExecute() {
-		return true;
-	}
 }
