@@ -24,16 +24,33 @@ import org.eclipse.emf.ecp.core.util.ECPCheckoutSource;
 import org.eclipse.emf.ecp.internal.ui.util.ECPHandlerHelper;
 import org.eclipse.swt.widgets.Shell;
 
+/**
+ * Handler to check out a {@link ECPCheckoutSource}.
+ * 
+ * @author Jonas
+ * 
+ */
 public class CheckoutProjectHandler {
-
+	/**
+	 * checks out a {@link ECPCheckoutSource}.
+	 * 
+	 * @param shell shell to display a dialog
+	 * @param checkoutSource the {@link ECPCheckoutSource} to be chcked out
+	 */
 	@Execute
 	public void execute(Shell shell,
 		@Named(IServiceConstants.ACTIVE_SELECTION) @Optional ECPCheckoutSource checkoutSource) {
 		ECPHandlerHelper.checkout(Collections.singletonList(checkoutSource), shell);
 	}
 
+	/**
+	 * checks if the current selection is an {@link ECPCheckoutSource}.
+	 * 
+	 * @param checkoutSource the current selection, if it is an {@link ECPCheckoutSource} or null otherwise
+	 * @return if the current selection is an {@link ECPCheckoutSource}
+	 */
 	@CanExecute
-	public boolean canExecute() {
-		return true;
+	public boolean canExecute(@Named(IServiceConstants.ACTIVE_SELECTION) @Optional ECPCheckoutSource checkoutSource) {
+		return checkoutSource != null;
 	}
 }

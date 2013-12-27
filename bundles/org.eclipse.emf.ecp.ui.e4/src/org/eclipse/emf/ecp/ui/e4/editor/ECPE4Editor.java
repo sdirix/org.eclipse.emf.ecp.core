@@ -38,6 +38,12 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
+/**
+ * Editor displaying one {@link EObject}.
+ * 
+ * @author Jonas
+ * 
+ */
 public class ECPE4Editor {
 
 	public static final java.lang.String INPUT = "ecpEditorInput";
@@ -116,6 +122,9 @@ public class ECPE4Editor {
 		}
 	}
 
+	/**
+	 * Sets the focus to the parent composite.
+	 */
 	@Focus
 	void setFocus() {
 		if (parent != null) {
