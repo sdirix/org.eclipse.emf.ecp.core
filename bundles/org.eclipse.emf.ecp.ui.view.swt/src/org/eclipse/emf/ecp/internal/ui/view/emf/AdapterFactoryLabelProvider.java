@@ -326,7 +326,7 @@ public class AdapterFactoryLabelProvider implements ILabelProvider, ITableLabelP
 	/**
 	 * This implements {@link org.eclipse.jface.viewers.ILabelProvider}.getImage by forwarding it to
 	 * an object that implements {@link org.eclipse.emf.edit.provider.IItemLabelProvider#getImage
-	 * IItemLabelProvider.getImage}
+	 * IItemLabelProvider.getImage}.
 	 */
 	public Image getImage(Object object) {
 		// Get the adapter from the factory.
@@ -360,7 +360,7 @@ public class AdapterFactoryLabelProvider implements ILabelProvider, ITableLabelP
 
 	/**
 	 * This implements {@link ILabelProvider}.getText by forwarding it to an object that implements
-	 * {@link IItemLabelProvider#getText IItemLabelProvider.getText}
+	 * {@link IItemLabelProvider#getText IItemLabelProvider.getText}.
 	 */
 	public String getText(Object object) {
 		// Get the adapter from the factory.
@@ -375,7 +375,7 @@ public class AdapterFactoryLabelProvider implements ILabelProvider, ITableLabelP
 	/**
 	 * This implements {@link org.eclipse.jface.viewers.IFontProvider}.getFont by forwarding it to
 	 * an object that implements {@link org.eclipse.emf.edit.provider.IItemFontProvider#getFont
-	 * IItemFontProvider.getFont}
+	 * IItemFontProvider.getFont}.
 	 */
 	public Font getFont(Object object) {
 		// Get the adapter from the factory.
@@ -394,7 +394,7 @@ public class AdapterFactoryLabelProvider implements ILabelProvider, ITableLabelP
 	/**
 	 * This implements {@link org.eclipse.jface.viewers.IColorProvider} .getForeground by forwarding
 	 * it to an object that implements {@link org.eclipse.emf.edit.provider.IItemColorProvider#getForeground
-	 * IItemColorProvider.getForeground}
+	 * IItemColorProvider.getForeground}.
 	 */
 	public Color getForeground(Object object) {
 		// Get the adapter from the factory.
@@ -409,7 +409,7 @@ public class AdapterFactoryLabelProvider implements ILabelProvider, ITableLabelP
 	/**
 	 * This implements {@link org.eclipse.jface.viewers.IColorProvider} .getBackground by forwarding
 	 * it to an object that implements {@link org.eclipse.emf.edit.provider.IItemColorProvider#getBackground
-	 * IItemColorProvider.getBackground}
+	 * IItemColorProvider.getBackground}.
 	 */
 	public Color getBackground(Object object) {
 		// Get the adapter from the factory.

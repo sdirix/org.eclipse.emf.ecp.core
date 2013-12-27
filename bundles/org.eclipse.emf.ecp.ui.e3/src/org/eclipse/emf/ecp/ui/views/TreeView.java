@@ -88,6 +88,11 @@ public abstract class TreeView extends ViewPart implements ISelectionProvider, I
 		return viewer;
 	}
 
+	/**
+	 * Return the refresh action, which triggers a reload on the TreeViewer.
+	 * 
+	 * @return an {@link Action}
+	 */
 	public final Action getRefreshAction()
 	{
 		return refreshAction;
@@ -183,25 +188,50 @@ public abstract class TreeView extends ViewPart implements ISelectionProvider, I
 		}
 	}
 
+	/**
+	 * Shows a message to the user.
+	 * 
+	 * @param message the message as a String
+	 */
 	protected void showMessage(String message)
 	{
 		MessageDialog.openInformation(viewer.getControl().getShell(), getTitle(), message);
 	}
 
+	/**
+	 * Creates a label decorator.
+	 * 
+	 * @return the label decorator to be used by the TreeView
+	 */
 	protected ILabelDecorator createLabelDecorator()
 	{
 		return PlatformUI.getWorkbench().getDecoratorManager().getLabelDecorator();
 	}
 
+	/**
+	 * Creates the {@link TreeViewer}. To be implemented by sub classes.
+	 * 
+	 * @param parent the parent composite to place the TreeViewer on.
+	 * @return the {@link TreeViewer}
+	 */
 	protected abstract TreeViewer createViewer(Composite parent);
 
-	/** {@inheritDoc} */
+	/**
+	 * Fills the menue of the view. Can be overridden by sub classes.
+	 * 
+	 * @param manager the {@link IMenuManager} to be filled.
+	 */
 	protected void fillLocalPullDown(IMenuManager manager)
 	{
 		manager.add(new Separator());
 		manager.add(refreshAction);
 	}
 
+	/**
+	 * Fills the toolbar of the view. Can be overridden by sub classes.
+	 * 
+	 * @param manager the {@link IToolBarManager} to be filled.
+	 */
 	protected void fillLocalToolBar(IToolBarManager manager)
 	{
 		manager.add(refreshAction);
@@ -209,6 +239,11 @@ public abstract class TreeView extends ViewPart implements ISelectionProvider, I
 
 	}
 
+	/**
+	 * Fills the contect menu of the view. Can be overriden by sub classes.
+	 * 
+	 * @param manager the {@link IMenuManager} to be filled.
+	 */
 	protected void fillContextMenu(IMenuManager manager)
 	{
 		manager.add(new Separator(GLOBAL_ADDITIONS));
@@ -216,6 +251,12 @@ public abstract class TreeView extends ViewPart implements ISelectionProvider, I
 		manager.add(new Separator());
 	}
 
+	/**
+	 * Called if a double click is triggered in the TreeViewer. Can be overridden by sub classes to add some behavior on
+	 * double click.
+	 * 
+	 * @param event the {@link DoubleClickEvent}
+	 */
 	protected void doubleClicked(DoubleClickEvent event)
 	{
 	}

@@ -22,7 +22,7 @@ import org.osgi.framework.BundleContext;
 public class Activator extends AbstractUIPlugin {
 
 	/**
-	 * The plugin ID
+	 * The plugin ID.
 	 */
 	public static final String PLUGIN_ID = "org.eclipse.emf.ecp.rap"; //$NON-NLS-1$
 

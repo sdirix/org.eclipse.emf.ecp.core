@@ -34,7 +34,6 @@ import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.swt.widgets.Display;
 
 /**
  * This content provider wraps an AdapterFactory and it delegates its JFace provider interfaces to
@@ -253,7 +252,7 @@ public class AdapterFactoryContentProvider implements ITreeContentProvider, INot
 		 * @param notification
 		 *            the notification to add to the queue
 		 * @return whether the queue has been made non-empty, which would indicate that the <code>ViewerRefresh</code>
-		 *         needs to be {@link Display#asyncExec scheduled} on the
+		 *         needs to be {@link org.eclipse.swt.widgets.Display#asyncExec scheduled} on the
 		 *         event queue
 		 * @since 2.2.0
 		 */

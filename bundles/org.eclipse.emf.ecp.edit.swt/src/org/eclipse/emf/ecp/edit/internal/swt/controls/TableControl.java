@@ -687,7 +687,7 @@ public class TableControl extends SWTControl {
 
 	/**
 	 * ECP specficic cell label provider that does also implement {@link IColorProvider} in
-	 * order to correctly
+	 * order to correctly.
 	 * 
 	 * @author emueller
 	 * 
