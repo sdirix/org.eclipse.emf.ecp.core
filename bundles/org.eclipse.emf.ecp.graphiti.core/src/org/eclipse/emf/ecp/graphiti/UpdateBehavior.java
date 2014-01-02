@@ -1,3 +1,4 @@
+// REUSED CLASS
 package org.eclipse.emf.ecp.graphiti;
 
 import org.eclipse.core.commands.operations.OperationHistoryEvent;
