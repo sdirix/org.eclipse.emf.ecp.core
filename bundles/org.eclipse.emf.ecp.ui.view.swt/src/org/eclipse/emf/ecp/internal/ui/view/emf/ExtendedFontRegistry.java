@@ -1,3 +1,4 @@
+// REUSED CLASS
 /**
  * Copyright (c) 2008 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
