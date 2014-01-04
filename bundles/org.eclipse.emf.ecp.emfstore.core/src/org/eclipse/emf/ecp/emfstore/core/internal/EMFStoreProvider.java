@@ -75,7 +75,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 	/**
 	 * This is the name of the EMFStore Provider.
 	 */
-	public static final String NAME = "org.eclipse.emf.ecp.emfstore.provider";
+	public static final String NAME = "org.eclipse.emf.ecp.emfstore.provider"; //$NON-NLS-1$
 
 	/**
 	 * EMFStore Provider Singleton.
