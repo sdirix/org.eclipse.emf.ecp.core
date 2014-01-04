@@ -64,7 +64,7 @@ public class ConditionEvaluatorTest {
 
 	private static final String CORRECT_PLAYER_NAME = "player";
 	private static final Gender CORRECT_PLAYER_GENDER = Gender.FEMALE;
-	private static Date CORRECT_PLAYER_BIRTH;
+	private static Date correctPlayerBirthDate;
 
 	private static final int CORRECT_PLAYER_VICTORIES = 42;
 	private static final double CORRECT_PLAYER_HEIGHT = 42.42;
@@ -76,7 +76,7 @@ public class ConditionEvaluatorTest {
 
 	static {
 		try {
-			CORRECT_PLAYER_BIRTH = DateFormat.getDateInstance(DateFormat.SHORT, Locale.GERMANY).parse("11.11.2011");
+			correctPlayerBirthDate = DateFormat.getDateInstance(DateFormat.SHORT, Locale.GERMANY).parse("11.11.2011");
 		} catch (final ParseException ex) {
 			ex.printStackTrace();
 		}
@@ -96,7 +96,7 @@ public class ConditionEvaluatorTest {
 		player.setName(CORRECT_PLAYER_NAME);
 		player.setGender(CORRECT_PLAYER_GENDER);
 		player.setNumberOfVictories(CORRECT_PLAYER_VICTORIES);
-		player.setDateOfBirth(CORRECT_PLAYER_BIRTH);
+		player.setDateOfBirth(correctPlayerBirthDate);
 		player.setHeight(CORRECT_PLAYER_HEIGHT);
 		player.setIsProfessional(CORRECT_PLAYER_PROFESSIONAL);
 		player.setWinLossRatio(CORRECT_PLAYER_RATION);
@@ -232,7 +232,7 @@ public class ConditionEvaluatorTest {
 	public void testDateConditionRight() {
 		final Player player = setupPlayerRight();
 		final LeafCondition leafCondition = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_DateOfBirth(),
-			CORRECT_PLAYER_BIRTH, player);
+			correctPlayerBirthDate, player);
 
 		assertTrue(leafCondition.evaluate());
 	}
