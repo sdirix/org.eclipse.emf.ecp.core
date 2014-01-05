@@ -8,10 +8,13 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecp.view.editor.controls.ControlRootEClassControl;
+import org.eclipse.emf.ecp.view.ideconfig.model.IDEConfig;
+import org.eclipse.emf.ecp.view.ideconfig.model.IdeconfigFactory;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Display;
@@ -64,7 +67,10 @@ public class ViewEditorIDEViewRootControl extends ControlRootEClassControl{
 					.toString(), true));
 				try {
 					resource.load(null);
-					return resource.getContents().get(0);
+					EPackage ePackage= (EPackage) resource.getContents().get(0);
+					EPackage.Registry.INSTANCE.put(ePackage.getNsURI(), ePackage);
+					persistSelectedEcore(file);
+					return ePackage;
 				} catch (IOException ex) {
 					MessageDialog.openError(Display.getDefault()
 						.getActiveShell(), "Error", "Error parsing XMI-File!");
@@ -72,6 +78,23 @@ public class ViewEditorIDEViewRootControl extends ControlRootEClassControl{
 			}
 		}
 		return null;
+	}
+
+	private void persistSelectedEcore(File file) {
+		ResourceSet resourceSet = new ResourceSetImpl();
+		
+		String viewModelPath=getFirstSetting().getEObject().eResource().getURI().toString();
+		String newModelPath=viewModelPath.substring(0, viewModelPath.lastIndexOf("."))+".ideconfig";
+		Resource resource = resourceSet.createResource(URI.createURI(newModelPath, true));
+		IDEConfig config = IdeconfigFactory.eINSTANCE.createIDEConfig();
+		config.setEcorePath(file.getFullPath().toString());
+		resource.getContents().add(config);
+		try {
+			resource.save(null);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
