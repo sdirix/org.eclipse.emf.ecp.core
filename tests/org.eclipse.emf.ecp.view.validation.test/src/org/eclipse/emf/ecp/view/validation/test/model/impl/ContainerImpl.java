@@ -11,53 +11,49 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.view.validation.test.model.impl;
 
-import org.eclipse.emf.common.notify.Notification;
+import java.util.Collection;
+
+import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.eclipse.emf.ecp.view.validation.test.model.PowerBlock;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
+import org.eclipse.emf.ecp.view.validation.test.model.Container;
+import org.eclipse.emf.ecp.view.validation.test.model.Content;
 import org.eclipse.emf.ecp.view.validation.test.model.TestPackage;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Power Block</b></em>'.
+ * An implementation of the model object '<em><b>Container</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.PowerBlockImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.ContainerImpl#getContents <em>Contents</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class PowerBlockImpl extends EObjectImpl implements PowerBlock {
+public class ContainerImpl extends EObjectImpl implements Container {
 	/**
-	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
+	 * The cached value of the '{@link #getContents() <em>Contents</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getName()
+	 * @see #getContents()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String NAME_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getName()
-	 * @generated
-	 * @ordered
-	 */
-	protected String name = NAME_EDEFAULT;
+	protected EList<Content> contents;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected PowerBlockImpl() {
+	protected ContainerImpl() {
 		super();
 	}
 
@@ -68,7 +64,7 @@ public class PowerBlockImpl extends EObjectImpl implements PowerBlock {
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return TestPackage.Literals.POWER_BLOCK;
+		return TestPackage.Literals.CONTAINER;
 	}
 
 	/**
@@ -76,8 +72,11 @@ public class PowerBlockImpl extends EObjectImpl implements PowerBlock {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getName() {
-		return name;
+	public EList<Content> getContents() {
+		if (contents == null) {
+			contents = new EObjectContainmentEList<Content>(Content.class, this, TestPackage.CONTAINER__CONTENTS);
+		}
+		return contents;
 	}
 
 	/**
@@ -85,11 +84,13 @@ public class PowerBlockImpl extends EObjectImpl implements PowerBlock {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setName(String newName) {
-		String oldName = name;
-		name = newName;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.POWER_BLOCK__NAME, oldName, name));
+	@Override
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case TestPackage.CONTAINER__CONTENTS:
+				return ((InternalEList<?>)getContents()).basicRemove(otherEnd, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
 
 	/**
@@ -100,8 +101,8 @@ public class PowerBlockImpl extends EObjectImpl implements PowerBlock {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case TestPackage.POWER_BLOCK__NAME:
-				return getName();
+			case TestPackage.CONTAINER__CONTENTS:
+				return getContents();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -111,11 +112,13 @@ public class PowerBlockImpl extends EObjectImpl implements PowerBlock {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case TestPackage.POWER_BLOCK__NAME:
-				setName((String)newValue);
+			case TestPackage.CONTAINER__CONTENTS:
+				getContents().clear();
+				getContents().addAll((Collection<? extends Content>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -129,8 +132,8 @@ public class PowerBlockImpl extends EObjectImpl implements PowerBlock {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case TestPackage.POWER_BLOCK__NAME:
-				setName(NAME_EDEFAULT);
+			case TestPackage.CONTAINER__CONTENTS:
+				getContents().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -144,26 +147,10 @@ public class PowerBlockImpl extends EObjectImpl implements PowerBlock {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case TestPackage.POWER_BLOCK__NAME:
-				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+			case TestPackage.CONTAINER__CONTENTS:
+				return contents != null && !contents.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public String toString() {
-		if (eIsProxy()) return super.toString();
-
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (name: ");
-		result.append(name);
-		result.append(')');
-		return result.toString();
-	}
-
-} // PowerBlockImpl
+} // ContainerImpl
