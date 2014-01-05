@@ -49,8 +49,6 @@ public class UniqueSetting {
 	 * 
 	 * @param eObject
 	 *            an {@link EObject}
-	 * @param attribute
-	 *            an EAttribute of the given {@code eObject}
 	 * @return the constructed setting
 	 */
 	public static UniqueSetting createSetting(Setting setting) {

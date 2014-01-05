@@ -73,7 +73,7 @@ public class TemplateIconControl extends AbstractTextControl {
 		final Button selectFileFromPlugin = new Button(main, SWT.PUSH);
 		selectFileFromPlugin.setText("Plugin File");
 
-		selectFileFromPlugin.addSelectionListener(new SelectionAdapterExtension(composite));
+		selectFileFromPlugin.addSelectionListener(new SelectFileFromPluginAdapter(composite));
 	}
 
 	@Override
@@ -93,15 +93,15 @@ public class TemplateIconControl extends AbstractTextControl {
 
 	/**
 	 * @author Jonas
-	 *
+	 * 
 	 */
-	private final class SelectionAdapterExtension extends SelectionAdapter {
+	private final class SelectFileFromPluginAdapter extends SelectionAdapter {
 		private final Composite composite;
 
 		/**
 		 * @param composite
 		 */
-		private SelectionAdapterExtension(Composite composite) {
+		private SelectFileFromPluginAdapter(Composite composite) {
 			this.composite = composite;
 		}
 
