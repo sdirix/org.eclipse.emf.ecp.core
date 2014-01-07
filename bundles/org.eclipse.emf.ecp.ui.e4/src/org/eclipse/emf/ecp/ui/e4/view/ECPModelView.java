@@ -96,6 +96,9 @@ public class ECPModelView {
 							selectionService.setSelection(structuredSelection.toList());
 						}
 					}
+					else {
+						selectionService.setSelection(null);
+					}
 				}
 			}
 		});
