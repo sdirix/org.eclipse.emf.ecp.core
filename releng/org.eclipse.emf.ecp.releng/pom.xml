@@ -175,6 +175,11 @@
 		<module>../../bundles/org.eclipse.emf.ecp.view.horizontal.ui.swt</module>
 		<module>../../features/org.eclipse.emf.ecp.view.horizontal.feature</module>
 
+		<!-- TreeMasterDetail Feature -->
+		<module>../../bundles/org.eclipse.emf.ecp.view.treemasterdetail.model</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.treemasterdetail.model.edit</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.treemasterdetail.ui.swt</module>
+		<module>../../features/org.eclipse.emf.ecp.view.treemasterdetail.feature</module>
 
 		<!-- Table Feature -->
 		<module>../../bundles/org.eclipse.emf.ecp.view.table.model</module>

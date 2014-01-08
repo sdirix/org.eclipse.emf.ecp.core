@@ -550,4 +550,22 @@
          install-size="0"
          version="0.0.0"/>
 
+   <plugin
+         id="org.eclipse.emf.ecp.view.treemasterdetail.model.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.eclipse.emf.ecp.view.treemasterdetail.model.edit.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.eclipse.emf.ecp.view.treemasterdetail.ui.swt.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
 </feature>
