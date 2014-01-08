@@ -137,4 +137,13 @@ public class ViewEditorPart extends EditorPart implements
 		});
 	}
 
+	@Override
+	public void dispose() {
+		VView view=(VView) resource.getContents().get(0);
+		Activator.getViewModelRegistry().unregisterViewModelEditor(view, this);
+		super.dispose();
+	}
+	
+	
+
 }

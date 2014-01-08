@@ -61,7 +61,9 @@ public class ViewEditorIDEViewRootControl extends ControlRootEClassControl{
 
 		if (dialog.open() == Dialog.OK) {
 			VView view=(VView) getFirstSetting().getEObject();
-			Activator.getViewModelRegistry().unregister(view.getRootEClass().eResource().getURI().toString(), view);
+			if(view.getRootEClass()!=null){
+				Activator.getViewModelRegistry().unregister(view.getRootEClass().eResource().getURI().toString(), view);
+			}
 			if (dialog.getFirstResult() instanceof IFile) {
 				IFile file = (IFile) dialog.getFirstResult();
 				ResourceSet resourceSet = new ResourceSetImpl();
