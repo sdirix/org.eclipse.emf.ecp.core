@@ -21,12 +21,11 @@ import org.osgi.framework.ServiceReference;
  */
 public class Activator extends AbstractUIPlugin {
 
-	/** The plug-in ID.*/
+	/** The plug-in ID. */
 	public static final String PLUGIN_ID = "org.eclipse.emf.ecp.ide.editor.view"; //$NON-NLS-1$
 
-	
 	private static Activator plugin;
-	
+
 	/**
 	 * The constructor.
 	 */
@@ -36,6 +35,7 @@ public class Activator extends AbstractUIPlugin {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
@@ -44,6 +44,7 @@ public class Activator extends AbstractUIPlugin {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void stop(BundleContext context) throws Exception {
 		plugin = null;
 		super.stop(context);
@@ -51,19 +52,22 @@ public class Activator extends AbstractUIPlugin {
 
 	/**
 	 * Returns the shared instance.
-	 *
+	 * 
 	 * @return the shared instance
 	 */
 	public static Activator getDefault() {
 		return plugin;
 	}
+
 	/**
 	 * Return the {@link IDEViewModelRegistry}.
+	 * 
 	 * @return the {@link IDEViewModelRegistry}
 	 */
-	public static IDEViewModelRegistry getViewModelRegistry(){
-		ServiceReference<IDEViewModelRegistry> serviceReference = getDefault().getBundle().getBundleContext().getServiceReference(IDEViewModelRegistry.class);
-		if(serviceReference==null){
+	public static IDEViewModelRegistry getViewModelRegistry() {
+		final ServiceReference<IDEViewModelRegistry> serviceReference = getDefault().getBundle().getBundleContext()
+			.getServiceReference(IDEViewModelRegistry.class);
+		if (serviceReference == null) {
 			return null;
 		}
 		return getDefault().getBundle().getBundleContext().getService(serviceReference);

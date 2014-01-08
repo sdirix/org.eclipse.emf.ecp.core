@@ -12,7 +12,6 @@
 package org.eclipse.emf.ecp.ide.editor.view;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -36,25 +35,26 @@ import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.part.EditorPart;
 import org.eclipse.ui.part.FileEditorInput;
+
 /**
  * The IDE ViewModel EditorPart.
+ * 
  * @author Eugen Neufeld
- *
+ * 
  */
 public class ViewEditorPart extends EditorPart implements
-		ViewModelEditorCallback {
+	ViewModelEditorCallback {
 
 	private Resource resource;
 	private BasicCommandStack basicCommandStack;
 	private Composite parent;
 	private ECPSWTView render;
 
-	
 	@Override
 	public void doSave(IProgressMonitor monitor) {
 		try {
 			resource.save(null);
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
 		}
 	}
@@ -66,21 +66,21 @@ public class ViewEditorPart extends EditorPart implements
 
 	@Override
 	public void init(IEditorSite site, IEditorInput input)
-			throws PartInitException {
+		throws PartInitException {
 		super.setSite(site);
 		super.setInput(input);
 		basicCommandStack = new BasicCommandStack();
 	}
 
 	private ResourceSet createResourceSet() {
-		ResourceSet resourceSet = new ResourceSetImpl();
+		final ResourceSet resourceSet = new ResourceSetImpl();
 
-		AdapterFactoryEditingDomain domain = new AdapterFactoryEditingDomain(
-				new ComposedAdapterFactory(
-						ComposedAdapterFactory.Descriptor.Registry.INSTANCE),
-				basicCommandStack, resourceSet);
+		final AdapterFactoryEditingDomain domain = new AdapterFactoryEditingDomain(
+			new ComposedAdapterFactory(
+				ComposedAdapterFactory.Descriptor.Registry.INSTANCE),
+			basicCommandStack, resourceSet);
 		resourceSet.eAdapters().add(
-				new AdapterFactoryEditingDomain.EditingDomainProvider(domain));
+			new AdapterFactoryEditingDomain.EditingDomainProvider(domain));
 		return resourceSet;
 	}
 
@@ -97,47 +97,50 @@ public class ViewEditorPart extends EditorPart implements
 	@Override
 	public void createPartControl(Composite parent) {
 		this.parent = parent;
-			
-			loadAndShowView();
-			VView view=(VView) resource.getContents().get(0);
-			Activator.getViewModelRegistry().registerViewModelEditor(view, this);
-			if(view.getRootEClass()!=null){
-				Activator.getViewModelRegistry().register(view.getRootEClass().eResource().getURI().toString(), view);
-			}
-		
+
+		loadAndShowView();
+		final VView view = (VView) resource.getContents().get(0);
+		Activator.getViewModelRegistry().registerViewModelEditor(view, this);
+		if (view.getRootEClass() != null) {
+			Activator.getViewModelRegistry().register(view.getRootEClass().eResource().getURI().toString(), view);
+		}
+
 	}
 
 	private void loadAndShowView() {
 		try {
-			FileEditorInput fei = (FileEditorInput) getEditorInput();
+			final FileEditorInput fei = (FileEditorInput) getEditorInput();
 
-			ResourceSet resourceSet = createResourceSet();
+			final ResourceSet resourceSet = createResourceSet();
 			resource = resourceSet.getResource(
-					URI.createURI(fei.getURI().toURL().toExternalForm()), true);
+				URI.createURI(fei.getURI().toURL().toExternalForm()), true);
 			resource.load(null);
-			VView view = (VView) resource.getContents().get(0);
+			final VView view = (VView) resource.getContents().get(0);
 
 			render = ECPSWTViewRenderer.INSTANCE
-					.render(parent, view);
-		} catch (ECPRendererException e) {
+				.render(parent, view);
+		} catch (final ECPRendererException e) {
 			Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
-		} 
+		}
 	}
 
 	@Override
 	public void setFocus() {
-		
+
 	}
 
-	@Override
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.ide.view.service.ViewModelEditorCallback#reloadViewModel()
+	 */
 	public void reloadViewModel() {
 		Display.getDefault().asyncExec(new Runnable() {
-			
-			@Override
+
 			public void run() {
-				if(render!=null){
+				if (render != null) {
 					render.dispose();
 					render.getSWTControl().dispose();
 				}
@@ -148,11 +151,9 @@ public class ViewEditorPart extends EditorPart implements
 
 	@Override
 	public void dispose() {
-		VView view=(VView) resource.getContents().get(0);
+		final VView view = (VView) resource.getContents().get(0);
 		Activator.getViewModelRegistry().unregisterViewModelEditor(view, this);
 		super.dispose();
 	}
-	
-	
 
 }

@@ -213,6 +213,16 @@
 		<module>../../bundles/org.eclipse.emf.ecp.graphiti.core</module>
 		<module>../../bundles/org.eclipse.emf.ecp.graphiti.integration</module>-->
 
+		<!-- IDE -->
+		<module>../../features/org.eclipse.emf.ecp.ide.feature</module>
+		<module>../../bundles/org.eclipse.emf.ecp.ide.editor.view</module>
+		<module>../../bundles/org.eclipse.emf.ecp.ide.editor.view.control</module>
+		<module>../../bundles/org.eclipse.emf.ecp.ide.editor.viewmodel</module>
+		<module>../../bundles/org.eclipse.emf.ecp.ide.view.service</module>
+		<module>../../bundles/org.eclipse.emf.ecp.ide.view.ideconfig.model</module>
+		<module>../../bundles/org.eclipse.emf.ecp.ide.view.ideconfig.model.edit</module>
+		
+
 		<!-- Tests -->
 		<module>../../tests/org.eclipse.emf.ecp.view.test.common</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.test.common.swt</module>
