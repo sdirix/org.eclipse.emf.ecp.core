@@ -219,8 +219,8 @@
 		<module>../../bundles/org.eclipse.emf.ecp.ide.editor.view.control</module>
 		<module>../../bundles/org.eclipse.emf.ecp.ide.editor.viewmodel</module>
 		<module>../../bundles/org.eclipse.emf.ecp.ide.view.service</module>
-		<module>../../bundles/org.eclipse.emf.ecp.ide.view.ideconfig.model</module>
-		<module>../../bundles/org.eclipse.emf.ecp.ide.view.ideconfig.model.edit</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.ideconfig.model</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.ideconfig.model.edit</module>
 		
 
 		<!-- Tests -->
