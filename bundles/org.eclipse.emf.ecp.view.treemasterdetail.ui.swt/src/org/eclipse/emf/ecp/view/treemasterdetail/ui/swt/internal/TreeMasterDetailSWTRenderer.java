@@ -37,11 +37,11 @@ import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
-import org.eclipse.emf.edit.ui.action.CreateChildAction;
-import org.eclipse.emf.edit.ui.action.DeleteAction;
+import org.eclipse.emf.edit.ui.action.ecp.CreateChildAction;
 import org.eclipse.emf.edit.ui.dnd.EditingDomainViewerDropAdapter;
 import org.eclipse.emf.edit.ui.dnd.LocalTransfer;
 import org.eclipse.emf.edit.ui.dnd.ViewerDragAdapter;
+import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
@@ -279,6 +279,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 				&& cp.getEReference().getUpperBound() <= ((List<?>) eObject.eGet(cp.getEReference())).size()) {
 				continue;
 			}
+
 			manager.add(new CreateChildAction(domain, new StructuredSelection(eObject), descriptor) {
 				@Override
 				public void run() {
@@ -306,13 +307,13 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 	private void addDeleteActionToContextMenu(final EditingDomain editingDomain, final IMenuManager manager,
 		final IStructuredSelection selection) {
 
-		final DeleteAction deleteAction = new DeleteAction(editingDomain, false) {
+		final Action deleteAction = new Action() {
 			@Override
 			public void run() {
 				super.run();
 				for (final Object obj : selection.toList())
 				{
-					domain.getCommandStack().execute(
+					editingDomain.getCommandStack().execute(
 						RemoveCommand.create(editingDomain, obj));
 				}
 
@@ -387,4 +388,5 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 			return composite;
 		}
 	}
+
 }

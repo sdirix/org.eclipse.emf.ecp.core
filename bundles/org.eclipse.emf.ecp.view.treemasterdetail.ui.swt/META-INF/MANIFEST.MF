@@ -6,12 +6,14 @@ Bundle-Version: 1.1.1.qualifier
 Bundle-Vendor: Eclipse Modeling Project
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.7.0,4.0.0)",
  org.eclipse.emf.ecp.ui.view.swt;bundle-version="[1.1.0,2.0.0)",
- org.eclipse.emf.ecp.edit;bundle-version="1.1.0",
+ org.eclipse.emf.ecp.edit;bundle-version="[1.1.0,2.0.0)",
  org.eclipse.emf.ecp.view.treemasterdetail.model;bundle-version="1.1.0"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
-Export-Package: org.eclipse.emf.ecp.view.treemasterdetail.ui.swt.internal;version="1.1.1";x-internal:=true
-Import-Package: org.eclipse.emf.ecp.common;version="1.1.0",
+Export-Package: org.eclipse.emf.ecp.view.treemasterdetail.ui.swt.internal;version="1.1.1";x-internal:=true,
+ org.eclipse.emf.edit.ui.action.ecp;version="1.1.1";x-internal:=true
+Import-Package: org.eclipse.core.commands.common;version="0.0.0",
+ org.eclipse.emf.ecp.common;version="1.1.0",
  org.eclipse.emf.ecp.core.util;version="1.1.0",
  org.eclipse.emf.ecp.edit.internal.swt.util;version="1.1.0",
  org.eclipse.emf.ecp.internal.ui.model;version="1.1.0",
@@ -19,6 +21,7 @@ Import-Package: org.eclipse.emf.ecp.common;version="1.1.0",
  org.eclipse.emf.ecp.ui.common;version="1.1.0",
  org.eclipse.emf.edit.ui.action;version="0.0.0",
  org.eclipse.emf.edit.ui.dnd;version="0.0.0",
+ org.eclipse.emf.edit.ui.provider;version="0.0.0",
  org.eclipse.jface.action;version="0.0.0",
  org.eclipse.jface.layout;version="0.0.0",
  org.eclipse.jface.resource;version="0.0.0",
@@ -29,6 +32,5 @@ Import-Package: org.eclipse.emf.ecp.common;version="1.1.0",
  org.eclipse.swt.events;version="0.0.0",
  org.eclipse.swt.graphics;version="0.0.0",
  org.eclipse.swt.layout;version="0.0.0",
- org.eclipse.swt.widgets;version="0.0.0",
- org.eclipse.ui;version="0.0.0"
+ org.eclipse.swt.widgets;version="0.0.0"
 Bundle-Activator: org.eclipse.emf.ecp.view.treemasterdetail.ui.swt.internal.Activator

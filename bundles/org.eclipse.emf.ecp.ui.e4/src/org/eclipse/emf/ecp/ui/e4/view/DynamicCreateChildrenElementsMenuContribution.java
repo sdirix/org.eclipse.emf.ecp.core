@@ -119,9 +119,9 @@ public class DynamicCreateChildrenElementsMenuContribution {
 		}
 	}
 
-	class CustomCreateChildAction extends CreateChildAction {
+	private class CustomCreateChildAction extends CreateChildAction {
 
-		public CustomCreateChildAction(EditingDomain editingDomain,
+		private CustomCreateChildAction(EditingDomain editingDomain,
 			ISelection selection, Object descriptor, CommandParameter cp,
 			ECPProject project) {
 			super(editingDomain, selection, descriptor);
@@ -139,7 +139,7 @@ public class DynamicCreateChildrenElementsMenuContribution {
 			ECPHandlerHelper.openModelElement(cp.getEValue(), project);
 		}
 
-		public String getImageURIString() {
+		private String getImageURIString() {
 			final CommandActionDelegate commandActionDelegate = (CommandActionDelegate) command;
 
 			return commandActionDelegate.getImage().toString();
