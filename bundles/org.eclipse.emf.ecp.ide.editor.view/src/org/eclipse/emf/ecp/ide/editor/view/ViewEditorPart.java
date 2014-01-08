@@ -1,9 +1,22 @@
+/*******************************************************************************
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * Eugen Neufeld - initial API and implementation
+ ******************************************************************************/
 package org.eclipse.emf.ecp.ide.editor.view;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -23,7 +36,11 @@ import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.part.EditorPart;
 import org.eclipse.ui.part.FileEditorInput;
-
+/**
+ * The IDE ViewModel EditorPart.
+ * @author Eugen Neufeld
+ *
+ */
 public class ViewEditorPart extends EditorPart implements
 		ViewModelEditorCallback {
 
@@ -32,23 +49,18 @@ public class ViewEditorPart extends EditorPart implements
 	private Composite parent;
 	private ECPSWTView render;
 
-	public ViewEditorPart() {
-		// TODO Auto-generated constructor stub
-	}
-
+	
 	@Override
 	public void doSave(IProgressMonitor monitor) {
 		try {
 			resource.save(null);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
 		}
 	}
 
 	@Override
 	public void doSaveAs() {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -79,7 +91,6 @@ public class ViewEditorPart extends EditorPart implements
 
 	@Override
 	public boolean isSaveAsAllowed() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -90,8 +101,9 @@ public class ViewEditorPart extends EditorPart implements
 			loadAndShowView();
 			VView view=(VView) resource.getContents().get(0);
 			Activator.getViewModelRegistry().registerViewModelEditor(view, this);
-			if(view.getRootEClass()!=null)
+			if(view.getRootEClass()!=null){
 				Activator.getViewModelRegistry().register(view.getRootEClass().eResource().getURI().toString(), view);
+			}
 		
 	}
 
@@ -108,18 +120,15 @@ public class ViewEditorPart extends EditorPart implements
 			render = ECPSWTViewRenderer.INSTANCE
 					.render(parent, view);
 		} catch (ECPRendererException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
 		} 
 	}
 
 	@Override
 	public void setFocus() {
-		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
