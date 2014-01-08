@@ -67,6 +67,13 @@ public class ECPE4Editor {
 		parent.setBackground(shell.getDisplay().getSystemColor(SWT.COLOR_WHITE));
 	}
 
+	/**
+	 * Sets the input of the editor part.
+	 * 
+	 * @param modelElement the {@link EObject} to be opened
+	 * @param ecpProject the {@link ECPProject} in which the {@link EObject} is contained
+	 * @param part the corresponding {@link MPart}
+	 */
 	@Inject
 	public void setInput(@Optional @Named(INPUT) EObject modelElement, @Optional ECPProject ecpProject, MPart part) {
 		if (modelElement == null || ecpProject == null) {
