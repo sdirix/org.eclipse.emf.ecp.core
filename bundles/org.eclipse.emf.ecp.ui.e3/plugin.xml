@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
-   <extension-point id="menuContributionEnablement" name="Menu Contribution Enablement" schema="schema/menuContributionEnablement.exsd"/>
+   
 <extension
          point="org.eclipse.ui.views">
       <category
@@ -653,13 +653,6 @@
    </extension>
    <extension
          point="org.eclipse.core.expressions.propertyTesters">
-      <propertyTester
-            class="org.eclipse.emf.ecp.ui.tester.ECPMenuContributionsEnablementTester"
-            id="org.eclipse.emf.ecp.ui.e3.workbench.menu.properties"
-            namespace="org.eclipse.emf.ecp.ui.e3.workbench.menu"
-            properties="enablement"
-            type="java.lang.Object">
-      </propertyTester>
       <propertyTester
             class="org.eclipse.emf.ecp.ui.tester.CanAddRepositoriesTester"
             id="org.eclipse.emf.ecp.ui.repository.tester"

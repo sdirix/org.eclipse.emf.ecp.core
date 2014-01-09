@@ -58,10 +58,12 @@ public class ECPRepositoryView {
 					final ISelection selection = event.getSelection();
 					if (IStructuredSelection.class.isInstance(selection)) {
 						final IStructuredSelection structuredSelection = (IStructuredSelection) selection;
-						if (!structuredSelection.isEmpty()) {
+						if (structuredSelection != null) {
 							selectionService
-								.setSelection(structuredSelection
-									.getFirstElement());
+								.setSelection(structuredSelection.toList());
+						}
+						else {
+							selectionService.setSelection(null);
 						}
 					}
 				}
