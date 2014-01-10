@@ -9,7 +9,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.editor.internal.e3;
+package org.eclipse.emf.ecp.spi.ui;
 
 import java.util.Collection;
 import java.util.HashSet;

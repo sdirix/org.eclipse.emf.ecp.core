@@ -27,16 +27,22 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.internal.ui.view.emf.AdapterFactoryLabelProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
+import org.eclipse.emf.ecp.spi.ui.ECPReferenceServiceImpl;
 import org.eclipse.emf.ecp.spi.ui.UIProvider;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
+import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+import org.osgi.service.log.LogService;
 
 /**
  * Editor displaying one {@link EObject}.
@@ -53,6 +59,8 @@ public class ECPE4Editor {
 	private EObject modelElement;
 	private Adapter adapter;
 	private final ScrolledComposite parent;
+	@Inject
+	private LogService logger;
 
 	/**
 	 * Default constructor.
@@ -81,9 +89,14 @@ public class ECPE4Editor {
 		}
 		this.part = part;
 		this.modelElement = modelElement;
-		ECPSWTView render;
+		ECPSWTView render = null;
 		try {
-			render = ECPSWTViewRenderer.INSTANCE.render(parent, modelElement);
+			// render = ECPSWTViewRenderer.INSTANCE.render(parent, modelElement);
+			final VView view = ViewProviderHelper.getView(modelElement);
+			final ViewModelContext vmc = ViewModelContextFactory.INSTANCE.createViewModelContext(view, modelElement,
+				new ECPReferenceServiceImpl());
+
+			render = ECPSWTViewRenderer.INSTANCE.render(parent, vmc);
 
 			parent.setExpandHorizontal(true);
 			parent.setExpandVertical(true);
@@ -91,7 +104,7 @@ public class ECPE4Editor {
 			parent.setMinSize(render.getSWTControl().computeSize(SWT.DEFAULT, SWT.DEFAULT));
 
 		} catch (final ECPRendererException ex) {
-			ex.printStackTrace();
+			logger.log(LogService.LOG_ERROR, ex.getMessage(), ex);
 		}
 
 		updateImageAndText();
