@@ -12,6 +12,8 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.ui.e4.editor;
 
+import java.net.URL;
+
 import javax.annotation.PreDestroy;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -25,10 +27,8 @@ import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.core.ECPProject;
-import org.eclipse.emf.ecp.internal.ui.view.emf.AdapterFactoryLabelProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
 import org.eclipse.emf.ecp.spi.ui.ECPReferenceServiceImpl;
-import org.eclipse.emf.ecp.spi.ui.UIProvider;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
@@ -70,6 +70,7 @@ public class ECPE4Editor {
 	 */
 	@Inject
 	public ECPE4Editor(Composite composite, Shell shell) {
+
 		parent = new ScrolledComposite(composite, SWT.V_SCROLL
 			| SWT.H_SCROLL);
 		parent.setBackground(shell.getDisplay().getSystemColor(SWT.COLOR_WHITE));
@@ -137,19 +138,24 @@ public class ECPE4Editor {
 	}
 
 	private void updateImageAndText() {
-		part.setLabel(UIProvider.EMF_LABEL_PROVIDER.getText(modelElement));
-		part.setTooltip(UIProvider.EMF_LABEL_PROVIDER.getText(modelElement));
 
-		final AdapterFactoryLabelProvider provider = new AdapterFactoryLabelProvider(
-			InternalProvider.EMF_ADAPTER_FACTORY);
-		final IItemLabelProvider itemLabelProvider = (IItemLabelProvider) provider.getAdapterFactory().adapt(
+		final IItemLabelProvider itemLabelProvider = (IItemLabelProvider) InternalProvider.EMF_ADAPTER_FACTORY.adapt(
 			modelElement, IItemLabelProvider.class);
 
+		part.setLabel(itemLabelProvider.getText(modelElement));
+		part.setTooltip(itemLabelProvider.getText(modelElement));
+
 		final Object image = itemLabelProvider.getImage(modelElement);
+		String iconUri = null;
 		if (URI.class.isInstance(image)) {
 			final URI uri = (URI) image;
-			part.setIconURI(uri.toString());
+			iconUri = uri.toString();
 		}
+		if (URL.class.isInstance(image)) {
+			final URL uri = (URL) image;
+			iconUri = uri.toString();
+		}
+		part.setIconURI(iconUri);
 	}
 
 	/**
