@@ -65,14 +65,17 @@
     </elements>
   </fragments>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_QnBwYHlLEeOKPMuLiPS6LA" featurename="children" parentElementId="org.eclipse.emf.ecp.e4.application.popupmenu.navigator">
+    <elements xsi:type="menu:HandledMenuItem" xmi:id="_FNwTMHkYEeOKPMuLiPS6LA" elementId="org.eclipse.emf.ecp.e4.emfstore.handledmenuitem.share" label="Share" iconURI="platform:/plugin/org.eclipse.emf.ecp.emfstore.ui.e4/icons/project/share.png" command="_Vif-8HkWEeOKPMuLiPS6LA">
+      <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_IEYWgHkiEeOKPMuLiPS6LA" coreExpressionId="org.eclipse.emf.ecp.emfstore.ui.share"/>
+    </elements>
     <elements xsi:type="menu:HandledMenuItem" xmi:id="_EmLV0HkYEeOKPMuLiPS6LA" elementId="org.eclipse.emf.ecp.e4.emfstore.handledmenuitem.commit" label="Commit" iconURI="platform:/plugin/org.eclipse.emf.ecp.emfstore.ui.e4/icons/project/commit.gif" command="_NQuWAHkWEeOKPMuLiPS6LA">
       <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_GDv7gHkiEeOKPMuLiPS6LA" coreExpressionId="org.eclipse.emf.ecp.emfstore.ui.commit"/>
     </elements>
     <elements xsi:type="menu:HandledMenuItem" xmi:id="_E0bNMHkYEeOKPMuLiPS6LA" elementId="org.eclipse.emf.ecp.e4.emfstore.handledmenuitem.update" label="Update" iconURI="platform:/plugin/org.eclipse.emf.ecp.emfstore.ui.e4/icons/project/update.png" command="_SudKAHkWEeOKPMuLiPS6LA">
       <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_HE0-AHkiEeOKPMuLiPS6LA" coreExpressionId="org.eclipse.emf.ecp.emfstore.ui.update"/>
     </elements>
-    <elements xsi:type="menu:HandledMenuItem" xmi:id="_FNwTMHkYEeOKPMuLiPS6LA" elementId="org.eclipse.emf.ecp.e4.emfstore.handledmenuitem.share" label="Share" iconURI="platform:/plugin/org.eclipse.emf.ecp.emfstore.ui.e4/icons/project/share.png" command="_Vif-8HkWEeOKPMuLiPS6LA">
-      <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_IEYWgHkiEeOKPMuLiPS6LA" coreExpressionId="org.eclipse.emf.ecp.emfstore.ui.share"/>
+    <elements xsi:type="menu:HandledMenuItem" xmi:id="_HBL_sHkYEeOKPMuLiPS6LA" elementId="org.eclipse.emf.ecp.e4.emfstore.handledmenuitem.updateToVersion" label="Update to version..." iconURI="platform:/plugin/org.eclipse.emf.ecp.emfstore.ui.e4/icons/project/update.png" command="_rBTp4HkWEeOKPMuLiPS6LA">
+      <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_PNcq8HkiEeOKPMuLiPS6LA" coreExpressionId="org.eclipse.emf.ecp.emfstore.ui.updateToVersion"/>
     </elements>
     <elements xsi:type="menu:HandledMenuItem" xmi:id="_FfPEwHkYEeOKPMuLiPS6LA" elementId="org.eclipse.emf.ecp.e4.emfstore.handledmenuitem.undo" label="Undo Last Operation" iconURI="platform:/plugin/org.eclipse.emf.ecp.emfstore.ui.e4/icons/project/undo.png" command="_Wz_cAHkWEeOKPMuLiPS6LA">
       <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_JHbu8HkiEeOKPMuLiPS6LA" coreExpressionId="org.eclipse.emf.ecp.emfstore.ui.undo"/>
@@ -88,9 +91,6 @@
     </elements>
     <elements xsi:type="menu:HandledMenuItem" xmi:id="_Gu5V0HkYEeOKPMuLiPS6LA" elementId="org.eclipse.emf.ecp.e4.emfstore.handledmenuitem.branchMerge" label="Merge with Branch" iconURI="platform:/plugin/org.eclipse.emf.ecp.emfstore.ui.e4/icons/project/merge.png" command="_o3rD4HkWEeOKPMuLiPS6LA">
       <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_N5Xz8HkiEeOKPMuLiPS6LA" coreExpressionId="org.eclipse.emf.ecp.emfstore.ui.branchMerge"/>
-    </elements>
-    <elements xsi:type="menu:HandledMenuItem" xmi:id="_HBL_sHkYEeOKPMuLiPS6LA" elementId="org.eclipse.emf.ecp.e4.emfstore.handledmenuitem.updateToVersion" label="Update to version..." iconURI="platform:/plugin/org.eclipse.emf.ecp.emfstore.ui.e4/icons/project/update.png" command="_rBTp4HkWEeOKPMuLiPS6LA">
-      <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_PNcq8HkiEeOKPMuLiPS6LA" coreExpressionId="org.eclipse.emf.ecp.emfstore.ui.updateToVersion"/>
     </elements>
   </fragments>
 </fragment:ModelFragments>

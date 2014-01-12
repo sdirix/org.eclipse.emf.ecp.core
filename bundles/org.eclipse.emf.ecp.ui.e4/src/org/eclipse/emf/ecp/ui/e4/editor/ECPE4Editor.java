@@ -36,6 +36,7 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
+import org.eclipse.emf.edit.provider.ComposedImage;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
@@ -145,8 +146,12 @@ public class ECPE4Editor {
 		part.setLabel(itemLabelProvider.getText(modelElement));
 		part.setTooltip(itemLabelProvider.getText(modelElement));
 
-		final Object image = itemLabelProvider.getImage(modelElement);
+		Object image = itemLabelProvider.getImage(modelElement);
 		String iconUri = null;
+		if (ComposedImage.class.isInstance(image)) {
+			final ComposedImage composedImage = (ComposedImage) image;
+			image = composedImage.getImages().get(0);
+		}
 		if (URI.class.isInstance(image)) {
 			final URI uri = (URI) image;
 			iconUri = uri.toString();
@@ -155,6 +160,7 @@ public class ECPE4Editor {
 			final URL uri = (URL) image;
 			iconUri = uri.toString();
 		}
+
 		part.setIconURI(iconUri);
 	}
 
