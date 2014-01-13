@@ -25,6 +25,7 @@
           </menus>
           <toolbar xmi:id="_uWMcwJoUEeKJoJcmiy2C6w" elementId="org.eclipse.emf.ecp.e4.application.toolbar.0">
             <children xsi:type="menu:HandledToolItem" xmi:id="_W0NKYHq2EeOKPMuLiPS6LA" elementId="org.eclipse.emf.ecp.application.e4.handledtoolitem.0" label="Save Project" iconURI="platform:/plugin/org.eclipse.emf.ecp.application.e4/icons/save_edit.gif" command="_FrvNkHq2EeOKPMuLiPS6LA"/>
+            <children xsi:type="menu:HandledToolItem" xmi:id="_qBe0sHvAEeOKPMuLiPS6LA" elementId="org.eclipse.emf.ecp.application.e4.handledtoolitem.link" label="Link" iconURI="platform:/plugin/org.eclipse.emf.ecp.application.e4/icons/link_with_editor.gif" tooltip="Link With Editor" selected="true" type="Check" command="_fDbLsHvAEeOKPMuLiPS6LA"/>
           </toolbar>
         </children>
       </children>
@@ -53,6 +54,7 @@
   <handlers xmi:id="_OFz24Hq2EeOKPMuLiPS6LA" elementId="org.eclipse.emf.ecp.e4.application.handler.saveProject" contributionURI="bundleclass://org.eclipse.emf.ecp.ui.e4/org.eclipse.emf.ecp.ui.e4.handlers.SaveProjectHandler" command="_FrvNkHq2EeOKPMuLiPS6LA"/>
   <handlers xmi:id="_zoFeEHq5EeOKPMuLiPS6LA" elementId="org.eclipse.emf.ecp.e4.application.handler.openProject" contributionURI="bundleclass://org.eclipse.emf.ecp.ui.e4/org.eclipse.emf.ecp.ui.e4.handlers.OpenProjectHandler" command="_vuNCcHq5EeOKPMuLiPS6LA"/>
   <handlers xmi:id="_3RXR4Hq5EeOKPMuLiPS6LA" elementId="org.eclipse.emf.ecp.e4.application.handler.closeProject" contributionURI="bundleclass://org.eclipse.emf.ecp.ui.e4/org.eclipse.emf.ecp.ui.e4.handlers.CloseProjectHandler" command="_snLnIHq5EeOKPMuLiPS6LA"/>
+  <handlers xmi:id="_iOh1wHvAEeOKPMuLiPS6LA" elementId="org.eclipse.emf.ecp.e4.application.handler.linkWithEditor" contributionURI="bundleclass://org.eclipse.emf.ecp.ui.e4/org.eclipse.emf.ecp.ui.e4.handlers.LinkWithEditorHandler" command="_fDbLsHvAEeOKPMuLiPS6LA"/>
   <descriptors xmi:id="_5aBzoJgREeKJoJcmiy2C6w" elementId="org.eclipse.emf.ecp.e4.application.partdescriptor.editor" label="" tooltip="" allowMultiple="true" category="editorPart" closeable="true" contributionURI="bundleclass://org.eclipse.emf.ecp.ui.e4/org.eclipse.emf.ecp.ui.e4.editor.ECPE4Editor"/>
   <commands xmi:id="_ogB3AJgZEeKJoJcmiy2C6w" elementId="org.eclipse.emf.ecp.e4.application.command.newProject" commandName="New Project"/>
   <commands xmi:id="_eOWrgJgcEeKJoJcmiy2C6w" elementId="org.eclipse.emf.ecp.e4.application.command.checkoutProject" commandName="Checkout"/>
@@ -62,6 +64,7 @@
   <commands xmi:id="_FrvNkHq2EeOKPMuLiPS6LA" elementId="org.eclipse.emf.ecp.e4.application.command.saveProject" commandName="Save Project"/>
   <commands xmi:id="_snLnIHq5EeOKPMuLiPS6LA" elementId="org.eclipse.emf.ecp.e4.application.command.closeProject" commandName="Close Project"/>
   <commands xmi:id="_vuNCcHq5EeOKPMuLiPS6LA" elementId="org.eclipse.emf.ecp.e4.application.command.openProject" commandName="Open Project"/>
+  <commands xmi:id="_fDbLsHvAEeOKPMuLiPS6LA" elementId="org.eclipse.emf.ecp.e4.application.command.linkWithEditor" commandName="Link"/>
   <addons xmi:id="_0JoRApgREeKJoJcmiy2C6w" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
   <addons xmi:id="_0JoRA5gREeKJoJcmiy2C6w" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
   <addons xmi:id="_0JoRBJgREeKJoJcmiy2C6w" elementId="org.eclipse.e4.ui.bindings.service" contributionURI="bundleclass://org.eclipse.e4.ui.bindings/org.eclipse.e4.ui.bindings.BindingServiceAddon"/>
