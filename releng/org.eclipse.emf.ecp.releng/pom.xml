@@ -223,6 +223,9 @@
 		<module>../../bundles/org.eclipse.emf.ecp.view.ideconfig.model</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.ideconfig.model.edit</module>
 		
+		<!-- RAP -->
+		<module>../../features/org.eclipse.emf.ecp.rap.util.feature</module>
+		<module>../../bundles/org.eclipse.emf.ecp.rap.util</module>
 
 		<!-- Tests -->
 		<module>../../tests/org.eclipse.emf.ecp.view.test.common</module>
