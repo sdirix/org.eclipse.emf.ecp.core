@@ -735,8 +735,13 @@ public class TableControl extends SWTControl {
 		@Override
 		public String getToolTipText(Object element) {
 			final EObject domainObject = (EObject) element;
-			final VDiagnostic diagnostic = getDiagnosticForFeature(domainObject, feature);
-			return diagnostic.getMessage();
+			final VDiagnostic vDiagnostic = getDiagnosticForFeature(domainObject, feature);
+			final Diagnostic diagnostic = (Diagnostic) vDiagnostic.getDiagnostics().get(0);
+			Diagnostic reason = diagnostic;
+			if (diagnostic.getChildren() != null && diagnostic.getChildren().size() != 0) {
+				reason = diagnostic.getChildren().get(0);
+			}
+			return reason.getMessage();
 		}
 
 		@Override
