@@ -17,9 +17,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.DatatypeConstants;
-import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.eclipse.core.databinding.UpdateValueStrategy;
@@ -137,22 +134,23 @@ public class XmlDateCellEditor extends CellEditor implements ECPCellEditor {
 	@Override
 	protected Object doGetValue() {
 
-		try {
-			final XMLGregorianCalendar cal = DatatypeFactory.newInstance().newXMLGregorianCalendar();
-			cal.setYear(dateWidget.getYear());
-			cal.setMonth(dateWidget.getMonth() + 1);
-			cal.setDay(dateWidget.getDay());
-
-			cal.setTimezone(DatatypeConstants.FIELD_UNDEFINED);
-
-			return cal;
-		} catch (final DatatypeConfigurationException ex) {
-			// Activator.logException(ex);
-		}
+		// try {
+		// final XMLGregorianCalendar cal = DatatypeFactory.newInstance().newXMLGregorianCalendar();
+		// cal.setYear(dateWidget.getYear());
+		// cal.setMonth(dateWidget.getMonth() + 1);
+		// cal.setDay(dateWidget.getDay());
+		//
+		// cal.setTimezone(DatatypeConstants.FIELD_UNDEFINED);
+		//
+		// return cal;
+		// } catch (final DatatypeConfigurationException ex) {
+		// // Activator.logException(ex);
+		// }
 		final Calendar selectedCalendarDate = Calendar.getInstance();
 		selectedCalendarDate.set(Calendar.YEAR, dateWidget.getYear());
-		selectedCalendarDate.set(Calendar.MONTH, dateWidget.getMonth());
+		selectedCalendarDate.set(Calendar.MONTH, dateWidget.getMonth() + 1);
 		selectedCalendarDate.set(Calendar.DAY_OF_MONTH, dateWidget.getDay());
+
 		return new XMLCalendar(selectedCalendarDate.getTime(), XMLCalendar.DATE);
 
 	}
