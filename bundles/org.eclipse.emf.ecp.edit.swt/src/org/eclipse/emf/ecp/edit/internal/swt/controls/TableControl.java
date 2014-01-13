@@ -574,7 +574,7 @@ public class TableControl extends SWTControl {
 
 	/**
 	 * @author Jonas
-	 *
+	 * 
 	 */
 	private final class ValidationStatusCellLabelProvider extends CellLabelProvider {
 		private final List<EStructuralFeature> structuralFeatures;
@@ -736,12 +736,16 @@ public class TableControl extends SWTControl {
 		public String getToolTipText(Object element) {
 			final EObject domainObject = (EObject) element;
 			final VDiagnostic vDiagnostic = getDiagnosticForFeature(domainObject, feature);
+			if (vDiagnostic.getDiagnostics().size() == 0) {
+				return vDiagnostic.getMessage();
+			}
 			final Diagnostic diagnostic = (Diagnostic) vDiagnostic.getDiagnostics().get(0);
 			Diagnostic reason = diagnostic;
 			if (diagnostic.getChildren() != null && diagnostic.getChildren().size() != 0) {
 				reason = diagnostic.getChildren().get(0);
 			}
 			return reason.getMessage();
+
 		}
 
 		@Override
