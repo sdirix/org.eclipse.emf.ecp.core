@@ -14,6 +14,7 @@ package org.eclipse.emf.ecp.view.spi.core.swt;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
@@ -126,10 +127,17 @@ public class SWTControlRenderer extends AbstractSWTRenderer<VControl> {
 			}
 
 			final List<RenderingResultRow<org.eclipse.swt.widgets.Control>> result = new ArrayList<RenderingResultRow<org.eclipse.swt.widgets.Control>>();
-			final Control next = createControls.iterator().next().getControls().iterator().next();
+
 			if (label != null) {
+				final Set<Control> mainControls = createControls.get(0).getControls();
+				final Control[] controls = new Control[mainControls.size() + 1];
+				controls[0] = label;
+				int i = 1;
+				for (final Control mainControl : mainControls) {
+					controls[i++] = mainControl;
+				}
 				result.add(SWTRenderingHelper.INSTANCE.getResultRowFactory()
-					.createRenderingResultRow(label, next));
+					.createRenderingResultRow(controls));
 			}
 			else {
 				result.addAll(createControls);
@@ -175,5 +183,4 @@ public class SWTControlRenderer extends AbstractSWTRenderer<VControl> {
 
 		return null;
 	}
-
 }
