@@ -226,6 +226,8 @@
 		<!-- RAP -->
 		<module>../../features/org.eclipse.emf.ecp.rap.util.feature</module>
 		<module>../../bundles/org.eclipse.emf.ecp.rap.util</module>
+		<module>../../bundles/org.eclipse.emf.ecp.rap</module>
+		<module>../../releng/org.eclipse.emf.ecp.rap.products</module>
 
 		<!-- Tests -->
 		<module>../../tests/org.eclipse.emf.ecp.view.test.common</module>
