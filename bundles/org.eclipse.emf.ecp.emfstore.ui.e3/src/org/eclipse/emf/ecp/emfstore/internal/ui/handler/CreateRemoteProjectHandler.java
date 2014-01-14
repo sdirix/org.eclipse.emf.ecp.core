@@ -20,7 +20,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
- * This is the EMFStore Register EPackage Handler delegating to the EMFStore {@link RegisterEPackageHandler}.
+ * This is the EMFStore Register EPackage Handler delegating to the {@link CreateRemoteProjectHelper}.
  * 
  * @author Tobias Verhoeven
  * 

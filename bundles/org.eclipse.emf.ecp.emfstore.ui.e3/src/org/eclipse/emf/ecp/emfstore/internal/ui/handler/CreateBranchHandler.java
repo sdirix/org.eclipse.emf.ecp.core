@@ -20,7 +20,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
- * A CreateBranch Handler. This allows to create a new branch.
+ * A CreateBranch Handler. This allows to create a new branch delegating to {@link CreateBranchHelper}.
  * 
  * @author Eugen Neufeld
  * 

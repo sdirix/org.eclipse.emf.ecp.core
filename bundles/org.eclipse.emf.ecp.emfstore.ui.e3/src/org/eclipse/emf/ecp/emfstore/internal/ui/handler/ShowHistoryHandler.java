@@ -15,12 +15,11 @@ package org.eclipse.emf.ecp.emfstore.internal.ui.handler;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.emf.emfstore.internal.client.ui.controller.UIShowHistoryController;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
- * This is the EMFStore ShowHistory Handler delegating to the EMFStore {@link UIShowHistoryController}.
+ * This is the EMFStore ShowHistory Handler delegating to the {@link ShowHistoryViewHelper}.
  * 
  * @author Tobias Verhoeven
  * 

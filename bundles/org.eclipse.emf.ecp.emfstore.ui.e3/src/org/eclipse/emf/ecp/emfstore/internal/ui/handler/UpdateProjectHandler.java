@@ -16,12 +16,11 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
-import org.eclipse.emf.emfstore.internal.client.ui.controller.UIUpdateProjectController;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
- * This is the EMFStore UpdateProject Handler delegating to the EMFStore {@link UIUpdateProjectController}.
+ * This is the EMFStore UpdateProject Handler delegating to the {@link UpdateProjectHelper}.
  * 
  * @author Eugen Neufeld
  * 

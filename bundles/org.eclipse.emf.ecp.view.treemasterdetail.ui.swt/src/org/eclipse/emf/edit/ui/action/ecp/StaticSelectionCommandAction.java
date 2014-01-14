@@ -1,3 +1,4 @@
+// REUSED CLASS
 /**
  * Copyright (c) 2002-2007 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
@@ -44,7 +45,6 @@ import org.eclipse.jface.viewers.IStructuredSelection;
  */
 public abstract class StaticSelectionCommandAction extends Action
 {
-	private static final long serialVersionUID = 1L;
 
 	/**
 	 * This records the editing domain of the current editor or viewer. For global

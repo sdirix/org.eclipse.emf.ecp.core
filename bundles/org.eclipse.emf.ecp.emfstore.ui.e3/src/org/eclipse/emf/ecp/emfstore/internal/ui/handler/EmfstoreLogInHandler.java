@@ -19,6 +19,8 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
+ * A login handler delegating the login to {@link EMFStoreLogInHelper}.
+ * 
  * @author Eugen Neufeld
  */
 public class EmfstoreLogInHandler extends AbstractHandler {

@@ -20,7 +20,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
- * A MergeBranch Handler. This allows to merge a branch.
+ * A MergeBranch Handler. This allows to merge a branch. The call is delegated to {@link MergeBranchHelper}.
  * 
  * @author Eugen Neufeld
  * 

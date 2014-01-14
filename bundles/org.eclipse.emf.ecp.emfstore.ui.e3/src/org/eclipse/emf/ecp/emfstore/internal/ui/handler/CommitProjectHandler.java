@@ -16,12 +16,11 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
-import org.eclipse.emf.emfstore.internal.client.ui.controller.UICommitProjectController;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
- * This is the EMFStore Commit Handler delegating to the EMFStore {@link UICommitProjectController}.
+ * This is the EMFStore Commit Handler delegating to the EMFStore {@link CommitProjectHelper}.
  * 
  * @author Eugen Neufeld
  * 

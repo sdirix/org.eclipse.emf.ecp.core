@@ -16,12 +16,11 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
-import org.eclipse.emf.emfstore.internal.client.ui.controller.UIUndoLastOperationController;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
- * This is the EMFStore UndoLastOperation Handler delegating to the EMFStore {@link UIUndoLastOperationController}.
+ * This is the EMFStore UndoLastOperation Handler delegating to the {@link UndoLastOperationHelper}.
  * 
  * @author Eugen Neufeld
  * 

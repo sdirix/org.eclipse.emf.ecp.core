@@ -35,6 +35,8 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
+ * An export project handler.
+ * 
  * @author Eugen Neufeld
  * 
  */

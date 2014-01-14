@@ -15,8 +15,15 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 
+/**
+ * A handler allowing to start a local EMFStore server. The call is delegated to {@link StartLocalServerHelper}.
+ * 
+ * @author Eugen Neufeld
+ * 
+ */
 public class StartLocalServerHandler extends AbstractHandler {
 
+	/** {@inheritDoc} **/
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		StartLocalServerHelper.startLocalServer();
 		return null;

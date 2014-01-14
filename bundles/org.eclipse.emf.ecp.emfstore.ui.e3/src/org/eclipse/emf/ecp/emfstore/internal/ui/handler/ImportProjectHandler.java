@@ -39,6 +39,8 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
+ * The import project handler allows to import an emfstore project.
+ * 
  * @author Eugen Neufeld
  * 
  */
