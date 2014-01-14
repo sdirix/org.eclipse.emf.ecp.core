@@ -110,15 +110,6 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 	 */
 	public Composite createControl(final Composite parent) {
 
-		// final Composite composite = new Composite(parent, SWT.NONE);
-		// composite.setBackground(parent.getBackground());
-		// final int numColumns = 1;
-		// if (isEmbedded()) {
-		// numColumns--;
-		// }
-		// TODO needed .spacing(10, 0) ?
-		// GridLayoutFactory.fillDefaults().numColumns(numColumns).applyTo(composite);
-
 		final Composite dataControl = createDataControl(parent);
 
 		setHelpTooltips();
