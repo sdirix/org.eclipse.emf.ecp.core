@@ -534,9 +534,47 @@ public class TableControl extends SWTControl {
 		}
 		final Image image = getValidationIcon(diagnostic.getSeverity());
 		validationLabel.setImage(image);
-		validationLabel.setToolTipText(diagnostic.getMessage());
+		validationLabel.setToolTipText(getTableTooltipMessage(diagnostic));
 		final EObject object = (EObject) diagnostic.getData().get(0);
 		tableViewer.update(object, null);
+	}
+
+	/**
+	 * Returns the message of the validation tool tip shown in the table header.
+	 * 
+	 * @param diagnostic the {@link Diagnostic} to extract the message from
+	 * @return the message
+	 */
+	protected String getTableTooltipMessage(Diagnostic diagnostic) {
+		return diagnostic.getMessage();
+	}
+
+	/**
+	 * Returns the message of the validation tool tip shown in the row.
+	 * 
+	 * @param vDiagnostic the {@link VDiagnostic} to get the message from
+	 * @return the message
+	 */
+	protected String getRowTooltipMessage(VDiagnostic vDiagnostic) {
+		return vDiagnostic.getMessage();
+	}
+
+	/**
+	 * Returns the message of the validation tool tip shown in the cell.
+	 * 
+	 * @param vDiagnostic the {@link VDiagnostic} to get the message from
+	 * @return the message
+	 */
+	protected String getCellTooltipMessage(VDiagnostic vDiagnostic) {
+		if (vDiagnostic.getDiagnostics().size() == 0) {
+			return vDiagnostic.getMessage();
+		}
+		final Diagnostic diagnostic = (Diagnostic) vDiagnostic.getDiagnostics().get(0);
+		Diagnostic reason = diagnostic;
+		if (diagnostic.getChildren() != null && diagnostic.getChildren().size() != 0) {
+			reason = diagnostic.getChildren().get(0);
+		}
+		return reason.getMessage();
 	}
 
 	/**
@@ -621,7 +659,7 @@ public class TableControl extends SWTControl {
 				if (tooltip.length() > 0) {
 					tooltip.append("\n"); //$NON-NLS-1$
 				}
-				tooltip.append(vDiagnostic.getMessage());
+				tooltip.append(getRowTooltipMessage(vDiagnostic));
 			}
 
 			return tooltip.toString();
@@ -736,15 +774,7 @@ public class TableControl extends SWTControl {
 		public String getToolTipText(Object element) {
 			final EObject domainObject = (EObject) element;
 			final VDiagnostic vDiagnostic = getDiagnosticForFeature(domainObject, feature);
-			if (vDiagnostic.getDiagnostics().size() == 0) {
-				return vDiagnostic.getMessage();
-			}
-			final Diagnostic diagnostic = (Diagnostic) vDiagnostic.getDiagnostics().get(0);
-			Diagnostic reason = diagnostic;
-			if (diagnostic.getChildren() != null && diagnostic.getChildren().size() != 0) {
-				reason = diagnostic.getChildren().get(0);
-			}
-			return reason.getMessage();
+			return getCellTooltipMessage(vDiagnostic);
 
 		}
 
