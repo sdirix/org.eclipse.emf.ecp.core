@@ -526,8 +526,8 @@ public class ViewValidationTest extends CommonValidationTest {
 				TestPackage.eINSTANCE.getComputer_Mainboard()));
 		view.getChildren().add(control);
 
-		final Mainboard mainboard = TestFactory.eINSTANCE.createMainboard();
-		computer.setMainboard(mainboard);
+		// final Mainboard mainboard = TestFactory.eINSTANCE.createMainboard();
+		// computer.setMainboard(mainboard);
 
 		assertEquals("Severity of mainboard name must be error", Diagnostic.ERROR, view.getDiagnostic()
 			.getHighestSeverity());
