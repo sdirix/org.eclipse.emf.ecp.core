@@ -85,8 +85,6 @@ public abstract class ECPAbstractCustomControlSWT extends
 	protected final Label createValidationLabel(Composite parent) {
 		validationLabel = new Label(parent, SWT.NONE);
 		validationLabel.setBackground(parent.getBackground());
-		validationLabel.setImage(getImage(VALIDATION_ERROR_IMAGE));
-		validationLabel.setVisible(false);
 		return validationLabel;
 	}
 
