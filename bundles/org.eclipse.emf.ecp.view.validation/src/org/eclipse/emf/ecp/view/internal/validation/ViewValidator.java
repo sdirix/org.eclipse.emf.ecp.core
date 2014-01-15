@@ -93,9 +93,7 @@ public class ViewValidator extends ViewModelGraph {
 	 */
 	@Override
 	public VDiagnostic getDefaultValue() {
-		final VDiagnostic result = VViewFactory.eINSTANCE.createDiagnostic();
-		result.getDiagnostics().add(Diagnostic.OK_INSTANCE);
-		return result;
+		return VViewFactory.eINSTANCE.createDiagnostic();
 	}
 
 	/**
@@ -208,6 +206,9 @@ public class ViewValidator extends ViewModelGraph {
 			for (final EStructuralFeature esf : okEObject.eClass().getEAllStructuralFeatures()) {
 				final Setting diagSetting = ((InternalEObject) okEObject).eSetting(esf);
 				for (final VControl control : validationRegistry.getRenderablesForEObject(diagSetting)) {
+					if (VDiagnosticHelper.isEqual(control.getDiagnostic(), getDefaultValue())) {
+						continue;
+					}
 					final VDomainModelReference modelReference = control.getDomainModelReference();
 					final Iterator<Setting> settings = modelReference.getIterator();
 					while (settings.hasNext()) {
