@@ -100,6 +100,9 @@ public class ValidationRegistry {
 		if (VControl.class.isInstance(renderable)) {
 			final VControl control = (VControl) renderable;
 			final VDomainModelReference domainModelReference = control.getDomainModelReference();
+			if (domainModelReference == null) {
+				return result;
+			}
 			final Iterator<Setting> iterator = domainModelReference.getIterator();
 			while (iterator.hasNext()) {
 				final UniqueSetting uniqueSetting = UniqueSetting.createSetting(iterator.next());
