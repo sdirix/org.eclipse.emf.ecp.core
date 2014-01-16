@@ -15,7 +15,6 @@ import java.util.Map;
 
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
-import org.eclipse.e4.ui.model.application.ui.menu.MToolBarElement;
 import org.eclipse.e4.ui.model.application.ui.menu.MToolItem;
 import org.eclipse.emf.ecp.ui.e4.view.ECPModelView;
 
@@ -31,7 +30,7 @@ public class LinkWithEditorHandler {
 	 * Execute Method.
 	 * 
 	 * @param part the {@link MPart}
-	 * @param toolBarElement the selected {@link MToolBarElement}
+	 * @param toolBarElement the selected {@link org.eclipse.e4.ui.model.application.ui.menu.MToolBarElement}
 	 */
 	@Execute
 	public void execute(MPart part, MToolItem toolBarElement) {
