@@ -119,6 +119,12 @@ public abstract class Registry<ELEMENT, OBSERVER extends ECPObserver> extends Li
 		}
 	}
 
+	/**
+	 * Adds or remove elements contained in the registry.
+	 * 
+	 * @param remove a set of elements to be removed
+	 * @param add a set of elements to be added
+	 */
 	public final void changeElements(Set<String> remove, Set<ELEMENT> add) {
 		checkActive();
 		doChangeElements(remove, add);
@@ -144,6 +150,14 @@ public abstract class Registry<ELEMENT, OBSERVER extends ECPObserver> extends Li
 		return true;
 	}
 
+	/**
+	 * Executes adding or removing elements contained in the registry.
+	 * As a caller, use changeElements().
+	 * 
+	 * @param remove a set of elements to be removed
+	 * @param add a set of elements to be added
+	 * @return a set of elements, which have been removed
+	 */
 	protected final Set<ELEMENT> doChangeElements(Set<String> remove, Set<ELEMENT> add) {
 		Set<ELEMENT> result = null;
 		final Set<ELEMENT> oldElements = new HashSet<ELEMENT>();

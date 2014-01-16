@@ -120,7 +120,7 @@ public class DynamicCreateChildrenElementsMenuContribution {
 		}
 	}
 
-	private class CustomCreateChildAction extends CreateChildAction {
+	private final class CustomCreateChildAction extends CreateChildAction {
 
 		private CustomCreateChildAction(EditingDomain editingDomain,
 			ISelection selection, Object descriptor, CommandParameter cp,
