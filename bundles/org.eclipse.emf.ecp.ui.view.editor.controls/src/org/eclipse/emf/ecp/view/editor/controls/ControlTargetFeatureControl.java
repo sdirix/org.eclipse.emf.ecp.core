@@ -86,7 +86,7 @@ public class ControlTargetFeatureControl extends LinkControl {
 			getEditingDomain()
 				.getCommandStack()
 				.execute(
-					new FilteredReferenceCommand(getSetting().getEObject(), composedAdapterFactory,
+					new FilteredReferenceCommand(getSetting().getEObject(), getComposedAdapterFactory(),
 						getShell()));
 		}
 	}
