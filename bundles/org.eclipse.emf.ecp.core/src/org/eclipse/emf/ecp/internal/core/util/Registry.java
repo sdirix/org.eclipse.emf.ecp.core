@@ -21,6 +21,7 @@ import java.util.Set;
 
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.core.util.observer.ECPObserver;
+import org.eclipse.emf.ecp.core.util.observer.ECPObserverBus;
 import org.eclipse.emf.ecp.internal.core.Activator;
 import org.eclipse.emf.ecp.spi.core.util.ECPDisposable;
 import org.eclipse.emf.ecp.spi.core.util.ECPDisposable.DisposeListener;
@@ -146,6 +147,10 @@ public abstract class Registry<ELEMENT, OBSERVER extends ECPObserver> extends Li
 		}
 	}
 
+	/**
+	 * 
+	 * @return Whether elements should be removed from the registry if they are disposed.
+	 */
 	protected boolean isRemoveDisposedElements() {
 		return true;
 	}
@@ -218,10 +223,20 @@ public abstract class Registry<ELEMENT, OBSERVER extends ECPObserver> extends Li
 		return result;
 	}
 
+	/**
+	 * Adds an {@link ECPObserver} to the {@link ECPObserverBus}.
+	 * 
+	 * @param observer the observer to be added
+	 */
 	public void addObserver(OBSERVER observer) {
 		ECPUtil.getECPObserverBus().register(observer);
 	}
 
+	/**
+	 * Removes an {@link ECPObserver} to the {@link ECPObserverBus}.
+	 * 
+	 * @param observer the observer to be removed
+	 */
 	public void removeObserver(OBSERVER observer) {
 		ECPUtil.getECPObserverBus().unregister(observer);
 	}
