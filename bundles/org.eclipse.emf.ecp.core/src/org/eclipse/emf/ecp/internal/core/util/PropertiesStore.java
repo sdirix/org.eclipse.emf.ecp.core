@@ -40,9 +40,16 @@ public abstract class PropertiesStore<ELEMENT extends StorableElement, OBSERVER 
 	ElementRegistry<ELEMENT, OBSERVER> {
 	private File folder;
 
+	/**
+	 * Default constructor.
+	 */
 	public PropertiesStore() {
 	}
 
+	/**
+	 * 
+	 * @return The folder, where this property store stores its properties as a {@link File}
+	 */
 	public final File getFolder() {
 		return folder;
 	}
