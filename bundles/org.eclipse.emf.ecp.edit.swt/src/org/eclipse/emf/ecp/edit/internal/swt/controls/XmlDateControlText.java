@@ -92,53 +92,7 @@ public class XmlDateControlText extends AbstractTextControl {
 		bDate = new Button(main, SWT.PUSH);
 		bDate.setImage(Activator.getImageDescriptor("icons/date.png").createImage()); //$NON-NLS-1$
 		bDate.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_xmldate"); //$NON-NLS-1$
-		bDate.addSelectionListener(new SelectionAdapter() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				final Shell dialog = new Shell(getText().getShell(), SWT.NONE);
-				dialog.setLayout(new GridLayout(1, false));
-
-				final DateTime calendar = new DateTime(dialog, SWT.CALENDAR | SWT.BORDER);
-				final XMLGregorianCalendar gregorianCalendar = (XMLGregorianCalendar) getModelValue().getValue();
-				final Calendar cal = Calendar.getInstance(getLocale());
-				if (gregorianCalendar != null) {
-					cal.setTime(gregorianCalendar.toGregorianCalendar().getTime());
-				}
-				calendar.setDate(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
-
-				final IObservableValue dateObserver = SWTObservables.observeSelection(calendar);
-				final Binding binding = getDataBindingContext().bindValue(dateObserver, getModelValue(),
-					new DateTargetToModelUpdateStrategy(), new DateModelToTargetUpdateStrategy());
-				binding.updateModelToTarget();
-				calendar.addSelectionListener(new SelectionAdapter() {
-					@Override
-					public void widgetSelected(SelectionEvent e) {
-						binding.updateTargetToModel();
-						binding.dispose();
-						dialog.close();
-					}
-				});
-				calendar.addFocusListener(new FocusListener() {
-
-					public void focusLost(FocusEvent event) {
-						binding.updateTargetToModel();
-						binding.dispose();
-						dialog.close();
-					}
-
-					public void focusGained(FocusEvent event) {
-					}
-				});
-				dialog.pack();
-				dialog.layout();
-				dialog.setLocation(bDate.getParent().toDisplay(
-					bDate.getLocation().x + bDate.getSize().x - dialog.getSize().x,
-					bDate.getLocation().y + bDate.getSize().y));
-				dialog.open();
-			}
-
-		});
+		bDate.addSelectionListener(new SelectionAdapterExtension());
 	}
 
 	@Override
@@ -149,6 +103,56 @@ public class XmlDateControlText extends AbstractTextControl {
 		final Binding binding = getDataBindingContext().bindValue(value, getModelValue(),
 			new DateTargetToModelUpdateStrategy(), new DateModelToTargetUpdateStrategy());
 		return binding;
+	}
+
+	/**
+	 * @author Jonas
+	 *
+	 */
+	private final class SelectionAdapterExtension extends SelectionAdapter {
+		@Override
+		public void widgetSelected(SelectionEvent e) {
+			final Shell dialog = new Shell(getText().getShell(), SWT.NONE);
+			dialog.setLayout(new GridLayout(1, false));
+
+			final DateTime calendar = new DateTime(dialog, SWT.CALENDAR | SWT.BORDER);
+			final XMLGregorianCalendar gregorianCalendar = (XMLGregorianCalendar) getModelValue().getValue();
+			final Calendar cal = Calendar.getInstance(getLocale());
+			if (gregorianCalendar != null) {
+				cal.setTime(gregorianCalendar.toGregorianCalendar().getTime());
+			}
+			calendar.setDate(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
+
+			final IObservableValue dateObserver = SWTObservables.observeSelection(calendar);
+			final Binding binding = getDataBindingContext().bindValue(dateObserver, getModelValue(),
+				new DateTargetToModelUpdateStrategy(), new DateModelToTargetUpdateStrategy());
+			binding.updateModelToTarget();
+			calendar.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					binding.updateTargetToModel();
+					binding.dispose();
+					dialog.close();
+				}
+			});
+			calendar.addFocusListener(new FocusListener() {
+
+				public void focusLost(FocusEvent event) {
+					binding.updateTargetToModel();
+					binding.dispose();
+					dialog.close();
+				}
+
+				public void focusGained(FocusEvent event) {
+				}
+			});
+			dialog.pack();
+			dialog.layout();
+			dialog.setLocation(bDate.getParent().toDisplay(
+				bDate.getLocation().x + bDate.getSize().x - dialog.getSize().x,
+				bDate.getLocation().y + bDate.getSize().y));
+			dialog.open();
+		}
 	}
 
 	private class DateModelToTargetUpdateStrategy extends ModelToTargetUpdateStrategy {
