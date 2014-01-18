@@ -1071,11 +1071,11 @@ public class TableControl extends SWTControl {
 		 * cycle.
 		 */
 		class EditingState {
-			IObservableValue target;
+			private final IObservableValue target;
 
-			IObservableValue model;
+			private final IObservableValue model;
 
-			Binding binding;
+			private final Binding binding;
 
 			EditingState(Binding binding, IObservableValue target, IObservableValue model) {
 				this.binding = binding;
