@@ -120,6 +120,13 @@ public abstract class PropertiesStore<ELEMENT extends StorableElement, OBSERVER 
 		return file.isFile();
 	}
 
+	/**
+	 * Loads an element.
+	 * 
+	 * @param in an {@link ObjectInput} to load the element from
+	 * @return the element
+	 * @throws IOException if the element cannot be loaded correctly
+	 */
 	protected abstract ELEMENT loadElement(ObjectInput in) throws IOException;
 
 	@Override

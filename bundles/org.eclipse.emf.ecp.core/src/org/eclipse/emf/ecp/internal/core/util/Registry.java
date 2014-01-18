@@ -240,14 +240,13 @@ public abstract class Registry<ELEMENT, OBSERVER extends ECPObserver> extends Li
 		ECPUtil.getECPObserverBus().unregister(observer);
 	}
 
-	// private void notifyObservers(Collection<ELEMENT> oldArray, Collection<ELEMENT> newArray) throws Exception {
-	// // TODO: remove warning
-	// Class<OBSERVER> observerType = (Class<OBSERVER>) ((ParameterizedType) getClass().getGenericSuperclass())
-	// .getActualTypeArguments()[1];
-	// OBSERVER notify = ECPObserverBusImpl.getInstance().notify(observerType);
-	// notifyObservers(notify, oldArray, newArray);
-	// }
-
+	/**
+	 * Notifies observers that the elements in the registry have changed.
+	 * 
+	 * @param oldArray The old collection of elements
+	 * @param newArray The new collection of elements
+	 * @throws Exception
+	 */
 	protected abstract void notifyObservers(Collection<ELEMENT> oldArray, Collection<ELEMENT> newArray)
 		throws Exception;
 
@@ -255,6 +254,10 @@ public abstract class Registry<ELEMENT, OBSERVER extends ECPObserver> extends Li
 		// Can be overridden in subclasses
 	}
 
+	/**
+	 * @param element the element to retrieve a name for.
+	 * @return the name of an element
+	 */
 	protected abstract String getElementName(ELEMENT element);
 
 	protected static boolean isDisposingElement() {
