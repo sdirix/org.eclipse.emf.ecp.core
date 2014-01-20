@@ -96,5 +96,6 @@
          </with>
       </definition>
    </extension>
+   <extension-point id="labelProvider" name="ECP Label Provider" schema="schema/labelProvider.exsd"/>
 	
 </plugin>

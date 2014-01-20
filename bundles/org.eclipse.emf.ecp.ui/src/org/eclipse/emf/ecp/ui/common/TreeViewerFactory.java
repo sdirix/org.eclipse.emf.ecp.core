@@ -55,30 +55,31 @@ public final class TreeViewerFactory {
 
 	public static TreeViewer createModelExplorerViewer(Composite parent, boolean hasDnD, ILabelDecorator labelDecorator) {
 		final ModelContentProvider contentProvider = new ModelContentProvider();
-		final TreeViewer viewer = createTreeViewer(parent, new ModelLabelProvider(contentProvider), contentProvider,
+		final TreeViewer viewer = createTreeViewer(parent, getLabelProvider(contentProvider), contentProvider,
 			ECPUtil.getECPProjectManager(), labelDecorator, false);
 		if (hasDnD) {
 			final ECPDropAdapter dropAdapter = getDropAdapter(contentProvider, viewer);
 
-			int dndOperations = DND.DROP_COPY | DND.DROP_MOVE | DND.DROP_LINK;
-			Transfer[] transfers = new Transfer[] { LocalTransfer.getInstance() };
+			final int dndOperations = DND.DROP_COPY | DND.DROP_MOVE | DND.DROP_LINK;
+			final Transfer[] transfers = new Transfer[] { LocalTransfer.getInstance() };
 			viewer.addDragSupport(dndOperations, transfers, new ViewerDragAdapter(viewer));// new ECPDragAdapter(viewer)
 			viewer.addDropSupport(dndOperations, transfers, dropAdapter);// ComposedDropAdapter
 			viewer.addSelectionChangedListener(new ISelectionChangedListener() {
 
 				public void selectionChanged(SelectionChangedEvent event) {
-					Object[] elements = ((IStructuredSelection) event.getSelection()).toArray();
+					final Object[] elements = ((IStructuredSelection) event.getSelection()).toArray();
 					if (elements == null || elements.length == 0) {
 						return;
 					}
 					ECPProject project = null;
 					if (elements[0] instanceof ECPProject) {
-						ECPContainer context = ECPUtil.getModelContext(contentProvider, elements);
+						final ECPContainer context = ECPUtil.getModelContext(contentProvider, elements);
 						if (context != null && context instanceof ECPProject) {
 							project = (ECPProject) context;
 						}
 					} else {
-						ECPModelContextProvider contextProvider = (ECPModelContextProvider) viewer.getContentProvider();
+						final ECPModelContextProvider contextProvider = (ECPModelContextProvider) viewer
+							.getContentProvider();
 						project = (ECPProject) ECPUtil.getModelContext(contextProvider, elements[0]);
 					}
 					if (project != null) {
@@ -98,15 +99,15 @@ public final class TreeViewerFactory {
 	private static ECPDropAdapter getDropAdapter(ModelContentProvider contentProvider, TreeViewer viewer) {
 		ECPDropAdapter dropAdapter = null;
 		// read extensionpoint, if no defined take default
-		IExtensionPoint extensionPoint = Platform.getExtensionRegistry().getExtensionPoint(
+		final IExtensionPoint extensionPoint = Platform.getExtensionRegistry().getExtensionPoint(
 			"org.eclipse.emf.ecp.ui.dropAdapter");
-		for (IExtension extension : extensionPoint.getExtensions()) {
-			IConfigurationElement configurationElement = extension.getConfigurationElements()[0];
+		for (final IExtension extension : extensionPoint.getExtensions()) {
+			final IConfigurationElement configurationElement = extension.getConfigurationElements()[0];
 			try {
 				dropAdapter = (ECPDropAdapter) configurationElement.createExecutableExtension("class");
 				dropAdapter.setViewer(viewer);
 				break;
-			} catch (CoreException ex) {
+			} catch (final CoreException ex) {
 				Activator.log(ex);
 			}
 		}
@@ -116,16 +117,42 @@ public final class TreeViewerFactory {
 		return dropAdapter;
 	}
 
+	/**
+	 * @param contentProvider
+	 * @param viewer
+	 * @return
+	 */
+	private static ILabelProvider getLabelProvider(ModelContentProvider contentProvider) {
+		ILabelProvider labelProvider = null;
+		// read extensionpoint, if no defined take default
+		final IExtensionPoint extensionPoint = Platform.getExtensionRegistry().getExtensionPoint(
+			"org.eclipse.emf.ecp.ui.labelProvider");
+		for (final IExtension extension : extensionPoint.getExtensions()) {
+			final IConfigurationElement configurationElement = extension.getConfigurationElements()[0];
+			try {
+				labelProvider = (ILabelProvider) configurationElement.createExecutableExtension("class");
+				return labelProvider;
+			} catch (final CoreException ex) {
+				Activator.log(ex);
+			}
+		}
+		if (labelProvider == null) {
+			labelProvider = new ModelLabelProvider(contentProvider);
+		}
+		return labelProvider;
+	}
+
 	public static TreeViewer createRepositoryExplorerViewer(Composite parent, ILabelDecorator labelDecorator) {
-		RepositoriesContentProvider contentProvider = new RepositoriesContentProvider();
-		TreeViewer viewer = createTreeViewer(parent, new RepositoriesLabelProvider(contentProvider), contentProvider,
+		final RepositoriesContentProvider contentProvider = new RepositoriesContentProvider();
+		final TreeViewer viewer = createTreeViewer(parent, new RepositoriesLabelProvider(contentProvider),
+			contentProvider,
 			ECPUtil.getECPRepositoryManager(), labelDecorator, true);
 		return viewer;
 	}
 
 	public static TreeViewer createTreeViewer(Composite parent, ILabelProvider labelProvider,
 		ITreeContentProvider contentProvider, Object input, ILabelDecorator labelDecorator, boolean sort) {
-		TreeViewer viewer = new TreeViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
+		final TreeViewer viewer = new TreeViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
 		createTreeViewer(labelProvider, contentProvider, input, labelDecorator, viewer, sort);
 		return viewer;
 	}
