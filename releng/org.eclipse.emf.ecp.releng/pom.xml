@@ -22,6 +22,7 @@
 		<sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>
 		<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
 		<sonar.jacoco.reportPath>../../tests/coverage/jacoco.exec</sonar.jacoco.reportPath>
+		<sonar.exclusions>**/model/**/*.java,**/test/**/*.java</sonar.exclusions>
 	</properties>
 
 	<profiles>
