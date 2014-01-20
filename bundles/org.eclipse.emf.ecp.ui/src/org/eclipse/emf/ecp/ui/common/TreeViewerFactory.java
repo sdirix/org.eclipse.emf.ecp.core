@@ -23,6 +23,7 @@ import org.eclipse.emf.ecp.core.util.ECPContainer;
 import org.eclipse.emf.ecp.core.util.ECPModelContextProvider;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.internal.core.Activator;
+import org.eclipse.emf.ecp.internal.ui.model.IECPLabelProvider;
 import org.eclipse.emf.ecp.internal.ui.model.ModelContentProvider;
 import org.eclipse.emf.ecp.internal.ui.model.ModelLabelProvider;
 import org.eclipse.emf.ecp.internal.ui.model.RepositoriesContentProvider;
@@ -123,22 +124,22 @@ public final class TreeViewerFactory {
 	 * @return
 	 */
 	private static ILabelProvider getLabelProvider(ModelContentProvider contentProvider) {
-		ILabelProvider labelProvider = null;
+		IECPLabelProvider labelProvider = null;
 		// read extensionpoint, if no defined take default
 		final IExtensionPoint extensionPoint = Platform.getExtensionRegistry().getExtensionPoint(
 			"org.eclipse.emf.ecp.ui.labelProvider");
 		for (final IExtension extension : extensionPoint.getExtensions()) {
 			final IConfigurationElement configurationElement = extension.getConfigurationElements()[0];
 			try {
-				labelProvider = (ILabelProvider) configurationElement.createExecutableExtension("class");
+				labelProvider = (IECPLabelProvider) configurationElement.createExecutableExtension("class");
+				labelProvider.setModelContextProvider(contentProvider);
 				return labelProvider;
 			} catch (final CoreException ex) {
 				Activator.log(ex);
 			}
 		}
-		if (labelProvider == null) {
-			labelProvider = new ModelLabelProvider(contentProvider);
-		}
+
+		labelProvider = new ModelLabelProvider(contentProvider);
 		return labelProvider;
 	}
 
