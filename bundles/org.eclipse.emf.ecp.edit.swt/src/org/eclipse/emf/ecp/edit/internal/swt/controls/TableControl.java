@@ -597,6 +597,9 @@ public class TableControl extends SWTControl {
 	 * @return the message
 	 */
 	protected String getCellTooltipMessage(VDiagnostic vDiagnostic) {
+		if (vDiagnostic == null) {
+			return null;
+		}
 		if (vDiagnostic.getDiagnostics().size() == 0) {
 			return vDiagnostic.getMessage();
 		}
