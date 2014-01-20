@@ -23,7 +23,7 @@ import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.xml.type.internal.XMLCalendar;
+import org.eclipse.emf.ecp.edit.internal.swt.util.DateUtil;
 import org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.jface.databinding.swt.WidgetValueProperty;
@@ -133,25 +133,12 @@ public class XmlDateCellEditor extends CellEditor implements ECPCellEditor {
 
 	@Override
 	protected Object doGetValue() {
-
-		// try {
-		// final XMLGregorianCalendar cal = DatatypeFactory.newInstance().newXMLGregorianCalendar();
-		// cal.setYear(dateWidget.getYear());
-		// cal.setMonth(dateWidget.getMonth() + 1);
-		// cal.setDay(dateWidget.getDay());
-		//
-		// cal.setTimezone(DatatypeConstants.FIELD_UNDEFINED);
-		//
-		// return cal;
-		// } catch (final DatatypeConfigurationException ex) {
-		// // Activator.logException(ex);
-		// }
 		final Calendar selectedCalendarDate = Calendar.getInstance();
 		selectedCalendarDate.set(Calendar.YEAR, dateWidget.getYear());
-		selectedCalendarDate.set(Calendar.MONTH, dateWidget.getMonth() + 1);
+		selectedCalendarDate.set(Calendar.MONTH, dateWidget.getMonth());
 		selectedCalendarDate.set(Calendar.DAY_OF_MONTH, dateWidget.getDay());
 
-		return new XMLCalendar(selectedCalendarDate.getTime(), XMLCalendar.DATE);
+		return DateUtil.convertOnlyDateToXMLGregorianCalendar(selectedCalendarDate);
 
 	}
 

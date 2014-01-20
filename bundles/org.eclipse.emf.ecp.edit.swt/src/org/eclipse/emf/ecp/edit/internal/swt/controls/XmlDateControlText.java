@@ -22,8 +22,8 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
-import org.eclipse.emf.ecore.xml.type.internal.XMLCalendar;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
+import org.eclipse.emf.ecp.edit.internal.swt.util.DateUtil;
 import org.eclipse.emf.ecp.edit.internal.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.jface.databinding.swt.SWTObservables;
@@ -107,7 +107,7 @@ public class XmlDateControlText extends AbstractTextControl {
 
 	/**
 	 * @author Jonas
-	 *
+	 * 
 	 */
 	private final class SelectionAdapterExtension extends SelectionAdapter {
 		@Override
@@ -197,19 +197,9 @@ public class XmlDateControlText extends AbstractTextControl {
 				final String formatedDate = format.format(date);
 				getText().setText(formatedDate);
 
-				// final Calendar targetCal = Calendar.getInstance();
-				// targetCal.setTime(date);
-				// final XMLGregorianCalendar cal = DatatypeFactory.newInstance().newXMLGregorianCalendar();
-				// cal.setYear(targetCal.get(Calendar.YEAR));
-				// cal.setMonth(targetCal.get(Calendar.MONTH) + 1);
-				// cal.setDay(targetCal.get(Calendar.DAY_OF_MONTH));
-				//
-				// cal.setTimezone(DatatypeConstants.FIELD_UNDEFINED);
-				//
-				// return cal;
-				return new XMLCalendar(date, XMLCalendar.DATE);
-				// } catch (final DatatypeConfigurationException ex) {
-				// Activator.logException(ex);
+				final Calendar targetCal = Calendar.getInstance();
+				targetCal.setTime(date);
+				return DateUtil.convertOnlyDateToXMLGregorianCalendar(targetCal);
 			} catch (final ParseException ex) {
 				return revertToOldValue(value);
 			}
