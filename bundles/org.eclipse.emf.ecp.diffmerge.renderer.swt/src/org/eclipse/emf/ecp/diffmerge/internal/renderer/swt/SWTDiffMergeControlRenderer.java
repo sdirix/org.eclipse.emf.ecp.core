@@ -26,6 +26,8 @@ import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
@@ -61,6 +63,8 @@ public class SWTDiffMergeControlRenderer extends SWTControlRenderer {
 		diffButton.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_compare_button"); //$NON-NLS-1$
 		diffButton.addSelectionListener(new SelectionListener() {
 
+			private static final long serialVersionUID = 1L;
+
 			public void widgetSelected(SelectionEvent e) {
 				openDiffDialog((DiffMergeModelContext) viewContext, vControl, control);
 			}
@@ -72,7 +76,8 @@ public class SWTDiffMergeControlRenderer extends SWTControlRenderer {
 		return labelDiffComposite;
 	}
 
-	private void openDiffDialog(DiffMergeModelContext diffModelContext, VControl vControl, ECPAbstractControl ecpControl) {
+	private void openDiffDialog(DiffMergeModelContext diffModelContext, VControl vControl,
+		ECPAbstractControl ecpControl) {
 		final ControlPair pairWithDiff = diffModelContext.getPairWithDiff(vControl);
 		if (pairWithDiff == null) {
 			return;
@@ -88,11 +93,14 @@ public class SWTDiffMergeControlRenderer extends SWTControlRenderer {
 			.getDomainModelReference(),
 			pairWithDiff.getRightControl().getDomainModelReference(), vControl.getDomainModelReference());
 
-		final Shell shell = new Shell(SWT.TITLE | SWT.BORDER | SWT.CLOSE);
+		final Shell shell = new Shell(SWT.TITLE | SWT.BORDER | SWT.APPLICATION_MODAL);
 		shell.setText(String.format(Messages.getString("SWTDiffMergeControlRenderer.ShellTitle1Parameter"), label)); //$NON-NLS-1$
 		shell.setLayout(new FillLayout());
 		dialog.create(shell);
 		shell.pack();
+		final Rectangle clientArea = shell.getDisplay().getBounds();
+		final Point size = shell.getSize();
+		shell.setLocation((clientArea.width - size.x) / 2, (clientArea.height - size.y) / 2);
 		shell.open();
 	}
 }

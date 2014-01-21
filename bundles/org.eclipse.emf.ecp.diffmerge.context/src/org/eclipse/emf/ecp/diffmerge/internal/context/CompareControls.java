@@ -14,8 +14,7 @@ package org.eclipse.emf.ecp.diffmerge.internal.context;
 import java.util.Iterator;
 
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
-import org.eclipse.emf.ecore.util.DelegatingEcoreEList;
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 
@@ -47,7 +46,7 @@ public final class CompareControls {
 	 * 
 	 * @param left the first {@link VDomainModelReference}
 	 * @param right the second {@link VDomainModelReference}
-	 * @return ture if all values of the {@link VDomainModelReference VDomainModelReferences} are equal
+	 * @return true if all values of the {@link VDomainModelReference VDomainModelReferences} are equal
 	 */
 	public static boolean areEqual(VDomainModelReference left, VDomainModelReference right) {
 		final Iterator<Setting> leftSettings = left.getIterator();
@@ -65,25 +64,23 @@ public final class CompareControls {
 			if (leftValue == null && rightValue == null) {
 				continue;
 			}
-			// TODO check for tables to ignore
-			else if (EObjectContainmentEList.class.isInstance(leftValue)
-				&& EObjectContainmentEList.class.isInstance(rightValue)) {
+			// TODO handle EReference (single and many)
+			if (EcorePackage.eINSTANCE.getEReference().isInstance(leftSetting.getEStructuralFeature())
+				|| EcorePackage.eINSTANCE.getEReference().isInstance(rightSetting.getEStructuralFeature())) {
 				continue;
 			}
-			// TODO check for tables to ignore
-			else if (DelegatingEcoreEList.class.isInstance(leftValue)
-				&& DelegatingEcoreEList.class.isInstance(rightValue)) {
-				continue;
+			if (leftValue == null && rightValue != null) {
+				return false;
 			}
-			else if (leftValue == null && rightValue != null) {
+			if (leftValue != null && rightValue == null) {
 				return false;
-			} else if (leftValue != null && rightValue == null) {
-				return false;
-			} else if (!leftValue.equals(rightValue)) {
+			}
+			if (!leftValue.equals(rightValue)) {
 				return false;
 			}
 
 		}
+		// will be false if one iterator still has elements
 		return !leftHasNext && !rightHasNext;
 	}
 }

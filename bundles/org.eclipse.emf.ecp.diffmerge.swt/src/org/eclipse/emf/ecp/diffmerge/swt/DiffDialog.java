@@ -12,25 +12,25 @@
 package org.eclipse.emf.ecp.diffmerge.swt;
 
 import java.util.Iterator;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.List;
 
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.diffmerge.spi.context.DiffMergeModelContext;
+import org.eclipse.emf.ecp.edit.internal.swt.util.DoubleColumnRow;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl;
-import org.eclipse.emf.ecp.edit.spi.ECPAbstractControl;
+import org.eclipse.emf.ecp.edit.internal.swt.util.SingleColumnRow;
+import org.eclipse.emf.ecp.edit.internal.swt.util.ThreeColumnRow;
 import org.eclipse.emf.ecp.edit.spi.ECPControlFactory;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.renderer.RenderingResultRow;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.DisposeEvent;
-import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Button;
@@ -62,7 +62,6 @@ public class DiffDialog {
 	private final VDomainModelReference main;
 	private final String diffAttribute;
 	private final DiffMergeModelContext viewModelContext;
-	private final Set<ECPAbstractControl> toDispose = new LinkedHashSet<ECPAbstractControl>();
 
 	/**
 	 * Constructor for the diff dialog.
@@ -89,22 +88,14 @@ public class DiffDialog {
 	 */
 	public void create(Composite parent) {
 		final BundleContext bundleContext = FrameworkUtil.getBundle(getClass()).getBundleContext();
-		parent.addDisposeListener(new DisposeListener() {
 
-			private static final long serialVersionUID = 1L;
-
-			public void widgetDisposed(DisposeEvent event) {
-				for (final ECPAbstractControl control : toDispose) {
-					control.dispose();
-				}
-			}
-		});
 		final ServiceReference<ECPControlFactory> serviceReference = bundleContext
 			.getServiceReference(ECPControlFactory.class);
 		final ECPControlFactory controlFactory = bundleContext.getService(serviceReference);
 
 		final Composite composite = new Composite(parent, SWT.NONE);
-		GridLayoutFactory.fillDefaults().numColumns(1).equalWidth(false).applyTo(composite);
+		GridLayoutFactory.fillDefaults().numColumns(1).equalWidth(false).extendedMargins(10, 10, 10, 10)
+			.applyTo(composite);
 
 		final Control title = createTitleLabel(composite);
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, false).applyTo(title);
@@ -129,7 +120,7 @@ public class DiffDialog {
 	private Control createMerge(final Composite parent, final ECPControlFactory ecpControlFactory) {
 		final Composite mainObjectComposite = new Composite(parent, SWT.NONE);
 		mainObjectComposite.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_compare_dialog_merge"); //$NON-NLS-1$
-		GridLayoutFactory.fillDefaults().numColumns(2).equalWidth(false).applyTo(mainObjectComposite);
+		GridLayoutFactory.fillDefaults().numColumns(4).equalWidth(false).applyTo(mainObjectComposite);
 
 		final Label mainObject = new Label(mainObjectComposite, SWT.NONE);
 		mainObject.setText(Messages.DiffDialog_mainObject);
@@ -137,11 +128,58 @@ public class DiffDialog {
 
 		final SWTControl mainControl = ecpControlFactory.createControl(SWTControl.class, main);
 		mainControl.init(viewModelContext, (VControl) main.eContainer());
-		toDispose.add(mainControl);
-		final Composite mainComposite = mainControl.createControl(mainObjectComposite);
-		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING).grab(true, false).applyTo(mainComposite);
+
+		final List<RenderingResultRow<Control>> createControls = mainControl.createControls(mainObjectComposite);
+		applyLayout(createControls);
+
+		final Button bConfirm = new Button(mainObjectComposite, SWT.PUSH);
+		bConfirm.setText(Messages.DiffDialog_Confirm);
+		bConfirm.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_compare_dialog_merge_confirm"); //$NON-NLS-1$
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING).grab(false, false).applyTo(bConfirm);
+		bConfirm.addSelectionListener(new SelectionAdapter() {
+
+			private static final long serialVersionUID = 1L;
+
+			/**
+			 * {@inheritDoc}
+			 * 
+			 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
+			 */
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				super.widgetSelected(e);
+				bConfirm.getShell().dispose();
+			}
+
+		});
 
 		return mainObjectComposite;
+	}
+
+	/**
+	 * @param renderingRows
+	 */
+	private void applyLayout(final List<RenderingResultRow<Control>> renderingRows) {
+		for (final RenderingResultRow<Control> row : renderingRows) {
+			if (SingleColumnRow.class.isInstance(row)) {
+				GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, false).span(2, 1)
+					.applyTo(((SingleColumnRow) row).getControl());
+			}
+			else if (DoubleColumnRow.class.isInstance(row)) {
+				GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(false, false).hint(16, 17)
+					.applyTo(((DoubleColumnRow) row).getLeftControl());
+				GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, false)
+					.applyTo(((DoubleColumnRow) row).getRightControl());
+			}
+			else if (ThreeColumnRow.class.isInstance(row)) {
+				GridDataFactory.fillDefaults().align(SWT.BEGINNING, SWT.CENTER).grab(false, false)
+					.applyTo(((ThreeColumnRow) row).getLeftControl());
+				GridDataFactory.fillDefaults().align(SWT.BEGINNING, SWT.CENTER).grab(false, false).hint(16, 17)
+					.applyTo(((ThreeColumnRow) row).getMiddleControl());
+				GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, false)
+					.applyTo(((ThreeColumnRow) row).getRightControl());
+			}
+		}
 	}
 
 	/**
@@ -155,7 +193,7 @@ public class DiffDialog {
 		final Group group = new Group(parent, SWT.NONE);
 		group.setText(Messages.DiffDialog_DifferenceGroup);
 		group.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_compare_dialog_diff"); //$NON-NLS-1$
-		GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(false).applyTo(group);
+		GridLayoutFactory.fillDefaults().numColumns(4).equalWidth(false).applyTo(group);
 
 		final Label leftObject = new Label(group, SWT.NONE);
 		leftObject.setText(Messages.DiffDialog_leftObject);
@@ -163,10 +201,10 @@ public class DiffDialog {
 
 		final SWTControl leftControl = ecpControlFactory.createControl(SWTControl.class, left);
 		leftControl.init(viewModelContext, (VControl) left.eContainer());
-		toDispose.add(leftControl);
-		final Composite leftComposite = leftControl.createControl(group);
+
+		final List<RenderingResultRow<Control>> leftControls = leftControl.createControls(group);
+		applyLayout(leftControls);
 		leftControl.setEditable(false);
-		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING).grab(true, false).applyTo(leftComposite);
 
 		final Button bReplaceWithLeft = new Button(group, SWT.PUSH);
 		bReplaceWithLeft.setText(Messages.DiffDialog_replaceWithLeft);
@@ -195,10 +233,9 @@ public class DiffDialog {
 
 		final SWTControl rightControl = ecpControlFactory.createControl(SWTControl.class, right);
 		rightControl.init(viewModelContext, (VControl) right.eContainer());
-		toDispose.add(rightControl);
-		final Composite rightComposite = rightControl.createControl(group);
+		final List<RenderingResultRow<Control>> rightControls = rightControl.createControls(group);
+		applyLayout(rightControls);
 		rightControl.setEditable(false);
-		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING).grab(true, false).applyTo(rightComposite);
 
 		final Button bReplaceWithRight = new Button(group, SWT.PUSH);
 		bReplaceWithRight.setText(Messages.DiffDialog_replaceWithRight);
