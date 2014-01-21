@@ -282,7 +282,10 @@ public class ValidationRegistry {
 	}
 
 	/**
-	 * @param newEObject
+	 * Update current Mappings, because a new EObject was added, this updates only for VControls referencing the parent
+	 * of the provided EObject.
+	 * 
+	 * @param newEObject the added EObject
 	 */
 	public void updateMappings(EObject newEObject) {
 

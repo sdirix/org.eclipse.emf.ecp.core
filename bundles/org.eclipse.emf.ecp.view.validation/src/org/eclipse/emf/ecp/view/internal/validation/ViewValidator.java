@@ -40,6 +40,7 @@ import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 
 /**
  * Validation for view validation.
@@ -275,11 +276,16 @@ public class ViewValidator extends ViewModelGraph {
 		if (validator == null) {
 			validator = new EObjectValidator();
 		}
+		final ComposedAdapterFactory adapterFactory = new ComposedAdapterFactory(
+			ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+
 		final Map<Object, Object> context = new LinkedHashMap<Object, Object>();
-		context.put(EValidator.SubstitutionLabelProvider.class, Diagnostician.INSTANCE);
+		context.put(EValidator.SubstitutionLabelProvider.class, new ECPSubstitutionLabelProvider(adapterFactory));
 		context.put(EValidator.class, validator);
 
 		validator.validate(object, diagnostics, context);
+
+		adapterFactory.dispose();
 
 		final Map<EStructuralFeature, DiagnosticChain> diagnosticMap = new LinkedHashMap<EStructuralFeature, DiagnosticChain>();
 		for (final Diagnostic child : diagnostics.getChildren()) {
