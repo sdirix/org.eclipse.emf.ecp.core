@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.emf.ecp.rap.util.feature"
       label="RAP Feature"
-      version="1.1.1.qualifier"
+      version="1.2.0.qualifier"
       provider-name="Eclipse Modeling Project">
 
    <description url="http://www.example.com/description">
