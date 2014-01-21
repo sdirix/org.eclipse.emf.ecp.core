@@ -57,8 +57,8 @@ public class SWTDiffMergeControlRenderer extends SWTControlRenderer {
 		final Control label = super.createLabelControl(labelDiffComposite, vControl, control, viewContext);
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, false).applyTo(label);
 		final Button diffButton = new Button(labelDiffComposite, SWT.PUSH);
-		diffButton.setText("Diff");
-
+		diffButton.setText(Messages.getString("SWTDiffMergeControlRenderer.DiffButton")); //$NON-NLS-1$
+		diffButton.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_compare_button"); //$NON-NLS-1$
 		diffButton.addSelectionListener(new SelectionListener() {
 
 			public void widgetSelected(SelectionEvent e) {
@@ -88,8 +88,8 @@ public class SWTDiffMergeControlRenderer extends SWTControlRenderer {
 			.getDomainModelReference(),
 			pairWithDiff.getRightControl().getDomainModelReference(), vControl.getDomainModelReference());
 
-		final Shell shell = new Shell();
-		shell.setText(String.format("Merge \"%1$s\"", label));
+		final Shell shell = new Shell(SWT.TITLE | SWT.BORDER | SWT.CLOSE);
+		shell.setText(String.format(Messages.getString("SWTDiffMergeControlRenderer.ShellTitle1Parameter"), label)); //$NON-NLS-1$
 		shell.setLayout(new FillLayout());
 		dialog.create(shell);
 		shell.pack();

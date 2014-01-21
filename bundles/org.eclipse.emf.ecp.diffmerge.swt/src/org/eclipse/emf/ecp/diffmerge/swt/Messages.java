@@ -24,6 +24,8 @@ public class Messages extends NLS {
 	public static String DiffDialog_DifferenceGroup;
 	public static String DiffDialog_leftObject;
 	public static String DiffDialog_mainObject;
+	public static String DiffDialog_replaceWithLeft;
+	public static String DiffDialog_replaceWithRight;
 	public static String DiffDialog_rightObject;
 	static {
 		// initialize resource bundle
