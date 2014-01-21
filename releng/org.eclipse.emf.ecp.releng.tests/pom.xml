@@ -19,6 +19,7 @@
 		<module>../../tests/org.eclipse.emf.ecp.view.model.editor.test.feature</module>
 
 		<!-- Tests -->
+		<module>../../tests/org.eclipse.emf.ecp.edit.swt.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.test.common</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.test.common.swt</module>
 		<module>../../tests/org.eclipse.emf.ecp.core.test</module>
