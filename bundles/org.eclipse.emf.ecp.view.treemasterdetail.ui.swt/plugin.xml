@@ -6,6 +6,10 @@
       <renderer
             element="org.eclipse.emf.ecp.view.treemasterdetail.model.VTreeMasterDetail"
             renderer="org.eclipse.emf.ecp.view.treemasterdetail.ui.swt.internal.TreeMasterDetailSWTRenderer">
+         <staticTest
+               element="org.eclipse.emf.ecp.view.treemasterdetail.model.VTreeMasterDetail"
+               priority="1">
+         </staticTest>
       </renderer>
    </extension>
 

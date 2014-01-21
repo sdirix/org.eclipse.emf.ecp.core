@@ -97,7 +97,7 @@ public class SWTViewRenderer extends AbstractSWTRenderer<VView> {
 					.applyTo(((DoubleColumnRow) row).getRightControl());
 			}
 			else if (ThreeColumnRow.class.isInstance(row)) {
-				GridDataFactory.fillDefaults().align(SWT.BEGINNING, SWT.CENTER).grab(false, false)
+				GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(false, false)
 					.applyTo(((ThreeColumnRow) row).getLeftControl());
 				GridDataFactory.fillDefaults().align(SWT.CENTER, SWT.CENTER).grab(false, false).hint(16, 17)
 					.applyTo(((ThreeColumnRow) row).getMiddleControl());
