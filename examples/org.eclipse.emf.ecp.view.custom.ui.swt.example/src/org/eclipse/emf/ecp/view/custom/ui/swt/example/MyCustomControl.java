@@ -12,13 +12,12 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.renderer.RenderingResultRow;
+import org.eclipse.emf.emfstore.bowling.BowlingPackage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
-
-import com.eclipsesource.makeithappen.model.task.TaskPackage;
 
 @SuppressWarnings("restriction")
 public class MyCustomControl extends ECPAbstractCustomControlSWT {
@@ -31,11 +30,11 @@ public class MyCustomControl extends ECPAbstractCustomControlSWT {
 		Set<VDomainModelReference> features = new LinkedHashSet<VDomainModelReference>();
 		VFeaturePathDomainModelReference lastNameFeature = VViewFactory.eINSTANCE
 			.createFeaturePathDomainModelReference();
-		lastNameFeature.setDomainModelEFeature(TaskPackage.eINSTANCE.getUser_LastName());
+		lastNameFeature.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Name());
 		features.add(lastNameFeature);
 
 		VFeaturePathDomainModelReference genderFeature = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
-		genderFeature.setDomainModelEFeature(TaskPackage.eINSTANCE.getUser_Gender());
+		genderFeature.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Gender());
 		features.add(genderFeature);
 
 		return features;
@@ -50,8 +49,8 @@ public class MyCustomControl extends ECPAbstractCustomControlSWT {
 		userAttributes.setText("User Attributes");
 		userAttributes.setAlignment(SWT.CENTER);
 
-		createControl(getResolvedDomainModelReference(TaskPackage.eINSTANCE.getUser_LastName()), parent);
-		createControl(getResolvedDomainModelReference(TaskPackage.eINSTANCE.getUser_Gender()), parent);
+		createControl(getResolvedDomainModelReference(BowlingPackage.eINSTANCE.getPlayer_Name()), parent);
+		createControl(getResolvedDomainModelReference(BowlingPackage.eINSTANCE.getPlayer_Gender()), parent);
 
 		List<RenderingResultRow<Control>> result = new ArrayList<RenderingResultRow<Control>>();
 		result.add(SWTRenderingHelper.INSTANCE.getResultRowFactory().createRenderingResultRow(parent));
