@@ -38,6 +38,7 @@ public interface ECPSWTView {
 	 * Returns the {@link ViewModelContext} which was used to create the current view.
 	 * 
 	 * @return the {@link ViewModelContext}
+	 * @since 1.2
 	 */
 	ViewModelContext getViewModelContext();
 }

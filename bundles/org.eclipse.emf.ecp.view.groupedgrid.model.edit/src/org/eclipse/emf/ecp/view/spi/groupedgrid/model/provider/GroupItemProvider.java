@@ -39,6 +39,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * <!-- end-user-doc -->
  * 
  * @generated
+ * @since 1.2
  */
 public class GroupItemProvider
 	extends ItemProviderAdapter
@@ -159,7 +160,7 @@ public class GroupItemProvider
 	@Override
 	public String getText(Object object)
 	{
-		String label = ((VGroup) object).getName();
+		final String label = ((VGroup) object).getName();
 		return label == null || label.length() == 0 ?
 			getString("_UI_Group_type") : //$NON-NLS-1$
 			getString("_UI_Group_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$

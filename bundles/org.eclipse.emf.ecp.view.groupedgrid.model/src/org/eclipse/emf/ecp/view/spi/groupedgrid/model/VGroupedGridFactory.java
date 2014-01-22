@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.EFactory;
  * 
  * @see org.eclipse.emf.ecp.view.spi.groupedgrid.model.VGroupedGridPackage
  * @generated
+ * @since 1.2
  */
 public interface VGroupedGridFactory extends EFactory
 {

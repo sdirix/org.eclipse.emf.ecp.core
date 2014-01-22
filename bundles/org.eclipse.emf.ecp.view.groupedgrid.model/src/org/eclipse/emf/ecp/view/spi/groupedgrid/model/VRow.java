@@ -30,6 +30,7 @@ import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
  * @see org.eclipse.emf.ecp.view.spi.groupedgrid.model.VGroupedGridPackage#getRow()
  * @model
  * @generated
+ * @since 1.2
  */
 public interface VRow extends EObject
 {

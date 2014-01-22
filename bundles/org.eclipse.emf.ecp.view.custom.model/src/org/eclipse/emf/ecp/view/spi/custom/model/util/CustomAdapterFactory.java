@@ -27,6 +27,7 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
  * 
  * @see org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage
  * @generated
+ * @since 1.2
  */
 public class CustomAdapterFactory extends AdapterFactoryImpl {
 	/**

@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
  * Helper class to create {@link VDomainModelReference VDomainModelReferences}.
  * 
  * @author Eugen Neufeld
+ * @since 1.2
  * 
  */
 public final class ModelReferenceHelper {

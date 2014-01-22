@@ -30,6 +30,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * <!-- end-user-doc -->
  * 
  * @generated
+ * @since 1.2
  */
 public class VGroupedGridPackageImpl extends EPackageImpl implements VGroupedGridPackage
 {
@@ -107,11 +108,12 @@ public class VGroupedGridPackageImpl extends EPackageImpl implements VGroupedGri
 	 */
 	public static VGroupedGridPackage init()
 	{
-		if (isInited)
+		if (isInited) {
 			return (VGroupedGridPackage) EPackage.Registry.INSTANCE.getEPackage(VGroupedGridPackage.eNS_URI);
+		}
 
 		// Obtain or create and register package
-		VGroupedGridPackageImpl theGroupedGridPackage = (VGroupedGridPackageImpl) (EPackage.Registry.INSTANCE
+		final VGroupedGridPackageImpl theGroupedGridPackage = (VGroupedGridPackageImpl) (EPackage.Registry.INSTANCE
 			.get(eNS_URI) instanceof VGroupedGridPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI)
 			: new VGroupedGridPackageImpl());
 
@@ -262,8 +264,9 @@ public class VGroupedGridPackageImpl extends EPackageImpl implements VGroupedGri
 	 */
 	public void createPackageContents()
 	{
-		if (isCreated)
+		if (isCreated) {
 			return;
+		}
 		isCreated = true;
 
 		// Create classes and their features
@@ -299,8 +302,9 @@ public class VGroupedGridPackageImpl extends EPackageImpl implements VGroupedGri
 	 */
 	public void initializePackageContents()
 	{
-		if (isInitialized)
+		if (isInitialized) {
 			return;
+		}
 		isInitialized = true;
 
 		// Initialize package
@@ -309,7 +313,7 @@ public class VGroupedGridPackageImpl extends EPackageImpl implements VGroupedGri
 		setNsURI(eNS_URI);
 
 		// Obtain other dependent packages
-		VViewPackage theViewPackage = (VViewPackage) EPackage.Registry.INSTANCE.getEPackage(VViewPackage.eNS_URI);
+		final VViewPackage theViewPackage = (VViewPackage) EPackage.Registry.INSTANCE.getEPackage(VViewPackage.eNS_URI);
 
 		// Create type parameters
 
@@ -324,14 +328,14 @@ public class VGroupedGridPackageImpl extends EPackageImpl implements VGroupedGri
 			"GroupedGrid", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(
 			getGroupedGrid_Groups(),
-			this.getGroup(),
+			getGroup(),
 			null,
 			"groups", null, 0, -1, VGroupedGrid.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(groupEClass, VGroup.class, "Group", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(
 			getGroup_Rows(),
-			this.getRow(),
+			getRow(),
 			null,
 			"rows", null, 0, -1, VGroup.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEAttribute(

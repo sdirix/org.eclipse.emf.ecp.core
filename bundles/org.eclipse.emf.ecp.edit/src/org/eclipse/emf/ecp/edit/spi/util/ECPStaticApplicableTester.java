@@ -66,7 +66,7 @@ public final class ECPStaticApplicableTester implements ECPApplicableTester {
 	 * {@inheritDoc}
 	 * 
 	 * @see org.eclipse.emf.ecp.edit.spi.util.ECPApplicableTester#isApplicable(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)
-	 * @since 1.1
+	 * @since 1.2
 	 */
 	public int isApplicable(VDomainModelReference domainModelReference) {
 		final Iterator<Setting> iterator = domainModelReference.getIterator();

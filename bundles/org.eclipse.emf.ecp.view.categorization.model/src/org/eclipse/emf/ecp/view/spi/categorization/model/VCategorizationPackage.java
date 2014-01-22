@@ -42,7 +42,7 @@ public interface VCategorizationPackage extends EPackage
 	 * 
 	 * @generated
 	 */
-	String eNAME = "categorization";
+	String eNAME = "categorization"; //$NON-NLS-1$
 
 	/**
 	 * The package namespace URI.
@@ -51,7 +51,7 @@ public interface VCategorizationPackage extends EPackage
 	 * 
 	 * @generated
 	 */
-	String eNS_URI = "http://org/eclipse/emf/ecp/view/categorization/model";
+	String eNS_URI = "http://org/eclipse/emf/ecp/view/categorization/model"; //$NON-NLS-1$
 
 	/**
 	 * The package namespace name.
@@ -60,7 +60,7 @@ public interface VCategorizationPackage extends EPackage
 	 * 
 	 * @generated
 	 */
-	String eNS_PREFIX = "org.eclipse.emf.ecp.view.categorization.model";
+	String eNS_PREFIX = "org.eclipse.emf.ecp.view.categorization.model"; //$NON-NLS-1$
 
 	/**
 	 * The singleton instance of the package.

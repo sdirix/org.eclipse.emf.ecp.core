@@ -30,6 +30,7 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
  * <!-- end-user-doc -->
  * 
  * @generated
+ * @since 1.2
  */
 public class ContainedElementItemProvider
 	extends ElementItemProvider implements IEditingDomainItemProvider, IStructuredItemContentProvider,
@@ -74,7 +75,7 @@ public class ContainedElementItemProvider
 	@Override
 	public String getText(Object object)
 	{
-		String label = ((VContainedElement) object).getName();
+		final String label = ((VContainedElement) object).getName();
 		return label == null || label.length() == 0 ?
 			getString("_UI_ContainedElement_type") : //$NON-NLS-1$
 			getString("_UI_ContainedElement_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$

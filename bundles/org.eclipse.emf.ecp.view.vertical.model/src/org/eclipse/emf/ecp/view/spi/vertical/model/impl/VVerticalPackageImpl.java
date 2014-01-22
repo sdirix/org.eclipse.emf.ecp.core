@@ -25,6 +25,7 @@ import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalPackage;
  * <!-- end-user-doc -->
  * 
  * @generated
+ * @since 1.2
  */
 public class VVerticalPackageImpl extends EPackageImpl implements VVerticalPackage
 {
@@ -78,12 +79,14 @@ public class VVerticalPackageImpl extends EPackageImpl implements VVerticalPacka
 	 */
 	public static VVerticalPackage init()
 	{
-		if (isInited)
+		if (isInited) {
 			return (VVerticalPackage) EPackage.Registry.INSTANCE.getEPackage(VVerticalPackage.eNS_URI);
+		}
 
 		// Obtain or create and register package
-		VVerticalPackageImpl theVerticalPackage = (VVerticalPackageImpl) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof VVerticalPackageImpl ? EPackage.Registry.INSTANCE
-			.get(eNS_URI) : new VVerticalPackageImpl());
+		final VVerticalPackageImpl theVerticalPackage = (VVerticalPackageImpl) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof VVerticalPackageImpl ? EPackage.Registry.INSTANCE
+			.get(eNS_URI)
+			: new VVerticalPackageImpl());
 
 		isInited = true;
 
@@ -144,8 +147,9 @@ public class VVerticalPackageImpl extends EPackageImpl implements VVerticalPacka
 	 */
 	public void createPackageContents()
 	{
-		if (isCreated)
+		if (isCreated) {
 			return;
+		}
 		isCreated = true;
 
 		// Create classes and their features
@@ -170,8 +174,9 @@ public class VVerticalPackageImpl extends EPackageImpl implements VVerticalPacka
 	 */
 	public void initializePackageContents()
 	{
-		if (isInitialized)
+		if (isInitialized) {
 			return;
+		}
 		isInitialized = true;
 
 		// Initialize package
@@ -180,7 +185,7 @@ public class VVerticalPackageImpl extends EPackageImpl implements VVerticalPacka
 		setNsURI(eNS_URI);
 
 		// Obtain other dependent packages
-		VViewPackage theViewPackage = (VViewPackage) EPackage.Registry.INSTANCE.getEPackage(VViewPackage.eNS_URI);
+		final VViewPackage theViewPackage = (VViewPackage) EPackage.Registry.INSTANCE.getEPackage(VViewPackage.eNS_URI);
 
 		// Create type parameters
 

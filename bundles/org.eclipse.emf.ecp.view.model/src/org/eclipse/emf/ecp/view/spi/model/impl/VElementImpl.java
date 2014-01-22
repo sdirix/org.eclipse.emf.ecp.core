@@ -44,6 +44,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * </p>
  * 
  * @generated
+ * @since 1.2
  */
 public abstract class VElementImpl extends EObjectImpl implements VElement
 {
@@ -199,10 +200,11 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	 */
 	public void setName(String newName)
 	{
-		String oldName = name;
+		final String oldName = name;
 		name = newName;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, VViewPackage.ELEMENT__NAME, oldName, name));
+		}
 	}
 
 	/**
@@ -224,10 +226,11 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	 */
 	public void setVisible(boolean newVisible)
 	{
-		boolean oldVisible = visible;
+		final boolean oldVisible = visible;
 		visible = newVisible;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, VViewPackage.ELEMENT__VISIBLE, oldVisible, visible));
+		}
 	}
 
 	/**
@@ -249,10 +252,11 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	 */
 	public void setEnabled(boolean newEnabled)
 	{
-		boolean oldEnabled = enabled;
+		final boolean oldEnabled = enabled;
 		enabled = newEnabled;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, VViewPackage.ELEMENT__ENABLED, oldEnabled, enabled));
+		}
 	}
 
 	/**
@@ -274,10 +278,11 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	 */
 	public void setReadonly(boolean newReadonly)
 	{
-		boolean oldReadonly = readonly;
+		final boolean oldReadonly = readonly;
 		readonly = newReadonly;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, VViewPackage.ELEMENT__READONLY, oldReadonly, readonly));
+		}
 	}
 
 	/**
@@ -299,16 +304,17 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	 */
 	public NotificationChain basicSetDiagnostic(VDiagnostic newDiagnostic, NotificationChain msgs)
 	{
-		VDiagnostic oldDiagnostic = diagnostic;
+		final VDiagnostic oldDiagnostic = diagnostic;
 		diagnostic = newDiagnostic;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
+			final ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
 				VViewPackage.ELEMENT__DIAGNOSTIC, oldDiagnostic, newDiagnostic);
-			if (msgs == null)
+			if (msgs == null) {
 				msgs = notification;
-			else
+			} else {
 				msgs.add(notification);
+			}
 		}
 		return msgs;
 	}
@@ -324,19 +330,23 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 		if (newDiagnostic != diagnostic)
 		{
 			NotificationChain msgs = null;
-			if (diagnostic != null)
+			if (diagnostic != null) {
 				msgs = ((InternalEObject) diagnostic).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
 					- VViewPackage.ELEMENT__DIAGNOSTIC, null, msgs);
-			if (newDiagnostic != null)
+			}
+			if (newDiagnostic != null) {
 				msgs = ((InternalEObject) newDiagnostic).eInverseAdd(this, EOPPOSITE_FEATURE_BASE
 					- VViewPackage.ELEMENT__DIAGNOSTIC, null, msgs);
+			}
 			msgs = basicSetDiagnostic(newDiagnostic, msgs);
-			if (msgs != null)
+			if (msgs != null) {
 				msgs.dispatch();
+			}
 		}
-		else if (eNotificationRequired())
+		else if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, VViewPackage.ELEMENT__DIAGNOSTIC, newDiagnostic,
 				newDiagnostic));
+		}
 	}
 
 	/**
@@ -505,10 +515,11 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	@Override
 	public String toString()
 	{
-		if (eIsProxy())
+		if (eIsProxy()) {
 			return super.toString();
+		}
 
-		StringBuffer result = new StringBuffer(super.toString());
+		final StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (name: "); //$NON-NLS-1$
 		result.append(name);
 		result.append(", visible: "); //$NON-NLS-1$

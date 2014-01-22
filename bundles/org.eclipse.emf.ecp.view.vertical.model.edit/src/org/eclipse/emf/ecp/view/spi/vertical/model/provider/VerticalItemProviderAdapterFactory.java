@@ -53,6 +53,7 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
  * <!-- end-user-doc -->
  * 
  * @generated
+ * @since 1.2
  */
 public class VerticalItemProviderAdapterFactory extends VerticalAdapterFactory implements ComposeableAdapterFactory,
 	IChangeNotifier, IDisposable, IChildCreationExtender
@@ -198,8 +199,8 @@ public class VerticalItemProviderAdapterFactory extends VerticalAdapterFactory i
 	{
 		if (isFactoryForType(type))
 		{
-			Object adapter = super.adapt(object, type);
-			if (!(type instanceof Class<?>) || (((Class<?>) type).isInstance(adapter)))
+			final Object adapter = super.adapt(object, type);
+			if (!(type instanceof Class<?>) || ((Class<?>) type).isInstance(adapter))
 			{
 				return adapter;
 			}
@@ -291,8 +292,9 @@ public class VerticalItemProviderAdapterFactory extends VerticalAdapterFactory i
 	 */
 	public void dispose()
 	{
-		if (verticalLayoutItemProvider != null)
+		if (verticalLayoutItemProvider != null) {
 			verticalLayoutItemProvider.dispose();
+		}
 	}
 
 	/**
@@ -399,7 +401,7 @@ public class VerticalItemProviderAdapterFactory extends VerticalAdapterFactory i
 		 */
 		public Collection<Object> getNewChildDescriptors(Object object, EditingDomain editingDomain)
 		{
-			ArrayList<Object> result = new ArrayList<Object>();
+			final ArrayList<Object> result = new ArrayList<Object>();
 			new CreationSwitch(result, editingDomain).doSwitch((EObject) object);
 			return result;
 		}

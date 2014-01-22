@@ -20,6 +20,7 @@ import org.eclipse.emf.ecp.view.spi.model.VView;
  * with the highest priority is then asked to {@link #generate(EObject)} a {@link VView}.
  * 
  * @author Eugen Neufeld
+ * @since 1.2
  * 
  */
 public interface IViewProvider {

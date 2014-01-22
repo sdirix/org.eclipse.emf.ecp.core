@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.EStructuralFeature.Setting;
  * @see org.eclipse.emf.ecp.view.spi.rule.model.RulePackage#getCondition()
  * @model abstract="true"
  * @generated
+ * @since 1.2
  */
 public interface Condition extends EObject {
 

@@ -315,6 +315,7 @@ public abstract class ECPAbstractControl {
 	 * Returns the {@link VDomainModelReference} set for this control.
 	 * 
 	 * @return the domainModelReference the {@link VDomainModelReference} of this control
+	 * @since 1.2
 	 */
 	protected final VDomainModelReference getDomainModelReference() {
 		return control.getDomainModelReference();

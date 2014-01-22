@@ -25,6 +25,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * <!-- end-user-doc -->
  * 
  * @generated
+ * @since 1.2
  */
 public class VGroupPackageImpl extends EPackageImpl implements VGroupPackage
 {
@@ -78,12 +79,14 @@ public class VGroupPackageImpl extends EPackageImpl implements VGroupPackage
 	 */
 	public static VGroupPackage init()
 	{
-		if (isInited)
+		if (isInited) {
 			return (VGroupPackage) EPackage.Registry.INSTANCE.getEPackage(VGroupPackage.eNS_URI);
+		}
 
 		// Obtain or create and register package
-		VGroupPackageImpl theGroupPackage = (VGroupPackageImpl) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof VGroupPackageImpl ? EPackage.Registry.INSTANCE
-			.get(eNS_URI) : new VGroupPackageImpl());
+		final VGroupPackageImpl theGroupPackage = (VGroupPackageImpl) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof VGroupPackageImpl ? EPackage.Registry.INSTANCE
+			.get(eNS_URI)
+			: new VGroupPackageImpl());
 
 		isInited = true;
 
@@ -144,8 +147,9 @@ public class VGroupPackageImpl extends EPackageImpl implements VGroupPackage
 	 */
 	public void createPackageContents()
 	{
-		if (isCreated)
+		if (isCreated) {
 			return;
+		}
 		isCreated = true;
 
 		// Create classes and their features
@@ -170,8 +174,9 @@ public class VGroupPackageImpl extends EPackageImpl implements VGroupPackage
 	 */
 	public void initializePackageContents()
 	{
-		if (isInitialized)
+		if (isInitialized) {
 			return;
+		}
 		isInitialized = true;
 
 		// Initialize package
@@ -180,7 +185,7 @@ public class VGroupPackageImpl extends EPackageImpl implements VGroupPackage
 		setNsURI(eNS_URI);
 
 		// Obtain other dependent packages
-		VViewPackage theViewPackage = (VViewPackage) EPackage.Registry.INSTANCE.getEPackage(VViewPackage.eNS_URI);
+		final VViewPackage theViewPackage = (VViewPackage) EPackage.Registry.INSTANCE.getEPackage(VViewPackage.eNS_URI);
 
 		// Create type parameters
 

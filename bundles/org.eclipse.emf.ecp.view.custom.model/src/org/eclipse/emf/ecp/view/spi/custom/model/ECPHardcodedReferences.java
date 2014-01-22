@@ -20,6 +20,7 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
  * {@link VDomainModelReference VDomainModelReferences} needed for rendering itself.
  * 
  * @author Eugen Neufeld
+ * @since 1.2
  * 
  */
 public interface ECPHardcodedReferences {

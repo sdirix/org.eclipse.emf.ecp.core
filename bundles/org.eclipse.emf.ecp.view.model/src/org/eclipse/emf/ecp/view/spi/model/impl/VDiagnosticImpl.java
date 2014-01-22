@@ -33,6 +33,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * </p>
  * 
  * @generated
+ * @since 1.2
  */
 public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic
 {
@@ -166,10 +167,11 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic
 	@Override
 	public String toString()
 	{
-		if (eIsProxy())
+		if (eIsProxy()) {
 			return super.toString();
+		}
 
-		StringBuffer result = new StringBuffer(super.toString());
+		final StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (diagnostics: "); //$NON-NLS-1$
 		result.append(diagnostics);
 		result.append(')');
@@ -199,12 +201,12 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic
 	 * @see org.eclipse.emf.ecp.view.spi.model.VDiagnostic#getMessage()
 	 */
 	public String getMessage() {
-		String message = "";
+		String message = ""; //$NON-NLS-1$
 		if (getDiagnostics().size() > 0) {
 			for (final Object o : getDiagnostics()) {
 				final Diagnostic diagnostic = (Diagnostic) o;
 				final String diagnosticMessage = diagnostic.getMessage();
-				message = message.concat(diagnosticMessage + "\n");
+				message = message.concat(diagnosticMessage + "\n"); //$NON-NLS-1$
 			}
 		}
 		return message;

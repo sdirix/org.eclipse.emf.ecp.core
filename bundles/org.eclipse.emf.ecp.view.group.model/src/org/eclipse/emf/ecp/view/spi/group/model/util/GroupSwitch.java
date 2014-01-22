@@ -33,6 +33,7 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
  * 
  * @see org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage
  * @generated
+ * @since 1.2
  */
 public class GroupSwitch<T> extends Switch<T> {
 	/**
@@ -86,16 +87,20 @@ public class GroupSwitch<T> extends Switch<T> {
 		switch (classifierID)
 		{
 		case VGroupPackage.GROUP: {
-			VGroup group = (VGroup) theEObject;
+			final VGroup group = (VGroup) theEObject;
 			T result = caseGroup(group);
-			if (result == null)
+			if (result == null) {
 				result = caseContainer(group);
-			if (result == null)
+			}
+			if (result == null) {
 				result = caseContainedElement(group);
-			if (result == null)
+			}
+			if (result == null) {
 				result = caseElement(group);
-			if (result == null)
+			}
+			if (result == null) {
 				result = defaultCase(theEObject);
+			}
 			return result;
 		}
 		default:

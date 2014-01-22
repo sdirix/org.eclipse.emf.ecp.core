@@ -24,6 +24,7 @@ import org.eclipse.emf.ecp.view.spi.model.impl.VContainerImpl;
  * </p>
  * 
  * @generated
+ * @since 1.2
  */
 public class VGroupImpl extends VContainerImpl implements VGroup
 {

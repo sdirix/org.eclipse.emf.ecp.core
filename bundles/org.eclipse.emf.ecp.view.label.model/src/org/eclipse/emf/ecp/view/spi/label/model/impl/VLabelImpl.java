@@ -31,6 +31,7 @@ import org.eclipse.emf.ecp.view.spi.model.impl.VContainedElementImpl;
  * </p>
  * 
  * @generated
+ * @since 1.2
  */
 public class VLabelImpl extends VContainedElementImpl implements VLabel
 {
@@ -98,10 +99,11 @@ public class VLabelImpl extends VContainedElementImpl implements VLabel
 	 */
 	public void setStyle(VLabelStyle newStyle)
 	{
-		VLabelStyle oldStyle = style;
+		final VLabelStyle oldStyle = style;
 		style = newStyle == null ? STYLE_EDEFAULT : newStyle;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, VLabelPackage.LABEL__STYLE, oldStyle, style));
+		}
 	}
 
 	/**
@@ -183,10 +185,11 @@ public class VLabelImpl extends VContainedElementImpl implements VLabel
 	@Override
 	public String toString()
 	{
-		if (eIsProxy())
+		if (eIsProxy()) {
 			return super.toString();
+		}
 
-		StringBuffer result = new StringBuffer(super.toString());
+		final StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (style: "); //$NON-NLS-1$
 		result.append(style);
 		result.append(')');

@@ -22,6 +22,7 @@ import org.eclipse.emf.ecp.view.spi.model.impl.Activator;
  * This Util class provides common methods used often when working with the view model.
  * 
  * @author Eugen Neufeld
+ * @since 1.2
  * 
  */
 public final class ViewModelUtil {

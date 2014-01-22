@@ -30,6 +30,7 @@ import org.eclipse.emf.ecore.EObject;
  * @see org.eclipse.emf.ecp.view.spi.groupedgrid.model.VGroupedGridPackage#getGroup()
  * @model
  * @generated
+ * @since 1.2
  */
 public interface VGroup extends EObject
 {

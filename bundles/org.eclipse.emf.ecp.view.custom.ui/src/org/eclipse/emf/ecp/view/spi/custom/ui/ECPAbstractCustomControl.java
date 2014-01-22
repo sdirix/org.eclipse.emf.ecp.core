@@ -45,6 +45,7 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
  * 
  * @author emueller
  * @author eneufeld
+ * @since 1.2
  * 
  */
 public abstract class ECPAbstractCustomControl extends ECPAbstractControl implements ECPHardcodedReferences {

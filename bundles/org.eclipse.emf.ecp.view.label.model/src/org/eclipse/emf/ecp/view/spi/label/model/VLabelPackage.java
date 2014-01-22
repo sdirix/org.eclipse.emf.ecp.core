@@ -32,6 +32,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * @see org.eclipse.emf.ecp.view.spi.label.model.VLabelFactory
  * @model kind="package"
  * @generated
+ * @since 1.2
  */
 public interface VLabelPackage extends EPackage
 {
@@ -42,7 +43,7 @@ public interface VLabelPackage extends EPackage
 	 * 
 	 * @generated
 	 */
-	String eNAME = "label";
+	String eNAME = "label"; //$NON-NLS-1$
 
 	/**
 	 * The package namespace URI.
@@ -51,7 +52,7 @@ public interface VLabelPackage extends EPackage
 	 * 
 	 * @generated
 	 */
-	String eNS_URI = "http://org/eclipse/emf/ecp/view/label/model";
+	String eNS_URI = "http://org/eclipse/emf/ecp/view/label/model"; //$NON-NLS-1$
 
 	/**
 	 * The package namespace name.
@@ -60,7 +61,7 @@ public interface VLabelPackage extends EPackage
 	 * 
 	 * @generated
 	 */
-	String eNS_PREFIX = "org.eclipse.emf.ecp.view.label.model";
+	String eNS_PREFIX = "org.eclipse.emf.ecp.view.label.model"; //$NON-NLS-1$
 
 	/**
 	 * The singleton instance of the package.

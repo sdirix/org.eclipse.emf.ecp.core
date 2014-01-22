@@ -36,6 +36,7 @@ import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
  * </p>
  * 
  * @generated
+ * @since 1.2
  */
 public class VRowImpl extends EObjectImpl implements VRow
 {

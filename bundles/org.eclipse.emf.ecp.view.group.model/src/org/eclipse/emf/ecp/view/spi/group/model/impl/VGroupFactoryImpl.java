@@ -26,6 +26,7 @@ import org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage;
  * <!-- end-user-doc -->
  * 
  * @generated
+ * @since 1.2
  */
 public class VGroupFactoryImpl extends EFactoryImpl implements VGroupFactory
 {
@@ -40,13 +41,13 @@ public class VGroupFactoryImpl extends EFactoryImpl implements VGroupFactory
 	{
 		try
 		{
-			VGroupFactory theGroupFactory = (VGroupFactory) EPackage.Registry.INSTANCE
+			final VGroupFactory theGroupFactory = (VGroupFactory) EPackage.Registry.INSTANCE
 				.getEFactory(VGroupPackage.eNS_URI);
 			if (theGroupFactory != null)
 			{
 				return theGroupFactory;
 			}
-		} catch (Exception exception)
+		} catch (final Exception exception)
 		{
 			EcorePlugin.INSTANCE.log(exception);
 		}
@@ -91,7 +92,7 @@ public class VGroupFactoryImpl extends EFactoryImpl implements VGroupFactory
 	 */
 	public VGroup createGroup()
 	{
-		VGroupImpl group = new VGroupImpl();
+		final VGroupImpl group = new VGroupImpl();
 		return group;
 	}
 

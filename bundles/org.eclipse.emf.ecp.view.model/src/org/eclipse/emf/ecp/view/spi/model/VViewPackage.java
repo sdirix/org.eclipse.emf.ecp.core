@@ -32,6 +32,7 @@ import org.eclipse.emf.ecore.EReference;
  * @see org.eclipse.emf.ecp.view.spi.model.VViewFactory
  * @model kind="package"
  * @generated
+ * @since 1.2
  */
 public interface VViewPackage extends EPackage {
 	/**

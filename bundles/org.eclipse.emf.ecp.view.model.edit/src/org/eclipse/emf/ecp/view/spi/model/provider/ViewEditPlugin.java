@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.provider.EcoreEditPlugin;
  * <!-- end-user-doc -->
  * 
  * @generated
+ * @since 1.2
  */
 public final class ViewEditPlugin extends EMFPlugin {
 	/**

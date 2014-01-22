@@ -24,23 +24,26 @@ import org.eclipse.emf.ecp.view.spi.separator.model.VSeparatorPackage;
  * <!-- begin-user-doc -->
  * An implementation of the model <b>Factory</b>.
  * <!-- end-user-doc -->
+ * 
  * @generated
+ * @since 1.2
  */
 public class VSeparatorFactoryImpl extends EFactoryImpl implements VSeparatorFactory {
 	/**
 	 * Creates the default factory implementation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public static VSeparatorFactory init() {
 		try {
-			VSeparatorFactory theSeparatorFactory = (VSeparatorFactory)EPackage.Registry.INSTANCE.getEFactory(VSeparatorPackage.eNS_URI);
+			final VSeparatorFactory theSeparatorFactory = (VSeparatorFactory) EPackage.Registry.INSTANCE
+				.getEFactory(VSeparatorPackage.eNS_URI);
 			if (theSeparatorFactory != null) {
 				return theSeparatorFactory;
 			}
-		}
-		catch (Exception exception) {
+		} catch (final Exception exception) {
 			EcorePlugin.INSTANCE.log(exception);
 		}
 		return new VSeparatorFactoryImpl();
@@ -50,6 +53,7 @@ public class VSeparatorFactoryImpl extends EFactoryImpl implements VSeparatorFac
 	 * Creates an instance of the factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public VSeparatorFactoryImpl() {
@@ -59,39 +63,44 @@ public class VSeparatorFactoryImpl extends EFactoryImpl implements VSeparatorFac
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
-			case VSeparatorPackage.SEPARATOR: return createSeparator();
-			default:
-				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
+		case VSeparatorPackage.SEPARATOR:
+			return createSeparator();
+		default:
+			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public VSeparator createSeparator() {
-		VSeparatorImpl separator = new VSeparatorImpl();
+		final VSeparatorImpl separator = new VSeparatorImpl();
 		return separator;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public VSeparatorPackage getSeparatorPackage() {
-		return (VSeparatorPackage)getEPackage();
+		return (VSeparatorPackage) getEPackage();
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @deprecated
 	 * @generated
 	 */

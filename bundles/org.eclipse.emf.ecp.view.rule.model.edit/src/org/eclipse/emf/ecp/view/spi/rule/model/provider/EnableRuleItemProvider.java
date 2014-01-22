@@ -34,6 +34,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * <!-- end-user-doc -->
  * 
  * @generated
+ * @since 1.2
  */
 public class EnableRuleItemProvider extends RuleItemProvider implements IEditingDomainItemProvider,
 	IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
@@ -111,7 +112,7 @@ public class EnableRuleItemProvider extends RuleItemProvider implements IEditing
 	 */
 	@Override
 	public String getText(Object object) {
-		EnableRule enableRule = (EnableRule) object;
+		final EnableRule enableRule = (EnableRule) object;
 		return getString("_UI_EnableRule_type") + " " + enableRule.isDisable(); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 

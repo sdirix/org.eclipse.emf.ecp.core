@@ -26,6 +26,7 @@ import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalPackage;
  * <!-- end-user-doc -->
  * 
  * @generated
+ * @since 1.2
  */
 public class VVerticalFactoryImpl extends EFactoryImpl implements VVerticalFactory
 {
@@ -40,13 +41,13 @@ public class VVerticalFactoryImpl extends EFactoryImpl implements VVerticalFacto
 	{
 		try
 		{
-			VVerticalFactory theVerticalFactory = (VVerticalFactory) EPackage.Registry.INSTANCE
+			final VVerticalFactory theVerticalFactory = (VVerticalFactory) EPackage.Registry.INSTANCE
 				.getEFactory(VVerticalPackage.eNS_URI);
 			if (theVerticalFactory != null)
 			{
 				return theVerticalFactory;
 			}
-		} catch (Exception exception)
+		} catch (final Exception exception)
 		{
 			EcorePlugin.INSTANCE.log(exception);
 		}
@@ -91,7 +92,7 @@ public class VVerticalFactoryImpl extends EFactoryImpl implements VVerticalFacto
 	 */
 	public VVerticalLayout createVerticalLayout()
 	{
-		VVerticalLayoutImpl verticalLayout = new VVerticalLayoutImpl();
+		final VVerticalLayoutImpl verticalLayout = new VVerticalLayoutImpl();
 		return verticalLayout;
 	}
 

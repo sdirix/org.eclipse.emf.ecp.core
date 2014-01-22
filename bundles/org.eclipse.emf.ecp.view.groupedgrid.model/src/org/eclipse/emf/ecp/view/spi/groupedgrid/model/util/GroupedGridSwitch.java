@@ -36,6 +36,7 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
  * 
  * @see org.eclipse.emf.ecp.view.spi.groupedgrid.model.VGroupedGridPackage
  * @generated
+ * @since 1.2
  */
 public class GroupedGridSwitch<T> extends Switch<T> {
 	/**
@@ -89,37 +90,44 @@ public class GroupedGridSwitch<T> extends Switch<T> {
 		switch (classifierID)
 		{
 		case VGroupedGridPackage.GROUPED_GRID: {
-			VGroupedGrid groupedGrid = (VGroupedGrid) theEObject;
+			final VGroupedGrid groupedGrid = (VGroupedGrid) theEObject;
 			T result = caseGroupedGrid(groupedGrid);
-			if (result == null)
+			if (result == null) {
 				result = caseContainedElement(groupedGrid);
-			if (result == null)
+			}
+			if (result == null) {
 				result = caseElement(groupedGrid);
-			if (result == null)
+			}
+			if (result == null) {
 				result = defaultCase(theEObject);
+			}
 			return result;
 		}
 		case VGroupedGridPackage.GROUP: {
-			VGroup group = (VGroup) theEObject;
+			final VGroup group = (VGroup) theEObject;
 			T result = caseGroup(group);
-			if (result == null)
+			if (result == null) {
 				result = defaultCase(theEObject);
+			}
 			return result;
 		}
 		case VGroupedGridPackage.ROW: {
-			VRow row = (VRow) theEObject;
+			final VRow row = (VRow) theEObject;
 			T result = caseRow(row);
-			if (result == null)
+			if (result == null) {
 				result = defaultCase(theEObject);
+			}
 			return result;
 		}
 		case VGroupedGridPackage.SPAN: {
-			VSpan span = (VSpan) theEObject;
+			final VSpan span = (VSpan) theEObject;
 			T result = caseSpan(span);
-			if (result == null)
+			if (result == null) {
 				result = caseAttachment(span);
-			if (result == null)
+			}
+			if (result == null) {
 				result = defaultCase(theEObject);
+			}
 			return result;
 		}
 		default:

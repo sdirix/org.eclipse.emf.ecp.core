@@ -21,6 +21,7 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
  * A Tester for Hardcoded domain model references.
  * 
  * @author Eugen Neufeld
+ * @since 1.2
  * 
  */
 public abstract class HardcodedTester implements ECPApplicableTester {

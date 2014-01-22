@@ -47,6 +47,7 @@ public class UniqueSetting {
 	/**
 	 * Convenience method for creating a setting.
 	 * 
+	 * @param setting the {@link Setting} to create a {@link UniqueSetting} from
 	 * @return the constructed setting
 	 */
 	public static UniqueSetting createSetting(Setting setting) {

@@ -37,6 +37,7 @@ import org.eclipse.emf.ecp.view.spi.rule.model.RulePackage;
  * </p>
  * 
  * @generated
+ * @since 1.2
  */
 public class OrConditionImpl extends ConditionImpl implements OrCondition {
 	/**

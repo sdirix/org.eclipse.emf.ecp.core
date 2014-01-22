@@ -26,6 +26,7 @@ package org.eclipse.emf.ecp.view.spi.rule.model;
  * @see org.eclipse.emf.ecp.view.spi.rule.model.RulePackage#getEnableRule()
  * @model
  * @generated
+ * @since 1.2
  */
 public interface EnableRule extends Rule {
 	/**

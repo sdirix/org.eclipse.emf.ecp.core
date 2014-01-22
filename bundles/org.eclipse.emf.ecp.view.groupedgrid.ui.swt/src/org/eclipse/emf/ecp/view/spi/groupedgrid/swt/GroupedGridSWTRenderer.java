@@ -35,6 +35,7 @@ import org.eclipse.swt.widgets.Label;
 
 /**
  * @author Eugen Neufeld
+ * @since 1.2
  * 
  */
 public class GroupedGridSWTRenderer extends AbstractSWTRenderer<VGroupedGrid> {

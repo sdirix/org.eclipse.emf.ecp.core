@@ -22,13 +22,15 @@ import org.eclipse.emf.ecp.view.spi.separator.model.VSeparatorPackage;
  * <!-- end-user-doc -->
  * <p>
  * </p>
- *
+ * 
  * @generated
+ * @since 1.2
  */
 public class VSeparatorImpl extends VContainedElementImpl implements VSeparator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected VSeparatorImpl() {
@@ -38,6 +40,7 @@ public class VSeparatorImpl extends VContainedElementImpl implements VSeparator 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override

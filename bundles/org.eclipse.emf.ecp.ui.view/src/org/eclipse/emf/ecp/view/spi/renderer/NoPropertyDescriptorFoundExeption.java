@@ -22,6 +22,7 @@ import org.eclipse.emf.ecp.ui.view.ECPRendererException;
  * @author Eugen Neufeld
  * 
  * @noextend This class is not intended to be subclassed by clients.
+ * @since 1.2
  */
 public class NoPropertyDescriptorFoundExeption extends ECPRendererException {
 

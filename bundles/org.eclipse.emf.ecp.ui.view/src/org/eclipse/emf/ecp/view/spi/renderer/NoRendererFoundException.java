@@ -19,6 +19,7 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
  * 
  * @author Eugen Neufeld
  * @noextend This class is not intended to be subclassed by clients.
+ * @since 1.2
  */
 public class NoRendererFoundException extends ECPRendererException {
 

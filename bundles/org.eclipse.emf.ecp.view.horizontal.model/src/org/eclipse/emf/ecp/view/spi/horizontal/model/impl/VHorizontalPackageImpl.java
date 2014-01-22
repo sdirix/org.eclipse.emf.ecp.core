@@ -25,6 +25,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * <!-- end-user-doc -->
  * 
  * @generated
+ * @since 1.2
  */
 public class VHorizontalPackageImpl extends EPackageImpl implements VHorizontalPackage
 {
@@ -78,11 +79,13 @@ public class VHorizontalPackageImpl extends EPackageImpl implements VHorizontalP
 	 */
 	public static VHorizontalPackage init()
 	{
-		if (isInited)
+		if (isInited) {
 			return (VHorizontalPackage) EPackage.Registry.INSTANCE.getEPackage(VHorizontalPackage.eNS_URI);
+		}
 
 		// Obtain or create and register package
-		VHorizontalPackageImpl theHorizontalPackage = (VHorizontalPackageImpl) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof VHorizontalPackageImpl ? EPackage.Registry.INSTANCE
+		final VHorizontalPackageImpl theHorizontalPackage = (VHorizontalPackageImpl) (EPackage.Registry.INSTANCE
+			.get(eNS_URI) instanceof VHorizontalPackageImpl ? EPackage.Registry.INSTANCE
 			.get(eNS_URI) : new VHorizontalPackageImpl());
 
 		isInited = true;
@@ -144,8 +147,9 @@ public class VHorizontalPackageImpl extends EPackageImpl implements VHorizontalP
 	 */
 	public void createPackageContents()
 	{
-		if (isCreated)
+		if (isCreated) {
 			return;
+		}
 		isCreated = true;
 
 		// Create classes and their features
@@ -170,8 +174,9 @@ public class VHorizontalPackageImpl extends EPackageImpl implements VHorizontalP
 	 */
 	public void initializePackageContents()
 	{
-		if (isInitialized)
+		if (isInitialized) {
 			return;
+		}
 		isInitialized = true;
 
 		// Initialize package
@@ -180,7 +185,7 @@ public class VHorizontalPackageImpl extends EPackageImpl implements VHorizontalP
 		setNsURI(eNS_URI);
 
 		// Obtain other dependent packages
-		VViewPackage theViewPackage = (VViewPackage) EPackage.Registry.INSTANCE.getEPackage(VViewPackage.eNS_URI);
+		final VViewPackage theViewPackage = (VViewPackage) EPackage.Registry.INSTANCE.getEPackage(VViewPackage.eNS_URI);
 
 		// Create type parameters
 

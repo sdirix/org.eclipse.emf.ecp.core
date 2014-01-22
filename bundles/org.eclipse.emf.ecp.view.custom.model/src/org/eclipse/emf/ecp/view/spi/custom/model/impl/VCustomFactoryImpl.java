@@ -26,6 +26,7 @@ import org.eclipse.emf.ecp.view.spi.custom.model.VHardcodedDomainModelReference;
  * <!-- end-user-doc -->
  * 
  * @generated
+ * @since 1.2
  */
 public class VCustomFactoryImpl extends EFactoryImpl implements VCustomFactory {
 	/**
@@ -37,12 +38,12 @@ public class VCustomFactoryImpl extends EFactoryImpl implements VCustomFactory {
 	 */
 	public static VCustomFactory init() {
 		try {
-			VCustomFactory theCustomFactory = (VCustomFactory) EPackage.Registry.INSTANCE
+			final VCustomFactory theCustomFactory = (VCustomFactory) EPackage.Registry.INSTANCE
 				.getEFactory(VCustomPackage.eNS_URI);
 			if (theCustomFactory != null) {
 				return theCustomFactory;
 			}
-		} catch (Exception exception) {
+		} catch (final Exception exception) {
 			EcorePlugin.INSTANCE.log(exception);
 		}
 		return new VCustomFactoryImpl();
@@ -82,7 +83,7 @@ public class VCustomFactoryImpl extends EFactoryImpl implements VCustomFactory {
 	 * @generated
 	 */
 	public VHardcodedDomainModelReference createHardcodedDomainModelReference() {
-		VHardcodedDomainModelReferenceImpl hardcodedDomainModelReference = new VHardcodedDomainModelReferenceImpl();
+		final VHardcodedDomainModelReferenceImpl hardcodedDomainModelReference = new VHardcodedDomainModelReferenceImpl();
 		return hardcodedDomainModelReference;
 	}
 

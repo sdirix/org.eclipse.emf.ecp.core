@@ -42,6 +42,7 @@ import org.eclipse.swt.widgets.Layout;
  * @author emueller
  * 
  * @param <R> the actual type of the {@link VElement} to be drawn
+ * @since 1.2
  */
 public abstract class AbstractSWTRenderer<R extends VElement> {
 

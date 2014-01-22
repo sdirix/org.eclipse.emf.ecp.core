@@ -28,6 +28,7 @@ import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
  * @see org.eclipse.emf.ecp.view.spi.label.model.VLabelPackage#getLabel()
  * @model
  * @generated
+ * @since 1.2
  */
 public interface VLabel extends VContainedElement
 {

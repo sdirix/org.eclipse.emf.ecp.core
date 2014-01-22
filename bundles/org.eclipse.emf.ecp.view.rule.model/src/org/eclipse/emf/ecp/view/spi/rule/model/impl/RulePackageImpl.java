@@ -34,6 +34,7 @@ import org.eclipse.emf.ecp.view.spi.rule.model.ShowRule;
  * <!-- end-user-doc -->
  * 
  * @generated
+ * @since 1.2
  */
 public class RulePackageImpl extends EPackageImpl implements RulePackage {
 	/**
@@ -132,12 +133,14 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 	 * @generated
 	 */
 	public static RulePackage init() {
-		if (isInited)
+		if (isInited) {
 			return (RulePackage) EPackage.Registry.INSTANCE.getEPackage(RulePackage.eNS_URI);
+		}
 
 		// Obtain or create and register package
-		RulePackageImpl theRulePackage = (RulePackageImpl) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof RulePackageImpl ? EPackage.Registry.INSTANCE
-			.get(eNS_URI) : new RulePackageImpl());
+		final RulePackageImpl theRulePackage = (RulePackageImpl) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof RulePackageImpl ? EPackage.Registry.INSTANCE
+			.get(eNS_URI)
+			: new RulePackageImpl());
 
 		isInited = true;
 
@@ -326,8 +329,9 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 	 * @generated
 	 */
 	public void createPackageContents() {
-		if (isCreated)
+		if (isCreated) {
 			return;
+		}
 		isCreated = true;
 
 		// Create classes and their features
@@ -370,8 +374,9 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 	 * @generated
 	 */
 	public void initializePackageContents() {
-		if (isInitialized)
+		if (isInitialized) {
 			return;
+		}
 		isInitialized = true;
 
 		// Initialize package
@@ -380,20 +385,21 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 		setNsURI(eNS_URI);
 
 		// Obtain other dependent packages
-		EcorePackage theEcorePackage = (EcorePackage) EPackage.Registry.INSTANCE.getEPackage(EcorePackage.eNS_URI);
-		VViewPackage theViewPackage = (VViewPackage) EPackage.Registry.INSTANCE.getEPackage(VViewPackage.eNS_URI);
+		final EcorePackage theEcorePackage = (EcorePackage) EPackage.Registry.INSTANCE
+			.getEPackage(EcorePackage.eNS_URI);
+		final VViewPackage theViewPackage = (VViewPackage) EPackage.Registry.INSTANCE.getEPackage(VViewPackage.eNS_URI);
 
 		// Create type parameters
 
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
-		leafConditionEClass.getESuperTypes().add(this.getCondition());
-		orConditionEClass.getESuperTypes().add(this.getCondition());
-		andConditionEClass.getESuperTypes().add(this.getCondition());
+		leafConditionEClass.getESuperTypes().add(getCondition());
+		orConditionEClass.getESuperTypes().add(getCondition());
+		andConditionEClass.getESuperTypes().add(getCondition());
 		ruleEClass.getESuperTypes().add(theViewPackage.getAttachment());
-		showRuleEClass.getESuperTypes().add(this.getRule());
-		enableRuleEClass.getESuperTypes().add(this.getRule());
+		showRuleEClass.getESuperTypes().add(getRule());
+		enableRuleEClass.getESuperTypes().add(getRule());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(conditionEClass, Condition.class,
@@ -415,7 +421,7 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 			"OrCondition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(
 			getOrCondition_Conditions(),
-			this.getCondition(),
+			getCondition(),
 			null,
 			"conditions", null, 2, -1, OrCondition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
@@ -423,14 +429,14 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 			"AndCondition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(
 			getAndCondition_Conditions(),
-			this.getCondition(),
+			getCondition(),
 			null,
 			"conditions", null, 2, -1, AndCondition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(ruleEClass, Rule.class, "Rule", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(
 			getRule_Condition(),
-			this.getCondition(),
+			getCondition(),
 			null,
 			"condition", null, 1, 1, Rule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 

@@ -20,6 +20,7 @@ import org.osgi.framework.ServiceReference;
  * Activator handling the life cycle.
  * 
  * @author Eugen Neufeld
+ * @since 1.2
  * 
  */
 public class Activator extends Plugin {

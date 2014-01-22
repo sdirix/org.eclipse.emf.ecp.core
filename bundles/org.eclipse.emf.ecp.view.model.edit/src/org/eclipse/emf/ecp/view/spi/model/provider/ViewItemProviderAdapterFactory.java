@@ -46,6 +46,7 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
  * <!-- end-user-doc -->
  * 
  * @generated
+ * @since 1.2
  */
 public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implements ComposeableAdapterFactory,
 	IChangeNotifier, IDisposable, IChildCreationExtender {
@@ -264,8 +265,8 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	public Object adapt(Object object, Object type) {
 		if (isFactoryForType(type))
 		{
-			Object adapter = super.adapt(object, type);
-			if (!(type instanceof Class<?>) || (((Class<?>) type).isInstance(adapter)))
+			final Object adapter = super.adapt(object, type);
+			if (!(type instanceof Class<?>) || ((Class<?>) type).isInstance(adapter))
 			{
 				return adapter;
 			}
@@ -350,14 +351,18 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 * @generated
 	 */
 	public void dispose() {
-		if (diagnosticItemProvider != null)
+		if (diagnosticItemProvider != null) {
 			diagnosticItemProvider.dispose();
-		if (featurePathDomainModelReferenceItemProvider != null)
+		}
+		if (featurePathDomainModelReferenceItemProvider != null) {
 			featurePathDomainModelReferenceItemProvider.dispose();
-		if (viewItemProvider != null)
+		}
+		if (viewItemProvider != null) {
 			viewItemProvider.dispose();
-		if (controlItemProvider != null)
+		}
+		if (controlItemProvider != null) {
 			controlItemProvider.dispose();
+		}
 	}
 
 }

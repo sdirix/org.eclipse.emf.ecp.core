@@ -40,6 +40,7 @@ import org.eclipse.swt.widgets.Display;
 
 /**
  * @author Eugen Neufeld
+ * @since 1.2
  * 
  */
 @SuppressWarnings("restriction")

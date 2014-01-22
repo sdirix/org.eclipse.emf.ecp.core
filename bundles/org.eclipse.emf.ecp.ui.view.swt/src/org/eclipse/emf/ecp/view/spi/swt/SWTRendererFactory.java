@@ -15,7 +15,6 @@ package org.eclipse.emf.ecp.view.spi.swt;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -23,7 +22,6 @@ import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.InvalidRegistryObjectException;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.emf.ecp.view.internal.swt.Activator;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
@@ -37,6 +35,7 @@ import org.osgi.framework.Bundle;
  * A RendererFactory for SWT controls.
  * 
  * @author Eugen Neufeld
+ * @since 1.2
  * 
  */
 public final class SWTRendererFactory {
@@ -50,7 +49,6 @@ public final class SWTRendererFactory {
 
 	private SWTRendererFactory() {
 		readRenderer();
-		readCustomRenderers();
 	}
 
 	private void readRenderer() {
@@ -91,26 +89,6 @@ public final class SWTRendererFactory {
 		}
 		return (Class<T>) bundle.loadClass(clazz);
 
-	}
-
-	@SuppressWarnings("unchecked")
-	private void readCustomRenderers() {
-		final IExtensionPoint extensionPoint = Platform.getExtensionRegistry().getExtensionPoint(
-			"org.eclipse.emf.ecp.ui.view.swt.customSWTRenderers"); //$NON-NLS-1$
-		for (final IExtension extension : extensionPoint.getExtensions()) {
-			final IConfigurationElement configurationElement = extension.getConfigurationElements()[0];
-			try {
-				final CustomSWTRenderer renderer = (CustomSWTRenderer) configurationElement
-					.createExecutableExtension("class"); //$NON-NLS-1$
-				for (final Entry<Class<? extends VElement>, AbstractSWTRenderer<? extends VElement>> entry : renderer
-					.getCustomRenderers()
-					.entrySet()) {
-					rendererMapping.put(entry.getKey(), (AbstractSWTRenderer<VElement>) entry.getValue());
-				}
-			} catch (final CoreException ex) {
-				Activator.log(ex);
-			}
-		}
 	}
 
 	/**

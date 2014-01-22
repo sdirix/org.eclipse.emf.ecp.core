@@ -29,6 +29,7 @@ import org.eclipse.emf.ecp.view.spi.rule.model.ShowRule;
  * </p>
  * 
  * @generated
+ * @since 1.2
  */
 public class ShowRuleImpl extends RuleImpl implements ShowRule {
 	/**
@@ -91,10 +92,11 @@ public class ShowRuleImpl extends RuleImpl implements ShowRule {
 	 * @generated
 	 */
 	public void setHide(boolean newHide) {
-		boolean oldHide = hide;
+		final boolean oldHide = hide;
 		hide = newHide;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, RulePackage.SHOW_RULE__HIDE, oldHide, hide));
+		}
 	}
 
 	/**
@@ -171,10 +173,11 @@ public class ShowRuleImpl extends RuleImpl implements ShowRule {
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy())
+		if (eIsProxy()) {
 			return super.toString();
+		}
 
-		StringBuffer result = new StringBuffer(super.toString());
+		final StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (hide: "); //$NON-NLS-1$
 		result.append(hide);
 		result.append(')');

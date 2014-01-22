@@ -48,6 +48,7 @@ import org.eclipse.swt.widgets.Shell;
  * Extend this class in order to provide an own implementation of an {@link ECPAbstractCustomControl}.
  * 
  * @author Eugen Neufeld
+ * @since 1.2
  * 
  */
 public abstract class ECPAbstractCustomControlSWT extends

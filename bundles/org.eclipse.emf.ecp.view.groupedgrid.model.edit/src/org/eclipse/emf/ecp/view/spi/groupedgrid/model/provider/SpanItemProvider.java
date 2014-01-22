@@ -35,6 +35,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * <!-- end-user-doc -->
  * 
  * @generated
+ * @since 1.2
  */
 public class SpanItemProvider
 	extends AttachmentItemProvider implements IEditingDomainItemProvider, IStructuredItemContentProvider,
@@ -118,7 +119,7 @@ public class SpanItemProvider
 	@Override
 	public String getText(Object object)
 	{
-		VSpan span = (VSpan) object;
+		final VSpan span = (VSpan) object;
 		return getString("_UI_Span_type") + " " + span.getHorizontalSpan(); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 

@@ -27,6 +27,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * <!-- end-user-doc -->
  * 
  * @generated
+ * @since 1.2
  */
 public class VCustomPackageImpl extends EPackageImpl implements VCustomPackage {
 	/**
@@ -77,12 +78,14 @@ public class VCustomPackageImpl extends EPackageImpl implements VCustomPackage {
 	 * @generated
 	 */
 	public static VCustomPackage init() {
-		if (isInited)
+		if (isInited) {
 			return (VCustomPackage) EPackage.Registry.INSTANCE.getEPackage(VCustomPackage.eNS_URI);
+		}
 
 		// Obtain or create and register package
-		VCustomPackageImpl theCustomPackage = (VCustomPackageImpl) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof VCustomPackageImpl ? EPackage.Registry.INSTANCE
-			.get(eNS_URI) : new VCustomPackageImpl());
+		final VCustomPackageImpl theCustomPackage = (VCustomPackageImpl) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof VCustomPackageImpl ? EPackage.Registry.INSTANCE
+			.get(eNS_URI)
+			: new VCustomPackageImpl());
 
 		isInited = true;
 
@@ -170,8 +173,9 @@ public class VCustomPackageImpl extends EPackageImpl implements VCustomPackage {
 	 * @generated
 	 */
 	public void createPackageContents() {
-		if (isCreated)
+		if (isCreated) {
 			return;
+		}
 		isCreated = true;
 
 		// Create classes and their features
@@ -198,8 +202,9 @@ public class VCustomPackageImpl extends EPackageImpl implements VCustomPackage {
 	 * @generated
 	 */
 	public void initializePackageContents() {
-		if (isInitialized)
+		if (isInitialized) {
 			return;
+		}
 		isInitialized = true;
 
 		// Initialize package
@@ -208,7 +213,7 @@ public class VCustomPackageImpl extends EPackageImpl implements VCustomPackage {
 		setNsURI(eNS_URI);
 
 		// Obtain other dependent packages
-		VViewPackage theViewPackage = (VViewPackage) EPackage.Registry.INSTANCE.getEPackage(VViewPackage.eNS_URI);
+		final VViewPackage theViewPackage = (VViewPackage) EPackage.Registry.INSTANCE.getEPackage(VViewPackage.eNS_URI);
 
 		// Create type parameters
 

@@ -28,6 +28,8 @@ import org.eclipse.swt.widgets.Label;
 /**
  * Renders an {@link VSeparator} to a SWT {@link Label}.
  * 
+ * @since 1.2
+ * 
  */
 public class SWTSeparatorRenderer extends AbstractSWTRenderer<VSeparator> {
 	/**

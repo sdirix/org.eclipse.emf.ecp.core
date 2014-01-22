@@ -26,6 +26,7 @@ import org.eclipse.emf.common.util.Enumerator;
  * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getLabelAlignment()
  * @model
  * @generated
+ * @since 1.2
  */
 public enum LabelAlignment implements Enumerator
 {
@@ -38,7 +39,7 @@ public enum LabelAlignment implements Enumerator
 	 * @generated
 	 * @ordered
 	 */
-	LEFT(0, "Left", "Left"),
+	LEFT(0, "Left", "Left"), //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
 	 * The '<em><b>None</b></em>' literal object.
@@ -49,7 +50,7 @@ public enum LabelAlignment implements Enumerator
 	 * @generated
 	 * @ordered
 	 */
-	NONE(1, "None", "None");
+	NONE(1, "None", "None"); //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
 	 * The '<em><b>Left</b></em>' literal value.
@@ -117,7 +118,7 @@ public enum LabelAlignment implements Enumerator
 	{
 		for (int i = 0; i < VALUES_ARRAY.length; ++i)
 		{
-			LabelAlignment result = VALUES_ARRAY[i];
+			final LabelAlignment result = VALUES_ARRAY[i];
 			if (result.toString().equals(literal))
 			{
 				return result;
@@ -137,7 +138,7 @@ public enum LabelAlignment implements Enumerator
 	{
 		for (int i = 0; i < VALUES_ARRAY.length; ++i)
 		{
-			LabelAlignment result = VALUES_ARRAY[i];
+			final LabelAlignment result = VALUES_ARRAY[i];
 			if (result.getName().equals(name))
 			{
 				return result;

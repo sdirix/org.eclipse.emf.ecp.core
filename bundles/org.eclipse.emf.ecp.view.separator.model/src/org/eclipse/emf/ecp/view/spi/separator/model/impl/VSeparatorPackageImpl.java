@@ -23,12 +23,15 @@ import org.eclipse.emf.ecp.view.spi.separator.model.VSeparatorPackage;
  * <!-- begin-user-doc -->
  * An implementation of the model <b>Package</b>.
  * <!-- end-user-doc -->
+ * 
  * @generated
+ * @since 1.2
  */
 public class VSeparatorPackageImpl extends EPackageImpl implements VSeparatorPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	private EClass separatorEClass = null;
@@ -54,6 +57,7 @@ public class VSeparatorPackageImpl extends EPackageImpl implements VSeparatorPac
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	private static boolean isInited = false;
@@ -61,20 +65,25 @@ public class VSeparatorPackageImpl extends EPackageImpl implements VSeparatorPac
 	/**
 	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
 	 * 
-	 * <p>This method is used to initialize {@link VSeparatorPackage#eINSTANCE} when that field is accessed.
-	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
-	 * <!-- begin-user-doc
+	 * <p>
+	 * This method is used to initialize {@link VSeparatorPackage#eINSTANCE} when that field is accessed. Clients should
+	 * not invoke it directly. Instead, they should simply access that field to obtain the package. <!-- begin-user-doc
 	 * --> <!-- end-user-doc -->
+	 * 
 	 * @see #eNS_URI
 	 * @see #createPackageContents()
 	 * @see #initializePackageContents()
 	 * @generated
 	 */
 	public static VSeparatorPackage init() {
-		if (isInited) return (VSeparatorPackage)EPackage.Registry.INSTANCE.getEPackage(VSeparatorPackage.eNS_URI);
+		if (isInited) {
+			return (VSeparatorPackage) EPackage.Registry.INSTANCE.getEPackage(VSeparatorPackage.eNS_URI);
+		}
 
 		// Obtain or create and register package
-		VSeparatorPackageImpl theSeparatorPackage = (VSeparatorPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof VSeparatorPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new VSeparatorPackageImpl());
+		final VSeparatorPackageImpl theSeparatorPackage = (VSeparatorPackageImpl) (EPackage.Registry.INSTANCE
+			.get(eNS_URI) instanceof VSeparatorPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI)
+			: new VSeparatorPackageImpl());
 
 		isInited = true;
 
@@ -90,7 +99,6 @@ public class VSeparatorPackageImpl extends EPackageImpl implements VSeparatorPac
 		// Mark meta-data to indicate it can't be changed
 		theSeparatorPackage.freeze();
 
-  
 		// Update the registry and return the package
 		EPackage.Registry.INSTANCE.put(VSeparatorPackage.eNS_URI, theSeparatorPackage);
 		return theSeparatorPackage;
@@ -99,6 +107,7 @@ public class VSeparatorPackageImpl extends EPackageImpl implements VSeparatorPac
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public EClass getSeparator() {
@@ -108,28 +117,33 @@ public class VSeparatorPackageImpl extends EPackageImpl implements VSeparatorPac
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public VSeparatorFactory getSeparatorFactory() {
-		return (VSeparatorFactory)getEFactoryInstance();
+		return (VSeparatorFactory) getEFactoryInstance();
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	private boolean isCreated = false;
 
 	/**
-	 * Creates the meta-model objects for the package.  This method is
+	 * Creates the meta-model objects for the package. This method is
 	 * guarded to have no affect on any invocation but its first.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public void createPackageContents() {
-		if (isCreated) return;
+		if (isCreated) {
+			return;
+		}
 		isCreated = true;
 
 		// Create classes and their features
@@ -139,19 +153,23 @@ public class VSeparatorPackageImpl extends EPackageImpl implements VSeparatorPac
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	private boolean isInitialized = false;
 
 	/**
-	 * Complete the initialization of the package and its meta-model.  This
+	 * Complete the initialization of the package and its meta-model. This
 	 * method is guarded to have no affect on any invocation but its first.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public void initializePackageContents() {
-		if (isInitialized) return;
+		if (isInitialized) {
+			return;
+		}
 		isInitialized = true;
 
 		// Initialize package
@@ -160,7 +178,7 @@ public class VSeparatorPackageImpl extends EPackageImpl implements VSeparatorPac
 		setNsURI(eNS_URI);
 
 		// Obtain other dependent packages
-		VViewPackage theViewPackage = (VViewPackage)EPackage.Registry.INSTANCE.getEPackage(VViewPackage.eNS_URI);
+		final VViewPackage theViewPackage = (VViewPackage) EPackage.Registry.INSTANCE.getEPackage(VViewPackage.eNS_URI);
 
 		// Create type parameters
 
@@ -170,7 +188,8 @@ public class VSeparatorPackageImpl extends EPackageImpl implements VSeparatorPac
 		separatorEClass.getESuperTypes().add(theViewPackage.getContainedElement());
 
 		// Initialize classes and features; add operations and parameters
-		initEClass(separatorEClass, VSeparator.class, "Separator", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEClass(separatorEClass, VSeparator.class,
+			"Separator", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
 		// Create resource
 		createResource(eNS_URI);

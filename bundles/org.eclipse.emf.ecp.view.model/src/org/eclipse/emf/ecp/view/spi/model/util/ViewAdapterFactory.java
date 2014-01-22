@@ -33,6 +33,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * 
  * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage
  * @generated
+ * @since 1.2
  */
 public class ViewAdapterFactory extends AdapterFactoryImpl {
 	/**

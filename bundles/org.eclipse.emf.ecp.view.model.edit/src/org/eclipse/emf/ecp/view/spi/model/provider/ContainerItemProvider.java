@@ -34,6 +34,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * <!-- end-user-doc -->
  * 
  * @generated
+ * @since 1.2
  */
 public class ContainerItemProvider
 	extends ContainedElementItemProvider implements IEditingDomainItemProvider, IStructuredItemContentProvider,
@@ -113,7 +114,7 @@ public class ContainerItemProvider
 	@Override
 	public String getText(Object object)
 	{
-		String label = ((VContainer) object).getName();
+		final String label = ((VContainer) object).getName();
 		return label == null || label.length() == 0 ?
 			getString("_UI_Container_type") : //$NON-NLS-1$
 			getString("_UI_Container_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$

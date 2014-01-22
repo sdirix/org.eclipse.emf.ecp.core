@@ -32,6 +32,7 @@ import org.eclipse.emf.edit.provider.ItemProviderAdapter;
  * <!-- end-user-doc -->
  * 
  * @generated
+ * @since 1.2
  */
 public class AttachmentItemProvider
 	extends ItemProviderAdapter

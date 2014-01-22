@@ -28,6 +28,8 @@ import org.eclipse.swt.widgets.Control;
 /**
  * Renders a SWT group.
  * 
+ * @since 1.2
+ * 
  */
 public class SWTGroupRenderer extends AbstractSWTRenderer<VGroup> {
 	/**
