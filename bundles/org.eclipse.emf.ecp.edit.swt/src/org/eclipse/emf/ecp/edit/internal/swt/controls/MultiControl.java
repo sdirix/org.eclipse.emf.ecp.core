@@ -310,6 +310,7 @@ public abstract class MultiControl extends SWTControl {
 
 		if (!isEmbedded() && getFirstStructuralFeature().isUnsettable()) {
 			unsetButton = new Button(toolbarComposite, SWT.PUSH);
+			unsetButton.setEnabled(!getControl().isReadonly());
 			unsetButton.setToolTipText(getUnsetButtonTooltip());
 			unsetButton.setImage(Activator.getImage("icons/delete.png")); //$NON-NLS-1$
 		}
@@ -348,6 +349,8 @@ public abstract class MultiControl extends SWTControl {
 			widget.setObservableValue(modelValue);
 			final Composite createControl = widget.createControl(composite);
 
+			widget.setEditable(!getControl().isReadonly());
+
 			GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(createControl);
 
 			createDeleteButton(composite);
@@ -363,6 +366,7 @@ public abstract class MultiControl extends SWTControl {
 		private void createDeleteButton(Composite composite) {
 			final Button delB = new Button(composite, SWT.PUSH);
 			delB.setImage(Activator.getImage("icons/delete.png")); //$NON-NLS-1$
+			delB.setEnabled(!getControl().isReadonly());
 			delB.addSelectionListener(new SelectionAdapter() {
 				private static final long serialVersionUID = 1L;
 
@@ -393,6 +397,7 @@ public abstract class MultiControl extends SWTControl {
 
 			final Button upB = new Button(composite, SWT.PUSH);
 			upB.setImage(up);
+			upB.setEnabled(!getControl().isReadonly());
 			upB.addSelectionListener(new SelectionAdapter() {
 				private static final long serialVersionUID = 1L;
 
@@ -418,6 +423,7 @@ public abstract class MultiControl extends SWTControl {
 			});
 			final Button downB = new Button(composite, SWT.PUSH);
 			downB.setImage(down);
+			downB.setEnabled(!getControl().isReadonly());
 			downB.addSelectionListener(new SelectionAdapter() {
 				private static final long serialVersionUID = 1L;
 
