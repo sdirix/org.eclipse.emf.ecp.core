@@ -50,6 +50,8 @@
 								<vmArgs>
 									<vmArg>-Dhttp.proxyHost=proxy.eclipse.org</vmArg>
 									<vmArg>-Dhttp.proxyPort=9898</vmArg>
+									<vmArg>-Dhttps.proxyHost=proxy.eclipse.org</vmArg>
+									<vmArg>-Dhttps.proxyPort=9898</vmArg>
 								</vmArgs>
 							</q7>
 
@@ -116,6 +118,8 @@
 								<vmArgs>
 									<vmArg>-Dhttp.proxyHost=proxy.eclipse.org</vmArg>
 									<vmArg>-Dhttp.proxyPort=9898</vmArg>
+									<vmArg>-Dhttps.proxyHost=proxy.eclipse.org</vmArg>
+									<vmArg>-Dhttps.proxyPort=9898</vmArg>
 								</vmArgs>
 							</q7client>
 
