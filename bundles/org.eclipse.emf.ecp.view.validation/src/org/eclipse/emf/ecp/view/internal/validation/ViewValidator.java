@@ -154,6 +154,7 @@ public class ViewValidator extends ViewModelGraph {
 			validationQueue.offer(eObject);
 		} else {
 			validationRunning = true;
+			validated.add(eObject);
 			validateAndNotifyControls(eObject);
 
 			EObject toValidate = validationQueue.poll();
