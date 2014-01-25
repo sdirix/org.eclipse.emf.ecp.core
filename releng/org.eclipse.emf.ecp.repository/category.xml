@@ -51,9 +51,6 @@
    <feature url="features/org.eclipse.emf.ecp.view.vertical.feature_1.2.0.qualifier.jar" id="org.eclipse.emf.ecp.view.vertical.feature" version="1.2.0.qualifier">
       <category name="org.eclipse.emf.ecp.view"/>
    </feature>
-   <feature url="features/org.eclipse.emf.ecp.view.model.ide.feature_1.2.0.qualifier.jar" id="org.eclipse.emf.ecp.view.model.ide.feature" version="1.2.0.qualifier">
-      <category name="org.eclipse.emf.ecp.view"/>
-   </feature>
    <feature url="features/org.eclipse.emf.ecp.view.custom.feature_1.2.0.qualifier.jar" id="org.eclipse.emf.ecp.view.custom.feature" version="1.2.0.qualifier">
       <category name="org.eclipse.emf.ecp.view"/>
    </feature>
