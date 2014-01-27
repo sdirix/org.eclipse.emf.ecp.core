@@ -32,10 +32,6 @@
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.emf.ecp.forms.sdk"
-         version="0.0.0"/>
-
-   <includes
          id="org.eclipse.emf.ecp.demo.e3.feature"
          version="0.0.0"/>
 
