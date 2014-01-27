@@ -150,6 +150,7 @@
 		<!-- e4 demo application -->
 		<module>../../bundles/org.eclipse.emf.ecp.application.e4</module>
 		<module>../../bundles/org.eclipse.emf.ecp.ui.e4</module>
+		<module>../../bundles/org.eclipse.emf.ecp.emfstore.ui.e4</module>
 	</modules>
 
 	<build>
