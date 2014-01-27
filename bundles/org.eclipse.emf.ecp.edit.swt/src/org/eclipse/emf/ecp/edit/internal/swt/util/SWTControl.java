@@ -96,8 +96,12 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 		final List<RenderingResultRow<Control>> list = Collections.singletonList(SWTRenderingHelper.INSTANCE
 			.getResultRowFactory().createRenderingResultRow(
 				validationLabel, createControl(parent)));
+
+		applyValidation(getControl().getDiagnostic());
+
 		// TODO remove asap
 		backwardCompatibleHandleValidation();
+
 		return list;
 
 	}

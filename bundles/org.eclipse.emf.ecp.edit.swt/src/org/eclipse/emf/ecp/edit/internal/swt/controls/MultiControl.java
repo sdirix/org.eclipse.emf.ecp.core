@@ -23,6 +23,7 @@ import org.eclipse.core.databinding.observable.list.ListChangeEvent;
 import org.eclipse.core.databinding.observable.list.ListDiff;
 import org.eclipse.core.databinding.observable.list.ListDiffVisitor;
 import org.eclipse.emf.common.util.Diagnostic;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
@@ -34,6 +35,7 @@ import org.eclipse.emf.ecp.edit.spi.ECPControlDescription;
 import org.eclipse.emf.ecp.edit.spi.ECPControlFactory;
 import org.eclipse.emf.ecp.edit.spi.util.ECPApplicableTester;
 import org.eclipse.emf.ecp.edit.spi.util.ECPStaticApplicableTester;
+import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.edit.command.MoveCommand;
 import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -476,22 +478,49 @@ public abstract class MultiControl extends SWTControl {
 
 	/**
 	 * {@inheritDoc}
-	 */
-	/**
-	 * {@inheritDoc}
 	 * 
-	 * @deprecated
+	 * @see org.eclipse.emf.ecp.edit.spi.ECPAbstractControl#applyValidation(org.eclipse.emf.ecp.view.spi.model.VDiagnostic)
 	 */
-	@Deprecated
 	@Override
-	public void handleValidation(Diagnostic diagnostic) {
-		updateValidationColor(getValidationBackgroundColor(diagnostic.getSeverity()));
-		if (validationLabel == null) {
-			return;
+	protected void applyValidation(VDiagnostic diagnostic) {
+		Diagnostic displayedDiagnostic = getMostSevereDiagnostic(diagnostic);
+		if (displayedDiagnostic == null) {
+			if (validationLabel == null || validationLabel.isDisposed()) {
+				return;
+			}
+			updateValidationColor(null);
+			validationLabel.setImage(null);
+			validationLabel.setToolTipText(""); //$NON-NLS-1$
+		} else {
+			updateValidationColor(getValidationBackgroundColor(displayedDiagnostic.getSeverity()));
+			if (validationLabel == null) {
+				return;
+			}
+			final Image image = getValidationIcon(displayedDiagnostic.getSeverity());
+			validationLabel.setImage(image);
+			validationLabel.setToolTipText(displayedDiagnostic.getMessage());
 		}
-		final Image image = getValidationIcon(diagnostic.getSeverity());
-		validationLabel.setImage(image);
-		validationLabel.setToolTipText(diagnostic.getMessage());
+	}
+
+	/**
+	 * @param diagnostic
+	 * @return
+	 */
+	private Diagnostic getMostSevereDiagnostic(VDiagnostic diagnostic) {
+		int highestSeverity = -1;
+		Diagnostic displayedDiagnostic = null;
+		final EList<Object> diagnostics = diagnostic.getDiagnostics();
+		for (final Object object : diagnostics) {
+			if (object == null) {
+				continue;
+			}
+			final Diagnostic childDiagnostic = (Diagnostic) object;
+			if (childDiagnostic.getSeverity() > highestSeverity) {
+				highestSeverity = childDiagnostic.getSeverity();
+				displayedDiagnostic = childDiagnostic;
+			}
+		}
+		return displayedDiagnostic;
 	}
 
 	/**
@@ -502,25 +531,6 @@ public abstract class MultiControl extends SWTControl {
 	 */
 	protected void updateValidationColor(Color color) {
 
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @deprecated
-	 */
-	@Deprecated
-	@Override
-	public void resetValidation() {
-		if (validationLabel == null || validationLabel.isDisposed()) {
-			return;
-		}
-		updateValidationColor(null);
-		validationLabel.setImage(null);
-		validationLabel.setToolTipText(""); //$NON-NLS-1$
 	}
 
 	/**
