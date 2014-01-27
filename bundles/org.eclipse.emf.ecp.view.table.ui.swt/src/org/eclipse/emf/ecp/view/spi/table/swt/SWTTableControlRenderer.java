@@ -18,8 +18,9 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.edit.internal.swt.table.TableColumnConfiguration;
 import org.eclipse.emf.ecp.edit.internal.swt.table.TableControlConfiguration;
-import org.eclipse.emf.ecp.view.internal.ui.Activator;
+import org.eclipse.emf.ecp.edit.spi.ECPAbstractControl;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.renderer.RenderingResultRow;
@@ -82,36 +83,58 @@ public class SWTTableControlRenderer extends AbstractSWTRenderer<VTableControl> 
 		control.setTableControlConfiguration(tcc);
 		control.init(viewContext, vTableControl);
 
-		Label label = null;
-		if (control.showLabel()) {
-			label = new Label(parent, SWT.NONE);
-			label.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_label"); //$NON-NLS-1$
-			label.setBackground(parent.getBackground());
-			String extra = ""; //$NON-NLS-1$
-			final Setting setting = control.getFirstSetting();
-			final IItemPropertyDescriptor itemPropertyDescriptor = control.getItemPropertyDescriptor(setting);
-
-			if (itemPropertyDescriptor == null) {
-				throw new NoPropertyDescriptorFoundExeption(setting.getEObject(), setting.getEStructuralFeature());
-			}
-			if (((EStructuralFeature) itemPropertyDescriptor.getFeature(null)).getLowerBound() > 0) {
-				extra = "*"; //$NON-NLS-1$
-			}
-
-			label.setText(itemPropertyDescriptor.getDisplayName(null)
-				+ extra);
-			label.setToolTipText(itemPropertyDescriptor.getDescription(null));
-		}
+		final Control label = createLabelControl(parent, vTableControl, control, viewContext);
 
 		final List<RenderingResultRow<Control>> createControls = control.createControls(parent);
 		// controlComposite.setBackground(parent.getBackground());
 
 		control.setEditable(!vTableControl.isReadonly());
 
-		Activator.getDefault().ungetECPControlFactory();
 		if (label == null) {
 			return createControls;
 		}
 		return createResult(label, createControls.iterator().next().getControls().iterator().next());
+	}
+
+	/**
+	 * Create the {@link Control} displaying the label of the current {@link VControl}.
+	 * 
+	 * @param parent the {@link Composite} to render onto
+	 * @param vControl the {@link VControl} to create the label for
+	 * @param control the {@link ECPAbstractControl} created for the vControl
+	 * @param viewContext the {@link ViewModelContext} used to create the current control
+	 * @return the created {@link Control} or null
+	 * @throws NoPropertyDescriptorFoundExeption thrown if the {@link org.eclipse.emf.ecore.EStructuralFeature
+	 *             EStructuralFeature} of the {@link VControl} doesn't have a registered {@link IItemPropertyDescriptor}
+	 */
+	protected Control createLabelControl(final Composite parent, final VControl vControl,
+		final ECPAbstractControl control, ViewModelContext viewContext)
+		throws NoPropertyDescriptorFoundExeption {
+		Label label = null;
+		labelRender: if (control.showLabel()) {
+			final Setting setting = control.getFirstSetting();
+			if (setting == null) {
+				break labelRender;
+			}
+			final IItemPropertyDescriptor itemPropertyDescriptor = control.getItemPropertyDescriptor(setting);
+
+			if (itemPropertyDescriptor == null) {
+				throw new NoPropertyDescriptorFoundExeption(setting.getEObject(), setting.getEStructuralFeature());
+			}
+			label = new Label(parent, SWT.NONE);
+			label.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_label"); //$NON-NLS-1$
+			label.setBackground(parent.getBackground());
+			String extra = ""; //$NON-NLS-1$
+			if (((EStructuralFeature) itemPropertyDescriptor.getFeature(null)).getLowerBound() > 0) {
+				extra = "*"; //$NON-NLS-1$
+			}
+
+			final String labelText = itemPropertyDescriptor.getDisplayName(setting.getEObject());
+			if (labelText != null && labelText.trim().length() != 0) {
+				label.setText(labelText + extra);
+				label.setToolTipText(itemPropertyDescriptor.getDescription(setting.getEObject()));
+			}
+		}
+		return label;
 	}
 }

@@ -7,23 +7,23 @@
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- * Eugen Neufeld - initial API and implementation
+ * Eugen - initial API and implementation
  ******************************************************************************/
 package org.eclipse.emf.ecp.diffmerge.internal.renderer.swt;
 
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.diffmerge.spi.context.ControlPair;
 import org.eclipse.emf.ecp.diffmerge.spi.context.DiffMergeModelContext;
-import org.eclipse.emf.ecp.diffmerge.swt.DiffDialog;
 import org.eclipse.emf.ecp.edit.spi.ECPAbstractControl;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.spi.core.swt.SWTControlRenderer;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
+import org.eclipse.emf.ecp.view.spi.table.swt.SWTTableControlRenderer;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Point;
@@ -35,12 +35,12 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 
 /**
- * A specific DiffMerge Control Renderer.
+ * A specific DiffMerge TableControl Renderer.
  * 
  * @author Eugen Neufeld
  * 
  */
-public class SWTDiffMergeControlRenderer extends SWTControlRenderer {
+public class SWTDiffMergeTableControlRenderer extends SWTTableControlRenderer {
 
 	/**
 	 * {@inheritDoc}
@@ -93,14 +93,32 @@ public class SWTDiffMergeControlRenderer extends SWTControlRenderer {
 		final IItemPropertyDescriptor itemPropertyDescriptor = ecpControl.getItemPropertyDescriptor(setting);
 		final String label = itemPropertyDescriptor.getDisplayName(setting.getEObject());
 
-		final DiffDialog dialog = new DiffDialog(diffModelContext, label, pairWithDiff.getLeftControl()
-			.getDomainModelReference(),
-			pairWithDiff.getRightControl().getDomainModelReference(), vControl.getDomainModelReference());
+		// final DiffDialog dialog = new DiffDialog(diffModelContext, label, pairWithDiff.getLeftControl()
+		// .getDomainModelReference(),
+		// pairWithDiff.getRightControl().getDomainModelReference(), vControl.getDomainModelReference());
 
 		final Shell shell = new Shell(SWT.TITLE | SWT.BORDER | SWT.APPLICATION_MODAL);
 		shell.setText(String.format(Messages.getString("SWTDiffMergeControlRenderer.ShellTitle1Parameter"), label)); //$NON-NLS-1$
 		shell.setLayout(new FillLayout());
-		dialog.create(shell);
+		// dialog.create(shell);
+		final Button b = new Button(shell, SWT.PUSH);
+		b.setText("There should be a diff here!");
+		b.addSelectionListener(new SelectionAdapter() {
+
+			private static final long serialVersionUID = 1L;
+
+			/**
+			 * {@inheritDoc}
+			 * 
+			 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
+			 */
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				super.widgetSelected(e);
+				shell.dispose();
+			}
+
+		});
 		shell.pack();
 		final Rectangle clientArea = shell.getDisplay().getBounds();
 		final Point size = shell.getSize();

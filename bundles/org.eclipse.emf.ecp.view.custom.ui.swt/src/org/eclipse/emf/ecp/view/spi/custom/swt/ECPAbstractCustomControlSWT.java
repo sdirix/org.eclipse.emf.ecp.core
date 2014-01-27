@@ -145,6 +145,7 @@ public abstract class ECPAbstractCustomControlSWT extends
 				dispose();
 			}
 		});
+		backwardCompatibleHandleValidation();
 		return renderingResult;
 	}
 

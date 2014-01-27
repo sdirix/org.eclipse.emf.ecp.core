@@ -76,15 +76,7 @@ public class SWTControlRenderer extends AbstractSWTRenderer<VControl> {
 	@Override
 	protected List<RenderingResultRow<Control>> renderModel(final Composite parent, final VControl vControl,
 		final ViewModelContext viewContext) throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
-		final ECPControlFactory controlFactory = Activator.getDefault().getECPControlFactory();
-
-		if (controlFactory == null) {
-			Activator.getDefault().ungetECPControlFactory();
-			return null;
-		}
-
-		final ECPAbstractControl control = controlFactory.createControl(ECPAbstractControl.class,
-			vControl.getDomainModelReference());
+		final ECPAbstractControl control = getControl(vControl);
 
 		if (control != null) {
 			control.init(viewContext, vControl);
@@ -154,9 +146,28 @@ public class SWTControlRenderer extends AbstractSWTRenderer<VControl> {
 
 		}
 
-		Activator.getDefault().ungetECPControlFactory();
-
 		return null;
+	}
+
+	/**
+	 * This method identifies the {@link ECPAbstractControl} that should be rendered.
+	 * 
+	 * @param vControl the {@link VControl} to find the {@link ECPAbstractControl} for
+	 * @return the {@link ECPAbstractControl} or null if no fitting control could be found
+	 */
+	protected ECPAbstractControl getControl(VControl vControl) {
+		final ECPControlFactory controlFactory = Activator.getDefault().getECPControlFactory();
+
+		if (controlFactory == null) {
+			Activator.getDefault().ungetECPControlFactory();
+			return null;
+		}
+
+		final ECPAbstractControl control = controlFactory.createControl(ECPAbstractControl.class,
+			vControl.getDomainModelReference());
+
+		Activator.getDefault().ungetECPControlFactory();
+		return control;
 	}
 
 	/**

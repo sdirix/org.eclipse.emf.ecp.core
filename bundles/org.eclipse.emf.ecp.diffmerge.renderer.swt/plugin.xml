@@ -9,6 +9,12 @@
                testClass="org.eclipse.emf.ecp.diffmerge.internal.renderer.swt.DiffMergeControlRendererTester">
          </dynamicTest>
       </renderer>
+      <renderer
+            renderer="org.eclipse.emf.ecp.diffmerge.internal.renderer.swt.SWTDiffMergeTableControlRenderer">
+         <dynamicTest
+               testClass="org.eclipse.emf.ecp.diffmerge.internal.renderer.swt.DiffMergeTableControlRendererTester">
+         </dynamicTest>
+      </renderer>
    </extension>
 
 </plugin>
