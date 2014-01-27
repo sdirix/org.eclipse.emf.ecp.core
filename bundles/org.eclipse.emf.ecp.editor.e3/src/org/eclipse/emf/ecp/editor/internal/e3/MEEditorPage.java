@@ -11,7 +11,6 @@
 package org.eclipse.emf.ecp.editor.internal.e3;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -30,6 +29,7 @@ import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.ContributionManager;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
 import org.eclipse.swt.layout.GridLayout;
@@ -51,6 +51,7 @@ import org.eclipse.ui.menus.IMenuService;
  */
 public class MEEditorPage extends FormPage {
 
+	private static final String TOOLBAR_ORG_ECLIPSE_EMF_ECP_EDITOR_INTERNAL_E3_ME_EDITOR_PAGE = "toolbar:org.eclipse.emf.ecp.editor.internal.e3.MEEditorPage"; //$NON-NLS-1$
 	//
 	private ScrolledForm form;
 	//
@@ -70,10 +71,10 @@ public class MEEditorPage extends FormPage {
 	 *            the {@link FormPage#id}
 	 * @param title
 	 *            the title
+	 * @param modelElementContext
+	 *            the {@link ECPEditorContext}
 	 * @param modelElement
 	 *            the modelElement
-	 * @param modelElementContext
-	 *            the {@link ModelElementContext}
 	 */
 	public MEEditorPage(MEEditor editor, String id, String title, ECPEditorContext modelElementContext,
 		EObject modelElement) {
@@ -91,12 +92,12 @@ public class MEEditorPage extends FormPage {
 	 *            the {@link FormPage#id}
 	 * @param title
 	 *            the title
+	 * @param modelElementContext
+	 *            the {@link ECPEditorContext}
 	 * @param modelElement
 	 *            the modelElement
 	 * @param problemFeature
 	 *            the problemFeature
-	 * @param modelElementContext
-	 *            the {@link ModelElementContext}
 	 */
 	public MEEditorPage(MEEditor editor, String id, String title, ECPEditorContext modelElementContext,
 		EObject modelElement, EStructuralFeature problemFeature) {
@@ -120,7 +121,6 @@ public class MEEditorPage extends FormPage {
 		final Composite body = form.getBody();
 		body.setLayout(new GridLayout());
 		body.setBackground(body.getDisplay().getSystemColor(SWT.COLOR_WHITE));
-		final EClass eClass = modelElementContext.getDomainObject().eClass();
 
 		final EObject domainObject = modelElementContext.getDomainObject();
 		final VView view = ViewProviderHelper.getView(domainObject);
@@ -129,6 +129,7 @@ public class MEEditorPage extends FormPage {
 		try {
 			ecpView = ECPSWTViewRenderer.INSTANCE.render(body, vmc);
 		} catch (final ECPRendererException ex) {
+			MessageDialog.openError(form.getShell(), ex.getClass().getName(), ex.getMessage());
 			Activator.logException(ex);
 		}
 
@@ -147,7 +148,7 @@ public class MEEditorPage extends FormPage {
 
 		String name = shortLabelProvider.getText(modelElementContext.getDomainObject());
 
-		name += " [" + modelElementContext.getDomainObject().eClass().getName() + "]";
+		name += " [" + modelElementContext.getDomainObject().eClass().getName() + "]"; //$NON-NLS-1$ //$NON-NLS-2$
 		try {
 			form.setText(name);
 		} catch (final SWTException e) {
@@ -180,26 +181,27 @@ public class MEEditorPage extends FormPage {
 		// .getService(IEvaluationService.class);
 		// service.addSourceProvider(sourceProvider);
 
-		form.getToolBarManager().add(new Action("", Activator.getImageDescriptor(ISharedImages.IMG_TOOL_DELETE)) {
+		form.getToolBarManager().add(new Action("", Activator.getImageDescriptor(ISharedImages.IMG_TOOL_DELETE)) { //$NON-NLS-1$
 
-			@Override
-			public void run() {
-				final EditingDomain editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(modelElementContext
-					.getDomainObject());
-				new ECPCommand(modelElementContext.getDomainObject(), editingDomain) {
+				@Override
+				public void run() {
+					final EditingDomain editingDomain = AdapterFactoryEditingDomain
+						.getEditingDomainFor(modelElementContext
+							.getDomainObject());
+					new ECPCommand(modelElementContext.getDomainObject(), editingDomain) {
 
-					@Override
-					protected void doRun() {
-						EcoreUtil.delete(modelElementContext.getDomainObject(), true);
-					}
+						@Override
+						protected void doRun() {
+							EcoreUtil.delete(modelElementContext.getDomainObject(), true);
+						}
 
-				}.run(true);
+					}.run(true);
 
-				MEEditorPage.this.getEditor().close(true);
-			}
-		});
+					MEEditorPage.this.getEditor().close(true);
+				}
+			});
 		menuService.populateContributionManager((ContributionManager) form.getToolBarManager(),
-			"toolbar:org.eclipse.emf.ecp.editor.internal.e3.MEEditorPage");
+			TOOLBAR_ORG_ECLIPSE_EMF_ECP_EDITOR_INTERNAL_E3_ME_EDITOR_PAGE);
 		form.getToolBarManager().update(true);
 	}
 

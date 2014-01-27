@@ -38,6 +38,7 @@ import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
 import org.eclipse.emf.edit.provider.ComposedImage;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.widgets.Composite;
@@ -104,8 +105,8 @@ public class ECPE4Editor {
 			parent.setExpandVertical(true);
 			parent.setContent(render.getSWTControl());
 			parent.setMinSize(render.getSWTControl().computeSize(SWT.DEFAULT, SWT.DEFAULT));
-
 		} catch (final ECPRendererException ex) {
+			MessageDialog.openError(parent.getShell(), ex.getClass().getName(), ex.getMessage());
 			logger.log(LogService.LOG_ERROR, ex.getMessage(), ex);
 		}
 

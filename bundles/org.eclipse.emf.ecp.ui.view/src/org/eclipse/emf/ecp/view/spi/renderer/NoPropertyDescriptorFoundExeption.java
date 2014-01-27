@@ -26,7 +26,7 @@ import org.eclipse.emf.ecp.ui.view.ECPRendererException;
  */
 public class NoPropertyDescriptorFoundExeption extends ECPRendererException {
 
-	private static final String NO_PROPERTY_DESCRIPTOR_FOUND = "No Property descriptor found. Make sure, the corresponing edit bundle is started."; //$NON-NLS-1$
+	private static final String NO_PROPERTY_DESCRIPTOR_FOUND = "No Property descriptor was found for the feature \"%s\" of \"%s\". Make sure, the corresponing edit bundle is started."; //$NON-NLS-1$
 
 	private static final long serialVersionUID = -4450264762772550298L;
 
@@ -44,7 +44,7 @@ public class NoPropertyDescriptorFoundExeption extends ECPRendererException {
 	 */
 	public NoPropertyDescriptorFoundExeption(EObject modelElement,
 		EStructuralFeature targetFeature) {
-		super(NO_PROPERTY_DESCRIPTOR_FOUND);
+		super(String.format(NO_PROPERTY_DESCRIPTOR_FOUND, targetFeature.getName(), modelElement.eClass().getName()));
 		this.modelElement = modelElement;
 		this.targetFeature = targetFeature;
 	}
