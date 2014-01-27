@@ -36,7 +36,7 @@
 						</dependency>
 						<dependency>
 							<type>eclipse-feature</type>
-							<artifactId>org.eclipse.emf.ecp.validation.feature</artifactId>
+							<artifactId>org.eclipse.emf.ecp.e3.feature</artifactId>
 							<version>0.0.0</version>
 						</dependency>
 					</dependencies>
