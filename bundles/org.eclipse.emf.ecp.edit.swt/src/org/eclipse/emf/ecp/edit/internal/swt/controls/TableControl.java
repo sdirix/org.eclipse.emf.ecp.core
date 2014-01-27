@@ -566,10 +566,11 @@ public class TableControl extends SWTControl {
 		if (validationLabel == null || validationLabel.isDisposed()) {
 			return;
 		}
-
-		final Image image = getValidationIcon(diagnostic.getHighestSeverity());
-		validationLabel.setImage(image);
-		validationLabel.setToolTipText(diagnostic.getMessage());
+		if (diagnostic != null) {
+			final Image image = getValidationIcon(diagnostic.getHighestSeverity());
+			validationLabel.setImage(image);
+			validationLabel.setToolTipText(diagnostic.getMessage());
+		}
 		if (addingRowWorkaround >= 0 && addingRowWorkaround <= 1) {
 			addingRowWorkaround++;
 			return;
