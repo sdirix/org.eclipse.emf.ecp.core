@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.eclipse.emf.ecp.view.rule.feature"
-      label="View Model Rule Feature"
+      label="EMF Forms Rule Model"
       version="1.2.0.qualifier"
       provider-name="Eclipse Modeling Project"
       plugin="org.eclipse.emf.ecp.view.rule"

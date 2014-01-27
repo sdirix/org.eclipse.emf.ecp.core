@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.eclipse.emf.ecp.e3.feature"
-      label="EMF Client Platform UI 3.x Feature"
+      label="ECP 3.x UI Integration"
       version="1.2.0.qualifier"
       provider-name="Eclipse Modeling Project"
       plugin="org.eclipse.emf.ecp.ui.e3"
@@ -30,13 +30,6 @@
 
    <plugin
          id="org.eclipse.emf.ecp.ui.e3"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.emf.ecp.application.e3"
          download-size="0"
          install-size="0"
          version="0.0.0"

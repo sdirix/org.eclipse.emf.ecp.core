@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.eclipse.emf.ecp.e4.feature"
-      label="EMF Client Platform UI e4 Feature"
+      label="ECP e4 UI Integration"
       version="1.2.0.qualifier"
       provider-name="%providerName"
       plugin="org.eclipse.emf.ecp.ui.e4"
@@ -22,13 +22,14 @@
    </license>
 
    <plugin
-         id="org.eclipse.emf.ecp.application.e4"
+         id="org.eclipse.emf.ecp.ui.e4"
          download-size="0"
          install-size="0"
-         version="0.0.0"/>
+         version="0.0.0"
+         unpack="false"/>
 
    <plugin
-         id="org.eclipse.emf.ecp.ui.e4"
+         id="org.eclipse.emf.ecp.emfstore.ui.e4"
          download-size="0"
          install-size="0"
          version="0.0.0"

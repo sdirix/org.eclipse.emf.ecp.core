@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="org.eclipse.emf.ecp.view.unset.feature"
-      label="EMF Forms Unset Service"
-      version="1.2.0.qualifier"
+      id="org.eclipse.emf.ecp.demo.e4.feature"
+      label="ECP e4 Demo Application"
+      version="1.0.0.qualifier"
       provider-name="%providerName"
-      plugin="org.eclipse.emf.ecp.view.unset"
+      plugin="org.eclipse.emf.ecp.ui.e4"
       image="eclipse_update_120.jpg"
       license-feature="org.eclipse.emf.ecp.license.feature"
       license-feature-version="1.2.0.qualifier">
@@ -22,7 +22,7 @@
    </license>
 
    <plugin
-         id="org.eclipse.emf.ecp.view.unset"
+         id="org.eclipse.emf.ecp.application.e4"
          download-size="0"
          install-size="0"
          version="0.0.0"

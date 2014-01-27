@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.eclipse.emf.ecp.view.separator.feature"
-      label="View Model Separator Feature"
+      label="EMF Forms Separator Model"
       version="1.2.0.qualifier"
       provider-name="Eclipse Modeling Project"
       plugin="org.eclipse.emf.ecp.view.separator.model"

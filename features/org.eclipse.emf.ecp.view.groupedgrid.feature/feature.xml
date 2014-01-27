@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.eclipse.emf.ecp.view.groupedgrid.feature"
-      label="View Model Grouped Grid Feature"
+      label="EMF Forms Grouped Grid Model"
       version="1.2.0.qualifier"
       provider-name="Eclipse Modeling Project"
       plugin="org.eclipse.emf.ecp.view.groupedgrid.model"
