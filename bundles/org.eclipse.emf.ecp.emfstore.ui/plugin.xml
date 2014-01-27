@@ -437,6 +437,9 @@
                             variable="org.eclipse.ui.selection">
                          <or>
                             <and>
+                               <instanceof
+                                     value="org.eclipse.emf.ecp.core.ECPRepository">
+                               </instanceof>
                                <test
                                      property="org.eclipse.emf.ecp.core.repository.providerName"
                                      value="org.eclipse.emf.ecp.emfstore.provider">
@@ -458,6 +461,9 @@
                                <iterate
                                      ifEmpty="false"
                                      operator="and">
+                                  <instanceof
+                                        value="org.eclipse.emf.ecp.core.ECPRepository">
+                                  </instanceof>
                                   <test
                                         property="org.eclipse.emf.ecp.core.repository.providerName"
                                         value="org.eclipse.emf.ecp.emfstore.provider">
@@ -483,6 +489,9 @@
                             variable="org.eclipse.ui.selection">
                          <or>
                             <and>
+                               <instanceof
+                                     value="org.eclipse.emf.ecp.core.ECPRepository">
+                               </instanceof>
                                <test
                                      property="org.eclipse.emf.ecp.core.repository.providerName"
                                      value="org.eclipse.emf.ecp.emfstore.provider">
@@ -504,6 +513,9 @@
                                <iterate
                                      ifEmpty="false"
                                      operator="and">
+                                  <instanceof
+                                        value="org.eclipse.emf.ecp.core.ECPRepository">
+                                  </instanceof>
                                   <test
                                         property="org.eclipse.emf.ecp.core.repository.providerName"
                                         value="org.eclipse.emf.ecp.emfstore.provider">
@@ -607,6 +619,9 @@
                             variable="org.eclipse.ui.selection">
                          <or>
                             <and>
+                               <instanceof
+                                     value="org.eclipse.emf.ecp.core.ECPRepository">
+                               </instanceof>
                                <test
                                      property="org.eclipse.emf.ecp.core.repository.providerName"
                                      value="org.eclipse.emf.ecp.emfstore.provider">
@@ -633,6 +648,9 @@
                                <iterate
                                      ifEmpty="false"
                                      operator="and">
+                                  <instanceof
+                                        value="org.eclipse.emf.ecp.core.ECPRepository">
+                                  </instanceof>
                                   <test
                                         property="org.eclipse.emf.ecp.core.repository.providerName"
                                         value="org.eclipse.emf.ecp.emfstore.provider">
@@ -663,6 +681,9 @@
                             variable="org.eclipse.ui.selection">
                          <or>
                             <and>
+                               <instanceof
+                                     value="org.eclipse.emf.ecp.core.ECPRepository">
+                               </instanceof>
                                <test
                                      property="org.eclipse.emf.ecp.core.repository.providerName"
                                      value="org.eclipse.emf.ecp.emfstore.provider">
@@ -689,6 +710,9 @@
                                <iterate
                                      ifEmpty="false"
                                      operator="and">
+                                  <instanceof
+                                        value="org.eclipse.emf.ecp.core.ECPRepository">
+                                  </instanceof>
                                   <test
                                         property="org.eclipse.emf.ecp.core.repository.providerName"
                                         value="org.eclipse.emf.ecp.emfstore.provider">
@@ -719,6 +743,9 @@
                             variable="org.eclipse.ui.selection">
                          <or>
                             <and>
+                               <instanceof
+                                     value="org.eclipse.emf.ecp.core.ECPRepository">
+                               </instanceof>
                                <test
                                      property="org.eclipse.emf.ecp.core.repository.providerName"
                                      value="org.eclipse.emf.ecp.emfstore.provider">
@@ -745,6 +772,9 @@
                                <iterate
                                      ifEmpty="false"
                                      operator="and">
+                                  <instanceof
+                                        value="org.eclipse.emf.ecp.core.ECPRepository">
+                                  </instanceof>
                                   <test
                                         property="org.eclipse.emf.ecp.core.repository.providerName"
                                         value="org.eclipse.emf.ecp.emfstore.provider">
@@ -775,6 +805,9 @@
                             variable="org.eclipse.ui.selection">
                          <or>
                             <and>
+                               <instanceof
+                                     value="org.eclipse.emf.ecp.core.ECPRepository">
+                               </instanceof>
                                <test
                                      forcePluginActivation="true"
                                      property="org.eclipse.emf.ecp.core.repository.providerName"
@@ -792,6 +825,9 @@
                                <iterate
                                      ifEmpty="false"
                                      operator="and">
+                                  <instanceof
+                                        value="org.eclipse.emf.ecp.core.ECPRepository">
+                                  </instanceof>
                                   <test
                                         forcePluginActivation="true"
                                         property="org.eclipse.emf.ecp.core.repository.providerName"
