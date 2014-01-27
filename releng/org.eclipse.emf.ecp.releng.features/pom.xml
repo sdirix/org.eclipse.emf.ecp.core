@@ -15,13 +15,13 @@
 	<packaging>pom</packaging>
 
 	<modules>
+		<module>../../features/org.eclipse.emf.ecp.target.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.cdo.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.emfstore.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.license.feature</module>
-		<module>../../features/org.eclipse.emf.ecp.target.feature</module>
-		<module>../../features/org.eclipse.emf.ecp.e3.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.workspace.feature</module>
+		<module>../../features/org.eclipse.emf.ecp.e3.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.view.model.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.ecore.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.view.model.editor.feature</module>
@@ -43,6 +43,7 @@
 		<module>../../features/org.eclipse.emf.ecp.view.template.helper.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.ide.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.e4.feature</module>
+		<module>../../features/org.eclipse.emf.ecp.rap.util.feature</module>
 		<!-- demo -->
 		<module>../../features/org.eclipse.emf.ecp.demo.e4.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.demo.e3.feature</module>
