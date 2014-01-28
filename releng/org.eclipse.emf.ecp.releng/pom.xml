@@ -178,6 +178,7 @@
 					<nohelp>true</nohelp>
 				</configuration>
 			</plugin>
+			<!-- 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-checkstyle-plugin</artifactId>
@@ -198,6 +199,7 @@
 					</execution>
 				</executions>
 			</plugin>
+			 -->
 			<!-- enable source bundle generation -->
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
