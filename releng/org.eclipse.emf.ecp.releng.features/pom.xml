@@ -57,6 +57,7 @@
 	<!-- Parent used for features. This POM contains all build steps for code signing. -->
 	<build>
 		<plugins>
+		<!--
 			<!-- 1. -->
 			<plugin>
 				<groupId>org.eclipse.tycho.extras</groupId>
@@ -76,6 +77,7 @@
 					</excludes>
 				</configuration>
 			</plugin>
+			-->
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-p2-plugin</artifactId>
