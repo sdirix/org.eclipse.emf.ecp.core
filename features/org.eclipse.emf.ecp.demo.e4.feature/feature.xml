@@ -21,6 +21,11 @@
       %license
    </license>
 
+   <requires>
+      <import feature="org.eclipse.emf.ecp.emfforms.runtime.feature" version="1.2.0.qualifier"/>
+      <import feature="org.eclipse.emf.ecp.e4.feature" version="1.2.0.qualifier"/>
+   </requires>
+
    <plugin
          id="org.eclipse.emf.ecp.application.e4"
          download-size="0"
