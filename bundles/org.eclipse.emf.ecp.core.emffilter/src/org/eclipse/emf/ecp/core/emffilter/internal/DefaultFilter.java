@@ -84,6 +84,11 @@ public class DefaultFilter implements ECPFilterProvider {
 		packages.add("http://org/eclipse/emf/ecp/view/separator/model"); //$NON-NLS-1$
 		packages.add("http://org/eclipse/emf/ecp/view/table/model"); //$NON-NLS-1$
 		packages.add("http://org/eclipse/emf/ecp/view/vertical/model"); //$NON-NLS-1$
+
+		packages.add("http://org/eclipse/emf/ecp/view/categorization/model"); //$NON-NLS-1$
+		packages.add("http://org/eclipse/emf/ecp/view/template/model"); //$NON-NLS-1$
+		packages.add("http://org/eclipse/emf/ecp/view/treemasterview/model"); //$NON-NLS-1$
+
 	}
 
 	private void addQ7Models(Set<String> packages) {
