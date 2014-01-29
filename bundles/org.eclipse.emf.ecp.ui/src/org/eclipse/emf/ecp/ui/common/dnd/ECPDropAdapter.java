@@ -24,6 +24,13 @@ import org.eclipse.jface.viewers.Viewer;
 public abstract class ECPDropAdapter extends EditingDomainViewerDropAdapter {
 
 	/**
+	 * Default constructor for drop adapters initialized by extension point.
+	 */
+	public ECPDropAdapter() {
+		this(null, null);
+	}
+
+	/**
 	 * Constructor.
 	 * 
 	 * @param domain the {@link EditingDomain} to use

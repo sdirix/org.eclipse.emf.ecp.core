@@ -19,6 +19,19 @@ import org.eclipse.swt.dnd.DropTargetEvent;
 
 public class ViewEditorDropAdapter extends ECPDropAdapter {
 
+	/**
+	 * Default constructor needed for extension point.
+	 */
+	public ViewEditorDropAdapter() {
+
+	}
+
+	/**
+	 * Constructor.
+	 * 
+	 * @param domain the {@link EditingDomain} to use
+	 * @param viewer the Viewer this {@link ECPDropAdapter} is applied to
+	 */
 	public ViewEditorDropAdapter(EditingDomain domain, Viewer viewer) {
 		super(domain, viewer);
 	}
