@@ -21,6 +21,10 @@
       %license
    </license>
 
+   <includes
+         id="org.eclipse.emf.ecp.feature"
+         version="0.0.0"/>
+
    <plugin
          id="org.eclipse.emf.ecp.editor.e3"
          download-size="0"
