@@ -1082,6 +1082,7 @@ public class TableControl extends SWTControl {
 				editingState = null;
 
 				getViewer().getColumnViewerEditor().removeEditorActivationListener(this);
+				getViewer().update(getViewer().getColumnViewerEditor().getFocusCell().getElement(), null);
 			}
 
 			@Override
