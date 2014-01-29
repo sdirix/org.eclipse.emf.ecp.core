@@ -20,19 +20,7 @@
    </license>
 
    <includes
-         id="org.eclipse.emf.ecp.e3.feature"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.ecp.emfforms.runtime.feature"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.ecp.feature"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.ecp.demo.e3.feature"
+         id="org.eclipse.emf.ecp.sdk.feature"
          version="0.0.0"/>
 
 </feature>

@@ -20,7 +20,63 @@
    </license>
 
    <includes
-         id="org.eclipse.emf.ecp.emfforms.sdk.feature"
+         id="org.eclipse.emf.ecp.cdo.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.ecp.emfstore.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.ecp.workspace.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.ecp.emfforms.runtime.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.ecp.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.ecp.demo.e3.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.ecp.e3.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.ecp.demo.e4.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.ecp.e4.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.ecp.ide.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.ecp.license.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.ecp.rap.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.ecp.rap.util.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.ecp.view.model.editor.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.ecp.view.template.helper.feature"
          version="0.0.0"/>
 
    <plugin
