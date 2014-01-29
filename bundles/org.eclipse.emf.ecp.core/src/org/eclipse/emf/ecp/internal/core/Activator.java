@@ -48,9 +48,9 @@ public final class Activator extends Plugin {
 	public void start(BundleContext bundleContext) throws Exception {
 		instance = this;
 		// Initialize all manager
-		getECPProviderRegistry();
-		getECPRepositoryManager();
-		getECPProjectManager();
+		// getECPProviderRegistry();
+		// getECPRepositoryManager();
+		// getECPProjectManager();
 		super.start(bundleContext);
 	}
 
