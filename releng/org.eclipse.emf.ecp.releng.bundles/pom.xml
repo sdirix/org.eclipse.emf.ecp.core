@@ -52,6 +52,7 @@
 		<module>../../bundles/org.eclipse.emf.ecp.view.model.provider.xmi</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.model.generator</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.context</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.context.locale</module>
 
 		<!-- Ecore Support -->
 		<module>../../bundles/org.eclipse.emf.ecp.edit.ecore.swt</module>
