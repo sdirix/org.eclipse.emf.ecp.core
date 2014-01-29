@@ -31,9 +31,9 @@ import org.eclipse.emf.ecp.view.spi.model.VView;
  */
 public class IDEViewModelRegistryImpl implements IDEViewModelRegistry {
 
-	private Map<VView, ViewModelEditorCallback> viewModelViewModelEditorMapping = new LinkedHashMap<>();
+	private Map<VView, ViewModelEditorCallback> viewModelViewModelEditorMapping = new LinkedHashMap<VView, ViewModelEditorCallback>();
 
-	private Map<String, Set<VView>> ecoreViewMapping = new LinkedHashMap<>();
+	private Map<String, Set<VView>> ecoreViewMapping = new LinkedHashMap<String, Set<VView>>();
 
 	@Override
 	public void register(String ecorePath, VView viewModel) {
