@@ -30,12 +30,13 @@ import org.eclipse.emf.ecp.view.validation.test.model.Mainboard;
 import org.eclipse.emf.ecp.view.validation.test.model.TestFactory;
 import org.eclipse.emf.ecp.view.validation.test.model.TestPackage;
 import org.eclipse.emf.ecp.view.validation.test.model.Writer;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
- * Tests for checking whether the {@link org.eclipse.emf.ecp.view.internal.validation.ValidationRegistry ValidationRegistry} &
- * the {@link org.eclipse.emf.ecp.view.internal.validation.ValidationService ValidationService} correctly behave if domain
+ * Tests for checking whether the {@link org.eclipse.emf.ecp.view.internal.validation.ValidationRegistry
+ * ValidationRegistry} &
+ * the {@link org.eclipse.emf.ecp.view.internal.validation.ValidationService ValidationService} correctly behave if
+ * domain
  * objects and/or {@link org.eclipse.emf.ecp.view.spi.model.VElement Renderable}s are removed.
  * 
  * @author emueller
@@ -178,7 +179,6 @@ public class ValidationServiceGCTest extends CommonValidationTest {
 	 * Remove the {@link Mainboard}. It shouldn't be referenced anymore
 	 * in contrast to the control.
 	 */
-	@Ignore
 	@Test
 	public void testRemoveChildOfDomainObject() {
 
