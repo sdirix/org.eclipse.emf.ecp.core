@@ -37,6 +37,14 @@
          id="org.eclipse.emf.ecp.workspace.feature"
          version="0.0.0"/>
 
+   <includes
+         id="org.eclipse.emf.ecp.view.model.editor.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.ecp.view.template.helper.feature"
+         version="0.0.0"/>
+
    <plugin
          id="org.eclipse.emf.ecp.application.e3"
          download-size="0"
