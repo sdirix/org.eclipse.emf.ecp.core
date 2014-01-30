@@ -59,7 +59,6 @@
 	<build>
 		<plugins>
 			<!-- 1. -->
-			<!--
 			<plugin>
 				<groupId>org.eclipse.tycho.extras</groupId>
 				<artifactId>tycho-source-feature-plugin</artifactId>
@@ -78,7 +77,7 @@
 					</excludes>
 				</configuration>
 			</plugin>
-			-->
+			
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-p2-plugin</artifactId>
