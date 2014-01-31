@@ -56,5 +56,28 @@
                </or>
          </with>
       </definition>
+      <definition
+            id="org.eclipse.emf.ecp.application.e4.isSingleModelElementSelected">
+         <with
+               variable="org.eclipse.ui.selection">
+               <instanceof
+                     value="org.eclipse.emf.ecore.EObject">
+               </instanceof>
+         </with>
+      </definition>
+      <definition
+            id="org.eclipse.emf.ecp.application.e4.isSingleProjectOrModelElementSelected">
+         <with
+               variable="org.eclipse.ui.selection">
+               <or>
+                   <instanceof
+                         value="org.eclipse.emf.ecore.EObject">
+                   </instanceof>
+                   <instanceof
+                         value="org.eclipse.emf.ecp.core.ECPProject">
+                   </instanceof>
+               </or>
+         </with>
+      </definition>
    </extension>
 </plugin>
