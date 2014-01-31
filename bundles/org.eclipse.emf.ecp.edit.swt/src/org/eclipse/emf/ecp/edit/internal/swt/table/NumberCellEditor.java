@@ -241,4 +241,15 @@ public class NumberCellEditor extends TextCellEditor implements ECPCellEditor {
 	private Text getText() {
 		return text;
 	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor#setEditable(boolean)
+	 */
+	public void setEditable(boolean editable) {
+		if (getText() != null) {
+			getText().setEditable(editable);
+		}
+	}
 }

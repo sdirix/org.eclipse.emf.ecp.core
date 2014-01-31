@@ -240,4 +240,15 @@ public class DateCellEditor extends CellEditor implements ECPCellEditor {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor#setEditable(boolean)
+	 */
+	public void setEditable(boolean editable) {
+		if (dateWidget != null) {
+			dateWidget.setEnabled(editable);
+		}
+	}
 }
