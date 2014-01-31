@@ -65,6 +65,9 @@
 		<module>../../bundles/org.eclipse.emf.ecp.ui.view.editor.controls</module>
 
 		<module>../../bundles/org.eclipse.emf.ecp.examplemodel.ui</module>
+		
+		<!-- Transaction support -->
+		<module>../../bundles/org.eclipse.emf.ecp.ui.transaction</module>
 
 		<!-- IDE Feature -->
 		<module>../../bundles/org.eclipse.emf.ecp.view.model.editor</module>

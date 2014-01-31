@@ -4,7 +4,7 @@
       label="Ecore Editor Wizard Feature"
       version="1.2.0.qualifier"
       provider-name="%providerName"
-      plugin="org.eclipse.emf.ecp.edit.ecore.swt"
+      plugin="org.eclipse.emf.ecp.ecore.editor.ui"
       license-feature="org.eclipse.emf.ecp.license.feature"
       license-feature-version="1.2.0.qualifier">
 
