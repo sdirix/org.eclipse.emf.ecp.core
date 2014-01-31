@@ -26,7 +26,6 @@ import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Button;
@@ -93,18 +92,16 @@ public class SWTDiffMergeControlRenderer extends SWTControlRenderer {
 		final IItemPropertyDescriptor itemPropertyDescriptor = ecpControl.getItemPropertyDescriptor(setting);
 		final String label = itemPropertyDescriptor.getDisplayName(setting.getEObject());
 
-		final DiffDialog dialog = new DiffDialog(diffModelContext, label, pairWithDiff.getLeftControl()
-			.getDomainModelReference(),
-			pairWithDiff.getRightControl().getDomainModelReference(), vControl.getDomainModelReference());
+		final DiffDialog dialog = new DiffDialog(diffModelContext, label, pairWithDiff.getLeftControl(),
+			pairWithDiff.getRightControl(), vControl);
 
 		final Shell shell = new Shell(SWT.TITLE | SWT.BORDER | SWT.APPLICATION_MODAL);
 		shell.setText(String.format(Messages.getString("SWTDiffMergeControlRenderer.ShellTitle1Parameter"), label)); //$NON-NLS-1$
 		shell.setLayout(new FillLayout());
-		dialog.create(shell);
-		shell.pack();
 		final Rectangle clientArea = shell.getDisplay().getBounds();
-		final Point size = shell.getSize();
-		shell.setLocation((clientArea.width - size.x) / 2, (clientArea.height - size.y) / 2);
+		shell.setSize(clientArea.width / 2, 500);
+		dialog.create(shell);
+		shell.setLocation(clientArea.width / 4, clientArea.height / 4);
 		shell.open();
 	}
 }

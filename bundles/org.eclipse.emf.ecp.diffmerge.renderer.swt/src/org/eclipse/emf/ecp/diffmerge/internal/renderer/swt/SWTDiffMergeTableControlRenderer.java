@@ -14,6 +14,7 @@ package org.eclipse.emf.ecp.diffmerge.internal.renderer.swt;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.diffmerge.spi.context.ControlPair;
 import org.eclipse.emf.ecp.diffmerge.spi.context.DiffMergeModelContext;
+import org.eclipse.emf.ecp.diffmerge.swt.DiffDialog;
 import org.eclipse.emf.ecp.edit.spi.ECPAbstractControl;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
@@ -23,10 +24,8 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Button;
@@ -93,36 +92,16 @@ public class SWTDiffMergeTableControlRenderer extends SWTTableControlRenderer {
 		final IItemPropertyDescriptor itemPropertyDescriptor = ecpControl.getItemPropertyDescriptor(setting);
 		final String label = itemPropertyDescriptor.getDisplayName(setting.getEObject());
 
-		// final DiffDialog dialog = new DiffDialog(diffModelContext, label, pairWithDiff.getLeftControl()
-		// .getDomainModelReference(),
-		// pairWithDiff.getRightControl().getDomainModelReference(), vControl.getDomainModelReference());
+		final DiffDialog dialog = new DiffDialog(diffModelContext, label, pairWithDiff.getLeftControl(),
+			pairWithDiff.getRightControl(), vControl);
 
 		final Shell shell = new Shell(SWT.TITLE | SWT.BORDER | SWT.APPLICATION_MODAL);
 		shell.setText(String.format(Messages.getString("SWTDiffMergeControlRenderer.ShellTitle1Parameter"), label)); //$NON-NLS-1$
 		shell.setLayout(new FillLayout());
-		// dialog.create(shell);
-		final Button b = new Button(shell, SWT.PUSH);
-		b.setText("There should be a diff here!");
-		b.addSelectionListener(new SelectionAdapter() {
-
-			private static final long serialVersionUID = 1L;
-
-			/**
-			 * {@inheritDoc}
-			 * 
-			 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
-			 */
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				super.widgetSelected(e);
-				shell.dispose();
-			}
-
-		});
-		shell.pack();
 		final Rectangle clientArea = shell.getDisplay().getBounds();
-		final Point size = shell.getSize();
-		shell.setLocation((clientArea.width - size.x) / 2, (clientArea.height - size.y) / 2);
+		shell.setSize(clientArea.width / 2, 500);
+		dialog.create(shell);
+		shell.setLocation(clientArea.width / 4, clientArea.height / 4);
 		shell.open();
 	}
 }

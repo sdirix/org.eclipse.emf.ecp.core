@@ -91,7 +91,7 @@ public class SWTViewRenderer extends AbstractSWTRenderer<VView> {
 					.applyTo(((SingleColumnRow) row).getControl());
 			}
 			else if (DoubleColumnRow.class.isInstance(row)) {
-				GridDataFactory.fillDefaults().align(SWT.BEGINNING, SWT.BEGINNING).grab(false, false)
+				GridDataFactory.fillDefaults().align(SWT.BEGINNING, SWT.BEGINNING).grab(false, false).hint(16, 17)
 					.applyTo(((DoubleColumnRow) row).getLeftControl());
 				GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING).grab(true, false).span(2, 1)
 					.applyTo(((DoubleColumnRow) row).getRightControl());
