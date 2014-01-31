@@ -834,8 +834,15 @@ public class TableControl extends SWTControl {
 		public String getToolTipText(Object element) {
 			final EObject domainObject = (EObject) element;
 			final VDiagnostic vDiagnostic = getDiagnosticForFeature(domainObject, feature);
-			return getCellTooltipMessage(vDiagnostic);
-
+			final String diagnosticMessage = getCellTooltipMessage(vDiagnostic);
+			if (diagnosticMessage != null && diagnosticMessage.length() != 0) {
+				return diagnosticMessage;
+			}
+			final Object value = domainObject.eGet(feature);
+			if (value == null) {
+				return null;
+			}
+			return String.valueOf(value);
 		}
 
 		@Override
@@ -988,6 +995,10 @@ public class TableControl extends SWTControl {
 		 */
 		@Override
 		protected boolean canEdit(Object element) {
+			if (ECPCellEditor.class.isInstance(cellEditor)) {
+				ECPCellEditor.class.cast(cellEditor).setEditable(editable);
+				return true;
+			}
 			return editable;
 		}
 
@@ -1082,7 +1093,10 @@ public class TableControl extends SWTControl {
 				editingState = null;
 
 				getViewer().getColumnViewerEditor().removeEditorActivationListener(this);
-				getViewer().update(getViewer().getColumnViewerEditor().getFocusCell().getElement(), null);
+				final ViewerCell focusCell = getViewer().getColumnViewerEditor().getFocusCell();
+				if (focusCell != null) {
+					getViewer().update(focusCell.getElement(), null);
+				}
 			}
 
 			@Override

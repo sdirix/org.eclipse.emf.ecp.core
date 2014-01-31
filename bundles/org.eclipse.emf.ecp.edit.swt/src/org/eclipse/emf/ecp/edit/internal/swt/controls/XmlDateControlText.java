@@ -100,8 +100,11 @@ public class XmlDateControlText extends AbstractTextControl {
 		// TODO: FocusOut doesn't seem to fire in case the same invalid text is
 		// entered twice
 		final IObservableValue value = SWTObservables.observeText(getText(), SWT.FocusOut);
+		final DateTargetToModelUpdateStrategy targetToModelUpdateStrategy = new DateTargetToModelUpdateStrategy();
+		final DateModelToTargetUpdateStrategy modelToTargetUpdateStrategy = new DateModelToTargetUpdateStrategy();
 		final Binding binding = getDataBindingContext().bindValue(value, getModelValue(),
-			new DateTargetToModelUpdateStrategy(), new DateModelToTargetUpdateStrategy());
+			targetToModelUpdateStrategy, modelToTargetUpdateStrategy);
+		createTooltipBinding(targetToModelUpdateStrategy, modelToTargetUpdateStrategy);
 		return binding;
 	}
 

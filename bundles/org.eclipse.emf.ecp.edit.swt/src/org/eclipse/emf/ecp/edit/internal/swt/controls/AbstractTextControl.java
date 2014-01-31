@@ -13,6 +13,7 @@
 package org.eclipse.emf.ecp.edit.internal.swt.controls;
 
 import org.eclipse.core.databinding.Binding;
+import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.databinding.EMFUpdateValueStrategy;
@@ -54,6 +55,7 @@ public abstract class AbstractTextControl extends SingleControl {
 	private void createTextWidget(Composite composite) {
 		text = new Text(composite, getTextWidgetStyle());
 		text.setLayoutData(getTextWidgetLayoutData());
+
 		if (getFirstStructuralFeature().isUnsettable()) {
 			text.setMessage(ControlMessages.AbstractTextControl_Unset);
 		}
@@ -129,10 +131,29 @@ public abstract class AbstractTextControl extends SingleControl {
 	@Override
 	public Binding bindValue() {
 		final IObservableValue value = SWTObservables.observeText(text, SWT.FocusOut);
+		final TargetToModelUpdateStrategy targetToModelUpdateStrategy = new TargetToModelUpdateStrategy();
+		final ModelToTargetUpdateStrategy modelToTargetUpdateStrategy = new ModelToTargetUpdateStrategy();
 		final Binding binding = getDataBindingContext().bindValue(value, getModelValue(),
-			new TargetToModelUpdateStrategy(),
-			new ModelToTargetUpdateStrategy());
+			targetToModelUpdateStrategy,
+			modelToTargetUpdateStrategy);
+
+		createTooltipBinding(targetToModelUpdateStrategy, modelToTargetUpdateStrategy);
+
 		return binding;
+	}
+
+	/**
+	 * Creates a tooltip binding for this control.
+	 * 
+	 * @param targetToModel the {@link UpdateValueStrategy} from target to Model
+	 * @param modelToTarget the {@link UpdateValueStrategy} from model to target
+	 * @return the created {@link Binding}
+	 */
+	protected Binding createTooltipBinding(UpdateValueStrategy targetToModel, UpdateValueStrategy modelToTarget) {
+		final IObservableValue toolTip = SWTObservables.observeTooltipText(text);
+		return getDataBindingContext().bindValue(toolTip, getModelValue(),
+			targetToModel,
+			modelToTarget);
 	}
 
 	/**

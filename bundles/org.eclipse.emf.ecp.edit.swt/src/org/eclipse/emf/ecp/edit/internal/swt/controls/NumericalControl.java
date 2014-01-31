@@ -90,6 +90,8 @@ public class NumericalControl extends AbstractTextControl {
 		final Binding binding = getDataBindingContext().bindValue(value, getModelValue(), targetToModelStrategy,
 			modelToTargetStrategy);
 
+		createTooltipBinding(targetToModelStrategy, modelToTargetStrategy);
+
 		if (isEmbedded()) {
 			// focus out is not fired if control is embedded;
 			// use value change listener to get same behavior for control
