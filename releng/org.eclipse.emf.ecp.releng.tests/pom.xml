@@ -44,5 +44,6 @@
 		<module>../../tests/org.eclipse.emf.ecp.view.vertical.ui.swt.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.ui.editor.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.dynamictree.model.test</module>
+		<module>../../tests/org.eclipse.emf.ecp.ecore.editor.test</module>
 	</modules>
 </project>

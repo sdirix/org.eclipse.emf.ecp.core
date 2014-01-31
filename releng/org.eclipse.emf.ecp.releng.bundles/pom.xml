@@ -56,6 +56,10 @@
 
 		<!-- Ecore Support -->
 		<module>../../bundles/org.eclipse.emf.ecp.edit.ecore.swt</module>
+		
+		<!-- Ecore Wizard -->
+		<module>../../bundles/org.eclipse.emf.ecp.ecore.editor</module>
+		<module>../../bundles/org.eclipse.emf.ecp.ecore.editor.ui</module>
 
 		<!-- Editor controls -->
 		<module>../../bundles/org.eclipse.emf.ecp.ui.view.editor.controls</module>
