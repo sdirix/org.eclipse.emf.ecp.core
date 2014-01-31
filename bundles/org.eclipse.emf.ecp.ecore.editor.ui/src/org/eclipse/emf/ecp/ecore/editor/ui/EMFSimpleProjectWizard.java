@@ -187,7 +187,7 @@ public class EMFSimpleProjectWizard extends Wizard implements INewWizard {
 			}
 		}
 		final ProjectHelper helper = new ProjectHelper(newProjectCreationPage.getProjectName());
-		final String filePrefix = helper.getProjectName().isEmpty() ? "model"
+		final String filePrefix = helper.getProjectName().length() == 0 ? "model"
 			: helper.getProjectName();
 		final IFile modelFile = getModelFile(newProjectCreationPage.getProjectName(),
 			filePrefix + ".ecore");
