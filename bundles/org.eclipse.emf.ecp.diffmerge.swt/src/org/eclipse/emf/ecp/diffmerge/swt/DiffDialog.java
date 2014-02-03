@@ -50,8 +50,6 @@ import org.osgi.framework.ServiceReference;
  * @author Eugen Neufeld
  * 
  */
-// TODO API
-@SuppressWarnings("restriction")
 public class DiffDialog {
 
 	/**
@@ -118,6 +116,9 @@ public class DiffDialog {
 		final Control merge = createMerge(composite, controlFactory);
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING).grab(true, false).applyTo(merge);
 
+		final Control nextPrevious = createNextPrevious(composite);
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING).grab(true, false).applyTo(nextPrevious);
+
 		scrolledComposite.setContent(composite);
 		composite.layout();
 		final Point point = composite.computeSize(SWT.DEFAULT, SWT.DEFAULT);
@@ -128,32 +129,67 @@ public class DiffDialog {
 	}
 
 	/**
-	 * Creates the Merge content.
-	 * 
-	 * @param parent the {@link Composite}
-	 * @param ecpControlFactory the {@link ECPControlFactory}
-	 * @return the control showing the merge
+	 * @param composite
+	 * @return
 	 */
-	private Control createMerge(final Composite parent, final ECPControlFactory ecpControlFactory) {
-		final Composite mainObjectComposite = new Composite(parent, SWT.NONE);
-		mainObjectComposite.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_compare_dialog_merge"); //$NON-NLS-1$
-		GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(false).applyTo(mainObjectComposite);
+	private Control createNextPrevious(Composite parent) {
+		final Composite nextPreviousComposite = new Composite(parent, SWT.NONE);
+		nextPreviousComposite.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_compare_dialog_nextPrevious"); //$NON-NLS-1$
+		GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(true).applyTo(nextPreviousComposite);
 
-		final Label mainObject = new Label(mainObjectComposite, SWT.NONE);
-		mainObject.setText(Messages.DiffDialog_mainObject);
-		mainObject.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_compare_dialog_merge_label"); //$NON-NLS-1$
-		mergeControl = EcoreUtil.copy(main);
-		final ResourceSet resourceSet = new ResourceSetImpl();
-		final AdapterFactoryEditingDomain domain = new AdapterFactoryEditingDomain(
-			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE),
-			new BasicCommandStack(), resourceSet);
-		final EObject domainObject = EcoreUtil.copy(viewModelContext.getDomainModel());
-		resourceSet.eAdapters().add(new AdapterFactoryEditingDomain.EditingDomainProvider(domain));
-		final Resource resource = resourceSet.createResource(URI.createURI("VIRTUAL_URI_TEMP"));
-		resource.getContents().add(domainObject);
-		createControl(mainObjectComposite, mergeControl, domainObject, false);
+		final int index = viewModelContext.getIndexOf(main);
 
-		final Button bConfirm = new Button(mainObjectComposite, SWT.PUSH);
+		final Button previous = new Button(nextPreviousComposite, SWT.PUSH);
+		previous.setText(Messages.DiffDialog_Previous);
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, false).applyTo(previous);
+		previous.addSelectionListener(new SelectionAdapter() {
+
+			private static final long serialVersionUID = 1L;
+
+			/**
+			 * {@inheritDoc}
+			 * 
+			 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
+			 */
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				super.widgetSelected(e);
+				replaceMainWith(mergeControl, false);
+				previous.getShell().dispose();
+				DiffDialogHelper.showDialog(viewModelContext, index - 1);
+			}
+
+		});
+		final Button next = new Button(nextPreviousComposite, SWT.PUSH);
+		next.setText(Messages.DiffDialog_Next);
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, false).applyTo(next);
+		next.addSelectionListener(new SelectionAdapter() {
+
+			private static final long serialVersionUID = 1L;
+
+			/**
+			 * {@inheritDoc}
+			 * 
+			 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
+			 */
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				super.widgetSelected(e);
+				replaceMainWith(mergeControl, false);
+				next.getShell().dispose();
+				DiffDialogHelper.showDialog(viewModelContext, index + 1);
+			}
+
+		});
+
+		if (index == 0) {
+			previous.setEnabled(false);
+		}
+		if (index + 1 == viewModelContext.getTotalNumberOfDiffs()) {
+			next.setEnabled(false);
+		}
+
+		final Button bConfirm = new Button(nextPreviousComposite, SWT.PUSH);
 		bConfirm.setText(Messages.DiffDialog_Confirm);
 		bConfirm.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_compare_dialog_merge_confirm"); //$NON-NLS-1$
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING).grab(false, false).applyTo(bConfirm);
@@ -174,6 +210,35 @@ public class DiffDialog {
 			}
 
 		});
+
+		return nextPreviousComposite;
+	}
+
+	/**
+	 * Creates the Merge content.
+	 * 
+	 * @param parent the {@link Composite}
+	 * @param ecpControlFactory the {@link ECPControlFactory}
+	 * @return the control showing the merge
+	 */
+	private Control createMerge(final Composite parent, final ECPControlFactory ecpControlFactory) {
+		final Composite mainObjectComposite = new Composite(parent, SWT.NONE);
+		mainObjectComposite.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_compare_dialog_merge"); //$NON-NLS-1$
+		GridLayoutFactory.fillDefaults().numColumns(2).equalWidth(false).applyTo(mainObjectComposite);
+
+		final Label mainObject = new Label(mainObjectComposite, SWT.NONE);
+		mainObject.setText(Messages.DiffDialog_mainObject);
+		mainObject.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_compare_dialog_merge_label"); //$NON-NLS-1$
+		mergeControl = EcoreUtil.copy(main);
+		final ResourceSet resourceSet = new ResourceSetImpl();
+		final AdapterFactoryEditingDomain domain = new AdapterFactoryEditingDomain(
+			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE),
+			new BasicCommandStack(), resourceSet);
+		final EObject domainObject = EcoreUtil.copy(viewModelContext.getDomainModel());
+		resourceSet.eAdapters().add(new AdapterFactoryEditingDomain.EditingDomainProvider(domain));
+		final Resource resource = resourceSet.createResource(URI.createURI("VIRTUAL_URI_TEMP")); //$NON-NLS-1$
+		resource.getContents().add(domainObject);
+		createControl(mainObjectComposite, mergeControl, domainObject, false);
 
 		return mainObjectComposite;
 	}

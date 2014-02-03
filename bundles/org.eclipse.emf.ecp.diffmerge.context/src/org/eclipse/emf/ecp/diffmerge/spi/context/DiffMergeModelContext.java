@@ -53,4 +53,27 @@ public interface DiffMergeModelContext extends ViewModelContext {
 	 */
 	ControlPair getPairWithDiff(VControl control);
 
+	/**
+	 * Returns the total number of differences.
+	 * 
+	 * @return the total number of differences
+	 */
+	int getTotalNumberOfDiffs();
+
+	/**
+	 * Returns the diff index of a control. If the control does not have a diff the index will be -1.
+	 * 
+	 * @param control the {@link VControl} to get the index for
+	 * @return the index of the control
+	 */
+	int getIndexOf(VControl control);
+
+	/**
+	 * Returns the control based on the diff index. If the index is less then 0 and greater or equals the total number
+	 * of diff, then a {@link IllegalArgumentException} will be thrown.
+	 * 
+	 * @param diffIndex the diff index to get the control for
+	 * @return the {@link VControl}
+	 */
+	VControl getControl(int diffIndex) throws IllegalArgumentException;
 }

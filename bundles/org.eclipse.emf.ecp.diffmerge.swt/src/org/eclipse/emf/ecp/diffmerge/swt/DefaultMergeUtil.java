@@ -44,6 +44,7 @@ public final class DefaultMergeUtil {
 	 * @param from the {@link VControl} holding the values
 	 * @param to the {@link VControl} which values should be updated
 	 */
+	@SuppressWarnings("unchecked")
 	public static void copyValues(VControl from, VControl to) {
 		final Iterator<Setting> fromIterator = from.getDomainModelReference().getIterator();
 		Iterator<Setting> toIterator = to.getDomainModelReference().getIterator();
@@ -52,6 +53,7 @@ public final class DefaultMergeUtil {
 			final Setting toSetting = toIterator.next();
 			final Setting fromSetting = fromIterator.next();
 			stepsChecked++;
+			// break because of derived tables
 			if (toSetting.getEStructuralFeature().isDerived()) {
 				break;
 			}

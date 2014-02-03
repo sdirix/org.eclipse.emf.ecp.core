@@ -12,9 +12,8 @@
 package org.eclipse.emf.ecp.diffmerge.internal.renderer.swt;
 
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
-import org.eclipse.emf.ecp.diffmerge.spi.context.ControlPair;
 import org.eclipse.emf.ecp.diffmerge.spi.context.DiffMergeModelContext;
-import org.eclipse.emf.ecp.diffmerge.swt.DiffDialog;
+import org.eclipse.emf.ecp.diffmerge.swt.DiffDialogHelper;
 import org.eclipse.emf.ecp.edit.spi.ECPAbstractControl;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
@@ -26,12 +25,9 @@ import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.graphics.Rectangle;
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Shell;
 
 /**
  * A specific DiffMerge TableControl Renderer.
@@ -81,10 +77,7 @@ public class SWTDiffMergeTableControlRenderer extends SWTTableControlRenderer {
 
 	private void openDiffDialog(DiffMergeModelContext diffModelContext, VControl vControl,
 		ECPAbstractControl ecpControl) {
-		final ControlPair pairWithDiff = diffModelContext.getPairWithDiff(vControl);
-		if (pairWithDiff == null) {
-			return;
-		}
+
 		final Setting setting = ecpControl.getFirstSetting();
 		if (setting == null) {
 			return;
@@ -92,16 +85,6 @@ public class SWTDiffMergeTableControlRenderer extends SWTTableControlRenderer {
 		final IItemPropertyDescriptor itemPropertyDescriptor = ecpControl.getItemPropertyDescriptor(setting);
 		final String label = itemPropertyDescriptor.getDisplayName(setting.getEObject());
 
-		final DiffDialog dialog = new DiffDialog(diffModelContext, label, pairWithDiff.getLeftControl(),
-			pairWithDiff.getRightControl(), vControl);
-
-		final Shell shell = new Shell(SWT.TITLE | SWT.BORDER | SWT.APPLICATION_MODAL);
-		shell.setText(String.format(Messages.getString("SWTDiffMergeControlRenderer.ShellTitle1Parameter"), label)); //$NON-NLS-1$
-		shell.setLayout(new FillLayout());
-		final Rectangle clientArea = shell.getDisplay().getBounds();
-		shell.setSize(clientArea.width / 2, 500);
-		dialog.create(shell);
-		shell.setLocation(clientArea.width / 4, clientArea.height / 4);
-		shell.open();
+		DiffDialogHelper.showDialog(diffModelContext, vControl, label);
 	}
 }

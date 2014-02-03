@@ -11,7 +11,9 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.diffmerge.internal.context;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.common.util.TreeIterator;
@@ -39,6 +41,7 @@ public class DiffMergeModelContextImpl extends ViewModelContextImpl implements
 	private final EObject left;
 	private final EObject right;
 	private Map<VControl, ControlPair> controlDiffMap;
+	private List<VControl> diffControls;
 
 	/**
 	 * Constructor for the {@link DiffMergeModelContextImpl}.
@@ -71,6 +74,7 @@ public class DiffMergeModelContextImpl extends ViewModelContextImpl implements
 		final TreeIterator<EObject> rightViewModel = viewModelRight.eAllContents();
 
 		controlDiffMap = new LinkedHashMap<VControl, ControlPair>();
+		diffControls = new ArrayList<VControl>();
 
 		while (mainViewModel.hasNext()) {
 			final EObject mainEObject = mainViewModel.next();
@@ -80,6 +84,7 @@ public class DiffMergeModelContextImpl extends ViewModelContextImpl implements
 				if (hasDiff((VControl) leftEObject, (VControl) rightEObject)) {
 					controlDiffMap.put((VControl) mainEObject, new ControlPair((VControl) leftEObject,
 						(VControl) rightEObject));
+					diffControls.add((VControl) mainEObject);
 				}
 			}
 		}
@@ -135,4 +140,39 @@ public class DiffMergeModelContextImpl extends ViewModelContextImpl implements
 	public ControlPair getPairWithDiff(VControl control) {
 		return controlDiffMap.get(control);
 	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.diffmerge.spi.context.DiffMergeModelContext#getTotalNumberOfDiffs()
+	 */
+	public int getTotalNumberOfDiffs() {
+		return diffControls.size();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.diffmerge.spi.context.DiffMergeModelContext#getIndexOf(org.eclipse.emf.ecp.view.spi.model.VControl)
+	 */
+	public int getIndexOf(VControl control) {
+		return diffControls.indexOf(control);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.diffmerge.spi.context.DiffMergeModelContext#getControl(int)
+	 */
+	public VControl getControl(int diffIndex) throws IllegalArgumentException {
+		if (diffIndex < 0) {
+			throw new IllegalArgumentException("The index must be 0 or greater.");
+		}
+		if (diffIndex >= getTotalNumberOfDiffs()) {
+			throw new IllegalArgumentException("The index " + diffIndex + " is to high. There are only "
+				+ getTotalNumberOfDiffs() + " differences.");
+		}
+		return diffControls.get(diffIndex);
+	}
+
 }
