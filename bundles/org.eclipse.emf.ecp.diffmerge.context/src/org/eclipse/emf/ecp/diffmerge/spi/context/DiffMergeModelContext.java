@@ -11,6 +11,8 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.diffmerge.spi.context;
 
+import java.util.Set;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
@@ -76,4 +78,26 @@ public interface DiffMergeModelContext extends ViewModelContext {
 	 * @return the {@link VControl}
 	 */
 	VControl getControl(int diffIndex) throws IllegalArgumentException;
+
+	/**
+	 * Returns true if the control already was merged or doesn't have a difference at all.
+	 * 
+	 * @param vControl the {@link VControl} to check
+	 * @return true if is merged
+	 */
+	boolean isControlMerged(VControl vControl);
+
+	/**
+	 * Mark a control as merged.
+	 * 
+	 * @param vControl the {@link VControl} to be merged
+	 */
+	void markControlAsMerged(VControl vControl);
+
+	/**
+	 * Returns the set of controls which are merged.
+	 * 
+	 * @return the set of merged {@link VControl VControls}
+	 */
+	Set<VControl> getMergedControls();
 }

@@ -28,6 +28,7 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 
 /**
  * A specific DiffMerge Control Renderer.
@@ -48,6 +49,7 @@ public class SWTDiffMergeControlRenderer extends SWTControlRenderer {
 	protected Control createLabelControl(Composite parent, final VControl vControl, final ECPAbstractControl control,
 		final ViewModelContext viewContext)
 		throws NoPropertyDescriptorFoundExeption {
+		final DiffMergeModelContext diffModelContext = (DiffMergeModelContext) viewContext;
 		final Composite labelDiffComposite = new Composite(parent, SWT.NONE);
 		labelDiffComposite.setBackground(parent.getBackground());
 		int numColumns = 1;
@@ -58,6 +60,9 @@ public class SWTDiffMergeControlRenderer extends SWTControlRenderer {
 		}
 		GridLayoutFactory.fillDefaults().numColumns(numColumns).equalWidth(false).applyTo(labelDiffComposite);
 		final Button diffButton = new Button(labelDiffComposite, SWT.PUSH);
+		if (diffModelContext.isControlMerged(vControl)) {
+			diffButton.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_GREEN));
+		}
 		diffButton.setText(Messages.getString("SWTDiffMergeControlRenderer.DiffButton")); //$NON-NLS-1$
 		diffButton.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_compare_button"); //$NON-NLS-1$
 		diffButton.addSelectionListener(new SelectionListener() {
@@ -65,7 +70,7 @@ public class SWTDiffMergeControlRenderer extends SWTControlRenderer {
 			private static final long serialVersionUID = 1L;
 
 			public void widgetSelected(SelectionEvent e) {
-				openDiffDialog((DiffMergeModelContext) viewContext, vControl, control);
+				openDiffDialog(diffModelContext, vControl, control);
 			}
 
 			public void widgetDefaultSelected(SelectionEvent e) {

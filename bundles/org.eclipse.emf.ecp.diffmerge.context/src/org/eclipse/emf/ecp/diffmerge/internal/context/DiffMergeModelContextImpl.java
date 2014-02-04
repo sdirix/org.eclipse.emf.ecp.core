@@ -13,8 +13,10 @@ package org.eclipse.emf.ecp.diffmerge.internal.context;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
@@ -42,6 +44,7 @@ public class DiffMergeModelContextImpl extends ViewModelContextImpl implements
 	private final EObject right;
 	private Map<VControl, ControlPair> controlDiffMap;
 	private List<VControl> diffControls;
+	private final Set<VControl> mergedControls = new LinkedHashSet<VControl>();
 
 	/**
 	 * Constructor for the {@link DiffMergeModelContextImpl}.
@@ -59,6 +62,58 @@ public class DiffMergeModelContextImpl extends ViewModelContextImpl implements
 		this.right = right;
 
 		initComparison();
+	}
+
+	/**
+	 * Constructor for the {@link DiffMergeModelContextImpl}.
+	 * 
+	 * @param view the {@link VElement}
+	 * @param domainObject the {@link EObject} which is editable
+	 * @param left the first object
+	 * @param right the second object
+	 * @param mergedControls the set of controls which are already merged
+	 * @see ViewModelContextImpl#ViewModelContextImpl(VElement, EObject)
+	 */
+	public DiffMergeModelContextImpl(VElement view, EObject domainObject,
+		EObject left, EObject right, Set<VControl> mergedControls) {
+		this(view, domainObject, left, right);
+		diffControls.addAll(mergedControls);
+	}
+
+	/**
+	 * Constructor for the {@link DiffMergeModelContextImpl}.
+	 * 
+	 * @param view the {@link VElement}
+	 * @param domainObject the {@link EObject} which is editable
+	 * @param origin1 the first object
+	 * @param origin2 the second object
+	 * @param modelServices the {@link ViewModelService ViewModelServices} to register
+	 * @see ViewModelContextImpl#ViewModelContextImpl(VElement, EObject, ViewModelService...)
+	 */
+	public DiffMergeModelContextImpl(VElement view, EObject domainObject,
+		EObject origin1, EObject origin2, ViewModelService... modelServices) {
+		super(view, domainObject, modelServices);
+		left = origin1;
+		right = origin2;
+
+		initComparison();
+	}
+
+	/**
+	 * Constructor for the {@link DiffMergeModelContextImpl}.
+	 * 
+	 * @param view the {@link VElement}
+	 * @param domainObject the {@link EObject} which is editable
+	 * @param origin1 the first object
+	 * @param origin2 the second object
+	 * @param mergedControls the set of controls which are already merged
+	 * @param modelServices the {@link ViewModelService ViewModelServices} to register
+	 * @see ViewModelContextImpl#ViewModelContextImpl(VElement, EObject, ViewModelService...)
+	 */
+	public DiffMergeModelContextImpl(VElement view, EObject domainObject,
+		EObject origin1, EObject origin2, Set<VControl> mergedControls, ViewModelService... modelServices) {
+		this(view, domainObject, origin1, origin2, modelServices);
+		diffControls.addAll(mergedControls);
 	}
 
 	private void initComparison() {
@@ -92,25 +147,6 @@ public class DiffMergeModelContextImpl extends ViewModelContextImpl implements
 
 	private boolean hasDiff(VControl leftEObject, VControl rightEObject) {
 		return !CompareControls.areEqual(leftEObject, rightEObject);
-	}
-
-	/**
-	 * Constructor for the {@link DiffMergeModelContextImpl}.
-	 * 
-	 * @param view the {@link VElement}
-	 * @param domainObject the {@link EObject} which is editable
-	 * @param origin1 the first object
-	 * @param origin2 the second object
-	 * @param modelServices the {@link ViewModelService ViewModelServices} to register
-	 * @see ViewModelContextImpl#ViewModelContextImpl(VElement, EObject, ViewModelService...)
-	 */
-	public DiffMergeModelContextImpl(VElement view, EObject domainObject,
-		EObject origin1, EObject origin2, ViewModelService[] modelServices) {
-		super(view, domainObject, modelServices);
-		left = origin1;
-		right = origin2;
-
-		initComparison();
 	}
 
 	/** {@inheritDoc} **/
@@ -166,13 +202,46 @@ public class DiffMergeModelContextImpl extends ViewModelContextImpl implements
 	 */
 	public VControl getControl(int diffIndex) throws IllegalArgumentException {
 		if (diffIndex < 0) {
-			throw new IllegalArgumentException("The index must be 0 or greater.");
+			throw new IllegalArgumentException("The index must be 0 or greater."); //$NON-NLS-1$
 		}
 		if (diffIndex >= getTotalNumberOfDiffs()) {
-			throw new IllegalArgumentException("The index " + diffIndex + " is to high. There are only "
-				+ getTotalNumberOfDiffs() + " differences.");
+			throw new IllegalArgumentException(String.format(
+				"The index %1$d is to high. There are only %2$d differences.", diffIndex, getTotalNumberOfDiffs())); //$NON-NLS-1$
 		}
 		return diffControls.get(diffIndex);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.diffmerge.spi.context.DiffMergeModelContext#isControlMerged(org.eclipse.emf.ecp.view.spi.model.VControl)
+	 */
+	public boolean isControlMerged(VControl vControl) {
+		if (!diffControls.contains(vControl)) {
+			return true;
+		}
+		if (mergedControls.contains(vControl)) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.diffmerge.spi.context.DiffMergeModelContext#markControlAsMerged(org.eclipse.emf.ecp.view.spi.model.VControl)
+	 */
+	public void markControlAsMerged(VControl vControl) {
+		mergedControls.add(vControl);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.diffmerge.spi.context.DiffMergeModelContext#getMergedControls()
+	 */
+	public Set<VControl> getMergedControls() {
+		return mergedControls;
 	}
 
 }

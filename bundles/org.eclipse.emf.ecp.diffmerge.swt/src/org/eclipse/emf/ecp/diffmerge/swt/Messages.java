@@ -22,9 +22,10 @@ import org.eclipse.osgi.util.NLS;
 public class Messages extends NLS {
 	private static final String BUNDLE_NAME = "org.eclipse.emf.ecp.diffmerge.swt.messages"; //$NON-NLS-1$
 	public static String DiffDialog_Confirm;
+	public static String DiffDialog_DiffConfirmed;
 	public static String DiffDialog_DifferenceGroup;
 	public static String DiffDialog_leftObject;
-	public static String DiffDialog_mainObject;
+	public static String DiffDialog_targetObject;
 	public static String DiffDialog_Next;
 	public static String DiffDialog_Previous;
 	public static String DiffDialog_replaceWithLeft;
