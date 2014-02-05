@@ -209,23 +209,28 @@
                   checkEnabled="false">
                <with
                      variable="activeMenuSelection">
-                  <and>
-                     <count
-                           value="1">
-                     </count>
-                     <iterate
-                           ifEmpty="false"
-                           operator="and">
-                        <instanceof
-                              value="org.eclipse.emf.ecp.core.ECPProject">
-                        </instanceof>
-                        <test
-                              args="org.eclipse.emf.ecp.ui.wizards.newModelElementWizard"
-                              property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
-                              value="true">
-                        </test>
-                     </iterate>
-                  </and>
+                     <and>
+                        <count
+                              value="1">
+                        </count>
+                        <iterate
+                              ifEmpty="false"
+                              operator="and">
+                           <test
+                                 args="org.eclipse.emf.ecp.ui.wizards.newModelElementWizard"
+                                 property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
+                                 value="true">
+                           </test>
+                           <or>
+                              <instanceof
+                                    value="org.eclipse.emf.ecore.resource.Resource">
+                              </instanceof>
+                              <instanceof
+                                    value="org.eclipse.emf.ecp.core.ECPProject">
+                              </instanceof>
+                           </or>
+                        </iterate>
+                     </and>
                </with>
             </visibleWhen>
          </command>
@@ -527,28 +532,97 @@
                </equals>
             </with></enabledWhen>
       </handler>
+      
+      
+      
+      
+      
+      
       <handler
-            class="org.eclipse.emf.ecp.ui.commands.NewModelElementWizardHandler"
+            class="org.eclipse.emf.ecp.ui.commands.NewModelElementOnECPProjectWizardHandler"
             commandId="org.eclipse.emf.ecp.ui.wizards.newModelElementWizard">
+         <activeWhen>
+             <with
+                  variable="activeMenuSelection">
+                  <and>
+                     <count
+                           value="1">
+                     </count>
+                     <iterate
+                           ifEmpty="false"
+                           operator="and">
+                        <instanceof
+                              value="org.eclipse.emf.ecp.core.ECPProject">
+                        </instanceof>
+                     </iterate>
+                  </and>
+            </with>
+         </activeWhen>
          <enabledWhen>
             <with
                   variable="activeMenuSelection">
-               <and>
-                  <count
-                        value="1">
-                  </count>
-                  <iterate
-                        ifEmpty="false"
-                        operator="and">
-                     <test
-                           property="org.eclipse.emf.ecp.core.project.open"
-                           value="true">
-                     </test>
-                  </iterate>
-               </and>
+                  <and>
+                     <count
+                           value="1">
+                     </count>
+                     <iterate
+                           ifEmpty="false"
+                           operator="and">
+                        <instanceof
+                              value="org.eclipse.emf.ecp.core.ECPProject">
+                        </instanceof>
+                        <test
+                              property="org.eclipse.emf.ecp.core.project.open"
+                              value="true">
+                        </test>
+                     </iterate>
+                  </and>
             </with>
-         </enabledWhen>
+         </enabledWhen> 
       </handler>
+      
+       <handler
+            class="org.eclipse.emf.ecp.ui.commands.NewModelElementOnResourceWizardHandler"
+            commandId="org.eclipse.emf.ecp.ui.wizards.newModelElementWizard">
+         <activeWhen>
+         	<with
+                  variable="activeMenuSelection">
+                  <and>
+                     <count
+                           value="1">
+                     </count>
+                     <iterate
+                           ifEmpty="false"
+                           operator="and">
+                        <instanceof
+                              value="org.eclipse.emf.ecore.resource.Resource">
+                        </instanceof>
+                     </iterate>
+                  </and>
+            </with>
+         </activeWhen>
+         <enabledWhen>
+            <with
+                  variable="activeMenuSelection">
+                  <and>
+                     <count
+                           value="1">
+                     </count>
+                     <iterate
+                           ifEmpty="false"
+                           operator="and">
+                        <instanceof
+                              value="org.eclipse.emf.ecore.resource.Resource">
+                        </instanceof>
+                     </iterate>
+                  </and>
+            </with>
+         </enabledWhen> 
+      </handler>
+      
+      
+      
+      
       <handler
             class="org.eclipse.emf.ecp.ui.commands.DeleteModelElementHandler"
             commandId="org.eclipse.emf.ecp.ui.workbench.deleteModelElement">
