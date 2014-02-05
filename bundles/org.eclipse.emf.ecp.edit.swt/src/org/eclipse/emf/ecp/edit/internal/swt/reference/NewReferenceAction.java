@@ -31,8 +31,7 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.ImageData;
 
 /**
- * An Action for adding reference links to a model element. It is mainly used in the
- * {@link org.org.eclipse.emf.ecp.edit.internal.swt.reference.ReferenceMultiControl ReferenceMultiControl}
+ * An Action for adding reference links to a model element. It is mainly used in the {@link ReferenceMultiControl}
  * 
  * @author shterev
  * @author Eugen Neufeld
