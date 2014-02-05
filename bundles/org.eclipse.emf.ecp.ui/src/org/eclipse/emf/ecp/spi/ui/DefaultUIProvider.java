@@ -68,11 +68,11 @@ import org.eclipse.swt.widgets.Text;
  */
 public class DefaultUIProvider extends Element implements UIProvider {
 
-	private static final String UNKNOWN_PACKAGE_ICON = "icons/EPackageUnknown.gif";
-	private static final String EPACKAGE_ICON = "icons/EPackage.gif";
 	private static final Image PROJECT_OPEN = Activator.getImage("icons/project_open.gif"); //$NON-NLS-1$
 	private static final Image PROJECT_CLOSED = Activator.getImage("icons/project_closed.gif"); //$NON-NLS-1$
 	private static final Image REPOSITORY = Activator.getImage("icons/repository.gif"); //$NON-NLS-1$
+	private static final String UNKNOWN_PACKAGE_ICON = "icons/EPackageUnknown.gif"; //$NON-NLS-1$
+	private static final String EPACKAGE_ICON = "icons/EPackage.gif"; //$NON-NLS-1$
 
 	private final Disposable disposable = new Disposable(this) {
 		@Override
