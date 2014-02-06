@@ -66,7 +66,7 @@ public final class DefaultMergeUtil {
 			if (toSetting.getEStructuralFeature().isMany()) {
 				editingDomain.getCommandStack().execute(
 					RemoveCommand.create(editingDomain, toSetting.getEObject(), toSetting.getEStructuralFeature(),
-						toSetting.get(true)));
+						(Collection<?>) toSetting.get(true)));
 			}
 			if (EAttribute.class.isInstance(toSetting.getEStructuralFeature())) {
 

@@ -13,6 +13,7 @@
 package org.eclipse.emf.ecp.edit.internal.swt.controls;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -491,7 +492,6 @@ public class TableControl extends SWTControl {
 	 * @param clazz the {@link EClass} defining the EObject to create
 	 */
 	protected void addRow(EClass clazz) {
-		addingRowWorkaround = 0;
 		final EObject modelElement = mainSetting.getEObject();
 		final EObject instance = clazz.getEPackage().getEFactoryInstance().create(clazz);
 
@@ -505,8 +505,6 @@ public class TableControl extends SWTControl {
 	private Setting mainSetting;
 
 	private boolean isDisposing;
-
-	private int addingRowWorkaround = -1;
 
 	private void createAddRowButton(final EClass clazz, final Composite buttonComposite) {
 		addButton = new Button(buttonComposite, SWT.None);
@@ -570,13 +568,10 @@ public class TableControl extends SWTControl {
 			final Image image = getValidationIcon(diagnostic.getHighestSeverity());
 			validationLabel.setImage(image);
 			validationLabel.setToolTipText(diagnostic.getMessage());
+			for (final Object object : (Collection<?>) mainSetting.get(true)) {
+				tableViewer.update(object, null);
+			}
 		}
-		if (addingRowWorkaround >= 0 && addingRowWorkaround <= 1) {
-			addingRowWorkaround++;
-			return;
-		}
-		addingRowWorkaround = -1;
-		tableViewer.refresh();
 	}
 
 	// /**

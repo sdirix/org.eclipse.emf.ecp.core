@@ -11,11 +11,16 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.diffmerge.internal.renderer.swt;
 
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.diffmerge.spi.context.DiffMergeModelContext;
 import org.eclipse.emf.ecp.diffmerge.swt.DiffDialogHelper;
 import org.eclipse.emf.ecp.edit.spi.ECPAbstractControl;
+import org.eclipse.emf.ecp.spi.diffmerge.model.VDiffAttachment;
+import org.eclipse.emf.ecp.spi.diffmerge.model.VDiffmergePackage;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.model.VAttachment;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.table.swt.SWTTableControlRenderer;
@@ -28,6 +33,7 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 
 /**
  * A specific DiffMerge TableControl Renderer.
@@ -65,7 +71,37 @@ public class SWTDiffMergeTableControlRenderer extends SWTTableControlRenderer {
 				widgetSelected(e);
 			}
 		});
+		for (final VAttachment attachment : vControl.getAttachments()) {
+			if (VDiffAttachment.class.isInstance(attachment)) {
+				attachment.eAdapters().add(new AdapterImpl() {
+
+					/**
+					 * {@inheritDoc}
+					 * 
+					 * @see org.eclipse.emf.common.notify.impl.AdapterImpl#notifyChanged(org.eclipse.emf.common.notify.Notification)
+					 */
+					@Override
+					public void notifyChanged(Notification msg) {
+						super.notifyChanged(msg);
+						if (msg.getFeature() == VDiffmergePackage.eINSTANCE.getDiffAttachment_MergedDiffs()) {
+							updateButtonColor(diffButton, (VDiffAttachment) attachment);
+						}
+					}
+
+				});
+				updateButtonColor(diffButton, (VDiffAttachment) attachment);
+				break;
+			}
+		}
 		return labelDiffComposite;
+	}
+
+	private void updateButtonColor(Button diffButton, VDiffAttachment attachment) {
+		if (attachment.getMergedDiffs() == 0) {
+			diffButton.setBackground(null);
+		} else {
+			diffButton.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_GREEN));
+		}
 	}
 
 	private void openDiffDialog(DiffMergeModelContext diffModelContext, VControl vControl,
