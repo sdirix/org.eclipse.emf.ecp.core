@@ -14,12 +14,12 @@ package org.eclipse.emf.ecp.view.spi.table.swt;
 import java.util.Iterator;
 import java.util.List;
 
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.edit.internal.swt.table.TableColumnConfiguration;
 import org.eclipse.emf.ecp.edit.internal.swt.table.TableControlConfiguration;
 import org.eclipse.emf.ecp.edit.spi.ECPAbstractControl;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
@@ -110,8 +110,23 @@ public class SWTTableControlRenderer extends AbstractSWTRenderer<VTableControl> 
 	protected Control createLabelControl(final Composite parent, final VControl vControl,
 		final ECPAbstractControl control, ViewModelContext viewContext)
 		throws NoPropertyDescriptorFoundExeption {
+		return createLabel(parent, vControl, control);
+	}
+
+	/**
+	 * Creates the label shown by the control
+	 * 
+	 * @param parent the {@link Composite} to create the label on
+	 * @param vControl the {@link VControl} to create the label for
+	 * @param control the {@link ECPAbstractControl} to create the label for
+	 * @return the created label or null
+	 * @throws NoPropertyDescriptorFoundExeption thrown if the {@link org.eclipse.emf.ecore.EStructuralFeature
+	 *             EStructuralFeature} of the {@link VControl} doesn't have a registered {@link IItemPropertyDescriptor}
+	 */
+	protected Label createLabel(final Composite parent, final VControl vControl,
+		final ECPAbstractControl control) throws NoPropertyDescriptorFoundExeption {
 		Label label = null;
-		labelRender: if (control.showLabel()) {
+		labelRender: if (vControl.getLabelAlignment() == LabelAlignment.LEFT) {
 			final Setting setting = control.getFirstSetting();
 			if (setting == null) {
 				break labelRender;
@@ -121,19 +136,20 @@ public class SWTTableControlRenderer extends AbstractSWTRenderer<VTableControl> 
 			if (itemPropertyDescriptor == null) {
 				throw new NoPropertyDescriptorFoundExeption(setting.getEObject(), setting.getEStructuralFeature());
 			}
+
 			label = new Label(parent, SWT.NONE);
 			label.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_label"); //$NON-NLS-1$
 			label.setBackground(parent.getBackground());
 			String extra = ""; //$NON-NLS-1$
-			if (((EStructuralFeature) itemPropertyDescriptor.getFeature(null)).getLowerBound() > 0) {
+			if (setting.getEStructuralFeature().getLowerBound() > 0) {
 				extra = "*"; //$NON-NLS-1$
 			}
-
 			final String labelText = itemPropertyDescriptor.getDisplayName(setting.getEObject());
 			if (labelText != null && labelText.trim().length() != 0) {
 				label.setText(labelText + extra);
 				label.setToolTipText(itemPropertyDescriptor.getDescription(setting.getEObject()));
 			}
+
 		}
 		return label;
 	}

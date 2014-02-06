@@ -184,6 +184,21 @@ public class SWTControlRenderer extends AbstractSWTRenderer<VControl> {
 	protected Control createLabelControl(final Composite parent, final VControl vControl,
 		final ECPAbstractControl control, ViewModelContext viewContext)
 		throws NoPropertyDescriptorFoundExeption {
+		return createLabel(parent, vControl, control);
+	}
+
+	/**
+	 * Creates the label shown by the control
+	 * 
+	 * @param parent the {@link Composite} to create the label on
+	 * @param vControl the {@link VControl} to create the label for
+	 * @param control the {@link ECPAbstractControl} to create the label for
+	 * @return the created label or null
+	 * @throws NoPropertyDescriptorFoundExeption thrown if the {@link org.eclipse.emf.ecore.EStructuralFeature
+	 *             EStructuralFeature} of the {@link VControl} doesn't have a registered {@link IItemPropertyDescriptor}
+	 */
+	protected Label createLabel(final Composite parent, final VControl vControl,
+		final ECPAbstractControl control) throws NoPropertyDescriptorFoundExeption {
 		Label label = null;
 		labelRender: if (vControl.getLabelAlignment() == LabelAlignment.LEFT) {
 			final Setting setting = control.getFirstSetting();

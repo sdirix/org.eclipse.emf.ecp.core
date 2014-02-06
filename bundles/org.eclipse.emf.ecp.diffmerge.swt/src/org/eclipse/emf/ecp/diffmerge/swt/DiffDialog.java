@@ -421,9 +421,9 @@ public class DiffDialog {
 
 	private void saveAndCloseDialog(final Shell shell) {
 		replaceMainWith(mergeControl, false);
-		if (diffConfirmed) {
-			viewModelContext.markControlAsMerged(main);
-		}
+
+		viewModelContext.markControl(main, diffConfirmed);
+
 		shell.dispose();
 	}
 }

@@ -155,6 +155,8 @@
 		<module>../../bundles/org.eclipse.emf.ecp.diffmerge.context</module>
 		<module>../../bundles/org.eclipse.emf.ecp.diffmerge.renderer.swt</module>
 		<module>../../bundles/org.eclipse.emf.ecp.diffmerge.swt</module>
+		<module>../../bundles/org.eclipse.emf.ecp.diffmerge.model</module>
+		<module>../../bundles/org.eclipse.emf.ecp.diffmerge.model.edit</module>
 	</modules>
 
 	<build>

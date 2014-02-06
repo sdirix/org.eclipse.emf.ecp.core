@@ -37,13 +37,6 @@ import org.eclipse.swt.widgets.Control;
  */
 public class SWTDiffMergeTableControlRenderer extends SWTTableControlRenderer {
 
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SWTControlRenderer#createLabelControl(org.eclipse.swt.widgets.Composite,
-	 *      org.eclipse.emf.ecp.view.spi.model.VControl, org.eclipse.emf.ecp.edit.spi.ECPAbstractControl,
-	 *      org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
-	 */
 	@Override
 	protected Control createLabelControl(Composite parent, final VControl vControl, final ECPAbstractControl control,
 		final ViewModelContext viewContext)

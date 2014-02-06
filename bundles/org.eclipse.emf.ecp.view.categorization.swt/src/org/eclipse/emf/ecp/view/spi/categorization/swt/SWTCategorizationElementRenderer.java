@@ -164,6 +164,8 @@ public class SWTCategorizationElementRenderer extends AbstractSWTRenderer<VCateg
 		final ScrolledComposite editorComposite, final ViewModelContext viewModelContext) {
 		treeViewer.addFilter(new ViewerFilter() {
 
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public boolean select(Viewer viewer, Object parentElement, Object element) {
 				return VCategorizableElement.class.isInstance(element) && ((VCategorizableElement) element).isVisible();
@@ -179,6 +181,8 @@ public class SWTCategorizationElementRenderer extends AbstractSWTRenderer<VCateg
 
 		final AdapterFactoryContentProvider contentProvider = new AdapterFactoryContentProvider(
 			adapterFactory) {
+
+			private static final long serialVersionUID = 1L;
 
 			/**
 			 * {@inheritDoc}
@@ -203,8 +207,7 @@ public class SWTCategorizationElementRenderer extends AbstractSWTRenderer<VCateg
 
 		};
 
-		final TreeTableLabelProvider treeTableLabelProvider = new TreeTableLabelProvider(
-			adapterFactory);
+		final TreeTableLabelProvider treeTableLabelProvider = getTreeLabelProvider(adapterFactory);
 		treeViewer.getTree().addDisposeListener(new DisposeListener() {
 
 			private static final long serialVersionUID = 1L;
@@ -225,6 +228,10 @@ public class SWTCategorizationElementRenderer extends AbstractSWTRenderer<VCateg
 
 		addTreeEditor(treeViewer, vCategorizationElement, editors);
 
+	}
+
+	protected TreeTableLabelProvider getTreeLabelProvider(AdapterFactory adapterFactory) {
+		return new TreeTableLabelProvider(adapterFactory);
 	}
 
 	/**
@@ -433,6 +440,8 @@ public class SWTCategorizationElementRenderer extends AbstractSWTRenderer<VCateg
 	 */
 	protected class TreeTableLabelProvider extends AdapterFactoryLabelProvider implements ITableItemLabelProvider {
 
+		private static final long serialVersionUID = 1L;
+
 		/**
 		 * Instantiates a new tree table label provider.
 		 * 
@@ -470,14 +479,22 @@ public class SWTCategorizationElementRenderer extends AbstractSWTRenderer<VCateg
 			if (columnIndex != 0) {
 				return null;
 			}
-			Image image = null;
-			image = super.getColumnImage(object, columnIndex);
+			Image image = super.getColumnImage(object, columnIndex);
 			if (VCategorizableElement.class.isInstance(object)) {
 				image = super.getColumnImage(((VCategorizableElement) object).getLabelObject(), columnIndex);
 			}
 
-			final VElement categorization = (VElement) object;
+			return getValidationOverlay(image, (VElement) object);
+		}
 
+		/**
+		 * This method generated an image with a validation overlay if necessary.
+		 * 
+		 * @param image the image to overlay
+		 * @param categorization the {@link VElement} to get the validation for
+		 * @return the Image
+		 */
+		protected Image getValidationOverlay(Image image, final VElement categorization) {
 			ImageDescriptor overlay = null;
 
 			if (categorization.getDiagnostic() == null) {

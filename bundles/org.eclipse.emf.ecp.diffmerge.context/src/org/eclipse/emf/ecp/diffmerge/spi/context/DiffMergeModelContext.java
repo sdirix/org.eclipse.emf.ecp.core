@@ -76,6 +76,7 @@ public interface DiffMergeModelContext extends ViewModelContext {
 	 * 
 	 * @param diffIndex the diff index to get the control for
 	 * @return the {@link VControl}
+	 * @throws IllegalArgumentException thrown if the index is invalid
 	 */
 	VControl getControl(int diffIndex) throws IllegalArgumentException;
 
@@ -91,8 +92,9 @@ public interface DiffMergeModelContext extends ViewModelContext {
 	 * Mark a control as merged.
 	 * 
 	 * @param vControl the {@link VControl} to be merged
+	 * @param merged true if control is merged, false otherwise
 	 */
-	void markControlAsMerged(VControl vControl);
+	void markControl(VControl vControl, boolean merged);
 
 	/**
 	 * Returns the set of controls which are merged.

@@ -23,8 +23,11 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.diffmerge.spi.context.ControlPair;
 import org.eclipse.emf.ecp.diffmerge.spi.context.DiffMergeModelContext;
+import org.eclipse.emf.ecp.spi.diffmerge.model.VDiffAttachment;
+import org.eclipse.emf.ecp.spi.diffmerge.model.VDiffmergeFactory;
 import org.eclipse.emf.ecp.view.internal.context.ViewModelContextImpl;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
+import org.eclipse.emf.ecp.view.spi.model.VAttachment;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.util.ViewModelUtil;
@@ -137,12 +140,68 @@ public class DiffMergeModelContextImpl extends ViewModelContextImpl implements
 			final EObject rightEObject = rightViewModel.next();
 			if (VControl.class.isInstance(mainEObject)) {
 				if (hasDiff((VControl) leftEObject, (VControl) rightEObject)) {
-					controlDiffMap.put((VControl) mainEObject, new ControlPair((VControl) leftEObject,
+					final VControl control = (VControl) mainEObject;
+					controlDiffMap.put(control, new ControlPair((VControl) leftEObject,
 						(VControl) rightEObject));
-					diffControls.add((VControl) mainEObject);
+					diffControls.add(control);
 				}
 			}
 		}
+		for (final VControl control : diffControls) {
+
+			final VDiffAttachment diffAttachment = getDiffAttachment(control);
+			diffAttachment.setTotalNumberOfDiffs(1);
+			diffAttachment.setMergedDiffs(mergedControls.contains(control) ? 1 : 0);
+			propagateDiffAttachment(control, diffAttachment);
+		}
+	}
+
+	private void propagateDiffAttachment(VControl control, VDiffAttachment childDiff) {
+
+		EObject parent = control.eContainer();
+		while (parent != null) {
+			final EObject newParent = parent.eContainer();
+			if (!VElement.class.isInstance(parent)) {
+				parent = newParent;
+				continue;
+			}
+			final VElement vElement = (VElement) parent;
+			final VDiffAttachment attachment = getDiffAttachment(vElement);
+			attachment.setMergedDiffs(0);
+			attachment.setTotalNumberOfDiffs(0);
+
+			for (final EObject eObject : vElement.eContents()) {
+				if (!VElement.class.isInstance(eObject)) {
+					continue;
+				}
+				final VElement childElement = (VElement) eObject;
+				final VDiffAttachment childAttachment = getDiffAttachment(childElement);
+				attachment.setMergedDiffs(attachment.getMergedDiffs() + childAttachment.getMergedDiffs());
+				attachment.setTotalNumberOfDiffs(attachment.getTotalNumberOfDiffs()
+					+ childAttachment.getTotalNumberOfDiffs());
+			}
+
+			parent = newParent;
+			childDiff = attachment;
+		}
+	}
+
+	private VDiffAttachment getDiffAttachment(VElement vElement) {
+		VDiffAttachment attachment = null;
+		boolean hasAttachment = false;
+		for (final VAttachment vAttachment : vElement.getAttachments()) {
+			if (VDiffAttachment.class.isInstance(vAttachment)) {
+				attachment = (VDiffAttachment) vAttachment;
+				hasAttachment = true;
+				break;
+			}
+		}
+		if (!hasAttachment) {
+			final VDiffAttachment vDiffAttachment = VDiffmergeFactory.eINSTANCE.createDiffAttachment();
+			vElement.getAttachments().add(vDiffAttachment);
+			attachment = vDiffAttachment;
+		}
+		return attachment;
 	}
 
 	private boolean hasDiff(VControl leftEObject, VControl rightEObject) {
@@ -227,12 +286,21 @@ public class DiffMergeModelContextImpl extends ViewModelContextImpl implements
 	}
 
 	/**
+	 * 
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.diffmerge.spi.context.DiffMergeModelContext#markControlAsMerged(org.eclipse.emf.ecp.view.spi.model.VControl)
+	 * @see org.eclipse.emf.ecp.diffmerge.spi.context.DiffMergeModelContext#markControl(org.eclipse.emf.ecp.view.spi.model.VControl,
+	 *      boolean)
 	 */
-	public void markControlAsMerged(VControl vControl) {
-		mergedControls.add(vControl);
+	public void markControl(VControl vControl, boolean merged) {
+		if (merged) {
+			mergedControls.add(vControl);
+		} else {
+			mergedControls.remove(vControl);
+		}
+		final VDiffAttachment diffAttachment = getDiffAttachment(vControl);
+		diffAttachment.setMergedDiffs(merged ? 1 : 0);
+		propagateDiffAttachment(vControl, diffAttachment);
 	}
 
 	/**

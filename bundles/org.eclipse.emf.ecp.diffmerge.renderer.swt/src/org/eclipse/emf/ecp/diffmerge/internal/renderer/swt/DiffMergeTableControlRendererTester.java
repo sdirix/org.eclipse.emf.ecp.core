@@ -39,6 +39,9 @@ public class DiffMergeTableControlRendererTester implements ECPRendererTester {
 		if (!VTableControl.class.isInstance(vElement)) {
 			return NOT_APPLICABLE;
 		}
+		if (!((VTableControl) vElement).getDomainModelReference().getEStructuralFeatureIterator().next().isChangeable()) {
+			return NOT_APPLICABLE;
+		}
 		if (!((DiffMergeModelContext) viewModelContext).hasDiff((VControl) vElement)) {
 			return NOT_APPLICABLE;
 		}
