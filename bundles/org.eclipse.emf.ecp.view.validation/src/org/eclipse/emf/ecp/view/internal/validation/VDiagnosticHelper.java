@@ -56,10 +56,9 @@ public final class VDiagnosticHelper {
 		if (!vDiagnostic1.getMessage().equals(vDiagnostic2.getMessage())) {
 			return false;
 		}
-		// TODO: this case also never applies since getMessage depends on the size
-		// if (vDiagnostic1.getDiagnostics().size() != vDiagnostic2.getDiagnostics().size()) {
-		// return false;
-		// }
+		if (vDiagnostic1.getDiagnostics().size() != vDiagnostic2.getDiagnostics().size()) {
+			return false;
+		}
 
 		for (int i = 0; i < vDiagnostic1.getDiagnostics().size(); i++) {
 			final Diagnostic diagnostic1 = (Diagnostic) vDiagnostic1.getDiagnostics().get(i);
