@@ -236,7 +236,7 @@ public final class ECPImportHandlerHelper {
 			return null;
 		}
 
-		final File file = new File(dialog.getFilterPath(), dialog.getFileName());
+		final File file = new File(fileName);
 
 		PreferenceHelper.setPreference(IMPORT_MODEL_PATH, file.getParent());
 
