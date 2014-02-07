@@ -73,11 +73,6 @@
 						</goals>
 					</execution>
 				</executions>
-				<configuration>
-					<excludes>
-						<feature id="org.eclipse.emf.ecp.target.feature.nosource"/>
-					</excludes>
-				</configuration>
 			</plugin>
 			
 			<plugin>
