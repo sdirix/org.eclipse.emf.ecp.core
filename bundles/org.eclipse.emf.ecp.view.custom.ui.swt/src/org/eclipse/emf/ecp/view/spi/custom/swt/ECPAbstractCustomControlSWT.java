@@ -27,6 +27,7 @@ import org.eclipse.emf.ecp.edit.internal.swt.util.ThreeColumnRow;
 import org.eclipse.emf.ecp.edit.spi.ECPAbstractControl;
 import org.eclipse.emf.ecp.view.internal.custom.swt.Activator;
 import org.eclipse.emf.ecp.view.spi.custom.ui.ECPAbstractCustomControl;
+import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.renderer.RenderingResultRow;
 import org.eclipse.jface.databinding.viewers.ViewerSupport;
@@ -41,6 +42,7 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 
@@ -363,6 +365,30 @@ public abstract class ECPAbstractCustomControlSWT extends
 
 		final IObservableList list = getObservableList(customControlFeature);
 		ViewerSupport.bind(viewer, list, labelProperties);
+	}
+
+	/**
+	 * Helper method to keep the old validation.
+	 * 
+	 * @since 1.2
+	 */
+	@Override
+	protected void backwardCompatibleHandleValidation() {
+		final VDiagnostic diagnostic = getControl().getDiagnostic();
+		if (diagnostic == null) {
+			return;
+		}
+		Display.getDefault().asyncExec(new Runnable() {
+			public void run() {
+				if (getControl() == null) {
+					return;
+				}
+				resetValidation();
+				for (final Object object : diagnostic.getDiagnostics()) {
+					handleValidation((Diagnostic) object);
+				}
+			}
+		});
 	}
 
 	/**
