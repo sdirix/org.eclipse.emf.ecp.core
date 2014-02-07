@@ -141,6 +141,16 @@ public class RuleServiceTest extends CommonRuleTest {
 			// not used in tests
 			return null;
 		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getControlsFor(org.eclipse.emf.ecore.EStructuralFeature.Setting)
+		 */
+		public Set<VControl> getControlsFor(Setting setting) {
+			// TODO Auto-generated method stub
+			return null;
+		}
 	}
 
 	/** The player. */
