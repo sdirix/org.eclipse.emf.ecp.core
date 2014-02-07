@@ -16,7 +16,7 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.diffmerge.internal.context.DiffMergeModelContextImpl;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
-import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 
 /**
@@ -78,12 +78,12 @@ public final class DiffMergeContextFactory {
 	 *            the domain object
 	 * @param left the first object
 	 * @param right the second object
-	 * @param mergedControls the set of controls which are already merged
+	 * @param mergedControls the set of already merged domain references
 	 * @return the created {@link DiffMergeModelContext}
 	 */
 	public DiffMergeModelContext createViewModelContext(VElement view, EObject target, EObject left,
-		EObject right, Set<VControl> mergedControls) {
-		return new DiffMergeModelContextImpl(view, target, left, right);
+		EObject right, Set<VDomainModelReference> mergedControls) {
+		return new DiffMergeModelContextImpl(view, target, left, right, mergedControls);
 	}
 
 	/**
@@ -95,14 +95,14 @@ public final class DiffMergeContextFactory {
 	 *            the domain object
 	 * @param left the first object
 	 * @param right the second object
-	 * @param mergedControls the set of controls which are already merged
+	 * @param mergedControls the set of already merged domain references
 	 * @param modelServices
 	 *            an array of services to use in the {@link DiffMergeModelContext }
 	 * @return the created {@link DiffMergeModelContext}
 	 */
 	public DiffMergeModelContext createViewModelContext(VElement view,
-		EObject target, EObject left, EObject right, Set<VControl> mergedControls,
+		EObject target, EObject left, EObject right, Set<VDomainModelReference> mergedControls,
 		ViewModelService... modelServices) {
-		return new DiffMergeModelContextImpl(view, target, left, right, modelServices);
+		return new DiffMergeModelContextImpl(view, target, left, right, mergedControls, modelServices);
 	}
 }

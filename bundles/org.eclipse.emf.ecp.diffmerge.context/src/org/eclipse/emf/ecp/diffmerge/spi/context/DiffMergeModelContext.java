@@ -16,6 +16,7 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 
 /**
  * The {@link DiffMergeModelContext} extends the {@link ViewModelContext} and allows to retrieve two origin objects.
@@ -97,9 +98,9 @@ public interface DiffMergeModelContext extends ViewModelContext {
 	void markControl(VControl vControl, boolean merged);
 
 	/**
-	 * Returns the set of controls which are merged.
+	 * Returns the set of domainModelReferences which are merged.
 	 * 
-	 * @return the set of merged {@link VControl VControls}
+	 * @return the set of merged {@link VDomainModelReference VDomainModelReferences}
 	 */
-	Set<VControl> getMergedControls();
+	Set<VDomainModelReference> getMergedDomainObjects();
 }

@@ -13,7 +13,12 @@ package org.eclipse.emf.ecp.view.internal.context;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -24,11 +29,15 @@ import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
+import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.util.EContentAdapter;
+import org.eclipse.emf.ecp.common.UniqueSetting;
 import org.eclipse.emf.ecp.view.spi.context.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
+import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.util.ViewModelUtil;
 
@@ -83,6 +92,11 @@ public class ViewModelContextImpl implements ViewModelContext {
 	private boolean isDisposing;
 
 	/**
+	 * A mapping between settings and controls.
+	 */
+	private final Map<UniqueSetting, Set<VControl>> settingToControlMap = new LinkedHashMap<UniqueSetting, Set<VControl>>();
+
+	/**
 	 * Instantiates a new view model context impl.
 	 * 
 	 * @param view the view
@@ -126,11 +140,47 @@ public class ViewModelContextImpl implements ViewModelContext {
 		domainModelContentAdapter = new DomainModelContentAdapter();
 		domainObject.eAdapters().add(domainModelContentAdapter);
 
+		createSettingToControlMapping();
+
 		readAbstractViewServices();
 
 		for (final ViewModelService viewService : viewServices) {
 			viewService.instantiate(this);
 		}
+	}
+
+	private void createSettingToControlMapping() {
+		checkAndUpdateSettingToControlMapping(view);
+
+		final TreeIterator<EObject> eAllContents = view.eAllContents();
+		while (eAllContents.hasNext()) {
+			final EObject eObject = eAllContents.next();
+			checkAndUpdateSettingToControlMapping(eObject);
+		}
+	}
+
+	private void checkAndUpdateSettingToControlMapping(EObject eObject) {
+		if (VControl.class.isInstance(eObject)) {
+			final VControl vControl = (VControl) eObject;
+			final Iterator<Setting> iterator = vControl.getDomainModelReference().getIterator();
+			while (iterator.hasNext()) {
+				final Setting setting = iterator.next();
+				final UniqueSetting uniqueSetting = UniqueSetting.createSetting(setting);
+				if (!settingToControlMap.containsKey(uniqueSetting)) {
+					settingToControlMap.put(uniqueSetting, new LinkedHashSet<VControl>());
+				}
+				settingToControlMap.get(uniqueSetting).add(vControl);
+			}
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getControlsFor(org.eclipse.emf.ecore.EStructuralFeature.Setting)
+	 */
+	public Set<VControl> getControlsFor(Setting setting) {
+		return settingToControlMap.get(UniqueSetting.createSetting(setting));
 	}
 
 	/**
@@ -394,4 +444,5 @@ public class ViewModelContextImpl implements ViewModelContext {
 		}
 
 	}
+
 }

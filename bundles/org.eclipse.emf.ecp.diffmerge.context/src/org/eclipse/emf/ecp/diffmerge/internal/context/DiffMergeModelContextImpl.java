@@ -12,6 +12,7 @@
 package org.eclipse.emf.ecp.diffmerge.internal.context;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -20,6 +21,7 @@ import java.util.Set;
 
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.diffmerge.spi.context.ControlPair;
 import org.eclipse.emf.ecp.diffmerge.spi.context.DiffMergeModelContext;
@@ -29,6 +31,7 @@ import org.eclipse.emf.ecp.view.internal.context.ViewModelContextImpl;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
 import org.eclipse.emf.ecp.view.spi.model.VAttachment;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.util.ViewModelUtil;
 
@@ -74,13 +77,13 @@ public class DiffMergeModelContextImpl extends ViewModelContextImpl implements
 	 * @param domainObject the {@link EObject} which is editable
 	 * @param left the first object
 	 * @param right the second object
-	 * @param mergedControls the set of controls which are already merged
+	 * @param mergedReferences the set of already merged domain references
 	 * @see ViewModelContextImpl#ViewModelContextImpl(VElement, EObject)
 	 */
 	public DiffMergeModelContextImpl(VElement view, EObject domainObject,
-		EObject left, EObject right, Set<VControl> mergedControls) {
+		EObject left, EObject right, Set<VDomainModelReference> mergedReferences) {
 		this(view, domainObject, left, right);
-		diffControls.addAll(mergedControls);
+		readAlreadyMerged(mergedReferences);
 	}
 
 	/**
@@ -109,14 +112,26 @@ public class DiffMergeModelContextImpl extends ViewModelContextImpl implements
 	 * @param domainObject the {@link EObject} which is editable
 	 * @param origin1 the first object
 	 * @param origin2 the second object
-	 * @param mergedControls the set of controls which are already merged
+	 * @param mergedReferences the set of already merged domain references
 	 * @param modelServices the {@link ViewModelService ViewModelServices} to register
 	 * @see ViewModelContextImpl#ViewModelContextImpl(VElement, EObject, ViewModelService...)
 	 */
 	public DiffMergeModelContextImpl(VElement view, EObject domainObject,
-		EObject origin1, EObject origin2, Set<VControl> mergedControls, ViewModelService... modelServices) {
+		EObject origin1, EObject origin2, Set<VDomainModelReference> mergedReferences,
+		ViewModelService... modelServices) {
 		this(view, domainObject, origin1, origin2, modelServices);
-		diffControls.addAll(mergedControls);
+		readAlreadyMerged(mergedReferences);
+	}
+
+	private void readAlreadyMerged(Set<VDomainModelReference> mergedReferences) {
+		for (final VDomainModelReference domainModelReference : mergedReferences) {
+			domainModelReference.resolve(getDomainModel());
+			final Iterator<Setting> iterator = domainModelReference.getIterator();
+			while (iterator.hasNext()) {
+				final Setting setting = iterator.next();
+				mergedControls.addAll(getControlsFor(setting));
+			}
+		}
 	}
 
 	private void initComparison() {
@@ -306,10 +321,14 @@ public class DiffMergeModelContextImpl extends ViewModelContextImpl implements
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.diffmerge.spi.context.DiffMergeModelContext#getMergedControls()
+	 * @see org.eclipse.emf.ecp.diffmerge.spi.context.DiffMergeModelContext#getMergedDomainObjects()
 	 */
-	public Set<VControl> getMergedControls() {
-		return mergedControls;
+	public Set<VDomainModelReference> getMergedDomainObjects() {
+		final Set<VDomainModelReference> result = new LinkedHashSet<VDomainModelReference>();
+		for (final VControl control : mergedControls) {
+			result.add(EcoreUtil.copy(control.getDomainModelReference()));
+		}
+		return result;
 	}
 
 }

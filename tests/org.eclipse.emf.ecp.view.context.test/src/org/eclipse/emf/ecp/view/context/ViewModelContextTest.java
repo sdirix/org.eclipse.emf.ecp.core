@@ -16,17 +16,27 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.util.Set;
+
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecp.view.spi.context.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
+import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
+import org.eclipse.emf.ecp.view.spi.table.model.VTableColumn;
+import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
+import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.table.model.VTableFactory;
 import org.eclipse.emf.emfstore.bowling.BowlingFactory;
 import org.eclipse.emf.emfstore.bowling.BowlingPackage;
+import org.eclipse.emf.emfstore.bowling.League;
 import org.eclipse.emf.emfstore.bowling.Player;
+import org.eclipse.emf.emfstore.bowling.impl.LeagueImpl;
+import org.eclipse.emf.emfstore.bowling.impl.PlayerImpl;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -458,6 +468,108 @@ public class ViewModelContextTest {
 		viewModelContext.unregisterDomainChangeListener(modelChangeListener);
 		view.setName("Test");
 		assertFalse(correctNotificationArrived);
+	}
+
+	/**
+	 * Tests setting to control mapping static.
+	 */
+	@Test
+	public void testSettingToControlMapSingleControlStatic() {
+		final VView view = VViewFactory.eINSTANCE.createView();
+		final VControl control = VViewFactory.eINSTANCE.createControl();
+		control.setDomainModelReference(BowlingPackage.eINSTANCE.getPlayer_Name());
+		view.getChildren().add(control);
+
+		viewModelContext = ViewModelContextFactory.INSTANCE.createViewModelContext(view, player);
+
+		final Set<VControl> controls = viewModelContext.getControlsFor(((PlayerImpl) player)
+			.eSetting(BowlingPackage.eINSTANCE.getPlayer_Name()));
+		assertEquals(1, controls.size());
+		assertEquals(control, controls.iterator().next());
+	}
+
+	/**
+	 * Tests setting to control mapping static.
+	 */
+	@Test
+	public void testSettingToControlMapMultipleControlsStatic() {
+		final VView view = VViewFactory.eINSTANCE.createView();
+		final VControl control = VViewFactory.eINSTANCE.createControl();
+		control.setDomainModelReference(BowlingPackage.eINSTANCE.getPlayer_Name());
+		view.getChildren().add(control);
+
+		final VControl control2 = VViewFactory.eINSTANCE.createControl();
+		control2.setDomainModelReference(BowlingPackage.eINSTANCE.getPlayer_Name());
+		view.getChildren().add(control2);
+
+		viewModelContext = ViewModelContextFactory.INSTANCE.createViewModelContext(view, player);
+
+		final Set<VControl> controls = viewModelContext.getControlsFor(((PlayerImpl) player)
+			.eSetting(BowlingPackage.eINSTANCE.getPlayer_Name()));
+		assertEquals(2, controls.size());
+
+		assertTrue(controls.contains(control));
+		assertTrue(controls.contains(control2));
+	}
+
+	/**
+	 * Tests setting to control mapping static.
+	 */
+	@Test
+	public void testSettingToTableMapSingleControlStatic() {
+		final VView view = VViewFactory.eINSTANCE.createView();
+		final VTableControl control = VTableFactory.eINSTANCE.createTableControl();
+		final VTableDomainModelReference domRef = VTableFactory.eINSTANCE.createTableDomainModelReference();
+		domRef.setDomainModelEFeature(BowlingPackage.eINSTANCE.getLeague_Players());
+		control.setDomainModelReference(domRef);
+		final VTableColumn col = VTableFactory.eINSTANCE.createTableColumn();
+		col.setAttribute(BowlingPackage.eINSTANCE.getPlayer_Name());
+		control.getColumns().add(col);
+		view.getChildren().add(control);
+
+		final League league = BowlingFactory.eINSTANCE.createLeague();
+		league.getPlayers().add(player);
+
+		viewModelContext = ViewModelContextFactory.INSTANCE.createViewModelContext(view, league);
+
+		final Set<VControl> controls = viewModelContext.getControlsFor(((LeagueImpl) league)
+			.eSetting(BowlingPackage.eINSTANCE.getLeague_Players()));
+		assertEquals(1, controls.size());
+		assertEquals(control, controls.iterator().next());
+
+		final Set<VControl> controls2 = viewModelContext.getControlsFor(((PlayerImpl) player)
+			.eSetting(BowlingPackage.eINSTANCE.getPlayer_Name()));
+		assertEquals(1, controls2.size());
+		assertEquals(control, controls2.iterator().next());
+	}
+
+	/**
+	 * Tests setting to control mapping static.
+	 */
+	@Test
+	public void testSettingToTableMapSingleControlDynamic() {
+		final VView view = VViewFactory.eINSTANCE.createView();
+		final VTableControl control = VTableFactory.eINSTANCE.createTableControl();
+		final VTableDomainModelReference domRef = VTableFactory.eINSTANCE.createTableDomainModelReference();
+		domRef.setDomainModelEFeature(BowlingPackage.eINSTANCE.getLeague_Players());
+		control.setDomainModelReference(domRef);
+		final VTableColumn col = VTableFactory.eINSTANCE.createTableColumn();
+		col.setAttribute(BowlingPackage.eINSTANCE.getPlayer_Name());
+		control.getColumns().add(col);
+		view.getChildren().add(control);
+
+		final League league = BowlingFactory.eINSTANCE.createLeague();
+		league.getPlayers().add(player);
+
+		viewModelContext = ViewModelContextFactory.INSTANCE.createViewModelContext(view, league);
+
+		final Player player2 = BowlingFactory.eINSTANCE.createPlayer();
+		league.getPlayers().add(player2);
+
+		final Set<VControl> controls2 = viewModelContext.getControlsFor(((PlayerImpl) player2)
+			.eSetting(BowlingPackage.eINSTANCE.getPlayer_Name()));
+		assertEquals(1, controls2.size());
+		assertEquals(control, controls2.iterator().next());
 	}
 
 }
