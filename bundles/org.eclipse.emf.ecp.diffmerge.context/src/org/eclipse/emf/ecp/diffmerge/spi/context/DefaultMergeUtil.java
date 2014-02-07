@@ -9,7 +9,7 @@
  * Contributors:
  * Eugen - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.diffmerge.swt;
+package org.eclipse.emf.ecp.diffmerge.spi.context;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -73,7 +73,7 @@ public final class DefaultMergeUtil {
 				if (toSetting.getEStructuralFeature().isMany()) {
 					editingDomain.getCommandStack().execute(
 						AddCommand.create(editingDomain, toSetting.getEObject(), toSetting.getEStructuralFeature(),
-							fromSetting.get(true)));
+							(Collection<?>) fromSetting.get(true)));
 				}
 				else {
 					editingDomain.getCommandStack().execute(

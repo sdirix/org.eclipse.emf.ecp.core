@@ -31,15 +31,14 @@ import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
- * This is the item provider adapter for a
- * {@link org.eclipse.emf.ecp.spi.diffmerge.model.VDiffAttachment} object. <!--
+ * This is the item provider adapter for a {@link org.eclipse.emf.ecp.spi.diffmerge.model.VDiffAttachment} object. <!--
  * begin-user-doc --> <!-- end-user-doc -->
  * 
  * @generated
  */
 public class DiffAttachmentItemProvider extends AttachmentItemProvider
-		implements IEditingDomainItemProvider, IStructuredItemContentProvider,
-		ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
+	implements IEditingDomainItemProvider, IStructuredItemContentProvider,
+	ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
 	/**
 	 * This constructs an instance from a factory and a notifier. <!--
 	 * begin-user-doc --> <!-- end-user-doc -->
@@ -75,16 +74,16 @@ public class DiffAttachmentItemProvider extends AttachmentItemProvider
 	 */
 	protected void addTotalNumberOfDiffsPropertyDescriptor(Object object) {
 		itemPropertyDescriptors
-				.add(createItemPropertyDescriptor(
-						((ComposeableAdapterFactory) adapterFactory)
-								.getRootAdapterFactory(),
-						getResourceLocator(),
-						getString("_UI_DiffAttachment_totalNumberOfDiffs_feature"), //$NON-NLS-1$
-						getString(
-								"_UI_PropertyDescriptor_description", "_UI_DiffAttachment_totalNumberOfDiffs_feature", "_UI_DiffAttachment_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-						VDiffmergePackage.Literals.DIFF_ATTACHMENT__TOTAL_NUMBER_OF_DIFFS,
-						true, false, false,
-						ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
+			.add(createItemPropertyDescriptor(
+				((ComposeableAdapterFactory) adapterFactory)
+					.getRootAdapterFactory(),
+				getResourceLocator(),
+				getString("_UI_DiffAttachment_totalNumberOfDiffs_feature"), //$NON-NLS-1$
+				getString(
+					"_UI_PropertyDescriptor_description", "_UI_DiffAttachment_totalNumberOfDiffs_feature", "_UI_DiffAttachment_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				VDiffmergePackage.Literals.DIFF_ATTACHMENT__TOTAL_NUMBER_OF_DIFFS,
+				true, false, false,
+				ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
 	}
 
 	/**
@@ -95,16 +94,16 @@ public class DiffAttachmentItemProvider extends AttachmentItemProvider
 	 */
 	protected void addMergedDiffsPropertyDescriptor(Object object) {
 		itemPropertyDescriptors
-				.add(createItemPropertyDescriptor(
-						((ComposeableAdapterFactory) adapterFactory)
-								.getRootAdapterFactory(),
-						getResourceLocator(),
-						getString("_UI_DiffAttachment_mergedDiffs_feature"), //$NON-NLS-1$
-						getString(
-								"_UI_PropertyDescriptor_description", "_UI_DiffAttachment_mergedDiffs_feature", "_UI_DiffAttachment_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-						VDiffmergePackage.Literals.DIFF_ATTACHMENT__MERGED_DIFFS,
-						true, false, false,
-						ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
+			.add(createItemPropertyDescriptor(
+				((ComposeableAdapterFactory) adapterFactory)
+					.getRootAdapterFactory(),
+				getResourceLocator(),
+				getString("_UI_DiffAttachment_mergedDiffs_feature"), //$NON-NLS-1$
+				getString(
+					"_UI_PropertyDescriptor_description", "_UI_DiffAttachment_mergedDiffs_feature", "_UI_DiffAttachment_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				VDiffmergePackage.Literals.DIFF_ATTACHMENT__MERGED_DIFFS,
+				true, false, false,
+				ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
 	}
 
 	/**
@@ -116,7 +115,7 @@ public class DiffAttachmentItemProvider extends AttachmentItemProvider
 	@Override
 	public Object getImage(Object object) {
 		return overlayImage(object,
-				getResourceLocator().getImage("full/obj16/DiffAttachment")); //$NON-NLS-1$
+			getResourceLocator().getImage("full/obj16/DiffAttachment")); //$NON-NLS-1$
 	}
 
 	/**
@@ -127,9 +126,10 @@ public class DiffAttachmentItemProvider extends AttachmentItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		VDiffAttachment diffAttachment = (VDiffAttachment) object;
-//		return getString("_UI_DiffAttachment_type") + " " + diffAttachment.getTotalNumberOfDiffs(); //$NON-NLS-1$ //$NON-NLS-2$
-		return getString("_UI_DiffAttachment_text", new Object[]{diffAttachment.getMergedDiffs(),diffAttachment.getTotalNumberOfDiffs()});//$NON-NLS-1$
+		final VDiffAttachment diffAttachment = (VDiffAttachment) object;
+		//		return getString("_UI_DiffAttachment_type") + " " + diffAttachment.getTotalNumberOfDiffs(); //$NON-NLS-1$ //$NON-NLS-2$
+		return getString(
+			"_UI_DiffAttachment_text", new Object[] { diffAttachment.getMergedDiffs(), diffAttachment.getTotalNumberOfDiffs() });//$NON-NLS-1$
 	}
 
 	/**
@@ -139,6 +139,7 @@ public class DiffAttachmentItemProvider extends AttachmentItemProvider
 	 * end-user-doc -->
 	 * 
 	 * @generated NOT
+	 * @param notification the {@link Notification} to propagate
 	 */
 	@Override
 	public void notifyChanged(Notification notification) {
@@ -148,10 +149,12 @@ public class DiffAttachmentItemProvider extends AttachmentItemProvider
 		case VDiffmergePackage.DIFF_ATTACHMENT__TOTAL_NUMBER_OF_DIFFS:
 		case VDiffmergePackage.DIFF_ATTACHMENT__MERGED_DIFFS:
 			fireNotifyChanged(new ViewerNotification(notification,
-					notification.getNotifier(), false, true));
+				notification.getNotifier(), false, true));
 			fireNotifyChanged(new ViewerNotification(notification,
-					((EObject)notification.getNotifier()).eContainer(), false, true));
+				((EObject) notification.getNotifier()).eContainer(), false, true));
 			return;
+		default:
+			super.notifyChanged(notification);
 		}
 		super.notifyChanged(notification);
 	}
@@ -165,7 +168,7 @@ public class DiffAttachmentItemProvider extends AttachmentItemProvider
 	 */
 	@Override
 	protected void collectNewChildDescriptors(
-			Collection<Object> newChildDescriptors, Object object) {
+		Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 	}
 

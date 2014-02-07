@@ -11,9 +11,12 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.diffmerge.spi.context;
 
+import java.util.Set;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.diffmerge.internal.context.DiffMergeModelContextImpl;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
+import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 
 /**
@@ -37,15 +40,15 @@ public final class DiffMergeContextFactory {
 	 * 
 	 * @param view
 	 *            the view
-	 * @param domainObject
+	 * @param target
 	 *            the domain object
-	 * @param origin1 the first object
-	 * @param origin2 the second object
+	 * @param left the first object
+	 * @param right the second object
 	 * @return the created {@link DiffMergeModelContext}
 	 */
-	public DiffMergeModelContext createViewModelContext(VElement view, EObject domainObject, EObject origin1,
-		EObject origin2) {
-		return new DiffMergeModelContextImpl(view, domainObject, origin1, origin2);
+	public DiffMergeModelContext createViewModelContext(VElement view, EObject target, EObject left,
+		EObject right) {
+		return new DiffMergeModelContextImpl(view, target, left, right);
 	}
 
 	/**
@@ -53,16 +56,53 @@ public final class DiffMergeContextFactory {
 	 * 
 	 * @param view
 	 *            the view
-	 * @param domainObject
+	 * @param target
 	 *            the domain object
-	 * @param origin1 the first object
-	 * @param origin2 the second object
+	 * @param left the first object
+	 * @param right the second object
 	 * @param modelServices
 	 *            an array of services to use in the {@link DiffMergeModelContext }
 	 * @return the created {@link DiffMergeModelContext}
 	 */
 	public DiffMergeModelContext createViewModelContext(VElement view,
-		EObject domainObject, EObject origin1, EObject origin2, ViewModelService... modelServices) {
-		return new DiffMergeModelContextImpl(view, domainObject, origin1, origin2, modelServices);
+		EObject target, EObject left, EObject right, ViewModelService... modelServices) {
+		return new DiffMergeModelContextImpl(view, target, left, right, modelServices);
+	}
+
+	/**
+	 * Instantiates a new view model context.
+	 * 
+	 * @param view
+	 *            the view
+	 * @param target
+	 *            the domain object
+	 * @param left the first object
+	 * @param right the second object
+	 * @param mergedControls the set of controls which are already merged
+	 * @return the created {@link DiffMergeModelContext}
+	 */
+	public DiffMergeModelContext createViewModelContext(VElement view, EObject target, EObject left,
+		EObject right, Set<VControl> mergedControls) {
+		return new DiffMergeModelContextImpl(view, target, left, right);
+	}
+
+	/**
+	 * Instantiates a new view model context with specific services.
+	 * 
+	 * @param view
+	 *            the view
+	 * @param target
+	 *            the domain object
+	 * @param left the first object
+	 * @param right the second object
+	 * @param mergedControls the set of controls which are already merged
+	 * @param modelServices
+	 *            an array of services to use in the {@link DiffMergeModelContext }
+	 * @return the created {@link DiffMergeModelContext}
+	 */
+	public DiffMergeModelContext createViewModelContext(VElement view,
+		EObject target, EObject left, EObject right, Set<VControl> mergedControls,
+		ViewModelService... modelServices) {
+		return new DiffMergeModelContextImpl(view, target, left, right, modelServices);
 	}
 }
