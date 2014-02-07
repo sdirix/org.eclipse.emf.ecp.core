@@ -67,7 +67,7 @@ public final class DiffDialogHelper {
 		final DiffDialog dialog = new DiffDialog(diffModelContext, featureLabel, pairWithDiff.getLeftControl(),
 			pairWithDiff.getRightControl(), vControl);
 
-		final Shell shell = new Shell(SWT.TITLE | SWT.BORDER | SWT.APPLICATION_MODAL);
+		final Shell shell = new Shell(SWT.TITLE | SWT.BORDER | SWT.APPLICATION_MODAL | SWT.MAX | SWT.RESIZE);
 		final int index = diffModelContext.getIndexOf(vControl);
 		if (index == -1) {
 			throw new IllegalArgumentException("This VControl doesn't has a difference."); //$NON-NLS-1$

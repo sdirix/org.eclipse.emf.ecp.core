@@ -108,9 +108,9 @@ public class DiffDialog {
 		final Composite mainComposite = new Composite(parent, SWT.NONE);
 		GridLayoutFactory.fillDefaults().numColumns(1).equalWidth(false).extendedMargins(10, 10, 10, 10)
 			.applyTo(mainComposite);
+		final ScrolledComposite scrolledComposite = new ScrolledComposite(mainComposite, SWT.H_SCROLL
+			| SWT.V_SCROLL);
 		{
-			final ScrolledComposite scrolledComposite = new ScrolledComposite(mainComposite, SWT.H_SCROLL
-				| SWT.V_SCROLL);
 			scrolledComposite.setExpandHorizontal(true);
 			scrolledComposite.setExpandVertical(true);
 			scrolledComposite.setShowFocusedControl(true);
@@ -231,26 +231,28 @@ public class DiffDialog {
 			}
 		}
 
-		final Button bConfirm = new Button(buttonRowComposite, SWT.PUSH);
-		bConfirm.setText(Messages.DiffDialog_Confirm);
-		bConfirm.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_compare_dialog_merge_confirm"); //$NON-NLS-1$
-		GridDataFactory.fillDefaults().align(SWT.END, SWT.BEGINNING).grab(true, false).applyTo(bConfirm);
-		bConfirm.addSelectionListener(new SelectionAdapter() {
+		{
+			final Button bConfirm = new Button(buttonRowComposite, SWT.PUSH);
+			bConfirm.setText(Messages.DiffDialog_Confirm);
+			bConfirm.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_compare_dialog_merge_confirm"); //$NON-NLS-1$
+			GridDataFactory.fillDefaults().align(SWT.END, SWT.BEGINNING).grab(true, false).applyTo(bConfirm);
+			bConfirm.addSelectionListener(new SelectionAdapter() {
 
-			private static final long serialVersionUID = 1L;
+				private static final long serialVersionUID = 1L;
 
-			/**
-			 * {@inheritDoc}
-			 * 
-			 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
-			 */
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				super.widgetSelected(e);
-				saveAndCloseDialog(bConfirm.getShell());
-			}
+				/**
+				 * {@inheritDoc}
+				 * 
+				 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
+				 */
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					super.widgetSelected(e);
+					saveAndCloseDialog(bConfirm.getShell());
+				}
 
-		});
+			});
+		}
 
 		return buttonRowComposite;
 	}
@@ -375,15 +377,7 @@ public class DiffDialog {
 	}
 
 	private void replaceMainWith(VControl replaceControl) {
-		replaceMainWith(replaceControl, true);
-	}
-
-	private void replaceMainWith(VControl replaceControl, boolean updateMerge) {
-		DefaultMergeUtil.copyValues(replaceControl, main);
-		if (updateMerge) {
-			DefaultMergeUtil.copyValues(replaceControl, mergeControl);
-		}
-
+		DefaultMergeUtil.copyValues(replaceControl, mergeControl);
 	}
 
 	/**
@@ -421,7 +415,7 @@ public class DiffDialog {
 	}
 
 	private void saveAndCloseDialog(final Shell shell) {
-		replaceMainWith(mergeControl, false);
+		DefaultMergeUtil.copyValues(mergeControl, main);
 
 		viewModelContext.markControl(main, diffConfirmed);
 
