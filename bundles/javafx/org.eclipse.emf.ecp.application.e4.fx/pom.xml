@@ -8,7 +8,7 @@
 
 	<parent>
 		<groupId>org.eclipse.emf.ecp.fx</groupId>
-		<artifactId>org.eclipse.emf.ecp.fx.releng</artifactId>
+		<artifactId>ecp-fx-parent</artifactId>
 		<relativePath>../../releng/javafx/org.eclipse.emf.ecp.fx.releng/pom.xml</relativePath>
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
