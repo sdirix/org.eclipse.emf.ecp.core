@@ -24,9 +24,9 @@
 
 	<modules>
 		<module>../org.eclipse.emf.ecp.fx.releng.bundles</module>
-		<module>../../bundles/javafx/org.eclipse.emf.ecp.application.e4.fx</module>
-		<module>../../features/javafx/org.eclipse.emf.ecp.application.e4.fx.feature</module>
-		<module>../../features/javafx/org.eclipse.emf.ecp.view.sdk.fx.feature</module>
+		<module>../../../bundles/javafx/org.eclipse.emf.ecp.application.e4.fx</module>
+		<module>../../../features/javafx/org.eclipse.emf.ecp.application.e4.fx.feature</module>
+		<module>../../../features/javafx/org.eclipse.emf.ecp.view.sdk.fx.feature</module>
 		<module>../org.eclipse.emf.ecp.application.e4.fx.product</module>
 	</modules>
 
