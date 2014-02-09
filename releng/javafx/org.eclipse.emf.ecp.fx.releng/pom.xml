@@ -28,6 +28,7 @@
 		<module>../../../features/javafx/org.eclipse.emf.ecp.application.e4.fx.feature</module>
 		<module>../../../features/javafx/org.eclipse.emf.ecp.view.sdk.fx.feature</module>
 		<module>../org.eclipse.emf.ecp.application.e4.fx.product</module>
+		<module>../org.eclipse.emf.ecp.repository.fx</module>
 	</modules>
 
 	<repositories>
