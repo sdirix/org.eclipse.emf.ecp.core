@@ -174,6 +174,17 @@ public class ViewModelContextImpl implements ViewModelContext {
 		}
 	}
 
+	private void vControlRemoved(VControl vControl) {
+		final Iterator<Setting> iterator = vControl.getDomainModelReference().getIterator();
+		while (iterator.hasNext()) {
+			final Setting next = iterator.next();
+			final UniqueSetting uniqueSetting = UniqueSetting.createSetting(next);
+			if (settingToControlMap.containsKey(uniqueSetting)) {
+				settingToControlMap.get(uniqueSetting).remove(vControl);
+			}
+		}
+	}
+
 	/**
 	 * {@inheritDoc}
 	 * 
@@ -246,6 +257,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 			viewService.dispose();
 		}
 		viewServices.clear();
+		settingToControlMap.clear();
 
 		isDisposing = false;
 		isDisposed = true;
@@ -394,6 +406,9 @@ public class ViewModelContextImpl implements ViewModelContext {
 			}
 			for (final ModelChangeListener modelChangeListener : viewModelChangeListener) {
 				modelChangeListener.notifyRemove(notifier);
+			}
+			if (VControl.class.isInstance(notifier)) {
+				vControlRemoved((VControl) notifier);
 			}
 		}
 
