@@ -15,15 +15,15 @@
 	</parent>
 	
 	<modules>
-		<module>../../bundles/javafx/org.eclipse.emf.ecp.controls.fx</module>
-		<module>../../bundles/javafx/org.eclipse.emf.ecp.util.fx</module>
-		<module>../../bundles/javafx/org.eclipse.emf.ecp.view.group.fx</module>
-		<module>../../bundles/javafx/org.eclipse.emf.ecp.view.horizontal.fx</module>
-		<module>../../bundles/javafx/org.eclipse.emf.ecp.view.model.fx</module>
-		<module>../../bundles/javafx/org.eclipse.emf.ecp.view.treemasterdetail.fx</module>
-		<module>../../bundles/javafx/org.eclipse.emf.ecp.view.vertical.fx</module>
-		<module>../../bundles/javafx/org.eclipse.emf.emfstore.fx.projects</module>
-		<module>../../bundles/javafx/org.eclipse.emf.ecp.emfstore.ui.e4.fx</module>
+		<module>../../../bundles/javafx/org.eclipse.emf.ecp.controls.fx</module>
+		<module>../../../bundles/javafx/org.eclipse.emf.ecp.util.fx</module>
+		<module>../../../bundles/javafx/org.eclipse.emf.ecp.view.group.fx</module>
+		<module>../../../bundles/javafx/org.eclipse.emf.ecp.view.horizontal.fx</module>
+		<module>../../../bundles/javafx/org.eclipse.emf.ecp.view.model.fx</module>
+		<module>../../../bundles/javafx/org.eclipse.emf.ecp.view.treemasterdetail.fx</module>
+		<module>../../../bundles/javafx/org.eclipse.emf.ecp.view.vertical.fx</module>
+		<module>../../../bundles/javafx/org.eclipse.emf.emfstore.fx.projects</module>
+		<module>../../../bundles/javafx/org.eclipse.emf.ecp.emfstore.ui.e4.fx</module>
 	</modules>
 
 	<build>
