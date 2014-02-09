@@ -15,7 +15,7 @@
 	</target>
 		
 	<target name="do-deploy" depends="init-fx-tasks">
-		<fileset id="equinox-launcher" dir="../org.eclipse.emf.ecp.application.e4.fx.app.product/target/products/org.eclipse.emf.ecp.application.e4.fx.app.product/noenv/noenv/noenv">
+		<fileset id="equinox-launcher" dir="../org.eclipse.emf.ecp.application.e4.fx.product/target/products/org.eclipse.emf.ecp.application.e4.fx.product/noenv/noenv/noenv">
 			<filename name="plugins/org.eclipse.equinox.launcher_*.jar"/>
 		</fileset>
 		<fxosgilauncher classpathref="fxant" equinoxlauncherjarref="equinox-launcher"/>
