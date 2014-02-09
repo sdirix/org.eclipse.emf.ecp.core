@@ -46,8 +46,11 @@
 			<layout>p2</layout>
 			<url>https://hudson.eclipse.org/ecp/job/emf-emfclient-integration/lastSuccessfulBuild/artifact/releng/org.eclipse.emf.ecp.repository/target/repository/</url>
 		</repository>
-		
-
+		<repository>
+			<id>emfstore</id>
+			<layout>p2</layout>
+			<url>http://download.eclipse.org/emf-store/releases_11</url>
+		</repository>
 	</repositories>
 
 	<pluginRepositories>
