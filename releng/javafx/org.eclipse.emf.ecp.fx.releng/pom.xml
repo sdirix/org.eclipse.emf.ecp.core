@@ -23,7 +23,6 @@
 	</properties>
 
 	<modules>
-		<module>../../org.eclipse.emf.ecp.releng.bundles</module>
 		<module>../org.eclipse.emf.ecp.fx.releng.bundles</module>
 		<module>../../../bundles/javafx/org.eclipse.emf.ecp.application.e4.fx</module>
 		<module>../../../features/javafx/org.eclipse.emf.ecp.application.e4.fx.feature</module>
@@ -40,11 +39,14 @@
 		<repository>
 			<id>efxclipse-addons</id>
 			<layout>p2</layout>
-			<!--
-			<url>http://downloads.efxclipse.org/efxclipse.bestsolution.at/p2-repos/runtime/nightly/site/</url>
-			-->
 			<url>http://downloads.efxclipse.bestsolution.at/p2-repos/addons/nightly/site/</url>
 		</repository>
+		<repository>
+			<id>ecp</id>
+			<layout>p2</layout>
+			<url>https://hudson.eclipse.org/ecp/job/emf-emfclient-integration/lastSuccessfulBuild/artifact/releng/org.eclipse.emf.ecp.repository/target/repository/</url>
+		</repository>
+		
 
 	</repositories>
 
