@@ -23,6 +23,7 @@
 	</properties>
 
 	<modules>
+		<module>../../org.eclipse.emf.ecp.releng.bundles</module>
 		<module>../org.eclipse.emf.ecp.fx.releng.bundles</module>
 		<module>../../../bundles/javafx/org.eclipse.emf.ecp.application.e4.fx</module>
 		<module>../../../features/javafx/org.eclipse.emf.ecp.application.e4.fx.feature</module>
