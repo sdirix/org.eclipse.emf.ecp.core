@@ -1,5 +1,5 @@
 <project name="native-build" default="do-deploy" basedir="."  xmlns:fx="javafx:com.sun.javafx.tools.ant">
-	<property name="eclipse-app-dir" value="../org.eclipse.emf.ecp.application.e4.fx.app.product/target/products/org.eclipse.emf.ecp.application.e4.fx.app.product/noenv/noenv/noenv" />
+	<property name="eclipse-app-dir" value="../org.eclipse.emf.ecp.application.e4.fx.product/target/products/org.eclipse.emf.ecp.application.e4.fx.product/noenv/noenv/noenv" />
 	
 	<target name="init-fx-tasks">
 		<taskdef name="fxosgilauncher" classpath="org.eclipse.fx.ide.ant.jar" classname="org.eclipse.fx.ide.ant.FXOsgiLaunchTask" />
