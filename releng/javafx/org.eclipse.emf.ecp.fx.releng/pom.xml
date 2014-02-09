@@ -39,7 +39,10 @@
 		<repository>
 			<id>efxclipse-addons</id>
 			<layout>p2</layout>
+			<!--
 			<url>http://downloads.efxclipse.org/efxclipse.bestsolution.at/p2-repos/runtime/nightly/site/</url>
+			-->
+			<url>http://downloads.efxclipse.bestsolution.at/p2-repos/addons/nightly/site/</url>
 		</repository>
 
 	</repositories>
