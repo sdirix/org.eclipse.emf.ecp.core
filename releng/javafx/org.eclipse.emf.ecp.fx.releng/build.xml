@@ -6,6 +6,7 @@
 		<path id="fxant">
 			<filelist>
 				<file name="${java.home}\..\lib\ant-javafx.jar"/>
+				<file name="${java.home}\..\jre\lib\jfxrt.jar"/>
 				<file name="${java.home}\lib\ant-jfxrt.jar"/>
 				<file name="${java.home}\..\jdk1.7.0_51\lib\ant-jfxrt.jar"/>
 				<file name="${java.home}\..\jdk1.7.0_51\lib\ant-javafx.jar"/>
