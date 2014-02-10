@@ -34,17 +34,25 @@
    <includes
          id="org.eclipse.emf.ecp.emfforms.runtime.feature.source"
          version="0.0.0"/>
-
+         
    <includes
          id="org.eclipse.emf.ecp.feature.source"
          version="0.0.0"/>
 
    <includes
          id="org.eclipse.emf.ecp.feature.source"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.ecp.demo.e3.feature.source"
          version="0.0.0"/>
 
    <includes
          id="org.eclipse.emf.ecp.e3.feature.source"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.ecp.demo.e4.feature.source"
          version="0.0.0"/>
 
    <includes
@@ -66,8 +74,8 @@
    <includes
          id="org.eclipse.emf.ecp.view.template.helper.feature.source"
          version="0.0.0"/>
-
-   <includes
+         
+         <includes
          id="org.eclipse.emf.ecp.cdo.feature"
          version="0.0.0"/>
 
@@ -82,17 +90,25 @@
    <includes
          id="org.eclipse.emf.ecp.emfforms.runtime.feature"
          version="0.0.0"/>
-
+         
    <includes
          id="org.eclipse.emf.ecp.feature"
          version="0.0.0"/>
 
    <includes
          id="org.eclipse.emf.ecp.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.ecp.demo.e3.feature"
          version="0.0.0"/>
 
    <includes
          id="org.eclipse.emf.ecp.e3.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.ecp.demo.e4.feature"
          version="0.0.0"/>
 
    <includes
