@@ -202,13 +202,14 @@ public class ViewValidator extends ViewModelGraph {
 			handleOKDiagnostic(eObject, diagnostic);
 		}
 		else {
-			final Map<Setting, Set<Diagnostic>> featureToValidationResult = collectChangedSettings(eObject, diagnostic);
+			final Map<UniqueSetting, Set<Diagnostic>> featureToValidationResult = collectChangedSettings(eObject,
+				diagnostic);
 
 			// TODO: if we ever get performance problems this is likely the place to start
 			// validation registry should be queryable with a control and a feature
 			// -> merge SettingsMapping and the registry
 			// final Set<UpdateTriple> updateTriplets = new LinkedHashSet<ViewValidator.UpdateTriple>();
-			for (final Setting invalidSetting : featureToValidationResult.keySet()) {
+			for (final UniqueSetting invalidSetting : featureToValidationResult.keySet()) {
 				for (final VControl control : validationRegistry.getRenderablesForEObject(invalidSetting)) {
 					final VDomainModelReference modelReference = control.getDomainModelReference();
 					final Iterator<Setting> settings = modelReference.getIterator();
@@ -245,8 +246,8 @@ public class ViewValidator extends ViewModelGraph {
 		}
 	}
 
-	private Map<Setting, Set<Diagnostic>> collectChangedSettings(EObject eObject, Diagnostic diagnostic) {
-		final Map<Setting, Set<Diagnostic>> featureToValidationResult = new LinkedHashMap<Setting,
+	private Map<UniqueSetting, Set<Diagnostic>> collectChangedSettings(EObject eObject, Diagnostic diagnostic) {
+		final Map<UniqueSetting, Set<Diagnostic>> featureToValidationResult = new LinkedHashMap<UniqueSetting,
 			Set<Diagnostic>>();
 		final Set<EStructuralFeature> validatedFeatures = new LinkedHashSet<EStructuralFeature>();
 		for (final Diagnostic childDiagnostic : diagnostic.getChildren()) {
@@ -258,10 +259,11 @@ public class ViewValidator extends ViewModelGraph {
 			validatedFeatures.add(feature);
 			final InternalEObject eObject2 = (InternalEObject) childDiagnostic.getData().get(0);
 			final Setting setting = eObject2.eSetting(feature);
-			if (!featureToValidationResult.containsKey(setting)) {
-				featureToValidationResult.put(setting, new LinkedHashSet<Diagnostic>());
+			final UniqueSetting uniqueSetting = UniqueSetting.createSetting(setting);
+			if (!featureToValidationResult.containsKey(uniqueSetting)) {
+				featureToValidationResult.put(uniqueSetting, new LinkedHashSet<Diagnostic>());
 			}
-			featureToValidationResult.get(setting).add(childDiagnostic);
+			featureToValidationResult.get(uniqueSetting).add(childDiagnostic);
 		}
 		for (final EStructuralFeature feature : eObject.eClass().getEAllStructuralFeatures()) {
 			if (validatedFeatures.contains(feature)) {
@@ -269,10 +271,11 @@ public class ViewValidator extends ViewModelGraph {
 			}
 			final InternalEObject eObject2 = (InternalEObject) eObject;
 			final Setting setting = eObject2.eSetting(feature);
-			if (!featureToValidationResult.containsKey(setting)) {
-				featureToValidationResult.put(setting, new LinkedHashSet<Diagnostic>());
+			final UniqueSetting uniqueSetting = UniqueSetting.createSetting(setting);
+			if (!featureToValidationResult.containsKey(uniqueSetting)) {
+				featureToValidationResult.put(uniqueSetting, new LinkedHashSet<Diagnostic>());
 			}
-			featureToValidationResult.get(setting).add(Diagnostic.OK_INSTANCE);
+			featureToValidationResult.get(uniqueSetting).add(Diagnostic.OK_INSTANCE);
 		}
 		return featureToValidationResult;
 	}
@@ -289,7 +292,8 @@ public class ViewValidator extends ViewModelGraph {
 		for (final EObject okEObject : okEObjects) {
 			for (final EStructuralFeature esf : okEObject.eClass().getEAllStructuralFeatures()) {
 				final Setting diagSetting = ((InternalEObject) okEObject).eSetting(esf);
-				for (final VControl control : validationRegistry.getRenderablesForEObject(diagSetting)) {
+				for (final VControl control : validationRegistry.getRenderablesForEObject(UniqueSetting
+					.createSetting(diagSetting))) {
 					if (VDiagnosticHelper.isEqual(control.getDiagnostic(), getDefaultValue())) {
 						continue;
 					}

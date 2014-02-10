@@ -237,11 +237,11 @@ public class ValidationRegistry {
 	 * Returns all associated {@link VElement}s for the given model. The list is ordered so that if two renderables
 	 * are part of the same hierachy the child will have a lower index than the parent.
 	 * 
-	 * @param model the model
+	 * @param model the {@link UniqueSetting} to get the controls for
 	 * @return list of all renderables
 	 */
-	public Set<VControl> getRenderablesForEObject(Setting model) {
-		if (!domainObjectToAffectedControls.containsKey(UniqueSetting.createSetting(model))) {
+	public Set<VControl> getRenderablesForEObject(UniqueSetting model) {
+		if (!domainObjectToAffectedControls.containsKey(model)) {
 			// TODO refresh only with control existing objects
 			return Collections.emptySet();
 			// final EObject parent = model.getEObject().eContainer();
@@ -267,7 +267,7 @@ public class ValidationRegistry {
 			// }
 			// return set;
 		}
-		return domainObjectToAffectedControls.get(UniqueSetting.createSetting(model));
+		return domainObjectToAffectedControls.get(model);
 	}
 
 	/**
