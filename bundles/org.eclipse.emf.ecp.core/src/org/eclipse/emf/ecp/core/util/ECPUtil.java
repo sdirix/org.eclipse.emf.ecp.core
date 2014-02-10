@@ -160,6 +160,7 @@ public final class ECPUtil {
 		final Set<String> namespaceURIs = new LinkedHashSet<String>(Registry.INSTANCE.keySet());
 		for (final String nsURI : namespaceURIs) {
 			final EPackage ePackage = Registry.INSTANCE.getEPackage(nsURI);
+			ePackages.add(ePackage);
 		}
 		return ePackages;
 	}
