@@ -33,7 +33,7 @@
 		<fxosgilauncher classpathref="fxant" equinoxlauncherjarref="equinox-launcher"/>
 	
 		<fx:resources id="appRes">
-			<fx:fileset dir="releng/javafx/org.eclipse.emf.ecp.fx.releng" includes="fx-osgi-launch.jar"/>
+			<fx:fileset dir="." includes="fx-osgi-launch.jar"/>
 			<fx:fileset dir="${eclipse-app-dir}" includes="**/*"/>
 		</fx:resources>
 		
