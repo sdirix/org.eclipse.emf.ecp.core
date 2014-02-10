@@ -7,11 +7,23 @@
 			<filelist>
 				<file name="${java.home}\..\lib\ant-javafx.jar"/>
 				<file name="${java.home}\lib\ant-jfxrt.jar"/>
+				<file name="${java.home}\..\jdk1.7.0_51\lib\ant-jfxrt.jar"/>
+				<file name="${java.home}\..\jdk1.7.0_51\lib\ant-javafx.jar"/>
 			</filelist>
 		</path>
+		<available property="file1.exists" file="${java.home}\..\lib\ant-javafx.jar"/>
+		<echo message="..\lib\ant-javafx.jar exists: ${file1.exists}"/>
+		<available property="file2.exists" file="${java.home}\lib\ant-jfxrt.jar"/>
+				<echo message="\lib\ant-jfxrt.jar exists: ${file2.exists}"/>
+		<available property="file3.exists" file="${java.home}\..\jdk1.7.0_51\lib\ant-jfxrt.jar"/>
+				<echo message="..\jdk1.7.0_51\lib\ant-jfxrt.jar exists: ${file3.exists}"/>
+		<available property="file4.exists" file="${java.home}\..\jdk1.7.0_51\lib\ant-javafx.jar"/>
+				<echo message="..\jdk1.7.0_51\lib\ant-javafx.jar exists: ${file4.exists}"/>
+		
 		<taskdef resource="com/sun/javafx/tools/ant/antlib.xml"      
 					uri="javafx:com.sun.javafx.tools.ant"
-					classpathref="fxant"/>
+					
+			classpathref="fxant"/>
 	</target>
 		
 	<target name="do-deploy" depends="init-fx-tasks">

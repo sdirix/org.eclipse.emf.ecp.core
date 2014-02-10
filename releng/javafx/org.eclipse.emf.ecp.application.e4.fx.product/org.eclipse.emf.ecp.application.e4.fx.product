@@ -18,6 +18,7 @@
 
    <features>
       <feature id="org.eclipse.emf.ecp.application.e4.fx.feature" version="1.0.0.qualifier"/>
+      <feature id="org.eclipse.emf.ecp.view.sdk.fx.feature" version="1.0.0.qualifier"/>
    </features>
 
    <configurations>
