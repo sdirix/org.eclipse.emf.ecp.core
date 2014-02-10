@@ -8,10 +8,13 @@
 				<file name="${java.home}\..\lib\ant-javafx.jar"/>
 				<file name="${java.home}\..\jre\lib\jfxrt.jar"/>
 				<file name="${java.home}\lib\ant-jfxrt.jar"/>
+				<!--
 				<file name="${java.home}\..\jdk1.7.0_51\lib\ant-jfxrt.jar"/>
+				-->
 				<file name="${java.home}\..\jdk1.7.0_51\lib\ant-javafx.jar"/>
 			</filelist>
 		</path>
+		<!--
 		<available property="file1.exists" file="${java.home}\..\lib\ant-javafx.jar"/>
 		<echo message="..\lib\ant-javafx.jar exists: ${file1.exists}"/>
 		<available property="file11.exists" file="${java.home}\..\jre\lib\jfxrt.jar"/>
@@ -22,7 +25,7 @@
 				<echo message="..\jdk1.7.0_51\lib\ant-jfxrt.jar exists: ${file3.exists}"/>
 		<available property="file4.exists" file="${java.home}\..\jdk1.7.0_51\lib\ant-javafx.jar"/>
 				<echo message="..\jdk1.7.0_51\lib\ant-javafx.jar exists: ${file4.exists}"/>
-		
+		-->
 		<taskdef resource="com/sun/javafx/tools/ant/antlib.xml"      
 					uri="javafx:com.sun.javafx.tools.ant"
 					
@@ -33,6 +36,7 @@
 		<fileset id="equinox-launcher" dir="../org.eclipse.emf.ecp.application.e4.fx.product/target/products/org.eclipse.emf.ecp.application.e4.fx.product/noenv/noenv/noenv">
 			<filename name="plugins/org.eclipse.equinox.launcher_*.jar"/>
 		</fileset>
+		<echo message="EquinoxLauncher ${toString:equinox-launcher}" />
 		<fxosgilauncher classpathref="fxant" equinoxlauncherjarref="equinox-launcher"/>
 	
 		<fx:resources id="appRes">
