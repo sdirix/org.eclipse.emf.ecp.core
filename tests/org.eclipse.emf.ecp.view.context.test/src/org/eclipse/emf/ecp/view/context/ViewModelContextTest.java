@@ -546,6 +546,7 @@ public class ViewModelContextTest {
 	/**
 	 * Tests setting to control mapping static.
 	 */
+	@Ignore("Not implemented yet")
 	@Test
 	public void testSettingToTableMapSingleControlDynamic() {
 		final VView view = VViewFactory.eINSTANCE.createView();
