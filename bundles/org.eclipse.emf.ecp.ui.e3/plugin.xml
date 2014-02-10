@@ -4,10 +4,6 @@
    
 <extension
          point="org.eclipse.ui.views">
-      <category
-            id="org.eclipse.emf.ecp.ui"
-            name="ECP">
-      </category>
       <view
             category="org.eclipse.emf.ecp.ui"
             class="org.eclipse.emf.ecp.ui.views.ModelExplorerView"
@@ -679,15 +675,6 @@
             class="org.eclipse.emf.ecp.ui.commands.ImportRootHandler"
             commandId="org.eclipse.emf.ecp.ui.e3.importRoot">
       </handler>
-   </extension>
-   <extension
-         point="org.eclipse.ui.perspectives">
-      <perspective
-            class="org.eclipse.emf.ecp.ui.perspective.ECPPerspectiveFactory"
-            icon="icons/bricks.png"
-            id="org.eclipse.emf.ecp.ui.main"
-            name="ECP">
-      </perspective>
    </extension>
    <extension
          point="org.eclipse.core.expressions.propertyTesters">
