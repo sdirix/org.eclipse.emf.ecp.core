@@ -60,6 +60,7 @@
 			outfile="fix-ide" 
 			nativeBundles="all"
 			updatemode="background"
+		verbose="true" 
 			>
 			
 			<fx:info title="ECP e4 FX Demo" vendor="Eclipse Modeling Project"/>
