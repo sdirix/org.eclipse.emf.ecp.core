@@ -16,6 +16,7 @@ package org.eclipse.emf.ecp.core.util;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EClass;
@@ -53,8 +54,8 @@ public final class ECPUtil {
 	 */
 	public static ECPContainer getModelContext(ECPModelContextProvider contextProvider, Object... elements) {
 		ECPContainer commonContext = null;
-		for (Object element : elements) {
-			ECPContainer elementContext = contextProvider.getModelContext(element);
+		for (final Object element : elements) {
+			final ECPContainer elementContext = contextProvider.getModelContext(element);
 			if (elementContext == null) {
 				return null;
 			}
@@ -89,7 +90,7 @@ public final class ECPUtil {
 	 */
 	public static boolean isDisposed(Object object) {
 		if (object instanceof ECPDisposable) {
-			ECPDisposable disposable = (ECPDisposable) object;
+			final ECPDisposable disposable = (ECPDisposable) object;
 			return disposable.isDisposed();
 		}
 
@@ -104,7 +105,7 @@ public final class ECPUtil {
 	 */
 	public static boolean isClosed(Object object) {
 		if (object instanceof ECPProject) {
-			ECPProject closeable = (ECPProject) object;
+			final ECPProject closeable = (ECPProject) object;
 			return !closeable.isOpen();
 		}
 
@@ -119,7 +120,7 @@ public final class ECPUtil {
 	 */
 	public static ECPElement getResolvedElement(ECPElement elementOrDescriptor) {
 		if (elementOrDescriptor instanceof ElementDescriptor) {
-			ElementDescriptor<?> descriptor = (ElementDescriptor<?>) elementOrDescriptor;
+			final ElementDescriptor<?> descriptor = (ElementDescriptor<?>) elementOrDescriptor;
 			return descriptor.getResolvedElement();
 		}
 
@@ -134,12 +135,12 @@ public final class ECPUtil {
 	 * @return a {@link Collection} of {@link EClass EClasses}
 	 */
 	public static Collection<EClass> getSubClasses(EClass superClass) {
-		Collection<EClass> classes = new HashSet<EClass>();
-		for (String nsURI : Registry.INSTANCE.keySet()) {
-			EPackage ePackage = Registry.INSTANCE.getEPackage(nsURI);
-			for (EClassifier eClassifier : ePackage.getEClassifiers()) {
+		final Collection<EClass> classes = new HashSet<EClass>();
+		for (final String nsURI : Registry.INSTANCE.keySet()) {
+			final EPackage ePackage = Registry.INSTANCE.getEPackage(nsURI);
+			for (final EClassifier eClassifier : ePackage.getEClassifiers()) {
 				if (eClassifier instanceof EClass) {
-					EClass eClass = (EClass) eClassifier;
+					final EClass eClass = (EClass) eClassifier;
 					if (superClass.isSuperTypeOf(eClass) && !eClass.isAbstract() && !eClass.isInterface()) {
 						classes.add(eClass);
 					}
@@ -155,10 +156,10 @@ public final class ECPUtil {
 	 * @return the Set of all known {@link EPackage Epackages}
 	 */
 	public static Set<EPackage> getAllRegisteredEPackages() {
-		Set<EPackage> ePackages = new HashSet<EPackage>();
-		for (String nsURI : Registry.INSTANCE.keySet()) {
-			EPackage ePackage = Registry.INSTANCE.getEPackage(nsURI);
-			ePackages.add(ePackage);
+		final Set<EPackage> ePackages = new HashSet<EPackage>();
+		final Set<String> namespaceURIs = new LinkedHashSet<String>(Registry.INSTANCE.keySet());
+		for (final String nsURI : namespaceURIs) {
+			final EPackage ePackage = Registry.INSTANCE.getEPackage(nsURI);
 		}
 		return ePackages;
 	}
