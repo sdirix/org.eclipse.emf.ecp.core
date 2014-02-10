@@ -539,7 +539,7 @@
       
       
       <handler
-            class="org.eclipse.emf.ecp.ui.commands.NewModelElementOnECPProjectWizardHandler"
+            class="org.eclipse.emf.ecp.ui.commands.NewModelElementWizardHandler"
             commandId="org.eclipse.emf.ecp.ui.wizards.newModelElementWizard">
          <activeWhen>
              <with
