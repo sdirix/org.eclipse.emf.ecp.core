@@ -14,6 +14,8 @@
 		</path>
 		<available property="file1.exists" file="${java.home}\..\lib\ant-javafx.jar"/>
 		<echo message="..\lib\ant-javafx.jar exists: ${file1.exists}"/>
+		<available property="file11.exists" file="${java.home}\..\jre\lib\jfxrt.jar"/>
+				<echo message="..\jre\lib\jfxrt.jar exists: ${file11.exists}"/>
 		<available property="file2.exists" file="${java.home}\lib\ant-jfxrt.jar"/>
 				<echo message="\lib\ant-jfxrt.jar exists: ${file2.exists}"/>
 		<available property="file3.exists" file="${java.home}\..\jdk1.7.0_51\lib\ant-jfxrt.jar"/>
