@@ -681,15 +681,28 @@ public class TableControl extends SWTControl {
 
 		@Override
 		public void update(ViewerCell cell) {
-			final Set<VDiagnostic> allDiagnostics = getAllDiagnostics((EObject) cell.getElement(),
-				structuralFeatures);
 			Integer mostSevere = Diagnostic.OK;
-
-			for (final VDiagnostic vDiagnostic : allDiagnostics) {
-				if (vDiagnostic.getHighestSeverity() > mostSevere) {
-					mostSevere = vDiagnostic.getHighestSeverity();
+			final VDiagnostic vDiagnostic = getControl().getDiagnostic();
+			for (final Object diagObject : vDiagnostic.getDiagnostics()) {
+				final Diagnostic diagnostic = (Diagnostic) diagObject;
+				if (diagnostic.getData().size() == 0) {
+					continue;
+				}
+				if (diagnostic.getData().get(0).equals(cell.getElement())) {
+					final int currentSeverity = diagnostic.getSeverity();
+					if (currentSeverity > mostSevere) {
+						mostSevere = currentSeverity;
+					}
 				}
 			}
+			// final Set<VDiagnostic> allDiagnostics = getAllDiagnostics((EObject) cell.getElement(),
+			// structuralFeatures);
+			//
+			// for (final VDiagnostic vDiagnostic : allDiagnostics) {
+			// if (vDiagnostic.getHighestSeverity() > mostSevere) {
+			// mostSevere = vDiagnostic.getHighestSeverity();
+			// }
+			// }
 
 			cell.setImage(getValidationIcon(mostSevere));
 
@@ -705,16 +718,33 @@ public class TableControl extends SWTControl {
 		@Override
 		public String getToolTipText(Object element) {
 			final StringBuffer tooltip = new StringBuffer();
-			final Set<VDiagnostic> allDiagnostics = getAllDiagnostics((EObject) element, structuralFeatures);
-
-			for (final VDiagnostic vDiagnostic : allDiagnostics) {
-				if (vDiagnostic.getHighestSeverity() == Diagnostic.OK) {
+			// final Set<VDiagnostic> allDiagnostics = getAllDiagnostics((EObject) element, structuralFeatures);
+			//
+			// for (final VDiagnostic vDiagnostic : allDiagnostics) {
+			// if (vDiagnostic.getHighestSeverity() == Diagnostic.OK) {
+			// continue;
+			// }
+			// if (tooltip.length() > 0) {
+			//					tooltip.append("\n"); //$NON-NLS-1$
+			// }
+			// tooltip.append(getRowTooltipMessage(vDiagnostic));
+			// }
+			final VDiagnostic vDiagnostic = getControl().getDiagnostic();
+			for (final Object diagObject : vDiagnostic.getDiagnostics()) {
+				final Diagnostic diagnostic = (Diagnostic) diagObject;
+				if (diagnostic.getData().size() < 2) {
 					continue;
 				}
-				if (tooltip.length() > 0) {
-					tooltip.append("\n"); //$NON-NLS-1$
+				if (diagnostic.getSeverity() == Diagnostic.OK) {
+					continue;
 				}
-				tooltip.append(getRowTooltipMessage(vDiagnostic));
+				if (diagnostic.getData().get(0).equals(element)
+					&& structuralFeatures.contains(diagnostic.getData().get(1))) {
+					if (tooltip.length() > 0) {
+						tooltip.append("\n"); //$NON-NLS-1$
+					}
+					tooltip.append(diagnostic.getMessage());
+				}
 			}
 
 			return tooltip.toString();
@@ -827,13 +857,49 @@ public class TableControl extends SWTControl {
 		 */
 		@Override
 		public String getToolTipText(Object element) {
-			final EObject domainObject = (EObject) element;
-			final VDiagnostic vDiagnostic = getDiagnosticForFeature(domainObject, feature);
-			final String diagnosticMessage = getCellTooltipMessage(vDiagnostic);
-			if (diagnosticMessage != null && diagnosticMessage.length() != 0) {
-				return diagnosticMessage;
+			// final EObject domainObject = (EObject) element;
+			// final VDiagnostic vDiagnostic = getDiagnosticForFeature(domainObject, feature);
+			// final String diagnosticMessage = getCellTooltipMessage(vDiagnostic);
+			// if (diagnosticMessage != null && diagnosticMessage.length() != 0) {
+			// return diagnosticMessage;
+			// }
+			// final Object value = domainObject.eGet(feature);
+			// if (value == null) {
+			// return null;
+			// }
+			// return String.valueOf(value);
+
+			final StringBuffer tooltip = new StringBuffer();
+			final VDiagnostic vDiagnostic = getControl().getDiagnostic();
+			for (final Object diagObject : vDiagnostic.getDiagnostics()) {
+				final Diagnostic diagnostic = (Diagnostic) diagObject;
+				if (diagnostic.getData().size() < 2) {
+					continue;
+				}
+				if (diagnostic.getData().get(0).equals(element) && diagnostic.getData().get(1).equals(feature)) {
+					if (tooltip.length() > 0) {
+						tooltip.append("\n"); //$NON-NLS-1$
+					}
+					if (diagnostic.getChildren() != null && diagnostic.getChildren().size() != 0) {
+						boolean childrenUsefull = false;
+						for (final Diagnostic diagnostic2 : diagnostic.getChildren()) {
+							if (diagnostic2.getSeverity() != Diagnostic.OK) {
+								tooltip.append(diagnostic2.getMessage());
+								childrenUsefull = true;
+							}
+						}
+						if (!childrenUsefull) {
+							tooltip.append(diagnostic.getMessage());
+						}
+					} else {
+						tooltip.append(diagnostic.getMessage());
+					}
+				}
 			}
-			final Object value = domainObject.eGet(feature);
+			if (tooltip.length() != 0) {
+				return tooltip.toString();
+			}
+			final Object value = ((EObject) element).eGet(feature);
 			if (value == null) {
 				return null;
 			}
@@ -875,21 +941,28 @@ public class TableControl extends SWTControl {
 			if (isDisposing) {
 				return null;
 			}
-			final VDiagnostic vDiagnostic = getDiagnosticForFeature((EObject) element, feature);
 
-			if (vDiagnostic == null) {
-				return null;
+			Integer mostSevere = Diagnostic.OK;
+			final VDiagnostic vDiagnostic = getControl().getDiagnostic();
+			for (final Object diagObject : vDiagnostic.getDiagnostics()) {
+				final Diagnostic diagnostic = (Diagnostic) diagObject;
+				if (diagnostic.getData().size() < 2) {
+					continue;
+				}
+				if (diagnostic.getData().get(0).equals(element) && diagnostic.getData().get(1).equals(feature)) {
+					final int currentSeverity = diagnostic.getSeverity();
+					if (currentSeverity > mostSevere) {
+						mostSevere = currentSeverity;
+					}
+				}
 			}
+			return getValidationBackgroundColor(mostSevere);
 
-			return getValidationBackgroundColor(vDiagnostic.getHighestSeverity());
-			// switch (vDiagnostic.getHighestSeverity()) {
-			// case Diagnostic.ERROR:
-			// return Display.getDefault().getSystemColor(SWT.COLOR_RED);
-			// case Diagnostic.WARNING:
-			// return Display.getDefault().getSystemColor(SWT.COLOR_YELLOW);
-			// default:
+			// final VDiagnostic vDiagnostic = getDiagnosticForFeature((EObject) element, feature);
+			// if (vDiagnostic == null) {
 			// return null;
 			// }
+			// return getValidationBackgroundColor(vDiagnostic.getHighestSeverity());
 		}
 	}
 
