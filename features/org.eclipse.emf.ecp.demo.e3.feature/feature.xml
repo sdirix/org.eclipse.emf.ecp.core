@@ -45,6 +45,15 @@
          id="org.eclipse.emf.ecp.view.template.helper.feature"
          version="0.0.0"/>
 
+   <requires>
+      <import plugin="org.eclipse.core.runtime" version="3.4.0" match="compatible"/>
+      <import plugin="org.eclipse.emf.ecp.ui.e3" version="1.1.0" match="compatible"/>
+      <import plugin="org.eclipse.ui" version="3.0.0" match="compatible"/>
+      <import plugin="org.eclipse.core.resources" version="3.8.0" match="compatible"/>
+      <import plugin="org.eclipse.ui.ide" version="3.8.0" match="compatible"/>
+      <import plugin="org.eclipse.ui.ide.application" version="1.0.0" match="compatible"/>
+   </requires>
+
    <plugin
          id="org.eclipse.emf.ecp.application.e3"
          download-size="0"
