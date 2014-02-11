@@ -48,7 +48,8 @@ public class DefaultFilter implements ECPFilterProvider {
 		addEMFCompareModels(packages);
 		addGMFModels(packages);
 		addGraphitiModels(packages);
-		addQ7Models(packages);
+		addQ7Models1(packages);
+		addQ7Models2(packages);
 		addNet4jModels(packages);
 		addViewModels(packages);
 
@@ -91,7 +92,7 @@ public class DefaultFilter implements ECPFilterProvider {
 
 	}
 
-	private void addQ7Models(Set<String> packages) {
+	private void addQ7Models1(Set<String> packages) {
 		packages.add("http://www.eclipse.org/ecl/ast.ecore"); //$NON-NLS-1$
 		packages.add("http://www.eclipse.org/ecl/invoke/commands.ecore"); //$NON-NLS-1$
 		packages.add("http://www.eclipse.org/debug/runtime/commands.ecore"); //$NON-NLS-1$
@@ -141,7 +142,17 @@ public class DefaultFilter implements ECPFilterProvider {
 		packages.add("http:///com/xored/q7/preferences.ecore"); //$NON-NLS-1$
 		packages.add("http://com/xored/q7/scenario.ecore"); //$NON-NLS-1$
 		packages.add("http://xored.com/x5/data/eclipse/workspace.ecore"); //$NON-NLS-1$
+	}
 
+	private void addQ7Models2(Set<String> packages) {
+		packages.add("http:///com/xored/q7/scenario.ecore"); //$NON-NLS-1$
+		packages.add("http://com/xored/q7/verifications/text.ecore"); //$NON-NLS-1$
+		packages.add("http://com/xored/q7/verifications/time.ecore"); //$NON-NLS-1$
+		packages.add("http://com/xored/q7/verifications/tree.ecore");//$NON-NLS-1$
+		packages.add("http://xored.com/sherlock/eclipse/workspace.ecore");//$NON-NLS-1$
+		packages.add("http://www.eclipse.org/debug/runtime/model.ecore");//$NON-NLS-1$
+		packages.add("http://com/xored/q7/verifications/status.ecore");//$NON-NLS-1$
+		packages.add("http://xored.com/x5/data/eclipse/workspace.ecore");//$NON-NLS-1$
 	}
 
 	private void addGraphitiModels(Set<String> packages) {
