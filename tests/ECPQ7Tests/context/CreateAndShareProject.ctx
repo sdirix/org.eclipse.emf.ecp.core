@@ -6,7 +6,8 @@ Element-Name: CreateAndShareProject
 Element-Type: context
 Element-Version: 2.0
 Id: _qKLa8G60EeKbTKOCBYPcow
-Save-Time: 5/2/13 4:09 PM
+Q7-Runtime-Version: 1.3.10.201312200736
+Save-Time: 2/11/14 1:23 PM
 
 ------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998
 Content-Type: text/ecl
@@ -20,13 +21,13 @@ with [get-window "Create Project"] {
 }
 get-view "Model Explorer" | get-tree | select TestProject | get-menu "New Model Element" | click
 with [get-window "Add new model element"] {
-    get-tree | select "bowling/League"
+	try { get-tree | select "League" } -catch { get-tree | select "bowling/League" }
     get-button Finish | click
 }
 get-editor League | get-editbox -after [get-label Name] | set-text America
 get-view "Model Explorer" | get-tree | select TestProject | get-menu "New Model Element" | click
 with [get-window "Add new model element"] {
-    get-tree | select "bowling/League"
+    try { get-tree | select "League" } -catch { get-tree | select "bowling/League" }
     get-button Finish | click
 }
 get-editor League | get-editbox -after [get-label Name] | set-text Europe
@@ -36,7 +37,7 @@ get-view "Model Explorer" | get-tree | select "TestProject/League America" | get
 get-editor Player | get-editbox -after [get-label Name] | set-text Maximilian
 get-view "Model Explorer" | get-tree | select TestProject | get-menu "New Model Element" | click
 with [get-window "Add new model element"] {
-    get-tree | select "bowling/Tournament"
+    try { get-tree | select "Tournament" } -catch { get-tree | select "bowling/Tournament" }
     get-button Finish | click
 }
 with [get-view "Model Explorer" | get-tree] {

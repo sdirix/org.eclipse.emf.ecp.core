@@ -7,7 +7,8 @@ Element-Type: testcase
 Element-Version: 3.0
 External-Reference: 
 Id: _zKqbgKEeEeKX8e34E6tWIg
-Save-Time: 9/25/13 11:23 AM
+Q7-Runtime-Version: 1.3.10.201312200736
+Save-Time: 2/11/14 1:32 PM
 Testcase-Type: ecl
 
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
@@ -46,7 +47,7 @@ get-window "Create Project" | get-editbox -after [get-label "Filename:"] | get-p
 get-window "Create Project" | get-button Finish | get-property enablement | equals false | verify-true
 with [get-window "Create Project"] {
     get-button -after [get-label "Root Class:"] | click
-    get-window "Choose Root Class" | get-tree | select "bowling/League" | double-click
+    get-window "Choose Root Class" | try { get-tree | select "League" } -catch { get-tree | select "bowling/League" } | double-click
 }
 get-window "Create Project" | get-button Finish | get-property enablement | equals true | verify-true
 get-window "Create Project" | get-button Finish | click
