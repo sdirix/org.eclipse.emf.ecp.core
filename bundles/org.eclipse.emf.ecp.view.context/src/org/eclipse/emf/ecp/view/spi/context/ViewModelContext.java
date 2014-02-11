@@ -132,7 +132,7 @@ public interface ViewModelContext {
 	 * a {@link org.eclipse.emf.ecp.common.UniqueSetting UniqueSetting}.
 	 * 
 	 * @param setting the {@link Setting} to search controls for
-	 * @return the Set of all controls associated with the provided setting
+	 * @return the Set of all controls associated with the provided setting or null if no controls can be found
 	 */
 	Set<VControl> getControlsFor(Setting setting);
 }

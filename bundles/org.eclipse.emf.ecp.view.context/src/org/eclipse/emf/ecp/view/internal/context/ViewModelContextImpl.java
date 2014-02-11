@@ -31,7 +31,10 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.emf.ecp.common.UniqueSetting;
 import org.eclipse.emf.ecp.view.spi.context.ModelChangeNotification;
@@ -181,6 +184,53 @@ public class ViewModelContextImpl implements ViewModelContext {
 			final UniqueSetting uniqueSetting = UniqueSetting.createSetting(next);
 			if (settingToControlMap.containsKey(uniqueSetting)) {
 				settingToControlMap.get(uniqueSetting).remove(vControl);
+				if (settingToControlMap.get(uniqueSetting).size() == 0) {
+					settingToControlMap.remove(uniqueSetting);
+				}
+			}
+		}
+	}
+
+	private void vControlAdded(VControl vControl) {
+		final Iterator<Setting> iterator = vControl.getDomainModelReference().getIterator();
+		while (iterator.hasNext()) {
+			final Setting next = iterator.next();
+			final UniqueSetting uniqueSetting = UniqueSetting.createSetting(next);
+			if (!settingToControlMap.containsKey(uniqueSetting)) {
+				settingToControlMap.put(uniqueSetting, new LinkedHashSet<VControl>());
+			}
+			settingToControlMap.get(uniqueSetting).add(vControl);
+		}
+	}
+
+	private void eObjectRemoved(EObject eObject) {
+		final InternalEObject internalEObject = (InternalEObject) eObject;
+		for (final EStructuralFeature eStructuralFeature : eObject.eClass().getEAllStructuralFeatures()) {
+			final Setting setting = internalEObject.eSetting(eStructuralFeature);
+			final UniqueSetting uniqueSetting = UniqueSetting.createSetting(setting);
+			if (settingToControlMap.containsKey(uniqueSetting)) {
+				settingToControlMap.remove(uniqueSetting);
+			}
+		}
+	}
+
+	private void eObjectAdded(EObject eObject) {
+		// FIXME how to add??
+		// TODO hack:
+		final InternalEObject internalParent = (InternalEObject) eObject.eContainer();
+		for (final EReference eReference : internalParent.eClass().getEAllContainments()) {
+			if (eReference.getEReferenceType().isInstance(eObject)) {
+				final Setting setting = internalParent.eSetting(eReference);
+				final UniqueSetting uniqueSetting = UniqueSetting.createSetting(setting);
+				final Set<VControl> controls = settingToControlMap.get(uniqueSetting);
+				if (controls == null) {
+					continue;
+				}
+				final Set<VControl> iterateControls = new LinkedHashSet<VControl>(controls);
+				for (final VControl control : iterateControls) {
+					vControlAdded(control);
+				}
+
 			}
 		}
 	}
@@ -379,22 +429,15 @@ public class ViewModelContextImpl implements ViewModelContext {
 			if (isDisposing) {
 				return;
 			}
-			// if (VControl.class.isInstance(notifier)) {
-			// final VControl control = (VControl) notifier;
-			// control.getDomainModelReference().resolve(domainObject);
-			// }
 			if (VElement.class.isInstance(notifier)) {
 				ViewModelUtil.resolveDomainReferences((VElement) notifier, getDomainModel());
+			}
+			if (VControl.class.isInstance(notifier)) {
+				vControlAdded((VControl) notifier);
 			}
 			for (final ModelChangeListener modelChangeListener : viewModelChangeListener) {
 				modelChangeListener.notifyAdd(notifier);
 			}
-			// if (VDomainModelReference.class.isInstance(notifier)) {
-			// final EObject container = ((EObject) notifier).eContainer();
-			// if (VElement.class.isInstance(container)) {
-			// ViewModelUtil.resolveDomainReferences((VElement) container, getDomainModel());
-			// }
-			// }
 		}
 
 		@Override
@@ -404,11 +447,11 @@ public class ViewModelContextImpl implements ViewModelContext {
 			if (isDisposing) {
 				return;
 			}
-			for (final ModelChangeListener modelChangeListener : viewModelChangeListener) {
-				modelChangeListener.notifyRemove(notifier);
-			}
 			if (VControl.class.isInstance(notifier)) {
 				vControlRemoved((VControl) notifier);
+			}
+			for (final ModelChangeListener modelChangeListener : viewModelChangeListener) {
+				modelChangeListener.notifyRemove(notifier);
 			}
 		}
 
@@ -441,6 +484,9 @@ public class ViewModelContextImpl implements ViewModelContext {
 			if (isDisposing) {
 				return;
 			}
+			if (EObject.class.isInstance(notifier)) {
+				eObjectAdded((EObject) notifier);
+			}
 			for (final ModelChangeListener modelChangeListener : domainModelChangeListener) {
 				modelChangeListener.notifyAdd(notifier);
 			}
@@ -452,6 +498,9 @@ public class ViewModelContextImpl implements ViewModelContext {
 			// do not notify while being disposed
 			if (isDisposing) {
 				return;
+			}
+			if (EObject.class.isInstance(notifier)) {
+				eObjectRemoved((EObject) notifier);
 			}
 			for (final ModelChangeListener modelChangeListener : domainModelChangeListener) {
 				modelChangeListener.notifyRemove(notifier);

@@ -13,6 +13,7 @@ package org.eclipse.emf.ecp.view.context;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -544,11 +545,10 @@ public class ViewModelContextTest {
 	}
 
 	/**
-	 * Tests setting to control mapping static.
+	 * Tests dynamic domain add.
 	 */
-	@Ignore("Not implemented yet")
 	@Test
-	public void testSettingToTableMapSingleControlDynamic() {
+	public void testSettingToTableMapSingleControlDynamicDomainAdd() {
 		final VView view = VViewFactory.eINSTANCE.createView();
 		final VTableControl control = VTableFactory.eINSTANCE.createTableControl();
 		final VTableDomainModelReference domRef = VTableFactory.eINSTANCE.createTableDomainModelReference();
@@ -571,6 +571,89 @@ public class ViewModelContextTest {
 			.eSetting(BowlingPackage.eINSTANCE.getPlayer_Name()));
 		assertEquals(1, controls2.size());
 		assertEquals(control, controls2.iterator().next());
+	}
+
+	/**
+	 * Tests dynamic domain remove.
+	 */
+	@Test
+	public void testSettingToTableMapSingleControlDynamicDomainRemove() {
+		final VView view = VViewFactory.eINSTANCE.createView();
+		final VTableControl control = VTableFactory.eINSTANCE.createTableControl();
+		final VTableDomainModelReference domRef = VTableFactory.eINSTANCE.createTableDomainModelReference();
+		domRef.setDomainModelEFeature(BowlingPackage.eINSTANCE.getLeague_Players());
+		control.setDomainModelReference(domRef);
+		final VTableColumn col = VTableFactory.eINSTANCE.createTableColumn();
+		col.setAttribute(BowlingPackage.eINSTANCE.getPlayer_Name());
+		control.getColumns().add(col);
+		view.getChildren().add(control);
+
+		final League league = BowlingFactory.eINSTANCE.createLeague();
+		league.getPlayers().add(player);
+		final Player player2 = BowlingFactory.eINSTANCE.createPlayer();
+		league.getPlayers().add(player2);
+
+		viewModelContext = ViewModelContextFactory.INSTANCE.createViewModelContext(view, league);
+
+		league.getPlayers().remove(player);
+
+		final Set<VControl> controls2 = viewModelContext.getControlsFor(((PlayerImpl) player)
+			.eSetting(BowlingPackage.eINSTANCE.getPlayer_Name()));
+		assertNull(controls2);
+
+		final Set<VControl> controls3 = viewModelContext.getControlsFor(((PlayerImpl) player2)
+			.eSetting(BowlingPackage.eINSTANCE.getPlayer_Name()));
+		assertEquals(1, controls3.size());
+		assertEquals(control, controls3.iterator().next());
+	}
+
+	/**
+	 * Tests dynamic view model add.
+	 */
+	@Test
+	public void testSettingToControlMapDynamicViewAdd() {
+		final VView view = VViewFactory.eINSTANCE.createView();
+		final VControl control = VViewFactory.eINSTANCE.createControl();
+		control.setDomainModelReference(BowlingPackage.eINSTANCE.getPlayer_Name());
+		view.getChildren().add(control);
+
+		viewModelContext = ViewModelContextFactory.INSTANCE.createViewModelContext(view, player);
+
+		final VControl control2 = VViewFactory.eINSTANCE.createControl();
+		control2.setDomainModelReference(BowlingPackage.eINSTANCE.getPlayer_Gender());
+		view.getChildren().add(control2);
+
+		final Set<VControl> controls = viewModelContext.getControlsFor(((PlayerImpl) player)
+			.eSetting(BowlingPackage.eINSTANCE.getPlayer_Gender()));
+		assertEquals(1, controls.size());
+		assertEquals(control2, controls.iterator().next());
+	}
+
+	/**
+	 * Tests dynamic view model remove.
+	 */
+	@Test
+	public void testSettingToControlMapDynamicViewRemove() {
+		final VView view = VViewFactory.eINSTANCE.createView();
+		final VControl control = VViewFactory.eINSTANCE.createControl();
+		control.setDomainModelReference(BowlingPackage.eINSTANCE.getPlayer_Name());
+		view.getChildren().add(control);
+		final VControl control2 = VViewFactory.eINSTANCE.createControl();
+		control2.setDomainModelReference(BowlingPackage.eINSTANCE.getPlayer_Gender());
+		view.getChildren().add(control2);
+
+		viewModelContext = ViewModelContextFactory.INSTANCE.createViewModelContext(view, player);
+
+		view.getChildren().remove(control);
+
+		final Set<VControl> controls = viewModelContext.getControlsFor(((PlayerImpl) player)
+			.eSetting(BowlingPackage.eINSTANCE.getPlayer_Name()));
+		assertNull(controls);
+
+		final Set<VControl> controls2 = viewModelContext.getControlsFor(((PlayerImpl) player)
+			.eSetting(BowlingPackage.eINSTANCE.getPlayer_Gender()));
+		assertEquals(1, controls2.size());
+		assertEquals(control2, controls2.iterator().next());
 	}
 
 }
