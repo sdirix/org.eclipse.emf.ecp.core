@@ -450,8 +450,18 @@ public final class ECPHandlerHelper {
 
 	}
 
+	/**
+	 * Loads the specified class from the given bundle.
+	 * 
+	 * @param bundleName the bundle name
+	 * @param clazz the class name
+	 * @return the loaded class
+	 * @throws ClassNotFoundException in case the class could not be loaded
+	 * 
+	 * @param <T> the type of the class to load
+	 */
 	@SuppressWarnings("unchecked")
-	private static <T> Class<T> loadClass(String bundleName, String clazz) throws ClassNotFoundException {
+	static <T> Class<T> loadClass(String bundleName, String clazz) throws ClassNotFoundException {
 		final Bundle bundle = Platform.getBundle(bundleName);
 		if (bundle == null) {
 			// TODO externalize strings

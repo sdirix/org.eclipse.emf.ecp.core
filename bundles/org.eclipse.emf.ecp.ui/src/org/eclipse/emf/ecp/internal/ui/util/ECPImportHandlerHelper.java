@@ -8,11 +8,11 @@
  * 
  * Contributors:
  * David Soto Setzke - initial API and implementation
- * 
+ * Johannes Faltermeier - moved file dialog dependent code to helper class
  *******************************************************************************/
 package org.eclipse.emf.ecp.internal.ui.util;
 
-import java.io.File;
+import java.lang.reflect.InvocationTargetException;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -23,7 +23,6 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.internal.ui.Activator;
-import org.eclipse.emf.ecp.internal.ui.PreferenceHelper;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.ChangeCommand;
 import org.eclipse.emf.edit.command.SetCommand;
@@ -31,8 +30,6 @@ import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
 
 /**
@@ -56,7 +53,7 @@ public final class ECPImportHandlerHelper {
 	 */
 	public static final String[] FILTER_NAMES = { "Model Files (*.xmi)" }; //$NON-NLS-1$
 
-	private static final String IMPORT_MODEL_PATH = "org.eclipse.emf.emfstore.client.ui.importModelPath"; //$NON-NLS-1$
+	private static final String FILE_DIALOG_HELPER_CLASS = "org.eclipse.emf.ecp.internal.ui.util.ECPFileDialogHelperImpl"; //$NON-NLS-1$
 
 	private static boolean imported;
 
@@ -222,26 +219,26 @@ public final class ECPImportHandlerHelper {
 	// }
 
 	private static String getFileName(Shell shell) {
-
-		final FileDialog dialog = new FileDialog(shell,
-			SWT.OPEN);
-		dialog.setFilterNames(FILTER_NAMES);
-		dialog.setFilterExtensions(FILTER_EXTS);
-		final String initialPath = PreferenceHelper.getPreference(IMPORT_MODEL_PATH, System.getProperty("user.home")); //$NON-NLS-1$
-		dialog.setFilterPath(initialPath);
-
-		final String fileName = dialog.open();
-
-		if (fileName == null) {
-			return null;
+		try {
+			final Class<ECPFileDialogHelper> clazz = ECPHandlerHelper.loadClass(Activator.PLUGIN_ID,
+				FILE_DIALOG_HELPER_CLASS);
+			final ECPFileDialogHelper fileDialogHelper = clazz.getConstructor().newInstance();
+			return fileDialogHelper.getPathForImport(shell);
+		} catch (final ClassNotFoundException ex) {
+			Activator.log(ex);
+		} catch (final InstantiationException ex) {
+			Activator.log(ex);
+		} catch (final IllegalAccessException ex) {
+			Activator.log(ex);
+		} catch (final IllegalArgumentException ex) {
+			Activator.log(ex);
+		} catch (final InvocationTargetException ex) {
+			Activator.log(ex);
+		} catch (final NoSuchMethodException ex) {
+			Activator.log(ex);
+		} catch (final SecurityException ex) {
+			Activator.log(ex);
 		}
-
-		final File file = new File(fileName);
-
-		PreferenceHelper.setPreference(IMPORT_MODEL_PATH, file.getParent());
-
-		return file.getAbsolutePath();
-		// return "";
+		return null;
 	}
-
 }

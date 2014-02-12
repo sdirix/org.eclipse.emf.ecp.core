@@ -9,16 +9,18 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.net4j.util;bundle-version="[3.0.0,4.0.0)",
  org.eclipse.core.expressions,
  org.eclipse.emf.ecp.edit,
- org.eclipse.emf.ecp.view.context,
- org.eclipse.rap.rwt.supplemental.filedialog;bundle-version="[2.0.0,3.0.0)";resolution:=optional,
- org.eclipse.swt;bundle-version="[3.102.1,4.0.0)";resolution:=optional
+ org.eclipse.emf.ecp.view.context
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.eclipse.emf.ecp.internal.ui;version="1.2.0";x-friends:="org.eclipse.emf.ecp.explorereditorbridge,org.eclipse.emf.ecp.edit.ecore.swt,org.eclipse.emf.ecp.emfstore.ui",
  org.eclipse.emf.ecp.internal.ui.composites;version="1.2.0";x-internal:=true,
  org.eclipse.emf.ecp.internal.ui.dialogs;version="1.2.0";x-friends:="org.eclipse.emf.ecp.explorereditorbridge",
  org.eclipse.emf.ecp.internal.ui.model;version="1.2.0";x-friends:="org.eclipse.emf.ecp.ui.e4,org.eclipse.emf.ecp.ui.e3,org.eclipse.emf.ecp.ui.transaction",
- org.eclipse.emf.ecp.internal.ui.util;version="1.2.0";x-friends:="org.eclipse.emf.ecp.explorereditorbridge,org.eclipse.emf.ecp.ui.e3,org.eclipse.emf.ecp.ui.e4",
+ org.eclipse.emf.ecp.internal.ui.util;version="1.2.0";
+  x-friends:="org.eclipse.emf.ecp.explorereditorbridge,
+   org.eclipse.emf.ecp.ui.e3,
+   org.eclipse.emf.ecp.ui.e4,
+   org.eclipse.emf.ecp.emfstore.ui.e3",
  org.eclipse.emf.ecp.internal.wizards;version="1.2.0";
   x-friends:="org.eclipse.emf.ecp.edit.ecore.swt,
    org.eclipse.emf.ecp.explorereditorbridge,

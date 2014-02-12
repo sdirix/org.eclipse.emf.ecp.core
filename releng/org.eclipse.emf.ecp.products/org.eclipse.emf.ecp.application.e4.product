@@ -91,6 +91,7 @@
       <plugin id="org.eclipse.emf.ecp.explorereditorbridge"/>
       <plugin id="org.eclipse.emf.ecp.ui"/>
       <plugin id="org.eclipse.emf.ecp.ui.e4"/>
+      <plugin id="org.eclipse.emf.ecp.ui.rcp" fragment="true"/>
       <plugin id="org.eclipse.emf.ecp.ui.view"/>
       <plugin id="org.eclipse.emf.ecp.ui.view.swt"/>
       <plugin id="org.eclipse.emf.ecp.view.context"/>

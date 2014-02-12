@@ -8,12 +8,13 @@
  * 
  * Contributors:
  * David Soto Setzke - initial API and implementation
- * 
+ * Johannes Faltermeier - moved file dialog dependent code to helper class
  *******************************************************************************/
 package org.eclipse.emf.ecp.internal.ui.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
@@ -30,8 +31,6 @@ import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
 
 /**
@@ -60,6 +59,8 @@ public final class ECPExportHandlerHelper {
 	public static final String[] FILTER_EXTS = { "*." + FILE_EXTENSION }; //$NON-NLS-1$
 
 	private static final String EXPORT_MODEL_PATH = "org.eclipse.emf.emfstore.client.ui.exportModelPath"; //$NON-NLS-1$
+
+	private static final String FILE_DIALOG_HELPER_CLASS = "org.eclipse.emf.ecp.internal.ui.util.ECPFileDialogHelperImpl"; //$NON-NLS-1$
 
 	/**
 	 * Export a list of model elements.
@@ -141,27 +142,27 @@ public final class ECPExportHandlerHelper {
 	}
 
 	private static String getFilePathByFileDialog(Shell shell, String modelElementName) {
-		final FileDialog dialog = new FileDialog(shell,
-			SWT.SAVE);
-		dialog.setFilterNames(FILTER_NAMES);
-		dialog.setFilterExtensions(FILTER_EXTS);
-		final String initialPath = PreferenceHelper.getPreference(EXPORT_MODEL_PATH, System.getProperty("user.home")); //$NON-NLS-1$
-		dialog.setFilterPath(initialPath);
-		dialog.setOverwrite(true);
-
 		try {
-			// String initialFileName = projectSpace.getProjectName() + "@"
-			// + projectSpace.getBaseVersion().getIdentifier() + ".ucp";
-			final String initialFileName = "ModelElement_" + modelElementName + "." + FILE_EXTENSION; //$NON-NLS-1$ //$NON-NLS-2$
-			dialog.setFileName(initialFileName);
-
-		} catch (final NullPointerException e) {
-			// do nothing
+			final Class<ECPFileDialogHelper> clazz = ECPHandlerHelper.loadClass(Activator.PLUGIN_ID,
+				FILE_DIALOG_HELPER_CLASS);
+			final ECPFileDialogHelper fileDialogHelper = clazz.getConstructor().newInstance();
+			return fileDialogHelper.getPathForExport(shell, modelElementName);
+		} catch (final ClassNotFoundException ex) {
+			Activator.log(ex);
+		} catch (final InstantiationException ex) {
+			Activator.log(ex);
+		} catch (final IllegalAccessException ex) {
+			Activator.log(ex);
+		} catch (final IllegalArgumentException ex) {
+			Activator.log(ex);
+		} catch (final InvocationTargetException ex) {
+			Activator.log(ex);
+		} catch (final NoSuchMethodException ex) {
+			Activator.log(ex);
+		} catch (final SecurityException ex) {
+			Activator.log(ex);
 		}
-
-		final String filePath = dialog.open();
-
-		return filePath;
+		return null;
 	}
 
 	/**

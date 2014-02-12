@@ -22,6 +22,7 @@
 		<module>../../bundles/org.eclipse.emf.ecp.edit.swt</module>
 		<module>../../bundles/org.eclipse.emf.ecp.explorereditorbridge</module>
 		<module>../../bundles/org.eclipse.emf.ecp.ui</module>
+		<module>../../bundles/org.eclipse.emf.ecp.ui.rcp</module>
 
 		<module>../../bundles/org.eclipse.emf.ecp.cdo.core</module>
 		<module>../../bundles/org.eclipse.emf.ecp.cdo.ui</module>
@@ -154,6 +155,7 @@
 		<!-- RAP -->
 		<module>../../bundles/org.eclipse.emf.ecp.rap.util</module>
 		<module>../../bundles/org.eclipse.emf.ecp.rap</module>
+		<module>../../bundles/org.eclipse.emf.ecp.ui.rap</module>
 
 		<!-- e4 demo application -->
 		<module>../../bundles/org.eclipse.emf.ecp.application.e4</module>
