@@ -376,33 +376,36 @@ public class ValidationServiceImpl2 implements ValidationService {
 
 	private void validateAndCollectSettings(EObject eObject) {
 		final Diagnostic diagnostic = getDiagnosticForEObject(eObject);
-		// if (Diagnostic.OK == diagnostic.getSeverity()) {
+		// unset everything for the new EObject
 		for (final EStructuralFeature feature : eObject.eClass().getEAllStructuralFeatures()) {
 			final UniqueSetting uniqueSetting = UniqueSetting.createSetting(eObject, feature);
 			if (!currentUpdates.containsKey(uniqueSetting)) {
 				currentUpdates.put(uniqueSetting, VViewFactory.eINSTANCE.createDiagnostic());
 			}
 		}
-		// }
-		// else {
 		analyzeDiagnostic(diagnostic);
-		// }
 
 	}
 
 	private void analyzeDiagnostic(Diagnostic diagnostic) {
 		if (diagnostic.getData().size() > 1) {
-			final InternalEObject internalEObject = (InternalEObject) diagnostic.getData().get(0);
-			final EStructuralFeature eStructuralFeature = (EStructuralFeature) diagnostic.getData().get(1);
-			final Setting setting = internalEObject.eSetting(eStructuralFeature);
-			final UniqueSetting uniqueSetting = UniqueSetting.createSetting(setting);
-			if (!currentUpdates.containsKey(uniqueSetting)) {
-				currentUpdates.put(uniqueSetting, VViewFactory.eINSTANCE.createDiagnostic());
+			if (InternalEObject.class.isInstance(diagnostic.getData().get(0))
+				&& EStructuralFeature.class.isInstance(diagnostic.getData().get(1))) {
+				final InternalEObject internalEObject = (InternalEObject) diagnostic.getData().get(0);
+				final EStructuralFeature eStructuralFeature = (EStructuralFeature) diagnostic.getData().get(1);
+				final Setting setting = internalEObject.eSetting(eStructuralFeature);
+				final UniqueSetting uniqueSetting = UniqueSetting.createSetting(setting);
+				if (!currentUpdates.containsKey(uniqueSetting)) {
+					currentUpdates.put(uniqueSetting, VViewFactory.eINSTANCE.createDiagnostic());
+				}
+				currentUpdates.get(uniqueSetting).getDiagnostics().add(diagnostic);
 			}
-			currentUpdates.get(uniqueSetting).getDiagnostics().add(diagnostic);
+
 		}
-		for (final Diagnostic childDiagnostic : diagnostic.getChildren()) {
-			analyzeDiagnostic(childDiagnostic);
+		else {
+			for (final Diagnostic childDiagnostic : diagnostic.getChildren()) {
+				analyzeDiagnostic(childDiagnostic);
+			}
 		}
 	}
 
