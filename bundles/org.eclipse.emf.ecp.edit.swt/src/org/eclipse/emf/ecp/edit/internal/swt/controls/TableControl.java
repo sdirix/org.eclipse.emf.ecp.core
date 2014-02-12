@@ -17,10 +17,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.observable.list.IObservableList;
@@ -45,7 +43,6 @@ import org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor;
 import org.eclipse.emf.ecp.edit.internal.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTRenderingHelper;
-import org.eclipse.emf.ecp.view.internal.validation.ValidationService;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.renderer.RenderingResultRow;
 import org.eclipse.emf.edit.command.AddCommand;
@@ -1003,32 +1000,6 @@ public class TableControl extends SWTControl {
 	@Deprecated
 	public boolean showLabel() {
 		return false;
-	}
-
-	private VDiagnostic getDiagnosticForFeature(EObject domainObject, EStructuralFeature feature) {
-		final ValidationService validationService = getViewModelContext().getService(ValidationService.class);
-		if (getControl().isReadonly() || validationService == null) {
-			return null;
-		}
-		final Map<EStructuralFeature, VDiagnostic> diagnosticPerFeature = validationService
-			.getDiagnosticPerFeature(domainObject);
-		return diagnosticPerFeature.get(feature);
-	}
-
-	private Set<VDiagnostic> getAllDiagnostics(EObject domainObject, List<EStructuralFeature> features) {
-		final ValidationService validationService = getViewModelContext().getService(ValidationService.class);
-		if (getControl().isReadonly() || validationService == null) {
-			return Collections.emptySet();
-		}
-		final Map<EStructuralFeature, VDiagnostic> diagnosticPerFeature =
-			validationService.getDiagnosticPerFeature(domainObject);
-		final Set<VDiagnostic> result = new LinkedHashSet<VDiagnostic>();
-		for (final EStructuralFeature feature : features) {
-			if (diagnosticPerFeature.containsKey(feature)) {
-				result.add(diagnosticPerFeature.get(feature));
-			}
-		}
-		return result;
 	}
 
 	/**

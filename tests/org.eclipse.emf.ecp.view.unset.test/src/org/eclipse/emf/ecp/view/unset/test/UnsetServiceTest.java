@@ -21,6 +21,7 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecp.common.UniqueSetting;
 import org.eclipse.emf.ecp.view.internal.unset.UnsetService;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorization;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationElement;
@@ -1487,6 +1488,16 @@ public class UnsetServiceTest {
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getControlsFor(org.eclipse.emf.ecore.EStructuralFeature.Setting)
 		 */
 		public Set<VControl> getControlsFor(Setting setting) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getControlsFor(org.eclipse.emf.ecp.view.spi.context.UniqueSetting)
+		 */
+		public Set<VControl> getControlsFor(UniqueSetting setting) {
 			// TODO Auto-generated method stub
 			return null;
 		}

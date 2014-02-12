@@ -16,6 +16,7 @@ import java.util.Set;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecp.common.UniqueSetting;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 
@@ -129,10 +130,18 @@ public interface ViewModelContext {
 
 	/**
 	 * Returns all controls which are associated with the provided {@link Setting}. The {@link Setting} is converted to
-	 * a {@link org.eclipse.emf.ecp.common.UniqueSetting UniqueSetting}.
+	 * a {@link UniqueSetting}.
 	 * 
 	 * @param setting the {@link Setting} to search controls for
 	 * @return the Set of all controls associated with the provided setting or null if no controls can be found
 	 */
 	Set<VControl> getControlsFor(Setting setting);
+
+	/**
+	 * Returns all controls which are associated with the provided {@link UniqueSetting}.
+	 * 
+	 * @param setting the {@link UniqueSetting} to search controls for
+	 * @return the Set of all controls associated with the provided setting or null if no controls can be found
+	 */
+	Set<VControl> getControlsFor(UniqueSetting setting);
 }

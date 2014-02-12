@@ -245,6 +245,15 @@ public class ViewModelContextImpl implements ViewModelContext {
 	}
 
 	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getControlsFor(org.eclipse.emf.ecp.common.UniqueSetting)
+	 */
+	public Set<VControl> getControlsFor(UniqueSetting setting) {
+		return settingToControlMap.get(setting);
+	}
+
+	/**
 	 * Read abstract view services.
 	 */
 	private void readAbstractViewServices() {
