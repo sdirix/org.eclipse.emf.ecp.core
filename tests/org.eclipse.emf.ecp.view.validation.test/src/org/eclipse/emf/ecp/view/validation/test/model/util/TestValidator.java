@@ -469,10 +469,7 @@ public class TestValidator extends EObjectValidator {
 		}
 		// create ok results
 		for (final Content content : contents) {
-			diagnostics.add(createDiagnostic(Diagnostic.OK, DIAGNOSTIC_SOURCE, 0,
-				"_UI_GenericConstraint_diagnostic",
-				new Object[] { "OK", getObjectLabel(content, context) }, new Object[] { content,
-					TestPackage.eINSTANCE.getContent_UniqueAttribute() }, context));
+			content.eNotify(new ValidationNotification(content));
 		}
 
 		final boolean result = true;
@@ -615,13 +612,6 @@ public class TestValidator extends EObjectValidator {
 		// create ok results
 		for (final TableContent content : contents) {
 			content.eNotify(new ValidationNotification(content));
-			if (duplicates.contains(content)) {
-				continue;
-			}
-			diagnostics.add(createDiagnostic(Diagnostic.OK, DIAGNOSTIC_SOURCE, 0,
-				"_UI_GenericConstraint_diagnostic",
-				new Object[] { "OK", getObjectLabel(content, context) }, new Object[] { content,
-					nameFeature }, context));
 		}
 
 		return noDuplicates;

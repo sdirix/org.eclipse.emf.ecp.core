@@ -10,7 +10,7 @@
  * Johannes Faltermeier - initial API and implementation
  * Edgar Mueller - adoptions in order to avoid memory leaks
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.internal.validation;
+package org.eclipse.emf.ecp.view.internal.validation.old;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -34,6 +34,10 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.common.UniqueSetting;
+import org.eclipse.emf.ecp.view.internal.validation.Activator;
+import org.eclipse.emf.ecp.view.internal.validation.ValidationNotification;
+import org.eclipse.emf.ecp.view.internal.validation.ValidationProvider;
+import org.eclipse.emf.ecp.view.internal.validation.ViewValidationListener;
 import org.eclipse.emf.ecp.view.spi.context.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener;

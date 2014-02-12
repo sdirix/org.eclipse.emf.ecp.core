@@ -33,10 +33,8 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 /**
- * Tests for checking whether the {@link org.eclipse.emf.ecp.view.internal.validation.ValidationRegistry
- * ValidationRegistry} &
- * the {@link org.eclipse.emf.ecp.view.internal.validation.ValidationService ValidationService} correctly behave if
- * domain
+ * Tests for checking whether the {@link org.eclipse.emf.ecp.view.internal.validation.ValidationService
+ * ValidationService} correctly behave if domain
  * objects and/or {@link org.eclipse.emf.ecp.view.spi.model.VElement Renderable}s are removed.
  * 
  * @author emueller

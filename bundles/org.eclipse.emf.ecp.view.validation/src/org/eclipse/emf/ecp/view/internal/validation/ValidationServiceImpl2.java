@@ -94,6 +94,8 @@ public class ValidationServiceImpl2 implements ValidationService {
 			case Notification.REMOVE_MANY:
 				reevaluateToTop(notification.getNotifier());
 				break;
+			default:
+				break;
 			}
 		}
 
@@ -159,7 +161,6 @@ public class ValidationServiceImpl2 implements ValidationService {
 			default:
 				validate(getAllEObjects(notification.getNotifier()));
 			}
-			// notifyListeners();
 		}
 
 		/**
@@ -168,7 +169,6 @@ public class ValidationServiceImpl2 implements ValidationService {
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener#notifyAdd(org.eclipse.emf.common.notify.Notifier)
 		 */
 		public void notifyAdd(Notifier notifier) {
-			validate((EObject) notifier);
 		}
 
 		/**
@@ -177,8 +177,6 @@ public class ValidationServiceImpl2 implements ValidationService {
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener#notifyRemove(org.eclipse.emf.common.notify.Notifier)
 		 */
 		public void notifyRemove(Notifier notifier) {
-			// TODO Auto-generated method stub
-
 		}
 
 	}
@@ -300,9 +298,20 @@ public class ValidationServiceImpl2 implements ValidationService {
 			update();
 			currentUpdates.clear();
 			validated.clear();
+			notifyListeners();
 			validationRunning = false;
 		}
 
+	}
+
+	private void notifyListeners() {
+		if (validationListener.size() > 0) {
+			final Set<Diagnostic> result = getDiagnosticResult();
+			for (final ViewValidationListener l : validationListener) {
+				l.onNewValidation(result);
+			}
+
+		}
 	}
 
 	private void update() {

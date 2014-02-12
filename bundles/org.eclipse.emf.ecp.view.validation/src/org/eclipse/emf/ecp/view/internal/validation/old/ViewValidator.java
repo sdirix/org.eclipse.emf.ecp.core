@@ -10,7 +10,7 @@
  * Johannes Faltermeier - initial API and implementation
  * Edgar Mueller - refactorings for the validation graph
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.internal.validation;
+package org.eclipse.emf.ecp.view.internal.validation.old;
 
 import java.util.Collection;
 import java.util.Comparator;
@@ -35,6 +35,9 @@ import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.common.UniqueSetting;
+import org.eclipse.emf.ecp.view.internal.validation.ECPSubstitutionLabelProvider;
+import org.eclipse.emf.ecp.view.internal.validation.VDiagnosticHelper;
+import org.eclipse.emf.ecp.view.internal.validation.ValidationProvider;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;

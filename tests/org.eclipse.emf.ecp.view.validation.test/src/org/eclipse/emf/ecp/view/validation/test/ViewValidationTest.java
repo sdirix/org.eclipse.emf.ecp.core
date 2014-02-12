@@ -941,6 +941,7 @@ public class ViewValidationTest extends CommonValidationTest {
 		writer3.setFirstName("bla");
 
 		final VTableControl control1 = VTableFactory.eINSTANCE.createTableControl();
+		control1.setName("firstNameTable");
 		control1.setDomainModelReference(
 			getVTableDomainModelReference(TestPackage.eINSTANCE.getLibrary_Writers()));
 		final VTableColumn tc1 = VTableFactory.eINSTANCE.createTableColumn();
@@ -948,6 +949,7 @@ public class ViewValidationTest extends CommonValidationTest {
 		control1.getColumns().add(tc1);
 
 		final VTableControl control2 = VTableFactory.eINSTANCE.createTableControl();
+		control2.setName("lastNameTable");
 		control2.setDomainModelReference(
 			getVTableDomainModelReference(TestPackage.eINSTANCE.getLibrary_Writers()));
 		final VTableColumn tc2 = VTableFactory.eINSTANCE.createTableColumn();
