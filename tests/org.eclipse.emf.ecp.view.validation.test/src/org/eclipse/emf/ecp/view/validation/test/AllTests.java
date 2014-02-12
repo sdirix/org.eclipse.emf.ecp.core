@@ -22,7 +22,8 @@ import org.junit.runners.Suite.SuiteClasses;
 	VDiagnosticHelperTest.class,
 	ValidationProviderTest.class,
 	SubstitutionLabelTest.class,
-	TableValidationTest.class
+	TableValidationTest.class,
+	ValidationPerformanceTest.class
 })
 public class AllTests {
 
