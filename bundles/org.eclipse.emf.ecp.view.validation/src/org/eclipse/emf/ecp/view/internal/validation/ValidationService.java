@@ -11,9 +11,11 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.validation;
 
+import java.util.Collection;
 import java.util.Set;
 
 import org.eclipse.emf.common.util.Diagnostic;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
 
 /**
@@ -42,12 +44,19 @@ public interface ValidationService extends ViewModelService {
 	 * 
 	 * @param listener the listener to register
 	 */
-	public void registerValidationListener(ViewValidationListener listener);
+	void registerValidationListener(ViewValidationListener listener);
 
 	/**
 	 * Deregisters the given listener.
 	 * 
 	 * @param listener the listener to deregister
 	 */
-	public void deregisterValidationListener(ViewValidationListener listener);
+	void deregisterValidationListener(ViewValidationListener listener);
+
+	/**
+	 * Validates all given eObjects.
+	 * 
+	 * @param eObjects the eObjects to validate
+	 */
+	void validate(Collection<EObject> eObjects);
 }

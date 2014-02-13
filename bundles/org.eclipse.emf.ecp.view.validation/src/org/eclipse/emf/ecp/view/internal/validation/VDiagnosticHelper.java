@@ -11,12 +11,18 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.validation;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 
@@ -132,6 +138,58 @@ public final class VDiagnosticHelper {
 			}
 		}
 		result.getDiagnostics().addAll(map.values());
+		return result;
+	}
+
+	public static VDiagnostic clean2(VDiagnostic vDiagnostic) {
+		final VDiagnostic result = VViewFactory.eINSTANCE.createDiagnostic();
+
+		final Map<EObject, Map<EStructuralFeature, List<Diagnostic>>> map = new LinkedHashMap<EObject, Map<EStructuralFeature, List<Diagnostic>>>();
+		for (final Object object : vDiagnostic.getDiagnostics()) {
+			final Diagnostic diagnostic = (Diagnostic) object;
+			if (diagnostic.getData() == null || diagnostic.getData().size() == 0) {
+				continue;
+			}
+			final EObject eObject = (EObject) diagnostic.getData().get(0);
+			if (!map.containsKey(eObject)) {
+				map.put(eObject, new LinkedHashMap<EStructuralFeature, List<Diagnostic>>());
+			}
+			final EStructuralFeature eStructuralFeature = (EStructuralFeature) diagnostic.getData().get(1);
+			if (!map.get(eObject).containsKey(eStructuralFeature)) {
+				map.get(eObject).put(eStructuralFeature, new ArrayList<Diagnostic>());
+			}
+			map.get(eObject).get(eStructuralFeature).add(diagnostic);
+		}
+
+		final List<Diagnostic> diagnostics = new ArrayList<Diagnostic>();
+		for (final EObject eObject : map.keySet()) {
+			final BasicDiagnostic eObjectDiagnostic = new BasicDiagnostic(null, 0, null, new Object[] { eObject });
+			for (final EStructuralFeature eStructuralFeature : map.get(eObject).keySet()) {
+				final BasicDiagnostic eStructuralFeatureDiagnostic = new BasicDiagnostic(null, 0, null, new Object[] {
+					eObject, eStructuralFeature });
+				Collections.sort(map.get(eObject).get(eStructuralFeature), new Comparator<Diagnostic>() {
+
+					public int compare(Diagnostic o1, Diagnostic o2) {
+						if (o1.getSeverity() != o2.getSeverity()) {
+							// highest first
+							return o2.getSeverity() - o1.getSeverity();
+						}
+						return o1.getMessage().compareTo(o2.getMessage());
+					}
+				});
+				for (final Diagnostic diagnostic : map.get(eObject).get(eStructuralFeature)) {
+					eStructuralFeatureDiagnostic.merge(diagnostic);
+				}
+				eObjectDiagnostic.merge(eStructuralFeatureDiagnostic);
+			}
+			diagnostics.add(eObjectDiagnostic);
+
+		}
+		if (diagnostics.size() == 1) {
+			result.getDiagnostics().addAll(diagnostics.get(0).getChildren());
+		} else {
+			result.getDiagnostics().addAll(diagnostics);
+		}
 		return result;
 	}
 }

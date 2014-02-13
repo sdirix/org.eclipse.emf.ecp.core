@@ -680,68 +680,52 @@ public class TableControl extends SWTControl {
 		public void update(ViewerCell cell) {
 			Integer mostSevere = Diagnostic.OK;
 			final VDiagnostic vDiagnostic = getControl().getDiagnostic();
-			for (final Object diagObject : vDiagnostic.getDiagnostics()) {
-				final Diagnostic diagnostic = (Diagnostic) diagObject;
-				if (diagnostic.getData().size() == 0) {
-					continue;
-				}
-				if (diagnostic.getData().get(0).equals(cell.getElement())) {
-					final int currentSeverity = diagnostic.getSeverity();
-					if (currentSeverity > mostSevere) {
-						mostSevere = currentSeverity;
-					}
-				}
+			// for (final Object diagObject : vDiagnostic.getDiagnostics()) {
+			// final Diagnostic diagnostic = (Diagnostic) diagObject;
+			// if (diagnostic.getData().size() == 0) {
+			// continue;
+			// }
+			// if (diagnostic.getData().get(0).equals(cell.getElement())) {
+			// final int currentSeverity = diagnostic.getSeverity();
+			// if (currentSeverity > mostSevere) {
+			// mostSevere = currentSeverity;
+			// }
+			// }
+			// }
+			final List<Diagnostic> diagnostics = vDiagnostic.getDiagnostics((EObject) cell.getElement());
+			if (diagnostics.size() != 0) {
+				mostSevere = diagnostics.get(0).getSeverity();
 			}
-			// final Set<VDiagnostic> allDiagnostics = getAllDiagnostics((EObject) cell.getElement(),
-			// structuralFeatures);
-			//
-			// for (final VDiagnostic vDiagnostic : allDiagnostics) {
-			// if (vDiagnostic.getHighestSeverity() > mostSevere) {
-			// mostSevere = vDiagnostic.getHighestSeverity();
-			// }
-			// }
-
 			cell.setImage(getValidationIcon(mostSevere));
-
-			// switch (mostSevere) {
-			// case Diagnostic.OK:
-			// cell.setImage(null);
-			// return;
-			// default:
-			// cell.setImage(Activator.getImage(ICON_VALIDATION_ERROR));
-			// }
 		}
 
 		@Override
 		public String getToolTipText(Object element) {
 			final StringBuffer tooltip = new StringBuffer();
-			// final Set<VDiagnostic> allDiagnostics = getAllDiagnostics((EObject) element, structuralFeatures);
-			//
-			// for (final VDiagnostic vDiagnostic : allDiagnostics) {
-			// if (vDiagnostic.getHighestSeverity() == Diagnostic.OK) {
+			final VDiagnostic vDiagnostic = getControl().getDiagnostic();
+			// for (final Object diagObject : vDiagnostic.getDiagnostics()) {
+			// final Diagnostic diagnostic = (Diagnostic) diagObject;
+			// if (diagnostic.getData().size() < 2) {
 			// continue;
 			// }
+			// if (diagnostic.getSeverity() == Diagnostic.OK) {
+			// continue;
+			// }
+			// if (diagnostic.getData().get(0).equals(element)
+			// && structuralFeatures.contains(diagnostic.getData().get(1))) {
 			// if (tooltip.length() > 0) {
-			//					tooltip.append("\n"); //$NON-NLS-1$
+			//						tooltip.append("\n"); //$NON-NLS-1$
 			// }
-			// tooltip.append(getRowTooltipMessage(vDiagnostic));
+			// tooltip.append(diagnostic.getMessage());
 			// }
-			final VDiagnostic vDiagnostic = getControl().getDiagnostic();
-			for (final Object diagObject : vDiagnostic.getDiagnostics()) {
-				final Diagnostic diagnostic = (Diagnostic) diagObject;
-				if (diagnostic.getData().size() < 2) {
-					continue;
+			// }
+
+			final List<Diagnostic> diagnostics = vDiagnostic.getDiagnostics((EObject) element);
+			for (final Diagnostic diagnostic : diagnostics) {
+				if (tooltip.length() > 0) {
+					tooltip.append("\n"); //$NON-NLS-1$
 				}
-				if (diagnostic.getSeverity() == Diagnostic.OK) {
-					continue;
-				}
-				if (diagnostic.getData().get(0).equals(element)
-					&& structuralFeatures.contains(diagnostic.getData().get(1))) {
-					if (tooltip.length() > 0) {
-						tooltip.append("\n"); //$NON-NLS-1$
-					}
-					tooltip.append(diagnostic.getMessage());
-				}
+				tooltip.append(diagnostic.getMessage());
 			}
 
 			return tooltip.toString();
@@ -854,53 +838,60 @@ public class TableControl extends SWTControl {
 		 */
 		@Override
 		public String getToolTipText(Object element) {
-			// final EObject domainObject = (EObject) element;
-			// final VDiagnostic vDiagnostic = getDiagnosticForFeature(domainObject, feature);
-			// final String diagnosticMessage = getCellTooltipMessage(vDiagnostic);
-			// if (diagnosticMessage != null && diagnosticMessage.length() != 0) {
-			// return diagnosticMessage;
+			final EObject domainObject = (EObject) element;
+
+			final StringBuffer tooltip = new StringBuffer();
+			final VDiagnostic vDiagnostic = getControl().getDiagnostic();
+			final List<Diagnostic> diagnostics = vDiagnostic.getDiagnostic(domainObject, feature);
+			for (final Diagnostic diagnostic : diagnostics) {
+				if (tooltip.length() > 0) {
+					tooltip.append("\n"); //$NON-NLS-1$
+				}
+				tooltip.append(diagnostic.getMessage());
+			}
+			return tooltip.toString();
+
+			// final VDiagnostic vDiagnostic = getControl().getDiagnostic();
+			// for (final Object diagObject : vDiagnostic.getDiagnostics()) {
+			// final Diagnostic diagnostic = (Diagnostic) diagObject;
+			// if (diagnostic.getData().size() < 2) {
+			// continue;
 			// }
-			// final Object value = domainObject.eGet(feature);
+			// if (diagnostic.getData().get(0).equals(element) && diagnostic.getData().get(1).equals(feature)) {
+			//
+			// if (diagnostic.getChildren() != null && diagnostic.getChildren().size() != 0) {
+			// boolean childrenUsefull = false;
+			// for (final Diagnostic diagnostic2 : diagnostic.getChildren()) {
+			// if (diagnostic2.getSeverity() != Diagnostic.OK) {
+			// if (tooltip.length() > 0) {
+			//									tooltip.append("\n"); //$NON-NLS-1$
+			// }
+			// tooltip.append(diagnostic2.getMessage());
+			// childrenUsefull = true;
+			// }
+			// }
+			// if (!childrenUsefull) {
+			// if (tooltip.length() > 0) {
+			//								tooltip.append("\n"); //$NON-NLS-1$
+			// }
+			// tooltip.append(diagnostic.getMessage());
+			// }
+			// } else {
+			// if (tooltip.length() > 0) {
+			//							tooltip.append("\n"); //$NON-NLS-1$
+			// }
+			// tooltip.append(diagnostic.getMessage());
+			// }
+			// }
+			// }
+			// if (tooltip.length() != 0) {
+			// return tooltip.toString();
+			// }
+			// final Object value = ((EObject) element).eGet(feature);
 			// if (value == null) {
 			// return null;
 			// }
 			// return String.valueOf(value);
-
-			final StringBuffer tooltip = new StringBuffer();
-			final VDiagnostic vDiagnostic = getControl().getDiagnostic();
-			for (final Object diagObject : vDiagnostic.getDiagnostics()) {
-				final Diagnostic diagnostic = (Diagnostic) diagObject;
-				if (diagnostic.getData().size() < 2) {
-					continue;
-				}
-				if (diagnostic.getData().get(0).equals(element) && diagnostic.getData().get(1).equals(feature)) {
-					if (tooltip.length() > 0) {
-						tooltip.append("\n"); //$NON-NLS-1$
-					}
-					if (diagnostic.getChildren() != null && diagnostic.getChildren().size() != 0) {
-						boolean childrenUsefull = false;
-						for (final Diagnostic diagnostic2 : diagnostic.getChildren()) {
-							if (diagnostic2.getSeverity() != Diagnostic.OK) {
-								tooltip.append(diagnostic2.getMessage());
-								childrenUsefull = true;
-							}
-						}
-						if (!childrenUsefull) {
-							tooltip.append(diagnostic.getMessage());
-						}
-					} else {
-						tooltip.append(diagnostic.getMessage());
-					}
-				}
-			}
-			if (tooltip.length() != 0) {
-				return tooltip.toString();
-			}
-			final Object value = ((EObject) element).eGet(feature);
-			if (value == null) {
-				return null;
-			}
-			return String.valueOf(value);
 		}
 
 		@Override
@@ -939,27 +930,23 @@ public class TableControl extends SWTControl {
 				return null;
 			}
 
-			Integer mostSevere = Diagnostic.OK;
+			final Integer mostSevere = Diagnostic.OK;
 			final VDiagnostic vDiagnostic = getControl().getDiagnostic();
-			for (final Object diagObject : vDiagnostic.getDiagnostics()) {
-				final Diagnostic diagnostic = (Diagnostic) diagObject;
-				if (diagnostic.getData().size() < 2) {
-					continue;
-				}
-				if (diagnostic.getData().get(0).equals(element) && diagnostic.getData().get(1).equals(feature)) {
-					final int currentSeverity = diagnostic.getSeverity();
-					if (currentSeverity > mostSevere) {
-						mostSevere = currentSeverity;
-					}
-				}
-			}
-			return getValidationBackgroundColor(mostSevere);
-
-			// final VDiagnostic vDiagnostic = getDiagnosticForFeature((EObject) element, feature);
-			// if (vDiagnostic == null) {
-			// return null;
+			// for (final Object diagObject : vDiagnostic.getDiagnostics()) {
+			// final Diagnostic diagnostic = (Diagnostic) diagObject;
+			// if (diagnostic.getData().size() < 2) {
+			// continue;
 			// }
-			// return getValidationBackgroundColor(vDiagnostic.getHighestSeverity());
+			// if (diagnostic.getData().get(0).equals(element) && diagnostic.getData().get(1).equals(feature)) {
+			// final int currentSeverity = diagnostic.getSeverity();
+			// if (currentSeverity > mostSevere) {
+			// mostSevere = currentSeverity;
+			// }
+			// }
+			// }
+			final List<Diagnostic> diagnostic = vDiagnostic.getDiagnostic((EObject) element, feature);
+			return getValidationBackgroundColor(diagnostic.size() == 0 ? Diagnostic.OK : diagnostic.get(0)
+				.getSeverity());
 		}
 	}
 

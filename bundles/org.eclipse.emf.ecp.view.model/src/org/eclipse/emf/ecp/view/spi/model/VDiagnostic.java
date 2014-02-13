@@ -11,8 +11,12 @@
  */
 package org.eclipse.emf.ecp.view.spi.model;
 
+import java.util.List;
+
+import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 
 /**
  * <!-- begin-user-doc -->
@@ -58,9 +62,28 @@ public interface VDiagnostic extends EObject
 
 	/**
 	 * Returns the message associated with this validation.
+	 * The message contains only the highest known severity for each EObject.
 	 * 
 	 * @return the message
 	 */
 	String getMessage();
+
+	/**
+	 * Returns all diagnostics for the provided {@link EObject}. The result is sorted by severity and message.
+	 * 
+	 * @param eObject the {@link EObject} to search diagnostics for
+	 * @return the list of sorted diagnostics
+	 */
+	List<Diagnostic> getDiagnostics(EObject eObject);
+
+	/**
+	 * Returns all diagnostics for the provided {@link EObject} and {@link EStructuralFeature}. The result is sorted by
+	 * severity and message.
+	 * 
+	 * @param eObject the {@link EObject} to search diagnostics for
+	 * @param eStructuralFeature the {@link EStructuralFeature} to search diagnostics for
+	 * @return the list of sorted diagnostics
+	 */
+	List<Diagnostic> getDiagnostic(EObject eObject, EStructuralFeature eStructuralFeature);
 
 } // VDiagnostic

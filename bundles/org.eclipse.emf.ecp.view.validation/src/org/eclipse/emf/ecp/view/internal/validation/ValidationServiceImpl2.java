@@ -254,9 +254,9 @@ public class ValidationServiceImpl2 implements ValidationService {
 	}
 
 	/**
-	 * Validates all given eObjects.
+	 * {@inheritDoc}
 	 * 
-	 * @param eObjects the eObjects to validate
+	 * @see org.eclipse.emf.ecp.view.internal.validation.ValidationService#validate(java.util.Collection)
 	 */
 	public void validate(Collection<EObject> eObjects) {
 
@@ -340,8 +340,7 @@ public class ValidationServiceImpl2 implements ValidationService {
 	private void updateAndPropagate(Map<VControl, VDiagnostic> controlDiagnosticMap) {
 		for (final VControl control : controlDiagnosticMap.keySet()) {
 
-			// VDiagnosticHelper.clean(controlDiagnosticMap.get(control));
-
+			// control.setDiagnostic(VDiagnosticHelper.clean2(controlDiagnosticMap.get(control)));
 			control.setDiagnostic(controlDiagnosticMap.get(control));
 
 			reevaluateToTop(control.eContainer());
