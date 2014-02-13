@@ -55,7 +55,7 @@ import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
  * @author Eugen Neufeld
  * 
  */
-public class ValidationServiceImpl2 implements ValidationService {
+public class ValidationServiceImpl implements ValidationService {
 
 	/**
 	 * The {@link ModelChangeListener} for the view model.

@@ -12,9 +12,7 @@
 package org.eclipse.emf.ecp.view.internal.validation;
 
 import java.util.Collection;
-import java.util.Set;
 
-import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
 
@@ -38,8 +36,10 @@ public interface ValidationService extends ViewModelService {
 	void removeValidationProvider(ValidationProvider validationProvider);
 
 	/**
-	 * Registers a listener that will receive {@link Diagnostic}s with severity higher than {@link Diagnostic#OK}. After
-	 * registration the listener's {@link ViewValidationListener#onNewValidation(Set)} will be called with current
+	 * Registers a listener that will receive {@link org.eclipse.emf.common.util.Diagnostic Diagnostic}s with severity
+	 * higher than {@link org.eclipse.emf.common.util.Diagnostic Diagnostic#OK}. After
+	 * registration the listener's {@link ViewValidationListener#onNewValidation(java.util.Set)} will be called with
+	 * current
 	 * results.
 	 * 
 	 * @param listener the listener to register
