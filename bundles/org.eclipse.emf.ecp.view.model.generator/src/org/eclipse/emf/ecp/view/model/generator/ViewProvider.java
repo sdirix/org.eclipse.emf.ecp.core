@@ -12,7 +12,7 @@
 package org.eclipse.emf.ecp.view.model.generator;
 
 import java.util.Collection;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
@@ -83,7 +83,7 @@ public class ViewProvider implements IViewProvider {
 			ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 		final AdapterFactoryItemDelegator adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(
 			composedAdapterFactory);
-		final Set<EStructuralFeature> featuresToAdd = new HashSet<EStructuralFeature>();
+		final Set<EStructuralFeature> featuresToAdd = new LinkedHashSet<EStructuralFeature>();
 		IItemPropertyDescriptor propertyDescriptor = null;
 		for (final EStructuralFeature feature : features) {
 			propertyDescriptor =
