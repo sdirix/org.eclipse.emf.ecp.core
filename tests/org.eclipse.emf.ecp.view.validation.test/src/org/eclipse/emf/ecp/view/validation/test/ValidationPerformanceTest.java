@@ -37,7 +37,6 @@ import org.eclipse.emf.ecp.view.validation.test.model.TestFactory;
 import org.eclipse.emf.ecp.view.validation.test.model.TestPackage;
 import org.eclipse.emf.ecp.view.validation.test.model.Writer;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -71,17 +70,17 @@ public class ValidationPerformanceTest {
 	@Parameters
 	public static Collection<Object[]> data() {
 		final List<Object[]> data = new ArrayList<Object[]>();
-		data.add(createParameters(4, 1, 50, 25));
-		data.add(createParameters(8, 1, 45, 30));
-		data.add(createParameters(11, 1, 32, 48));
+		data.add(createParameters(4, 1, 30, 10));
+		data.add(createParameters(8, 1, 30, 10));
+		data.add(createParameters(11, 1, 60, 20));
 
-		data.add(createParameters(4, 5, 22, 65));
-		data.add(createParameters(8, 5, 266, 656));
-		data.add(createParameters(11, 5, 864, 2052));
+		data.add(createParameters(4, 5, 30, 10));
+		data.add(createParameters(8, 5, 70, 10));
+		data.add(createParameters(11, 5, 250, 20));
 
-		data.add(createParameters(4, 10, 133, 385));
-		data.add(createParameters(8, 10, 1386, 4481));
-		data.add(createParameters(11, 10, 5079, 20316));
+		data.add(createParameters(4, 10, 30, 10));
+		data.add(createParameters(8, 10, 150, 20));
+		data.add(createParameters(11, 10, 500, 30));
 		return data;
 	}
 
@@ -229,13 +228,12 @@ public class ValidationPerformanceTest {
 		return column;
 	}
 
-	@Ignore
 	@Test
 	public void testViewModelContextStartup() {
-		final int loops = 10;
+		final int loops = 50;
 		final List<Long> diffs = new ArrayList<Long>();
 		countDomainObjects();
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < loops; i++) {
 			testBegin = now();
 			final ViewModelContext context = createContext();
 			testEnd = now();
@@ -251,13 +249,12 @@ public class ValidationPerformanceTest {
 		assertTrue(avgDiff < timeGateStartup);
 	}
 
-	@Ignore
 	@Test
 	public void testAddWriterWithError() {
 		countDomainObjects();
-		final int loops = 10;
+		final int loops = 50;
 		final List<Long> diffs = new ArrayList<Long>();
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < loops; i++) {
 			final ViewModelContext context = createContext();
 			testBegin = now();
 			domain.getWriters().add(createWriter(false));
