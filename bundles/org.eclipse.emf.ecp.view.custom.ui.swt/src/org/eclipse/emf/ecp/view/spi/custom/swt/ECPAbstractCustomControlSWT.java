@@ -32,6 +32,8 @@ import org.eclipse.emf.ecp.view.spi.renderer.RenderingResultRow;
 import org.eclipse.jface.databinding.viewers.ViewerSupport;
 import org.eclipse.jface.dialogs.IDialogLabelKeys;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.swt.SWT;
@@ -146,6 +148,7 @@ public abstract class ECPAbstractCustomControlSWT extends
 				dispose();
 			}
 		});
+		backwardCompatibleHandleValidation();
 		return renderingResult;
 	}
 
@@ -194,10 +197,10 @@ public abstract class ECPAbstractCustomControlSWT extends
 	 */
 	@Override
 	public final void handleValidation(Diagnostic diagnostic) {
-		if (diagnostic.getSeverity() == Diagnostic.OK) {
-			resetValidation();
-			return;
-		}
+		// if (diagnostic.getSeverity() == Diagnostic.OK) {
+		// resetValidation();
+		// return;
+		// }
 		Diagnostic reason = diagnostic;
 		if (diagnostic.getChildren() != null
 			&& diagnostic.getChildren().size() != 0) {
@@ -333,9 +336,19 @@ public abstract class ECPAbstractCustomControlSWT extends
 	 * @return the rendered {@link Composite} of the created control
 	 */
 	protected final Composite createControl(VDomainModelReference domainModelReference, Composite parent) {
+		final Composite composite = new Composite(parent, SWT.NONE);
+		GridLayoutFactory.fillDefaults().numColumns(2).equalWidth(false).applyTo(composite);
 		final SWTControl control = getControl(SWTControl.class, domainModelReference);
-
-		return control.createControl(parent);
+		final List<RenderingResultRow<Control>> createControls = control.createControls(composite);
+		final RenderingResultRow<Control> row = createControls.get(0);
+		if (DoubleColumnRow.class.isInstance(row)) {
+			((DoubleColumnRow) row).getLeftControl().setLayoutData(
+				GridDataFactory.fillDefaults().align(SWT.BEGINNING, SWT.CENTER).grab(false, false).hint(16, 17)
+					.create());
+			((DoubleColumnRow) row).getRightControl().setLayoutData(
+				GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, false).create());
+		}
+		return composite;
 	}
 
 	/**

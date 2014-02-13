@@ -146,7 +146,7 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 	private Composite createDataControl(Composite composite) {
 		final Composite innerComposite = new Composite(composite, SWT.NONE);
 		innerComposite.setBackground(composite.getBackground());
-		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(innerComposite);
+		// GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(innerComposite);
 		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(innerComposite);
 		createContentControl(innerComposite);
 		return innerComposite;
