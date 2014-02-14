@@ -41,13 +41,6 @@
          version="0.0.0"/>
 
    <plugin
-         id="org.eclipse.emf.ecp.application.e4.fx"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.emf.ecp.cdo.core"
          download-size="0"
          install-size="0"
@@ -70,13 +63,6 @@
 
    <plugin
          id="org.eclipse.emf.ecp.controls"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.emf.ecp.controls.fx"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -213,13 +199,6 @@
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-
-   <plugin
-         id="org.eclipse.emf.ecp.emfstore.ui.e4.fx"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         fragment="true"/>
 
    <plugin
          id="org.eclipse.emf.ecp.emfstore.ui.search"
@@ -517,13 +496,6 @@
 
    <plugin
          id="org.eclipse.emf.ecp.view.dynamictree.ui.swt"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.emf.ecp.view.group.fx"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -921,13 +893,6 @@
          install-size="0"
          version="0.0.0"
          fragment="true"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.emf.ecp.view.vertical.fx"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
          unpack="false"/>
 
    <plugin

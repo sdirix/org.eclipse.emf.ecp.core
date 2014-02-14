@@ -25,11 +25,10 @@
   <setupTasks xsi:type="setup:EclipsePreferenceTask" key="instance/org.eclipse.jdt.launching/org.eclipse.jdt.launching.PREF_STRICTLY_COMPATIBLE_JRE_NOT_AVAILABLE" value="ignore"/>
   <setupTasks xsi:type="setup:EclipsePreferenceTask" key="instance/org.eclipse.jdt.core/org.eclipse.jdt.core.compiler.problem.unclosedCloseable" value="ignore"/>
   <setupTasks xsi:type="setup:EclipsePreferenceTask" key="instance/org.eclipse.pde/compilers.f.unresolved-features" value="2"/>
-  <setupTasks xsi:type="setup:ApiBaselineTask" version="${ecp.baseline.version}" zipLocation="https://dl.dropboxusercontent.com/u/23674036/111.zip"/>
   <setupTasks xsi:type="setup:ContextVariableTask" documentation="Location of CDO's Git clone." name="git.clone" value="${setup.branch.dir/git/ecp}" stringSubstitution="true"/>
   <setupTasks xsi:type="setup:GitCloneTask" location="${git.clone}" remoteURI="ssh://git.eclipse.org/gitroot/emfclient/org.eclipse.emf.ecp.core.git" checkoutBranch="${ecp.git.branch}"/>
   <setupTasks xsi:type="setup:TargletTask" name="ECP">
-    <roots id="org.eclipse.emf.ecp.sdk.feature.feature.group"/>
+    <roots id="org.eclipse.emf.ecp.all.feature.feature.group"/>
     <roots id="org.eclipse.sdk.feature.group"/>
     <sourceLocators rootFolder="${git.clone}" locateNestedProjects="true"/>
     <repositoryLists name="Kepler Dependencies">
@@ -41,6 +40,7 @@
       <p2Repositories url="http://download.eclipse.org/emf-store/releases_11"/>
     </repositoryLists>
   </setupTasks>
+  <setupTasks xsi:type="setup:ApiBaselineTask" version="1.2" zipLocation="https://dl.dropboxusercontent.com/u/23674036/120.zip"/>
   <setupTasks xsi:type="setup:WorkingSetTask">
     <workingSets name="Core" id="CDO CDO">
       <predicates xsi:type="predicates:AndPredicate">
@@ -70,39 +70,12 @@
       </predicates>
     </workingSets>
   </setupTasks>
-  <setupTasks xsi:type="setup:CompoundSetupTask" name="Mylyn Queries">
-    <setupTasks xsi:type="setup:ContextVariableTask" name="cdo.bugzilla.repository" value="https://bugs.eclipse.org/bugs"/>
-    <setupTasks xsi:type="setup:ContextVariableTask" name="cdo.bugzilla.prefix" value="/buglist.cgi?classification=Modeling&amp;product=EMF"/>
-    <setupTasks xsi:type="setup:ContextVariableTask" name="cdo.bugzilla.components" value="component=cdo.core&amp;component=cdo.legacy&amp;component=cdo.dawn&amp;component=cdo.db&amp;component=cdo.docs&amp;component=cdo.hibernate&amp;component=cdo.net4j&amp;component=cdo.net4j.db&amp;component=cdo.net4j.ui&amp;component=cdo.objy&amp;component=cdo.releng&amp;component=cdo.ui"/>
-    <setupTasks xsi:type="setup:ContextVariableTask" name="cdo.bugzilla.open" value="bug_status=UNCONFIRMED&amp;bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=REOPENED"/>
-    <setupTasks xsi:type="setup:MylynQueryTask" summary="0_REVIEWS" repositoryURL="${cdo.bugzilla.repository}" relativeURL="${cdo.bugzilla.prefix}&amp;${cdo.bugzilla.components}&amp;version=${cdo.bugzilla.version}&amp;${cdo.bugzilla.open}&amp;query_format=advanced&amp;field0-0-0=flagtypes.name&amp;type0-0-0=equals&amp;value0-0-0=review%3F"/>
-    <setupTasks xsi:type="setup:MylynQueryTask" summary="1_BUGS" repositoryURL="${cdo.bugzilla.repository}" relativeURL="${cdo.bugzilla.prefix}&amp;component=cdo.core&amp;component=cdo.docs&amp;component=cdo.net4j&amp;version=${cdo.bugzilla.version}&amp;${cdo.bugzilla.open}&amp;bug_severity=blocker&amp;bug_severity=critical&amp;bug_severity=major&amp;bug_severity=normal&amp;bug_severity=minor&amp;bug_severity=trivial"/>
-    <setupTasks xsi:type="setup:MylynQueryTask" summary="2_FEATURES" repositoryURL="${cdo.bugzilla.repository}" relativeURL="${cdo.bugzilla.prefix}&amp;component=cdo.core&amp;component=cdo.docs&amp;component=cdo.net4j&amp;version=${cdo.bugzilla.version}&amp;${cdo.bugzilla.open}&amp;bug_severity=enhancement"/>
-    <setupTasks xsi:type="setup:MylynQueryTask" summary="3_RESOLVED" repositoryURL="${cdo.bugzilla.repository}" relativeURL="${cdo.bugzilla.prefix}&amp;${cdo.bugzilla.components}&amp;version=${cdo.bugzilla.version}&amp;bug_status=RESOLVED&amp;resolution=FIXED"/>
-    <setupTasks xsi:type="setup:MylynQueryTask" summary="CDO_Complete" repositoryURL="${cdo.bugzilla.repository}" relativeURL="${cdo.bugzilla.prefix}&amp;${cdo.bugzilla.components}"/>
-    <setupTasks xsi:type="setup:MylynQueryTask" summary="CDO_Dawn" repositoryURL="${cdo.bugzilla.repository}" relativeURL="${cdo.bugzilla.prefix}&amp;component=cdo.dawn&amp;version=${cdo.bugzilla.version}&amp;${cdo.bugzilla.open}"/>
-    <setupTasks xsi:type="setup:MylynQueryTask" summary="CDO_DB" repositoryURL="${cdo.bugzilla.repository}" relativeURL="${cdo.bugzilla.prefix}&amp;component=cdo.db&amp;component=cdo.net4j.db&amp;version=${cdo.bugzilla.version}&amp;${cdo.bugzilla.open}"/>
-    <setupTasks xsi:type="setup:MylynQueryTask" summary="CDO_Hibernate" repositoryURL="${cdo.bugzilla.repository}" relativeURL="${cdo.bugzilla.prefix}&amp;component=cdo.hibernate&amp;version=${cdo.bugzilla.version}&amp;${cdo.bugzilla.open}"/>
-    <setupTasks xsi:type="setup:MylynQueryTask" summary="CDO_Legacy" repositoryURL="${cdo.bugzilla.repository}" relativeURL="${cdo.bugzilla.prefix}&amp;component=cdo.legacy&amp;version=${cdo.bugzilla.version}&amp;${cdo.bugzilla.open}"/>
-    <setupTasks xsi:type="setup:MylynQueryTask" summary="CDO_Releng" repositoryURL="${cdo.bugzilla.repository}" relativeURL="${cdo.bugzilla.prefix}&amp;component=cdo.releng&amp;version=${cdo.bugzilla.version}&amp;${cdo.bugzilla.open}"/>
-    <setupTasks xsi:type="setup:MylynQueryTask" summary="CDO_UI" repositoryURL="${cdo.bugzilla.repository}" relativeURL="${cdo.bugzilla.prefix}&amp;component=cdo.net4j.ui&amp;component=cdo.ui&amp;version=${cdo.bugzilla.version}&amp;${cdo.bugzilla.open}"/>
-    <setupTasks xsi:type="setup:MylynQueryTask" disabled="true" summary="TaskTable" repositoryURL="${cdo.bugzilla.repository}" relativeURL="${cdo.bugzilla.prefix}&amp;${cdo.bugzilla.components}&amp;query_format=advanced&amp;resolution=FIXED&amp;resolution=---"/>
-  </setupTasks>
+  <setupTasks xsi:type="setup:CompoundSetupTask" name="Mylyn Queries"/>
   <branches name="develop">
     <setupTasks xsi:type="setup:ContextVariableTask" name="ecp.git.branch" value="develop" stringSubstitution="true"/>
-    <setupTasks xsi:type="setup:ContextVariableTask" name="cdo.bugzilla.version" value="4.2" stringSubstitution="true"/>
-    <setupTasks xsi:type="setup:ContextVariableTask" name="ecp.baseline.version" value="1.1" stringSubstitution="true"/>
   </branches>
-  <branches name="4.2">
-    <setupTasks xsi:type="setup:P2Task" mergeDisabled="true">
-      <installableUnits id="org.eclipse.emf.sdk.feature.group"/>
-      <installableUnits id="org.eclipse.gmf.runtime.notation.sdk.feature.group"/>
-      <installableUnits id="org.eclipse.gmf.runtime.sdk.feature.group"/>
-      <installableUnits id="org.eclipse.gmf.sdk.feature.group"/>
-      <p2Repositories url="http://download.eclipse.org/releases/kepler"/>
-    </setupTasks>
-    <setupTasks xsi:type="setup:ContextVariableTask" name="cdo.bugzilla.version" value="4.2" stringSubstitution="true"/>
-    <setupTasks xsi:type="setup:ContextVariableTask" name="cdo.baseline.version" value="4.2" stringSubstitution="true"/>
-    <setupTasks xsi:type="setup:ContextVariableTask" name="cdo.git.branch" value="streams/4.2-maintenance" stringSubstitution="true"/>
+  <branches name="master">
+    <setupTasks xsi:type="setup:ContextVariableTask" name="ecp.git.branch" value="master" stringSubstitution="true"/>
+    <setupTasks xsi:type="setup:ContextVariableTask" name="ecp.baseline.version" value="1.2" stringSubstitution="true"/>
   </branches>
 </setup:Project>
