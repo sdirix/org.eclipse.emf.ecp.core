@@ -540,13 +540,6 @@
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.emf.ecp.view.horizontal.fx"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.emf.ecp.view.horizontal.model"
          download-size="0"
          install-size="0"
@@ -818,13 +811,6 @@
 
    <plugin
          id="org.eclipse.emf.ecp.view.test.common.swt"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.emf.ecp.view.treemasterdetail.fx"
          download-size="0"
          install-size="0"
          version="0.0.0"
