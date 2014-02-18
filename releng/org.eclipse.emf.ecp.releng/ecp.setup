@@ -32,6 +32,7 @@
   <setupTasks xsi:type="setup:TargletTask" name="ECP">
     <roots id="org.eclipse.emf.ecp.all.feature.feature.group"/>
     <roots id="org.eclipse.sdk.feature.group"/>
+    <roots id="org.eclipse.emf.ecp.releng"/>
     <sourceLocators rootFolder="${git.clone}" locateNestedProjects="true"/>
     <repositoryLists name="Kepler Dependencies">
       <p2Repositories url="http://download.eclipse.org/modeling/emf/cdo/orbit/latest-S"/>
