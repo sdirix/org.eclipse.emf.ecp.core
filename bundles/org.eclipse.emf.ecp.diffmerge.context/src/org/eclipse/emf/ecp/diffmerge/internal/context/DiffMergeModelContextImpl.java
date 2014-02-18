@@ -129,7 +129,10 @@ public class DiffMergeModelContextImpl extends ViewModelContextImpl implements
 			final Iterator<Setting> iterator = domainModelReference.getIterator();
 			while (iterator.hasNext()) {
 				final Setting setting = iterator.next();
-				mergedControls.addAll(getControlsFor(setting));
+				final Set<VControl> controls = getControlsFor(setting);
+				for (final VControl vControl : controls) {
+					markControl(vControl, true);
+				}
 			}
 		}
 	}
