@@ -88,6 +88,7 @@
       <plugin id="org.eclipse.emf.ecp.editor.e3"/>
       <plugin id="org.eclipse.emf.ecp.emfstore.core"/>
       <plugin id="org.eclipse.emf.ecp.emfstore.ui"/>
+      <plugin id="org.eclipse.emf.ecp.emfstore.ui.e4"/>
       <plugin id="org.eclipse.emf.ecp.explorereditorbridge"/>
       <plugin id="org.eclipse.emf.ecp.ui"/>
       <plugin id="org.eclipse.emf.ecp.ui.e4"/>

@@ -10,7 +10,7 @@
             <children xsi:type="menu:HandledMenuItem" xmi:id="_ibQRIJgZEeKJoJcmiy2C6w" elementId="org.eclipse.emf.ecp.e4.application.handledmenuitem.newProject" label="Create new project" iconURI="platform:/plugin/org.eclipse.emf.ecp.application.e4/icons/project_new.gif" command="_ogB3AJgZEeKJoJcmiy2C6w"/>
             <children xsi:type="menu:MenuSeparator" xmi:id="_-yuXAH3ZEeO60MnVpeSbmA" elementId="org.eclipse.emf.ecp.application.e4.menuseparator.0"/>
             <children xsi:type="menu:HandledMenuItem" xmi:id="_GflIgHq6EeOKPMuLiPS6LA" elementId="org.eclipse.emf.ecp.e4.application.handledmenuitem.project.closeProject" label="Close" command="_snLnIHq5EeOKPMuLiPS6LA">
-              <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_1YRz4Hq6EeOKPMuLiPS6LA" coreExpressionId="org.eclipse.emf.ecp.ui.definition.projectOpened"/>
+              <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_1YRz4Hq6EeOKPMuLiPS6LA" coreExpressionId="org.eclipse.emf.ecp.application.e4.isProjectOpened"/>
             </children>
             <children xsi:type="menu:HandledMenuItem" xmi:id="_Kb8pcGfMEeOSxuzzXgfhAA" elementId="org.eclipse.emf.ecp.e4.application.handledmenuitem.project.deleteProject" label="Delete" iconURI="platform:/plugin/org.eclipse.emf.ecp.application.e4/icons/delete.gif" command="_-EYP0GfLEeOSxuzzXgfhAA">
               <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_9gTzQGfoEeOSxuzzXgfhAA" coreExpressionId="org.eclipse.emf.ecp.application.e4.isProjectSelected"/>
@@ -19,7 +19,7 @@
               <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_ZtxHgGfpEeOSxuzzXgfhAA" coreExpressionId="org.eclipse.emf.ecp.application.e4.isModelElementSelected"/>
             </children>
             <children xsi:type="menu:HandledMenuItem" xmi:id="_XUKgAHq6EeOKPMuLiPS6LA" elementId="org.eclipse.emf.ecp.e4.application.handledmenuitem.project.openProject" label="Open" command="_vuNCcHq5EeOKPMuLiPS6LA">
-              <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_8XlIUHq6EeOKPMuLiPS6LA" coreExpressionId="org.eclipse.emf.ecp.ui.definition.projectClosed"/>
+              <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_8XlIUHq6EeOKPMuLiPS6LA" coreExpressionId="org.eclipse.emf.ecp.application.e4.isProjectClosed"/>
             </children>
             <children xsi:type="menu:HandledMenuItem" xmi:id="_73BDkH3IEeOH4sahiLvWWw" elementId="org.eclipse.emf.ecp.application.e4.handledmenuitem.0" label="Filter Model Elements" iconURI="platform:/plugin/org.eclipse.emf.ecp.application.e4/icons/sample.gif" command="_v4zlIH3IEeOH4sahiLvWWw">
               <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_-GJ0oH3IEeOH4sahiLvWWw" coreExpressionId="org.eclipse.emf.ecp.application.e4.isProjectSelected"/>
