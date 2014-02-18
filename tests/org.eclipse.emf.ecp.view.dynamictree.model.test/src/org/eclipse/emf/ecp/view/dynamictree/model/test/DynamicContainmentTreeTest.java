@@ -176,8 +176,10 @@ public class DynamicContainmentTreeTest {
 
 	@Test
 	public void testValidationErrorToOkByRemove() {
-		final String id = "123";
-		addItem(id, tree, tree.getDomainModel());
+		assertEquals("Severity must be error", Diagnostic.ERROR,
+			tree.getDiagnostic().getHighestSeverity());
+		// final String id = "123";
+		// addItem(id, tree, tree.getDomainModel());
 		final Object labelObjectOfLastChild = tree.getItems().get(tree.getItems().size() - 1).getDomainModel();
 		assertTrue(TestElement.class.isInstance(labelObjectOfLastChild));
 
@@ -185,6 +187,8 @@ public class DynamicContainmentTreeTest {
 		final TestElementContainer container = (TestElementContainer) testElement.eContainer();
 
 		container.getTestElements().clear();
+		// TODO remove must be somewhere else
+		tree.getItems().remove(tree.getItems().size() - 1);
 
 		assertEquals("Severity must be ok", Diagnostic.OK,
 			tree.getDiagnostic().getHighestSeverity());

@@ -71,16 +71,16 @@ public class ValidationPerformanceTest {
 	public static Collection<Object[]> data() {
 		final List<Object[]> data = new ArrayList<Object[]>();
 		data.add(createParameters(4, 1, 30, 10));
-		data.add(createParameters(8, 1, 30, 10));
-		data.add(createParameters(11, 1, 60, 20));
+		data.add(createParameters(8, 1, 50, 10));
+		data.add(createParameters(11, 1, 90, 20));
 
 		data.add(createParameters(4, 5, 30, 10));
-		data.add(createParameters(8, 5, 70, 10));
-		data.add(createParameters(11, 5, 250, 20));
+		data.add(createParameters(8, 5, 150, 15));
+		data.add(createParameters(11, 5, 250, 30));
 
 		data.add(createParameters(4, 10, 30, 10));
-		data.add(createParameters(8, 10, 150, 20));
-		data.add(createParameters(11, 10, 500, 30));
+		data.add(createParameters(8, 10, 300, 30));
+		data.add(createParameters(11, 10, 1000, 60));
 		return data;
 	}
 
