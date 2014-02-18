@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.eclipse.emf.ecp.rap.feature"
-      label="ECP RAP Demo Application"
+      label="ECP RAP Demo Application (Experimental)"
       version="1.2.0.qualifier"
       provider-name="%providerName"
       plugin="org.eclipse.emf.ecp.rap"

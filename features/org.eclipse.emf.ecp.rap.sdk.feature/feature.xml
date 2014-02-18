@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.eclipse.emf.ecp.rap.sdk.feature"
-      label="ECP RAP SDK"
+      label="ECP RAP SDK (Experimental)"
       version="1.2.0.qualifier"
       provider-name="%providerName"
       license-feature="org.eclipse.emf.ecp.license.feature"
@@ -62,8 +62,8 @@
    <includes
          id="org.eclipse.emf.ecp.view.template.helper.feature.source"
          version="0.0.0"/>
-         
-            <includes
+
+   <includes
          id="org.eclipse.emf.ecp.emfstore.feature"
          version="0.0.0"/>
 
