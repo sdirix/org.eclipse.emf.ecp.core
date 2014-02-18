@@ -87,48 +87,6 @@
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.emf.ecp.diffmerge.context"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.emf.ecp.diffmerge.model"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
-         id="org.eclipse.emf.ecp.diffmerge.model.edit"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.emf.ecp.diffmerge.renderer.swt"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.emf.ecp.diffmerge.swt"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.emf.ecp.diffmerge.test"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         fragment="true"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.emf.ecp.doc"
          download-size="0"
          install-size="0"
@@ -218,20 +176,6 @@
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.emf.ecp.graphiti.core"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.emf.ecp.graphiti.integration"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.emf.ecp.ide.editor.view"
          download-size="0"
          install-size="0"
@@ -263,19 +207,6 @@
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-
-   <plugin
-         id="org.eclipse.emf.ecp.rap"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.emf.ecp.rap.util"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
 
    <plugin
          id="org.eclipse.emf.ecp.ui"
