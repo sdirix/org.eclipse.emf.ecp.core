@@ -47,7 +47,7 @@
     <workingSets name="ECP" id="CDO CDO">
       <predicates xsi:type="predicates:AndPredicate">
         <operands xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.emf\.ecp.*"/>
-        <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@setupTasks.10/@workingSets.1 //@setupTasks.10/@workingSets.2 //@setupTasks.10/@workingSets.4 //@setupTasks.10/@workingSets.3"/>
+        <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@setupTasks.10/@workingSets.1 //@setupTasks.10/@workingSets.2 //@setupTasks.10/@workingSets.4 //@setupTasks.10/@workingSets.3 //@setupTasks.10/@workingSets.5"/>
       </predicates>
     </workingSets>
     <workingSets name="ECP Tests" id="CDO CDO Tests">
@@ -80,6 +80,12 @@
           <operand xsi:type="predicates:NamePredicate" pattern=".*provider.*"/>
         </operands>
       </predicates>
+    </workingSets>
+    <workingSets name="ECP RAP">
+      <predicates xsi:type="predicates:NamePredicate" pattern=".*rap.*"/>
+    </workingSets>
+    <workingSets name="ECP DiffMerge">
+      <predicates xsi:type="predicates:NamePredicate" pattern=".*diffmerge.*"/>
     </workingSets>
   </setupTasks>
   <setupTasks xsi:type="setup:CompoundSetupTask" name="Mylyn Queries"/>

@@ -23,6 +23,18 @@
          id="org.eclipse.emf.ecp.sdk.feature"
          version="0.0.0"/>
 
+   <includes
+         id="org.eclipse.emf.ecp.rap.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.ecp.rap.util.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.ecp.diffmerge.feature"
+         version="0.0.0"/>
+
    <plugin
          id="org.eclipse.emf.ecp.application.e3"
          download-size="0"
@@ -826,6 +838,48 @@
          download-size="0"
          install-size="0"
          version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.ecp.diffmerge.context"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.ecp.diffmerge.model"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.eclipse.emf.ecp.diffmerge.model.edit"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.ecp.diffmerge.renderer.swt"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.ecp.diffmerge.swt"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.ecp.diffmerge.test"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
          unpack="false"/>
 
 </feature>
