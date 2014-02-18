@@ -60,18 +60,16 @@
         <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@setupTasks.10/@workingSets.1 //@setupTasks.10/@workingSets.4 //@setupTasks.10/@workingSets.3"/>
         <operands xsi:type="predicates:OrPredicate">
           <operands xsi:type="predicates:NamePredicate" pattern=".*view.*"/>
-          <operands xsi:type="predicates:NamePredicate" pattern="*ecp.edit"/>
-          <operands xsi:type="predicates:NamePredicate" pattern="*ecp.edit.swt*"/>
-          <operands xsi:type="predicates:NamePredicate" pattern="*ecp.common*"/>
+          <operands xsi:type="predicates:NamePredicate" pattern=".*ecp.edit"/>
+          <operands xsi:type="predicates:NamePredicate" pattern=".*ecp.edit.swt*"/>
+          <operands xsi:type="predicates:NamePredicate" pattern=".*ecp.common*"/>
         </operands>
       </predicates>
     </workingSets>
     <workingSets name="ECP Releng" id="CDO Net4j DB">
-      <predicates xsi:type="predicates:AndPredicate">
-        <operands xsi:type="predicates:NamePredicate" pattern=".*feature"/>
-      </predicates>
       <predicates xsi:type="predicates:OrPredicate">
         <operands xsi:type="predicates:NamePredicate" pattern=".*releng.*"/>
+        <operands xsi:type="predicates:NamePredicate" pattern=".*feature"/>
       </predicates>
     </workingSets>
     <workingSets name="ECP IDE">
