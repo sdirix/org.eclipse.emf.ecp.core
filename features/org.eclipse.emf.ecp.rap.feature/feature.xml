@@ -202,7 +202,7 @@
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.emf.ecp.editor"
+         id="org.eclipse.emf.ecp.editor.e3"
          download-size="0"
          install-size="0"
          version="0.0.0"
