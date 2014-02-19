@@ -22,6 +22,10 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExtensionRegistry;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.BasicDiagnostic;
@@ -209,6 +213,8 @@ public class ValidationServiceImpl implements ValidationService {
 			throw new IllegalStateException("Domain model must not be null"); //$NON-NLS-1$
 		}
 
+		readValidationProvider();
+
 		domainChangeListener = new DomainModelChangeListener();
 		viewChangeListener = new ViewModelChangeListener();
 
@@ -216,6 +222,23 @@ public class ValidationServiceImpl implements ValidationService {
 		context.registerViewChangeListener(viewChangeListener);
 
 		validate(getAllEObjects(domainModel));
+	}
+
+	private void readValidationProvider() {
+		final IExtensionRegistry extensionRegistry = Platform.getExtensionRegistry();
+		if (extensionRegistry == null) {
+			return;
+		}
+		final IConfigurationElement[] controls = extensionRegistry
+			.getConfigurationElementsFor("org.eclipse.emf.ecp.view.validation.validationProvider"); //$NON-NLS-1$
+		for (final IConfigurationElement e : controls) {
+			try {
+				final ValidationProvider validationProvider = (ValidationProvider) e.createExecutableExtension("class"); //$NON-NLS-1$
+				validationProviders.add(validationProvider);
+			} catch (final CoreException e1) {
+				Activator.logException(e1);
+			}
+		}
 	}
 
 	/**
