@@ -27,10 +27,10 @@ import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.jface.viewers.TreePath;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.dialogs.ISelectionStatusValidator;
 
 /**
  * A Link Control for creating VFeaturePathDomainReference Objects.
@@ -93,13 +93,18 @@ public class ControlTargetFeatureControl extends LinkControl {
 
 	private class FilteredReferenceCommand extends AbstractFilteredReferenceCommand<EStructuralFeature> {
 
-		public FilteredReferenceCommand(Notifier notifier, ComposedAdapterFactory composedAdapterFactory, Shell shell) {
+		public FilteredReferenceCommand(final Notifier notifier, ComposedAdapterFactory composedAdapterFactory,
+			Shell shell) {
+
 			super(notifier, composedAdapterFactory, shell, Helper.getRootEClass((EObject) notifier),
-				new ISelectionStatusValidator() {
+				new ECPSelectionStatusValidator() {
 
 					public IStatus validate(Object[] selection) {
+
 						if (selection.length != 0 && EStructuralFeature.class.isInstance(selection[0])) {
-							if (!Helper.hasFeaturePropertyDescriptor((EStructuralFeature) selection[0])) {
+							final TreePath treePath = getTreePath();
+							if (!Helper
+								.hasFeaturePropertyDescriptor(Helper.getRootEClass((EObject) notifier), treePath)) {
 								return new Status(IStatus.ERROR,
 									org.eclipse.emf.ecp.view.editor.controls.Activator.PLUGIN_ID,
 									"The selected " + EStructuralFeature.class.getSimpleName()
