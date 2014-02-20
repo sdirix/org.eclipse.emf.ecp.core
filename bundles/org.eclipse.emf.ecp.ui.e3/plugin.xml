@@ -31,6 +31,32 @@
       <menuContribution
             allPopups="true"
             locationURI="popup:org.eclipse.ui.popup.any?after=common">
+      </menuContribution>
+      <menuContribution
+            locationURI="popup:org.eclipse.emf.ecp.ui.ModelExplorerView">
+         <command
+               commandId="org.eclipse.emf.ecp.ui.project.createProject"
+               icon="icons/checkout_project_old.gif"
+               label="%CreateNewProject"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="activeMenuSelection">
+                  <iterate>
+                     <test
+                           args="org.eclipse.emf.ecp.ui.project.createProject"
+                           property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
+                           value="true">
+                     </test>
+                  </iterate>
+               </with>
+            </visibleWhen>
+         </command>
+         <separator
+               name="common"
+               visible="true">
+         </separator>
          <command
                commandId="org.eclipse.emf.ecp.ui.closable"
                label="%OpenClosable"
@@ -69,7 +95,7 @@
             <visibleWhen
                   checkEnabled="false">
                <with
-                  variable="activeMenuSelection">
+                     variable="activeMenuSelection">
                   <iterate
                         ifEmpty="false"
                         operator="or">
@@ -87,58 +113,6 @@
                </with>
             </visibleWhen>
          </command>
-         <command
-               commandId="org.eclipse.emf.ecp.ui.checkout"
-               icon="icons/checkout_project.gif"
-               label="%CheckoutProject"
-               style="push">
-            <visibleWhen
-                  checkEnabled="false">
-               <with
-                  variable="activeMenuSelection">
-                  <iterate
-                        ifEmpty="false"
-                        operator="or">
-                     <and>
-                        <instanceof
-                              value="org.eclipse.emf.ecp.core.util.ECPCheckoutSource">
-                        </instanceof>
-                        <test
-                              args="org.eclipse.emf.ecp.ui.checkout"
-                              property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
-                              value="true">
-                        </test>
-                     </and>
-                  </iterate>
-               </with>
-            </visibleWhen>
-         </command>
-      </menuContribution>
-      <menuContribution
-            locationURI="popup:org.eclipse.emf.ecp.ui.ModelExplorerView">
-         <command
-               commandId="org.eclipse.emf.ecp.ui.project.createProject"
-               icon="icons/checkout_project_old.gif"
-               label="%CreateNewProject"
-               style="push">
-            <visibleWhen
-                  checkEnabled="false">
-               <with
-                     variable="activeMenuSelection">
-                  <iterate>
-                     <test
-                           args="org.eclipse.emf.ecp.ui.project.createProject"
-                           property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
-                           value="true">
-                     </test>
-                  </iterate>
-               </with>
-            </visibleWhen>
-         </command>
-         <separator
-               name="common"
-               visible="true">
-         </separator>
          <command
                commandId="org.eclipse.emf.ecp.ui.properties.project"
                label="%ProjectProperties"
@@ -360,6 +334,27 @@
                name="common"
                visible="true">
          </separator>
+         <command
+               commandId="org.eclipse.emf.ecp.ui.checkout"
+               icon="icons/checkout_project.gif"
+               label="%CheckoutProject"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="activeMenuSelection">
+                  <iterate
+                        ifEmpty="false"
+                        operator="or">
+                     <and>
+                        <instanceof
+                              value="org.eclipse.emf.ecp.core.util.ECPCheckoutSource">
+                        </instanceof>
+                     </and>
+                  </iterate>
+               </with>
+            </visibleWhen>
+         </command>
          <command
                commandId="org.eclipse.emf.ecp.ui.properties.repository"
                label="%RepositoryProperties"
