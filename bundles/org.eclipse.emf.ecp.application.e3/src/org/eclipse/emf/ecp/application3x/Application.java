@@ -24,10 +24,16 @@ import org.eclipse.ui.PlatformUI;
 public class Application implements IApplication {
 
 	// BEGIN SUPRESS CATCH EXCEPTION
+	/**
+	 * 
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.equinox.app.IApplication#start(org.eclipse.equinox.app.IApplicationContext)
+	 */
 	public Object start(IApplicationContext context) throws Exception {
-		Display display = PlatformUI.createDisplay();
+		final Display display = PlatformUI.createDisplay();
 		try {
-			int returnCode = PlatformUI.createAndRunWorkbench(display, new ApplicationWorkbenchAdvisor());
+			final int returnCode = PlatformUI.createAndRunWorkbench(display, new ApplicationWorkbenchAdvisor());
 			if (returnCode == PlatformUI.RETURN_RESTART) {
 				return IApplication.EXIT_RESTART;
 			}
