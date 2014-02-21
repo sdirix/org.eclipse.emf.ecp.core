@@ -95,15 +95,15 @@
     <queries summary="Features in ${ecp.bugzilla.version}" url="https://bugs.eclipse.org/bugs/buglist.cgi?classification=Modeling&amp;product=ECP&amp;bug_status=UNCONFIRMED&amp;bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=REOPENED&amp;version=${ecp.bugzilla.version}&amp;bug_severity=enhancement"/>
     <queries summary="Resolved in ${ecp.bugzilla.version}" url="https://bugs.eclipse.org/bugs/buglist.cgi?classification=Modeling&amp;product=ECP&amp;bug_status=RESOLVED&amp;resolution=FIXED&amp;version=${ecp.bugzilla.version}"/>
   </setupTasks>
-  <setupTasks xsi:type="setup:RedirectionTask" sourceURL="http://git.eclipse.org/c/emfclient/org.eclipse.emf.ecp.core.git/plain/releng/org.eclipse.emf.ecp.releng/ecp.setup?h=develop" targetURL="${git.clone|uri}/releng/org.eclipse.emf.ecp.releng/ecp.setup"/>
+  <setupTasks xsi:type="setup:RedirectionTask" sourceURL="http://git.eclipse.org/c/emfclient/org.eclipse.emf.ecp.core.git/plain/releng/org.eclipse.emf.ecp.releng/ecp.setup" targetURL="${git.clone|uri}/releng/org.eclipse.emf.ecp.releng/ecp.setup"/>
   <branches name="develop">
     <setupTasks xsi:type="setup:ContextVariableTask" name="ecp.git.branch" value="develop" stringSubstitution="true"/>
     <setupTasks xsi:type="setup:ContextVariableTask" name="ecp.baseline.version" value="1.2" stringSubstitution="true"/>
-    <setupTasks xsi:type="setup:ContextVariableTask" name="ecp.bugzilla.version" value="1.3" stringSubstitution="true"/>
+    <setupTasks xsi:type="setup:ContextVariableTask" name="ecp.bugzilla.version" value="1.2" stringSubstitution="true" label=""/>
   </branches>
   <branches name="master">
     <setupTasks xsi:type="setup:ContextVariableTask" name="ecp.git.branch" value="master" stringSubstitution="true"/>
     <setupTasks xsi:type="setup:ContextVariableTask" name="ecp.baseline.version" value="1.2" stringSubstitution="true"/>
-    <setupTasks xsi:type="setup:ContextVariableTask" name="ecp.bugzilla.version" value="1.3" stringSubstitution="true"/>
+    <setupTasks xsi:type="setup:ContextVariableTask" name="ecp.bugzilla.version" value="1.2" stringSubstitution="true"/>
   </branches>
 </setup:Project>
