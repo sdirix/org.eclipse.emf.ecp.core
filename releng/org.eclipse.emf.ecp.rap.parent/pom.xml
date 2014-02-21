@@ -52,6 +52,11 @@
 							<artifactId>ecp</artifactId>
 							<version>${ecp-version}</version>
 						</artifact>
+						<artifact>
+							<groupId>org.eclipse.emf.ecp</groupId>
+							<artifactId>ecpRAP</artifactId>
+							<version>${ecp-version}</version>
+						</artifact>
 					</target>
 				</configuration>
 			</plugin>
