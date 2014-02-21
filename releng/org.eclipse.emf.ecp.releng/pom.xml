@@ -70,9 +70,9 @@
 	<modules>
 		<module>../../releng/org.eclipse.emf.ecp.target.rcp</module>
 		<module>../../releng/org.eclipse.emf.ecp.target.rap</module>
+		<module>../../releng/org.eclipse.emf.ecp.repository</module>
 		<module>../../releng/org.eclipse.emf.ecp.products</module>
 		<module>../../releng/org.eclipse.emf.ecp.rap.products</module>
-		<module>../../releng/org.eclipse.emf.ecp.repository</module>
 
 		<module>../../releng/org.eclipse.emf.ecp.releng.bundles</module>
 		<module>../../releng/org.eclipse.emf.ecp.releng.features</module>
