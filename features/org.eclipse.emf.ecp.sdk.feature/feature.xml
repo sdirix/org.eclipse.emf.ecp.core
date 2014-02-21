@@ -34,10 +34,6 @@
    <includes
          id="org.eclipse.emf.ecp.emfforms.runtime.feature.source"
          version="0.0.0"/>
-         
-   <includes
-         id="org.eclipse.emf.ecp.feature.source"
-         version="0.0.0"/>
 
    <includes
          id="org.eclipse.emf.ecp.feature.source"
@@ -60,10 +56,6 @@
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.emf.ecp.ide.feature.source"
-         version="0.0.0"/>
-
-   <includes
          id="org.eclipse.emf.ecp.license.feature.source"
          version="0.0.0"/>
 
@@ -74,8 +66,8 @@
    <includes
          id="org.eclipse.emf.ecp.view.template.helper.feature.source"
          version="0.0.0"/>
-         
-         <includes
+
+   <includes
          id="org.eclipse.emf.ecp.cdo.feature"
          version="0.0.0"/>
 
@@ -89,10 +81,6 @@
 
    <includes
          id="org.eclipse.emf.ecp.emfforms.runtime.feature"
-         version="0.0.0"/>
-         
-   <includes
-         id="org.eclipse.emf.ecp.feature"
          version="0.0.0"/>
 
    <includes
@@ -116,10 +104,6 @@
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.emf.ecp.ide.feature"
-         version="0.0.0"/>
-
-   <includes
          id="org.eclipse.emf.ecp.license.feature"
          version="0.0.0"/>
 
@@ -129,6 +113,14 @@
 
    <includes
          id="org.eclipse.emf.ecp.view.template.helper.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.ecp.view.model.controls.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.ecp.view.model.controls.feature.source"
          version="0.0.0"/>
 
 </feature>

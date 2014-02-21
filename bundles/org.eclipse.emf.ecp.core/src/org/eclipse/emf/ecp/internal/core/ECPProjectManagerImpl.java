@@ -153,10 +153,17 @@ public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject
 
 	/** {@inheritDoc} */
 	public Collection<ECPProject> getProjects() {
-		final Collection<InternalProject> projects = getElements();
+		initializeProjects();
+		return (Collection) getElements();
+	}
+
+	/**
+	 * @param projects
+	 */
+	private void initializeProjects() {
 		if (!initializedProjects) {
 
-			for (final InternalProject project : projects) {
+			for (final InternalProject project : getElements()) {
 
 				if (!project.getProvider().modelExists(project)) {
 					project.close();
@@ -168,8 +175,6 @@ public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject
 			}
 			initializedProjects = true;
 		}
-
-		return (Collection) projects;
 	}
 
 	/**

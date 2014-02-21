@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="org.eclipse.emf.ecp.view.model.editor.feature"
-      label="EMF Forms View Model Wizard"
+      id="org.eclipse.emf.ecp.view.model.controls.feature"
+      label="EMF Forms View Model Controls"
       version="1.2.0.qualifier"
       provider-name="%providerName"
-      plugin="org.eclipse.emf.ecp.view.model.editor"
+      plugin="org.eclipse.emf.ecp.ui.view.editor.controls"
       image="eclipse_update_120.jpg"
       license-feature="org.eclipse.emf.ecp.license.feature"
       license-feature-version="1.2.0.qualifier">
@@ -22,7 +22,7 @@
    </license>
 
    <plugin
-         id="org.eclipse.emf.ecp.view.model.editor"
+         id="org.eclipse.emf.ecp.ui.view.editor.controls"
          download-size="0"
          install-size="0"
          version="0.0.0"

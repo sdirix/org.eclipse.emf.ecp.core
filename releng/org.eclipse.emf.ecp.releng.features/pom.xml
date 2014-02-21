@@ -26,6 +26,7 @@
 		<module>../../features/org.eclipse.emf.ecp.ecore.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.ecore.editor.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.view.model.editor.feature</module>
+		<module>../../features/org.eclipse.emf.ecp.view.model.controls.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.examplemodel.ui.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.view.categorization.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.view.custom.feature</module>
