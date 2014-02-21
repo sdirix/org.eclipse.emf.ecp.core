@@ -11,6 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.core.test;
 
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import org.eclipse.emf.ecore.EcoreFactory;
@@ -31,8 +32,18 @@ public class ECPInitializationTest {
 		try {
 			final ECPProject project = ECPUtil.getECPProjectManager().createProject(
 				ECPUtil.getECPProviderRegistry().getProvider(EMFStoreProvider.NAME), "test");
-			project.getContents().add(EcoreFactory.eINSTANCE.createEClass());
-			project.getContents().add(EcoreFactory.eINSTANCE.createEClass());
+			final long startTimeMillis = System.currentTimeMillis();
+			for (int i = 0; i < 60000; i++) {
+				project.getContents().add(EcoreFactory.eINSTANCE.createEClass());
+				if (i % 1000 == 0) {
+					if (System.currentTimeMillis() - startTimeMillis > 20000) {
+						fail("Taking too long");
+					}
+					System.out
+						.println("Added " + i + "Items, Time passed " + (System.currentTimeMillis() - startTimeMillis));
+				}
+			}
+			assertTrue(System.currentTimeMillis() - startTimeMillis < 20000);
 		} catch (final ECPProjectWithNameExistsException e) {
 			fail();
 		}

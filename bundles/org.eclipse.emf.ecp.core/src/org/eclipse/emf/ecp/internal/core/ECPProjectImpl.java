@@ -75,6 +75,8 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 
 	private boolean open;
 
+	private boolean initialized = false;
+
 	/**
 	 * Constructor used when an offline project is created.
 	 * 
@@ -385,9 +387,15 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 
 	/** {@inheritDoc} */
 	public void notifyProvider(LifecycleEvent event) {
+		// guard to prevent multiple initializations
+		if (event == LifecycleEvent.INIT && initialized) {
+			return;
+		}
 		final InternalProvider provider = getProvider();
+
 		provider.handleLifecycle(this, event);
 		if (event == LifecycleEvent.INIT) {
+			initialized = true;
 			final Notifier root = provider.getRoot(this);
 			if (root != null) {
 				root.eAdapters().add(new ECPModelContextAdapter(this));
