@@ -29,6 +29,8 @@ import org.eclipse.jface.viewers.LabelProviderChangedEvent;
  */
 public class TransactionalModelLabelProvider extends ECPLabelProvider implements ECPProjectOpenClosedObserver {
 
+	private static final long serialVersionUID = 2187552299181329364L;
+
 	/**
 	 * Default constructor.
 	 */
