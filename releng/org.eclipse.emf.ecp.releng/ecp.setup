@@ -103,4 +103,10 @@
     <setupTasks xsi:type="setup:ContextVariableTask" name="ecp.bugzilla.milestone" value="1.2" stringSubstitution="true" label=""/>
     <setupTasks xsi:type="setup:ContextVariableTask" name="ecp.bugzilla.nextmilestone" value="1.3" stringSubstitution="true" label=""/>
   </branches>
+  <branches name="master">
+    <setupTasks xsi:type="setup:ContextVariableTask" name="ecp.git.branch" value="master" stringSubstitution="true"/>
+    <setupTasks xsi:type="setup:ContextVariableTask" name="ecp.baseline.version" value="1.1" stringSubstitution="true"/>
+    <setupTasks xsi:type="setup:ContextVariableTask" name="ecp.bugzilla.milestone" value="1.2" stringSubstitution="true" label=""/>
+    <setupTasks xsi:type="setup:ContextVariableTask" name="ecp.bugzilla.nextmilestone" value="1.3" stringSubstitution="true" label=""/>
+  </branches>
 </setup:Project>
