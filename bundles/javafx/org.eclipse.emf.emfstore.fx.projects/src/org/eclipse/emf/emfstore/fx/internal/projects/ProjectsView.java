@@ -55,59 +55,7 @@ public class ProjectsView {
 			}
 		});
 
-//		final Button addElementButton = new Button("Add Element");
-//		addElementButton.setMaxWidth(Double.MAX_VALUE);
-//		addElementButton.setDisable(true);
-//		addElementButton.setOnAction(new EventHandler<ActionEvent>() {
-//
-//			@Override
-//			public void handle(ActionEvent event) {
-//				TreeItem<Object> selectedItem = localProjectsView
-//						.getSelectionModel().getSelectedItem();
-//				if (selectedItem == null)
-//					return;
-//				Object selectedValue = selectedItem.getValue();
-//				if (ESLocalProject.class.isInstance(selectedValue)) {
-//					ESLocalProject localProject = (ESLocalProject) selectedValue;
-//
-//					// EObject result = TaskFactory.eINSTANCE.createUser();
-//					CreateEObjectStage stage = new CreateEObjectStage();
-//
-//					stage.showAndWait();
-//
-//					EObject result = stage.getResult();
-//					if (result == null)
-//						return;
-//					localProject.getModelElements().add(result);
-//					projectTreeItem.updateChildren();
-//				}
-//			}
-//		});
 
-//		final Button btnSaveProject = new Button("Save");
-//		btnSaveProject.setMaxWidth(Double.MAX_VALUE);
-//		btnSaveProject.setDisable(true);
-//		btnSaveProject.setOnAction(new EventHandler<ActionEvent>() {
-//
-//			@Override
-//			public void handle(ActionEvent event) {
-//				TreeItem<Object> selectedItem = localProjectsView
-//						.getSelectionModel().getSelectedItem();
-//				if (selectedItem == null)
-//					return;
-//				Object selectedValue = selectedItem.getValue();
-//				ESLocalProject localProject = null;
-//				if (ESLocalProject.class.isInstance(selectedValue)) {
-//					localProject = (ESLocalProject) selectedValue;
-//				} else if (EObject.class.isInstance(selectedValue)) {
-//					localProject = ESWorkspaceProvider.INSTANCE.getWorkspace()
-//							.getLocalProject((EObject) selectedValue);
-//
-//				}
-//				if (localProject != null)
-//					localProject.save();
-//			}
-//		});
 
 		
 
@@ -115,8 +63,6 @@ public class ProjectsView {
 		HBox box = new HBox();
 		HBox.setHgrow(btnAddProject, Priority.ALWAYS);
 		box.getChildren().add(btnAddProject);
-//		box.getChildren().add(addElementButton);
-//		box.getChildren().add(btnSaveProject);
 
 		
 		localProjectsView.setRoot(projectTreeItem);
@@ -147,56 +93,10 @@ public class ProjectsView {
 				
 				if (selectedItem == null)
 					return;
-//				Object selectedValue = selectedItem.getValue();
-
-//				addElementButton.setDisable(true);
-
-//				if (ESLocalProject.class.isInstance(selectedValue)) {
-//					ESLocalProject localProject = (ESLocalProject) selectedValue;
-//					btnSaveProject.setDisable(!localProject
-//							.hasUnsavedChanges());
-////					addElementButton.setDisable(false);
-//				} else if (EObject.class.isInstance(selectedValue)) {
-//					ESLocalProject localProject = ESWorkspaceProvider.INSTANCE
-//							.getWorkspace().getLocalProject(
-//									(EObject) selectedValue);
-//					btnSaveProject.setDisable(!localProject
-//							.hasUnsavedChanges());
-//				}
-				
-				
 			}
 		});
-
-		
-
-		final TreeView<Object> remoteProjectsView = new TreeView<>();
-		remoteProjectsView.setShowRoot(false);
-		remoteProjectsView.setRoot(new EmfStoreRemoteProjectTreeItem(
-				ESWorkspaceProvider.INSTANCE.getWorkspace()));
-		remoteProjectsView
-				.setCellFactory(new Callback<TreeView<Object>, TreeCell<Object>>() {
-
-					@Override
-					public TreeCell<Object> call(TreeView<Object> param) {
-
-						return new ESRemoteProjectTreeCell(projectTreeItem);
-					}
-				});
-
-		
-
-		
-		
-		VBox vBox = new VBox();
-		vBox.getChildren().add(box);
-		vBox.getChildren().add(new Label("Local Projects"));
-		vBox.getChildren().add(localProjectsView);
-		vBox.getChildren().add(new Label("Remote Projects"));
-		vBox.getChildren().add(remoteProjectsView);
-		VBox.setMargin(remoteProjectsView, new Insets(5,5,5,5));
-		VBox.setMargin(localProjectsView, new Insets(5,5,5,5));
-		parent.setCenter(vBox);
+		parent.setTop(box);
+		parent.setCenter(localProjectsView);
 
 	}
 }

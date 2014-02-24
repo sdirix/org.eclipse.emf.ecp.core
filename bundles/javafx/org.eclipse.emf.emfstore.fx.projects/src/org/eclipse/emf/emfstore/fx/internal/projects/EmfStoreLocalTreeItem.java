@@ -14,6 +14,8 @@ import javafx.scene.control.TreeItem;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.emfstore.client.ESLocalProject;
 import org.eclipse.emf.emfstore.client.ESWorkspace;
+import org.eclipse.emf.emfstore.client.observer.ESCheckoutObserver;
+import org.eclipse.emf.emfstore.internal.client.model.ESWorkspaceProviderImpl;
 import org.eclipse.fx.emf.edit.ui.AdapterFactoryTreeItem;
 import org.eclipse.fx.emf.edit.ui.CellUtil;
 
@@ -23,6 +25,7 @@ class EmfStoreLocalTreeItem extends TreeItem<Object> {
 	private final ObservableList<TreeItem<Object>> children;
 	private Control view;
 
+	@SuppressWarnings("restriction")
 	public EmfStoreLocalTreeItem(ProjectsView projectsView, Object root,
 			Control view) {
 		super(root);
@@ -32,6 +35,15 @@ class EmfStoreLocalTreeItem extends TreeItem<Object> {
 		children = FXCollections
 				.unmodifiableObservableList(super.getChildren());
 		updateChildren();
+		
+		ESWorkspaceProviderImpl.getObserverBus().register(new ESCheckoutObserver() {
+			
+			@Override
+			public void checkoutDone(ESLocalProject project) {
+				
+				updateChildren();
+			}
+		});
 	}
 
 	@Override
