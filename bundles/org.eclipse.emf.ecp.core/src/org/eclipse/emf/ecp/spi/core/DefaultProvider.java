@@ -83,7 +83,7 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 	protected DefaultProvider(String name) {
 		super(name);
 		label = name;
-		description = "";
+		description = ""; //$NON-NLS-1$
 	}
 
 	/** {@inheritDoc} */
@@ -310,7 +310,7 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 	public void handleLifecycle(ECPContainer context, LifecycleEvent event) {
 		final String providerClass = getClass().getSimpleName();
 		final String contextClass = context.getClass().getSimpleName();
-		Activator.log(providerClass + " received " + event + " for " + contextClass + " " + context);
+		Activator.log(providerClass + " received " + event + " for " + contextClass + " " + context); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 	}
 
 	/**
