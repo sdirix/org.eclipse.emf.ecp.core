@@ -157,8 +157,6 @@ public class DiffDialog {
 			buttonDiffConfirmed.setSelection(diffConfirmed);
 			buttonDiffConfirmed.addSelectionListener(new SelectionAdapter() {
 
-				private static final long serialVersionUID = 1L;
-
 				/**
 				 * {@inheritDoc}
 				 * 
@@ -184,10 +182,9 @@ public class DiffDialog {
 
 			final Button previous = new Button(nextPreviousComposite, SWT.PUSH);
 			previous.setText(Messages.DiffDialog_Previous);
+			previous.setImage(Activator.getImage("icons/arrow_left.png")); //$NON-NLS-1$
 			GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING).grab(false, false).applyTo(previous);
 			previous.addSelectionListener(new SelectionAdapter() {
-
-				private static final long serialVersionUID = 1L;
 
 				/**
 				 * {@inheritDoc}
@@ -204,10 +201,9 @@ public class DiffDialog {
 			});
 			final Button next = new Button(nextPreviousComposite, SWT.PUSH);
 			next.setText(Messages.DiffDialog_Next);
+			next.setImage(Activator.getImage("icons/arrow_right.png")); //$NON-NLS-1$
 			GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING).grab(false, false).applyTo(next);
 			next.addSelectionListener(new SelectionAdapter() {
-
-				private static final long serialVersionUID = 1L;
 
 				/**
 				 * {@inheritDoc}
@@ -237,8 +233,6 @@ public class DiffDialog {
 			bConfirm.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_compare_dialog_merge_confirm"); //$NON-NLS-1$
 			GridDataFactory.fillDefaults().align(SWT.END, SWT.BEGINNING).grab(true, false).applyTo(bConfirm);
 			bConfirm.addSelectionListener(new SelectionAdapter() {
-
-				private static final long serialVersionUID = 1L;
 
 				/**
 				 * {@inheritDoc}
@@ -311,11 +305,10 @@ public class DiffDialog {
 
 		final Button bReplaceWithLeft = new Button(group, SWT.PUSH);
 		bReplaceWithLeft.setText(Messages.DiffDialog_replaceWithLeft);
+		bReplaceWithLeft.setImage(Activator.getImage("icons/arrow_down.png")); //$NON-NLS-1$
 		bReplaceWithLeft.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_compare_dialog_diff_leftReplace"); //$NON-NLS-1$
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING).grab(false, false).applyTo(bReplaceWithLeft);
 		bReplaceWithLeft.addSelectionListener(new SelectionAdapter() {
-
-			private static final long serialVersionUID = 1L;
 
 			/**
 			 * {@inheritDoc}
@@ -340,11 +333,10 @@ public class DiffDialog {
 
 		final Button bReplaceWithRight = new Button(group, SWT.PUSH);
 		bReplaceWithRight.setText(Messages.DiffDialog_replaceWithRight);
+		bReplaceWithRight.setImage(Activator.getImage("icons/arrow_down.png")); //$NON-NLS-1$
 		bReplaceWithLeft.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_compare_dialog_diff_rightReplace"); //$NON-NLS-1$
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING).grab(false, false).applyTo(bReplaceWithRight);
 		bReplaceWithRight.addSelectionListener(new SelectionAdapter() {
-
-			private static final long serialVersionUID = 1L;
 
 			/**
 			 * {@inheritDoc}

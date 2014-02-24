@@ -28,12 +28,11 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
 
 /**
  * A specific DiffMerge TableControl Renderer.
@@ -47,6 +46,7 @@ public class SWTDiffMergeTableControlRenderer extends SWTTableControlRenderer {
 	protected Control createLabelControl(Composite parent, final VControl vControl, final ECPAbstractControl control,
 		final ViewModelContext viewContext)
 		throws NoPropertyDescriptorFoundExeption {
+		final DiffMergeModelContext diffModelContext = (DiffMergeModelContext) viewContext;
 		final Composite labelDiffComposite = new Composite(parent, SWT.NONE);
 		labelDiffComposite.setBackground(parent.getBackground());
 		int numColumns = 1;
@@ -56,21 +56,25 @@ public class SWTDiffMergeTableControlRenderer extends SWTTableControlRenderer {
 			numColumns++;
 		}
 		GridLayoutFactory.fillDefaults().numColumns(numColumns).equalWidth(false).applyTo(labelDiffComposite);
+
 		final Button diffButton = new Button(labelDiffComposite, SWT.PUSH);
 		diffButton.setText(Messages.getString("SWTDiffMergeControlRenderer.DiffButton")); //$NON-NLS-1$
 		diffButton.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_compare_button"); //$NON-NLS-1$
-		diffButton.addSelectionListener(new SelectionListener() {
+		diffButton.addSelectionListener(new SelectionAdapter() {
 
-			private static final long serialVersionUID = 1L;
-
+			/**
+			 * {@inheritDoc}
+			 * 
+			 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
+			 */
+			@Override
 			public void widgetSelected(SelectionEvent e) {
-				openDiffDialog((DiffMergeModelContext) viewContext, vControl, control);
+				super.widgetSelected(e);
+				openDiffDialog(diffModelContext, vControl, control);
 			}
 
-			public void widgetDefaultSelected(SelectionEvent e) {
-				widgetSelected(e);
-			}
 		});
+
 		for (final VAttachment attachment : vControl.getAttachments()) {
 			if (VDiffAttachment.class.isInstance(attachment)) {
 				attachment.eAdapters().add(new AdapterImpl() {
@@ -84,23 +88,23 @@ public class SWTDiffMergeTableControlRenderer extends SWTTableControlRenderer {
 					public void notifyChanged(Notification msg) {
 						super.notifyChanged(msg);
 						if (msg.getFeature() == VDiffmergePackage.eINSTANCE.getDiffAttachment_MergedDiffs()) {
-							updateButtonColor(diffButton, (VDiffAttachment) attachment);
+							updateButton(diffButton, (VDiffAttachment) attachment);
 						}
 					}
 
 				});
-				updateButtonColor(diffButton, (VDiffAttachment) attachment);
+				updateButton(diffButton, (VDiffAttachment) attachment);
 				break;
 			}
 		}
 		return labelDiffComposite;
 	}
 
-	private void updateButtonColor(Button diffButton, VDiffAttachment attachment) {
+	private void updateButton(Button diffButton, VDiffAttachment attachment) {
 		if (attachment.getMergedDiffs() == 0) {
-			diffButton.setBackground(null);
+			diffButton.setImage(Activator.getImage("icons/lightning.png")); //$NON-NLS-1$
 		} else {
-			diffButton.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_GREEN));
+			diffButton.setImage(Activator.getImage("icons/accept.png")); //$NON-NLS-1$
 		}
 	}
 

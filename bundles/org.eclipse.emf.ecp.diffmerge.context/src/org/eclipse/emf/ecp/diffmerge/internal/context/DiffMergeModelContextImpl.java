@@ -157,7 +157,7 @@ public class DiffMergeModelContextImpl extends ViewModelContextImpl implements
 			final EObject leftEObject = leftViewModel.next();
 			final EObject rightEObject = rightViewModel.next();
 			if (VControl.class.isInstance(mainEObject)) {
-				if (hasDiff((VControl) leftEObject, (VControl) rightEObject)) {
+				if (hasDiff((VControl) leftEObject, (VControl) rightEObject, (VControl) mainEObject)) {
 					final VControl control = (VControl) mainEObject;
 					controlDiffMap.put(control, new ControlPair((VControl) leftEObject,
 						(VControl) rightEObject));
@@ -222,8 +222,16 @@ public class DiffMergeModelContextImpl extends ViewModelContextImpl implements
 		return attachment;
 	}
 
-	private boolean hasDiff(VControl leftEObject, VControl rightEObject) {
-		return !CompareControls.areEqual(leftEObject, rightEObject);
+	/**
+	 * Checks whether the controls have a diff.
+	 * 
+	 * @param leftControl the left control to check
+	 * @param rightControl the right control to check
+	 * @param targetControl the target control to check
+	 * @return true if there is a diff, false otherwise
+	 */
+	protected boolean hasDiff(VControl leftControl, VControl rightControl, VControl targetControl) {
+		return !CompareControls.areEqual(leftControl, rightControl);
 	}
 
 	/** {@inheritDoc} **/
