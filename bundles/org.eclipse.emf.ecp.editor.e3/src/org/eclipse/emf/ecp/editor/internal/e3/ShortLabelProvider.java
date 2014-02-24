@@ -21,6 +21,8 @@ import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
  */
 public class ShortLabelProvider extends AdapterFactoryLabelProvider {
 
+	private static final long serialVersionUID = 4218817231757409161L;
+
 	/**
 	 * Default constructor.
 	 * 

@@ -11,7 +11,6 @@
 package org.eclipse.emf.ecp.editor.internal.e3;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -73,7 +72,7 @@ public class MEEditorPage extends FormPage {
 	 * @param modelElement
 	 *            the modelElement
 	 * @param modelElementContext
-	 *            the {@link ModelElementContext}
+	 *            the {@link ECPEditorContext}
 	 */
 	public MEEditorPage(MEEditor editor, String id, String title, ECPEditorContext modelElementContext,
 		EObject modelElement) {
@@ -96,7 +95,7 @@ public class MEEditorPage extends FormPage {
 	 * @param problemFeature
 	 *            the problemFeature
 	 * @param modelElementContext
-	 *            the {@link ModelElementContext}
+	 *            the {@link ECPEditorContext}
 	 */
 	public MEEditorPage(MEEditor editor, String id, String title, ECPEditorContext modelElementContext,
 		EObject modelElement, EStructuralFeature problemFeature) {
@@ -120,7 +119,6 @@ public class MEEditorPage extends FormPage {
 		final Composite body = form.getBody();
 		body.setLayout(new GridLayout());
 		body.setBackground(body.getDisplay().getSystemColor(SWT.COLOR_WHITE));
-		final EClass eClass = modelElementContext.getDomainObject().eClass();
 
 		final EObject domainObject = modelElementContext.getDomainObject();
 		final VView view = ViewProviderHelper.getView(domainObject);
@@ -199,7 +197,7 @@ public class MEEditorPage extends FormPage {
 			}
 		});
 		menuService.populateContributionManager((ContributionManager) form.getToolBarManager(),
-			"toolbar:org.eclipse.emf.ecp.editor.internal.e3.MEEditorPage");
+			"toolbar:org.eclipse.emf.ecp.editor.internal.e3.MEEditorPage"); //$NON-NLS-1$
 		form.getToolBarManager().update(true);
 	}
 

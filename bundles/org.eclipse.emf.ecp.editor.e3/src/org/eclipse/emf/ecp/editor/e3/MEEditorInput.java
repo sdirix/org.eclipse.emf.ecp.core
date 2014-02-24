@@ -119,16 +119,16 @@ public class MEEditorInput implements IEditorInput {
 	}
 
 	/**
-	 * Returns the {@link ECPModelelemenContext}.
+	 * Returns the {@link ECPEditorContext}.
 	 * 
-	 * @return {@link ECPControlContext}
+	 * @return {@link ECPEditorContext}
 	 */
 	public ECPEditorContext getModelElementContext() {
 		return modelElementContext;
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Disposes the input.
 	 */
 	public void dispose() {
 		modelElementContext.dispose();
