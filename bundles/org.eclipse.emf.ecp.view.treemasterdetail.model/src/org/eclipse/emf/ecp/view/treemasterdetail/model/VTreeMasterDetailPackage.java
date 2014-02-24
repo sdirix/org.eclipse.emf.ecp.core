@@ -41,7 +41,7 @@ public interface VTreeMasterDetailPackage extends EPackage
 	 * 
 	 * @generated
 	 */
-	String eNAME = "model"; //$NON-NLS-1$
+	String eNAME = "treemasterdetail"; //$NON-NLS-1$
 
 	/**
 	 * The package namespace URI.
