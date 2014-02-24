@@ -27,6 +27,8 @@ import org.eclipse.ui.PlatformUI;
  */
 public class EditorModelElementOpener implements ECPModelElementOpener {
 
+	private static final String ECP_EDITOR_ID = "org.eclipse.emf.ecp.editor"; //$NON-NLS-1$
+
 	/**
 	 * Convenient constructor.
 	 */
@@ -53,7 +55,7 @@ public class EditorModelElementOpener implements ECPModelElementOpener {
 		final MEEditorInput input = new MEEditorInput(new EditorContext((EObject) modelElement, ecpProject));
 		try {
 			PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
-				.openEditor(input, "org.eclipse.emf.ecp.editor", true);
+				.openEditor(input, ECP_EDITOR_ID, true);
 		} catch (final PartInitException e) {
 			Activator.logException(e);
 		}
