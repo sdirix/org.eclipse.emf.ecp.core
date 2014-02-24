@@ -32,12 +32,13 @@ import org.eclipse.emf.ecp.validation.api.IValidationService;
  * 
  * @author emueller
  * @author Tobias Verhoeven
- *
+ * 
  */
 public final class ValidationService extends AbstractCachedTree<Diagnostic> implements IValidationService {
-	
+
 	/**
 	 * Constructor for the ECP ValidationService.
+	 * 
 	 * @param callback to use
 	 */
 	public ValidationService(IExcludedObjectsCallback callback) {
@@ -48,12 +49,12 @@ public final class ValidationService extends AbstractCachedTree<Diagnostic> impl
 	 * Tree node that caches the severity of its children.
 	 */
 	public class CachedSeverityTreeNode extends CachedTreeNode<Diagnostic> {
-		
+
 		/**
 		 * Constructor.
 		 * 
 		 * @param diagnostic
-		 * 			the initial diagnostic containing the severity and validation message
+		 *            the initial diagnostic containing the severity and validation message
 		 */
 		public CachedSeverityTreeNode(Diagnostic diagnostic) {
 			super(diagnostic);
@@ -62,12 +63,13 @@ public final class ValidationService extends AbstractCachedTree<Diagnostic> impl
 		/**
 		 * {@inheritDoc}
 		 */
+		@Override
 		public void update() {
-			Collection<Diagnostic> severities = values();
+			final Collection<Diagnostic> severities = values();
 
 			if (severities.size() > 0) {
-				Diagnostic mostSevereDiagnostic = values().iterator().next();	
-				for (Diagnostic diagnostic : severities) {
+				Diagnostic mostSevereDiagnostic = values().iterator().next();
+				for (final Diagnostic diagnostic : severities) {
 					if (diagnostic.getSeverity() > mostSevereDiagnostic.getSeverity()) {
 						mostSevereDiagnostic = diagnostic;
 					}
@@ -80,10 +82,10 @@ public final class ValidationService extends AbstractCachedTree<Diagnostic> impl
 
 		@Override
 		public Diagnostic getDisplayValue() {
-			if (getChildValue() == null ) {
+			if (getChildValue() == null) {
 				return getOwnValue();
 			}
-			return (getOwnValue().getSeverity() > getChildValue().getSeverity())?getOwnValue():getChildValue();
+			return getOwnValue().getSeverity() > getChildValue().getSeverity() ? getOwnValue() : getChildValue();
 		}
 	}
 
@@ -91,9 +93,9 @@ public final class ValidationService extends AbstractCachedTree<Diagnostic> impl
 	 * {@inheritDoc}
 	 */
 	public Set<EObject> validate(Collection<EObject> eObjects) {
-		Set<EObject> allAffected=new HashSet<EObject>();
-		for(EObject eObject : eObjects) {
-			Set<EObject> affected=validate(eObject);
+		final Set<EObject> allAffected = new HashSet<EObject>();
+		for (final EObject eObject : eObjects) {
+			final Set<EObject> affected = validate(eObject);
 			allAffected.addAll(affected);
 		}
 		return allAffected;
@@ -109,7 +111,7 @@ public final class ValidationService extends AbstractCachedTree<Diagnostic> impl
 	/**
 	 * {@inheritDoc}
 	 */
-	public Diagnostic getDiagnostic(Object eObject) {		
+	public Diagnostic getDiagnostic(Object eObject) {
 		return getCachedValue(eObject);
 	}
 
@@ -119,7 +121,7 @@ public final class ValidationService extends AbstractCachedTree<Diagnostic> impl
 	public Diagnostic getRootDiagnostic() {
 		return getRootValue();
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -127,7 +129,7 @@ public final class ValidationService extends AbstractCachedTree<Diagnostic> impl
 	public Diagnostic getDefaultValue() {
 		return Diagnostic.OK_INSTANCE;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -138,12 +140,12 @@ public final class ValidationService extends AbstractCachedTree<Diagnostic> impl
 
 	private Diagnostic getSeverity(EObject object) {
 		EValidator validator = EValidator.Registry.INSTANCE.getEValidator(object.eClass().getEPackage());
-		BasicDiagnostic diagnostics = Diagnostician.INSTANCE.createDefaultDiagnostic(object);
+		final BasicDiagnostic diagnostics = Diagnostician.INSTANCE.createDefaultDiagnostic(object);
 
 		if (validator == null) {
 			validator = new EObjectValidator();
 		}
-		Map<Object, Object> context = new HashMap<Object, Object>();
+		final Map<Object, Object> context = new HashMap<Object, Object>();
 		context.put(EValidator.SubstitutionLabelProvider.class, Diagnostician.INSTANCE);
 		context.put(EValidator.class, validator);
 
@@ -153,4 +155,3 @@ public final class ValidationService extends AbstractCachedTree<Diagnostic> impl
 	}
 
 }
-

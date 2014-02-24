@@ -26,7 +26,9 @@ import org.eclipse.jface.viewers.ILightweightLabelDecorator;
  * @author Eugen Neufeld
  * @author emueller
  */
-public class ValidationFailedDecorator  implements ILightweightLabelDecorator {
+public class ValidationFailedDecorator implements ILightweightLabelDecorator {
+
+	private static final long serialVersionUID = 4874789355110393561L;
 
 	/**
 	 * {@inheritDoc}
@@ -35,33 +37,34 @@ public class ValidationFailedDecorator  implements ILightweightLabelDecorator {
 		if (!(element instanceof EObject) && !(element instanceof ECPProject)) {
 			return;
 		}
-		
+
 		Integer severity = null;
-		
+
 		if (element instanceof EObject) {
 
-			ECPProject project = ECPUtil.getECPProjectManager().getProject(element);
-			
-			if (project != null&&project.isOpen()) {
+			final ECPProject project = ECPUtil.getECPProjectManager().getProject(element);
+
+			if (project != null && project.isOpen()) {
 				severity = Activator.getDefault().getValidationService(project).getDiagnostic(element).getSeverity();
 			}
-		} else if (element instanceof ECPProject && ((ECPProject)element).isOpen()) {
+		} else if (element instanceof ECPProject && ((ECPProject) element).isOpen()) {
 			if (ECPUtil.getECPProjectManager().getProject(((ECPProject) element).getName()) == null) {
 				return;
 			}
-			severity = Activator.getDefault().getValidationService((ECPProject) element).getRootDiagnostic().getSeverity();
+			severity = Activator.getDefault().getValidationService((ECPProject) element).getRootDiagnostic()
+				.getSeverity();
 		}
-		
+
 		if (severity == null) {
 			return;
 		}
-		
+
 		switch (severity.intValue()) {
 		case Diagnostic.ERROR:
-			decoration.addOverlay(Activator.getImageDescriptor("icons/error_decorate.png"), IDecoration.BOTTOM_RIGHT);
+			decoration.addOverlay(Activator.getImageDescriptor("icons/error_decorate.png"), IDecoration.BOTTOM_RIGHT); //$NON-NLS-1$
 			break;
 		case Diagnostic.WARNING:
-			decoration.addOverlay(Activator.getImageDescriptor("icons/warning_decorate.png"), IDecoration.BOTTOM_RIGHT);
+			decoration.addOverlay(Activator.getImageDescriptor("icons/warning_decorate.png"), IDecoration.BOTTOM_RIGHT); //$NON-NLS-1$
 			break;
 		case Diagnostic.OK:
 			decoration.addOverlay(null);
@@ -71,18 +74,22 @@ public class ValidationFailedDecorator  implements ILightweightLabelDecorator {
 		}
 
 	}
+
 	/** {@inheritDoc} */
 	public void addListener(ILabelProviderListener listener) {
-		
+
 	}
+
 	/** {@inheritDoc} */
 	public void dispose() {
-		
+
 	}
+
 	/** {@inheritDoc} */
 	public boolean isLabelProperty(Object element, String property) {
 		return false;
 	}
+
 	/** {@inheritDoc} */
 	public void removeListener(ILabelProviderListener listener) {
 	}
