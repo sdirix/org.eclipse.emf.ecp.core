@@ -26,13 +26,13 @@ import org.eclipse.core.runtime.IConfigurationElement;
 public final class PageCandidate {
 
 	// By which pages this page is about to be replaced
-	private List<PageCandidate> replacedBy = new LinkedList<PageCandidate>();
+	private final List<PageCandidate> replacedBy = new LinkedList<PageCandidate>();
 
 	// Which pages follow after this page
-	private List<PageCandidate> successors = new LinkedList<PageCandidate>();
+	private final List<PageCandidate> successors = new LinkedList<PageCandidate>();
 
 	// The wrapped configuration element
-	private IConfigurationElement page;
+	private final IConfigurationElement page;
 
 	// If this page is already in the resulting list
 	private boolean enqueued;
@@ -53,7 +53,7 @@ public final class PageCandidate {
 	public static List<IConfigurationElement> getPages(IConfigurationElement[] input) {
 
 		// Create Page Candidates and store them in the map
-		for (IConfigurationElement i : input) {
+		for (final IConfigurationElement i : input) {
 			new PageCandidate(i);
 		}
 
@@ -61,14 +61,14 @@ public final class PageCandidate {
 		linkPages();
 
 		// Determine order
-		List<PageCandidate> orderedPages = determineOrder();
+		final List<PageCandidate> orderedPages = determineOrder();
 
 		// The hashmap content is no longer needed
 		candidates.clear();
 
 		// Unwrap ordered Pages and return them.
-		List<IConfigurationElement> result = new LinkedList<IConfigurationElement>();
-		for (PageCandidate p : orderedPages) {
+		final List<IConfigurationElement> result = new LinkedList<IConfigurationElement>();
+		for (final PageCandidate p : orderedPages) {
 			result.add(p.page);
 		}
 
@@ -83,12 +83,12 @@ public final class PageCandidate {
 	private PageCandidate(IConfigurationElement page) {
 		super();
 		this.page = page;
-		String name = page.getAttribute("name");
+		final String name = page.getAttribute("name"); //$NON-NLS-1$
 
 		// Entry the page into the candidates map. Log an exception if there are colliding names
 		if (candidates.containsKey(name)) {
-			Activator.logException(new Exception("Two pages to be added to the MEEditor have the same name (" + name
-				+ ")! One of them will not be visible."));
+			Activator.logException(new Exception("Two pages to be added to the MEEditor have the same name (" + name //$NON-NLS-1$
+				+ ")! One of them will not be visible.")); //$NON-NLS-1$
 		}
 		candidates.put(name, this);
 	}
@@ -99,16 +99,16 @@ public final class PageCandidate {
 	 */
 	private static void linkPages() {
 		// Build the page tree...
-		for (Entry<String, PageCandidate> curEntry : candidates.entrySet()) {
-			PageCandidate cur = curEntry.getValue();
+		for (final Entry<String, PageCandidate> curEntry : candidates.entrySet()) {
+			final PageCandidate cur = curEntry.getValue();
 			// Set replacements if this page has any
-			String r = cur.page.getAttribute("replace");
+			final String r = cur.page.getAttribute("replace"); //$NON-NLS-1$
 			if (r != null) {
-				String[] replacements = r.split(",");
+				final String[] replacements = r.split(","); //$NON-NLS-1$
 
 				// Loop over replacements and set them, if they exist
-				for (String s : replacements) {
-					PageCandidate replaced = candidates.get(s.trim());
+				for (final String s : replacements) {
+					final PageCandidate replaced = candidates.get(s.trim());
 					if (replaced != null) {
 						// Replaced page does exist, link them
 						replaced.replacedBy.add(cur);
@@ -117,9 +117,9 @@ public final class PageCandidate {
 			}
 
 			// Build the after fields
-			String after = cur.page.getAttribute("after");
+			final String after = cur.page.getAttribute("after"); //$NON-NLS-1$
 			if (after != null) {
-				PageCandidate before = candidates.get(after);
+				final PageCandidate before = candidates.get(after);
 				if (before != null) {
 					before.successors.add(cur);
 				}
@@ -145,7 +145,7 @@ public final class PageCandidate {
 		if (replacedBy.size() != 0) {
 
 			// Enqueue all pages that replaced this page
-			for (PageCandidate c : replacedBy) {
+			for (final PageCandidate c : replacedBy) {
 				c.enqueue(l);
 			}
 
@@ -156,7 +156,7 @@ public final class PageCandidate {
 		}
 
 		// Were some pages tagged "after" this page? Enqueue them!
-		for (PageCandidate c : successors) {
+		for (final PageCandidate c : successors) {
 			c.enqueue(l);
 		}
 	}
@@ -168,12 +168,12 @@ public final class PageCandidate {
 	 * @return A properly ordered list of all non-replaced page candidates.
 	 */
 	private static List<PageCandidate> determineOrder() {
-		List<PageCandidate> result = new LinkedList<PageCandidate>();
+		final List<PageCandidate> result = new LinkedList<PageCandidate>();
 
 		// Loop over all pages and enqueue pages that are not after a specific page
 		// and also do not replace a page. (These pages get enqueued recursively)
-		for (Entry<String, PageCandidate> e : candidates.entrySet()) {
-			PageCandidate p = e.getValue();
+		for (final Entry<String, PageCandidate> e : candidates.entrySet()) {
+			final PageCandidate p = e.getValue();
 			if (p.successors.size() == 0 && p.replacedBy.size() == 0) {
 				p.enqueue(result);
 			}

@@ -62,7 +62,7 @@ public final class ECPProviderRegistryImpl extends ElementRegistry<InternalProvi
 	 */
 	public ECPProviderRegistryImpl() {
 		if (INSTANCE != null) {
-			throw new IllegalStateException("Manager must not be initialized twice");
+			throw new IllegalStateException("Manager must not be initialized twice"); //$NON-NLS-1$
 		}
 		INSTANCE = this;
 	}
@@ -130,7 +130,7 @@ public final class ECPProviderRegistryImpl extends ElementRegistry<InternalProvi
 	 * @author Eike Stepper
 	 */
 	private final class ProviderParser extends ExtensionParser<InternalProvider> {
-		private static final String EXTENSION_POINT_NAME = "providers";
+		private static final String EXTENSION_POINT_NAME = "providers"; //$NON-NLS-1$
 
 		public ProviderParser() {
 			super(ECPProviderRegistryImpl.this, Activator.PLUGIN_ID, EXTENSION_POINT_NAME);

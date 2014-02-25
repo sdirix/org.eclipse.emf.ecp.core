@@ -145,7 +145,7 @@ public class MEEditorPage extends FormPage {
 
 		String name = shortLabelProvider.getText(modelElementContext.getDomainObject());
 
-		name += " [" + modelElementContext.getDomainObject().eClass().getName() + "]";
+		name += " [" + modelElementContext.getDomainObject().eClass().getName() + "]"; //$NON-NLS-1$ //$NON-NLS-2$
 		try {
 			form.setText(name);
 		} catch (final SWTException e) {
@@ -178,24 +178,27 @@ public class MEEditorPage extends FormPage {
 		// .getService(IEvaluationService.class);
 		// service.addSourceProvider(sourceProvider);
 
-		form.getToolBarManager().add(new Action("", Activator.getImageDescriptor(ISharedImages.IMG_TOOL_DELETE)) {
+		form.getToolBarManager().add(new Action("", Activator.getImageDescriptor(ISharedImages.IMG_TOOL_DELETE)) { //$NON-NLS-1$
 
-			@Override
-			public void run() {
-				final EditingDomain editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(modelElementContext
-					.getDomainObject());
-				new ECPCommand(modelElementContext.getDomainObject(), editingDomain) {
+				private static final long serialVersionUID = -8174732263834262751L;
 
-					@Override
-					protected void doRun() {
-						EcoreUtil.delete(modelElementContext.getDomainObject(), true);
-					}
+				@Override
+				public void run() {
+					final EditingDomain editingDomain = AdapterFactoryEditingDomain
+						.getEditingDomainFor(modelElementContext
+							.getDomainObject());
+					new ECPCommand(modelElementContext.getDomainObject(), editingDomain) {
 
-				}.run(true);
+						@Override
+						protected void doRun() {
+							EcoreUtil.delete(modelElementContext.getDomainObject(), true);
+						}
 
-				MEEditorPage.this.getEditor().close(true);
-			}
-		});
+					}.run(true);
+
+					MEEditorPage.this.getEditor().close(true);
+				}
+			});
 		menuService.populateContributionManager((ContributionManager) form.getToolBarManager(),
 			"toolbar:org.eclipse.emf.ecp.editor.internal.e3.MEEditorPage"); //$NON-NLS-1$
 		form.getToolBarManager().update(true);

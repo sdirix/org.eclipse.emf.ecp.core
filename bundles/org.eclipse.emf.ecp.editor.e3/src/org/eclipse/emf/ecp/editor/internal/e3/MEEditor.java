@@ -88,7 +88,7 @@ public class MEEditor extends SharedHeaderFormEditor {
 	@Override
 	protected void addPages() {
 		final String editorID = DEFAULT_PAGE_ID;
-		final String editorDesc = "Standard View";
+		final String editorDesc = Messages.MEEditor_Standard_View_Name;
 		final MEEditorInput editorInput = (MEEditorInput) getEditorInput();
 
 		// add pages from the extension point

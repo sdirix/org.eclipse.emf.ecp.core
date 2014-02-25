@@ -53,6 +53,7 @@ import org.eclipse.net4j.util.AdapterUtil;
 public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject, ECPObserver> implements
 	ECPProjectManager, ECPRepositoriesChangedObserver {
 
+	private static final String PROJECT_FOLDERNAME = "projects"; //$NON-NLS-1$
 	/**
 	 * The Singleton to access the implementation of the Default ECPProjectManager.
 	 */
@@ -67,11 +68,11 @@ public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject
 	 */
 	public ECPProjectManagerImpl() {
 		if (INSTANCE != null) {
-			throw new IllegalStateException("Manager must not be initialized twice");
+			throw new IllegalStateException("Manager must not be initialized twice"); //$NON-NLS-1$
 		}
 		INSTANCE = this;
 		final File stateLocation = Activator.getInstance().getStateLocation().toFile();
-		setFolder(new File(stateLocation, "projects"));
+		setFolder(new File(stateLocation, PROJECT_FOLDERNAME));
 	}
 
 	/** {@inheritDoc} */
@@ -83,11 +84,11 @@ public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject
 	public ECPProject createProject(ECPProvider provider, String name, ECPProperties properties)
 		throws ECPProjectWithNameExistsException {
 		if (projectExists(name)) {
-			throw new ECPProjectWithNameExistsException("A project with name " + name + " already exists");
+			throw new ECPProjectWithNameExistsException("A project with name " + name + " already exists"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 		if (!provider.hasCreateProjectWithoutRepositorySupport()) {
-			throw new UnsupportedOperationException("The provider " + provider.getLabel()
-				+ " doesn't support the creation of projects without an ECPRepository (aka offline project).");
+			throw new UnsupportedOperationException("The provider " + provider.getLabel() //$NON-NLS-1$
+				+ " doesn't support the creation of projects without an ECPRepository (aka offline project)."); //$NON-NLS-1$
 		}
 		final InternalProject project = new ECPProjectImpl((InternalProvider) provider, name, properties);
 		return createProject(project);
@@ -97,7 +98,7 @@ public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject
 	public ECPProject createProject(ECPRepository repository, String name, ECPProperties properties)
 		throws ECPProjectWithNameExistsException {
 		if (projectExists(name)) {
-			throw new ECPProjectWithNameExistsException("A project with name " + name + " already exists");
+			throw new ECPProjectWithNameExistsException("A project with name " + name + " already exists"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 		final InternalProject project = new ECPProjectImpl(repository, name, properties);
 		return createProject(project);
@@ -160,7 +161,7 @@ public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject
 
 				if (!project.getProvider().modelExists(project)) {
 					project.close();
-					Activator.log(IStatus.ERROR, "Project Data was deleted since last start. Project is now closed.");
+					Activator.log(IStatus.ERROR, "Project Data was deleted since last start. Project is now closed."); //$NON-NLS-1$
 
 					continue;
 				}
