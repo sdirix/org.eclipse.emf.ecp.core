@@ -69,24 +69,9 @@ public class SaveLoadTests {
 		vControlNumberOfVictories.setDomainModelReference(BowlingPackage.eINSTANCE.getPlayer_NumberOfVictories());
 		view.getChildren().add(vControlNumberOfVictories);
 
-		final Player left = BowlingFactory.eINSTANCE.createPlayer();
-		left.setName("a"); //$NON-NLS-1$
-		left.setGender(Gender.MALE);
-		left.setHeight(1);
-		left.setIsProfessional(true);
-		left.setNumberOfVictories(1);
-		final Player right = BowlingFactory.eINSTANCE.createPlayer();
-		right.setName("a"); //$NON-NLS-1$
-		right.setGender(Gender.FEMALE);
-		right.setHeight(2);
-		right.setIsProfessional(false);
-		right.setNumberOfVictories(1);
-		final Player target = BowlingFactory.eINSTANCE.createPlayer();
-		target.setName("b"); //$NON-NLS-1$
-		target.setGender(Gender.MALE);
-		target.setHeight(3);
-		target.setIsProfessional(true);
-		target.setNumberOfVictories(1);
+		final Player left = createPlayer("a", Gender.MALE, 1, true, 1); //$NON-NLS-1$
+		final Player right = createPlayer("a", Gender.FEMALE, 2, false, 1); //$NON-NLS-1$
+		final Player target = createPlayer("b", Gender.MALE, 3, true, 1); //$NON-NLS-1$
 
 		final DiffMergeModelContext context = DiffMergeContextFactory.INSTANCE.createViewModelContext(view, target,
 			left, right);
@@ -119,4 +104,13 @@ public class SaveLoadTests {
 		assertTrue(context2.isControlMerged(vControlHeight));
 	}
 
+	private Player createPlayer(String name, Gender gender, double height, boolean professional, int numberOfVictories) {
+		final Player player = BowlingFactory.eINSTANCE.createPlayer();
+		player.setName(name);
+		player.setGender(gender);
+		player.setHeight(height);
+		player.setIsProfessional(professional);
+		player.setNumberOfVictories(numberOfVictories);
+		return player;
+	}
 }
