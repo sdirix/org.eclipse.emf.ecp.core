@@ -55,7 +55,8 @@
       <feature id="org.eclipse.emf.ecp.view.categorization.feature"/>
       <feature id="org.eclipse.emf.ecp.view.template.helper.feature"/>
       <feature id="org.eclipse.emf.ecp.view.model.editor.feature"/>
-      <feature id="org.eclipse.emf.ecp.demo.e3.feature" version="1.2.0.qualifier"/>
+      <feature id="org.eclipse.emf.ecp.demo.e3.feature"/>
+      <feature id="org.eclipse.emf.ecp.view.model.controls.feature"/>
    </features>
 
    <configurations>
