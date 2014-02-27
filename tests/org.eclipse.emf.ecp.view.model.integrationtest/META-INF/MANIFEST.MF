@@ -5,16 +5,16 @@ Bundle-SymbolicName: org.eclipse.emf.ecp.view.model.integrationtest
 Bundle-Version: 1.2.0.qualifier
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Require-Bundle: org.junit;bundle-version="[4.0.0,5.0.0)",
- org.eclipse.emf.ecp.view.model;bundle-version="[1.1.0,2.0.0)",
+ org.eclipse.emf.ecp.view.model;bundle-version="[1.2.0,2.0.0)",
  org.eclipse.emf.edit;bundle-version="[2.7.0,3.0.0)",
- org.eclipse.emf.ecp.view.model.edit;bundle-version="[1.1.0,2.0.0)",
- org.eclipse.emf.ecp.view.separator.model;bundle-version="[1.1.0,2.0.0)",
- org.eclipse.emf.ecp.view.groupedgrid.model;bundle-version="1.1.0",
- org.eclipse.emf.ecp.view.label.model;bundle-version="1.1.0",
- org.eclipse.emf.ecp.view.rule.model;bundle-version="1.1.0",
- org.eclipse.emf.ecp.view.group.model;bundle-version="1.1.0",
- org.eclipse.emf.ecp.view.table.model;bundle-version="1.0.0",
- org.eclipse.emf.ecp.view.categorization.model;bundle-version="1.1.0"
+ org.eclipse.emf.ecp.view.model.edit;bundle-version="[1.2.0,2.0.0)",
+ org.eclipse.emf.ecp.view.separator.model;bundle-version="[1.2.0,2.0.0)",
+ org.eclipse.emf.ecp.view.groupedgrid.model;bundle-version="[1.2.0,2.0.0)",
+ org.eclipse.emf.ecp.view.label.model;bundle-version="[1.2.0,2.0.0)",
+ org.eclipse.emf.ecp.view.rule.model;bundle-version="[1.2.0,2.0.0)",
+ org.eclipse.emf.ecp.view.group.model;bundle-version="[1.2.0,2.0.0)",
+ org.eclipse.emf.ecp.view.table.model;bundle-version="[1.2.0,2.0.0)",
+ org.eclipse.emf.ecp.view.categorization.model;bundle-version="[1.2.0,2.0.0)"
 Export-Package: org.eclipse.emf.ecp.view.model.integrationtest;version="1.2.0";x-internal:=true
 Import-Package: org.eclipse.emf.ecp.common
 
