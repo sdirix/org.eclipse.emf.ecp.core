@@ -39,6 +39,7 @@ import org.eclipse.emf.ecp.view.spi.groupedgrid.model.VRow;
  * </p>
  * 
  * @generated
+ * @since 1.2
  */
 public class VGroupImpl extends EObjectImpl implements VGroup
 {
@@ -132,10 +133,11 @@ public class VGroupImpl extends EObjectImpl implements VGroup
 	 */
 	public void setName(String newName)
 	{
-		String oldName = name;
+		final String oldName = name;
 		name = newName;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, VGroupedGridPackage.GROUP__NAME, oldName, name));
+		}
 	}
 
 	/**
@@ -246,10 +248,11 @@ public class VGroupImpl extends EObjectImpl implements VGroup
 	@Override
 	public String toString()
 	{
-		if (eIsProxy())
+		if (eIsProxy()) {
 			return super.toString();
+		}
 
-		StringBuffer result = new StringBuffer(super.toString());
+		final StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (name: "); //$NON-NLS-1$
 		result.append(name);
 		result.append(')');

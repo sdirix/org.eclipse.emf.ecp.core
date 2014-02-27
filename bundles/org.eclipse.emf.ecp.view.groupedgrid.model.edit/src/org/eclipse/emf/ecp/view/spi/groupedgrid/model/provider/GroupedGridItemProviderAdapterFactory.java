@@ -54,6 +54,7 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
  * <!-- end-user-doc -->
  * 
  * @generated
+ * @since 1.2
  */
 public class GroupedGridItemProviderAdapterFactory extends GroupedGridAdapterFactory implements
 	ComposeableAdapterFactory, IChangeNotifier, IDisposable, IChildCreationExtender
@@ -283,8 +284,8 @@ public class GroupedGridItemProviderAdapterFactory extends GroupedGridAdapterFac
 	{
 		if (isFactoryForType(type))
 		{
-			Object adapter = super.adapt(object, type);
-			if (!(type instanceof Class<?>) || (((Class<?>) type).isInstance(adapter)))
+			final Object adapter = super.adapt(object, type);
+			if (!(type instanceof Class<?>) || ((Class<?>) type).isInstance(adapter))
 			{
 				return adapter;
 			}
@@ -376,14 +377,18 @@ public class GroupedGridItemProviderAdapterFactory extends GroupedGridAdapterFac
 	 */
 	public void dispose()
 	{
-		if (groupedGridItemProvider != null)
+		if (groupedGridItemProvider != null) {
 			groupedGridItemProvider.dispose();
-		if (groupItemProvider != null)
+		}
+		if (groupItemProvider != null) {
 			groupItemProvider.dispose();
-		if (rowItemProvider != null)
+		}
+		if (rowItemProvider != null) {
 			rowItemProvider.dispose();
-		if (spanItemProvider != null)
+		}
+		if (spanItemProvider != null) {
 			spanItemProvider.dispose();
+		}
 	}
 
 	/**
@@ -507,7 +512,7 @@ public class GroupedGridItemProviderAdapterFactory extends GroupedGridAdapterFac
 		 */
 		public Collection<Object> getNewChildDescriptors(Object object, EditingDomain editingDomain)
 		{
-			ArrayList<Object> result = new ArrayList<Object>();
+			final ArrayList<Object> result = new ArrayList<Object>();
 			new CreationSwitch(result, editingDomain).doSwitch((EObject) object);
 			return result;
 		}

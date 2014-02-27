@@ -30,6 +30,7 @@ import org.eclipse.swt.widgets.Control;
  * The SWT Renderer for the {@link VHorizontalLayout}. It renders all elements next to each other.
  * 
  * @author Eugen Neufeld
+ * @since 1.2
  * 
  */
 public class HorizontalLayoutSWTRenderer extends AbstractSWTRenderer<VHorizontalLayout> {

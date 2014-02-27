@@ -36,6 +36,7 @@ import org.eclipse.emf.ecp.view.spi.model.impl.VContainedElementImpl;
  * </p>
  * 
  * @generated
+ * @since 1.2
  */
 public class VGroupedGridImpl extends VContainedElementImpl implements VGroupedGrid
 {

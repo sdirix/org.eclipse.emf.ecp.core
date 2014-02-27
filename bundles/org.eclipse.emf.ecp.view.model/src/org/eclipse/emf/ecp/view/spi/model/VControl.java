@@ -32,6 +32,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
  * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getControl()
  * @model
  * @generated
+ * @since 1.2
  */
 public interface VControl extends VContainedElement {
 	/**

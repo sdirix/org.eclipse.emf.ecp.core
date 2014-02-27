@@ -50,6 +50,7 @@ public interface ECPSWTViewRenderer {
 	 * @param viewModel the view model describing the layout of the view
 	 * @return an ECPSWTView providing an interface to the rendered view
 	 * @throws ECPRendererException if there is an exception during rendering
+	 * @since 1.2
 	 */
 	ECPSWTView render(Composite parent, EObject domainObject, VView viewModel) throws ECPRendererException;
 
@@ -61,6 +62,7 @@ public interface ECPSWTViewRenderer {
 	 * @param viewModelContext the {@link ViewModelContext} to use
 	 * @return an ECPSWTView providing an interface to the rendered view
 	 * @throws ECPRendererException if there is an exception during rendering
+	 * @since 1.2
 	 */
 	ECPSWTView render(Composite parent, ViewModelContext viewModelContext) throws ECPRendererException;
 

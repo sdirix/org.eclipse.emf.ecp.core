@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="%productName" uid="org.eclipse.emf.ecp.3x" id="org.eclipse.emf.ecp.application.e3.product" application="org.eclipse.emf.ecp.application.e3.application" version="1.1.1.qualifier" useFeatures="true" includeLaunchers="true">
+<product name="%productName" uid="org.eclipse.emf.ecp.3x" id="org.eclipse.emf.ecp.application.e3.product" application="org.eclipse.emf.ecp.application.e3.application" version="1.2.0.qualifier" useFeatures="true" includeLaunchers="true">
 
    <aboutInfo>
       <image path="/org.eclipse.emf.ecp.application.e3/icons/eclipse_lg.gif"/>
@@ -33,7 +33,6 @@
    </plugins>
 
    <features>
-      <feature id="org.eclipse.emf.ecp.validation.feature"/>
       <feature id="org.eclipse.emf.emfstore.example.feature"/>
       <feature id="org.eclipse.emf.ecp.cdo.feature"/>
       <feature id="org.eclipse.emf.ecp.e3.feature"/>
@@ -56,6 +55,8 @@
       <feature id="org.eclipse.emf.ecp.view.categorization.feature"/>
       <feature id="org.eclipse.emf.ecp.view.template.helper.feature"/>
       <feature id="org.eclipse.emf.ecp.view.model.editor.feature"/>
+      <feature id="org.eclipse.emf.ecp.demo.e3.feature"/>
+      <feature id="org.eclipse.emf.ecp.view.model.controls.feature"/>
    </features>
 
    <configurations>

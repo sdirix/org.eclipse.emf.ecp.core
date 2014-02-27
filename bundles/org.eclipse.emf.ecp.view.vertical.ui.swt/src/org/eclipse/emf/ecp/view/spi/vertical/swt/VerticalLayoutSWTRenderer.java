@@ -30,6 +30,7 @@ import org.eclipse.swt.widgets.Control;
  * The SWT Renderer for the {@link VVerticalLayout}. It renders all elements under each other.
  * 
  * @author Eugen Neufeld
+ * @since 1.2
  * 
  */
 public class VerticalLayoutSWTRenderer extends AbstractSWTRenderer<VVerticalLayout> {

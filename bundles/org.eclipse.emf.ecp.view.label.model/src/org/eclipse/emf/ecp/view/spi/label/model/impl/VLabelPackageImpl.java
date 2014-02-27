@@ -28,6 +28,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * <!-- end-user-doc -->
  * 
  * @generated
+ * @since 1.2
  */
 public class VLabelPackageImpl extends EPackageImpl implements VLabelPackage
 {
@@ -89,12 +90,14 @@ public class VLabelPackageImpl extends EPackageImpl implements VLabelPackage
 	 */
 	public static VLabelPackage init()
 	{
-		if (isInited)
+		if (isInited) {
 			return (VLabelPackage) EPackage.Registry.INSTANCE.getEPackage(VLabelPackage.eNS_URI);
+		}
 
 		// Obtain or create and register package
-		VLabelPackageImpl theLabelPackage = (VLabelPackageImpl) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof VLabelPackageImpl ? EPackage.Registry.INSTANCE
-			.get(eNS_URI) : new VLabelPackageImpl());
+		final VLabelPackageImpl theLabelPackage = (VLabelPackageImpl) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof VLabelPackageImpl ? EPackage.Registry.INSTANCE
+			.get(eNS_URI)
+			: new VLabelPackageImpl());
 
 		isInited = true;
 
@@ -177,8 +180,9 @@ public class VLabelPackageImpl extends EPackageImpl implements VLabelPackage
 	 */
 	public void createPackageContents()
 	{
-		if (isCreated)
+		if (isCreated) {
 			return;
+		}
 		isCreated = true;
 
 		// Create classes and their features
@@ -207,8 +211,9 @@ public class VLabelPackageImpl extends EPackageImpl implements VLabelPackage
 	 */
 	public void initializePackageContents()
 	{
-		if (isInitialized)
+		if (isInitialized) {
 			return;
+		}
 		isInitialized = true;
 
 		// Initialize package
@@ -217,7 +222,7 @@ public class VLabelPackageImpl extends EPackageImpl implements VLabelPackage
 		setNsURI(eNS_URI);
 
 		// Obtain other dependent packages
-		VViewPackage theViewPackage = (VViewPackage) EPackage.Registry.INSTANCE.getEPackage(VViewPackage.eNS_URI);
+		final VViewPackage theViewPackage = (VViewPackage) EPackage.Registry.INSTANCE.getEPackage(VViewPackage.eNS_URI);
 
 		// Create type parameters
 
@@ -230,7 +235,7 @@ public class VLabelPackageImpl extends EPackageImpl implements VLabelPackage
 		initEClass(labelEClass, VLabel.class, "Label", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEAttribute(
 			getLabel_Style(),
-			this.getVLabelStyle(),
+			getVLabelStyle(),
 			"style", null, 0, 1, VLabel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		// Initialize enums and add enum literals

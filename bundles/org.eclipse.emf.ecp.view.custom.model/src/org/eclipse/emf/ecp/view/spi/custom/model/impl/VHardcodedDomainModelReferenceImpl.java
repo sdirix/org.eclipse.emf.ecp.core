@@ -52,6 +52,7 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
  * </p>
  * 
  * @generated
+ * @since 1.2
  */
 public class VHardcodedDomainModelReferenceImpl extends EObjectImpl implements VHardcodedDomainModelReference {
 
@@ -149,11 +150,12 @@ public class VHardcodedDomainModelReferenceImpl extends EObjectImpl implements V
 	 * @generated
 	 */
 	public void setControlId(String newControlId) {
-		String oldControlId = controlId;
+		final String oldControlId = controlId;
 		controlId = newControlId;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				VCustomPackage.HARDCODED_DOMAIN_MODEL_REFERENCE__CONTROL_ID, oldControlId, controlId));
+		}
 	}
 
 	/**
@@ -187,11 +189,12 @@ public class VHardcodedDomainModelReferenceImpl extends EObjectImpl implements V
 	 * @generated
 	 */
 	public void setControlChecked(boolean newControlChecked) {
-		boolean oldControlChecked = controlChecked;
+		final boolean oldControlChecked = controlChecked;
 		controlChecked = newControlChecked;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				VCustomPackage.HARDCODED_DOMAIN_MODEL_REFERENCE__CONTROL_CHECKED, oldControlChecked, controlChecked));
+		}
 	}
 
 	/**
@@ -301,10 +304,11 @@ public class VHardcodedDomainModelReferenceImpl extends EObjectImpl implements V
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy())
+		if (eIsProxy()) {
 			return super.toString();
+		}
 
-		StringBuffer result = new StringBuffer(super.toString());
+		final StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (controlId: "); //$NON-NLS-1$
 		result.append(controlId);
 		result.append(", controlChecked: "); //$NON-NLS-1$

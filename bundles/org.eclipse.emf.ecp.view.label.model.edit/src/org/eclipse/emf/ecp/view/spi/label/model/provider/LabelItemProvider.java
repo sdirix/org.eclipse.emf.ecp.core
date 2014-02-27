@@ -35,6 +35,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * <!-- end-user-doc -->
  * 
  * @generated
+ * @since 1.2
  */
 public class LabelItemProvider
 	extends ContainedElementItemProvider implements IEditingDomainItemProvider, IStructuredItemContentProvider,
@@ -118,7 +119,7 @@ public class LabelItemProvider
 	@Override
 	public String getText(Object object)
 	{
-		String label = ((VLabel) object).getName();
+		final String label = ((VLabel) object).getName();
 		return label == null || label.length() == 0 ?
 			getString("_UI_Label_type") : //$NON-NLS-1$
 			getString("_UI_Label_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$

@@ -29,6 +29,7 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
  * 
  * @see org.eclipse.emf.ecp.view.spi.horizontal.model.VHorizontalPackage
  * @generated
+ * @since 1.2
  */
 public class HorizontalAdapterFactory extends AdapterFactoryImpl
 {

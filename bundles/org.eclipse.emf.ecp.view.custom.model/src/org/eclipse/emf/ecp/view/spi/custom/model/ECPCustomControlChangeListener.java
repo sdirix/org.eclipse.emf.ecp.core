@@ -16,6 +16,7 @@ package org.eclipse.emf.ecp.view.spi.custom.model;
  * {@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReference VDomainModelReference} changes.
  * 
  * @author eneufeld
+ * @since 1.2
  * 
  */
 public interface ECPCustomControlChangeListener {

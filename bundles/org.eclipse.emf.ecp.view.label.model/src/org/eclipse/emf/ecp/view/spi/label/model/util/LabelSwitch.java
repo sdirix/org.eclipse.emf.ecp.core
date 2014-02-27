@@ -32,6 +32,7 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
  * 
  * @see org.eclipse.emf.ecp.view.spi.label.model.VLabelPackage
  * @generated
+ * @since 1.2
  */
 public class LabelSwitch<T> extends Switch<T>
 {
@@ -89,14 +90,17 @@ public class LabelSwitch<T> extends Switch<T>
 		switch (classifierID)
 		{
 		case VLabelPackage.LABEL: {
-			VLabel label = (VLabel) theEObject;
+			final VLabel label = (VLabel) theEObject;
 			T result = caseLabel(label);
-			if (result == null)
+			if (result == null) {
 				result = caseContainedElement(label);
-			if (result == null)
+			}
+			if (result == null) {
 				result = caseElement(label);
-			if (result == null)
+			}
+			if (result == null) {
 				result = defaultCase(theEObject);
+			}
 			return result;
 		}
 		default:

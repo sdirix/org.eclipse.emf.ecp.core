@@ -29,6 +29,7 @@ import org.eclipse.emf.ecp.view.spi.rule.model.RulePackage;
  * </p>
  * 
  * @generated
+ * @since 1.2
  */
 public class EnableRuleImpl extends RuleImpl implements EnableRule {
 	/**
@@ -91,10 +92,11 @@ public class EnableRuleImpl extends RuleImpl implements EnableRule {
 	 * @generated
 	 */
 	public void setDisable(boolean newDisable) {
-		boolean oldDisable = disable;
+		final boolean oldDisable = disable;
 		disable = newDisable;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, RulePackage.ENABLE_RULE__DISABLE, oldDisable, disable));
+		}
 	}
 
 	/**
@@ -171,10 +173,11 @@ public class EnableRuleImpl extends RuleImpl implements EnableRule {
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy())
+		if (eIsProxy()) {
 			return super.toString();
+		}
 
-		StringBuffer result = new StringBuffer(super.toString());
+		final StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (disable: "); //$NON-NLS-1$
 		result.append(disable);
 		result.append(')');

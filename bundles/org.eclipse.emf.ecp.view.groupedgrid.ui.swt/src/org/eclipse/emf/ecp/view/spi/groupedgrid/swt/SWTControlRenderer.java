@@ -38,6 +38,7 @@ import org.eclipse.swt.widgets.Label;
  * The AbstractSWTRenderer of an SWTControlRenderer.
  * 
  * @author Eugen Neufeld
+ * @since 1.2
  * 
  */
 public class SWTControlRenderer extends AbstractSWTRenderer<VControl> {

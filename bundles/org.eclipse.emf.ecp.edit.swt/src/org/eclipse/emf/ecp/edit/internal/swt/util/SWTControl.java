@@ -98,8 +98,12 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 		final List<RenderingResultRow<Control>> list = Collections.singletonList(SWTRenderingHelper.INSTANCE
 			.getResultRowFactory().createRenderingResultRow(
 				validationLabel, createControl(parent)));
+
+		applyValidation(getControl().getDiagnostic());
+
 		// TODO remove asap
 		backwardCompatibleHandleValidation();
+
 		return list;
 
 	}
@@ -144,7 +148,7 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 	private Composite createDataControl(Composite composite) {
 		final Composite innerComposite = new Composite(composite, SWT.NONE);
 		innerComposite.setBackground(composite.getBackground());
-		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(innerComposite);
+		// GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(innerComposite);
 		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(innerComposite);
 		createContentControl(innerComposite);
 		return innerComposite;
@@ -316,6 +320,7 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 	protected Button createButtonForAction(final Action action, final Composite composite) {
 		final Button selectButton = new Button(composite, SWT.PUSH);
 		selectButton.setImage(action.getImageDescriptor().createImage());
+		selectButton.setEnabled(!getControl().isReadonly());
 		selectButton.setToolTipText(action.getToolTipText());
 		selectButton.addSelectionListener(new SelectionAdapter() {
 			@Override

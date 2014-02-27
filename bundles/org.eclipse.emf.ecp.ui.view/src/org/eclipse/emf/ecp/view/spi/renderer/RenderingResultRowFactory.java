@@ -16,6 +16,7 @@ package org.eclipse.emf.ecp.view.spi.renderer;
  * 
  * @param <CONTROL> the type of the control this {@link RenderingResultRowFactory} works on
  * @author Eugen Neufeld
+ * @since 1.2
  * 
  */
 public interface RenderingResultRowFactory<CONTROL> {

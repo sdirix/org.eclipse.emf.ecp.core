@@ -37,6 +37,7 @@ import org.osgi.framework.Bundle;
  * A RendererFactory for SWT controls.
  * 
  * @author Eugen Neufeld
+ * @since 1.2
  * 
  */
 public final class SWTRendererFactory {
@@ -57,7 +58,6 @@ public final class SWTRendererFactory {
 
 	private SWTRendererFactory() {
 		readRenderer();
-		// readCustomRenderers();
 	}
 
 	private void readRenderer() {
@@ -113,26 +113,6 @@ public final class SWTRendererFactory {
 		return (Class<T>) bundle.loadClass(clazz);
 
 	}
-
-	// @SuppressWarnings("unchecked")
-	// private void readCustomRenderers() {
-	// final IExtensionPoint extensionPoint = Platform.getExtensionRegistry().getExtensionPoint(
-	//			"org.eclipse.emf.ecp.ui.view.swt.customSWTRenderers"); //$NON-NLS-1$
-	// for (final IExtension extension : extensionPoint.getExtensions()) {
-	// final IConfigurationElement configurationElement = extension.getConfigurationElements()[0];
-	// try {
-	// final CustomSWTRenderer renderer = (CustomSWTRenderer) configurationElement
-	//					.createExecutableExtension("class"); //$NON-NLS-1$
-	// for (final Entry<Class<? extends VElement>, AbstractSWTRenderer<? extends VElement>> entry : renderer
-	// .getCustomRenderers()
-	// .entrySet()) {
-	// rendererMapping.put(entry.getKey(), (AbstractSWTRenderer<VElement>) entry.getValue());
-	// }
-	// } catch (final CoreException ex) {
-	// Activator.log(ex);
-	// }
-	// }
-	// }
 
 	/**
 	 * Searches for a fitting renderer and then renders the passed {@link VElement}.

@@ -16,6 +16,7 @@ package org.eclipse.emf.ecp.view.spi.renderer;
  * 
  * @author Eugen Neufeld
  * @param <LAYOUT> the type of layout object this helper provides.
+ * @since 1.2
  */
 public interface LayoutHelper<LAYOUT> {
 

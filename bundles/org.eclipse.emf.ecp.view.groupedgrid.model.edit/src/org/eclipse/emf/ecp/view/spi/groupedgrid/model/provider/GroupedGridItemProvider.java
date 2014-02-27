@@ -36,6 +36,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * <!-- end-user-doc -->
  * 
  * @generated
+ * @since 1.2
  */
 public class GroupedGridItemProvider
 	extends ContainedElementItemProvider implements IEditingDomainItemProvider, IStructuredItemContentProvider,
@@ -129,7 +130,7 @@ public class GroupedGridItemProvider
 	@Override
 	public String getText(Object object)
 	{
-		String label = ((VGroupedGrid) object).getName();
+		final String label = ((VGroupedGrid) object).getName();
 		return label == null || label.length() == 0 ?
 			getString("_UI_GroupedGrid_type") : //$NON-NLS-1$
 			getString("_UI_GroupedGrid_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$

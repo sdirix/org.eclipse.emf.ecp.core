@@ -33,6 +33,7 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
  * <!-- end-user-doc -->
  * 
  * @generated
+ * @since 1.2
  */
 public class VerticalLayoutItemProvider
 	extends ContainerItemProvider implements IEditingDomainItemProvider, IStructuredItemContentProvider,
@@ -92,7 +93,7 @@ public class VerticalLayoutItemProvider
 	@Override
 	public String getText(Object object)
 	{
-		String label = ((VVerticalLayout) object).getName();
+		final String label = ((VVerticalLayout) object).getName();
 		return label == null || label.length() == 0 ?
 			getString("_UI_VerticalLayout_type") : //$NON-NLS-1$
 			getString("_UI_VerticalLayout_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$

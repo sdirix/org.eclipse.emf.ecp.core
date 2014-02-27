@@ -41,6 +41,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * <!-- end-user-doc -->
  * 
  * @generated
+ * @since 1.2
  */
 public class HardcodedDomainModelReferenceItemProvider
 	extends ItemProviderAdapter
@@ -153,7 +154,7 @@ public class HardcodedDomainModelReferenceItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((VHardcodedDomainModelReference) object).getControlId();
+		final String label = ((VHardcodedDomainModelReference) object).getControlId();
 		return label == null || label.length() == 0 ?
 			getString("_UI_HardcodedDomainModelReference_type") : //$NON-NLS-1$
 			getString("_UI_HardcodedDomainModelReference_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$

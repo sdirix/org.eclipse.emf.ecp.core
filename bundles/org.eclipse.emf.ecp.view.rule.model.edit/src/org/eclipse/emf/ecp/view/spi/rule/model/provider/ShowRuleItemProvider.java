@@ -34,6 +34,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * <!-- end-user-doc -->
  * 
  * @generated
+ * @since 1.2
  */
 public class ShowRuleItemProvider extends RuleItemProvider implements IEditingDomainItemProvider,
 	IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
@@ -110,7 +111,7 @@ public class ShowRuleItemProvider extends RuleItemProvider implements IEditingDo
 	 */
 	@Override
 	public String getText(Object object) {
-		ShowRule showRule = (ShowRule) object;
+		final ShowRule showRule = (ShowRule) object;
 		return getString("_UI_ShowRule_type") + " " + showRule.isHide(); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 

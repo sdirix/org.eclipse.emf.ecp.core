@@ -20,6 +20,7 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
 
 /**
  * @author Eugen Neufeld
+ * @since 1.2
  * 
  */
 public interface RuleServiceHelper {

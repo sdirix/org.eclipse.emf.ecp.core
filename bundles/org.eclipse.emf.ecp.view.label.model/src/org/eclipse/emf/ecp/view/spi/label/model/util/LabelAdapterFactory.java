@@ -28,6 +28,7 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
  * 
  * @see org.eclipse.emf.ecp.view.spi.label.model.VLabelPackage
  * @generated
+ * @since 1.2
  */
 public class LabelAdapterFactory extends AdapterFactoryImpl
 {

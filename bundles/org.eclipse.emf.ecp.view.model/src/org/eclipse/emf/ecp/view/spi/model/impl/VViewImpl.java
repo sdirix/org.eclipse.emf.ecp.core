@@ -41,6 +41,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * </p>
  * 
  * @generated
+ * @since 1.2
  */
 public class VViewImpl extends VElementImpl implements VView {
 	/**
@@ -95,13 +96,14 @@ public class VViewImpl extends VElementImpl implements VView {
 	public EClass getRootEClass() {
 		if (rootEClass != null && rootEClass.eIsProxy())
 		{
-			InternalEObject oldRootEClass = (InternalEObject) rootEClass;
+			final InternalEObject oldRootEClass = (InternalEObject) rootEClass;
 			rootEClass = (EClass) eResolveProxy(oldRootEClass);
 			if (rootEClass != oldRootEClass)
 			{
-				if (eNotificationRequired())
+				if (eNotificationRequired()) {
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, VViewPackage.VIEW__ROOT_ECLASS,
 						oldRootEClass, rootEClass));
+				}
 			}
 		}
 		return rootEClass;
@@ -124,11 +126,12 @@ public class VViewImpl extends VElementImpl implements VView {
 	 * @generated
 	 */
 	public void setRootEClass(EClass newRootEClass) {
-		EClass oldRootEClass = rootEClass;
+		final EClass oldRootEClass = rootEClass;
 		rootEClass = newRootEClass;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, VViewPackage.VIEW__ROOT_ECLASS, oldRootEClass,
 				rootEClass));
+		}
 	}
 
 	/**
@@ -173,8 +176,9 @@ public class VViewImpl extends VElementImpl implements VView {
 		switch (featureID)
 		{
 		case VViewPackage.VIEW__ROOT_ECLASS:
-			if (resolve)
+			if (resolve) {
 				return getRootEClass();
+			}
 			return basicGetRootEClass();
 		case VViewPackage.VIEW__CHILDREN:
 			return getChildren();

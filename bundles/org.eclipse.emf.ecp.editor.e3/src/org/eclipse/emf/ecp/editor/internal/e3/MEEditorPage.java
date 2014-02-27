@@ -29,6 +29,7 @@ import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.ContributionManager;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
 import org.eclipse.swt.layout.GridLayout;
@@ -50,6 +51,7 @@ import org.eclipse.ui.menus.IMenuService;
  */
 public class MEEditorPage extends FormPage {
 
+	private static final String TOOLBAR_ORG_ECLIPSE_EMF_ECP_EDITOR_INTERNAL_E3_ME_EDITOR_PAGE = "toolbar:org.eclipse.emf.ecp.editor.internal.e3.MEEditorPage"; //$NON-NLS-1$
 	//
 	private ScrolledForm form;
 	//
@@ -69,6 +71,8 @@ public class MEEditorPage extends FormPage {
 	 *            the {@link FormPage#id}
 	 * @param title
 	 *            the title
+	 * @param modelElementContext
+	 *            the {@link ECPEditorContext}
 	 * @param modelElement
 	 *            the modelElement
 	 * @param modelElementContext
@@ -90,12 +94,12 @@ public class MEEditorPage extends FormPage {
 	 *            the {@link FormPage#id}
 	 * @param title
 	 *            the title
+	 * @param modelElementContext
+	 *            the {@link ECPEditorContext}
 	 * @param modelElement
 	 *            the modelElement
 	 * @param problemFeature
 	 *            the problemFeature
-	 * @param modelElementContext
-	 *            the {@link ECPEditorContext}
 	 */
 	public MEEditorPage(MEEditor editor, String id, String title, ECPEditorContext modelElementContext,
 		EObject modelElement, EStructuralFeature problemFeature) {
@@ -127,6 +131,7 @@ public class MEEditorPage extends FormPage {
 		try {
 			ecpView = ECPSWTViewRenderer.INSTANCE.render(body, vmc);
 		} catch (final ECPRendererException ex) {
+			MessageDialog.openError(form.getShell(), ex.getClass().getName(), ex.getMessage());
 			Activator.logException(ex);
 		}
 
@@ -180,8 +185,6 @@ public class MEEditorPage extends FormPage {
 
 		form.getToolBarManager().add(new Action("", Activator.getImageDescriptor(ISharedImages.IMG_TOOL_DELETE)) { //$NON-NLS-1$
 
-				private static final long serialVersionUID = -8174732263834262751L;
-
 				@Override
 				public void run() {
 					final EditingDomain editingDomain = AdapterFactoryEditingDomain
@@ -200,7 +203,7 @@ public class MEEditorPage extends FormPage {
 				}
 			});
 		menuService.populateContributionManager((ContributionManager) form.getToolBarManager(),
-			"toolbar:org.eclipse.emf.ecp.editor.internal.e3.MEEditorPage"); //$NON-NLS-1$
+			TOOLBAR_ORG_ECLIPSE_EMF_ECP_EDITOR_INTERNAL_E3_ME_EDITOR_PAGE);
 		form.getToolBarManager().update(true);
 	}
 

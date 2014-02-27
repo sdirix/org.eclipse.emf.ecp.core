@@ -22,6 +22,7 @@ import org.eclipse.emf.ecp.view.spi.model.VContainer;
  * @see org.eclipse.emf.ecp.view.spi.horizontal.model.VHorizontalPackage#getHorizontalLayout()
  * @model
  * @generated
+ * @since 1.2
  */
 public interface VHorizontalLayout extends VContainer
 {

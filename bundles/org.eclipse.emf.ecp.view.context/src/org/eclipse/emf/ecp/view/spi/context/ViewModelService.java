@@ -17,6 +17,7 @@ package org.eclipse.emf.ecp.view.spi.context;
  * something while the model is not the current one anymore.
  * 
  * @author Eugen Neufeld
+ * @since 1.2
  */
 public interface ViewModelService {
 

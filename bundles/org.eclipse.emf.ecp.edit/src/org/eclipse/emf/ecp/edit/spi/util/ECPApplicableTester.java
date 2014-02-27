@@ -49,7 +49,7 @@ public interface ECPApplicableTester {
 	 * @param domainModelReference the {@link VDomainModelReference} to test
 	 * @return {@link #NOT_APPLICABLE} if the corresponding control should not be used, a positivie integer value
 	 *         otherwise. The control with the highest priority will be taken.
-	 * @since 1.1
+	 * @since 1.2
 	 */
 	int isApplicable(VDomainModelReference domainModelReference);
 

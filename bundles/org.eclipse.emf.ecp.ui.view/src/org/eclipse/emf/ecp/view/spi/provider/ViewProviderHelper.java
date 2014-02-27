@@ -28,6 +28,7 @@ import org.osgi.framework.Bundle;
  * Util class for retrieving a {@link VView} based on an {@link EObject}.
  * 
  * @author Eugen Neufeld
+ * @since 1.2
  * 
  */
 public final class ViewProviderHelper {

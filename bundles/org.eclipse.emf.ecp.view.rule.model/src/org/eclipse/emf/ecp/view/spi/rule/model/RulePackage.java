@@ -32,6 +32,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * @see org.eclipse.emf.ecp.view.spi.rule.model.RuleFactory
  * @model kind="package"
  * @generated
+ * @since 1.2
  */
 public interface RulePackage extends EPackage {
 	/**
@@ -41,7 +42,7 @@ public interface RulePackage extends EPackage {
 	 * 
 	 * @generated
 	 */
-	String eNAME = "rule";
+	String eNAME = "rule"; //$NON-NLS-1$
 
 	/**
 	 * The package namespace URI.
@@ -50,7 +51,7 @@ public interface RulePackage extends EPackage {
 	 * 
 	 * @generated
 	 */
-	String eNS_URI = "http://org/eclipse/emf/ecp/view/rule/model";
+	String eNS_URI = "http://org/eclipse/emf/ecp/view/rule/model"; //$NON-NLS-1$
 
 	/**
 	 * The package namespace name.
@@ -59,7 +60,7 @@ public interface RulePackage extends EPackage {
 	 * 
 	 * @generated
 	 */
-	String eNS_PREFIX = "org.eclipse.emf.ecp.view.rule.model";
+	String eNS_PREFIX = "org.eclipse.emf.ecp.view.rule.model"; //$NON-NLS-1$
 
 	/**
 	 * The singleton instance of the package.

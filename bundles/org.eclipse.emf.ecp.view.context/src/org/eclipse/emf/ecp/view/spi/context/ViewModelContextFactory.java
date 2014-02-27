@@ -19,6 +19,7 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
  * This Factory can be used to instantiate {@link ViewModelContext ViewModelContexts}.
  * 
  * @author Eugen Neufeld
+ * @since 1.2
  * 
  */
 public final class ViewModelContextFactory {

@@ -29,6 +29,7 @@ import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalPackage;
  * 
  * @see org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalPackage
  * @generated
+ * @since 1.2
  */
 public class VerticalAdapterFactory extends AdapterFactoryImpl
 {

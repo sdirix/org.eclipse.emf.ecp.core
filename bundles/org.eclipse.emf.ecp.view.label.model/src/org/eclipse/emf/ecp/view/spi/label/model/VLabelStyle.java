@@ -26,6 +26,7 @@ import org.eclipse.emf.common.util.Enumerator;
  * @see org.eclipse.emf.ecp.view.spi.label.model.VLabelPackage#getVLabelStyle()
  * @model
  * @generated
+ * @since 1.2
  */
 public enum VLabelStyle implements Enumerator
 {
@@ -38,7 +39,7 @@ public enum VLabelStyle implements Enumerator
 	 * @generated
 	 * @ordered
 	 */
-	H0(0, "H0", "H0"),
+	H0(0, "H0", "H0"), //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
 	 * The '<em><b>H1</b></em>' literal object.
@@ -49,7 +50,7 @@ public enum VLabelStyle implements Enumerator
 	 * @generated
 	 * @ordered
 	 */
-	H1(1, "H1", "H1"),
+	H1(1, "H1", "H1"), //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
 	 * The '<em><b>H2</b></em>' literal object.
@@ -60,7 +61,7 @@ public enum VLabelStyle implements Enumerator
 	 * @generated
 	 * @ordered
 	 */
-	H2(2, "H2", "H2"),
+	H2(2, "H2", "H2"), //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
 	 * The '<em><b>H3</b></em>' literal object.
@@ -71,7 +72,7 @@ public enum VLabelStyle implements Enumerator
 	 * @generated
 	 * @ordered
 	 */
-	H3(3, "H3", "H3"),
+	H3(3, "H3", "H3"), //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
 	 * The '<em><b>H4</b></em>' literal object.
@@ -82,7 +83,7 @@ public enum VLabelStyle implements Enumerator
 	 * @generated
 	 * @ordered
 	 */
-	H4(4, "H4", "H4"),
+	H4(4, "H4", "H4"), //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
 	 * The '<em><b>H5</b></em>' literal object.
@@ -93,7 +94,7 @@ public enum VLabelStyle implements Enumerator
 	 * @generated
 	 * @ordered
 	 */
-	H5(5, "H5", "H5"),
+	H5(5, "H5", "H5"), //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
 	 * The '<em><b>H6</b></em>' literal object.
@@ -104,7 +105,7 @@ public enum VLabelStyle implements Enumerator
 	 * @generated
 	 * @ordered
 	 */
-	H6(6, "H6", "H6"),
+	H6(6, "H6", "H6"), //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
 	 * The '<em><b>H7</b></em>' literal object.
@@ -115,7 +116,7 @@ public enum VLabelStyle implements Enumerator
 	 * @generated
 	 * @ordered
 	 */
-	H7(7, "H7", "H7"),
+	H7(7, "H7", "H7"), //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
 	 * The '<em><b>H8</b></em>' literal object.
@@ -126,7 +127,7 @@ public enum VLabelStyle implements Enumerator
 	 * @generated
 	 * @ordered
 	 */
-	H8(8, "H8", "H8"),
+	H8(8, "H8", "H8"), //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
 	 * The '<em><b>H9</b></em>' literal object.
@@ -137,7 +138,7 @@ public enum VLabelStyle implements Enumerator
 	 * @generated
 	 * @ordered
 	 */
-	H9(9, "H9", "H9"),
+	H9(9, "H9", "H9"), //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
 	 * The '<em><b>Separator</b></em>' literal object.
@@ -148,7 +149,7 @@ public enum VLabelStyle implements Enumerator
 	 * @generated
 	 * @ordered
 	 */
-	SEPARATOR(10, "Separator", "Separator");
+	SEPARATOR(10, "Separator", "Separator"); //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
 	 * The '<em><b>H0</b></em>' literal value.
@@ -369,7 +370,7 @@ public enum VLabelStyle implements Enumerator
 	{
 		for (int i = 0; i < VALUES_ARRAY.length; ++i)
 		{
-			VLabelStyle result = VALUES_ARRAY[i];
+			final VLabelStyle result = VALUES_ARRAY[i];
 			if (result.toString().equals(literal))
 			{
 				return result;
@@ -389,7 +390,7 @@ public enum VLabelStyle implements Enumerator
 	{
 		for (int i = 0; i < VALUES_ARRAY.length; ++i)
 		{
-			VLabelStyle result = VALUES_ARRAY[i];
+			final VLabelStyle result = VALUES_ARRAY[i];
 			if (result.getName().equals(name))
 			{
 				return result;

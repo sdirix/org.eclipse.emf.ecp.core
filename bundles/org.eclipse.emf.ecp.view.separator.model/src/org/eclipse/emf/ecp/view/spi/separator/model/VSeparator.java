@@ -17,11 +17,12 @@ import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Separator</b></em>'.
  * <!-- end-user-doc -->
- *
- *
+ * 
+ * 
  * @see org.eclipse.emf.ecp.view.spi.separator.model.VSeparatorPackage#getSeparator()
  * @model
  * @generated
+ * @since 1.2
  */
 public interface VSeparator extends VContainedElement {
 } // VSeparator

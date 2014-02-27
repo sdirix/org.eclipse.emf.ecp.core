@@ -28,6 +28,7 @@ import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.edit.spi.ECPAbstractControl;
 import org.eclipse.emf.ecp.edit.spi.ECPControlFactory;
 import org.eclipse.emf.ecp.view.internal.custom.ui.Activator;
@@ -45,6 +46,7 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
  * 
  * @author emueller
  * @author eneufeld
+ * @since 1.2
  * 
  */
 public abstract class ECPAbstractCustomControl extends ECPAbstractControl implements ECPHardcodedReferences {
@@ -335,7 +337,9 @@ public abstract class ECPAbstractCustomControl extends ECPAbstractControl implem
 		VDomainModelReference domainModelReference) {
 		final T createControl = controlFactory.createControl(clazz, domainModelReference);
 		final VControl vControl = VViewFactory.eINSTANCE.createControl();
-		vControl.setDomainModelReference(domainModelReference);
+		final VDomainModelReference modelReference = EcoreUtil.copy(domainModelReference);
+		modelReference.resolve(getViewModelContext().getDomainModel());
+		vControl.setDomainModelReference(modelReference);
 		vControl.setDiagnostic(VViewFactory.eINSTANCE.createDiagnostic());
 		createControl.init(getViewModelContext(), vControl);
 		final Iterator<Setting> iterator = domainModelReference.getIterator();

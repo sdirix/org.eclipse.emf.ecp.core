@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.EFactory;
  * 
  * @see org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalPackage
  * @generated
+ * @since 1.2
  */
 public interface VVerticalFactory extends EFactory
 {

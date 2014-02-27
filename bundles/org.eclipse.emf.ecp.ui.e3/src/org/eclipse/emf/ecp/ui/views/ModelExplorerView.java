@@ -46,7 +46,10 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IPartListener2;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchListener;
 import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
 
 /**
  * @author Eike Stepper
@@ -139,6 +142,20 @@ public class ModelExplorerView extends TreeView implements ILinkedWithEditorView
 
 			}
 		}
+
+		getSite().getWorkbenchWindow().getWorkbench().addWorkbenchListener(new IWorkbenchListener() {
+
+			public boolean preShutdown(IWorkbench workbench, boolean forced) {
+
+				return ECPHandlerHelper.showDirtyProjectsDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+					.getShell());
+			}
+
+			public void postShutdown(IWorkbench workbench) {
+				// do nothing
+			}
+		});
+
 		return viewer;
 	}
 

@@ -37,6 +37,7 @@ import org.eclipse.emf.ecp.view.spi.rule.model.ShowRule;
  * 
  * @see org.eclipse.emf.ecp.view.spi.rule.model.RulePackage
  * @generated
+ * @since 1.2
  */
 public class RuleSwitch<T> extends Switch<T> {
 	/**
@@ -90,68 +91,83 @@ public class RuleSwitch<T> extends Switch<T> {
 		switch (classifierID)
 		{
 		case RulePackage.CONDITION: {
-			Condition condition = (Condition) theEObject;
+			final Condition condition = (Condition) theEObject;
 			T result = caseCondition(condition);
-			if (result == null)
+			if (result == null) {
 				result = defaultCase(theEObject);
+			}
 			return result;
 		}
 		case RulePackage.LEAF_CONDITION: {
-			LeafCondition leafCondition = (LeafCondition) theEObject;
+			final LeafCondition leafCondition = (LeafCondition) theEObject;
 			T result = caseLeafCondition(leafCondition);
-			if (result == null)
+			if (result == null) {
 				result = caseCondition(leafCondition);
-			if (result == null)
+			}
+			if (result == null) {
 				result = defaultCase(theEObject);
+			}
 			return result;
 		}
 		case RulePackage.OR_CONDITION: {
-			OrCondition orCondition = (OrCondition) theEObject;
+			final OrCondition orCondition = (OrCondition) theEObject;
 			T result = caseOrCondition(orCondition);
-			if (result == null)
+			if (result == null) {
 				result = caseCondition(orCondition);
-			if (result == null)
+			}
+			if (result == null) {
 				result = defaultCase(theEObject);
+			}
 			return result;
 		}
 		case RulePackage.AND_CONDITION: {
-			AndCondition andCondition = (AndCondition) theEObject;
+			final AndCondition andCondition = (AndCondition) theEObject;
 			T result = caseAndCondition(andCondition);
-			if (result == null)
+			if (result == null) {
 				result = caseCondition(andCondition);
-			if (result == null)
+			}
+			if (result == null) {
 				result = defaultCase(theEObject);
+			}
 			return result;
 		}
 		case RulePackage.RULE: {
-			Rule rule = (Rule) theEObject;
+			final Rule rule = (Rule) theEObject;
 			T result = caseRule(rule);
-			if (result == null)
+			if (result == null) {
 				result = caseAttachment(rule);
-			if (result == null)
+			}
+			if (result == null) {
 				result = defaultCase(theEObject);
+			}
 			return result;
 		}
 		case RulePackage.SHOW_RULE: {
-			ShowRule showRule = (ShowRule) theEObject;
+			final ShowRule showRule = (ShowRule) theEObject;
 			T result = caseShowRule(showRule);
-			if (result == null)
+			if (result == null) {
 				result = caseRule(showRule);
-			if (result == null)
+			}
+			if (result == null) {
 				result = caseAttachment(showRule);
-			if (result == null)
+			}
+			if (result == null) {
 				result = defaultCase(theEObject);
+			}
 			return result;
 		}
 		case RulePackage.ENABLE_RULE: {
-			EnableRule enableRule = (EnableRule) theEObject;
+			final EnableRule enableRule = (EnableRule) theEObject;
 			T result = caseEnableRule(enableRule);
-			if (result == null)
+			if (result == null) {
 				result = caseRule(enableRule);
-			if (result == null)
+			}
+			if (result == null) {
 				result = caseAttachment(enableRule);
-			if (result == null)
+			}
+			if (result == null) {
 				result = defaultCase(theEObject);
+			}
 			return result;
 		}
 		default:

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.eclipse.emf.ecp.demo.e3.feature"
+      label="ECP e3 Demo Application"
+      version="1.2.0.qualifier"
+      provider-name="%providerName"
+      plugin="org.eclipse.emf.ecp.ui.e4"
+      image="eclipse_update_120.jpg"
+      license-feature="org.eclipse.emf.ecp.license.feature"
+      license-feature-version="1.2.0.qualifier">
+
+   <description>
+      %description
+   </description>
+
+   <copyright url="%copyrightURL">
+      %copyright
+   </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
+
+   <includes
+         id="org.eclipse.emf.ecp.e3.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.ecp.emfforms.runtime.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.ecp.emfstore.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.ecp.workspace.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.ecp.view.model.editor.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.ecp.view.template.helper.feature"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.eclipse.emf.ecp.application.e3"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>

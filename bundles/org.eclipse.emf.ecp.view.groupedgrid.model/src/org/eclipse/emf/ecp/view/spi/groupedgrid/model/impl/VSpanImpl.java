@@ -30,6 +30,7 @@ import org.eclipse.emf.ecp.view.spi.model.impl.VAttachmentImpl;
  * </p>
  * 
  * @generated
+ * @since 1.2
  */
 public class VSpanImpl extends VAttachmentImpl implements VSpan
 {
@@ -97,11 +98,12 @@ public class VSpanImpl extends VAttachmentImpl implements VSpan
 	 */
 	public void setHorizontalSpan(int newHorizontalSpan)
 	{
-		int oldHorizontalSpan = horizontalSpan;
+		final int oldHorizontalSpan = horizontalSpan;
 		horizontalSpan = newHorizontalSpan;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, VGroupedGridPackage.SPAN__HORIZONTAL_SPAN,
 				oldHorizontalSpan, horizontalSpan));
+		}
 	}
 
 	/**
@@ -183,10 +185,11 @@ public class VSpanImpl extends VAttachmentImpl implements VSpan
 	@Override
 	public String toString()
 	{
-		if (eIsProxy())
+		if (eIsProxy()) {
 			return super.toString();
+		}
 
-		StringBuffer result = new StringBuffer(super.toString());
+		final StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (horizontalSpan: "); //$NON-NLS-1$
 		result.append(horizontalSpan);
 		result.append(')');

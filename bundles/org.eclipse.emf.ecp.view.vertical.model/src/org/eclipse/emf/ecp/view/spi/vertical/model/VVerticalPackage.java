@@ -30,6 +30,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * @see org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalFactory
  * @model kind="package"
  * @generated
+ * @since 1.2
  */
 public interface VVerticalPackage extends EPackage
 {
@@ -40,7 +41,7 @@ public interface VVerticalPackage extends EPackage
 	 * 
 	 * @generated
 	 */
-	String eNAME = "vertical";
+	String eNAME = "vertical"; //$NON-NLS-1$
 
 	/**
 	 * The package namespace URI.
@@ -49,7 +50,7 @@ public interface VVerticalPackage extends EPackage
 	 * 
 	 * @generated
 	 */
-	String eNS_URI = "http://org/eclipse/emf/ecp/view/vertical/model";
+	String eNS_URI = "http://org/eclipse/emf/ecp/view/vertical/model"; //$NON-NLS-1$
 
 	/**
 	 * The package namespace name.
@@ -58,7 +59,7 @@ public interface VVerticalPackage extends EPackage
 	 * 
 	 * @generated
 	 */
-	String eNS_PREFIX = "org.eclipse.emf.ecp.view.vertical.model";
+	String eNS_PREFIX = "org.eclipse.emf.ecp.view.vertical.model"; //$NON-NLS-1$
 
 	/**
 	 * The singleton instance of the package.

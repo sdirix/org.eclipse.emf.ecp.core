@@ -20,11 +20,11 @@ import org.eclipse.emf.ecp.common.UniqueSetting;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Interface ViewModelContext.
  * 
  * @author Eugen Neufeld
+ * @since 1.2
  */
 public interface ViewModelContext {
 	/**
@@ -35,6 +35,8 @@ public interface ViewModelContext {
 	 * component's <code>registerViewChangeListener</code> or <code>registerDomainChangeListener</code> method. When
 	 * the modelChange event occurs, that object's appropriate
 	 * method is invoked.
+	 * 
+	 * @since 1.2
 	 * 
 	 */
 	public interface ModelChangeListener {

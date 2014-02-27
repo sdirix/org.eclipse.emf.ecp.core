@@ -31,6 +31,7 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
  * 
  * @see org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage
  * @generated
+ * @since 1.2
  */
 public class CustomSwitch<T> extends Switch<T> {
 	/**
@@ -82,12 +83,14 @@ public class CustomSwitch<T> extends Switch<T> {
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
 		case VCustomPackage.HARDCODED_DOMAIN_MODEL_REFERENCE: {
-			VHardcodedDomainModelReference hardcodedDomainModelReference = (VHardcodedDomainModelReference) theEObject;
+			final VHardcodedDomainModelReference hardcodedDomainModelReference = (VHardcodedDomainModelReference) theEObject;
 			T result = caseHardcodedDomainModelReference(hardcodedDomainModelReference);
-			if (result == null)
+			if (result == null) {
 				result = caseDomainModelReference(hardcodedDomainModelReference);
-			if (result == null)
+			}
+			if (result == null) {
 				result = defaultCase(theEObject);
+			}
 			return result;
 		}
 		default:

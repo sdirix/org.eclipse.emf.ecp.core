@@ -20,12 +20,8 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.emf.ecp.internal.ui.util.ECPHandlerHelper;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.ui.IWorkbench;
-import org.eclipse.ui.IWorkbenchListener;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
@@ -39,7 +35,7 @@ public class Activator extends AbstractUIPlugin {
 
 	// The shared instance
 	private static Activator instance;
-	
+
 	/**
 	 * The constructor.
 	 */
@@ -51,34 +47,25 @@ public class Activator extends AbstractUIPlugin {
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		instance = this;
-		
-		PlatformUI.getWorkbench().addWorkbenchListener(new IWorkbenchListener() {
 
-			public boolean preShutdown(IWorkbench workbench, boolean forced) {
-				
-				return ECPHandlerHelper.showDirtyProjectsDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell());
-			}
-
-			public void postShutdown(IWorkbench workbench) {
-				// do nothing
-			}
-		});
 	}
-	
+
 	@Override
 	public void stop(BundleContext context) throws Exception {
 		instance = null;
 		super.stop(context);
 	}
+
 	// END SUPRESS CATCH EXCEPTION
 	/**
 	 * Returns the shared instance.
-	 *
+	 * 
 	 * @return the shared instance
 	 */
 	public static Activator getDefault() {
 		return instance;
 	}
+
 	/**
 	 * Logs messages.
 	 * 
@@ -96,7 +83,7 @@ public class Activator extends AbstractUIPlugin {
 	 */
 	public static void log(String message, Throwable t) {
 		if (t instanceof CoreException) {
-			CoreException coreException = (CoreException) t;
+			final CoreException coreException = (CoreException) t;
 			instance.getLog().log(coreException.getStatus());
 		} else {
 			instance.getLog().log(new Status(IStatus.ERROR, PLUGIN_ID, message, t));
@@ -119,7 +106,7 @@ public class Activator extends AbstractUIPlugin {
 	 * @return the message of the created status
 	 */
 	public static String log(Throwable t) {
-		IStatus status = getStatus(t);
+		final IStatus status = getStatus(t);
 		log(status);
 		return status.getMessage();
 	}
@@ -132,7 +119,7 @@ public class Activator extends AbstractUIPlugin {
 	 */
 	public static IStatus getStatus(Throwable t) {
 		if (t instanceof CoreException) {
-			CoreException coreException = (CoreException) t;
+			final CoreException coreException = (CoreException) t;
 			return coreException.getStatus();
 		}
 
@@ -174,7 +161,7 @@ public class Activator extends AbstractUIPlugin {
 	}
 
 	private static Image loadImage(String path) {
-		ImageDescriptor id = loadImageDescriptor(path);
+		final ImageDescriptor id = loadImageDescriptor(path);
 		if (id == null) {
 			return null;
 		}
@@ -183,11 +170,11 @@ public class Activator extends AbstractUIPlugin {
 	}
 
 	private static ImageDescriptor loadImageDescriptor(String path) {
-		URL url = FileLocator.find(Platform.getBundle(PLUGIN_ID), new Path(path), null);
+		final URL url = FileLocator.find(Platform.getBundle(PLUGIN_ID), new Path(path), null);
 		if (url == null) {
 			return null;
 		}
-		ImageDescriptor imageDescriptor = ImageDescriptor.createFromURL(url);
+		final ImageDescriptor imageDescriptor = ImageDescriptor.createFromURL(url);
 		getDefault().getImageRegistry().put(path, imageDescriptor);
 		return imageDescriptor;
 	}

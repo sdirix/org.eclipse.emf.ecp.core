@@ -32,6 +32,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * @see org.eclipse.emf.ecp.view.spi.groupedgrid.model.VGroupedGridFactory
  * @model kind="package"
  * @generated
+ * @since 1.2
  */
 public interface VGroupedGridPackage extends EPackage
 {
@@ -42,7 +43,7 @@ public interface VGroupedGridPackage extends EPackage
 	 * 
 	 * @generated
 	 */
-	String eNAME = "groupedgrid";
+	String eNAME = "groupedgrid"; //$NON-NLS-1$
 
 	/**
 	 * The package namespace URI.
@@ -51,7 +52,7 @@ public interface VGroupedGridPackage extends EPackage
 	 * 
 	 * @generated
 	 */
-	String eNS_URI = "http://org/eclipse/emf/ecp/view/groupedgrid/model";
+	String eNS_URI = "http://org/eclipse/emf/ecp/view/groupedgrid/model"; //$NON-NLS-1$
 
 	/**
 	 * The package namespace name.
@@ -60,7 +61,7 @@ public interface VGroupedGridPackage extends EPackage
 	 * 
 	 * @generated
 	 */
-	String eNS_PREFIX = "org.eclipse.emf.ecp.view.groupedgrid.model";
+	String eNS_PREFIX = "org.eclipse.emf.ecp.view.groupedgrid.model"; //$NON-NLS-1$
 
 	/**
 	 * The singleton instance of the package.

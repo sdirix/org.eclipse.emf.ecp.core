@@ -53,6 +53,7 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
  * <!-- end-user-doc -->
  * 
  * @generated
+ * @since 1.2
  */
 public class HorizontalItemProviderAdapterFactory extends HorizontalAdapterFactory implements
 	ComposeableAdapterFactory, IChangeNotifier, IDisposable, IChildCreationExtender
@@ -198,8 +199,8 @@ public class HorizontalItemProviderAdapterFactory extends HorizontalAdapterFacto
 	{
 		if (isFactoryForType(type))
 		{
-			Object adapter = super.adapt(object, type);
-			if (!(type instanceof Class<?>) || (((Class<?>) type).isInstance(adapter)))
+			final Object adapter = super.adapt(object, type);
+			if (!(type instanceof Class<?>) || ((Class<?>) type).isInstance(adapter))
 			{
 				return adapter;
 			}
@@ -291,8 +292,9 @@ public class HorizontalItemProviderAdapterFactory extends HorizontalAdapterFacto
 	 */
 	public void dispose()
 	{
-		if (horizontalLayoutItemProvider != null)
+		if (horizontalLayoutItemProvider != null) {
 			horizontalLayoutItemProvider.dispose();
+		}
 	}
 
 	/**
@@ -399,7 +401,7 @@ public class HorizontalItemProviderAdapterFactory extends HorizontalAdapterFacto
 		 */
 		public Collection<Object> getNewChildDescriptors(Object object, EditingDomain editingDomain)
 		{
-			ArrayList<Object> result = new ArrayList<Object>();
+			final ArrayList<Object> result = new ArrayList<Object>();
 			new CreationSwitch(result, editingDomain).doSwitch((EObject) object);
 			return result;
 		}

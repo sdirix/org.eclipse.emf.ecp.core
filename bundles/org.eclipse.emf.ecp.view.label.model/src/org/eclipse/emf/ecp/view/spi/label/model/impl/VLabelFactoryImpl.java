@@ -28,6 +28,7 @@ import org.eclipse.emf.ecp.view.spi.label.model.VLabelStyle;
  * <!-- end-user-doc -->
  * 
  * @generated
+ * @since 1.2
  */
 public class VLabelFactoryImpl extends EFactoryImpl implements VLabelFactory
 {
@@ -42,13 +43,13 @@ public class VLabelFactoryImpl extends EFactoryImpl implements VLabelFactory
 	{
 		try
 		{
-			VLabelFactory theLabelFactory = (VLabelFactory) EPackage.Registry.INSTANCE
+			final VLabelFactory theLabelFactory = (VLabelFactory) EPackage.Registry.INSTANCE
 				.getEFactory(VLabelPackage.eNS_URI);
 			if (theLabelFactory != null)
 			{
 				return theLabelFactory;
 			}
-		} catch (Exception exception)
+		} catch (final Exception exception)
 		{
 			EcorePlugin.INSTANCE.log(exception);
 		}
@@ -129,7 +130,7 @@ public class VLabelFactoryImpl extends EFactoryImpl implements VLabelFactory
 	 */
 	public VLabel createLabel()
 	{
-		VLabelImpl label = new VLabelImpl();
+		final VLabelImpl label = new VLabelImpl();
 		return label;
 	}
 
@@ -141,10 +142,12 @@ public class VLabelFactoryImpl extends EFactoryImpl implements VLabelFactory
 	 */
 	public VLabelStyle createVLabelStyleFromString(EDataType eDataType, String initialValue)
 	{
-		VLabelStyle result = VLabelStyle.get(initialValue);
+		final VLabelStyle result = VLabelStyle.get(initialValue);
 		if (result == null)
+		{
 			throw new IllegalArgumentException(
 				"The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+		}
 		return result;
 	}
 

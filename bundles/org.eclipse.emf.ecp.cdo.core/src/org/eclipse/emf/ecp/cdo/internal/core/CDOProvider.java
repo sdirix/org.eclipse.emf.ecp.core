@@ -15,9 +15,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.util.Collection;
+import java.util.Set;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.net4j.CDONet4jSession;
 import org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
@@ -235,6 +237,24 @@ public class CDOProvider extends DefaultProvider {
 		} finally {
 			IOUtil.close(stream);
 		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 */
+	@Override
+	public ECPContainer getModelContext(Object element) {
+		if (element instanceof CDOResource) {
+			final Set<InternalProject> openProjects = getOpenProjects();
+			for (final InternalProject project : openProjects) {
+				final CDOProjectData projectData = (CDOProjectData) project.getProviderSpecificData();
+				if (projectData.getRootResource().getContents().contains(element)) {
+					return project;
+				}
+			}
+		}
+		return super.getModelContext(element);
 	}
 
 	/**

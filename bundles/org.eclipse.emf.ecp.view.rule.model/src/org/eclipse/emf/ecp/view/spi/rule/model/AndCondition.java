@@ -28,6 +28,7 @@ import org.eclipse.emf.common.util.EList;
  * @see org.eclipse.emf.ecp.view.spi.rule.model.RulePackage#getAndCondition()
  * @model
  * @generated
+ * @since 1.2
  */
 public interface AndCondition extends Condition {
 	/**

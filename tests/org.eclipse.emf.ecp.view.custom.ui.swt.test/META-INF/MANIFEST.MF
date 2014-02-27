@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Tests for the Custom SWT Renderer
 Bundle-SymbolicName: org.eclipse.emf.ecp.view.custom.ui.swt.test;singleton:=true
-Bundle-Version: 1.1.1.qualifier
+Bundle-Version: 1.2.0.qualifier
 Bundle-Vendor: Eclipse Modeling Project
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Require-Bundle: org.eclipse.emf.ecp.view.test.common.swt;bundle-version="1.0.0",
@@ -19,8 +19,8 @@ Require-Bundle: org.eclipse.emf.ecp.view.test.common.swt;bundle-version="1.0.0",
  org.eclipse.jface.databinding;bundle-version="[1.4.0,2.0.0)",
  org.eclipse.emf.emfstore.examplemodel;bundle-version="1.0.1",
  org.eclipse.emf.ecp.edit.swt;bundle-version="1.1.0",
- org.eclipse.emf.ecp.view.validation;bundle-version="1.1.0"
+ org.eclipse.emf.ecp.view.validation;bundle-version="1.1.0",
+ org.eclipse.core.databinding.property;bundle-version="[1.4.0,2.0.0)"
 Export-Package: org.eclipse.emf.ecp.view.custom.ui.swt.test;version="1.0.2";x-internal:=true
-Import-Package: org.eclipse.core.databinding.property.value,
- org.eclipse.jface.layout,
+Import-Package: org.eclipse.jface.layout,
  org.eclipse.jface.viewers

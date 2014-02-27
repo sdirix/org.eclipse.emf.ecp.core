@@ -26,6 +26,7 @@ import org.eclipse.emf.ecore.EStructuralFeature.Setting;
  * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getDomainModelReference()
  * @model interface="true" abstract="true"
  * @generated
+ * @since 1.2
  */
 public interface VDomainModelReference extends EObject
 {

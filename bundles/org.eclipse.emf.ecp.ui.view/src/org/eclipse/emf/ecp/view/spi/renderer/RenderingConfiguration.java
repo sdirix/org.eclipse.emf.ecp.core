@@ -26,6 +26,7 @@ import org.eclipse.emf.ecp.view.internal.ui.Activator;
  * fitting {@link RenderingResultRowFactory} based on a {@link Class}.
  * 
  * @author Eugen Neufeld
+ * @since 1.2
  * 
  */
 public final class RenderingConfiguration {

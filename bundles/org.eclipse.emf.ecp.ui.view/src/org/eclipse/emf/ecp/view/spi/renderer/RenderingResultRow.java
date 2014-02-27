@@ -18,6 +18,7 @@ import java.util.Set;
  * 
  * @param <T> the type this {@link RenderingResultRow} works on
  * @author Eugen Neufeld
+ * @since 1.2
  * 
  */
 public interface RenderingResultRow<T> {

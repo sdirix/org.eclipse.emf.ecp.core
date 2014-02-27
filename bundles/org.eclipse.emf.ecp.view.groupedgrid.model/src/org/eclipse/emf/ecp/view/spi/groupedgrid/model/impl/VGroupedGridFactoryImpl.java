@@ -29,6 +29,7 @@ import org.eclipse.emf.ecp.view.spi.groupedgrid.model.VSpan;
  * <!-- end-user-doc -->
  * 
  * @generated
+ * @since 1.2
  */
 public class VGroupedGridFactoryImpl extends EFactoryImpl implements VGroupedGridFactory
 {
@@ -43,13 +44,13 @@ public class VGroupedGridFactoryImpl extends EFactoryImpl implements VGroupedGri
 	{
 		try
 		{
-			VGroupedGridFactory theGroupedGridFactory = (VGroupedGridFactory) EPackage.Registry.INSTANCE
+			final VGroupedGridFactory theGroupedGridFactory = (VGroupedGridFactory) EPackage.Registry.INSTANCE
 				.getEFactory(VGroupedGridPackage.eNS_URI);
 			if (theGroupedGridFactory != null)
 			{
 				return theGroupedGridFactory;
 			}
-		} catch (Exception exception)
+		} catch (final Exception exception)
 		{
 			EcorePlugin.INSTANCE.log(exception);
 		}
@@ -100,7 +101,7 @@ public class VGroupedGridFactoryImpl extends EFactoryImpl implements VGroupedGri
 	 */
 	public VGroupedGrid createGroupedGrid()
 	{
-		VGroupedGridImpl groupedGrid = new VGroupedGridImpl();
+		final VGroupedGridImpl groupedGrid = new VGroupedGridImpl();
 		return groupedGrid;
 	}
 
@@ -112,7 +113,7 @@ public class VGroupedGridFactoryImpl extends EFactoryImpl implements VGroupedGri
 	 */
 	public VGroup createGroup()
 	{
-		VGroupImpl group = new VGroupImpl();
+		final VGroupImpl group = new VGroupImpl();
 		return group;
 	}
 
@@ -124,7 +125,7 @@ public class VGroupedGridFactoryImpl extends EFactoryImpl implements VGroupedGri
 	 */
 	public VRow createRow()
 	{
-		VRowImpl row = new VRowImpl();
+		final VRowImpl row = new VRowImpl();
 		return row;
 	}
 
@@ -136,7 +137,7 @@ public class VGroupedGridFactoryImpl extends EFactoryImpl implements VGroupedGri
 	 */
 	public VSpan createSpan()
 	{
-		VSpanImpl span = new VSpanImpl();
+		final VSpanImpl span = new VSpanImpl();
 		return span;
 	}
 

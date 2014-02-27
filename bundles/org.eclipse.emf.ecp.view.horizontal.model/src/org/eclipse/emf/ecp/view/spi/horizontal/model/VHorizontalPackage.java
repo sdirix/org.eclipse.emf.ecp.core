@@ -30,6 +30,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * @see org.eclipse.emf.ecp.view.spi.horizontal.model.VHorizontalFactory
  * @model kind="package"
  * @generated
+ * @since 1.2
  */
 public interface VHorizontalPackage extends EPackage
 {
@@ -40,7 +41,7 @@ public interface VHorizontalPackage extends EPackage
 	 * 
 	 * @generated
 	 */
-	String eNAME = "horizontal";
+	String eNAME = "horizontal"; //$NON-NLS-1$
 
 	/**
 	 * The package namespace URI.
@@ -49,7 +50,7 @@ public interface VHorizontalPackage extends EPackage
 	 * 
 	 * @generated
 	 */
-	String eNS_URI = "http://org/eclipse/emf/ecp/view/horizontal/model";
+	String eNS_URI = "http://org/eclipse/emf/ecp/view/horizontal/model"; //$NON-NLS-1$
 
 	/**
 	 * The package namespace name.
@@ -58,7 +59,7 @@ public interface VHorizontalPackage extends EPackage
 	 * 
 	 * @generated
 	 */
-	String eNS_PREFIX = "org.eclipse.emf.ecp.view.horizontal.model";
+	String eNS_PREFIX = "org.eclipse.emf.ecp.view.horizontal.model"; //$NON-NLS-1$
 
 	/**
 	 * The singleton instance of the package.

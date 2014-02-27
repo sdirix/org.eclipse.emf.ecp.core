@@ -12,11 +12,12 @@
 package org.eclipse.emf.ecp.view.ui.editor.test.controls;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
 import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeConstants;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
@@ -63,9 +64,22 @@ public class XmlDateControlSWTBotTest extends ECPCommonSWTBotTest {
 
 	private GCCollectable viewCollectable;
 	private GCCollectable domainCollectable;
+	private final Calendar calendar;
 
 	public XmlDateControlSWTBotTest(boolean isDomainCollectable) {
 		this.isDomainCollectable = isDomainCollectable;
+
+		// Creating date
+		// [DE] 02.10.1986 11:11:11:111
+		// [US] 10/02/1986 11:11:11:111
+		calendar = Calendar.getInstance();
+		calendar.set(Calendar.YEAR, 1986);
+		calendar.set(Calendar.MONTH, 9);
+		calendar.set(Calendar.DAY_OF_MONTH, 2);
+		calendar.set(Calendar.HOUR, 11);
+		calendar.set(Calendar.MINUTE, 11);
+		calendar.set(Calendar.SECOND, 11);
+		calendar.set(Calendar.MILLISECOND, 111);
 	}
 
 	@AfterClass
@@ -96,13 +110,24 @@ public class XmlDateControlSWTBotTest extends ECPCommonSWTBotTest {
 		final SWTBotButton button = bot.button();
 		button.click();
 		final SWTBotDateTime dateTime = bot.dateTime();
-		dateTime.setDate(new Date());
+		dateTime.setDate(calendar.getTime());
 	}
 
 	@Override
 	public void assertions(double before, double after) {
 		XmlDateControlSWTBotTest.memBefore += before;
 		XmlDateControlSWTBotTest.memAfter += after;
+
+		final XMLGregorianCalendar cal = (XMLGregorianCalendar) getDomainObject().eGet(
+			BowlingPackage.eINSTANCE.getReferee_DateOfBirth(), true);
+		assertEquals(DatatypeConstants.FIELD_UNDEFINED, cal.getTimezone());
+		assertEquals(DatatypeConstants.FIELD_UNDEFINED, cal.getHour());
+		assertEquals(DatatypeConstants.FIELD_UNDEFINED, cal.getMinute());
+		assertEquals(DatatypeConstants.FIELD_UNDEFINED, cal.getSecond());
+		assertEquals(DatatypeConstants.FIELD_UNDEFINED, cal.getMillisecond());
+		assertEquals(1986, cal.getYear());
+		assertEquals(10, cal.getMonth());
+		assertEquals(2, cal.getDay());
 
 		assertTrue("More than four adapter left on domain model element after dispose of ECPSWTView: "
 			+ getDomainObject().eAdapters().size()

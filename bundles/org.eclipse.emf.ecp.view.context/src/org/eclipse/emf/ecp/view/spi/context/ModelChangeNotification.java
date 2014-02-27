@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
  * Such a notification is issued by the {@link ViewModelContext} when a change in the domain or the view model occurs.
  * 
  * @author Eugen Neufeld
+ * @since 1.2
  */
 public class ModelChangeNotification {
 

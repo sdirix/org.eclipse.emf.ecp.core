@@ -20,6 +20,7 @@ package org.eclipse.emf.ecp.view.spi.model;
  * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getContainedElement()
  * @model abstract="true"
  * @generated
+ * @since 1.2
  */
 public interface VContainedElement extends VElement {
 

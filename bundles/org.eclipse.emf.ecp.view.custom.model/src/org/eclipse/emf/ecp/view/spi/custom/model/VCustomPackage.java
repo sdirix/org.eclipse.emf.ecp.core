@@ -32,6 +32,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * @see org.eclipse.emf.ecp.view.spi.custom.model.VCustomFactory
  * @model kind="package"
  * @generated
+ * @since 1.2
  */
 public interface VCustomPackage extends EPackage {
 	/**
@@ -41,7 +42,7 @@ public interface VCustomPackage extends EPackage {
 	 * 
 	 * @generated
 	 */
-	String eNAME = "custom";
+	String eNAME = "custom"; //$NON-NLS-1$
 
 	/**
 	 * The package namespace URI.
@@ -50,7 +51,7 @@ public interface VCustomPackage extends EPackage {
 	 * 
 	 * @generated
 	 */
-	String eNS_URI = "http://org/eclipse/emf/ecp/view/custom/model";
+	String eNS_URI = "http://org/eclipse/emf/ecp/view/custom/model"; //$NON-NLS-1$
 
 	/**
 	 * The package namespace name.
@@ -59,7 +60,7 @@ public interface VCustomPackage extends EPackage {
 	 * 
 	 * @generated
 	 */
-	String eNS_PREFIX = "org.eclipse.emf.ecp.view.custom.model";
+	String eNS_PREFIX = "org.eclipse.emf.ecp.view.custom.model"; //$NON-NLS-1$
 
 	/**
 	 * The singleton instance of the package.

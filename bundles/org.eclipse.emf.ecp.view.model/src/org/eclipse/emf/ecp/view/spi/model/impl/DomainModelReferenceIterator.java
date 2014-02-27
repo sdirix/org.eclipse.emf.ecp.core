@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.InternalEObject;
  * Class for the DomainModelReferenceIterator which iterates over all found {@link Setting Settings}.
  * 
  * @author Eugen Neufeld
+ * @since 1.2
  * 
  */
 public class DomainModelReferenceIterator implements Iterator<EStructuralFeature.Setting> {

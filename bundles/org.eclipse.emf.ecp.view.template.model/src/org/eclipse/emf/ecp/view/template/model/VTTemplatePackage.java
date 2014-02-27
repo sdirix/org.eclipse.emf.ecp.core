@@ -42,7 +42,7 @@ public interface VTTemplatePackage extends EPackage
 	 * 
 	 * @generated
 	 */
-	String eNAME = "model";
+	String eNAME = "model"; //$NON-NLS-1$
 
 	/**
 	 * The package namespace URI.
@@ -51,7 +51,7 @@ public interface VTTemplatePackage extends EPackage
 	 * 
 	 * @generated
 	 */
-	String eNS_URI = "http://org/eclipse/emf/ecp/view/template/model";
+	String eNS_URI = "http://org/eclipse/emf/ecp/view/template/model"; //$NON-NLS-1$
 
 	/**
 	 * The package namespace name.
@@ -60,7 +60,7 @@ public interface VTTemplatePackage extends EPackage
 	 * 
 	 * @generated
 	 */
-	String eNS_PREFIX = "org.eclipse.emf.ecp.view.template.model";
+	String eNS_PREFIX = "org.eclipse.emf.ecp.view.template.model"; //$NON-NLS-1$
 
 	/**
 	 * The singleton instance of the package.

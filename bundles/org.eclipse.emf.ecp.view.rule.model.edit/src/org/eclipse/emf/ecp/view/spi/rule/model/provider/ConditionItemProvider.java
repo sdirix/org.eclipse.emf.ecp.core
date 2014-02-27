@@ -32,6 +32,7 @@ import org.eclipse.emf.edit.provider.ItemProviderAdapter;
  * <!-- end-user-doc -->
  * 
  * @generated
+ * @since 1.2
  */
 public class ConditionItemProvider extends ItemProviderAdapter implements
 	IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider,

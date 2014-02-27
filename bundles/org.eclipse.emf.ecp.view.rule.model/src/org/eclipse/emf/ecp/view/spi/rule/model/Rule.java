@@ -28,6 +28,7 @@ import org.eclipse.emf.ecp.view.spi.model.VAttachment;
  * @see org.eclipse.emf.ecp.view.spi.rule.model.RulePackage#getRule()
  * @model abstract="true"
  * @generated
+ * @since 1.2
  */
 public interface Rule extends VAttachment {
 	/**

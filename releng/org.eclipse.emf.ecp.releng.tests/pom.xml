@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.eclipse.emf.ecp</groupId>
 	<artifactId>ecp-tests-parent</artifactId>
-	<version>1.1.1-SNAPSHOT</version>
+	<version>1.2.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<modules>
@@ -19,6 +19,7 @@
 		<module>../../tests/org.eclipse.emf.ecp.view.model.editor.test.feature</module>
 
 		<!-- Tests -->
+		<module>../../tests/org.eclipse.emf.ecp.edit.swt.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.test.common</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.test.common.swt</module>
 		<module>../../tests/org.eclipse.emf.ecp.core.test</module>
@@ -43,6 +44,7 @@
 		<module>../../tests/org.eclipse.emf.ecp.view.vertical.ui.swt.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.ui.editor.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.dynamictree.model.test</module>
+		<module>../../tests/org.eclipse.emf.ecp.ecore.editor.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.diffmerge.test</module>
 	</modules>
 </project>

@@ -28,6 +28,7 @@ import org.eclipse.emf.ecp.view.spi.model.VAttachment;
  * @see org.eclipse.emf.ecp.view.spi.groupedgrid.model.VGroupedGridPackage#getSpan()
  * @model
  * @generated
+ * @since 1.2
  */
 public interface VSpan extends VAttachment
 {

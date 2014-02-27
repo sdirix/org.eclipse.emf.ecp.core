@@ -33,6 +33,7 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
  * 
  * @see org.eclipse.emf.ecp.view.spi.horizontal.model.VHorizontalPackage
  * @generated
+ * @since 1.2
  */
 public class HorizontalSwitch<T> extends Switch<T>
 {
@@ -90,16 +91,20 @@ public class HorizontalSwitch<T> extends Switch<T>
 		switch (classifierID)
 		{
 		case VHorizontalPackage.HORIZONTAL_LAYOUT: {
-			VHorizontalLayout horizontalLayout = (VHorizontalLayout) theEObject;
+			final VHorizontalLayout horizontalLayout = (VHorizontalLayout) theEObject;
 			T result = caseHorizontalLayout(horizontalLayout);
-			if (result == null)
+			if (result == null) {
 				result = caseContainer(horizontalLayout);
-			if (result == null)
+			}
+			if (result == null) {
 				result = caseContainedElement(horizontalLayout);
-			if (result == null)
+			}
+			if (result == null) {
 				result = caseElement(horizontalLayout);
-			if (result == null)
+			}
+			if (result == null) {
 				result = defaultCase(theEObject);
+			}
 			return result;
 		}
 		default:

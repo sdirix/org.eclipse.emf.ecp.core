@@ -22,6 +22,7 @@ import org.eclipse.emf.ecp.view.spi.model.VContainer;
  * @see org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage#getGroup()
  * @model
  * @generated
+ * @since 1.2
  */
 public interface VGroup extends VContainer
 {

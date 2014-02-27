@@ -33,6 +33,7 @@ import org.eclipse.emf.ecp.view.spi.rule.model.ShowRule;
  * 
  * @see org.eclipse.emf.ecp.view.spi.rule.model.RulePackage
  * @generated
+ * @since 1.2
  */
 public class RuleAdapterFactory extends AdapterFactoryImpl {
 	/**

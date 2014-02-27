@@ -49,6 +49,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * </p>
  * 
  * @generated
+ * @since 1.2
  */
 public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 	VFeaturePathDomainModelReference

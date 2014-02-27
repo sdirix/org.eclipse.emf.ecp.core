@@ -33,6 +33,7 @@ import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalPackage;
  * 
  * @see org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalPackage
  * @generated
+ * @since 1.2
  */
 public class VerticalSwitch<T> extends Switch<T>
 {
@@ -90,16 +91,20 @@ public class VerticalSwitch<T> extends Switch<T>
 		switch (classifierID)
 		{
 		case VVerticalPackage.VERTICAL_LAYOUT: {
-			VVerticalLayout verticalLayout = (VVerticalLayout) theEObject;
+			final VVerticalLayout verticalLayout = (VVerticalLayout) theEObject;
 			T result = caseVerticalLayout(verticalLayout);
-			if (result == null)
+			if (result == null) {
 				result = caseContainer(verticalLayout);
-			if (result == null)
+			}
+			if (result == null) {
 				result = caseContainedElement(verticalLayout);
-			if (result == null)
+			}
+			if (result == null) {
 				result = caseElement(verticalLayout);
-			if (result == null)
+			}
+			if (result == null) {
 				result = defaultCase(theEObject);
+			}
 			return result;
 		}
 		default:

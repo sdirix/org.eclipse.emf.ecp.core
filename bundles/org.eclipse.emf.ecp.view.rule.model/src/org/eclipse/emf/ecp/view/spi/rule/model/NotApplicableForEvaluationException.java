@@ -15,6 +15,7 @@ package org.eclipse.emf.ecp.view.spi.rule.model;
  * Internal exception used in the condition evaluator.
  * 
  * @author emueller
+ * @since 1.2
  */
 @SuppressWarnings("serial")
 public class NotApplicableForEvaluationException extends Exception {

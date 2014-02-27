@@ -30,6 +30,7 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
  * @see org.eclipse.emf.ecp.view.spi.rule.model.RulePackage#getLeafCondition()
  * @model
  * @generated
+ * @since 1.2
  */
 public interface LeafCondition extends Condition {
 	/**

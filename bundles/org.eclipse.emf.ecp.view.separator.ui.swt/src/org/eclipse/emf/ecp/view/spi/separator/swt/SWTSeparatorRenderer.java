@@ -28,6 +28,8 @@ import org.eclipse.swt.widgets.Label;
 /**
  * Renders an {@link VSeparator} to a SWT {@link Label}.
  * 
+ * @since 1.2
+ * 
  */
 public class SWTSeparatorRenderer extends AbstractSWTRenderer<VSeparator> {
 	/**
@@ -47,7 +49,9 @@ public class SWTSeparatorRenderer extends AbstractSWTRenderer<VSeparator> {
 		throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
 		final Label label = new Label(parent, SWT.NONE);
-		label.setText(separator.getName());
+		if (separator.getName() != null) {
+			label.setText(separator.getName());
+		}
 		label.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_ui_seperator"); //$NON-NLS-1$
 
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER)

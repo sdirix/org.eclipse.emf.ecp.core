@@ -71,6 +71,8 @@ public class DefaultUIProvider extends Element implements UIProvider {
 	private static final Image PROJECT_OPEN = Activator.getImage("icons/project_open.gif"); //$NON-NLS-1$
 	private static final Image PROJECT_CLOSED = Activator.getImage("icons/project_closed.gif"); //$NON-NLS-1$
 	private static final Image REPOSITORY = Activator.getImage("icons/repository.gif"); //$NON-NLS-1$
+	private static final String UNKNOWN_PACKAGE_ICON = "icons/EPackageUnknown.gif"; //$NON-NLS-1$
+	private static final String EPACKAGE_ICON = "icons/EPackage.gif"; //$NON-NLS-1$
 
 	private final Disposable disposable = new Disposable(this) {
 		@Override
@@ -211,8 +213,11 @@ public class DefaultUIProvider extends Element implements UIProvider {
 
 	private void fillContextMenuForProject(IMenuManager manager, final ECPProject project, Object element) {
 		if (element instanceof Resource) {
-			final Resource resource = (Resource) element;
-			populateNewRoot(resource, manager);
+			// TODO: does it make sense to show "all" registered EPackages in context menu of a resource?
+			// ZH: Do nothing for now. Instead, we show an "Add new Model Element..." in context menu,
+			// when element is a resource
+			// final Resource resource = (Resource) element;
+			// populateNewRoot(resource, manager);
 		} else if (element instanceof EObject) {
 			final EditingDomain domain = project.getEditingDomain();
 			final ChildrenDescriptorCollector childrenDescriptorCollector = new ChildrenDescriptorCollector();
@@ -243,7 +248,7 @@ public class DefaultUIProvider extends Element implements UIProvider {
 			if (!cp.getEReference().isMany() && eObject.eIsSet(cp.getEStructuralFeature())) {
 				continue;
 			} else if (cp.getEReference().isMany() && cp.getEReference().getUpperBound() != -1
-				&& cp.getEReference().getUpperBound() <= ((List) eObject.eGet(cp.getEReference())).size()) {
+				&& cp.getEReference().getUpperBound() <= ((List<?>) eObject.eGet(cp.getEReference())).size()) {
 				continue;
 			}
 			// TODO: Temporal hack to remove all other elements of the view model for 1.1.M1
@@ -320,13 +325,13 @@ public class DefaultUIProvider extends Element implements UIProvider {
 		if (value instanceof EPackage) {
 			final EPackage ePackage = (EPackage) value;
 
-			final ImageDescriptor imageDescriptor = Activator.getImageDescriptor("icons/EPackage.gif");
+			final ImageDescriptor imageDescriptor = Activator.getImageDescriptor(EPACKAGE_ICON);
 			final MenuManager submenuManager = new MenuManager(nsURI, imageDescriptor, nsURI);
 			populateSubMenu(resource, ePackage, submenuManager);
 			return submenuManager;
 		}
 
-		final ImageDescriptor imageDescriptor = Activator.getImageDescriptor("icons/EPackageUnknown.gif");
+		final ImageDescriptor imageDescriptor = Activator.getImageDescriptor(UNKNOWN_PACKAGE_ICON);
 		final MenuManager submenuManager = new MenuManager(nsURI, imageDescriptor, nsURI);
 		submenuManager.setRemoveAllWhenShown(true);
 		submenuManager.add(new Action("Calculating...") {

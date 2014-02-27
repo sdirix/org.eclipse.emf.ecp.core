@@ -85,7 +85,7 @@ public class ECPModelView {
 				}
 			}
 		}
-		modelExplorerTree = TreeViewerFactory.createModelExplorerViewer(composite, false, null);
+		modelExplorerTree = TreeViewerFactory.createModelExplorerViewer(composite, true, null);
 		menuService.registerContextMenu(modelExplorerTree.getTree(),
 			POPUPMENU_NAVIGATOR);
 		contentProvider = (ModelContentProvider) modelExplorerTree.getContentProvider();

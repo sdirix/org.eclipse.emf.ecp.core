@@ -24,6 +24,7 @@ import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalPackage;
  * </p>
  * 
  * @generated
+ * @since 1.2
  */
 public class VVerticalLayoutImpl extends VContainerImpl implements VVerticalLayout
 {

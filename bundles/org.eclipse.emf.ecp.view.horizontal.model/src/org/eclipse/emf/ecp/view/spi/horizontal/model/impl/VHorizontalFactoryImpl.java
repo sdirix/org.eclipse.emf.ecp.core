@@ -26,6 +26,7 @@ import org.eclipse.emf.ecp.view.spi.horizontal.model.VHorizontalPackage;
  * <!-- end-user-doc -->
  * 
  * @generated
+ * @since 1.2
  */
 public class VHorizontalFactoryImpl extends EFactoryImpl implements VHorizontalFactory
 {
@@ -40,13 +41,13 @@ public class VHorizontalFactoryImpl extends EFactoryImpl implements VHorizontalF
 	{
 		try
 		{
-			VHorizontalFactory theHorizontalFactory = (VHorizontalFactory) EPackage.Registry.INSTANCE
+			final VHorizontalFactory theHorizontalFactory = (VHorizontalFactory) EPackage.Registry.INSTANCE
 				.getEFactory(VHorizontalPackage.eNS_URI);
 			if (theHorizontalFactory != null)
 			{
 				return theHorizontalFactory;
 			}
-		} catch (Exception exception)
+		} catch (final Exception exception)
 		{
 			EcorePlugin.INSTANCE.log(exception);
 		}
@@ -91,7 +92,7 @@ public class VHorizontalFactoryImpl extends EFactoryImpl implements VHorizontalF
 	 */
 	public VHorizontalLayout createHorizontalLayout()
 	{
-		VHorizontalLayoutImpl horizontalLayout = new VHorizontalLayoutImpl();
+		final VHorizontalLayoutImpl horizontalLayout = new VHorizontalLayoutImpl();
 		return horizontalLayout;
 	}
 

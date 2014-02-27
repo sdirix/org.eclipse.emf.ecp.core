@@ -33,6 +33,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
  * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getFeaturePathDomainModelReference()
  * @model
  * @generated
+ * @since 1.2
  */
 public interface VFeaturePathDomainModelReference extends VDomainModelReference
 {

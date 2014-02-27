@@ -36,6 +36,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * <!-- end-user-doc -->
  * 
  * @generated
+ * @since 1.2
  */
 public class LeafConditionItemProvider extends ConditionItemProvider implements IEditingDomainItemProvider,
 	IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
@@ -149,8 +150,8 @@ public class LeafConditionItemProvider extends ConditionItemProvider implements 
 	 */
 	@Override
 	public String getText(Object object) {
-		Object labelValue = ((LeafCondition) object).getExpectedValue();
-		String label = labelValue == null ? null : labelValue.toString();
+		final Object labelValue = ((LeafCondition) object).getExpectedValue();
+		final String label = labelValue == null ? null : labelValue.toString();
 		return label == null || label.length() == 0 ?
 			getString("_UI_LeafCondition_type") : //$NON-NLS-1$
 			getString("_UI_LeafCondition_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$

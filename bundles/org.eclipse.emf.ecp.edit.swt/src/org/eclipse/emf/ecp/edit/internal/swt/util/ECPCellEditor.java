@@ -29,8 +29,21 @@ public interface ECPCellEditor {
 	 */
 	String CUSTOM_VARIANT = "org.eclipse.rap.rwt.customVariant"; //$NON-NLS-1$
 
+	/**
+	 * Returns the {@link IValueProperty} for this cell editor which is used by the table to create an
+	 * {@link org.eclipse.core.databinding.observable.value.IObservableValue IObservableValue}.
+	 * 
+	 * @return the {@link IValueProperty} for this cell editor
+	 */
 	IValueProperty getValueProperty();
 
+	/**
+	 * Instantiates this cell editor. This allows the cell editor to use
+	 * {@link org.eclipse.emf.ecp.view.spi.context.ViewModelService ViewModelServices}.
+	 * 
+	 * @param feature the {@link EStructuralFeature} displayed in this cell editor
+	 * @param viewModelContext the {@link ViewModelContext} used for the current view
+	 */
 	void instantiate(EStructuralFeature feature, ViewModelContext viewModelContext);
 
 	int getStyle();
