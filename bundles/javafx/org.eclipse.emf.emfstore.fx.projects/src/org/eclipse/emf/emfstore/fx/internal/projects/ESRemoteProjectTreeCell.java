@@ -1,5 +1,8 @@
 package org.eclipse.emf.emfstore.fx.internal.projects;
 
+import java.util.Arrays;
+import java.util.List;
+
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
@@ -27,10 +30,14 @@ import org.eclipse.emf.emfstore.client.ESWorkspace;
 import org.eclipse.emf.emfstore.client.observer.ESLoginObserver;
 import org.eclipse.emf.emfstore.client.observer.ESLogoutObserver;
 import org.eclipse.emf.emfstore.internal.client.model.ESWorkspaceProviderImpl;
+import org.eclipse.emf.emfstore.internal.server.EMFStoreController;
+import org.eclipse.emf.emfstore.internal.server.exceptions.FatalESException;
 import org.eclipse.emf.emfstore.server.exceptions.ESException;
 
 public final class ESRemoteProjectTreeCell extends TreeCell<Object> {
 
+	private static List<String> localURLs=Arrays.asList("localhost","127.0.0.1");
+	
 	private class LoginHandler implements EventHandler<ActionEvent> {
 		public void handle(ActionEvent t) {
 			ESServer server = (ESServer) getTreeItem().getValue();
@@ -105,6 +112,7 @@ public final class ESRemoteProjectTreeCell extends TreeCell<Object> {
 	private ContextMenu remoteProjectMenu = new ContextMenu();
 	private ContextMenu serverMenu = new ContextMenu();
 	private BooleanProperty loggedIn = new SimpleBooleanProperty(false);
+	
 
 	// private ContextMenu serverMenu = new ContextMenu();
 
@@ -202,7 +210,29 @@ public final class ESRemoteProjectTreeCell extends TreeCell<Object> {
 					result = HBoxBuilder.create().alignment(Pos.CENTER_LEFT)
 							.children(image, label).build();
 				}
-
+				if(localURLs.contains(server.getURL()) && EMFStoreController.getInstance()==null)
+				{
+					final MenuItem startServerItem = new MenuItem();
+					ImageView image = new ImageView(Activator.getContext()
+							.getBundle().getResource("icons/server_go.png")
+							.toExternalForm());
+					startServerItem.setGraphic(HBoxBuilder.create()
+							.alignment(Pos.CENTER_LEFT)
+							.children(image, new Label("Start Server")).build());
+					serverMenu.getItems().add(0,startServerItem);
+					startServerItem.setOnAction(new EventHandler<ActionEvent>() {
+						
+						@Override
+						public void handle(ActionEvent arg0) {
+							try {
+								EMFStoreController.runAsNewThread();
+								startServerItem.setVisible(false);
+							} catch (final FatalESException ex) {
+//								Activator.log(ex);
+							}
+						}
+					});
+				}
 				
 				{
 					MenuItem logInItem = new MenuItem();
