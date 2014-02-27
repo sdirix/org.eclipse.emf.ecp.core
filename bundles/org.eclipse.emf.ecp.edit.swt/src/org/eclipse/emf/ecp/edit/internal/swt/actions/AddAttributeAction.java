@@ -13,11 +13,10 @@ package org.eclipse.emf.ecp.edit.internal.swt.actions;
 
 import java.lang.reflect.InvocationTargetException;
 
-import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
-import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
 import org.eclipse.emf.edit.command.AddCommand;
-import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.emf.edit.domain.EditingDomain;
 
 /**
  * The action to allow adding of attribute values to multi attribute controls.
@@ -30,13 +29,11 @@ public class AddAttributeAction extends ECPSWTAction {
 	/**
 	 * The constructor for the add attribute action.
 	 * 
-	 * @param modelElementContext the {@link ECPControlContext} to use
-	 * @param feature the {@link EStructuralFeature} to use
-	 * @param itemPropertyDescriptor the {@link IItemPropertyDescriptor} to use
+	 * @param editingDomain the {@link EditingDomain} to use
+	 * @param setting the {@link Setting} to use
 	 */
-	public AddAttributeAction(ECPControlContext modelElementContext, IItemPropertyDescriptor itemPropertyDescriptor,
-		EStructuralFeature feature) {
-		super(modelElementContext, itemPropertyDescriptor, feature);
+	public AddAttributeAction(EditingDomain editingDomain, Setting setting) {
+		super(editingDomain, setting);
 		// TODO remove PlatformUI
 		setImageDescriptor(Activator.getImageDescriptor("icons/add.png")); //$NON-NLS-1$
 		setToolTipText(ActionMessages.AddAttributeAction_AddEntry);
@@ -46,30 +43,30 @@ public class AddAttributeAction extends ECPSWTAction {
 	public void run() {
 		super.run();
 		// TODO show message if something goes wrong
-		Object defaultValue = getFeature().getEType().getDefaultValue();
+		Object defaultValue = getSetting().getEStructuralFeature().getEType().getDefaultValue();
 		if (defaultValue == null) {
 			try {
-				defaultValue = getFeature().getEType().getInstanceClass().getConstructor().newInstance();
-			} catch (InstantiationException e) {
+				defaultValue = getSetting().getEStructuralFeature().getEType().getInstanceClass().getConstructor()
+					.newInstance();
+			} catch (final InstantiationException e) {
 				Activator.logException(e);
-			} catch (IllegalAccessException e) {
+			} catch (final IllegalAccessException e) {
 				Activator.logException(e);
-			} catch (IllegalArgumentException e) {
+			} catch (final IllegalArgumentException e) {
 				Activator.logException(e);
-			} catch (InvocationTargetException e) {
+			} catch (final InvocationTargetException e) {
 				Activator.logException(e);
-			} catch (NoSuchMethodException e) {
+			} catch (final NoSuchMethodException e) {
 				Activator.logException(e);
-			} catch (SecurityException e) {
+			} catch (final SecurityException e) {
 				Activator.logException(e);
 			}
 		}
-		getModelElementContext()
-			.getEditingDomain()
+		getEditingDomain()
 			.getCommandStack()
 			.execute(
-				AddCommand.create(getModelElementContext().getEditingDomain(), getModelElementContext()
-					.getModelElement(), getFeature(), defaultValue));
+				AddCommand.create(getEditingDomain(), getSetting().getEObject(), getSetting().getEStructuralFeature(),
+					defaultValue));
 
 	}
 }

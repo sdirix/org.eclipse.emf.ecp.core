@@ -1,8 +1,18 @@
 /**
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * Edgar Mueller - initial API and implementation
  */
 package org.eclipse.emf.ecp.view.dynamictree.model.impl;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
@@ -24,9 +34,10 @@ import org.eclipse.emf.ecp.view.dynamictree.model.TestElementContainer;
  *
  * @generated
  */
-public class DomainIntermediateImpl extends EObjectImpl implements DomainIntermediate {
+public class DomainIntermediateImpl extends EObjectImpl implements DomainIntermediate
+{
 	/**
-	 * The cached value of the '{@link #getTestElementContainer() <em>Test Element Container</em>}' reference.
+	 * The cached value of the '{@link #getTestElementContainer() <em>Test Element Container</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getTestElementContainer()
@@ -40,7 +51,8 @@ public class DomainIntermediateImpl extends EObjectImpl implements DomainInterme
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected DomainIntermediateImpl() {
+	protected DomainIntermediateImpl()
+	{
 		super();
 	}
 
@@ -50,7 +62,8 @@ public class DomainIntermediateImpl extends EObjectImpl implements DomainInterme
 	 * @generated
 	 */
 	@Override
-	protected EClass eStaticClass() {
+	protected EClass eStaticClass()
+	{
 		return ModelPackage.Literals.DOMAIN_INTERMEDIATE;
 	}
 
@@ -59,15 +72,8 @@ public class DomainIntermediateImpl extends EObjectImpl implements DomainInterme
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public TestElementContainer getTestElementContainer() {
-		if (testElementContainer != null && testElementContainer.eIsProxy()) {
-			InternalEObject oldTestElementContainer = (InternalEObject)testElementContainer;
-			testElementContainer = (TestElementContainer)eResolveProxy(oldTestElementContainer);
-			if (testElementContainer != oldTestElementContainer) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ModelPackage.DOMAIN_INTERMEDIATE__TEST_ELEMENT_CONTAINER, oldTestElementContainer, testElementContainer));
-			}
-		}
+	public TestElementContainer getTestElementContainer()
+	{
 		return testElementContainer;
 	}
 
@@ -76,20 +82,34 @@ public class DomainIntermediateImpl extends EObjectImpl implements DomainInterme
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public TestElementContainer basicGetTestElementContainer() {
-		return testElementContainer;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setTestElementContainer(TestElementContainer newTestElementContainer) {
+	public NotificationChain basicSetTestElementContainer(TestElementContainer newTestElementContainer, NotificationChain msgs) {
 		TestElementContainer oldTestElementContainer = testElementContainer;
 		testElementContainer = newTestElementContainer;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.DOMAIN_INTERMEDIATE__TEST_ELEMENT_CONTAINER, oldTestElementContainer, testElementContainer));
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ModelPackage.DOMAIN_INTERMEDIATE__TEST_ELEMENT_CONTAINER, oldTestElementContainer, newTestElementContainer);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setTestElementContainer(TestElementContainer newTestElementContainer)
+	{
+		if (newTestElementContainer != testElementContainer) {
+			NotificationChain msgs = null;
+			if (testElementContainer != null)
+				msgs = ((InternalEObject)testElementContainer).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ModelPackage.DOMAIN_INTERMEDIATE__TEST_ELEMENT_CONTAINER, null, msgs);
+			if (newTestElementContainer != null)
+				msgs = ((InternalEObject)newTestElementContainer).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ModelPackage.DOMAIN_INTERMEDIATE__TEST_ELEMENT_CONTAINER, null, msgs);
+			msgs = basicSetTestElementContainer(newTestElementContainer, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.DOMAIN_INTERMEDIATE__TEST_ELEMENT_CONTAINER, newTestElementContainer, newTestElementContainer));
 	}
 
 	/**
@@ -98,11 +118,25 @@ public class DomainIntermediateImpl extends EObjectImpl implements DomainInterme
 	 * @generated
 	 */
 	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case ModelPackage.DOMAIN_INTERMEDIATE__TEST_ELEMENT_CONTAINER:
-				if (resolve) return getTestElementContainer();
-				return basicGetTestElementContainer();
+				return basicSetTestElementContainer(null, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object eGet(int featureID, boolean resolve, boolean coreType)
+	{
+		switch (featureID) {
+			case ModelPackage.DOMAIN_INTERMEDIATE__TEST_ELEMENT_CONTAINER:
+				return getTestElementContainer();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -113,7 +147,8 @@ public class DomainIntermediateImpl extends EObjectImpl implements DomainInterme
 	 * @generated
 	 */
 	@Override
-	public void eSet(int featureID, Object newValue) {
+	public void eSet(int featureID, Object newValue)
+	{
 		switch (featureID) {
 			case ModelPackage.DOMAIN_INTERMEDIATE__TEST_ELEMENT_CONTAINER:
 				setTestElementContainer((TestElementContainer)newValue);
@@ -128,7 +163,8 @@ public class DomainIntermediateImpl extends EObjectImpl implements DomainInterme
 	 * @generated
 	 */
 	@Override
-	public void eUnset(int featureID) {
+	public void eUnset(int featureID)
+	{
 		switch (featureID) {
 			case ModelPackage.DOMAIN_INTERMEDIATE__TEST_ELEMENT_CONTAINER:
 				setTestElementContainer((TestElementContainer)null);
@@ -143,7 +179,8 @@ public class DomainIntermediateImpl extends EObjectImpl implements DomainInterme
 	 * @generated
 	 */
 	@Override
-	public boolean eIsSet(int featureID) {
+	public boolean eIsSet(int featureID)
+	{
 		switch (featureID) {
 			case ModelPackage.DOMAIN_INTERMEDIATE__TEST_ELEMENT_CONTAINER:
 				return testElementContainer != null;
@@ -151,4 +188,4 @@ public class DomainIntermediateImpl extends EObjectImpl implements DomainInterme
 		return super.eIsSet(featureID);
 	}
 
-} //DomainIntermediateImpl
+} // DomainIntermediateImpl

@@ -16,11 +16,13 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.eclipse.emf.common.util.Diagnostic;
-import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
-import org.eclipse.emf.ecp.view.model.VControl;
-import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
-import org.eclipse.emf.ecp.view.model.VView;
-import org.eclipse.emf.ecp.view.model.VViewFactory;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
+import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
+import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalFactory;
+import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalLayout;
 import org.eclipse.emf.ecp.view.test.common.GCCollectable;
 import org.eclipse.emf.ecp.view.test.common.Tuple;
 import org.eclipse.emf.ecp.view.validation.test.model.Computer;
@@ -28,15 +30,14 @@ import org.eclipse.emf.ecp.view.validation.test.model.Mainboard;
 import org.eclipse.emf.ecp.view.validation.test.model.TestFactory;
 import org.eclipse.emf.ecp.view.validation.test.model.TestPackage;
 import org.eclipse.emf.ecp.view.validation.test.model.Writer;
-import org.eclipse.emf.ecp.view.vertical.model.VVerticalFactory;
-import org.eclipse.emf.ecp.view.vertical.model.VVerticalLayout;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
- * Tests for checking whether the {@link org.eclipse.emf.ecp.view.validation.ValidationRegistry ValidationRegistry} &
- * the {@link org.eclipse.emf.ecp.view.validation.ValidationService ValidationService} correctly behave if domain
- * objects and/or {@link org.eclipse.emf.ecp.view.model.VElement Renderable}s are removed.
+ * Tests for checking whether the {@link org.eclipse.emf.ecp.view.internal.validation.ValidationRegistry
+ * ValidationRegistry} &
+ * the {@link org.eclipse.emf.ecp.view.internal.validation.ValidationService ValidationService} correctly behave if
+ * domain
+ * objects and/or {@link org.eclipse.emf.ecp.view.spi.model.VElement Renderable}s are removed.
  * 
  * @author emueller
  */
@@ -55,7 +56,7 @@ public class ValidationServiceGCTest extends CommonValidationTest {
 		final Computer computer = TestFactory.eINSTANCE.createComputer();
 		final VView view = VViewFactory.eINSTANCE.createView();
 
-		new ViewModelContextImpl(view, computer);
+		ViewModelContextFactory.INSTANCE.createViewModelContext(view, computer);
 
 		final VControl control = VViewFactory.eINSTANCE.createControl();
 		final VVerticalLayout column = VVerticalFactory.eINSTANCE.createVerticalLayout();
@@ -103,7 +104,7 @@ public class ValidationServiceGCTest extends CommonValidationTest {
 
 		column.getChildren().add(controlWriter);
 
-		new ViewModelContextImpl(view, writer);
+		ViewModelContextFactory.INSTANCE.createViewModelContext(view, writer);
 
 		return new Tuple<VView, Writer>(view, writer);
 	}
@@ -178,7 +179,6 @@ public class ValidationServiceGCTest extends CommonValidationTest {
 	 * Remove the {@link Mainboard}. It shouldn't be referenced anymore
 	 * in contrast to the control.
 	 */
-	@Ignore
 	@Test
 	public void testRemoveChildOfDomainObject() {
 

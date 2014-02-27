@@ -11,11 +11,16 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.ui.view.swt;
 
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.swt.widgets.Control;
 
 /**
- * @author Jonas
+ * This is the result of a Rendering call.
+ * It contains the created SWT Control and the {@link ViewModelContext}.
  * 
+ * @author Jonas
+ * @noimplement This interface is not intended to be implemented by clients.
+ * @noextend This interface is not intended to be extended by clients.
  */
 public interface ECPSWTView {
 
@@ -29,4 +34,11 @@ public interface ECPSWTView {
 	 */
 	void dispose();
 
+	/**
+	 * Returns the {@link ViewModelContext} which was used to create the current view.
+	 * 
+	 * @return the {@link ViewModelContext}
+	 * @since 1.2
+	 */
+	ViewModelContext getViewModelContext();
 }

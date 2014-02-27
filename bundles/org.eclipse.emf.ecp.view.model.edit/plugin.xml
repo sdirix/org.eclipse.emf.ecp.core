@@ -10,7 +10,7 @@
       <!-- @generated view -->
       <factory
             uri="http://org/eclipse/emf/ecp/view/model"
-            class="org.eclipse.emf.ecp.view.model.provider.ViewItemProviderAdapterFactory"
+            class="org.eclipse.emf.ecp.view.spi.model.provider.ViewItemProviderAdapterFactory"
             supportedTypes=
               "org.eclipse.emf.edit.provider.IEditingDomainItemProvider
                org.eclipse.emf.edit.provider.IStructuredItemContentProvider

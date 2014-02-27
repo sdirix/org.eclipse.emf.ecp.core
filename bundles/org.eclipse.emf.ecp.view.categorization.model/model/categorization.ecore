@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="categorization" nsURI="http://org/eclipse/emf/ecp/view/categorization/model"
+    nsPrefix="org.eclipse.emf.ecp.view.categorization.model">
+  <eClassifiers xsi:type="ecore:EClass" name="AbstractCategorization" abstract="true"
+      eSuperTypes="#//CategorizableElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="actions" upperBound="-1"
+        eType="#//Action" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Categorization" eSuperTypes="#//AbstractCategorization">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="categorizations" upperBound="-1"
+        eType="#//AbstractCategorization" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Category" eSuperTypes="#//AbstractCategorization">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="composite" eType="ecore:EClass ../../org.eclipse.emf.ecp.view.model/model/view.ecore#//ContainedElement"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Action">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="bundle" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="className" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CategorizationElement" eSuperTypes="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//ContainedElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="categorizations" upperBound="-1"
+        eType="#//AbstractCategorization" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="currentSelection" eType="#//CategorizableElement"
+        transient="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CategorizableElement" abstract="true"
+      eSuperTypes="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//Element">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="labelObject" eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EObject"
+        changeable="false" volatile="true" transient="true" derived="true" resolveProxies="false"/>
+  </eClassifiers>
+</ecore:EPackage>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.emf.ecp.edit.controls">
+      <control
+            class="org.eclipse.emf.ecp.edit.ecore.swt.internal.EClassifierControl"
+            id="org.eclipse.emf.ecp.ecore.control.swt.eClassifier">
+         <staticTest
+               priority="2"
+               singleValue="true"
+               supportedClassType="org.eclipse.emf.ecore.EClassifier">
+         </staticTest>
+      </control>
+      <control
+            class="org.eclipse.emf.ecp.edit.ecore.swt.internal.EClassifierOnlyEClassControl"
+            id="org.eclipse.emf.ecp.ecore.control.swt.eClassifierOnlyEClass">
+         <staticTest
+               priority="3"
+               singleValue="true"
+               supportedClassType="org.eclipse.emf.ecore.EClassifier"
+               supportedEObject="org.eclipse.emf.ecore.EReference">
+         </staticTest>
+      </control>
+      <control
+            class="org.eclipse.emf.ecp.edit.ecore.swt.internal.EClassifierOnlyEDataTypeControl"
+            id="org.eclipse.emf.ecp.ecore.control.swt.eClassifierOnlyEDataType">
+         <staticTest
+               priority="3"
+               singleValue="true"
+               supportedClassType="org.eclipse.emf.ecore.EClassifier"
+               supportedEObject="org.eclipse.emf.ecore.EAttribute">
+         </staticTest>
+      </control>
+   </extension>
+
+</plugin>

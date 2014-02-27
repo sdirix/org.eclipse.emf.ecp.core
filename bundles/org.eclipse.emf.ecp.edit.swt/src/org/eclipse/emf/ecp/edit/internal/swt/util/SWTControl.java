@@ -13,33 +13,32 @@
 package org.eclipse.emf.ecp.edit.internal.swt.util;
 
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.ecp.edit.spi.ECPAbstractControl;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
-import org.eclipse.emf.ecp.view.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.renderer.RenderingResultRow;
 import org.eclipse.emf.edit.command.SetCommand;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.jface.action.Action;
-import org.eclipse.jface.dialogs.IDialogLabelKeys;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
-import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -63,6 +62,9 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 	 */
 	protected static final String VALIDATION_ERROR_ICON = "icons/validation_error.png";//$NON-NLS-1$
 
+	/**
+	 * The label for the validation icon.
+	 */
 	protected Label validationLabel;
 
 	private IObservableValue modelValue;
@@ -80,12 +82,28 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPControlSWT#createControls(org.eclipse.swt.widgets.Composite)
 	 */
 	public List<RenderingResultRow<Control>> createControls(final Composite parent) {
-		final IItemPropertyDescriptor itemPropertyDescriptor = getItemPropertyDescriptor();
+		final IItemPropertyDescriptor itemPropertyDescriptor = getItemPropertyDescriptor(getFirstSetting());
 		if (itemPropertyDescriptor == null) {
 			return null;
 		}
-		return Collections.singletonList(SWTRenderingHelper.INSTANCE.getResultRowFactory().createRenderingResultRow(
-			createControl(parent)));
+		parent.addDisposeListener(new DisposeListener() {
+
+			public void widgetDisposed(DisposeEvent e) {
+				dispose();
+			}
+		});
+		createValidationIcon(parent);
+		final List<RenderingResultRow<Control>> list = Collections.singletonList(SWTRenderingHelper.INSTANCE
+			.getResultRowFactory().createRenderingResultRow(
+				validationLabel, createControl(parent)));
+
+		applyValidation(getControl().getDiagnostic());
+
+		// TODO remove asap
+		backwardCompatibleHandleValidation();
+
+		return list;
+
 	}
 
 	/**
@@ -96,21 +114,9 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 	 */
 	public Composite createControl(final Composite parent) {
 
-		final Composite composite = new Composite(parent, SWT.NONE);
-		composite.setBackground(parent.getBackground());
-		int numColumns = 2;
-		if (isEmbedded()) {
-			numColumns--;
-		}
-		if (getModelElementContext().isRunningAsWebApplication()) {
-			numColumns++;
-		}
-		// TODO needed .spacing(10, 0) ?
-		GridLayoutFactory.fillDefaults().numColumns(numColumns).applyTo(composite);
+		final Composite dataControl = createDataControl(parent);
 
-		createValidationIcon(composite);
-		createDataControl(composite);
-		createHelpIcon(composite);
+		setHelpTooltips();
 
 		// init
 		setEditable(isEditable());
@@ -118,14 +124,14 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 		binding = bindValue();
 
 		// write initial values to model (if they differ from the default value of the model-element)
-		if (!getStructuralFeature().isUnsettable()
-			&& !getModelElementContext().getModelElement().eIsSet(getStructuralFeature())) {
+		if (!getFirstStructuralFeature().isUnsettable()
+			&& !getFirstSetting().isSet()) {
 			if (binding != null) {
 				binding.updateTargetToModel();
 			}
 		}
 
-		return composite;
+		return dataControl;
 	}
 
 	private void createValidationIcon(Composite composite) {
@@ -133,81 +139,25 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 			validationLabel = new Label(composite, SWT.NONE);
 			validationLabel.setBackground(composite.getBackground());
 			// set the size of the label to the size of the image
-			GridDataFactory.fillDefaults().hint(16, 17).applyTo(validationLabel);
+			// GridDataFactory.fillDefaults().hint(16, 17).applyTo(validationLabel);
 		}
 	}
 
-	private void createDataControl(Composite composite) {
+	private Composite createDataControl(Composite composite) {
 		final Composite innerComposite = new Composite(composite, SWT.NONE);
 		innerComposite.setBackground(composite.getBackground());
-		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(innerComposite);
+		// GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(innerComposite);
 		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(innerComposite);
 		createContentControl(innerComposite);
+		return innerComposite;
 	}
 
-	private void createHelpIcon(final Composite composite) {
-		if (getModelElementContext().isRunningAsWebApplication() && getHelpText() != null
-			&& getHelpText().length() != 0) {
-			final Label l = new Label(composite, SWT.PUSH);
-			l.setImage(Activator.getImage("icons/help.png")); //$NON-NLS-1$
-			l.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_help"); //$NON-NLS-1$
-			l.setBackground(composite.getBackground());
-			l.addMouseListener(new MouseListener() {
-
-				public void mouseUp(MouseEvent e) {
-					final MessageDialog dialog = new MessageDialog(composite.getShell(), UtilMessages.SWTControl_Help,
-						null, getHelpText(),
-						MessageDialog.INFORMATION, new String[] { JFaceResources
-							.getString(IDialogLabelKeys.OK_LABEL_KEY) }, 0);
-					new ECPDialogExecutor(dialog) {
-
-						@Override
-						public void handleResult(int codeResult) {
-
-						}
-					}.execute();
-				}
-
-				public void mouseDown(MouseEvent e) {
-					// TODO Auto-generated method stub
-
-				}
-
-				public void mouseDoubleClick(MouseEvent e) {
-					// TODO Auto-generated method stub
-
-				}
-			});
-			// Button b = new Button(composite, SWT.PUSH);
-			// b.addSelectionListener(new SelectionAdapter() {
-			//
-			// @Override
-			// public void widgetSelected(SelectionEvent e) {
-			// super.widgetSelected(e);
-			// MessageDialog dialog = new MessageDialog(parent.getShell(), "Help", null, getHelpText(),
-			// MessageDialog.INFORMATION, new String[] { JFaceResources
-			// .getString(IDialogLabelKeys.OK_LABEL_KEY) }, 0);
-			// new ECPDialogExecutor(dialog) {
-			//
-			// @Override
-			// public void handleResult(int codeResult) {
-			//
-			// }
-			// }.execute();
-			// }
-			//
-			// });
-			// Control[] tabList = new Control[composite.getTabList().length - 1];
-			// System.arraycopy(composite.getTabList(), 0, tabList, 0, tabList.length);
-			// composite.setTabList(tabList);
-		} else {
-			final Control[] controls = getControlsForTooltip();
-			if (controls != null) {
-				for (final Control control : controls) {
-					control.setToolTipText(getHelpText());
-				}
+	private void setHelpTooltips() {
+		final Control[] controls = getControlsForTooltip();
+		if (controls != null) {
+			for (final Control control : controls) {
+				control.setToolTipText(getHelpText());
 			}
-
 		}
 	}
 
@@ -232,6 +182,10 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 		controlComposite = new Composite(parentComposite, SWT.NONE);
 		controlComposite.setBackground(parentComposite.getBackground());
 
+		// 1 column for control, 1 for default unset button
+		GridLayoutFactory.fillDefaults().numColumns(1).spacing(2, 0)
+			.applyTo(controlComposite);
+
 		unsetLabel = new Label(parentComposite, SWT.NONE);
 		unsetLabel.setBackground(composite.getBackground());
 		unsetLabel.setForeground(composite.getShell().getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY));
@@ -245,9 +199,10 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 				if (binding != null) {
 					binding.updateTargetToModel();
 				} else {
-					final Object currentUnsetValue = getModelElementContext().getModelElement().eGet(
-						getStructuralFeature());
-					getModelElementContext().getModelElement().eSet(getStructuralFeature(), currentUnsetValue);
+					// TODO editingdomain is missing
+					final Setting firstSetting = getFirstSetting();
+					final Object currentUnsetValue = firstSetting.get(true);
+					firstSetting.set(currentUnsetValue);
 				}
 			}
 
@@ -262,7 +217,7 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 		int numControls = 1;
 		fillControlComposite(controlComposite);
 
-		if (!isEmbedded() && getStructuralFeature().isUnsettable()) {
+		if (!isEmbedded() && getFirstStructuralFeature().isUnsettable()) {
 			Button unsetButton = getCustomUnsetButton();
 			if (unsetButton == null) {
 				numControls++;
@@ -273,27 +228,28 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 			unsetButton.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					getModelElementContext()
-						.getEditingDomain()
-						.getCommandStack()
+					final Setting firstSetting = getFirstSetting();
+					final EditingDomain editingDomain = getEditingDomain(firstSetting);
+					editingDomain.getCommandStack()
 						.execute(
-							new SetCommand(getModelElementContext().getEditingDomain(), getModelElementContext()
-								.getModelElement(), getStructuralFeature(), SetCommand.UNSET_VALUE));
+							new SetCommand(editingDomain, firstSetting.getEObject(), firstSetting
+								.getEStructuralFeature(), SetCommand.UNSET_VALUE));
 
 					showUnsetLabel();
 				}
 			});
 			unsetButton.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_unset"); //$NON-NLS-1$
 		}
+		if (numControls != 1) {
+			// 1 column for control, 1 for default unset button
+			((GridLayout) controlComposite.getLayout()).numColumns = numControls;
+		}
 
-		// 1 column for control, 1 for default unset button
-		GridLayoutFactory.fillDefaults().numColumns(numControls).spacing(2, 0)
-			.applyTo(controlComposite);
 		// INFO margin needed for controlDecorator
 		// .extendedMargins(10, 0, 0, 0)
 
-		if (!getStructuralFeature().isUnsettable()
-			|| getModelElementContext().getModelElement().eIsSet(getStructuralFeature())) {
+		if (!getFirstStructuralFeature().isUnsettable()
+			|| getFirstSetting().isSet()) {
 			sl.topControl = controlComposite;
 		} else {
 			sl.topControl = unsetLabel;
@@ -337,8 +293,9 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 		if (modelValue != null) {
 			return modelValue;
 		}
-		modelValue = EMFEditObservables.observeValue(getModelElementContext().getEditingDomain(),
-			getModelElementContext().getModelElement(), getStructuralFeature());
+		final Setting setting = getFirstSetting();
+		modelValue = EMFEditObservables.observeValue(getEditingDomain(setting),
+			setting.getEObject(), setting.getEStructuralFeature());
 		return modelValue;
 	}
 
@@ -361,6 +318,7 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 	protected Button createButtonForAction(final Action action, final Composite composite) {
 		final Button selectButton = new Button(composite, SWT.PUSH);
 		selectButton.setImage(action.getImageDescriptor().createImage());
+		selectButton.setEnabled(!getControl().isReadonly());
 		selectButton.setToolTipText(action.getToolTipText());
 		selectButton.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -386,7 +344,27 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 	 * @return The help text
 	 */
 	protected String getHelpText() {
-		return getItemPropertyDescriptor().getDescription(null);
+		return getItemPropertyDescriptor(getFirstSetting()).getDescription(null);
+	}
+
+	/**
+	 * Returns the validation icon matching the given severity.
+	 * 
+	 * @param severity the severity of the {@link org.eclipse.emf.common.util.Diagnostic}
+	 * @return the icon to be displayed, or <code>null</code> when no icon is to be displayed
+	 */
+	protected Image getValidationIcon(int severity) {
+		return SWTValidationHelper.INSTANCE.getValidationIcon(severity);
+	}
+
+	/**
+	 * Returns the background color for a control with the given validation severity.
+	 * 
+	 * @param severity severity the severity of the {@link org.eclipse.emf.common.util.Diagnostic}
+	 * @return the color to be used as a background color
+	 */
+	protected Color getValidationBackgroundColor(int severity) {
+		return SWTValidationHelper.INSTANCE.getValidationBackgroundColor(severity);
 	}
 
 	/**
@@ -416,54 +394,6 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 		return parentComposite.getShell().getDisplay().getSystemColor(color);
 	}
 
-	private Setting getSetting(VDomainModelReference domainModelReference) {
-		final Iterator<Setting> iterator = domainModelReference.getIterator();
-		int count = 0;
-		Setting lastSetting = null;
-		while (iterator.hasNext()) {
-			count++;
-			if (count == 2) {
-				throw new IllegalArgumentException(
-					"The passed VDomainModelReference resolves to more then one setting.");
-			}
-			lastSetting = iterator.next();
-		}
-		if (count == 0) {
-			throw new IllegalArgumentException("The passed VDomainModelReference resolves to no setting.");
-		}
-		return lastSetting;
-	}
-
-	/**
-	 * Return the {@link EStructuralFeature} of this control.
-	 * 
-	 * @return the {@link EStructuralFeature}
-	 */
-	@Deprecated
-	protected EStructuralFeature getStructuralFeature() {
-		final Iterator<EStructuralFeature> iterator = getDomainModelReference().getEStructuralFeatureIterator();
-		int count = 0;
-		EStructuralFeature lastFeature = null;
-		while (iterator.hasNext()) {
-			count++;
-			// if (count == 2) {
-			// throw new IllegalArgumentException(
-			// "The passed VDomainModelReference resolves to more then one EStructuralFeature.");
-			// }
-			// lastFeature=iterator.next();
-			if (lastFeature == null) {
-				lastFeature = iterator.next();
-			} else {
-				iterator.next();
-			}
-		}
-		if (count == 0) {
-			throw new IllegalArgumentException("The passed VDomainModelReference resolves to no EStructuralFeature.");
-		}
-
-		return lastFeature;
-	}
-
 	/**
 	 * Whether this control should be editable.
 	 * 
@@ -471,16 +401,34 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 	 */
 	@Deprecated
 	protected boolean isEditable() {
-		return getItemPropertyDescriptor().canSetProperty(getSetting(getDomainModelReference()).getEObject());
+		final Setting firstSetting = getFirstSetting();
+		return getItemPropertyDescriptor(firstSetting).canSetProperty(firstSetting.getEObject());
 	}
 
-	/**
-	 * Convenience Method for retrieving an {@link IItemPropertyDescriptor}.
-	 * 
-	 * @return the {@link IItemPropertyDescriptor}
-	 */
-	@Deprecated
-	protected IItemPropertyDescriptor getItemPropertyDescriptor() {
-		return getItemPropertyDescriptor(getSetting(getDomainModelReference()));
+	@Override
+	public void dispose() {
+		validationLabel = null;
+		if (modelValue != null) {
+			modelValue.dispose();
+			modelValue = null;
+		}
+		if (binding != null) {
+			binding.dispose();
+			binding = null;
+		}
+		if (controlComposite != null) {
+			controlComposite.dispose();
+			controlComposite = null;
+		}
+		if (parentComposite != null) {
+			parentComposite.dispose();
+			parentComposite = null;
+		}
+		sl = null;
+		if (unsetLabel != null) {
+			unsetLabel.dispose();
+			unsetLabel = null;
+		}
+		super.dispose();
 	}
 }

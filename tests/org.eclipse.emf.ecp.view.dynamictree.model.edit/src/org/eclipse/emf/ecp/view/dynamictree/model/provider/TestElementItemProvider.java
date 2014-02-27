@@ -1,4 +1,13 @@
 /**
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * Edgar Mueller - initial API and implementation
  */
 package org.eclipse.emf.ecp.view.dynamictree.model.provider;
 
@@ -30,14 +39,16 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * @generated
  */
 public class TestElementItemProvider
-	extends EObjectItemProvider implements IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
+	extends EObjectItemProvider implements IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
+{
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public TestElementItemProvider(AdapterFactory adapterFactory) {
+	public TestElementItemProvider(AdapterFactory adapterFactory)
+	{
 		super(adapterFactory);
 	}
 
@@ -48,12 +59,14 @@ public class TestElementItemProvider
 	 * @generated
 	 */
 	@Override
-	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object)
+	{
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
 			addIdPropertyDescriptor(object);
 			addParentIdPropertyDescriptor(object);
+			addNamePropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -64,7 +77,8 @@ public class TestElementItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addIdPropertyDescriptor(Object object) {
+	protected void addIdPropertyDescriptor(Object object)
+	{
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
@@ -86,7 +100,8 @@ public class TestElementItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addParentIdPropertyDescriptor(Object object) {
+	protected void addParentIdPropertyDescriptor(Object object)
+	{
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
@@ -94,6 +109,28 @@ public class TestElementItemProvider
 				 getString("_UI_TestElement_parentId_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_TestElement_parentId_feature", "_UI_TestElement_type"),
 				 ModelPackage.Literals.TEST_ELEMENT__PARENT_ID,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Name feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addNamePropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_TestElement_name_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_TestElement_name_feature", "_UI_TestElement_type"),
+				 ModelPackage.Literals.TEST_ELEMENT__NAME,
 				 true,
 				 false,
 				 false,
@@ -111,7 +148,8 @@ public class TestElementItemProvider
 	 * @generated
 	 */
 	@Override
-	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
+	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object)
+	{
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(ModelPackage.Literals.TEST_ELEMENT__ELEMENTS);
@@ -125,7 +163,8 @@ public class TestElementItemProvider
 	 * @generated
 	 */
 	@Override
-	protected EStructuralFeature getChildFeature(Object object, Object child) {
+	protected EStructuralFeature getChildFeature(Object object, Object child)
+	{
 		// Check the type of the specified child object and return the proper feature to use for
 		// adding (see {@link AddCommand}) it as a child.
 
@@ -139,7 +178,8 @@ public class TestElementItemProvider
 	 * @generated
 	 */
 	@Override
-	public Object getImage(Object object) {
+	public Object getImage(Object object)
+	{
 		return overlayImage(object, getResourceLocator().getImage("full/obj16/TestElement"));
 	}
 
@@ -150,8 +190,9 @@ public class TestElementItemProvider
 	 * @generated
 	 */
 	@Override
-	public String getText(Object object) {
-		String label = ((TestElement)object).getId();
+	public String getText(Object object)
+	{
+		String label = ((TestElement)object).getName();
 		return label == null || label.length() == 0 ?
 			getString("_UI_TestElement_type") :
 			getString("_UI_TestElement_type") + " " + label;
@@ -165,12 +206,14 @@ public class TestElementItemProvider
 	 * @generated
 	 */
 	@Override
-	public void notifyChanged(Notification notification) {
+	public void notifyChanged(Notification notification)
+	{
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(TestElement.class)) {
 			case ModelPackage.TEST_ELEMENT__ID:
 			case ModelPackage.TEST_ELEMENT__PARENT_ID:
+			case ModelPackage.TEST_ELEMENT__NAME:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 			case ModelPackage.TEST_ELEMENT__ELEMENTS:
@@ -188,7 +231,8 @@ public class TestElementItemProvider
 	 * @generated
 	 */
 	@Override
-	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
+	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
+	{
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
 		newChildDescriptors.add
@@ -204,7 +248,8 @@ public class TestElementItemProvider
 	 * @generated
 	 */
 	@Override
-	public ResourceLocator getResourceLocator() {
+	public ResourceLocator getResourceLocator()
+	{
 		return DynamicTreeEditPlugin.INSTANCE;
 	}
 

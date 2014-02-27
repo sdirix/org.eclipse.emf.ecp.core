@@ -15,24 +15,15 @@ package org.eclipse.emf.ecp.ui.view.swt.separator.test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.util.List;
-
 import org.eclipse.emf.ecp.core.exceptions.ECPProjectWithNameExistsException;
-import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
-import org.eclipse.emf.ecp.internal.ui.view.builders.NodeBuilders;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.Node;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
-import org.eclipse.emf.ecp.ui.view.swt.internal.SWTRenderers;
-import org.eclipse.emf.ecp.ui.view.test.ViewTestHelper;
-import org.eclipse.emf.ecp.view.model.VView;
-import org.eclipse.emf.ecp.view.model.VViewFactory;
-import org.eclipse.emf.ecp.view.separator.model.VSeparator;
-import org.eclipse.emf.ecp.view.separator.model.VSeparatorFactory;
+import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
+import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
+import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
+import org.eclipse.emf.ecp.view.spi.separator.model.VSeparator;
+import org.eclipse.emf.ecp.view.spi.separator.model.VSeparatorFactory;
 import org.eclipse.emf.ecp.view.test.common.swt.DatabindingClassRunner;
-import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
-import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.ecp.view.test.common.swt.SWTViewTestHelper;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
@@ -63,26 +54,11 @@ public class SWTSeparatorTest {
 		final Display display = Display.getDefault();
 		final Shell shell = new Shell(display);
 		shell.setLayout(new FillLayout());
-		// shell.setLayout(new GridLayout());
-		// Composite parent = new Composite(shell, SWT.NONE);
-		// parent.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		// parent.setLayout(new GridLayout());
 
-		final ECPControlContext context = ViewTestHelper.createECPControlContext(view, shell);
-
-		// test SWTRenderer
-		final Node<VView> node = NodeBuilders.INSTANCE.build(view, context);
-		final Node<?> sepNode = node.getChildren().get(0);
-		final ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(
-			ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
-		final AdapterFactoryItemDelegator adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(
-			composedAdapterFactory);
-		final List<RenderingResultRow<Control>> resultRows = SWTRenderers.INSTANCE.render(shell, sepNode,
-			adapterFactoryItemDelegator);
+		final Control control = SWTViewTestHelper.render(separator, view, shell);
 
 		final Control renderedControl = shell.getChildren()[0];
-		assertEquals("Rendered Control and control returned by renderer are not the same", resultRows.get(0)
-			.getMainControl(), renderedControl);
+		assertEquals("Rendered Control and control returned by renderer are not the same", control, renderedControl);
 		assertTrue(renderedControl instanceof Label);
 		final Label label = (Label) renderedControl;
 		assertEquals("Rendered Separator does not have correct name", SEPARATOR_NAME, label.getText());

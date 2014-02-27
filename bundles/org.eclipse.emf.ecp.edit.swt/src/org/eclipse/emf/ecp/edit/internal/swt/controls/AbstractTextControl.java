@@ -54,7 +54,7 @@ public abstract class AbstractTextControl extends SingleControl {
 	private void createTextWidget(Composite composite) {
 		text = new Text(composite, getTextWidgetStyle());
 		text.setLayoutData(getTextWidgetLayoutData());
-		if (getStructuralFeature().isUnsettable()) {
+		if (getFirstStructuralFeature().isUnsettable()) {
 			text.setMessage(ControlMessages.AbstractTextControl_Unset);
 		}
 		text.setData(CUSTOM_VARIANT, getTextVariantID());
@@ -62,6 +62,14 @@ public abstract class AbstractTextControl extends SingleControl {
 
 	}
 
+	/**
+	 * Creates a {@link ToolTip}.
+	 * 
+	 * @param style the SWT style
+	 * @param text the text
+	 * @param message the message
+	 * @return a {@link ToolTip}
+	 */
 	protected ToolTip createToolTip(int style, String text, String message) {
 		final ToolTip toolTip = new ToolTip(this.text.getShell(), style);
 		toolTip.setText(text);
@@ -106,12 +114,14 @@ public abstract class AbstractTextControl extends SingleControl {
 
 	@Override
 	protected Control[] getControlsForTooltip() {
-		return new Control[] { text };
+		// return new Control[] { text };
+		return new Control[0];
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void setEditable(boolean isEditable) {
 		text.setEditable(isEditable);
 	}
@@ -188,7 +198,7 @@ public abstract class AbstractTextControl extends SingleControl {
 		@Override
 		public Object convert(Object value) {
 			// controlDecoration.hide();
-			updateValidationColor(null);
+			// updateValidationColor(null);
 			return convertValue(value);
 		}
 
@@ -217,11 +227,11 @@ public abstract class AbstractTextControl extends SingleControl {
 			try {
 
 				// controlDecoration.hide();
-				updateValidationColor(null);
+				// updateValidationColor(null);
 				if ("".equals(value)) { //$NON-NLS-1$
 					value = null;
 				}
-				if (value == null && getStructuralFeature().isUnsettable()) {
+				if (value == null && getFirstStructuralFeature().isUnsettable()) {
 					return SetCommand.UNSET_VALUE;
 				}
 
@@ -231,7 +241,7 @@ public abstract class AbstractTextControl extends SingleControl {
 
 			} catch (final IllegalArgumentException e) {
 				// controlDecoration.show();
-				updateValidationColor(getText().getShell().getDisplay().getSystemColor(SWT.COLOR_RED));
+				// updateValidationColor(getText().getShell().getDisplay().getSystemColor(SWT.COLOR_RED));
 				// controlDecoration.setDescriptionText(ControlMessages.AbstractTextControl_InvalidInputSpace
 				// + e.getLocalizedMessage());
 				throw e;

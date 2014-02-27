@@ -3,15 +3,15 @@
     xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText="Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.&#xD;&#xA;&#xD;&#xA;All rights reserved. This program and the accompanying materials&#xD;&#xA;are made available under the terms of the Eclipse Public License v1.0&#xD;&#xA;which accompanies this distribution, and is available at&#xD;&#xA;http://www.eclipse.org/legal/epl-v10.html&#xD;&#xA;&#xD;&#xA;Contributors:&#xD;&#xA;Eugen Neufeld - initial API and implementation"
     modelDirectory="/org.eclipse.emf.ecp.view.model/src" editDirectory="/org.eclipse.emf.ecp.view.model.edit/src"
     editorDirectory="/org.eclipse.emf.ecp.view.model.editor/src" modelPluginID="org.eclipse.emf.ecp.view.model"
-    modelName="View" editPluginClass="org.eclipse.emf.ecp.view.model.provider.ViewEditPlugin"
+    modelName="View" editPluginClass="org.eclipse.emf.ecp.view.spi.model.provider.ViewEditPlugin"
     editorPluginClass="org.eclipse.emf.ecp.view.model.presentation.ViewEditorPlugin"
-    codeFormatting="true" commentFormatting="true" testSuiteClass="org.eclipse.emf.ecp.view.model.tests.ViewAllTests"
+    nonNLSMarkers="true" codeFormatting="true" commentFormatting="true" testSuiteClass="org.eclipse.emf.ecp.view.model.tests.ViewAllTests"
     importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0" copyrightFields="false"
     editPluginID="org.eclipse.emf.ecp.view.model.edit" editorPluginID="org.eclipse.emf.ecp.view.model.editor"
     language="" usedGenPackages="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore"
-    interfaceNamePattern="V{0}" classNamePattern="V{0}Impl">
+    interfaceNamePattern="V{0}" classNamePattern="V{0}Impl" importOrganizing="true">
   <foreignModel>view.ecore</foreignModel>
-  <genPackages prefix="View" basePackage="org.eclipse.emf.ecp.view" disposableProviderFactory="true"
+  <genPackages prefix="View" basePackage="org.eclipse.emf.ecp.view.spi" disposableProviderFactory="true"
       extensibleProviderFactory="true" childCreationExtenders="true" ecorePackage="view.ecore#/">
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="view.ecore#//LabelAlignment">
       <genEnumLiterals ecoreEnumLiteral="view.ecore#//LabelAlignment/Left"/>
@@ -32,13 +32,12 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//Element/visible"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//Element/enabled"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//Element/readonly"/>
-      <genFeatures property="None" children="true" createChild="false" ecoreFeature="ecore:EReference view.ecore#//Element/diagnostic"/>
+      <genFeatures property="None" createChild="false" ecoreFeature="ecore:EReference view.ecore#//Element/diagnostic"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference view.ecore#//Element/attachments"/>
     </genClasses>
     <genClasses ecoreClass="view.ecore#//View">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference view.ecore#//View/rootEClass"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference view.ecore#//View/children"/>
-      <genFeatures property="None" createChild="true" ecoreFeature="ecore:EReference view.ecore#//View/categorizations"/>
     </genClasses>
     <genClasses image="false" ecoreClass="view.ecore#//ContainedElement"/>
     <genClasses image="false" ecoreClass="view.ecore#//Container">
@@ -47,20 +46,6 @@
     <genClasses ecoreClass="view.ecore#//Control">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//Control/labelAlignment"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference view.ecore#//Control/domainModelReference"/>
-    </genClasses>
-    <genClasses ecoreClass="view.ecore#//AbstractCategorization">
-      <genFeatures property="None" children="true" createChild="true" propertySortChoices="true"
-          ecoreFeature="ecore:EReference view.ecore#//AbstractCategorization/actions"/>
-    </genClasses>
-    <genClasses ecoreClass="view.ecore#//Categorization">
-      <genFeatures children="true" createChild="true" propertySortChoices="true" ecoreFeature="ecore:EReference view.ecore#//Categorization/categorizations"/>
-    </genClasses>
-    <genClasses ecoreClass="view.ecore#//Category">
-      <genFeatures children="true" createChild="true" propertySortChoices="true" ecoreFeature="ecore:EReference view.ecore#//Category/composite"/>
-    </genClasses>
-    <genClasses ecoreClass="view.ecore#//Action">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//Action/bundle"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//Action/className"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

@@ -12,15 +12,14 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.controls;
 
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.edit.internal.swt.actions.AddAttributeAction;
 import org.eclipse.emf.ecp.edit.internal.swt.actions.ECPSWTAction;
 import org.eclipse.emf.ecp.edit.spi.util.ECPStaticApplicableTester;
-import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
 /**
- * This class defines a Control which is used for displaying {@link EStructuralFeature}s which have a multi attribute.
+ * This class defines a Control which is used for displaying {@link org.eclipse.emf.ecore.EStructuralFeature}s which
+ * have a multi attribute.
  * 
  * @author Eugen Neufeld
  * 
@@ -30,16 +29,15 @@ public class AttributeMultiControl extends MultiControl {
 	@Override
 	protected ECPSWTAction[] instantiateActions() {
 		final ECPSWTAction[] actions = new ECPSWTAction[1];
-		actions[0] = new AddAttributeAction(getModelElementContext(), getItemPropertyDescriptor(),
-			getStructuralFeature());
+		final Setting firstSetting = getFirstSetting();
+		actions[0] = new AddAttributeAction(getEditingDomain(firstSetting), firstSetting);
 		return actions;
 	}
 
 	@Override
-	protected int getTesterPriority(ECPStaticApplicableTester tester, IItemPropertyDescriptor itemPropertyDescriptor,
-		EObject eObject) {
+	protected int getTesterPriority(ECPStaticApplicableTester tester, Setting setting) {
 		return AttributeMultiControlTester.getTesterPriority(tester,
-			(EStructuralFeature) itemPropertyDescriptor.getFeature(eObject), eObject);
+			setting.getEStructuralFeature(), setting.getEObject());
 	}
 
 	/*

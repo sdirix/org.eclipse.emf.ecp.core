@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
-   <extension-point id="validationSubProcessor" name="Validation Sub Processor" schema="schema/validationSubProcessor.exsd"/>
+   <extension-point id="validationProvider" name="Additiona Validation Provider" schema="schema/validationProvider.exsd"/>
    <extension
          point="org.eclipse.emf.ecp.view.context.viewServices">
       <viewService
-            class="org.eclipse.emf.ecp.view.validation.ValidationService">
+            class="org.eclipse.emf.ecp.view.internal.validation.ValidationService">
       </viewService>
    </extension>
    

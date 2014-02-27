@@ -14,8 +14,8 @@ package org.eclipse.emf.ecp.edit.internal.swt.util;
 
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.property.value.IValueProperty;
-import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
-import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 
 /**
  * A common super interface for all CellEditors contributed to ECP.
@@ -29,9 +29,22 @@ public interface ECPCellEditor {
 	 */
 	String CUSTOM_VARIANT = "org.eclipse.rap.rwt.customVariant"; //$NON-NLS-1$
 
+	/**
+	 * Returns the {@link IValueProperty} for this cell editor which is used by the table to create an
+	 * {@link org.eclipse.core.databinding.observable.value.IObservableValue IObservableValue}.
+	 * 
+	 * @return the {@link IValueProperty} for this cell editor
+	 */
 	IValueProperty getValueProperty();
 
-	void instantiate(IItemPropertyDescriptor descriptor, ECPControlContext ecpControlContext);
+	/**
+	 * Instantiates this cell editor. This allows the cell editor to use
+	 * {@link org.eclipse.emf.ecp.view.spi.context.ViewModelService ViewModelServices}.
+	 * 
+	 * @param feature the {@link EStructuralFeature} displayed in this cell editor
+	 * @param viewModelContext the {@link ViewModelContext} used for the current view
+	 */
+	void instantiate(EStructuralFeature feature, ViewModelContext viewModelContext);
 
 	int getStyle();
 

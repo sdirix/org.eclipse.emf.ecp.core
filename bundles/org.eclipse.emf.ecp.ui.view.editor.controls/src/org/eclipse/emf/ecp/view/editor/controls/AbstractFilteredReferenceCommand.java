@@ -49,7 +49,7 @@ public abstract class AbstractFilteredReferenceCommand<T extends EStructuralFeat
 	private final Shell shell;
 	private final ComposedAdapterFactory composedAdapterFactory;
 	private final EClass rootClass;
-	private final ISelectionStatusValidator validator;
+	private final ECPSelectionStatusValidator validator;
 	private final boolean allowMultiReferences;
 
 	/**
@@ -59,11 +59,11 @@ public abstract class AbstractFilteredReferenceCommand<T extends EStructuralFeat
 	 * @param composedAdapterFactory the {@link ComposedAdapterFactory} for the LabelProvider
 	 * @param shell the {@link Shell} to use in the dialog
 	 * @param rootClass the {@link EClass} which is the root of the view
-	 * @param validator the {@link ISelectionStatusValidator} to use when a selection was done
+	 * @param validator the {@link ECPSelectionStatusValidator} to use when a selection was done
 	 * @param allowMultiReferences whether multi references are allowed during the selection
 	 */
 	public AbstractFilteredReferenceCommand(Notifier notifier, ComposedAdapterFactory composedAdapterFactory,
-		Shell shell, EClass rootClass, ISelectionStatusValidator validator, boolean allowMultiReferences) {
+		Shell shell, EClass rootClass, ECPSelectionStatusValidator validator, boolean allowMultiReferences) {
 		super(notifier);
 		this.shell = shell;
 		this.composedAdapterFactory = composedAdapterFactory;
@@ -86,6 +86,7 @@ public abstract class AbstractFilteredReferenceCommand<T extends EStructuralFeat
 		final AdapterFactoryLabelProvider labelProvider = new AdapterFactoryLabelProvider(composedAdapterFactory);
 		final ECPViewEditorTreeSelectionDialog dialog = new ECPViewEditorTreeSelectionDialog(shell, labelProvider,
 			getContentProvider(rootClass));
+		validator.setECPViewEditorTreeSelectionDialog(dialog);
 		dialog.setAllowMultiple(false);
 		dialog.setValidator(validator);
 		dialog.setInput(rootClass);
@@ -190,12 +191,6 @@ public abstract class AbstractFilteredReferenceCommand<T extends EStructuralFeat
 					}
 				}
 				else {
-
-					// get all propertyDescriptors, get features from descriptors
-					// final List<IItemPropertyDescriptor> propertyDescriptors = adapterFactoryItemDelegator
-					// .getPropertyDescriptors(modelElementContext.getModelElement());
-
-					// TODO workaround for the moment, solution see above
 					result.addAll(eClass.getEAllReferences());
 					result.addAll(eClass.getEAllAttributes());
 				}
@@ -210,7 +205,7 @@ public abstract class AbstractFilteredReferenceCommand<T extends EStructuralFeat
 	 * @author Eugen Neufeld
 	 * 
 	 */
-	private class ECPViewEditorTreeSelectionDialog extends ElementTreeSelectionDialog {
+	private static class ECPViewEditorTreeSelectionDialog extends ElementTreeSelectionDialog {
 
 		private TreePath treePath;
 
@@ -227,21 +222,34 @@ public abstract class AbstractFilteredReferenceCommand<T extends EStructuralFeat
 		}
 
 		public TreePath getTreePath() {
+			if (getTreeViewer() != null) {
+				treePath = ((TreeSelection) getTreeViewer().getSelection()).getPaths()[0];
+			}
 			return treePath;
 		}
 
-		/**
-		 * {@inheritDoc}
-		 * 
-		 * @see org.eclipse.ui.dialogs.ElementTreeSelectionDialog#computeResult()
-		 */
-		@Override
-		protected void computeResult() {
-			treePath = ((TreeSelection) getTreeViewer().getSelection()).getPaths()[0];
+		// /**
+		// * {@inheritDoc}
+		// *
+		// * @see org.eclipse.ui.dialogs.ElementTreeSelectionDialog#computeResult()
+		// */
+		// @Override
+		// protected void computeResult() {
+		// treePath = ((TreeSelection) getTreeViewer().getSelection()).getPaths()[0];
+		// super.computeResult();
+		// }
+	}
 
-			super.computeResult();
+	static abstract class ECPSelectionStatusValidator implements ISelectionStatusValidator {
+		private ECPViewEditorTreeSelectionDialog dialog;
+
+		private void setECPViewEditorTreeSelectionDialog(ECPViewEditorTreeSelectionDialog dialog) {
+			this.dialog = dialog;
 		}
 
+		protected TreePath getTreePath() {
+			return dialog.getTreePath();
+		}
 	}
 
 }

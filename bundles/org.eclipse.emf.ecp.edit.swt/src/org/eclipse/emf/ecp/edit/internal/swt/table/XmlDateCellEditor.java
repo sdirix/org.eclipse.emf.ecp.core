@@ -17,18 +17,15 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.DatatypeConstants;
-import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.property.value.IValueProperty;
-import org.eclipse.emf.ecore.xml.type.internal.XMLCalendar;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecp.edit.internal.swt.util.DateUtil;
 import org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor;
-import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
-import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.jface.databinding.swt.WidgetValueProperty;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.swt.SWT;
@@ -88,7 +85,13 @@ public class XmlDateCellEditor extends CellEditor implements ECPCellEditor {
 		};
 	}
 
-	public void instantiate(IItemPropertyDescriptor descriptor, ECPControlContext ecpControlContext) {
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor#instantiate(org.eclipse.emf.ecore.EStructuralFeature,
+	 *      org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
+	 */
+	public void instantiate(EStructuralFeature feature, ViewModelContext viewModelContext) {
 
 	}
 
@@ -130,24 +133,12 @@ public class XmlDateCellEditor extends CellEditor implements ECPCellEditor {
 
 	@Override
 	protected Object doGetValue() {
-
-		try {
-			final XMLGregorianCalendar cal = DatatypeFactory.newInstance().newXMLGregorianCalendar();
-			cal.setYear(dateWidget.getYear());
-			cal.setMonth(dateWidget.getMonth() + 1);
-			cal.setDay(dateWidget.getDay());
-
-			cal.setTimezone(DatatypeConstants.FIELD_UNDEFINED);
-
-			return cal;
-		} catch (final DatatypeConfigurationException ex) {
-			// Activator.logException(ex);
-		}
 		final Calendar selectedCalendarDate = Calendar.getInstance();
 		selectedCalendarDate.set(Calendar.YEAR, dateWidget.getYear());
 		selectedCalendarDate.set(Calendar.MONTH, dateWidget.getMonth());
 		selectedCalendarDate.set(Calendar.DAY_OF_MONTH, dateWidget.getDay());
-		return new XMLCalendar(selectedCalendarDate.getTime(), XMLCalendar.DATE);
+
+		return DateUtil.convertOnlyDateToXMLGregorianCalendar(selectedCalendarDate);
 
 	}
 

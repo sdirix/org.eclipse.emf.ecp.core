@@ -18,24 +18,37 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.edit.spi.util.ECPApplicableTester;
-import org.eclipse.emf.ecp.view.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
+/**
+ * Tester for number cell editor.
+ * 
+ * @author Eugen Neufeld
+ * 
+ */
 public class NumberCellEditorTester implements ECPApplicableTester {
 
-	public NumberCellEditorTester() {
-	}
-
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.edit.spi.util.ECPApplicableTester#isApplicable(org.eclipse.emf.edit.provider.IItemPropertyDescriptor,
+	 *      org.eclipse.emf.ecore.EObject)
+	 * @deprecated
+	 */
+	@Deprecated
 	public int isApplicable(IItemPropertyDescriptor itemPropertyDescriptor, EObject eObject) {
 		final EStructuralFeature feature = (EStructuralFeature) itemPropertyDescriptor.getFeature(null);
-		return check(eObject, feature);
+		return isApplicable(eObject, feature);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.edit.spi.util.ECPApplicableTester#isApplicable(org.eclipse.emf.ecp.view.model.VDomainModelReference)
+	 * @see org.eclipse.emf.ecp.edit.spi.util.ECPApplicableTester#isApplicable(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)
+	 * 
 	 */
+
 	public int isApplicable(VDomainModelReference domainModelReference) {
 		final Iterator<Setting> iterator = domainModelReference.getIterator();
 		int count = 0;
@@ -47,15 +60,16 @@ public class NumberCellEditorTester implements ECPApplicableTester {
 		if (count != 1) {
 			return NOT_APPLICABLE;
 		}
-		return check(setting.getEObject(), setting.getEStructuralFeature());
+		return isApplicable(setting.getEObject(), setting.getEStructuralFeature());
 	}
 
 	/**
-	 * @param eObject
-	 * @param eStructuralFeature
-	 * @return
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.edit.spi.util.ECPApplicableTester#isApplicable(org.eclipse.emf.ecore.EObject,
+	 *      org.eclipse.emf.ecore.EStructuralFeature)
 	 */
-	private int check(EObject eObject, EStructuralFeature feature) {
+	public int isApplicable(EObject eObject, EStructuralFeature feature) {
 		if (EAttribute.class.isInstance(feature)) {
 			final Class<?> instanceClass = ((EAttribute) feature).getEAttributeType().getInstanceClass();
 			if (Number.class.isAssignableFrom(instanceClass)) {

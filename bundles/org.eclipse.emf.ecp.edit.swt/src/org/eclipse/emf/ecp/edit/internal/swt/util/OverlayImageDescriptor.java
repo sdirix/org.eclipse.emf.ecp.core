@@ -45,16 +45,15 @@ public class OverlayImageDescriptor extends CompositeImageDescriptor {
 	/** default image height. */
 	private static final int DEFAULT_IMAGE_HEIGHT = 19;
 
-	/** base image. */
-	private Image srcImage;
-
 	/** overlay image. */
-	private ImageDescriptor overlayDesc;
+	private final ImageDescriptor overlayDesc;
 
 	/** the position of the overlay image. */
-	private int overlayPos = LOWER_RIGHT;
+	private final int overlayPos = LOWER_RIGHT;
 
-	private int offset = 3;
+	private final int offset = 3;
+
+	private final ImageData backgroundData;
 
 	/**
 	 * OverlayImageDescriptor constructor.
@@ -66,7 +65,21 @@ public class OverlayImageDescriptor extends CompositeImageDescriptor {
 	public OverlayImageDescriptor(Image srcImage, ImageDescriptor overlayDesc, int overlayPos) {
 		assert null != srcImage;
 		assert null != overlayDesc;
-		this.srcImage = srcImage;
+		backgroundData = srcImage.getImageData();
+		this.overlayDesc = overlayDesc;
+	}
+
+	/**
+	 * OverlayImageDescriptor constructor.
+	 * 
+	 * @param backgroundData the base ImageData
+	 * @param overlayDesc the overlay image
+	 * @param overlayPos the overlay position
+	 */
+	public OverlayImageDescriptor(ImageData backgroundData, ImageDescriptor overlayDesc, int overlayPos) {
+		assert null != backgroundData;
+		assert null != overlayDesc;
+		this.backgroundData = backgroundData;
 		this.overlayDesc = overlayDesc;
 	}
 
@@ -80,13 +93,13 @@ public class OverlayImageDescriptor extends CompositeImageDescriptor {
 	@Override
 	protected void drawCompositeImage(int width, int height) {
 		// draw the base image
-		ImageData backgroundData = srcImage.getImageData();
+
 		if (backgroundData != null) {
 			drawImage(backgroundData, 0, 0);
 		}
 
 		// draw the overlay image
-		ImageData overlayData = overlayDesc.getImageData();
+		final ImageData overlayData = overlayDesc.getImageData();
 		if (overlayData != null) {
 			Point pos = null;
 			switch (overlayPos) {

@@ -16,17 +16,21 @@ import java.util.List;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.notify.Notifier;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.edit.internal.swt.actions.DeleteReferenceAction;
-import org.eclipse.emf.ecp.edit.internal.swt.controls.LinkControl;
-import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecp.edit.internal.swt.reference.DeleteReferenceAction;
+import org.eclipse.emf.ecp.edit.internal.swt.reference.LinkControl;
+import org.eclipse.emf.ecp.edit.spi.ReferenceService;
+import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.jface.viewers.TreePath;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.dialogs.ISelectionStatusValidator;
 
 /**
  * A Link Control for creating VFeaturePathDomainReference Objects.
@@ -44,21 +48,22 @@ public class ControlTargetFeatureControl extends LinkControl {
 	@Override
 	protected Button[] createButtons(Composite composite) {
 		final Button[] buttons = new Button[2];
-		buttons[0] = createButtonForAction(new DeleteReferenceAction(getModelElementContext(),
-			getItemPropertyDescriptor(), getStructuralFeature()) {
+		final Setting setting = getFirstSetting();
+		buttons[0] = createButtonForAction(new DeleteReferenceAction(getEditingDomain(setting), setting,
+			getItemPropertyDescriptor(setting), getService(ReferenceService.class)) {
 
 			@Override
 			public void run() {
 				super.run();
 				final VFeaturePathDomainModelReference modelReference =
-					(VFeaturePathDomainModelReference) getModelElementContext().getModelElement();
+					(VFeaturePathDomainModelReference) setting.getEObject();
 				modelReference.getDomainModelEReferencePath().clear();
 				modelReference.setDomainModelEFeature(null);
 			}
 
 		}, composite);
-		buttons[1] = createButtonForAction(new FilteredReferenceAction((EReference) getStructuralFeature(),
-			getItemPropertyDescriptor(), composite.getShell()), composite);
+		buttons[1] = createButtonForAction(new FilteredReferenceAction(getEditingDomain(setting), setting,
+			getItemPropertyDescriptor(setting), composite.getShell()), composite);
 		return buttons;
 	}
 
@@ -68,8 +73,9 @@ public class ControlTargetFeatureControl extends LinkControl {
 
 	private class FilteredReferenceAction extends AbstractFilteredReferenceAction {
 
-		public FilteredReferenceAction(EReference eReference, IItemPropertyDescriptor descriptor, Shell shell) {
-			super(eReference, descriptor, shell);
+		public FilteredReferenceAction(EditingDomain editingDomain, Setting setting,
+			IItemPropertyDescriptor descriptor, Shell shell) {
+			super(editingDomain, setting, descriptor, shell);
 		}
 
 		/**
@@ -77,36 +83,45 @@ public class ControlTargetFeatureControl extends LinkControl {
 		 */
 		@Override
 		public void run() {
-			getModelElementContext()
-				.getEditingDomain()
+			getEditingDomain()
 				.getCommandStack()
 				.execute(
-					new FilteredReferenceCommand(getModelElementContext().getModelElement(), composedAdapterFactory,
-						shell));
+					new FilteredReferenceCommand(getSetting().getEObject(), getComposedAdapterFactory(),
+						getShell()));
 		}
 	}
 
 	private class FilteredReferenceCommand extends AbstractFilteredReferenceCommand<EStructuralFeature> {
 
-		public FilteredReferenceCommand(Notifier notifier, ComposedAdapterFactory composedAdapterFactory, Shell shell) {
-			super(notifier, composedAdapterFactory, shell, Helper.getRootEClass(getModelElementContext()
-				.getModelElement()), new ISelectionStatusValidator() {
+		public FilteredReferenceCommand(final Notifier notifier, ComposedAdapterFactory composedAdapterFactory,
+			Shell shell) {
 
-				public IStatus validate(Object[] selection) {
-					if (selection.length != 0 && EStructuralFeature.class.isInstance(selection[0])) {
+			super(notifier, composedAdapterFactory, shell, Helper.getRootEClass((EObject) notifier),
+				new ECPSelectionStatusValidator() {
 
-						return Status.OK_STATUS;
+					public IStatus validate(Object[] selection) {
+
+						if (selection.length != 0 && EStructuralFeature.class.isInstance(selection[0])) {
+							final TreePath treePath = getTreePath();
+							if (!Helper
+								.hasFeaturePropertyDescriptor(Helper.getRootEClass((EObject) notifier), treePath)) {
+								return new Status(IStatus.ERROR,
+									org.eclipse.emf.ecp.view.editor.controls.Activator.PLUGIN_ID,
+									"The selected " + EStructuralFeature.class.getSimpleName()
+										+ " has no PropertyDescriptor.");
+							}
+							return Status.OK_STATUS;
+						}
+						return new Status(IStatus.ERROR, org.eclipse.emf.ecp.view.editor.controls.Activator.PLUGIN_ID,
+							"This is not an " + EStructuralFeature.class.getSimpleName() + ".");
 					}
-					return new Status(IStatus.ERROR, org.eclipse.emf.ecp.view.editor.controls.Activator.PLUGIN_ID,
-						"This is not an " + EStructuralFeature.class.getSimpleName() + ".");
-				}
-			}, allowMultiSelection());
+				}, allowMultiSelection());
 		}
 
 		@Override
 		protected void setSelectedValues(EStructuralFeature selectedFeature, List<EReference> bottomUpPath) {
-			final VFeaturePathDomainModelReference modelReference = (VFeaturePathDomainModelReference) getModelElementContext()
-				.getModelElement();
+			final VFeaturePathDomainModelReference modelReference = (VFeaturePathDomainModelReference) getFirstSetting()
+				.getEObject();
 			modelReference.setDomainModelEFeature(selectedFeature);
 			modelReference.getDomainModelEReferencePath().clear();
 			modelReference.getDomainModelEReferencePath().addAll(bottomUpPath);

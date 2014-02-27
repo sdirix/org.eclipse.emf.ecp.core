@@ -20,8 +20,10 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecp.edit.spi.ECPControlFactory;
+import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.ImageData;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 
@@ -122,8 +124,11 @@ public class Activator extends Plugin {
 	 */
 	public static Image getImage(URL url) {
 		if (!getDefault().imageRegistry.containsKey(url == null ? "NULL" : url.toExternalForm())) { //$NON-NLS-1$
+
+			final ImageDescriptor createFromURL = ImageDescriptor.createFromURL(url);
+			final ImageData imageData = createFromURL.getImageData();
 			getDefault().imageRegistry.put(url == null ? "NULL" : url.toExternalForm(), new ImageDescriptorToImage( //$NON-NLS-1$
-				ImageDescriptor.createFromURL(url)));
+				createFromURL));
 		}
 		return getDefault().imageRegistry.get(url == null ? "NULL" : url.toExternalForm()).getImage(); //$NON-NLS-1$
 
@@ -142,6 +147,16 @@ public class Activator extends Plugin {
 		}
 		return getDefault().imageRegistry.get(path).getImageDescriptor();
 
+	}
+
+	/**
+	 * Loads an {@link ImageData} based on the provided {@link URL}.
+	 * 
+	 * @param url the {@link URL} to the {@link ImageData}
+	 * @return the {@link ImageData}
+	 */
+	public static ImageData getImageData(URL url) {
+		return ImageDescriptor.createFromURL(url).getImageData();
 	}
 
 	private ServiceReference<ECPControlFactory> controlFactoryReference;
@@ -168,6 +183,25 @@ public class Activator extends Plugin {
 		}
 		plugin.getBundle().getBundleContext().ungetService(controlFactoryReference);
 		controlFactoryReference = null;
+	}
+
+	private VTViewTemplateProvider viewTemplate;
+
+	/**
+	 * Returns the currentInstance of the {@link VTViewTemplateProvider}.
+	 * 
+	 * @return the {@link ECPControlFactory}
+	 */
+	public VTViewTemplateProvider getVTViewTemplateProvider() {
+		if (viewTemplate == null) {
+			final ServiceReference<VTViewTemplateProvider> viewTemplateReference = plugin.getBundle()
+				.getBundleContext()
+				.getServiceReference(VTViewTemplateProvider.class);
+			if (viewTemplateReference != null) {
+				viewTemplate = plugin.getBundle().getBundleContext().getService(viewTemplateReference);
+			}
+		}
+		return viewTemplate;
 	}
 
 }

@@ -13,21 +13,11 @@ package org.eclipse.emf.ecp.edit.internal.swt.actions;
 
 import org.eclipse.osgi.util.NLS;
 
-public class ActionMessages extends NLS {
+public final class ActionMessages extends NLS {
 
 	private static final String BUNDLE_NAME = "org.eclipse.emf.ecp.edit.internal.swt.actions.messages"; //$NON-NLS-1$
 
 	public static String AddAttributeAction_AddEntry;
-	public static String AddReferenceAction_Link;
-
-	public static String DeleteReferenceAction_Confirmation;
-	public static String DeleteReferenceAction_DeleteModelQuestion;
-	public static String DeleteReferenceAction_DeleteReference;
-	public static String DeleteReferenceAction_Yes;
-	public static String DeleteReferenceAction_No;
-	public static String DeleteReferenceAction_Questionmark;
-
-	public static String NewReferenceAction_CreateAndLinkNew;
 
 	private ActionMessages() {
 	}

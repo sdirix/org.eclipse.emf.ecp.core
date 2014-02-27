@@ -13,7 +13,8 @@
 package org.eclipse.emf.ecp.edit.spi.util;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.view.model.VDomainModelReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
 /**
@@ -43,7 +44,24 @@ public interface ECPApplicableTester {
 	int isApplicable(IItemPropertyDescriptor itemPropertyDescriptor, EObject eObject);
 
 	/**
-	 * @since 1.1
+	 * Returns the priority of the corresponding control for the provided {@link VDomainModelReference}.
+	 * 
+	 * @param domainModelReference the {@link VDomainModelReference} to test
+	 * @return {@link #NOT_APPLICABLE} if the corresponding control should not be used, a positivie integer value
+	 *         otherwise. The control with the highest priority will be taken.
+	 * @since 1.2
 	 */
 	int isApplicable(VDomainModelReference domainModelReference);
+
+	/**
+	 * Returns the priority of the corresponding control for the combination of the {@link EObject} and the
+	 * {@link EStructuralFeature}.
+	 * 
+	 * @param eStructuralFeature the {@link EStructuralFeature} to test
+	 * @param eObject the {@link EObject} to test
+	 * @return {@link #NOT_APPLICABLE} if the corresponding control should not be used, a positivie integer value
+	 *         otherwise. The control with the highest priority will be taken.
+	 * @since 1.2
+	 */
+	int isApplicable(EObject eObject, EStructuralFeature eStructuralFeature);
 }

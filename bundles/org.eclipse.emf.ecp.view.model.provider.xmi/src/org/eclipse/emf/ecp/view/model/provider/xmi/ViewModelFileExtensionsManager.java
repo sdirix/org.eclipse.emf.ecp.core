@@ -29,8 +29,8 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.emf.ecp.internal.view.model.provider.xmi.Activator;
-import org.eclipse.emf.ecp.view.model.VView;
-import org.eclipse.emf.ecp.view.model.VViewPackage;
+import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 
 /**
  * @author Jonas
@@ -39,8 +39,8 @@ import org.eclipse.emf.ecp.view.model.VViewPackage;
  */
 public final class ViewModelFileExtensionsManager {
 
-	private static final String FILE_EXTENSION = "org.eclipse.emf.ecp.view.model.provider.xmi.file";
-	private static final String FILEPATH_ATTRIBUTE = "filePath";
+	private static final String FILE_EXTENSION = "org.eclipse.emf.ecp.view.model.provider.xmi.file"; //$NON-NLS-1$
+	private static final String FILEPATH_ATTRIBUTE = "filePath"; //$NON-NLS-1$
 
 	private final Map<EClass, VView> map = new HashMap<EClass, VView>();
 

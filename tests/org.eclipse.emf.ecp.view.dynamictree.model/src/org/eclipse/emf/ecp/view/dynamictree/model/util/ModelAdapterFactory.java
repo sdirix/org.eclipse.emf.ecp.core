@@ -1,4 +1,13 @@
 /**
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * Edgar Mueller - initial API and implementation
  */
 package org.eclipse.emf.ecp.view.dynamictree.model.util;
 
@@ -10,12 +19,15 @@ import org.eclipse.emf.ecp.view.dynamictree.model.DomainIntermediate;
 import org.eclipse.emf.ecp.view.dynamictree.model.DomainRoot;
 import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem;
 import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree;
+import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTreeDomainModelReference;
 import org.eclipse.emf.ecp.view.dynamictree.model.ModelPackage;
 import org.eclipse.emf.ecp.view.dynamictree.model.TestElement;
 import org.eclipse.emf.ecp.view.dynamictree.model.TestElementContainer;
-import org.eclipse.emf.ecp.view.model.VAbstractCategorization;
-import org.eclipse.emf.ecp.view.model.VCategory;
-import org.eclipse.emf.ecp.view.model.VElement;
+import org.eclipse.emf.ecp.view.spi.categorization.model.VAbstractCategorization;
+import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizableElement;
+import org.eclipse.emf.ecp.view.spi.categorization.model.VCategory;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VElement;
 
 /**
  * <!-- begin-user-doc -->
@@ -25,7 +37,8 @@ import org.eclipse.emf.ecp.view.model.VElement;
  * @see org.eclipse.emf.ecp.view.dynamictree.model.ModelPackage
  * @generated
  */
-public class ModelAdapterFactory extends AdapterFactoryImpl {
+public class ModelAdapterFactory extends AdapterFactoryImpl
+{
 	/**
 	 * The cached model package.
 	 * <!-- begin-user-doc -->
@@ -40,7 +53,8 @@ public class ModelAdapterFactory extends AdapterFactoryImpl {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ModelAdapterFactory() {
+	public ModelAdapterFactory()
+	{
 		if (modelPackage == null) {
 			modelPackage = ModelPackage.eINSTANCE;
 		}
@@ -49,13 +63,15 @@ public class ModelAdapterFactory extends AdapterFactoryImpl {
 	/**
 	 * Returns whether this factory is applicable for the type of the object.
 	 * <!-- begin-user-doc -->
-	 * This implementation returns <code>true</code> if the object is either the model's package or is an instance object of the model.
+	 * This implementation returns <code>true</code> if the object is either the model's package or is an instance
+	 * object of the model.
 	 * <!-- end-user-doc -->
 	 * @return whether this factory is applicable for the type of the object.
 	 * @generated
 	 */
 	@Override
-	public boolean isFactoryForType(Object object) {
+	public boolean isFactoryForType(Object object)
+	{
 		if (object == modelPackage) {
 			return true;
 		}
@@ -98,8 +114,16 @@ public class ModelAdapterFactory extends AdapterFactoryImpl {
 				return createTestElementContainerAdapter();
 			}
 			@Override
+			public Adapter caseDynamicContainmentTreeDomainModelReference(DynamicContainmentTreeDomainModelReference object) {
+				return createDynamicContainmentTreeDomainModelReferenceAdapter();
+			}
+			@Override
 			public Adapter caseElement(VElement object) {
 				return createElementAdapter();
+			}
+			@Override
+			public Adapter caseCategorizableElement(VCategorizableElement object) {
+				return createCategorizableElementAdapter();
 			}
 			@Override
 			public Adapter caseAbstractCategorization(VAbstractCategorization object) {
@@ -108,6 +132,10 @@ public class ModelAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseCategory(VCategory object) {
 				return createCategoryAdapter();
+			}
+			@Override
+			public Adapter caseDomainModelReference(VDomainModelReference object) {
+				return createDomainModelReferenceAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -124,10 +152,10 @@ public class ModelAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	@Override
-	public Adapter createAdapter(Notifier target) {
+	public Adapter createAdapter(Notifier target)
+	{
 		return modelSwitch.doSwitch((EObject)target);
 	}
-
 
 	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree <em>Dynamic Containment Tree</em>}'.
@@ -139,7 +167,8 @@ public class ModelAdapterFactory extends AdapterFactoryImpl {
 	 * @see org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree
 	 * @generated
 	 */
-	public Adapter createDynamicContainmentTreeAdapter() {
+	public Adapter createDynamicContainmentTreeAdapter()
+	{
 		return null;
 	}
 
@@ -153,7 +182,8 @@ public class ModelAdapterFactory extends AdapterFactoryImpl {
 	 * @see org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem
 	 * @generated
 	 */
-	public Adapter createDynamicContainmentItemAdapter() {
+	public Adapter createDynamicContainmentItemAdapter()
+	{
 		return null;
 	}
 
@@ -167,7 +197,8 @@ public class ModelAdapterFactory extends AdapterFactoryImpl {
 	 * @see org.eclipse.emf.ecp.view.dynamictree.model.TestElement
 	 * @generated
 	 */
-	public Adapter createTestElementAdapter() {
+	public Adapter createTestElementAdapter()
+	{
 		return null;
 	}
 
@@ -181,7 +212,8 @@ public class ModelAdapterFactory extends AdapterFactoryImpl {
 	 * @see org.eclipse.emf.ecp.view.dynamictree.model.DomainRoot
 	 * @generated
 	 */
-	public Adapter createDomainRootAdapter() {
+	public Adapter createDomainRootAdapter()
+	{
 		return null;
 	}
 
@@ -195,7 +227,8 @@ public class ModelAdapterFactory extends AdapterFactoryImpl {
 	 * @see org.eclipse.emf.ecp.view.dynamictree.model.DomainIntermediate
 	 * @generated
 	 */
-	public Adapter createDomainIntermediateAdapter() {
+	public Adapter createDomainIntermediateAdapter()
+	{
 		return null;
 	}
 
@@ -209,49 +242,95 @@ public class ModelAdapterFactory extends AdapterFactoryImpl {
 	 * @see org.eclipse.emf.ecp.view.dynamictree.model.TestElementContainer
 	 * @generated
 	 */
-	public Adapter createTestElementContainerAdapter() {
+	public Adapter createTestElementContainerAdapter()
+	{
 		return null;
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.VElement <em>Element</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTreeDomainModelReference <em>Dynamic Containment Tree Domain Model Reference</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.model.VElement
+	 * @see org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTreeDomainModelReference
 	 * @generated
 	 */
-	public Adapter createElementAdapter() {
+	public Adapter createDynamicContainmentTreeDomainModelReferenceAdapter() {
 		return null;
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.VAbstractCategorization <em>Abstract Categorization</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.spi.model.VElement <em>Element</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.model.VAbstractCategorization
+	 * @see org.eclipse.emf.ecp.view.spi.model.VElement
 	 * @generated
 	 */
-	public Adapter createAbstractCategorizationAdapter() {
+	public Adapter createElementAdapter()
+	{
 		return null;
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.model.VCategory <em>Category</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizableElement <em>Categorizable Element</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.model.VCategory
+	 * @see org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizableElement
 	 * @generated
 	 */
-	public Adapter createCategoryAdapter() {
+	public Adapter createCategorizableElementAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.spi.categorization.model.VAbstractCategorization <em>Abstract Categorization</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.spi.categorization.model.VAbstractCategorization
+	 * @generated
+	 */
+	public Adapter createAbstractCategorizationAdapter()
+	{
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.spi.categorization.model.VCategory <em>Category</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.spi.categorization.model.VCategory
+	 * @generated
+	 */
+	public Adapter createCategoryAdapter()
+	{
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReference <em>Domain Model Reference</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReference
+	 * @generated
+	 */
+	public Adapter createDomainModelReferenceAdapter() {
 		return null;
 	}
 
@@ -263,8 +342,9 @@ public class ModelAdapterFactory extends AdapterFactoryImpl {
 	 * @return the new adapter.
 	 * @generated
 	 */
-	public Adapter createEObjectAdapter() {
+	public Adapter createEObjectAdapter()
+	{
 		return null;
 	}
 
-} //ModelAdapterFactory
+} // ModelAdapterFactory

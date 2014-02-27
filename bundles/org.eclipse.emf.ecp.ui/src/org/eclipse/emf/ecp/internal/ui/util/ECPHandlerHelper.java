@@ -25,6 +25,7 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.emf.ecp.core.ECPProvider;
@@ -104,8 +105,8 @@ public final class ECPHandlerHelper {
 				try {
 					checkoutSource.checkout(projectName, projectProperties);
 				} catch (final ECPProjectWithNameExistsException ex) {
-					showError(shell, "Cannot checkout project", "A project with name " + projectName
-						+ " already exists in the workspace.");
+					showError(shell, "Cannot checkout project", "A project with name " + projectName //$NON-NLS-1$ //$NON-NLS-2$
+						+ " already exists in the workspace."); //$NON-NLS-1$
 				}
 			}
 		}
@@ -138,7 +139,7 @@ public final class ECPHandlerHelper {
 		}
 		if (providers.size() == 0) {
 			// TODO language
-			showError(shell, "No Provider", "Please check if a suitable provider is installed.");
+			showError(shell, "No Provider", "Please check if a suitable provider is installed."); //$NON-NLS-1$//$NON-NLS-2$
 			return null;
 		}
 		final CreateProjectComposite createProjectComposite = CompositeFactory.getCreateProjectComposite(providers);
@@ -151,7 +152,7 @@ public final class ECPHandlerHelper {
 		if (result == Window.OK) {
 			final ECPProvider selectedProvider = createProjectComposite.getProvider();
 			if (selectedProvider == null) {
-				showError(shell, "No project created", "Please check if a suitable provider is installed.");
+				showError(shell, "No project created", "Please check if a suitable provider is installed."); //$NON-NLS-1$//$NON-NLS-2$
 				return null;
 			}
 
@@ -163,12 +164,12 @@ public final class ECPHandlerHelper {
 				project = ECPUtil.getECPProjectManager()
 					.createProject(selectedProvider, projectName, projectProperties);
 			} catch (final ECPProjectWithNameExistsException ex) {
-				showError(shell, "No project created", "A project with name " + projectName
-					+ " already exists in the workspace.");
+				showError(shell, "No project created", "A project with name " + projectName //$NON-NLS-1$ //$NON-NLS-2$ 
+					+ " already exists in the workspace."); //$NON-NLS-1$
 				return null;
 			}
 			if (project == null) {
-				showError(shell, "No project created", "Please check the log.");
+				showError(shell, "No project created", "Please check the log."); //$NON-NLS-1$//$NON-NLS-2$
 				return null;
 			}
 			((InternalProvider) selectedProvider).handleLifecycle(project, LifecycleEvent.CREATE);
@@ -184,8 +185,77 @@ public final class ECPHandlerHelper {
 	 * @param ecpProject the {@link ECPProject} to add the {@link EObject} to
 	 * @param shell the {@link Shell} used to display the UI
 	 * @param open whether to open the corresponding editor or not
+	 * @return the created {@link EObject}
 	 */
 	public static EObject addModelElement(final ECPProject ecpProject, final Shell shell, boolean open) {
+		final EClass newMEType = openSelectModelElementWizard(ecpProject, shell, open);
+		if (ecpProject != null && newMEType != null) {
+			// create ME
+			final EObject newMEInstance = createModelElementInstance(newMEType);
+			ecpProject.getEditingDomain().getCommandStack().execute(new ChangeCommand(newMEInstance) {
+
+				@Override
+				protected void doExecute() {
+					ecpProject.getContents().add(newMEInstance);
+				}
+			});
+			if (open) {
+				openModelElement(newMEInstance, ecpProject);
+			}
+			return newMEInstance;
+		}
+		return null;
+	}
+
+	/**
+	 * @param resource the resource
+	 * @param activeShell current active shell
+	 * @param open if model element should be directly opened in an editor after it is added to project.
+	 * 
+	 * @return the created model element.
+	 */
+	public static EObject addModelElement(final Resource resource, Shell activeShell, boolean open) {
+
+		final ECPProject ecpProject = ECPUtil.getECPProjectManager().getProject(resource);
+		if (ecpProject == null) {
+			return null;
+		}
+		final EClass newMEType = openSelectModelElementWizard(ecpProject, activeShell, open);
+		if (resource != null && newMEType != null) {
+			// create ME
+			final EObject newMEInstance = createModelElementInstance(newMEType);
+			ecpProject.getEditingDomain().getCommandStack().execute(new ChangeCommand(newMEInstance) {
+
+				@Override
+				protected void doExecute() {
+					resource.getContents().add(newMEInstance);
+				}
+			});
+			if (open) {
+				openModelElement(newMEInstance, ecpProject);
+			}
+			return newMEInstance;
+		}
+		return null;
+	}
+
+	/**
+	 * @param newMEType
+	 * @return
+	 */
+	private static EObject createModelElementInstance(final EClass newMEType) {
+		final EPackage ePackage = newMEType.getEPackage();
+		final EObject newMEInstance = ePackage.getEFactoryInstance().create(newMEType);
+		return newMEInstance;
+	}
+
+	/**
+	 * @param ecpProject
+	 * @param shell
+	 * @param open
+	 * @return
+	 */
+	private static EClass openSelectModelElementWizard(final ECPProject ecpProject, final Shell shell, boolean open) {
 		final SelectionComposite<TreeViewer> helper = CompositeFactory.getSelectModelClassComposite(ecpProject);
 		final SelectModelElementWizard wizard = new SelectModelElementWizard(
 			Messages.NewModelElementWizardHandler_Title,
@@ -198,28 +268,8 @@ public final class ECPHandlerHelper {
 		final int wizardResult = wd.open();
 		if (wizardResult == Window.OK) {
 			final Object[] selection = helper.getSelection();
-			if (selection == null || selection.length == 0) {
-				return null;
-			}
-			final EClass newMEType = (EClass) selection[0];
-			// TODO find childdescriptor
-
-			if (ecpProject != null && newMEType != null) {
-				// 1.create ME
-				final EPackage ePackage = newMEType.getEPackage();
-				final EObject newMEInstance = ePackage.getEFactoryInstance().create(newMEType);
-				ecpProject.getEditingDomain().getCommandStack().execute(new ChangeCommand(newMEInstance) {
-
-					@Override
-					protected void doExecute() {
-						ecpProject.getContents().add(newMEInstance);
-					}
-				});
-				if (open) {
-					// 3.open the newly created ME
-					openModelElement(newMEInstance, ecpProject);
-				}
-				return newMEInstance;
+			if (selection != null && selection.length > 0) {
+				return (EClass) selection[0];
 			}
 		}
 		return null;
@@ -358,7 +408,7 @@ public final class ECPHandlerHelper {
 				for (final IConfigurationElement testerElement : element.getChildren()) {
 					if ("staticTester".equals(testerElement.getName())) {//$NON-NLS-1$
 						final int priority = Integer.parseInt(testerElement.getAttribute("priority"));//$NON-NLS-1$
-						final String type = testerElement.getAttribute("modelElement");
+						final String type = testerElement.getAttribute("modelElement"); //$NON-NLS-1$
 						try {
 							final Class<?> supportedClassType = loadClass(testerElement.getContributor().getName(),
 								type);
@@ -400,8 +450,18 @@ public final class ECPHandlerHelper {
 
 	}
 
+	/**
+	 * Loads the specified class from the given bundle.
+	 * 
+	 * @param bundleName the bundle name
+	 * @param clazz the class name
+	 * @return the loaded class
+	 * @throws ClassNotFoundException in case the class could not be loaded
+	 * 
+	 * @param <T> the type of the class to load
+	 */
 	@SuppressWarnings("unchecked")
-	private static <T> Class<T> loadClass(String bundleName, String clazz) throws ClassNotFoundException {
+	static <T> Class<T> loadClass(String bundleName, String clazz) throws ClassNotFoundException {
 		final Bundle bundle = Platform.getBundle(bundleName);
 		if (bundle == null) {
 			// TODO externalize strings
@@ -434,6 +494,12 @@ public final class ECPHandlerHelper {
 		new RepositoryPropertiesDialog(shell, editable, repository).open();
 	}
 
+	/**
+	 * Opens a dialog to save dirty projects.
+	 * 
+	 * @param shell to open the dialog in
+	 * @return if the save was triggered
+	 */
 	public static boolean showDirtyProjectsDialog(Shell shell) {
 		final ECPProjectManager manager = ECPUtil.getECPProjectManager();
 
@@ -453,7 +519,7 @@ public final class ECPHandlerHelper {
 				@Override
 				public Image getImage(Object element) {
 					if (ECPProject.class.isInstance(element)) {
-						return Activator.getImage("icons/project_open.gif");
+						return Activator.getImage("icons/project_open.gif"); //$NON-NLS-1$
 					}
 					return super.getImage(element);
 				}
@@ -466,9 +532,9 @@ public final class ECPHandlerHelper {
 					return super.getText(element);
 				}
 
-			}, "Select the projects, which should be saved.");
+			}, "Select the projects, which should be saved."); //$NON-NLS-1$
 		lsd.setInitialSelections(manager.getProjects().toArray());
-		lsd.setTitle("Unsaved Projects");
+		lsd.setTitle("Unsaved Projects"); //$NON-NLS-1$
 		final int result = lsd.open();
 		if (Window.OK == result) {
 			for (final Object o : lsd.getResult()) {

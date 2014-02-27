@@ -14,12 +14,11 @@ package org.eclipse.emf.ecp.edit.spi;
 
 import java.util.Set;
 
-import org.eclipse.emf.ecp.view.model.VDomainModelReference;
-import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 
 /**
  * The ControlFactory provides a
- * method ({@link ECPControlFactory#createControl(Class, IItemPropertyDescriptor, ECPControlContext)}) for creating a
+ * method ({@link ECPControlFactory#createControl(Class, VDomainModelReference)}) for creating a
  * suitable
  * control with the known widgets.
  * 
@@ -29,35 +28,6 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
  * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface ECPControlFactory {
-	/**
-	 * Creates an {@link ECPAbstractControl} from the provided {@link IItemPropertyDescriptor} and the
-	 * {@link ECPControlContext}.
-	 * 
-	 * @param <T> the type of the control to create
-	 * @param controlTypeClass the class of the control to create
-	 * @param itemPropertyDescriptor the {@link IItemPropertyDescriptor}
-	 * @param context the {@link ECPControlContext}
-	 * @return the created {@link ECPControl} or null if nothing fitting could be created
-	 */
-	@Deprecated
-	<T extends ECPControl> T createControl(Class<T> controlTypeClass, IItemPropertyDescriptor itemPropertyDescriptor,
-		ECPControlContext context);
-
-	/**
-	 * Creates an {@link ECPAbstractControl} based on a provided id.
-	 * 
-	 * @param <T> the type of the control to create
-	 * @param itemPropertyDescriptor the {@link IItemPropertyDescriptor}
-	 * @param context the {@link ECPControlContext}
-	 * @param controlId the id of the control to create
-	 * @return the created {@link ECPControl} or null if id is unknown
-	 * 
-	 * @deprecated
-	 */
-
-	@Deprecated
-	<T extends ECPControl> T createControl(IItemPropertyDescriptor itemPropertyDescriptor,
-		ECPControlContext context, String controlId);
 
 	/**
 	 * Creates an {@link ECPAbstractControl} based on a {@link Class} and the {@link VDomainModelReference}.
@@ -67,7 +37,7 @@ public interface ECPControlFactory {
 	 * @param <T> the type of the control to return
 	 * @return the found control or null
 	 * 
-	 * @since 1.1
+	 * @since 1.2
 	 */
 	<T> T createControl(Class<T> controlTypeClass, VDomainModelReference domainModelReference);
 

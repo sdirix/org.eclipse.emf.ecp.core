@@ -11,7 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.util;
 
-import org.eclipse.emf.ecp.internal.ui.view.renderer.LayoutHelper;
+import org.eclipse.emf.ecp.view.spi.renderer.LayoutHelper;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
@@ -26,7 +26,7 @@ public final class DefaultLayoutHelper implements LayoutHelper<Layout> {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.internal.ui.view.renderer.LayoutHelper#getColumnLayout(int, boolean)
+	 * @see org.eclipse.emf.ecp.view.spi.renderer.LayoutHelper#getColumnLayout(int, boolean)
 	 */
 	public Layout getColumnLayout(int numColumns, boolean equalWidth) {
 		return GridLayoutFactory.fillDefaults().numColumns(numColumns).equalWidth(equalWidth).create();
@@ -35,7 +35,7 @@ public final class DefaultLayoutHelper implements LayoutHelper<Layout> {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.internal.ui.view.renderer.LayoutHelper#getSpanningLayoutData(int, int)
+	 * @see org.eclipse.emf.ecp.view.spi.renderer.LayoutHelper#getSpanningLayoutData(int, int)
 	 */
 	public Object getSpanningLayoutData(int xSpan, int ySpan) {
 		return GridDataFactory.fillDefaults()
@@ -48,7 +48,7 @@ public final class DefaultLayoutHelper implements LayoutHelper<Layout> {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.internal.ui.view.renderer.LayoutHelper#getLeftColumnLayoutData()
+	 * @see org.eclipse.emf.ecp.view.spi.renderer.LayoutHelper#getLeftColumnLayoutData()
 	 */
 	public Object getLeftColumnLayoutData() {
 		return GridDataFactory.fillDefaults()
@@ -59,12 +59,24 @@ public final class DefaultLayoutHelper implements LayoutHelper<Layout> {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.internal.ui.view.renderer.LayoutHelper#getRightColumnLayoutData()
+	 * @see org.eclipse.emf.ecp.view.spi.renderer.LayoutHelper#getRightColumnLayoutData(int)
 	 */
-	public Object getRightColumnLayoutData() {
+	public Object getRightColumnLayoutData(int xSpan) {
 		return GridDataFactory.fillDefaults()
 			.align(SWT.FILL, SWT.CENTER)
-			.grab(true, false)
+			.grab(true, false).span(xSpan, 1)
+			.create();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.spi.renderer.LayoutHelper#getValidationColumnLayoutData()
+	 */
+	public Object getValidationColumnLayoutData() {
+		return GridDataFactory.fillDefaults()
+			.align(SWT.CENTER, SWT.CENTER).hint(16, 17)
+			.grab(false, false)
 			.create();
 	}
 

@@ -21,7 +21,7 @@
       <!-- @generated vertical -->
       <package
             uri="http://org/eclipse/emf/ecp/view/vertical/model"
-            class="org.eclipse.emf.ecp.view.vertical.model.VVerticalPackage"
+            class="org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalPackage"
             genModel="model/vertical.genmodel"/>
    </extension>
 

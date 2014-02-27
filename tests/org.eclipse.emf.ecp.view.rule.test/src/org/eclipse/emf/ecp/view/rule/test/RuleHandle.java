@@ -12,8 +12,8 @@
 package org.eclipse.emf.ecp.view.rule.test;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.view.model.VElement;
-import org.eclipse.emf.ecp.view.rule.model.Rule;
+import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.spi.rule.model.Rule;
 
 /**
  * @author Jonas

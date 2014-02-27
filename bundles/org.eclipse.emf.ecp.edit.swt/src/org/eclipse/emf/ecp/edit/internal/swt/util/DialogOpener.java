@@ -22,17 +22,28 @@ import org.eclipse.jface.dialogs.Dialog;
  * @author Eugen Neufeld
  * 
  */
-public class DialogOpener {
+public final class DialogOpener {
 
+	private DialogOpener() {
+
+	}
+
+	/**
+	 * The provided {@link Dialog} is opened and the result is returned via the provided {@link ECPDialogExecutor}.
+	 * This method searches for a DialogWrapper which will wrap the code in order to allow opening JFace dialogs in RAP.
+	 * 
+	 * @param dialog the JFace Dialog to open
+	 * @param callBack the {@link ECPDialogExecutor} called to handle the result
+	 */
 	public static void openDialog(Dialog dialog, ECPDialogExecutor callBack) {
 		DialogWrapper wrapper = null;
-		IConfigurationElement[] controls = Platform.getExtensionRegistry().getConfigurationElementsFor(
+		final IConfigurationElement[] controls = Platform.getExtensionRegistry().getConfigurationElementsFor(
 			"org.eclipse.emf.ecp.edit.swt.dialogWrapper"); //$NON-NLS-1$
-		for (IConfigurationElement e : controls) {
+		for (final IConfigurationElement e : controls) {
 			try {
 				wrapper = (DialogWrapper) e.createExecutableExtension("class"); //$NON-NLS-1$
 				break;
-			} catch (CoreException e1) {
+			} catch (final CoreException e1) {
 				Activator.logException(e1);
 			}
 		}

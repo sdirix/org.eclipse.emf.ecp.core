@@ -11,17 +11,25 @@
 package org.eclipse.emf.ecp.editor.internal.e3;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
-import org.eclipse.emf.ecp.editor.EditorFactory;
-import org.eclipse.emf.ecp.editor.IEditorCompositeProvider;
+import org.eclipse.emf.ecp.editor.e3.ECPEditorContext;
+import org.eclipse.emf.ecp.spi.ui.ECPReferenceServiceImpl;
+import org.eclipse.emf.ecp.ui.view.ECPRendererException;
+import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
+import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
+import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.ContributionManager;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
 import org.eclipse.swt.layout.GridLayout;
@@ -43,21 +51,16 @@ import org.eclipse.ui.menus.IMenuService;
  */
 public class MEEditorPage extends FormPage {
 
+	private static final String TOOLBAR_ORG_ECLIPSE_EMF_ECP_EDITOR_INTERNAL_E3_ME_EDITOR_PAGE = "toolbar:org.eclipse.emf.ecp.editor.internal.e3.MEEditorPage"; //$NON-NLS-1$
 	//
 	private ScrolledForm form;
 	//
-	private final ECPControlContext modelElementContext;
-
-	// TODO: unused?
-	private IEditorCompositeProvider editorPageContent;
+	private final ECPEditorContext modelElementContext;
 
 	private ShortLabelProvider shortLabelProvider;
 
 	private ComposedAdapterFactory composedAdapterFactory;
-
-	// private ISourceProvider sourceProvider;
-
-	// private IEvaluationService service;
+	private ECPSWTView ecpView;
 
 	/**
 	 * Default constructor.
@@ -68,12 +71,12 @@ public class MEEditorPage extends FormPage {
 	 *            the {@link FormPage#id}
 	 * @param title
 	 *            the title
+	 * @param modelElementContext
+	 *            the {@link ECPEditorContext}
 	 * @param modelElement
 	 *            the modelElement
-	 * @param modelElementContext
-	 *            the {@link ModelElementContext}
 	 */
-	public MEEditorPage(MEEditor editor, String id, String title, ECPControlContext modelElementContext,
+	public MEEditorPage(MEEditor editor, String id, String title, ECPEditorContext modelElementContext,
 		EObject modelElement) {
 		super(editor, id, title);
 		this.modelElementContext = modelElementContext;
@@ -89,14 +92,14 @@ public class MEEditorPage extends FormPage {
 	 *            the {@link FormPage#id}
 	 * @param title
 	 *            the title
+	 * @param modelElementContext
+	 *            the {@link ECPEditorContext}
 	 * @param modelElement
 	 *            the modelElement
 	 * @param problemFeature
 	 *            the problemFeature
-	 * @param modelElementContext
-	 *            the {@link ModelElementContext}
 	 */
-	public MEEditorPage(MEEditor editor, String id, String title, ECPControlContext modelElementContext,
+	public MEEditorPage(MEEditor editor, String id, String title, ECPEditorContext modelElementContext,
 		EObject modelElement, EStructuralFeature problemFeature) {
 		this(editor, id, title, modelElementContext, modelElement);
 	}
@@ -111,19 +114,26 @@ public class MEEditorPage extends FormPage {
 			new ReflectiveItemProviderAdapterFactory(),
 			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
 		shortLabelProvider = new ShortLabelProvider(composedAdapterFactory);
-		FormToolkit toolkit = getEditor().getToolkit();
+		final FormToolkit toolkit = getEditor().getToolkit();
 		form = managedForm.getForm();
 		form.setShowFocusedControl(true);
 		toolkit.decorateFormHeading(form.getForm());
 		final Composite body = form.getBody();
 		body.setLayout(new GridLayout());
 		body.setBackground(body.getDisplay().getSystemColor(SWT.COLOR_WHITE));
-		EClass eClass = modelElementContext.getModelElement().eClass();
 
-		editorPageContent = EditorFactory.INSTANCE.getEditorComposite(modelElementContext);
-		editorPageContent.createUI(body);
+		final EObject domainObject = modelElementContext.getDomainObject();
+		final VView view = ViewProviderHelper.getView(domainObject);
+		final ViewModelContext vmc = ViewModelContextFactory.INSTANCE.createViewModelContext(view, domainObject,
+			new ECPReferenceServiceImpl());
+		try {
+			ecpView = ECPSWTViewRenderer.INSTANCE.render(body, vmc);
+		} catch (final ECPRendererException ex) {
+			MessageDialog.openError(form.getShell(), ex.getClass().getName(), ex.getMessage());
+			Activator.logException(ex);
+		}
 
-		form.setImage(shortLabelProvider.getImage(modelElementContext.getModelElement()));
+		form.setImage(shortLabelProvider.getImage(modelElementContext.getDomainObject()));
 		createToolbar();
 		form.pack();
 		updateSectionTitle();
@@ -136,18 +146,18 @@ public class MEEditorPage extends FormPage {
 	public void updateSectionTitle() {
 		// Layout form
 
-		String name = shortLabelProvider.getText(modelElementContext.getModelElement());
+		String name = shortLabelProvider.getText(modelElementContext.getDomainObject());
 
-		name += " [" + modelElementContext.getModelElement().eClass().getName() + "]";
+		name += " [" + modelElementContext.getDomainObject().eClass().getName() + "]"; //$NON-NLS-1$ //$NON-NLS-2$
 		try {
 			form.setText(name);
-		} catch (SWTException e) {
+		} catch (final SWTException e) {
 			// Catch in case editor is closed directly after change
 		}
 	}
 
 	private void createToolbar() {
-		IMenuService menuService = (IMenuService) PlatformUI.getWorkbench().getService(IMenuService.class);
+		final IMenuService menuService = (IMenuService) PlatformUI.getWorkbench().getService(IMenuService.class);
 		// sourceProvider = new AbstractSourceProvider() {
 		// public void dispose() {
 		// }
@@ -171,24 +181,27 @@ public class MEEditorPage extends FormPage {
 		// .getService(IEvaluationService.class);
 		// service.addSourceProvider(sourceProvider);
 
-		form.getToolBarManager().add(new Action("", Activator.getImageDescriptor(ISharedImages.IMG_TOOL_DELETE)) {
+		form.getToolBarManager().add(new Action("", Activator.getImageDescriptor(ISharedImages.IMG_TOOL_DELETE)) { //$NON-NLS-1$
 
-			@Override
-			public void run() {
-				new ECPCommand(modelElementContext.getModelElement(), modelElementContext.getEditingDomain()) {
+				@Override
+				public void run() {
+					final EditingDomain editingDomain = AdapterFactoryEditingDomain
+						.getEditingDomainFor(modelElementContext
+							.getDomainObject());
+					new ECPCommand(modelElementContext.getDomainObject(), editingDomain) {
 
-					@Override
-					protected void doRun() {
-						EcoreUtil.delete(modelElementContext.getModelElement(), true);
-					}
+						@Override
+						protected void doRun() {
+							EcoreUtil.delete(modelElementContext.getDomainObject(), true);
+						}
 
-				}.run(true);
+					}.run(true);
 
-				MEEditorPage.this.getEditor().close(true);
-			}
-		});
+					MEEditorPage.this.getEditor().close(true);
+				}
+			});
 		menuService.populateContributionManager((ContributionManager) form.getToolBarManager(),
-			"toolbar:org.eclipse.emf.ecp.editor.internal.e3.MEEditorPage");
+			TOOLBAR_ORG_ECLIPSE_EMF_ECP_EDITOR_INTERNAL_E3_ME_EDITOR_PAGE);
 		form.getToolBarManager().update(true);
 	}
 
@@ -207,7 +220,7 @@ public class MEEditorPage extends FormPage {
 	 */
 	@Override
 	public void dispose() {
-		editorPageContent.dispose();
+		ecpView.dispose();
 		composedAdapterFactory.dispose();
 		shortLabelProvider.dispose();
 		form.dispose();

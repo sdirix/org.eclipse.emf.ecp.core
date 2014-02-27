@@ -11,8 +11,8 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.rule;
 
+import java.util.Arrays;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,18 +25,16 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
-import org.eclipse.emf.ecp.view.context.AbstractViewService;
-import org.eclipse.emf.ecp.view.context.ModelChangeNotification;
-import org.eclipse.emf.ecp.view.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.context.ViewModelContext.ModelChangeListener;
-import org.eclipse.emf.ecp.view.model.VElement;
-import org.eclipse.emf.ecp.view.model.VAttachment;
-import org.eclipse.emf.ecp.view.model.VControl;
-import org.eclipse.emf.ecp.view.model.VDomainModelReference;
-import org.eclipse.emf.ecp.view.rule.model.Condition;
-import org.eclipse.emf.ecp.view.rule.model.EnableRule;
-import org.eclipse.emf.ecp.view.rule.model.Rule;
-import org.eclipse.emf.ecp.view.rule.model.ShowRule;
+import org.eclipse.emf.ecp.view.spi.context.ModelChangeNotification;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
+import org.eclipse.emf.ecp.view.spi.model.VAttachment;
+import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.spi.rule.model.Condition;
+import org.eclipse.emf.ecp.view.spi.rule.model.EnableRule;
+import org.eclipse.emf.ecp.view.spi.rule.model.Rule;
+import org.eclipse.emf.ecp.view.spi.rule.model.ShowRule;
 
 /**
  * Rule service that, once instantiated, maintains and synchronizes
@@ -44,15 +42,16 @@ import org.eclipse.emf.ecp.view.rule.model.ShowRule;
  * 
  * @author emueller
  */
-public class RuleService extends AbstractViewService {
+public class RuleService implements ViewModelService {
 
+	private static final String DOMAIN_MODEL_NULL_EXCEPTION = "Domain model must not be null."; //$NON-NLS-1$
+	private static final String VIEW_MODEL_NULL_EXCEPTION = "View model must not be null."; //$NON-NLS-1$
 	private ViewModelContext context;
 	private ModelChangeListener domainChangeListener;
 	private ModelChangeListener viewChangeListener;
 
 	private final RuleRegistry<EnableRule> enableRuleRegistry;
 	private final RuleRegistry<ShowRule> showRuleRegistry;
-	private boolean isUnset;
 
 	/**
 	 * Instantiates the rule service.
@@ -65,16 +64,15 @@ public class RuleService extends AbstractViewService {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.context.AbstractViewService#instantiate(org.eclipse.emf.ecp.view.context.ViewModelContext)
+	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#instantiate(org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
-	@Override
 	public void instantiate(ViewModelContext context) {
 		this.context = context;
 		final VElement view = context.getViewModel();
 		domainChangeListener = new ModelChangeListener() {
 
 			public void notifyChange(ModelChangeNotification notification) {
-				if (isAttributeNotification(notification) && !isUnset) {
+				if (isAttributeNotification(notification)) {
 					final EAttribute attribute = (EAttribute) notification.getStructuralFeature();
 					evalShow(attribute);
 					evalEnable(attribute);
@@ -126,13 +124,13 @@ public class RuleService extends AbstractViewService {
 		context.registerViewChangeListener(viewChangeListener);
 
 		if (view == null) {
-			throw new IllegalStateException("View model must not be null");
+			throw new IllegalStateException(VIEW_MODEL_NULL_EXCEPTION);
 		}
 
 		final EObject domainModel = context.getDomainModel();
 
 		if (domainModel == null) {
-			throw new IllegalStateException("Domain model must not be null");
+			throw new IllegalStateException(DOMAIN_MODEL_NULL_EXCEPTION);
 		}
 
 		init(enableRuleRegistry, EnableRule.class, view, domainModel);
@@ -165,11 +163,24 @@ public class RuleService extends AbstractViewService {
 		return null;
 	}
 
-	private static void updateStateMap(Map<VElement, Boolean> stateMap, VElement renderable,
-		boolean isOpposite, boolean evalResult) {
+	private static <T extends Rule> void updateStateMap(Map<VElement, Boolean> stateMap, VElement renderable,
+		boolean isOpposite, boolean evalResult, Class<T> ruleType) {
 
 		if (!stateMap.containsKey(renderable)) {
-			stateMap.put(renderable, isOpposite ? !evalResult : evalResult);
+			boolean didUpdate = false;
+			final Rule rule = getRule(renderable);
+			if (rule != null && ruleApplies(rule, ruleType)) {
+				final Condition condition = rule.getCondition();
+				if (condition != null && canOverrideParent(evalResult, isOpposite)) {
+					final boolean evaluate = condition.evaluate();
+					stateMap.put(renderable, isOpposite(rule) ? !evaluate : evaluate);
+					didUpdate = true;
+				}
+			}
+			// use result of parent
+			if (!didUpdate) {
+				stateMap.put(renderable, isOpposite ? !evalResult : evalResult);
+			}
 		} else {
 			final Boolean currentState = stateMap.get(renderable).booleanValue();
 			if (currentState) {
@@ -179,9 +190,21 @@ public class RuleService extends AbstractViewService {
 
 		for (final EObject childContent : renderable.eContents()) {
 			if (childContent instanceof VElement) {
-				updateStateMap(stateMap, (VElement) childContent, isOpposite, evalResult);
+				updateStateMap(stateMap, (VElement) childContent, isOpposite, evalResult, ruleType);
 			}
 		}
+	}
+
+	private static boolean canOverrideParent(boolean evalResult, boolean isOpposite) {
+		return evalResult && !isOpposite || !evalResult && isOpposite;
+	}
+
+	private static <T extends Rule> boolean ruleApplies(Rule rule, Class<T> ruleType) {
+		return Arrays.asList(rule.getClass().getInterfaces()).contains(ruleType);
+	}
+
+	private static boolean isOpposite(Rule rule) {
+		return isHideRule(rule) || isDisableRule(rule);
 	}
 
 	private static <T extends Rule> boolean hasRule(Class<T> ruleType, EObject eObject) {
@@ -209,9 +232,10 @@ public class RuleService extends AbstractViewService {
 			attribute).entrySet()) {
 
 			final Rule rule = ruleAndRenderable.getKey();
+
 			final VElement renderable = ruleAndRenderable.getValue();
 			// whether the value changed at all, if newValue has been provided
-			boolean hasChanged = false;
+			boolean hasChanged = true;
 
 			if (!ruleType.isInstance(rule)) {
 				continue;
@@ -219,42 +243,77 @@ public class RuleService extends AbstractViewService {
 
 			if (isDryRun) {
 
-				for (final Setting setting : possibleValues.keySet()) {
-					final EObject parent = setting.getEObject();
-					final EStructuralFeature feature = setting.getEStructuralFeature();
-					final EClass attributeClass = feature.getEContainingClass();
-					if (!attributeClass.isInstance(parent)) {
-						continue;
-					}
-					final Object actualValue = parent.eGet(feature);
-					final Object newValue = possibleValues.get(setting);
-					if (!feature.isMany()) {
-						if (newValue == null) {
-							hasChanged |= actualValue == null;
-						} else {
-							hasChanged |= !newValue.equals(actualValue);
-						}
-					}
-					else {
-						// EMF API
-						@SuppressWarnings("unchecked")
-						final List<Object> objects = (List<Object>) actualValue;
-						hasChanged |= !objects.contains(newValue);
-					}
-				}
+				hasChanged = checkDryRun(possibleValues);
 
 			}
 
-			if (hasChanged) {
-				final boolean result = ConditionEvaluator.evaluate(possibleValues, rule.getCondition());
-				updateStateMap(map, renderable, isDisableRule(rule) || isHideRule(rule), result);
+			boolean result = false;
+			boolean updateMap = true;
+			if (rule.getCondition() == null) {
+				result = false;
+			} else if (isDryRun && hasChanged) {
+				result = rule.getCondition().evaluateChangedValues(possibleValues);
 			} else if (!isDryRun) {
-				final boolean result = ConditionEvaluator.evaluate(rule.getCondition());
-				updateStateMap(map, renderable, isDisableRule(rule) || isHideRule(rule), result);
+				result = rule.getCondition().evaluate();
+			}
+			else {
+				updateMap = false;
+			}
+			final boolean isOposite = isDisableRule(rule) || isHideRule(rule);
+			updateMap &= propagateChanges(result, isOposite, rule, renderable);
+			if (updateMap) {
+				updateStateMap(map, renderable, isOposite, result, ruleType);
 			}
 		}
 
 		return map;
+	}
+
+	private static boolean propagateChanges(boolean result, boolean isOposite, Rule rule, VElement renderable) {
+		if (result && !isOposite || isOposite && !result) {
+			if (ShowRule.class.isInstance(rule)) {
+				if (isOposite && result != renderable.isVisible()) {
+					return false;
+				} else if (!isOposite && result == renderable.isVisible()) {
+					return false;
+				}
+			} else if (EnableRule.class.isInstance(rule)) {
+				if (isOposite && result != renderable.isEnabled()) {
+					return false;
+				} else if (!isOposite && result == renderable.isEnabled()) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
+	private static boolean checkDryRun(Map<Setting, Object> possibleValues) {
+		boolean hasChanged = true;
+		for (final Setting setting : possibleValues.keySet()) {
+			final EObject parent = setting.getEObject();
+			final EStructuralFeature feature = setting.getEStructuralFeature();
+			final EClass attributeClass = feature.getEContainingClass();
+			if (!attributeClass.isInstance(parent)) {
+				continue;
+			}
+			final Object actualValue = parent.eGet(feature);
+			final Object newValue = possibleValues.get(setting);
+			if (!feature.isMany()) {
+				if (newValue == null) {
+					hasChanged &= actualValue == null;
+				} else {
+					hasChanged &= !newValue.equals(actualValue);
+				}
+			}
+			else {
+				// EMF API
+				@SuppressWarnings("unchecked")
+				final List<Object> objects = (List<Object>) actualValue;
+				hasChanged &= !objects.contains(newValue);
+			}
+		}
+		return hasChanged;
 	}
 
 	private static <T extends Rule> Map<VElement, Boolean> evalAffectedRenderables(RuleRegistry<T> registry,
@@ -264,7 +323,8 @@ public class RuleService extends AbstractViewService {
 
 	private static <T extends Rule> Map<VElement, Boolean> evalAffectedRenderables(RuleRegistry<T> registry,
 		Class<T> ruleType, EStructuralFeature attribute) {
-		return evalAffectedRenderables(registry, ruleType, attribute, false, null);
+		final Map<Setting, Object> changedValues = Collections.emptyMap();
+		return evalAffectedRenderables(registry, ruleType, attribute, false, changedValues);
 	}
 
 	private static boolean isDisableRule(Rule rule) {
@@ -296,11 +356,7 @@ public class RuleService extends AbstractViewService {
 		for (final Map.Entry<VElement, Boolean> e : visibleMap.entrySet()) {
 			final Boolean isVisible = e.getValue();
 			final VElement renderable = e.getKey();
-			final boolean isCurrentlyVisible = renderable.isVisible();
 			renderable.setVisible(isVisible);
-			if (isCurrentlyVisible && !isVisible) {
-				unset(renderable);
-			}
 		}
 	}
 
@@ -354,21 +410,14 @@ public class RuleService extends AbstractViewService {
 	 * 
 	 * @param possibleValues
 	 *            a mapping of settings to their would-be new value
+	 * @param changedAttribute the changed attribute
 	 * @return the hidden {@link VElement}s and their new state if {@code possibleValues} would be set
 	 */
-	public Map<VElement, Boolean> getDisabledRenderables(Map<Setting, Object> possibleValues) {
+	public Map<VElement, Boolean> getDisabledRenderables(Map<Setting, Object> possibleValues,
+		EAttribute changedAttribute) {
 
-		final EStructuralFeature feature = possibleValues.keySet().iterator().next().getEStructuralFeature();
-
-		if (feature instanceof EAttribute) {
-
-			final EAttribute attribute = (EAttribute) feature;
-
-			return evalAffectedRenderables(enableRuleRegistry,
-				EnableRule.class, attribute, possibleValues);
-		}
-
-		return Collections.emptyMap();
+		return evalAffectedRenderables(enableRuleRegistry,
+			EnableRule.class, changedAttribute, possibleValues);
 	}
 
 	/**
@@ -377,51 +426,18 @@ public class RuleService extends AbstractViewService {
 	 * 
 	 * @param possibleValues
 	 *            a mapping of settings to their would-be new value
+	 * @param changedAttribute the attribute that was changed
 	 * @return the hidden {@link VElement}s and their new state if {@code possibleValues} would be set
 	 */
-	public Map<VElement, Boolean> getHiddenRenderables(Map<Setting, Object> possibleValues) {
+	public Map<VElement, Boolean> getHiddenRenderables(Map<Setting, Object> possibleValues, EAttribute changedAttribute) {
 
-		final EStructuralFeature feature = possibleValues.keySet().iterator().next().getEStructuralFeature();
-
-		if (feature instanceof EAttribute) {
-
-			final EAttribute attribute = (EAttribute) feature;
-
-			return evalAffectedRenderables(showRuleRegistry,
-				ShowRule.class, attribute, possibleValues);
-		}
-
-		return Collections.emptyMap();
-	}
-
-	private void unset(VElement renderable) {
-
-		if (renderable instanceof VControl) {
-			final VControl control = (VControl) renderable;
-			final VDomainModelReference domainModelReference = control.getDomainModelReference();
-			final Iterator<Setting> settings = domainModelReference.getIterator();
-			while (settings.hasNext()) {
-				final Setting setting = settings.next();
-				final EObject parent = setting.getEObject();
-				final EStructuralFeature targetFeature = setting.getEStructuralFeature();
-				if (targetFeature == null) {
-					continue;
-				}
-				final Class<?> containerClass = targetFeature.getContainerClass();
-
-				isUnset = true;
-				if (containerClass.isInstance(parent)) {
-					parent.eUnset(targetFeature);
-				}
-				isUnset = false;
-			}
-		}
+		return evalAffectedRenderables(showRuleRegistry,
+			ShowRule.class, changedAttribute, possibleValues);
 	}
 
 	/**
 	 * Dispose.
 	 */
-	@Override
 	public void dispose() {
 		// dispose stuff
 		context.unregisterDomainChangeListener(domainChangeListener);
@@ -452,9 +468,8 @@ public class RuleService extends AbstractViewService {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.context.AbstractViewService#getPriority()
+	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#getPriority()
 	 */
-	@Override
 	public int getPriority() {
 		return 1;
 	}

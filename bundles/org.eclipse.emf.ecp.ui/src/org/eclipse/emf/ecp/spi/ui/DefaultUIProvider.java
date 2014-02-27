@@ -12,15 +12,12 @@
 package org.eclipse.emf.ecp.spi.ui;
 
 import java.io.IOException;
-import java.lang.reflect.AccessibleObject;
-import java.lang.reflect.Field;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -34,6 +31,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecp.common.ChildrenDescriptorCollector;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.util.ECPCheckoutSource;
@@ -46,12 +44,9 @@ import org.eclipse.emf.ecp.internal.ui.Activator;
 import org.eclipse.emf.ecp.internal.ui.composites.PropertiesComposite;
 import org.eclipse.emf.ecp.internal.ui.util.ECPHandlerHelper;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
-import org.eclipse.emf.edit.EMFEditPlugin;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.CommandParameter;
 import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.emf.edit.provider.IChildCreationExtender;
-import org.eclipse.emf.edit.provider.IChildCreationExtender.Descriptor;
 import org.eclipse.emf.edit.ui.action.CreateChildAction;
 import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
 import org.eclipse.jface.action.Action;
@@ -76,6 +71,8 @@ public class DefaultUIProvider extends Element implements UIProvider {
 	private static final Image PROJECT_OPEN = Activator.getImage("icons/project_open.gif"); //$NON-NLS-1$
 	private static final Image PROJECT_CLOSED = Activator.getImage("icons/project_closed.gif"); //$NON-NLS-1$
 	private static final Image REPOSITORY = Activator.getImage("icons/repository.gif"); //$NON-NLS-1$
+	private static final String UNKNOWN_PACKAGE_ICON = "icons/EPackageUnknown.gif"; //$NON-NLS-1$
+	private static final String EPACKAGE_ICON = "icons/EPackage.gif"; //$NON-NLS-1$
 
 	private final Disposable disposable = new Disposable(this) {
 		@Override
@@ -216,46 +213,15 @@ public class DefaultUIProvider extends Element implements UIProvider {
 
 	private void fillContextMenuForProject(IMenuManager manager, final ECPProject project, Object element) {
 		if (element instanceof Resource) {
-			final Resource resource = (Resource) element;
-			populateNewRoot(resource, manager);
+			// TODO: does it make sense to show "all" registered EPackages in context menu of a resource?
+			// ZH: Do nothing for now. Instead, we show an "Add new Model Element..." in context menu,
+			// when element is a resource
+			// final Resource resource = (Resource) element;
+			// populateNewRoot(resource, manager);
 		} else if (element instanceof EObject) {
 			final EditingDomain domain = project.getEditingDomain();
-			final Collection<?> descriptors = domain.getNewChildDescriptors(element, null);
-			final EObject eObject = (EObject) element;
-			final Set<String> alreadyReadNameSpaces = new LinkedHashSet<String>();
-			alreadyReadNameSpaces.add(eObject.eClass().getEPackage().getNsURI());
-			for (final EClass eClass : eObject.eClass().getEAllSuperTypes()) {
-				final String namespace = eClass.getEPackage().getNsURI();
-				if (alreadyReadNameSpaces.contains(namespace)) {
-					continue;
-				}
-				for (final Descriptor descriptor : EMFEditPlugin.getChildCreationExtenderDescriptorRegistry()
-					.getDescriptors(namespace)) {
-					final IChildCreationExtender createChildCreationExtender = descriptor.createChildCreationExtender();
-					try {
-						final Field declaredField = descriptor.getClass().getDeclaredField("contributor");
-						AccessibleObject.setAccessible(new AccessibleObject[] { declaredField }, true);
-						final String value = (String) declaredField.get(descriptor);
-						if (value.startsWith(eObject.eClass().getEPackage().getNsPrefix())) {
-							continue;
-						}
-					} catch (final NoSuchFieldException ex) {
-						Activator.log(ex);
-						continue;
-					} catch (final IllegalArgumentException ex) {
-						Activator.log(ex);
-						continue;
-					} catch (final IllegalAccessException ex) {
-						Activator.log(ex);
-						continue;
-					}
-					final Collection newChildDescriptors = createChildCreationExtender
-						.getNewChildDescriptors(eObject, domain);
-					descriptors.addAll(newChildDescriptors);
-				}
-				alreadyReadNameSpaces.add(namespace);
-			}
-
+			final ChildrenDescriptorCollector childrenDescriptorCollector = new ChildrenDescriptorCollector();
+			final Collection<?> descriptors = childrenDescriptorCollector.getDescriptors((EObject) element);
 			if (descriptors != null) {
 				fillContextMenuWithDescriptors(manager, descriptors, domain, element, project);
 			}
@@ -282,7 +248,7 @@ public class DefaultUIProvider extends Element implements UIProvider {
 			if (!cp.getEReference().isMany() && eObject.eIsSet(cp.getEStructuralFeature())) {
 				continue;
 			} else if (cp.getEReference().isMany() && cp.getEReference().getUpperBound() != -1
-				&& cp.getEReference().getUpperBound() <= ((List) eObject.eGet(cp.getEReference())).size()) {
+				&& cp.getEReference().getUpperBound() <= ((List<?>) eObject.eGet(cp.getEReference())).size()) {
 				continue;
 			}
 			// TODO: Temporal hack to remove all other elements of the view model for 1.1.M1
@@ -359,13 +325,13 @@ public class DefaultUIProvider extends Element implements UIProvider {
 		if (value instanceof EPackage) {
 			final EPackage ePackage = (EPackage) value;
 
-			final ImageDescriptor imageDescriptor = Activator.getImageDescriptor("icons/EPackage.gif");
+			final ImageDescriptor imageDescriptor = Activator.getImageDescriptor(EPACKAGE_ICON);
 			final MenuManager submenuManager = new MenuManager(nsURI, imageDescriptor, nsURI);
 			populateSubMenu(resource, ePackage, submenuManager);
 			return submenuManager;
 		}
 
-		final ImageDescriptor imageDescriptor = Activator.getImageDescriptor("icons/EPackageUnknown.gif");
+		final ImageDescriptor imageDescriptor = Activator.getImageDescriptor(UNKNOWN_PACKAGE_ICON);
 		final MenuManager submenuManager = new MenuManager(nsURI, imageDescriptor, nsURI);
 		submenuManager.setRemoveAllWhenShown(true);
 		submenuManager.add(new Action("Calculating...") {

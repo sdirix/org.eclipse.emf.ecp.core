@@ -13,7 +13,7 @@ package org.eclipse.emf.ecp.edit.internal.swt.controls;
 
 import org.eclipse.osgi.util.NLS;
 
-public class ControlMessages extends NLS {
+public final class ControlMessages extends NLS {
 
 	private static final String BUNDLE_NAME = "org.eclipse.emf.ecp.edit.internal.swt.controls.messages"; //$NON-NLS-1$
 
@@ -56,6 +56,7 @@ public class ControlMessages extends NLS {
 	public static String TableControl_NotSetClickToSet;
 	public static String TableControl_RemoveSelected;
 	public static String TableControl_Unset;
+	public static String TableControl_ValidationStatusColumn;
 
 	public static String XmlDateControlText_InvalidNumber;
 	public static String XmlDateControlText_NoDateSetClickToSetDate;

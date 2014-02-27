@@ -15,9 +15,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.util.Collection;
+import java.util.Set;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.net4j.CDONet4jSession;
 import org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
@@ -52,37 +54,37 @@ public class CDOProvider extends DefaultProvider {
 	/**
 	 * The unique provider name.
 	 */
-	public static final String NAME = "org.eclipse.emf.ecp.cdo.provider";
+	public static final String NAME = "org.eclipse.emf.ecp.cdo.provider"; //$NON-NLS-1$
 
 	/**
 	 * The key for the connector type ECP project property.
 	 */
-	public static final String PROP_CONNECTOR_TYPE = "connectorType";
+	public static final String PROP_CONNECTOR_TYPE = "connectorType"; //$NON-NLS-1$
 
 	/**
 	 * The key for the connector description ECP project property.
 	 */
-	public static final String PROP_CONNECTOR_DESCRIPTION = "connectorDescription";
+	public static final String PROP_CONNECTOR_DESCRIPTION = "connectorDescription"; //$NON-NLS-1$
 
 	/**
 	 * The key for the repository name ECP project property.
 	 */
-	public static final String PROP_REPOSITORY_NAME = "repositoryName";
+	public static final String PROP_REPOSITORY_NAME = "repositoryName"; //$NON-NLS-1$
 
 	/**
 	 * The key for the branch path ECP project property.
 	 */
-	public static final String PROP_BRANCH_PATH = "branchPath";
+	public static final String PROP_BRANCH_PATH = "branchPath"; //$NON-NLS-1$
 
 	/**
 	 * The key for the time stamp ECP project property.
 	 */
-	public static final String PROP_TIME_STAMP = "timeStamp";
+	public static final String PROP_TIME_STAMP = "timeStamp"; //$NON-NLS-1$
 
 	/**
 	 * The key for the workspace ID ECP project property.
 	 */
-	public static final String PROP_WORKSPACE_ID = "workspaceID";
+	public static final String PROP_WORKSPACE_ID = "workspaceID"; //$NON-NLS-1$
 
 	/**
 	 * Contains the singleton instance of this provider.
@@ -226,15 +228,33 @@ public class CDOProvider extends DefaultProvider {
 		PrintStream stream = null;
 
 		try {
-			stream = new PrintStream(new File(folder, "ecp.properties"));
-			stream.println("project.name = " + project.getName());
+			stream = new PrintStream(new File(folder, "ecp.properties")); //$NON-NLS-1$
+			stream.println("project.name = " + project.getName()); //$NON-NLS-1$
 
 		} catch (final FileNotFoundException ex) {
 			Activator.log(ex);
-			throw new IllegalStateException("Retrieving project folder failed!", ex);
+			throw new IllegalStateException("Retrieving project folder failed!", ex); //$NON-NLS-1$
 		} finally {
 			IOUtil.close(stream);
 		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 */
+	@Override
+	public ECPContainer getModelContext(Object element) {
+		if (element instanceof CDOResource) {
+			final Set<InternalProject> openProjects = getOpenProjects();
+			for (final InternalProject project : openProjects) {
+				final CDOProjectData projectData = (CDOProjectData) project.getProviderSpecificData();
+				if (projectData.getRootResource().getContents().contains(element)) {
+					return project;
+				}
+			}
+		}
+		return super.getModelContext(element);
 	}
 
 	/**
@@ -274,7 +294,7 @@ public class CDOProvider extends DefaultProvider {
 	 * @return the {@link CDOWorkspaceBase}
 	 */
 	protected CDOWorkspaceBase createWorkspaceBase(InternalProject project, File folder) {
-		final File base = new File(folder, "base");
+		final File base = new File(folder, "base"); //$NON-NLS-1$
 		base.mkdirs();
 
 		return CDOWorkspaceUtil.createFolderWorkspaceBase(base);
@@ -288,11 +308,11 @@ public class CDOProvider extends DefaultProvider {
 	 * @return the {@link IDBStore}
 	 */
 	protected IDBStore createLocalStore(InternalProject project, File folder) {
-		final File local = new File(folder, "local");
+		final File local = new File(folder, "local"); //$NON-NLS-1$
 		local.mkdirs();
 
 		final JdbcDataSource dataSource = new JdbcDataSource();
-		dataSource.setURL("jdbc:h2:" + new File(local, "local").getAbsolutePath());
+		dataSource.setURL("jdbc:h2:" + new File(local, "local").getAbsolutePath()); //$NON-NLS-1$ //$NON-NLS-2$
 
 		final IMappingStrategy mappingStrategy = CDODBUtil.createHorizontalMappingStrategy(false, false);
 		final IDBAdapter dbAdapter = new H2Adapter();

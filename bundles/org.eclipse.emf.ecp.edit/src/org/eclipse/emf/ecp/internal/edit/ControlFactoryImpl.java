@@ -21,19 +21,16 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.edit.spi.ECPAbstractControl;
-import org.eclipse.emf.ecp.edit.spi.ECPControl;
-import org.eclipse.emf.ecp.edit.spi.ECPControlContext;
 import org.eclipse.emf.ecp.edit.spi.ECPControlDescription;
 import org.eclipse.emf.ecp.edit.spi.ECPControlFactory;
 import org.eclipse.emf.ecp.edit.spi.util.ECPApplicableTester;
 import org.eclipse.emf.ecp.edit.spi.util.ECPStaticApplicableTester;
-import org.eclipse.emf.ecp.view.model.VDomainModelReference;
-import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.osgi.framework.Bundle;
 
 /**
  * The ControlFactoryImpl is a Singleton which reads the org.eclipse.emf.ecp.editor.widgets ExtensionPoint and provides
- * a method ({@link #createControl(Class, IItemPropertyDescriptor, ECPControlContext)}) for creating a suitable
+ * a method ({@link #createControl(Class, VDomainModelReference)}) for creating a suitable
  * control for with the known widgets.
  * 
  * @author Eugen Neufeld
@@ -135,50 +132,9 @@ public final class ControlFactoryImpl implements ECPControlFactory {
 
 	/**
 	 * {@inheritDoc}
-	 */
-	@Deprecated
-	public <T extends ECPControl> T createControl(Class<T> controlType, IItemPropertyDescriptor itemPropertyDescriptor,
-		ECPControlContext context) {
-
-		final ECPControlDescription controlDescription = getControlCandidate(controlType, itemPropertyDescriptor,
-			context.getModelElement());
-		if (controlDescription == null) {
-			return null;
-		}
-		final T control = getControlInstance(controlDescription);
-
-		return control;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @deprecated
-	 */
-	@Deprecated
-	public <T extends ECPControl> T createControl(IItemPropertyDescriptor itemPropertyDescriptor,
-		ECPControlContext context, String controlId) {
-
-		ECPControlDescription controlDescription = null;
-		for (final ECPControlDescription desc : controlDescriptors) {
-			if (desc.getId().equals(controlId)) {
-				controlDescription = desc;
-				break;
-			}
-		}
-		if (controlDescription == null) {
-			return null;
-		}
-		final T control = getControlInstance(controlDescription);
-
-		return control;
-	}
-
-	/**
-	 * {@inheritDoc}
 	 * 
 	 * @see org.eclipse.emf.ecp.edit.spi.ECPControlFactory#createControl(java.lang.Class,
-	 *      org.eclipse.emf.ecp.view.model.VDomainModelReference)
+	 *      org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)
 	 */
 	public <T> T createControl(Class<T> controlType, VDomainModelReference domainModelReference) {
 
@@ -221,9 +177,9 @@ public final class ControlFactoryImpl implements ECPControlFactory {
 	}
 
 	@SuppressWarnings("unchecked")
-	private static <T extends ECPControl> T getControlInstance(ECPControlDescription controlDescription) {
+	private static <T> T getControlInstance(ECPControlDescription controlDescription) {
 		try {
-			final Constructor<? extends ECPControl> controlConstructor = controlDescription.getControlClass()
+			final Constructor<?> controlConstructor = controlDescription.getControlClass()
 				.getConstructor();
 			return (T) controlConstructor.newInstance();
 		} catch (final IllegalArgumentException ex) {
@@ -246,6 +202,9 @@ public final class ControlFactoryImpl implements ECPControlFactory {
 		VDomainModelReference domainModelReference) {
 		int highestPriority = -1;
 		ECPControlDescription bestCandidate = null;
+		if (domainModelReference == null) {
+			return bestCandidate;
+		}
 		for (final ECPControlDescription description : controlDescriptors) {
 
 			if (!controlClass.isAssignableFrom(description.getControlClass())) {
@@ -255,34 +214,6 @@ public final class ControlFactoryImpl implements ECPControlFactory {
 
 			for (final ECPApplicableTester tester : description.getTester()) {
 				final int testerPriority = tester.isApplicable(domainModelReference);
-				if (testerPriority > currentPriority) {
-					currentPriority = testerPriority;
-				}
-
-			}
-
-			if (currentPriority > highestPriority) {
-				highestPriority = currentPriority;
-				bestCandidate = description;
-			}
-		}
-		return bestCandidate;
-	}
-
-	@Deprecated
-	private ECPControlDescription getControlCandidate(Class<?> controlClass,
-		IItemPropertyDescriptor iItemPropertyDescriptor, EObject modelElement) {
-		int highestPriority = -1;
-		ECPControlDescription bestCandidate = null;
-		for (final ECPControlDescription description : controlDescriptors) {
-
-			if (!controlClass.isAssignableFrom(description.getControlClass())) {
-				continue;
-			}
-			int currentPriority = -1;
-
-			for (final ECPApplicableTester tester : description.getTester()) {
-				final int testerPriority = tester.isApplicable(iItemPropertyDescriptor, modelElement);
 				if (testerPriority > currentPriority) {
 					currentPriority = testerPriority;
 				}

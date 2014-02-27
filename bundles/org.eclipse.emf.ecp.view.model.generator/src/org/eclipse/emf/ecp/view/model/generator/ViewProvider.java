@@ -11,14 +11,21 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.model.generator;
 
+import java.util.Collection;
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.internal.ui.view.IViewProvider;
-import org.eclipse.emf.ecp.view.model.VControl;
-import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
-import org.eclipse.emf.ecp.view.model.VView;
-import org.eclipse.emf.ecp.view.model.VViewFactory;
+import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
+import org.eclipse.emf.ecp.view.spi.provider.IViewProvider;
+import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
 /**
  * View Provider.
@@ -29,21 +36,18 @@ public class ViewProvider implements IViewProvider {
 	 * 
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.internal.ui.view.IViewProvider#generate(org.eclipse.emf.ecore.EObject)
+	 * @see org.eclipse.emf.ecp.view.spi.provider.IViewProvider#generate(org.eclipse.emf.ecore.EObject)
 	 */
 	public VView generate(EObject eObject) {
 		final VView view = VViewFactory.eINSTANCE.createView();
-		for (final EStructuralFeature feature : eObject.eClass().getEAllStructuralFeatures()) {
-
-			if (isInvalidFeature(feature)) {
-				continue;
-			}
+		for (final EStructuralFeature feature : getValidFeatures(eObject)) {
 
 			final VControl control = VViewFactory.eINSTANCE.createControl();
 			final VFeaturePathDomainModelReference modelReference = VViewFactory.eINSTANCE
 				.createFeaturePathDomainModelReference();
 			modelReference.setDomainModelEFeature(feature);
 			control.setDomainModelReference(modelReference);
+			control.setReadonly(!feature.isChangeable());
 			view.getChildren().add(control);
 		}
 
@@ -73,11 +77,34 @@ public class ViewProvider implements IViewProvider {
 		return feature.isVolatile();
 	}
 
+	private Set<EStructuralFeature> getValidFeatures(EObject eObject) {
+		final Collection<EStructuralFeature> features = eObject.eClass().getEAllStructuralFeatures();
+		final ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(
+			ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+		final AdapterFactoryItemDelegator adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(
+			composedAdapterFactory);
+		final Set<EStructuralFeature> featuresToAdd = new LinkedHashSet<EStructuralFeature>();
+		IItemPropertyDescriptor propertyDescriptor = null;
+		for (final EStructuralFeature feature : features) {
+			propertyDescriptor =
+				adapterFactoryItemDelegator
+					.getPropertyDescriptor(eObject, feature);
+			if (propertyDescriptor == null || isInvalidFeature(feature)) {
+				continue;
+			}
+
+			featuresToAdd.add(feature);
+
+		}
+		composedAdapterFactory.dispose();
+		return featuresToAdd;
+	}
+
 	/**
 	 * 
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.internal.ui.view.IViewProvider#canRender(org.eclipse.emf.ecore.EObject)
+	 * @see org.eclipse.emf.ecp.view.spi.provider.IViewProvider#canRender(org.eclipse.emf.ecore.EObject)
 	 */
 	public int canRender(EObject eObject) {
 		return 1;

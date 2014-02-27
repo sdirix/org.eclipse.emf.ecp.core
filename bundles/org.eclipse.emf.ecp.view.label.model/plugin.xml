@@ -20,7 +20,7 @@
       <!-- @generated label -->
       <package
             uri="http://org/eclipse/emf/ecp/view/label/model"
-            class="org.eclipse.emf.ecp.view.label.model.VLabelPackage"
+            class="org.eclipse.emf.ecp.view.spi.label.model.VLabelPackage"
             genModel="model/label.genmodel"/>
    </extension>
 

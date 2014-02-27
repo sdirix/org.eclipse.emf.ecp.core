@@ -12,12 +12,15 @@
 package org.eclipse.emf.ecp.view.custom.ui.swt.test;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTRenderingHelper;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
-import org.eclipse.emf.ecp.ui.view.custom.swt.ECPAbstractCustomControlSWT;
+import org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.renderer.RenderingResultRow;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -34,13 +37,13 @@ public class CustomControlStub extends ECPAbstractCustomControlSWT {
 	private static Composite parent;
 
 	public CustomControlStub() {
-		super(null);
+		super();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.ui.view.custom.swt.ECPAbstractCustomControlSWT#createControls(org.eclipse.swt.widgets.Composite)
+	 * @see org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT#createControls(org.eclipse.swt.widgets.Composite)
 	 */
 	@Override
 	public List<RenderingResultRow<Control>> createControl(Composite composite) {
@@ -58,7 +61,7 @@ public class CustomControlStub extends ECPAbstractCustomControlSWT {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.ui.view.custom.swt.ECPAbstractCustomControlSWT#handleContentValidation(int,
+	 * @see org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT#handleContentValidation(int,
 	 *      org.eclipse.emf.ecore.EStructuralFeature)
 	 */
 	@Override
@@ -70,7 +73,7 @@ public class CustomControlStub extends ECPAbstractCustomControlSWT {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.ui.view.custom.ECPAbstractCustomControl#disposeCustomControl()
+	 * @see org.eclipse.emf.ecp.view.spi.custom.ui.ECPAbstractCustomControl#disposeCustomControl()
 	 */
 	@Override
 	protected void disposeCustomControl() {
@@ -81,7 +84,7 @@ public class CustomControlStub extends ECPAbstractCustomControlSWT {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.ui.view.custom.swt.ECPAbstractCustomControlSWT#resetContentValidation()
+	 * @see org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT#resetContentValidation()
 	 */
 	@Override
 	protected void resetContentValidation() {
@@ -115,6 +118,16 @@ public class CustomControlStub extends ECPAbstractCustomControlSWT {
 	 */
 	public static void setParent(Composite parent) {
 		CustomControlStub.parent = parent;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.spi.custom.model.ECPHardcodedReferences#getNeededDomainModelReferences()
+	 */
+	public Set<VDomainModelReference> getNeededDomainModelReferences() {
+		// TODO Auto-generated method stub
+		return Collections.emptySet();
 	}
 
 }

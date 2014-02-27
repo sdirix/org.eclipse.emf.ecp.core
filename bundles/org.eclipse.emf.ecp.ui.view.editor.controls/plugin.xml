@@ -5,37 +5,34 @@
          point="org.eclipse.emf.ecp.edit.controls">
       <control
             class="org.eclipse.emf.ecp.view.editor.controls.ControlTargetFeatureControl"
-            id="org.eclipse.emf.ecp.view.editor.controls.feature"
-            showLabel="true">
+            id="org.eclipse.emf.ecp.view.editor.controls.feature">
          <staticTest
                priority="2"
                singleValue="true"
                supportedClassType="org.eclipse.emf.ecore.EStructuralFeature"
-               supportedEObject="org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference"
+               supportedEObject="org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference"
                supportedFeature="domainModelEFeature">
          </staticTest>
       </control>
       <control
             class="org.eclipse.emf.ecp.view.editor.controls.ExpectedValueControl"
-            id="org.eclipse.emf.ecp.view.editor.controls.ruleattribute"
-            showLabel="true">
+            id="org.eclipse.emf.ecp.view.editor.controls.ruleattribute">
          <staticTest
                priority="1"
                singleValue="true"
                supportedClassType="java.lang.Object"
-               supportedEObject="org.eclipse.emf.ecp.view.rule.model.LeafCondition"
+               supportedEObject="org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition"
                supportedFeature="expectedValue">
          </staticTest>
       </control>
       <control
             class="org.eclipse.emf.ecp.view.editor.controls.ControlRootEClassControl"
-            id="org.eclipse.emf.ecp.view.editor.controls.rootEClass"
-            showLabel="true">
+            id="org.eclipse.emf.ecp.view.editor.controls.rootEClass">
          <staticTest
-               priority="2"
+               priority="3"
                singleValue="true"
                supportedClassType="org.eclipse.emf.ecore.EClass"
-               supportedEObject="org.eclipse.emf.ecp.view.model.VView"
+               supportedEObject="org.eclipse.emf.ecp.view.spi.model.VView"
                supportedFeature="rootEClass">
          </staticTest>
       </control>
@@ -55,19 +52,17 @@
       -->
       <control
             class="org.eclipse.emf.ecp.view.editor.controls.TableColumnAttributeControl"
-            id="org.eclipse.emf.ecp.view.editor.controls.tableColumnAttribute"
-            showLabel="true">
+            id="org.eclipse.emf.ecp.view.editor.controls.tableColumnAttribute">
          <staticTest
                priority="2"
                singleValue="true"
                supportedClassType="org.eclipse.emf.ecore.EAttribute"
-               supportedEObject="org.eclipse.emf.ecp.view.table.model.VTableColumn">
+               supportedEObject="org.eclipse.emf.ecp.view.spi.table.model.VTableColumn">
          </staticTest>
       </control>
       <control
             class="org.eclipse.emf.ecp.view.editor.controls.RuleFeaturePathControl"
-            id="org.eclipse.emf.ecp.ui.view.editor.controls.referencePath.leafcondition"
-            showLabel="true">
+            id="org.eclipse.emf.ecp.ui.view.editor.controls.referencePath.leafcondition">
          <dynamicTest
                testClass="org.eclipse.emf.ecp.view.editor.controls.RuleFeaturePathTester">
          </dynamicTest>
@@ -92,7 +87,7 @@
                      </count>
                      <iterate>
                         <instanceof
-                              value="org.eclipse.emf.ecp.view.model.VContainer">
+                              value="org.eclipse.emf.ecp.view.spi.model.VContainer">
                         </instanceof>
                      </iterate>
                   </and>
@@ -113,7 +108,7 @@
                      </count>
                      <iterate>
                         <instanceof
-                              value="org.eclipse.emf.ecp.view.model.VView">
+                              value="org.eclipse.emf.ecp.view.spi.model.VView">
                         </instanceof>
                      </iterate>
                   </and>
@@ -158,7 +153,7 @@
             name="Migrate">
       </command>
       <command
-            defaultHandler="org.eclipse.emf.ecp.view.editor.handler.GenerateControlsOnViewHandler"
+            defaultHandler="org.eclipse.emf.ecp.view.editor.handler.GenerateControlsHandler"
             id="org.eclipse.emf.ecp.view.editor.controls.generateDefaultOnView"
             name="Generate Controls">
       </command>

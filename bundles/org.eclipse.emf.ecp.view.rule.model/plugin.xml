@@ -9,7 +9,7 @@
    <extension point="org.eclipse.emf.ecore.generated_package">
       <package
             uri="http://org/eclipse/emf/ecp/view/rule/model"
-            class="org.eclipse.emf.ecp.view.rule.model.RulePackage"
+            class="org.eclipse.emf.ecp.view.spi.rule.model.RulePackage"
             genModel="model/rule.genmodel"/>
    </extension>
 

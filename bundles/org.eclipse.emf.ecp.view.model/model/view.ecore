@@ -33,11 +33,8 @@
         eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EClass"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="children" upperBound="-1"
         eType="#//ContainedElement" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="categorizations" upperBound="-1"
-        eType="#//AbstractCategorization" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ContainedElement" abstract="true"
-      eSuperTypes="#//Element"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ContainedElement" abstract="true" eSuperTypes="#//Element"/>
   <eClassifiers xsi:type="ecore:EClass" name="Container" abstract="true" eSuperTypes="#//ContainedElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="children" upperBound="-1"
         eType="#//ContainedElement" containment="true"/>
@@ -51,24 +48,5 @@
   <eClassifiers xsi:type="ecore:EEnum" name="LabelAlignment">
     <eLiterals name="Left"/>
     <eLiterals name="None" value="1"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="AbstractCategorization" abstract="true"
-      eSuperTypes="#//Element">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="actions" upperBound="-1"
-        eType="#//Action" containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Categorization" eSuperTypes="#//AbstractCategorization">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="categorizations" upperBound="-1"
-        eType="#//AbstractCategorization" containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Category" eSuperTypes="#//AbstractCategorization">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="composite" eType="#//ContainedElement"
-        containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Action">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="bundle" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="className" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
 </ecore:EPackage>

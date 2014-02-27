@@ -11,9 +11,9 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.util;
 
-import org.eclipse.emf.ecp.internal.ui.view.renderer.LayoutHelper;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingConfiguration;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRowFactory;
+import org.eclipse.emf.ecp.view.spi.renderer.LayoutHelper;
+import org.eclipse.emf.ecp.view.spi.renderer.RenderingConfiguration;
+import org.eclipse.emf.ecp.view.spi.renderer.RenderingResultRowFactory;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Layout;
 
@@ -23,6 +23,9 @@ import org.eclipse.swt.widgets.Layout;
  */
 public final class SWTRenderingHelper {
 
+	/**
+	 * Singleton instance.
+	 */
 	public static final SWTRenderingHelper INSTANCE = new SWTRenderingHelper();
 
 	private final LayoutHelper<Layout> defaultLayoutHelper;
@@ -36,6 +39,10 @@ public final class SWTRenderingHelper {
 		defaultRowFactory = new DefaultRenderingResultFactory();
 	}
 
+	/**
+	 * 
+	 * @return A {@link LayoutHelper} based on the current {@link RenderingConfiguration}.
+	 */
 	public LayoutHelper<Layout> getLayoutHelper() {
 		final LayoutHelper<Layout> layoutHelper = RenderingConfiguration.getCurrent().getLayoutHelper(Layout.class);
 		if (layoutHelper != null) {

@@ -1,22 +1,37 @@
 /**
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * Edgar Mueller - initial API and implementation
  */
 package org.eclipse.emf.ecp.view.dynamictree.model.impl;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EGenericType;
+import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecp.view.dynamictree.model.DomainIntermediate;
 import org.eclipse.emf.ecp.view.dynamictree.model.DomainRoot;
 import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem;
 import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree;
+import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTreeDomainModelReference;
 import org.eclipse.emf.ecp.view.dynamictree.model.ModelFactory;
 import org.eclipse.emf.ecp.view.dynamictree.model.ModelPackage;
 import org.eclipse.emf.ecp.view.dynamictree.model.TestElement;
 import org.eclipse.emf.ecp.view.dynamictree.model.TestElementContainer;
-import org.eclipse.emf.ecp.view.model.VViewPackage;
+import org.eclipse.emf.ecp.view.dynamictree.model.util.ModelValidator;
+import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage;
+import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -24,7 +39,8 @@ import org.eclipse.emf.ecp.view.model.VViewPackage;
  * <!-- end-user-doc -->
  * @generated
  */
-public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
+public class ModelPackageImpl extends EPackageImpl implements ModelPackage
+{
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -68,21 +84,28 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 	private EClass testElementContainerEClass = null;
 
 	/**
-	 * Creates an instance of the model <b>Package</b>, registered with
-	 * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
-	 * package URI value.
-	 * <p>Note: the correct way to create the package is via the static
-	 * factory method {@link #init init()}, which also performs
-	 * initialization of the package, or returns the registered package,
-	 * if one already exists.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass dynamicContainmentTreeDomainModelReferenceEClass = null;
+
+	/**
+	 * Creates an instance of the model <b>Package</b>, registered with {@link org.eclipse.emf.ecore.EPackage.Registry
+	 * EPackage.Registry} by the package
+	 * package URI value.
+	 * <p>
+	 * Note: the correct way to create the package is via the static factory method {@link #init init()}, which also
+	 * performs initialization of the package, or returns the registered package, if one already exists. <!--
+	 * begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see org.eclipse.emf.ecore.EPackage.Registry
 	 * @see org.eclipse.emf.ecp.view.dynamictree.model.ModelPackage#eNS_URI
 	 * @see #init()
 	 * @generated
 	 */
-	private ModelPackageImpl() {
+	private ModelPackageImpl()
+	{
 		super(eNS_URI, ModelFactory.eINSTANCE);
 	}
 
@@ -105,7 +128,8 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 	 * @see #initializePackageContents()
 	 * @generated
 	 */
-	public static ModelPackage init() {
+	public static ModelPackage init()
+	{
 		if (isInited) return (ModelPackage)EPackage.Registry.INSTANCE.getEPackage(ModelPackage.eNS_URI);
 
 		// Obtain or create and register package
@@ -114,13 +138,22 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 		isInited = true;
 
 		// Initialize simple dependencies
-		VViewPackage.eINSTANCE.eClass();
+		VCategorizationPackage.eINSTANCE.eClass();
 
 		// Create package meta-data objects
 		theModelPackage.createPackageContents();
 
 		// Initialize created meta-data
 		theModelPackage.initializePackageContents();
+
+		// Register package validator
+		EValidator.Registry.INSTANCE.put
+			(theModelPackage, 
+			 new EValidator.Descriptor() {
+				 public EValidator getEValidator() {
+					 return ModelValidator.INSTANCE;
+				 }
+			 });
 
 		// Mark meta-data to indicate it can't be changed
 		theModelPackage.freeze();
@@ -136,7 +169,8 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getDynamicContainmentTree() {
+	public EClass getDynamicContainmentTree()
+	{
 		return dynamicContainmentTreeEClass;
 	}
 
@@ -145,7 +179,8 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDynamicContainmentTree_DomainModel() {
+	public EReference getDynamicContainmentTree_DomainModel()
+	{
 		return (EReference)dynamicContainmentTreeEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -154,7 +189,8 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDynamicContainmentTree_ChildReference() {
+	public EReference getDynamicContainmentTree_ChildReference()
+	{
 		return (EReference)dynamicContainmentTreeEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -163,7 +199,8 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDynamicContainmentTree_PathToRoot() {
+	public EReference getDynamicContainmentTree_PathToRoot()
+	{
 		return (EReference)dynamicContainmentTreeEClass.getEStructuralFeatures().get(2);
 	}
 
@@ -172,7 +209,8 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDynamicContainmentTree_ChildComposite() {
+	public EReference getDynamicContainmentTree_ChildComposite()
+	{
 		return (EReference)dynamicContainmentTreeEClass.getEStructuralFeatures().get(3);
 	}
 
@@ -181,7 +219,8 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDynamicContainmentTree_Items() {
+	public EReference getDynamicContainmentTree_Items()
+	{
 		return (EReference)dynamicContainmentTreeEClass.getEStructuralFeatures().get(4);
 	}
 
@@ -190,7 +229,8 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getDynamicContainmentItem() {
+	public EClass getDynamicContainmentItem()
+	{
 		return dynamicContainmentItemEClass;
 	}
 
@@ -199,7 +239,8 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDynamicContainmentItem_DomainModel() {
+	public EReference getDynamicContainmentItem_DomainModel()
+	{
 		return (EReference)dynamicContainmentItemEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -208,7 +249,8 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDynamicContainmentItem_Items() {
+	public EReference getDynamicContainmentItem_Items()
+	{
 		return (EReference)dynamicContainmentItemEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -217,7 +259,8 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDynamicContainmentItem_Composite() {
+	public EReference getDynamicContainmentItem_Composite()
+	{
 		return (EReference)dynamicContainmentItemEClass.getEStructuralFeatures().get(2);
 	}
 
@@ -226,7 +269,17 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getTestElement() {
+	public EAttribute getDynamicContainmentItem_BaseItemIndex() {
+		return (EAttribute)dynamicContainmentItemEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getTestElement()
+	{
 		return testElementEClass;
 	}
 
@@ -235,7 +288,8 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getTestElement_Id() {
+	public EAttribute getTestElement_Id()
+	{
 		return (EAttribute)testElementEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -244,7 +298,8 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getTestElement_Elements() {
+	public EReference getTestElement_Elements()
+	{
 		return (EReference)testElementEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -253,7 +308,8 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getTestElement_ParentId() {
+	public EAttribute getTestElement_ParentId()
+	{
 		return (EAttribute)testElementEClass.getEStructuralFeatures().get(2);
 	}
 
@@ -262,7 +318,17 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getDomainRoot() {
+	public EAttribute getTestElement_Name() {
+		return (EAttribute)testElementEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getDomainRoot()
+	{
 		return domainRootEClass;
 	}
 
@@ -271,7 +337,8 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDomainRoot_Intermediate() {
+	public EReference getDomainRoot_Intermediate()
+	{
 		return (EReference)domainRootEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -280,7 +347,8 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getDomainIntermediate() {
+	public EClass getDomainIntermediate()
+	{
 		return domainIntermediateEClass;
 	}
 
@@ -289,7 +357,8 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDomainIntermediate_TestElementContainer() {
+	public EReference getDomainIntermediate_TestElementContainer()
+	{
 		return (EReference)domainIntermediateEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -298,7 +367,8 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getTestElementContainer() {
+	public EClass getTestElementContainer()
+	{
 		return testElementContainerEClass;
 	}
 
@@ -307,7 +377,8 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getTestElementContainer_TestElements() {
+	public EReference getTestElementContainer_TestElements()
+	{
 		return (EReference)testElementContainerEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -316,7 +387,8 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getTestElementContainer_Id() {
+	public EAttribute getTestElementContainer_Id()
+	{
 		return (EAttribute)testElementContainerEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -325,7 +397,35 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ModelFactory getModelFactory() {
+	public EClass getDynamicContainmentTreeDomainModelReference() {
+		return dynamicContainmentTreeDomainModelReferenceEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getDynamicContainmentTreeDomainModelReference_PathFromRoot() {
+		return (EReference)dynamicContainmentTreeDomainModelReferenceEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getDynamicContainmentTreeDomainModelReference_PathFromBase() {
+		return (EReference)dynamicContainmentTreeDomainModelReferenceEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ModelFactory getModelFactory()
+	{
 		return (ModelFactory)getEFactoryInstance();
 	}
 
@@ -343,7 +443,8 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void createPackageContents() {
+	public void createPackageContents()
+	{
 		if (isCreated) return;
 		isCreated = true;
 
@@ -359,11 +460,13 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 		createEReference(dynamicContainmentItemEClass, DYNAMIC_CONTAINMENT_ITEM__DOMAIN_MODEL);
 		createEReference(dynamicContainmentItemEClass, DYNAMIC_CONTAINMENT_ITEM__ITEMS);
 		createEReference(dynamicContainmentItemEClass, DYNAMIC_CONTAINMENT_ITEM__COMPOSITE);
+		createEAttribute(dynamicContainmentItemEClass, DYNAMIC_CONTAINMENT_ITEM__BASE_ITEM_INDEX);
 
 		testElementEClass = createEClass(TEST_ELEMENT);
 		createEAttribute(testElementEClass, TEST_ELEMENT__ID);
 		createEReference(testElementEClass, TEST_ELEMENT__ELEMENTS);
 		createEAttribute(testElementEClass, TEST_ELEMENT__PARENT_ID);
+		createEAttribute(testElementEClass, TEST_ELEMENT__NAME);
 
 		domainRootEClass = createEClass(DOMAIN_ROOT);
 		createEReference(domainRootEClass, DOMAIN_ROOT__INTERMEDIATE);
@@ -374,6 +477,10 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 		testElementContainerEClass = createEClass(TEST_ELEMENT_CONTAINER);
 		createEReference(testElementContainerEClass, TEST_ELEMENT_CONTAINER__TEST_ELEMENTS);
 		createEAttribute(testElementContainerEClass, TEST_ELEMENT_CONTAINER__ID);
+
+		dynamicContainmentTreeDomainModelReferenceEClass = createEClass(DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE);
+		createEReference(dynamicContainmentTreeDomainModelReferenceEClass, DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_ROOT);
+		createEReference(dynamicContainmentTreeDomainModelReferenceEClass, DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_BASE);
 	}
 
 	/**
@@ -390,7 +497,8 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void initializePackageContents() {
+	public void initializePackageContents()
+	{
 		if (isInitialized) return;
 		isInitialized = true;
 
@@ -400,17 +508,19 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 		setNsURI(eNS_URI);
 
 		// Obtain other dependent packages
-		VViewPackage theViewPackage = (VViewPackage)EPackage.Registry.INSTANCE.getEPackage(VViewPackage.eNS_URI);
+		VCategorizationPackage theCategorizationPackage = (VCategorizationPackage)EPackage.Registry.INSTANCE.getEPackage(VCategorizationPackage.eNS_URI);
 		EcorePackage theEcorePackage = (EcorePackage)EPackage.Registry.INSTANCE.getEPackage(EcorePackage.eNS_URI);
+		VViewPackage theViewPackage = (VViewPackage)EPackage.Registry.INSTANCE.getEPackage(VViewPackage.eNS_URI);
 
 		// Create type parameters
 
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
-		dynamicContainmentTreeEClass.getESuperTypes().add(theViewPackage.getCategory());
-		dynamicContainmentItemEClass.getESuperTypes().add(theViewPackage.getElement());
+		dynamicContainmentTreeEClass.getESuperTypes().add(theCategorizationPackage.getCategory());
+		dynamicContainmentItemEClass.getESuperTypes().add(theCategorizationPackage.getCategorizableElement());
 		testElementEClass.getESuperTypes().add(theEcorePackage.getEObject());
+		dynamicContainmentTreeDomainModelReferenceEClass.getESuperTypes().add(theViewPackage.getDomainModelReference());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(dynamicContainmentTreeEClass, DynamicContainmentTree.class, "DynamicContainmentTree", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -424,24 +534,39 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 		initEReference(getDynamicContainmentItem_DomainModel(), ecorePackage.getEObject(), null, "domainModel", null, 0, 1, DynamicContainmentItem.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getDynamicContainmentItem_Items(), this.getDynamicContainmentItem(), null, "items", null, 0, -1, DynamicContainmentItem.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getDynamicContainmentItem_Composite(), theViewPackage.getContainedElement(), null, "composite", null, 0, 1, DynamicContainmentItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getDynamicContainmentItem_BaseItemIndex(), theEcorePackage.getEIntegerObject(), "baseItemIndex", null, 0, 1, DynamicContainmentItem.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(testElementEClass, TestElement.class, "TestElement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getTestElement_Id(), theEcorePackage.getEString(), "id", null, 0, 1, TestElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTestElement_Elements(), this.getTestElement(), null, "elements", null, 0, -1, TestElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTestElement_ParentId(), theEcorePackage.getEString(), "parentId", null, 0, 1, TestElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTestElement_Name(), theEcorePackage.getEString(), "name", null, 0, 1, TestElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		EOperation op = addEOperation(testElementEClass, theEcorePackage.getEBoolean(), "validate", 0, 1, IS_UNIQUE, IS_ORDERED);
+		addEParameter(op, theEcorePackage.getEDiagnosticChain(), "diagnostic", 0, 1, IS_UNIQUE, IS_ORDERED);
+		EGenericType g1 = createEGenericType(theEcorePackage.getEMap());
+		EGenericType g2 = createEGenericType();
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType();
+		g1.getETypeArguments().add(g2);
+		addEParameter(op, g1, "context", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(domainRootEClass, DomainRoot.class, "DomainRoot", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getDomainRoot_Intermediate(), this.getDomainIntermediate(), null, "intermediate", null, 0, 1, DomainRoot.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getDomainRoot_Intermediate(), this.getDomainIntermediate(), null, "intermediate", null, 0, 1, DomainRoot.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(domainIntermediateEClass, DomainIntermediate.class, "DomainIntermediate", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getDomainIntermediate_TestElementContainer(), this.getTestElementContainer(), null, "testElementContainer", null, 0, 1, DomainIntermediate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getDomainIntermediate_TestElementContainer(), this.getTestElementContainer(), null, "testElementContainer", null, 0, 1, DomainIntermediate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(testElementContainerEClass, TestElementContainer.class, "TestElementContainer", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getTestElementContainer_TestElements(), this.getTestElement(), null, "testElements", null, 0, -1, TestElementContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTestElementContainer_Id(), theEcorePackage.getEString(), "id", null, 0, 1, TestElementContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+		initEClass(dynamicContainmentTreeDomainModelReferenceEClass, DynamicContainmentTreeDomainModelReference.class, "DynamicContainmentTreeDomainModelReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getDynamicContainmentTreeDomainModelReference_PathFromRoot(), theViewPackage.getDomainModelReference(), null, "pathFromRoot", null, 0, 1, DynamicContainmentTreeDomainModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getDynamicContainmentTreeDomainModelReference_PathFromBase(), theViewPackage.getDomainModelReference(), null, "pathFromBase", null, 1, 1, DynamicContainmentTreeDomainModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
 		// Create resource
 		createResource(eNS_URI);
 	}
 
-} //ModelPackageImpl
+} // ModelPackageImpl

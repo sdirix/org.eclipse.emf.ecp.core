@@ -19,8 +19,8 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.core.util.observer.ECPProjectContentChangedObserver;
-import org.eclipse.emf.ecp.view.model.VView;
 import org.eclipse.emf.ecp.view.model.provider.xmi.ViewModelFileExtensionsManager;
+import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.workspace.internal.core.WorkspaceProvider;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
@@ -30,7 +30,9 @@ import org.osgi.framework.BundleContext;
  */
 public class Activator extends AbstractUIPlugin {
 
-	// The plug-in ID
+	/**
+	 * The plug-in ID.
+	 */
 	public static final String PLUGIN_ID = "org.eclipse.emf.ecp.view.editor.controls"; //$NON-NLS-1$
 
 	// The shared instance
@@ -83,7 +85,7 @@ public class Activator extends AbstractUIPlugin {
 	}
 
 	/**
-	 * Returns the shared instance
+	 * Returns the shared instance.
 	 * 
 	 * @return the shared instance
 	 */

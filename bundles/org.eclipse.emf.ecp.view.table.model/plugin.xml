@@ -19,7 +19,7 @@
       <!-- @generated table -->
       <package
             uri="http://org/eclipse/emf/ecp/view/table/model"
-            class="org.eclipse.emf.ecp.view.table.model.VTablePackage"
+            class="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"
             genModel="model/table.genmodel"/>
    </extension>
 

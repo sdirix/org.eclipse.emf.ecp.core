@@ -96,7 +96,7 @@ public class NumericalControl extends AbstractTextControl {
 			value.addValueChangeListener(new IValueChangeListener() {
 				public void handleValueChange(ValueChangeEvent event) {
 					final Object newValue = event.diff.getNewValue();
-					final DecimalFormat format = NumericalHelper.setupFormat(getModelElementContext().getLocale(),
+					final DecimalFormat format = NumericalHelper.setupFormat(getLocale(),
 						getInstanceClass());
 					try {
 						final Number number = format.parse((String) newValue);
@@ -113,7 +113,7 @@ public class NumericalControl extends AbstractTextControl {
 	}
 
 	private Class<?> getInstanceClass() {
-		return getStructuralFeature().getEType().getInstanceClass();
+		return getFirstStructuralFeature().getEType().getInstanceClass();
 	}
 
 	private String getFormatText() {
@@ -135,7 +135,10 @@ public class NumericalControl extends AbstractTextControl {
 
 		@Override
 		public Object convertValue(Object value) {
-			final DecimalFormat format = NumericalHelper.setupFormat(getModelElementContext().getLocale(),
+			if (value == null) {
+				return "";
+			}
+			final DecimalFormat format = NumericalHelper.setupFormat(getLocale(),
 				getInstanceClass());
 			return format.format(value);
 		}
@@ -153,7 +156,7 @@ public class NumericalControl extends AbstractTextControl {
 
 		NumericalTargetToModelUpdateStrategy() {
 			super();
-			format = NumericalHelper.setupFormat(getModelElementContext().getLocale(), getInstanceClass());
+			format = NumericalHelper.setupFormat(getLocale(), getInstanceClass());
 
 		}
 
@@ -226,7 +229,7 @@ public class NumericalControl extends AbstractTextControl {
 
 		private Object revertToOldValue(final Object value) {
 
-			if (getStructuralFeature().getDefaultValue() == null && (value == null || value.equals(""))) { //$NON-NLS-1$
+			if (getFirstStructuralFeature().getDefaultValue() == null && (value == null || value.equals(""))) { //$NON-NLS-1$
 				return null;
 			}
 
@@ -250,7 +253,7 @@ public class NumericalControl extends AbstractTextControl {
 				getDataBindingContext().updateTargets();
 			}
 
-			if (getStructuralFeature().isUnsettable() && result == null) {
+			if (getFirstStructuralFeature().isUnsettable() && result == null) {
 				showUnsetLabel();
 				return SetCommand.UNSET_VALUE;
 			}

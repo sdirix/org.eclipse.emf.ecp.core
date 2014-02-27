@@ -1,4 +1,13 @@
 /**
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * Edgar Mueller - initial API and implementation
  */
 package org.eclipse.emf.ecp.view.dynamictree.model.provider;
 
@@ -12,8 +21,9 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem;
 import org.eclipse.emf.ecp.view.dynamictree.model.ModelFactory;
 import org.eclipse.emf.ecp.view.dynamictree.model.ModelPackage;
-import org.eclipse.emf.ecp.view.model.VViewFactory;
-import org.eclipse.emf.ecp.view.model.provider.ElementItemProvider;
+import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationFactory;
+import org.eclipse.emf.ecp.view.spi.categorization.model.provider.CategorizableElementItemProvider;
+import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -21,6 +31,7 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
+import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
@@ -30,14 +41,17 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * @generated
  */
 public class DynamicContainmentItemItemProvider
-	extends ElementItemProvider implements IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
+	extends CategorizableElementItemProvider implements IEditingDomainItemProvider, IStructuredItemContentProvider,
+	ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
+{
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public DynamicContainmentItemItemProvider(AdapterFactory adapterFactory) {
+	public DynamicContainmentItemItemProvider(AdapterFactory adapterFactory)
+	{
 		super(adapterFactory);
 	}
 
@@ -48,11 +62,13 @@ public class DynamicContainmentItemItemProvider
 	 * @generated
 	 */
 	@Override
-	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object)
+	{
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
 			addDomainModelPropertyDescriptor(object);
+			addBaseItemIndexPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -63,7 +79,8 @@ public class DynamicContainmentItemItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addDomainModelPropertyDescriptor(Object object) {
+	protected void addDomainModelPropertyDescriptor(Object object)
+	{
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
@@ -80,6 +97,28 @@ public class DynamicContainmentItemItemProvider
 	}
 
 	/**
+	 * This adds a property descriptor for the Base Item Index feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addBaseItemIndexPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_DynamicContainmentItem_baseItemIndex_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_DynamicContainmentItem_baseItemIndex_feature", "_UI_DynamicContainmentItem_type"),
+				 ModelPackage.Literals.DYNAMIC_CONTAINMENT_ITEM__BASE_ITEM_INDEX,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
 	 * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
 	 * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
 	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
@@ -88,7 +127,8 @@ public class DynamicContainmentItemItemProvider
 	 * @generated
 	 */
 	@Override
-	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
+	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object)
+	{
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(ModelPackage.Literals.DYNAMIC_CONTAINMENT_ITEM__ITEMS);
@@ -103,7 +143,8 @@ public class DynamicContainmentItemItemProvider
 	 * @generated
 	 */
 	@Override
-	protected EStructuralFeature getChildFeature(Object object, Object child) {
+	protected EStructuralFeature getChildFeature(Object object, Object child)
+	{
 		// Check the type of the specified child object and return the proper feature to use for
 		// adding (see {@link AddCommand}) it as a child.
 
@@ -117,7 +158,8 @@ public class DynamicContainmentItemItemProvider
 	 * @generated
 	 */
 	@Override
-	public Object getImage(Object object) {
+	public Object getImage(Object object)
+	{
 		return overlayImage(object, getResourceLocator().getImage("full/obj16/DynamicContainmentItem"));
 	}
 
@@ -128,7 +170,8 @@ public class DynamicContainmentItemItemProvider
 	 * @generated
 	 */
 	@Override
-	public String getText(Object object) {
+	public String getText(Object object)
+	{
 		String label = ((DynamicContainmentItem)object).getName();
 		return label == null || label.length() == 0 ?
 			getString("_UI_DynamicContainmentItem_type") :
@@ -143,10 +186,14 @@ public class DynamicContainmentItemItemProvider
 	 * @generated
 	 */
 	@Override
-	public void notifyChanged(Notification notification) {
+	public void notifyChanged(Notification notification)
+	{
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(DynamicContainmentItem.class)) {
+			case ModelPackage.DYNAMIC_CONTAINMENT_ITEM__BASE_ITEM_INDEX:
+				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+				return;
 			case ModelPackage.DYNAMIC_CONTAINMENT_ITEM__ITEMS:
 			case ModelPackage.DYNAMIC_CONTAINMENT_ITEM__COMPOSITE:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
@@ -163,13 +210,19 @@ public class DynamicContainmentItemItemProvider
 	 * @generated
 	 */
 	@Override
-	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
+	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
+	{
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
 		newChildDescriptors.add
 			(createChildParameter
 				(ModelPackage.Literals.DYNAMIC_CONTAINMENT_ITEM__ITEMS,
 				 ModelFactory.eINSTANCE.createDynamicContainmentItem()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(ModelPackage.Literals.DYNAMIC_CONTAINMENT_ITEM__COMPOSITE,
+				 VCategorizationFactory.eINSTANCE.createCategorizationElement()));
 
 		newChildDescriptors.add
 			(createChildParameter
@@ -184,7 +237,8 @@ public class DynamicContainmentItemItemProvider
 	 * @generated
 	 */
 	@Override
-	public ResourceLocator getResourceLocator() {
+	public ResourceLocator getResourceLocator()
+	{
 		return DynamicTreeEditPlugin.INSTANCE;
 	}
 

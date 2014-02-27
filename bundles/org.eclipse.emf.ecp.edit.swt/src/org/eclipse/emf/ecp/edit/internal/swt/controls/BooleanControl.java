@@ -16,6 +16,7 @@ import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -81,6 +82,17 @@ public class BooleanControl extends SingleControl {
 	 */
 	@Override
 	protected Control[] getControlsForTooltip() {
-		return new Control[] { check };
+		// return new Control[] { check };
+		return new Control[0];
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.edit.internal.swt.controls.SingleControl#updateValidationColor(org.eclipse.swt.graphics.Color)
+	 */
+	@Override
+	protected void updateValidationColor(Color color) {
+		check.setBackground(color);
 	}
 }

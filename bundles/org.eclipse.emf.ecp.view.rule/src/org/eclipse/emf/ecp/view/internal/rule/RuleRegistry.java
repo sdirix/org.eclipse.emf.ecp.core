@@ -22,13 +22,13 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.common.BidirectionalMap;
-import org.eclipse.emf.ecp.view.model.VElement;
-import org.eclipse.emf.ecp.view.rule.model.AndCondition;
-import org.eclipse.emf.ecp.view.rule.model.Condition;
-import org.eclipse.emf.ecp.view.rule.model.LeafCondition;
-import org.eclipse.emf.ecp.view.rule.model.OrCondition;
-import org.eclipse.emf.ecp.view.rule.model.Rule;
-import org.eclipse.emf.ecp.view.rule.model.impl.LeafConditionImpl;
+import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.spi.rule.model.AndCondition;
+import org.eclipse.emf.ecp.view.spi.rule.model.Condition;
+import org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition;
+import org.eclipse.emf.ecp.view.spi.rule.model.OrCondition;
+import org.eclipse.emf.ecp.view.spi.rule.model.Rule;
+import org.eclipse.emf.ecp.view.spi.rule.model.impl.LeafConditionImpl;
 
 /**
  * Rule registry that maintains which {@link VElement}s
@@ -46,14 +46,14 @@ public class RuleRegistry<T extends Rule> {
 	}
 
 	private static NoCondition noCondition = new NoCondition();
-	private final Map<EStructuralFeature, BidirectionalMap<LeafCondition, T>> featuresToRules;
+	private final Map<EStructuralFeature, BidirectionalMap<Condition, T>> featuresToRules;
 	private final BidirectionalMap<T, VElement> rulesToRenderables;
 
 	/**
 	 * Default constructor.
 	 */
 	public RuleRegistry() {
-		featuresToRules = new LinkedHashMap<EStructuralFeature, BidirectionalMap<LeafCondition, T>>();
+		featuresToRules = new LinkedHashMap<EStructuralFeature, BidirectionalMap<Condition, T>>();
 		rulesToRenderables = new BidirectionalMap<T, VElement>();
 	}
 
@@ -73,10 +73,7 @@ public class RuleRegistry<T extends Rule> {
 	 */
 	public void register(VElement renderable, T rule, Condition condition, EObject domainModel) {
 
-		if (condition == null) {
-			mapFeatureToRule(AllEAttributes.get(), noCondition, rule);
-			rulesToRenderables.put(rule, renderable);
-		} else if (condition instanceof LeafCondition) {
+		if (condition instanceof LeafCondition) {
 			final LeafCondition leafCondition = (LeafCondition) condition;
 
 			leafCondition.getDomainModelReference().resolve(domainModel);
@@ -94,11 +91,14 @@ public class RuleRegistry<T extends Rule> {
 			for (final Condition cond : orCondition.getConditions()) {
 				register(renderable, rule, cond, domainModel);
 			}
-		} else {
+		} else if (condition instanceof AndCondition) {
 			final AndCondition andCondition = (AndCondition) condition;
 			for (final Condition cond : andCondition.getConditions()) {
 				register(renderable, rule, cond, domainModel);
 			}
+		} else {
+			mapFeatureToRule(AllEAttributes.get(), noCondition, rule);
+			rulesToRenderables.put(rule, renderable);
 		}
 	}
 
@@ -115,8 +115,8 @@ public class RuleRegistry<T extends Rule> {
 			return removeCondition(condition);
 		}
 
-		final Collection<BidirectionalMap<LeafCondition, T>> values = featuresToRules.values();
-		for (final BidirectionalMap<LeafCondition, T> bidirectionalMap : values) {
+		final Collection<BidirectionalMap<Condition, T>> values = featuresToRules.values();
+		for (final BidirectionalMap<Condition, T> bidirectionalMap : values) {
 			if (bidirectionalMap.removeByValue(rule) != null) {
 				break;
 			}
@@ -148,27 +148,31 @@ public class RuleRegistry<T extends Rule> {
 	public VElement removeCondition(Condition condition) {
 		VElement ret = null;
 		// we only have to care about leaf conditions since or/and conditions aren't even registered
+		final BidirectionalMap<Condition, T> bidirectionalMap;
 		if (LeafCondition.class.isInstance(condition)) {
 			final LeafCondition leafCondition = LeafCondition.class.cast(condition);
 			final Iterator<Setting> settingIterator = leafCondition.getDomainModelReference().getIterator();
 
 			final Setting setting = settingIterator.next();
 
-			final BidirectionalMap<LeafCondition, T> bidirectionalMap = featuresToRules.get(setting
+			bidirectionalMap = featuresToRules.get(setting
 				.getEStructuralFeature());
+		}
+		else {
+			bidirectionalMap = featuresToRules.get(AllEAttributes.get());
+		}
 
-			if (bidirectionalMap != null) {
-				final T removeByKey = bidirectionalMap.removeByKey(leafCondition);
-				ret = rulesToRenderables.removeByKey(removeByKey);
-			}
+		if (bidirectionalMap != null) {
+			final T removeByKey = bidirectionalMap.removeByKey(condition);
+			ret = rulesToRenderables.removeByKey(removeByKey);
 		}
 
 		return ret;
 	}
 
-	private void mapFeatureToRule(final EStructuralFeature attribute, LeafCondition condition, T rule) {
+	private void mapFeatureToRule(final EStructuralFeature attribute, Condition condition, T rule) {
 		if (!featuresToRules.containsKey(attribute)) {
-			featuresToRules.put(attribute, new BidirectionalMap<LeafCondition, T>());
+			featuresToRules.put(attribute, new BidirectionalMap<Condition, T>());
 		}
 		featuresToRules.get(attribute).put(condition, rule);
 	}
@@ -192,11 +196,11 @@ public class RuleRegistry<T extends Rule> {
 	public Map<T, VElement> getAffectedRenderables(final EStructuralFeature feature) {
 
 		final Map<T, VElement> result = new LinkedHashMap<T, VElement>();
-		BidirectionalMap<LeafCondition, T> bidirectionalMap = featuresToRules.get(feature);
+		final BidirectionalMap<Condition, T> bidirectionalMap = featuresToRules.get(feature);
 
-		if (bidirectionalMap == null) {
-			bidirectionalMap = featuresToRules.get(AllEAttributes.get());
-		}
+		// if (bidirectionalMap == null) {
+		// bidirectionalMap = featuresToRules.get(AllEAttributes.get());
+		// }
 
 		if (bidirectionalMap == null) {
 			return Collections.emptyMap();

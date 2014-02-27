@@ -22,12 +22,13 @@ import org.junit.runners.Suite;
  * @author eneufeld
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({ 
+@Suite.SuiteClasses({
 	ECPProjectManagerTests.class,
-	ECPProjectTests.class, 
+	ECPProjectTests.class,
 	ECPProviderTests.class,
 	ECPProviderRegistryTest.class,
-	ECPRepositoryTest.class})
+	ECPRepositoryTest.class,
+	ECPInitializationTest.class })
 public class AllTests {
 
 }

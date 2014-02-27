@@ -19,6 +19,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -49,6 +50,7 @@ import org.eclipse.emf.emfstore.client.ESRemoteProject;
 import org.eclipse.emf.emfstore.client.ESServer;
 import org.eclipse.emf.emfstore.client.ESWorkspace;
 import org.eclipse.emf.emfstore.client.ESWorkspaceProvider;
+import org.eclipse.emf.emfstore.client.util.RunESCommand;
 import org.eclipse.emf.emfstore.internal.client.model.Configuration;
 import org.eclipse.emf.emfstore.internal.client.model.ESWorkspaceProviderImpl;
 import org.eclipse.emf.emfstore.internal.client.model.ProjectSpace;
@@ -75,7 +77,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 	/**
 	 * This is the name of the EMFStore Provider.
 	 */
-	public static final String NAME = "org.eclipse.emf.ecp.emfstore.provider";
+	public static final String NAME = "org.eclipse.emf.ecp.emfstore.provider"; //$NON-NLS-1$
 
 	/**
 	 * EMFStore Provider Singleton.
@@ -85,26 +87,29 @@ public final class EMFStoreProvider extends DefaultProvider {
 	/**
 	 * Property constant for Repository URL.
 	 */
-	public static final String PROP_REPOSITORY_URL = "repositoryUrl";
+	public static final String PROP_REPOSITORY_URL = "repositoryUrl"; //$NON-NLS-1$
 	/**
 	 * Property constant for Repository Port.
 	 */
-	public static final String PROP_PORT = "port";
+	public static final String PROP_PORT = "port"; //$NON-NLS-1$
 	/**
 	 * Property constant for Repository Certificate.
 	 */
-	public static final String PROP_CERTIFICATE = "certificate";
+	public static final String PROP_CERTIFICATE = "certificate"; //$NON-NLS-1$
 	/**
 	 * Property constant for ProjectSpaceID.
 	 */
-	public static final String PROP_PROJECTSPACEID = "projectSpaceID";
+	public static final String PROP_PROJECTSPACEID = "projectSpaceID"; //$NON-NLS-1$
 	/**
 	 * Property constant for ServerInfoID.
 	 */
-	public static final String PROP_SERVERINFOID = "serverInfoID";
+	public static final String PROP_SERVERINFOID = "serverInfoID"; //$NON-NLS-1$
 
 	private AdapterImpl adapter;
 
+	/**
+	 * Default constructor.
+	 */
 	public EMFStoreProvider() {
 		super(NAME);
 		configureEMFStore();
@@ -130,7 +135,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 
 	/** {@inheritDoc} */
 	@Override
-	public void fillChildren(ECPContainer context, Object parent, InternalChildrenList childrenList) {
+	public void fillChildren(final ECPContainer context, final Object parent, final InternalChildrenList childrenList) {
 		if (parent instanceof InternalProject) {
 			final ESLocalProject projectSpace = getProjectSpace((InternalProject) parent);
 			if (projectSpace != null) {
@@ -151,7 +156,12 @@ public final class EMFStoreProvider extends DefaultProvider {
 
 			}
 		}
-		super.fillChildren(context, parent, childrenList);
+		RunESCommand.run(new Callable<Void>() {
+			public Void call() throws Exception {
+				EMFStoreProvider.super.fillChildren(context, parent, childrenList);
+				return null;
+			}
+		});
 	}
 
 	@Override
@@ -185,7 +195,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 		}
 		final String providerClass = getClass().getSimpleName();
 		final String contextClass = context.getClass().getSimpleName();
-		Activator.log(IStatus.INFO, providerClass + " received " + event + " for " + contextClass + " " + context);
+		Activator.log(IStatus.INFO, providerClass + " received " + event + " for " + contextClass + " " + context); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 	}
 
 	/**

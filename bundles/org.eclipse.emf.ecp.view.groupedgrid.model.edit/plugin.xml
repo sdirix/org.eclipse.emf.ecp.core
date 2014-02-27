@@ -18,7 +18,7 @@
    <extension point="org.eclipse.emf.edit.itemProviderAdapterFactories">
       <factory
             uri="http://org/eclipse/emf/ecp/view/groupedgrid/model"
-            class="org.eclipse.emf.ecp.edit.groupedgrid.model.provider.GroupedGridItemProviderAdapterFactory"
+            class="org.eclipse.emf.ecp.view.spi.groupedgrid.model.provider.GroupedGridItemProviderAdapterFactory"
             supportedTypes=
               "org.eclipse.emf.edit.provider.IEditingDomainItemProvider
                org.eclipse.emf.edit.provider.IStructuredItemContentProvider
@@ -30,7 +30,7 @@
    <extension point="org.eclipse.emf.edit.childCreationExtenders">
       <extender
             uri="http://org/eclipse/emf/ecp/view/model"
-            class="org.eclipse.emf.ecp.edit.groupedgrid.model.provider.GroupedGridItemProviderAdapterFactory$ViewChildCreationExtender"/>
+            class="org.eclipse.emf.ecp.view.spi.groupedgrid.model.provider.GroupedGridItemProviderAdapterFactory$ViewChildCreationExtender"/>
    </extension>
 
 </plugin>

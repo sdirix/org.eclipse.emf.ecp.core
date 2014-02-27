@@ -22,9 +22,15 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
-import org.eclipse.emf.ecp.view.model.VView;
+import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.jface.viewers.TreePath;
 
 /**
  * Helper class for editor controls.
@@ -38,28 +44,41 @@ public final class Helper {
 
 	}
 
+	/**
+	 * Retrieves the root ECLass form a project, with the assumption that the project consists only of a {@link VView}.
+	 * 
+	 * @param project the project to check
+	 * @return the root {@link EClass}
+	 */
 	public static EClass getRootEClass(ECPProject project) {
 		return ((VView) project.getContents().get(0)).getRootEClass();
 	}
 
+	/**
+	 * Retrieves the root ECLass form an EObject. The hierarchy of the provided {@link EObject} is checked for
+	 * {@link VView}.
+	 * 
+	 * @param eObject the {@link EObject} to check
+	 * @return the root {@link EClass}
+	 */
 	public static EClass getRootEClass(EObject eObject) {
 		EObject testObject = eObject;
-		// while (!(View.class.isInstance(testObject) || TreeCategory.class.isInstance(testObject)
-		// && ((TreeCategory) testObject).getTargetFeature() != null)
-		// && testObject != null) {
 		while (!VView.class.isInstance(testObject)
 			&& testObject != null) {
 			testObject = testObject.eContainer();
 		}
 		if (VView.class.isInstance(testObject)) {
 			return ((VView) testObject).getRootEClass();
-			// } else if (TreeCategory.class.isInstance(testObject)) {
-			// return ((EReference) ((TreeCategory) testObject).getTargetFeature())
-			// .getEReferenceType();
 		}
 		return getRootEClass(ECPUtil.getECPProjectManager().getProject(eObject));
 	}
 
+	/**
+	 * Fills a map based on all containment features found from the provided EClass onward.
+	 * 
+	 * @param parent the {@link EClass} to use as root
+	 * @param childParentReferenceMap the map to fill
+	 */
 	public static void getReferenceMap(EClass parent,
 		Map<EClass, EReference> childParentReferenceMap) {
 		for (final EReference eReference : parent.getEAllContainments()) {
@@ -70,6 +89,13 @@ public final class Helper {
 		}
 	}
 
+	/**
+	 * Retrieves the reference path for a selected EClass from the provided map.
+	 * 
+	 * @param selectedClass the {@link EClass} to get the reference path for
+	 * @param childParentReferenceMap the map to use
+	 * @return the reference path
+	 */
 	public static List<EReference> getReferencePath(EClass selectedClass,
 		Map<EClass, EReference> childParentReferenceMap) {
 		final List<EReference> bottomUpPath = new ArrayList<EReference>();
@@ -104,5 +130,54 @@ public final class Helper {
 		for (final EReference eReference : root.getEAllContainments()) {
 			getDatasegmentSubclasses(eReference.getEReferenceType(), possibleSegments);
 		}
+	}
+
+	/**
+	 * Checks whether a {@link EStructuralFeature} has an {@link IItemPropertyDescriptor}.
+	 * 
+	 * @param featureToCheck the {@link EStructuralFeature} to check
+	 * @return true if a IItemPropertyDescriptor could be found, false otherwise
+	 */
+	public static boolean hasFeaturePropertyDescriptor(EStructuralFeature featureToCheck) {
+
+		final ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(
+			ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+		final AdapterFactoryItemDelegator adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(
+			composedAdapterFactory);
+		final IItemPropertyDescriptor propertyDescriptor =
+			adapterFactoryItemDelegator
+				.getPropertyDescriptor(EcoreUtil.create(featureToCheck.getEContainingClass()), featureToCheck);
+
+		composedAdapterFactory.dispose();
+		return propertyDescriptor != null;
+	}
+
+	/**
+	 * Checks whether a {@link EStructuralFeature} has an {@link IItemPropertyDescriptor}.
+	 * 
+	 * @param eClass the root {@link EClass}
+	 * @param treePath the {@link TreePath} to check
+	 * @return true if a IItemPropertyDescriptor could be found, false otherwise
+	 */
+	public static boolean hasFeaturePropertyDescriptor(EClass eClass, TreePath treePath) {
+
+		EClass eClassToCheck = eClass;
+		final EStructuralFeature featureToCheck = (EStructuralFeature) treePath.getLastSegment();
+		for (int i = 0; i < treePath.getSegmentCount() - 1; i++) {
+			if (EReference.class.isInstance(treePath.getSegment(i))) {
+				eClassToCheck = EReference.class.cast(treePath.getSegment(i)).getEReferenceType();
+			}
+		}
+
+		final ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(
+			ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+		final AdapterFactoryItemDelegator adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(
+			composedAdapterFactory);
+		final IItemPropertyDescriptor propertyDescriptor =
+			adapterFactoryItemDelegator
+				.getPropertyDescriptor(EcoreUtil.create(eClassToCheck), featureToCheck);
+
+		composedAdapterFactory.dispose();
+		return propertyDescriptor != null;
 	}
 }

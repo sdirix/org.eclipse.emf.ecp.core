@@ -12,10 +12,8 @@
 package org.eclipse.emf.ecp.edit.internal.swt.controls;
 
 import org.eclipse.emf.common.util.Diagnostic;
-import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl;
 import org.eclipse.jface.fieldassist.ControlDecoration;
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Control;
@@ -30,42 +28,42 @@ import org.eclipse.swt.widgets.Control;
  */
 public abstract class SingleControl extends SWTControl {
 
-	private static final String VALIDATION_ERROR_ICON = "icons/validation_error.png";//$NON-NLS-1$
+	//	private static final String VALIDATION_ERROR_ICON = "icons/validation_error.png";//$NON-NLS-1$
 	private ControlDecoration controlDecoration;
 
 	// private static final Color VALIDATION_ERROR_BACKGROUND_COLOR=new Color(Display.getDefault(), 255, 140, 0);
 
 	/**
 	 * {@inheritDoc}
+	 * 
+	 * @deprecated
 	 */
+	@Deprecated
+	@Override
 	public void handleValidation(Diagnostic diagnostic) {
 		if (diagnostic.getData().size() < 2) {
 			return;
 		}
-		if (!diagnostic.getData().get(0).equals(getModelElementContext().getModelElement())
-			|| !diagnostic.getData().get(1).equals(getStructuralFeature())) {
+		if (!diagnostic.getData().get(0).equals(getFirstSetting().getEObject())
+			|| !diagnostic.getData().get(1).equals(getFirstStructuralFeature())) {
 			return;
 		}
 
-		if (diagnostic.getSeverity() == Diagnostic.ERROR || diagnostic.getSeverity() == Diagnostic.WARNING) {
-			final Image image = Activator.getImage(SingleControl.VALIDATION_ERROR_ICON);
-			Diagnostic reason = diagnostic;
-			if (diagnostic.getChildren() != null && diagnostic.getChildren().size() != 0) {
-				reason = diagnostic.getChildren().get(0);
-			}
-			if (validationLabel != null) {
-				validationLabel.setImage(image);
-				validationLabel.setToolTipText(reason.getMessage());
-
-			}
-			if (controlDecoration != null) {
-				controlDecoration.setDescriptionText(reason.getMessage());
-				controlDecoration.show();
-			}
-			updateValidationColor(getSystemColor(SWT.COLOR_RED));
-		} else {
-			resetValidation();
+		final Image image = getValidationIcon(diagnostic.getSeverity());
+		Diagnostic reason = diagnostic;
+		if (diagnostic.getChildren() != null && diagnostic.getChildren().size() != 0) {
+			reason = diagnostic.getChildren().get(0);
 		}
+		if (validationLabel != null) {
+			validationLabel.setImage(image);
+			validationLabel.setToolTipText(reason.getMessage());
+
+		}
+		if (controlDecoration != null) {
+			controlDecoration.setDescriptionText(reason.getMessage());
+			controlDecoration.show();
+		}
+		updateValidationColor(getValidationBackgroundColor(diagnostic.getSeverity()));
 	}
 
 	/**
@@ -88,14 +86,18 @@ public abstract class SingleControl extends SWTControl {
 
 	/**
 	 * {@inheritDoc}
+	 * 
+	 * @deprecated
 	 */
+	@Deprecated
+	@Override
 	public void resetValidation() {
 		if (validationLabel == null || validationLabel.isDisposed()) {
 			return;
 		}
+		updateValidationColor(null);
 		validationLabel.setImage(null);
 		validationLabel.setToolTipText(""); //$NON-NLS-1$
-		updateValidationColor(null);
 		if (controlDecoration != null) {
 			controlDecoration.hide();
 		}
@@ -106,6 +108,7 @@ public abstract class SingleControl extends SWTControl {
 	 */
 	@Override
 	public void dispose() {
+		super.dispose();
 		if (validationLabel != null) {
 			validationLabel.dispose();
 		}
@@ -119,6 +122,7 @@ public abstract class SingleControl extends SWTControl {
 	 * 
 	 * @deprecated
 	 */
+	@Override
 	@Deprecated
 	public boolean showLabel() {
 		return true;

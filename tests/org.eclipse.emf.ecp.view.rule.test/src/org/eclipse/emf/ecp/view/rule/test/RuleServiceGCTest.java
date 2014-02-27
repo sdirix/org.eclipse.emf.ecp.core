@@ -15,20 +15,20 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.view.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
 import org.eclipse.emf.ecp.view.internal.rule.RuleService;
-import org.eclipse.emf.ecp.view.internal.rule.RuleServiceHelper;
-import org.eclipse.emf.ecp.view.model.VControl;
-import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
-import org.eclipse.emf.ecp.view.model.VView;
-import org.eclipse.emf.ecp.view.model.VViewFactory;
-import org.eclipse.emf.ecp.view.rule.model.EnableRule;
-import org.eclipse.emf.ecp.view.rule.model.ShowRule;
+import org.eclipse.emf.ecp.view.internal.rule.RuleServiceHelperImpl;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
+import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
+import org.eclipse.emf.ecp.view.spi.rule.model.EnableRule;
+import org.eclipse.emf.ecp.view.spi.rule.model.ShowRule;
+import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalFactory;
+import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalLayout;
 import org.eclipse.emf.ecp.view.test.common.GCCollectable;
 import org.eclipse.emf.ecp.view.test.common.Tuple;
-import org.eclipse.emf.ecp.view.vertical.model.VVerticalFactory;
-import org.eclipse.emf.ecp.view.vertical.model.VVerticalLayout;
 import org.eclipse.emf.emfstore.bowling.BowlingFactory;
 import org.eclipse.emf.emfstore.bowling.BowlingPackage;
 import org.eclipse.emf.emfstore.bowling.League;
@@ -85,8 +85,8 @@ public class RuleServiceGCTest extends CommonRuleTest {
 	 */
 	private RuleService instantiateRuleService(VView view, final EObject domainModel) {
 		final RuleService ruleService = new RuleService();
-		final RuleServiceHelper ruleServiceHelper = new RuleServiceHelper();
-		context = new ViewModelContextImpl(view, domainModel);
+		final RuleServiceHelperImpl ruleServiceHelper = new RuleServiceHelperImpl();
+		context = ViewModelContextFactory.INSTANCE.createViewModelContext(view, domainModel);
 		ruleService.instantiate(context);
 		ruleServiceHelper.instantiate(context);
 		return ruleService;

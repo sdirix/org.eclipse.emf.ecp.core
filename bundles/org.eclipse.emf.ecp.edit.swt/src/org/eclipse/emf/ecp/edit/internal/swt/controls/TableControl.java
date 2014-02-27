@@ -13,10 +13,13 @@
 package org.eclipse.emf.ecp.edit.internal.swt.controls;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.observable.list.IObservableList;
@@ -40,6 +43,10 @@ import org.eclipse.emf.ecp.edit.internal.swt.util.CellEditorFactory;
 import org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor;
 import org.eclipse.emf.ecp.edit.internal.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl;
+import org.eclipse.emf.ecp.edit.internal.swt.util.SWTRenderingHelper;
+import org.eclipse.emf.ecp.view.internal.validation.ValidationService;
+import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
+import org.eclipse.emf.ecp.view.spi.renderer.RenderingResultRow;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -58,15 +65,17 @@ import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.viewers.CellEditor;
+import org.eclipse.jface.viewers.CellLabelProvider;
 import org.eclipse.jface.viewers.ColumnViewer;
 import org.eclipse.jface.viewers.ColumnViewerEditor;
 import org.eclipse.jface.viewers.ColumnViewerEditorActivationEvent;
 import org.eclipse.jface.viewers.ColumnViewerEditorActivationListener;
 import org.eclipse.jface.viewers.ColumnViewerEditorActivationStrategy;
 import org.eclipse.jface.viewers.ColumnViewerEditorDeactivationEvent;
+import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.EditingSupport;
-import org.eclipse.jface.viewers.FocusCellOwnerDrawHighlighter;
+import org.eclipse.jface.viewers.IColorProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
@@ -76,8 +85,11 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -90,11 +102,15 @@ import org.eclipse.swt.widgets.TableColumn;
  * The class describing a table control.
  * 
  * @author Eugen Neufeld
- * 
+ * @author emueller
  */
 // this class is not serialized
 @SuppressWarnings("serial")
 public class TableControl extends SWTControl {
+
+	private static final String FIXED_COLUMNS = "org.eclipse.rap.rwt.fixedColumns"; //$NON-NLS-1$
+
+	private static final String ICON_ADD = "icons/add.png"; //$NON-NLS-1$
 
 	private TableViewer tableViewer;
 	private ComposedAdapterFactory composedAdapterFactory;
@@ -104,13 +120,8 @@ public class TableControl extends SWTControl {
 	private TableControlConfiguration tableControlConfiguration;
 	private boolean editable = true;
 
-	private final Map<EObject, Map<EStructuralFeature, Diagnostic>> featureErrorMap = new HashMap<EObject, Map<EStructuralFeature, Diagnostic>>();
-
 	private EReference getTableReference() {
-		if (mainFeature == null) {
-			mainFeature = (EReference) getDomainModelReference().getEStructuralFeatureIterator().next();
-		}
-		return mainFeature;
+		return (EReference) getFirstStructuralFeature();
 	}
 
 	/**
@@ -126,9 +137,36 @@ public class TableControl extends SWTControl {
 		return null;
 	}
 
+	/**
+	 * 
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPControlSWT#createControls(org.eclipse.swt.widgets.Composite)
+	 */
+	@Override
+	public List<RenderingResultRow<Control>> createControls(final Composite parent) {
+		final IItemPropertyDescriptor itemPropertyDescriptor = getItemPropertyDescriptor(getFirstSetting());
+		if (itemPropertyDescriptor == null) {
+			return null;
+		}
+		parent.addDisposeListener(new DisposeListener() {
+
+			public void widgetDisposed(DisposeEvent e) {
+				dispose();
+			}
+		});
+		final List<RenderingResultRow<Control>> list = Collections.singletonList(SWTRenderingHelper.INSTANCE
+			.getResultRowFactory().createRenderingResultRow(
+				createControl(parent)));
+		// TODO remove asap
+		backwardCompatibleHandleValidation();
+		return list;
+
+	}
+
 	@Override
 	public Composite createControl(final Composite parent) {
-		mainSetting = getDomainModelReference().getIterator().next();
+		mainSetting = getFirstSetting();
 		composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
 			new ReflectiveItemProviderAdapterFactory(),
 			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
@@ -189,26 +227,15 @@ public class TableControl extends SWTControl {
 		return composite;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see
-	 * org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl#fillControlComposite(org.eclipse.swt.widgets.Composite)
-	 */
-	@Override
-	protected void fillControlComposite(Composite parent) {
-		final Composite composite = new Composite(parent, SWT.NONE);
-		// composite.setLayout(new FillLayout());
-		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).hint(1, 200).applyTo(composite);
-
-		tableViewer = new TableViewer(composite, SWT.MULTI | SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.BORDER);
-		// GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).hint(SWT.DEFAULT, SWT.DEFAULT)
-		// .applyTo(tableViewer.getTable());
+	private TableViewer createTableViewer(Composite parent) {
+		final TableViewer tableViewer = new TableViewer(parent, SWT.MULTI | SWT.V_SCROLL | SWT.FULL_SELECTION
+			| SWT.BORDER);
 		tableViewer.getTable().setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_table"); //$NON-NLS-1$
 		tableViewer.getTable().setHeaderVisible(true);
 		tableViewer.getTable().setLinesVisible(true);
 
 		final TableViewerFocusCellManager focusCellManager = new TableViewerFocusCellManager(tableViewer,
-			new FocusCellOwnerDrawHighlighter(tableViewer));
+			new ECPFocusCellDrawHighlighter(tableViewer));
 		final ColumnViewerEditorActivationStrategy actSupport = new ColumnViewerEditorActivationStrategy(tableViewer) {
 			@Override
 			protected boolean isEditorActivationEvent(ColumnViewerEditorActivationEvent event) {
@@ -223,22 +250,48 @@ public class TableControl extends SWTControl {
 			| ColumnViewerEditor.TABBING_MOVE_TO_ROW_NEIGHBOR | ColumnViewerEditor.TABBING_VERTICAL
 			| ColumnViewerEditor.KEYBOARD_ACTIVATION);
 
-		// create a content provider
-		final ObservableListContentProvider cp = new ObservableListContentProvider();
+		tableViewer.getTable().setData(FIXED_COLUMNS, new Integer(1));
+		ColumnViewerToolTipSupport.enableFor(tableViewer);
 
-		final EObject tempInstance = clazz.getEPackage().getEFactoryInstance().create(clazz);
+		return tableViewer;
+	}
+
+	private void createFixedValidationStatusColumn(TableViewer tableViewer,
+		final List<EStructuralFeature> structuralFeatures) {
+		final TableViewerColumn column = TableViewerColumnBuilder.create()
+			.setMoveable(false)
+			.setText(ControlMessages.TableControl_ValidationStatusColumn)
+			.setWidth(80)
+			.build(tableViewer);
+
+		column.setLabelProvider(new ValidationStatusCellLabelProvider(structuralFeatures));
+	}
+
+	private EObject getInstanceOf(EClass clazz) {
+		return clazz.getEPackage().getEFactoryInstance().create(clazz);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl#fillControlComposite(org.eclipse.swt.widgets.Composite)
+	 */
+	@Override
+	protected void fillControlComposite(Composite parent) {
+		final Composite composite = new Composite(parent, SWT.NONE);
+		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).hint(1, 200).applyTo(composite);
+		tableViewer = createTableViewer(composite);
+
+		final ObservableListContentProvider cp = new ObservableListContentProvider();
+		final EObject tempInstance = getInstanceOf(clazz);
 		final ECPTableViewerComparator comparator = new ECPTableViewerComparator();
 		tableViewer.setComparator(comparator);
 		int columnNumber = 0;
-		List<EStructuralFeature> structuralFeatures = clazz.getEAllStructuralFeatures();
-		Map<EStructuralFeature, Boolean> readOnlyColumn = null;
-		if (tableControlConfiguration != null) {
-			structuralFeatures = new ArrayList<EStructuralFeature>();
-			readOnlyColumn = new HashMap<EStructuralFeature, Boolean>();
-			for (final TableColumnConfiguration tcc : tableControlConfiguration.getColumns()) {
-				structuralFeatures.add(tcc.getColumnAttribute());
-				readOnlyColumn.put(tcc.getColumnAttribute(), tcc.isReadOnly());
-			}
+		final Map<EStructuralFeature, Boolean> readOnlyConfig = createReadOnlyConfig(clazz);
+		final List<EStructuralFeature> structuralFeatures = new ArrayList<EStructuralFeature>();
+		structuralFeatures.addAll(readOnlyConfig.keySet());
+		if (!getControl().isReadonly()) {
+			createFixedValidationStatusColumn(tableViewer, structuralFeatures);
 		}
 
 		for (final EStructuralFeature feature : structuralFeatures) {
@@ -249,61 +302,25 @@ public class TableControl extends SWTControl {
 				continue;
 			}
 
-			final CellEditor cellEditor = CellEditorFactory.INSTANCE.getCellEditor(itemPropertyDescriptor,
-				tempInstance, tableViewer.getTable(), getModelElementContext());
-			// create a new column
-			final TableViewerColumn column = new TableViewerColumn(tableViewer, cellEditor.getStyle());
+			final CellEditor cellEditor = createCellEditor(tempInstance, feature);
+			final TableViewerColumn column = TableViewerColumnBuilder
+				.create()
+				.setText(itemPropertyDescriptor.getDisplayName(null))
+				.setToolTipText(itemPropertyDescriptor.getDescription(null))
+				.setResizable(true)
+				.setMoveable(false)
+				.setStyle(noStyle())
+				.setData("width", //$NON-NLS-1$
+					ECPCellEditor.class.isInstance(cellEditor) ? ECPCellEditor.class.cast(cellEditor)
+						.getColumnWidthWeight() : 100)
+				.build(tableViewer);
 
-			if (ECPCellEditor.class.isInstance(cellEditor)) {
-				column.getColumn().setData("width", ((ECPCellEditor) cellEditor).getColumnWidthWeight()); //$NON-NLS-1$
-			} else {
-				column.getColumn().setData("width", 100); //$NON-NLS-1$
-			}
-
-			// determine the attribute that should be observed
-			IObservableMap map = null;
-			if (feature.isMany()) {
-				map = new EObjectObservableMap(cp.getKnownElements(), feature);
-			} else {
-				map = EMFProperties.value(feature).observeDetail(cp.getKnownElements());
-			}
-			column.setLabelProvider(new ObservableMapCellLabelProvider(map) {
-				@Override
-				public void update(ViewerCell cell) {
-					final EObject element = (EObject) cell.getElement();
-					final Object value = attributeMaps[0].get(element);
-
-					if (ECPCellEditor.class.isInstance(cellEditor)) {
-						final ECPCellEditor ecpCellEditor = (ECPCellEditor) cellEditor;
-						final String text = ecpCellEditor.getFormatedString(value);
-						cell.setText(text == null ? "" : text); //$NON-NLS-1$
-
-					} else {
-
-						cell.setText(value == null ? "" : value.toString()); //$NON-NLS-1$
-						cell.getControl().setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_edit_cellEditor_string"); //$NON-NLS-1$
-					}
-
-					// if (featureErrorMap.containsKey(element)
-					// && featureErrorMap.get(element).containsKey(attributeMaps[0].getValueType())) {
-					// cell.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_RED));
-					// } else {
-					// cell.setBackground(null);
-					// }
-				}
-			});
-
+			column.setLabelProvider(new ECPCellLabelProvider(feature, cellEditor, feature.isMany() ?
+				new EObjectObservableMap(cp.getKnownElements(), feature) :
+				EMFProperties.value(feature).observeDetail(cp.getKnownElements())));
 			column.getColumn().addSelectionListener(getSelectionAdapter(comparator, column.getColumn(), columnNumber));
-			// set the column title & set the size
-			column.getColumn().setText(itemPropertyDescriptor.getDisplayName(null));
-			column.getColumn().setToolTipText(itemPropertyDescriptor.getDescription(null));
-			column.getColumn().setResizable(true);
-			column.getColumn().setMoveable(false);
-			boolean addEditingSupport = true;
-			if (readOnlyColumn != null) {
-				addEditingSupport = !readOnlyColumn.get(feature);
-			}
-			if (addEditingSupport) {
+
+			if (!isReadOnlyFeature(readOnlyConfig, feature)) {
 				// remove if no editing needed
 				final EditingSupport observableSupport = new ECPTableEditingSupport(tableViewer, cellEditor, feature);
 				column.setEditingSupport(observableSupport);
@@ -311,7 +328,7 @@ public class TableControl extends SWTControl {
 			columnNumber++;
 		}
 		tableViewer.setContentProvider(cp);
-		final IObservableList list = EMFEditObservables.observeList(getModelElementContext().getEditingDomain(),
+		final IObservableList list = EMFEditObservables.observeList(getEditingDomain(mainSetting),
 			mainSetting.getEObject(), mainSetting.getEStructuralFeature());
 		tableViewer.setInput(list);
 
@@ -326,6 +343,39 @@ public class TableControl extends SWTControl {
 			layout.setColumnData(tableViewer.getTable().getColumns()[i], new ColumnWeightData(storedValue == null ? 50
 				: storedValue));
 		}
+	}
+
+	private CellEditor createCellEditor(final EObject tempInstance, final EStructuralFeature feature) {
+		return CellEditorFactory.INSTANCE.getCellEditor(feature,
+			tempInstance, tableViewer.getTable(), getViewModelContext());
+	}
+
+	private static boolean isReadOnlyFeature(Map<EStructuralFeature, Boolean> readOnlyConfig, EStructuralFeature feature) {
+		if (readOnlyConfig != null) {
+			final Boolean isReadOnly = readOnlyConfig.get(feature);
+			if (isReadOnly != null) {
+				return isReadOnly;
+			}
+		}
+		return false;
+	}
+
+	private Map<EStructuralFeature, Boolean> createReadOnlyConfig(EClass clazz) {
+		final Map<EStructuralFeature, Boolean> readOnlyConfig = new LinkedHashMap<EStructuralFeature, Boolean>();
+		if (tableControlConfiguration != null) {
+			for (final TableColumnConfiguration tcc : tableControlConfiguration.getColumns()) {
+				readOnlyConfig.put(tcc.getColumnAttribute(), tcc.isReadOnly());
+			}
+		} else {
+			for (final EStructuralFeature feature : clazz.getEStructuralFeatures()) {
+				readOnlyConfig.put(feature, Boolean.FALSE);
+			}
+		}
+		return readOnlyConfig;
+	}
+
+	private int noStyle() {
+		return SWT.NONE;
 	}
 
 	@Override
@@ -427,7 +477,7 @@ public class TableControl extends SWTControl {
 	 * @param deletionList the list of {@link EObject EObjects} to delete
 	 */
 	protected void deleteRows(List<EObject> deletionList) {
-		final EditingDomain editingDomain = getModelElementContext().getEditingDomain();
+		final EditingDomain editingDomain = getEditingDomain(mainSetting);
 		final EObject modelElement = mainSetting.getEObject();
 		editingDomain.getCommandStack().execute(
 			RemoveCommand.create(editingDomain, modelElement, getTableReference(), deletionList));
@@ -444,7 +494,7 @@ public class TableControl extends SWTControl {
 		final EObject modelElement = mainSetting.getEObject();
 		final EObject instance = clazz.getEPackage().getEFactoryInstance().create(clazz);
 
-		final EditingDomain editingDomain = getModelElementContext().getEditingDomain();
+		final EditingDomain editingDomain = getEditingDomain(mainSetting);
 		editingDomain.getCommandStack().execute(
 			AddCommand.create(editingDomain, modelElement, getTableReference(), instance));
 
@@ -452,11 +502,12 @@ public class TableControl extends SWTControl {
 
 	private Button addButton;
 	private Setting mainSetting;
-	private EReference mainFeature;
+
+	private boolean isDisposing;
 
 	private void createAddRowButton(final EClass clazz, final Composite buttonComposite) {
 		addButton = new Button(buttonComposite, SWT.None);
-		final Image image = Activator.getImage("icons/add.png"); //$NON-NLS-1$
+		final Image image = Activator.getImage(ICON_ADD);
 		addButton.setImage(image);
 		addButton.setToolTipText(ControlMessages.TableControl_AddInstanceOf + clazz.getInstanceClass().getSimpleName());
 		addButton.addSelectionListener(new SelectionAdapter() {
@@ -492,45 +543,97 @@ public class TableControl extends SWTControl {
 	 */
 	@Override
 	public void dispose() {
+		isDisposing = true;
+		super.dispose();
 		composedAdapterFactory.dispose();
+		mainSetting = null;
+		adapterFactoryItemDelegator = null;
+		composedAdapterFactory = null;
+		isDisposing = false;
 	}
 
 	/**
 	 * {@inheritDoc}
+	 * 
+	 * @deprecated
 	 */
+	@Deprecated
+	@Override
 	public void handleValidation(Diagnostic diagnostic) {
-		if (diagnostic.getSeverity() == Diagnostic.ERROR || diagnostic.getSeverity() == Diagnostic.WARNING) {
-			final Image image = Activator.getImage(VALIDATION_ERROR_ICON);
-			validationLabel.setImage(image);
-			validationLabel.setToolTipText(diagnostic.getMessage());
-			final EObject object = (EObject) diagnostic.getData().get(0);
-			if (!featureErrorMap.containsKey(object)) {
-				featureErrorMap.put(object, new HashMap<EStructuralFeature, Diagnostic>());
-			}
-			if (diagnostic.getData().size() > 1) {
-				featureErrorMap.get(object).put((EStructuralFeature) diagnostic.getData().get(1), diagnostic);
-			}
-			tableViewer.update(object, null);
-			// tableViewer.refresh();
+		if (diagnostic.getData().isEmpty()) {
+			return;
 		}
+		final Image image = getValidationIcon(diagnostic.getSeverity());
+		validationLabel.setImage(image);
+		validationLabel.setToolTipText(getTableTooltipMessage(diagnostic));
+		final EObject object = (EObject) diagnostic.getData().get(0);
+		tableViewer.update(object, null);
+	}
+
+	/**
+	 * Returns the message of the validation tool tip shown in the table header.
+	 * 
+	 * @param diagnostic the {@link Diagnostic} to extract the message from
+	 * @return the message
+	 */
+	protected String getTableTooltipMessage(Diagnostic diagnostic) {
+		return diagnostic.getMessage();
+	}
+
+	/**
+	 * Returns the message of the validation tool tip shown in the row.
+	 * 
+	 * @param vDiagnostic the {@link VDiagnostic} to get the message from
+	 * @return the message
+	 */
+	protected String getRowTooltipMessage(VDiagnostic vDiagnostic) {
+		return vDiagnostic.getMessage();
+	}
+
+	/**
+	 * Returns the message of the validation tool tip shown in the cell.
+	 * 
+	 * @param vDiagnostic the {@link VDiagnostic} to get the message from
+	 * @return the message
+	 */
+	protected String getCellTooltipMessage(VDiagnostic vDiagnostic) {
+		if (vDiagnostic == null) {
+			return null;
+		}
+		if (vDiagnostic.getDiagnostics().size() == 0) {
+			return vDiagnostic.getMessage();
+		}
+		final Diagnostic diagnostic = (Diagnostic) vDiagnostic.getDiagnostics().get(0);
+		Diagnostic reason = diagnostic;
+		if (diagnostic.getChildren() != null && diagnostic.getChildren().size() != 0) {
+			reason = diagnostic.getChildren().get(0);
+		}
+		return reason.getMessage();
 	}
 
 	/**
 	 * {@inheritDoc}
+	 * 
+	 * @deprecated
 	 */
+	@Deprecated
+	@Override
 	public void resetValidation() {
-		featureErrorMap.clear();
-		// tableViewer.refresh();
 		if (validationLabel == null || validationLabel.isDisposed()) {
 			return;
 		}
+		validationLabel.setToolTipText(""); //$NON-NLS-1$
 		validationLabel.setImage(null);
 
 	}
 
 	/**
 	 * {@inheritDoc}
+	 * 
+	 * @deprecated
 	 */
+	@Deprecated
+	@Override
 	public void setEditable(boolean isEditable) {
 		if (addButton != null) {
 			addButton.setVisible(isEditable);
@@ -539,6 +642,62 @@ public class TableControl extends SWTControl {
 			removeButton.setVisible(isEditable);
 		}
 		editable = isEditable;
+	}
+
+	/**
+	 * @author Jonas
+	 * 
+	 */
+	private final class ValidationStatusCellLabelProvider extends CellLabelProvider {
+		private final List<EStructuralFeature> structuralFeatures;
+
+		/**
+		 * @param structuralFeatures
+		 */
+		private ValidationStatusCellLabelProvider(List<EStructuralFeature> structuralFeatures) {
+			this.structuralFeatures = structuralFeatures;
+		}
+
+		@Override
+		public void update(ViewerCell cell) {
+			final Set<VDiagnostic> allDiagnostics = getAllDiagnostics((EObject) cell.getElement(),
+				structuralFeatures);
+			Integer mostSevere = Diagnostic.OK;
+
+			for (final VDiagnostic vDiagnostic : allDiagnostics) {
+				if (vDiagnostic.getHighestSeverity() > mostSevere) {
+					mostSevere = vDiagnostic.getHighestSeverity();
+				}
+			}
+
+			cell.setImage(getValidationIcon(mostSevere));
+
+			// switch (mostSevere) {
+			// case Diagnostic.OK:
+			// cell.setImage(null);
+			// return;
+			// default:
+			// cell.setImage(Activator.getImage(ICON_VALIDATION_ERROR));
+			// }
+		}
+
+		@Override
+		public String getToolTipText(Object element) {
+			final StringBuffer tooltip = new StringBuffer();
+			final Set<VDiagnostic> allDiagnostics = getAllDiagnostics((EObject) element, structuralFeatures);
+
+			for (final VDiagnostic vDiagnostic : allDiagnostics) {
+				if (vDiagnostic.getHighestSeverity() == Diagnostic.OK) {
+					continue;
+				}
+				if (tooltip.length() > 0) {
+					tooltip.append("\n"); //$NON-NLS-1$
+				}
+				tooltip.append(getRowTooltipMessage(vDiagnostic));
+			}
+
+			return tooltip.toString();
+		}
 	}
 
 	/**
@@ -612,6 +771,100 @@ public class TableControl extends SWTControl {
 		}
 	}
 
+	/**
+	 * ECP specficic cell label provider that does also implement {@link IColorProvider} in
+	 * order to correctly.
+	 * 
+	 * @author emueller
+	 * 
+	 */
+	public class ECPCellLabelProvider extends ObservableMapCellLabelProvider implements IColorProvider {
+
+		private final EStructuralFeature feature;
+		private final CellEditor cellEditor;
+
+		/**
+		 * Constructor.
+		 * 
+		 * @param feature
+		 *            the {@link EStructuralFeature} the cell is bound to
+		 * @param cellEditor
+		 *            the {@link CellEditor} instance
+		 * @param attributeMap
+		 *            an {@link IObservableMap} instance that is passed to the {@link ObservableMapCellLabelProvider}
+		 */
+		public ECPCellLabelProvider(EStructuralFeature feature, CellEditor cellEditor, IObservableMap attributeMap) {
+			super(attributeMap);
+			this.feature = feature;
+			this.cellEditor = cellEditor;
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @see org.eclipse.jface.viewers.CellLabelProvider#getToolTipText(java.lang.Object)
+		 */
+		@Override
+		public String getToolTipText(Object element) {
+			final EObject domainObject = (EObject) element;
+			final VDiagnostic vDiagnostic = getDiagnosticForFeature(domainObject, feature);
+			return getCellTooltipMessage(vDiagnostic);
+
+		}
+
+		@Override
+		public void update(ViewerCell cell) {
+			final EObject element = (EObject) cell.getElement();
+			final Object value = attributeMaps[0].get(element);
+
+			if (ECPCellEditor.class.isInstance(cellEditor)) {
+				final ECPCellEditor ecpCellEditor = (ECPCellEditor) cellEditor;
+				final String text = ecpCellEditor.getFormatedString(value);
+				cell.setText(text == null ? "" : text); //$NON-NLS-1$
+			} else {
+				cell.setText(value == null ? "" : value.toString()); //$NON-NLS-1$
+				cell.getControl().setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_edit_cellEditor_string"); //$NON-NLS-1$
+			}
+
+			cell.setBackground(getBackground(element));
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @see org.eclipse.jface.viewers.IColorProvider#getForeground(java.lang.Object)
+		 */
+		public Color getForeground(Object element) {
+			return null;
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @see org.eclipse.jface.viewers.IColorProvider#getBackground(java.lang.Object)
+		 */
+		public Color getBackground(Object element) {
+			if (isDisposing) {
+				return null;
+			}
+			final VDiagnostic vDiagnostic = getDiagnosticForFeature((EObject) element, feature);
+
+			if (vDiagnostic == null) {
+				return null;
+			}
+
+			return getValidationBackgroundColor(vDiagnostic.getHighestSeverity());
+			// switch (vDiagnostic.getHighestSeverity()) {
+			// case Diagnostic.ERROR:
+			// return Display.getDefault().getSystemColor(SWT.COLOR_RED);
+			// case Diagnostic.WARNING:
+			// return Display.getDefault().getSystemColor(SWT.COLOR_YELLOW);
+			// default:
+			// return null;
+			// }
+		}
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl#getUnsetLabelText()
@@ -636,7 +889,8 @@ public class TableControl extends SWTControl {
 	 */
 	@Override
 	protected Control[] getControlsForTooltip() {
-		return new Control[] { tableViewer.getControl() };
+		// return new Control[] { tableViewer.getControl() };
+		return new Control[0];
 	}
 
 	/**
@@ -644,9 +898,36 @@ public class TableControl extends SWTControl {
 	 * 
 	 * @deprecated
 	 */
+	@Override
 	@Deprecated
 	public boolean showLabel() {
 		return false;
+	}
+
+	private VDiagnostic getDiagnosticForFeature(EObject domainObject, EStructuralFeature feature) {
+		final ValidationService validationService = getViewModelContext().getService(ValidationService.class);
+		if (getControl().isReadonly() || validationService == null) {
+			return null;
+		}
+		final Map<EStructuralFeature, VDiagnostic> diagnosticPerFeature = validationService
+			.getDiagnosticPerFeature(domainObject);
+		return diagnosticPerFeature.get(feature);
+	}
+
+	private Set<VDiagnostic> getAllDiagnostics(EObject domainObject, List<EStructuralFeature> features) {
+		final ValidationService validationService = getViewModelContext().getService(ValidationService.class);
+		if (getControl().isReadonly() || validationService == null) {
+			return Collections.emptySet();
+		}
+		final Map<EStructuralFeature, VDiagnostic> diagnosticPerFeature =
+			validationService.getDiagnosticPerFeature(domainObject);
+		final Set<VDiagnostic> result = new LinkedHashSet<VDiagnostic>();
+		for (final EStructuralFeature feature : features) {
+			if (diagnosticPerFeature.containsKey(feature)) {
+				result.add(diagnosticPerFeature.get(feature));
+			}
+		}
+		return result;
 	}
 
 	/**
@@ -746,7 +1027,7 @@ public class TableControl extends SWTControl {
 		}
 
 		protected IObservableValue doCreateElementObservable(Object element, ViewerCell cell) {
-			return EMFEditObservables.observeValue(getModelElementContext().getEditingDomain(),
+			return EMFEditObservables.observeValue(getEditingDomain(),
 				(EObject) element, cellFeature);
 		}
 
@@ -793,11 +1074,11 @@ public class TableControl extends SWTControl {
 		 * cycle.
 		 */
 		class EditingState {
-			IObservableValue target;
+			private final IObservableValue target;
 
-			IObservableValue model;
+			private final IObservableValue model;
 
-			Binding binding;
+			private final Binding binding;
 
 			EditingState(Binding binding, IObservableValue target, IObservableValue model) {
 				this.binding = binding;
@@ -812,4 +1093,5 @@ public class TableControl extends SWTControl {
 			}
 		}
 	};
+
 }

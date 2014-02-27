@@ -23,20 +23,22 @@ import org.eclipse.core.databinding.observable.list.ListChangeEvent;
 import org.eclipse.core.databinding.observable.list.ListDiff;
 import org.eclipse.core.databinding.observable.list.ListDiffVisitor;
 import org.eclipse.emf.common.util.Diagnostic;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
-import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.ecp.edit.internal.swt.actions.ECPSWTAction;
 import org.eclipse.emf.ecp.edit.internal.swt.util.ECPObservableValue;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl;
-import org.eclipse.emf.ecp.edit.spi.ECPControl;
+import org.eclipse.emf.ecp.edit.spi.ECPAbstractControl;
 import org.eclipse.emf.ecp.edit.spi.ECPControlDescription;
 import org.eclipse.emf.ecp.edit.spi.ECPControlFactory;
 import org.eclipse.emf.ecp.edit.spi.util.ECPApplicableTester;
 import org.eclipse.emf.ecp.edit.spi.util.ECPStaticApplicableTester;
+import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.edit.command.MoveCommand;
 import org.eclipse.emf.edit.command.RemoveCommand;
-import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -44,6 +46,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
@@ -83,7 +86,7 @@ public abstract class MultiControl extends SWTControl {
 	 */
 	protected abstract ECPSWTAction[] instantiateActions();
 
-	private void findControlDescription(IItemPropertyDescriptor itemPropertyDescriptor, EObject eObject) {
+	private void findControlDescription(Setting setting) {
 		int bestPriority = -1;
 		final ECPControlFactory controlFactory = Activator.getDefault().getECPControlFactory();
 		if (controlFactory == null) {
@@ -94,7 +97,7 @@ public abstract class MultiControl extends SWTControl {
 			for (final ECPApplicableTester tester : description.getTester()) {
 				if (ECPStaticApplicableTester.class.isInstance(tester)) {
 					final ECPStaticApplicableTester test = (ECPStaticApplicableTester) tester;
-					final int priority = getTesterPriority(test, itemPropertyDescriptor, eObject);
+					final int priority = getTesterPriority(test, setting);
 					if (bestPriority < priority) {
 						bestPriority = priority;
 						controlDescription = description;
@@ -112,17 +115,16 @@ public abstract class MultiControl extends SWTControl {
 	 * Checks the priority of a tester.
 	 * 
 	 * @param tester the {@link ECPStaticApplicableTester} to test
-	 * @param itemPropertyDescriptor the {@link IItemPropertyDescriptor} to use
-	 * @param eObject the {@link EObject} to use
+	 * @param setting the {@link Setting} to use
 	 * @return the priority
 	 */
 	protected abstract int getTesterPriority(ECPStaticApplicableTester tester,
-		IItemPropertyDescriptor itemPropertyDescriptor, EObject eObject);
+		Setting setting);
 
 	@Override
 	protected void fillControlComposite(Composite parent) {
-
-		findControlDescription(getItemPropertyDescriptor(), getModelElementContext().getModelElement());
+		final Setting firstSetting = getFirstSetting();
+		findControlDescription(firstSetting);
 		actions = instantiateActions();
 
 		mainComposite = new Composite(parent, SWT.BORDER);
@@ -136,8 +138,8 @@ public abstract class MultiControl extends SWTControl {
 		final Label seperator = new Label(mainComposite, SWT.SEPARATOR | SWT.HORIZONTAL);
 		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).span(3, 1).applyTo(seperator);
 
-		model = EMFEditObservables.observeList(getModelElementContext().getEditingDomain(), getModelElementContext()
-			.getModelElement(), getStructuralFeature());
+		model = EMFEditObservables.observeList(getEditingDomain(firstSetting), firstSetting.getEObject(),
+			firstSetting.getEStructuralFeature());
 
 		final ScrolledComposite scrolledComposite = new ScrolledComposite(mainComposite, SWT.V_SCROLL);
 		scrolledComposite.setExpandVertical(true);
@@ -155,7 +157,7 @@ public abstract class MultiControl extends SWTControl {
 				final ListDiff diff = event.diff;
 				diff.accept(new ListDiffVisitor() {
 
-					int widthBeforeChange = -1; // initial negative value
+					private int widthBeforeChange = -1; // initial negative value
 
 					@Override
 					public void handleRemove(int index, Object element) {
@@ -172,7 +174,11 @@ public abstract class MultiControl extends SWTControl {
 
 					@Override
 					public void handleAdd(int index, Object element) {
+						if (sectionComposite.isDisposed()) {
+							return;
+						}
 						addControl();
+
 						sectionComposite.layout();
 						triggerScrollbarUpdate();
 						updateTargets();
@@ -185,10 +191,13 @@ public abstract class MultiControl extends SWTControl {
 
 					@Override
 					public void handleReplace(int index, Object oldElement, Object newElement) {
-						// do nothing
+						widgetWrappers.get(index).widget.getDataBindingContext().updateTargets();
 					}
 
 					private void triggerScrollbarUpdate() {
+						if (sectionComposite.isDisposed()) {
+							return;
+						}
 						final int widthAfterChange = sectionComposite.getSize().x;
 						if (widthBeforeChange != widthAfterChange) {
 							scrolledComposite.setMinHeight(sectionComposite.computeSize(widthAfterChange, SWT.DEFAULT).y);
@@ -215,7 +224,7 @@ public abstract class MultiControl extends SWTControl {
 	}
 
 	private void isFull() {
-		final int upperBound = getStructuralFeature().getUpperBound();
+		final int upperBound = getFirstStructuralFeature().getUpperBound();
 		final boolean full = model.size() >= upperBound && upperBound != -1;
 		for (final Action action : toolBarActions) {
 			action.setEnabled(!full);
@@ -223,10 +232,12 @@ public abstract class MultiControl extends SWTControl {
 	}
 
 	private void addControl() {
+		if (sectionComposite.isDisposed()) {
+			return;
+		}
 
 		final ECPObservableValue modelValue = new ECPObservableValue(model, widgetWrappers.size(), supportedClassType);
 		final WidgetWrapper h = new WidgetWrapper(modelValue);
-
 		h.createControl(sectionComposite, SWT.NONE);
 		widgetWrappers.add(h);
 	}
@@ -244,11 +255,11 @@ public abstract class MultiControl extends SWTControl {
 			//
 			// return (SWTControl) widgetConstructor.newInstance(false, getItemPropertyDescriptor(),
 			// getStructuralFeature(), getModelElementContext(), true);
-			final Constructor<? extends ECPControl> widgetConstructor = controlDescription.getControlClass()
+			final Constructor<? extends ECPAbstractControl> widgetConstructor = controlDescription.getControlClass()
 				.getConstructor();
 
 			final SWTControl control = (SWTControl) widgetConstructor.newInstance();
-			control.init(getModelElementContext(), getDomainModelReference());
+			control.init(getViewModelContext(), getControl());
 			control.setEmbedded(true);
 			return control;
 		} catch (final IllegalArgumentException ex) {
@@ -284,7 +295,7 @@ public abstract class MultiControl extends SWTControl {
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING).grab(true, false).applyTo(toolbarComposite);
 
 		int colNum = actions.length + 1;
-		if (!isEmbedded() && getStructuralFeature().isUnsettable()) {
+		if (!isEmbedded() && getFirstStructuralFeature().isUnsettable()) {
 			colNum++;
 		}
 
@@ -299,8 +310,9 @@ public abstract class MultiControl extends SWTControl {
 			createButtonForAction(action, toolbarComposite);
 		}
 
-		if (!isEmbedded() && getStructuralFeature().isUnsettable()) {
+		if (!isEmbedded() && getFirstStructuralFeature().isUnsettable()) {
 			unsetButton = new Button(toolbarComposite, SWT.PUSH);
+			unsetButton.setEnabled(!getControl().isReadonly());
 			unsetButton.setToolTipText(getUnsetButtonTooltip());
 			unsetButton.setImage(Activator.getImage("icons/delete.png")); //$NON-NLS-1$
 		}
@@ -339,10 +351,12 @@ public abstract class MultiControl extends SWTControl {
 			widget.setObservableValue(modelValue);
 			final Composite createControl = widget.createControl(composite);
 
+			widget.setEditable(!getControl().isReadonly());
+
 			GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(createControl);
 
 			createDeleteButton(composite);
-			if (getStructuralFeature().isOrdered()) {
+			if (getFirstStructuralFeature().isOrdered()) {
 				createUpDownButtons(composite);
 			}
 
@@ -354,7 +368,9 @@ public abstract class MultiControl extends SWTControl {
 		private void createDeleteButton(Composite composite) {
 			final Button delB = new Button(composite, SWT.PUSH);
 			delB.setImage(Activator.getImage("icons/delete.png")); //$NON-NLS-1$
+			delB.setEnabled(!getControl().isReadonly());
 			delB.addSelectionListener(new SelectionAdapter() {
+				private static final long serialVersionUID = 1L;
 
 				/*
 				 * (non-Javadoc)
@@ -362,13 +378,13 @@ public abstract class MultiControl extends SWTControl {
 				 */
 				@Override
 				public void widgetSelected(SelectionEvent e) {
+					final Setting firstSetting = getFirstSetting();
+					final EditingDomain editingDomain = getEditingDomain(firstSetting);
 
-					getModelElementContext()
-						.getEditingDomain()
-						.getCommandStack()
+					editingDomain.getCommandStack()
 						.execute(
-							RemoveCommand.create(getModelElementContext().getEditingDomain(), getModelElementContext()
-								.getModelElement(), getStructuralFeature(), modelValue.getValue()));
+							RemoveCommand.create(editingDomain, firstSetting.getEObject(),
+								firstSetting.getEStructuralFeature(), modelValue.getValue()));
 				}
 
 			});
@@ -383,7 +399,10 @@ public abstract class MultiControl extends SWTControl {
 
 			final Button upB = new Button(composite, SWT.PUSH);
 			upB.setImage(up);
+			upB.setEnabled(!getControl().isReadonly());
 			upB.addSelectionListener(new SelectionAdapter() {
+				private static final long serialVersionUID = 1L;
+
 				/*
 				 * (non-Javadoc)
 				 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
@@ -394,19 +413,22 @@ public abstract class MultiControl extends SWTControl {
 						return;
 					}
 					final int currentIndex = getThis().getModelValue().getIndex();
+					final Setting firstSetting = getFirstSetting();
+					final EditingDomain editingDomain = getEditingDomain(firstSetting);
 
-					getModelElementContext()
-						.getEditingDomain()
-						.getCommandStack()
+					editingDomain.getCommandStack()
 						.execute(
-							new MoveCommand(getModelElementContext().getEditingDomain(), getModelElementContext()
-								.getModelElement(), getStructuralFeature(), currentIndex, currentIndex - 1));
+							new MoveCommand(editingDomain, firstSetting.getEObject(), firstSetting
+								.getEStructuralFeature(), currentIndex, currentIndex - 1));
 
 				}
 			});
 			final Button downB = new Button(composite, SWT.PUSH);
 			downB.setImage(down);
+			downB.setEnabled(!getControl().isReadonly());
 			downB.addSelectionListener(new SelectionAdapter() {
+				private static final long serialVersionUID = 1L;
+
 				/*
 				 * (non-Javadoc)
 				 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
@@ -417,13 +439,13 @@ public abstract class MultiControl extends SWTControl {
 						return;
 					}
 					final int currentIndex = getThis().getModelValue().getIndex();
-
-					getModelElementContext()
-						.getEditingDomain()
+					final Setting firstSetting = getFirstSetting();
+					final EditingDomain editingDomain = getEditingDomain(firstSetting);
+					editingDomain
 						.getCommandStack()
 						.execute(
-							new MoveCommand(getModelElementContext().getEditingDomain(), getModelElementContext()
-								.getModelElement(), getStructuralFeature(), currentIndex, currentIndex + 1));
+							new MoveCommand(editingDomain, firstSetting.getEObject(), firstSetting
+								.getEStructuralFeature(), currentIndex, currentIndex + 1));
 
 				}
 			});
@@ -439,6 +461,7 @@ public abstract class MultiControl extends SWTControl {
 		public void dispose() {
 			composite.dispose();
 			modelValue.dispose();
+			widget.dispose();
 			composite = null;
 			modelValue = null;
 			widget = null;
@@ -446,38 +469,68 @@ public abstract class MultiControl extends SWTControl {
 	}
 
 	private void updateIndicesAfterRemove(int indexRemoved) {
+		if (widgetWrappers.size() == 0) {
+			return;
+		}
 		final WidgetWrapper wrapper = widgetWrappers.remove(widgetWrappers.size() - 1);
-		wrapper.composite.dispose();
+		wrapper.dispose();
 	}
 
 	/**
 	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.edit.spi.ECPAbstractControl#applyValidation(org.eclipse.emf.ecp.view.spi.model.VDiagnostic)
 	 */
-	/**
-	 * {@inheritDoc}
-	 */
-	public void handleValidation(Diagnostic diagnostic) {
-		if (validationLabel == null) {
-			return;
-		}
-		if (diagnostic.getSeverity() == Diagnostic.ERROR || diagnostic.getSeverity() == Diagnostic.WARNING) {
-			final Image image = Activator.getImage(VALIDATION_ERROR_ICON);
+	@Override
+	protected void applyValidation(VDiagnostic diagnostic) {
+		Diagnostic displayedDiagnostic = getMostSevereDiagnostic(diagnostic);
+		if (displayedDiagnostic == null) {
+			if (validationLabel == null || validationLabel.isDisposed()) {
+				return;
+			}
+			updateValidationColor(null);
+			validationLabel.setImage(null);
+			validationLabel.setToolTipText(""); //$NON-NLS-1$
+		} else {
+			updateValidationColor(getValidationBackgroundColor(displayedDiagnostic.getSeverity()));
+			if (validationLabel == null) {
+				return;
+			}
+			final Image image = getValidationIcon(displayedDiagnostic.getSeverity());
 			validationLabel.setImage(image);
-			validationLabel.setToolTipText(diagnostic.getMessage());
+			validationLabel.setToolTipText(displayedDiagnostic.getMessage());
 		}
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * @param diagnostic
+	 * @return
 	 */
-	/**
-	 * {@inheritDoc}
-	 */
-	public void resetValidation() {
-		if (validationLabel == null || validationLabel.isDisposed()) {
-			return;
+	private Diagnostic getMostSevereDiagnostic(VDiagnostic diagnostic) {
+		int highestSeverity = -1;
+		Diagnostic displayedDiagnostic = null;
+		final EList<Object> diagnostics = diagnostic.getDiagnostics();
+		for (final Object object : diagnostics) {
+			if (object == null) {
+				continue;
+			}
+			final Diagnostic childDiagnostic = (Diagnostic) object;
+			if (childDiagnostic.getSeverity() > highestSeverity) {
+				highestSeverity = childDiagnostic.getSeverity();
+				displayedDiagnostic = childDiagnostic;
+			}
 		}
-		validationLabel.setImage(null);
+		return displayedDiagnostic;
+	}
+
+	/**
+	 * Allows controls to supply a second visual effect for controls on validation. The color to set is provided as the
+	 * parameter.
+	 * 
+	 * @param color the color to set, null if the default background color should be set
+	 */
+	protected void updateValidationColor(Color color) {
+
 	}
 
 	/**
@@ -485,7 +538,7 @@ public abstract class MultiControl extends SWTControl {
 	 */
 	@Override
 	public void dispose() {
-
+		super.dispose();
 		model.removeListChangeListener(changeListener);
 		model.dispose();
 
@@ -502,7 +555,11 @@ public abstract class MultiControl extends SWTControl {
 
 	/**
 	 * {@inheritDoc}
+	 * 
+	 * @deprecated
 	 */
+	@Deprecated
+	@Override
 	public void setEditable(boolean isEditable) {
 		for (final ECPSWTAction action : actions) {
 			action.setEnabled(isEditable);
@@ -519,6 +576,7 @@ public abstract class MultiControl extends SWTControl {
 	 * 
 	 * @deprecated
 	 */
+	@Override
 	@Deprecated
 	public boolean showLabel() {
 		return true;

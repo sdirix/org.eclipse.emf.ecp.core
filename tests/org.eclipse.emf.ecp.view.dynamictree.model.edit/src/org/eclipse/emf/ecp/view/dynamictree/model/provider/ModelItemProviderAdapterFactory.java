@@ -1,4 +1,13 @@
 /**
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * Edgar Mueller - initial API and implementation
  */
 package org.eclipse.emf.ecp.view.dynamictree.model.provider;
 
@@ -30,7 +39,9 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
  * <!-- end-user-doc -->
  * @generated
  */
-public class ModelItemProviderAdapterFactory extends ModelAdapterFactory implements ComposeableAdapterFactory, IChangeNotifier, IDisposable {
+public class ModelItemProviderAdapterFactory extends ModelAdapterFactory implements ComposeableAdapterFactory,
+	IChangeNotifier, IDisposable
+{
 	/**
 	 * This keeps track of the root adapter factory that delegates to this adapter factory.
 	 * <!-- begin-user-doc -->
@@ -61,7 +72,8 @@ public class ModelItemProviderAdapterFactory extends ModelAdapterFactory impleme
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ModelItemProviderAdapterFactory() {
+	public ModelItemProviderAdapterFactory()
+	{
 		supportedTypes.add(IEditingDomainItemProvider.class);
 		supportedTypes.add(IStructuredItemContentProvider.class);
 		supportedTypes.add(ITreeItemContentProvider.class);
@@ -84,7 +96,8 @@ public class ModelItemProviderAdapterFactory extends ModelAdapterFactory impleme
 	 * @generated
 	 */
 	@Override
-	public Adapter createDynamicContainmentTreeAdapter() {
+	public Adapter createDynamicContainmentTreeAdapter()
+	{
 		if (dynamicContainmentTreeItemProvider == null) {
 			dynamicContainmentTreeItemProvider = new DynamicContainmentTreeItemProvider(this);
 		}
@@ -107,7 +120,8 @@ public class ModelItemProviderAdapterFactory extends ModelAdapterFactory impleme
 	 * @generated
 	 */
 	@Override
-	public Adapter createDynamicContainmentItemAdapter() {
+	public Adapter createDynamicContainmentItemAdapter()
+	{
 		if (dynamicContainmentItemItemProvider == null) {
 			dynamicContainmentItemItemProvider = new DynamicContainmentItemItemProvider(this);
 		}
@@ -130,7 +144,8 @@ public class ModelItemProviderAdapterFactory extends ModelAdapterFactory impleme
 	 * @generated
 	 */
 	@Override
-	public Adapter createTestElementAdapter() {
+	public Adapter createTestElementAdapter()
+	{
 		if (testElementItemProvider == null) {
 			testElementItemProvider = new TestElementItemProvider(this);
 		}
@@ -153,7 +168,8 @@ public class ModelItemProviderAdapterFactory extends ModelAdapterFactory impleme
 	 * @generated
 	 */
 	@Override
-	public Adapter createDomainRootAdapter() {
+	public Adapter createDomainRootAdapter()
+	{
 		if (domainRootItemProvider == null) {
 			domainRootItemProvider = new DomainRootItemProvider(this);
 		}
@@ -176,7 +192,8 @@ public class ModelItemProviderAdapterFactory extends ModelAdapterFactory impleme
 	 * @generated
 	 */
 	@Override
-	public Adapter createDomainIntermediateAdapter() {
+	public Adapter createDomainIntermediateAdapter()
+	{
 		if (domainIntermediateItemProvider == null) {
 			domainIntermediateItemProvider = new DomainIntermediateItemProvider(this);
 		}
@@ -199,7 +216,8 @@ public class ModelItemProviderAdapterFactory extends ModelAdapterFactory impleme
 	 * @generated
 	 */
 	@Override
-	public Adapter createTestElementContainerAdapter() {
+	public Adapter createTestElementContainerAdapter()
+	{
 		if (testElementContainerItemProvider == null) {
 			testElementContainerItemProvider = new TestElementContainerItemProvider(this);
 		}
@@ -208,12 +226,36 @@ public class ModelItemProviderAdapterFactory extends ModelAdapterFactory impleme
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTreeDomainModelReference} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected DynamicContainmentTreeDomainModelReferenceItemProvider dynamicContainmentTreeDomainModelReferenceItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTreeDomainModelReference}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createDynamicContainmentTreeDomainModelReferenceAdapter() {
+		if (dynamicContainmentTreeDomainModelReferenceItemProvider == null) {
+			dynamicContainmentTreeDomainModelReferenceItemProvider = new DynamicContainmentTreeDomainModelReferenceItemProvider(this);
+		}
+
+		return dynamicContainmentTreeDomainModelReferenceItemProvider;
+	}
+
+	/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ComposeableAdapterFactory getRootAdapterFactory() {
+	public ComposeableAdapterFactory getRootAdapterFactory()
+	{
 		return parentAdapterFactory == null ? this : parentAdapterFactory.getRootAdapterFactory();
 	}
 
@@ -223,7 +265,8 @@ public class ModelItemProviderAdapterFactory extends ModelAdapterFactory impleme
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setParentAdapterFactory(ComposedAdapterFactory parentAdapterFactory) {
+	public void setParentAdapterFactory(ComposedAdapterFactory parentAdapterFactory)
+	{
 		this.parentAdapterFactory = parentAdapterFactory;
 	}
 
@@ -233,7 +276,8 @@ public class ModelItemProviderAdapterFactory extends ModelAdapterFactory impleme
 	 * @generated
 	 */
 	@Override
-	public boolean isFactoryForType(Object type) {
+	public boolean isFactoryForType(Object type)
+	{
 		return supportedTypes.contains(type) || super.isFactoryForType(type);
 	}
 
@@ -244,7 +288,8 @@ public class ModelItemProviderAdapterFactory extends ModelAdapterFactory impleme
 	 * @generated
 	 */
 	@Override
-	public Adapter adapt(Notifier notifier, Object type) {
+	public Adapter adapt(Notifier notifier, Object type)
+	{
 		return super.adapt(notifier, this);
 	}
 
@@ -254,7 +299,8 @@ public class ModelItemProviderAdapterFactory extends ModelAdapterFactory impleme
 	 * @generated
 	 */
 	@Override
-	public Object adapt(Object object, Object type) {
+	public Object adapt(Object object, Object type)
+	{
 		if (isFactoryForType(type)) {
 			Object adapter = super.adapt(object, type);
 			if (!(type instanceof Class<?>) || (((Class<?>)type).isInstance(adapter))) {
@@ -271,7 +317,8 @@ public class ModelItemProviderAdapterFactory extends ModelAdapterFactory impleme
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void addListener(INotifyChangedListener notifyChangedListener) {
+	public void addListener(INotifyChangedListener notifyChangedListener)
+	{
 		changeNotifier.addListener(notifyChangedListener);
 	}
 
@@ -281,7 +328,8 @@ public class ModelItemProviderAdapterFactory extends ModelAdapterFactory impleme
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void removeListener(INotifyChangedListener notifyChangedListener) {
+	public void removeListener(INotifyChangedListener notifyChangedListener)
+	{
 		changeNotifier.removeListener(notifyChangedListener);
 	}
 
@@ -291,7 +339,8 @@ public class ModelItemProviderAdapterFactory extends ModelAdapterFactory impleme
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void fireNotifyChanged(Notification notification) {
+	public void fireNotifyChanged(Notification notification)
+	{
 		changeNotifier.fireNotifyChanged(notification);
 
 		if (parentAdapterFactory != null) {
@@ -305,13 +354,15 @@ public class ModelItemProviderAdapterFactory extends ModelAdapterFactory impleme
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void dispose() {
+	public void dispose()
+	{
 		if (dynamicContainmentTreeItemProvider != null) dynamicContainmentTreeItemProvider.dispose();
 		if (dynamicContainmentItemItemProvider != null) dynamicContainmentItemItemProvider.dispose();
 		if (testElementItemProvider != null) testElementItemProvider.dispose();
 		if (domainRootItemProvider != null) domainRootItemProvider.dispose();
 		if (domainIntermediateItemProvider != null) domainIntermediateItemProvider.dispose();
 		if (testElementContainerItemProvider != null) testElementContainerItemProvider.dispose();
+		if (dynamicContainmentTreeDomainModelReferenceItemProvider != null) dynamicContainmentTreeDomainModelReferenceItemProvider.dispose();
 	}
 
 }

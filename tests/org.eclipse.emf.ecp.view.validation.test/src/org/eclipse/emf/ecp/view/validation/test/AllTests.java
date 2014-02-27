@@ -19,7 +19,8 @@ import org.junit.runners.Suite.SuiteClasses;
 @SuiteClasses({
 	ValidationServiceGCTest.class,
 	ViewValidationTest.class,
-	VDiagnosticHelperTest.class
+	VDiagnosticHelperTest.class,
+	ValidationProviderTest.class
 })
 public class AllTests {
 

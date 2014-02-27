@@ -20,9 +20,9 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.internal.swt.controls.SingleControl;
-import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
-import org.eclipse.emf.ecp.view.rule.model.LeafCondition;
-import org.eclipse.emf.ecp.view.rule.model.RulePackage;
+import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition;
+import org.eclipse.emf.ecp.view.spi.rule.model.RulePackage;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -87,7 +87,7 @@ public class ExpectedValueControl extends SingleControl {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				super.widgetSelected(e);
-				final LeafCondition condition = (LeafCondition) getModelElementContext().getModelElement();
+				final LeafCondition condition = (LeafCondition) getFirstSetting().getEObject();
 				final EStructuralFeature structuralFeature = ((VFeaturePathDomainModelReference) condition
 					.getDomainModelReference()).getDomainModelEFeature();
 				if (structuralFeature == null) {
@@ -176,6 +176,7 @@ public class ExpectedValueControl extends SingleControl {
 	 * 
 	 * @see org.eclipse.emf.ecp.edit.spi.ECPControl#setEditable(boolean)
 	 */
+	@Override
 	public void setEditable(boolean isEditable) {
 		// text.setEditable(isEditable);
 	}
@@ -195,7 +196,8 @@ public class ExpectedValueControl extends SingleControl {
 
 	@Override
 	protected Control[] getControlsForTooltip() {
-		return new Control[] { text };
+		// return new Control[] { text };
+		return new Control[0];
 	}
 
 	@Override

@@ -18,12 +18,12 @@ import java.util.Set;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTRenderingHelper;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
-import org.eclipse.emf.ecp.ui.view.custom.swt.ECPAbstractCustomControlSWT;
-import org.eclipse.emf.ecp.view.custom.model.ECPHardcodedReferences;
-import org.eclipse.emf.ecp.view.model.VDomainModelReference;
-import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
-import org.eclipse.emf.ecp.view.model.VViewFactory;
+import org.eclipse.emf.ecp.view.spi.custom.model.ECPHardcodedReferences;
+import org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
+import org.eclipse.emf.ecp.view.spi.renderer.RenderingResultRow;
 import org.eclipse.emf.emfstore.bowling.BowlingPackage;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -34,28 +34,20 @@ import org.eclipse.swt.widgets.Control;
  */
 public class ValidationCustomControl extends ECPAbstractCustomControlSWT implements ECPHardcodedReferences {
 
-	private static Set<VDomainModelReference> features = new LinkedHashSet<VDomainModelReference>();
-
-	static {
-
-		final VFeaturePathDomainModelReference feature = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
-		feature.setDomainModelEFeature(
-			BowlingPackage.eINSTANCE.getPlayer_EMails());
-		features.add(feature);
-	}
+	private final Set<VDomainModelReference> features = new LinkedHashSet<VDomainModelReference>();
 
 	/**
 	 * @param features
 	 */
 	public ValidationCustomControl() {
-		super(features);
+		super();
 		// TODO Auto-generated constructor stub
 	}
 
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.ui.view.custom.swt.ECPAbstractCustomControlSWT#createControls(org.eclipse.swt.widgets.Composite)
+	 * @see org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT#createControls(org.eclipse.swt.widgets.Composite)
 	 */
 	@Override
 	public List<RenderingResultRow<Control>> createControl(Composite composite) {
@@ -70,7 +62,7 @@ public class ValidationCustomControl extends ECPAbstractCustomControlSWT impleme
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.ui.view.custom.swt.ECPAbstractCustomControlSWT#handleContentValidation(int,
+	 * @see org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT#handleContentValidation(int,
 	 *      org.eclipse.emf.ecore.EStructuralFeature)
 	 */
 	@Override
@@ -82,7 +74,7 @@ public class ValidationCustomControl extends ECPAbstractCustomControlSWT impleme
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.ui.view.custom.swt.ECPAbstractCustomControlSWT#resetContentValidation()
+	 * @see org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT#resetContentValidation()
 	 */
 	@Override
 	protected void resetContentValidation() {
@@ -93,12 +85,25 @@ public class ValidationCustomControl extends ECPAbstractCustomControlSWT impleme
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.ui.view.custom.ECPAbstractCustomControl#disposeCustomControl()
+	 * @see org.eclipse.emf.ecp.view.spi.custom.ui.ECPAbstractCustomControl#disposeCustomControl()
 	 */
 	@Override
 	protected void disposeCustomControl() {
 		// TODO Auto-generated method stub
 
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.spi.custom.model.ECPHardcodedReferences#getNeededDomainModelReferences()
+	 */
+	public Set<VDomainModelReference> getNeededDomainModelReferences() {
+		final VFeaturePathDomainModelReference feature = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
+		feature.setDomainModelEFeature(
+			BowlingPackage.eINSTANCE.getPlayer_EMails());
+		features.add(feature);
+		return features;
 	}
 
 }

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.emf.ecp.ui.view.swt" version="2">
+    <resource path="META-INF/MANIFEST.MF">
+        <filter comment="SPI change" id="923795461">
+            <message_arguments>
+                <message_argument value="1.2.0"/>
+                <message_argument value="1.1.1"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/ui/view/swt/ECPSWTViewRenderer.java" type="org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer">
+        <filter comment="SPI change" id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer"/>
+                <message_argument value="render(Composite, EObject, VView)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

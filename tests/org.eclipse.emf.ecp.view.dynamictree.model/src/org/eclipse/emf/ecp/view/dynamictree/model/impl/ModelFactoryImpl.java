@@ -1,4 +1,13 @@
 /**
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * Edgar Mueller - initial API and implementation
  */
 package org.eclipse.emf.ecp.view.dynamictree.model.impl;
 
@@ -11,6 +20,7 @@ import org.eclipse.emf.ecp.view.dynamictree.model.DomainIntermediate;
 import org.eclipse.emf.ecp.view.dynamictree.model.DomainRoot;
 import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem;
 import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree;
+import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTreeDomainModelReference;
 import org.eclipse.emf.ecp.view.dynamictree.model.ModelFactory;
 import org.eclipse.emf.ecp.view.dynamictree.model.ModelPackage;
 import org.eclipse.emf.ecp.view.dynamictree.model.TestElement;
@@ -22,14 +32,16 @@ import org.eclipse.emf.ecp.view.dynamictree.model.TestElementContainer;
  * <!-- end-user-doc -->
  * @generated
  */
-public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory {
+public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory
+{
 	/**
 	 * Creates the default factory implementation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static ModelFactory init() {
+	public static ModelFactory init()
+	{
 		try {
 			ModelFactory theModelFactory = (ModelFactory)EPackage.Registry.INSTANCE.getEFactory(ModelPackage.eNS_URI);
 			if (theModelFactory != null) {
@@ -48,7 +60,8 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ModelFactoryImpl() {
+	public ModelFactoryImpl()
+	{
 		super();
 	}
 
@@ -58,7 +71,8 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory {
 	 * @generated
 	 */
 	@Override
-	public EObject create(EClass eClass) {
+	public EObject create(EClass eClass)
+	{
 		switch (eClass.getClassifierID()) {
 			case ModelPackage.DYNAMIC_CONTAINMENT_TREE: return createDynamicContainmentTree();
 			case ModelPackage.DYNAMIC_CONTAINMENT_ITEM: return createDynamicContainmentItem();
@@ -66,6 +80,7 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory {
 			case ModelPackage.DOMAIN_ROOT: return createDomainRoot();
 			case ModelPackage.DOMAIN_INTERMEDIATE: return createDomainIntermediate();
 			case ModelPackage.TEST_ELEMENT_CONTAINER: return createTestElementContainer();
+			case ModelPackage.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE: return createDynamicContainmentTreeDomainModelReference();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -76,7 +91,8 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public DynamicContainmentTree createDynamicContainmentTree() {
+	public DynamicContainmentTree createDynamicContainmentTree()
+	{
 		DynamicContainmentTreeImpl dynamicContainmentTree = new DynamicContainmentTreeImpl();
 		return dynamicContainmentTree;
 	}
@@ -86,7 +102,8 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public DynamicContainmentItem createDynamicContainmentItem() {
+	public DynamicContainmentItem createDynamicContainmentItem()
+	{
 		DynamicContainmentItemImpl dynamicContainmentItem = new DynamicContainmentItemImpl();
 		return dynamicContainmentItem;
 	}
@@ -96,7 +113,8 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public TestElement createTestElement() {
+	public TestElement createTestElement()
+	{
 		TestElementImpl testElement = new TestElementImpl();
 		return testElement;
 	}
@@ -106,7 +124,8 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public DomainRoot createDomainRoot() {
+	public DomainRoot createDomainRoot()
+	{
 		DomainRootImpl domainRoot = new DomainRootImpl();
 		return domainRoot;
 	}
@@ -116,7 +135,8 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public DomainIntermediate createDomainIntermediate() {
+	public DomainIntermediate createDomainIntermediate()
+	{
 		DomainIntermediateImpl domainIntermediate = new DomainIntermediateImpl();
 		return domainIntermediate;
 	}
@@ -126,7 +146,8 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public TestElementContainer createTestElementContainer() {
+	public TestElementContainer createTestElementContainer()
+	{
 		TestElementContainerImpl testElementContainer = new TestElementContainerImpl();
 		return testElementContainer;
 	}
@@ -136,7 +157,18 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ModelPackage getModelPackage() {
+	public DynamicContainmentTreeDomainModelReference createDynamicContainmentTreeDomainModelReference() {
+		DynamicContainmentTreeDomainModelReferenceImpl dynamicContainmentTreeDomainModelReference = new DynamicContainmentTreeDomainModelReferenceImpl();
+		return dynamicContainmentTreeDomainModelReference;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ModelPackage getModelPackage()
+	{
 		return (ModelPackage)getEPackage();
 	}
 
@@ -147,7 +179,8 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory {
 	 * @generated
 	 */
 	@Deprecated
-	public static ModelPackage getPackage() {
+	public static ModelPackage getPackage()
+	{
 		return ModelPackage.eINSTANCE;
 	}
 

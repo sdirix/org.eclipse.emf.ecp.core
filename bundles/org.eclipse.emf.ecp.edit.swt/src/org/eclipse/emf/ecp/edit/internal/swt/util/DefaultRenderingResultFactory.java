@@ -11,8 +11,8 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.util;
 
-import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRowFactory;
+import org.eclipse.emf.ecp.view.spi.renderer.RenderingResultRow;
+import org.eclipse.emf.ecp.view.spi.renderer.RenderingResultRowFactory;
 import org.eclipse.swt.widgets.Control;
 
 /**
@@ -24,14 +24,14 @@ public final class DefaultRenderingResultFactory implements RenderingResultRowFa
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRowFactory#createRenderingResultRow(org.eclipse.swt.widgets.Control[])
+	 * @see org.eclipse.emf.ecp.view.spi.renderer.RenderingResultRowFactory#createRenderingResultRow(org.eclipse.swt.widgets.Control[])
 	 */
 	public RenderingResultRow<Control> createRenderingResultRow(Control... controls) {
 		if (controls == null) {
-			throw new IllegalArgumentException("Controls must not be null.");
+			throw new IllegalArgumentException("Controls must not be null."); //$NON-NLS-1$
 		}
 		if (controls.length == 0) {
-			throw new IllegalArgumentException("Controls must not be empty.");
+			throw new IllegalArgumentException("Controls must not be empty."); //$NON-NLS-1$
 		}
 		if (controls.length == 1) {
 			return new SingleColumnRow(controls[0]);
@@ -39,8 +39,11 @@ public final class DefaultRenderingResultFactory implements RenderingResultRowFa
 		if (controls.length == 2) {
 			return new DoubleColumnRow(controls[0], controls[1]);
 		}
+		if (controls.length == 3) {
+			return new ThreeColumnRow(controls[0], controls[1], controls[2]);
+		}
 		throw new IllegalArgumentException(
-			"DefaultRenderingResultFactory cannot handle more then two controls per row.");
+			"DefaultRenderingResultFactory cannot handle more then three controls per row."); //$NON-NLS-1$
 	}
 
 }

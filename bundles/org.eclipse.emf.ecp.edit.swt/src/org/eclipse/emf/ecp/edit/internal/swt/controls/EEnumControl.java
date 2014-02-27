@@ -14,11 +14,13 @@ package org.eclipse.emf.ecp.edit.internal.swt.controls;
 
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.jface.databinding.viewers.ViewersObservables;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
@@ -36,8 +38,8 @@ public class EEnumControl extends SingleControl {
 
 	@Override
 	protected void fillControlComposite(Composite composite) {
-		final IItemLabelProvider labelProvider = getItemPropertyDescriptor().getLabelProvider(
-			getModelElementContext().getModelElement());
+		final Setting firstSetting = getFirstSetting();
+		final IItemLabelProvider labelProvider = getItemPropertyDescriptor(firstSetting).getLabelProvider(null);
 
 		combo = new ComboViewer(composite);
 		combo.setContentProvider(new ArrayContentProvider());
@@ -49,13 +51,14 @@ public class EEnumControl extends SingleControl {
 			}
 
 		});
-		combo.setInput(getStructuralFeature().getEType().getInstanceClass().getEnumConstants());
+		combo.setInput(firstSetting.getEStructuralFeature().getEType().getInstanceClass().getEnumConstants());
 		combo.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_enum"); //$NON-NLS-1$
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void setEditable(boolean isEditable) {
 		combo.getControl().setEnabled(isEditable);
 	}
@@ -90,7 +93,18 @@ public class EEnumControl extends SingleControl {
 	 */
 	@Override
 	protected Control[] getControlsForTooltip() {
-		return new Control[] { combo.getControl() };
+		// return new Control[] { combo.getControl() };
+		return new Control[0];
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.edit.internal.swt.controls.SingleControl#updateValidationColor(org.eclipse.swt.graphics.Color)
+	 */
+	@Override
+	protected void updateValidationColor(Color color) {
+		combo.getControl().setBackground(color);
 	}
 
 }

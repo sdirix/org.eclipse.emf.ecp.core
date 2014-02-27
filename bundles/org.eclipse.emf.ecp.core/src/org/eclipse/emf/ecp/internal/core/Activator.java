@@ -33,7 +33,7 @@ public final class Activator extends Plugin {
 	/**
 	 * The constant holding the id of this plugin.
 	 */
-	public static final String PLUGIN_ID = "org.eclipse.emf.ecp.core";
+	public static final String PLUGIN_ID = "org.eclipse.emf.ecp.core"; //$NON-NLS-1$
 
 	private static Activator instance;
 
@@ -48,9 +48,9 @@ public final class Activator extends Plugin {
 	public void start(BundleContext bundleContext) throws Exception {
 		instance = this;
 		// Initialize all manager
-		getECPProviderRegistry();
-		getECPRepositoryManager();
-		getECPProjectManager();
+		// getECPProviderRegistry();
+		// getECPRepositoryManager();
+		// getECPProjectManager();
 		super.start(bundleContext);
 	}
 

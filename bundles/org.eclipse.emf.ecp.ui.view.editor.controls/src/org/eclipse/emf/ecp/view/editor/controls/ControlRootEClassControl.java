@@ -22,11 +22,13 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EPackage.Descriptor;
 import org.eclipse.emf.ecore.EPackage.Registry;
-import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecp.edit.internal.swt.actions.DeleteReferenceAction;
-import org.eclipse.emf.ecp.edit.internal.swt.controls.LinkControl;
-import org.eclipse.emf.ecp.view.model.VView;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecp.edit.internal.swt.reference.DeleteReferenceAction;
+import org.eclipse.emf.ecp.edit.internal.swt.reference.LinkControl;
+import org.eclipse.emf.ecp.edit.spi.ReferenceService;
+import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.edit.command.ChangeCommand;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
@@ -55,17 +57,19 @@ public class ControlRootEClassControl extends LinkControl {
 	@Override
 	protected Button[] createButtons(Composite composite) {
 		final Button[] buttons = new Button[2];
-		buttons[0] = createButtonForAction(new DeleteReferenceAction(getModelElementContext(),
-			getItemPropertyDescriptor(), getStructuralFeature()), composite);
-		buttons[1] = createButtonForAction(new FilteredReferenceAction((EReference) getStructuralFeature(),
-			getItemPropertyDescriptor(), composite.getShell()), composite);
+		final Setting setting = getFirstSetting();
+		buttons[0] = createButtonForAction(new DeleteReferenceAction(getEditingDomain(setting), setting,
+			getItemPropertyDescriptor(setting), getService(ReferenceService.class)), composite);
+		buttons[1] = createButtonForAction(new FilteredReferenceAction(getEditingDomain(setting), setting,
+			getItemPropertyDescriptor(setting), composite.getShell()), composite);
 		return buttons;
 	}
 
 	private class FilteredReferenceAction extends AbstractFilteredReferenceAction {
 
-		public FilteredReferenceAction(EReference eReference, IItemPropertyDescriptor descriptor, Shell shell) {
-			super(eReference, descriptor, shell);
+		public FilteredReferenceAction(EditingDomain editingDomain, Setting setting,
+			IItemPropertyDescriptor descriptor, Shell shell) {
+			super(editingDomain, setting, descriptor, shell);
 		}
 
 		/**
@@ -73,8 +77,8 @@ public class ControlRootEClassControl extends LinkControl {
 		 */
 		@Override
 		public void run() {
-			getModelElementContext().getEditingDomain().getCommandStack()
-				.execute(new FilteredReferenceCommand(getModelElementContext().getModelElement(), shell));
+			getEditingDomain().getCommandStack()
+				.execute(new FilteredReferenceCommand(getSetting().getEObject(), getShell()));
 		}
 	}
 
@@ -90,7 +94,7 @@ public class ControlRootEClassControl extends LinkControl {
 		@Override
 		protected void doExecute() {
 
-			final AdapterFactoryLabelProvider labelProvider = new AdapterFactoryLabelProvider(composedAdapterFactory);
+			final AdapterFactoryLabelProvider labelProvider = new AdapterFactoryLabelProvider(getComposedAdapterFactory());
 			final ElementTreeSelectionDialog dialog = new ElementTreeSelectionDialog(shell, labelProvider,
 				getContentProvider());
 			dialog.setAllowMultiple(false);
@@ -105,7 +109,7 @@ public class ControlRootEClassControl extends LinkControl {
 						"This is not an EClass.");
 				}
 			});
-			dialog.setInput(Registry.INSTANCE);
+			dialog.setInput(getInput());
 			dialog.setMessage("Select an EClass.");
 			dialog.setTitle("Select an EClass.");
 			dialog.setComparator(new ViewerComparator());
@@ -115,7 +119,7 @@ public class ControlRootEClassControl extends LinkControl {
 				if (EClass.class.isInstance(selection)) {
 					final EClass selectedFeature = (EClass) selection;
 
-					((VView) getModelElementContext().getModelElement()).setRootEClass(selectedFeature);
+					((VView) getFirstSetting().getEObject()).setRootEClass(selectedFeature);
 				}
 			}
 			labelProvider.dispose();
@@ -154,10 +158,7 @@ public class ControlRootEClassControl extends LinkControl {
 				}
 
 				public Object[] getElements(Object inputElement) {
-					if (Registry.class.isInstance(inputElement)) {
-						return ((Registry) inputElement).values().toArray();
-					}
-					return null;
+					return getChildren(inputElement);
 				}
 
 				public Object[] getChildren(Object parentElement) {
@@ -174,11 +175,21 @@ public class ControlRootEClassControl extends LinkControl {
 					if (Descriptor.class.isInstance(parentElement)) {
 						return getChildren(((Descriptor) parentElement).getEPackage());
 					}
+					if (Registry.class.isInstance(parentElement)) {
+						return ((Registry) parentElement).values().toArray();
+					}
 					return null;
 				}
 			};
 		}
 
+	}
+
+	/**
+	 * @return
+	 */
+	protected Object getInput() {
+		return Registry.INSTANCE;
 	}
 
 }

@@ -14,12 +14,15 @@ package org.eclipse.emf.ecp.view.editor.controls;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecp.edit.internal.swt.actions.DeleteReferenceAction;
-import org.eclipse.emf.ecp.edit.internal.swt.controls.LinkControl;
-import org.eclipse.emf.ecp.view.model.VFeaturePathDomainModelReference;
-import org.eclipse.emf.ecp.view.table.model.VTableColumn;
-import org.eclipse.emf.ecp.view.table.model.VTableControl;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecp.edit.internal.swt.reference.DeleteReferenceAction;
+import org.eclipse.emf.ecp.edit.internal.swt.reference.LinkControl;
+import org.eclipse.emf.ecp.edit.spi.ReferenceService;
+import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.table.model.VTableColumn;
+import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.edit.command.ChangeCommand;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jface.viewers.ArrayContentProvider;
@@ -39,21 +42,21 @@ public class TableColumnAttributeControl extends LinkControl {
 	@Override
 	protected Button[] createButtons(Composite composite) {
 		final Button[] buttons = new Button[2];
-		buttons[0] = createButtonForAction(new DeleteReferenceAction(
-			getModelElementContext(), getItemPropertyDescriptor(),
-			getStructuralFeature()), composite);
+		final Setting setting = getFirstSetting();
+		buttons[0] = createButtonForAction(new DeleteReferenceAction(getEditingDomain(setting), setting,
+			getItemPropertyDescriptor(setting), getService(ReferenceService.class)), composite);
 		buttons[1] = createButtonForAction(new FilteredReferenceAction(
-			(EReference) getStructuralFeature(),
-			getItemPropertyDescriptor(), composite.getShell()), composite);
+			getEditingDomain(setting), setting,
+			getItemPropertyDescriptor(setting), composite.getShell()), composite);
 		return buttons;
 	}
 
 	private class FilteredReferenceAction extends
 		AbstractFilteredReferenceAction {
 
-		public FilteredReferenceAction(EReference eReference,
+		public FilteredReferenceAction(EditingDomain editingDomain, Setting setting,
 			IItemPropertyDescriptor descriptor, Shell shell) {
-			super(eReference, descriptor, shell);
+			super(editingDomain, setting, descriptor, shell);
 		}
 
 		/**
@@ -61,13 +64,12 @@ public class TableColumnAttributeControl extends LinkControl {
 		 */
 		@Override
 		public void run() {
-			getModelElementContext()
-				.getEditingDomain()
+			getEditingDomain()
 				.getCommandStack()
 				.execute(
 					new FilteredReferenceCommand(
-						getModelElementContext().getModelElement(),
-						shell));
+						getSetting().getEObject(),
+						getShell()));
 		}
 	}
 
@@ -84,9 +86,9 @@ public class TableColumnAttributeControl extends LinkControl {
 		protected void doExecute() {
 
 			final AdapterFactoryLabelProvider labelProvider = new AdapterFactoryLabelProvider(
-				composedAdapterFactory);
-			final EReference eref = (EReference) ((VFeaturePathDomainModelReference) ((VTableControl) getModelElementContext()
-				.getModelElement()
+				getComposedAdapterFactory());
+			final EReference eref = (EReference) ((VFeaturePathDomainModelReference) ((VTableControl) getFirstSetting()
+				.getEObject()
 				.eContainer()).getDomainModelReference()).getDomainModelEFeature();
 			final ListDialog ld = new ListDialog(shell);
 			ld.setLabelProvider(labelProvider);
@@ -99,7 +101,7 @@ public class TableColumnAttributeControl extends LinkControl {
 				if (EAttribute.class.isInstance(selection)) {
 					final EAttribute selectedFeature = (EAttribute) selection;
 
-					((VTableColumn) getModelElementContext().getModelElement()).setAttribute(selectedFeature);
+					((VTableColumn) getFirstSetting().getEObject()).setAttribute(selectedFeature);
 				}
 			}
 			labelProvider.dispose();
