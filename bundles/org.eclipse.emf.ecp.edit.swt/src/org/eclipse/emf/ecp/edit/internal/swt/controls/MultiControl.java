@@ -483,7 +483,7 @@ public abstract class MultiControl extends SWTControl {
 	 */
 	@Override
 	protected void applyValidation(VDiagnostic diagnostic) {
-		Diagnostic displayedDiagnostic = getMostSevereDiagnostic(diagnostic);
+		final Diagnostic displayedDiagnostic = getMostSevereDiagnostic(diagnostic);
 		if (displayedDiagnostic == null) {
 			if (validationLabel == null || validationLabel.isDisposed()) {
 				return;
@@ -509,6 +509,9 @@ public abstract class MultiControl extends SWTControl {
 	private Diagnostic getMostSevereDiagnostic(VDiagnostic diagnostic) {
 		int highestSeverity = -1;
 		Diagnostic displayedDiagnostic = null;
+		if (diagnostic == null) {
+			return displayedDiagnostic;
+		}
 		final EList<Object> diagnostics = diagnostic.getDiagnostics();
 		for (final Object object : diagnostics) {
 			if (object == null) {
