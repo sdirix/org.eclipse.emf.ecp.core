@@ -12,14 +12,13 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.categorization.swt;
 
-import java.util.List;
-
 import org.eclipse.emf.ecp.view.internal.categorization.swt.Messages;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorization;
-import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.layout.grid.GridCell;
+import org.eclipse.emf.ecp.view.spi.layout.grid.GridDescription;
+import org.eclipse.emf.ecp.view.spi.layout.grid.GridDescriptionFactory;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.view.spi.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
@@ -38,14 +37,22 @@ public class SWTCategorizationRenderer extends AbstractSWTRenderer<VCategorizati
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#renderModel(org.eclipse.swt.widgets.Composite,
+	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#getGridDescription()
+	 */
+	@Override
+	public GridDescription getGridDescription() {
+		return GridDescriptionFactory.INSTANCE.createSimpleGrid(1, 1);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#renderControl(int, org.eclipse.swt.widgets.Composite,
 	 *      org.eclipse.emf.ecp.view.spi.model.VElement, org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
 	@Override
-	protected List<RenderingResultRow<Control>> renderModel(Composite parent, VCategorization vCategorization,
-		ViewModelContext viewContext)
-		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
-
+	protected Control renderControl(GridCell cell, Composite parent) throws NoRendererFoundException,
+		NoPropertyDescriptorFoundExeption {
 		final Composite categoryComposite = new Composite(parent, SWT.NONE);
 		categoryComposite.setBackground(parent.getBackground());
 		categoryComposite.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_categorization"); //$NON-NLS-1$
@@ -56,10 +63,10 @@ public class SWTCategorizationRenderer extends AbstractSWTRenderer<VCategorizati
 		headingLbl.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_categorization_title"); //$NON-NLS-1$
 		final Label whatToDoLbl = new Label(categoryComposite, SWT.NONE);
 		whatToDoLbl.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_categorization_message"); //$NON-NLS-1$
-		final String headingText = vCategorization.getName();
+		final String headingText = getVElement().getName();
 		headingLbl.setText(headingText == null ? "" : headingText); //$NON-NLS-1$
 		whatToDoLbl.setText(Messages.Categorization_Selection);
-
-		return createResult(categoryComposite);
+		return categoryComposite;
 	}
+
 }

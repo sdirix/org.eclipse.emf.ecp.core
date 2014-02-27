@@ -12,15 +12,19 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.categorization.swt;
 
-import java.util.List;
+import java.util.LinkedHashSet;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategory;
-import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.layout.grid.GridCell;
+import org.eclipse.emf.ecp.view.spi.layout.grid.GridCellDescription;
+import org.eclipse.emf.ecp.view.spi.layout.grid.GridDescription;
+import org.eclipse.emf.ecp.view.spi.layout.grid.GridDescriptionFactory;
+import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.view.spi.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
-import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -36,24 +40,60 @@ public class SWTCategoryRenderer extends AbstractSWTRenderer<VCategory> {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#renderModel(org.eclipse.swt.widgets.Composite,
+	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#renderControl(int, org.eclipse.swt.widgets.Composite,
 	 *      org.eclipse.emf.ecp.view.spi.model.VElement, org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
 	@Override
-	protected List<RenderingResultRow<Control>> renderModel(Composite parent, VCategory vCategory,
-		ViewModelContext viewContext)
+	protected Control renderControl(GridCell gridCell, Composite parent)
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
-
 		final Composite categoryComposite = new Composite(parent, SWT.NONE);
 		categoryComposite.setBackground(parent.getBackground());
 
-		categoryComposite.setLayout(getLayoutHelper().getColumnLayout(3, false));
+		final AbstractSWTRenderer<VElement> renderer = getSWTRendererFactory().getRenderer(
+			getVElement().getComposite(),
+			getViewModelContext());
+		if (renderer == null) {
+			Activator
+				.getDefault()
+				.getLog()
+				.log(
+					new Status(IStatus.INFO, Activator.PLUGIN_ID, String.format(
+						"No Renderer for %s found.", getVElement().getComposite().eClass().getName()))); //$NON-NLS-1$
+			return categoryComposite;
+		}
+		final GridDescription gridDescription = renderer.getGridDescription();
+		categoryComposite.setLayout(getLayoutHelper().getColumnLayout(
+			gridDescription.getColumns(), false));
 
-		final List<RenderingResultRow<Control>> resultRows = SWTRendererFactory.INSTANCE.render(categoryComposite,
-			vCategory.getComposite(), viewContext);
+		for (final GridCell childGridCell : gridDescription.getGrid()) {
+			try {
+				final Control control = renderer.render(
+					childGridCell,
+					categoryComposite);
+				// TODO who should apply the layout
+				setLayoutDataForControl(childGridCell, gridDescription, gridDescription.getColumns(),
+					new LinkedHashSet<GridCellDescription>(),
+					new LinkedHashSet<GridCellDescription>(),
+					control);
+				// resultRows = SWTRendererFactory.INSTANCE.render(columnComposite, child, viewContext);
+			} catch (final NoPropertyDescriptorFoundExeption ex) {
+				Activator.getDefault().getLog()
+					.log(new Status(IStatus.INFO, Activator.PLUGIN_ID, ex.getMessage(), ex));
+				continue;
+			}
+		}
+		renderer.postRender(categoryComposite);
 
-		setLayoutDataForResultRows(resultRows);
+		return categoryComposite;
+	}
 
-		return createResult(categoryComposite);
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#getGridDescription()
+	 */
+	@Override
+	public GridDescription getGridDescription() {
+		return GridDescriptionFactory.INSTANCE.createSimpleGrid(1, 1);
 	}
 }

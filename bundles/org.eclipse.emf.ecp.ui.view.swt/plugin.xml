@@ -2,5 +2,6 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension-point id="renderers" name="ECP View SWT Renderer" schema="schema/renderers.exsd"/>
+   <extension-point id="additionalRenderers" name="Addition Renderers" schema="schema/additionalRenderers.exsd"/>
 
 </plugin>

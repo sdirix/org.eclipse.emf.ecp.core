@@ -11,7 +11,10 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.7.0,4.0.0)",
  org.eclipse.emf.ecp.edit;bundle-version="[1.2.0,2.0.0)"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
-Export-Package: org.eclipse.emf.ecp.view.spi.horizontal.swt;version="1.2.0"
-Import-Package: org.eclipse.jface.layout;version="0.0.0",
+Export-Package: org.eclipse.emf.ecp.view.internal.horizontal.swt;version="1.2.0";x-internal:=true,
+ org.eclipse.emf.ecp.view.spi.horizontal.swt;version="1.2.0"
+Import-Package: org.eclipse.emf.ecp.view.internal.core.swt;version="1.1.1",
+ org.eclipse.jface.layout;version="0.0.0",
  org.eclipse.swt;version="0.0.0",
  org.eclipse.swt.widgets;version="0.0.0"
+Bundle-Activator: org.eclipse.emf.ecp.view.internal.horizontal.swt.Activator

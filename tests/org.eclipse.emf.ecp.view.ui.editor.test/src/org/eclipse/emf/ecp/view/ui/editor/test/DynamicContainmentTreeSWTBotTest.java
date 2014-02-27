@@ -41,6 +41,7 @@ import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.swtbot.swt.finder.finders.UIThreadRunnable;
 import org.eclipse.swtbot.swt.finder.results.VoidResult;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 
 public class DynamicContainmentTreeSWTBotTest extends ECPCommonSWTBotTest {
 
@@ -94,7 +95,18 @@ public class DynamicContainmentTreeSWTBotTest extends ECPCommonSWTBotTest {
 		final VCategorizationElement element = VCategorizationFactory.eINSTANCE.createCategorizationElement();
 		element.getCategorizations().add(categorization);
 		view.getChildren().add(element);
+		// final ResourceSet rs = new ResourceSetImpl();
+		// final Resource createResource = rs.createResource(URI
+		// .createFileURI("C:/Users/Eugen/Workspaces/workspace_ecp/_viewmodelTest/dynamicView.viewmodel"));
+		// createResource.getContents().add(view);
+		// try {
+		// createResource.save(null);
+		// } catch (final IOException ex) {
+		// ex.printStackTrace();
+		// }
+
 		return view;
+
 	}
 
 	private VFeaturePathDomainModelReference createFeaturePathDomainModelReference(EStructuralFeature feature,
@@ -229,7 +241,8 @@ public class DynamicContainmentTreeSWTBotTest extends ECPCommonSWTBotTest {
 				// causes UI update
 				testElement.setName(TEST_ELEMENT_NAME_2);
 				bot.tree().getAllItems()[0].getItems()[0].expand();
-				bot.tree().getAllItems()[0].getItems()[0].getItems()[0].select();
+				final SWTBotTreeItem swtBotTreeItem = bot.tree().getAllItems()[0].getItems()[0].getItems()[0];
+				bot.tree().select(swtBotTreeItem);
 				assertEquals("foo", bot.text().getText());
 
 				bot.tree().getAllItems()[0].getItems()[0].getItems()[1].select();

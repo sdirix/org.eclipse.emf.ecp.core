@@ -22,7 +22,6 @@ import org.eclipse.emf.ecp.view.spi.model.provider.ViewEditPlugin;
  * <!-- end-user-doc -->
  * 
  * @generated
- * @since 1.2
  */
 public final class CustomEditPlugin extends EMFPlugin {
 	/**
@@ -51,7 +50,8 @@ public final class CustomEditPlugin extends EMFPlugin {
 	 * @generated
 	 */
 	public CustomEditPlugin() {
-		super(new ResourceLocator[] {
+		super(new ResourceLocator[]
+		{
 			EcoreEditPlugin.INSTANCE,
 			ViewEditPlugin.INSTANCE,
 		});

@@ -12,34 +12,13 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.core.swt;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
-import org.eclipse.emf.common.notify.Notifier;
+import org.eclipse.core.databinding.Binding;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
-import org.eclipse.emf.ecp.edit.internal.swt.util.ECPControlSWT;
-import org.eclipse.emf.ecp.edit.internal.swt.util.SWTRenderingHelper;
-import org.eclipse.emf.ecp.edit.spi.ECPAbstractControl;
-import org.eclipse.emf.ecp.edit.spi.ECPControlFactory;
-import org.eclipse.emf.ecp.view.internal.core.swt.Activator;
-import org.eclipse.emf.ecp.view.spi.context.ModelChangeNotification;
-import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener;
-import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
-import org.eclipse.emf.ecp.view.spi.model.VControl;
-import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
-import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
-import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.view.spi.renderer.RenderingResultRow;
-import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
-import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.swt.SWT;
+import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Label;
 
 /**
  * Renderer for {@link org.eclipse.swt.widgets.Control Controls}.
@@ -47,184 +26,73 @@ import org.eclipse.swt.widgets.Label;
  * @author Eugen Neufeld
  * 
  */
-public class SWTControlRenderer extends AbstractSWTRenderer<VControl> {
+public abstract class SWTControlRenderer extends SimpleControlSWTRenderer {
 	/**
-	 * Instance field to access this renderer as a singleton.
+	 * Default constructor.
 	 */
-	public static final SWTControlRenderer INSTANCE = new SWTControlRenderer();
-
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#render(org.eclipse.swt.widgets.Composite,
-	 *      org.eclipse.emf.ecp.view.spi.model.VElement, org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
-	 */
-	@Override
-	public List<RenderingResultRow<Control>> render(Composite parent, final VControl vControl,
-		final ViewModelContext viewContext)
-		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
-
-		return renderModel(parent, vControl, viewContext);
+	public SWTControlRenderer() {
+		super();
 	}
 
 	/**
-	 * {@inheritDoc}.
+	 * Test constructor.
 	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#renderModel(org.eclipse.swt.widgets.Composite,
-	 *      org.eclipse.emf.ecp.view.spi.model.VElement, org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
+	 * @param factory the {@link SWTRendererFactory} to use.
 	 */
-	@Override
-	protected List<RenderingResultRow<Control>> renderModel(final Composite parent, final VControl vControl,
-		final ViewModelContext viewContext) throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
-		final ECPAbstractControl control = getControl(vControl);
-
-		if (control != null) {
-			control.init(viewContext, vControl);
-			final Control label = createLabelControl(parent, vControl, control, viewContext);
-
-			final List<RenderingResultRow<org.eclipse.swt.widgets.Control>> createControls = ((ECPControlSWT) control)
-				.createControls(parent);
-			if (createControls == null) {
-				return null;
-			}
-			// TODO discuss whether to call from here or checked by control
-			control.setEditable(!vControl.isReadonly());
-			if (!vControl.isReadonly()) {
-				control.setEditable(vControl.isEnabled());
-			}
-
-			final List<RenderingResultRow<org.eclipse.swt.widgets.Control>> result = new ArrayList<RenderingResultRow<org.eclipse.swt.widgets.Control>>();
-
-			if (label != null) {
-				final Set<Control> mainControls = createControls.get(0).getControls();
-				final Control[] controls = new Control[mainControls.size() + 1];
-				controls[0] = label;
-				int i = 1;
-				for (final Control mainControl : mainControls) {
-					controls[i++] = mainControl;
-				}
-				result.add(SWTRenderingHelper.INSTANCE.getResultRowFactory()
-					.createRenderingResultRow(controls));
-			}
-			else {
-				result.addAll(createControls);
-			}
-
-			final ModelChangeListener listener = new ModelChangeListener() {
-
-				public void notifyRemove(Notifier notifier) {
-					// TODO Auto-generated method stub
-
-				}
-
-				public void notifyChange(ModelChangeNotification notification) {
-					if (notification.getNotifier() != vControl) {
-						return;
-					}
-					if (notification.getStructuralFeature() == VViewPackage.eINSTANCE.getElement_Visible()) {
-						applyVisible(vControl, result);
-					}
-				}
-
-				public void notifyAdd(Notifier notifier) {
-					// TODO Auto-generated method stub
-
-				}
-			};
-			viewContext.registerViewChangeListener(listener);
-			parent.addDisposeListener(new DisposeListener() {
-
-				private static final long serialVersionUID = 1L;
-
-				public void widgetDisposed(DisposeEvent e) {
-					viewContext.unregisterViewChangeListener(listener);
-				}
-			});
-			applyVisible(vControl, result);
-
-			return result;
-
-		}
-
-		return null;
+	protected SWTControlRenderer(SWTRendererFactory factory) {
+		super(factory);
 	}
 
 	/**
-	 * This method identifies the {@link ECPAbstractControl} that should be rendered.
+	 * Creates the control itself.
 	 * 
-	 * @param vControl the {@link VControl} to find the {@link ECPAbstractControl} for
-	 * @return the {@link ECPAbstractControl} or null if no fitting control could be found
+	 * @param parent the {@link Composite} to render onto
+	 * @return the rendered control
 	 */
-	protected ECPAbstractControl getControl(VControl vControl) {
-		final ECPControlFactory controlFactory = Activator.getDefault().getECPControlFactory();
+	@Override
+	protected final Control createControl(Composite parent) {
+		final Setting setting = getVElement().getDomainModelReference().getIterator().next();
 
-		if (controlFactory == null) {
-			Activator.getDefault().ungetECPControlFactory();
-			return null;
+		final Control control = createControl(parent, setting);
+		final Binding[] bindings = createBindings(control, setting);
+
+		// write initial values to model (if they differ from the default value of the model-element)
+		if (!setting.getEStructuralFeature().isUnsettable() && !setting.isSet() && bindings != null) {
+			for (final Binding binding : bindings) {
+				binding.updateTargetToModel();
+			}
 		}
 
-		final ECPAbstractControl control = controlFactory.createControl(ECPAbstractControl.class,
-			vControl.getDomainModelReference());
+		control.addDisposeListener(new DisposeListener() {
+			public void widgetDisposed(DisposeEvent e) {
+				if (bindings != null) {
+					for (final Binding binding : bindings) {
+						binding.dispose();
+					}
+				}
 
-		Activator.getDefault().ungetECPControlFactory();
+			}
+		});
+
 		return control;
 	}
 
 	/**
-	 * Create the {@link Control} displaying the label of the current {@link VControl}.
+	 * Create the {@link Binding Bindings} for this controls.
 	 * 
-	 * @param parent the {@link Composite} to render onto
-	 * @param vControl the {@link VControl} to create the label for
-	 * @param control the {@link ECPAbstractControl} created for the vControl
-	 * @param viewContext the {@link ViewModelContext} used to create the current control
-	 * @return the created {@link Control} or null
-	 * @throws NoPropertyDescriptorFoundExeption thrown if the {@link org.eclipse.emf.ecore.EStructuralFeature
-	 *             EStructuralFeature} of the {@link VControl} doesn't have a registered {@link IItemPropertyDescriptor}
+	 * @param control the {@link Control} to create the binding for
+	 * @param setting the current {@link Setting}
+	 * @return all the bindings created by this renderer
 	 */
-	protected Control createLabelControl(final Composite parent, final VControl vControl,
-		final ECPAbstractControl control, ViewModelContext viewContext)
-		throws NoPropertyDescriptorFoundExeption {
-		return createLabel(parent, vControl, control);
-	}
+	protected abstract Binding[] createBindings(Control control, Setting setting);
 
 	/**
-	 * Creates the label shown by the control
+	 * Creates the Control.
 	 * 
-	 * @param parent the {@link Composite} to create the label on
-	 * @param vControl the {@link VControl} to create the label for
-	 * @param control the {@link ECPAbstractControl} to create the label for
-	 * @return the created label or null
-	 * @throws NoPropertyDescriptorFoundExeption thrown if the {@link org.eclipse.emf.ecore.EStructuralFeature
-	 *             EStructuralFeature} of the {@link VControl} doesn't have a registered {@link IItemPropertyDescriptor}
+	 * @param parent the {@link Composite} to use as a parent
+	 * @param setting the {@link Setting}
+	 * @return the created control
 	 */
-	protected Label createLabel(final Composite parent, final VControl vControl,
-		final ECPAbstractControl control) throws NoPropertyDescriptorFoundExeption {
-		Label label = null;
-		labelRender: if (vControl.getLabelAlignment() == LabelAlignment.LEFT) {
-			final Setting setting = control.getFirstSetting();
-			if (setting == null) {
-				break labelRender;
-			}
-			final IItemPropertyDescriptor itemPropertyDescriptor = control.getItemPropertyDescriptor(setting);
+	protected abstract Control createControl(Composite parent, Setting setting);
 
-			if (itemPropertyDescriptor == null) {
-				throw new NoPropertyDescriptorFoundExeption(setting.getEObject(), setting.getEStructuralFeature());
-			}
-
-			label = new Label(parent, SWT.NONE);
-			label.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_label"); //$NON-NLS-1$
-			label.setBackground(parent.getBackground());
-			String extra = ""; //$NON-NLS-1$
-			if (setting.getEStructuralFeature().getLowerBound() > 0) {
-				extra = "*"; //$NON-NLS-1$
-			}
-			final String labelText = itemPropertyDescriptor.getDisplayName(setting.getEObject());
-			if (labelText != null && labelText.trim().length() != 0) {
-				label.setText(labelText + extra);
-				label.setToolTipText(itemPropertyDescriptor.getDescription(setting.getEObject()));
-			}
-
-		}
-		return label;
-	}
 }

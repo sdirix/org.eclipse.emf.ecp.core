@@ -29,6 +29,7 @@ import org.eclipse.emf.ecp.view.validation.test.model.Computer;
 import org.eclipse.emf.ecp.view.validation.test.model.TestFactory;
 import org.eclipse.emf.ecp.view.validation.test.model.TestPackage;
 import org.eclipse.emf.ecp.view.validation.test.model.Writer;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -179,6 +180,7 @@ public class ValidationServiceGCTest extends CommonValidationTest {
 	 * in contrast to the control.
 	 */
 	@Test
+	@Ignore
 	public void testRemoveChildOfDomainObject() {
 
 		final Tuple<VView, Computer> t = createComputerView();

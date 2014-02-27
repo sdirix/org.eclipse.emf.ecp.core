@@ -12,23 +12,22 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.treemasterdetail.ui.swt.internal;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecp.common.ChildrenDescriptorCollector;
-import org.eclipse.emf.ecp.edit.internal.swt.util.SWTRenderingHelper;
 import org.eclipse.emf.ecp.internal.ui.view.emf.AdapterFactoryContentProvider;
 import org.eclipse.emf.ecp.internal.ui.view.emf.AdapterFactoryLabelProvider;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
-import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.layout.grid.GridCell;
+import org.eclipse.emf.ecp.view.spi.layout.grid.GridDescription;
+import org.eclipse.emf.ecp.view.spi.layout.grid.GridDescriptionFactory;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.view.spi.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
 import org.eclipse.emf.ecp.view.treemasterdetail.model.VTreeMasterDetail;
 import org.eclipse.emf.edit.command.AddCommand;
@@ -106,15 +105,24 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 	}
 
 	/**
-	 * {@inheritDoc}.
+	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.ui.view.swt.internal.AbstractSWTRenderer#renderModel(org.eclipse.swt.widgets.Composite,
-	 *      org.eclipse.emf.ecp.view.model.VElement, org.eclipse.emf.ecp.view.context.ViewModelContext)
+	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#getGridDescription()
 	 */
 	@Override
-	protected List<RenderingResultRow<Control>> renderModel(Composite parent, VTreeMasterDetail vElement,
-		ViewModelContext viewContext) throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+	public GridDescription getGridDescription() {
+		return GridDescriptionFactory.INSTANCE.createSimpleGrid(1, 1);
+	}
 
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#renderControl(org.eclipse.emf.ecp.view.spi.layout.grid.GridCell,
+	 *      org.eclipse.swt.widgets.Composite)
+	 */
+	@Override
+	protected Control renderControl(GridCell cell, Composite parent) throws NoRendererFoundException,
+		NoPropertyDescriptorFoundExeption {
 		final SashForm sash = new SashForm(parent, SWT.HORIZONTAL);
 
 		GridLayoutFactory.fillDefaults().numColumns(2).equalWidth(false).applyTo(sash);
@@ -137,8 +145,8 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 
 		sash.setWeights(new int[] { 1, 3 });
 
-		final EObject modelElement = viewContext.getDomainModel();
-		final VView detailView = vElement.getDetailView();
+		final EObject modelElement = getViewModelContext().getDomainModel();
+		final VView detailView = getVElement().getDetailView();
 
 		final EditingDomain editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(modelElement);
 
@@ -180,15 +188,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 
 		fillContextMenu(treeViewer, editingDomain);
 
-		final RenderingResultRow<Control> createRenderingResultRow = SWTRenderingHelper.INSTANCE.getResultRowFactory()
-			.createRenderingResultRow(parent);
-
-		final List<RenderingResultRow<Control>> renderingList = new ArrayList<RenderingResultRow<Control>>();
-		renderingList.add(createRenderingResultRow);
-
 		treeViewer.getTree().addDisposeListener(new DisposeListener() {
-
-			private static final long serialVersionUID = 1L;
 
 			public void widgetDisposed(DisposeEvent event) {
 				adapterFactoryContentProvider.dispose();
@@ -197,15 +197,9 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 			}
 		});
 
-		return renderingList;
-
+		return sash;
 	}
 
-	/**
-	 * @param modelElement
-	 * @param treeViewer
-	 * @param editingDomain
-	 */
 	private void addDragAndDropSupport(final EObject modelElement, final TreeViewer treeViewer,
 		EditingDomain editingDomain) {
 

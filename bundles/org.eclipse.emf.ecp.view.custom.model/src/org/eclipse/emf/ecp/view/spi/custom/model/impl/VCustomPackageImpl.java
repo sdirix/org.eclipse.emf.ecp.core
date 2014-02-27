@@ -16,9 +16,10 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
+import org.eclipse.emf.ecp.view.spi.custom.model.VCustomControl;
+import org.eclipse.emf.ecp.view.spi.custom.model.VCustomDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.custom.model.VCustomFactory;
 import org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage;
-import org.eclipse.emf.ecp.view.spi.custom.model.VHardcodedDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 
 /**
@@ -27,7 +28,6 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * <!-- end-user-doc -->
  * 
  * @generated
- * @since 1.2
  */
 public class VCustomPackageImpl extends EPackageImpl implements VCustomPackage {
 	/**
@@ -36,7 +36,14 @@ public class VCustomPackageImpl extends EPackageImpl implements VCustomPackage {
 	 * 
 	 * @generated
 	 */
-	private EClass hardcodedDomainModelReferenceEClass = null;
+	private EClass customControlEClass = null;
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	private EClass customDomainModelReferenceEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with {@link org.eclipse.emf.ecore.EPackage.Registry
@@ -78,14 +85,12 @@ public class VCustomPackageImpl extends EPackageImpl implements VCustomPackage {
 	 * @generated
 	 */
 	public static VCustomPackage init() {
-		if (isInited) {
+		if (isInited)
 			return (VCustomPackage) EPackage.Registry.INSTANCE.getEPackage(VCustomPackage.eNS_URI);
-		}
 
 		// Obtain or create and register package
-		final VCustomPackageImpl theCustomPackage = (VCustomPackageImpl) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof VCustomPackageImpl ? EPackage.Registry.INSTANCE
-			.get(eNS_URI)
-			: new VCustomPackageImpl());
+		VCustomPackageImpl theCustomPackage = (VCustomPackageImpl) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof VCustomPackageImpl ? EPackage.Registry.INSTANCE
+			.get(eNS_URI) : new VCustomPackageImpl());
 
 		isInited = true;
 
@@ -112,8 +117,9 @@ public class VCustomPackageImpl extends EPackageImpl implements VCustomPackage {
 	 * 
 	 * @generated
 	 */
-	public EClass getHardcodedDomainModelReference() {
-		return hardcodedDomainModelReferenceEClass;
+	public EClass getCustomControl()
+	{
+		return customControlEClass;
 	}
 
 	/**
@@ -122,8 +128,9 @@ public class VCustomPackageImpl extends EPackageImpl implements VCustomPackage {
 	 * 
 	 * @generated
 	 */
-	public EAttribute getHardcodedDomainModelReference_ControlId() {
-		return (EAttribute) hardcodedDomainModelReferenceEClass.getEStructuralFeatures().get(0);
+	public EAttribute getCustomControl_BundleName()
+	{
+		return (EAttribute) customControlEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -132,8 +139,9 @@ public class VCustomPackageImpl extends EPackageImpl implements VCustomPackage {
 	 * 
 	 * @generated
 	 */
-	public EReference getHardcodedDomainModelReference_DomainModelReferences() {
-		return (EReference) hardcodedDomainModelReferenceEClass.getEStructuralFeatures().get(1);
+	public EAttribute getCustomControl_ClassName()
+	{
+		return (EAttribute) customControlEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -142,8 +150,53 @@ public class VCustomPackageImpl extends EPackageImpl implements VCustomPackage {
 	 * 
 	 * @generated
 	 */
-	public EAttribute getHardcodedDomainModelReference_ControlChecked() {
-		return (EAttribute) hardcodedDomainModelReferenceEClass.getEStructuralFeatures().get(2);
+	public EClass getCustomDomainModelReference()
+	{
+		return customDomainModelReferenceEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public EReference getCustomDomainModelReference_DomainModelReferences()
+	{
+		return (EReference) customDomainModelReferenceEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public EAttribute getCustomDomainModelReference_BundleName()
+	{
+		return (EAttribute) customDomainModelReferenceEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public EAttribute getCustomDomainModelReference_ClassName()
+	{
+		return (EAttribute) customDomainModelReferenceEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public EAttribute getCustomDomainModelReference_ControlChecked()
+	{
+		return (EAttribute) customDomainModelReferenceEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -173,16 +226,20 @@ public class VCustomPackageImpl extends EPackageImpl implements VCustomPackage {
 	 * @generated
 	 */
 	public void createPackageContents() {
-		if (isCreated) {
+		if (isCreated)
 			return;
-		}
 		isCreated = true;
 
 		// Create classes and their features
-		hardcodedDomainModelReferenceEClass = createEClass(HARDCODED_DOMAIN_MODEL_REFERENCE);
-		createEAttribute(hardcodedDomainModelReferenceEClass, HARDCODED_DOMAIN_MODEL_REFERENCE__CONTROL_ID);
-		createEReference(hardcodedDomainModelReferenceEClass, HARDCODED_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCES);
-		createEAttribute(hardcodedDomainModelReferenceEClass, HARDCODED_DOMAIN_MODEL_REFERENCE__CONTROL_CHECKED);
+		customControlEClass = createEClass(CUSTOM_CONTROL);
+		createEAttribute(customControlEClass, CUSTOM_CONTROL__BUNDLE_NAME);
+		createEAttribute(customControlEClass, CUSTOM_CONTROL__CLASS_NAME);
+
+		customDomainModelReferenceEClass = createEClass(CUSTOM_DOMAIN_MODEL_REFERENCE);
+		createEReference(customDomainModelReferenceEClass, CUSTOM_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCES);
+		createEAttribute(customDomainModelReferenceEClass, CUSTOM_DOMAIN_MODEL_REFERENCE__BUNDLE_NAME);
+		createEAttribute(customDomainModelReferenceEClass, CUSTOM_DOMAIN_MODEL_REFERENCE__CLASS_NAME);
+		createEAttribute(customDomainModelReferenceEClass, CUSTOM_DOMAIN_MODEL_REFERENCE__CONTROL_CHECKED);
 	}
 
 	/**
@@ -202,9 +259,8 @@ public class VCustomPackageImpl extends EPackageImpl implements VCustomPackage {
 	 * @generated
 	 */
 	public void initializePackageContents() {
-		if (isInitialized) {
+		if (isInitialized)
 			return;
-		}
 		isInitialized = true;
 
 		// Initialize package
@@ -213,31 +269,47 @@ public class VCustomPackageImpl extends EPackageImpl implements VCustomPackage {
 		setNsURI(eNS_URI);
 
 		// Obtain other dependent packages
-		final VViewPackage theViewPackage = (VViewPackage) EPackage.Registry.INSTANCE.getEPackage(VViewPackage.eNS_URI);
+		VViewPackage theViewPackage = (VViewPackage) EPackage.Registry.INSTANCE.getEPackage(VViewPackage.eNS_URI);
 
 		// Create type parameters
 
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
-		hardcodedDomainModelReferenceEClass.getESuperTypes().add(theViewPackage.getDomainModelReference());
+		customControlEClass.getESuperTypes().add(theViewPackage.getControl());
+		customDomainModelReferenceEClass.getESuperTypes().add(theViewPackage.getDomainModelReference());
 
 		// Initialize classes and features; add operations and parameters
-		initEClass(hardcodedDomainModelReferenceEClass, VHardcodedDomainModelReference.class,
-			"HardcodedDomainModelReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEClass(customControlEClass, VCustomControl.class,
+			"CustomControl", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEAttribute(
-			getHardcodedDomainModelReference_ControlId(),
+			getCustomControl_BundleName(),
 			ecorePackage.getEString(),
-			"controlId", null, 1, 1, VHardcodedDomainModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+			"bundleName", null, 1, 1, VCustomControl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(
+			getCustomControl_ClassName(),
+			ecorePackage.getEString(),
+			"className", null, 1, 1, VCustomControl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(customDomainModelReferenceEClass, VCustomDomainModelReference.class,
+			"CustomDomainModelReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(
-			getHardcodedDomainModelReference_DomainModelReferences(),
+			getCustomDomainModelReference_DomainModelReferences(),
 			theViewPackage.getDomainModelReference(),
 			null,
-			"domainModelReferences", null, 0, -1, VHardcodedDomainModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+			"domainModelReferences", null, 0, -1, VCustomDomainModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEAttribute(
-			getHardcodedDomainModelReference_ControlChecked(),
+			getCustomDomainModelReference_BundleName(),
+			ecorePackage.getEString(),
+			"bundleName", null, 1, 1, VCustomDomainModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(
+			getCustomDomainModelReference_ClassName(),
+			ecorePackage.getEString(),
+			"className", null, 1, 1, VCustomDomainModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(
+			getCustomDomainModelReference_ControlChecked(),
 			ecorePackage.getEBoolean(),
-			"controlChecked", "false", 1, 1, VHardcodedDomainModelReference.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+			"controlChecked", "false", 1, 1, VCustomDomainModelReference.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 
 		// Create resource
 		createResource(eNS_URI);

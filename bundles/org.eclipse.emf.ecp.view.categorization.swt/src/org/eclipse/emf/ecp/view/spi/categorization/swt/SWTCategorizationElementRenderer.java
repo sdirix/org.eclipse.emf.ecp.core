@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
@@ -29,12 +31,13 @@ import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizableElement;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationElement;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategory;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.layout.grid.GridCell;
+import org.eclipse.emf.ecp.view.spi.layout.grid.GridDescription;
+import org.eclipse.emf.ecp.view.spi.layout.grid.GridDescriptionFactory;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.view.spi.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
-import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ITableItemLabelProvider;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -73,45 +76,51 @@ public class SWTCategorizationElementRenderer extends AbstractSWTRenderer<VCateg
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#renderModel(org.eclipse.swt.widgets.Composite,
+	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#getGridDescription()
+	 */
+	@Override
+	public GridDescription getGridDescription() {
+		return GridDescriptionFactory.INSTANCE.createSimpleGrid(1, 1);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#renderControl(int, org.eclipse.swt.widgets.Composite,
 	 *      org.eclipse.emf.ecp.view.spi.model.VElement, org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
 	@Override
-	protected List<RenderingResultRow<Control>> renderModel(Composite parent,
-		final VCategorizationElement vCategorizationElement,
-		ViewModelContext viewContext) throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
-
+	protected Control renderControl(GridCell cell, Composite parent) throws NoRendererFoundException,
+		NoPropertyDescriptorFoundExeption {
 		final TreeViewer treeViewer;
-
-		// final RefreshTreeViewerAdapter adapter = new RefreshTreeViewerAdapter();
-		// vCategorizationElement.eAdapters().add(adapter);
-		// parent.addDisposeListener(new DisposeListener() {
-		// private static final long serialVersionUID = 1L;
-		//
-		// public void widgetDisposed(DisposeEvent event) {
-		// vCategorizationElement.eAdapters().remove(adapter);
-		// }
-		// });
-		final EList<VAbstractCategorization> categorizations = vCategorizationElement.getCategorizations();
+		final EList<VAbstractCategorization> categorizations = getVElement().getCategorizations();
 
 		if (categorizations.size() == 1 && categorizations.get(0) instanceof VCategory) {
-			final List<RenderingResultRow<Control>> resultRows = SWTRendererFactory.INSTANCE.render(parent,
-				vCategorizationElement.getCategorizations().get(0), viewContext);
-
-			return resultRows;
+			final VElement child = getVElement().getCategorizations().get(0);
+			final AbstractSWTRenderer<VElement> renderer = getSWTRendererFactory().getRenderer(child,
+				getViewModelContext());
+			if (renderer == null) {
+				Activator
+					.getDefault()
+					.getLog()
+					.log(
+						new Status(IStatus.INFO, Activator.PLUGIN_ID, String.format(
+							"No Renderer for %s found.", child.eClass().getName()))); //$NON-NLS-1$
+				return null;
+			}
+			final Control render = renderer.render(cell, parent);
+			renderer.postRender(parent);
+			return render;
 
 		}
 		final Composite composite = createComposite(parent);
 		treeViewer = new TreeViewer(composite);
 		final ScrolledComposite editorComposite = createdEditorPane(composite);
-		setupTreeViewer(treeViewer, vCategorizationElement,
-			editorComposite, viewContext);
-		// adapter.setTreeViewer(treeViewer);
+		setupTreeViewer(treeViewer,
+			editorComposite);
 
-		initTreeViewer(treeViewer, vCategorizationElement);
-
-		return createResult(composite);
-
+		initTreeViewer(treeViewer);
+		return composite;
 	}
 
 	/**
@@ -155,16 +164,12 @@ public class SWTCategorizationElementRenderer extends AbstractSWTRenderer<VCateg
 	 * Configures the passed tree viewer.
 	 * 
 	 * @param treeViewer the {@link TreeViewer} to configure
-	 * @param vCategorizationElement the {@link VCategorizationElement}
 	 * @param editorComposite the composite of the editor
-	 * @param viewModelContext the {@link ViewModelContext} to use
 	 */
 	protected void setupTreeViewer(final TreeViewer treeViewer,
-		final VCategorizationElement vCategorizationElement,
-		final ScrolledComposite editorComposite, final ViewModelContext viewModelContext) {
-		treeViewer.addFilter(new ViewerFilter() {
 
-			private static final long serialVersionUID = 1L;
+		final ScrolledComposite editorComposite) {
+		treeViewer.addFilter(new ViewerFilter() {
 
 			@Override
 			public boolean select(Viewer viewer, Object parentElement, Object element) {
@@ -181,8 +186,6 @@ public class SWTCategorizationElementRenderer extends AbstractSWTRenderer<VCateg
 
 		final AdapterFactoryContentProvider contentProvider = new AdapterFactoryContentProvider(
 			adapterFactory) {
-
-			private static final long serialVersionUID = 1L;
 
 			/**
 			 * {@inheritDoc}
@@ -210,8 +213,6 @@ public class SWTCategorizationElementRenderer extends AbstractSWTRenderer<VCateg
 		final TreeTableLabelProvider treeTableLabelProvider = getTreeLabelProvider(adapterFactory);
 		treeViewer.getTree().addDisposeListener(new DisposeListener() {
 
-			private static final long serialVersionUID = 1L;
-
 			public void widgetDisposed(DisposeEvent event) {
 				contentProvider.dispose();
 				treeTableLabelProvider.dispose();
@@ -222,14 +223,20 @@ public class SWTCategorizationElementRenderer extends AbstractSWTRenderer<VCateg
 		treeViewer.setContentProvider(contentProvider);
 		treeViewer.setLabelProvider(treeTableLabelProvider);
 
-		treeViewer.addSelectionChangedListener(new TreeSelectionChangedListener(viewModelContext, editorComposite,
-			vCategorizationElement,
+		treeViewer.addSelectionChangedListener(new TreeSelectionChangedListener(getViewModelContext(), editorComposite,
+			getVElement(),
 			treeViewer, editors));
 
-		addTreeEditor(treeViewer, vCategorizationElement, editors);
+		addTreeEditor(treeViewer, getVElement(), editors);
 
 	}
 
+	/**
+	 * The TreeTableLabel provider.
+	 * 
+	 * @param adapterFactory the {@link AdapterFactory} to use
+	 * @return the created {@link TreeTableLabelProvider}
+	 */
 	protected TreeTableLabelProvider getTreeLabelProvider(AdapterFactory adapterFactory) {
 		return new TreeTableLabelProvider(adapterFactory);
 	}
@@ -238,13 +245,12 @@ public class SWTCategorizationElementRenderer extends AbstractSWTRenderer<VCateg
 	 * Inits the tree viewer.
 	 * 
 	 * @param treeViewer the tree viewer
-	 * @param vCategorizationElement the {@link VCategorizationElement}
 	 */
-	protected void initTreeViewer(final TreeViewer treeViewer, VCategorizationElement vCategorizationElement) {
+	protected void initTreeViewer(final TreeViewer treeViewer) {
 
-		treeViewer.setInput(vCategorizationElement);
+		treeViewer.setInput(getVElement());
 		treeViewer.expandAll();
-		treeViewer.setSelection(new StructuredSelection(vCategorizationElement.getCategorizations().get(0)));
+		treeViewer.setSelection(new StructuredSelection(getVElement().getCategorizations().get(0)));
 	}
 
 	/**
@@ -305,8 +311,6 @@ public class SWTCategorizationElementRenderer extends AbstractSWTRenderer<VCateg
 		}
 
 		tree.addTreeListener(new TreeListener() {
-
-			private static final long serialVersionUID = -576684848162963651L;
 
 			public void treeExpanded(TreeEvent e) {
 			}
@@ -412,13 +416,26 @@ public class SWTCategorizationElementRenderer extends AbstractSWTRenderer<VCateg
 			childComposite.setBackground(editorComposite.getBackground());
 			editorComposite.setContent(childComposite);
 
-			final VElement node = (VElement) selection;
+			final VElement child = (VElement) selection;
 			try {
-				final List<RenderingResultRow<Control>> resultRows = SWTRendererFactory.INSTANCE.render(
-					childComposite, node, viewModelContext);
+
+				final AbstractSWTRenderer<VElement> renderer = getSWTRendererFactory().getRenderer(child,
+					viewModelContext);
+				if (renderer == null) {
+					Activator
+						.getDefault()
+						.getLog()
+						.log(
+							new Status(IStatus.INFO, Activator.PLUGIN_ID, String.format(
+								"No Renderer for %s found.", child.eClass().getName()))); //$NON-NLS-1$
+					return;
+				}
+				// we have a VCategory-> thus only one element in the grid
+				final Control render = renderer.render(renderer.getGridDescription().getGrid()[0], childComposite);
+				renderer.postRender(childComposite);
 				GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true)
-					.applyTo(resultRows.get(0).getMainControl());
-				vCategorizationElement.setCurrentSelection((VCategorizableElement) node);
+					.applyTo(render);
+				vCategorizationElement.setCurrentSelection((VCategorizableElement) child);
 			} catch (final NoRendererFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -439,8 +456,6 @@ public class SWTCategorizationElementRenderer extends AbstractSWTRenderer<VCateg
 	 * The Class TreeTableLabelProvider.
 	 */
 	protected class TreeTableLabelProvider extends AdapterFactoryLabelProvider implements ITableItemLabelProvider {
-
-		private static final long serialVersionUID = 1L;
 
 		/**
 		 * Instantiates a new tree table label provider.
