@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.eclipse.emf.ecp.nosite.feature"
-      label="ECP Feature for features which are not on the update site"
+      label="ECP Feature for features which are not in the SDK"
       version="1.1.1.qualifier"
       provider-name="Eclipse Modeling Project"
       license-feature="org.eclipse.emf.ecp.license.feature"
@@ -37,6 +37,18 @@
 
    <includes
          id="org.eclipse.emf.ecp.examplemodel.ui.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.ecp.rap.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.ecp.rap.sdk.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.ecp.rap.util.feature"
          version="0.0.0"/>
 
    <plugin
