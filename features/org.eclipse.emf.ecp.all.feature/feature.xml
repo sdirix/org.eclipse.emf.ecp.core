@@ -35,4 +35,14 @@
          id="org.eclipse.emf.ecp.graphiti.feature"
          version="0.0.0"/>
 
+   <includes
+         id="org.eclipse.emf.ecp.examplemodel.ui.feature"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.eclipse.emf.ecp.doc"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
 </feature>
