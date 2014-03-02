@@ -27,4 +27,12 @@
          id="org.eclipse.emf.ecp.test.feature"
          version="0.0.0"/>
 
+   <includes
+         id="org.eclipse.emf.ecp.ide.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.ecp.graphiti.feature"
+         version="0.0.0"/>
+
 </feature>
