@@ -32,7 +32,8 @@
   <setupTasks xsi:type="setup:ContextVariableTask" documentation="Location of CDO's Git clone." name="git.clone" value="${setup.branch.dir/git/ecp}" stringSubstitution="true"/>
   <setupTasks xsi:type="setup:GitCloneTask" location="${git.clone}" remoteURI="ssh://git.eclipse.org/gitroot/emfclient/org.eclipse.emf.ecp.core.git" checkoutBranch="${ecp.git.branch}"/>
   <setupTasks xsi:type="setup:TargletTask" name="ECP">
-    <roots id="org.eclipse.emf.ecp.all.feature.feature.group"/>
+    <roots id="org.eclipse.emf.ecp.nosite.feature.feature.group"/>
+<roots id="org.eclipse.emf.ecp.emfforms.sdk.feature.feature.group"/>
     <roots id="org.eclipse.emf.ecp.releng"/>
     <roots id="org.eclipse.sdk.feature.group"/>
     <sourceLocators rootFolder="${git.clone}" locateNestedProjects="true"/>
