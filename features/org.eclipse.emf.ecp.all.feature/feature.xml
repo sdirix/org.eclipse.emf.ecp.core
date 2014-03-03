@@ -39,18 +39,6 @@
          id="org.eclipse.emf.ecp.examplemodel.ui.feature"
          version="0.0.0"/>
 
-   <includes
-         id="org.eclipse.emf.ecp.rap.feature"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.ecp.rap.sdk.feature"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.ecp.rap.util.feature"
-         version="0.0.0"/>
-
    <plugin
          id="org.eclipse.emf.ecp.doc"
          download-size="0"
