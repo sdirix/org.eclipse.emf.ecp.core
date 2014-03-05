@@ -53,8 +53,6 @@
       <p2Repositories url="http://download.eclipse.org/eclipse/updates/4.3"/>
       <p2Repositories url="http://download.eclipse.org/rt/rap/incubator/2.1/fileupload"/>
       <p2Repositories url="http://download.eclipse.org/emf-store/releases_11"/>
-    </repositoryLists>
-    <repositoryLists name="JavaFX">
       <p2Repositories url="http://download.eclipse.org/efxclipse/runtime-nightly/site"/>
     </repositoryLists>
   </setupTasks>
