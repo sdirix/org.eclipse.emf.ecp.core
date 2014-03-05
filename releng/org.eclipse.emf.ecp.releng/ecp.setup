@@ -16,12 +16,15 @@
     <installableUnits id="org.eclipse.egit.feature.group"/>
     <installableUnits id="org.eclipse.egit.mylyn.feature.group"/>
     <installableUnits id="net.sf.eclipsecs.feature.group"/>
+    <installableUnits id="org.eclipse.fx.ide.all.kepler.feature"/>
     <p2Repositories url="http://download.eclipse.org/mylyn/snapshots/weekly"/>
     <p2Repositories url="http://download.eclipse.org/egit/updates-nightly"/>
     <p2Repositories url="http://download.eclipse.org/modeling/emft/ecoretools/updates/1.2/201306071421"/>
     <p2Repositories url="http://eclipse-cs.sf.net/update"/>
     <p2Repositories url="${train.url}"/>
     <p2Repositories url="${releng.url}"/>
+    <p2Repositories url="http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/"/>
+    <p2Repositories url="http://download.eclipse.org/efxclipse/updates-released/0.9.0/site"/>
   </setupTasks>
   <setupTasks xsi:type="setup:EclipseIniTask" option="-Xmx" value="4g" vm="true"/>
   <setupTasks xsi:type="setup:ResourceCreationTask" excludedTriggers="STARTUP MANUAL" content="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;section name=&quot;Workbench&quot;>&#xD;&#xA;&#x9;&lt;section name=&quot;org.eclipse.jdt.internal.ui.packageview.PackageExplorerPart&quot;>&#xD;&#xA;&#x9;&#x9;&lt;item value=&quot;true&quot; key=&quot;group_libraries&quot;/>&#xD;&#xA;&#x9;&#x9;&lt;item value=&quot;false&quot; key=&quot;linkWithEditor&quot;/>&#xD;&#xA;&#x9;&#x9;&lt;item value=&quot;2&quot; key=&quot;layout&quot;/>&#xD;&#xA;&#x9;&#x9;&lt;item value=&quot;2&quot; key=&quot;rootMode&quot;/>&#xD;&#xA;&#x9;&#x9;&lt;item value=&quot;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt;&amp;#x0D;&amp;#x0A;&amp;lt;packageExplorer configured=&amp;quot;true&amp;quot; group_libraries=&amp;quot;1&amp;quot; layout=&amp;quot;2&amp;quot; linkWithEditor=&amp;quot;0&amp;quot; rootMode=&amp;quot;2&amp;quot; sortWorkingSets=&amp;quot;false&amp;quot; workingSetName=&amp;quot;&amp;quot;&amp;gt;&amp;#x0D;&amp;#x0A;&amp;lt;localWorkingSetManager&amp;gt;&amp;#x0D;&amp;#x0A;&amp;lt;workingSet editPageId=&amp;quot;org.eclipse.jdt.internal.ui.OthersWorkingSet&amp;quot; factoryID=&amp;quot;org.eclipse.ui.internal.WorkingSetFactory&amp;quot; id=&amp;quot;1382792884467_1&amp;quot; label=&amp;quot;Other Projects&amp;quot; name=&amp;quot;Other Projects&amp;quot;/&amp;gt;&amp;#x0D;&amp;#x0A;&amp;lt;/localWorkingSetManager&amp;gt;&amp;#x0D;&amp;#x0A;&amp;lt;activeWorkingSet workingSetName=&amp;quot;Other Projects&amp;quot;/&amp;gt;&amp;#x0D;&amp;#x0A;&amp;lt;allWorkingSets workingSetName=&amp;quot;Other Projects&amp;quot;/&amp;gt;&amp;#x0D;&amp;#x0A;&amp;lt;/packageExplorer&amp;gt;&quot; key=&quot;memento&quot;/>&#xD;&#xA;&#x9;&lt;/section>&#xD;&#xA;&lt;/section>&#xD;&#xA;" targetURL="${setup.ws.dir|uri}/.metadata/.plugins/org.eclipse.jdt.ui/dialog_settings.xml" encoding="UTF-8"/>
@@ -39,6 +42,9 @@
     <roots id="org.eclipse.emf.ecp.products"/>
     <roots id="org.eclipse.emf.ecp.target.rap"/>
     <roots id="org.eclipse.emf.ecp.target.rcp"/>
+    <roots id="org.eclipse.fx.target.feature"/>
+    <roots id="org.eclipse.emf.ecp.view.sdk.fx.feature"/>
+    <roots id="org.eclipse.emf.ecp.application.e4.fx.feature"/>
     <sourceLocators rootFolder="${git.clone}" locateNestedProjects="true"/>
     <repositoryLists name="Kepler Dependencies">
       <p2Repositories url="http://download.eclipse.org/modeling/emf/cdo/orbit/latest-S"/>
@@ -47,6 +53,9 @@
       <p2Repositories url="http://download.eclipse.org/eclipse/updates/4.3"/>
       <p2Repositories url="http://download.eclipse.org/rt/rap/incubator/2.1/fileupload"/>
       <p2Repositories url="http://download.eclipse.org/emf-store/releases_11"/>
+    </repositoryLists>
+    <repositoryLists name="JavaFX">
+      <p2Repositories url="http://download.eclipse.org/efxclipse/runtime-nightly/site"/>
     </repositoryLists>
   </setupTasks>
   <setupTasks xsi:type="setup:ApiBaselineTask" version="${ecp.baseline.version}" zipLocation="https://dl.dropboxusercontent.com/u/23674036/120.zip"/>
@@ -93,6 +102,9 @@
     </workingSets>
     <workingSets name="ECP DiffMerge">
       <predicates xsi:type="predicates:NamePredicate" pattern=".*diffmerge.*"/>
+    </workingSets>
+    <workingSets name="ECP FX">
+      <predicates xsi:type="predicates:NamePredicate" pattern=".*fx.*"/>
     </workingSets>
   </setupTasks>
   <setupTasks xsi:type="setup:MylynQueriesTask" repositoryURL="https://bugs.eclipse.org/bugs">
