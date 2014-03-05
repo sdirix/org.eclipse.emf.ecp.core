@@ -42,7 +42,7 @@
     <roots id="org.eclipse.emf.ecp.products"/>
     <roots id="org.eclipse.emf.ecp.target.rap"/>
     <roots id="org.eclipse.emf.ecp.target.rcp"/>
-    <roots id="org.eclipse.fx.target.feature"/>
+    <roots id="org.eclipse.fx.target.feature.feature.group"/>
     <roots id="org.eclipse.emf.ecp.view.sdk.fx.feature"/>
     <roots id="org.eclipse.emf.ecp.application.e4.fx.feature"/>
     <sourceLocators rootFolder="${git.clone}" locateNestedProjects="true"/>
