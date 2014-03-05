@@ -10,6 +10,7 @@ import javafx.scene.control.Control;
 import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.control.SelectionModel;
 import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeView;
 
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.emfstore.client.ESLocalProject;
@@ -23,11 +24,11 @@ class EmfStoreLocalTreeItem extends TreeItem<Object> {
 
 	private final ProjectsView projectsView;
 	private final ObservableList<TreeItem<Object>> children;
-	private Control view;
+	private TreeView<Object> view;
 
 	@SuppressWarnings("restriction")
 	public EmfStoreLocalTreeItem(ProjectsView projectsView, Object root,
-			Control view) {
+			TreeView<Object> view) {
 		super(root);
 		this.projectsView = projectsView;
 		this.view = view;
@@ -54,8 +55,7 @@ class EmfStoreLocalTreeItem extends TreeItem<Object> {
 	void updateChildren() {
 		ObservableList<TreeItem<Object>> childTreeItems = super.getChildren();
 
-		MultipleSelectionModel<?> selectionModel = CellUtil
-				.getSelectionModel(view);
+		MultipleSelectionModel<?> selectionModel = view.getSelectionModel();
 		List<?> selection = selectionModel.getSelectedItems();
 		ArrayList<Object> selectedItems = new ArrayList<>();
 		ArrayList<TreeItem<?>> selectedTreeItems = new ArrayList<>();
