@@ -59,5 +59,6 @@ with [get-editor "Player Jonas" -index 1 | get-date-time] {
     get-property date | equals "1988/12/5" | verify-true
     
 }
+ //get-date-time -after [get-label "Date Of Birth"] -index 1 | set-value "435resfd"
 
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

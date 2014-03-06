@@ -50,6 +50,14 @@ with [get-editor "Player John" | get-label -after [get-label "EMails*"]] {
     get-property "getToolTipText()" | contains "with 0 values must have at least 1 values" | verify-true
     get-property "getImage().getBounds().toString()" | equals "Rectangle {0, 0, 16, 17}" | verify-true
 }
+
+//Validation Propogation to the Model Explorer Tree View
+get-view "Model Explorer" | get-tree | get-item "TestProject/Player John" | get-property "image.decorations[0].path" 
+    | contains "icons/error_decorate.png" | verify-true
+    
+get-view "Model Explorer" | get-tree | get-item TestProject | get-property "image.decorations[0].path" 
+    | contains "icons/error_decorate.png" | verify-true
+
 with [get-editor "Player John"] {
     get-button "Add Entry" | click
     get-editbox -after [get-label "EMails*"] | set-text "john@smith.de"
