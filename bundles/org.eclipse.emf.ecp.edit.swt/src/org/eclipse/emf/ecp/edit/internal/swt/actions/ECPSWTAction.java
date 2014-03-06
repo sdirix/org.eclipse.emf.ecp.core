@@ -62,7 +62,7 @@ public abstract class ECPSWTAction extends Action {
 	 */
 	@Override
 	public int hashCode() {
-		return this.getClass().getCanonicalName().hashCode() * setting.getEStructuralFeature().getName().hashCode();
+		return this.getClass().getName().hashCode() * setting.getEStructuralFeature().getName().hashCode();
 	}
 
 	/**
