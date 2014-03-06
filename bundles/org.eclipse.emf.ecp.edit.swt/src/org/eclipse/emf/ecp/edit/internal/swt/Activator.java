@@ -21,6 +21,7 @@ import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecp.edit.spi.ECPControlFactory;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
+import org.eclipse.jface.action.Action;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
@@ -56,6 +57,9 @@ public class Activator extends Plugin {
 		super.stop(context);
 		plugin = null;
 		for (final ImageDescriptorToImage descriptorToImage : imageRegistry.values()) {
+			descriptorToImage.getImage().dispose();
+		}
+		for (final ImageDescriptorToImage descriptorToImage : imageRegistryByAction.values()) {
 			descriptorToImage.getImage().dispose();
 		}
 	}
@@ -100,6 +104,8 @@ public class Activator extends Plugin {
 
 	};
 
+	private final Map<Action, ImageDescriptorToImage> imageRegistryByAction = new LinkedHashMap<Action, ImageDescriptorToImage>();
+
 	/**
 	 * Loads an image based on the provided path form this bundle.
 	 * 
@@ -112,6 +118,21 @@ public class Activator extends Plugin {
 				new ImageDescriptorToImage(ImageDescriptor.createFromURL(getDefault().getBundle().getResource(path))));
 		}
 		return getDefault().imageRegistry.get(path).getImage();
+
+	}
+
+	/**
+	 * Loads an image for the given Action.
+	 * 
+	 * @param action the action
+	 * @return the {@link Image}
+	 */
+	public static Image getImage(Action action) {
+		if (!getDefault().imageRegistryByAction.containsKey(action)) {
+			getDefault().imageRegistryByAction.put(action,
+				new ImageDescriptorToImage(action.getImageDescriptor()));
+		}
+		return getDefault().imageRegistryByAction.get(action).getImage();
 
 	}
 
