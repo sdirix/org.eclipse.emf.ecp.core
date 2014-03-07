@@ -7,8 +7,8 @@ Element-Type: testcase
 Element-Version: 3.0
 External-Reference: 
 Id: _GYZaMHlAEeO9Ja8zvRhhOQ
-Q7-Runtime-Version: 1.3.7.201309090800
-Save-Time: 1/9/14 4:23 PM
+Q7-Runtime-Version: 1.3.10.201312200736
+Save-Time: 3/6/14 5:57 PM
 Testcase-Type: ecl
 
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
@@ -18,11 +18,11 @@ Entry-Name: .content
 get-view "Model Explorer" | get-tree | select "TestProject \\[trunk, Version 0\\]" | get-menu "New Model Element" 
     | click
 with [get-window "Add new model element"] {
-    get-tree | select "bowling/Referee"
+    try { get-tree | select "Referee" } -catch { get-tree | select "bowling/Referee" }
     get-button Finish | click
 }
 get-editor Referee | get-button -after [get-label "Date Of Birth"] | click
-get-window -from "XmlDateControlText$1.widgetSelected()" | get-date-time | set-value "2013/12/1 0:0:0"
+get-window -from "XmlDateControlText$SelectionAdapterExtension.widgetSelected()" | get-date-time | set-value "2013/12/1 0:0:0"
 with [get-editor "Referee 2013-12-01" | get-editbox -after [get-label "Date Of Birth"]] {
     set-text "15/4/2012"
 }

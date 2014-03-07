@@ -6,8 +6,8 @@ Element-Name: SetupRuleModelObjects
 Element-Type: context
 Element-Version: 2.0
 Id: _ElgmoHlIEeO9Ja8zvRhhOQ
-Q7-Runtime-Version: 1.3.7.201309090800
-Save-Time: 1/9/14 6:01 PM
+Q7-Runtime-Version: 1.3.10.201312200736
+Save-Time: 3/6/14 6:45 PM
 
 ------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998
 Content-Type: text/ecl
@@ -20,7 +20,7 @@ with [get-window "Create Project"] {
 }
 get-view "Model Explorer" | get-tree | select Model | get-menu "New Model Element" | click
 with [get-window "Add new model element"] {
-    get-tree | select "bowling/Player"
+    try { get-tree | select "Player" } -catch { get-tree | select "bowling/Player" }
     get-button Finish | click
 }
 get-editor View | get-button "Link Root EClas" | click
