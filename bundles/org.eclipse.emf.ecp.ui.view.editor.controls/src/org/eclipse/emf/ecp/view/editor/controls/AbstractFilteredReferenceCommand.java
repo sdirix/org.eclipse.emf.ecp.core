@@ -223,7 +223,10 @@ public abstract class AbstractFilteredReferenceCommand<T extends EStructuralFeat
 
 		public TreePath getTreePath() {
 			if (getTreeViewer() != null) {
-				treePath = ((TreeSelection) getTreeViewer().getSelection()).getPaths()[0];
+				final TreeSelection selection = (TreeSelection) getTreeViewer().getSelection();
+				if (!selection.isEmpty()) {
+					treePath = selection.getPaths()[0];
+				}
 			}
 			return treePath;
 		}
