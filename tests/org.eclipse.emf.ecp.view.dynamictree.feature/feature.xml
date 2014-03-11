@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.emf.ecp.view.dynamictree.feature"
       label="Dynamic Tree Feature"
-      version="1.2.0.qualifier">
+      version="1.2.1.qualifier">
 
    <description url="http://www.example.com/description">
       [Enter Feature Description here.]

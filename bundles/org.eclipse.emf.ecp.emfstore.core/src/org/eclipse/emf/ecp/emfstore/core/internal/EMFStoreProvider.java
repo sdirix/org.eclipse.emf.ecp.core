@@ -562,10 +562,10 @@ public final class EMFStoreProvider extends DefaultProvider {
 	/**
 	 * This gets the ECPRepository based on a ServerInfo.
 	 * 
-	 * @param serverInfo the {@link ServerInfo} to get the {@link ECPRepository} for
+	 * @param serverInfo the {@link ESServer} to get the {@link ECPRepository} for
 	 * @return the {@link ECPRepository} corresponding to this ServerInfo or null if none found
 	 */
-	public ECPRepository getRepository(ServerInfo serverInfo) {
+	public ECPRepository getRepository(ESServer serverInfo) {
 		if (serverInfo != null) {
 			for (final ECPRepository internalRepository : ECPUtil.getECPRepositoryManager().getRepositories()) {
 				if (internalRepository.getProvider().equals(this)) {

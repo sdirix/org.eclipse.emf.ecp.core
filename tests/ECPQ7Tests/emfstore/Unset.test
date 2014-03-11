@@ -140,7 +140,7 @@ with [get-editor Fan] {
     get-date-time | get-property date | equals "2013/5/12" | verify-true
     get-date-time -after [get-label "Date Of Birth"] -index 1 | get-property time | equals "17:9:46" | verify-true
     get-button "Unset Date" | get-property tooltip | equals "Unset Date" | verify-true
-    get-button "The Has Season Ticket of the Fan" | get-property selected | equals false | verify-true
+    get-button -after [get-label "Has Season Ticket"] | get-property selected | equals false | verify-true
     get-button "Unset boolean" | get-property tooltip | equals "Unset boolean" | verify-true
     get-button Unset | get-property tooltip | equals Unset | verify-true
     get-combo -after [get-label Gender] | get-property selection | equals Female | verify-true
@@ -189,7 +189,7 @@ with [get-editor Fan] {
     }
     get-combo -after [get-label Gender] | get-property selection | equals Female | verify-true
     get-button "Unset value" | get-property tooltip | equals "Unset value" | verify-true
-    get-button "The Has Season Ticket of the Fan" | get-property selected | equals false | verify-true
+    get-button -after [get-label "Has Season Ticket"] | get-property selected | equals false | verify-true
     get-button "Unset boolean" | get-property tooltip | equals "Unset boolean" | verify-true
     get-button "Unset Link" | get-property tooltip | equals "Unset Link" | verify-true
     get-label "(Not Set)" | get-property caption | equals "(Not Set)" | verify-true
