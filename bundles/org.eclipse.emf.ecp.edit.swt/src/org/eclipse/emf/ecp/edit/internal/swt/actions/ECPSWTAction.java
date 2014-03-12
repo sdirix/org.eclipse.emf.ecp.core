@@ -54,4 +54,31 @@ public abstract class ECPSWTAction extends Action {
 	public EditingDomain getEditingDomain() {
 		return editingDomain;
 	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		return this.getClass().getName().hashCode() * setting.getEStructuralFeature().getName().hashCode();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object other) {
+		if (other == null) {
+			return false;
+		}
+		if (!other.getClass().isInstance(this)) {
+			return false;
+		}
+		final ECPSWTAction otherAction = (ECPSWTAction) other;
+		return setting.getEStructuralFeature().getName().equals(otherAction.setting.getEStructuralFeature().getName());
+	}
 }

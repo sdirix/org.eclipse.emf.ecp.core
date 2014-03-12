@@ -23,7 +23,6 @@ import org.eclipse.emf.emfstore.client.ESServer;
 import org.eclipse.emf.emfstore.client.ESUsersession;
 import org.eclipse.emf.emfstore.client.observer.ESLoginObserver;
 import org.eclipse.emf.emfstore.client.observer.ESLogoutObserver;
-import org.eclipse.emf.emfstore.internal.client.model.impl.api.ESServerImpl;
 import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ILightweightLabelDecorator;
@@ -121,8 +120,8 @@ public class RepositoryViewLabelDecorator extends LabelProvider implements ILigh
 					// EMFStoreProvider.INSTANCE.getRepository(((ESServerImpl) usersession.getServer())
 					// .toInternalAPI())));
 					((EMFStoreProvider) ECPUtil.getResolvedElement(ECPUtil.getECPProviderRegistry()
-						.getProvider(EMFStoreProvider.NAME))).getRepository(((ESServerImpl) usersession.getServer())
-						.toInternalAPI())));
+						.getProvider(EMFStoreProvider.NAME))).getRepository(usersession.getServer()
+						)));
 			}
 		});
 	}

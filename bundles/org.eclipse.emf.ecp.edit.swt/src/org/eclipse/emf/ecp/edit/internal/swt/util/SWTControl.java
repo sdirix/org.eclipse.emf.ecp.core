@@ -319,7 +319,7 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 	 */
 	protected Button createButtonForAction(final Action action, final Composite composite) {
 		final Button selectButton = new Button(composite, SWT.PUSH);
-		selectButton.setImage(action.getImageDescriptor().createImage());
+		selectButton.setImage(Activator.getImage(action));
 		selectButton.setEnabled(!getControl().isReadonly());
 		selectButton.setToolTipText(action.getToolTipText());
 		selectButton.addSelectionListener(new SelectionAdapter() {

@@ -90,7 +90,7 @@ public class XmlDateControlText extends AbstractTextControl {
 		super.fillControlComposite(main);
 		// ((GridLayout) composite.getLayout()).numColumns = 2;
 		bDate = new Button(main, SWT.PUSH);
-		bDate.setImage(Activator.getImageDescriptor("icons/date.png").createImage()); //$NON-NLS-1$
+		bDate.setImage(Activator.getImage("icons/date.png")); //$NON-NLS-1$
 		bDate.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_xmldate"); //$NON-NLS-1$
 		bDate.addSelectionListener(new SelectionAdapterExtension());
 	}

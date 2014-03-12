@@ -51,6 +51,7 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 
 /**
@@ -482,24 +483,28 @@ public abstract class MultiControl extends SWTControl {
 	 * @see org.eclipse.emf.ecp.edit.spi.ECPAbstractControl#applyValidation(org.eclipse.emf.ecp.view.spi.model.VDiagnostic)
 	 */
 	@Override
-	protected void applyValidation(VDiagnostic diagnostic) {
-		Diagnostic displayedDiagnostic = getMostSevereDiagnostic(diagnostic);
-		if (displayedDiagnostic == null) {
-			if (validationLabel == null || validationLabel.isDisposed()) {
-				return;
+	protected void applyValidation(final VDiagnostic diagnostic) {
+		Display.getDefault().asyncExec(new Runnable() {
+			public void run() {
+				final Diagnostic displayedDiagnostic = getMostSevereDiagnostic(diagnostic);
+				if (displayedDiagnostic == null) {
+					if (validationLabel == null || validationLabel.isDisposed()) {
+						return;
+					}
+					updateValidationColor(null);
+					validationLabel.setImage(null);
+					validationLabel.setToolTipText(""); //$NON-NLS-1$
+				} else {
+					updateValidationColor(getValidationBackgroundColor(displayedDiagnostic.getSeverity()));
+					if (validationLabel == null) {
+						return;
+					}
+					final Image image = getValidationIcon(displayedDiagnostic.getSeverity());
+					validationLabel.setImage(image);
+					validationLabel.setToolTipText(displayedDiagnostic.getMessage());
+				}
 			}
-			updateValidationColor(null);
-			validationLabel.setImage(null);
-			validationLabel.setToolTipText(""); //$NON-NLS-1$
-		} else {
-			updateValidationColor(getValidationBackgroundColor(displayedDiagnostic.getSeverity()));
-			if (validationLabel == null) {
-				return;
-			}
-			final Image image = getValidationIcon(displayedDiagnostic.getSeverity());
-			validationLabel.setImage(image);
-			validationLabel.setToolTipText(displayedDiagnostic.getMessage());
-		}
+		});
 	}
 
 	/**
@@ -509,6 +514,9 @@ public abstract class MultiControl extends SWTControl {
 	private Diagnostic getMostSevereDiagnostic(VDiagnostic diagnostic) {
 		int highestSeverity = -1;
 		Diagnostic displayedDiagnostic = null;
+		if (diagnostic == null) {
+			return displayedDiagnostic;
+		}
 		final EList<Object> diagnostics = diagnostic.getDiagnostics();
 		for (final Object object : diagnostics) {
 			if (object == null) {

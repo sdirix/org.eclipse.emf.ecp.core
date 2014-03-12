@@ -179,8 +179,8 @@ public class ValidationServiceGCTest extends CommonValidationTest {
 	 * anymore
 	 * in contrast to the control.
 	 */
-	@Test
 	@Ignore
+	@Test
 	public void testRemoveChildOfDomainObject() {
 
 		final Tuple<VView, Computer> t = createComputerView();

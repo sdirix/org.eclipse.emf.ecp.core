@@ -5,15 +5,15 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.eclipse.emf.ecp</groupId>
 	<artifactId>ecp-parent</artifactId>
-	<version>1.2.0-SNAPSHOT</version>
+	<version>1.2.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<properties>
 		<tycho-version>0.18.0</tycho-version>
 		<tycho-extras-version>0.18.0</tycho-extras-version>
 		<javadoc-version>2.9</javadoc-version>
-		<javadoc-title>EMF Client Platform 1.1.1 API</javadoc-title>
-		<ecp-version>1.2.0-SNAPSHOT</ecp-version>
+		<javadoc-title>EMF Client Platform 1.2.1 API</javadoc-title>
+		<ecp-version>1.2.1-SNAPSHOT</ecp-version>
 		<maven.antrun.plugin.version>1.7</maven.antrun.plugin.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<tycho.scmUrl>scm:git:git://git.eclipse.org/gitroot/emfclient/org.eclipse.emf.ecp.core.git</tycho.scmUrl>
@@ -84,6 +84,12 @@
 		<outputDirectory>bin</outputDirectory>
 
 		<plugins>
+			<plugin>  
+				<groupId>org.eclipse.tycho</groupId>  
+				<artifactId>tycho-versions-plugin</artifactId>  
+				<version>${tycho-version}</version>  
+			</plugin>
+
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-maven-plugin</artifactId>
@@ -204,7 +210,7 @@
 					</execution>
 				</executions>
 			</plugin>
-			
+
 			<!-- enable source bundle generation -->
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>

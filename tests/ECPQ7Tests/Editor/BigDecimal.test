@@ -56,6 +56,14 @@ with [get-window "Invalid Number"] {
 
 get-window "Invalid Number" | get-button OK | click
 
+get-editor "Player Jonas" | get-editbox -after [get-label "Win Loss Ratio"] | set-text gzfghjcjhcxhjf
+with [get-window "Invalid Number"] {
+    get-property title | equals "Invalid Number" | verify-true
+    get-label "The Number you have entered is invalid. The value will be unset." | get-property caption 
+        | equals "The Number you have entered is invalid. The value will be unset." | verify-true
+}
+get-window "Invalid Number" | get-button OK | click
+
 get-editor "Player Maximilian" | get-editbox -after [get-label "Number Of Victories"] | click-text 1 2
 get-editor "Player Maximilian" | get-editbox -after [get-label "Win Loss Ratio"] | get-property text | equals 356356 
     | verify-true

@@ -15,6 +15,7 @@ import java.text.DateFormat;
 import java.util.Date;
 
 import org.eclipse.emf.ecp.core.ECPProject;
+import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.exceptions.ECPProjectWithNameExistsException;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
@@ -43,6 +44,8 @@ public class CheckoutObserver implements ESCheckoutObserver {
 	 */
 	public void checkoutDone(ESLocalProject project) {
 
+		final ECPRepository repository = EMFStoreProvider.INSTANCE.getRepository(
+			project.getUsersession().getServer());
 		boolean ecpProjectExists = false;
 		boolean validProjectName = false;
 
@@ -62,7 +65,7 @@ public class CheckoutObserver implements ESCheckoutObserver {
 		if (!ecpProjectExists) {
 			while (!validProjectName) {
 				try {
-					ECPUtil.getECPProjectManager().createProject(EMFStoreProvider.INSTANCE.getProvider(), projectName,
+					ECPUtil.getECPProjectManager().createProject(repository, projectName,
 						createECPProperties(project));
 					validProjectName = true;
 				} catch (final ECPProjectWithNameExistsException ex) {
