@@ -56,7 +56,10 @@ public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject
 	private static final String PROJECT_FOLDERNAME = "projects"; //$NON-NLS-1$
 	/**
 	 * The Singleton to access the implementation of the Default ECPProjectManager.
+	 * 
+	 * @deprecated use {@link ECPUtil} instead
 	 */
+	@Deprecated
 	public static ECPProjectManagerImpl INSTANCE;
 	/**
 	 * This variable defines whether the projects where already initialized. Default value is false.

@@ -52,7 +52,10 @@ public final class ECPProviderRegistryImpl extends ElementRegistry<InternalProvi
 	ECPProviderRegistry {
 	/**
 	 * The Singleton to access the implementation of the Default ECPProviderRegistry.
+	 * 
+	 * @deprecated use {@link ECPUtil} instead
 	 */
+	@Deprecated
 	public static ECPProviderRegistryImpl INSTANCE;
 
 	private final ProviderParser extensionParser = new ProviderParser();
