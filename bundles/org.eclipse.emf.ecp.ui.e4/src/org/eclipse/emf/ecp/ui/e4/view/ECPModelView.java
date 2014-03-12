@@ -34,7 +34,6 @@ import org.eclipse.emf.ecp.internal.ui.model.ModelContentProvider;
 import org.eclipse.emf.ecp.internal.ui.util.ECPHandlerHelper;
 import org.eclipse.emf.ecp.ui.common.TreeViewerFactory;
 import org.eclipse.emf.ecp.ui.e4.editor.ECPE4Editor;
-import org.eclipse.emf.ecp.ui.e4.util.EPartServiceHelper;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelection;
@@ -60,7 +59,9 @@ public class ECPModelView {
 	private static final String POPUPMENU_NAVIGATOR = "org.eclipse.emf.ecp.e4.application.popupmenu.navigator"; //$NON-NLS-1$
 	private TreeViewer modelExplorerTree;
 	private ModelContentProvider contentProvider;
-	private final EPartService partService = EPartServiceHelper.getEPartService();
+
+	@Inject
+	private EPartService partService;
 
 	private MPart modelViewPart;
 
