@@ -18,6 +18,8 @@
     <elements xsi:type="commands:Command" xmi:id="_m91NYHkWEeOKPMuLiPS6LA" elementId="org.eclipse.emf.ecp.e4.emfstore.command.branchCreate" commandName="Create Branch"/>
     <elements xsi:type="commands:Command" xmi:id="_o3rD4HkWEeOKPMuLiPS6LA" elementId="org.eclipse.emf.ecp.e4.emfstore.command.branchMerge" commandName="Merge with Branch"/>
     <elements xsi:type="commands:Command" xmi:id="_rBTp4HkWEeOKPMuLiPS6LA" elementId="org.eclipse.emf.ecp.e4.emfstore.command.updateToVersion" commandName="Update to version..."/>
+    <elements xsi:type="commands:Command" xmi:id="_8LZM4KN_EeOHes-ZueR8hA" elementId="org.eclipse.emf.ecp.e4.emfstore.command.importProject" commandName="Import Project"/>
+    <elements xsi:type="commands:Command" xmi:id="_4GkskKN_EeOHes-ZueR8hA" elementId="org.eclipse.emf.ecp.e4.emfstore.command.exportProject" commandName="Export Project"/>
   </fragments>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_8oN_0JozEeKJoJcmiy2C6w" featurename="handlers" parentElementId="org.eclipse.e4.ide.application">
     <elements xsi:type="commands:Handler" xmi:id="_qRumIJoyEeKJoJcmiy2C6w" elementId="org.eclipse.emf.ecp.e4.emfstore.handler.login" contributionURI="bundleclass://org.eclipse.emf.ecp.emfstore.ui.e4/org.eclipse.emf.ecp.e4.emfstore.LogInHandler" command="_pCdWoJoyEeKJoJcmiy2C6w"/>
@@ -37,6 +39,8 @@
     <elements xsi:type="commands:Handler" xmi:id="_gZAZAHkXEeOKPMuLiPS6LA" elementId="org.eclipse.emf.ecp.e4.emfstore.handler.branchCreate" contributionURI="bundleclass://org.eclipse.emf.ecp.emfstore.ui.e4/org.eclipse.emf.ecp.e4.emfstore.CreateBranchHandler" command="_m91NYHkWEeOKPMuLiPS6LA"/>
     <elements xsi:type="commands:Handler" xmi:id="_gpFcYHkXEeOKPMuLiPS6LA" elementId="org.eclipse.emf.ecp.e4.emfstore.handler.branchMerge" contributionURI="bundleclass://org.eclipse.emf.ecp.emfstore.ui.e4/org.eclipse.emf.ecp.e4.emfstore.MergeBranchHandler" command="_o3rD4HkWEeOKPMuLiPS6LA"/>
     <elements xsi:type="commands:Handler" xmi:id="_g53qYHkXEeOKPMuLiPS6LA" elementId="org.eclipse.emf.ecp.e4.emfstore.handler.updateToVersion" contributionURI="bundleclass://org.eclipse.emf.ecp.emfstore.ui.e4/org.eclipse.emf.ecp.e4.emfstore.UpdateToVersionHandler" command="_rBTp4HkWEeOKPMuLiPS6LA"/>
+    <elements xsi:type="commands:Handler" xmi:id="__dDK4KN_EeOHes-ZueR8hA" elementId="org.eclipse.emf.ecp.e4.emfstore.handler.importProject" contributionURI="bundleclass://org.eclipse.emf.ecp.emfstore.ui.e4/org.eclipse.emf.ecp.e4.emfstore.ImportProjectHandler" command="_8LZM4KN_EeOHes-ZueR8hA"/>
+    <elements xsi:type="commands:Handler" xmi:id="_c-vHIKOAEeOHes-ZueR8hA" elementId="org.eclipse.emf.ecp.e4.emfstore.handler.exportProject" contributionURI="bundleclass://org.eclipse.emf.ecp.emfstore.ui.e4/org.eclipse.emf.ecp.e4.emfstore.ExportProjectHandler" command="_4GkskKN_EeOHes-ZueR8hA"/>
   </fragments>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="__dQ6UJozEeKJoJcmiy2C6w" featurename="children" parentElementId="org.eclipse.emf.ecp.e4.application.popupmenu.repository">
     <elements xsi:type="menu:HandledMenuItem" xmi:id="_szdjEJoyEeKJoJcmiy2C6w" elementId="org.eclipse.emf.ecp.e4.emfstore.handledmenuitem.login" label="LogIn" iconURI="platform:/plugin/org.eclipse.emf.ecp.emfstore.ui.e4/icons/repository/login.png" command="_pCdWoJoyEeKJoJcmiy2C6w">
@@ -92,5 +96,9 @@
     <elements xsi:type="menu:HandledMenuItem" xmi:id="_Gu5V0HkYEeOKPMuLiPS6LA" elementId="org.eclipse.emf.ecp.e4.emfstore.handledmenuitem.branchMerge" label="Merge with Branch" iconURI="platform:/plugin/org.eclipse.emf.ecp.emfstore.ui.e4/icons/project/merge.png" command="_o3rD4HkWEeOKPMuLiPS6LA">
       <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_N5Xz8HkiEeOKPMuLiPS6LA" coreExpressionId="org.eclipse.emf.ecp.emfstore.ui.e4.branchMerge"/>
     </elements>
+    <elements xsi:type="menu:HandledMenuItem" xmi:id="_4EB5cKOAEeOHes-ZueR8hA" elementId="org.eclipse.emf.ecp.e4.emfstore.handledmenuitem.exportProject" label="Export Project" command="_4GkskKN_EeOHes-ZueR8hA">
+      <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_iIYsEKOBEeOHes-ZueR8hA" coreExpressionId="org.eclipse.emf.ecp.emfstore.ui.e4.exportProject"/>
+    </elements>
+    <elements xsi:type="menu:HandledMenuItem" xmi:id="_IDkUwKOAEeOHes-ZueR8hA" elementId="org.eclipse.emf.ecp.e4.emfstore.handledmenuitem.importProject" label="Import Project" command="_8LZM4KN_EeOHes-ZueR8hA"/>
   </fragments>
 </fragment:ModelFragments>
