@@ -34,12 +34,6 @@
          version="0.0.0"/>
 
    <plugin
-         id="org.eclipse.emf.ecp.view.custom.ui"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
          id="org.eclipse.emf.ecp.view.custom.ui.swt"
          download-size="0"
          install-size="0"
