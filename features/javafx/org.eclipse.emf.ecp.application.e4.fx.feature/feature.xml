@@ -131,13 +131,6 @@
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.fx.ui.workbench.fx.controls"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.fx.ui.workbench.renderers.base"
          download-size="0"
          install-size="0"
