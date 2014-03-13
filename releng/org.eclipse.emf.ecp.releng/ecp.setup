@@ -42,15 +42,13 @@
     <roots id="org.eclipse.emf.ecp.products"/>
     <roots id="org.eclipse.emf.ecp.target.rap"/>
     <roots id="org.eclipse.emf.ecp.target.rcp"/>
-    <roots id="org.eclipse.fx.target.feature.feature.group"/>
-    <roots id="org.eclipse.emf.ecp.view.sdk.fx.feature"/>
-    <roots id="org.eclipse.emf.ecp.application.e4.fx.feature"/>
+    <roots id="org.eclipse.fx.runtime.feature.feature.group"/>
     <sourceLocators rootFolder="${git.clone}" locateNestedProjects="true"/>
     <repositoryLists name="Kepler Dependencies">
       <p2Repositories url="http://download.eclipse.org/modeling/emf/cdo/orbit/latest-S"/>
-      <p2Repositories url="http://download.eclipse.org/releases/kepler"/>
+      <p2Repositories url="http://download.eclipse.org/releases/luna"/>
       <p2Repositories url="http://download.eclipse.org/technology/swtbot/releases/latest"/>
-      <p2Repositories url="http://download.eclipse.org/eclipse/updates/4.3"/>
+      <p2Repositories url="http://download.eclipse.org/eclipse/updates/4.4milestones"/>
       <p2Repositories url="http://download.eclipse.org/rt/rap/incubator/2.1/fileupload"/>
       <p2Repositories url="http://download.eclipse.org/emf-store/releases_11"/>
       <p2Repositories url="http://download.eclipse.org/efxclipse/runtime-nightly/site"/>
