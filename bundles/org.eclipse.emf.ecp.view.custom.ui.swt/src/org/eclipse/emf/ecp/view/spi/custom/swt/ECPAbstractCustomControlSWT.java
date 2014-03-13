@@ -49,6 +49,7 @@ import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescription;
+import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
@@ -657,5 +658,16 @@ public abstract class ECPAbstractCustomControlSWT
 	 */
 	protected boolean setEditable(boolean editable) {
 		return true;
+	}
+
+	/**
+	 * Creates a simple grid.
+	 * 
+	 * @param rows the number of rows
+	 * @param columns the number of columns
+	 * @return the {@link GridDescription}
+	 */
+	protected final GridDescription createSimpleGrid(int rows, int columns) {
+		return GridDescriptionFactory.INSTANCE.createSimpleGrid(rows, columns, null);
 	}
 }

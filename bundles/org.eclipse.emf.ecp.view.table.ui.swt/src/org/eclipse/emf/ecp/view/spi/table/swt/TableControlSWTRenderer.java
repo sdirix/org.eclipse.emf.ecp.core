@@ -654,7 +654,14 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 				}
 				tooltip.append(diagnostic.getMessage());
 			}
-			return tooltip.toString();
+			if (tooltip.length() != 0) {
+				return tooltip.toString();
+			}
+			final Object value = ((EObject) element).eGet(feature);
+			if (value == null) {
+				return null;
+			}
+			return String.valueOf(value);
 		}
 
 		@Override

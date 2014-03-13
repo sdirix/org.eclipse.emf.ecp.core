@@ -34,7 +34,7 @@ public class SWTCategoryRenderer extends ContainerSWTRenderer<VCategory> {
 	 */
 	@Override
 	protected String getCustomVariant() {
-		return "org.eclipse.emf.ecp.view.categorization.category"; //$NON-NLS-1$
+		return "org_eclipse_emf_ecp_view_categorization_category"; //$NON-NLS-1$
 	}
 
 	/**

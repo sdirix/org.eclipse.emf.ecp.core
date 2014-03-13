@@ -56,7 +56,7 @@ public class ViewSWTRenderer extends ContainerSWTRenderer<VView> {
 			GridDataFactory
 				.fillDefaults()
 				.align(SWT.FILL, SWT.FILL)
-				.grab(true, false)
+				.grab(true, true)
 				.span(
 					1 + fullRowDescription.getColumns() - gridDescription.getColumns(), 1)
 				.applyTo(control);
