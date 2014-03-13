@@ -14,7 +14,7 @@ package org.eclipse.emf.ecp.view.spi.vertical.swt;
 
 import java.util.Collection;
 
-import org.eclipse.emf.ecp.view.spi.core.swt.SWTContainerRenderer;
+import org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalLayout;
 
@@ -25,14 +25,14 @@ import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalLayout;
  * @since 1.2
  * 
  */
-public class VerticalLayoutSWTRenderer extends SWTContainerRenderer<VVerticalLayout> {
+public class VerticalLayoutSWTRenderer extends ContainerSWTRenderer<VVerticalLayout> {
 
 	private static final String CONTROL_COLUMN = "org_eclipse_emf_ecp_ui_layout_vertical"; //$NON-NLS-1$
 
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SWTContainerRenderer#getChildren()
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer#getChildren()
 	 */
 	@Override
 	protected Collection<VContainedElement> getChildren() {
@@ -42,7 +42,7 @@ public class VerticalLayoutSWTRenderer extends SWTContainerRenderer<VVerticalLay
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SWTContainerRenderer#getCustomVariant()
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer#getCustomVariant()
 	 */
 	@Override
 	protected String getCustomVariant() {

@@ -7,13 +7,11 @@ import static org.mockito.Mockito.mock;
 import org.eclipse.emf.ecp.view.core.swt.test.model.SimpleTestObject;
 import org.eclipse.emf.ecp.view.core.swt.test.model.TestFactory;
 import org.eclipse.emf.ecp.view.core.swt.test.model.TestPackage;
-import org.eclipse.emf.ecp.view.internal.core.swt.renderer.SWTDateTimeControlRenderer;
-import org.eclipse.emf.ecp.view.spi.layout.grid.GridCell;
-import org.eclipse.emf.ecp.view.spi.layout.grid.GridCellDescription;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
+import org.eclipse.emf.ecp.view.spi.swt.layout.GridCell;
 import org.eclipse.emf.ecp.view.test.common.swt.DatabindingClassRunner;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -28,7 +26,7 @@ public class DateTimeControlRendererTest extends AbstractControlTest {
 	@Before
 	public void before() {
 		SWTRendererFactory factory = mock(SWTRendererFactory.class);
-		setup(new SWTDateTimeControlRenderer(factory));
+		setup(new DateTimeControlSWTRenderer(factory));
 	}
 
 	@After
@@ -40,8 +38,7 @@ public class DateTimeControlRendererTest extends AbstractControlTest {
 	public void renderControlLabelAlignmentNone()
 			throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		setMockLabelAlignment(LabelAlignment.NONE);
-		Control render = renderControl(new GridCell(0, 1,
-				new GridCellDescription()));
+		Control render = renderControl(new GridCell(0, 1,renderer));
 		assertControl(render);
 	}
 
@@ -49,8 +46,7 @@ public class DateTimeControlRendererTest extends AbstractControlTest {
 	public void renderControlLabelAlignmentLeft()
 			throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		setMockLabelAlignment(LabelAlignment.LEFT);
-		Control render = renderControl(new GridCell(0, 2,
-				new GridCellDescription()));
+		Control render = renderControl(new GridCell(0, 2,renderer));
 
 		assertControl(render);
 	}

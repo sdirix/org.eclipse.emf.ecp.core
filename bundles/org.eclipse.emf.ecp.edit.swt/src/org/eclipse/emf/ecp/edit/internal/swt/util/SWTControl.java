@@ -53,6 +53,7 @@ import org.eclipse.swt.widgets.Label;
  * @author Eugen Neufeld
  * 
  */
+@Deprecated
 public abstract class SWTControl extends ECPAbstractControl implements ECPControlSWT {
 
 	/**

@@ -31,7 +31,9 @@ import org.eclipse.emf.ecp.edit.internal.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.ecp.edit.spi.ViewLocaleService;
 import org.eclipse.emf.ecp.view.internal.core.swt.Activator;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
+import org.eclipse.emf.ecp.view.spi.swt.layout.GridCell;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.dialogs.IDialogLabelKeys;
@@ -57,7 +59,7 @@ import org.eclipse.swt.widgets.Text;
  * @author Eugen
  * 
  */
-public class SWTXMLDateControlRenderer extends SWTTextControlRenderer {
+public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 	private final class SelectionAdapterExtension extends SelectionAdapter {
 		private final Control button;
 		private final IObservableValue modelValue;
@@ -222,22 +224,22 @@ public class SWTXMLDateControlRenderer extends SWTTextControlRenderer {
 		}
 	}
 
-	public SWTXMLDateControlRenderer() {
+	public XMLDateControlSWTRenderer() {
 		super();
 	}
 
 	// test constructor
-	SWTXMLDateControlRenderer(SWTRendererFactory factory) {
+	XMLDateControlSWTRenderer(SWTRendererFactory factory) {
 		super(factory);
 	}
 
 	@Override
-	protected Control createControl(Composite parent, Setting setting) {
+	protected Control createSWTControl(Composite parent, Setting setting) {
 		final Composite main = new Composite(parent, SWT.NONE);
 		main.setBackground(parent.getBackground());
 		GridLayoutFactory.fillDefaults().numColumns(2).applyTo(main);
 		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(main);
-		final Control text = super.createControl(main, setting);
+		final Control text = super.createSWTControl(main, setting);
 		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.CENTER).applyTo(text);
 		final Button bDate = new Button(main, SWT.PUSH);
 		GridDataFactory.fillDefaults().grab(false, false).align(SWT.CENTER, SWT.CENTER).applyTo(bDate);
@@ -248,8 +250,8 @@ public class SWTXMLDateControlRenderer extends SWTTextControlRenderer {
 	}
 
 	@Override
-	protected String getTextMessage(Setting setting, ViewModelContext viewModelContext) {
-		return ((SimpleDateFormat) setupFormat(viewModelContext)).toPattern();
+	protected String getTextMessage(Setting setting) {
+		return ((SimpleDateFormat) setupFormat(getViewModelContext())).toPattern();
 	}
 
 	@Override
@@ -292,7 +294,7 @@ public class SWTXMLDateControlRenderer extends SWTTextControlRenderer {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SWTControlRenderer#setValidationColor(org.eclipse.swt.widgets.Control,
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer#setValidationColor(org.eclipse.swt.widgets.Control,
 	 *      org.eclipse.swt.graphics.Color)
 	 */
 	@Override
@@ -301,23 +303,24 @@ public class SWTXMLDateControlRenderer extends SWTTextControlRenderer {
 	}
 
 	@Override
-	protected void setControlEnabled(int index, Control control, boolean enabled) {
-		if (index == 2) {
+	protected void setControlEnabled(GridCell gridCell, Control control, boolean enabled) {
+		if (getVElement().getLabelAlignment() == LabelAlignment.NONE && gridCell.getColumn() == 1
+			|| getVElement().getLabelAlignment() == LabelAlignment.LEFT && gridCell.getColumn() == 2) {
 			((Text) ((Composite) control).getChildren()[0]).setEditable(enabled);
 			((Button) ((Composite) control).getChildren()[1]).setEnabled(enabled);
 		} else {
-			super.setControlEnabled(index, control, enabled);
+			super.setControlEnabled(gridCell, control, enabled);
 		}
 	}
 
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.internal.core.swt.renderer.SWTTextControlRenderer#getUnsetText()
+	 * @see org.eclipse.emf.ecp.view.internal.core.swt.renderer.TextControlSWTRenderer#getUnsetText()
 	 */
 	@Override
 	protected String getUnsetText() {
-		return ControlMessages.XmlDateControlText_NoDateSetClickToSetDate;
+		return RendererMessages.XmlDateControlText_NoDateSetClickToSetDate;
 	}
 
 }

@@ -14,15 +14,13 @@
 package org.eclipse.emf.ecp.view.internal.core.swt.renderer;
 
 import java.util.Collection;
-import java.util.Set;
 
-import org.eclipse.emf.ecp.view.spi.core.swt.SWTContainerRenderer;
-import org.eclipse.emf.ecp.view.spi.layout.grid.GridCell;
-import org.eclipse.emf.ecp.view.spi.layout.grid.GridCellDescription;
-import org.eclipse.emf.ecp.view.spi.layout.grid.GridDescription;
+import org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
+import org.eclipse.emf.ecp.view.spi.swt.layout.GridCell;
+import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescription;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
@@ -30,13 +28,13 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Layout;
 
 /**
- * The Class SWTViewRenderer.
+ * The Class ViewSWTRenderer.
  */
-public class SWTViewRenderer extends SWTContainerRenderer<VView> {
+public class ViewSWTRenderer extends ContainerSWTRenderer<VView> {
 	/**
 	 * Default constructor.
 	 */
-	public SWTViewRenderer() {
+	public ViewSWTRenderer() {
 		super();
 	}
 
@@ -45,23 +43,22 @@ public class SWTViewRenderer extends SWTContainerRenderer<VView> {
 	 * 
 	 * @param factory the {@link SWTRendererFactory} to use.
 	 */
-	SWTViewRenderer(SWTRendererFactory factory) {
+	ViewSWTRenderer(SWTRendererFactory factory) {
 		super(factory);
 	}
 
 	@Override
 	protected final void setLayoutDataForControl(GridCell gridCell, GridDescription gridDescription,
-		int maxNumberColumns, Set<GridCellDescription> preDescriptions, Set<GridCellDescription> postDescriptions,
+		GridDescription fullRowDescription,
 		Control control) {
 
 		if (gridCell.getColumn() + 1 == gridDescription.getColumns()) {
 			GridDataFactory
 				.fillDefaults()
 				.align(SWT.FILL, SWT.FILL)
-				.grab(true, true)
+				.grab(true, false)
 				.span(
-					1 + maxNumberColumns - gridDescription.getColumns() - preDescriptions.size()
-						- postDescriptions.size(), 1)
+					1 + fullRowDescription.getColumns() - gridDescription.getColumns(), 1)
 				.applyTo(control);
 		} else if (gridCell.getColumn() == 0) {
 			GridDataFactory.fillDefaults().grab(false, false)
@@ -80,7 +77,7 @@ public class SWTViewRenderer extends SWTContainerRenderer<VView> {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SWTContainerRenderer#getChildren()
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer#getChildren()
 	 */
 	@Override
 	protected Collection<VContainedElement> getChildren() {
@@ -95,7 +92,7 @@ public class SWTViewRenderer extends SWTContainerRenderer<VView> {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SWTContainerRenderer#getCustomVariant()
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer#getCustomVariant()
 	 */
 	@Override
 	protected String getCustomVariant() {

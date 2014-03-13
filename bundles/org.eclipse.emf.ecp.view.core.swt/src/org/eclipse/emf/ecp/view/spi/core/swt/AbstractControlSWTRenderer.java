@@ -198,6 +198,12 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 		return label;
 	}
 
+	/**
+	 * Creates a validation icon.
+	 * 
+	 * @param composite the {@link Composite} to create onto
+	 * @return the created Label
+	 */
 	protected final Label createValidationIcon(Composite composite) {
 		final Label validationLabel = new Label(composite, SWT.NONE);
 		validationLabel.setBackground(composite.getBackground());

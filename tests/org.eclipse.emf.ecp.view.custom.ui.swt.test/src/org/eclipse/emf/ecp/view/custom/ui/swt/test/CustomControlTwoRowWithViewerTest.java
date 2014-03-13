@@ -16,15 +16,16 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.custom.model.VCustomControl;
 import org.eclipse.emf.ecp.view.spi.custom.model.VCustomDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.custom.model.VCustomFactory;
-import org.eclipse.emf.ecp.view.spi.layout.grid.GridCell;
-import org.eclipse.emf.ecp.view.spi.layout.grid.GridCellDescription;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
+import org.eclipse.emf.ecp.view.spi.swt.layout.GridCell;
 import org.eclipse.emf.ecp.view.test.common.swt.DatabindingClassRunner;
 import org.eclipse.emf.ecp.view.test.common.swt.SWTViewTestHelper;
 import org.eclipse.emf.emfstore.bowling.BowlingFactory;
@@ -83,8 +84,8 @@ public class CustomControlTwoRowWithViewerTest {
 		// modelReference.resolve(league);
 		// }
 
-		label = (Label) customControl.renderControl(new GridCell(0, 0, new GridCellDescription()), parent);
-		Composite composite = (Composite) customControl.renderControl(new GridCell(0, 1, new GridCellDescription()),
+		label = (Label) customControl.renderControl(new GridCell(0, 0, null), parent);
+		Composite composite = (Composite) customControl.renderControl(new GridCell(0, 1, null),
 			parent);
 		// final List<RenderingResultRow<Control>> rows = customControl.createControls(parent);
 		// final DoubleColumnRow doubleRow = (DoubleColumnRow) rows.get(0);
@@ -115,16 +116,25 @@ public class CustomControlTwoRowWithViewerTest {
 		assertEquals(player2.getName(), table.getItem(0).getText());
 	}
 
+	private Map<GridCell, Control> createControlMap(Control... controls) {
+		final Map<GridCell, Control> result = new LinkedHashMap<GridCell, Control>();
+		for (int i = 0; i < controls.length; i++) {
+			result.put(new GridCell(0, i, null), controls[i]);
+		}
+		return result;
+	}
+
 	@Test
 	public void testSetEditable() {
 		controlModel.setEnabled(false);
-		customControl.applyEnable(new Control[] { label, table });
+
+		customControl.applyEnable(createControlMap(label, table));
 		// customControl.setEditable(false);
 		assertFalse(label.isEnabled());
 		assertFalse(table.isEnabled());
 		// customControl.setEditable(true);
 		controlModel.setEnabled(true);
-		customControl.applyEnable(new Control[] { label, table });
+		customControl.applyEnable(createControlMap(label, table));
 		assertTrue(label.isEnabled());
 		assertTrue(table.isEnabled());
 	}

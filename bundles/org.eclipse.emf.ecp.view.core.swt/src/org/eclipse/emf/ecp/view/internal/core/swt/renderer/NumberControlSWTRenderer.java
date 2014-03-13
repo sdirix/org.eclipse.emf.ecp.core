@@ -42,11 +42,11 @@ import org.eclipse.swt.widgets.Text;
  * @author Eugen Neufeld
  * 
  */
-public class SWTNumberControlRenderer extends SWTTextControlRenderer {
+public class NumberControlSWTRenderer extends TextControlSWTRenderer {
 	/**
 	 * Default constructor.
 	 */
-	public SWTNumberControlRenderer() {
+	public NumberControlSWTRenderer() {
 		super();
 	}
 
@@ -55,7 +55,7 @@ public class SWTNumberControlRenderer extends SWTTextControlRenderer {
 	 * 
 	 * @param factory the {@link SWTRendererFactory} to use.
 	 */
-	SWTNumberControlRenderer(SWTRendererFactory factory) {
+	NumberControlSWTRenderer(SWTRendererFactory factory) {
 		super(factory);
 	}
 
@@ -74,7 +74,7 @@ public class SWTNumberControlRenderer extends SWTTextControlRenderer {
 	}
 
 	@Override
-	protected String getTextMessage(Setting setting, ViewModelContext viewModelContext) {
+	protected String getTextMessage(Setting setting) {
 		if (NumericalHelper.isInteger(getInstanceClass(setting.getEStructuralFeature()))) {
 			return ControlMessages.NumericalControl_FormatNumerical;
 		} else if (NumericalHelper.isDouble(getInstanceClass(setting.getEStructuralFeature()))) {
@@ -268,7 +268,7 @@ public class SWTNumberControlRenderer extends SWTTextControlRenderer {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.internal.core.swt.renderer.SWTTextControlRenderer#getUnsetText()
+	 * @see org.eclipse.emf.ecp.view.internal.core.swt.renderer.TextControlSWTRenderer#getUnsetText()
 	 */
 	@Override
 	protected String getUnsetText() {

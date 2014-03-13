@@ -42,12 +42,12 @@ import org.eclipse.emf.ecp.edit.internal.swt.util.CellEditorFactory;
 import org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor;
 import org.eclipse.emf.ecp.edit.internal.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.ecp.view.spi.core.swt.AbstractControlSWTRenderer;
-import org.eclipse.emf.ecp.view.spi.layout.grid.GridCell;
-import org.eclipse.emf.ecp.view.spi.layout.grid.GridDescription;
-import org.eclipse.emf.ecp.view.spi.layout.grid.GridDescriptionFactory;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
+import org.eclipse.emf.ecp.view.spi.swt.layout.GridCell;
+import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescription;
+import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableColumn;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.edit.command.AddCommand;
@@ -103,7 +103,8 @@ import org.eclipse.swt.widgets.TableColumn;
  * @author Eugen Neufeld
  * 
  */
-public class SWTTableControlRenderer extends AbstractControlSWTRenderer<VTableControl> {
+public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableControl> {
+	private GridDescription rendererGridDescription;
 	private static final String FIXED_COLUMNS = "org.eclipse.rap.rwt.fixedColumns"; //$NON-NLS-1$
 
 	private static final String ICON_ADD = "icons/add.png"; //$NON-NLS-1$
@@ -116,11 +117,14 @@ public class SWTTableControlRenderer extends AbstractControlSWTRenderer<VTableCo
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#getGridDescription()
+	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#getGridDescription(GridDescription)
 	 */
 	@Override
-	public GridDescription getGridDescription() {
-		return GridDescriptionFactory.INSTANCE.createSimpleGrid(1, 1);
+	public GridDescription getGridDescription(GridDescription gridDescription) {
+		if (rendererGridDescription == null) {
+			rendererGridDescription = GridDescriptionFactory.INSTANCE.createSimpleGrid(1, 1, this);
+		}
+		return rendererGridDescription;
 	}
 
 	/**
@@ -432,6 +436,9 @@ public class SWTTableControlRenderer extends AbstractControlSWTRenderer<VTableCo
 	 * This method shows a user confirmation dialog when the user attempts to delete a row in the table.
 	 * 
 	 * @param deletionList the list of selected EObjects to delete
+	 * @param mainSetting the containment reference setting
+	 * @param addButton the add button
+	 * @param removeButton the remove button
 	 */
 	protected void deleteRowUserConfirmDialog(final List<EObject> deletionList, final Setting mainSetting,
 		final Button addButton, final Button removeButton) {
@@ -467,6 +474,7 @@ public class SWTTableControlRenderer extends AbstractControlSWTRenderer<VTableCo
 	 * elements.
 	 * 
 	 * @param deletionList the list of {@link EObject EObjects} to delete
+	 * @param mainSetting the containment reference setting
 	 */
 	protected void deleteRows(List<EObject> deletionList, Setting mainSetting) {
 		final EObject modelElement = mainSetting.getEObject();
@@ -481,6 +489,7 @@ public class SWTTableControlRenderer extends AbstractControlSWTRenderer<VTableCo
 	 * You can override this method but you have to call super nonetheless.
 	 * 
 	 * @param clazz the {@link EClass} defining the EObject to create
+	 * @param mainSetting the containment reference setting
 	 */
 	protected void addRow(EClass clazz, Setting mainSetting) {
 		final EObject modelElement = mainSetting.getEObject();
@@ -511,6 +520,17 @@ public class SWTTableControlRenderer extends AbstractControlSWTRenderer<VTableCo
 		for (final Object object : (Collection<?>) mainSetting.get(true)) {
 			tableViewer.update(object, null);
 		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#dispose()
+	 */
+	@Override
+	protected void dispose() {
+		rendererGridDescription = null;
+		super.dispose();
 	}
 
 	/**
@@ -606,6 +626,7 @@ public class SWTTableControlRenderer extends AbstractControlSWTRenderer<VTableCo
 		 *            the {@link CellEditor} instance
 		 * @param attributeMap
 		 *            an {@link IObservableMap} instance that is passed to the {@link ObservableMapCellLabelProvider}
+		 * @param vTableControl the {@link VTableControl}
 		 */
 		public ECPCellLabelProvider(EStructuralFeature feature, CellEditor cellEditor, IObservableMap attributeMap,
 			VTableControl vTableControl) {
@@ -802,7 +823,13 @@ public class SWTTableControlRenderer extends AbstractControlSWTRenderer<VTableCo
 			editingState.binding.updateTargetToModel();
 		}
 
-		class ColumnViewerEditorActivationListenerHelper extends ColumnViewerEditorActivationListener {
+		/**
+		 * A ColumnViewerEditorActivationListener to reset the cells after focus lost.
+		 * 
+		 * @author Eugen Neufeld
+		 * 
+		 */
+		private class ColumnViewerEditorActivationListenerHelper extends ColumnViewerEditorActivationListener {
 
 			@Override
 			public void afterEditorActivated(ColumnViewerEditorActivationEvent event) {
@@ -857,6 +884,12 @@ public class SWTTableControlRenderer extends AbstractControlSWTRenderer<VTableCo
 		}
 	}
 
+	/**
+	 * The {@link CellLabelProvider} to update the validation status on the cells.
+	 * 
+	 * @author Eugen Neufeld
+	 * 
+	 */
 	private class ValidationStatusCellLabelProvider extends CellLabelProvider {
 		private final VTableControl vTableControl;
 

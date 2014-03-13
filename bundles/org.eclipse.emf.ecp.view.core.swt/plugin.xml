@@ -5,53 +5,53 @@
    <extension
          point="org.eclipse.emf.ecp.ui.view.swt.renderers">
       <renderer
-            renderer="org.eclipse.emf.ecp.view.internal.core.swt.renderer.SWTViewRenderer">
+            renderer="org.eclipse.emf.ecp.view.internal.core.swt.renderer.ViewSWTRenderer">
          <staticTest
                element="org.eclipse.emf.ecp.view.spi.model.VView"
                priority="1">
          </staticTest>
       </renderer>
       <renderer
-            renderer="org.eclipse.emf.ecp.view.internal.core.swt.renderer.SWTLegacyControlRenderer">
+            renderer="org.eclipse.emf.ecp.view.internal.core.swt.renderer.ECPLegacyControlSWTRenderer">
          <staticTest
                element="org.eclipse.emf.ecp.view.spi.model.VControl"
                priority="1">
          </staticTest>
       </renderer>
       <renderer
-            renderer="org.eclipse.emf.ecp.view.internal.core.swt.renderer.SWTTextControlRenderer">
+            renderer="org.eclipse.emf.ecp.view.internal.core.swt.renderer.TextControlSWTRenderer">
          <dynamicTest
-               testClass="org.eclipse.emf.ecp.view.internal.core.swt.renderer.SWTTextControlRendererTester">
+               testClass="org.eclipse.emf.ecp.view.internal.core.swt.renderer.TextControlSWTRendererTester">
          </dynamicTest>
       </renderer>
       <renderer
-            renderer="org.eclipse.emf.ecp.view.internal.core.swt.renderer.SWTBooleanControlRenderer">
+            renderer="org.eclipse.emf.ecp.view.internal.core.swt.renderer.BooleanControlSWTRenderer">
          <dynamicTest
-               testClass="org.eclipse.emf.ecp.view.internal.core.swt.renderer.SWTBooleanControlRendererTester">
+               testClass="org.eclipse.emf.ecp.view.internal.core.swt.renderer.BooleanControlSWTRendererTester">
          </dynamicTest>
       </renderer>
       <renderer
-            renderer="org.eclipse.emf.ecp.view.internal.core.swt.renderer.SWTEnumComboViewerRenderer">
+            renderer="org.eclipse.emf.ecp.view.internal.core.swt.renderer.EnumComboViewerSWTRenderer">
          <dynamicTest
-               testClass="org.eclipse.emf.ecp.view.internal.core.swt.renderer.SWTEnumControlRendererTester">
+               testClass="org.eclipse.emf.ecp.view.internal.core.swt.renderer.EnumComboViewerSWTRendererTester">
          </dynamicTest>
       </renderer>
       <renderer
-            renderer="org.eclipse.emf.ecp.view.internal.core.swt.renderer.SWTNumberControlRenderer">
+            renderer="org.eclipse.emf.ecp.view.internal.core.swt.renderer.NumberControlSWTRenderer">
          <dynamicTest
-               testClass="org.eclipse.emf.ecp.view.internal.core.swt.renderer.SWTNumberControlRendererTester">
+               testClass="org.eclipse.emf.ecp.view.internal.core.swt.renderer.NumberControlSWTRendererTester">
          </dynamicTest>
       </renderer>
       <renderer
-            renderer="org.eclipse.emf.ecp.view.internal.core.swt.renderer.SWTDateTimeControlRenderer">
+            renderer="org.eclipse.emf.ecp.view.internal.core.swt.renderer.DateTimeControlSWTRenderer">
          <dynamicTest
-               testClass="org.eclipse.emf.ecp.view.internal.core.swt.renderer.SWTDateTimeControlRendererTester">
+               testClass="org.eclipse.emf.ecp.view.internal.core.swt.renderer.DateTimeControlSWTRendererTester">
          </dynamicTest>
       </renderer>
       <renderer
-            renderer="org.eclipse.emf.ecp.view.internal.core.swt.renderer.SWTXMLDateControlRenderer">
+            renderer="org.eclipse.emf.ecp.view.internal.core.swt.renderer.XMLDateControlSWTRenderer">
          <dynamicTest
-               testClass="org.eclipse.emf.ecp.view.internal.core.swt.renderer.SWTXMLDateControlRendererTester">
+               testClass="org.eclipse.emf.ecp.view.internal.core.swt.renderer.XMLDateControlSWTRendererTester">
          </dynamicTest>
       </renderer>
    </extension>

@@ -18,13 +18,14 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.internal.swt.SWTRendererFactoryImpl;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
-import org.eclipse.emf.ecp.view.spi.layout.grid.GridDescription;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
+import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescription;
+import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -54,9 +55,10 @@ public final class SWTViewTestHelper {
 		final ViewModelContext viewContext = ViewModelContextFactory.INSTANCE.createViewModelContext(renderable, input);
 		final AbstractSWTRenderer<VElement> renderer = factory
 			.getRenderer(renderable, viewContext);
-		final GridDescription gridDescription = renderer.getGridDescription();
-		final Control control = renderer.render(gridDescription.getGrid()[gridDescription.getColumns() - 1], shell);
-		renderer.postRender(shell);
+		final GridDescription gridDescription = renderer.getGridDescription(GridDescriptionFactory.INSTANCE
+			.createEmptyGridDescription());
+		final Control control = renderer.render(gridDescription.getGrid().get(gridDescription.getColumns() - 1), shell);
+		renderer.finalizeRendering(shell);
 		// TODO return resultRows
 		if (control == null) {
 			return null;

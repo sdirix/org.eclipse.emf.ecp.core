@@ -7,14 +7,11 @@ import static org.mockito.Mockito.mock;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
-import org.eclipse.emf.ecp.view.internal.core.swt.renderer.SWTNumberControlRenderer;
-import org.eclipse.emf.ecp.view.internal.core.swt.renderer.SWTViewRenderer;
-import org.eclipse.emf.ecp.view.spi.layout.grid.GridCell;
-import org.eclipse.emf.ecp.view.spi.layout.grid.GridCellDescription;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
+import org.eclipse.emf.ecp.view.spi.swt.layout.GridCell;
 import org.eclipse.emf.ecp.view.test.common.swt.DatabindingClassRunner;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Control;
@@ -30,7 +27,7 @@ public class NumberControlRendererTest extends AbstractControlTest {
 	@Before
 	public void before() {
 		SWTRendererFactory factory = mock(SWTRendererFactory.class);
-		setup(new SWTNumberControlRenderer(factory));
+		setup(new NumberControlSWTRenderer(factory));
 	}
 
 	@After
@@ -42,8 +39,7 @@ public class NumberControlRendererTest extends AbstractControlTest {
 	public void renderControlLabelAlignmentNone()
 			throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		setMockLabelAlignment(LabelAlignment.NONE);
-		Control render = renderControl(new GridCell(0, 1,
-				new GridCellDescription()));
+		Control render = renderControl(new GridCell(0, 1,renderer));
 		assertControl(render);
 	}
 
@@ -51,8 +47,7 @@ public class NumberControlRendererTest extends AbstractControlTest {
 	public void renderControlLabelAlignmentLeft()
 			throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		setMockLabelAlignment(LabelAlignment.LEFT);
-		Control render = renderControl(new GridCell(0, 2,
-				new GridCellDescription()));
+		Control render = renderControl(new GridCell(0, 2,renderer));
 
 		assertControl(render);
 	}

@@ -12,22 +12,12 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.categorization.swt;
 
-import java.util.LinkedHashSet;
+import java.util.Collection;
+import java.util.Collections;
 
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategory;
-import org.eclipse.emf.ecp.view.spi.layout.grid.GridCell;
-import org.eclipse.emf.ecp.view.spi.layout.grid.GridCellDescription;
-import org.eclipse.emf.ecp.view.spi.layout.grid.GridDescription;
-import org.eclipse.emf.ecp.view.spi.layout.grid.GridDescriptionFactory;
-import org.eclipse.emf.ecp.view.spi.model.VElement;
-import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
-import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
+import org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer;
+import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 
 /**
  * Renderer for {@link VCategory VCategories}.
@@ -35,65 +25,89 @@ import org.eclipse.swt.widgets.Control;
  * @author Eugen Neufeld
  * 
  */
-public class SWTCategoryRenderer extends AbstractSWTRenderer<VCategory> {
+public class SWTCategoryRenderer extends ContainerSWTRenderer<VCategory> {
 
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#renderControl(int, org.eclipse.swt.widgets.Composite,
-	 *      org.eclipse.emf.ecp.view.spi.model.VElement, org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer#getCustomVariant()
 	 */
 	@Override
-	protected Control renderControl(GridCell gridCell, Composite parent)
-		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
-		final Composite categoryComposite = new Composite(parent, SWT.NONE);
-		categoryComposite.setBackground(parent.getBackground());
-
-		final AbstractSWTRenderer<VElement> renderer = getSWTRendererFactory().getRenderer(
-			getVElement().getComposite(),
-			getViewModelContext());
-		if (renderer == null) {
-			Activator
-				.getDefault()
-				.getLog()
-				.log(
-					new Status(IStatus.INFO, Activator.PLUGIN_ID, String.format(
-						"No Renderer for %s found.", getVElement().getComposite().eClass().getName()))); //$NON-NLS-1$
-			return categoryComposite;
-		}
-		final GridDescription gridDescription = renderer.getGridDescription();
-		categoryComposite.setLayout(getLayoutHelper().getColumnLayout(
-			gridDescription.getColumns(), false));
-
-		for (final GridCell childGridCell : gridDescription.getGrid()) {
-			try {
-				final Control control = renderer.render(
-					childGridCell,
-					categoryComposite);
-				// TODO who should apply the layout
-				setLayoutDataForControl(childGridCell, gridDescription, gridDescription.getColumns(),
-					new LinkedHashSet<GridCellDescription>(),
-					new LinkedHashSet<GridCellDescription>(),
-					control);
-				// resultRows = SWTRendererFactory.INSTANCE.render(columnComposite, child, viewContext);
-			} catch (final NoPropertyDescriptorFoundExeption ex) {
-				Activator.getDefault().getLog()
-					.log(new Status(IStatus.INFO, Activator.PLUGIN_ID, ex.getMessage(), ex));
-				continue;
-			}
-		}
-		renderer.postRender(categoryComposite);
-
-		return categoryComposite;
+	protected String getCustomVariant() {
+		return "org.eclipse.emf.ecp.view.categorization.category"; //$NON-NLS-1$
 	}
 
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#getGridDescription()
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer#getChildren()
 	 */
 	@Override
-	public GridDescription getGridDescription() {
-		return GridDescriptionFactory.INSTANCE.createSimpleGrid(1, 1);
+	protected Collection<VContainedElement> getChildren() {
+		return Collections.singleton(getVElement().getComposite());
 	}
+
+	// /**
+	// * {@inheritDoc}
+	// *
+	// * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#renderControl(int, org.eclipse.swt.widgets.Composite,
+	// * org.eclipse.emf.ecp.view.spi.model.VElement, org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
+	// */
+	// @Override
+	// protected Control renderControl(GridCell gridCell, Composite parent)
+	// throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+	// final Composite categoryComposite = new Composite(parent, SWT.NONE);
+	// categoryComposite.setBackground(parent.getBackground());
+	//
+	// final AbstractSWTRenderer<VElement> renderer = getSWTRendererFactory().getRenderer(
+	// getVElement().getComposite(),
+	// getViewModelContext());
+	// if (renderer == null) {
+	// Activator
+	// .getDefault()
+	// .getLog()
+	// .log(
+	// new Status(IStatus.INFO, Activator.PLUGIN_ID, String.format(
+	//						"No Renderer for %s found.", getVElement().getComposite().eClass().getName()))); //$NON-NLS-1$
+	// return categoryComposite;
+	// }
+	// final GridDescription gridDescription = renderer.getGridDescription(GridDescriptionFactory.INSTANCE
+	// .createEmptyGridDescription());
+	// categoryComposite.setLayout(getLayoutHelper().getColumnLayout(
+	// gridDescription.getColumns(), false));
+	//
+	// for (final GridCell childGridCell : gridDescription.getGrid()) {
+	// try {
+	// final Control control = renderer.render(
+	// childGridCell,
+	// categoryComposite);
+	// // TODO who should apply the layout
+	// setLayoutDataForControl(childGridCell, gridDescription, gridDescription.getColumns(),
+	// new LinkedHashSet<GridCellDescription>(),
+	// new LinkedHashSet<GridCellDescription>(),
+	// control);
+	// // resultRows = SWTRendererFactory.INSTANCE.render(columnComposite, child, viewContext);
+	// } catch (final NoPropertyDescriptorFoundExeption ex) {
+	// Activator.getDefault().getLog()
+	// .log(new Status(IStatus.INFO, Activator.PLUGIN_ID, ex.getMessage(), ex));
+	// continue;
+	// }
+	// }
+	// renderer.finalizeRendering(categoryComposite);
+	//
+	// return categoryComposite;
+	// }
+	//
+	// /**
+	// * {@inheritDoc}
+	// *
+	// * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#getGridDescription(GridDescription)
+	// */
+	// @Override
+	// public GridDescription getGridDescription(GridDescription gridDescription) {
+	// if (rendererGridDescription == null) {
+	// rendererGridDescription = GridDescriptionFactory.INSTANCE.createSimpleGrid(1, 1, this);
+	// }
+	// return rendererGridDescription;
+	// }
 }

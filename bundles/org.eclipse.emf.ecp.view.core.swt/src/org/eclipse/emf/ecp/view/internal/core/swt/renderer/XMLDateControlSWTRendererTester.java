@@ -11,7 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.core.swt.renderer;
 
-import java.util.Date;
+import javax.xml.datatype.XMLGregorianCalendar;
 
 /**
  * Tester for Text Renderer.
@@ -19,12 +19,12 @@ import java.util.Date;
  * @author Eugen Neufeld
  * 
  */
-public class SWTDateTimeControlRendererTester extends SWTSimpleControlRendererTester {
+public class XMLDateControlSWTRendererTester extends SimpleControlSWTRendererTester {
 
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.internal.core.swt.renderer.SWTSimpleControlRendererTester#isSingleValue()
+	 * @see org.eclipse.emf.ecp.view.internal.core.swt.renderer.SimpleControlSWTRendererTester#isSingleValue()
 	 */
 	@Override
 	protected boolean isSingleValue() {
@@ -34,7 +34,7 @@ public class SWTDateTimeControlRendererTester extends SWTSimpleControlRendererTe
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.internal.core.swt.renderer.SWTSimpleControlRendererTester#getPriority()
+	 * @see org.eclipse.emf.ecp.view.internal.core.swt.renderer.SimpleControlSWTRendererTester#getPriority()
 	 */
 	@Override
 	protected int getPriority() {
@@ -44,10 +44,10 @@ public class SWTDateTimeControlRendererTester extends SWTSimpleControlRendererTe
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.internal.core.swt.renderer.SWTSimpleControlRendererTester#getSupportedClassType()
+	 * @see org.eclipse.emf.ecp.view.internal.core.swt.renderer.SimpleControlSWTRendererTester#getSupportedClassType()
 	 */
 	@Override
 	protected Class<?> getSupportedClassType() {
-		return Date.class;
+		return XMLGregorianCalendar.class;
 	}
 }

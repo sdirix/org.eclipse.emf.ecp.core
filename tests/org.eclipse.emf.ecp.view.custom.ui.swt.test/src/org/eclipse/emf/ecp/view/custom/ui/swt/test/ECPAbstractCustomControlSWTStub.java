@@ -21,14 +21,14 @@ import org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl;
 import org.eclipse.emf.ecp.view.spi.custom.model.ECPHardcodedReferences;
 import org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage;
 import org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT;
-import org.eclipse.emf.ecp.view.spi.layout.grid.GridCell;
-import org.eclipse.emf.ecp.view.spi.layout.grid.GridDescription;
-import org.eclipse.emf.ecp.view.spi.layout.grid.GridDescriptionFactory;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
+import org.eclipse.emf.ecp.view.spi.swt.layout.GridCell;
+import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescription;
+import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -101,15 +101,15 @@ public class ECPAbstractCustomControlSWTStub extends ECPAbstractCustomControlSWT
 	@Override
 	public GridDescription getGridDescription() {
 		if (!withControl) {
-			return GridDescriptionFactory.INSTANCE.createSimpleGrid(1, 1);
+			return GridDescriptionFactory.INSTANCE.createSimpleGrid(1, 1, null);
 		}
-		return GridDescriptionFactory.INSTANCE.createSimpleGrid(1, 3);
+		return GridDescriptionFactory.INSTANCE.createSimpleGrid(1, 3, null);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT#renderControl(org.eclipse.emf.ecp.view.spi.layout.grid.GridCell,
+	 * @see org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT#renderControl(org.eclipse.emf.ecp.view.spi.swt.layout.GridCell,
 	 *      org.eclipse.swt.widgets.Composite)
 	 */
 	@Override

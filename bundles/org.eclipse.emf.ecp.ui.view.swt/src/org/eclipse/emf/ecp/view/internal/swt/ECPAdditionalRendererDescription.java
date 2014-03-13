@@ -12,7 +12,7 @@
 package org.eclipse.emf.ecp.view.internal.swt;
 
 import org.eclipse.emf.ecp.view.spi.model.VElement;
-import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTAdditionalRenderer;
+import org.eclipse.emf.ecp.view.spi.swt.AbstractAdditionalSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.swt.ECPAdditionalRendererTester;
 
 /**
@@ -23,7 +23,7 @@ import org.eclipse.emf.ecp.view.spi.swt.ECPAdditionalRendererTester;
  */
 public class ECPAdditionalRendererDescription {
 
-	private final Class<AbstractSWTAdditionalRenderer<VElement>> rendererClass;
+	private final Class<AbstractAdditionalSWTRenderer<VElement>> rendererClass;
 	private final ECPAdditionalRendererTester tester;
 
 	/**
@@ -32,7 +32,7 @@ public class ECPAdditionalRendererDescription {
 	 * @param rendererClass the rendererClass
 	 * @param tester the class testing whether the rendererClass is applicable for the current view model context
 	 */
-	public ECPAdditionalRendererDescription(Class<AbstractSWTAdditionalRenderer<VElement>> rendererClass,
+	public ECPAdditionalRendererDescription(Class<AbstractAdditionalSWTRenderer<VElement>> rendererClass,
 		ECPAdditionalRendererTester tester) {
 		super();
 		this.rendererClass = rendererClass;
@@ -40,11 +40,11 @@ public class ECPAdditionalRendererDescription {
 	}
 
 	/**
-	 * The rendererClass. It extends the {@link AbstractSWTAdditionalRenderer}.
+	 * The rendererClass. It extends the {@link AbstractAdditionalSWTRenderer}.
 	 * 
 	 * @return the class implementing this rendererClass
 	 */
-	public Class<AbstractSWTAdditionalRenderer<VElement>> getRenderer() {
+	public Class<AbstractAdditionalSWTRenderer<VElement>> getRenderer() {
 		return rendererClass;
 	}
 

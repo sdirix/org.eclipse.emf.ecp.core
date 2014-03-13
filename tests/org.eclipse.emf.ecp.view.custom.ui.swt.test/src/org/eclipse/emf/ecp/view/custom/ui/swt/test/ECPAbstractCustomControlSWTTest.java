@@ -22,7 +22,9 @@ import static org.junit.Assert.fail;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
@@ -40,13 +42,12 @@ import org.eclipse.emf.ecp.view.spi.custom.model.VCustomFactory;
 import org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage;
 import org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT;
 import org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT.SWTCustomControlHelper;
-import org.eclipse.emf.ecp.view.spi.layout.grid.GridCell;
-import org.eclipse.emf.ecp.view.spi.layout.grid.GridCellDescription;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
+import org.eclipse.emf.ecp.view.spi.swt.layout.GridCell;
 import org.eclipse.emf.ecp.view.test.common.swt.DatabindingClassRunner;
 import org.eclipse.emf.ecp.view.test.common.swt.SWTViewTestHelper;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
@@ -184,7 +185,7 @@ public class ECPAbstractCustomControlSWTTest {
 		// .createControls(new Composite(SWTViewTestHelper.createShell(), SWT.NONE));
 
 		final Composite composite = new Composite(SWTViewTestHelper.createShell(), SWT.NONE);
-		customControl.renderControl(new GridCell(0, 0, new GridCellDescription()), composite);
+		customControl.renderControl(new GridCell(0, 0, null), composite);
 
 		assertTrue(customControl.isRendered());
 		final Composite parentCompositeFromView = composite;
@@ -228,7 +229,7 @@ public class ECPAbstractCustomControlSWTTest {
 	 */
 	@Test
 	public void testCreateContentControl() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
-		customControl.renderControl(new GridCell(0, 0, new GridCellDescription()), testComposite);
+		customControl.renderControl(new GridCell(0, 0, null), testComposite);
 		assertTrue(testComposite.getChildren()[0] instanceof Label);
 	}
 
@@ -337,7 +338,7 @@ public class ECPAbstractCustomControlSWTTest {
 		// SWTViewTestHelper.createShell()), null);
 		customControl.init(
 			controlModel, ViewModelContextFactory.INSTANCE.createViewModelContext(controlModel, domainObject));
-		customControl.renderControl(new GridCell(0, 0, new GridCellDescription()), testComposite);
+		customControl.renderControl(new GridCell(0, 0, null), testComposite);
 		customControl.applyValidation();
 		// Check Label, Check Image
 		assertEquals(Diagnostic.ERROR, customControl.getLastValidationSeverity());
@@ -345,7 +346,7 @@ public class ECPAbstractCustomControlSWTTest {
 		assertSame(VCustomPackage.eINSTANCE.getCustomDomainModelReference_BundleName(),
 			customControl.getLastValidationFeature());
 
-		customControl.renderControl(new GridCell(0, 0, new GridCellDescription()), testComposite);
+		customControl.renderControl(new GridCell(0, 0, null), testComposite);
 		customControl.applyValidation();
 
 		// assertNotNull(customControl.getValidationLabel().getImage());
@@ -645,15 +646,23 @@ public class ECPAbstractCustomControlSWTTest {
 		assertFalse(control.getEnabled());
 	}
 
+	private Map<GridCell, Control> createControlMap(Control... controls) {
+		final Map<GridCell, Control> result = new LinkedHashMap<GridCell, Control>();
+		for (int i = 0; i < controls.length; i++) {
+			result.put(new GridCell(0, i, null), controls[i]);
+		}
+		return result;
+	}
+
 	@Test
 	public void testSetEditable() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
-		customControl.renderControl(new GridCell(0, 0, new GridCellDescription()), testComposite);
+		customControl.renderControl(new GridCell(0, 0, null), testComposite);
 		assertTrue(customControl.getLabel().isEnabled());
 		controlModel.setEnabled(false);
-		customControl.applyEnable(new Control[] { customControl.getLabel() });
+		customControl.applyEnable(createControlMap(customControl.getLabel()));
 		assertFalse(customControl.getLabel().isEnabled());
 		controlModel.setEnabled(true);
-		customControl.applyEnable(new Control[] { customControl.getLabel() });
+		customControl.applyEnable(createControlMap(customControl.getLabel()));
 		assertTrue(customControl.getLabel().isEnabled());
 	}
 }

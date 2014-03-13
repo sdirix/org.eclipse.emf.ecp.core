@@ -42,6 +42,6 @@ public interface SWTRendererFactory {
 	 * @param viewModelContext the {@link ViewModelContext} to check
 	 * @return the Collection of additional renderer
 	 */
-	Collection<AbstractSWTAdditionalRenderer<VElement>> getAdditionalRenderer(VElement vElement,
+	Collection<AbstractAdditionalSWTRenderer<VElement>> getAdditionalRenderer(VElement vElement,
 		ViewModelContext viewModelContext);
 }

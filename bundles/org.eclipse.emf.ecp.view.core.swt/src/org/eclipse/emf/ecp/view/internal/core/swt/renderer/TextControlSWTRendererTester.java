@@ -17,12 +17,12 @@ package org.eclipse.emf.ecp.view.internal.core.swt.renderer;
  * @author Eugen Neufeld
  * 
  */
-public class SWTBooleanControlRendererTester extends SWTSimpleControlRendererTester {
+public class TextControlSWTRendererTester extends SimpleControlSWTRendererTester {
 
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.internal.core.swt.renderer.SWTSimpleControlRendererTester#isSingleValue()
+	 * @see org.eclipse.emf.ecp.view.internal.core.swt.renderer.SimpleControlSWTRendererTester#isSingleValue()
 	 */
 	@Override
 	protected boolean isSingleValue() {
@@ -32,20 +32,20 @@ public class SWTBooleanControlRendererTester extends SWTSimpleControlRendererTes
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.internal.core.swt.renderer.SWTSimpleControlRendererTester#getPriority()
+	 * @see org.eclipse.emf.ecp.view.internal.core.swt.renderer.SimpleControlSWTRendererTester#getPriority()
 	 */
 	@Override
 	protected int getPriority() {
-		return 3;
+		return 2;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.internal.core.swt.renderer.SWTSimpleControlRendererTester#getSupportedClassType()
+	 * @see org.eclipse.emf.ecp.view.internal.core.swt.renderer.SimpleControlSWTRendererTester#getSupportedClassType()
 	 */
 	@Override
 	protected Class<?> getSupportedClassType() {
-		return Boolean.class;
+		return String.class;
 	}
 }

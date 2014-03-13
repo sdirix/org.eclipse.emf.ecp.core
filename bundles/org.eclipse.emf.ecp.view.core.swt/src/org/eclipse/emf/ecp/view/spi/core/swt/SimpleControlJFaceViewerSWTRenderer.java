@@ -27,12 +27,12 @@ import org.eclipse.swt.widgets.Control;
  * @author Eugen Neufeld
  * 
  */
-public abstract class SWTViewerRenderer extends SimpleControlSWTRenderer {
+public abstract class SimpleControlJFaceViewerSWTRenderer extends SimpleControlSWTRenderer {
 
 	/**
 	 * Default constructor.
 	 */
-	public SWTViewerRenderer() {
+	public SimpleControlJFaceViewerSWTRenderer() {
 		super();
 	}
 
@@ -41,7 +41,7 @@ public abstract class SWTViewerRenderer extends SimpleControlSWTRenderer {
 	 * 
 	 * @param factory the {@link SWTRendererFactory} to use.
 	 */
-	protected SWTViewerRenderer(SWTRendererFactory factory) {
+	protected SimpleControlJFaceViewerSWTRenderer(SWTRendererFactory factory) {
 		super(factory);
 	}
 
@@ -55,7 +55,7 @@ public abstract class SWTViewerRenderer extends SimpleControlSWTRenderer {
 	protected final Control createControl(Composite parent) {
 		final Setting setting = getVElement().getDomainModelReference().getIterator().next();
 
-		final Viewer viewer = createViewer(parent, setting);
+		final Viewer viewer = createJFaceViewer(parent, setting);
 		final Binding[] bindings = createBindings(viewer, setting);
 
 		// write initial values to model (if they differ from the default value of the model-element)
@@ -95,6 +95,6 @@ public abstract class SWTViewerRenderer extends SimpleControlSWTRenderer {
 	 * @param setting the {@link Setting}
 	 * @return the created {@link Viewer}
 	 */
-	protected abstract Viewer createViewer(Composite parent, Setting setting);
+	protected abstract Viewer createJFaceViewer(Composite parent, Setting setting);
 
 }

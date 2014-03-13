@@ -13,8 +13,7 @@ package org.eclipse.emf.ecp.view.internal.core.swt.renderer;
 
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
-import org.eclipse.emf.ecp.edit.internal.swt.controls.ControlMessages;
-import org.eclipse.emf.ecp.view.spi.core.swt.SWTControlRenderer;
+import org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.swt.SWT;
@@ -26,11 +25,11 @@ import org.eclipse.swt.widgets.Control;
  * @author Eugen
  * 
  */
-public class SWTBooleanControlRenderer extends SWTControlRenderer {
+public class BooleanControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 	/**
 	 * Default constructor.
 	 */
-	public SWTBooleanControlRenderer() {
+	public BooleanControlSWTRenderer() {
 		super();
 	}
 
@@ -39,7 +38,7 @@ public class SWTBooleanControlRenderer extends SWTControlRenderer {
 	 * 
 	 * @param factory the {@link SWTRendererFactory} to use.
 	 */
-	SWTBooleanControlRenderer(SWTRendererFactory factory) {
+	BooleanControlSWTRenderer(SWTRendererFactory factory) {
 		super(factory);
 	}
 
@@ -51,7 +50,7 @@ public class SWTBooleanControlRenderer extends SWTControlRenderer {
 	}
 
 	@Override
-	protected Control createControl(Composite parent, Setting setting) {
+	protected Control createSWTControl(Composite parent, Setting setting) {
 		final Button check = new Button(parent, SWT.CHECK);
 		check.setBackground(parent.getBackground());
 		check.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_boolean"); //$NON-NLS-1$
@@ -65,7 +64,7 @@ public class SWTBooleanControlRenderer extends SWTControlRenderer {
 	 */
 	@Override
 	protected String getUnsetText() {
-		return ControlMessages.BooleanControl_NoBooleanSetClickToSetBoolean;
+		return RendererMessages.BooleanControl_NoBooleanSetClickToSetBoolean;
 	}
 
 }

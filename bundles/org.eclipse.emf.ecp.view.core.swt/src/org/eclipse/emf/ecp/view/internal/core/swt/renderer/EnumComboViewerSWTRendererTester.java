@@ -17,12 +17,12 @@ package org.eclipse.emf.ecp.view.internal.core.swt.renderer;
  * @author Eugen Neufeld
  * 
  */
-public class SWTTextControlRendererTester extends SWTSimpleControlRendererTester {
+public class EnumComboViewerSWTRendererTester extends SimpleControlSWTRendererTester {
 
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.internal.core.swt.renderer.SWTSimpleControlRendererTester#isSingleValue()
+	 * @see org.eclipse.emf.ecp.view.internal.core.swt.renderer.SimpleControlSWTRendererTester#isSingleValue()
 	 */
 	@Override
 	protected boolean isSingleValue() {
@@ -32,20 +32,20 @@ public class SWTTextControlRendererTester extends SWTSimpleControlRendererTester
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.internal.core.swt.renderer.SWTSimpleControlRendererTester#getPriority()
+	 * @see org.eclipse.emf.ecp.view.internal.core.swt.renderer.SimpleControlSWTRendererTester#getPriority()
 	 */
 	@Override
 	protected int getPriority() {
-		return 2;
+		return 3;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.internal.core.swt.renderer.SWTSimpleControlRendererTester#getSupportedClassType()
+	 * @see org.eclipse.emf.ecp.view.internal.core.swt.renderer.SimpleControlSWTRendererTester#getSupportedClassType()
 	 */
 	@Override
 	protected Class<?> getSupportedClassType() {
-		return String.class;
+		return Enum.class;
 	}
 }

@@ -13,7 +13,7 @@ package org.eclipse.emf.ecp.view.spi.group.swt;
 
 import java.util.Collection;
 
-import org.eclipse.emf.ecp.view.spi.core.swt.SWTContainerRenderer;
+import org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.group.model.VGroup;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.swt.SWT;
@@ -26,13 +26,13 @@ import org.eclipse.swt.widgets.Group;
  * @since 1.2
  * 
  */
-public class SWTGroupRenderer extends SWTContainerRenderer<VGroup> {
+public class GroupSWTRenderer extends ContainerSWTRenderer<VGroup> {
 	private static final String CONTROL_GROUP = "org_eclipse_emf_ecp_ui_control_group"; //$NON-NLS-1$
 
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SWTContainerRenderer#getCustomVariant()
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer#getCustomVariant()
 	 */
 	@Override
 	protected String getCustomVariant() {
@@ -42,7 +42,7 @@ public class SWTGroupRenderer extends SWTContainerRenderer<VGroup> {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SWTContainerRenderer#getChildren()
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer#getChildren()
 	 */
 	@Override
 	protected Collection<VContainedElement> getChildren() {
@@ -52,7 +52,7 @@ public class SWTGroupRenderer extends SWTContainerRenderer<VGroup> {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SWTContainerRenderer#getComposite(org.eclipse.swt.widgets.Composite)
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer#getComposite(org.eclipse.swt.widgets.Composite)
 	 */
 	@Override
 	protected Composite getComposite(Composite parent) {

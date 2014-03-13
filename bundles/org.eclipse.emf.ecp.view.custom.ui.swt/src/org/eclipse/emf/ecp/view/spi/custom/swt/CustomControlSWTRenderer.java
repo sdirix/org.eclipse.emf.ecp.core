@@ -15,11 +15,11 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTValidationHelper;
 import org.eclipse.emf.ecp.internal.edit.EditMessages;
 import org.eclipse.emf.ecp.view.spi.custom.model.VCustomControl;
-import org.eclipse.emf.ecp.view.spi.layout.grid.GridCell;
-import org.eclipse.emf.ecp.view.spi.layout.grid.GridDescription;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
+import org.eclipse.emf.ecp.view.spi.swt.layout.GridCell;
+import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescription;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
@@ -28,7 +28,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.osgi.framework.Bundle;
 
-public class SWTCustomControlRenderer extends AbstractSWTRenderer<VCustomControl> {
+public class CustomControlSWTRenderer extends AbstractSWTRenderer<VCustomControl> {
 
 	private ECPAbstractCustomControlSWT swtCustomControl;
 
@@ -88,18 +88,22 @@ public class SWTCustomControlRenderer extends AbstractSWTRenderer<VCustomControl
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#getGridDescription(org.eclipse.emf.ecp.view.spi.model.VElement)
+	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#getGridDescription(GridDescription)
 	 */
 	@Override
-	public GridDescription getGridDescription() {
-		return swtCustomControl.getGridDescription();
+	public GridDescription getGridDescription(GridDescription gridDescription) {
+		final GridDescription gd = swtCustomControl.getGridDescription();
+		for (final GridCell gridCell : gd.getGrid()) {
+			gridCell.setRenderer(this);
+		}
+		return gd;
 	}
 
 	/**
 	 * 
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#renderControl(org.eclipse.emf.ecp.view.spi.layout.grid.GridCell,
+	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#renderControl(org.eclipse.emf.ecp.view.spi.swt.layout.GridCell,
 	 *      org.eclipse.swt.widgets.Composite)
 	 */
 	@Override
@@ -120,18 +124,15 @@ public class SWTCustomControlRenderer extends AbstractSWTRenderer<VCustomControl
 
 	@Override
 	protected void applyVisible() {
-		for (int i = 0; i < getControls().length; i++) {
-			if (getControls()[i] == null) {
-				continue;
-			}
-			final Object layoutData = getControls()[i].getLayoutData();
+		for (final GridCell gridCell : getControls().keySet()) {
+			final Object layoutData = getControls().get(gridCell).getLayoutData();
 			if (GridData.class.isInstance(layoutData)) {
 				final GridData gridData = (GridData) layoutData;
 				if (gridData != null) {
 					gridData.exclude = false;
 				}
 			}
-			getControls()[i].setVisible(getVElement().isVisible());
+			getControls().get(gridCell).setVisible(getVElement().isVisible());
 		}
 	}
 
@@ -142,9 +143,9 @@ public class SWTCustomControlRenderer extends AbstractSWTRenderer<VCustomControl
 	@Override
 	protected void applyValidation() {
 		Label validationIcon = null;
-		switch (getControls().length) {
+		switch (getControls().size()) {
 		case 3:
-			validationIcon = Label.class.cast(getControls()[1]);
+			validationIcon = Label.class.cast(getControls().get(new GridCell(0, 1, this)));
 			break;
 		default:
 			break;

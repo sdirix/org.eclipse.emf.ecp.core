@@ -19,12 +19,13 @@ import org.eclipse.emf.ecp.diffmerge.spi.context.DiffMergeModelContext;
 import org.eclipse.emf.ecp.diffmerge.swt.DiffDialogHelper;
 import org.eclipse.emf.ecp.spi.diffmerge.model.VDiffAttachment;
 import org.eclipse.emf.ecp.spi.diffmerge.model.VDiffmergePackage;
-import org.eclipse.emf.ecp.view.spi.layout.grid.GridCell;
-import org.eclipse.emf.ecp.view.spi.layout.grid.GridCellDescription;
-import org.eclipse.emf.ecp.view.spi.layout.grid.GridDescription;
 import org.eclipse.emf.ecp.view.spi.model.VAttachment;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
-import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTAdditionalRenderer;
+import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
+import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
+import org.eclipse.emf.ecp.view.spi.swt.AbstractAdditionalSWTRenderer;
+import org.eclipse.emf.ecp.view.spi.swt.layout.GridCell;
+import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescription;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -34,47 +35,80 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 
 /**
  * @author Eugen
  * 
  */
-public class SWTDiffMergeAddition extends AbstractSWTAdditionalRenderer<VControl> {
+public class SWTDiffMergeAddition extends AbstractAdditionalSWTRenderer<VControl> {
 
+	// /**
+	// * {@inheritDoc}
+	// *
+	// * @see org.eclipse.emf.ecp.view.spi.swt.AbstractAdditionalSWTRenderer#getAdditionalColumns()
+	// */
+	// @Override
+	// public int getAdditionalColumns() {
+	// return 1;
+	// }
+	//
+	// /**
+	// * {@inheritDoc}
+	// *
+	// * @see
+	// org.eclipse.emf.ecp.view.spi.swt.AbstractAdditionalSWTRenderer#preCellRenderControl(org.eclipse.emf.ecp.view.spi.swt.layout.GridDescription,
+	// * org.eclipse.emf.ecp.view.spi.swt.layout.GridCell, org.eclipse.swt.widgets.Composite)
+	// */
+	// @Override
+	// public GridCellDescription preCellRenderControl(GridDescription gridDescription, GridCell cell, Composite parent)
+	// {
+	// // TODO Auto-generated method stub
+	// return null;
+	// }
+	//
+	// /**
+	// * {@inheritDoc}
+	// *
+	// * @see
+	// org.eclipse.emf.ecp.view.spi.swt.AbstractAdditionalSWTRenderer#postCellRenderControl(org.eclipse.emf.ecp.view.spi.swt.layout.GridDescription,
+	// * org.eclipse.emf.ecp.view.spi.swt.layout.GridCell, org.eclipse.swt.widgets.Composite)
+	// */
+	// @Override
+	// public GridCellDescription postCellRenderControl(GridDescription gridDescription, GridCell cell, Composite
+	// parent) {
+	// if (gridDescription.getColumns() == cell.getColumn() + 1) {
+	// // if (cell.getColumn() == 1) {
+	// createDiffButton(parent);
+	// return new GridCellDescription();
+	// }
+	// return null;
+	// }
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTAdditionalRenderer#getAdditionalColumns()
+	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#getGridDescription(org.eclipse.emf.ecp.view.spi.swt.layout.GridDescription)
 	 */
 	@Override
-	public int getAdditionalColumns() {
-		return 1;
+	public GridDescription getGridDescription(GridDescription gridDescription) {
+		gridDescription.getGrid().add(new GridCell(0, gridDescription.getColumns(), this));
+		gridDescription.setColumns(gridDescription.getColumns() + 1);
+		return gridDescription;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTAdditionalRenderer#preCellRenderControl(org.eclipse.emf.ecp.view.spi.layout.grid.GridDescription,
-	 *      org.eclipse.emf.ecp.view.spi.layout.grid.GridCell, org.eclipse.swt.widgets.Composite)
+	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#renderControl(org.eclipse.emf.ecp.view.spi.swt.layout.GridCell,
+	 *      org.eclipse.swt.widgets.Composite)
 	 */
 	@Override
-	public GridCellDescription preCellRenderControl(GridDescription gridDescription, GridCell cell, Composite parent) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	protected Control renderControl(GridCell cell, Composite parent) throws NoRendererFoundException,
+		NoPropertyDescriptorFoundExeption {
+		// if (gridDescription.getColumns() == cell.getColumn() + 1) {
+		if (cell.getRenderer() == this) {
+			return createDiffButton(parent);
 
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTAdditionalRenderer#postCellRenderControl(org.eclipse.emf.ecp.view.spi.layout.grid.GridDescription,
-	 *      org.eclipse.emf.ecp.view.spi.layout.grid.GridCell, org.eclipse.swt.widgets.Composite)
-	 */
-	@Override
-	public GridCellDescription postCellRenderControl(GridDescription gridDescription, GridCell cell, Composite parent) {
-		if (gridDescription.getColumns() == cell.getColumn() + 1) {
-			// if (cell.getColumn() == 1) {
-			createDiffButton(parent);
-			return new GridCellDescription();
 		}
 		return null;
 	}
@@ -82,7 +116,7 @@ public class SWTDiffMergeAddition extends AbstractSWTAdditionalRenderer<VControl
 	/**
 	 * @param parent
 	 */
-	private void createDiffButton(Composite parent) {
+	private Button createDiffButton(Composite parent) {
 		final Button diffButton = new Button(parent, SWT.PUSH);
 		diffButton.setText(Messages.getString("SWTDiffMergeControlRenderer.DiffButton")); //$NON-NLS-1$
 		diffButton.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_compare_button"); //$NON-NLS-1$
@@ -123,6 +157,7 @@ public class SWTDiffMergeAddition extends AbstractSWTAdditionalRenderer<VControl
 				break;
 			}
 		}
+		return diffButton;
 	}
 
 	private void updateButton(Button diffButton, VDiffAttachment attachment) {

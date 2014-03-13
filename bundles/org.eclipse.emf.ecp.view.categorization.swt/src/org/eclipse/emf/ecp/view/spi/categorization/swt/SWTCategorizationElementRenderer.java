@@ -31,13 +31,13 @@ import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizableElement;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationElement;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategory;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.spi.layout.grid.GridCell;
-import org.eclipse.emf.ecp.view.spi.layout.grid.GridDescription;
-import org.eclipse.emf.ecp.view.spi.layout.grid.GridDescriptionFactory;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
+import org.eclipse.emf.ecp.view.spi.swt.layout.GridCell;
+import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescription;
+import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ITableItemLabelProvider;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -66,21 +66,34 @@ import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.swt.widgets.TreeItem;
 
 /**
- * The Class SWTViewRenderer.
+ * The Class ViewSWTRenderer.
  */
 public class SWTCategorizationElementRenderer extends AbstractSWTRenderer<VCategorizationElement> {
 
-	/** The Constant INSTANCE. */
-	public static final SWTCategorizationElementRenderer INSTANCE = new SWTCategorizationElementRenderer();
+	private GridDescription gridDescription;
 
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#getGridDescription()
+	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#getGridDescription(GridDescription)
 	 */
 	@Override
-	public GridDescription getGridDescription() {
-		return GridDescriptionFactory.INSTANCE.createSimpleGrid(1, 1);
+	public GridDescription getGridDescription(GridDescription gridDescription) {
+		if (this.gridDescription == null) {
+			this.gridDescription = GridDescriptionFactory.INSTANCE.createSimpleGrid(1, 1, this);
+		}
+		return this.gridDescription;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#dispose()
+	 */
+	@Override
+	protected void dispose() {
+		gridDescription = null;
+		super.dispose();
 	}
 
 	/**
@@ -109,7 +122,7 @@ public class SWTCategorizationElementRenderer extends AbstractSWTRenderer<VCateg
 				return null;
 			}
 			final Control render = renderer.render(cell, parent);
-			renderer.postRender(parent);
+			renderer.finalizeRendering(parent);
 			return render;
 
 		}
@@ -431,8 +444,10 @@ public class SWTCategorizationElementRenderer extends AbstractSWTRenderer<VCateg
 					return;
 				}
 				// we have a VCategory-> thus only one element in the grid
-				final Control render = renderer.render(renderer.getGridDescription().getGrid()[0], childComposite);
-				renderer.postRender(childComposite);
+				final Control render = renderer.render(
+					renderer.getGridDescription(GridDescriptionFactory.INSTANCE.createEmptyGridDescription()).getGrid()
+						.get(0), childComposite);
+				renderer.finalizeRendering(childComposite);
 				GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true)
 					.applyTo(render);
 				vCategorizationElement.setCurrentSelection((VCategorizableElement) child);

@@ -8,10 +8,6 @@ import static org.mockito.Mockito.when;
 
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.spi.layout.grid.GridCell;
-import org.eclipse.emf.ecp.view.spi.layout.grid.GridCellDescription;
-import org.eclipse.emf.ecp.view.spi.layout.grid.GridDescription;
-import org.eclipse.emf.ecp.view.spi.layout.grid.GridDescriptionFactory;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
@@ -19,6 +15,9 @@ import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
+import org.eclipse.emf.ecp.view.spi.swt.layout.GridCell;
+import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescription;
+import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.ecp.view.test.common.swt.DatabindingClassRunner;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -36,7 +35,7 @@ import org.mockito.stubbing.Answer;
 @RunWith(DatabindingClassRunner.class)
 public class ViewRendererTest {
 
-	private SWTViewRenderer viewRenderer;
+	private ViewSWTRenderer viewRenderer;
 	private VView view;
 	private ViewModelContext context;
 	private Shell shell;
@@ -46,7 +45,7 @@ public class ViewRendererTest {
 	public void setUp() {
 		factory = mock(SWTRendererFactory.class);
 		
-		viewRenderer = new SWTViewRenderer(factory);
+		viewRenderer = new ViewSWTRenderer(factory);
 		view = Mockito.mock(VView.class);
 
 		context = Mockito.mock(ViewModelContext.class);
@@ -63,7 +62,7 @@ public class ViewRendererTest {
 	public void testGridDescription() throws NoRendererFoundException,
 			NoPropertyDescriptorFoundExeption {
 		viewRenderer.init(view, context);
-		GridDescription gridDescription = viewRenderer.getGridDescription();
+		GridDescription gridDescription = viewRenderer.getGridDescription(GridDescriptionFactory.INSTANCE.createEmptyGridDescription());
 		assertEquals(1, gridDescription.getColumns());
 		assertEquals(1, gridDescription.getRows());
 	}
@@ -74,8 +73,7 @@ public class ViewRendererTest {
 		when(view.getChildren())
 				.thenReturn(new BasicEList<VContainedElement>());
 		viewRenderer.init(view, context);
-		Control render = viewRenderer.render(new GridCell(0, 0,
-				new GridCellDescription()), shell);
+		Control render = viewRenderer.render(new GridCell(0, 0,viewRenderer), shell);
 		assertTrue(Composite.class.isInstance(render));
 		assertEquals(0, Composite.class.cast(render).getChildren().length);
 	}
@@ -97,8 +95,7 @@ public class ViewRendererTest {
 		when(factory.getRenderer(control2, context)).thenReturn(mockRenderer2);
 		
 		viewRenderer.init(view, context);
-		Control render = viewRenderer.render(new GridCell(0, 0,
-				new GridCellDescription()), shell);
+		Control render = viewRenderer.render(new GridCell(0, 0,viewRenderer), shell);
 		assertTrue(Composite.class.isInstance(render));
 		assertEquals(2, Composite.class.cast(render).getChildren().length);
 		assertTrue(GridData.class.isInstance(Composite.class.cast(render).getChildren()[0].getLayoutData()));
@@ -129,8 +126,7 @@ public class ViewRendererTest {
 		when(factory.getRenderer(control3, context)).thenReturn(mockRenderer3);
 		
 		viewRenderer.init(view, context);
-		Control render = viewRenderer.render(new GridCell(0, 0,
-				new GridCellDescription()), shell);
+		Control render = viewRenderer.render(new GridCell(0, 0,viewRenderer), shell);
 		assertTrue(Composite.class.isInstance(render));
 		assertEquals(6, Composite.class.cast(render).getChildren().length);
 		for(int i=0;i<6;i++)
@@ -144,8 +140,8 @@ public class ViewRendererTest {
 			VContainedElement control1, int numColumns) throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		AbstractSWTRenderer<VElement> mockRenderer=mock(AbstractSWTRenderer.class);
 		
-		GridDescription gd=GridDescriptionFactory.INSTANCE.createSimpleGrid(1, numColumns);
-		when(mockRenderer.getGridDescription()).thenReturn(gd);
+		GridDescription gd=GridDescriptionFactory.INSTANCE.createSimpleGrid(1, numColumns,viewRenderer);
+		when(mockRenderer.getGridDescription(GridDescriptionFactory.INSTANCE.createEmptyGridDescription())).thenReturn(gd);
 		when(mockRenderer.render(any(GridCell.class), any(Composite.class))).thenAnswer(new Answer<Control>() {
 
 			public Control answer(InvocationOnMock invocation) throws Throwable {

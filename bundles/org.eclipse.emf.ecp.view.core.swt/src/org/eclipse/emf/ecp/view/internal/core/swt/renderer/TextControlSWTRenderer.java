@@ -17,10 +17,10 @@ import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.databinding.EMFUpdateValueStrategy;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
-import org.eclipse.emf.ecp.edit.internal.swt.controls.ControlMessages;
-import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.spi.core.swt.SWTControlRenderer;
+import org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer;
+import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
+import org.eclipse.emf.ecp.view.spi.swt.layout.GridCell;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.swt.SWT;
@@ -34,11 +34,11 @@ import org.eclipse.swt.widgets.Text;
  * @author Eugen Neufeld
  * 
  */
-public class SWTTextControlRenderer extends SWTControlRenderer {
+public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 	/**
 	 * Default constructor.
 	 */
-	public SWTTextControlRenderer() {
+	public TextControlSWTRenderer() {
 		super();
 	}
 
@@ -47,7 +47,7 @@ public class SWTTextControlRenderer extends SWTControlRenderer {
 	 * 
 	 * @param factory the {@link SWTRendererFactory} to use.
 	 */
-	SWTTextControlRenderer(SWTRendererFactory factory) {
+	TextControlSWTRenderer(SWTRendererFactory factory) {
 		super(factory);
 	}
 
@@ -66,10 +66,10 @@ public class SWTTextControlRenderer extends SWTControlRenderer {
 	}
 
 	@Override
-	protected Control createControl(Composite parent, Setting setting) {
+	protected Control createSWTControl(Composite parent, Setting setting) {
 		final Text text = new Text(parent, getTextWidgetStyle());
 		text.setData(CUSTOM_VARIANT, getTextVariantID());
-		text.setMessage(getTextMessage(setting, getViewModelContext()));
+		text.setMessage(getTextMessage(setting));
 		return text;
 	}
 
@@ -77,8 +77,9 @@ public class SWTTextControlRenderer extends SWTControlRenderer {
 	 * Returns the text which should be set as the message text on the Text field.
 	 * 
 	 * @param setting the setting being shown in the text field
+	 * @return the string to show as the message
 	 */
-	protected String getTextMessage(Setting setting, ViewModelContext viewModelContext) {
+	protected String getTextMessage(Setting setting) {
 		return getItemPropertyDescriptor(setting).getDisplayName(null);
 	}
 
@@ -134,8 +135,9 @@ public class SWTTextControlRenderer extends SWTControlRenderer {
 	}
 
 	@Override
-	protected void setControlEnabled(int index, Control control, boolean enabled) {
-		if (index == 2) {
+	protected void setControlEnabled(GridCell gridCell, Control control, boolean enabled) {
+		if (getVElement().getLabelAlignment() == LabelAlignment.NONE && gridCell.getColumn() == 1
+			|| getVElement().getLabelAlignment() == LabelAlignment.LEFT && gridCell.getColumn() == 2) {
 			final Setting setting = getVElement().getDomainModelReference().getIterator().next();
 			if (!setting.isSet()) {
 				return;
@@ -146,7 +148,7 @@ public class SWTTextControlRenderer extends SWTControlRenderer {
 			}
 			Text.class.cast(controlToUnset).setEditable(enabled);
 		} else {
-			super.setControlEnabled(index, control, enabled);
+			super.setControlEnabled(gridCell, control, enabled);
 		}
 	}
 
@@ -177,11 +179,23 @@ public class SWTTextControlRenderer extends SWTControlRenderer {
 			return convertValue(value);
 		}
 
+		/**
+		 * Convert a value.
+		 * 
+		 * @param value the value to convert
+		 * @return the converted value
+		 */
 		protected Object convertValue(Object value) {
 			return super.convert(value);
 		}
 	}
 
+	/**
+	 * The strategy to convert from model to target.
+	 * 
+	 * @author Eugen Neufeld
+	 * 
+	 */
 	protected class ModelToTargetUpdateStrategy extends EMFUpdateConvertValueStrategy {
 
 		@Override
@@ -191,12 +205,23 @@ public class SWTTextControlRenderer extends SWTControlRenderer {
 
 	}
 
+	/**
+	 * The strategy to convert from target to model.
+	 * 
+	 * @author Eugen
+	 * 
+	 */
 	protected class TargetToModelUpdateStrategy extends EMFUpdateConvertValueStrategy {
 
 		private final boolean unsetable;
 
-		public TargetToModelUpdateStrategy(boolean unsetable) {
-			this.unsetable = unsetable;
+		/**
+		 * Constructor for indicating whether a value is unsettable.
+		 * 
+		 * @param unsettable true if value is unsettable, false otherwise
+		 */
+		public TargetToModelUpdateStrategy(boolean unsettable) {
+			unsetable = unsettable;
 
 		}
 
@@ -228,7 +253,7 @@ public class SWTTextControlRenderer extends SWTControlRenderer {
 	 */
 	@Override
 	protected String getUnsetText() {
-		return ControlMessages.StringControl_NoTextSetClickToSetText;
+		return RendererMessages.StringControl_NoTextSetClickToSetText;
 	}
 
 }

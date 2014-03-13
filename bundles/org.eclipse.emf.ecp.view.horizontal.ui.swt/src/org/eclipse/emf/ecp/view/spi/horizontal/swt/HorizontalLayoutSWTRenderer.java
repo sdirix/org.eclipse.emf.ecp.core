@@ -13,22 +13,20 @@
 package org.eclipse.emf.ecp.view.spi.horizontal.swt;
 
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.Map;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecp.view.internal.horizontal.swt.Activator;
 import org.eclipse.emf.ecp.view.spi.horizontal.model.VHorizontalLayout;
-import org.eclipse.emf.ecp.view.spi.layout.grid.GridCell;
-import org.eclipse.emf.ecp.view.spi.layout.grid.GridCellDescription;
-import org.eclipse.emf.ecp.view.spi.layout.grid.GridDescription;
-import org.eclipse.emf.ecp.view.spi.layout.grid.GridDescriptionFactory;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
+import org.eclipse.emf.ecp.view.spi.swt.layout.GridCell;
+import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescription;
+import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -43,15 +41,30 @@ import org.eclipse.swt.widgets.Control;
 public class HorizontalLayoutSWTRenderer extends AbstractSWTRenderer<VHorizontalLayout> {
 
 	private static final String CONTROL_COLUMN_COMPOSITE = "org_eclipse_emf_ecp_ui_layout_horizontal"; //$NON-NLS-1$
+	private GridDescription rendererGridDescription;
 
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#getGridDescription()
+	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#dispose()
 	 */
 	@Override
-	public GridDescription getGridDescription() {
-		return GridDescriptionFactory.INSTANCE.createSimpleGrid(1, 1);
+	protected void dispose() {
+		rendererGridDescription = null;
+		super.dispose();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#getGridDescription(GridDescription)
+	 */
+	@Override
+	public GridDescription getGridDescription(GridDescription gridDescription) {
+		if (rendererGridDescription == null) {
+			rendererGridDescription = GridDescriptionFactory.INSTANCE.createSimpleGrid(1, 1, this);
+		}
+		return rendererGridDescription;
 	}
 
 	/**
@@ -96,18 +109,19 @@ public class HorizontalLayoutSWTRenderer extends AbstractSWTRenderer<VHorizontal
 
 			column.setLayoutData(getLayoutHelper().getSpanningLayoutData(1, 1));
 
-			column.setLayout(getLayoutHelper().getColumnLayout(renderer.getGridDescription().getColumns(), false));
+			final GridDescription gridDescription = renderer.getGridDescription(GridDescriptionFactory.INSTANCE
+				.createEmptyGridDescription());
+			column.setLayout(getLayoutHelper().getColumnLayout(gridDescription.getColumns(), false));
 
 			try {
-				for (final GridCell childGridCell : renderer.getGridDescription().getGrid()) {
+				for (final GridCell childGridCell : gridDescription.getGrid()) {
 					final Control control = renderer.render(childGridCell, column);
 					// TODO who should apply the layout
-					setLayoutDataForControl(childGridCell, renderer.getGridDescription(),
-						renderer.getGridDescription().getColumns(), new LinkedHashSet<GridCellDescription>(),
-						new LinkedHashSet<GridCellDescription>(),
+					setLayoutDataForControl(childGridCell, gridDescription,
+						gridDescription,
 						control);
 				}
-				renderer.postRender(column);
+				renderer.finalizeRendering(column);
 			} catch (final NoPropertyDescriptorFoundExeption e) {
 				continue;
 			}

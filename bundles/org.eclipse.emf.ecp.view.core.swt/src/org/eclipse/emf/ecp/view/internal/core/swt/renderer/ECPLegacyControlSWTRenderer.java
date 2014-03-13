@@ -17,22 +17,25 @@ import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl;
 import org.eclipse.emf.ecp.edit.spi.ECPControlFactory;
 import org.eclipse.emf.ecp.view.internal.core.swt.Activator;
-import org.eclipse.emf.ecp.view.spi.core.swt.SWTControlRenderer;
+import org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
 /**
  * Renderer for {@link org.eclipse.swt.widgets.Control Controls}.
+ * This renderer will be removed with the next major release.
  * 
  * @author Eugen Neufeld
  * 
  */
-public class SWTLegacyControlRenderer extends SWTControlRenderer {
+@SuppressWarnings("restriction")
+@Deprecated
+public class ECPLegacyControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 
 	private SWTControl control;
 
 	@Override
-	protected Control createControl(Composite parent, Setting setting) {
+	protected Control createSWTControl(Composite parent, Setting setting) {
 		final ECPControlFactory controlFactory = Activator.getDefault().getECPControlFactory();
 
 		if (controlFactory == null) {

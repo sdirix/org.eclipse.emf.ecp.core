@@ -29,7 +29,7 @@ import org.eclipse.emf.ecp.view.spi.swt.ECPRendererTester;
  * @author Eugen Neufeld
  * 
  */
-public abstract class SWTSimpleControlRendererTester implements ECPRendererTester {
+public abstract class SimpleControlSWTRendererTester implements ECPRendererTester {
 
 	/**
 	 * {@inheritDoc}

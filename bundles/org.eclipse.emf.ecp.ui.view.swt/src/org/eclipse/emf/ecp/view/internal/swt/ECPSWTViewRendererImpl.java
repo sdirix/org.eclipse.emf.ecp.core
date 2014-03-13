@@ -17,12 +17,13 @@ import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
-import org.eclipse.emf.ecp.view.spi.layout.grid.GridDescription;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
+import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescription;
+import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
@@ -66,14 +67,15 @@ public class ECPSWTViewRendererImpl implements ECPSWTViewRenderer {
 		final AbstractSWTRenderer<VElement> renderer = factory.getRenderer(
 			viewModelContext.getViewModel(),
 			viewModelContext);
-		final GridDescription gridDescription = renderer.getGridDescription();
-		if (gridDescription.getGrid().length != 1) {
+		final GridDescription gridDescription = renderer.getGridDescription(GridDescriptionFactory.INSTANCE
+			.createEmptyGridDescription());
+		if (gridDescription.getGrid().size() != 1) {
 			// do sth. if wrong number of controls
-			throw new IllegalStateException("Wrong number of control!"); //$NON-NLS-1$
+			throw new IllegalStateException("Invalid number of cells, expected exactly one cell!"); //$NON-NLS-1$
 		}
 		// a view returns always a composite and always only one row with one control
-		final Composite composite = (Composite) renderer.render(gridDescription.getGrid()[0], parent);
-		renderer.postRender(parent);
+		final Composite composite = (Composite) renderer.render(gridDescription.getGrid().get(0), parent);
+		renderer.finalizeRendering(parent);
 
 		final GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
 		composite.setLayoutData(gridData);

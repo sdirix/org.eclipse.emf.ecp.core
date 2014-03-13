@@ -128,11 +128,12 @@ public class Activator extends Plugin {
 	 * @return the {@link Image}
 	 */
 	public static Image getImage(Action action) {
-		if (!getDefault().imageRegistryByAction.containsKey(action)) {
-			getDefault().imageRegistryByAction.put(action,
+		final String path = action.toString();
+		if (!getDefault().imageRegistry.containsKey(path)) {
+			getDefault().imageRegistry.put(path,
 				new ImageDescriptorToImage(action.getImageDescriptor()));
 		}
-		return getDefault().imageRegistryByAction.get(action).getImage();
+		return getDefault().imageRegistry.get(path).getImage();
 
 	}
 

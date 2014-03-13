@@ -12,14 +12,15 @@
 package org.eclipse.emf.ecp.view.spi.core.swt;
 
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
-import org.eclipse.emf.ecp.view.spi.layout.grid.GridCell;
-import org.eclipse.emf.ecp.view.spi.layout.grid.GridDescription;
-import org.eclipse.emf.ecp.view.spi.layout.grid.GridDescriptionFactory;
+import org.eclipse.emf.ecp.view.internal.core.swt.renderer.RendererMessages;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
+import org.eclipse.emf.ecp.view.spi.swt.layout.GridCell;
+import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescription;
+import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -39,6 +40,8 @@ import org.eclipse.swt.widgets.Label;
  * 
  */
 public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRenderer<VControl> {
+	private GridDescription rendererGridDescription;
+
 	/**
 	 * Default constructor.
 	 */
@@ -58,12 +61,15 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#getGridDescription()
+	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#getGridDescription(GridDescription)
 	 */
 	@Override
-	public final GridDescription getGridDescription() {
-		return GridDescriptionFactory.INSTANCE.createSimpleGrid(1,
-			getVElement().getLabelAlignment() == LabelAlignment.NONE ? 2 : 3);
+	public final GridDescription getGridDescription(GridDescription gridDescription) {
+		if (rendererGridDescription == null) {
+			rendererGridDescription = GridDescriptionFactory.INSTANCE.createSimpleGrid(1,
+				getVElement().getLabelAlignment() == LabelAlignment.NONE ? 2 : 3, this);
+		}
+		return rendererGridDescription;
 	}
 
 	/**
@@ -130,13 +136,13 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 				Object value = null;
 				if (!setting.isSet()) {
 					sl.topControl = baseControl;
-					unsetButton.setText("Unset");
+					unsetButton.setText(RendererMessages.SimpleControlSWTRenderer_Unset);
 					value = setting
 						.getEStructuralFeature().getDefaultValue();
 				}
 				else {
 					sl.topControl = createUnsetLabel;
-					unsetButton.setText("Set");
+					unsetButton.setText(RendererMessages.SimpleControlSWTRenderer_Set);
 					value = SetCommand.UNSET_VALUE;
 				}
 				final EditingDomain editingDomain = getEditingDomain(setting);
@@ -148,11 +154,11 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 
 		if (getVElement().getDomainModelReference().getIterator().next().isSet()) {
 			sl.topControl = baseControl;
-			unsetButton.setText("Unset");
+			unsetButton.setText(RendererMessages.SimpleControlSWTRenderer_Unset);
 		}
 		else {
 			sl.topControl = createUnsetLabel;
-			unsetButton.setText("Set");
+			unsetButton.setText(RendererMessages.SimpleControlSWTRenderer_Set);
 		}
 
 		return composite;
@@ -165,6 +171,11 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 		return unsetLabel;
 	}
 
+	/**
+	 * Provide the unset text to show on the label when value is unset.
+	 * 
+	 * @return the text to show on the unset label
+	 */
 	protected abstract String getUnsetText();
 
 	/**
@@ -182,14 +193,14 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 
 		Label validationIcon;
 		Control editControl;
-		switch (getControls().length) {
+		switch (getControls().size()) {
 		case 2:
-			validationIcon = Label.class.cast(getControls()[0]);
-			editControl = getControls()[1];
+			validationIcon = Label.class.cast(getControls().get(new GridCell(0, 0, this)));
+			editControl = getControls().get(new GridCell(0, 1, this));
 			break;
 		case 3:
-			validationIcon = Label.class.cast(getControls()[1]);
-			editControl = getControls()[2];
+			validationIcon = Label.class.cast(getControls().get(new GridCell(0, 1, this)));
+			editControl = getControls().get(new GridCell(0, 2, this));
 			break;
 		default: // TODO log error ;
 			return;
@@ -220,4 +231,15 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 	 * @return the rendered control
 	 */
 	protected abstract Control createControl(Composite parent);
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#dispose()
+	 */
+	@Override
+	protected void dispose() {
+		rendererGridDescription = null;
+		super.dispose();
+	}
 }

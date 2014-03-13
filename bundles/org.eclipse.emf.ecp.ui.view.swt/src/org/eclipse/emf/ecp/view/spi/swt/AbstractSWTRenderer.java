@@ -12,7 +12,8 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.swt;
 
-import java.util.Set;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTRenderingHelper;
@@ -20,15 +21,14 @@ import org.eclipse.emf.ecp.view.internal.swt.SWTRendererFactoryImpl;
 import org.eclipse.emf.ecp.view.spi.context.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener;
-import org.eclipse.emf.ecp.view.spi.layout.grid.GridCell;
-import org.eclipse.emf.ecp.view.spi.layout.grid.GridCellDescription;
-import org.eclipse.emf.ecp.view.spi.layout.grid.GridDescription;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.renderer.LayoutHelper;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
+import org.eclipse.emf.ecp.view.spi.swt.layout.GridCell;
+import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescription;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.layout.GridData;
@@ -37,9 +37,21 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Layout;
 
 /**
- * Common base class for all SWT specific renderer classes.
+ * Common base class for all SWT specific renderer classes. {@link #init(VElement, ViewModelContext)} is called by the
+ * framework when providing the renderer. You don't need to call this.
  * 
- * @author emueller
+ * A renderer using other renderers to render its contents must call this methods in this order:
+ * 
+ * <pre>
+ *  {@link #getGridDescription(GridDescription)}
+ *  for each GridCell
+ *  	{@link #render(GridCell, Composite)}
+ * {@link #finalizeRendering(Composite)}
+ * </pre>
+ * 
+ * If you don't call {@link #finalizeRendering(Composite)} after the rendering, the automatic disposing of the renderer
+ * will not work, as well as the initial validation check.
+ * 
  * @author Eugen Neufeld
  * 
  * @param <VELEMENT> the actual type of the {@link VElement} to be drawn
@@ -48,8 +60,9 @@ import org.eclipse.swt.widgets.Layout;
 public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends AbstractRenderer<VELEMENT> {
 
 	private ModelChangeListener listener;
-	private Control[] controls;
+	private Map<GridCell, Control> controls;
 	private SWTRendererFactory rendererFactory;
+	private boolean renderingFinished;
 
 	/**
 	 * Default constructor.
@@ -70,24 +83,27 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 	/**
 	 * Returns the GridDescription for this Renderer.
 	 * 
+	 * @param gridDescription the current {@link GridDescription}
 	 * @return the number of controls per row
 	 */
-	public abstract GridDescription getGridDescription();
+	public abstract GridDescription getGridDescription(GridDescription gridDescription);
 
 	@Override
 	public final void init(final VELEMENT vElement, final ViewModelContext viewContext) {
 		super.init(vElement, viewContext);
 		preInit();
-		controls = new Control[getGridDescription().getGrid().length];
+		controls = new LinkedHashMap<GridCell, Control>();
 		if (getViewModelContext() != null) {
 			listener = new ModelChangeListener() {
 
 				public void notifyRemove(Notifier notifier) {
-					// TODO Auto-generated method stub
-
+					// nothing to do
 				}
 
 				public void notifyChange(ModelChangeNotification notification) {
+					if (!renderingFinished) {
+						return;
+					}
 					if (notification.getNotifier() != getVElement()) {
 						return;
 					}
@@ -105,8 +121,7 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 				}
 
 				public void notifyAdd(Notifier notifier) {
-					// TODO Auto-generated method stub
-
+					// nothing to do
 				}
 			};
 			getViewModelContext().registerViewChangeListener(listener);
@@ -115,12 +130,12 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 	}
 
 	/**
-	 * Returns the controls array.
+	 * Returns a copy of the {@link GridCell} to {@link Control} map.
 	 * 
-	 * @return the array containing the rendered controls
+	 * @return a copy of the controls map
 	 */
-	protected final Control[] getControls() {
-		return controls;
+	protected final Map<GridCell, Control> getControls() {
+		return new LinkedHashMap<GridCell, Control>(controls);
 	}
 
 	/**
@@ -144,6 +159,7 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 	@Override
 	protected void dispose() {
 		getViewModelContext().unregisterViewChangeListener(listener);
+		listener = null;
 		controls = null;
 		super.dispose();
 	}
@@ -159,8 +175,8 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 	 */
 	public Control render(final GridCell cell, Composite parent)
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
-		final int index = cell.getColumn() * (cell.getRow() + 1);
-		Control control = controls[index];
+
+		Control control = controls.get(cell);
 		if (control != null) {
 			return control;
 		}
@@ -170,14 +186,14 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 			// something went wrong, log
 			return null;
 		}
-		controls[index] = control;
+		controls.put(cell, control);
 
 		// register dispose listener to rerender if disposed
 		control.addDisposeListener(new DisposeListener() {
 
 			public void widgetDisposed(DisposeEvent e) {
 				if (controls != null) {
-					controls[index] = null;
+					controls.remove(cell);
 				}
 			}
 		});
@@ -190,7 +206,8 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 	 * 
 	 * @param parent the parent used during render
 	 */
-	public final void postRender(Composite parent) {
+	public final void finalizeRendering(Composite parent) {
+		renderingFinished = true;
 		applyVisible();
 		applyReadOnly();
 		if (!getVElement().isReadonly()) {
@@ -222,11 +239,8 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 	 * 
 	 */
 	protected void applyReadOnly() {
-		for (int i = 0; i < getControls().length; i++) {
-			if (getControls()[i] == null) {
-				continue;
-			}
-			setControlEnabled(i, getControls()[i], !getVElement().isReadonly());
+		for (final GridCell gridCell : controls.keySet()) {
+			setControlEnabled(gridCell, controls.get(gridCell), !getVElement().isReadonly());
 		}
 	}
 
@@ -235,22 +249,19 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 	 * 
 	 */
 	protected void applyEnable() {
-		for (int i = 0; i < getControls().length; i++) {
-			if (getControls()[i] == null) {
-				continue;
-			}
-			setControlEnabled(i, getControls()[i], getVElement().isEnabled());
+		for (final GridCell gridCell : controls.keySet()) {
+			setControlEnabled(gridCell, controls.get(gridCell), getVElement().isEnabled());
 		}
 	}
 
 	/**
 	 * Wraps the call to enable/disable a control.
 	 * 
-	 * @param index the index of the control to enable/disable
+	 * @param gridCell the {@link GridCell} to enable/disable
 	 * @param control the {@link Control} to enable/disable
 	 * @param enabled true if control should be enabled, false otherwise
 	 */
-	protected void setControlEnabled(int index, Control control, boolean enabled) {
+	protected void setControlEnabled(GridCell gridCell, Control control, boolean enabled) {
 		control.setEnabled(enabled);
 	}
 
@@ -259,18 +270,15 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 	 * 
 	 */
 	protected void applyVisible() {
-		for (int i = 0; i < getControls().length; i++) {
-			if (getControls()[i] == null) {
-				continue;
-			}
-			final Object layoutData = getControls()[i].getLayoutData();
+		for (final GridCell gridCell : controls.keySet()) {
+			final Object layoutData = controls.get(gridCell).getLayoutData();
 			if (GridData.class.isInstance(layoutData)) {
 				final GridData gridData = (GridData) layoutData;
 				if (gridData != null) {
 					gridData.exclude = false;
 				}
 			}
-			getControls()[i].setVisible(getVElement().isVisible());
+			controls.get(gridCell).setVisible(getVElement().isVisible());
 		}
 	}
 
@@ -296,27 +304,20 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 	 * 
 	 * @param gridCell the {@link GridCell} used to render the control
 	 * @param gridDescription the {@link GridDescription} of the parent which rendered the control
-	 * @param maxNumberColumns maximal number of controls per row
-	 * @param preControlDescriptions all {@link GridCellDescription} returned by already called additional renderer
-	 *            which rendered something in front of the actual control
-	 * @param postControlDescriptions all {@link GridCellDescription} returned by already called additional renderer
-	 *            which rendered something after of the actual control
+	 * @param fullRowDescription the {@link GridDescription} of the full row
 	 * @param control the control to set the layout to
 	 */
-	protected void setLayoutDataForControl(GridCell gridCell, GridDescription gridDescription, int maxNumberColumns,
-		Set<GridCellDescription> preControlDescriptions, Set<GridCellDescription> postControlDescriptions,
-		Control control) {
+	protected void setLayoutDataForControl(GridCell gridCell, GridDescription gridDescription,
+		GridDescription fullRowDescription, Control control) {
 
 		if (gridCell.getColumn() + 1 == gridDescription.getColumns()) {
 			// if control use right column
 			if (VControl.class.isInstance(getVElement())) {
 				control.setLayoutData(getLayoutHelper().getRightColumnLayoutData(
-					1 + maxNumberColumns - gridDescription.getColumns() - preControlDescriptions.size()
-						- postControlDescriptions.size()));
+					1 + fullRowDescription.getColumns() - gridDescription.getColumns()));
 			} else {
 				control.setLayoutData(getLayoutHelper().getSpanningLayoutData(
-					1 + maxNumberColumns - gridDescription.getColumns() - preControlDescriptions.size()
-						- postControlDescriptions.size(), 1));
+					1 + fullRowDescription.getColumns() - gridDescription.getColumns(), 1));
 			}
 		} else if (gridCell.getColumn() == 0) {
 			control.setLayoutData(getLayoutHelper().getLeftColumnLayoutData());

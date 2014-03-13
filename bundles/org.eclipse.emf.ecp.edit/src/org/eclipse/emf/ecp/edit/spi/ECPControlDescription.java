@@ -22,6 +22,7 @@ import org.eclipse.emf.ecp.edit.spi.util.ECPApplicableTester;
  * 
  * @author Eugen Neufeld
  */
+@Deprecated
 public final class ECPControlDescription {
 
 	private final String id;

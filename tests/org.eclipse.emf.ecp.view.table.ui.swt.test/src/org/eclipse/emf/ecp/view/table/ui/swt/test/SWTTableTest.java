@@ -39,10 +39,11 @@ import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
+import org.eclipse.emf.ecp.view.spi.swt.layout.GridCell;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableColumn;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableFactory;
-import org.eclipse.emf.ecp.view.spi.table.swt.SWTTableControlRenderer;
+import org.eclipse.emf.ecp.view.spi.table.swt.TableControlSWTRenderer;
 import org.eclipse.emf.ecp.view.test.common.swt.DatabindingClassRunner;
 import org.eclipse.emf.ecp.view.test.common.swt.SWTViewTestHelper;
 import org.eclipse.swt.widgets.Composite;
@@ -67,7 +68,7 @@ public class SWTTableTest {
 
 		final EClass eClass = EcoreFactory.eINSTANCE.createEClass();
 		eClass.getESuperTypes().add(EcorePackage.eINSTANCE.getEClass());
-		new SWTTableControlRenderer();
+		new TableControlSWTRenderer();
 		domainElement = eClass;
 	}
 
@@ -167,7 +168,7 @@ public class SWTTableTest {
 		final AbstractSWTRenderer<VElement> tableRenderer = rendererFactory.getRenderer(handle.getTableControl(),
 			new ViewModelContextWithoutServices(handle.getTableControl()));
 
-		final Control render = tableRenderer.render(tableRenderer.getGridDescription().getGrid()[0], shell);
+		final Control render = tableRenderer.render(new GridCell(0, 0, tableRenderer), shell);
 		if (render == null) {
 			fail();
 		}
@@ -203,7 +204,7 @@ public class SWTTableTest {
 		final AbstractSWTRenderer<VElement> tableRenderer = rendererFactory.getRenderer(handle.getTableControl(),
 			new ViewModelContextWithoutServices(handle.getTableControl()));
 
-		final Control render = tableRenderer.render(tableRenderer.getGridDescription().getGrid()[0], shell);
+		final Control render = tableRenderer.render(new GridCell(0, 0, tableRenderer), shell);
 		if (render == null) {
 			fail();
 		}

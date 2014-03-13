@@ -12,7 +12,6 @@ Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.eclipse.emf.ecp.ui.view;version="1.2.0",
  org.eclipse.emf.ecp.view.internal.ui;version="1.2.0";x-friends:="org.eclipse.emf.ecp.view.table.ui.swt",
- org.eclipse.emf.ecp.view.spi.layout.grid;version="1.2.0",
  org.eclipse.emf.ecp.view.spi.provider;version="1.2.0",
  org.eclipse.emf.ecp.view.spi.renderer;version="1.2.0"
 Bundle-Vendor: Eclipse Modeling Project

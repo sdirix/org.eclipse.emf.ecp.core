@@ -26,9 +26,9 @@ import org.eclipse.emf.ecp.view.spi.swt.ECPRendererTester;
  * @author Eugen Neufeld
  * 
  */
-public class SWTNumberControlRendererTester implements ECPRendererTester {
+public class NumberControlSWTRendererTester implements ECPRendererTester {
 
-	private static Set<NumberTester> testers = new LinkedHashSet<SWTNumberControlRendererTester.NumberTester>();
+	private static Set<NumberTester> testers = new LinkedHashSet<NumberControlSWTRendererTester.NumberTester>();
 	static {
 		testers.add(new NumberTester(Integer.class));
 		testers.add(new NumberTester(Long.class));
@@ -61,7 +61,7 @@ public class SWTNumberControlRendererTester implements ECPRendererTester {
 	 * @author Eugen Neufeld
 	 * 
 	 */
-	private static class NumberTester extends SWTSimpleControlRendererTester {
+	private static class NumberTester extends SimpleControlSWTRendererTester {
 		private final Class<?> clazz;
 
 		public NumberTester(Class<?> clazz) {
@@ -71,7 +71,7 @@ public class SWTNumberControlRendererTester implements ECPRendererTester {
 		/**
 		 * {@inheritDoc}
 		 * 
-		 * @see org.eclipse.emf.ecp.view.internal.core.swt.renderer.SWTSimpleControlRendererTester#isSingleValue()
+		 * @see org.eclipse.emf.ecp.view.internal.core.swt.renderer.SimpleControlSWTRendererTester#isSingleValue()
 		 */
 		@Override
 		protected boolean isSingleValue() {
@@ -81,7 +81,7 @@ public class SWTNumberControlRendererTester implements ECPRendererTester {
 		/**
 		 * {@inheritDoc}
 		 * 
-		 * @see org.eclipse.emf.ecp.view.internal.core.swt.renderer.SWTSimpleControlRendererTester#getPriority()
+		 * @see org.eclipse.emf.ecp.view.internal.core.swt.renderer.SimpleControlSWTRendererTester#getPriority()
 		 */
 		@Override
 		protected int getPriority() {
@@ -91,7 +91,7 @@ public class SWTNumberControlRendererTester implements ECPRendererTester {
 		/**
 		 * {@inheritDoc}
 		 * 
-		 * @see org.eclipse.emf.ecp.view.internal.core.swt.renderer.SWTSimpleControlRendererTester#getSupportedClassType()
+		 * @see org.eclipse.emf.ecp.view.internal.core.swt.renderer.SimpleControlSWTRendererTester#getSupportedClassType()
 		 */
 		@Override
 		protected Class<?> getSupportedClassType() {

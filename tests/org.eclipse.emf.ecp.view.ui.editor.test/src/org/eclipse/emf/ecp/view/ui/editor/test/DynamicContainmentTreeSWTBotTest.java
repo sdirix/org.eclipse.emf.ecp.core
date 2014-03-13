@@ -12,9 +12,7 @@
 package org.eclipse.emf.ecp.view.ui.editor.test;
 
 import java.util.Arrays;
-import java.util.List;
 
-import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -28,13 +26,11 @@ import org.eclipse.emf.ecp.view.dynamictree.model.ModelFactory;
 import org.eclipse.emf.ecp.view.dynamictree.model.ModelPackage;
 import org.eclipse.emf.ecp.view.dynamictree.model.TestElement;
 import org.eclipse.emf.ecp.view.dynamictree.model.TestElementContainer;
-import org.eclipse.emf.ecp.view.spi.categorization.model.VAction;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorization;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationElement;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationFactory;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
-import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
@@ -128,7 +124,7 @@ public class DynamicContainmentTreeSWTBotTest extends ECPCommonSWTBotTest {
 		((TestElementContainer) virtualParent).getTestElements().add(newValue);
 		VElement renderable = null;
 		DynamicContainmentTree tree = null;
-		List<VAction> actions = null;
+		// List<VAction> actions = null;
 
 		if (!TestElementContainer.class.isInstance(virtualParent)) {
 			virtualParent = virtualParent.eContainer();
@@ -144,7 +140,7 @@ public class DynamicContainmentTreeSWTBotTest extends ECPCommonSWTBotTest {
 		if (tree == null) {
 			tree = (DynamicContainmentTree) viewModelParent;
 		}
-		actions = tree.getActions();
+		// actions = tree.getActions();
 		renderable = tree.getChildComposite();
 
 		// final ECPControlContext childContext = virtualParentNode.getControlContext()
@@ -168,23 +164,6 @@ public class DynamicContainmentTreeSWTBotTest extends ECPCommonSWTBotTest {
 
 		// return n;
 		return pi;
-	}
-
-	private static void resolveDomainReferences(VElement renderable,
-		EObject domainModelRoot) {
-		final TreeIterator<EObject> eAllContents = renderable.eAllContents();
-		while (eAllContents.hasNext()) {
-			final EObject eObject = eAllContents.next();
-
-			if (VDomainModelReference.class.isInstance(eObject)) {
-				final VDomainModelReference modelReference = (VDomainModelReference) eObject;
-				final boolean resolve = modelReference.resolve(domainModelRoot);
-				if (!resolve) {
-					// log
-				}
-
-			}
-		}
 	}
 
 	/**
@@ -215,7 +194,6 @@ public class DynamicContainmentTreeSWTBotTest extends ECPCommonSWTBotTest {
 	 * 
 	 * @see org.eclipse.emf.ecp.view.ui.editor.test.ECPCommonSWTBotTest#logic()
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public void logic() {
 

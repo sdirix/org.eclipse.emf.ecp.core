@@ -26,11 +26,11 @@ import org.eclipse.swt.widgets.Control;
  * @author Eugen Neufeld
  * 
  */
-public abstract class SWTControlRenderer extends SimpleControlSWTRenderer {
+public abstract class SimpleControlSWTControlSWTRenderer extends SimpleControlSWTRenderer {
 	/**
 	 * Default constructor.
 	 */
-	public SWTControlRenderer() {
+	public SimpleControlSWTControlSWTRenderer() {
 		super();
 	}
 
@@ -39,7 +39,7 @@ public abstract class SWTControlRenderer extends SimpleControlSWTRenderer {
 	 * 
 	 * @param factory the {@link SWTRendererFactory} to use.
 	 */
-	protected SWTControlRenderer(SWTRendererFactory factory) {
+	protected SimpleControlSWTControlSWTRenderer(SWTRendererFactory factory) {
 		super(factory);
 	}
 
@@ -53,7 +53,7 @@ public abstract class SWTControlRenderer extends SimpleControlSWTRenderer {
 	protected final Control createControl(Composite parent) {
 		final Setting setting = getVElement().getDomainModelReference().getIterator().next();
 
-		final Control control = createControl(parent, setting);
+		final Control control = createSWTControl(parent, setting);
 		final Binding[] bindings = createBindings(control, setting);
 
 		// write initial values to model (if they differ from the default value of the model-element)
@@ -93,6 +93,6 @@ public abstract class SWTControlRenderer extends SimpleControlSWTRenderer {
 	 * @param setting the {@link Setting}
 	 * @return the created control
 	 */
-	protected abstract Control createControl(Composite parent, Setting setting);
+	protected abstract Control createSWTControl(Composite parent, Setting setting);
 
 }

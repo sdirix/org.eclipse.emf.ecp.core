@@ -15,7 +15,7 @@ import java.util.Collection;
 import java.util.Collections;
 
 import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem;
-import org.eclipse.emf.ecp.view.spi.core.swt.SWTContainerRenderer;
+import org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 
 /**
@@ -23,12 +23,12 @@ import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
  * 
  * @author emueller
  */
-public class SWTDynamicContainmentItemRenderer extends SWTContainerRenderer<DynamicContainmentItem> {
+public class SWTDynamicContainmentItemRenderer extends ContainerSWTRenderer<DynamicContainmentItem> {
 
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SWTContainerRenderer#getCustomVariant()
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer#getCustomVariant()
 	 */
 	@Override
 	protected String getCustomVariant() {
@@ -39,7 +39,7 @@ public class SWTDynamicContainmentItemRenderer extends SWTContainerRenderer<Dyna
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SWTContainerRenderer#getChildren()
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer#getChildren()
 	 */
 	@Override
 	protected Collection<VContainedElement> getChildren() {

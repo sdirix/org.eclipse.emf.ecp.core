@@ -20,14 +20,14 @@ import org.eclipse.emf.ecore.resource.impl.ResourceFactoryImpl;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.AbstractControlSWTRenderer;
-import org.eclipse.emf.ecp.view.spi.layout.grid.GridCell;
-import org.eclipse.emf.ecp.view.spi.layout.grid.GridCellDescription;
-import org.eclipse.emf.ecp.view.spi.layout.grid.GridDescription;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
+import org.eclipse.emf.ecp.view.spi.swt.layout.GridCell;
+import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescription;
+import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.swt.widgets.Control;
@@ -38,7 +38,7 @@ import org.mockito.Mockito;
 
 public abstract class AbstractControlTest {
 	protected static final String CUSTOM_VARIANT = "org.eclipse.rap.rwt.customVariant"; //$NON-NLS-1$
-	private AbstractControlSWTRenderer<VControl> renderer;
+	protected AbstractControlSWTRenderer<VControl> renderer;
 
 	private Resource createResource() {
 		Resource.Factory.Registry registry = Resource.Factory.Registry.INSTANCE;
@@ -103,7 +103,7 @@ public abstract class AbstractControlTest {
 	public void testGridDescriptionLabelAlignmentNone() {
 		setMockLabelAlignment(LabelAlignment.NONE);
 		renderer.init(control, context);
-		GridDescription gridDescription = renderer.getGridDescription();
+		GridDescription gridDescription = renderer.getGridDescription(GridDescriptionFactory.INSTANCE.createEmptyGridDescription());
 		assertEquals(2, gridDescription.getColumns());
 		assertEquals(1, gridDescription.getRows());
 	}
@@ -112,7 +112,7 @@ public abstract class AbstractControlTest {
 	public void testGridDescriptionLabelAlignmentLeft() {
 		setMockLabelAlignment(LabelAlignment.LEFT);
 		renderer.init(control, context);
-		GridDescription gridDescription = renderer.getGridDescription();
+		GridDescription gridDescription = renderer.getGridDescription(GridDescriptionFactory.INSTANCE.createEmptyGridDescription());
 		assertEquals(3, gridDescription.getColumns());
 		assertEquals(1, gridDescription.getRows());
 	}
@@ -121,14 +121,14 @@ public abstract class AbstractControlTest {
 	public void renderValidationIconLabelAlignmentNone()
 			throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		setMockLabelAlignment(LabelAlignment.NONE);
-		renderValidationIcon(new GridCell(0, 0, new GridCellDescription()));
+		renderValidationIcon(new GridCell(0, 0,renderer));
 	}
 
 	@Test
 	public void renderValidationIconLabelAlignmentLeft()
 			throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		setMockLabelAlignment(LabelAlignment.LEFT);
-		renderValidationIcon(new GridCell(0, 1, new GridCellDescription()));
+		renderValidationIcon(new GridCell(0, 1,renderer));
 	}
 
 	private void renderValidationIcon(GridCell gridCell)
@@ -145,8 +145,7 @@ public abstract class AbstractControlTest {
 		setMockLabelAlignment(LabelAlignment.LEFT);
 		mockControl();
 		renderer.init(control, context);
-		Control render = renderer.render(new GridCell(0, 0,
-				new GridCellDescription()), shell);
+		Control render = renderer.render(new GridCell(0, 0,renderer), shell);
 		assertTrue(Label.class.isInstance(render));
 		assertEquals(text, Label.class.cast(render).getText());
 	}

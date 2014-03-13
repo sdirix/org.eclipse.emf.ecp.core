@@ -13,8 +13,7 @@ package org.eclipse.emf.ecp.view.internal.core.swt.renderer;
 
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
-import org.eclipse.emf.ecp.edit.internal.swt.controls.ControlMessages;
-import org.eclipse.emf.ecp.view.spi.core.swt.SWTViewerRenderer;
+import org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlJFaceViewerSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.jface.databinding.swt.SWTObservables;
@@ -31,11 +30,11 @@ import org.eclipse.swt.widgets.Composite;
  * @author Eugen Neufeld
  * 
  */
-public class SWTEnumComboViewerRenderer extends SWTViewerRenderer {
+public class EnumComboViewerSWTRenderer extends SimpleControlJFaceViewerSWTRenderer {
 	/**
 	 * Default constructor.
 	 */
-	public SWTEnumComboViewerRenderer() {
+	public EnumComboViewerSWTRenderer() {
 		super();
 	}
 
@@ -44,7 +43,7 @@ public class SWTEnumComboViewerRenderer extends SWTViewerRenderer {
 	 * 
 	 * @param factory the {@link SWTRendererFactory} to use.
 	 */
-	SWTEnumComboViewerRenderer(SWTRendererFactory factory) {
+	EnumComboViewerSWTRenderer(SWTRendererFactory factory) {
 		super(factory);
 	}
 
@@ -61,11 +60,11 @@ public class SWTEnumComboViewerRenderer extends SWTViewerRenderer {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SWTViewerRenderer#createViewer(org.eclipse.swt.widgets.Composite,
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlJFaceViewerSWTRenderer#createJFaceViewer(org.eclipse.swt.widgets.Composite,
 	 *      org.eclipse.emf.ecore.EStructuralFeature.Setting)
 	 */
 	@Override
-	protected Viewer createViewer(Composite parent, Setting setting) {
+	protected Viewer createJFaceViewer(Composite parent, Setting setting) {
 		final ComboViewer combo = new ComboViewer(parent);
 		final IItemLabelProvider labelProvider = getItemPropertyDescriptor(setting).getLabelProvider(null);
 		combo.setContentProvider(new ArrayContentProvider());
@@ -89,7 +88,7 @@ public class SWTEnumComboViewerRenderer extends SWTViewerRenderer {
 	 */
 	@Override
 	protected String getUnsetText() {
-		return ControlMessages.EEnumControl_NoValueSetClickToSetValue;
+		return RendererMessages.EEnumControl_NoValueSetClickToSetValue;
 	}
 
 }

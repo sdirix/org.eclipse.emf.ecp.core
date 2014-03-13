@@ -11,14 +11,11 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.core.swt.renderer;
 
-import java.util.Date;
-
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.observable.value.DateAndTimeObservableValue;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
-import org.eclipse.emf.ecp.edit.internal.swt.controls.ControlMessages;
-import org.eclipse.emf.ecp.view.spi.core.swt.SWTControlRenderer;
+import org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -31,16 +28,16 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.DateTime;
 
 /**
- * A control which can handle {@link Date}.
+ * A control which can handle {@link java.util.Date Date}.
  * 
  * @author Eugen Neufeld
  * 
  */
-public class SWTDateTimeControlRenderer extends SWTControlRenderer {
+public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 	/**
 	 * Default constructor.
 	 */
-	public SWTDateTimeControlRenderer() {
+	public DateTimeControlSWTRenderer() {
 		super();
 	}
 
@@ -49,7 +46,7 @@ public class SWTDateTimeControlRenderer extends SWTControlRenderer {
 	 * 
 	 * @param factory the {@link SWTRendererFactory} to use.
 	 */
-	SWTDateTimeControlRenderer(SWTRendererFactory factory) {
+	DateTimeControlSWTRenderer(SWTRendererFactory factory) {
 		super(factory);
 	}
 
@@ -63,7 +60,7 @@ public class SWTDateTimeControlRenderer extends SWTControlRenderer {
 	}
 
 	@Override
-	protected Control createControl(Composite parent, Setting setting) {
+	protected Control createSWTControl(Composite parent, Setting setting) {
 		final Composite dateTimeComposite = new Composite(parent, SWT.NONE);
 		dateTimeComposite.setBackground(parent.getBackground());
 		GridLayoutFactory.fillDefaults().numColumns(3).spacing(2, 0).equalWidth(false)
@@ -85,7 +82,7 @@ public class SWTDateTimeControlRenderer extends SWTControlRenderer {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SWTControlRenderer#setValidationColor(org.eclipse.swt.widgets.Control,
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer#setValidationColor(org.eclipse.swt.widgets.Control,
 	 *      org.eclipse.swt.graphics.Color)
 	 */
 	@Override
@@ -101,7 +98,7 @@ public class SWTDateTimeControlRenderer extends SWTControlRenderer {
 	 */
 	@Override
 	protected String getUnsetText() {
-		return ControlMessages.DateTimeControl_NoDateSetClickToSetDate;
+		return RendererMessages.DateTimeControl_NoDateSetClickToSetDate;
 	}
 
 }

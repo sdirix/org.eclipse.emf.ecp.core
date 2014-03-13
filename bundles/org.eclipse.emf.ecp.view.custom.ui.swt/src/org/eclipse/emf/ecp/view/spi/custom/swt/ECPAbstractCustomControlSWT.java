@@ -40,8 +40,6 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.custom.model.ECPCustomControlChangeListener;
 import org.eclipse.emf.ecp.view.spi.custom.model.VCustomControl;
 import org.eclipse.emf.ecp.view.spi.custom.model.VCustomDomainModelReference;
-import org.eclipse.emf.ecp.view.spi.layout.grid.GridCell;
-import org.eclipse.emf.ecp.view.spi.layout.grid.GridDescription;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
@@ -49,6 +47,8 @@ import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
+import org.eclipse.emf.ecp.view.spi.swt.layout.GridCell;
+import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescription;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
@@ -623,18 +623,15 @@ public abstract class ECPAbstractCustomControlSWT
 	 * 
 	 * @param controls the controls provided
 	 */
-	public final void applyReadOnly(Control[] controls) {
+	public final void applyReadOnly(Map<GridCell, Control> controls) {
 		if (setEditable(!getCustomControl().isReadonly())) {
-			for (int i = 0; i < controls.length; i++) {
-				if (controls[i] == null) {
-					continue;
-				}
-				setControlEnabled(i, controls[i], !getCustomControl().isReadonly());
+			for (final GridCell gridCell : controls.keySet()) {
+				setControlEnabled(gridCell, controls.get(gridCell), !getCustomControl().isReadonly());
 			}
 		}
 	}
 
-	private void setControlEnabled(int index, Control control, boolean enabled) {
+	private void setControlEnabled(GridCell gridCell, Control control, boolean enabled) {
 		control.setEnabled(enabled);
 	}
 
@@ -643,13 +640,10 @@ public abstract class ECPAbstractCustomControlSWT
 	 * 
 	 * @param controls the controls
 	 */
-	public final void applyEnable(Control[] controls) {
+	public final void applyEnable(Map<GridCell, Control> controls) {
 		if (setEditable(getCustomControl().isEnabled())) {
-			for (int i = 0; i < controls.length; i++) {
-				if (controls[i] == null) {
-					continue;
-				}
-				setControlEnabled(i, controls[i], getCustomControl().isEnabled());
+			for (final GridCell gridCell : controls.keySet()) {
+				setControlEnabled(gridCell, controls.get(gridCell), getCustomControl().isEnabled());
 			}
 		}
 	}

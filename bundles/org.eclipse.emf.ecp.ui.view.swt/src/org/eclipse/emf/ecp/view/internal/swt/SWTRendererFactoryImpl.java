@@ -23,7 +23,7 @@ import org.eclipse.core.runtime.InvalidRegistryObjectException;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
-import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTAdditionalRenderer;
+import org.eclipse.emf.ecp.view.spi.swt.AbstractAdditionalSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.swt.ECPAdditionalRendererTester;
 import org.eclipse.emf.ecp.view.spi.swt.ECPRendererTester;
@@ -110,7 +110,7 @@ public final class SWTRendererFactoryImpl implements SWTRendererFactory {
 			for (final IConfigurationElement configurationElement : extension
 				.getConfigurationElements()) {
 				try {
-					final Class<AbstractSWTAdditionalRenderer<VElement>> renderer = loadClass(configurationElement
+					final Class<AbstractAdditionalSWTRenderer<VElement>> renderer = loadClass(configurationElement
 						.getContributor().getName(), configurationElement
 						.getAttribute("renderer")); //$NON-NLS-1$
 					final ECPAdditionalRendererTester tester = (ECPAdditionalRendererTester) configurationElement
@@ -210,14 +210,14 @@ public final class SWTRendererFactoryImpl implements SWTRendererFactory {
 	 * @see org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory#getAdditionalRenderer(org.eclipse.emf.ecp.view.spi.model.VElement,
 	 *      org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
-	public Collection<AbstractSWTAdditionalRenderer<VElement>> getAdditionalRenderer(VElement vElement,
+	public Collection<AbstractAdditionalSWTRenderer<VElement>> getAdditionalRenderer(VElement vElement,
 		ViewModelContext viewModelContext) {
-		final Set<AbstractSWTAdditionalRenderer<VElement>> renderers = new LinkedHashSet<AbstractSWTAdditionalRenderer<VElement>>();
+		final Set<AbstractAdditionalSWTRenderer<VElement>> renderers = new LinkedHashSet<AbstractAdditionalSWTRenderer<VElement>>();
 		for (final ECPAdditionalRendererDescription description : additionalRendererDescriptors) {
 			final ECPAdditionalRendererTester tester = description.getTester();
 			if (tester.isApplicable(vElement, viewModelContext)) {
 				try {
-					final AbstractSWTAdditionalRenderer<VElement> renderer = description.getRenderer()
+					final AbstractAdditionalSWTRenderer<VElement> renderer = description.getRenderer()
 						.newInstance();
 					renderer.init(vElement, viewModelContext);
 					renderers.add(renderer);
