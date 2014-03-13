@@ -44,8 +44,8 @@ public class ChildrenDescriptorExtensionTest {
 	private static final int COMPOSITE_CHILD_COUNT = RENDERABLE_CHILD_COUNT;
 	private static final int ABSTRACTCATEGORIZATION_CHILD_COUNT = RENDERABLE_CHILD_COUNT + 1;
 	private static final int NUMBER_OF_MAIN_COMPOSITES = 1;
-	// label, separator, table, vertical, horizontal, group, groupedgrid, categorizationElement
-	private static final int NUMBER_OF_EXTERNAL_COMPOSITES = 8;
+	// label, separator, table, vertical, horizontal, group, groupedgrid, categorizationElement, custom control
+	private static final int NUMBER_OF_EXTERNAL_COMPOSITES = 9;
 	private static final int NUMBER_OF_COMPOSITES = NUMBER_OF_MAIN_COMPOSITES + NUMBER_OF_EXTERNAL_COMPOSITES;
 	// categorization, category
 	private static final int NUMBER_OF_CATEGORIZATIONS = 2;
@@ -61,7 +61,7 @@ public class ChildrenDescriptorExtensionTest {
 	// TODO: Should be not -10, labels, groupedgrid, span, 2 rules, vertical, horizontal, separator,table, group
 	// are missing
 	// TODO: upper hierarchy is missing, can't find children
-	private static final int CATEGORY_CHILD_COUNT = NUMBER_OF_COMPOSITES + ABSTRACTCATEGORIZATION_CHILD_COUNT - 10 + 3;
+	private static final int CATEGORY_CHILD_COUNT = NUMBER_OF_COMPOSITES + ABSTRACTCATEGORIZATION_CHILD_COUNT - 11 + 3;
 	// VDomainModelReference -> VFeaturePathDR, VPredefinedDR, VTableDR
 	private static final int CONTROL_CHILD_COUNT = COMPOSITE_CHILD_COUNT + 3;
 	private static final int TABLECONTROL_CHILD_COUNT = CONTROL_CHILD_COUNT + 1;
@@ -75,7 +75,7 @@ public class ChildrenDescriptorExtensionTest {
 	private static final int GRIDEDGROUP_CHILD_COUNT = 1;
 	// TODO: Should be not -7, labels, group, vertical, horizontal, separator ,table,categorizationelement are missing
 	// TODO: upper hierarchy is missing, can't find children
-	private static final int GRIDEDGROUPROW_CHILD_COUNT = NUMBER_OF_COMPOSITES - 7;
+	private static final int GRIDEDGROUPROW_CHILD_COUNT = NUMBER_OF_COMPOSITES - 8;
 	private static final int GRIDEDGROUPSPAN_CHILD_COUNT = 0;
 
 	private final ChildrenDescriptorCollector descriptorCollector = new ChildrenDescriptorCollector();

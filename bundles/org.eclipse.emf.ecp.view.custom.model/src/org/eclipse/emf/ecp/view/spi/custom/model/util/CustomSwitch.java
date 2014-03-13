@@ -14,9 +14,12 @@ package org.eclipse.emf.ecp.view.spi.custom.model.util;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
+import org.eclipse.emf.ecp.view.spi.custom.model.*;
+import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
+import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage;
-import org.eclipse.emf.ecp.view.spi.custom.model.VHardcodedDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VElement;
 
 /**
  * <!-- begin-user-doc -->
@@ -31,7 +34,6 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
  * 
  * @see org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage
  * @generated
- * @since 1.2
  */
 public class CustomSwitch<T> extends Switch<T> {
 	/**
@@ -51,7 +53,8 @@ public class CustomSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public CustomSwitch() {
-		if (modelPackage == null) {
+		if (modelPackage == null)
+		{
 			modelPackage = VCustomPackage.eINSTANCE;
 		}
 	}
@@ -81,16 +84,28 @@ public class CustomSwitch<T> extends Switch<T> {
 	 */
 	@Override
 	protected T doSwitch(int classifierID, EObject theEObject) {
-		switch (classifierID) {
-		case VCustomPackage.HARDCODED_DOMAIN_MODEL_REFERENCE: {
-			final VHardcodedDomainModelReference hardcodedDomainModelReference = (VHardcodedDomainModelReference) theEObject;
-			T result = caseHardcodedDomainModelReference(hardcodedDomainModelReference);
-			if (result == null) {
-				result = caseDomainModelReference(hardcodedDomainModelReference);
-			}
-			if (result == null) {
+		switch (classifierID)
+		{
+		case VCustomPackage.CUSTOM_CONTROL: {
+			VCustomControl customControl = (VCustomControl) theEObject;
+			T result = caseCustomControl(customControl);
+			if (result == null)
+				result = caseControl(customControl);
+			if (result == null)
+				result = caseContainedElement(customControl);
+			if (result == null)
+				result = caseElement(customControl);
+			if (result == null)
 				result = defaultCase(theEObject);
-			}
+			return result;
+		}
+		case VCustomPackage.CUSTOM_DOMAIN_MODEL_REFERENCE: {
+			VCustomDomainModelReference customDomainModelReference = (VCustomDomainModelReference) theEObject;
+			T result = caseCustomDomainModelReference(customDomainModelReference);
+			if (result == null)
+				result = caseDomainModelReference(customDomainModelReference);
+			if (result == null)
+				result = defaultCase(theEObject);
 			return result;
 		}
 		default:
@@ -99,18 +114,36 @@ public class CustomSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Hardcoded Domain Model Reference</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Control</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * 
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Hardcoded Domain Model Reference</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Control</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseHardcodedDomainModelReference(VHardcodedDomainModelReference object) {
+	public T caseCustomControl(VCustomControl object)
+	{
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Domain Model Reference</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * 
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Domain Model Reference</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseCustomDomainModelReference(VCustomDomainModelReference object)
+	{
 		return null;
 	}
 
@@ -127,6 +160,57 @@ public class CustomSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseDomainModelReference(VDomainModelReference object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Element</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * 
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Element</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseElement(VElement object)
+	{
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Contained Element</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * 
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Contained Element</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseContainedElement(VContainedElement object)
+	{
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Control</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * 
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Control</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseControl(VControl object)
+	{
 		return null;
 	}
 

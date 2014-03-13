@@ -92,6 +92,9 @@ public abstract class SingleControl extends SWTControl {
 	@Deprecated
 	@Override
 	public void resetValidation() {
+		if (getControl() == null) {
+			return;
+		}
 		updateValidationColor(null);
 		if (validationLabel != null) {
 			validationLabel.setImage(null);

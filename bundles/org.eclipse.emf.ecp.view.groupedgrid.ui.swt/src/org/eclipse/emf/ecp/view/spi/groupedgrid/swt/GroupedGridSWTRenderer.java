@@ -11,20 +11,19 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.groupedgrid.swt;
 
-import java.util.List;
-
-import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.groupedgrid.model.VGroup;
 import org.eclipse.emf.ecp.view.spi.groupedgrid.model.VGroupedGrid;
 import org.eclipse.emf.ecp.view.spi.groupedgrid.model.VRow;
 import org.eclipse.emf.ecp.view.spi.groupedgrid.model.VSpan;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.VAttachment;
+import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.view.spi.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
-import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
+import org.eclipse.emf.ecp.view.spi.swt.layout.GridCell;
+import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescription;
+import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
@@ -39,27 +38,50 @@ import org.eclipse.swt.widgets.Label;
  * 
  */
 public class GroupedGridSWTRenderer extends AbstractSWTRenderer<VGroupedGrid> {
+	private GridDescription rendererGridDescription;
 
 	/**
-	 * The instance of the GroupedGridSWTRenderer.
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#getGridDescription(GridDescription)
 	 */
-	public static final GroupedGridSWTRenderer INSTANCE = new GroupedGridSWTRenderer();
-
 	@Override
-	protected List<RenderingResultRow<Control>> renderModel(Composite parent, VGroupedGrid groupedGrid,
-		ViewModelContext viewContext) throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+	public GridDescription getGridDescription(GridDescription gridDescription) {
+		if (rendererGridDescription == null) {
+			rendererGridDescription = GridDescriptionFactory.INSTANCE.createSimpleGrid(1, 1, this);
+		}
+		return rendererGridDescription;
+	}
 
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#dispose()
+	 */
+	@Override
+	protected void dispose() {
+		rendererGridDescription = null;
+		super.dispose();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#renderControl(org.eclipse.emf.ecp.view.spi.swt.layout.GridCell,
+	 *      org.eclipse.swt.widgets.Composite)
+	 */
+	@Override
+	protected Control renderControl(GridCell cell, Composite parent) throws NoRendererFoundException,
+		NoPropertyDescriptorFoundExeption {
 		final Composite columnComposite = new Composite(parent, SWT.NONE);
 		columnComposite.setBackground(parent.getBackground());
 
-		final int maxNumColumns = calculateColumns(groupedGrid);
+		final int maxNumColumns = calculateColumns(getVElement());
 
 		GridLayoutFactory.fillDefaults().numColumns(maxNumColumns).equalWidth(true)
 			.applyTo(columnComposite);
 
-		final int currentControl = 0;
-
-		for (final VGroup group : groupedGrid.getGroups()) {
+		for (final VGroup group : getVElement().getGroups()) {
 			// Label
 			final Composite labelComposite = new Composite(columnComposite, SWT.NONE);
 			labelComposite.setBackground(parent.getBackground());
@@ -80,16 +102,15 @@ public class GroupedGridSWTRenderer extends AbstractSWTRenderer<VGroupedGrid> {
 				for (final org.eclipse.emf.ecp.view.spi.model.VContainedElement child : row.getChildren()) {
 
 					final int hSpan = getHSpanOfComposite(child);
-					final List<RenderingResultRow<Control>> resultRows = SWTRendererFactory.INSTANCE.render(
-						columnComposite,
-						child, viewContext);
+					final AbstractSWTRenderer<VElement> renderer = getSWTRendererFactory().getRenderer(child,
+						getViewModelContext());
+					final Control childRender = renderer.render(new GridCell(0, 0, this),
+						columnComposite);
 
 					// TOOD; when does this case apply?
-					if (resultRows == null) {
+					if (childRender == null) {
 						continue;
 					}
-					// TODO refactor
-					final Control childRender = resultRows.get(0).getMainControl();
 					childRender.setBackground(parent.getBackground());
 					GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, false).indent(0, 0)
 						.span(hSpan, 1).applyTo(childRender);
@@ -113,7 +134,7 @@ public class GroupedGridSWTRenderer extends AbstractSWTRenderer<VGroupedGrid> {
 				}
 			}
 		}
-		return createResult(columnComposite);
+		return columnComposite;
 	}
 
 	/**
@@ -158,4 +179,5 @@ public class GroupedGridSWTRenderer extends AbstractSWTRenderer<VGroupedGrid> {
 		return 0;
 
 	}
+
 }

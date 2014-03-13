@@ -23,7 +23,9 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.spi.custom.model.VCustomFactory;
 import org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage;
 import org.eclipse.emf.ecp.view.spi.custom.model.util.CustomAdapterFactory;
+import org.eclipse.emf.ecp.view.spi.model.VContainer;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.model.util.ViewSwitch;
 import org.eclipse.emf.edit.command.CommandParameter;
@@ -52,7 +54,6 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
  * <!-- end-user-doc -->
  * 
  * @generated
- * @since 1.2
  */
 public class CustomItemProviderAdapterFactory extends CustomAdapterFactory implements ComposeableAdapterFactory,
 	IChangeNotifier, IDisposable, IChildCreationExtender {
@@ -109,29 +110,59 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all
-	 * {@link org.eclipse.emf.ecp.view.spi.custom.model.VHardcodedDomainModelReference} instances.
+	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.view.spi.custom.model.VCustomControl}
+	 * instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 */
-	protected HardcodedDomainModelReferenceItemProvider hardcodedDomainModelReferenceItemProvider;
+	protected CustomControlItemProvider customControlItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.spi.custom.model.VHardcodedDomainModelReference}.
+	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.spi.custom.model.VCustomControl}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 */
 	@Override
-	public Adapter createHardcodedDomainModelReferenceAdapter() {
-		if (hardcodedDomainModelReferenceItemProvider == null) {
-			hardcodedDomainModelReferenceItemProvider = new HardcodedDomainModelReferenceItemProvider(this);
+	public Adapter createCustomControlAdapter()
+	{
+		if (customControlItemProvider == null)
+		{
+			customControlItemProvider = new CustomControlItemProvider(this);
 		}
 
-		return hardcodedDomainModelReferenceItemProvider;
+		return customControlItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all
+	 * {@link org.eclipse.emf.ecp.view.spi.custom.model.VCustomDomainModelReference} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	protected CustomDomainModelReferenceItemProvider customDomainModelReferenceItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.spi.custom.model.VCustomDomainModelReference}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	@Override
+	public Adapter createCustomDomainModelReferenceAdapter()
+	{
+		if (customDomainModelReferenceItemProvider == null)
+		{
+			customDomainModelReferenceItemProvider = new CustomDomainModelReferenceItemProvider(this);
+		}
+
+		return customDomainModelReferenceItemProvider;
 	}
 
 	/**
@@ -187,9 +218,11 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 	 */
 	@Override
 	public Object adapt(Object object, Object type) {
-		if (isFactoryForType(type)) {
-			final Object adapter = super.adapt(object, type);
-			if (!(type instanceof Class<?>) || ((Class<?>) type).isInstance(adapter)) {
+		if (isFactoryForType(type))
+		{
+			Object adapter = super.adapt(object, type);
+			if (!(type instanceof Class<?>) || (((Class<?>) type).isInstance(adapter)))
+			{
 				return adapter;
 			}
 		}
@@ -259,7 +292,8 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 	public void fireNotifyChanged(Notification notification) {
 		changeNotifier.fireNotifyChanged(notification);
 
-		if (parentAdapterFactory != null) {
+		if (parentAdapterFactory != null)
+		{
 			parentAdapterFactory.fireNotifyChanged(notification);
 		}
 	}
@@ -272,9 +306,10 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 	 * @generated
 	 */
 	public void dispose() {
-		if (hardcodedDomainModelReferenceItemProvider != null) {
-			hardcodedDomainModelReferenceItemProvider.dispose();
-		}
+		if (customControlItemProvider != null)
+			customControlItemProvider.dispose();
+		if (customDomainModelReferenceItemProvider != null)
+			customDomainModelReferenceItemProvider.dispose();
 	}
 
 	/**
@@ -330,11 +365,45 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 			 * @generated
 			 */
 			@Override
+			public Object caseView(VView object)
+			{
+				newChildDescriptors.add
+					(createChildParameter
+					(VViewPackage.Literals.VIEW__CHILDREN,
+						VCustomFactory.eINSTANCE.createCustomControl()));
+
+				return null;
+			}
+
+			/**
+			 * <!-- begin-user-doc -->
+			 * <!-- end-user-doc -->
+			 * 
+			 * @generated
+			 */
+			@Override
+			public Object caseContainer(VContainer object)
+			{
+				newChildDescriptors.add
+					(createChildParameter
+					(VViewPackage.Literals.CONTAINER__CHILDREN,
+						VCustomFactory.eINSTANCE.createCustomControl()));
+
+				return null;
+			}
+
+			/**
+			 * <!-- begin-user-doc -->
+			 * <!-- end-user-doc -->
+			 * 
+			 * @generated
+			 */
+			@Override
 			public Object caseControl(VControl object) {
 				newChildDescriptors.add
 					(createChildParameter
 					(VViewPackage.Literals.CONTROL__DOMAIN_MODEL_REFERENCE,
-						VCustomFactory.eINSTANCE.createHardcodedDomainModelReference()));
+						VCustomFactory.eINSTANCE.createCustomDomainModelReference()));
 
 				return null;
 			}
@@ -358,7 +427,7 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 		 * @generated
 		 */
 		public Collection<Object> getNewChildDescriptors(Object object, EditingDomain editingDomain) {
-			final ArrayList<Object> result = new ArrayList<Object>();
+			ArrayList<Object> result = new ArrayList<Object>();
 			new CreationSwitch(result, editingDomain).doSwitch((EObject) object);
 			return result;
 		}

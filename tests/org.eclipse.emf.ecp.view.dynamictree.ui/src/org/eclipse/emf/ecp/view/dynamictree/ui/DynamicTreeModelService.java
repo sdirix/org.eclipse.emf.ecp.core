@@ -193,7 +193,7 @@ public class DynamicTreeModelService implements ViewModelService {
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#getPriority()
 	 */
 	public int getPriority() {
-		return 0;
+		return -5;
 	}
 
 }

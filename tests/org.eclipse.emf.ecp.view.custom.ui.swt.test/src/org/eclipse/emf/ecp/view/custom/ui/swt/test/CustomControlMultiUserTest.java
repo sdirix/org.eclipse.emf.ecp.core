@@ -11,14 +11,12 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.custom.ui.swt.test;
 
-import static org.junit.Assert.assertNotEquals;
-
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
+import org.eclipse.emf.ecp.view.spi.custom.model.VCustomControl;
+import org.eclipse.emf.ecp.view.spi.custom.model.VCustomDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.custom.model.VCustomFactory;
-import org.eclipse.emf.ecp.view.spi.custom.model.VHardcodedDomainModelReference;
-import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.test.common.swt.DatabindingClassRunner;
@@ -29,6 +27,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -64,14 +63,21 @@ public class CustomControlMultiUserTest {
 			fan2.setFavouriteMerchandise(m2);
 		}
 
-		final VControl control1 = VViewFactory.eINSTANCE.createControl();
-		final VControl control2 = VViewFactory.eINSTANCE.createControl();
+		final VCustomControl control1 = VCustomFactory.eINSTANCE.createCustomControl();
+		final VCustomControl control2 = VCustomFactory.eINSTANCE.createCustomControl();
 
-		final VHardcodedDomainModelReference hard1 = VCustomFactory.eINSTANCE.createHardcodedDomainModelReference();
-		final VHardcodedDomainModelReference hard2 = VCustomFactory.eINSTANCE.createHardcodedDomainModelReference();
+		final VCustomDomainModelReference hard1 = VCustomFactory.eINSTANCE.createCustomDomainModelReference();
+		final VCustomDomainModelReference hard2 = VCustomFactory.eINSTANCE.createCustomDomainModelReference();
 
-		hard1.setControlId("org.eclipse.emf.ecp.view.custom.ui.swt.test.CustomControlStub2");
-		hard2.setControlId("org.eclipse.emf.ecp.view.custom.ui.swt.test.CustomControlStub2");
+		hard1.setBundleName("org.eclipse.emf.ecp.view.custom.ui.swt.test");
+		hard2.setBundleName("org.eclipse.emf.ecp.view.custom.ui.swt.test");
+		hard1.setClassName("org.eclipse.emf.ecp.view.custom.ui.swt.test.CustomControlStub2");
+		hard2.setClassName("org.eclipse.emf.ecp.view.custom.ui.swt.test.CustomControlStub2");
+
+		control1.setBundleName("org.eclipse.emf.ecp.view.custom.ui.swt.test");
+		control2.setBundleName("org.eclipse.emf.ecp.view.custom.ui.swt.test");
+		control1.setClassName("org.eclipse.emf.ecp.view.custom.ui.swt.test.CustomControlStub2");
+		control2.setClassName("org.eclipse.emf.ecp.view.custom.ui.swt.test.CustomControlStub2");
 
 		control1.setDomainModelReference(hard1);
 		control2.setDomainModelReference(hard2);
@@ -104,12 +110,12 @@ public class CustomControlMultiUserTest {
 		final Composite comp1 = (Composite) swtView1.getSWTControl();
 		final Composite comp2 = (Composite) swtView2.getSWTControl();
 
-		final String text1 = ((Text) ((Composite) ((Composite) ((Composite) ((Composite) comp1.getChildren()[2])
-			.getChildren()[1]).getChildren()[0]).getChildren()[0]).getChildren()[0]).getText();
-		final String text2 = ((Text) ((Composite) ((Composite) ((Composite) ((Composite) comp2.getChildren()[2])
-			.getChildren()[1]).getChildren()[0]).getChildren()[0]).getChildren()[0]).getText();
+		final String text1 = ((Text) ((Composite) ((Composite) ((Composite) comp1.getChildren()[1])
+			.getChildren()[0]).getChildren()[0]).getChildren()[0]).getText();
+		final String text2 = ((Text) ((Composite) ((Composite) ((Composite) comp2.getChildren()[1])
+			.getChildren()[0]).getChildren()[0]).getChildren()[0]).getText();
 
-		assertNotEquals(text1, text2);
+		Assert.assertNotEquals(text1, text2);
 
 		shell1.close();
 		shell1.dispose();

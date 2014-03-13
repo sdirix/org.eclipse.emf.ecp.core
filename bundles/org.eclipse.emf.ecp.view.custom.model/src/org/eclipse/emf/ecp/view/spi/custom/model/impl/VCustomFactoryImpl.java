@@ -16,9 +16,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-import org.eclipse.emf.ecp.view.spi.custom.model.VCustomFactory;
-import org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage;
-import org.eclipse.emf.ecp.view.spi.custom.model.VHardcodedDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.custom.model.*;
 
 /**
  * <!-- begin-user-doc -->
@@ -26,7 +24,6 @@ import org.eclipse.emf.ecp.view.spi.custom.model.VHardcodedDomainModelReference;
  * <!-- end-user-doc -->
  * 
  * @generated
- * @since 1.2
  */
 public class VCustomFactoryImpl extends EFactoryImpl implements VCustomFactory {
 	/**
@@ -37,13 +34,16 @@ public class VCustomFactoryImpl extends EFactoryImpl implements VCustomFactory {
 	 * @generated
 	 */
 	public static VCustomFactory init() {
-		try {
-			final VCustomFactory theCustomFactory = (VCustomFactory) EPackage.Registry.INSTANCE
+		try
+		{
+			VCustomFactory theCustomFactory = (VCustomFactory) EPackage.Registry.INSTANCE
 				.getEFactory(VCustomPackage.eNS_URI);
-			if (theCustomFactory != null) {
+			if (theCustomFactory != null)
+			{
 				return theCustomFactory;
 			}
-		} catch (final Exception exception) {
+		} catch (Exception exception)
+		{
 			EcorePlugin.INSTANCE.log(exception);
 		}
 		return new VCustomFactoryImpl();
@@ -68,9 +68,12 @@ public class VCustomFactoryImpl extends EFactoryImpl implements VCustomFactory {
 	 */
 	@Override
 	public EObject create(EClass eClass) {
-		switch (eClass.getClassifierID()) {
-		case VCustomPackage.HARDCODED_DOMAIN_MODEL_REFERENCE:
-			return createHardcodedDomainModelReference();
+		switch (eClass.getClassifierID())
+		{
+		case VCustomPackage.CUSTOM_CONTROL:
+			return createCustomControl();
+		case VCustomPackage.CUSTOM_DOMAIN_MODEL_REFERENCE:
+			return createCustomDomainModelReference();
 		default:
 			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -82,9 +85,22 @@ public class VCustomFactoryImpl extends EFactoryImpl implements VCustomFactory {
 	 * 
 	 * @generated
 	 */
-	public VHardcodedDomainModelReference createHardcodedDomainModelReference() {
-		final VHardcodedDomainModelReferenceImpl hardcodedDomainModelReference = new VHardcodedDomainModelReferenceImpl();
-		return hardcodedDomainModelReference;
+	public VCustomControl createCustomControl()
+	{
+		VCustomControlImpl customControl = new VCustomControlImpl();
+		return customControl;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public VCustomDomainModelReference createCustomDomainModelReference()
+	{
+		VCustomDomainModelReferenceImpl customDomainModelReference = new VCustomDomainModelReferenceImpl();
+		return customDomainModelReference;
 	}
 
 	/**

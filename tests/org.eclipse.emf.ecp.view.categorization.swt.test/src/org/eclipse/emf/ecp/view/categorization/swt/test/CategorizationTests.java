@@ -63,7 +63,14 @@ public class CategorizationTests {
 	}
 
 	private static boolean checkIfThereIsATextControl(Control control) {
+		if (Text.class.isInstance(control)) {
+			return true;
+		}
+
 		Composite controlComposite = (Composite) control;
+		if (Text.class.isInstance(controlComposite.getChildren()[2])) {
+			return true;
+		}
 		controlComposite = (Composite) controlComposite.getChildren()[2];
 		controlComposite = (Composite) controlComposite.getChildren()[0];
 		controlComposite = (Composite) controlComposite.getChildren()[0];
@@ -94,8 +101,9 @@ public class CategorizationTests {
 	}
 
 	private void assertLabelAndTextControl(Composite composite, String labelText) {
-		assertLabelText(composite, labelText);
-		assertTrue(checkIfThereIsATextControl(composite));
+		final Composite composite2 = Composite.class.cast(composite.getChildren()[0]);
+		assertLabelText(composite2, labelText);
+		assertTrue(checkIfThereIsATextControl(composite2));
 	}
 
 	private void assertLabelText(Composite composite, String labelText) {
@@ -131,12 +139,12 @@ public class CategorizationTests {
 		final Control render = render();
 
 		assertTrue(Composite.class.isInstance(render));
-		Composite composite = (Composite) render;
+		final Composite composite = (Composite) render;
 		// extra assert due to extra composite
 		assertTrue(composite.getChildren().length == 1);
-		composite = (Composite) composite.getChildren()[0];
+		// composite = (Composite) composite.getChildren()[0];
 
-		assertTrue(composite.getChildren().length == 3);
+		assertTrue(Composite.class.cast(composite.getChildren()[0]).getChildren().length == 3);
 		assertLabelAndTextControl(composite, NAME);
 
 	}
@@ -168,9 +176,9 @@ public class CategorizationTests {
 
 		assertTrue(ScrolledComposite.class.isInstance(composite.getChildren()[1]));
 		final ScrolledComposite scrolledComposite = (ScrolledComposite) composite.getChildren()[1];
-		Control content = scrolledComposite.getContent();
+		final Control content = scrolledComposite.getContent();
 		assertTrue(Composite.class.isInstance(content));
-		content = ((Composite) content).getChildren()[0];
+		// content = ((Composite) content).getChildren()[0];
 		assertLabelAndTextControl((Composite) content, NAME);
 	}
 

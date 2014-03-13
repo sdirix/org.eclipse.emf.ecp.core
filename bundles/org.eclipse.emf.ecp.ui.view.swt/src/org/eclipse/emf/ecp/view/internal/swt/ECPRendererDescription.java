@@ -18,40 +18,41 @@ import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.swt.ECPRendererTester;
 
 /**
- * A class describing a renderer.
+ * A class describing a rendererClass.
  * 
  * @author Eugen Neufeld
  * 
  */
 public class ECPRendererDescription {
 
-	private final AbstractSWTRenderer<VElement> renderer;
+	private final Class<AbstractSWTRenderer<VElement>> rendererClass;
 	private final Set<ECPRendererTester> tester;
 
 	/**
 	 * The constructor of the ControlDescription.
 	 * 
-	 * @param renderer the renderer
-	 * @param tester the class testing whether the renderer is applicable for the current view model context
+	 * @param rendererClass the rendererClass
+	 * @param tester the class testing whether the rendererClass is applicable for the current view model context
 	 */
-	public ECPRendererDescription(AbstractSWTRenderer<VElement> renderer,
+	public ECPRendererDescription(Class<AbstractSWTRenderer<VElement>> rendererClass,
 		Set<ECPRendererTester> tester) {
 		super();
-		this.renderer = renderer;
+		this.rendererClass = rendererClass;
 		this.tester = tester;
 	}
 
 	/**
-	 * The renderer. It extends the {@link AbstractSWTRenderer}.
+	 * The rendererClass. It extends the {@link AbstractSWTRenderer}.
 	 * 
-	 * @return the class implementing this renderer
+	 * @return the class implementing this rendererClass
 	 */
-	public AbstractSWTRenderer<VElement> getRenderer() {
-		return renderer;
+	public Class<AbstractSWTRenderer<VElement>> getRenderer() {
+		return rendererClass;
 	}
 
 	/**
-	 * The tester for this renderer. The tester is used to check whether this renderer is usable on a specific view
+	 * The tester for this rendererClass. The tester is used to check whether this rendererClass is usable on a specific
+	 * view
 	 * model context.
 	 * 
 	 * @return the {@link ECPRendererTester} implementation

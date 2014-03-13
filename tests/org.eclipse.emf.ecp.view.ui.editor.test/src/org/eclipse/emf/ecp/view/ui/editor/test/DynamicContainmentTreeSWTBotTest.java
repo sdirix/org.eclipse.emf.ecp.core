@@ -12,9 +12,7 @@
 package org.eclipse.emf.ecp.view.ui.editor.test;
 
 import java.util.Arrays;
-import java.util.List;
 
-import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -28,19 +26,18 @@ import org.eclipse.emf.ecp.view.dynamictree.model.ModelFactory;
 import org.eclipse.emf.ecp.view.dynamictree.model.ModelPackage;
 import org.eclipse.emf.ecp.view.dynamictree.model.TestElement;
 import org.eclipse.emf.ecp.view.dynamictree.model.TestElementContainer;
-import org.eclipse.emf.ecp.view.spi.categorization.model.VAction;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorization;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationElement;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationFactory;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
-import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.swtbot.swt.finder.finders.UIThreadRunnable;
 import org.eclipse.swtbot.swt.finder.results.VoidResult;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 
 public class DynamicContainmentTreeSWTBotTest extends ECPCommonSWTBotTest {
 
@@ -94,7 +91,18 @@ public class DynamicContainmentTreeSWTBotTest extends ECPCommonSWTBotTest {
 		final VCategorizationElement element = VCategorizationFactory.eINSTANCE.createCategorizationElement();
 		element.getCategorizations().add(categorization);
 		view.getChildren().add(element);
+		// final ResourceSet rs = new ResourceSetImpl();
+		// final Resource createResource = rs.createResource(URI
+		// .createFileURI("C:/Users/Eugen/Workspaces/workspace_ecp/_viewmodelTest/dynamicView.viewmodel"));
+		// createResource.getContents().add(view);
+		// try {
+		// createResource.save(null);
+		// } catch (final IOException ex) {
+		// ex.printStackTrace();
+		// }
+
 		return view;
+
 	}
 
 	private VFeaturePathDomainModelReference createFeaturePathDomainModelReference(EStructuralFeature feature,
@@ -116,7 +124,7 @@ public class DynamicContainmentTreeSWTBotTest extends ECPCommonSWTBotTest {
 		((TestElementContainer) virtualParent).getTestElements().add(newValue);
 		VElement renderable = null;
 		DynamicContainmentTree tree = null;
-		List<VAction> actions = null;
+		// List<VAction> actions = null;
 
 		if (!TestElementContainer.class.isInstance(virtualParent)) {
 			virtualParent = virtualParent.eContainer();
@@ -132,7 +140,7 @@ public class DynamicContainmentTreeSWTBotTest extends ECPCommonSWTBotTest {
 		if (tree == null) {
 			tree = (DynamicContainmentTree) viewModelParent;
 		}
-		actions = tree.getActions();
+		// actions = tree.getActions();
 		renderable = tree.getChildComposite();
 
 		// final ECPControlContext childContext = virtualParentNode.getControlContext()
@@ -156,23 +164,6 @@ public class DynamicContainmentTreeSWTBotTest extends ECPCommonSWTBotTest {
 
 		// return n;
 		return pi;
-	}
-
-	private static void resolveDomainReferences(VElement renderable,
-		EObject domainModelRoot) {
-		final TreeIterator<EObject> eAllContents = renderable.eAllContents();
-		while (eAllContents.hasNext()) {
-			final EObject eObject = eAllContents.next();
-
-			if (VDomainModelReference.class.isInstance(eObject)) {
-				final VDomainModelReference modelReference = (VDomainModelReference) eObject;
-				final boolean resolve = modelReference.resolve(domainModelRoot);
-				if (!resolve) {
-					// log
-				}
-
-			}
-		}
 	}
 
 	/**
@@ -203,7 +194,6 @@ public class DynamicContainmentTreeSWTBotTest extends ECPCommonSWTBotTest {
 	 * 
 	 * @see org.eclipse.emf.ecp.view.ui.editor.test.ECPCommonSWTBotTest#logic()
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public void logic() {
 
@@ -229,7 +219,8 @@ public class DynamicContainmentTreeSWTBotTest extends ECPCommonSWTBotTest {
 				// causes UI update
 				testElement.setName(TEST_ELEMENT_NAME_2);
 				bot.tree().getAllItems()[0].getItems()[0].expand();
-				bot.tree().getAllItems()[0].getItems()[0].getItems()[0].select();
+				final SWTBotTreeItem swtBotTreeItem = bot.tree().getAllItems()[0].getItems()[0].getItems()[0];
+				bot.tree().select(swtBotTreeItem);
 				assertEquals("foo", bot.text().getText());
 
 				bot.tree().getAllItems()[0].getItems()[0].getItems()[1].select();

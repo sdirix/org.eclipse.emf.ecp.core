@@ -15,9 +15,12 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecp.view.spi.custom.model.*;
+import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
+import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage;
-import org.eclipse.emf.ecp.view.spi.custom.model.VHardcodedDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VElement;
 
 /**
  * <!-- begin-user-doc -->
@@ -27,7 +30,6 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
  * 
  * @see org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage
  * @generated
- * @since 1.2
  */
 public class CustomAdapterFactory extends AdapterFactoryImpl {
 	/**
@@ -47,7 +49,8 @@ public class CustomAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public CustomAdapterFactory() {
-		if (modelPackage == null) {
+		if (modelPackage == null)
+		{
 			modelPackage = VCustomPackage.eINSTANCE;
 		}
 	}
@@ -64,10 +67,12 @@ public class CustomAdapterFactory extends AdapterFactoryImpl {
 	 */
 	@Override
 	public boolean isFactoryForType(Object object) {
-		if (object == modelPackage) {
+		if (object == modelPackage)
+		{
 			return true;
 		}
-		if (object instanceof EObject) {
+		if (object instanceof EObject)
+		{
 			return ((EObject) object).eClass().getEPackage() == modelPackage;
 		}
 		return false;
@@ -81,19 +86,47 @@ public class CustomAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	protected CustomSwitch<Adapter> modelSwitch =
-		new CustomSwitch<Adapter>() {
+		new CustomSwitch<Adapter>()
+		{
 			@Override
-			public Adapter caseHardcodedDomainModelReference(VHardcodedDomainModelReference object) {
-				return createHardcodedDomainModelReferenceAdapter();
+			public Adapter caseCustomControl(VCustomControl object)
+			{
+				return createCustomControlAdapter();
 			}
 
 			@Override
-			public Adapter caseDomainModelReference(VDomainModelReference object) {
+			public Adapter caseCustomDomainModelReference(VCustomDomainModelReference object)
+			{
+				return createCustomDomainModelReferenceAdapter();
+			}
+
+			@Override
+			public Adapter caseElement(VElement object)
+			{
+				return createElementAdapter();
+			}
+
+			@Override
+			public Adapter caseContainedElement(VContainedElement object)
+			{
+				return createContainedElementAdapter();
+			}
+
+			@Override
+			public Adapter caseControl(VControl object)
+			{
+				return createControlAdapter();
+			}
+
+			@Override
+			public Adapter caseDomainModelReference(VDomainModelReference object)
+			{
 				return createDomainModelReferenceAdapter();
 			}
 
 			@Override
-			public Adapter defaultCase(EObject object) {
+			public Adapter defaultCase(EObject object)
+			{
 				return createEObjectAdapter();
 			}
 		};
@@ -113,19 +146,36 @@ public class CustomAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '
-	 * {@link org.eclipse.emf.ecp.view.spi.custom.model.VHardcodedDomainModelReference
-	 * <em>Hardcoded Domain Model Reference</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.spi.custom.model.VCustomControl
+	 * <em>Control</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * 
 	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.spi.custom.model.VHardcodedDomainModelReference
+	 * @see org.eclipse.emf.ecp.view.spi.custom.model.VCustomControl
 	 * @generated
 	 */
-	public Adapter createHardcodedDomainModelReferenceAdapter() {
+	public Adapter createCustomControlAdapter()
+	{
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '
+	 * {@link org.eclipse.emf.ecp.view.spi.custom.model.VCustomDomainModelReference <em>Domain Model Reference</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.spi.custom.model.VCustomDomainModelReference
+	 * @generated
+	 */
+	public Adapter createCustomDomainModelReferenceAdapter()
+	{
 		return null;
 	}
 
@@ -142,6 +192,57 @@ public class CustomAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createDomainModelReferenceAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.spi.model.VElement
+	 * <em>Element</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.spi.model.VElement
+	 * @generated
+	 */
+	public Adapter createElementAdapter()
+	{
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.spi.model.VContainedElement
+	 * <em>Contained Element</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.spi.model.VContainedElement
+	 * @generated
+	 */
+	public Adapter createContainedElementAdapter()
+	{
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.spi.model.VControl
+	 * <em>Control</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.spi.model.VControl
+	 * @generated
+	 */
+	public Adapter createControlAdapter()
+	{
 		return null;
 	}
 

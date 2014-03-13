@@ -41,6 +41,7 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
  * @author Eugen Neufeld
  * 
  */
+@Deprecated
 public abstract class ECPAbstractControl {
 
 	private boolean embedded;

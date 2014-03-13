@@ -11,15 +11,13 @@
  */
 package org.eclipse.emf.ecp.view.spi.separator.swt;
 
-import java.util.List;
-
-import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.view.spi.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.view.spi.separator.model.VSeparator;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
-import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.emf.ecp.view.spi.swt.layout.GridCell;
+import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescription;
+import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -32,32 +30,43 @@ import org.eclipse.swt.widgets.Label;
  * 
  */
 public class SWTSeparatorRenderer extends AbstractSWTRenderer<VSeparator> {
-	/**
-	 * The instance.
-	 */
-	public static final SWTSeparatorRenderer INSTANCE = new SWTSeparatorRenderer();
+	private GridDescription rendererGridDescription;
 
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#renderModel(org.eclipse.swt.widgets.Composite,
-	 *      org.eclipse.emf.ecp.view.spi.model.VElement, org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
+	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#dispose()
 	 */
 	@Override
-	protected List<RenderingResultRow<Control>> renderModel(Composite parent, VSeparator separator,
-		ViewModelContext viewContext)
-		throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+	protected void dispose() {
+		rendererGridDescription = null;
+		super.dispose();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#getGridDescription(GridDescription)
+	 */
+	@Override
+	public GridDescription getGridDescription(GridDescription gridDescription) {
+		if (rendererGridDescription == null) {
+			rendererGridDescription = GridDescriptionFactory.INSTANCE.createSimpleGrid(1, 1, this);
+		}
+		return rendererGridDescription;
+	}
+
+	@Override
+	protected Control renderControl(GridCell cell, Composite parent)
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		final Label label = new Label(parent, SWT.NONE);
-		if (separator.getName() != null) {
-			label.setText(separator.getName());
+		if (getVElement().getName() != null) {
+			label.setText(getVElement().getName());
 		}
 		label.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_ui_seperator"); //$NON-NLS-1$
 
-		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER)
-			.grab(true, true).span(2, 1).applyTo(label);
+		return label;
 
-		return createResult(label);
 	}
 
 }

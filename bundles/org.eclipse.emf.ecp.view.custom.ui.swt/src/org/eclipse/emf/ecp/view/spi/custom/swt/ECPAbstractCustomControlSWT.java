@@ -11,42 +11,58 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.custom.swt;
 
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.eclipse.core.databinding.Binding;
+import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.list.IObservableList;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.property.value.IValueProperty;
+import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.emf.common.notify.AdapterFactory;
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.Diagnostic;
+import org.eclipse.emf.databinding.EMFDataBindingContext;
+import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.edit.internal.swt.util.DoubleColumnRow;
-import org.eclipse.emf.ecp.edit.internal.swt.util.ECPControlSWT;
-import org.eclipse.emf.ecp.edit.internal.swt.util.ECPDialogExecutor;
-import org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl;
-import org.eclipse.emf.ecp.edit.internal.swt.util.SWTValidationHelper;
-import org.eclipse.emf.ecp.edit.internal.swt.util.SingleColumnRow;
-import org.eclipse.emf.ecp.edit.internal.swt.util.ThreeColumnRow;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.edit.spi.ECPAbstractControl;
+import org.eclipse.emf.ecp.edit.spi.ECPControlFactory;
 import org.eclipse.emf.ecp.view.internal.custom.swt.Activator;
-import org.eclipse.emf.ecp.view.spi.custom.ui.ECPAbstractCustomControl;
-import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.custom.model.ECPCustomControlChangeListener;
+import org.eclipse.emf.ecp.view.spi.custom.model.VCustomControl;
+import org.eclipse.emf.ecp.view.spi.custom.model.VCustomDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
+import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
-import org.eclipse.emf.ecp.view.spi.renderer.RenderingResultRow;
+import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
+import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
+import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
+import org.eclipse.emf.ecp.view.spi.swt.layout.GridCell;
+import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescription;
+import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.jface.databinding.viewers.ViewerSupport;
-import org.eclipse.jface.dialogs.IDialogLabelKeys;
-import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.layout.GridDataFactory;
-import org.eclipse.jface.layout.GridLayoutFactory;
-import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.DisposeEvent;
-import org.eclipse.swt.events.DisposeListener;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Shell;
 
 /**
  * Extend this class in order to provide an own implementation of an {@link ECPAbstractCustomControl}.
@@ -55,8 +71,12 @@ import org.eclipse.swt.widgets.Shell;
  * @since 1.2
  * 
  */
-public abstract class ECPAbstractCustomControlSWT extends
-	ECPAbstractCustomControl implements ECPControlSWT {
+public abstract class ECPAbstractCustomControlSWT
+{
+	/**
+	 * Variant constant for indicating RAP controls.
+	 */
+	protected static final String CUSTOM_VARIANT = "org.eclipse.rap.rwt.customVariant"; //$NON-NLS-1$
 	/**
 	 * Constant for an validation error image.
 	 */
@@ -75,187 +95,109 @@ public abstract class ECPAbstractCustomControlSWT extends
 	public static final int HELP_IMAGE = 3;
 
 	private final SWTCustomControlHelper swtHelper = new SWTCustomControlHelper();
-	private Label validationLabel;
-	private Shell shell;
-	private List<RenderingResultRow<Control>> renderingResult;
+	private ECPControlFactory controlFactory;
+	private final Map<EStructuralFeature, ECPAbstractControl> controlMap = new LinkedHashMap<EStructuralFeature, ECPAbstractControl>();
+	private final Map<VDomainModelReference, Adapter> adapterMap = new LinkedHashMap<VDomainModelReference, Adapter>();
+	private ViewModelContext viewModelContext;
+	private ComposedAdapterFactory composedAdapterFactory;
+	private AdapterFactoryItemDelegator adapterFactoryItemDelegator;
+	private VCustomControl customControl;
+	private DataBindingContext dataBindingContext;
 
 	/**
-	 * This will create a validation label which will show the validation result of the whole
-	 * {@link org.eclipse.emf.ecp.view.custom.model.ECPCustomControl
-	 * ECPCustomControl}.
+	 * Called by the framework to trigger an initialization.
 	 * 
-	 * @param parent the {@link Composite} to position the validation label on
-	 * @return the label showing the validation
+	 * @param customControl the {@link VCustomControl} to use
+	 * @param viewModelContext the {@link ViewModelContext} to use
 	 */
-	protected final Label createValidationLabel(Composite parent) {
-		validationLabel = new Label(parent, SWT.NONE);
-		validationLabel.setBackground(parent.getBackground());
-		return validationLabel;
+	public final void init(VCustomControl customControl, ViewModelContext viewModelContext) {
+		this.customControl = customControl;
+		this.viewModelContext = viewModelContext;
+		controlFactory = Activator.getDefault().getECPControlFactory();
+
+		composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
+			new ReflectiveItemProviderAdapterFactory(),
+			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
+		adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(composedAdapterFactory);
+		postInit();
 	}
 
 	/**
-	 * This allows to show an error dialog.
-	 * 
-	 * @param title the title of the dialog
-	 * @param message the message to show in the dialog
+	 * This method is called after the initialization. Custom controls can overwrite this to execute specific
+	 * initialization steps.
 	 */
-	protected final void showError(String title, String message) {
-		showMessageDialog(MessageDialog.ERROR, title, message);
+	protected void postInit() {
+
 	}
 
 	/**
-	 * This allows to show an info dialog.
-	 * 
-	 * @param title the title of the dialog
-	 * @param message the message to show in the dialog
+	 * Is called by the framework to trigger a dispose of the control.
 	 */
-	protected final void showInfo(String title, String message) {
-		showMessageDialog(MessageDialog.INFORMATION, title, message);
-	}
-
-	/**
-	 * Sets the shell where message dialogs are displayed.
-	 * 
-	 * @param shell the shell
-	 */
-	public final void setMessageShell(Shell shell) {
-		this.shell = shell;
-	}
-
-	private void showMessageDialog(int type, String title, String message) {
-		final MessageDialog dialog = new MessageDialog(shell, title,
-			null, message, type,
-			new String[] { JFaceResources
-				.getString(IDialogLabelKeys.OK_LABEL_KEY) }, 0);
-		new ECPDialogExecutor(dialog) {
-
-			@Override
-			public void handleResult(int codeResult) {
-				// Nothing to do
-			}
-		}.execute();
-	}
-
-	/**
-	 * This is called by the framework when this control is about to be rendered.
-	 * 
-	 * @param composite The composite on which this custom control shall add its controls.
-	 * @return a list of {@link RenderingResultRow}s. The RenderingResultsRows are in order with the added controls.
-	 */
-	public final List<RenderingResultRow<Control>> createControls(Composite composite) {
-		renderingResult = createControl(composite);
-		composite.addDisposeListener(new DisposeListener() {
-
-			public void widgetDisposed(DisposeEvent e) {
-				dispose();
-			}
-		});
-		backwardCompatibleHandleValidation();
-		return renderingResult;
-	}
-
-	/**
-	 * This is called when this {@link org.eclipse.emf.ecp.view.custom.model.ECPCustomControl
-	 * ECPCustomControl} is about to be rendered.
-	 * 
-	 * @param composite The composite on which this custom control shall add its controls.
-	 * @return a list of {@link RenderingResultRow}s. The RenderingResultsRows are in order with the added controls.
-	 */
-	protected abstract List<RenderingResultRow<Control>> createControl(Composite composite);
-
-	/**
-	 * Override this method in order to correctly set the custom control to editable or not editable.
-	 * 
-	 * {@inheritDoc}
-	 * 
-	 * @see org.eclipse.emf.ecp.edit.spi.ECPAbstractControl#setEditable(boolean)
-	 */
-	@Override
-	public void setEditable(boolean isEditable) {
-		// Do nothing
-
-		for (final RenderingResultRow<Control> row : renderingResult) {
-			if (SingleColumnRow.class.isInstance(row)) {
-				((SingleColumnRow) row).getControl().setEnabled(isEditable);
-			}
-			else if (DoubleColumnRow.class.isInstance(row)) {
-				((DoubleColumnRow) row).getLeftControl().setEnabled(isEditable);
-				((DoubleColumnRow) row).getRightControl().setEnabled(isEditable);
-
-			}
-			else if (ThreeColumnRow.class.isInstance(row)) {
-				((ThreeColumnRow) row).getLeftControl().setEnabled(isEditable);
-				((ThreeColumnRow) row).getRightControl().setEnabled(isEditable);
-				((ThreeColumnRow) row).getMiddleControl().setEnabled(isEditable);
-
-			}
+	public final void dispose() {
+		viewModelContext = null;
+		if (composedAdapterFactory != null) {
+			composedAdapterFactory.dispose();
 		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see org.eclipse.emf.ecp.edit.spi.ECPAbstractControl#handleValidation(org.eclipse.emf.common.util.Diagnostic)
-	 */
-	@Override
-	public final void handleValidation(Diagnostic diagnostic) {
-		// if (diagnostic.getSeverity() == Diagnostic.OK) {
-		// resetValidation();
-		// return;
-		// }
-		Diagnostic reason = diagnostic;
-		if (diagnostic.getChildren() != null
-			&& diagnostic.getChildren().size() != 0) {
-			reason = diagnostic.getChildren().get(0);
+		if (dataBindingContext != null) {
+			dataBindingContext.dispose();
 		}
-		updateValidationColor(getValidationBackgroundColor(diagnostic.getSeverity()));
-		if (validationLabel != null) {
-			validationLabel.setImage(getValidationIcon(diagnostic.getSeverity()));
-			validationLabel.setToolTipText(reason.getMessage());
-			validationLabel.setVisible(true);
+		customControl = null;
+		if (adapterMap != null) {
+			for (final VDomainModelReference domainModelReference : adapterMap.keySet()) {
+				final Setting setting = getFirstSetting(domainModelReference);
+				setting.getEObject().eAdapters().remove(adapterMap.get(domainModelReference));
+			}
+
+			adapterMap.clear();
 		}
-		final List<?> data = diagnostic.getData();
+		if (controlMap != null) {
+			for (final ECPAbstractControl control : controlMap.values()) {
+				control.dispose();
+			}
+			controlMap.clear();
+		}
 
-		handleCreatedControls(diagnostic);
+		Activator.getDefault().ungetECPControlFactory();
+		controlFactory = null;
 
-		handleContentValidation(diagnostic.getSeverity(),
-			(EStructuralFeature) (data.size() > 1 && EStructuralFeature.class.isInstance(data.get(1)) ? data.get(1)
-				: null));
+		disposeCustomControl();
 	}
 
 	/**
-	 * Returns the validation icon matching the given severity.
+	 * This method is called during dispose and allows to dispose necessary objects.
+	 */
+	protected abstract void disposeCustomControl();
+
+	/**
+	 * Return the {@link ViewModelContext}.
 	 * 
-	 * @param severity the severity of the {@link Diagnostic}
-	 * @return the icon to be displayed, or <code>null</code> when no icon is to be displayed
+	 * @return the {@link ViewModelContext} of this control
 	 */
-	protected Image getValidationIcon(int severity) {
-		return SWTValidationHelper.INSTANCE.getValidationIcon(severity);
+	protected final ViewModelContext getViewModelContext() {
+		return viewModelContext;
 	}
 
 	/**
-	 * Returns the background color for a control with the given validation severity.
+	 * Return the {@link VCustomControl}.
 	 * 
-	 * @param severity severity the severity of the {@link Diagnostic}
-	 * @return the color to be used as a background color
+	 * @return the {@link VCustomControl} of this control
 	 */
-	protected Color getValidationBackgroundColor(int severity) {
-		return SWTValidationHelper.INSTANCE.getValidationBackgroundColor(severity);
+	protected final VCustomControl getCustomControl() {
+		return customControl;
 	}
 
 	/**
-	 * Allows controls to supply a second visual effect for controls on validation. The color to set is provided as the
-	 * parameter.
+	 * Returns a {@link DataBindingContext} for this control.
 	 * 
-	 * @param color the color to set, null if the default background color should be set
+	 * @return the {@link DataBindingContext}
 	 */
-	protected void updateValidationColor(Color color) {
-
+	protected final DataBindingContext getDataBindingContext() {
+		if (dataBindingContext == null) {
+			dataBindingContext = new EMFDataBindingContext();
+		}
+		return dataBindingContext;
 	}
 
-	/**
-	 * @param diagnostic
-	 */
 	private void handleCreatedControls(Diagnostic diagnostic) {
 		if (diagnostic.getData() == null) {
 			return;
@@ -267,7 +209,7 @@ public abstract class ECPAbstractCustomControlSWT extends
 			return;
 		}
 		final EStructuralFeature feature = (EStructuralFeature) diagnostic.getData().get(1);
-		final ECPAbstractControl ecpControl = getRetrievedControl(feature);
+		final ECPAbstractControl ecpControl = controlMap.get(feature);
 		if (ecpControl == null) {
 			return;
 		}
@@ -276,34 +218,8 @@ public abstract class ECPAbstractCustomControlSWT extends
 
 	/**
 	 * This is called so that an error can be shown by the user.
-	 * 
-	 * @param severity the severity of the error
-	 * @param feature the feature for which the error occurred
 	 */
-	protected abstract void handleContentValidation(int severity,
-		EStructuralFeature feature);
-
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see org.eclipse.emf.ecp.edit.spi.ECPAbstractControl#resetValidation()
-	 */
-	@Override
-	public final void resetValidation() {
-		resetControlValidation();
-		updateValidationColor(null);
-		if (validationLabel != null && !validationLabel.isDisposed()) {
-			validationLabel.setImage(null);
-			validationLabel.setToolTipText(""); //$NON-NLS-1$
-			validationLabel.setVisible(false);
-		}
-		resetContentValidation();
-	}
-
-	/**
-	 * This is called so that the user can be reset all validation errors.
-	 */
-	protected abstract void resetContentValidation();
+	protected abstract void handleContentValidation();
 
 	/**
 	 * This is a helper method which provides an {@link SWTCustomControlHelper}. It allows to get an image based on the
@@ -311,7 +227,7 @@ public abstract class ECPAbstractCustomControlSWT extends
 	 * 
 	 * @return the {@link SWTCustomControlHelper} to use to retrieve images.
 	 */
-	protected final SWTCustomControlHelper getSWTHelper() {
+	protected final SWTCustomControlHelper getHelper() {
 		return swtHelper;
 	}
 
@@ -331,38 +247,54 @@ public abstract class ECPAbstractCustomControlSWT extends
 	}
 
 	/**
-	 * Allows to create a framework control based on an {@link VDomainModelReference}.
+	 * Create the {@link Control} displaying the label of the current {@link VControl}.
 	 * 
-	 * @param domainModelReference the {@link VDomainModelReference} to create the control for
-	 * @param parent the {@link Composite} to create the control on
-	 * @return the rendered {@link Composite} of the created control
+	 * @param parent the {@link Composite} to render onto
+	 * @return the created {@link Control} or null
+	 * @throws NoPropertyDescriptorFoundExeption thrown if the {@link org.eclipse.emf.ecore.EStructuralFeature
+	 *             EStructuralFeature} of the {@link VControl} doesn't have a registered {@link IItemPropertyDescriptor}
 	 */
-	protected final Composite createControl(VDomainModelReference domainModelReference, Composite parent) {
-		final Composite composite = new Composite(parent, SWT.NONE);
-		GridLayoutFactory.fillDefaults().numColumns(2).equalWidth(false).applyTo(composite);
-		final SWTControl control = getControl(SWTControl.class, domainModelReference);
-		final List<RenderingResultRow<Control>> createControls = control.createControls(composite);
-		final RenderingResultRow<Control> row = createControls.get(0);
-		if (DoubleColumnRow.class.isInstance(row)) {
-			((DoubleColumnRow) row).getLeftControl().setLayoutData(
-				GridDataFactory.fillDefaults().align(SWT.BEGINNING, SWT.CENTER).grab(false, false).hint(16, 17)
-					.create());
-			((DoubleColumnRow) row).getRightControl().setLayoutData(
-				GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, false).create());
+	protected final Control createLabel(final Composite parent)
+		throws NoPropertyDescriptorFoundExeption {
+		Label label = null;
+		labelRender: if (getCustomControl().getLabelAlignment() == LabelAlignment.LEFT) {
+			final Setting setting = getCustomControl().getDomainModelReference().getIterator().next();
+			if (setting == null) {
+				break labelRender;
+			}
+			final IItemPropertyDescriptor itemPropertyDescriptor = getItemPropertyDescriptor(setting);
+
+			if (itemPropertyDescriptor == null) {
+				throw new NoPropertyDescriptorFoundExeption(setting.getEObject(), setting.getEStructuralFeature());
+			}
+
+			label = new Label(parent, SWT.NONE);
+			label.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_label"); //$NON-NLS-1$
+			label.setBackground(parent.getBackground());
+			String extra = ""; //$NON-NLS-1$
+			if (setting.getEStructuralFeature().getLowerBound() > 0) {
+				extra = "*"; //$NON-NLS-1$
+			}
+			final String labelText = itemPropertyDescriptor.getDisplayName(setting.getEObject());
+			if (labelText != null && labelText.trim().length() != 0) {
+				label.setText(labelText + extra);
+				label.setToolTipText(itemPropertyDescriptor.getDescription(setting.getEObject()));
+			}
+
 		}
-		return composite;
+		return label;
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Creates a Label which is used to display the validation icon.
+	 * 
+	 * @param composite the {@link Composite} to render onto
+	 * @return the created Label
 	 */
-	@Override
-	public final void dispose() {
-		if (validationLabel != null) {
-			validationLabel.dispose();
-			validationLabel = null;
-		}
-		super.dispose();
+	protected final Label createValidationIcon(Composite composite) {
+		final Label validationLabel = new Label(composite, SWT.NONE);
+		validationLabel.setBackground(composite.getBackground());
+		return validationLabel;
 	}
 
 	/**
@@ -373,7 +305,7 @@ public abstract class ECPAbstractCustomControlSWT extends
 	 * @param viewer the {@link StructuredViewer} to bind
 	 * @param labelProperties the array if {@link IValueProperty IValueProperties} to use for labels
 	 */
-	protected void createViewerBinding(VDomainModelReference customControlFeature, StructuredViewer viewer,
+	protected final void createViewerBinding(VDomainModelReference customControlFeature, StructuredViewer viewer,
 		IValueProperty[] labelProperties) {
 
 		final IObservableList list = getObservableList(customControlFeature);
@@ -381,27 +313,237 @@ public abstract class ECPAbstractCustomControlSWT extends
 	}
 
 	/**
-	 * Helper method to keep the old validation.
+	 * Return an {@link IObservableList} based on a {@link VDomainModelReference}.
 	 * 
-	 * @since 1.2
+	 * @param domainModelReference the {@link VDomainModelReference} to use
+	 * @return the {@link IObservableList}
 	 */
-	@Override
-	protected void backwardCompatibleHandleValidation() {
-		final VDiagnostic diagnostic = getControl().getDiagnostic();
-		if (diagnostic == null) {
-			return;
+	protected final IObservableList getObservableList(VDomainModelReference domainModelReference) {
+		final Setting setting = getFirstSetting(domainModelReference);
+		return EMFEditObservables.observeList(
+			getEditingDomain(setting),
+			setting.getEObject(), setting.getEStructuralFeature());
+	}
+
+	/**
+	 * Returns the {@link EditingDomain} for the provided {@link Setting}.
+	 * 
+	 * @param setting the provided {@link Setting}
+	 * @return the {@link EditingDomain} of this {@link Setting}
+	 */
+	protected final EditingDomain getEditingDomain(Setting setting) {
+		return AdapterFactoryEditingDomain.getEditingDomainFor(setting.getEObject());
+	}
+
+	/**
+	 * @param modelFeature the {@link VDomainModelReference} to get the Setting for
+	 * @return the setting or throws an {@link IllegalStateException} if too many or too few elements are found.
+	 */
+	private Setting getFirstSetting(VDomainModelReference modelFeature) {
+		final Iterator<Setting> iterator = modelFeature.getIterator();
+		int numElments = 0;
+		Setting setting = null;
+		while (iterator.hasNext()) {
+			setting = iterator.next();
+			numElments++;
 		}
-		Display.getDefault().asyncExec(new Runnable() {
-			public void run() {
-				if (getControl() == null) {
-					return;
-				}
-				resetValidation();
-				for (final Object object : diagnostic.getDiagnostics()) {
-					handleValidation((Diagnostic) object);
+		if (numElments == 0) {
+			throw new IllegalStateException("The VDomainModelReference was not initialised."); //$NON-NLS-1$
+		}
+		else if (numElments > 1) {
+			throw new IllegalStateException(
+				"The VDomainModelReference is ambigous, please use VDomainModelReference which resolve to exactly one setting."); //$NON-NLS-1$
+		}
+		// if (!isEditable()) {
+		// throw new IllegalArgumentException("Feature is not registered as editable");
+		// }
+		return setting;
+	}
+
+	/**
+	 * Use this method to get an {@link ECPControl} which can be used inside the {@link ECPCustomControl}.
+	 * 
+	 * @param clazz the {@link Class} of the {@link ECPControl} to retrieve
+	 * @param domainModelReference the {@link VDomainModelReference} to retrieve a control for
+	 * @param <T> the type of the control to retrieve
+	 * @return the {@link ECPControl} that is fitting the most for the {@link ECPCustomControlFeature}. Can also be
+	 *         null.
+	 */
+	protected final <T extends ECPAbstractControl> T getControl(Class<T> clazz,
+		VDomainModelReference domainModelReference) {
+		final T createControl = controlFactory.createControl(clazz, domainModelReference);
+		final VControl vControl = VViewFactory.eINSTANCE.createControl();
+		final VDomainModelReference modelReference = EcoreUtil.copy(domainModelReference);
+		modelReference.resolve(getViewModelContext().getDomainModel());
+		vControl.setDomainModelReference(modelReference);
+		vControl.setDiagnostic(VViewFactory.eINSTANCE.createDiagnostic());
+		createControl.init(getViewModelContext(), vControl);
+		final Iterator<Setting> iterator = domainModelReference.getIterator();
+		final boolean hasNext = iterator.hasNext();
+		if (hasNext) {
+			controlMap.put(iterator.next().getEStructuralFeature(), createControl);
+			return createControl;
+		}
+		return null;
+	}
+
+	/**
+	 * Return the {@link IItemPropertyDescriptor} describing this {@link Setting}.
+	 * 
+	 * @param setting the {@link Setting} to use for identifying the {@link IItemPropertyDescriptor}.
+	 * @return the {@link IItemPropertyDescriptor}
+	 */
+	protected final IItemPropertyDescriptor getItemPropertyDescriptor(Setting setting) {
+		return adapterFactoryItemDelegator.getPropertyDescriptor(setting.getEObject(),
+			setting.getEStructuralFeature());
+	}
+
+	private String getHelp(VDomainModelReference domainModelReference) {
+		if (!getResolvedDomainModelReferences().contains(domainModelReference)) {
+			throw new IllegalArgumentException("The feature must have been registered before!"); //$NON-NLS-1$
+		}
+		return getItemPropertyDescriptor(getFirstSetting(domainModelReference)).getDescription(null);
+	}
+
+	private String getLabel(VDomainModelReference domainModelReference) {
+		if (!getResolvedDomainModelReferences().contains(domainModelReference)) {
+			throw new IllegalArgumentException("The feature must have been registered before!"); //$NON-NLS-1$
+		}
+		return getItemPropertyDescriptor(getFirstSetting(domainModelReference)).getDisplayName(null);
+	}
+
+	/**
+	 * Returns a list of all {@link VDomainModelReference VDomainModelReferences} which were already resolved and thus
+	 * can be used for binding etc.
+	 * 
+	 * @return the List of {@link VDomainModelReference VDomainModelReferences}
+	 */
+	protected final List<VDomainModelReference> getResolvedDomainModelReferences() {
+		// final VHardcodedDomainModelReference hardcodedDomainModelReference = VHardcodedDomainModelReference.class
+		// .cast(getCustomControl().getDomainModelReference());
+		// return hardcodedDomainModelReference.getDomainModelReferences();
+		final VDomainModelReference domainModelReference = getCustomControl().getDomainModelReference();
+		if (VCustomDomainModelReference.class.isInstance(domainModelReference)) {
+			return VCustomDomainModelReference.class.cast(domainModelReference).getDomainModelReferences();
+		}
+		return Collections.singletonList(domainModelReference);
+	}
+
+	/**
+	 * Finds the {@link VDomainModelReference} which provides a specific {@link EStructuralFeature}.
+	 * 
+	 * @param feature the {@link EStructuralFeature} to find the {@link VDomainModelReference} for
+	 * @return the {@link VDomainModelReference} or null
+	 */
+	protected final VDomainModelReference getResolvedDomainModelReference(EStructuralFeature feature) {
+		for (final VDomainModelReference domainModelReference : getResolvedDomainModelReferences()) {
+			if (VFeaturePathDomainModelReference.class.isInstance(domainModelReference)) {
+				final VFeaturePathDomainModelReference ref = VFeaturePathDomainModelReference.class
+					.cast(domainModelReference);
+				if (ref.getDomainModelEFeature() == feature) {
+					return ref;
 				}
 			}
-		});
+		}
+		return null;
+	}
+
+	/**
+	 * Method for enabling databinding on the reference/attribute of the referenced object.
+	 * Throws an {@link IllegalStateException} if the {@link VDomainModelReference} doesn't resolve to exactly one
+	 * {@link Setting}.
+	 * 
+	 * 
+	 * @param modelFeature the {@link VDomainModelReference} to bind
+	 * @param targetValue the target observerable
+	 * @param targetToModel update strategy target to model
+	 * @param modelToTarget update strategy model to target
+	 * @return the resulting binding
+	 */
+	protected final Binding bindTargetToModel(VDomainModelReference modelFeature, IObservableValue targetValue,
+		UpdateValueStrategy targetToModel,
+		UpdateValueStrategy modelToTarget) {
+		final Setting setting = getFirstSetting(modelFeature);
+		final IObservableValue modelValue = EMFEditObservables.observeValue(
+			getEditingDomain(setting),
+			setting.getEObject(), setting.getEStructuralFeature());
+		return getDataBindingContext().bindValue(targetValue, modelValue, targetToModel,
+			modelToTarget);
+	}
+
+	/**
+	 * Provides the {@link EditingDomain} for this custom control.
+	 * 
+	 * @return the {@link EditingDomain} for this control
+	 */
+	protected final EditingDomain getEditingDomain() {
+		return getEditingDomain(getCustomControl().getDomainModelReference().getIterator().next());
+	}
+
+	/**
+	 * Returns the current set value of the feature.
+	 * Throws an {@link IllegalStateException} if the {@link VDomainModelReference} doesn't resolve to exactly one
+	 * {@link Setting}.
+	 * 
+	 * @param modelReference the {@link VDomainModelReference} to get the value for
+	 * @return the value
+	 */
+	protected final Object getValue(VDomainModelReference modelReference) {
+		final Setting setting = getFirstSetting(modelReference);
+		return setting.get(false);
+	}
+
+	/**
+	 * Sets the value of the feature to the new value.
+	 * Throws an {@link IllegalStateException} if the {@link VDomainModelReference} doesn't resolve to exactly one
+	 * {@link Setting}.
+	 * 
+	 * @param modelReference the {@link VDomainModelReference} to get the value for
+	 * @param newValue the value to be set
+	 */
+	protected final void setValue(VDomainModelReference modelReference, Object newValue) {
+		// FIXME needed?
+		// if (!isEditable) {
+		// throw new UnsupportedOperationException(
+		// "Set value is not supported on ECPCustomControlFeatures that are not editable.");
+		// }
+		final Setting setting = getFirstSetting(modelReference);
+		setting.set(newValue);
+	}
+
+	/**
+	 * 
+	 * Registers a change listener on the referenced object. {@link ECPCustomControlChangeListener#notifyChanged()} will
+	 * be called when a change on the referenced object is noticed.
+	 * 
+	 * Throws an {@link IllegalStateException} if the {@link VDomainModelReference} doesn't resolve to exactly one
+	 * {@link Setting}.
+	 * 
+	 * @param modelReference the {@link VDomainModelReference} to register a listener for
+	 * @param changeListener the change listener to register
+	 */
+	protected final void registerChangeListener(VDomainModelReference modelReference,
+		final ECPCustomControlChangeListener changeListener) {
+		if (adapterMap.containsKey(modelReference)) {
+			return;
+		}
+		final Setting setting = getFirstSetting(modelReference);
+		final Adapter newAdapter = new AdapterImpl() {
+
+			@Override
+			public void notifyChanged(Notification msg) {
+				if (msg.isTouch()) {
+					return;
+				}
+				if (msg.getFeature().equals(setting.getEStructuralFeature())) {
+					super.notifyChanged(msg);
+					changeListener.notifyChanged();
+				}
+			}
+
+		};
+		setting.getEObject().eAdapters().add(newAdapter);
+		adapterMap.put(modelReference, newAdapter);
 	}
 
 	/**
@@ -421,6 +563,111 @@ public abstract class ECPAbstractCustomControlSWT extends
 		public Image getImage(int imageType) {
 			return ECPAbstractCustomControlSWT.this.getImage(imageType);
 		}
+
+		/**
+		 * This return a text providing a long helpful description of the feature. Can be used for example in a ToolTip.
+		 * 
+		 * @param domainModelReference the {@link VDomainModelReference} to retrieve the help text for
+		 * @return the String containing the helpful description or null if no description is found
+		 */
+		public String getHelp(VDomainModelReference domainModelReference) {
+			return ECPAbstractCustomControlSWT.this.getHelp(domainModelReference);
+		}
+
+		/**
+		 * This return a text providing a short label of the feature. Can be used for example as a label in front of the
+		 * edit field.
+		 * 
+		 * @param domainModelReference the {@link VDomainModelReference} to retrieve the text for
+		 * @return the String containing the label null if no label is found
+		 */
+		public String getLabel(VDomainModelReference domainModelReference) {
+			return ECPAbstractCustomControlSWT.this.getLabel(domainModelReference);
+		}
 	}
 
+	/**
+	 * Returns the GridDescription for this Renderer.
+	 * 
+	 * @return the GridDescription
+	 */
+	public abstract GridDescription getGridDescription();
+
+	/**
+	 * Renders the control.
+	 * 
+	 * @param cell the {@link GridCell} of the control to render
+	 * @param parent the {@link Composite} to render on
+	 * @return the rendered {@link Control}
+	 * @throws NoRendererFoundException this is thrown when a renderer cannot be found
+	 * @throws NoPropertyDescriptorFoundExeption this is thrown when no property descriptor can be found
+	 */
+	public abstract Control renderControl(GridCell cell, Composite parent) throws NoRendererFoundException,
+		NoPropertyDescriptorFoundExeption;
+
+	/**
+	 * Called by the framework to apply validation changes.
+	 */
+	public final void applyValidation() {
+		if (getCustomControl().getDiagnostic() == null) {
+			return;
+		}
+		for (final Object diagnostic : getCustomControl().getDiagnostic().getDiagnostics()) {
+			handleCreatedControls((Diagnostic) diagnostic);
+		}
+
+		handleContentValidation();
+	}
+
+	/**
+	 * Applies the current readOnlyState.
+	 * 
+	 * @param controls the controls provided
+	 */
+	public final void applyReadOnly(Map<GridCell, Control> controls) {
+		if (setEditable(!getCustomControl().isReadonly())) {
+			for (final GridCell gridCell : controls.keySet()) {
+				setControlEnabled(gridCell, controls.get(gridCell), !getCustomControl().isReadonly());
+			}
+		}
+	}
+
+	private void setControlEnabled(GridCell gridCell, Control control, boolean enabled) {
+		control.setEnabled(enabled);
+	}
+
+	/**
+	 * Applies the current enable state.
+	 * 
+	 * @param controls the controls
+	 */
+	public final void applyEnable(Map<GridCell, Control> controls) {
+		if (setEditable(getCustomControl().isEnabled())) {
+			for (final GridCell gridCell : controls.keySet()) {
+				setControlEnabled(gridCell, controls.get(gridCell), getCustomControl().isEnabled());
+			}
+		}
+	}
+
+	/**
+	 * Allows custom controls to call specific code for setting controls editable or not. The result indicates whether
+	 * to call the default editable
+	 * 
+	 * @param editable if the current state is editable
+	 * @return true if default editable modification should be executed
+	 */
+	protected boolean setEditable(boolean editable) {
+		return true;
+	}
+
+	/**
+	 * Creates a simple grid.
+	 * 
+	 * @param rows the number of rows
+	 * @param columns the number of columns
+	 * @return the {@link GridDescription}
+	 */
+	protected final GridDescription createSimpleGrid(int rows, int columns) {
+		return GridDescriptionFactory.INSTANCE.createSimpleGrid(rows, columns, null);
+	}
 }

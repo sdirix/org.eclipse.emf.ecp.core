@@ -11,44 +11,39 @@
  */
 package org.eclipse.emf.ecp.view.dynamictree.ui.swt;
 
-import java.util.List;
+import java.util.Collection;
+import java.util.Collections;
 
 import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem;
-import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
-import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.view.spi.renderer.RenderingResultRow;
-import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
-import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
+import org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer;
+import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 
 /**
  * SWT renderer for {@link DynamicContainmentItem}s.
  * 
  * @author emueller
  */
-public class SWTDynamicContainmentItemRenderer extends AbstractSWTRenderer<DynamicContainmentItem> {
+public class SWTDynamicContainmentItemRenderer extends ContainerSWTRenderer<DynamicContainmentItem> {
 
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#renderModel(org.eclipse.swt.widgets.Composite,
-	 *      org.eclipse.emf.ecp.view.spi.model.VElement, org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer#getCustomVariant()
 	 */
 	@Override
-	protected List<RenderingResultRow<Control>> renderModel(Composite parent,
-		DynamicContainmentItem dynamicContainmentItem,
-		ViewModelContext viewModelContext) throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+	protected String getCustomVariant() {
+		// TODO Auto-generated method stub
+		return "test";
+	}
 
-		List<RenderingResultRow<Control>> childControl;
-		try {
-			childControl = SWTRendererFactory.INSTANCE.render(parent, dynamicContainmentItem.getComposite(),
-				viewModelContext);
-		} catch (final NoPropertyDescriptorFoundExeption e) {
-			return null;
-		}
-		return childControl;
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer#getChildren()
+	 */
+	@Override
+	protected Collection<VContainedElement> getChildren() {
+		return Collections.singleton(getVElement().getComposite());
 	}
 
 }

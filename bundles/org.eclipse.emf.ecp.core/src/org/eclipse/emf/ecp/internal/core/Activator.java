@@ -56,9 +56,15 @@ public final class Activator extends Plugin {
 
 	@Override
 	public void stop(BundleContext bundleContext) throws Exception {
-		ECPProjectManagerImpl.INSTANCE.deactivate();
-		ECPRepositoryManagerImpl.INSTANCE.deactivate();
-		ECPProviderRegistryImpl.INSTANCE.deactivate();
+		if (ECPProjectManagerImpl.INSTANCE != null) {
+			ECPProjectManagerImpl.INSTANCE.deactivate();
+		}
+		if (ECPRepositoryManagerImpl.INSTANCE != null) {
+			ECPRepositoryManagerImpl.INSTANCE.deactivate();
+		}
+		if (ECPProviderRegistryImpl.INSTANCE != null) {
+			ECPProviderRegistryImpl.INSTANCE.deactivate();
+		}
 
 		instance = null;
 		super.stop(bundleContext);

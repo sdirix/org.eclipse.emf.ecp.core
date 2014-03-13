@@ -15,14 +15,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecp.view.internal.swt.SWTRendererFactoryImpl;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.view.spi.renderer.RenderingResultRow;
+import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
+import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescription;
+import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -32,7 +35,9 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
+@SuppressWarnings("restriction")
 public final class SWTViewTestHelper {
+	private static SWTRendererFactory factory = new SWTRendererFactoryImpl();
 
 	private SWTViewTestHelper() {
 
@@ -48,15 +53,18 @@ public final class SWTViewTestHelper {
 	public static Control render(VElement renderable, EObject input, Shell shell) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
 		final ViewModelContext viewContext = ViewModelContextFactory.INSTANCE.createViewModelContext(renderable, input);
-
-		final List<RenderingResultRow<Control>> resultRows = SWTRendererFactory.INSTANCE.render(shell, renderable,
-			viewContext);
+		final AbstractSWTRenderer<VElement> renderer = factory
+			.getRenderer(renderable, viewContext);
+		final GridDescription gridDescription = renderer.getGridDescription(GridDescriptionFactory.INSTANCE
+			.createEmptyGridDescription());
+		final Control control = renderer.render(gridDescription.getGrid().get(gridDescription.getColumns() - 1), shell);
+		renderer.finalizeRendering(shell);
 		// TODO return resultRows
-		if (resultRows == null) {
+		if (control == null) {
 			return null;
 		}
 
-		return resultRows.get(0).getMainControl();
+		return control;
 
 	}
 
@@ -79,15 +87,18 @@ public final class SWTViewTestHelper {
 		if (!(control instanceof Composite)) {
 			return false;
 		}
-		Composite controlComposite = (Composite) control;
-		controlComposite = (Composite) controlComposite.getChildren()[2];
-		return checkIfThereIsATextControl(controlComposite);
+		final Composite controlComposite = (Composite) control;
+
+		return checkIfThereIsATextControl(controlComposite.getChildren()[2]);
 	}
 
 	public static boolean checkIfThereIsATextControl(Control control) {
+		if (Text.class.isInstance(control)) {
+			return true;
+		}
 		Composite controlComposite = (Composite) control;
 		controlComposite = (Composite) controlComposite.getChildren()[0];
-		controlComposite = (Composite) controlComposite.getChildren()[0];
+		// controlComposite = (Composite) controlComposite.getChildren()[0];
 		final Control textControl = controlComposite.getChildren()[0];
 
 		return textControl instanceof Text;

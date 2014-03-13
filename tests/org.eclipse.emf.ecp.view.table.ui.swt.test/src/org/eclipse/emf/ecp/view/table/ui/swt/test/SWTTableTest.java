@@ -17,7 +17,6 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.util.List;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EClass;
@@ -26,6 +25,7 @@ import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecp.common.UniqueSetting;
+import org.eclipse.emf.ecp.view.internal.swt.SWTRendererFactoryImpl;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
@@ -37,11 +37,13 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.model.util.ViewModelUtil;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.view.spi.renderer.RenderingResultRow;
+import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
+import org.eclipse.emf.ecp.view.spi.swt.layout.GridCell;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableColumn;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableFactory;
+import org.eclipse.emf.ecp.view.spi.table.swt.TableControlSWTRenderer;
 import org.eclipse.emf.ecp.view.test.common.swt.DatabindingClassRunner;
 import org.eclipse.emf.ecp.view.test.common.swt.SWTViewTestHelper;
 import org.eclipse.swt.widgets.Composite;
@@ -56,6 +58,7 @@ import org.junit.runner.RunWith;
 @RunWith(DatabindingClassRunner.class)
 public class SWTTableTest {
 
+	private static SWTRendererFactory rendererFactory = new SWTRendererFactoryImpl();
 	private Shell shell;
 	private EObject domainElement;
 
@@ -65,6 +68,7 @@ public class SWTTableTest {
 
 		final EClass eClass = EcoreFactory.eINSTANCE.createEClass();
 		eClass.getESuperTypes().add(EcorePackage.eINSTANCE.getEClass());
+		new TableControlSWTRenderer();
 		domainElement = eClass;
 	}
 
@@ -161,13 +165,13 @@ public class SWTTableTest {
 	public void testTableWithoutColumnsWithoutViewServices() throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
 		final TableControlHandle handle = createInitializedTableWithoutTableColumns();
-		final List<RenderingResultRow<Control>> resultRows = SWTRendererFactory.INSTANCE.render(shell,
-			handle.getTableControl(),
+		final AbstractSWTRenderer<VElement> tableRenderer = rendererFactory.getRenderer(handle.getTableControl(),
 			new ViewModelContextWithoutServices(handle.getTableControl()));
-		if (resultRows == null) {
+
+		final Control render = tableRenderer.render(new GridCell(0, 0, tableRenderer), shell);
+		if (render == null) {
 			fail();
 		}
-		final Control render = resultRows.get(0).getMainControl();
 		assertTrue(render instanceof Composite);
 
 		assertEquals(0, handle.getTableControl().getColumns().size());
@@ -197,13 +201,13 @@ public class SWTTableTest {
 		NoPropertyDescriptorFoundExeption {
 		// setup model
 		final TableControlHandle handle = createTableWithTwoTableColumns();
-		final List<RenderingResultRow<Control>> resultRows = SWTRendererFactory.INSTANCE.render(shell,
-			handle.getTableControl(),
+		final AbstractSWTRenderer<VElement> tableRenderer = rendererFactory.getRenderer(handle.getTableControl(),
 			new ViewModelContextWithoutServices(handle.getTableControl()));
-		if (resultRows == null) {
+
+		final Control render = tableRenderer.render(new GridCell(0, 0, tableRenderer), shell);
+		if (render == null) {
 			fail();
 		}
-		final Control render = resultRows.get(0).getMainControl();
 		assertTrue(render instanceof Composite);
 
 		final Control control = getTable(render);
@@ -215,9 +219,9 @@ public class SWTTableTest {
 	private Control getTable(Control render) {
 		Composite composite = (Composite) render;
 		composite = (Composite) composite.getChildren()[1];
-		composite = (Composite) composite.getChildren()[0];
-		composite = (Composite) composite.getChildren()[0];
-		composite = (Composite) composite.getChildren()[0];
+		// composite = (Composite) composite.getChildren()[0];
+		// composite = (Composite) composite.getChildren()[0];
+		// composite = (Composite) composite.getChildren()[0];
 		return composite.getChildren()[0];
 	}
 
