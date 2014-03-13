@@ -62,7 +62,10 @@ public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepo
 	ECPRepositoryManager, ECPProvidersChangedObserver {
 	/**
 	 * The Singleton to access the implementation of the Default ECPRepositoryManagerImpl.
+	 * 
+	 * @deprecated use {@link ECPUtil} instead
 	 */
+	@Deprecated
 	public static ECPRepositoryManagerImpl INSTANCE;
 
 	/**

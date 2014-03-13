@@ -770,6 +770,15 @@
             </or>
          </with>
       </definition>
+      <definition
+            id="org.eclipse.emf.ecp.emfstore.ui.e4.exportProject">
+         <with
+               variable="org.eclipse.ui.selection">
+            <instanceof
+                  value="org.eclipse.emf.ecp.core.ECPProject">
+            </instanceof>
+         </with>
+      </definition>
    </extension>
 
 </plugin>

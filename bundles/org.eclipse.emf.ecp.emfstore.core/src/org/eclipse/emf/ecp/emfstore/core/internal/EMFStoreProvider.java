@@ -261,7 +261,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 
 	private boolean isAutosave() {
 		final IPreferencesService service = Platform.getPreferencesService();
-		return service.getBoolean("org.eclipse.emf.ecp", "AUTOSAVE", false, null);
+		return service.getBoolean("org.eclipse.emf.ecp", "AUTOSAVE", false, null); //$NON-NLS-1$ //$NON-NLS-2$
 
 	}
 

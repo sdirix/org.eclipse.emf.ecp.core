@@ -71,17 +71,15 @@ public class MEEditorPage extends FormPage {
 	 *            the {@link FormPage#id}
 	 * @param title
 	 *            the title
-	 * @param modelElementContext
+	 * @param ecpEditorContext
 	 *            the {@link ECPEditorContext}
 	 * @param modelElement
 	 *            the modelElement
-	 * @param modelElementContext
-	 *            the {@link ECPEditorContext}
 	 */
-	public MEEditorPage(MEEditor editor, String id, String title, ECPEditorContext modelElementContext,
+	public MEEditorPage(MEEditor editor, String id, String title, ECPEditorContext ecpEditorContext,
 		EObject modelElement) {
 		super(editor, id, title);
-		this.modelElementContext = modelElementContext;
+		modelElementContext = ecpEditorContext;
 
 	}
 
@@ -184,6 +182,8 @@ public class MEEditorPage extends FormPage {
 		// service.addSourceProvider(sourceProvider);
 
 		form.getToolBarManager().add(new Action("", Activator.getImageDescriptor(ISharedImages.IMG_TOOL_DELETE)) { //$NON-NLS-1$
+
+				private static final long serialVersionUID = -8174732263834262751L;
 
 				@Override
 				public void run() {
