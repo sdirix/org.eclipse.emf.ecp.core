@@ -243,13 +243,24 @@ public abstract class AbstractFilteredReferenceCommand<T extends EStructuralFeat
 		// }
 	}
 
-	static abstract class ECPSelectionStatusValidator implements ISelectionStatusValidator {
+	/**
+	 * An ISelectionStatusValidator allowing to get the {@link TreePath} of the current selection.
+	 * 
+	 * @author Eugen Neufeld
+	 * 
+	 */
+	protected abstract static class ECPSelectionStatusValidator implements ISelectionStatusValidator {
 		private ECPViewEditorTreeSelectionDialog dialog;
 
 		private void setECPViewEditorTreeSelectionDialog(ECPViewEditorTreeSelectionDialog dialog) {
 			this.dialog = dialog;
 		}
 
+		/**
+		 * The {@link TreePath} of the current selection.
+		 * 
+		 * @return the {@link TreePath}
+		 */
 		protected TreePath getTreePath() {
 			return dialog.getTreePath();
 		}
