@@ -95,8 +95,8 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 
 			final IObservableValue dateObserver = SWTObservables.observeSelection(calendar);
 			final Binding binding = dataBindingContext.bindValue(dateObserver, modelValue,
-				new DateTargetToModelUpdateStrategy(eStructuralFeature, viewModelContext, modelValue,
-					dataBindingContext, text), new DateModelToTargetUpdateStrategy(viewModelContext));
+				new DateTargetToModelUpdateStrategy(eStructuralFeature, modelValue,
+					dataBindingContext, text), new DateModelToTargetUpdateStrategy());
 			binding.updateModelToTarget();
 			calendar.addSelectionListener(new SelectionAdapter() {
 				@Override
@@ -128,16 +128,13 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 
 	private class DateModelToTargetUpdateStrategy extends ModelToTargetUpdateStrategy {
 
-		private final ViewModelContext viewModelContext;
-
-		public DateModelToTargetUpdateStrategy(ViewModelContext viewModelContext) {
-			this.viewModelContext = viewModelContext;
+		public DateModelToTargetUpdateStrategy() {
 
 		}
 
 		@Override
 		public Object convertValue(Object value) {
-			final DateFormat format = setupFormat(viewModelContext);
+			final DateFormat format = setupFormat();
 			final XMLGregorianCalendar gregorianCalendar = (XMLGregorianCalendar) value;
 			if (gregorianCalendar == null) {
 				return null;
@@ -150,16 +147,14 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 	private class DateTargetToModelUpdateStrategy extends TargetToModelUpdateStrategy {
 
 		private final EStructuralFeature eStructuralFeature;
-		private final ViewModelContext viewModelContext;
 		private final Text text;
 		private final IObservableValue modelValue;
 
-		DateTargetToModelUpdateStrategy(EStructuralFeature eStructuralFeature,
-			ViewModelContext viewModelContext, IObservableValue modelValue, DataBindingContext dataBindingContext,
+		DateTargetToModelUpdateStrategy(EStructuralFeature eStructuralFeature, IObservableValue modelValue,
+			DataBindingContext dataBindingContext,
 			Text text) {
 			super(eStructuralFeature.isUnsettable());
 			this.eStructuralFeature = eStructuralFeature;
-			this.viewModelContext = viewModelContext;
 			this.modelValue = modelValue;
 			this.text = text;
 
@@ -170,13 +165,13 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 			try {
 				Date date = null;
 				if (String.class.isInstance(value)) {
-					date = setupFormat(viewModelContext).parse((String) value);
+					date = setupFormat().parse((String) value);
 				} else if (Date.class.isInstance(value)) {
 					date = (Date) value;
 				} else if (value == null) {
 					return value;
 				}
-				final String formatedDate = setupFormat(viewModelContext).format(date);
+				final String formatedDate = setupFormat().format(date);
 				text.setText(formatedDate);
 
 				final Calendar targetCal = Calendar.getInstance();
@@ -213,7 +208,7 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 			} else {
 				final XMLGregorianCalendar gregorianCalendar = (XMLGregorianCalendar) result;
 				final Date date = gregorianCalendar.toGregorianCalendar().getTime();
-				text.setText(setupFormat(viewModelContext).format(date));
+				text.setText(setupFormat().format(date));
 			}
 
 			if (eStructuralFeature.isUnsettable() && result == null) {
@@ -251,7 +246,7 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 
 	@Override
 	protected String getTextMessage(Setting setting) {
-		return ((SimpleDateFormat) setupFormat(getViewModelContext())).toPattern();
+		return ((SimpleDateFormat) setupFormat()).toPattern();
 	}
 
 	@Override
@@ -268,10 +263,9 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 			getDataBindingContext(), setting.getEStructuralFeature()));
 		final IObservableValue value = SWTObservables.observeText(text, SWT.FocusOut);
 		final DateTargetToModelUpdateStrategy targetToModelUpdateStrategy = new DateTargetToModelUpdateStrategy(
-			setting.getEStructuralFeature(), getViewModelContext(), getModelValue(setting), getDataBindingContext(),
+			setting.getEStructuralFeature(), getModelValue(setting), getDataBindingContext(),
 			text);
-		final DateModelToTargetUpdateStrategy modelToTargetUpdateStrategy = new DateModelToTargetUpdateStrategy(
-			getViewModelContext());
+		final DateModelToTargetUpdateStrategy modelToTargetUpdateStrategy = new DateModelToTargetUpdateStrategy();
 		final Binding binding = getDataBindingContext().bindValue(value, getModelValue(setting),
 			targetToModelUpdateStrategy, modelToTargetUpdateStrategy);
 		final Binding tooltipBinding = createTooltipBinding(control, getModelValue(setting), getDataBindingContext(),
@@ -279,8 +273,14 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 		return new Binding[] { binding, tooltipBinding };
 	}
 
-	private DateFormat setupFormat(ViewModelContext viewModelContext) {
-		return DateFormat.getDateInstance(DateFormat.MEDIUM, getLocale(viewModelContext));
+	/**
+	 * Setups the {@link DateFormat}.
+	 * 
+	 * @param viewModelContext the {@link ViewModelContext}
+	 * @return the {@link DateFormat}
+	 */
+	protected DateFormat setupFormat() {
+		return DateFormat.getDateInstance(DateFormat.MEDIUM, getLocale(getViewModelContext()));
 	}
 
 	private Locale getLocale(ViewModelContext viewModelContext) {

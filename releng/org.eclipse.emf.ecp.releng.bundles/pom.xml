@@ -54,6 +54,8 @@
 		<module>../../bundles/org.eclipse.emf.ecp.view.model.generator</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.context</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.context.locale</module>
+		
+		<module>../../bundles/org.eclipse.emf.ecp.view.swt.layout</module>
 
 		<!-- Ecore Support -->
 		<module>../../bundles/org.eclipse.emf.ecp.edit.ecore.swt</module>

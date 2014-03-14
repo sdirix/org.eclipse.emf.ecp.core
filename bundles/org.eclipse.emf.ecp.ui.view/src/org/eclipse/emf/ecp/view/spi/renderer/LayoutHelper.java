@@ -18,6 +18,7 @@ package org.eclipse.emf.ecp.view.spi.renderer;
  * @param <LAYOUT> the type of layout object this helper provides.
  * @since 1.2
  */
+@Deprecated
 public interface LayoutHelper<LAYOUT> {
 
 	/**
@@ -59,4 +60,5 @@ public interface LayoutHelper<LAYOUT> {
 	 * @return the layout data to set
 	 */
 	Object getValidationColumnLayoutData();
+
 }

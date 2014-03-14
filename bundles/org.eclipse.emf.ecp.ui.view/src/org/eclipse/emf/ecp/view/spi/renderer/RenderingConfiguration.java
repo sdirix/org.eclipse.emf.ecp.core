@@ -29,6 +29,7 @@ import org.eclipse.emf.ecp.view.internal.ui.Activator;
  * @since 1.2
  * 
  */
+@Deprecated
 public final class RenderingConfiguration {
 
 	private static final String RENDERING_LAYOUT_HELPER = "renderingLayoutHelper"; //$NON-NLS-1$

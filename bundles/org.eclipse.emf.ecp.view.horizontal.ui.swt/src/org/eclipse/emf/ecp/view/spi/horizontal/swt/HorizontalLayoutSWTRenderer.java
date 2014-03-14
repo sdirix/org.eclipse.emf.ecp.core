@@ -27,6 +27,7 @@ import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescription;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
+import org.eclipse.emf.ecp.view.spi.swt.layout.LayoutProviderHelper;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -101,24 +102,24 @@ public class HorizontalLayoutSWTRenderer extends AbstractSWTRenderer<VHorizontal
 		}
 		// Gridlayout does not have an overflow as other Layouts might have.
 
-		columnComposite.setLayout(getLayoutHelper().getColumnLayout(elementRendererMap.size(), true));
+		columnComposite.setLayout(LayoutProviderHelper.getColumnLayout(elementRendererMap.size(), true));
 		for (final VContainedElement child : elementRendererMap.keySet()) {
 			final AbstractSWTRenderer<VElement> renderer = elementRendererMap.get(child);
 			final Composite column = new Composite(columnComposite, SWT.NONE);
 			column.setBackground(parent.getBackground());
 
-			column.setLayoutData(getLayoutHelper().getSpanningLayoutData(1, 1));
+			column.setLayoutData(LayoutProviderHelper.getSpanningLayoutData(1, 1));
 
 			final GridDescription gridDescription = renderer.getGridDescription(GridDescriptionFactory.INSTANCE
 				.createEmptyGridDescription());
-			column.setLayout(getLayoutHelper().getColumnLayout(gridDescription.getColumns(), false));
+			column.setLayout(LayoutProviderHelper.getColumnLayout(gridDescription.getColumns(), false));
 
 			try {
 				for (final GridCell childGridCell : gridDescription.getGrid()) {
 					final Control control = renderer.render(childGridCell, column);
 					// TODO who should apply the layout
-					setLayoutDataForControl(childGridCell, gridDescription,
-						gridDescription,
+					LayoutProviderHelper.getLayoutData(childGridCell, gridDescription, gridDescription,
+						gridDescription, child,
 						control);
 				}
 				renderer.finalizeRendering(column);

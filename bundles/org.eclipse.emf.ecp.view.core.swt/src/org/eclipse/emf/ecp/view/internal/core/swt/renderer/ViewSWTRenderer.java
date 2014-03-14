@@ -17,6 +17,7 @@ import java.util.Collection;
 
 import org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
+import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridCell;
@@ -49,7 +50,7 @@ public class ViewSWTRenderer extends ContainerSWTRenderer<VView> {
 
 	@Override
 	protected final void setLayoutDataForControl(GridCell gridCell, GridDescription gridDescription,
-		GridDescription fullRowDescription,
+		GridDescription fullRowDescription, GridDescription fullGridDescription, VElement vElement,
 		Control control) {
 
 		if (gridCell.getColumn() + 1 == gridDescription.getColumns()) {

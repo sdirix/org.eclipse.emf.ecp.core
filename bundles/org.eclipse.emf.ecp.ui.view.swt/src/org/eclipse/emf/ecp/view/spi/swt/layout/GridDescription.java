@@ -11,6 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.swt.layout;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -101,5 +102,15 @@ public class GridDescription {
 	 */
 	public void setColumns(int columns) {
 		this.columns = columns;
+	}
+
+	/**
+	 * Creates a copy of the grid.
+	 * 
+	 * @return a copy of the grid
+	 */
+	public GridDescription copy() {
+		final GridDescription gd = new GridDescription(rows, columns, new ArrayList<GridCell>(grid));
+		return gd;
 	}
 }

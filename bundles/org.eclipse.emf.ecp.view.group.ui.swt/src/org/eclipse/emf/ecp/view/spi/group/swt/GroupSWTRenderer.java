@@ -16,6 +16,7 @@ import java.util.Collection;
 import org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.group.model.VGroup;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
+import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
@@ -28,6 +29,22 @@ import org.eclipse.swt.widgets.Group;
  */
 public class GroupSWTRenderer extends ContainerSWTRenderer<VGroup> {
 	private static final String CONTROL_GROUP = "org_eclipse_emf_ecp_ui_control_group"; //$NON-NLS-1$
+
+	/**
+	 * Default constructor.
+	 */
+	public GroupSWTRenderer() {
+		super();
+	}
+
+	/**
+	 * Test constructor.
+	 * 
+	 * @param factory the {@link SWTRendererFactory} to use.
+	 */
+	protected GroupSWTRenderer(SWTRendererFactory factory) {
+		super(factory);
+	}
 
 	/**
 	 * {@inheritDoc}

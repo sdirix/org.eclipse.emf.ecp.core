@@ -20,6 +20,7 @@ import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescription;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
+import org.eclipse.emf.ecp.view.spi.swt.layout.LayoutProviderHelper;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -72,7 +73,7 @@ public class SWTCategorizationRenderer extends AbstractSWTRenderer<VCategorizati
 		categoryComposite.setBackground(parent.getBackground());
 		categoryComposite.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_categorization"); //$NON-NLS-1$
 
-		categoryComposite.setLayout(getLayoutHelper().getColumnLayout(1, false));
+		categoryComposite.setLayout(LayoutProviderHelper.getColumnLayout(1, false));
 
 		final Label headingLbl = new Label(categoryComposite, SWT.NONE);
 		headingLbl.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_categorization_title"); //$NON-NLS-1$

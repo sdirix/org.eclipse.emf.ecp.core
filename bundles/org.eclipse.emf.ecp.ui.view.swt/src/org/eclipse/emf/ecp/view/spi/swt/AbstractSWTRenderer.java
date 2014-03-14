@@ -16,25 +16,22 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.eclipse.emf.common.notify.Notifier;
-import org.eclipse.emf.ecp.edit.internal.swt.util.SWTRenderingHelper;
 import org.eclipse.emf.ecp.view.internal.swt.SWTRendererFactoryImpl;
 import org.eclipse.emf.ecp.view.spi.context.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener;
-import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
-import org.eclipse.emf.ecp.view.spi.renderer.LayoutHelper;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescription;
+import org.eclipse.emf.ecp.view.spi.swt.layout.LayoutProviderHelper;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Layout;
 
 /**
  * Common base class for all SWT specific renderer classes. {@link #init(VElement, ViewModelContext)} is called by the
@@ -291,40 +288,21 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 	}
 
 	/**
-	 * Return the {@link LayoutHelper} allowing to set layout data manually.
-	 * 
-	 * @return the {@link LayoutHelper}
-	 */
-	protected LayoutHelper<Layout> getLayoutHelper() {
-		return SWTRenderingHelper.INSTANCE.getLayoutHelper();
-	}
-
-	/**
 	 * Sets the LayoutData for the specified control.
 	 * 
 	 * @param gridCell the {@link GridCell} used to render the control
 	 * @param gridDescription the {@link GridDescription} of the parent which rendered the control
-	 * @param fullRowDescription the {@link GridDescription} of the full row
+	 * @param currentRowGridDescription the {@link GridDescription} of the current row
+	 * @param fullGridDescription the {@link GridDescription} of the whole container
 	 * @param control the control to set the layout to
 	 */
 	protected void setLayoutDataForControl(GridCell gridCell, GridDescription gridDescription,
-		GridDescription fullRowDescription, Control control) {
+		GridDescription currentRowGridDescription, GridDescription fullGridDescription, VElement vElement,
+		Control control) {
 
-		if (gridCell.getColumn() + 1 == gridDescription.getColumns()) {
-			// if control use right column
-			if (VControl.class.isInstance(getVElement())) {
-				control.setLayoutData(getLayoutHelper().getRightColumnLayoutData(
-					1 + fullRowDescription.getColumns() - gridDescription.getColumns()));
-			} else {
-				control.setLayoutData(getLayoutHelper().getSpanningLayoutData(
-					1 + fullRowDescription.getColumns() - gridDescription.getColumns(), 1));
-			}
-		} else if (gridCell.getColumn() == 0) {
-			control.setLayoutData(getLayoutHelper().getLeftColumnLayoutData());
-		}
-		else if (gridCell.getColumn() == 1) {
-			control.setLayoutData(getLayoutHelper().getValidationColumnLayoutData());
-		}
+		control.setLayoutData(LayoutProviderHelper.getLayoutData(gridCell, gridDescription, currentRowGridDescription,
+			fullGridDescription,
+			vElement, control));
 
 	}
 

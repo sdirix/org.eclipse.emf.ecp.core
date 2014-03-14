@@ -91,9 +91,10 @@ public class SWTDiffMergeAddition extends AbstractAdditionalSWTRenderer<VControl
 	 */
 	@Override
 	public GridDescription getGridDescription(GridDescription gridDescription) {
-		gridDescription.getGrid().add(new GridCell(0, gridDescription.getColumns(), this));
-		gridDescription.setColumns(gridDescription.getColumns() + 1);
-		return gridDescription;
+		final GridDescription addGridDescription = gridDescription.copy();
+		addGridDescription.getGrid().add(new GridCell(0, addGridDescription.getColumns(), this));
+		addGridDescription.setColumns(addGridDescription.getColumns() + 1);
+		return addGridDescription;
 	}
 
 	/**

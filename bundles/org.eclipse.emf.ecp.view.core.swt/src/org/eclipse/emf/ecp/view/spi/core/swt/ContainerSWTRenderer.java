@@ -30,6 +30,7 @@ import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescription;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
+import org.eclipse.emf.ecp.view.spi.swt.layout.LayoutProviderHelper;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -96,7 +97,8 @@ public abstract class ContainerSWTRenderer<VELEMENT extends VElement> extends Ab
 		// elementAdditionalRendererMap = new LinkedHashMap<VContainedElement,
 		// Collection<AbstractAdditionalSWTRenderer<VElement>>>();
 		GridDescription maximalGridDescription = null;
-		final Map<VContainedElement, GridDescription> mainGridDescription = new LinkedHashMap<VContainedElement, GridDescription>();
+		final Map<VContainedElement, GridDescription> rowGridDescription = new LinkedHashMap<VContainedElement, GridDescription>();
+		final Map<VContainedElement, GridDescription> controlGridDescription = new LinkedHashMap<VContainedElement, GridDescription>();
 		for (final VContainedElement child : getChildren()) {
 
 			final AbstractSWTRenderer<VElement> renderer = getSWTRendererFactory().getRenderer(child,
@@ -115,6 +117,8 @@ public abstract class ContainerSWTRenderer<VELEMENT extends VElement> extends Ab
 					getViewModelContext());
 			GridDescription gridDescription = renderer.getGridDescription(GridDescriptionFactory.INSTANCE
 				.createEmptyGridDescription());
+			controlGridDescription.put(child, gridDescription);
+
 			// int maxAdditionalColumn = 0;
 			for (final AbstractAdditionalSWTRenderer<VElement> additionalRenderer : additionalRenderers) {
 				gridDescription = additionalRenderer.getGridDescription(gridDescription);
@@ -122,7 +126,7 @@ public abstract class ContainerSWTRenderer<VELEMENT extends VElement> extends Ab
 				// maxAdditionalColumn = additionalRenderer.getGridDescription().getColumns();
 				// }
 			}
-			mainGridDescription.put(child, gridDescription);
+			rowGridDescription.put(child, gridDescription);
 			if (maximalGridDescription == null
 				|| maximalGridDescription.getColumns() < gridDescription.getColumns())
 			{
@@ -146,13 +150,15 @@ public abstract class ContainerSWTRenderer<VELEMENT extends VElement> extends Ab
 		columnComposite.setLayout(getLayout(maximalGridDescription.getColumns(), false));
 		for (final VContainedElement child : getChildren()) {
 			try {
-				final GridDescription gridDescription = mainGridDescription.get(child);
+				final GridDescription gridDescription = rowGridDescription.get(child);
 				for (final GridCell childGridCell : gridDescription.getGrid()) {
 
 					final Control control = childGridCell.getRenderer().render(childGridCell,
 						columnComposite);
 					// TODO who should apply the layout
-					setLayoutDataForControl(childGridCell, gridDescription, maximalGridDescription, control);
+					setLayoutDataForControl(childGridCell, controlGridDescription.get(child), gridDescription,
+						maximalGridDescription,
+						child, control);
 
 				}
 				for (final AbstractSWTRenderer<VElement> renderer : elementRendererMap.get(child)) {
@@ -200,7 +206,7 @@ public abstract class ContainerSWTRenderer<VELEMENT extends VElement> extends Ab
 	 * @return the {@link Layout}
 	 */
 	protected Layout getLayout(int numControls, boolean equalWidth) {
-		return getLayoutHelper().getColumnLayout(numControls, equalWidth);
+		return LayoutProviderHelper.getColumnLayout(numControls, equalWidth);
 	}
 
 	/**
