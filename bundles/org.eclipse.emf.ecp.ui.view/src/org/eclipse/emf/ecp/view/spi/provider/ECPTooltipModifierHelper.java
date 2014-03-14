@@ -18,23 +18,22 @@ import java.util.Set;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.view.internal.ui.Activator;
-import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.osgi.framework.Bundle;
 
 /**
  * A helper to ease the access to the string modifiers.
  * 
- * @author Eugen
+ * @author Eugen Neufeld
  * 
  */
-public final class ECPStringModifierHelper {
+public final class ECPTooltipModifierHelper {
 	private static final String CLASS_CANNOT_BE_RESOLVED = "%1$s cannot be loaded because bundle %2$s cannot be resolved."; //$NON-NLS-1$
 	private static final String CLASS = "class"; //$NON-NLS-1$
 	private static final String EXTENSION_POINT_ID = "org.eclipse.emf.ecp.ui.view.tooltipModifier"; //$NON-NLS-1$
 
-	private ECPStringModifierHelper() {
+	private ECPTooltipModifierHelper() {
 
 	}
 
@@ -96,14 +95,13 @@ public final class ECPStringModifierHelper {
 	 * Modifies a string by iterating over all known {@link ECPStringModifier}.
 	 * 
 	 * @param text the text to modify
-	 * @param vElement the {@link VElement} used
-	 * @param viewModelContext the {@link ViewModelContext} used
+	 * @param setting the {@link Setting} used to create the text
 	 * @return the modified text
 	 */
-	public static String modifyString(String text, VElement vElement, ViewModelContext viewModelContext) {
+	public static String modifyString(String text, Setting setting) {
 		String returnValue = text;
 		for (final ECPStringModifier tooltipModifier : getStringModifiers()) {
-			returnValue = tooltipModifier.modifyString(returnValue, vElement, viewModelContext);
+			returnValue = tooltipModifier.modifyString(returnValue, setting);
 		}
 		return returnValue;
 	}

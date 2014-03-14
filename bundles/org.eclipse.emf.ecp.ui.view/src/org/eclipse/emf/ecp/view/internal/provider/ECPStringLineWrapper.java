@@ -11,8 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.provider;
 
-import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.view.spi.provider.ECPStringModifier;
 
 /**
@@ -27,13 +26,18 @@ public class ECPStringLineWrapper implements ECPStringModifier {
 	 * {@inheritDoc}
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.provider.ECPStringModifier#modifyString(java.lang.String,
-	 *      org.eclipse.emf.ecp.view.spi.model.VElement, org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
+	 *      org.eclipse.emf.ecore.EStructuralFeature.Setting)
 	 */
-	public String modifyString(String text, VElement vElement, ViewModelContext viewModelContext) {
+	public String modifyString(String text, Setting setting) {
 		final StringBuilder sb = new StringBuilder(text);
 		final int maxLineLength = 80;
 		int i = 0;
+		// TODO check line breaks
 		while (i + maxLineLength < sb.length()) {
+			i = sb.lastIndexOf("\n", i + maxLineLength); //$NON-NLS-1$
+			if (i == -1) {
+				i = 0;
+			}
 			i = sb.lastIndexOf(" ", i + maxLineLength); //$NON-NLS-1$
 			if (i == -1) {
 				break;

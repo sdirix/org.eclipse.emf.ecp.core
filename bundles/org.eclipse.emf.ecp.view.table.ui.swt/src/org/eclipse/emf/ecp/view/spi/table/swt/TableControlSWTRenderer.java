@@ -43,6 +43,7 @@ import org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor;
 import org.eclipse.emf.ecp.edit.internal.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.ecp.view.spi.core.swt.AbstractControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
+import org.eclipse.emf.ecp.view.spi.provider.ECPTooltipModifierHelper;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridCell;
@@ -644,7 +645,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		@Override
 		public String getToolTipText(Object element) {
 			final EObject domainObject = (EObject) element;
-
+			final Setting setting = InternalEObject.class.cast(domainObject).eSetting(feature);
 			final StringBuffer tooltip = new StringBuffer();
 			final VDiagnostic vDiagnostic = vTableControl.getDiagnostic();
 			final List<Diagnostic> diagnostics = vDiagnostic.getDiagnostic(domainObject, feature);
@@ -655,13 +656,13 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 				tooltip.append(diagnostic.getMessage());
 			}
 			if (tooltip.length() != 0) {
-				return tooltip.toString();
+				return ECPTooltipModifierHelper.modifyString(tooltip.toString(), setting);
 			}
 			final Object value = ((EObject) element).eGet(feature);
 			if (value == null) {
 				return null;
 			}
-			return String.valueOf(value);
+			return ECPTooltipModifierHelper.modifyString(String.valueOf(value), setting);
 		}
 
 		@Override

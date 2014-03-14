@@ -11,8 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.provider;
 
-import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 
 /**
  * The TooltipModifier allows to manipulate a provided String.
@@ -26,9 +25,8 @@ public interface ECPStringModifier {
 	 * Modifies a string.
 	 * 
 	 * @param text the text to modify
-	 * @param vElement the {@link VElement} which was rendered for the tooltip
-	 * @param viewModelContext the {@link ViewModelContext} used
+	 * @param setting the Setting used to generate this text
 	 * @return the modified text
 	 */
-	String modifyString(String text, VElement vElement, ViewModelContext viewModelContext);
+	String modifyString(String text, Setting setting);
 }
