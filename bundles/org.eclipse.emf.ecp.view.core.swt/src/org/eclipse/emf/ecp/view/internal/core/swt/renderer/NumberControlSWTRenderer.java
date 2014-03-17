@@ -243,11 +243,11 @@ public class NumberControlSWTRenderer extends TextControlSWTRenderer {
 				}
 			}.execute();
 
-			if (result == null) {
-				text.setText(""); //$NON-NLS-1$
-			} else {
-				dataBindingContext.updateTargets();
-			}
+			// if (result == null) {
+			//				text.setText(""); //$NON-NLS-1$
+			// } else {
+			dataBindingContext.updateTargets();
+			// }
 
 			if (eStructuralFeature.isUnsettable() && result == null) {
 				// showUnsetLabel();

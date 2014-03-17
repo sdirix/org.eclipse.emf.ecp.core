@@ -7,7 +7,7 @@
             renderer="org.eclipse.emf.ecp.view.spi.custom.swt.CustomControlSWTRenderer">
          <staticTest
                element="org.eclipse.emf.ecp.view.spi.custom.model.VCustomControl"
-               priority="4">
+               priority="6">
          </staticTest>
       </renderer>
    </extension>
