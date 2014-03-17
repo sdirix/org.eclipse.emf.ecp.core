@@ -289,12 +289,12 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic
 			&& eObject.equals(diagnostic.getData().get(0))) {
 			result.add(diagnostic);
 		}
-		for (final Diagnostic childDiagnostic : diagnostic.getChildren()) {
-			if (childDiagnostic.getSeverity() == Diagnostic.OK) {
-				continue;
-			}
-			result.addAll(getDiagnostics(childDiagnostic, eObject));
-		}
+		// for (final Diagnostic childDiagnostic : diagnostic.getChildren()) {
+		// if (childDiagnostic.getSeverity() == Diagnostic.OK) {
+		// continue;
+		// }
+		// result.addAll(getDiagnostics(childDiagnostic, eObject));
+		// }
 		return result;
 	}
 
@@ -322,13 +322,17 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic
 		final List<Diagnostic> result = new ArrayList<Diagnostic>();
 		if (diagnostic.getData() != null && diagnostic.getData().size() > 1
 			&& eObject.equals(diagnostic.getData().get(0)) && eStructuralFeature.equals(diagnostic.getData().get(1))) {
-			result.add(diagnostic);
-		}
-		for (final Diagnostic childDiagnostic : diagnostic.getChildren()) {
-			if (childDiagnostic.getSeverity() == Diagnostic.OK) {
-				continue;
+			if (diagnostic.getChildren() == null || diagnostic.getChildren().size() == 0) {
+				result.add(diagnostic);
+			} else {
+				for (final Diagnostic childDiagnostic : diagnostic.getChildren()) {
+					if (childDiagnostic.getSeverity() == Diagnostic.OK) {
+						continue;
+					}
+					// result.addAll(getDiagnostics(childDiagnostic, eObject, eStructuralFeature));
+					result.add(childDiagnostic);
+				}
 			}
-			result.addAll(getDiagnostics(childDiagnostic, eObject, eStructuralFeature));
 		}
 		return result;
 	}
