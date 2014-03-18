@@ -307,7 +307,7 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 		if (getVElement().getLabelAlignment() == LabelAlignment.NONE && gridCell.getColumn() == 1
 			|| getVElement().getLabelAlignment() == LabelAlignment.LEFT && gridCell.getColumn() == 2) {
 			((Text) ((Composite) control).getChildren()[0]).setEditable(enabled);
-			((Button) ((Composite) control).getChildren()[1]).setEnabled(enabled);
+			((Button) ((Composite) control).getChildren()[1]).setVisible(enabled);
 		} else {
 			super.setControlEnabled(gridCell, control, enabled);
 		}

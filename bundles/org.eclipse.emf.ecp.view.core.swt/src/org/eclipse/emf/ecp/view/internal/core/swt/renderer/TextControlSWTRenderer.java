@@ -122,7 +122,11 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 	 * @return the style to apply
 	 */
 	protected int getTextWidgetStyle() {
-		return SWT.SINGLE | SWT.BORDER;
+		int textStyle = SWT.SINGLE | SWT.BORDER;
+		if (getItemPropertyDescriptor(getVElement().getDomainModelReference().getIterator().next()).isMultiLine(null)) {
+			textStyle = SWT.MULTI | SWT.WRAP | SWT.V_SCROLL | SWT.BORDER;
+		}
+		return textStyle;
 	}
 
 	/**
@@ -139,11 +143,11 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 		if (getVElement().getLabelAlignment() == LabelAlignment.NONE && gridCell.getColumn() == 1
 			|| getVElement().getLabelAlignment() == LabelAlignment.LEFT && gridCell.getColumn() == 2) {
 			final Setting setting = getVElement().getDomainModelReference().getIterator().next();
-			if (!setting.isSet()) {
-				return;
-			}
 			Control controlToUnset = control;
 			if (setting.getEStructuralFeature().isUnsettable()) {
+				if (!setting.isSet()) {
+					return;
+				}
 				controlToUnset = Composite.class.cast(Composite.class.cast(control).getChildren()[0]).getChildren()[0];
 			}
 			Text.class.cast(controlToUnset).setEditable(enabled);

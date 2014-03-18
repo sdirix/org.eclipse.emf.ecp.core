@@ -211,7 +211,25 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic
 	 */
 	public String getMessage() {
 		String message = ""; //$NON-NLS-1$
-		if (getDiagnostics().size() > 0) {
+		if (getDiagnostics().size() == 1) {
+			final Diagnostic diagnostic = Diagnostic.class.cast(getDiagnostics().get(0));
+			if (Diagnostic.OK == diagnostic.getSeverity()) {
+				return message;
+			}
+			if (diagnostic.getChildren() != null && diagnostic.getChildren().size() == 0) {
+				return diagnostic.getMessage();
+			}
+			final StringBuilder sb = new StringBuilder();
+			for (final Diagnostic childDiagnostic : diagnostic.getChildren()) {
+				if (sb.length() > 0)
+				{
+					sb.append("\n"); //$NON-NLS-1$
+				}
+				sb.append(childDiagnostic.getMessage());
+			}
+			message = sb.toString();
+		}
+		else if (getDiagnostics().size() > 0) {
 			// for (final Object o : getDiagnostics()) {
 			// final Diagnostic diagnostic = (Diagnostic) o;
 			// if (Diagnostic.OK == diagnostic.getSeverity()) {
