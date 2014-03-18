@@ -13,6 +13,7 @@ package org.eclipse.emf.ecp.view.internal.rule;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +34,7 @@ import org.eclipse.emf.ecp.view.spi.model.VAttachment;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.rule.model.Condition;
 import org.eclipse.emf.ecp.view.spi.rule.model.EnableRule;
+import org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition;
 import org.eclipse.emf.ecp.view.spi.rule.model.Rule;
 import org.eclipse.emf.ecp.view.spi.rule.model.ShowRule;
 
@@ -66,7 +68,7 @@ public class RuleService implements ViewModelService {
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#instantiate(org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
-	public void instantiate(ViewModelContext context) {
+	public void instantiate(final ViewModelContext context) {
 		this.context = context;
 		final VElement view = context.getViewModel();
 		domainChangeListener = new ModelChangeListener() {
@@ -99,7 +101,40 @@ public class RuleService implements ViewModelService {
 			}
 
 			public void notifyAdd(Notifier notifier) {
-				// TODO Auto-generated method stub
+				if (VElement.class.isInstance(notifier)) {
+					register(enableRuleRegistry, EnableRule.class, context.getDomainModel(),
+						VElement.class.cast(notifier));
+					register(showRuleRegistry, ShowRule.class, context.getDomainModel(), VElement.class.cast(notifier));
+
+					final Rule rule = getRule(VElement.class.cast(notifier));
+					if (rule == null) {
+						return;
+					}
+					if (LeafCondition.class.isInstance(rule.getCondition())) {
+						evalNewRules(LeafCondition.class.cast(rule.getCondition()));
+					}
+					else {
+						final TreeIterator<EObject> eAllContents = rule.getCondition().eAllContents();
+						while (eAllContents.hasNext()) {
+							final EObject eObject = eAllContents.next();
+							if (LeafCondition.class.isInstance(eObject)) {
+								evalNewRules(LeafCondition.class.cast(eObject));
+							}
+						}
+					}
+
+				}
+			}
+
+			private void evalNewRules(LeafCondition leafCondition) {
+				leafCondition.getDomainModelReference().resolve(context.getDomainModel());
+				final Iterator<EStructuralFeature> eStructuralFeatureIterator = leafCondition.getDomainModelReference()
+					.getEStructuralFeatureIterator();
+				while (eStructuralFeatureIterator.hasNext()) {
+					final EStructuralFeature feature = eStructuralFeatureIterator.next();
+					evalEnable(feature);
+					evalShow(feature);
+				}
 			}
 
 			public void notifyRemove(Notifier notifier) {
