@@ -94,6 +94,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
@@ -506,24 +507,30 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 	@Override
 	protected void applyValidation() {
-		// triggered due to another validation rule before this control is rendered
-		if (validationIcon == null) {
-			return;
-		}
-		// validation rule triggered after the control was disposed
-		if (validationIcon.isDisposed()) {
-			return;
-		}
-		// no diagnostic set
-		if (getVElement().getDiagnostic() == null) {
-			return;
-		}
-		validationIcon.setImage(getValidationIcon(getVElement().getDiagnostic().getHighestSeverity()));
-		validationIcon.setToolTipText(getVElement().getDiagnostic().getMessage());
-		final Setting mainSetting = getVElement().getDomainModelReference().getIterator().next();
-		for (final Object object : (Collection<?>) mainSetting.get(true)) {
-			tableViewer.update(object, null);
-		}
+		Display.getDefault().asyncExec(new Runnable() {
+
+			public void run() {
+				// triggered due to another validation rule before this control is rendered
+				if (validationIcon == null) {
+					return;
+				}
+				// validation rule triggered after the control was disposed
+				if (validationIcon.isDisposed()) {
+					return;
+				}
+				// no diagnostic set
+				if (getVElement().getDiagnostic() == null) {
+					return;
+				}
+				validationIcon.setImage(getValidationIcon(getVElement().getDiagnostic().getHighestSeverity()));
+				validationIcon.setToolTipText(getVElement().getDiagnostic().getMessage());
+				final Setting mainSetting = getVElement().getDomainModelReference().getIterator().next();
+				for (final Object object : (Collection<?>) mainSetting.get(true)) {
+					tableViewer.update(object, null);
+				}
+			}
+		});
+
 	}
 
 	/**

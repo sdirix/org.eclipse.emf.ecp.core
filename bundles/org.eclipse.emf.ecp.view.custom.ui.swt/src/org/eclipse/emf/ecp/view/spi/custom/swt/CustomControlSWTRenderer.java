@@ -25,6 +25,7 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.osgi.framework.Bundle;
 
@@ -142,21 +143,26 @@ public class CustomControlSWTRenderer extends AbstractSWTRenderer<VCustomControl
 	 */
 	@Override
 	protected void applyValidation() {
-		Label validationIcon = null;
-		switch (getControls().size()) {
-		case 3:
-			validationIcon = Label.class.cast(getControls().get(new GridCell(0, 1, this)));
-			break;
-		default:
-			break;
-		}
+		Display.getDefault().asyncExec(new Runnable() {
 
-		if (validationIcon != null && !validationIcon.isDisposed()) {
-			validationIcon.setImage(getValidationIcon(getVElement().getDiagnostic().getHighestSeverity()));
-			validationIcon.setToolTipText(getVElement().getDiagnostic().getMessage());
-		}
-		swtCustomControl.applyValidation();
+			public void run() {
+				Label validationIcon = null;
+				switch (getControls().size()) {
+				case 3:
+					validationIcon = Label.class.cast(getControls().get(
+						new GridCell(0, 1, CustomControlSWTRenderer.this)));
+					break;
+				default:
+					break;
+				}
 
+				if (validationIcon != null && !validationIcon.isDisposed()) {
+					validationIcon.setImage(getValidationIcon(getVElement().getDiagnostic().getHighestSeverity()));
+					validationIcon.setToolTipText(getVElement().getDiagnostic().getMessage());
+				}
+				swtCustomControl.applyValidation();
+			}
+		});
 	}
 
 	private Image getValidationIcon(int severity) {
