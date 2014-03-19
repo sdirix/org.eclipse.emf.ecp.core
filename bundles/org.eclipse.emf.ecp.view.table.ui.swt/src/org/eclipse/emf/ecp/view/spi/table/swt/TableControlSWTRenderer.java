@@ -114,6 +114,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	private TableViewer tableViewer;
 
 	private Label validationIcon;
+	private Button addButton;
+	private Button removeButton;
 
 	/**
 	 * {@inheritDoc}
@@ -196,7 +198,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			GridLayoutFactory.fillDefaults().numColumns(numButtons).equalWidth(true).applyTo(buttonComposite);
 		}
 		final Composite controlComposite = new Composite(composite, SWT.NONE);
-		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).hint(1, 200)
+		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL)
+			.hint(1, 200)
 			.applyTo(controlComposite);
 		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(controlComposite);
 		tableViewer = createTableViewer(controlComposite, clazz,
@@ -406,7 +409,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	}
 
 	private Button createRemoveRowButton(EClass clazz, final Composite buttonComposite, Setting mainSetting) {
-		final Button removeButton = new Button(buttonComposite, SWT.None);
+		removeButton = new Button(buttonComposite, SWT.None);
 		final Image image = Activator.getImage(ICON_DELETE);
 		removeButton.setImage(image);
 		removeButton.setToolTipText(ControlMessages.TableControl_RemoveSelected
@@ -420,7 +423,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	}
 
 	private Button createAddRowButton(final EClass clazz, final Composite buttonComposite, final Setting mainSetting) {
-		final Button addButton = new Button(buttonComposite, SWT.None);
+		addButton = new Button(buttonComposite, SWT.None);
 		final Image image = Activator.getImage(ICON_ADD);
 		addButton.setImage(image);
 		addButton.setToolTipText(ControlMessages.TableControl_AddInstanceOf + clazz.getInstanceClass().getSimpleName());
@@ -520,6 +523,21 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		final Setting mainSetting = getVElement().getDomainModelReference().getIterator().next();
 		for (final Object object : (Collection<?>) mainSetting.get(true)) {
 			tableViewer.update(object, null);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#applyEnable()
+	 */
+	@Override
+	protected void applyEnable() {
+		if (addButton != null) {
+			addButton.setVisible(getVElement().isEnabled() && !getVElement().isReadonly());
+		}
+		if (removeButton != null) {
+			removeButton.setVisible(getVElement().isEnabled() && !getVElement().isReadonly());
 		}
 	}
 
