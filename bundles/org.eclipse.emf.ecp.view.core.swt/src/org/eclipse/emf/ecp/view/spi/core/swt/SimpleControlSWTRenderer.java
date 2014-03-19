@@ -33,6 +33,7 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 
 /**
@@ -193,17 +194,27 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 
 	@Override
 	protected final void applyValidation() {
+		Display.getDefault().asyncExec(new Runnable() {
 
+			public void run() {
+				applyInnerValidation();
+			}
+		});
+	}
+
+	private void applyInnerValidation() {
 		Label validationIcon;
 		Control editControl;
 		switch (getControls().size()) {
 		case 2:
-			validationIcon = Label.class.cast(getControls().get(new GridCell(0, 0, this)));
-			editControl = getControls().get(new GridCell(0, 1, this));
+			validationIcon = Label.class.cast(getControls().get(
+				new GridCell(0, 0, SimpleControlSWTRenderer.this)));
+			editControl = getControls().get(new GridCell(0, 1, SimpleControlSWTRenderer.this));
 			break;
 		case 3:
-			validationIcon = Label.class.cast(getControls().get(new GridCell(0, 1, this)));
-			editControl = getControls().get(new GridCell(0, 2, this));
+			validationIcon = Label.class.cast(getControls().get(
+				new GridCell(0, 1, SimpleControlSWTRenderer.this)));
+			editControl = getControls().get(new GridCell(0, 2, SimpleControlSWTRenderer.this));
 			break;
 		default: // TODO log error ;
 			return;
@@ -220,6 +231,7 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 		if (getVElement().getDiagnostic() == null) {
 			return;
 		}
+
 		validationIcon.setImage(getValidationIcon(getVElement().getDiagnostic().getHighestSeverity()));
 		validationIcon.setToolTipText(getVElement().getDiagnostic().getMessage());
 
