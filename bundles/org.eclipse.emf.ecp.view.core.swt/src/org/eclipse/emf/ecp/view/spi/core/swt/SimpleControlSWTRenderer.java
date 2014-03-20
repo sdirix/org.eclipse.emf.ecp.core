@@ -193,6 +193,21 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 	}
 
 	@Override
+	protected void setControlEnabled(GridCell gridCell, Control control, boolean enabled) {
+		int controlIndex = gridCell.getColumn();
+		if (getVElement().getLabelAlignment() == LabelAlignment.NONE) {
+			controlIndex++;
+		}
+		switch (controlIndex) {
+		case 0:
+		case 1:
+			break;
+		default:
+			control.setEnabled(enabled);
+		}
+	}
+
+	@Override
 	protected final void applyValidation() {
 		Display.getDefault().asyncExec(new Runnable() {
 

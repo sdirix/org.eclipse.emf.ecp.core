@@ -12,6 +12,7 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.swt;
 
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -132,6 +133,9 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 	 * @return a copy of the controls map
 	 */
 	protected final Map<GridCell, Control> getControls() {
+		if (controls == null) {
+			return Collections.emptyMap();
+		}
 		return new LinkedHashMap<GridCell, Control>(controls);
 	}
 

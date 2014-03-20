@@ -165,6 +165,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		titleComposite.setBackground(parent.getBackground());
 		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING)
 			.applyTo(titleComposite);
+		final boolean createButtons = !tableControlConfiguration.isAddRemoveDisabled();
 		GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(false).applyTo(titleComposite);
 
 		// TODO discuss
@@ -180,16 +181,14 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		// validationLabel.setBackground(parent.getBackground());
 		// // set the size of the label to the size of the image
 		validationIcon = createValidationIcon(titleComposite);
-		GridDataFactory.fillDefaults().hint(16, 17).applyTo(validationIcon);
-
-		final boolean createButtons = !tableControlConfiguration.isAddRemoveDisabled();
+		GridDataFactory.fillDefaults().hint(16, 17).grab(true, false).applyTo(validationIcon);
 
 		Button addButton = null;
 		Button removeButton = null;
 		if (createButtons) {
 			// addButtons
 			final Composite buttonComposite = new Composite(titleComposite, SWT.NONE);
-			GridDataFactory.fillDefaults().align(SWT.END, SWT.BEGINNING).grab(true, false).applyTo(buttonComposite);
+			GridDataFactory.fillDefaults().align(SWT.END, SWT.BEGINNING).grab(false, false).applyTo(buttonComposite);
 			final int numButtons = 2;
 
 			addButton = createAddRowButton(clazz, buttonComposite, mainSetting);
@@ -413,8 +412,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		removeButton = new Button(buttonComposite, SWT.None);
 		final Image image = Activator.getImage(ICON_DELETE);
 		removeButton.setImage(image);
-		removeButton.setToolTipText(ControlMessages.TableControl_RemoveSelected
-			+ clazz.getInstanceClass().getSimpleName());
+		removeButton.setToolTipText(String.format(ControlMessages.TableControl_RemoveSelected
+			, clazz.getInstanceClass().getSimpleName()));
 
 		final List<?> containments = (List<?>) mainSetting.get(true);
 		if (containments.size() <= mainSetting.getEStructuralFeature().getLowerBound()) {
@@ -427,7 +426,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		addButton = new Button(buttonComposite, SWT.None);
 		final Image image = Activator.getImage(ICON_ADD);
 		addButton.setImage(image);
-		addButton.setToolTipText(ControlMessages.TableControl_AddInstanceOf + clazz.getInstanceClass().getSimpleName());
+		addButton.setToolTipText(String.format(ControlMessages.TableControl_AddInstanceOf, clazz.getInstanceClass()
+			.getSimpleName()));
 
 		final List<?> containments = (List<?>) mainSetting.get(true);
 		if (mainSetting.getEStructuralFeature().getUpperBound() != -1
