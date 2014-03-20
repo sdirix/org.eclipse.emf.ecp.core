@@ -525,8 +525,11 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 				validationIcon.setImage(getValidationIcon(getVElement().getDiagnostic().getHighestSeverity()));
 				validationIcon.setToolTipText(getVElement().getDiagnostic().getMessage());
 				final Setting mainSetting = getVElement().getDomainModelReference().getIterator().next();
-				for (final Object object : (Collection<?>) mainSetting.get(true)) {
-					tableViewer.update(object, null);
+				final Collection<?> collection = (Collection<?>) mainSetting.get(true);
+				if (!collection.isEmpty()) {
+					for (final Object object : collection) {
+						tableViewer.update(object, null);
+					}
 				}
 			}
 		});

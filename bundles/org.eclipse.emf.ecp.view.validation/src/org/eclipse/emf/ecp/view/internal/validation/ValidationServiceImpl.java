@@ -162,6 +162,8 @@ public class ValidationServiceImpl implements ValidationService {
 				validate(getAllEObjects(notification.getNotifier()));
 
 				break;
+			case Notification.REMOVING_ADAPTER:
+				break;
 			default:
 				validate(getAllEObjects(notification.getNotifier()));
 			}

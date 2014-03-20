@@ -54,9 +54,9 @@ public final class DefaultMergeUtil {
 			final Setting fromSetting = fromIterator.next();
 			stepsChecked++;
 			// break because of derived tables
-			if (toSetting.getEStructuralFeature().isDerived()) {
-				break;
-			}
+			// if (toSetting.getEStructuralFeature().isDerived()) {
+			// break;
+			// }
 			if (!toSetting.getEStructuralFeature().isChangeable()) {
 				continue;
 			}
@@ -66,7 +66,7 @@ public final class DefaultMergeUtil {
 			if (toSetting.getEStructuralFeature().isMany()) {
 				editingDomain.getCommandStack().execute(
 					RemoveCommand.create(editingDomain, toSetting.getEObject(), toSetting.getEStructuralFeature(),
-						(Collection<?>) toSetting.get(true)));
+						(Collection<?>) toSetting.get(true))
 			}
 			if (EAttribute.class.isInstance(toSetting.getEStructuralFeature())) {
 
@@ -92,12 +92,12 @@ public final class DefaultMergeUtil {
 					for (int i = 0; i < stepsChecked; i++) {
 						toIterator.next();
 					}
+					break;
 				}
-				else {
-					editingDomain.getCommandStack().execute(
-						SetCommand.create(editingDomain, toSetting.getEObject(), toSetting.getEStructuralFeature(),
-							EcoreUtil.copy((EObject) fromSetting.get(true))));
-				}
+				editingDomain.getCommandStack().execute(
+					SetCommand.create(editingDomain, toSetting.getEObject(), toSetting.getEStructuralFeature(),
+						EcoreUtil.copy((EObject) fromSetting.get(true))));
+
 			}
 		}
 	}
