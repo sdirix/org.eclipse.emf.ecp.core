@@ -335,9 +335,11 @@ public class TreeMasterDetailItemProviderAdapterFactory extends
 				final VTreeMasterDetail createTreeMasterDetail = VTreeMasterDetailFactory.eINSTANCE
 					.createTreeMasterDetail();
 
-				final VView createView = VViewFactory.eINSTANCE.createView();
-				createView.setRootEClass(view.getRootEClass());
-				createTreeMasterDetail.setDetailView(createView);
+				if (view != null) {
+					final VView createView = VViewFactory.eINSTANCE.createView();
+					createView.setRootEClass(view.getRootEClass());
+					createTreeMasterDetail.setDetailView(createView);
+				}
 
 				return createTreeMasterDetail;
 

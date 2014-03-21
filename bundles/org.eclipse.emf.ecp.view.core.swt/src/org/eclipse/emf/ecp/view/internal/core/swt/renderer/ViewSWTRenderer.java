@@ -56,10 +56,10 @@ public class ViewSWTRenderer extends ContainerSWTRenderer<VView> {
 		if (gridCell.getColumn() + 1 == gridDescription.getColumns()) {
 			GridDataFactory
 				.fillDefaults()
-				.align(SWT.FILL, SWT.FILL)
-				.grab(true, true)
+				.align(SWT.FILL, SWT.CENTER)
+				.grab(true, false)
 				.span(
-					1 + fullRowDescription.getColumns() - gridDescription.getColumns(), 1)
+					1 + fullGridDescription.getColumns() - fullRowDescription.getColumns(), 1)
 				.applyTo(control);
 		} else if (gridCell.getColumn() == 0) {
 			GridDataFactory.fillDefaults().grab(false, false)
