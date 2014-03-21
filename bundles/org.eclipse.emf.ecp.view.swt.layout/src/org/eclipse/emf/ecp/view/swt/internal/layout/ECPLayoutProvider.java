@@ -43,7 +43,7 @@ public class ECPLayoutProvider implements LayoutProvider {
 
 	private GridData getLabelGridData() {
 		return GridDataFactory.fillDefaults().grab(false, false)
-			.align(SWT.FILL, SWT.CENTER).create();
+			.align(SWT.BEGINNING, SWT.CENTER).create();
 	}
 
 	private GridData getValidationGridData() {

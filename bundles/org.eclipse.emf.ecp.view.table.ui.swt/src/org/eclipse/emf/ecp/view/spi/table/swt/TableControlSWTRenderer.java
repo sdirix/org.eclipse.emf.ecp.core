@@ -554,6 +554,21 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	/**
 	 * {@inheritDoc}
 	 * 
+	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#applyReadOnly()
+	 */
+	@Override
+	protected void applyReadOnly() {
+		if (addButton != null) {
+			addButton.setVisible(getVElement().isEnabled() && !getVElement().isReadonly());
+		}
+		if (removeButton != null) {
+			removeButton.setVisible(getVElement().isEnabled() && !getVElement().isReadonly());
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#dispose()
 	 */
 	@Override

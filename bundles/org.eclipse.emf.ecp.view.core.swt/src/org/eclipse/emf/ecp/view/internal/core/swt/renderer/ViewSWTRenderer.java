@@ -17,6 +17,7 @@ import java.util.Collection;
 
 import org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
+import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
@@ -49,28 +50,28 @@ public class ViewSWTRenderer extends ContainerSWTRenderer<VView> {
 	}
 
 	@Override
-	protected final void setLayoutDataForControl(GridCell gridCell, GridDescription gridDescription,
-		GridDescription fullRowDescription, GridDescription fullGridDescription, VElement vElement,
+	protected final void setLayoutDataForControl(GridCell gridCell,
+		GridDescription controlGridDescription,
+		GridDescription currentRowGridDescription, GridDescription fullGridDescription, VElement vElement,
 		Control control) {
-
-		if (gridCell.getColumn() + 1 == gridDescription.getColumns()) {
-			GridDataFactory
-				.fillDefaults()
-				.align(SWT.FILL, SWT.CENTER)
-				.grab(true, false)
-				.span(
-					1 + fullGridDescription.getColumns() - fullRowDescription.getColumns(), 1)
-				.applyTo(control);
-		} else if (gridCell.getColumn() == 0) {
-			GridDataFactory.fillDefaults().grab(false, false)
-				.align(SWT.FILL, SWT.CENTER)
-				.applyTo(control);
-		}
-		else if (gridCell.getColumn() == 1) {
-			GridDataFactory.fillDefaults()
-				.align(SWT.CENTER, SWT.CENTER).hint(16, 17)
-				.grab(false, false)
-				.applyTo(control);
+		if (VControl.class.isInstance(vElement)) {
+			// last column of control
+			if (gridCell.getColumn() + 1 == controlGridDescription.getColumns()) {
+				GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER)
+					.grab(true, false).span(1 + fullGridDescription.getColumns()
+						- currentRowGridDescription.getColumns(), 1).applyTo(control);
+			} else if (controlGridDescription.getColumns() == 3 && gridCell.getColumn() == 0) {
+				GridDataFactory.fillDefaults().grab(false, false)
+					.align(SWT.BEGINNING, SWT.CENTER).applyTo(control);
+			} else if (controlGridDescription.getColumns() == 3 && gridCell.getColumn() == 1) {
+				GridDataFactory.fillDefaults().align(SWT.CENTER, SWT.CENTER)
+					.hint(16, 17).grab(false, false).applyTo(control);
+			}
+		} else {
+			// we have some kind of container -> render with necessary span
+			GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL)
+				.grab(true, false).span(1 + fullGridDescription.getColumns()
+					- currentRowGridDescription.getColumns(), 1).applyTo(control);
 		}
 
 	}
