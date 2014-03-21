@@ -58,7 +58,7 @@ public class ECPLayoutProvider implements LayoutProvider {
 
 	private GridData getSpanningGridData(int xSpan, int ySpan) {
 		return GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL)
-			.grab(true, false).span(xSpan, ySpan).create();
+			.grab(true, true).span(xSpan, ySpan).create();
 	}
 
 	public Object getSpanningLayoutData(int spanX, int spanY) {

@@ -70,7 +70,7 @@ public class ViewSWTRenderer extends ContainerSWTRenderer<VView> {
 		} else {
 			// we have some kind of container -> render with necessary span
 			GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL)
-				.grab(true, false).span(1 + fullGridDescription.getColumns()
+				.grab(true, true).span(1 + fullGridDescription.getColumns()
 					- currentRowGridDescription.getColumns(), 1).applyTo(control);
 		}
 
