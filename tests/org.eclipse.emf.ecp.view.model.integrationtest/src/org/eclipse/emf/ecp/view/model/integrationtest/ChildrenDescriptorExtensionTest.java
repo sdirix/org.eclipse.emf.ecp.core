@@ -60,8 +60,9 @@ public class ChildrenDescriptorExtensionTest {
 	private static final int ANDCONDITION_CHILD_COUNT = 3;
 	// TODO: Should be not -10, labels, groupedgrid, span, 2 rules, vertical, horizontal, separator,table, group
 	// are missing
-	// TODO: upper hierarchy is missing, can't find children
-	private static final int CATEGORY_CHILD_COUNT = NUMBER_OF_COMPOSITES + ABSTRACTCATEGORIZATION_CHILD_COUNT - 11 + 3;
+	// TODO: upper hierarchy is missing, can't find children +2 because of hardcoded layouts
+	private static final int CATEGORY_CHILD_COUNT = NUMBER_OF_COMPOSITES + ABSTRACTCATEGORIZATION_CHILD_COUNT - 11 + 3
+		+ 2;
 	// VDomainModelReference -> VFeaturePathDR, VPredefinedDR, VTableDR
 	private static final int CONTROL_CHILD_COUNT = COMPOSITE_CHILD_COUNT + 3;
 	private static final int TABLECONTROL_CHILD_COUNT = CONTROL_CHILD_COUNT + 1;
