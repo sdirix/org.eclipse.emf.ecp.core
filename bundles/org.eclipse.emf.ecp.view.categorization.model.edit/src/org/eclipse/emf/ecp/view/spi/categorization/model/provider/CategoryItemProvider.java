@@ -20,7 +20,9 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationFactory;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategory;
+import org.eclipse.emf.ecp.view.spi.horizontal.model.VHorizontalFactory;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
+import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -166,7 +168,7 @@ public class CategoryItemProvider
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
@@ -182,6 +184,15 @@ public class CategoryItemProvider
 			(createChildParameter
 			(VCategorizationPackage.Literals.CATEGORY__COMPOSITE,
 				VViewFactory.eINSTANCE.createControl()));
-	}
 
+		newChildDescriptors.add
+			(createChildParameter
+			(VCategorizationPackage.Literals.CATEGORY__COMPOSITE,
+				VHorizontalFactory.eINSTANCE.createHorizontalLayout()));
+
+		newChildDescriptors.add
+			(createChildParameter
+			(VCategorizationPackage.Literals.CATEGORY__COMPOSITE,
+				VVerticalFactory.eINSTANCE.createVerticalLayout()));
+	}
 }
