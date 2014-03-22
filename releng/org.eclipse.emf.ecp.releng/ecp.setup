@@ -38,6 +38,7 @@
     <roots id="org.eclipse.emf.ecp.nosite.feature.feature.group"/>
     <roots id="org.eclipse.emf.ecp.emfforms.sdk.feature.feature.group"/>
     <roots id="org.eclipse.emf.ecp.releng"/>
+	<roots id="org.eclipse.emf.ecp.fx.releng"/>
     <roots id="org.eclipse.sdk.feature.group"/>
     <roots id="org.eclipse.emf.ecp.products"/>
     <roots id="org.eclipse.emf.ecp.target.rap"/>
