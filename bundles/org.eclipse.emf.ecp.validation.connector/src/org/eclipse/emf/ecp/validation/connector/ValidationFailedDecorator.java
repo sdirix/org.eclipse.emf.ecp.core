@@ -28,8 +28,6 @@ import org.eclipse.jface.viewers.ILightweightLabelDecorator;
  */
 public class ValidationFailedDecorator implements ILightweightLabelDecorator {
 
-	private static final long serialVersionUID = 4874789355110393561L;
-
 	/**
 	 * {@inheritDoc}
 	 */

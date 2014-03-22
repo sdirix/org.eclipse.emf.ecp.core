@@ -47,8 +47,6 @@ public class MEEditor extends SharedHeaderFormEditor {
 
 	private static final String STATUS_EXTENSIONPOINT_ID = "org.eclipse.emf.ecp.editor.internal.e3.statusmessage"; //$NON-NLS-1$
 
-	private static final long serialVersionUID = 3282049427380573684L;
-
 	private static final String DEFAULT_PAGE_ID = "Edit"; //$NON-NLS-1$
 
 	private static final String REPLACE_ATTRIBUTE = "replace"; //$NON-NLS-1$

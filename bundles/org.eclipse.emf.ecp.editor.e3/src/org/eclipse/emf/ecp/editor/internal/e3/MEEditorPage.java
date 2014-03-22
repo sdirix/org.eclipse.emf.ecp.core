@@ -183,8 +183,6 @@ public class MEEditorPage extends FormPage {
 
 		form.getToolBarManager().add(new Action("", Activator.getImageDescriptor(ISharedImages.IMG_TOOL_DELETE)) { //$NON-NLS-1$
 
-				private static final long serialVersionUID = -8174732263834262751L;
-
 				@Override
 				public void run() {
 					final EditingDomain editingDomain = AdapterFactoryEditingDomain
