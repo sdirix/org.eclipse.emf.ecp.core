@@ -24,6 +24,7 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.util.fx.EMFUtil;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ComposedImage;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.emfstore.client.ESLocalProject;
@@ -35,28 +36,25 @@ public final class ESLocalProjectTreeCell extends TreeCell<Object> {
 	/**
 	 * 
 	 */
-	private final ProjectsView projectsView;
+	private final ComposedAdapterFactory adapterFactory;
 	private EObject currentItem;
 	private AdapterImpl adapter = new AdapterImpl() {
 		@Override
 		public void notifyChanged(Notification msg) {
-			Node result = update(msg.getNotifier());
-			if (result != null)
-				setGraphic(result);
+			updateItem(msg.getNotifier(),false);
+			
+//			if (result != null)
+//				setGraphic(result);
 		}
 	};
 	private ContextMenu localProjectMenu = new ContextMenu();
 	private ContextMenu sharedProjectMenu = new ContextMenu();
-	private ContextMenu eObjectMenu = new ContextMenu();
-	private EmfStoreLocalTreeItem projectTreeItem;
+	private MenuItem saveItem;
 
-	/**
-	 * @param projectTreeItem
-	 */
-	public ESLocalProjectTreeCell(ProjectsView projectsView,EmfStoreLocalTreeItem projectTreeItem) {
+	
+	public ESLocalProjectTreeCell(ComposedAdapterFactory adapterFactory) {
 		
-		this.projectsView = projectsView;
-		this.projectTreeItem = projectTreeItem;
+		this.adapterFactory = adapterFactory;
 		setupRemoteProjectContextMenu();
 	}
 
@@ -71,7 +69,7 @@ public final class ESLocalProjectTreeCell extends TreeCell<Object> {
 				try {
 					localProject.getRemoteProject().getServer().login("super", "super");
 					localProject.commit(new NullProgressMonitor());
-					projectTreeItem.updateChildren();
+					
 				} catch (ESException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -92,7 +90,7 @@ public final class ESLocalProjectTreeCell extends TreeCell<Object> {
 				try {
 					session.refresh();
 					localProject.update(new NullProgressMonitor());
-					projectTreeItem.updateChildren();
+//					projectTreeItem.updateChildren();
 				} catch (ESException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -112,7 +110,7 @@ public final class ESLocalProjectTreeCell extends TreeCell<Object> {
 				try {
 					session.refresh();
 					localProject.shareProject(session, new NullProgressMonitor());
-					projectTreeItem.updateChildren();
+					
 				} catch (ESException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -140,12 +138,12 @@ public final class ESLocalProjectTreeCell extends TreeCell<Object> {
 					if (result == null)
 						return;
 					localProject.getModelElements().add(result);
-					projectTreeItem.updateChildren();
+					
 				
 			}
 		});
 		
-		final MenuItem saveItem = new MenuItem();
+		saveItem = new MenuItem();
 		ImageView imgSave  = new ImageView(Activator.getContext().getBundle().getResource("icons/save.png").toExternalForm());
 		saveItem.setGraphic(HBoxBuilder.create().alignment(Pos.CENTER_LEFT).children(imgSave,new Label("Save")).build());
 		saveItem.setDisable(true);
@@ -205,7 +203,7 @@ public final class ESLocalProjectTreeCell extends TreeCell<Object> {
 		localProjectMenu.getItems().add(shareItem);
 		localProjectMenu.getItems().add(addElement);
 		
-		eObjectMenu.getItems().add(saveItem);
+//		eObjectMenu.getItems().add(saveItem);
 	}
 
 	
@@ -213,18 +211,19 @@ public final class ESLocalProjectTreeCell extends TreeCell<Object> {
 	@Override
 	public void updateItem(Object item, boolean empty) {
 		super.updateItem(item, empty);
-		update(item);
+		
+//		update(item);
 
+		String cellText=null;
+		Node graphics = null;
 		if (item != null) {
-
-			Node result = null;
 			if (ESLocalProject.class.isInstance(item)){
 				ESLocalProject localProject=(ESLocalProject) item;
 				
-				Node label = createLabel(localProject
-						.getProjectName()+(localProject.isShared()?(" ["+localProject.getBaseVersion().getBranch()+" "+localProject.getBaseVersion().getIdentifier()+"]"):""));
-				ImageView image  = new ImageView(Activator.getContext().getBundle().getResource("icons/localProject.gif").toExternalForm());
-				result=HBoxBuilder.create().alignment(Pos.CENTER_LEFT).children(image,label).build();
+				cellText=localProject
+						.getProjectName()+(localProject.isShared()?(" ["+localProject.getBaseVersion().getBranch()+" "+localProject.getBaseVersion().getIdentifier()+"]"):"");
+				graphics= new ImageView(Activator.getContext().getBundle().getResource("icons/localProject.gif").toExternalForm());
+//				graphics=HBoxBuilder.create().alignment(Pos.CENTER_LEFT).children(image,label).build();
 				if(localProject.isShared())
 					setContextMenu(sharedProjectMenu);
 				else
@@ -235,9 +234,17 @@ public final class ESLocalProjectTreeCell extends TreeCell<Object> {
 				if (currentItem != item) {
 					updatedAdapter((EObject) item);
 				}
-				result = update(item);
+				IItemLabelProvider labelProvider = (IItemLabelProvider) this.adapterFactory
+						.adapt(item, IItemLabelProvider.class);
 				
+				if (labelProvider != null) {
+					cellText = labelProvider.getText(item);
+					graphics = graphicFromObject(labelProvider
+							.getImage(item));
+				}
 				
+				ContextMenu eObjectMenu = new ContextMenu();
+				eObjectMenu.getItems().add(saveItem);
 				MenuItem childrenMenu = EMFUtil.getCreateChildrenMenu(currentItem);
 				
 				if(childrenMenu!=null){
@@ -245,38 +252,43 @@ public final class ESLocalProjectTreeCell extends TreeCell<Object> {
 				}
 				setContextMenu(eObjectMenu);
 			}
-			if (result != null)
-				setGraphic(result);
+//			if (graphics != null)
+			
+//			getTreeView().getSelectionModel().select(getTreeItem());
 		}
+		setGraphic(graphics);
+		setText(cellText);
+		
+		
 	}
 
-	private Node createLabel(String value) {
-		return new Label(value);
-	}
+//	private Node createLabel(String value) {
+//		return new Label(value);
+//	}
 
-	private Node update(Object item) {
-		IItemLabelProvider labelProvider = (IItemLabelProvider) this.projectsView.adapterFactory
-				.adapt(item, IItemLabelProvider.class);
-
-		if (labelProvider != null) {
-			String value = labelProvider.getText(item);
-			Node label = createLabel(value);
-			Node image = graphicFromObject(labelProvider
-					.getImage(item));
-
-			Node result = label;
-			if (image != null) {
-				HBox hBox = new HBox();
-				hBox.alignmentProperty().set(
-						Pos.CENTER_LEFT);
-				hBox.getChildren().add(image);
-				hBox.getChildren().add(label);
-				result = hBox;
-			}
-			return result;
-		}
-		return null;
-	}
+//	private Node update(Object item) {
+//		IItemLabelProvider labelProvider = (IItemLabelProvider) this.adapterFactory
+//				.adapt(item, IItemLabelProvider.class);
+//
+//		if (labelProvider != null) {
+//			String value = labelProvider.getText(item);
+//			Node label = createLabel(value);
+//			Node image = graphicFromObject(labelProvider
+//					.getImage(item));
+//
+//			Node result = label;
+//			if (image != null) {
+//				HBox hBox = new HBox();
+//				hBox.alignmentProperty().set(
+//						Pos.CENTER_LEFT);
+//				hBox.getChildren().add(image);
+//				hBox.getChildren().add(label);
+//				result = hBox;
+//			}
+//			return result;
+//		}
+//		return null;
+//	}
 
 	private Node graphicFromObject(Object object) {
 		if (object instanceof URL) {

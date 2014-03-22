@@ -79,7 +79,7 @@ public class CreateEObjectStage extends Stage {
 
 		AdapterFactoryTreeCellFactory cellFactory = new AdapterFactoryTreeCellFactory(
 				adapterFactory);
-
+		
 		treeView.setCellFactory(cellFactory);
 
 		final Button button = new Button("Create");

@@ -51,7 +51,7 @@ public class ProjectsView {
 			public void handle(ActionEvent event) {
 				ESWorkspaceProvider.INSTANCE.getWorkspace().createLocalProject(
 						"test");
-				projectTreeItem.updateChildren();
+//				projectTreeItem.updateChildren();
 			}
 		});
 
@@ -74,7 +74,7 @@ public class ProjectsView {
 					@Override
 					public TreeCell<Object> call(TreeView<Object> param) {
 
-						return new ESLocalProjectTreeCell(ProjectsView.this,projectTreeItem);
+						return new ESLocalProjectTreeCell(adapterFactory);
 					}
 				});
 		localProjectsView.getSelectionModel().selectedItemProperty()

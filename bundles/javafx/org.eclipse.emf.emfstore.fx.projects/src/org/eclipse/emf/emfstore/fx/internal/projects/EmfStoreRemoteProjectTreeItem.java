@@ -91,7 +91,7 @@ public class EmfStoreRemoteProjectTreeItem extends TreeItem<Object> {
 		});
 	}
 
-	public void updateChildren() {
+	private void updateChildren() {
 
 		Object selectedValue = getValue();
 		if (ESWorkspace.class.isInstance(selectedValue)) {
