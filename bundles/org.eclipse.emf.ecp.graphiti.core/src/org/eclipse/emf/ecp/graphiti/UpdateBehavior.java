@@ -24,9 +24,7 @@ import org.eclipse.graphiti.ui.internal.services.GraphitiUiInternal;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
-import org.eclipse.ui.IWorkbenchPartSite;
 import org.eclipse.ui.PlatformUI;
 
 /*******************************************************************************
@@ -433,24 +431,6 @@ public class UpdateBehavior extends DefaultUpdateBehavior {
 
 	private Shell getShell() {
 		return diagramBehavior.getDiagramContainer().getSite().getShell();
-	}
-
-	private void closeContainer() {
-		final IDiagramContainerUI diagramContainer = diagramBehavior.getDiagramContainer();
-		if (diagramContainer == null) {
-			return;
-		}
-		final IWorkbenchPartSite site = diagramContainer.getSite();
-		// Since we run asynchronously we have to check if our UI is still
-		// there.
-		if (site == null) {
-			return;
-		}
-		final IWorkbenchPage page = site.getPage();
-		if (page == null) {
-			return;
-		}
-		diagramContainer.close();
 	}
 
 	/**
