@@ -236,6 +236,9 @@ public class ValidationServiceImpl implements ValidationService {
 
 	private void cleanControlDiagnostics(EObject parent, EReference parentReference, EObject removedEObject) {
 		final Set<VControl> controls = context.getControlsFor(UniqueSetting.createSetting(parent, parentReference));
+		if (controls == null) {
+			return;
+		}
 		for (final VControl vControl : controls) {
 			if (vControl == null) {
 				continue;
