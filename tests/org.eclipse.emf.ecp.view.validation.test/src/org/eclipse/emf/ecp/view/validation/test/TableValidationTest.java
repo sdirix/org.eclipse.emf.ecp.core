@@ -24,6 +24,7 @@ import org.eclipse.emf.ecp.view.spi.table.model.VTableColumn;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableFactory;
+import org.eclipse.emf.ecp.view.validation.test.model.Library;
 import org.eclipse.emf.ecp.view.validation.test.model.TableContentWithValidation;
 import org.eclipse.emf.ecp.view.validation.test.model.TableContentWithoutValidation;
 import org.eclipse.emf.ecp.view.validation.test.model.TableWithMultiplicity;
@@ -31,6 +32,7 @@ import org.eclipse.emf.ecp.view.validation.test.model.TableWithUnique;
 import org.eclipse.emf.ecp.view.validation.test.model.TableWithoutMultiplicity;
 import org.eclipse.emf.ecp.view.validation.test.model.TestFactory;
 import org.eclipse.emf.ecp.view.validation.test.model.TestPackage;
+import org.eclipse.emf.ecp.view.validation.test.model.Writer;
 import org.junit.Test;
 
 /**
@@ -539,5 +541,26 @@ public class TableValidationTest {
 		domain.getContent().add(content3);
 		content3.setName("b");
 		assertEquals(Diagnostic.WARNING, table.getDiagnostic().getHighestSeverity());
+	}
+
+	@Test
+	public void testChangeOfSingleContentElement() {
+		final VView view = createViewWithTableControl(TestPackage.eINSTANCE.getLibrary(),
+			TestPackage.eINSTANCE.getLibrary_Writers(), TestPackage.eINSTANCE.getWriter_FirstName());
+		final VTableControl table = (VTableControl) view.getChildren().get(0);
+
+		final Library library = TestFactory.eINSTANCE.createLibrary();
+		final Writer writer1 = TestFactory.eINSTANCE.createWriter();
+		final Writer writer2 = TestFactory.eINSTANCE.createWriter();
+		library.getWriters().add(writer1);
+		library.getWriters().add(writer2);
+
+		ViewModelContextFactory.INSTANCE.createViewModelContext(view, library);
+
+		assertEquals(2, table.getDiagnostic().getDiagnostics().size());
+
+		writer1.setFirstName("test");
+
+		assertEquals(1, table.getDiagnostic().getDiagnostics().size());
 	}
 }

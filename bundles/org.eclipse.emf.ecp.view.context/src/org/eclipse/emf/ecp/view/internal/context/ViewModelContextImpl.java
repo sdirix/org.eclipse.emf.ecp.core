@@ -424,7 +424,12 @@ public class ViewModelContextImpl implements ViewModelContext {
 			if (notification.isTouch()) {
 				return;
 			}
-
+			// FIXME possible side effects?
+			if (notification.getEventType() == Notification.ADD) {
+				if (VControl.class.isInstance(notification.getNotifier())) {
+					checkAndUpdateSettingToControlMapping(VControl.class.cast(notification.getNotifier()));
+				}
+			}
 			final ModelChangeNotification modelChangeNotification = new ModelChangeNotification(notification);
 			for (final ModelChangeListener modelChangeListener : viewModelChangeListener) {
 				modelChangeListener.notifyChange(modelChangeNotification);

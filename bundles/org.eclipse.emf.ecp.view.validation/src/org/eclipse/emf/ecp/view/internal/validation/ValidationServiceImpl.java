@@ -33,6 +33,7 @@ import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.EValidator;
@@ -154,11 +155,16 @@ public class ValidationServiceImpl implements ValidationService {
 			final Notification rawNotification = notification.getRawNotification();
 			switch (rawNotification.getEventType()) {
 			case Notification.ADD:
-			case Notification.REMOVE:
+			case Notification.ADD_MANY:
 				validate(getAllEObjects(notification.getNotifier()));
 				break;
-			case Notification.ADD_MANY:
+			case Notification.REMOVE:
 			case Notification.REMOVE_MANY:
+				if (EReference.class.isInstance(rawNotification.getFeature())) {
+					cleanControlDiagnostics(EObject.class.cast(notification.getNotifier()),
+						EReference.class.cast(rawNotification.getFeature()),
+						EObject.class.cast(rawNotification.getOldValue()));
+				}
 				validate(getAllEObjects(notification.getNotifier()));
 
 				break;
@@ -175,6 +181,7 @@ public class ValidationServiceImpl implements ValidationService {
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener#notifyAdd(org.eclipse.emf.common.notify.Notifier)
 		 */
 		public void notifyAdd(Notifier notifier) {
+			// do nothing
 		}
 
 		/**
@@ -183,6 +190,7 @@ public class ValidationServiceImpl implements ValidationService {
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener#notifyRemove(org.eclipse.emf.common.notify.Notifier)
 		 */
 		public void notifyRemove(Notifier notifier) {
+			// do nothing
 		}
 
 	}
@@ -224,6 +232,29 @@ public class ValidationServiceImpl implements ValidationService {
 		context.registerViewChangeListener(viewChangeListener);
 
 		validate(getAllEObjects(domainModel));
+	}
+
+	private void cleanControlDiagnostics(EObject parent, EReference parentReference, EObject removedEObject) {
+		final Set<VControl> controls = context.getControlsFor(UniqueSetting.createSetting(parent, parentReference));
+		for (final VControl vControl : controls) {
+			if (vControl == null) {
+				continue;
+			}
+			if (vControl.getDiagnostic() == null) {
+				continue;
+			}
+			final Set<Object> diagnosticsToRemove = new LinkedHashSet<Object>();
+			for (final Object diagnosticObject : vControl.getDiagnostic().getDiagnostics()) {
+				final Diagnostic diagnostic = Diagnostic.class.cast(diagnosticObject);
+				if (diagnostic.getData().size() < 1) {
+					continue;
+				}
+				if (removedEObject.equals(diagnostic.getData().get(0))) {
+					diagnosticsToRemove.add(diagnostic);
+				}
+			}
+			vControl.getDiagnostic().getDiagnostics().removeAll(diagnosticsToRemove);
+		}
 	}
 
 	private void readValidationProvider() {
@@ -355,6 +386,26 @@ public class ValidationServiceImpl implements ValidationService {
 				}
 				controlDiagnosticMap.get(control).getDiagnostics()
 					.addAll(currentUpdates.get(uniqueSetting).getDiagnostics());
+
+				// add all diagnostics of control which are not in the currentUpdates
+				if (control.getDiagnostic() == null) {
+					continue;
+				}
+
+				for (final Object diagnosticObject : control.getDiagnostic().getDiagnostics()) {
+					final Diagnostic diagnostic = Diagnostic.class.cast(diagnosticObject);
+					if (diagnostic.getData().size() < 2 || !EObject.class.isInstance(diagnostic.getData().get(0))
+						|| !EStructuralFeature.class.isInstance(diagnostic.getData().get(1))) {
+						continue;
+					}
+					final UniqueSetting uniqueSetting2 = UniqueSetting.createSetting(
+						EObject.class.cast(diagnostic.getData().get(0)),
+						EStructuralFeature.class.cast(diagnostic.getData().get(1)));
+					if (!currentUpdates.containsKey(uniqueSetting2)) {
+						controlDiagnosticMap.get(control).getDiagnostics().add(diagnosticObject);
+					}
+
+				}
 
 			}
 		}
