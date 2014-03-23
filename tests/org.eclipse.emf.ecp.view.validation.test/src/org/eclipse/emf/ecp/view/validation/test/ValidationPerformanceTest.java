@@ -71,7 +71,7 @@ public class ValidationPerformanceTest {
 	public static Collection<Object[]> data() {
 		final List<Object[]> data = new ArrayList<Object[]>();
 		data.add(createParameters(4, 1, 30, 15)); // 0
-		data.add(createParameters(8, 1, 40, 15));// 1
+		data.add(createParameters(8, 1, 40, 20));// 1
 		data.add(createParameters(11, 1, 100, 40));// 2
 
 		data.add(createParameters(4, 5, 30, 15));// 3
