@@ -33,13 +33,13 @@
   <setupTasks xsi:type="setup:EclipsePreferenceTask" key="instance/org.eclipse.jdt.core/org.eclipse.jdt.core.compiler.problem.unclosedCloseable" value="ignore"/>
   <setupTasks xsi:type="setup:EclipsePreferenceTask" key="instance/org.eclipse.pde/compilers.f.unresolved-features" value="2"/>
   <setupTasks xsi:type="setup:ContextVariableTask" documentation="Location of CDO's Git clone." name="git.clone" value="${setup.branch.dir/git/ecp}" stringSubstitution="true"/>
-  <setupTasks xsi:type="setup:GitCloneTask" location="${git.clone}" remoteURI="ssh://git.eclipse.org/gitroot/emfclient/org.eclipse.emf.ecp.core.git" checkoutBranch="${ecp.git.branch}"/>
+  <setupTasks xsi:type="setup:GitCloneTask" location="${git.clone}" remoteURI="${ecp.git.protocol}://git.eclipse.org/gitroot/emfclient/org.eclipse.emf.ecp.core.git" checkoutBranch="${ecp.git.branch}"/>
   <setupTasks xsi:type="setup:TargletTask" name="ECP">
     <roots id="org.eclipse.emf.ecp.nosite.feature.feature.group"/>
     <roots id="org.eclipse.emf.ecp.emfforms.sdk.feature.feature.group"/>
     <roots id="org.eclipse.emf.ecp.releng"/>
-	<roots id="org.eclipse.emf.ecp.fx.releng"/>
-	<roots id="org.eclipse.emf.ecp.application.e4.fx.product"/>
+    <roots id="org.eclipse.emf.ecp.fx.releng"/>
+    <roots id="org.eclipse.emf.ecp.application.e4.fx.product"/>
     <roots id="org.eclipse.sdk.feature.group"/>
     <roots id="org.eclipse.emf.ecp.products"/>
     <roots id="org.eclipse.emf.ecp.target.rap"/>
@@ -116,11 +116,20 @@
     <setupTasks xsi:type="setup:ContextVariableTask" name="ecp.baseline.version" value="1.2" stringSubstitution="true"/>
     <setupTasks xsi:type="setup:ContextVariableTask" name="ecp.bugzilla.milestone" value="1.2" stringSubstitution="true" label=""/>
     <setupTasks xsi:type="setup:ContextVariableTask" name="ecp.bugzilla.nextmilestone" value="1.3" stringSubstitution="true" label=""/>
+    <setupTasks xsi:type="setup:ContextVariableTask" name="ecp.git.protocol" value="ssh"/>
   </branches>
   <branches name="master">
     <setupTasks xsi:type="setup:ContextVariableTask" name="ecp.git.branch" value="master" stringSubstitution="true"/>
     <setupTasks xsi:type="setup:ContextVariableTask" name="ecp.baseline.version" value="1.1" stringSubstitution="true"/>
     <setupTasks xsi:type="setup:ContextVariableTask" name="ecp.bugzilla.milestone" value="1.2" stringSubstitution="true" label=""/>
     <setupTasks xsi:type="setup:ContextVariableTask" name="ecp.bugzilla.nextmilestone" value="1.3" stringSubstitution="true" label=""/>
+    <setupTasks xsi:type="setup:ContextVariableTask" name="ecp.git.protocol" value="ssh"/>
+  </branches>
+  <branches name="develop (anonymous)">
+    <setupTasks xsi:type="setup:ContextVariableTask" name="ecp.git.branch" value="develop" stringSubstitution="true"/>
+    <setupTasks xsi:type="setup:ContextVariableTask" name="ecp.baseline.version" value="1.2" stringSubstitution="true"/>
+    <setupTasks xsi:type="setup:ContextVariableTask" name="ecp.bugzilla.milestone" value="1.2" stringSubstitution="true" label=""/>
+    <setupTasks xsi:type="setup:ContextVariableTask" name="ecp.bugzilla.nextmilestone" value="1.3" stringSubstitution="true" label=""/>
+    <setupTasks xsi:type="setup:ContextVariableTask" name="ecp.git.protocol" value="git"/>
   </branches>
 </setup:Project>
