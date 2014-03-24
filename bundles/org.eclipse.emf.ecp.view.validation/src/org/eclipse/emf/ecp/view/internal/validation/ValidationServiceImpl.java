@@ -159,12 +159,13 @@ public class ValidationServiceImpl implements ValidationService {
 				validate(getAllEObjects(notification.getNotifier()));
 				break;
 			case Notification.REMOVE:
-			case Notification.REMOVE_MANY:
 				if (EReference.class.isInstance(rawNotification.getFeature())) {
 					cleanControlDiagnostics(EObject.class.cast(notification.getNotifier()),
 						EReference.class.cast(rawNotification.getFeature()),
 						EObject.class.cast(rawNotification.getOldValue()));
 				}
+				//$FALL-THROUGH$
+			case Notification.REMOVE_MANY:
 				validate(getAllEObjects(notification.getNotifier()));
 
 				break;
