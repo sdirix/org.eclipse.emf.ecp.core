@@ -74,11 +74,11 @@ public class ValidationPerformanceTest {
 		data.add(createParameters(8, 1, 40, 20));// 1
 		data.add(createParameters(11, 1, 120, 40));// 2
 
-		data.add(createParameters(4, 5, 30, 15));// 3
+		data.add(createParameters(4, 5, 30, 20));// 3
 		data.add(createParameters(8, 5, 150, 50));// 4
-		data.add(createParameters(11, 5, 500, 150));// 5
+		data.add(createParameters(11, 5, 600, 150));// 5
 
-		data.add(createParameters(4, 10, 30, 30));// 6
+		data.add(createParameters(4, 10, 30, 40));// 6
 		data.add(createParameters(8, 10, 400, 150));// 7
 		data.add(createParameters(11, 10, 1500, 300));// 8
 		return data;
