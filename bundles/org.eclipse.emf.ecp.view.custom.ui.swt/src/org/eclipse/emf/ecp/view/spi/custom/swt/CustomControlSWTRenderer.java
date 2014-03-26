@@ -160,7 +160,9 @@ public class CustomControlSWTRenderer extends AbstractSWTRenderer<VCustomControl
 					validationIcon.setImage(getValidationIcon(getVElement().getDiagnostic().getHighestSeverity()));
 					validationIcon.setToolTipText(getVElement().getDiagnostic().getMessage());
 				}
-				swtCustomControl.applyValidation();
+				if (swtCustomControl != null) {
+					swtCustomControl.applyValidation();
+				}
 			}
 		});
 	}

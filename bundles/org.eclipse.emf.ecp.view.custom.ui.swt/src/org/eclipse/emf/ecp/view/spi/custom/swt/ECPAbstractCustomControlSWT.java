@@ -609,7 +609,7 @@ public abstract class ECPAbstractCustomControlSWT
 	 * Called by the framework to apply validation changes.
 	 */
 	public final void applyValidation() {
-		if (getCustomControl().getDiagnostic() == null) {
+		if (getCustomControl() == null || getCustomControl().getDiagnostic() == null) {
 			return;
 		}
 		for (final Object diagnostic : getCustomControl().getDiagnostic().getDiagnostics()) {
