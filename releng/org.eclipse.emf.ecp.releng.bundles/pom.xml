@@ -57,6 +57,11 @@
 		
 		<module>../../bundles/org.eclipse.emf.ecp.view.swt.layout</module>
 
+		<!-- Diagnostician/Validation View -->
+		<module>../../bundles/org.eclipse.emf.ecp.diagnostician</module>
+		<module>../../bundles/org.eclipse.emf.ecp.ui.validation</module>
+		<module>../../bundles/org.eclipse.emf.ecp.ui.validation.e4</module>
+
 		<!-- Ecore Support -->
 		<module>../../bundles/org.eclipse.emf.ecp.edit.ecore.swt</module>
 		
