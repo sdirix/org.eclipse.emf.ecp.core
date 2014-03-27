@@ -11,6 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.diffmerge.internal.renderer.swt;
 
+import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
@@ -31,6 +32,8 @@ import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Button;
@@ -138,7 +141,7 @@ public class SWTDiffMergeAddition extends AbstractAdditionalSWTRenderer<VControl
 		});
 		for (final VAttachment attachment : getVElement().getAttachments()) {
 			if (VDiffAttachment.class.isInstance(attachment)) {
-				attachment.eAdapters().add(new AdapterImpl() {
+				final Adapter adapter = new AdapterImpl() {
 
 					/**
 					 * {@inheritDoc}
@@ -153,6 +156,13 @@ public class SWTDiffMergeAddition extends AbstractAdditionalSWTRenderer<VControl
 						}
 					}
 
+				};
+				attachment.eAdapters().add(adapter);
+				diffButton.addDisposeListener(new DisposeListener() {
+
+					public void widgetDisposed(DisposeEvent event) {
+						attachment.eAdapters().remove(adapter);
+					}
 				});
 				updateButton(diffButton, (VDiffAttachment) attachment);
 				break;
