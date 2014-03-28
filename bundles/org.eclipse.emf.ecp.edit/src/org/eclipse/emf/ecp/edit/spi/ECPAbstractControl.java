@@ -15,6 +15,7 @@ import java.util.Iterator;
 import java.util.Locale;
 
 import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
@@ -33,6 +34,7 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 
 /**
  * The {@link ECPAbstractControl} is the abstract class describing a control.
@@ -64,7 +66,9 @@ public abstract class ECPAbstractControl {
 	public final void init(ViewModelContext viewModelContext, final VControl control) {
 		this.viewModelContext = viewModelContext;
 		this.control = control;
-		composedAdapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+		composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
+			new ReflectiveItemProviderAdapterFactory(),
+			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
 		adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(composedAdapterFactory);
 
 		viewChangeListener = new ModelChangeListener() {
