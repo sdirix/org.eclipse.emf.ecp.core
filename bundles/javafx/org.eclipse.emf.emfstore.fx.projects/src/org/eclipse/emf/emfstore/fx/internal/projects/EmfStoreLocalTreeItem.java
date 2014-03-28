@@ -1,12 +1,10 @@
 package org.eclipse.emf.emfstore.fx.internal.projects;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.Control;
 import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.control.SelectionModel;
 import javafx.scene.control.TreeItem;
@@ -14,17 +12,18 @@ import javafx.scene.control.TreeView;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
-import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.emfstore.client.ESLocalProject;
-import org.eclipse.emf.emfstore.client.ESProject;
 import org.eclipse.emf.emfstore.client.ESWorkspace;
 import org.eclipse.emf.emfstore.client.ESWorkspaceProvider;
 import org.eclipse.emf.emfstore.client.observer.ESCheckoutObserver;
 import org.eclipse.emf.emfstore.internal.client.model.ESWorkspaceProviderImpl;
 import org.eclipse.emf.emfstore.internal.client.model.ModelPackage;
+import org.eclipse.emf.emfstore.internal.client.model.impl.api.ESLocalProjectImpl;
 import org.eclipse.emf.emfstore.internal.client.model.impl.api.ESWorkspaceImpl;
+import org.eclipse.emf.emfstore.internal.common.model.IdEObjectCollection;
+import org.eclipse.emf.emfstore.internal.common.model.util.IdEObjectCollectionChangeObserver;
 import org.eclipse.fx.emf.edit.ui.AdapterFactoryTreeItem;
-import org.eclipse.fx.emf.edit.ui.CellUtil;
 
 class EmfStoreLocalTreeItem extends TreeItem<Object> {
 
@@ -60,7 +59,7 @@ class EmfStoreLocalTreeItem extends TreeItem<Object> {
 	}
 
 	@SuppressWarnings("restriction")
-	public EmfStoreLocalTreeItem(ProjectsView projectsView, ESLocalProject root,
+	public EmfStoreLocalTreeItem(ProjectsView projectsView, final ESLocalProject root,
 			TreeView<Object> view) {
 		super(root);
 		this.projectsView = projectsView;
@@ -81,6 +80,33 @@ class EmfStoreLocalTreeItem extends TreeItem<Object> {
 								getSelectedItems(getSelectionModel()), getSelectionModel());
 					}
 				});
+		ESLocalProjectImpl.class.cast(root).toInternalAPI().getProject().addIdEObjectCollectionChangeObserver(new IdEObjectCollectionChangeObserver() {
+			
+			@Override
+			public void notify(Notification notification,
+					IdEObjectCollection collection, EObject modelElement) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void modelElementRemoved(IdEObjectCollection collection,
+					EObject eObject) {
+				updateProject(root, getExpandedItems(), getSelectedItems(getSelectionModel()), getSelectionModel());
+			}
+			
+			@Override
+			public void modelElementAdded(IdEObjectCollection collection,
+					EObject eObject) {
+				updateProject(root, getExpandedItems(), getSelectedItems(getSelectionModel()), getSelectionModel());
+			}
+			
+			@Override
+			public void collectionDeleted(IdEObjectCollection collection) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 	}
 
 	@Override
