@@ -19,8 +19,8 @@ import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecp.internal.diagnostician.ECPValidatorRegistry;
 
 /**
- * The {@link ECPDiagnostician} will invoke the registered
- * {@link org.eclipse.emf.ecp.diagnostician.ECPValidator ECPValidators}.
+ * The {@link ECPDiagnostician} will invoke the registered {@link org.eclipse.emf.ecp.diagnostician.ECPValidator
+ * ECPValidators}.
  * 
  * @author jfaltermeier
  * 
@@ -57,5 +57,15 @@ public final class ECPDiagnostician {
 	 */
 	public Diagnostic validate(EObject eObject, Map<?, ?> contextEntries) {
 		return diagnostician.validate(eObject, contextEntries);
+	}
+
+	/**
+	 * Whether the diagnostician can validate the given object.
+	 * 
+	 * @param eObject the object to check
+	 * @return <code>true</code> if a validator is registered for the object, <code>false</code> otherwise
+	 */
+	public boolean canValidate(EObject eObject) {
+		return ECPValidatorRegistry.INSTANCE.hasValidator(eObject.eClass());
 	}
 }

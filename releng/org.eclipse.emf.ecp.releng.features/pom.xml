@@ -48,6 +48,7 @@
 		<module>../../features/org.eclipse.emf.ecp.rap.util.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.transaction.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.diffmerge.feature</module>
+		<module>../../features/org.eclipse.emf.ecp.validation.view.feature</module>
 		<!-- demo -->
 		<module>../../features/org.eclipse.emf.ecp.demo.e4.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.demo.e3.feature</module>

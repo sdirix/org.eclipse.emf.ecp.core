@@ -42,18 +42,20 @@ public final class ECPValidatorRegistry extends EValidatorRegistryImpl {
 
 	private static final long serialVersionUID = -1274718490799689910L;
 
+	private final Set<EClassifier> eClassesWithValidator;
+
 	private ECPValidatorRegistry() {
+		eClassesWithValidator = new LinkedHashSet<EClassifier>();
 		final Map<EPackage, Map<EClassifier, ECPValidator>> registeredValidatorsPerPackage = readElementsFromExtensionPoint();
 		registerValidators(registeredValidatorsPerPackage);
 
 	}
 
 	private Map<EPackage, Map<EClassifier, ECPValidator>> readElementsFromExtensionPoint() {
-		final Set<EClassifier> eClassesWithValidator = new LinkedHashSet<EClassifier>();
 		final Map<EPackage, Map<EClassifier, ECPValidator>> registeredValidatorsPerPackage = new LinkedHashMap<EPackage, Map<EClassifier, ECPValidator>>();
 
 		IConfigurationElement[] batchValidators = Platform.getExtensionRegistry().getConfigurationElementsFor(
-			"org.eclipse.emf.ecp.diagnostician.ecpValidators"); //$NON-NLS-1$
+			"org.eclipse.emf.ecp.validation.diagnostician.ecpValidators"); //$NON-NLS-1$
 		for (final IConfigurationElement element : batchValidators) {
 			batchValidators = null;
 			try {
@@ -84,5 +86,15 @@ public final class ECPValidatorRegistry extends EValidatorRegistryImpl {
 			final EValidator validator = new ECPValidatorWrapper(map);
 			put(ePackage, validator);
 		}
+	}
+
+	/**
+	 * Check if the registry contains a validator for the given classifier.
+	 * 
+	 * @param classifier the classifier to check
+	 * @return <code>true</code> if validator is registerd, <code>false</code> otherwise
+	 */
+	public boolean hasValidator(EClassifier classifier) {
+		return eClassesWithValidator.contains(classifier);
 	}
 }
