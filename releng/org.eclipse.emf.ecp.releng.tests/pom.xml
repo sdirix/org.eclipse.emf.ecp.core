@@ -17,6 +17,9 @@
         <module>../../tests/org.eclipse.emf.ecp.view.dynamictree.feature</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.model.editor.testplugin</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.model.editor.test.feature</module>
+		<module>../../tests/org.eclipse.emf.ecp.test.model</module>
+		<module>../../tests/org.eclipse.emf.ecp.test.model.edit</module>
+		<module>../../tests/org.eclipse.emf.ecp.test.model.feature</module>
 
 		<!-- Tests -->
 		<module>../../tests/org.eclipse.emf.ecp.edit.swt.test</module>

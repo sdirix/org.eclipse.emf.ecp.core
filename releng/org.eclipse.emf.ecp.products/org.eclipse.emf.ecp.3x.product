@@ -57,6 +57,7 @@
       <feature id="org.eclipse.emf.ecp.view.model.editor.feature"/>
       <feature id="org.eclipse.emf.ecp.demo.e3.feature"/>
       <feature id="org.eclipse.emf.ecp.view.model.controls.feature"/>
+      <feature id="org.eclipse.emf.ecp.test.model.feature"/>
    </features>
 
    <configurations>
