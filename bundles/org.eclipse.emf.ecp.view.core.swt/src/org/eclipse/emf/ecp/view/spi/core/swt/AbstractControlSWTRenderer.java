@@ -171,6 +171,9 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 		throws NoPropertyDescriptorFoundExeption {
 		Label label = null;
 		labelRender: if (getVElement().getLabelAlignment() == LabelAlignment.LEFT) {
+			if (!getVElement().getDomainModelReference().getIterator().hasNext()) {
+				break labelRender;
+			}
 			final Setting setting = getVElement().getDomainModelReference().getIterator().next();
 			if (setting == null) {
 				break labelRender;

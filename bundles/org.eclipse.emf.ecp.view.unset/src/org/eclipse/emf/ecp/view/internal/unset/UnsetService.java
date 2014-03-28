@@ -256,6 +256,9 @@ public class UnsetService implements ViewModelService {
 	private Setting getSetting(VControl control) {
 		final VDomainModelReference domainModelReference = control
 			.getDomainModelReference();
+		if (domainModelReference == null) {
+			return null;
+		}
 		final Iterator<Setting> settings = domainModelReference.getIterator();
 		Setting firstSetting = null;
 		while (settings.hasNext()) {

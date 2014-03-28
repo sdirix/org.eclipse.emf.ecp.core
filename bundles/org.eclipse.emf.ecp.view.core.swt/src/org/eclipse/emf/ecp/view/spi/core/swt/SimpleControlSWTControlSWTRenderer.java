@@ -51,9 +51,15 @@ public abstract class SimpleControlSWTControlSWTRenderer extends SimpleControlSW
 	 */
 	@Override
 	protected final Control createControl(Composite parent) {
+		if (!getVElement().getDomainModelReference().getIterator().hasNext()) {
+			return null;
+		}
 		final Setting setting = getVElement().getDomainModelReference().getIterator().next();
 
 		final Control control = createSWTControl(parent, setting);
+		if (control == null) {
+			return null;
+		}
 		final Binding[] bindings = createBindings(control, setting);
 
 		// write initial values to model (if they differ from the default value of the model-element)

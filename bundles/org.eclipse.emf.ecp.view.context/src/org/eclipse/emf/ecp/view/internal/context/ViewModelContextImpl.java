@@ -41,6 +41,7 @@ import org.eclipse.emf.ecp.view.spi.context.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.util.ViewModelUtil;
 
@@ -165,6 +166,9 @@ public class ViewModelContextImpl implements ViewModelContext {
 	private void checkAndUpdateSettingToControlMapping(EObject eObject) {
 		if (VControl.class.isInstance(eObject)) {
 			final VControl vControl = (VControl) eObject;
+			if (vControl.getDomainModelReference() == null) {
+				return;
+			}
 			final Iterator<Setting> iterator = vControl.getDomainModelReference().getIterator();
 			while (iterator.hasNext()) {
 				final Setting setting = iterator.next();
@@ -178,6 +182,9 @@ public class ViewModelContextImpl implements ViewModelContext {
 	}
 
 	private void vControlRemoved(VControl vControl) {
+		if (vControl.getDomainModelReference() == null) {
+			return;
+		}
 		final Iterator<Setting> iterator = vControl.getDomainModelReference().getIterator();
 		while (iterator.hasNext()) {
 			final Setting next = iterator.next();
@@ -189,9 +196,13 @@ public class ViewModelContextImpl implements ViewModelContext {
 				}
 			}
 		}
+
 	}
 
 	private void vControlAdded(VControl vControl) {
+		if (vControl.getDomainModelReference() == null) {
+			return;
+		}
 		final Iterator<Setting> iterator = vControl.getDomainModelReference().getIterator();
 		while (iterator.hasNext()) {
 			final Setting next = iterator.next();
@@ -201,12 +212,12 @@ public class ViewModelContextImpl implements ViewModelContext {
 			}
 			settingToControlMap.get(uniqueSetting).add(vControl);
 		}
+
 	}
 
 	private void eObjectRemoved(EObject eObject) {
-		final InternalEObject internalEObject = (InternalEObject) eObject;
 		for (final EStructuralFeature eStructuralFeature : eObject.eClass().getEAllStructuralFeatures()) {
-			final Setting setting = internalEObject.eSetting(eStructuralFeature);
+			final Setting setting = InternalEObject.class.cast(eObject).eSetting(eStructuralFeature);
 			final UniqueSetting uniqueSetting = UniqueSetting.createSetting(setting);
 			if (settingToControlMap.containsKey(uniqueSetting)) {
 				settingToControlMap.remove(uniqueSetting);
@@ -215,9 +226,12 @@ public class ViewModelContextImpl implements ViewModelContext {
 	}
 
 	private void eObjectAdded(EObject eObject) {
+		final InternalEObject internalParent = InternalEObject.class.cast(eObject.eContainer());
+		if (internalParent == null) {
+			return;
+		}
 		// FIXME how to add??
 		// TODO hack:
-		final InternalEObject internalParent = (InternalEObject) eObject.eContainer();
 		for (final EReference eReference : internalParent.eClass().getEAllContainments()) {
 			if (eReference.getEReferenceType().isInstance(eObject)) {
 				final Setting setting = internalParent.eSetting(eReference);
@@ -233,6 +247,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 
 			}
 		}
+
 	}
 
 	/**
@@ -448,6 +463,10 @@ public class ViewModelContextImpl implements ViewModelContext {
 			}
 			if (VControl.class.isInstance(notifier)) {
 				vControlAdded((VControl) notifier);
+			}
+			if (VDomainModelReference.class.isInstance(notifier)
+				&& VControl.class.isInstance(VDomainModelReference.class.cast(notifier).eContainer())) {
+				vControlAdded((VControl) VDomainModelReference.class.cast(notifier).eContainer());
 			}
 			for (final ModelChangeListener modelChangeListener : viewModelChangeListener) {
 				modelChangeListener.notifyAdd(notifier);

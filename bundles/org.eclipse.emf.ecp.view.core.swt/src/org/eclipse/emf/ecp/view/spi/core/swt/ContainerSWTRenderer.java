@@ -21,6 +21,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecp.view.internal.core.swt.Activator;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
+import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
@@ -91,16 +92,14 @@ public abstract class ContainerSWTRenderer<VELEMENT extends VElement> extends Ab
 		columnComposite.setData(CUSTOM_VARIANT, getCustomVariant());
 		columnComposite.setBackground(parent.getBackground());
 
-		// int maxNumberControlsPerRow = 1;
 		final Map<VContainedElement, Collection<AbstractSWTRenderer<VElement>>> elementRendererMap = new LinkedHashMap<VContainedElement, Collection<AbstractSWTRenderer<VElement>>>();
-		// final Map<VContainedElement, Collection<AbstractAdditionalSWTRenderer<VElement>>>
-		// elementAdditionalRendererMap = new LinkedHashMap<VContainedElement,
-		// Collection<AbstractAdditionalSWTRenderer<VElement>>>();
 		GridDescription maximalGridDescription = null;
 		final Map<VContainedElement, GridDescription> rowGridDescription = new LinkedHashMap<VContainedElement, GridDescription>();
 		final Map<VContainedElement, GridDescription> controlGridDescription = new LinkedHashMap<VContainedElement, GridDescription>();
 		for (final VContainedElement child : getChildren()) {
-
+			if (VControl.class.isInstance(child) && VControl.class.cast(child).getDomainModelReference() == null) {
+				continue;
+			}
 			final AbstractSWTRenderer<VElement> renderer = getSWTRendererFactory().getRenderer(child,
 				getViewModelContext());
 			if (renderer == null) {
@@ -119,12 +118,8 @@ public abstract class ContainerSWTRenderer<VELEMENT extends VElement> extends Ab
 				.createEmptyGridDescription());
 			controlGridDescription.put(child, gridDescription);
 
-			// int maxAdditionalColumn = 0;
 			for (final AbstractAdditionalSWTRenderer<VElement> additionalRenderer : additionalRenderers) {
 				gridDescription = additionalRenderer.getGridDescription(gridDescription);
-				// if (additionalRenderer.getGridDescription().getColumns() > maxAdditionalColumn) {
-				// maxAdditionalColumn = additionalRenderer.getGridDescription().getColumns();
-				// }
 			}
 			rowGridDescription.put(child, gridDescription);
 			if (maximalGridDescription == null
@@ -132,17 +127,10 @@ public abstract class ContainerSWTRenderer<VELEMENT extends VElement> extends Ab
 			{
 				maximalGridDescription = gridDescription;
 			}
-
-			// final int maxColumnsInCurrentRow = renderer.getGridDescription().getColumns()
-			// + maxAdditionalColumn;
-			// if (maxNumberControlsPerRow < maxColumnsInCurrentRow) {
-			// maxNumberControlsPerRow = maxColumnsInCurrentRow;
-			// }
 			final Set<AbstractSWTRenderer<VElement>> allRenderer = new LinkedHashSet<AbstractSWTRenderer<VElement>>();
 			allRenderer.add(renderer);
 			allRenderer.addAll(additionalRenderers);
 			elementRendererMap.put(child, allRenderer);
-			// elementAdditionalRendererMap.put(child, additionalRenderers);
 		}
 		if (maximalGridDescription == null) {
 			return columnComposite;
@@ -150,12 +138,19 @@ public abstract class ContainerSWTRenderer<VELEMENT extends VElement> extends Ab
 		columnComposite.setLayout(getLayout(maximalGridDescription.getColumns(), false));
 		for (final VContainedElement child : getChildren()) {
 			try {
+				if (VControl.class.isInstance(child) && VControl.class.cast(child).getDomainModelReference() == null) {
+					continue;
+				}
 				final GridDescription gridDescription = rowGridDescription.get(child);
 				for (final GridCell childGridCell : gridDescription.getGrid()) {
 
 					final Control control = childGridCell.getRenderer().render(childGridCell,
 						columnComposite);
 					// TODO who should apply the layout
+					if (control == null) {
+						continue;
+					}
+					// TODO possible layout issues?
 					setLayoutDataForControl(childGridCell, controlGridDescription.get(child), gridDescription,
 						maximalGridDescription,
 						child, control);

@@ -111,8 +111,11 @@ public class ValidationServiceImpl implements ValidationService {
 		 */
 		public void notifyAdd(Notifier notifier) {
 			if (VControl.class.isInstance(notifier)) {
-				final VControl control = (VControl) notifier;
-				final VDomainModelReference domainModelReference = control.getDomainModelReference();
+				final VDomainModelReference domainModelReference = VControl.class.cast(notifier)
+					.getDomainModelReference();
+				if (domainModelReference == null) {
+					return;
+				}
 				final Iterator<Setting> settings = domainModelReference.getIterator();
 				final Set<EObject> eObjectsToValidate = new LinkedHashSet<EObject>();
 				while (settings.hasNext()) {
