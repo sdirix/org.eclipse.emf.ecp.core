@@ -19,6 +19,7 @@ import org.eclipse.emf.databinding.EMFUpdateValueStrategy;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
+import org.eclipse.emf.ecp.view.spi.provider.ECPTooltipModifierHelper;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridCell;
 import org.eclipse.emf.edit.command.SetCommand;
@@ -55,13 +56,13 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 	protected Binding[] createBindings(Control control, Setting setting) {
 		final TargetToModelUpdateStrategy targetToModelUpdateStrategy = new TargetToModelUpdateStrategy(
 			setting.getEStructuralFeature().isUnsettable());
-		final ModelToTargetUpdateStrategy modelToTargetUpdateStrategy = new ModelToTargetUpdateStrategy();
+		final ModelToTargetUpdateStrategy modelToTargetUpdateStrategy = new ModelToTargetUpdateStrategy(false);
 		final Binding binding = bindValue(control, getModelValue(setting), getDataBindingContext(),
 			targetToModelUpdateStrategy,
 			modelToTargetUpdateStrategy);
 		final Binding tooltipBinding = createTooltipBinding(control, getModelValue(setting), getDataBindingContext(),
 			targetToModelUpdateStrategy,
-			modelToTargetUpdateStrategy);
+			new ModelToTargetUpdateStrategy(true));
 		return new Binding[] { binding, tooltipBinding };
 	}
 
@@ -124,7 +125,7 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 	protected int getTextWidgetStyle() {
 		int textStyle = SWT.SINGLE | SWT.BORDER;
 		if (getItemPropertyDescriptor(getVElement().getDomainModelReference().getIterator().next()).isMultiLine(null)) {
-			textStyle = SWT.MULTI | SWT.WRAP | SWT.V_SCROLL | SWT.BORDER;
+			textStyle = SWT.MULTI | SWT.WRAP | SWT.V_SCROLL | SWT.H_SCROLL | SWT.BORDER;
 		}
 		return textStyle;
 	}
@@ -202,9 +203,21 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 	 */
 	protected class ModelToTargetUpdateStrategy extends EMFUpdateConvertValueStrategy {
 
+		private final boolean tooltip;
+
+		public ModelToTargetUpdateStrategy(boolean tooltip) {
+			this.tooltip = tooltip;
+
+		}
+
 		@Override
 		public Object convert(Object value) {
-			return convertValue(value);
+			final Object converted = convertValue(value);
+			if (tooltip && String.class.isInstance(converted)) {
+				return ECPTooltipModifierHelper.modifyString(String.class.cast(converted), getVElement()
+					.getDomainModelReference().getIterator().next());
+			}
+			return converted;
 		}
 
 	}

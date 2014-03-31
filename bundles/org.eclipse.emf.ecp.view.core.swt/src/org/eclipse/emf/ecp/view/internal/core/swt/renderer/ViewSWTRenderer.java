@@ -15,6 +15,8 @@ package org.eclipse.emf.ecp.view.internal.core.swt.renderer;
 
 import java.util.Collection;
 
+import org.eclipse.emf.common.notify.AdapterFactory;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
@@ -23,11 +25,16 @@ import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescription;
+import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Layout;
+import org.eclipse.swt.widgets.Text;
 
 /**
  * The Class ViewSWTRenderer.
@@ -57,9 +64,8 @@ public class ViewSWTRenderer extends ContainerSWTRenderer<VView> {
 		if (VControl.class.isInstance(vElement)) {
 			// last column of control
 			if (gridCell.getColumn() + 1 == controlGridDescription.getColumns()) {
-				GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER)
-					.grab(true, false).span(1 + fullGridDescription.getColumns()
-						- currentRowGridDescription.getColumns(), 1).applyTo(control);
+				getControlGridData(1 + fullGridDescription.getColumns()
+					- currentRowGridDescription.getColumns(), VControl.class.cast(vElement), control).applyTo(control);
 			} else if (controlGridDescription.getColumns() == 3 && gridCell.getColumn() == 0) {
 				GridDataFactory.fillDefaults().grab(false, false)
 					.align(SWT.BEGINNING, SWT.CENTER).applyTo(control);
@@ -99,5 +105,37 @@ public class ViewSWTRenderer extends ContainerSWTRenderer<VView> {
 	@Override
 	protected String getCustomVariant() {
 		return "org_eclipse_emf_ecp_ui_layout_view"; //$NON-NLS-1$
+	}
+
+	private GridDataFactory getControlGridData(int xSpan, VControl vControl, Control control) {
+		GridDataFactory gdf =
+			GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER)
+				.grab(true, false).span(xSpan, 1);
+
+		if (Text.class.isInstance(control) && vControl.getDomainModelReference() != null) {
+			final Setting setting = vControl.getDomainModelReference().getIterator().next();
+
+			if (isMultiLine(setting)) {
+				gdf = gdf.hint(50, 200); // set x hint to enable wrapping
+			}
+		}
+
+		return gdf;
+	}
+
+	private boolean isMultiLine(Setting setting) {
+		final ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
+			new ReflectiveItemProviderAdapterFactory(),
+			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
+		final AdapterFactoryItemDelegator adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(
+			composedAdapterFactory);
+		final IItemPropertyDescriptor descriptor = adapterFactoryItemDelegator.getPropertyDescriptor(
+			setting.getEObject(), setting.getEStructuralFeature());
+		final boolean multiline = descriptor.isMultiLine(null);
+
+		composedAdapterFactory.dispose();
+
+		return multiline;
+
 	}
 }

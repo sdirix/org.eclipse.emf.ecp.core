@@ -90,13 +90,14 @@ public class NumberControlSWTRenderer extends TextControlSWTRenderer {
 			setting.getEStructuralFeature(), getViewModelContext(), getModelValue(setting), getDataBindingContext(),
 			(Text) control);
 		final NumericalModelToTargetUpdateStrategy modelToTargetStrategy = new NumericalModelToTargetUpdateStrategy(
-			getInstanceClass(setting.getEStructuralFeature()), getViewModelContext());
+			getInstanceClass(setting.getEStructuralFeature()), getViewModelContext(), false);
 		final Binding binding = bindValue(control, getModelValue(setting), getDataBindingContext(),
 			targetToModelStrategy,
 			modelToTargetStrategy);
 		final Binding tooltipBinding = createTooltipBinding(control, getModelValue(setting), getDataBindingContext(),
 			targetToModelStrategy,
-			modelToTargetStrategy);
+			new NumericalModelToTargetUpdateStrategy(
+				getInstanceClass(setting.getEStructuralFeature()), getViewModelContext(), true));
 		return new Binding[] { binding, tooltipBinding };
 	}
 
@@ -113,7 +114,9 @@ public class NumberControlSWTRenderer extends TextControlSWTRenderer {
 		private final Class<?> instanceClass;
 		private final ViewModelContext viewModelContext;
 
-		public NumericalModelToTargetUpdateStrategy(Class<?> instanceClass, ViewModelContext viewModelContext) {
+		public NumericalModelToTargetUpdateStrategy(Class<?> instanceClass, ViewModelContext viewModelContext,
+			boolean tooltip) {
+			super(tooltip);
 			this.instanceClass = instanceClass;
 			this.viewModelContext = viewModelContext;
 

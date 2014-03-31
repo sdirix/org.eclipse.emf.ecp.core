@@ -96,7 +96,7 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 			final IObservableValue dateObserver = SWTObservables.observeSelection(calendar);
 			final Binding binding = dataBindingContext.bindValue(dateObserver, modelValue,
 				new DateTargetToModelUpdateStrategy(eStructuralFeature, modelValue,
-					dataBindingContext, text), new DateModelToTargetUpdateStrategy());
+					dataBindingContext, text), new DateModelToTargetUpdateStrategy(false));
 			binding.updateModelToTarget();
 			calendar.addSelectionListener(new SelectionAdapter() {
 				@Override
@@ -128,8 +128,8 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 
 	private class DateModelToTargetUpdateStrategy extends ModelToTargetUpdateStrategy {
 
-		public DateModelToTargetUpdateStrategy() {
-
+		public DateModelToTargetUpdateStrategy(boolean tooltip) {
+			super(tooltip);
 		}
 
 		@Override
@@ -265,18 +265,17 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 		final DateTargetToModelUpdateStrategy targetToModelUpdateStrategy = new DateTargetToModelUpdateStrategy(
 			setting.getEStructuralFeature(), getModelValue(setting), getDataBindingContext(),
 			text);
-		final DateModelToTargetUpdateStrategy modelToTargetUpdateStrategy = new DateModelToTargetUpdateStrategy();
+		final DateModelToTargetUpdateStrategy modelToTargetUpdateStrategy = new DateModelToTargetUpdateStrategy(false);
 		final Binding binding = getDataBindingContext().bindValue(value, getModelValue(setting),
 			targetToModelUpdateStrategy, modelToTargetUpdateStrategy);
 		final Binding tooltipBinding = createTooltipBinding(control, getModelValue(setting), getDataBindingContext(),
-			targetToModelUpdateStrategy, modelToTargetUpdateStrategy);
+			targetToModelUpdateStrategy, new DateModelToTargetUpdateStrategy(true));
 		return new Binding[] { binding, tooltipBinding };
 	}
 
 	/**
 	 * Setups the {@link DateFormat}.
 	 * 
-	 * @param viewModelContext the {@link ViewModelContext}
 	 * @return the {@link DateFormat}
 	 */
 	protected DateFormat setupFormat() {
