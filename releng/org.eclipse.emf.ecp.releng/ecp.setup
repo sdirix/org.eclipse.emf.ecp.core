@@ -15,6 +15,7 @@
     <installableUnits id="org.eclipse.mylyn.git.feature.group"/>
     <installableUnits id="org.eclipse.egit.feature.group"/>
     <installableUnits id="org.eclipse.egit.mylyn.feature.group"/>
+    <installableUnits id="org.eclipse.rap.tools.feature.feature.group"/>
     <installableUnits id="net.sf.eclipsecs.feature.group"/>
     <installableUnits id="org.eclipse.fx.ide.all.kepler.feature.feature.group"/>
     <p2Repositories url="http://download.eclipse.org/mylyn/snapshots/weekly"/>
@@ -35,8 +36,11 @@
   <setupTasks xsi:type="setup:ContextVariableTask" documentation="Location of CDO's Git clone." name="git.clone" value="${setup.branch.dir/git/ecp}" stringSubstitution="true"/>
   <setupTasks xsi:type="setup:GitCloneTask" location="${git.clone}" remoteURI="${ecp.git.protocol}://git.eclipse.org/gitroot/emfclient/org.eclipse.emf.ecp.core.git" checkoutBranch="${ecp.git.branch}"/>
   <setupTasks xsi:type="setup:TargletTask" name="ECP">
+    <roots id="org.eclipse.rap.fileupload.feature.feature.group" />
     <roots id="org.eclipse.emf.ecp.nosite.feature.feature.group"/>
     <roots id="org.eclipse.emf.ecp.emfforms.sdk.feature.feature.group"/>
+    <roots id="org.eclipse.emf.ecp.rap.util.feature.feature.group"/>
+    <roots id="org.eclipse.emf.ecp.rap.sdk.feature.feature.group"/>
     <roots id="org.eclipse.emf.ecp.releng"/>
     <roots id="org.eclipse.emf.ecp.fx.releng"/>
     <roots id="org.eclipse.emf.ecp.application.e4.fx.product"/>
@@ -51,7 +55,8 @@
       <p2Repositories url="http://download.eclipse.org/releases/luna"/>
       <p2Repositories url="http://download.eclipse.org/technology/swtbot/releases/latest"/>
       <p2Repositories url="http://download.eclipse.org/eclipse/updates/4.4milestones"/>
-      <p2Repositories url="http://download.eclipse.org/rt/rap/incubator/2.1/fileupload"/>
+      <p2Repositories url="http://download.eclipse.org/rt/rap/2.2" />
+      <p2Repositories url="http://download.eclipse.org/rt/rap/incubator/2.2/fileupload"/>
       <p2Repositories url="http://download.eclipse.org/emf-store/releases_11"/>
       <p2Repositories url="http://download.eclipse.org/efxclipse/runtime-nightly/site"/>
     </repositoryLists>
@@ -96,7 +101,7 @@
       </predicates>
     </workingSets>
     <workingSets name="ECP RAP">
-      <predicates xsi:type="predicates:NamePredicate" pattern=".*/.rap/..*"/>
+      <predicates xsi:type="predicates:NamePredicate" pattern=".*\.rap.*"/>
     </workingSets>
     <workingSets name="ECP DiffMerge">
       <predicates xsi:type="predicates:NamePredicate" pattern=".*diffmerge.*"/>
