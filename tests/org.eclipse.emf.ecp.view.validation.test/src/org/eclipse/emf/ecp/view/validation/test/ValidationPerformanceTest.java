@@ -58,6 +58,7 @@ public class ValidationPerformanceTest {
 	private final int viewModelCountFactor;
 	private final long timeGateStartup;
 	private final long timeGateAdd;
+	private int loops = 100;
 
 	public ValidationPerformanceTest(int domainObjectCountFactor, int viewModelCountFactor, long timeGateStartup,
 		long timeGateAdd) {
@@ -70,17 +71,17 @@ public class ValidationPerformanceTest {
 	@Parameters
 	public static Collection<Object[]> data() {
 		final List<Object[]> data = new ArrayList<Object[]>();
-		data.add(createParameters(4, 1, 30, 15)); // 0
-		data.add(createParameters(8, 1, 40, 20));// 1
-		data.add(createParameters(11, 1, 120, 40));// 2
+		data.add(createParameters(4, 1, 60, 20)); // 0
+		data.add(createParameters(8, 1, 60, 30));// 1
+		data.add(createParameters(11, 1, 140, 70));// 2
 
-		data.add(createParameters(4, 5, 30, 20));// 3
-		data.add(createParameters(8, 5, 150, 50));// 4
-		data.add(createParameters(11, 5, 600, 150));// 5
+		data.add(createParameters(4, 5, 30, 30));// 3
+		data.add(createParameters(8, 5, 190, 90));// 4
+		data.add(createParameters(11, 5, 600, 210));// 5
 
-		data.add(createParameters(4, 10, 30, 40));// 6
-		data.add(createParameters(8, 10, 400, 150));// 7
-		data.add(createParameters(11, 10, 1500, 300));// 8
+		data.add(createParameters(4, 10, 60, 60));// 6
+		data.add(createParameters(8, 10, 370, 180));// 7
+		data.add(createParameters(11, 10, 1230, 390));// 8
 		return data;
 	}
 
@@ -230,7 +231,7 @@ public class ValidationPerformanceTest {
 
 	@Test
 	public void testViewModelContextStartup() {
-		final int loops = 50;
+		loops = 50;
 		final List<Long> diffs = new ArrayList<Long>();
 		countDomainObjects();
 		for (int i = 0; i < loops; i++) {
@@ -252,7 +253,6 @@ public class ValidationPerformanceTest {
 	@Test
 	public void testAddWriterWithError() {
 		countDomainObjects();
-		final int loops = 50;
 		final List<Long> diffs = new ArrayList<Long>();
 		for (int i = 0; i < loops; i++) {
 			final ViewModelContext context = createContext();
