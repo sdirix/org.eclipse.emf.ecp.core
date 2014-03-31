@@ -36,7 +36,7 @@ public class StartUpTest {
 						+ bundle.getSymbolicName() + " state: "
 						+ getBundleStateText(state);
 					list.add(string);
-					result += string + System.lineSeparator();
+					result += string + "\n";
 				}
 
 			}
