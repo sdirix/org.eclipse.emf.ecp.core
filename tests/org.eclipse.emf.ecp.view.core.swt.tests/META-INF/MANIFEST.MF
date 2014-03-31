@@ -7,7 +7,7 @@ Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Fragment-Host: org.eclipse.emf.ecp.view.core.swt;bundle-version="1.2.0"
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: org.eclipse.emf.ecp.view.core.swt.test.model;x-internal:=true,
  org.eclipse.emf.ecp.view.core.swt.test.model.impl;x-internal:=true,
  org.eclipse.emf.ecp.view.core.swt.test.model.util;x-internal:=true

@@ -6,7 +6,7 @@ Bundle-Version: 1.2.1.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: org.eclipse.emf.ecp.view.treemasterdetail.model;version="1.2.0";x-friends:="org.eclipse.emf.ecp.view.treemasterdetail.model.edit,org.eclipse.emf.ecp.view.treemasterdetail.ui.swt",
  org.eclipse.emf.ecp.view.treemasterdetail.model.impl;version="1.2.0";x-internal:=true,
  org.eclipse.emf.ecp.view.treemasterdetail.model.util;version="1.2.0";x-internal:=true

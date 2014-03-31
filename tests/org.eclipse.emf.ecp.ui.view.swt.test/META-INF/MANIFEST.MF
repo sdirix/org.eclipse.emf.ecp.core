@@ -4,7 +4,7 @@ Bundle-Name: SWT Renderer Tests
 Bundle-SymbolicName: org.eclipse.emf.ecp.ui.view.swt.test
 Bundle-Version: 1.2.1.qualifier
 Fragment-Host: org.eclipse.emf.ecp.ui.view.swt;bundle-version="[1.2.0,2.0.0)"
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-Vendor: Eclipse Modeling Project
 Require-Bundle: org.junit;bundle-version="[4.0.0,5.0.0)",
  org.eclipse.jface.databinding;bundle-version="[1.6.0,2.0.0)",

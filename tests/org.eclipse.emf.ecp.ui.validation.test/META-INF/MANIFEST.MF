@@ -4,7 +4,7 @@ Bundle-Name: ECP Validation View Test
 Bundle-SymbolicName: org.eclipse.emf.ecp.ui.validation.test
 Bundle-Version: 1.2.1.qualifier
 Fragment-Host: org.eclipse.emf.ecp.ui.validation;bundle-version="[1.2.1,2.0.0)"
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-Vendor: Eclipse Modeling Project
 Require-Bundle: org.eclipse.emf.emfstore.examplemodel;bundle-version="[1.1.0,2.0.0)",
  org.junit;bundle-version="[4.11.0,5.0.0)"

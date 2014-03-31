@@ -17,7 +17,7 @@ Require-Bundle: org.eclipse.ui;bundle-version="3.103.0",
  org.eclipse.emf.ecp.view.model.provider.xmi;bundle-version="[1.2.0,2.0.0)",
  org.eclipse.emf.ecp.view.table.model;bundle-version="[1.2.0,2.0.0)"
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: org.eclipse.jface.action;version="0.0.0",
  org.eclipse.jface.databinding.swt;version="0.0.0",
  org.eclipse.jface.resource;version="0.0.0",
