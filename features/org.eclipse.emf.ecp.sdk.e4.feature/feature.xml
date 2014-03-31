@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="org.eclipse.emf.ecp.sdk.feature"
+      id="org.eclipse.emf.ecp.sdk.e4.feature"
       label="ECP SDK"
       version="1.2.1.qualifier"
       provider-name="Eclipse Modeling Project"
@@ -40,11 +40,11 @@
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.emf.ecp.demo.e3.feature.source"
+         id="org.eclipse.emf.ecp.demo.e4.feature.source"
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.emf.ecp.e3.feature.source"
+         id="org.eclipse.emf.ecp.e4.feature.source"
          version="0.0.0"/>
 
    <includes
@@ -80,11 +80,11 @@
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.emf.ecp.demo.e3.feature"
+         id="org.eclipse.emf.ecp.demo.e4.feature"
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.emf.ecp.e3.feature"
+         id="org.eclipse.emf.ecp.e4.feature"
          version="0.0.0"/>
 
    <includes
