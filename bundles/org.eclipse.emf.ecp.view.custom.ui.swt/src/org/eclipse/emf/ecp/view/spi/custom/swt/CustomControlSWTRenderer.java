@@ -29,6 +29,9 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.osgi.framework.Bundle;
 
+/**
+ * @since 1.3
+ */
 public class CustomControlSWTRenderer extends AbstractSWTRenderer<VCustomControl> {
 
 	private ECPAbstractCustomControlSWT swtCustomControl;
@@ -145,6 +148,7 @@ public class CustomControlSWTRenderer extends AbstractSWTRenderer<VCustomControl
 	protected void applyValidation() {
 		Display.getDefault().asyncExec(new Runnable() {
 
+			@Override
 			public void run() {
 				Label validationIcon = null;
 				switch (getControls().size()) {

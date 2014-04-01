@@ -37,6 +37,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * <!-- end-user-doc -->
  * 
  * @generated
+ * @since 1.3
  */
 public class CustomControlItemProvider
 	extends ControlItemProvider
@@ -154,7 +155,7 @@ public class CustomControlItemProvider
 	@Override
 	public String getText(Object object)
 	{
-		String label = ((VCustomControl) object).getName();
+		final String label = ((VCustomControl) object).getName();
 		return label == null || label.length() == 0 ?
 			getString("_UI_CustomControl_type") : //$NON-NLS-1$
 			getString("_UI_CustomControl_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$

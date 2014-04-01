@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.emf.ecp.view.context" version="2">
+    <resource path="META-INF/MANIFEST.MF">
+        <filter comment="This is SPI" id="923795461">
+            <message_arguments>
+                <message_argument value="1.3.0"/>
+                <message_argument value="1.2.1"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/context/ViewModelContext.java" type="org.eclipse.emf.ecp.view.spi.context.ViewModelContext">
+        <filter comment="This is SPI" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.context.ViewModelContext"/>
+                <message_argument value="getControlsFor(EStructuralFeature.Setting)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="This is SPI" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.context.ViewModelContext"/>
+                <message_argument value="getControlsFor(UniqueSetting)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

@@ -34,6 +34,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
  * @model
  * @generated
  * @since 1.2
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface VDiagnostic extends EObject
 {
@@ -74,6 +75,7 @@ public interface VDiagnostic extends EObject
 	 * 
 	 * @param eObject the {@link EObject} to search diagnostics for
 	 * @return the list of sorted diagnostics
+	 * @since 1.3
 	 */
 	List<Diagnostic> getDiagnostics(EObject eObject);
 
@@ -84,6 +86,7 @@ public interface VDiagnostic extends EObject
 	 * @param eObject the {@link EObject} to search diagnostics for
 	 * @param eStructuralFeature the {@link EStructuralFeature} to search diagnostics for
 	 * @return the list of sorted diagnostics
+	 * @since 1.3
 	 */
 	List<Diagnostic> getDiagnostic(EObject eObject, EStructuralFeature eStructuralFeature);
 

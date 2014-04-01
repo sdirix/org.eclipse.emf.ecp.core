@@ -20,7 +20,8 @@ import java.util.List;
  * 
  * Use the {@link GridDescriptionFactory} to create {@link GridDescription GridDescriptions}.
  * 
- * @author Eugen
+ * @author Eugen Neufeld
+ * @since 1.3
  * 
  */
 public class GridDescription {

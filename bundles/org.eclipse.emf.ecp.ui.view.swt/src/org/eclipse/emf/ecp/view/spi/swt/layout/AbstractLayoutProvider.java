@@ -19,11 +19,20 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 
 /**
- * @author Eugen
+ * Abstract implementation of a {@link LayoutProvider} which contributes helper methods.
+ * 
+ * @author Eugen Neufeld
+ * @since 1.3
  * 
  */
 public abstract class AbstractLayoutProvider implements LayoutProvider {
 
+	/**
+	 * Checks whether a setting is set to multiline.
+	 * 
+	 * @param setting the {@link Setting} to check
+	 * @return true if multiline, false otherwise
+	 */
 	protected static boolean isMultiLine(Setting setting) {
 		final ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
 			new ReflectiveItemProviderAdapterFactory(),

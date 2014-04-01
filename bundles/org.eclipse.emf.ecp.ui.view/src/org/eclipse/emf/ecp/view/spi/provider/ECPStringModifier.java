@@ -17,7 +17,7 @@ import org.eclipse.emf.ecore.EStructuralFeature.Setting;
  * The TooltipModifier allows to manipulate a provided String.
  * 
  * @author Eugen Neufeld
- * 
+ * @since 1.3
  */
 public interface ECPStringModifier {
 

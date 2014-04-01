@@ -15,10 +15,11 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.view.spi.custom.model.*;
+import org.eclipse.emf.ecp.view.spi.custom.model.VCustomControl;
+import org.eclipse.emf.ecp.view.spi.custom.model.VCustomDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
-import org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 
@@ -156,6 +157,7 @@ public class CustomAdapterFactory extends AdapterFactoryImpl {
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.spi.custom.model.VCustomControl
 	 * @generated
+	 * @since 1.3
 	 */
 	public Adapter createCustomControlAdapter()
 	{
@@ -173,6 +175,7 @@ public class CustomAdapterFactory extends AdapterFactoryImpl {
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.spi.custom.model.VCustomDomainModelReference
 	 * @generated
+	 * @since 1.3
 	 */
 	public Adapter createCustomDomainModelReferenceAdapter()
 	{
@@ -206,6 +209,7 @@ public class CustomAdapterFactory extends AdapterFactoryImpl {
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VElement
 	 * @generated
+	 * @since 1.3
 	 */
 	public Adapter createElementAdapter()
 	{
@@ -223,6 +227,7 @@ public class CustomAdapterFactory extends AdapterFactoryImpl {
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VContainedElement
 	 * @generated
+	 * @since 1.3
 	 */
 	public Adapter createContainedElementAdapter()
 	{
@@ -240,6 +245,7 @@ public class CustomAdapterFactory extends AdapterFactoryImpl {
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VControl
 	 * @generated
+	 * @since 1.3
 	 */
 	public Adapter createControlAdapter()
 	{

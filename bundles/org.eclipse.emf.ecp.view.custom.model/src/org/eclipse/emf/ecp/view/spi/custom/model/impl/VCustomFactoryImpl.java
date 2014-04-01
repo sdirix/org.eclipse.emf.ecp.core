@@ -16,7 +16,10 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-import org.eclipse.emf.ecp.view.spi.custom.model.*;
+import org.eclipse.emf.ecp.view.spi.custom.model.VCustomControl;
+import org.eclipse.emf.ecp.view.spi.custom.model.VCustomDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.custom.model.VCustomFactory;
+import org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -36,13 +39,13 @@ public class VCustomFactoryImpl extends EFactoryImpl implements VCustomFactory {
 	public static VCustomFactory init() {
 		try
 		{
-			VCustomFactory theCustomFactory = (VCustomFactory) EPackage.Registry.INSTANCE
+			final VCustomFactory theCustomFactory = (VCustomFactory) EPackage.Registry.INSTANCE
 				.getEFactory(VCustomPackage.eNS_URI);
 			if (theCustomFactory != null)
 			{
 				return theCustomFactory;
 			}
-		} catch (Exception exception)
+		} catch (final Exception exception)
 		{
 			EcorePlugin.INSTANCE.log(exception);
 		}
@@ -84,10 +87,12 @@ public class VCustomFactoryImpl extends EFactoryImpl implements VCustomFactory {
 	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
+	 * @since 1.3
 	 */
+	@Override
 	public VCustomControl createCustomControl()
 	{
-		VCustomControlImpl customControl = new VCustomControlImpl();
+		final VCustomControlImpl customControl = new VCustomControlImpl();
 		return customControl;
 	}
 
@@ -96,10 +101,12 @@ public class VCustomFactoryImpl extends EFactoryImpl implements VCustomFactory {
 	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
+	 * @since 1.3
 	 */
+	@Override
 	public VCustomDomainModelReference createCustomDomainModelReference()
 	{
-		VCustomDomainModelReferenceImpl customDomainModelReference = new VCustomDomainModelReferenceImpl();
+		final VCustomDomainModelReferenceImpl customDomainModelReference = new VCustomDomainModelReferenceImpl();
 		return customDomainModelReference;
 	}
 
@@ -109,6 +116,7 @@ public class VCustomFactoryImpl extends EFactoryImpl implements VCustomFactory {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public VCustomPackage getCustomPackage() {
 		return (VCustomPackage) getEPackage();
 	}

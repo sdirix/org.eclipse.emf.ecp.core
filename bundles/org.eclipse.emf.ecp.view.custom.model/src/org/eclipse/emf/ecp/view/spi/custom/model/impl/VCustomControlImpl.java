@@ -31,6 +31,7 @@ import org.eclipse.emf.ecp.view.spi.model.impl.VControlImpl;
  * </p>
  * 
  * @generated
+ * @since 1.3
  */
 public class VCustomControlImpl extends VControlImpl implements VCustomControl
 {
@@ -107,6 +108,7 @@ public class VCustomControlImpl extends VControlImpl implements VCustomControl
 	 * 
 	 * @generated
 	 */
+	@Override
 	public String getBundleName()
 	{
 		return bundleName;
@@ -118,13 +120,15 @@ public class VCustomControlImpl extends VControlImpl implements VCustomControl
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setBundleName(String newBundleName)
 	{
-		String oldBundleName = bundleName;
+		final String oldBundleName = bundleName;
 		bundleName = newBundleName;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, VCustomPackage.CUSTOM_CONTROL__BUNDLE_NAME,
 				oldBundleName, bundleName));
+		}
 	}
 
 	/**
@@ -133,6 +137,7 @@ public class VCustomControlImpl extends VControlImpl implements VCustomControl
 	 * 
 	 * @generated
 	 */
+	@Override
 	public String getClassName()
 	{
 		return className;
@@ -144,13 +149,15 @@ public class VCustomControlImpl extends VControlImpl implements VCustomControl
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setClassName(String newClassName)
 	{
-		String oldClassName = className;
+		final String oldClassName = className;
 		className = newClassName;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, VCustomPackage.CUSTOM_CONTROL__CLASS_NAME,
 				oldClassName, className));
+		}
 	}
 
 	/**
@@ -242,10 +249,11 @@ public class VCustomControlImpl extends VControlImpl implements VCustomControl
 	@Override
 	public String toString()
 	{
-		if (eIsProxy())
+		if (eIsProxy()) {
 			return super.toString();
+		}
 
-		StringBuffer result = new StringBuffer(super.toString());
+		final StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (bundleName: "); //$NON-NLS-1$
 		result.append(bundleName);
 		result.append(", className: "); //$NON-NLS-1$

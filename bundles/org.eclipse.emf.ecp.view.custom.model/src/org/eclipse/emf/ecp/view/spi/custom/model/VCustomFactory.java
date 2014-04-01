@@ -39,6 +39,7 @@ public interface VCustomFactory extends EFactory {
 	 * 
 	 * @return a new object of class '<em>Control</em>'.
 	 * @generated
+	 * @since 1.3
 	 */
 	VCustomControl createCustomControl();
 
@@ -49,6 +50,7 @@ public interface VCustomFactory extends EFactory {
 	 * 
 	 * @return a new object of class '<em>Domain Model Reference</em>'.
 	 * @generated
+	 * @since 1.3
 	 */
 	VCustomDomainModelReference createCustomDomainModelReference();
 

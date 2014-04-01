@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.emf.ecp.view.label.ui.swt" version="2">
+    <resource path="META-INF/MANIFEST.MF">
+        <filter comment="This is SPI" id="923795461">
+            <message_arguments>
+                <message_argument value="1.3.0"/>
+                <message_argument value="1.2.1"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.view.spi.label.swt.SWTLabelRenderer">
+        <filter comment="This is SPI" id="305324134">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.label.swt.SWTLabelRenderer"/>
+                <message_argument value="org.eclipse.emf.ecp.view.label.ui.swt_1.3.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

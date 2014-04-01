@@ -18,6 +18,7 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
  * EPCRendererTester is used by the framework to find the best fitting renderer for a specific {@link ViewModelContext}.
  * 
  * @author Eugen Neufeld
+ * @since 1.3
  * 
  */
 public interface ECPAdditionalRendererTester {

@@ -116,6 +116,7 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
+	 * @since 1.3
 	 */
 	protected CustomControlItemProvider customControlItemProvider;
 
@@ -144,6 +145,7 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
+	 * @since 1.3
 	 */
 	protected CustomDomainModelReferenceItemProvider customDomainModelReferenceItemProvider;
 
@@ -172,6 +174,7 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 	 * 
 	 * @generated
 	 */
+	@Override
 	public ComposeableAdapterFactory getRootAdapterFactory() {
 		return parentAdapterFactory == null ? this : parentAdapterFactory.getRootAdapterFactory();
 	}
@@ -183,6 +186,7 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setParentAdapterFactory(ComposedAdapterFactory parentAdapterFactory) {
 		this.parentAdapterFactory = parentAdapterFactory;
 	}
@@ -220,8 +224,8 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 	public Object adapt(Object object, Object type) {
 		if (isFactoryForType(type))
 		{
-			Object adapter = super.adapt(object, type);
-			if (!(type instanceof Class<?>) || (((Class<?>) type).isInstance(adapter)))
+			final Object adapter = super.adapt(object, type);
+			if (!(type instanceof Class<?>) || ((Class<?>) type).isInstance(adapter))
 			{
 				return adapter;
 			}
@@ -246,6 +250,7 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 	 * 
 	 * @generated
 	 */
+	@Override
 	public Collection<?> getNewChildDescriptors(Object object, EditingDomain editingDomain) {
 		return childCreationExtenderManager.getNewChildDescriptors(object, editingDomain);
 	}
@@ -256,6 +261,7 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 	 * 
 	 * @generated
 	 */
+	@Override
 	public ResourceLocator getResourceLocator() {
 		return childCreationExtenderManager;
 	}
@@ -267,6 +273,7 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void addListener(INotifyChangedListener notifyChangedListener) {
 		changeNotifier.addListener(notifyChangedListener);
 	}
@@ -278,6 +285,7 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void removeListener(INotifyChangedListener notifyChangedListener) {
 		changeNotifier.removeListener(notifyChangedListener);
 	}
@@ -289,6 +297,7 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void fireNotifyChanged(Notification notification) {
 		changeNotifier.fireNotifyChanged(notification);
 
@@ -305,11 +314,14 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void dispose() {
-		if (customControlItemProvider != null)
+		if (customControlItemProvider != null) {
 			customControlItemProvider.dispose();
-		if (customDomainModelReferenceItemProvider != null)
+		}
+		if (customDomainModelReferenceItemProvider != null) {
 			customDomainModelReferenceItemProvider.dispose();
+		}
 	}
 
 	/**
@@ -426,8 +438,9 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 		 * 
 		 * @generated
 		 */
+		@Override
 		public Collection<Object> getNewChildDescriptors(Object object, EditingDomain editingDomain) {
-			ArrayList<Object> result = new ArrayList<Object>();
+			final ArrayList<Object> result = new ArrayList<Object>();
 			new CreationSwitch(result, editingDomain).doSwitch((EObject) object);
 			return result;
 		}
@@ -438,6 +451,7 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 		 * 
 		 * @generated
 		 */
+		@Override
 		public ResourceLocator getResourceLocator() {
 			return CustomEditPlugin.INSTANCE;
 		}

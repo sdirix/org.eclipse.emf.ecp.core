@@ -21,6 +21,7 @@ import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
  * A Factory to create {@link GridDescription GridDescriptions}.
  * 
  * @author Eugen Neufeld
+ * @since 1.3
  * 
  */
 public final class GridDescriptionFactory {

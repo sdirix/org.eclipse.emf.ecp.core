@@ -136,6 +136,7 @@ public interface ViewModelContext {
 	 * 
 	 * @param setting the {@link Setting} to search controls for
 	 * @return the Set of all controls associated with the provided setting or null if no controls can be found
+	 * @since 1.3
 	 */
 	Set<VControl> getControlsFor(Setting setting);
 
@@ -144,6 +145,7 @@ public interface ViewModelContext {
 	 * 
 	 * @param setting the {@link UniqueSetting} to search controls for
 	 * @return the Set of all controls associated with the provided setting or null if no controls can be found
+	 * @since 1.3
 	 */
 	Set<VControl> getControlsFor(UniqueSetting setting);
 }

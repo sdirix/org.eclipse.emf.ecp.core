@@ -86,6 +86,7 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EList<Object> getDiagnostics()
 	{
 		if (diagnostics == null)
@@ -192,6 +193,7 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.model.VDiagnostic#getHighestSeverity()
 	 */
+	@Override
 	public int getHighestSeverity() {
 		int highestSeverity = Diagnostic.OK;
 		if (getDiagnostics().size() > 0) {
@@ -209,6 +211,7 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.model.VDiagnostic#getMessage()
 	 */
+	@Override
 	public String getMessage() {
 		String message = ""; //$NON-NLS-1$
 		if (getDiagnostics().size() == 1) {
@@ -273,6 +276,7 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic
 	private void sortDiagnostics(final List<Diagnostic> diagnostics) {
 		Collections.sort(diagnostics, new Comparator<Diagnostic>() {
 
+			@Override
 			public int compare(Diagnostic o1, Diagnostic o2) {
 				if (o1.getSeverity() != o2.getSeverity()) {
 					// highest first
@@ -287,7 +291,9 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic
 	 * {@inheritDoc}
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.model.VDiagnostic#getDiagnostics(org.eclipse.emf.ecore.EObject)
+	 * @since 1.3
 	 */
+	@Override
 	public List<Diagnostic> getDiagnostics(EObject eObject) {
 		final EList<Diagnostic> result = new BasicEList<Diagnostic>();
 		for (final Object objectDiagnostic : getDiagnostics()) {
@@ -321,7 +327,9 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.model.VDiagnostic#getDiagnostic(org.eclipse.emf.ecore.EObject,
 	 *      org.eclipse.emf.ecore.EStructuralFeature)
+	 * @since 1.3
 	 */
+	@Override
 	public List<Diagnostic> getDiagnostic(EObject eObject, EStructuralFeature eStructuralFeature) {
 		final EList<Diagnostic> result = new BasicEList<Diagnostic>();
 		for (final Object objectDiagnostic : getDiagnostics()) {

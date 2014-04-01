@@ -41,6 +41,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * <!-- end-user-doc -->
  * 
  * @generated
+ * @since 1.3
  */
 public class CustomDomainModelReferenceItemProvider
 	extends ItemProviderAdapter
@@ -220,7 +221,7 @@ public class CustomDomainModelReferenceItemProvider
 	@Override
 	public String getText(Object object)
 	{
-		String label = ((VCustomDomainModelReference) object).getBundleName();
+		final String label = ((VCustomDomainModelReference) object).getBundleName();
 		return label == null || label.length() == 0 ?
 			getString("_UI_CustomDomainModelReference_type") : //$NON-NLS-1$
 			getString("_UI_CustomDomainModelReference_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$

@@ -19,6 +19,7 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
  * 
  * @author Eugen Neufeld
  * @param <VELEMENT> the {@link VElement} this renderer is applicable for
+ * @since 1.3
  * 
  */
 public abstract class AbstractRenderer<VELEMENT extends VElement> {

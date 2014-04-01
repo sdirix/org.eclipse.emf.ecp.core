@@ -26,7 +26,7 @@ import org.osgi.framework.Bundle;
  * A helper to ease the access to the string modifiers.
  * 
  * @author Eugen Neufeld
- * 
+ * @since 1.3
  */
 public final class ECPTooltipModifierHelper {
 	private static final String CLASS_CANNOT_BE_RESOLVED = "%1$s cannot be loaded because bundle %2$s cannot be resolved."; //$NON-NLS-1$

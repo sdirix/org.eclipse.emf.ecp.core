@@ -75,6 +75,8 @@ public abstract class ECPAbstractCustomControlSWT
 {
 	/**
 	 * Variant constant for indicating RAP controls.
+	 * 
+	 * @since 1.3
 	 */
 	protected static final String CUSTOM_VARIANT = "org.eclipse.rap.rwt.customVariant"; //$NON-NLS-1$
 	/**
@@ -109,6 +111,7 @@ public abstract class ECPAbstractCustomControlSWT
 	 * 
 	 * @param customControl the {@link VCustomControl} to use
 	 * @param viewModelContext the {@link ViewModelContext} to use
+	 * @since 1.3
 	 */
 	public final void init(VCustomControl customControl, ViewModelContext viewModelContext) {
 		this.customControl = customControl;
@@ -125,6 +128,8 @@ public abstract class ECPAbstractCustomControlSWT
 	/**
 	 * This method is called after the initialization. Custom controls can overwrite this to execute specific
 	 * initialization steps.
+	 * 
+	 * @since 1.3
 	 */
 	protected void postInit() {
 
@@ -165,6 +170,8 @@ public abstract class ECPAbstractCustomControlSWT
 
 	/**
 	 * This method is called during dispose and allows to dispose necessary objects.
+	 * 
+	 * @since 1.3
 	 */
 	protected abstract void disposeCustomControl();
 
@@ -172,6 +179,7 @@ public abstract class ECPAbstractCustomControlSWT
 	 * Return the {@link ViewModelContext}.
 	 * 
 	 * @return the {@link ViewModelContext} of this control
+	 * @since 1.3
 	 */
 	protected final ViewModelContext getViewModelContext() {
 		return viewModelContext;
@@ -181,6 +189,7 @@ public abstract class ECPAbstractCustomControlSWT
 	 * Return the {@link VCustomControl}.
 	 * 
 	 * @return the {@link VCustomControl} of this control
+	 * @since 1.3
 	 */
 	protected final VCustomControl getCustomControl() {
 		return customControl;
@@ -190,6 +199,7 @@ public abstract class ECPAbstractCustomControlSWT
 	 * Returns a {@link DataBindingContext} for this control.
 	 * 
 	 * @return the {@link DataBindingContext}
+	 * @since 1.3
 	 */
 	protected final DataBindingContext getDataBindingContext() {
 		if (dataBindingContext == null) {
@@ -218,6 +228,8 @@ public abstract class ECPAbstractCustomControlSWT
 
 	/**
 	 * This is called so that an error can be shown by the user.
+	 * 
+	 * @since 1.3
 	 */
 	protected abstract void handleContentValidation();
 
@@ -226,6 +238,7 @@ public abstract class ECPAbstractCustomControlSWT
 	 * constants defined in {@link ECPAbstractCustomControlSWT}.
 	 * 
 	 * @return the {@link SWTCustomControlHelper} to use to retrieve images.
+	 * @since 1.3
 	 */
 	protected final SWTCustomControlHelper getHelper() {
 		return swtHelper;
@@ -253,6 +266,7 @@ public abstract class ECPAbstractCustomControlSWT
 	 * @return the created {@link Control} or null
 	 * @throws NoPropertyDescriptorFoundExeption thrown if the {@link org.eclipse.emf.ecore.EStructuralFeature
 	 *             EStructuralFeature} of the {@link VControl} doesn't have a registered {@link IItemPropertyDescriptor}
+	 * @since 1.3
 	 */
 	protected final Control createLabel(final Composite parent)
 		throws NoPropertyDescriptorFoundExeption {
@@ -290,6 +304,7 @@ public abstract class ECPAbstractCustomControlSWT
 	 * 
 	 * @param composite the {@link Composite} to render onto
 	 * @return the created Label
+	 * @since 1.3
 	 */
 	protected final Label createValidationIcon(Composite composite) {
 		final Label validationLabel = new Label(composite, SWT.NONE);
@@ -317,6 +332,7 @@ public abstract class ECPAbstractCustomControlSWT
 	 * 
 	 * @param domainModelReference the {@link VDomainModelReference} to use
 	 * @return the {@link IObservableList}
+	 * @since 1.3
 	 */
 	protected final IObservableList getObservableList(VDomainModelReference domainModelReference) {
 		final Setting setting = getFirstSetting(domainModelReference);
@@ -330,6 +346,7 @@ public abstract class ECPAbstractCustomControlSWT
 	 * 
 	 * @param setting the provided {@link Setting}
 	 * @return the {@link EditingDomain} of this {@link Setting}
+	 * @since 1.3
 	 */
 	protected final EditingDomain getEditingDomain(Setting setting) {
 		return AdapterFactoryEditingDomain.getEditingDomainFor(setting.getEObject());
@@ -368,6 +385,7 @@ public abstract class ECPAbstractCustomControlSWT
 	 * @param <T> the type of the control to retrieve
 	 * @return the {@link ECPControl} that is fitting the most for the {@link ECPCustomControlFeature}. Can also be
 	 *         null.
+	 * @since 1.3
 	 */
 	protected final <T extends ECPAbstractControl> T getControl(Class<T> clazz,
 		VDomainModelReference domainModelReference) {
@@ -392,6 +410,7 @@ public abstract class ECPAbstractCustomControlSWT
 	 * 
 	 * @param setting the {@link Setting} to use for identifying the {@link IItemPropertyDescriptor}.
 	 * @return the {@link IItemPropertyDescriptor}
+	 * @since 1.3
 	 */
 	protected final IItemPropertyDescriptor getItemPropertyDescriptor(Setting setting) {
 		return adapterFactoryItemDelegator.getPropertyDescriptor(setting.getEObject(),
@@ -417,6 +436,7 @@ public abstract class ECPAbstractCustomControlSWT
 	 * can be used for binding etc.
 	 * 
 	 * @return the List of {@link VDomainModelReference VDomainModelReferences}
+	 * @since 1.3
 	 */
 	protected final List<VDomainModelReference> getResolvedDomainModelReferences() {
 		// final VHardcodedDomainModelReference hardcodedDomainModelReference = VHardcodedDomainModelReference.class
@@ -434,6 +454,7 @@ public abstract class ECPAbstractCustomControlSWT
 	 * 
 	 * @param feature the {@link EStructuralFeature} to find the {@link VDomainModelReference} for
 	 * @return the {@link VDomainModelReference} or null
+	 * @since 1.3
 	 */
 	protected final VDomainModelReference getResolvedDomainModelReference(EStructuralFeature feature) {
 		for (final VDomainModelReference domainModelReference : getResolvedDomainModelReferences()) {
@@ -459,6 +480,7 @@ public abstract class ECPAbstractCustomControlSWT
 	 * @param targetToModel update strategy target to model
 	 * @param modelToTarget update strategy model to target
 	 * @return the resulting binding
+	 * @since 1.3
 	 */
 	protected final Binding bindTargetToModel(VDomainModelReference modelFeature, IObservableValue targetValue,
 		UpdateValueStrategy targetToModel,
@@ -475,6 +497,7 @@ public abstract class ECPAbstractCustomControlSWT
 	 * Provides the {@link EditingDomain} for this custom control.
 	 * 
 	 * @return the {@link EditingDomain} for this control
+	 * @since 1.3
 	 */
 	protected final EditingDomain getEditingDomain() {
 		return getEditingDomain(getCustomControl().getDomainModelReference().getIterator().next());
@@ -487,6 +510,7 @@ public abstract class ECPAbstractCustomControlSWT
 	 * 
 	 * @param modelReference the {@link VDomainModelReference} to get the value for
 	 * @return the value
+	 * @since 1.3
 	 */
 	protected final Object getValue(VDomainModelReference modelReference) {
 		final Setting setting = getFirstSetting(modelReference);
@@ -500,6 +524,7 @@ public abstract class ECPAbstractCustomControlSWT
 	 * 
 	 * @param modelReference the {@link VDomainModelReference} to get the value for
 	 * @param newValue the value to be set
+	 * @since 1.3
 	 */
 	protected final void setValue(VDomainModelReference modelReference, Object newValue) {
 		// FIXME needed?
@@ -521,6 +546,7 @@ public abstract class ECPAbstractCustomControlSWT
 	 * 
 	 * @param modelReference the {@link VDomainModelReference} to register a listener for
 	 * @param changeListener the change listener to register
+	 * @since 1.3
 	 */
 	protected final void registerChangeListener(VDomainModelReference modelReference,
 		final ECPCustomControlChangeListener changeListener) {
@@ -569,6 +595,7 @@ public abstract class ECPAbstractCustomControlSWT
 		 * 
 		 * @param domainModelReference the {@link VDomainModelReference} to retrieve the help text for
 		 * @return the String containing the helpful description or null if no description is found
+		 * @since 1.3
 		 */
 		public String getHelp(VDomainModelReference domainModelReference) {
 			return ECPAbstractCustomControlSWT.this.getHelp(domainModelReference);
@@ -580,6 +607,7 @@ public abstract class ECPAbstractCustomControlSWT
 		 * 
 		 * @param domainModelReference the {@link VDomainModelReference} to retrieve the text for
 		 * @return the String containing the label null if no label is found
+		 * @since 1.3
 		 */
 		public String getLabel(VDomainModelReference domainModelReference) {
 			return ECPAbstractCustomControlSWT.this.getLabel(domainModelReference);
@@ -590,6 +618,7 @@ public abstract class ECPAbstractCustomControlSWT
 	 * Returns the GridDescription for this Renderer.
 	 * 
 	 * @return the GridDescription
+	 * @since 1.3
 	 */
 	public abstract GridDescription getGridDescription();
 
@@ -601,12 +630,15 @@ public abstract class ECPAbstractCustomControlSWT
 	 * @return the rendered {@link Control}
 	 * @throws NoRendererFoundException this is thrown when a renderer cannot be found
 	 * @throws NoPropertyDescriptorFoundExeption this is thrown when no property descriptor can be found
+	 * @since 1.3
 	 */
 	public abstract Control renderControl(GridCell cell, Composite parent) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption;
 
 	/**
 	 * Called by the framework to apply validation changes.
+	 * 
+	 * @since 1.3
 	 */
 	public final void applyValidation() {
 		if (getCustomControl() == null || getCustomControl().getDiagnostic() == null) {
@@ -623,6 +655,7 @@ public abstract class ECPAbstractCustomControlSWT
 	 * Applies the current readOnlyState.
 	 * 
 	 * @param controls the controls provided
+	 * @since 1.3
 	 */
 	public final void applyReadOnly(Map<GridCell, Control> controls) {
 		if (setEditable(!getCustomControl().isReadonly())) {
@@ -640,6 +673,7 @@ public abstract class ECPAbstractCustomControlSWT
 	 * Applies the current enable state.
 	 * 
 	 * @param controls the controls
+	 * @since 1.3
 	 */
 	public final void applyEnable(Map<GridCell, Control> controls) {
 		if (setEditable(getCustomControl().isEnabled())) {
@@ -655,6 +689,7 @@ public abstract class ECPAbstractCustomControlSWT
 	 * 
 	 * @param editable if the current state is editable
 	 * @return true if default editable modification should be executed
+	 * @since 1.3
 	 */
 	protected boolean setEditable(boolean editable) {
 		return true;
@@ -666,6 +701,7 @@ public abstract class ECPAbstractCustomControlSWT
 	 * @param rows the number of rows
 	 * @param columns the number of columns
 	 * @return the {@link GridDescription}
+	 * @since 1.3
 	 */
 	protected final GridDescription createSimpleGrid(int rows, int columns) {
 		return GridDescriptionFactory.INSTANCE.createSimpleGrid(rows, columns, null);

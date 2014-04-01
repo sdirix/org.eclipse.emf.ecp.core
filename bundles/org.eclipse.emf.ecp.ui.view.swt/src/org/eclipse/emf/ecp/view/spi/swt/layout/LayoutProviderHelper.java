@@ -25,7 +25,10 @@ import org.eclipse.swt.widgets.Layout;
 import org.osgi.framework.Bundle;
 
 /**
- * @author Eugen
+ * The helper class allowing an easy access to {@link LayoutProvider LayoutProviders}.
+ * 
+ * @author Eugen Neufeld
+ * @since 1.3
  * 
  */
 public final class LayoutProviderHelper {
@@ -108,7 +111,7 @@ public final class LayoutProviderHelper {
 	/**
 	 * Eases the access to the layout provider extension point. For the method description.
 	 * 
-	 * @see LayoutProvider#getLayoutData(GridCell, GridDescription, GridDescription, VElement, Control)
+	 * @see LayoutProvider#getLayoutData(GridCell, GridDescription, GridDescription, GridDescription, VElement, Control)
 	 * 
 	 * @param gridCell the current {@link GridCell}
 	 * @param controlGridDescription the {@link GridDescription} of the rendered {@link VElement}
@@ -143,8 +146,8 @@ public final class LayoutProviderHelper {
 	/**
 	 * The layout data for a spanning layout.
 	 * 
-	 * @param spanX
-	 * @param spanY
+	 * @param spanX the horizontal span
+	 * @param spanY the vertical span
 	 * @return a simple spanning layout
 	 */
 	public static Object getSpanningLayoutData(int spanX, int spanY) {

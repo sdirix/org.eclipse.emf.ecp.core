@@ -26,7 +26,7 @@ import org.eclipse.swt.widgets.Label;
 /**
  * Renders an {@link VLabel} to a SWT {@link Label}.
  * 
- * @since 1.2
+ * @since 1.3
  * 
  */
 public class LabelSWTRenderer extends AbstractSWTRenderer<VLabel> {

@@ -19,6 +19,7 @@ import org.eclipse.swt.widgets.Layout;
  * By providing an own implementation, the layout of the application can be influenced.
  * 
  * @author Eugen Neufeld
+ * @since 1.3
  */
 public interface LayoutProvider {
 
@@ -47,7 +48,7 @@ public interface LayoutProvider {
 		Control control);
 
 	/**
-	 * A simple spanning Layout-
+	 * A simple spanning Layout.
 	 * 
 	 * @param spanX the horizontal span
 	 * @param spanY the vertical span

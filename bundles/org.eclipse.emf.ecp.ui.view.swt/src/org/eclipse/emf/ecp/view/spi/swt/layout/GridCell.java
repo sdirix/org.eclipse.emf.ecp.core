@@ -18,6 +18,7 @@ import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
  * A {@link GridCell} has a row, a column and a renderer it is rendered by.
  * 
  * @author Eugen Neufeld
+ * @since 1.3
  * 
  */
 public class GridCell {

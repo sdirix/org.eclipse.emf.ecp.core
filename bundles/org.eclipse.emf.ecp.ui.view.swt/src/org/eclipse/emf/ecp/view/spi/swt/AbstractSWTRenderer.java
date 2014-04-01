@@ -73,6 +73,7 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 	 * Constructor for testing purpose.
 	 * 
 	 * @param factory the factory to use
+	 * @since 1.3
 	 */
 	protected AbstractSWTRenderer(SWTRendererFactory factory) {
 		this.rendererFactory = factory;
@@ -83,6 +84,7 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 	 * 
 	 * @param gridDescription the current {@link GridDescription}
 	 * @return the number of controls per row
+	 * @since 1.3
 	 */
 	public abstract GridDescription getGridDescription(GridDescription gridDescription);
 
@@ -94,10 +96,12 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 		if (getViewModelContext() != null) {
 			listener = new ModelChangeListener() {
 
+				@Override
 				public void notifyRemove(Notifier notifier) {
 					// nothing to do
 				}
 
+				@Override
 				public void notifyChange(ModelChangeNotification notification) {
 					if (!renderingFinished) {
 						return;
@@ -118,6 +122,7 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 					}
 				}
 
+				@Override
 				public void notifyAdd(Notifier notifier) {
 					// nothing to do
 				}
@@ -131,6 +136,7 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 	 * Returns a copy of the {@link GridCell} to {@link Control} map.
 	 * 
 	 * @return a copy of the controls map
+	 * @since 1.3
 	 */
 	protected final Map<GridCell, Control> getControls() {
 		if (controls == null) {
@@ -141,6 +147,8 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 
 	/**
 	 * Use this method to initialize objects which are needed already before rendering.
+	 * 
+	 * @since 1.3
 	 */
 	protected void preInit() {
 
@@ -148,6 +156,8 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 
 	/**
 	 * Use this method to initialize objects which are needed during rendering.
+	 * 
+	 * @since 1.3
 	 */
 	protected void postInit() {
 
@@ -173,6 +183,7 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 	 * @return the rendered {@link Control}
 	 * @throws NoRendererFoundException this is thrown when a renderer cannot be found
 	 * @throws NoPropertyDescriptorFoundExeption this is thrown when no property descriptor can be found
+	 * @since 1.3
 	 */
 	public Control render(final GridCell cell, Composite parent)
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
@@ -192,6 +203,7 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 		// register dispose listener to rerender if disposed
 		control.addDisposeListener(new DisposeListener() {
 
+			@Override
 			public void widgetDisposed(DisposeEvent e) {
 				if (controls != null) {
 					controls.remove(cell);
@@ -206,6 +218,7 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 	 * Called by the framework to initialize listener.
 	 * 
 	 * @param parent the parent used during render
+	 * @since 1.3
 	 */
 	public final void finalizeRendering(Composite parent) {
 		renderingFinished = true;
@@ -217,6 +230,7 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 		applyValidation();
 		parent.addDisposeListener(new DisposeListener() {
 
+			@Override
 			public void widgetDisposed(DisposeEvent event) {
 				dispose();
 			}
@@ -231,12 +245,15 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 	 * @return the rendered {@link Control}
 	 * @throws NoRendererFoundException this is thrown when a renderer cannot be found
 	 * @throws NoPropertyDescriptorFoundExeption this is thrown when no property descriptor can be found
+	 * @since 1.3
 	 */
 	protected abstract Control renderControl(final GridCell cell, Composite parent) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption;
 
 	/**
 	 * Marks a controls as readonly.
+	 * 
+	 * @since 1.3
 	 * 
 	 */
 	protected void applyReadOnly() {
@@ -247,6 +264,8 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 
 	/**
 	 * Allows implementers to set a control to enabled.
+	 * 
+	 * @since 1.3
 	 * 
 	 */
 	protected void applyEnable() {
@@ -261,6 +280,7 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 	 * @param gridCell the {@link GridCell} to enable/disable
 	 * @param control the {@link Control} to enable/disable
 	 * @param enabled true if control should be enabled, false otherwise
+	 * @since 1.3
 	 */
 	protected void setControlEnabled(GridCell gridCell, Control control, boolean enabled) {
 		control.setEnabled(enabled);
@@ -268,6 +288,8 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 
 	/**
 	 * Allows implementers to check and set the visibility on the whole result row.
+	 * 
+	 * @since 1.3
 	 * 
 	 */
 	protected void applyVisible() {
@@ -286,6 +308,8 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 	/**
 	 * Allows implementers to display the validation state of the control.
 	 * The default implementation does nothing.
+	 * 
+	 * @since 1.3
 	 */
 	protected void applyValidation() {
 
@@ -298,7 +322,9 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 	 * @param gridDescription the {@link GridDescription} of the parent which rendered the control
 	 * @param currentRowGridDescription the {@link GridDescription} of the current row
 	 * @param fullGridDescription the {@link GridDescription} of the whole container
+	 * @param vElement the {@link VElement} to set the layoutData for
 	 * @param control the control to set the layout to
+	 * @since 1.3
 	 */
 	protected void setLayoutDataForControl(GridCell gridCell, GridDescription gridDescription,
 		GridDescription currentRowGridDescription, GridDescription fullGridDescription, VElement vElement,
@@ -314,6 +340,7 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 	 * The {@link SWTRendererFactory} to use.
 	 * 
 	 * @return the {@link SWTRendererFactory}
+	 * @since 1.3
 	 */
 	protected final SWTRendererFactory getSWTRendererFactory() {
 		return rendererFactory;

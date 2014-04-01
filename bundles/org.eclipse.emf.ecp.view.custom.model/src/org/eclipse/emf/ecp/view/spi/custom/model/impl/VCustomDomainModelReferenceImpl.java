@@ -55,6 +55,7 @@ import org.osgi.framework.Bundle;
  * </p>
  * 
  * @generated
+ * @since 1.3
  */
 public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCustomDomainModelReference
 {
@@ -165,6 +166,7 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EList<VDomainModelReference> getDomainModelReferences()
 	{
 		if (domainModelReferences == null)
@@ -181,6 +183,7 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 	 * 
 	 * @generated
 	 */
+	@Override
 	public String getBundleName()
 	{
 		return bundleName;
@@ -192,13 +195,15 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setBundleName(String newBundleName)
 	{
-		String oldBundleName = bundleName;
+		final String oldBundleName = bundleName;
 		bundleName = newBundleName;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				VCustomPackage.CUSTOM_DOMAIN_MODEL_REFERENCE__BUNDLE_NAME, oldBundleName, bundleName));
+		}
 	}
 
 	/**
@@ -207,6 +212,7 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 	 * 
 	 * @generated
 	 */
+	@Override
 	public String getClassName()
 	{
 		return className;
@@ -218,13 +224,15 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setClassName(String newClassName)
 	{
-		String oldClassName = className;
+		final String oldClassName = className;
 		className = newClassName;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				VCustomPackage.CUSTOM_DOMAIN_MODEL_REFERENCE__CLASS_NAME, oldClassName, className));
+		}
 	}
 
 	/**
@@ -233,6 +241,7 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 	 * 
 	 * @generated
 	 */
+	@Override
 	public boolean isControlChecked()
 	{
 		return controlChecked;
@@ -244,13 +253,15 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setControlChecked(boolean newControlChecked)
 	{
-		boolean oldControlChecked = controlChecked;
+		final boolean oldControlChecked = controlChecked;
 		controlChecked = newControlChecked;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				VCustomPackage.CUSTOM_DOMAIN_MODEL_REFERENCE__CONTROL_CHECKED, oldControlChecked, controlChecked));
+		}
 	}
 
 	/**
@@ -381,10 +392,11 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 	@Override
 	public String toString()
 	{
-		if (eIsProxy())
+		if (eIsProxy()) {
 			return super.toString();
+		}
 
-		StringBuffer result = new StringBuffer(super.toString());
+		final StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (bundleName: "); //$NON-NLS-1$
 		result.append(bundleName);
 		result.append(", className: "); //$NON-NLS-1$
@@ -401,6 +413,7 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 	 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReference#resolve(org.eclipse.emf.ecore.EObject)
 	 * @generated NOT
 	 */
+	@Override
 	public boolean resolve(EObject eObject) {
 		final ECPHardcodedReferences customControl = loadObject(getBundleName(), getClassName());
 		if (customControl == null) {
@@ -453,6 +466,7 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 	 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReference#getIterator()
 	 * @generated NOT
 	 */
+	@Override
 	public Iterator<Setting> getIterator() {
 		return new ExistingIteratorIterator<EStructuralFeature.Setting>() {
 			@Override
@@ -468,6 +482,7 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 	 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReference#getEStructuralFeatureIterator()
 	 * @generated NOT
 	 */
+	@Override
 	public Iterator<EStructuralFeature> getEStructuralFeatureIterator() {
 		return new ExistingIteratorIterator<EStructuralFeature>() {
 			@Override
@@ -488,10 +503,12 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 		private Iterator<T> currentSubIterator;
 		private final Iterator<VDomainModelReference> referencesIterator = getDomainModelReferences().iterator();
 
+		@Override
 		public boolean hasNext() {
 			return referencesIterator.hasNext() || currentSubIterator != null && currentSubIterator.hasNext();
 		}
 
+		@Override
 		public T next() {
 			if (currentSubIterator == null) {
 				currentSubIterator = getSubIterator(referencesIterator.next());
@@ -503,6 +520,7 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 			return result;
 		}
 
+		@Override
 		public void remove() {
 			throw new UnsupportedOperationException();
 		}
