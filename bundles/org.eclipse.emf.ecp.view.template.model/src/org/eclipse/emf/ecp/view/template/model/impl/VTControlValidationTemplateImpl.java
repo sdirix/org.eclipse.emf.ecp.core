@@ -422,6 +422,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * 
 	 * @generated
 	 */
+	@Override
 	public String getOkColorHEX()
 	{
 		return okColorHEX;
@@ -433,13 +434,15 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setOkColorHEX(String newOkColorHEX)
 	{
-		String oldOkColorHEX = okColorHEX;
+		final String oldOkColorHEX = okColorHEX;
 		okColorHEX = newOkColorHEX;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE__OK_COLOR_HEX, oldOkColorHEX, okColorHEX));
+		}
 	}
 
 	/**
@@ -448,6 +451,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * 
 	 * @generated
 	 */
+	@Override
 	public String getOkImageURL()
 	{
 		return okImageURL;
@@ -459,13 +463,15 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setOkImageURL(String newOkImageURL)
 	{
-		String oldOkImageURL = okImageURL;
+		final String oldOkImageURL = okImageURL;
 		okImageURL = newOkImageURL;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE__OK_IMAGE_URL, oldOkImageURL, okImageURL));
+		}
 	}
 
 	/**
@@ -474,6 +480,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * 
 	 * @generated
 	 */
+	@Override
 	public String getOkOverlayURL()
 	{
 		return okOverlayURL;
@@ -485,13 +492,15 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setOkOverlayURL(String newOkOverlayURL)
 	{
-		String oldOkOverlayURL = okOverlayURL;
+		final String oldOkOverlayURL = okOverlayURL;
 		okOverlayURL = newOkOverlayURL;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE__OK_OVERLAY_URL, oldOkOverlayURL, okOverlayURL));
+		}
 	}
 
 	/**
@@ -500,6 +509,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * 
 	 * @generated
 	 */
+	@Override
 	public String getInfoColorHEX()
 	{
 		return infoColorHEX;
@@ -511,13 +521,15 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setInfoColorHEX(String newInfoColorHEX)
 	{
-		String oldInfoColorHEX = infoColorHEX;
+		final String oldInfoColorHEX = infoColorHEX;
 		infoColorHEX = newInfoColorHEX;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE__INFO_COLOR_HEX, oldInfoColorHEX, infoColorHEX));
+		}
 	}
 
 	/**
@@ -526,6 +538,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * 
 	 * @generated
 	 */
+	@Override
 	public String getInfoImageURL()
 	{
 		return infoImageURL;
@@ -537,13 +550,15 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setInfoImageURL(String newInfoImageURL)
 	{
-		String oldInfoImageURL = infoImageURL;
+		final String oldInfoImageURL = infoImageURL;
 		infoImageURL = newInfoImageURL;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE__INFO_IMAGE_URL, oldInfoImageURL, infoImageURL));
+		}
 	}
 
 	/**
@@ -552,6 +567,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * 
 	 * @generated
 	 */
+	@Override
 	public String getInfoOverlayURL()
 	{
 		return infoOverlayURL;
@@ -563,13 +579,15 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setInfoOverlayURL(String newInfoOverlayURL)
 	{
-		String oldInfoOverlayURL = infoOverlayURL;
+		final String oldInfoOverlayURL = infoOverlayURL;
 		infoOverlayURL = newInfoOverlayURL;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE__INFO_OVERLAY_URL, oldInfoOverlayURL, infoOverlayURL));
+		}
 	}
 
 	/**
@@ -578,6 +596,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * 
 	 * @generated
 	 */
+	@Override
 	public String getWarningColorHEX()
 	{
 		return warningColorHEX;
@@ -589,13 +608,15 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setWarningColorHEX(String newWarningColorHEX)
 	{
-		String oldWarningColorHEX = warningColorHEX;
+		final String oldWarningColorHEX = warningColorHEX;
 		warningColorHEX = newWarningColorHEX;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE__WARNING_COLOR_HEX, oldWarningColorHEX, warningColorHEX));
+		}
 	}
 
 	/**
@@ -604,6 +625,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * 
 	 * @generated
 	 */
+	@Override
 	public String getWarningImageURL()
 	{
 		return warningImageURL;
@@ -615,13 +637,15 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setWarningImageURL(String newWarningImageURL)
 	{
-		String oldWarningImageURL = warningImageURL;
+		final String oldWarningImageURL = warningImageURL;
 		warningImageURL = newWarningImageURL;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE__WARNING_IMAGE_URL, oldWarningImageURL, warningImageURL));
+		}
 	}
 
 	/**
@@ -630,6 +654,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * 
 	 * @generated
 	 */
+	@Override
 	public String getWarningOverlayURL()
 	{
 		return warningOverlayURL;
@@ -641,14 +666,16 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setWarningOverlayURL(String newWarningOverlayURL)
 	{
-		String oldWarningOverlayURL = warningOverlayURL;
+		final String oldWarningOverlayURL = warningOverlayURL;
 		warningOverlayURL = newWarningOverlayURL;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE__WARNING_OVERLAY_URL, oldWarningOverlayURL,
 				warningOverlayURL));
+		}
 	}
 
 	/**
@@ -657,6 +684,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * 
 	 * @generated
 	 */
+	@Override
 	public String getErrorColorHEX()
 	{
 		return errorColorHEX;
@@ -668,13 +696,15 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setErrorColorHEX(String newErrorColorHEX)
 	{
-		String oldErrorColorHEX = errorColorHEX;
+		final String oldErrorColorHEX = errorColorHEX;
 		errorColorHEX = newErrorColorHEX;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE__ERROR_COLOR_HEX, oldErrorColorHEX, errorColorHEX));
+		}
 	}
 
 	/**
@@ -683,6 +713,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * 
 	 * @generated
 	 */
+	@Override
 	public String getErrorImageURL()
 	{
 		return errorImageURL;
@@ -694,13 +725,15 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setErrorImageURL(String newErrorImageURL)
 	{
-		String oldErrorImageURL = errorImageURL;
+		final String oldErrorImageURL = errorImageURL;
 		errorImageURL = newErrorImageURL;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE__ERROR_IMAGE_URL, oldErrorImageURL, errorImageURL));
+		}
 	}
 
 	/**
@@ -709,6 +742,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * 
 	 * @generated
 	 */
+	@Override
 	public String getErrorOverlayURL()
 	{
 		return errorOverlayURL;
@@ -720,13 +754,15 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setErrorOverlayURL(String newErrorOverlayURL)
 	{
-		String oldErrorOverlayURL = errorOverlayURL;
+		final String oldErrorOverlayURL = errorOverlayURL;
 		errorOverlayURL = newErrorOverlayURL;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE__ERROR_OVERLAY_URL, oldErrorOverlayURL, errorOverlayURL));
+		}
 	}
 
 	/**
@@ -735,6 +771,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * 
 	 * @generated
 	 */
+	@Override
 	public String getCancelColorHEX()
 	{
 		return cancelColorHEX;
@@ -746,13 +783,15 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setCancelColorHEX(String newCancelColorHEX)
 	{
-		String oldCancelColorHEX = cancelColorHEX;
+		final String oldCancelColorHEX = cancelColorHEX;
 		cancelColorHEX = newCancelColorHEX;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE__CANCEL_COLOR_HEX, oldCancelColorHEX, cancelColorHEX));
+		}
 	}
 
 	/**
@@ -761,6 +800,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * 
 	 * @generated
 	 */
+	@Override
 	public String getCancelImageURL()
 	{
 		return cancelImageURL;
@@ -772,13 +812,15 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setCancelImageURL(String newCancelImageURL)
 	{
-		String oldCancelImageURL = cancelImageURL;
+		final String oldCancelImageURL = cancelImageURL;
 		cancelImageURL = newCancelImageURL;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE__CANCEL_IMAGE_URL, oldCancelImageURL, cancelImageURL));
+		}
 	}
 
 	/**
@@ -787,6 +829,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * 
 	 * @generated
 	 */
+	@Override
 	public String getCancelOverlayURL()
 	{
 		return cancelOverlayURL;
@@ -798,14 +841,16 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setCancelOverlayURL(String newCancelOverlayURL)
 	{
-		String oldCancelOverlayURL = cancelOverlayURL;
+		final String oldCancelOverlayURL = cancelOverlayURL;
 		cancelOverlayURL = newCancelOverlayURL;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE__CANCEL_OVERLAY_URL, oldCancelOverlayURL,
 				cancelOverlayURL));
+		}
 	}
 
 	/**
@@ -1040,10 +1085,11 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	@Override
 	public String toString()
 	{
-		if (eIsProxy())
+		if (eIsProxy()) {
 			return super.toString();
+		}
 
-		StringBuffer result = new StringBuffer(super.toString());
+		final StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (okColorHEX: "); //$NON-NLS-1$
 		result.append(okColorHEX);
 		result.append(", okImageURL: "); //$NON-NLS-1$

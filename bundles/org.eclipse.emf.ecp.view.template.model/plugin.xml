@@ -23,4 +23,29 @@
             genModel="model/template.genmodel"/>
    </extension>
 
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated alignmentStyle -->
+      <package
+            uri="http://www.eclipse.org/emf/ecp/view/template/style/alignment/model"
+            class="org.eclipse.emf.ecp.view.template.style.alignment.model.VTAlignmentPackage"
+            genModel="model/alignmentStyle.genmodel"/>
+   </extension>
+
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated validationStyle -->
+      <package
+            uri="http://www.eclipse.org/emf/ecp/view/template/style/validation/model"
+            class="org.eclipse.emf.ecp.view.template.style.validation.model.VTValidationPackage"
+            genModel="model/validationStyle.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated domainModelReferenceSelector -->
+      <package
+            uri="http://www.eclipse.org/emf/ecp/view/template/selector/domainmodelreference/model"
+            class="org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.VTDomainmodelreferencePackage"
+            genModel="model/domainModelReferenceSelector.genmodel"/>
+   </extension>
+
 </plugin>

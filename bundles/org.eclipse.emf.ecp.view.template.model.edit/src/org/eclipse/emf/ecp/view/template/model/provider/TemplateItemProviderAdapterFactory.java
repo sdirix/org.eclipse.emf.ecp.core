@@ -160,12 +160,41 @@ public class TemplateItemProviderAdapterFactory extends TemplateAdapterFactory i
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.view.template.model.VTStyle}
+	 * instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	protected StyleItemProvider styleItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.template.model.VTStyle}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	@Override
+	public Adapter createStyleAdapter()
+	{
+		if (styleItemProvider == null)
+		{
+			styleItemProvider = new StyleItemProvider(this);
+		}
+
+		return styleItemProvider;
+	}
+
+	/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 */
+	@Override
 	public ComposeableAdapterFactory getRootAdapterFactory()
 	{
 		return parentAdapterFactory == null ? this : parentAdapterFactory.getRootAdapterFactory();
@@ -178,6 +207,7 @@ public class TemplateItemProviderAdapterFactory extends TemplateAdapterFactory i
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setParentAdapterFactory(ComposedAdapterFactory parentAdapterFactory)
 	{
 		this.parentAdapterFactory = parentAdapterFactory;
@@ -219,8 +249,8 @@ public class TemplateItemProviderAdapterFactory extends TemplateAdapterFactory i
 	{
 		if (isFactoryForType(type))
 		{
-			Object adapter = super.adapt(object, type);
-			if (!(type instanceof Class<?>) || (((Class<?>) type).isInstance(adapter)))
+			final Object adapter = super.adapt(object, type);
+			if (!(type instanceof Class<?>) || ((Class<?>) type).isInstance(adapter))
 			{
 				return adapter;
 			}
@@ -246,6 +276,7 @@ public class TemplateItemProviderAdapterFactory extends TemplateAdapterFactory i
 	 * 
 	 * @generated
 	 */
+	@Override
 	public Collection<?> getNewChildDescriptors(Object object, EditingDomain editingDomain)
 	{
 		return childCreationExtenderManager.getNewChildDescriptors(object, editingDomain);
@@ -257,6 +288,7 @@ public class TemplateItemProviderAdapterFactory extends TemplateAdapterFactory i
 	 * 
 	 * @generated
 	 */
+	@Override
 	public ResourceLocator getResourceLocator()
 	{
 		return childCreationExtenderManager;
@@ -269,6 +301,7 @@ public class TemplateItemProviderAdapterFactory extends TemplateAdapterFactory i
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void addListener(INotifyChangedListener notifyChangedListener)
 	{
 		changeNotifier.addListener(notifyChangedListener);
@@ -281,6 +314,7 @@ public class TemplateItemProviderAdapterFactory extends TemplateAdapterFactory i
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void removeListener(INotifyChangedListener notifyChangedListener)
 	{
 		changeNotifier.removeListener(notifyChangedListener);
@@ -293,6 +327,7 @@ public class TemplateItemProviderAdapterFactory extends TemplateAdapterFactory i
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void fireNotifyChanged(Notification notification)
 	{
 		changeNotifier.fireNotifyChanged(notification);
@@ -310,12 +345,18 @@ public class TemplateItemProviderAdapterFactory extends TemplateAdapterFactory i
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void dispose()
 	{
-		if (viewTemplateItemProvider != null)
+		if (viewTemplateItemProvider != null) {
 			viewTemplateItemProvider.dispose();
-		if (controlValidationTemplateItemProvider != null)
+		}
+		if (controlValidationTemplateItemProvider != null) {
 			controlValidationTemplateItemProvider.dispose();
+		}
+		if (styleItemProvider != null) {
+			styleItemProvider.dispose();
+		}
 	}
 
 }

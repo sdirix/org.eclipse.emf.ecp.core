@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.ecp.view.template.model;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -23,6 +24,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  * <li>{@link org.eclipse.emf.ecp.view.template.model.VTViewTemplate#getControlValidationConfiguration <em>Control
  * Validation Configuration</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.template.model.VTViewTemplate#getStyles <em>Styles</em>}</li>
  * </ul>
  * </p>
  * 
@@ -61,5 +63,22 @@ public interface VTViewTemplate extends EObject
 	 * @generated
 	 */
 	void setControlValidationConfiguration(VTControlValidationTemplate value);
+
+	/**
+	 * Returns the value of the '<em><b>Styles</b></em>' containment reference list.
+	 * The list contents are of type {@link org.eclipse.emf.ecp.view.template.model.VTStyle}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Styles</em>' containment reference list isn't clear, there really should be more of a
+	 * description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the value of the '<em>Styles</em>' containment reference list.
+	 * @see org.eclipse.emf.ecp.view.template.model.VTTemplatePackage#getViewTemplate_Styles()
+	 * @model containment="true"
+	 * @generated
+	 */
+	EList<VTStyle> getStyles();
 
 } // VTViewTemplate

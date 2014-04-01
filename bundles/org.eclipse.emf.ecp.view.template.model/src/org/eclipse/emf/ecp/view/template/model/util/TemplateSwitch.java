@@ -15,6 +15,9 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
 import org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate;
+import org.eclipse.emf.ecp.view.template.model.VTStyle;
+import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
+import org.eclipse.emf.ecp.view.template.model.VTStyleSelector;
 import org.eclipse.emf.ecp.view.template.model.VTTemplatePackage;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplate;
 
@@ -88,17 +91,43 @@ public class TemplateSwitch<T> extends Switch<T>
 		switch (classifierID)
 		{
 		case VTTemplatePackage.VIEW_TEMPLATE: {
-			VTViewTemplate viewTemplate = (VTViewTemplate) theEObject;
+			final VTViewTemplate viewTemplate = (VTViewTemplate) theEObject;
 			T result = caseViewTemplate(viewTemplate);
-			if (result == null)
+			if (result == null) {
 				result = defaultCase(theEObject);
+			}
 			return result;
 		}
 		case VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE: {
-			VTControlValidationTemplate controlValidationTemplate = (VTControlValidationTemplate) theEObject;
+			final VTControlValidationTemplate controlValidationTemplate = (VTControlValidationTemplate) theEObject;
 			T result = caseControlValidationTemplate(controlValidationTemplate);
-			if (result == null)
+			if (result == null) {
 				result = defaultCase(theEObject);
+			}
+			return result;
+		}
+		case VTTemplatePackage.STYLE: {
+			final VTStyle style = (VTStyle) theEObject;
+			T result = caseStyle(style);
+			if (result == null) {
+				result = defaultCase(theEObject);
+			}
+			return result;
+		}
+		case VTTemplatePackage.STYLE_PROPERTY: {
+			final VTStyleProperty styleProperty = (VTStyleProperty) theEObject;
+			T result = caseStyleProperty(styleProperty);
+			if (result == null) {
+				result = defaultCase(theEObject);
+			}
+			return result;
+		}
+		case VTTemplatePackage.STYLE_SELECTOR: {
+			final VTStyleSelector styleSelector = (VTStyleSelector) theEObject;
+			T result = caseStyleSelector(styleSelector);
+			if (result == null) {
+				result = defaultCase(theEObject);
+			}
 			return result;
 		}
 		default:
@@ -136,6 +165,57 @@ public class TemplateSwitch<T> extends Switch<T>
 	 * @generated
 	 */
 	public T caseControlValidationTemplate(VTControlValidationTemplate object)
+	{
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Style</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * 
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Style</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseStyle(VTStyle object)
+	{
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Style Property</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * 
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Style Property</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseStyleProperty(VTStyleProperty object)
+	{
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Style Selector</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * 
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Style Selector</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseStyleSelector(VTStyleSelector object)
 	{
 		return null;
 	}

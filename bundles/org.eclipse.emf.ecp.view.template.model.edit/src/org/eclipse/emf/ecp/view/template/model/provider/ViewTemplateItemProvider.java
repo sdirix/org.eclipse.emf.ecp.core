@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.template.model.VTTemplateFactory;
 import org.eclipse.emf.ecp.view.template.model.VTTemplatePackage;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplate;
+import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IChildCreationExtender;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -73,8 +74,34 @@ public class ViewTemplateItemProvider
 		{
 			super.getPropertyDescriptors(object);
 
+			addStylesPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
+	}
+
+	/**
+	 * This adds a property descriptor for the Styles feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	protected void addStylesPropertyDescriptor(Object object)
+	{
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(),
+				getString("_UI_ViewTemplate_styles_feature"), //$NON-NLS-1$
+				getString(
+					"_UI_PropertyDescriptor_description", "_UI_ViewTemplate_styles_feature", "_UI_ViewTemplate_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				VTTemplatePackage.Literals.VIEW_TEMPLATE__STYLES,
+				true,
+				false,
+				false,
+				null,
+				null,
+				null));
 	}
 
 	/**
@@ -93,6 +120,7 @@ public class ViewTemplateItemProvider
 		{
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(VTTemplatePackage.Literals.VIEW_TEMPLATE__CONTROL_VALIDATION_CONFIGURATION);
+			childrenFeatures.add(VTTemplatePackage.Literals.VIEW_TEMPLATE__STYLES);
 		}
 		return childrenFeatures;
 	}
@@ -154,6 +182,7 @@ public class ViewTemplateItemProvider
 		switch (notification.getFeatureID(VTViewTemplate.class))
 		{
 		case VTTemplatePackage.VIEW_TEMPLATE__CONTROL_VALIDATION_CONFIGURATION:
+		case VTTemplatePackage.VIEW_TEMPLATE__STYLES:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 			return;
 		}
@@ -177,6 +206,11 @@ public class ViewTemplateItemProvider
 			(createChildParameter
 			(VTTemplatePackage.Literals.VIEW_TEMPLATE__CONTROL_VALIDATION_CONFIGURATION,
 				VTTemplateFactory.eINSTANCE.createControlValidationTemplate()));
+
+		newChildDescriptors.add
+			(createChildParameter
+			(VTTemplatePackage.Literals.VIEW_TEMPLATE__STYLES,
+				VTTemplateFactory.eINSTANCE.createStyle()));
 	}
 
 	/**
