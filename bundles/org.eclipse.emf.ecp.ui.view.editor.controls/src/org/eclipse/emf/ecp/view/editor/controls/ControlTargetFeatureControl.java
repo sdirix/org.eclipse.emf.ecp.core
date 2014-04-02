@@ -99,12 +99,14 @@ public class ControlTargetFeatureControl extends LinkControl {
 			super(notifier, composedAdapterFactory, shell, Helper.getRootEClass((EObject) notifier),
 				new ECPSelectionStatusValidator() {
 
+					@Override
 					public IStatus validate(Object[] selection) {
 
 						if (selection.length != 0 && EStructuralFeature.class.isInstance(selection[0])) {
 							final TreePath treePath = getTreePath();
 							if (!Helper
-								.hasFeaturePropertyDescriptor(Helper.getRootEClass((EObject) notifier), treePath)) {
+								.hasFeaturePropertyDescriptor(EStructuralFeature.class.cast(selection[0])
+									.getEContainingClass(), treePath)) {
 								return new Status(IStatus.ERROR,
 									org.eclipse.emf.ecp.view.editor.controls.Activator.PLUGIN_ID,
 									"The selected " + EStructuralFeature.class.getSimpleName()

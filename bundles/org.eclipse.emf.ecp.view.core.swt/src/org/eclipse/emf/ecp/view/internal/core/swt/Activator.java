@@ -15,6 +15,7 @@ import java.net.URL;
 
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.emf.ecp.edit.spi.ECPControlFactory;
+import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.swt.graphics.Image;
@@ -118,5 +119,24 @@ public class Activator extends Plugin {
 			plugin.registry.put(path, image);
 		}
 		return image;
+	}
+
+	private VTViewTemplateProvider viewTemplate;
+
+	/**
+	 * Returns the currentInstance of the {@link VTViewTemplateProvider}.
+	 * 
+	 * @return the {@link ECPControlFactory}
+	 */
+	public VTViewTemplateProvider getVTViewTemplateProvider() {
+		if (viewTemplate == null) {
+			final ServiceReference<VTViewTemplateProvider> viewTemplateReference = plugin.getBundle()
+				.getBundleContext()
+				.getServiceReference(VTViewTemplateProvider.class);
+			if (viewTemplateReference != null) {
+				viewTemplate = plugin.getBundle().getBundleContext().getService(viewTemplateReference);
+			}
+		}
+		return viewTemplate;
 	}
 }

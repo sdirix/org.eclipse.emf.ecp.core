@@ -60,8 +60,8 @@ public class NumberControlSWTRenderer extends TextControlSWTRenderer {
 	}
 
 	@Override
-	protected int getTextWidgetStyle() {
-		return super.getTextWidgetStyle() | SWT.RIGHT;
+	protected int getDefaultAlignment() {
+		return SWT.RIGHT;
 	}
 
 	/*

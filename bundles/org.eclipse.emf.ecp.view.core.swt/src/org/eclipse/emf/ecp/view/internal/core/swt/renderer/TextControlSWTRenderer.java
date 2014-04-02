@@ -11,17 +11,23 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.core.swt.renderer;
 
+import java.util.Set;
+
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.databinding.EMFUpdateValueStrategy;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecp.view.internal.core.swt.Activator;
 import org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.provider.ECPTooltipModifierHelper;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridCell;
+import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
+import org.eclipse.emf.ecp.view.template.style.alignment.model.AlignmentType;
+import org.eclipse.emf.ecp.view.template.style.alignment.model.VTAlignmentStyleProperty;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.swt.SWT;
@@ -127,7 +133,33 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 		if (getItemPropertyDescriptor(getVElement().getDomainModelReference().getIterator().next()).isMultiLine(null)) {
 			textStyle = SWT.MULTI | SWT.WRAP | SWT.V_SCROLL | SWT.H_SCROLL | SWT.BORDER;
 		}
+		textStyle |= getAlignment();
 		return textStyle;
+	}
+
+	private int getAlignment() {
+		final Set<VTStyleProperty> styleProperties = Activator.getDefault().getVTViewTemplateProvider()
+			.getStyleProperties(getVElement(), getViewModelContext());
+		for (final VTStyleProperty styleProperty : styleProperties) {
+			if (VTAlignmentStyleProperty.class.isInstance(styleProperty)) {
+				if (VTAlignmentStyleProperty.class.cast(styleProperty).getType() == AlignmentType.LEFT) {
+					return SWT.LEFT;
+				}
+				else if (VTAlignmentStyleProperty.class.cast(styleProperty).getType() == AlignmentType.RIGHT) {
+					return SWT.RIGHT;
+				}
+			}
+		}
+		return getDefaultAlignment();
+	}
+
+	/**
+	 * Return the default alignment value for this renderer.
+	 * 
+	 * @return the alignment to use if no style was defined
+	 */
+	protected int getDefaultAlignment() {
+		return SWT.LEFT;
 	}
 
 	/**
