@@ -184,6 +184,16 @@ public interface VTablePackage extends EPackage
 	int TABLE_CONTROL__ADD_REMOVE_DISABLED = VViewPackage.CONTROL_FEATURE_COUNT + 1;
 
 	/**
+	 * The feature id for the '<em><b>Enable Detail Editing Dialog</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int TABLE_CONTROL__ENABLE_DETAIL_EDITING_DIALOG = VViewPackage.CONTROL_FEATURE_COUNT + 2;
+
+	/**
 	 * The number of structural features of the '<em>Control</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -191,7 +201,7 @@ public interface VTablePackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int TABLE_CONTROL_FEATURE_COUNT = VViewPackage.CONTROL_FEATURE_COUNT + 2;
+	int TABLE_CONTROL_FEATURE_COUNT = VViewPackage.CONTROL_FEATURE_COUNT + 3;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.table.model.impl.VTableColumnImpl
@@ -316,6 +326,20 @@ public interface VTablePackage extends EPackage
 	EAttribute getTableControl_AddRemoveDisabled();
 
 	/**
+	 * Returns the meta object for the attribute '
+	 * {@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl#isEnableDetailEditingDialog
+	 * <em>Enable Detail Editing Dialog</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for the attribute '<em>Enable Detail Editing Dialog</em>'.
+	 * @see org.eclipse.emf.ecp.view.spi.table.model.VTableControl#isEnableDetailEditingDialog()
+	 * @see #getTableControl()
+	 * @generated
+	 */
+	EAttribute getTableControl_EnableDetailEditingDialog();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.table.model.VTableColumn <em>Column</em>}
 	 * '.
 	 * <!-- begin-user-doc -->
@@ -419,6 +443,15 @@ public interface VTablePackage extends EPackage
 		 * @generated
 		 */
 		EAttribute TABLE_CONTROL__ADD_REMOVE_DISABLED = eINSTANCE.getTableControl_AddRemoveDisabled();
+
+		/**
+		 * The meta object literal for the '<em><b>Enable Detail Editing Dialog</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @generated
+		 */
+		EAttribute TABLE_CONTROL__ENABLE_DETAIL_EDITING_DIALOG = eINSTANCE.getTableControl_EnableDetailEditingDialog();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.table.model.impl.VTableColumnImpl

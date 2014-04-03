@@ -67,6 +67,7 @@ public class TableControlItemProvider
 			super.getPropertyDescriptors(object);
 
 			addAddRemoveDisabledPropertyDescriptor(object);
+			addEnableDetailEditingDialogPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -88,6 +89,32 @@ public class TableControlItemProvider
 				getString(
 					"_UI_PropertyDescriptor_description", "_UI_TableControl_addRemoveDisabled_feature", "_UI_TableControl_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				VTablePackage.Literals.TABLE_CONTROL__ADD_REMOVE_DISABLED,
+				true,
+				false,
+				false,
+				ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
+				null,
+				null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Enable Detail Editing Dialog feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	protected void addEnableDetailEditingDialogPropertyDescriptor(Object object)
+	{
+		itemPropertyDescriptors
+			.add
+			(createItemPropertyDescriptor
+			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(),
+				getString("_UI_TableControl_enableDetailEditingDialog_feature"), //$NON-NLS-1$
+				getString(
+					"_UI_PropertyDescriptor_description", "_UI_TableControl_enableDetailEditingDialog_feature", "_UI_TableControl_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				VTablePackage.Literals.TABLE_CONTROL__ENABLE_DETAIL_EDITING_DIALOG,
 				true,
 				false,
 				false,
@@ -171,6 +198,7 @@ public class TableControlItemProvider
 		switch (notification.getFeatureID(VTableControl.class))
 		{
 		case VTablePackage.TABLE_CONTROL__ADD_REMOVE_DISABLED:
+		case VTablePackage.TABLE_CONTROL__ENABLE_DETAIL_EDITING_DIALOG:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 			return;
 		case VTablePackage.TABLE_CONTROL__COLUMNS:

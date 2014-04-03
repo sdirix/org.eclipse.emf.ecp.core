@@ -42,13 +42,13 @@ public class VTableFactoryImpl extends EFactoryImpl implements VTableFactory
 	{
 		try
 		{
-			VTableFactory theTableFactory = (VTableFactory) EPackage.Registry.INSTANCE
+			final VTableFactory theTableFactory = (VTableFactory) EPackage.Registry.INSTANCE
 				.getEFactory(VTablePackage.eNS_URI);
 			if (theTableFactory != null)
 			{
 				return theTableFactory;
 			}
-		} catch (Exception exception)
+		} catch (final Exception exception)
 		{
 			EcorePlugin.INSTANCE.log(exception);
 		}
@@ -95,9 +95,10 @@ public class VTableFactoryImpl extends EFactoryImpl implements VTableFactory
 	 * 
 	 * @generated
 	 */
+	@Override
 	public VTableControl createTableControl()
 	{
-		VTableControlImpl tableControl = new VTableControlImpl();
+		final VTableControlImpl tableControl = new VTableControlImpl();
 		return tableControl;
 	}
 
@@ -107,9 +108,10 @@ public class VTableFactoryImpl extends EFactoryImpl implements VTableFactory
 	 * 
 	 * @generated
 	 */
+	@Override
 	public VTableColumn createTableColumn()
 	{
-		VTableColumnImpl tableColumn = new VTableColumnImpl();
+		final VTableColumnImpl tableColumn = new VTableColumnImpl();
 		return tableColumn;
 	}
 
@@ -119,9 +121,10 @@ public class VTableFactoryImpl extends EFactoryImpl implements VTableFactory
 	 * 
 	 * @generated
 	 */
+	@Override
 	public VTableDomainModelReference createTableDomainModelReference()
 	{
-		VTableDomainModelReferenceImpl tableDomainModelReference = new VTableDomainModelReferenceImpl();
+		final VTableDomainModelReferenceImpl tableDomainModelReference = new VTableDomainModelReferenceImpl();
 		return tableDomainModelReference;
 	}
 
@@ -131,6 +134,7 @@ public class VTableFactoryImpl extends EFactoryImpl implements VTableFactory
 	 * 
 	 * @generated
 	 */
+	@Override
 	public VTablePackage getTablePackage()
 	{
 		return (VTablePackage) getEPackage();

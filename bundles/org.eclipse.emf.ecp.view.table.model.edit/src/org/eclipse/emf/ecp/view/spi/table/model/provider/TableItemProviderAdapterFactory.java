@@ -198,6 +198,7 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 	 * 
 	 * @generated
 	 */
+	@Override
 	public ComposeableAdapterFactory getRootAdapterFactory() {
 		return parentAdapterFactory == null ? this : parentAdapterFactory.getRootAdapterFactory();
 	}
@@ -209,6 +210,7 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setParentAdapterFactory(ComposedAdapterFactory parentAdapterFactory) {
 		this.parentAdapterFactory = parentAdapterFactory;
 	}
@@ -246,8 +248,8 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 	public Object adapt(Object object, Object type) {
 		if (isFactoryForType(type))
 		{
-			Object adapter = super.adapt(object, type);
-			if (!(type instanceof Class<?>) || (((Class<?>) type).isInstance(adapter)))
+			final Object adapter = super.adapt(object, type);
+			if (!(type instanceof Class<?>) || ((Class<?>) type).isInstance(adapter))
 			{
 				return adapter;
 			}
@@ -272,6 +274,7 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 	 * 
 	 * @generated
 	 */
+	@Override
 	public Collection<?> getNewChildDescriptors(Object object, EditingDomain editingDomain) {
 		return childCreationExtenderManager.getNewChildDescriptors(object, editingDomain);
 	}
@@ -282,6 +285,7 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 	 * 
 	 * @generated
 	 */
+	@Override
 	public ResourceLocator getResourceLocator() {
 		return childCreationExtenderManager;
 	}
@@ -293,6 +297,7 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void addListener(INotifyChangedListener notifyChangedListener) {
 		changeNotifier.addListener(notifyChangedListener);
 	}
@@ -304,6 +309,7 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void removeListener(INotifyChangedListener notifyChangedListener) {
 		changeNotifier.removeListener(notifyChangedListener);
 	}
@@ -315,6 +321,7 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void fireNotifyChanged(Notification notification) {
 		changeNotifier.fireNotifyChanged(notification);
 
@@ -331,13 +338,17 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void dispose() {
-		if (tableControlItemProvider != null)
+		if (tableControlItemProvider != null) {
 			tableControlItemProvider.dispose();
-		if (tableColumnItemProvider != null)
+		}
+		if (tableColumnItemProvider != null) {
 			tableColumnItemProvider.dispose();
-		if (tableDomainModelReferenceItemProvider != null)
+		}
+		if (tableDomainModelReferenceItemProvider != null) {
 			tableDomainModelReferenceItemProvider.dispose();
+		}
 	}
 
 	/**
@@ -454,8 +465,9 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 		 * 
 		 * @generated
 		 */
+		@Override
 		public Collection<Object> getNewChildDescriptors(Object object, EditingDomain editingDomain) {
-			ArrayList<Object> result = new ArrayList<Object>();
+			final ArrayList<Object> result = new ArrayList<Object>();
 			new CreationSwitch(result, editingDomain).doSwitch((EObject) object);
 			return result;
 		}
@@ -466,6 +478,7 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 		 * 
 		 * @generated
 		 */
+		@Override
 		public ResourceLocator getResourceLocator() {
 			return TableEditPlugin.INSTANCE;
 		}

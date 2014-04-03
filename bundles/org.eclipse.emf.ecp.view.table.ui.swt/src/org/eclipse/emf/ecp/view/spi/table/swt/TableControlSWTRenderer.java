@@ -58,6 +58,7 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.databinding.viewers.ObservableMapCellLabelProvider;
+import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IDialogLabelKeys;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -77,7 +78,9 @@ import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.EditingSupport;
 import org.eclipse.jface.viewers.IColorProvider;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.TableViewerEditor;
@@ -96,6 +99,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 
@@ -117,6 +121,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	private Label validationIcon;
 	private Button addButton;
 	private Button removeButton;
+	private Button detailEditButton;
 
 	/**
 	 * {@inheritDoc}
@@ -165,7 +170,6 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		titleComposite.setBackground(parent.getBackground());
 		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING)
 			.applyTo(titleComposite);
-		final boolean createButtons = !tableControlConfiguration.isAddRemoveDisabled();
 		GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(false).applyTo(titleComposite);
 
 		// TODO discuss
@@ -185,18 +189,23 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 		Button addButton = null;
 		Button removeButton = null;
-		if (createButtons) {
-			// addButtons
-			final Composite buttonComposite = new Composite(titleComposite, SWT.NONE);
-			GridDataFactory.fillDefaults().align(SWT.END, SWT.BEGINNING).grab(false, false).applyTo(buttonComposite);
-			final int numButtons = 2;
-
-			addButton = createAddRowButton(clazz, buttonComposite, mainSetting);
-
-			removeButton = createRemoveRowButton(clazz, buttonComposite, mainSetting);
-
-			GridLayoutFactory.fillDefaults().numColumns(numButtons).equalWidth(true).applyTo(buttonComposite);
+		final Composite buttonComposite = new Composite(titleComposite, SWT.NONE);
+		buttonComposite.setBackground(titleComposite.getBackground());
+		GridDataFactory.fillDefaults().align(SWT.END, SWT.BEGINNING).grab(false, false).applyTo(buttonComposite);
+		int numButtons = 2;
+		if (getVElement().isEnableDetailEditingDialog()) {
+			numButtons++;
+			createDetailEditButton(buttonComposite);
 		}
+		if (!tableControlConfiguration.isAddRemoveDisabled()) {
+			// addButtons
+			addButton = createAddRowButton(clazz, buttonComposite, mainSetting);
+			removeButton = createRemoveRowButton(clazz, buttonComposite, mainSetting);
+		}
+		else {
+			numButtons -= 2;
+		}
+		GridLayoutFactory.fillDefaults().numColumns(numButtons).equalWidth(false).applyTo(buttonComposite);
 		final Composite controlComposite = new Composite(composite, SWT.NONE);
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL)
 			.hint(1, 200)
@@ -255,6 +264,56 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		}
 
 		return composite;
+	}
+
+	private void createDetailEditButton(final Composite buttonComposite) {
+		detailEditButton = new Button(buttonComposite, SWT.PUSH);
+		// detailEditButton.setText("Edit in Detail");
+		detailEditButton.setImage(Activator.getImage("icons/detailEdit.png")); //$NON-NLS-1$
+		detailEditButton.setEnabled(false);
+		detailEditButton.addSelectionListener(new SelectionAdapter() {
+
+			/**
+			 * {@inheritDoc}
+			 * 
+			 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
+			 */
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				super.widgetSelected(e);
+				if (tableViewer.getSelection().isEmpty()) {
+					final MessageDialog dialog = new MessageDialog(buttonComposite.getShell(),
+						"No Table Selection", null,
+						"You must select one element in order to edit it.", MessageDialog.WARNING, new String[] {
+							JFaceResources.getString(IDialogLabelKeys.OK_LABEL_KEY) }, 0);
+
+					new ECPDialogExecutor(dialog) {
+
+						@Override
+						public void handleResult(int codeResult) {
+
+						}
+					}.execute();
+				} else {
+					openDetailEditDialog(buttonComposite.getShell());
+				}
+			}
+
+		});
+	}
+
+	private void openDetailEditDialog(Shell shell) {
+		final Dialog dialog = new DetailDialog(shell, (EObject) IStructuredSelection.class.cast(
+			tableViewer.getSelection()).getFirstElement());
+
+		new ECPDialogExecutor(dialog) {
+
+			@Override
+			public void handleResult(int codeResult) {
+
+			}
+		}.execute();
+
 	}
 
 	private TableViewer createTableViewer(Composite composite, EClass clazz,
@@ -349,6 +408,29 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			layout.setColumnData(tableViewer.getTable().getColumns()[i], new ColumnWeightData(storedValue == null ? 50
 				: storedValue));
 		}
+
+		tableViewer.addSelectionChangedListener(new ISelectionChangedListener() {
+
+			@Override
+			public void selectionChanged(SelectionChangedEvent event) {
+				if (event.getSelection().isEmpty()) {
+					if (detailEditButton != null) {
+						detailEditButton.setEnabled(false);
+					}
+					if (removeButton != null) {
+						removeButton.setEnabled(false);
+					}
+				}
+				else {
+					if (detailEditButton != null && IStructuredSelection.class.cast(event.getSelection()).size() == 1) {
+						detailEditButton.setEnabled(true);
+					}
+					if (removeButton != null) {
+						removeButton.setEnabled(true);
+					}
+				}
+			}
+		});
 		return tableViewer;
 	}
 
@@ -412,6 +494,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		removeButton = new Button(buttonComposite, SWT.None);
 		final Image image = Activator.getImage(ICON_DELETE);
 		removeButton.setImage(image);
+		removeButton.setEnabled(false);
 		removeButton.setToolTipText(String.format(ControlMessages.TableControl_RemoveSelected
 			, clazz.getInstanceClass().getSimpleName()));
 
@@ -509,6 +592,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	protected void applyValidation() {
 		Display.getDefault().asyncExec(new Runnable() {
 
+			@Override
 			public void run() {
 				// triggered due to another validation rule before this control is rendered
 				if (validationIcon == null) {
@@ -730,6 +814,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		 * 
 		 * @see org.eclipse.jface.viewers.IColorProvider#getForeground(java.lang.Object)
 		 */
+		@Override
 		public Color getForeground(Object element) {
 			return null;
 		}
@@ -739,6 +824,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		 * 
 		 * @see org.eclipse.jface.viewers.IColorProvider#getBackground(java.lang.Object)
 		 */
+		@Override
 		public Color getBackground(Object element) {
 			final VDiagnostic vDiagnostic = vTableControl.getDiagnostic();
 			final List<Diagnostic> diagnostic = vDiagnostic.getDiagnostic((EObject) element, feature);

@@ -76,12 +76,14 @@ public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 			int currentObject = -1;
 			int currentAttribute = 0;
 
+			@Override
 			public boolean hasNext() {
 				return numElems > 0
 					&& ((EList<?>) lastResolvedEObject.eGet(getDomainModelEFeature())).size()
 						* control.getColumns().size() + 1 >= numElems;
 			}
 
+			@Override
 			public Setting next() {
 				Setting result;
 				if (currentObject == -1) {
@@ -101,6 +103,7 @@ public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 				return result;
 			}
 
+			@Override
 			public void remove() {
 				// TODO Auto-generated method stub
 
@@ -131,10 +134,12 @@ public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 		return new Iterator<EStructuralFeature>() {
 			private int counter = 0;
 
+			@Override
 			public boolean hasNext() {
 				return control.getColumns().size() + 1 > counter;
 			}
 
+			@Override
 			public EStructuralFeature next() {
 				EStructuralFeature result = null;
 				if (0 == counter) {
@@ -147,6 +152,7 @@ public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 				return result;
 			}
 
+			@Override
 			public void remove() {
 			}
 		};

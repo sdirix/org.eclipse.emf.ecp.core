@@ -6,6 +6,8 @@
         eType="#//TableColumn" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="addRemoveDisabled" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean" defaultValueLiteral="false"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="enableDetailEditingDialog"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean" defaultValueLiteral="false"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TableColumn">
     <eStructuralFeatures xsi:type="ecore:EReference" name="attribute" lowerBound="1"

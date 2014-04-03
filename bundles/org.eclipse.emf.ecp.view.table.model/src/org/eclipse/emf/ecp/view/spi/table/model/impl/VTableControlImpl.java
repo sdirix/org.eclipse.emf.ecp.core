@@ -36,6 +36,8 @@ import org.eclipse.emf.ecp.view.spi.table.model.VTablePackage;
  * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.impl.VTableControlImpl#getColumns <em>Columns</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.impl.VTableControlImpl#isAddRemoveDisabled <em>Add Remove
  * Disabled</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.impl.VTableControlImpl#isEnableDetailEditingDialog <em>Enable
+ * Detail Editing Dialog</em>}</li>
  * </ul>
  * </p>
  * 
@@ -77,6 +79,29 @@ public class VTableControlImpl extends VControlImpl implements VTableControl
 	protected boolean addRemoveDisabled = ADD_REMOVE_DISABLED_EDEFAULT;
 
 	/**
+	 * The default value of the '{@link #isEnableDetailEditingDialog() <em>Enable Detail Editing Dialog</em>}'
+	 * attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see #isEnableDetailEditingDialog()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean ENABLE_DETAIL_EDITING_DIALOG_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isEnableDetailEditingDialog() <em>Enable Detail Editing Dialog</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see #isEnableDetailEditingDialog()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean enableDetailEditingDialog = ENABLE_DETAIL_EDITING_DIALOG_EDEFAULT;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
@@ -105,6 +130,7 @@ public class VTableControlImpl extends VControlImpl implements VTableControl
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EList<VTableColumn> getColumns()
 	{
 		if (columns == null)
@@ -121,6 +147,7 @@ public class VTableControlImpl extends VControlImpl implements VTableControl
 	 * 
 	 * @generated
 	 */
+	@Override
 	public boolean isAddRemoveDisabled()
 	{
 		return addRemoveDisabled;
@@ -132,13 +159,45 @@ public class VTableControlImpl extends VControlImpl implements VTableControl
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setAddRemoveDisabled(boolean newAddRemoveDisabled)
 	{
-		boolean oldAddRemoveDisabled = addRemoveDisabled;
+		final boolean oldAddRemoveDisabled = addRemoveDisabled;
 		addRemoveDisabled = newAddRemoveDisabled;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, VTablePackage.TABLE_CONTROL__ADD_REMOVE_DISABLED,
 				oldAddRemoveDisabled, addRemoveDisabled));
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	@Override
+	public boolean isEnableDetailEditingDialog()
+	{
+		return enableDetailEditingDialog;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	@Override
+	public void setEnableDetailEditingDialog(boolean newEnableDetailEditingDialog)
+	{
+		final boolean oldEnableDetailEditingDialog = enableDetailEditingDialog;
+		enableDetailEditingDialog = newEnableDetailEditingDialog;
+		if (eNotificationRequired()) {
+			eNotify(new ENotificationImpl(this, Notification.SET,
+				VTablePackage.TABLE_CONTROL__ENABLE_DETAIL_EDITING_DIALOG, oldEnableDetailEditingDialog,
+				enableDetailEditingDialog));
+		}
 	}
 
 	/**
@@ -173,6 +232,8 @@ public class VTableControlImpl extends VControlImpl implements VTableControl
 			return getColumns();
 		case VTablePackage.TABLE_CONTROL__ADD_REMOVE_DISABLED:
 			return isAddRemoveDisabled();
+		case VTablePackage.TABLE_CONTROL__ENABLE_DETAIL_EDITING_DIALOG:
+			return isEnableDetailEditingDialog();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -196,6 +257,9 @@ public class VTableControlImpl extends VControlImpl implements VTableControl
 		case VTablePackage.TABLE_CONTROL__ADD_REMOVE_DISABLED:
 			setAddRemoveDisabled((Boolean) newValue);
 			return;
+		case VTablePackage.TABLE_CONTROL__ENABLE_DETAIL_EDITING_DIALOG:
+			setEnableDetailEditingDialog((Boolean) newValue);
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -217,6 +281,9 @@ public class VTableControlImpl extends VControlImpl implements VTableControl
 		case VTablePackage.TABLE_CONTROL__ADD_REMOVE_DISABLED:
 			setAddRemoveDisabled(ADD_REMOVE_DISABLED_EDEFAULT);
 			return;
+		case VTablePackage.TABLE_CONTROL__ENABLE_DETAIL_EDITING_DIALOG:
+			setEnableDetailEditingDialog(ENABLE_DETAIL_EDITING_DIALOG_EDEFAULT);
+			return;
 		}
 		super.eUnset(featureID);
 	}
@@ -236,6 +303,8 @@ public class VTableControlImpl extends VControlImpl implements VTableControl
 			return columns != null && !columns.isEmpty();
 		case VTablePackage.TABLE_CONTROL__ADD_REMOVE_DISABLED:
 			return addRemoveDisabled != ADD_REMOVE_DISABLED_EDEFAULT;
+		case VTablePackage.TABLE_CONTROL__ENABLE_DETAIL_EDITING_DIALOG:
+			return enableDetailEditingDialog != ENABLE_DETAIL_EDITING_DIALOG_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -249,12 +318,15 @@ public class VTableControlImpl extends VControlImpl implements VTableControl
 	@Override
 	public String toString()
 	{
-		if (eIsProxy())
+		if (eIsProxy()) {
 			return super.toString();
+		}
 
-		StringBuffer result = new StringBuffer(super.toString());
+		final StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (addRemoveDisabled: "); //$NON-NLS-1$
 		result.append(addRemoveDisabled);
+		result.append(", enableDetailEditingDialog: "); //$NON-NLS-1$
+		result.append(enableDetailEditingDialog);
 		result.append(')');
 		return result.toString();
 	}

@@ -24,6 +24,8 @@ import org.eclipse.emf.ecp.view.spi.model.VControl;
  * <ul>
  * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl#getColumns <em>Columns</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl#isAddRemoveDisabled <em>Add Remove Disabled</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl#isEnableDetailEditingDialog <em>Enable Detail
+ * Editing Dialog</em>}</li>
  * </ul>
  * </p>
  * 
@@ -79,5 +81,35 @@ public interface VTableControl extends VControl
 	 * @generated
 	 */
 	void setAddRemoveDisabled(boolean value);
+
+	/**
+	 * Returns the value of the '<em><b>Enable Detail Editing Dialog</b></em>' attribute.
+	 * The default value is <code>"false"</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Enable Detail Editing Dialog</em>' attribute isn't clear, there really should be more
+	 * of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the value of the '<em>Enable Detail Editing Dialog</em>' attribute.
+	 * @see #setEnableDetailEditingDialog(boolean)
+	 * @see org.eclipse.emf.ecp.view.spi.table.model.VTablePackage#getTableControl_EnableDetailEditingDialog()
+	 * @model default="false"
+	 * @generated
+	 */
+	boolean isEnableDetailEditingDialog();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl#isEnableDetailEditingDialog
+	 * <em>Enable Detail Editing Dialog</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @param value the new value of the '<em>Enable Detail Editing Dialog</em>' attribute.
+	 * @see #isEnableDetailEditingDialog()
+	 * @generated
+	 */
+	void setEnableDetailEditingDialog(boolean value);
 
 } // VTableControl

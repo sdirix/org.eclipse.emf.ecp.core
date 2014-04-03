@@ -179,6 +179,7 @@ public final class SWTValidationHelper {
 				final VTControlValidationTemplate validationTemplate = VTTemplateFactory.eINSTANCE
 					.createControlValidationTemplate();
 				defaultTemplate.setControlValidationConfiguration(validationTemplate);
+				validationTemplate.setOkColorHEX("ffffff"); //$NON-NLS-1$
 				validationTemplate.setErrorColorHEX("ff0000"); //$NON-NLS-1$
 				validationTemplate.setWarningColorHEX("FFD800");//$NON-NLS-1$
 				validationTemplate.setErrorImageURL(Activator.getDefault().getBundle()

@@ -99,11 +99,12 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage
 	 */
 	public static VTablePackage init()
 	{
-		if (isInited)
+		if (isInited) {
 			return (VTablePackage) EPackage.Registry.INSTANCE.getEPackage(VTablePackage.eNS_URI);
+		}
 
 		// Obtain or create and register package
-		VTablePackageImpl theTablePackage = (VTablePackageImpl) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof VTablePackageImpl ? EPackage.Registry.INSTANCE
+		final VTablePackageImpl theTablePackage = (VTablePackageImpl) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof VTablePackageImpl ? EPackage.Registry.INSTANCE
 			.get(eNS_URI)
 			: new VTablePackageImpl());
 
@@ -132,6 +133,7 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EClass getTableControl()
 	{
 		return tableControlEClass;
@@ -143,6 +145,7 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EReference getTableControl_Columns()
 	{
 		return (EReference) tableControlEClass.getEStructuralFeatures().get(0);
@@ -154,6 +157,7 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EAttribute getTableControl_AddRemoveDisabled()
 	{
 		return (EAttribute) tableControlEClass.getEStructuralFeatures().get(1);
@@ -165,6 +169,19 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage
 	 * 
 	 * @generated
 	 */
+	@Override
+	public EAttribute getTableControl_EnableDetailEditingDialog()
+	{
+		return (EAttribute) tableControlEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	@Override
 	public EClass getTableColumn()
 	{
 		return tableColumnEClass;
@@ -176,6 +193,7 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EReference getTableColumn_Attribute()
 	{
 		return (EReference) tableColumnEClass.getEStructuralFeatures().get(0);
@@ -187,6 +205,7 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EAttribute getTableColumn_ReadOnly()
 	{
 		return (EAttribute) tableColumnEClass.getEStructuralFeatures().get(1);
@@ -198,6 +217,7 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EClass getTableDomainModelReference()
 	{
 		return tableDomainModelReferenceEClass;
@@ -209,6 +229,7 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage
 	 * 
 	 * @generated
 	 */
+	@Override
 	public VTableFactory getTableFactory()
 	{
 		return (VTableFactory) getEFactoryInstance();
@@ -232,14 +253,16 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage
 	 */
 	public void createPackageContents()
 	{
-		if (isCreated)
+		if (isCreated) {
 			return;
+		}
 		isCreated = true;
 
 		// Create classes and their features
 		tableControlEClass = createEClass(TABLE_CONTROL);
 		createEReference(tableControlEClass, TABLE_CONTROL__COLUMNS);
 		createEAttribute(tableControlEClass, TABLE_CONTROL__ADD_REMOVE_DISABLED);
+		createEAttribute(tableControlEClass, TABLE_CONTROL__ENABLE_DETAIL_EDITING_DIALOG);
 
 		tableColumnEClass = createEClass(TABLE_COLUMN);
 		createEReference(tableColumnEClass, TABLE_COLUMN__ATTRIBUTE);
@@ -266,8 +289,9 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage
 	 */
 	public void initializePackageContents()
 	{
-		if (isInitialized)
+		if (isInitialized) {
 			return;
+		}
 		isInitialized = true;
 
 		// Initialize package
@@ -276,8 +300,9 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage
 		setNsURI(eNS_URI);
 
 		// Obtain other dependent packages
-		VViewPackage theViewPackage = (VViewPackage) EPackage.Registry.INSTANCE.getEPackage(VViewPackage.eNS_URI);
-		EcorePackage theEcorePackage = (EcorePackage) EPackage.Registry.INSTANCE.getEPackage(EcorePackage.eNS_URI);
+		final VViewPackage theViewPackage = (VViewPackage) EPackage.Registry.INSTANCE.getEPackage(VViewPackage.eNS_URI);
+		final EcorePackage theEcorePackage = (EcorePackage) EPackage.Registry.INSTANCE
+			.getEPackage(EcorePackage.eNS_URI);
 
 		// Create type parameters
 
@@ -292,13 +317,17 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage
 			"TableControl", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(
 			getTableControl_Columns(),
-			this.getTableColumn(),
+			getTableColumn(),
 			null,
 			"columns", null, 0, -1, VTableControl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEAttribute(
 			getTableControl_AddRemoveDisabled(),
 			ecorePackage.getEBoolean(),
 			"addRemoveDisabled", "false", 1, 1, VTableControl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEAttribute(
+			getTableControl_EnableDetailEditingDialog(),
+			ecorePackage.getEBoolean(),
+			"enableDetailEditingDialog", "false", 0, 1, VTableControl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 
 		initEClass(tableColumnEClass, VTableColumn.class,
 			"TableColumn", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$

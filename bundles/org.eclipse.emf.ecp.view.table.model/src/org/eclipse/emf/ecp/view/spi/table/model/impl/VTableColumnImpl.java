@@ -98,17 +98,19 @@ public class VTableColumnImpl extends EObjectImpl implements VTableColumn
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EAttribute getAttribute()
 	{
 		if (attribute != null && attribute.eIsProxy())
 		{
-			InternalEObject oldAttribute = (InternalEObject) attribute;
+			final InternalEObject oldAttribute = (InternalEObject) attribute;
 			attribute = (EAttribute) eResolveProxy(oldAttribute);
 			if (attribute != oldAttribute)
 			{
-				if (eNotificationRequired())
+				if (eNotificationRequired()) {
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, VTablePackage.TABLE_COLUMN__ATTRIBUTE,
 						oldAttribute, attribute));
+				}
 			}
 		}
 		return attribute;
@@ -131,13 +133,15 @@ public class VTableColumnImpl extends EObjectImpl implements VTableColumn
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setAttribute(EAttribute newAttribute)
 	{
-		EAttribute oldAttribute = attribute;
+		final EAttribute oldAttribute = attribute;
 		attribute = newAttribute;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, VTablePackage.TABLE_COLUMN__ATTRIBUTE, oldAttribute,
 				attribute));
+		}
 	}
 
 	/**
@@ -146,6 +150,7 @@ public class VTableColumnImpl extends EObjectImpl implements VTableColumn
 	 * 
 	 * @generated
 	 */
+	@Override
 	public boolean isReadOnly()
 	{
 		return readOnly;
@@ -157,13 +162,15 @@ public class VTableColumnImpl extends EObjectImpl implements VTableColumn
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setReadOnly(boolean newReadOnly)
 	{
-		boolean oldReadOnly = readOnly;
+		final boolean oldReadOnly = readOnly;
 		readOnly = newReadOnly;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, VTablePackage.TABLE_COLUMN__READ_ONLY, oldReadOnly,
 				readOnly));
+		}
 	}
 
 	/**
@@ -178,8 +185,9 @@ public class VTableColumnImpl extends EObjectImpl implements VTableColumn
 		switch (featureID)
 		{
 		case VTablePackage.TABLE_COLUMN__ATTRIBUTE:
-			if (resolve)
+			if (resolve) {
 				return getAttribute();
+			}
 			return basicGetAttribute();
 		case VTablePackage.TABLE_COLUMN__READ_ONLY:
 			return isReadOnly();
@@ -257,10 +265,11 @@ public class VTableColumnImpl extends EObjectImpl implements VTableColumn
 	@Override
 	public String toString()
 	{
-		if (eIsProxy())
+		if (eIsProxy()) {
 			return super.toString();
+		}
 
-		StringBuffer result = new StringBuffer(super.toString());
+		final StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (readOnly: "); //$NON-NLS-1$
 		result.append(readOnly);
 		result.append(')');
