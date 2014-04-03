@@ -37,6 +37,7 @@ public class DefaultFilter implements ECPFilterProvider {
 	 * 
 	 * @return a {@link Set} of {@link String Strings} of the default packages in the modeling edition of eclipse
 	 */
+	@Override
 	public Set<String> getHiddenPackages() {
 		final Set<String> packages = new HashSet<String>();
 		addE4Models(packages);
@@ -88,6 +89,10 @@ public class DefaultFilter implements ECPFilterProvider {
 
 		packages.add("http://org/eclipse/emf/ecp/view/categorization/model"); //$NON-NLS-1$
 		packages.add("http://org/eclipse/emf/ecp/view/template/model"); //$NON-NLS-1$
+		packages.add("http://org/eclipse/emf/ecp/view/template/style/validation/model"); //$NON-NLS-1$
+		packages.add("http://org/eclipse/emf/ecp/view/template/style/alignment/model"); //$NON-NLS-1$
+		packages.add("http://org/eclipse/emf/ecp/view/template/selector/domainmodelreference/model"); //$NON-NLS-1$
+
 		packages.add("http://org/eclipse/emf/ecp/view/treemasterview/model"); //$NON-NLS-1$
 
 	}
