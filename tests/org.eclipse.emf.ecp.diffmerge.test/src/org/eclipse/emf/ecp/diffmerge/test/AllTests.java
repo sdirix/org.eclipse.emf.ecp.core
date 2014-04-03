@@ -22,7 +22,7 @@ import org.junit.runners.Suite.SuiteClasses;
  * 
  */
 @RunWith(Suite.class)
-@SuiteClasses({ DiffTests.class, MergeTests.class })
+@SuiteClasses({ DiffTests.class, MergeTests.class, SaveLoadTests.class })
 public class AllTests {
 
 }

@@ -28,9 +28,14 @@ import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
+import org.eclipse.emf.ecp.view.spi.table.model.VTableColumn;
+import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
+import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.table.model.VTableFactory;
 import org.eclipse.emf.emfstore.bowling.BowlingFactory;
 import org.eclipse.emf.emfstore.bowling.BowlingPackage;
 import org.eclipse.emf.emfstore.bowling.Gender;
+import org.eclipse.emf.emfstore.bowling.League;
 import org.eclipse.emf.emfstore.bowling.Player;
 import org.junit.Test;
 
@@ -112,5 +117,43 @@ public class SaveLoadTests {
 		player.setIsProfessional(professional);
 		player.setNumberOfVictories(numberOfVictories);
 		return player;
+	}
+
+	@Test
+	public void testTableDomainModelReference() {
+
+		final VView view = VViewFactory.eINSTANCE.createView();
+
+		final VTableControl vControlPlayers = VTableFactory.eINSTANCE.createTableControl();
+		vControlPlayers.setDomainModelReference(BowlingPackage.eINSTANCE.getLeague_Players());
+		final VTableColumn col = VTableFactory.eINSTANCE.createTableColumn();
+		col.setAttribute(BowlingPackage.eINSTANCE.getPlayer_Name());
+		vControlPlayers.getColumns().add(col);
+		view.getChildren().add(vControlPlayers);
+
+		final League left = createLeague("a"); //$NON-NLS-1$
+		final League right = createLeague("a"); //$NON-NLS-1$
+		final League target = createLeague("b"); //$NON-NLS-1$
+
+		final Set<VDomainModelReference> savedObjects = new LinkedHashSet<VDomainModelReference>();
+		final VTableDomainModelReference tableDomainModelReference = VTableFactory.eINSTANCE
+			.createTableDomainModelReference();
+		tableDomainModelReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getLeague_Players());
+		savedObjects.add(tableDomainModelReference);
+
+		final DiffMergeModelContext context2 = DiffMergeContextFactory.INSTANCE.createViewModelContext(view, target,
+			left, right, savedObjects);
+
+		assertTrue(context2.isControlMerged(vControlPlayers));
+	}
+
+	private League createLeague(String name) {
+		final League league = BowlingFactory.eINSTANCE.createLeague();
+		league.setName(name);
+		final Player player = BowlingFactory.eINSTANCE.createPlayer();
+		league.getPlayers().add(player);
+		final Player player2 = BowlingFactory.eINSTANCE.createPlayer();
+		league.getPlayers().add(player2);
+		return league;
 	}
 }

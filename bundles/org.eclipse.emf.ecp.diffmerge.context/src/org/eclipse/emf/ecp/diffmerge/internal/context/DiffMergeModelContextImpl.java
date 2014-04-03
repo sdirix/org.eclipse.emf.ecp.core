@@ -130,6 +130,9 @@ public class DiffMergeModelContextImpl extends ViewModelContextImpl implements
 			while (iterator.hasNext()) {
 				final Setting setting = iterator.next();
 				final Set<VControl> controls = getControlsFor(setting);
+				if (controls == null) {
+					continue;
+				}
 				for (final VControl vControl : controls) {
 					markControl(vControl, true);
 				}
@@ -235,11 +238,13 @@ public class DiffMergeModelContextImpl extends ViewModelContextImpl implements
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public EObject getLeftModel() {
 		return left;
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public EObject getRightModel() {
 		return right;
 	}
@@ -249,6 +254,7 @@ public class DiffMergeModelContextImpl extends ViewModelContextImpl implements
 	 * 
 	 * @see org.eclipse.emf.ecp.diffmerge.spi.context.DiffMergeModelContext#hasDiff(org.eclipse.emf.ecp.view.spi.model.VControl)
 	 */
+	@Override
 	public boolean hasDiff(VControl control) {
 		return controlDiffMap.containsKey(control);
 	}
@@ -258,6 +264,7 @@ public class DiffMergeModelContextImpl extends ViewModelContextImpl implements
 	 * 
 	 * @see org.eclipse.emf.ecp.diffmerge.spi.context.DiffMergeModelContext#getPairWithDiff(org.eclipse.emf.ecp.view.spi.model.VControl)
 	 */
+	@Override
 	public ControlPair getPairWithDiff(VControl control) {
 		return controlDiffMap.get(control);
 	}
@@ -267,6 +274,7 @@ public class DiffMergeModelContextImpl extends ViewModelContextImpl implements
 	 * 
 	 * @see org.eclipse.emf.ecp.diffmerge.spi.context.DiffMergeModelContext#getTotalNumberOfDiffs()
 	 */
+	@Override
 	public int getTotalNumberOfDiffs() {
 		return diffControls.size();
 	}
@@ -276,6 +284,7 @@ public class DiffMergeModelContextImpl extends ViewModelContextImpl implements
 	 * 
 	 * @see org.eclipse.emf.ecp.diffmerge.spi.context.DiffMergeModelContext#getIndexOf(org.eclipse.emf.ecp.view.spi.model.VControl)
 	 */
+	@Override
 	public int getIndexOf(VControl control) {
 		return diffControls.indexOf(control);
 	}
@@ -285,6 +294,7 @@ public class DiffMergeModelContextImpl extends ViewModelContextImpl implements
 	 * 
 	 * @see org.eclipse.emf.ecp.diffmerge.spi.context.DiffMergeModelContext#getControl(int)
 	 */
+	@Override
 	public VControl getControl(int diffIndex) throws IllegalArgumentException {
 		if (diffIndex < 0) {
 			throw new IllegalArgumentException("The index must be 0 or greater."); //$NON-NLS-1$
@@ -301,6 +311,7 @@ public class DiffMergeModelContextImpl extends ViewModelContextImpl implements
 	 * 
 	 * @see org.eclipse.emf.ecp.diffmerge.spi.context.DiffMergeModelContext#isControlMerged(org.eclipse.emf.ecp.view.spi.model.VControl)
 	 */
+	@Override
 	public boolean isControlMerged(VControl vControl) {
 		if (!diffControls.contains(vControl)) {
 			return true;
@@ -318,6 +329,7 @@ public class DiffMergeModelContextImpl extends ViewModelContextImpl implements
 	 * @see org.eclipse.emf.ecp.diffmerge.spi.context.DiffMergeModelContext#markControl(org.eclipse.emf.ecp.view.spi.model.VControl,
 	 *      boolean)
 	 */
+	@Override
 	public void markControl(VControl vControl, boolean merged) {
 		if (merged) {
 			mergedControls.add(vControl);
@@ -334,6 +346,7 @@ public class DiffMergeModelContextImpl extends ViewModelContextImpl implements
 	 * 
 	 * @see org.eclipse.emf.ecp.diffmerge.spi.context.DiffMergeModelContext#getMergedDomainObjects()
 	 */
+	@Override
 	public Set<VDomainModelReference> getMergedDomainObjects() {
 		final Set<VDomainModelReference> result = new LinkedHashSet<VDomainModelReference>();
 		for (final VControl control : mergedControls) {

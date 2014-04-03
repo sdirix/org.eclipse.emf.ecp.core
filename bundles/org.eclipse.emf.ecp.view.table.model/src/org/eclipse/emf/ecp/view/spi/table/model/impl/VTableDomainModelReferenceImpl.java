@@ -18,6 +18,7 @@ import java.util.Set;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -68,29 +69,46 @@ public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 			return settings.iterator();
 		}
 		final VTableControl control = findTableControl();
+		final EList<EStructuralFeature> allFeatures = EReference.class.cast(getDomainModelEFeature())
+			.getEReferenceType().getEAllStructuralFeatures();
+		int numColumns = 1;
+		if (control != null) {
+			numColumns = control.getColumns().size();
+		}
+		else {
+			numColumns = allFeatures.size();
+		}
 
+		final int numElems = 1 + ((EList<?>) lastResolvedEObject.eGet(getDomainModelEFeature())).size()
+			* numColumns;
 		return new Iterator<EStructuralFeature.Setting>() {
 			// 1 for the tablereference + numElements*numColumns
-			int numElems = 1 + ((EList<?>) lastResolvedEObject.eGet(getDomainModelEFeature())).size()
-				* control.getColumns().size();
+
 			int currentObject = -1;
 			int currentAttribute = 0;
 
+			int returnedElements = 0;
+
 			@Override
 			public boolean hasNext() {
-				return numElems > 0
+				if (control != null) {
+					return numElems > returnedElements
+						&& ((EList<?>) lastResolvedEObject.eGet(getDomainModelEFeature())).size()
+							* control.getColumns().size() + 1 >= numElems - returnedElements;
+				}
+				return numElems > returnedElements
 					&& ((EList<?>) lastResolvedEObject.eGet(getDomainModelEFeature())).size()
-						* control.getColumns().size() + 1 >= numElems;
+						* allFeatures.size() + 1 >= numElems - returnedElements;
 			}
 
 			@Override
 			public Setting next() {
-				Setting result;
+				Setting result = null;
 				if (currentObject == -1) {
 					result = ((InternalEObject) lastResolvedEObject).eSetting(getDomainModelEFeature());
 					currentObject++;
 				}
-				else {
+				else if (control != null) {
 
 					result = ((InternalEObject) ((EList<?>) lastResolvedEObject.eGet(getDomainModelEFeature()))
 						.get(currentObject)).eSetting(control.getColumns().get(currentAttribute++).getAttribute());
@@ -99,7 +117,16 @@ public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 						currentObject++;
 					}
 				}
-				numElems--;
+				else {
+
+					result = ((InternalEObject) ((EList<?>) lastResolvedEObject.eGet(getDomainModelEFeature()))
+						.get(currentObject)).eSetting(allFeatures.get(currentAttribute++));
+					if (currentAttribute == allFeatures.size()) {
+						currentAttribute = 0;
+						currentObject++;
+					}
+				}
+				returnedElements++;
 				return result;
 			}
 
@@ -117,7 +144,7 @@ public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	 */
 	private VTableControl findTableControl() {
 		EObject parent = eContainer();
-		while (!VTableControl.class.isInstance(parent)) {
+		while (!VTableControl.class.isInstance(parent) && parent != null) {
 			parent = parent.eContainer();
 		}
 		return (VTableControl) parent;
@@ -131,12 +158,17 @@ public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	@Override
 	public Iterator<EStructuralFeature> getEStructuralFeatureIterator() {
 		final VTableControl control = findTableControl();
+		final EList<EStructuralFeature> allFeatures = EReference.class.cast(getDomainModelEFeature())
+			.getEReferenceType().getEAllStructuralFeatures();
 		return new Iterator<EStructuralFeature>() {
 			private int counter = 0;
 
 			@Override
 			public boolean hasNext() {
-				return control.getColumns().size() + 1 > counter;
+				if (control != null) {
+					return control.getColumns().size() + 1 > counter;
+				}
+				return allFeatures.size() + 1 > counter;
 			}
 
 			@Override
@@ -146,7 +178,11 @@ public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 					result = getDomainModelEFeature();
 				}
 				else {
-					result = control.getColumns().get(counter - 1).getAttribute();
+					if (control != null) {
+						result = control.getColumns().get(counter - 1).getAttribute();
+					} else {
+						result = allFeatures.get(counter - 1);
+					}
 				}
 				counter++;
 				return result;
