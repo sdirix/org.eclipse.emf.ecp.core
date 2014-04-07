@@ -79,7 +79,15 @@ public class DetailDialog extends Dialog {
 	@Override
 	protected Point getInitialSize() {
 		final Point p = super.getInitialSize();
-		return new Point(Math.round(p.x * 1.5f), Math.round(p.y / 1.5f));
+		int height = p.y;
+		int width = p.x;
+		if (height > 800) {
+			height = Math.round(height / 1.5f);
+		}
+		if (width < 600) {
+			width = Math.round(width * 1.5f);
+		}
+		return new Point(width, height);
 	}
 
 	@Override
@@ -136,7 +144,7 @@ public class DetailDialog extends Dialog {
 
 	@Override
 	protected void createButtonsForButtonBar(Composite parent) {
-		createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL,
+		createButton(parent, IDialogConstants.OK_ID, "OK", //$NON-NLS-1$
 			true);
 	}
 
