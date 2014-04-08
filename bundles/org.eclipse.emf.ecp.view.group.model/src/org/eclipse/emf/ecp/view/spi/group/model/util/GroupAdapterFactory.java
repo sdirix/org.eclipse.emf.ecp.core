@@ -29,7 +29,6 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
  * 
  * @see org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage
  * @generated
- * @since 1.2
  */
 public class GroupAdapterFactory extends AdapterFactoryImpl {
 	/**

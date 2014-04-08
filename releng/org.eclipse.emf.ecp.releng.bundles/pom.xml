@@ -109,6 +109,8 @@
 		<module>../../bundles/org.eclipse.emf.ecp.view.group.model</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.group.model.edit</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.group.ui.swt</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.group.swt.embedded</module>
+		
 
 		<!-- Rule Feature -->
 		<module>../../bundles/org.eclipse.emf.ecp.view.rule</module>

@@ -63,20 +63,24 @@ public class ViewSWTRenderer extends ContainerSWTRenderer<VView> {
 		Control control) {
 		if (VControl.class.isInstance(vElement)) {
 			// last column of control
-			if (gridCell.getColumn() + 1 == controlGridDescription.getColumns()) {
-				getControlGridData(1 + fullGridDescription.getColumns()
+			if (gridCell.getColumn() + gridCell.getHorizontalSpan() == controlGridDescription.getColumns()) {
+				getControlGridData(gridCell.getHorizontalSpan() + fullGridDescription.getColumns()
 					- currentRowGridDescription.getColumns(), VControl.class.cast(vElement), control).applyTo(control);
-			} else if (controlGridDescription.getColumns() == 3 && gridCell.getColumn() == 0) {
+			} else if (gridCell.getColumn() == 0) { // controlGridDescription.getColumns() == 3 &&
 				GridDataFactory.fillDefaults().grab(false, false)
 					.align(SWT.BEGINNING, SWT.CENTER).applyTo(control);
-			} else if (controlGridDescription.getColumns() == 3 && gridCell.getColumn() == 1) {
+			} else if (gridCell.getColumn() == 1) { // controlGridDescription.getColumns() == 3 &&
 				GridDataFactory.fillDefaults().align(SWT.CENTER, SWT.CENTER)
 					.hint(16, 17).grab(false, false).applyTo(control);
 			}
 		} else {
 			// we have some kind of container -> render with necessary span
-			GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL)
-				.grab(true, true).span(1 + fullGridDescription.getColumns()
+			GridDataFactory
+				.fillDefaults()
+				.align(gridCell.isHorizontalFill() ? SWT.FILL : SWT.BEGINNING,
+					gridCell.isVerticalFill() ? SWT.FILL : SWT.CENTER)
+				.grab(gridCell.isHorizontalGrab(), gridCell.isVerticalGrab())
+				.span(gridCell.getHorizontalSpan() + fullGridDescription.getColumns()
 					- currentRowGridDescription.getColumns(), 1).applyTo(control);
 		}
 

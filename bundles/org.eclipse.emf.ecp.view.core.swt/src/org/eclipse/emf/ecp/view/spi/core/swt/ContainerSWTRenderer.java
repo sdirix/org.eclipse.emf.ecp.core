@@ -150,14 +150,15 @@ public abstract class ContainerSWTRenderer<VELEMENT extends VElement> extends Ab
 					if (control == null) {
 						continue;
 					}
+
 					// TODO possible layout issues?
 					setLayoutDataForControl(childGridCell, controlGridDescription.get(child), gridDescription,
 						maximalGridDescription,
-						child, control);
+						childGridCell.getRenderer().getVElement(), control);
 
 				}
-				for (final AbstractSWTRenderer<VElement> renderer : elementRendererMap.get(child)) {
-					renderer.finalizeRendering(columnComposite);
+				for (final GridCell childGridCell : gridDescription.getGrid()) {
+					childGridCell.getRenderer().finalizeRendering(columnComposite);
 				}
 			} catch (final NoPropertyDescriptorFoundExeption ex) {
 				Activator.getDefault().getLog()

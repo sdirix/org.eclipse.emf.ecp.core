@@ -79,11 +79,13 @@ public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public ECPProject createProject(ECPProvider provider, String name) throws ECPProjectWithNameExistsException {
 		return this.createProject(provider, name, ECPUtil.createProperties());
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public ECPProject createProject(ECPProvider provider, String name, ECPProperties properties)
 		throws ECPProjectWithNameExistsException {
 		if (projectExists(name)) {
@@ -98,6 +100,7 @@ public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public ECPProject createProject(ECPRepository repository, String name, ECPProperties properties)
 		throws ECPProjectWithNameExistsException {
 		if (projectExists(name)) {
@@ -108,6 +111,7 @@ public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public ECPProject createProject(ECPProject project, String name) {
 		final InternalProject internalProject = (InternalProject) project;
 		final InternalProject newProject = internalProject.clone(name);
@@ -126,6 +130,7 @@ public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public InternalProject getProject(Object adaptable) {
 		if (adaptable instanceof ECPProjectAware) {
 			final ECPProjectAware projectAware = (ECPProjectAware) adaptable;
@@ -151,11 +156,13 @@ public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public InternalProject getProject(String name) {
 		return getElement(name);
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public Collection<ECPProject> getProjects() {
 		initializeProjects();
 		return (Collection) getElements();
@@ -223,13 +230,15 @@ public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void repositoriesChanged(Collection<ECPRepository> oldRepositories, Collection<ECPRepository> newRepositories) {
 		final Set<ECPRepository> addedRepositories = InternalUtil.getAddedElements(oldRepositories, newRepositories);
 		final Collection<InternalProject> projects = getElements();
 
 		for (final ECPRepository repository : addedRepositories) {
 			for (final InternalProject project : projects) {
-				if (!project.isOpen() && project.getRepository().getName().equals(repository.getName())) {
+				if (!project.isOpen() && project.getRepository() != null
+					&& repository.getName().equals(project.getRepository().getName())) {
 					project.undispose((InternalRepository) repository);
 				}
 			}

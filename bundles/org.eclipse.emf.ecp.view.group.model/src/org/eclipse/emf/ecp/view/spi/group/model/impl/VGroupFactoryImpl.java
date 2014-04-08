@@ -12,10 +12,12 @@
 package org.eclipse.emf.ecp.view.spi.group.model.impl;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+import org.eclipse.emf.ecp.view.spi.group.model.GroupLabelAlignment;
 import org.eclipse.emf.ecp.view.spi.group.model.VGroup;
 import org.eclipse.emf.ecp.view.spi.group.model.VGroupFactory;
 import org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage;
@@ -26,7 +28,6 @@ import org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage;
  * <!-- end-user-doc -->
  * 
  * @generated
- * @since 1.2
  */
 public class VGroupFactoryImpl extends EFactoryImpl implements VGroupFactory
 {
@@ -90,6 +91,43 @@ public class VGroupFactoryImpl extends EFactoryImpl implements VGroupFactory
 	 * 
 	 * @generated
 	 */
+	@Override
+	public Object createFromString(EDataType eDataType, String initialValue)
+	{
+		switch (eDataType.getClassifierID())
+		{
+		case VGroupPackage.GROUP_LABEL_ALIGNMENT:
+			return createGroupLabelAlignmentFromString(eDataType, initialValue);
+		default:
+			throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	@Override
+	public String convertToString(EDataType eDataType, Object instanceValue)
+	{
+		switch (eDataType.getClassifierID())
+		{
+		case VGroupPackage.GROUP_LABEL_ALIGNMENT:
+			return convertGroupLabelAlignmentToString(eDataType, instanceValue);
+		default:
+			throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	@Override
 	public VGroup createGroup()
 	{
 		final VGroupImpl group = new VGroupImpl();
@@ -101,7 +139,38 @@ public class VGroupFactoryImpl extends EFactoryImpl implements VGroupFactory
 	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
+	 * @since 1.3
 	 */
+	public GroupLabelAlignment createGroupLabelAlignmentFromString(EDataType eDataType, String initialValue)
+	{
+		final GroupLabelAlignment result = GroupLabelAlignment.get(initialValue);
+		if (result == null)
+		{
+			throw new IllegalArgumentException(
+				"The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+		}
+		return result;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @since 1.3
+	 */
+	public String convertGroupLabelAlignmentToString(EDataType eDataType, Object instanceValue)
+	{
+		return instanceValue == null ? null : instanceValue.toString();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	@Override
 	public VGroupPackage getGroupPackage()
 	{
 		return (VGroupPackage) getEPackage();

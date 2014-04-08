@@ -18,14 +18,18 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecp.view.spi.group.model.VGroup;
 import org.eclipse.emf.ecp.view.spi.group.model.VGroupFactory;
+import org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.model.provider.ContainerItemProvider;
+import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
+import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
+import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
  * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.spi.group.model.VGroup} object.
@@ -33,7 +37,6 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
  * <!-- end-user-doc -->
  * 
  * @generated
- * @since 1.2
  */
 public class GroupItemProvider
 	extends ContainerItemProvider implements IEditingDomainItemProvider, IStructuredItemContentProvider,
@@ -65,8 +68,62 @@ public class GroupItemProvider
 		{
 			super.getPropertyDescriptors(object);
 
+			addContainerLayoutEmbeddingPropertyDescriptor(object);
+			addLabelAlignmentPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
+	}
+
+	/**
+	 * This adds a property descriptor for the Container Layout Embedding feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @since 1.3
+	 */
+	protected void addContainerLayoutEmbeddingPropertyDescriptor(Object object)
+	{
+		itemPropertyDescriptors
+			.add
+			(createItemPropertyDescriptor
+			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(),
+				getString("_UI_Group_containerLayoutEmbedding_feature"), //$NON-NLS-1$
+				getString(
+					"_UI_PropertyDescriptor_description", "_UI_Group_containerLayoutEmbedding_feature", "_UI_Group_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				VGroupPackage.Literals.GROUP__CONTAINER_LAYOUT_EMBEDDING,
+				true,
+				false,
+				false,
+				ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
+				null,
+				null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Label Alignment feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @since 1.3
+	 */
+	protected void addLabelAlignmentPropertyDescriptor(Object object)
+	{
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(),
+				getString("_UI_Group_labelAlignment_feature"), //$NON-NLS-1$
+				getString("_UI_PropertyDescriptor_description", "_UI_Group_labelAlignment_feature", "_UI_Group_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				VGroupPackage.Literals.GROUP__LABEL_ALIGNMENT,
+				true,
+				false,
+				false,
+				ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				null,
+				null));
 	}
 
 	/**
@@ -110,6 +167,14 @@ public class GroupItemProvider
 	public void notifyChanged(Notification notification)
 	{
 		updateChildren(notification);
+
+		switch (notification.getFeatureID(VGroup.class))
+		{
+		case VGroupPackage.GROUP__CONTAINER_LAYOUT_EMBEDDING:
+		case VGroupPackage.GROUP__LABEL_ALIGNMENT:
+			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+			return;
+		}
 		super.notifyChanged(notification);
 	}
 

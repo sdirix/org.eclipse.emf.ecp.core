@@ -21,7 +21,6 @@ import org.eclipse.emf.ecore.EFactory;
  * 
  * @see org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage
  * @generated
- * @since 1.2
  */
 public interface VGroupFactory extends EFactory
 {

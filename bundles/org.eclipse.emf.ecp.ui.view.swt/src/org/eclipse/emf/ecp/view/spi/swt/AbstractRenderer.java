@@ -58,7 +58,7 @@ public abstract class AbstractRenderer<VELEMENT extends VElement> {
 	 * 
 	 * @return the {@link VElement}
 	 */
-	protected final VELEMENT getVElement() {
+	public final VELEMENT getVElement() {
 		return vElement;
 	}
 

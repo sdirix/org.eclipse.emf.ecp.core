@@ -16,19 +16,21 @@ import org.eclipse.swt.widgets.Text;
 
 public class ECPLayoutProvider extends AbstractLayoutProvider {
 
+	@Override
 	public Layout getColumnLayout(int numColumns, boolean equalWidth) {
 		return GridLayoutFactory.fillDefaults().numColumns(numColumns)
 			.equalWidth(equalWidth).create();
 	}
 
+	@Override
 	public Object getLayoutData(GridCell gridCell,
 		GridDescription controlGridDescription,
 		GridDescription currentRowGridDescription, GridDescription fullGridDescription, VElement vElement,
 		Control control) {
 		if (VControl.class.isInstance(vElement)) {
 			// last column of control
-			if (gridCell.getColumn() + 1 == controlGridDescription.getColumns()) {
-				return getControlGridData(1 + fullGridDescription.getColumns()
+			if (gridCell.getColumn() + gridCell.getHorizontalSpan() == controlGridDescription.getColumns()) {
+				return getControlGridData(gridCell.getHorizontalSpan() + fullGridDescription.getColumns()
 					- currentRowGridDescription.getColumns(), VControl.class.cast(vElement), control);
 			} else if (controlGridDescription.getColumns() == 3 && gridCell.getColumn() == 0) {
 				return getLabelGridData();
@@ -38,8 +40,13 @@ public class ECPLayoutProvider extends AbstractLayoutProvider {
 		}
 		// we have some kind of container -> render with necessary span
 
-		return getSpanningGridData(1 + fullGridDescription.getColumns()
-			- currentRowGridDescription.getColumns(), 1);
+		return GridDataFactory
+			.fillDefaults()
+			.align(gridCell.isHorizontalFill() ? SWT.FILL : SWT.BEGINNING,
+				gridCell.isVerticalFill() ? SWT.FILL : SWT.CENTER)
+			.grab(gridCell.isHorizontalGrab(), gridCell.isVerticalGrab())
+			.span(gridCell.getHorizontalSpan() + fullGridDescription.getColumns()
+				- currentRowGridDescription.getColumns(), 1).create();
 
 	}
 
@@ -74,6 +81,7 @@ public class ECPLayoutProvider extends AbstractLayoutProvider {
 			.grab(true, true).span(xSpan, ySpan).create();
 	}
 
+	@Override
 	public Object getSpanningLayoutData(int spanX, int spanY) {
 		return getSpanningGridData(spanX, spanY);
 	}

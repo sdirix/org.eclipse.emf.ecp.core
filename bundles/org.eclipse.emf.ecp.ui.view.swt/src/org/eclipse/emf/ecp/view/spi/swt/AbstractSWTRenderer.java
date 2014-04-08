@@ -169,7 +169,9 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 	 */
 	@Override
 	protected void dispose() {
-		getViewModelContext().unregisterViewChangeListener(listener);
+		if (getViewModelContext() != null) {
+			getViewModelContext().unregisterViewChangeListener(listener);
+		}
 		listener = null;
 		controls = null;
 		super.dispose();
@@ -221,6 +223,9 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 	 * @since 1.3
 	 */
 	public final void finalizeRendering(Composite parent) {
+		if (renderingFinished) {
+			return;
+		}
 		renderingFinished = true;
 		applyVisible();
 		applyReadOnly();

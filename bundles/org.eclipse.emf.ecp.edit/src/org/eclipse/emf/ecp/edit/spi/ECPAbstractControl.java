@@ -73,11 +73,13 @@ public abstract class ECPAbstractControl {
 
 		viewChangeListener = new ModelChangeListener() {
 
+			@Override
 			public void notifyRemove(Notifier notifier) {
 				// TODO Auto-generated method stub
 
 			}
 
+			@Override
 			public void notifyChange(ModelChangeNotification notification) {
 				if (notification.getNotifier() != ECPAbstractControl.this.control) {
 					return;
@@ -94,6 +96,7 @@ public abstract class ECPAbstractControl {
 				}
 			}
 
+			@Override
 			public void notifyAdd(Notifier notifier) {
 				// TODO Auto-generated method stub
 
@@ -241,14 +244,18 @@ public abstract class ECPAbstractControl {
 	 * @since 1.1
 	 */
 	public void dispose() {
-		composedAdapterFactory.dispose();
+		if (composedAdapterFactory != null) {
+			composedAdapterFactory.dispose();
+		}
 		composedAdapterFactory = null;
 		adapterFactoryItemDelegator = null;
 		if (dataBindingContext != null) {
 			dataBindingContext.dispose();
 		}
 		dataBindingContext = null;
-		viewModelContext.unregisterViewChangeListener(viewChangeListener);
+		if (viewModelContext != null) {
+			viewModelContext.unregisterViewChangeListener(viewChangeListener);
+		}
 		viewModelContext = null;
 
 		viewChangeListener = null;

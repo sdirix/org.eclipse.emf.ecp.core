@@ -53,7 +53,6 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
  * <!-- end-user-doc -->
  * 
  * @generated
- * @since 1.2
  */
 public class GroupItemProviderAdapterFactory extends GroupAdapterFactory implements ComposeableAdapterFactory,
 	IChangeNotifier, IDisposable, IChildCreationExtender
@@ -199,8 +198,8 @@ public class GroupItemProviderAdapterFactory extends GroupAdapterFactory impleme
 	{
 		if (isFactoryForType(type))
 		{
-			final Object adapter = super.adapt(object, type);
-			if (!(type instanceof Class<?>) || ((Class<?>) type).isInstance(adapter))
+			Object adapter = super.adapt(object, type);
+			if (!(type instanceof Class<?>) || (((Class<?>) type).isInstance(adapter)))
 			{
 				return adapter;
 			}
@@ -292,9 +291,8 @@ public class GroupItemProviderAdapterFactory extends GroupAdapterFactory impleme
 	 */
 	public void dispose()
 	{
-		if (groupItemProvider != null) {
+		if (groupItemProvider != null)
 			groupItemProvider.dispose();
-		}
 	}
 
 	/**
@@ -401,7 +399,7 @@ public class GroupItemProviderAdapterFactory extends GroupAdapterFactory impleme
 		 */
 		public Collection<Object> getNewChildDescriptors(Object object, EditingDomain editingDomain)
 		{
-			final ArrayList<Object> result = new ArrayList<Object>();
+			ArrayList<Object> result = new ArrayList<Object>();
 			new CreationSwitch(result, editingDomain).doSwitch((EObject) object);
 			return result;
 		}

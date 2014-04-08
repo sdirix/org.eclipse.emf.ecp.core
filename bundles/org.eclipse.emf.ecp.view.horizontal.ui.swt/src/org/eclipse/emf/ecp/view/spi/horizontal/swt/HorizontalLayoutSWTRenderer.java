@@ -116,14 +116,19 @@ public class HorizontalLayoutSWTRenderer extends AbstractSWTRenderer<VHorizontal
 
 			try {
 				for (final GridCell childGridCell : gridDescription.getGrid()) {
-					final Control control = renderer.render(childGridCell, column);
+					final Control control = childGridCell.getRenderer().render(childGridCell, column);
+					if (control == null) {
+						continue;
+					}
 					// TODO who should apply the layout
 					control.setLayoutData(LayoutProviderHelper.getLayoutData(childGridCell, gridDescription,
 						gridDescription,
-						gridDescription, child,
+						gridDescription, childGridCell.getRenderer().getVElement(),
 						control));
 				}
-				renderer.finalizeRendering(column);
+				for (final GridCell childGridCell : gridDescription.getGrid()) {
+					childGridCell.getRenderer().finalizeRendering(column);
+				}
 			} catch (final NoPropertyDescriptorFoundExeption e) {
 				continue;
 			}
