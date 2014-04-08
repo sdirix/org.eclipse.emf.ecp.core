@@ -21,7 +21,7 @@ import org.junit.runners.Suite;
  * 
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({ ECPSWTViewRendererTest.class })
+@Suite.SuiteClasses({ ECPSWTViewRendererTest.class, ECPStringLineWrapperTest.class })
 public class AllTests {
 
 }

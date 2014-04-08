@@ -28,6 +28,7 @@ public class ECPStringLineWrapper implements ECPStringModifier {
 	 * @see org.eclipse.emf.ecp.view.spi.provider.ECPStringModifier#modifyString(java.lang.String,
 	 *      org.eclipse.emf.ecore.EStructuralFeature.Setting)
 	 */
+	@Override
 	public String modifyString(String text, Setting setting) {
 		final StringBuilder sb = new StringBuilder(text);
 		final int maxLineLength = 80;
@@ -39,6 +40,14 @@ public class ECPStringLineWrapper implements ECPStringModifier {
 				i = 0;
 			}
 			i = sb.lastIndexOf(" ", i + maxLineLength); //$NON-NLS-1$
+			int multiplicator = 2;
+			while (i == -1) {
+				i = sb.lastIndexOf(" ", i + multiplicator * maxLineLength); //$NON-NLS-1$
+				multiplicator++;
+				if (multiplicator * maxLineLength > sb.length()) {
+					break;
+				}
+			}
 			if (i == -1) {
 				break;
 			}
