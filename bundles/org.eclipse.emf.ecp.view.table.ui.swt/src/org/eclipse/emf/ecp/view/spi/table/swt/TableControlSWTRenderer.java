@@ -185,13 +185,13 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		// validationLabel.setBackground(parent.getBackground());
 		// // set the size of the label to the size of the image
 		validationIcon = createValidationIcon(titleComposite);
-		GridDataFactory.fillDefaults().hint(16, 17).grab(true, false).applyTo(validationIcon);
+		GridDataFactory.fillDefaults().hint(16, 17).grab(false, false).applyTo(validationIcon);
 
 		Button addButton = null;
 		Button removeButton = null;
 		final Composite buttonComposite = new Composite(titleComposite, SWT.NONE);
 		buttonComposite.setBackground(titleComposite.getBackground());
-		GridDataFactory.fillDefaults().align(SWT.END, SWT.BEGINNING).grab(false, false).applyTo(buttonComposite);
+		GridDataFactory.fillDefaults().align(SWT.END, SWT.BEGINNING).grab(true, false).applyTo(buttonComposite);
 		int numButtons = 2;
 		if (getVElement().isEnableDetailEditingDialog()) {
 			numButtons++;
