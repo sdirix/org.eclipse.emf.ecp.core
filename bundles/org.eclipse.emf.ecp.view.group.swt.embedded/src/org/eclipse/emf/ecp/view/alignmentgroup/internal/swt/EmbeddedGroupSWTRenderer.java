@@ -113,17 +113,18 @@ public class EmbeddedGroupSWTRenderer extends AbstractSWTRenderer<VGroup> {
 			if (text == null)
 			{
 				text = ""; //$NON-NLS-1$
-				l.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_view_group_title"); //$NON-NLS-1$
 			}
 			switch (getVElement().getLabelAlignment()) {
 			case LABEL_ALIGNED:
 				if (cell.getColumn() == 0) {
 					l.setText(text);
+					l.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_view_group_title"); //$NON-NLS-1$
 				}
 				break;
 			case INPUT_ALIGNED:
 				if (cell.getColumn() + 1 == currentGridDescription.getColumns()) {
 					l.setText(text);
+					l.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_view_group_title"); //$NON-NLS-1$
 				}
 				break;
 			default:
