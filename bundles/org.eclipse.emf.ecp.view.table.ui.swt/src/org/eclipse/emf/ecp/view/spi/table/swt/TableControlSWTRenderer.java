@@ -304,7 +304,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 	private void openDetailEditDialog(Shell shell) {
 		final Dialog dialog = new DetailDialog(shell, (EObject) IStructuredSelection.class.cast(
-			tableViewer.getSelection()).getFirstElement());
+			tableViewer.getSelection()).getFirstElement(), getVElement());
 
 		new ECPDialogExecutor(dialog) {
 

@@ -18,6 +18,9 @@ import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
+import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
+import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
@@ -45,6 +48,7 @@ public class DetailDialog extends Dialog {
 	private Adapter objectChangeAdapter;
 	private ComposedAdapterFactory composedAdapterFactory;
 	private AdapterFactoryItemDelegator adapterFactoryItemDelegator;
+	private final VTableControl tableControl;
 
 	/**
 	 * Creates a dialog allowing to edit an {@link EObject}.
@@ -52,9 +56,10 @@ public class DetailDialog extends Dialog {
 	 * @param parentShell the {@link Shell} to use in the dialog
 	 * @param selection the {@link EObject} to edit
 	 */
-	public DetailDialog(Shell parentShell, EObject selection) {
+	public DetailDialog(Shell parentShell, EObject selection, VTableControl tableControl) {
 		super(parentShell);
 		this.selection = selection;
+		this.tableControl = tableControl;
 		init();
 	}
 
@@ -107,8 +112,10 @@ public class DetailDialog extends Dialog {
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(content);
 
 		try {
+			final VView view = ViewProviderHelper.getView(selection);
+			view.setReadonly(tableControl.isReadonly() || !tableControl.isEnabled());
 			ECPSWTViewRenderer.INSTANCE.render(content,
-				selection);
+				selection, view);
 		} catch (final ECPRendererException ex) {
 			ex.printStackTrace();
 		}
