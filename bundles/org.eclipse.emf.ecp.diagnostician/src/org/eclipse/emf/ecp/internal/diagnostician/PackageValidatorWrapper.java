@@ -28,7 +28,7 @@ import org.eclipse.emf.ecp.diagnostician.ECPValidator;
  * @author jfaltermeier
  * 
  */
-public class ECPValidatorWrapper implements EValidator {
+public class PackageValidatorWrapper implements EValidator {
 
 	private final Map<EClassifier, ECPValidator> classifierToValidatorMap;
 
@@ -37,7 +37,7 @@ public class ECPValidatorWrapper implements EValidator {
 	 * 
 	 * @param classifierToValidatorMap map from Classifier to its validator
 	 */
-	public ECPValidatorWrapper(Map<EClassifier, ECPValidator> classifierToValidatorMap) {
+	public PackageValidatorWrapper(Map<EClassifier, ECPValidator> classifierToValidatorMap) {
 		this.classifierToValidatorMap = classifierToValidatorMap;
 	}
 

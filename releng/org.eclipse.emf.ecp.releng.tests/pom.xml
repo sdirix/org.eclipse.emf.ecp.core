@@ -51,5 +51,6 @@
 		<module>../../tests/org.eclipse.emf.ecp.diffmerge.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.integrationtest</module>
 		<module>../../tests/org.eclipse.emf.ecp.ui.validation.test</module>
+		<module>../../tests/org.eclipse.emf.ecp.validation.diagnostician.test</module>
 	</modules>
 </project>

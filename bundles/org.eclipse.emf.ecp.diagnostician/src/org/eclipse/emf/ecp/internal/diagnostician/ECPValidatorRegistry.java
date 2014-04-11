@@ -42,10 +42,10 @@ public final class ECPValidatorRegistry extends EValidatorRegistryImpl {
 
 	private static final long serialVersionUID = -1274718490799689910L;
 
-	private final Set<EClassifier> eClassesWithValidator;
+	private final Map<EClassifier, Set<ECPValidator>> eclassifierToAllValidatorsMap;
 
 	private ECPValidatorRegistry() {
-		eClassesWithValidator = new LinkedHashSet<EClassifier>();
+		eclassifierToAllValidatorsMap = new LinkedHashMap<EClassifier, Set<ECPValidator>>();
 		final Map<EPackage, Map<EClassifier, ECPValidator>> registeredValidatorsPerPackage = readElementsFromExtensionPoint();
 		registerValidators(registeredValidatorsPerPackage);
 
@@ -62,19 +62,29 @@ public final class ECPValidatorRegistry extends EValidatorRegistryImpl {
 				final ECPValidator validator = (ECPValidator) element.createExecutableExtension("class"); //$NON-NLS-1$
 				final Set<EClassifier> validatedEClassifier = validator.getValidatedEClassifier();
 				for (final EClassifier eClassifier : validatedEClassifier) {
-					if (eClassesWithValidator.contains(validatedEClassifier)) {
-						// TODO how to handle multiple validators for the same classifier?
-						continue;
+					if (!eclassifierToAllValidatorsMap.containsKey(eClassifier)) {
+						eclassifierToAllValidatorsMap.put(eClassifier, new LinkedHashSet<ECPValidator>());
 					}
-					eClassesWithValidator.add(eClassifier);
-					final EPackage ePackage = eClassifier.getEPackage();
+					eclassifierToAllValidatorsMap.get(eClassifier).add(validator);
+				}
+
+				for (final EClassifier classifier : eclassifierToAllValidatorsMap.keySet()) {
+					ECPValidator validatorToRegister;
+					if (eclassifierToAllValidatorsMap.get(classifier).size() == 1) {
+						validatorToRegister = eclassifierToAllValidatorsMap.get(classifier).iterator().next();
+					} else {
+						validatorToRegister = new ClassifierValidatorWrapper(classifier,
+							eclassifierToAllValidatorsMap.get(classifier));
+					}
+					final EPackage ePackage = classifier.getEPackage();
 					if (!registeredValidatorsPerPackage.containsKey(ePackage)) {
 						registeredValidatorsPerPackage.put(ePackage, new LinkedHashMap<EClassifier, ECPValidator>());
 					}
-					registeredValidatorsPerPackage.get(ePackage).put(eClassifier, validator);
+					registeredValidatorsPerPackage.get(ePackage).put(classifier, validatorToRegister);
 				}
+
 			} catch (final CoreException e) {
-				// TODO logging?
+				Activator.log(e);
 			}
 		}
 		return registeredValidatorsPerPackage;
@@ -83,7 +93,7 @@ public final class ECPValidatorRegistry extends EValidatorRegistryImpl {
 	private void registerValidators(Map<EPackage, Map<EClassifier, ECPValidator>> registeredValidatorsPerPackage) {
 		for (final EPackage ePackage : registeredValidatorsPerPackage.keySet()) {
 			final Map<EClassifier, ECPValidator> map = registeredValidatorsPerPackage.get(ePackage);
-			final EValidator validator = new ECPValidatorWrapper(map);
+			final EValidator validator = new PackageValidatorWrapper(map);
 			put(ePackage, validator);
 		}
 	}
@@ -95,6 +105,6 @@ public final class ECPValidatorRegistry extends EValidatorRegistryImpl {
 	 * @return <code>true</code> if validator is registerd, <code>false</code> otherwise
 	 */
 	public boolean hasValidator(EClassifier classifier) {
-		return eClassesWithValidator.contains(classifier);
+		return eclassifierToAllValidatorsMap.containsKey(classifier);
 	}
 }
