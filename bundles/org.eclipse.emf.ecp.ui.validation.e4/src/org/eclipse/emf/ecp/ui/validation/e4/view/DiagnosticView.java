@@ -39,7 +39,7 @@ public class DiagnosticView {
 	 * @param object the input
 	 */
 	public static void setInput(Object object) {
-		// TODO remove this hack when bridge is available
+		// TODO better to use some kind of bridge?
 		if (diagnosticTree != null) {
 			diagnosticTree.setInput(object);
 		}
@@ -56,6 +56,7 @@ public class DiagnosticView {
 		diagnosticTree = ValidationTreeViewerFactory.createValidationViewer(composite);
 		diagnosticTree
 			.addSelectionChangedListener(new ISelectionChangedListener() {
+				@Override
 				public void selectionChanged(SelectionChangedEvent event) {
 					final ISelection selection = event.getSelection();
 					if (IStructuredSelection.class.isInstance(selection)) {

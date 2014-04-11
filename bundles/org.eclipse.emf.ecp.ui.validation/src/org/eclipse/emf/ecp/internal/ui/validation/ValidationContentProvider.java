@@ -41,6 +41,7 @@ public class ValidationContentProvider implements ITreeContentProvider {
 	 * 
 	 * @see org.eclipse.jface.viewers.IContentProvider#dispose()
 	 */
+	@Override
 	public void dispose() {
 		diagnosticToParentMap.clear();
 	}
@@ -51,6 +52,7 @@ public class ValidationContentProvider implements ITreeContentProvider {
 	 * @see org.eclipse.jface.viewers.IContentProvider#inputChanged(org.eclipse.jface.viewers.Viewer, java.lang.Object,
 	 *      java.lang.Object)
 	 */
+	@Override
 	public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
 		diagnosticToParentMap.clear();
 	}
@@ -60,6 +62,7 @@ public class ValidationContentProvider implements ITreeContentProvider {
 	 * 
 	 * @see org.eclipse.jface.viewers.ITreeContentProvider#getElements(java.lang.Object)
 	 */
+	@Override
 	public Object[] getElements(Object inputElement) {
 		if (inputElement instanceof Diagnostic) {
 			return getChildren(inputElement);
@@ -78,6 +81,7 @@ public class ValidationContentProvider implements ITreeContentProvider {
 	 * 
 	 * @see org.eclipse.jface.viewers.ITreeContentProvider#getChildren(java.lang.Object)
 	 */
+	@Override
 	public Object[] getChildren(Object parentElement) {
 		final Diagnostic diagnostic = (Diagnostic) parentElement;
 		final Diagnostic[] childDiagnostics = diagnostic.getChildren().toArray(
@@ -93,6 +97,7 @@ public class ValidationContentProvider implements ITreeContentProvider {
 	 * 
 	 * @see org.eclipse.jface.viewers.ITreeContentProvider#getParent(java.lang.Object)
 	 */
+	@Override
 	public Object getParent(Object element) {
 		return diagnosticToParentMap.get(element);
 	}
@@ -102,6 +107,7 @@ public class ValidationContentProvider implements ITreeContentProvider {
 	 * 
 	 * @see org.eclipse.jface.viewers.ITreeContentProvider#hasChildren(java.lang.Object)
 	 */
+	@Override
 	public boolean hasChildren(Object element) {
 		final Diagnostic diagnostic = (Diagnostic) element;
 		return diagnostic.getChildren().size() > 0 ? true : false;

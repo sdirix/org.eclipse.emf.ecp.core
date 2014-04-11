@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="org.eclipse.emf.ecp.diagnostician" xmlns="http://www.w3.org/2001/XMLSchema">
+<schema targetNamespace="org.eclipse.emf.ecp.ui.validation" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appinfo>
-         <meta.schema plugin="org.eclipse.emf.ecp.diagnostician" id="ecpValidators" name="ECP Validators"/>
+         <meta.schema plugin="org.eclipse.emf.ecp.ui.validation" id="doubleClickListener" name="Validation View Double Click Listener"/>
       </appinfo>
       <documentation>
          &lt;b&gt;This extension point is experimental and is likely to change in the future releases.&lt;/b&gt;
@@ -18,7 +18,7 @@
       </annotation>
       <complexType>
          <sequence minOccurs="1" maxOccurs="unbounded">
-            <element ref="validator"/>
+            <element ref="doubleClickListener"/>
          </sequence>
          <attribute name="point" type="string" use="required">
             <annotation>
@@ -47,7 +47,7 @@
       </complexType>
    </element>
 
-   <element name="validator">
+   <element name="doubleClickListener">
       <complexType>
          <attribute name="class" type="string" use="required">
             <annotation>
@@ -55,7 +55,7 @@
                   
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn="org.eclipse.emf.ecp.diagnostician.ECPValidator:"/>
+                  <meta.attribute kind="java" basedOn=":org.eclipse.jface.viewers.IDoubleClickListener"/>
                </appinfo>
             </annotation>
          </attribute>

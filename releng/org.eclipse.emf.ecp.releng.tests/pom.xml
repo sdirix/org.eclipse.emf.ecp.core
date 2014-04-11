@@ -50,5 +50,6 @@
 		<module>../../tests/org.eclipse.emf.ecp.ecore.editor.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.diffmerge.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.integrationtest</module>
+		<module>../../tests/org.eclipse.emf.ecp.ui.validation.test</module>
 	</modules>
 </project>

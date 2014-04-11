@@ -47,6 +47,7 @@ public abstract class ECPValidator implements EValidator {
 	 * @see org.eclipse.emf.ecore.EValidator#validate(org.eclipse.emf.ecore.EObject,
 	 *      org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
 	 */
+	@Override
 	public boolean validate(EObject eObject, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return validate(eObject.eClass(), eObject, diagnostics, context);
 	}
@@ -57,6 +58,7 @@ public abstract class ECPValidator implements EValidator {
 	 * @see org.eclipse.emf.ecore.EValidator#validate(org.eclipse.emf.ecore.EClass, org.eclipse.emf.ecore.EObject,
 	 *      org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
 	 */
+	@Override
 	public boolean validate(EClass eClass, EObject eObject, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return true;
 	}
@@ -67,6 +69,7 @@ public abstract class ECPValidator implements EValidator {
 	 * @see org.eclipse.emf.ecore.EValidator#validate(org.eclipse.emf.ecore.EDataType, java.lang.Object,
 	 *      org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
 	 */
+	@Override
 	public boolean validate(EDataType eDataType, Object value, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return true;
 	}

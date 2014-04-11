@@ -20,7 +20,8 @@ Export-Package: org.eclipse.emf.ecp.internal.ui;version="1.2.0";x-friends:="org.
   x-friends:="org.eclipse.emf.ecp.explorereditorbridge,
    org.eclipse.emf.ecp.ui.e3,
    org.eclipse.emf.ecp.ui.e4,
-   org.eclipse.emf.ecp.emfstore.ui.e3",
+   org.eclipse.emf.ecp.emfstore.ui.e3,
+   org.eclipse.emf.ecp.validationvieweditorbridge",
  org.eclipse.emf.ecp.internal.wizards;version="1.2.0";
   x-friends:="org.eclipse.emf.ecp.edit.ecore.swt,
    org.eclipse.emf.ecp.explorereditorbridge,

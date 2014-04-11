@@ -13,6 +13,10 @@
 
 package org.eclipse.emf.ecp.internal.ui.validation;
 
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
@@ -39,7 +43,6 @@ public final class ValidationTreeViewerFactory {
 	 * @return the tree viewer
 	 */
 	public static TreeViewer createValidationViewer(Composite parent) {
-		// TODO fixed width
 		final Tree validationTree = new Tree(parent, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
 		validationTree.setHeaderVisible(true);
 		validationTree.setLinesVisible(true);
@@ -48,7 +51,7 @@ public final class ValidationTreeViewerFactory {
 		final TreeColumn messageColumn = new TreeColumn(validationTree, SWT.LEFT);
 		messageColumn.setAlignment(SWT.LEFT);
 		messageColumn.setText(Messages.ValidationTreeViewerFactory_Description);
-		messageColumn.setWidth(400);
+		messageColumn.setWidth(600);
 
 		final TreeColumn objectColumn = new TreeColumn(validationTree, SWT.LEFT);
 		objectColumn.setAlignment(SWT.LEFT);
@@ -62,6 +65,24 @@ public final class ValidationTreeViewerFactory {
 
 		treeViewer.setContentProvider(new ValidationContentProvider());
 		treeViewer.setLabelProvider(new ValidationLabelProvider());
+		addDoubleClickListener(treeViewer);
 		return treeViewer;
 	}
+
+	/**
+	 * @param treeViewer
+	 */
+	private static void addDoubleClickListener(TreeViewer treeViewer) {
+		IConfigurationElement[] doubleClickListener = Platform.getExtensionRegistry().getConfigurationElementsFor(
+			"org.eclipse.emf.ecp.ui.validation.doubleClickListener"); //$NON-NLS-1$
+		for (final IConfigurationElement element : doubleClickListener) {
+			doubleClickListener = null;
+			try {
+				final IDoubleClickListener dcl = (IDoubleClickListener) element.createExecutableExtension("class"); //$NON-NLS-1$
+				treeViewer.addDoubleClickListener(dcl);
+			} catch (final CoreException e) {
+			}
+		}
+	}
+
 }

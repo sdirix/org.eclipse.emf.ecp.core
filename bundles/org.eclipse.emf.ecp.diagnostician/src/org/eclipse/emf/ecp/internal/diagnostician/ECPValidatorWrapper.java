@@ -47,6 +47,7 @@ public class ECPValidatorWrapper implements EValidator {
 	 * @see org.eclipse.emf.ecore.EValidator#validate(org.eclipse.emf.ecore.EObject,
 	 *      org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
 	 */
+	@Override
 	public boolean validate(EObject eObject, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		final ECPValidator ecpValidator = classifierToValidatorMap.get(eObject.eClass());
 		if (ecpValidator == null) {
@@ -61,6 +62,7 @@ public class ECPValidatorWrapper implements EValidator {
 	 * @see org.eclipse.emf.ecore.EValidator#validate(org.eclipse.emf.ecore.EClass, org.eclipse.emf.ecore.EObject,
 	 *      org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
 	 */
+	@Override
 	public boolean validate(EClass eClass, EObject eObject, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		final ECPValidator ecpValidator = classifierToValidatorMap.get(eClass);
 		if (ecpValidator == null) {
@@ -75,6 +77,7 @@ public class ECPValidatorWrapper implements EValidator {
 	 * @see org.eclipse.emf.ecore.EValidator#validate(org.eclipse.emf.ecore.EDataType, java.lang.Object,
 	 *      org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
 	 */
+	@Override
 	public boolean validate(EDataType eDataType, Object value, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		final ECPValidator ecpValidator = classifierToValidatorMap.get(eDataType);
 		if (ecpValidator == null) {
