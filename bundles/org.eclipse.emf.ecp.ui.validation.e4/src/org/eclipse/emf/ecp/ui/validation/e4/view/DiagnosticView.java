@@ -12,10 +12,14 @@
 package org.eclipse.emf.ecp.ui.validation.e4.view;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+import javax.inject.Inject;
 
 import org.eclipse.e4.ui.di.Focus;
 import org.eclipse.e4.ui.workbench.modeling.ESelectionService;
 import org.eclipse.emf.ecp.internal.ui.validation.ValidationTreeViewerFactory;
+import org.eclipse.emf.ecp.ui.validation.ECPValidationViewService;
+import org.eclipse.emf.ecp.ui.validation.ECPValidationViewService.ECPValidationViewServiceListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -33,17 +37,9 @@ public class DiagnosticView {
 
 	private static TreeViewer diagnosticTree;
 
-	/**
-	 * set input.
-	 * 
-	 * @param object the input
-	 */
-	public static void setInput(Object object) {
-		// TODO better to use some kind of bridge?
-		if (diagnosticTree != null) {
-			diagnosticTree.setInput(object);
-		}
-	}
+	@Inject
+	private ECPValidationViewService service;
+	private ECPValidationViewServiceListener listener;
 
 	/**
 	 * Creates the diagnostic view.
@@ -77,6 +73,14 @@ public class DiagnosticView {
 					}
 				}
 			});
+		listener = new ECPValidationViewServiceListener() {
+			@Override
+			public void inputChanged(Object diagnostic) {
+				diagnosticTree.setInput(diagnostic);
+				diagnosticTree.expandAll();
+			}
+		};
+		service.register(listener);
 	}
 
 	/**
@@ -85,6 +89,14 @@ public class DiagnosticView {
 	@Focus
 	public void setFocus() {
 		diagnosticTree.getTree().setFocus();
+	}
+
+	/**
+	 * Clean up code.
+	 */
+	@PreDestroy
+	public void preDestroy() {
+		service.deregister(listener);
 	}
 
 }
