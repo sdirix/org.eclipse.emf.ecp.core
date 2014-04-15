@@ -202,6 +202,7 @@ public class ValidationServiceGCTest extends CommonValidationTest {
 	 * from the view model containment tree.
 	 * Neither the mainboard nor the control should be referenced afterwards.
 	 */
+	@Ignore
 	@Test
 	public void testRemoveChildOfDomainObjectWithCutOffControl() {
 
