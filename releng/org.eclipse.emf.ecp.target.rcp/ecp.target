@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?><target name="ECP RCP" sequenceNumber="228">
+<?pde version="3.8"?><target name="ECP RCP" sequenceNumber="229">
 <locations>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.graphiti.feature.feature.group" version="0.11.0.v20140312-0950"/>
@@ -38,14 +38,14 @@
 <repository location="http://download.eclipse.org/eclipse/updates/4.4milestones"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.emf.emfstore.server.feature.feature.group" version="1.1.0.v20131205-1626"/>
-<unit id="org.eclipse.emf.emfstore.ecore.feature.feature.group" version="1.1.0.v20131205-1626"/>
-<unit id="org.eclipse.emf.emfstore.example.feature.feature.group" version="1.1.0.v20131205-1626"/>
-<unit id="org.eclipse.emf.emfstore.client.feature.feature.group" version="1.1.0.v20131205-1626"/>
-<unit id="org.eclipse.emf.emfstore.common.feature.feature.group" version="1.1.0.v20131205-1626"/>
-<unit id="org.eclipse.emf.emfstore.client.transaction.feature.feature.group" version="1.1.0.v20131205-1626"/>
-<unit id="org.eclipse.emf.emfstore.client.ui.feature.feature.group" version="1.1.0.v20131205-1626"/>
-<repository location="http://download.eclipse.org/emf-store/releases_11/"/>
+<unit id="org.eclipse.emf.emfstore.client.transaction.feature.feature.group" version="1.2.0.v20140404-1123"/>
+<unit id="org.eclipse.emf.emfstore.client.feature.feature.group" version="1.2.0.v20140404-1123"/>
+<unit id="org.eclipse.emf.emfstore.common.feature.feature.group" version="1.2.0.v20140404-1123"/>
+<unit id="org.eclipse.emf.emfstore.server.feature.feature.group" version="1.2.0.v20140404-1123"/>
+<unit id="org.eclipse.emf.emfstore.example.feature.feature.group" version="1.2.0.v20140404-1123"/>
+<unit id="org.eclipse.emf.emfstore.client.ui.feature.feature.group" version="1.2.0.v20140404-1123"/>
+<unit id="org.eclipse.emf.emfstore.ecore.feature.feature.group" version="1.2.0.v20140404-1123"/>
+<repository location="http://download.eclipse.org/emf-store/releases_12"/>
 </location>
 </locations>
 </target>
