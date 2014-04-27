@@ -5,7 +5,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eike Stepper - initial API and implementation
  *******************************************************************************/
@@ -26,6 +26,7 @@ import org.eclipse.emf.ecp.ui.common.TreeViewerFactory;
 import org.eclipse.emf.ecp.ui.linkedView.ILinkedWithEditorView;
 import org.eclipse.emf.ecp.ui.linkedView.LinkedWithEditorPartListener;
 import org.eclipse.emf.ecp.ui.platform.Activator;
+import org.eclipse.emf.ecp.ui.tester.ECPSavePropertySource;
 import org.eclipse.emf.ecp.ui.tester.SaveButtonEnablementObserver;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuManager;
@@ -46,10 +47,12 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IPartListener2;
+import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchListener;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.services.IEvaluationService;
 
 /**
  * @author Eike Stepper
@@ -69,6 +72,7 @@ public class ModelExplorerView extends TreeView implements ILinkedWithEditorView
 		/**
 		 * Opens an EObject using the ActionHelper or opens a closed ECPProject. {@inheritDoc}
 		 */
+		@Override
 		public void doubleClick(DoubleClickEvent event) {
 			if (event.getSelection() instanceof IStructuredSelection) {
 				final IStructuredSelection structuredSelection = (IStructuredSelection) event.getSelection();
@@ -104,11 +108,39 @@ public class ModelExplorerView extends TreeView implements ILinkedWithEditorView
 
 	private Action linkWithEditorAction;
 
+	private ECPSavePropertySource ecpSavePropertySource;
+
 	/**
 	 * Default Constructor.
 	 */
 	public ModelExplorerView() {
 		super(ID);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.ui.views.TreeView#init(org.eclipse.ui.IViewSite)
+	 */
+	@Override
+	public void init(IViewSite site) throws PartInitException {
+		super.init(site);
+		final IEvaluationService evaluationService = (IEvaluationService) site.getService(IEvaluationService.class);
+		ecpSavePropertySource = new ECPSavePropertySource();
+		evaluationService.addSourceProvider(ecpSavePropertySource);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.ui.part.WorkbenchPart#dispose()
+	 */
+	@Override
+	public void dispose() {
+		final IEvaluationService evaluationService = (IEvaluationService) getSite()
+			.getService(IEvaluationService.class);
+		evaluationService.removeSourceProvider(ecpSavePropertySource);
+		super.dispose();
 	}
 
 	@Override
@@ -118,12 +150,14 @@ public class ModelExplorerView extends TreeView implements ILinkedWithEditorView
 		viewer.addDoubleClickListener(new DoubleClickListener());
 		viewer.addSelectionChangedListener(new ModelExplorerViewSelectionListener());
 		viewer.getControl().addFocusListener(new FocusListener() {
+			@Override
 			public void focusGained(FocusEvent event) {
 			}
 
+			@Override
 			public void focusLost(FocusEvent event) {
 				ECPUtil.getECPObserverBus().notify(SaveButtonEnablementObserver.class)
-					.notifyChangeButtonState(null, false);
+				.notifyChangeButtonState(null, false);
 			}
 
 		});
@@ -145,12 +179,14 @@ public class ModelExplorerView extends TreeView implements ILinkedWithEditorView
 
 		getSite().getWorkbenchWindow().getWorkbench().addWorkbenchListener(new IWorkbenchListener() {
 
+			@Override
 			public boolean preShutdown(IWorkbench workbench, boolean forced) {
 
 				return ECPHandlerHelper.showDirtyProjectsDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow()
 					.getShell());
 			}
 
+			@Override
 			public void postShutdown(IWorkbench workbench) {
 				// do nothing
 			}
@@ -217,6 +253,7 @@ public class ModelExplorerView extends TreeView implements ILinkedWithEditorView
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void editorActivated(IEditorPart activatedEditor) {
 		if (!linkingActive || !getViewSite().getPage().isPartVisible(this)) {
 			return;
@@ -228,12 +265,13 @@ public class ModelExplorerView extends TreeView implements ILinkedWithEditorView
 	}
 
 	/**
-	 * 
+	 *
 	 * @author jfaltermeier
-	 * 
+	 *
 	 */
 	private class ModelExplorerViewSelectionListener implements ISelectionChangedListener {
 
+		@Override
 		public void selectionChanged(SelectionChangedEvent event) {
 			notifyAboutSaveButtonState(event);
 			if (linkingActive) {
@@ -269,7 +307,7 @@ public class ModelExplorerView extends TreeView implements ILinkedWithEditorView
 			}
 
 			ECPUtil.getECPObserverBus().notify(SaveButtonEnablementObserver.class)
-				.notifyChangeButtonState(project, selectedProjectIsDirty);
+			.notifyChangeButtonState(project, selectedProjectIsDirty);
 		}
 	}
 }

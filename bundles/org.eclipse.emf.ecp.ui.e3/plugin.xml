@@ -682,16 +682,6 @@
       </propertyTester>
    </extension>
    <extension
-         point="org.eclipse.ui.services">
-      <sourceProvider
-            provider="org.eclipse.emf.ecp.ui.tester.ECPSavePropertySource">
-         <variable
-               name="org.eclipse.emf.ecp.ui.e3.workbench.menu.currentProjectHasUnsavedChanges"
-               priorityLevel="workbench">
-         </variable>
-      </sourceProvider>
-   </extension>
-   <extension
          point="org.eclipse.core.expressions.definitions">
       <definition
             id="org.eclipse.emf.ecp.ui.definition.projectClosed">
