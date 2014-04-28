@@ -12,51 +12,62 @@
 package org.eclipse.emf.ecp.ui.validation;
 
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.emf.common.util.Diagnostic;
+import org.eclipse.emf.ecore.EClassifier;
 
 /**
- * Service for passing input to the validation view.
+ * Service for propagating validation results.
  * 
  * @author jfaltermeier
  * 
  */
-public interface ECPValidationViewService {
+public interface ECPValidationResultService {
 
 	/**
-	 * Passes the given diagnostic to all registered {@link ECPValidationViewServiceListener}s.
+	 * Passes the given diagnostic to all registered {@link ECPValidationResultServiceListener}s.
 	 * 
 	 * @param diagnostic the diagnostic to display
 	 */
-	void setInput(Diagnostic diagnostic);
+	void setResult(Diagnostic diagnostic);
 
 	/**
-	 * Passes the given diagnostics to all registered {@link ECPValidationViewServiceListener}s.
+	 * Passes the given diagnostics to all registered {@link ECPValidationResultServiceListener}s.
 	 * 
 	 * @param diagnostic the diagnostics to display
 	 */
-	void setInput(Diagnostic[] diagnostic);
+	void setResult(Diagnostic[] diagnostic);
 
 	/**
-	 * Passes the given diagnostics to all registered {@link ECPValidationViewServiceListener}s.
+	 * Passes the given diagnostics to all registered {@link ECPValidationResultServiceListener}s.
 	 * 
 	 * @param diagnostic the diagnostics to display
 	 */
-	void setInput(List<Diagnostic> diagnostic);
+	void setResult(List<Diagnostic> diagnostic);
 
 	/**
 	 * Registers a listener that gets informed whenever the input changes.
 	 * 
 	 * @param listener the listener to be registered
 	 */
-	void register(ECPValidationViewServiceListener listener);
+	void register(ECPValidationResultServiceListener listener);
+
+	/**
+	 * Registers a listener that gets informed whenever there is a validation result for an object of a type from the
+	 * given set of {@link EClassifier}s.
+	 * 
+	 * @param listener the listener to be registered
+	 * @param classifiersOfInterest the set of {@link EClassifier}s
+	 */
+	void register(ECPValidationResultServiceListener listener, Set<EClassifier> classifiersOfInterest);
 
 	/**
 	 * Deregisters a listener.
 	 * 
 	 * @param listener the listener to be deregistered
 	 */
-	void deregister(ECPValidationViewServiceListener listener);
+	void deregister(ECPValidationResultServiceListener listener);
 
 	/**
 	 * Listener interface for getting informed on input changes of the validation view.
@@ -64,13 +75,13 @@ public interface ECPValidationViewService {
 	 * @author jfaltermeier
 	 * 
 	 */
-	public interface ECPValidationViewServiceListener {
+	public interface ECPValidationResultServiceListener {
 		/**
 		 * Called whenever the input changes.
 		 * 
 		 * @param diagnostic the diagnostic. May be an array a list or a single Diagnostic.
 		 */
-		void inputChanged(Object diagnostic);
+		void resultChanged(Object diagnostic);
 	}
 
 }

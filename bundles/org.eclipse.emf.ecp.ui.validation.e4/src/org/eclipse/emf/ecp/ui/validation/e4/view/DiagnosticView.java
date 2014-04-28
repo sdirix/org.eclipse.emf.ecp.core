@@ -16,10 +16,11 @@ import javax.annotation.PreDestroy;
 import javax.inject.Inject;
 
 import org.eclipse.e4.ui.di.Focus;
+import org.eclipse.e4.ui.services.EMenuService;
 import org.eclipse.e4.ui.workbench.modeling.ESelectionService;
 import org.eclipse.emf.ecp.internal.ui.validation.ValidationTreeViewerFactory;
-import org.eclipse.emf.ecp.ui.validation.ECPValidationViewService;
-import org.eclipse.emf.ecp.ui.validation.ECPValidationViewService.ECPValidationViewServiceListener;
+import org.eclipse.emf.ecp.ui.validation.ECPValidationResultService;
+import org.eclipse.emf.ecp.ui.validation.ECPValidationResultService.ECPValidationResultServiceListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -35,21 +36,26 @@ import org.eclipse.swt.widgets.Composite;
  */
 public class DiagnosticView {
 
-	private static TreeViewer diagnosticTree;
+	private static final String POPUPMENU_VALIDATION_ID = "org.eclipse.emf.ecp.e4.application.popupmenu.validation"; //$NON-NLS-1$
 
 	@Inject
-	private ECPValidationViewService service;
-	private ECPValidationViewServiceListener listener;
+	private ECPValidationResultService service;
+	private ECPValidationResultServiceListener listener;
+	private TreeViewer diagnosticTree;
 
 	/**
 	 * Creates the diagnostic view.
 	 * 
 	 * @param composite the parent {@link Composite}
+	 * @param menuService the menu service to register the context menu
 	 * @param selectionService the selection service to publish the selection of the tree viewer.
 	 */
 	@PostConstruct
-	public void create(Composite composite, final ESelectionService selectionService) {
+	public void create(Composite composite, EMenuService menuService,
+		final ESelectionService selectionService) {
 		diagnosticTree = ValidationTreeViewerFactory.createValidationViewer(composite);
+		menuService.registerContextMenu(diagnosticTree.getTree(),
+			POPUPMENU_VALIDATION_ID);
 		diagnosticTree
 			.addSelectionChangedListener(new ISelectionChangedListener() {
 				@Override
@@ -73,9 +79,9 @@ public class DiagnosticView {
 					}
 				}
 			});
-		listener = new ECPValidationViewServiceListener() {
+		listener = new ECPValidationResultServiceListener() {
 			@Override
-			public void inputChanged(Object diagnostic) {
+			public void resultChanged(Object diagnostic) {
 				diagnosticTree.setInput(diagnostic);
 				diagnosticTree.expandAll();
 			}

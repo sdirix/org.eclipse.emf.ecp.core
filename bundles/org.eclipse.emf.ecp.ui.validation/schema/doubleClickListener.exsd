@@ -6,7 +6,7 @@
          <meta.schema plugin="org.eclipse.emf.ecp.ui.validation" id="doubleClickListener" name="Validation View Double Click Listener"/>
       </appinfo>
       <documentation>
-         &lt;b&gt;This extension point is experimental and is likely to change in the future releases.&lt;/b&gt;
+         &lt;b&gt;This extension point is provisional and will be potentially changed in future releases.&lt;/b&gt;
       </documentation>
    </annotation>
 

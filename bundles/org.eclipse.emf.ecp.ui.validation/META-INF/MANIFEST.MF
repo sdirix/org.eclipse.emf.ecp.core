@@ -6,13 +6,15 @@ Bundle-Version: 1.2.1.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-Vendor: Eclipse Modeling Project
 Bundle-ActivationPolicy: lazy
-Import-Package: org.eclipse.emf.edit.ui.provider;version="0.0.0",
+Import-Package: org.eclipse.jface.resource;version="0.0.0",
  org.eclipse.jface.viewers;version="0.0.0",
  org.eclipse.swt;version="0.0.0",
  org.eclipse.swt.graphics;version="0.0.0",
  org.eclipse.swt.widgets;version="0.0.0"
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
- org.eclipse.emf.edit;bundle-version="[2.9.0,3.0.0)"
+ org.eclipse.emf.edit;bundle-version="[2.9.0,3.0.0)",
+ org.eclipse.emf.ecp.ui.view.swt;bundle-version="[1.2.1,2.0.0)"
 Export-Package: org.eclipse.emf.ecp.internal.ui.validation;version="1.2.1";x-friends:="org.eclipse.emf.ecp.ui.validation.e4",
  org.eclipse.emf.ecp.ui.validation;version="1.2.1";x-friends:="org.eclipse.emf.ecp.ui.validation.e4"
 Service-Component: OSGI-INF/component.xml
+Bundle-Activator: org.eclipse.emf.ecp.internal.ui.validation.Activator

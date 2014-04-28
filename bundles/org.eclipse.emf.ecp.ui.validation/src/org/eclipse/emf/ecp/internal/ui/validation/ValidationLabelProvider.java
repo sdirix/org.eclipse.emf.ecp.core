@@ -15,8 +15,8 @@ import java.util.List;
 
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecp.internal.ui.view.emf.AdapterFactoryLabelProvider;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
-import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.swt.graphics.Image;
@@ -32,6 +32,8 @@ public class ValidationLabelProvider implements ITableLabelProvider {
 
 	private final ComposedAdapterFactory composedAdapterFactory;
 	private final AdapterFactoryLabelProvider labelProvider;
+	private final Image warning;
+	private final Image error;
 
 	/**
 	 * Default constructor.
@@ -39,6 +41,8 @@ public class ValidationLabelProvider implements ITableLabelProvider {
 	public ValidationLabelProvider() {
 		composedAdapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 		labelProvider = new AdapterFactoryLabelProvider(composedAdapterFactory);
+		error = Activator.getImageDescriptor("icons/error_decorate.png").createImage(); //$NON-NLS-1$
+		warning = Activator.getImageDescriptor("icons/warning_decorate.png").createImage(); //$NON-NLS-1$
 	}
 
 	/**
@@ -59,6 +63,8 @@ public class ValidationLabelProvider implements ITableLabelProvider {
 	public void dispose() {
 		composedAdapterFactory.dispose();
 		labelProvider.dispose();
+		error.dispose();
+		warning.dispose();
 	}
 
 	/**
@@ -97,13 +103,17 @@ public class ValidationLabelProvider implements ITableLabelProvider {
 	}
 
 	private Image getImageForSeverity(int severity) {
-		// TODO add images
 		switch (severity) {
 		case Diagnostic.OK:
+			return null;
 		case Diagnostic.INFO:
+			return null;
 		case Diagnostic.WARNING:
+			return warning;
 		case Diagnostic.ERROR:
+			return error;
 		case Diagnostic.CANCEL:
+			return null;
 		default:
 			return null;
 		}

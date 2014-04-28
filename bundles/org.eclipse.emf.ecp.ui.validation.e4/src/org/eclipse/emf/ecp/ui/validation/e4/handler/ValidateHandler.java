@@ -21,7 +21,7 @@ import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.diagnostician.ECPDiagnostician;
-import org.eclipse.emf.ecp.ui.validation.ECPValidationViewService;
+import org.eclipse.emf.ecp.ui.validation.ECPValidationResultService;
 
 /**
  * Handler for performing a validation using the {@link ECPDiagnostician}.
@@ -32,18 +32,18 @@ import org.eclipse.emf.ecp.ui.validation.ECPValidationViewService;
 public class ValidateHandler {
 
 	@Inject
-	private ECPValidationViewService service;
+	private ECPValidationResultService service;
 
 	/**
 	 * Performs a validation for currently selected EObject and passes the result to the
-	 * {@link ECPValidationViewService}.
+	 * {@link ECPValidationResultService}.
 	 * 
 	 * @param object the object to validate
 	 */
 	@Execute
 	public void execute(@Named(IServiceConstants.ACTIVE_SELECTION) @Optional final EObject object) {
 		final Diagnostic validate = ECPDiagnostician.INSTANCE.validate(object);
-		service.setInput(validate);
+		service.setResult(validate);
 	}
 
 	/**
