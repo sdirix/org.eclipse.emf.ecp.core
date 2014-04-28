@@ -25,7 +25,6 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.diffmerge.spi.context.DefaultMergeUtil;
 import org.eclipse.emf.ecp.diffmerge.spi.context.DiffMergeModelContext;
-import org.eclipse.emf.ecp.edit.spi.ECPControlFactory;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
@@ -51,9 +50,6 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceReference;
 
 /**
  * Class creating a diff Dialog.
@@ -101,12 +97,6 @@ public class DiffDialog {
 	 * @param parent the parent {@link Composite}
 	 */
 	public void create(Composite parent) {
-		final BundleContext bundleContext = FrameworkUtil.getBundle(getClass()).getBundleContext();
-
-		final ServiceReference<ECPControlFactory> serviceReference = bundleContext
-			.getServiceReference(ECPControlFactory.class);
-		final ECPControlFactory controlFactory = bundleContext.getService(serviceReference);
-
 		final Composite mainComposite = new Composite(parent, SWT.NONE);
 		GridLayoutFactory.fillDefaults().numColumns(1).equalWidth(false).extendedMargins(10, 10, 10, 10)
 			.applyTo(mainComposite);
@@ -127,10 +117,10 @@ public class DiffDialog {
 			final Control title = createTitleLabel(composite);
 			GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, false).applyTo(title);
 
-			final Control diff = createDiff(composite, controlFactory);
+			final Control diff = createDiff(composite);
 			GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING).grab(false, false).applyTo(diff);
 
-			final Control merge = createTarget(composite, controlFactory);
+			final Control merge = createTarget(composite);
 			GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING).grab(false, false).applyTo(merge);
 
 			scrolledComposite.setContent(composite);
@@ -140,7 +130,6 @@ public class DiffDialog {
 		}
 		final Control nextPrevious = createButtonRow(mainComposite);
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING).grab(true, false).applyTo(nextPrevious);
-		bundleContext.ungetService(serviceReference);
 
 	}
 
@@ -257,10 +246,9 @@ public class DiffDialog {
 	 * Creates the Merge content.
 	 * 
 	 * @param parent the {@link Composite}
-	 * @param ecpControlFactory the {@link ECPControlFactory}
 	 * @return the control showing the merge
 	 */
-	private Control createTarget(final Composite parent, final ECPControlFactory ecpControlFactory) {
+	private Control createTarget(final Composite parent) {
 		final Group targetGroup = new Group(parent, SWT.NONE);
 		targetGroup.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_compare_dialog_target"); //$NON-NLS-1$
 		targetGroup.setText(Messages.DiffDialog_targetObject);
@@ -291,10 +279,9 @@ public class DiffDialog {
 	 * Creates the Diff content.
 	 * 
 	 * @param parent the {@link Composite}
-	 * @param ecpControlFactory the {@link ECPControlFactory}
 	 * @return the control showing the diff
 	 */
-	private Control createDiff(final Composite parent, final ECPControlFactory ecpControlFactory) {
+	private Control createDiff(final Composite parent) {
 		final Group group = new Group(parent, SWT.NONE);
 		group.setText(Messages.DiffDialog_DifferenceGroup);
 		group.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_compare_dialog_diff"); //$NON-NLS-1$

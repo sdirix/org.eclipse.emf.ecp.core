@@ -18,8 +18,10 @@ import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
+import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VView;
-import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
+import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
+import org.eclipse.emf.ecp.view.spi.table.model.VTableColumn;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -112,8 +114,7 @@ public class DetailDialog extends Dialog {
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(content);
 
 		try {
-			final VView view = ViewProviderHelper.getView(selection);
-			view.setReadonly(tableControl.isReadonly() || !tableControl.isEnabled());
+			final VView view = getView();
 			ECPSWTViewRenderer.INSTANCE.render(content,
 				selection, view);
 		} catch (final ECPRendererException ex) {
@@ -142,6 +143,19 @@ public class DetailDialog extends Dialog {
 		selection.eAdapters().add(objectChangeAdapter);
 
 		return composite;
+	}
+
+	private VView getView() {
+		// return ViewProviderHelper.getView(selection);
+		final VView vView = VViewFactory.eINSTANCE.createView();
+		for (final VTableColumn column : tableControl.getColumns()) {
+			final VControl vControl = VViewFactory.eINSTANCE.createControl();
+			vControl.setDomainModelReference(column.getAttribute());
+			vControl.setReadonly(column.isReadOnly() || tableControl.isReadonly() || !tableControl.isEnabled());
+
+			vView.getChildren().add(vControl);
+		}
+		return vView;
 	}
 
 	private void updateTitle() {
