@@ -5,10 +5,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Johannes Faltermeier
- * 
+ *
  *******************************************************************************/
 package org.eclipse.emf.ecp.view.table.ui.swt.test;
 
@@ -17,6 +17,8 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EClass;
@@ -28,7 +30,6 @@ import org.eclipse.emf.ecp.common.UniqueSetting;
 import org.eclipse.emf.ecp.view.internal.swt.SWTRendererFactoryImpl;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
-import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
@@ -50,20 +51,36 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
+import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(DatabindingClassRunner.class)
 public class SWTTableTest {
-
+	private static String log;
 	private static SWTRendererFactory rendererFactory = new SWTRendererFactoryImpl();
+	private static PrintStream systemErr;
 	private Shell shell;
 	private EObject domainElement;
 
+	@BeforeClass
+	public static void beforeClass() {
+		systemErr = System.err;
+		System.setErr(new PrintStreamWrapper(systemErr));
+	}
+
+	@AfterClass
+	public static void afterClass() {
+		System.setErr(systemErr);
+	}
+
 	@Before
 	public void init() {
+		log = "";
 		shell = SWTViewTestHelper.createShell();
 
 		final EClass eClass = EcoreFactory.eINSTANCE.createEClass();
@@ -72,12 +89,18 @@ public class SWTTableTest {
 		domainElement = eClass;
 	}
 
+	@After
+	public void after() {
+		if (!log.isEmpty()) {
+			fail("Unexpected log to System.err: " + log);
+		}
+	}
+
 	@Test
 	public void testUninitializedTableWithoutColumns() throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
 		// setup model
 		final TableControlHandle handle = createUninitializedTableWithoutColumns();
-		final VDomainModelReference domainModelReference = handle.getTableControl().getDomainModelReference();
 		//
 		final Control render = SWTViewTestHelper.render(handle.getTableControl(), domainElement, shell);
 		assertNull(render);
@@ -269,9 +292,9 @@ public class SWTTableTest {
 
 	/**
 	 * Stub implementation without getting services from ex. point.
-	 * 
+	 *
 	 * @author jfaltermeier
-	 * 
+	 *
 	 */
 	private class ViewModelContextWithoutServices implements ViewModelContext {
 
@@ -284,90 +307,100 @@ public class SWTTableTest {
 
 		/**
 		 * {@inheritDoc}
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getViewModel()
 		 */
+		@Override
 		public VElement getViewModel() {
 			return view;
 		}
 
 		/**
 		 * {@inheritDoc}
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getDomainModel()
 		 */
+		@Override
 		public EObject getDomainModel() {
 			return domainElement;
 		}
 
 		/**
 		 * {@inheritDoc}
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#registerViewChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener)
 		 */
+		@Override
 		public void registerViewChangeListener(ModelChangeListener modelChangeListener) {
 			// not needed
 		}
 
 		/**
 		 * {@inheritDoc}
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#unregisterViewChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener)
 		 */
+		@Override
 		public void unregisterViewChangeListener(ModelChangeListener modelChangeListener) {
 			// not needed
 		}
 
 		/**
 		 * {@inheritDoc}
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#registerDomainChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener)
 		 */
+		@Override
 		public void registerDomainChangeListener(ModelChangeListener modelChangeListener) {
 			// not needed
 		}
 
 		/**
 		 * {@inheritDoc}
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#unregisterDomainChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener)
 		 */
+		@Override
 		public void unregisterDomainChangeListener(ModelChangeListener modelChangeListener) {
 			// not needed
 		}
 
 		/**
 		 * {@inheritDoc}
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#dispose()
 		 */
+		@Override
 		public void dispose() {
 			// not needed
 		}
 
 		/**
 		 * {@inheritDoc}
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#hasService(java.lang.Class)
 		 */
+		@Override
 		public <T> boolean hasService(Class<T> serviceType) {
 			return false;
 		}
 
 		/**
 		 * {@inheritDoc}
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getService(java.lang.Class)
 		 */
+		@Override
 		public <T> T getService(Class<T> serviceType) {
 			return null;
 		}
 
 		/**
 		 * {@inheritDoc}
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getControlsFor(org.eclipse.emf.ecore.EStructuralFeature.Setting)
 		 */
+		@Override
 		public Set<VControl> getControlsFor(Setting setting) {
 			// TODO Auto-generated method stub
 			return null;
@@ -375,14 +408,35 @@ public class SWTTableTest {
 
 		/**
 		 * {@inheritDoc}
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getControlsFor(org.eclipse.emf.ecp.common.UniqueSetting)
 		 */
+		@Override
 		public Set<VControl> getControlsFor(UniqueSetting setting) {
 			// TODO Auto-generated method stub
 			return null;
 		}
+	}
 
+	private static class PrintStreamWrapper extends PrintStream {
+
+		private final PrintStream printStream;
+
+		public PrintStreamWrapper(PrintStream printStream) {
+			super(new ByteArrayOutputStream());
+			this.printStream = printStream;
+		}
+
+		/**
+		 * {@inheritDoc}
+		 *
+		 * @see java.io.PrintStream#print(java.lang.String)
+		 */
+		@Override
+		public void print(String s) {
+			log = log.concat("\n" + s);
+			printStream.print(s + "\n");
+		}
 	}
 
 }
