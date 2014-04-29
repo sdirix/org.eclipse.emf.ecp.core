@@ -5,6 +5,7 @@ Bundle-SymbolicName: org.eclipse.emf.ecp.view.template.service.test
 Bundle-Version: 1.2.1.qualifier
 Fragment-Host: org.eclipse.emf.ecp.view.template.service;bundle-version="[1.2.1,2.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Require-Bundle: org.junit;bundle-version="[4.0.0,5.0.0)",
- org.mockito.mockito-all;bundle-version="[1.9.5,2.0.0)"
+Require-Bundle: org.junit;bundle-version="[4.0.0,5.0.0)"
 Export-Package: org.eclipse.emf.ecp.view.template.service;version="1.2.1";x-internal:=true
+Import-Package: org.mockito;version="1.9.5",
+ org.mockito.stubbing;version="1.9.5"

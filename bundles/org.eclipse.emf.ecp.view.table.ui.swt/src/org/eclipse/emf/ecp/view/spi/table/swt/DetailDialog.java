@@ -57,6 +57,7 @@ public class DetailDialog extends Dialog {
 	 * 
 	 * @param parentShell the {@link Shell} to use in the dialog
 	 * @param selection the {@link EObject} to edit
+	 * @param tableControl the {@link VTableControl}
 	 */
 	public DetailDialog(Shell parentShell, EObject selection, VTableControl tableControl) {
 		super(parentShell);

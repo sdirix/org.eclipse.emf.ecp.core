@@ -283,9 +283,9 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 				super.widgetSelected(e);
 				if (tableViewer.getSelection().isEmpty()) {
 					final MessageDialog dialog = new MessageDialog(buttonComposite.getShell(),
-						"No Table Selection", null,
-						"You must select one element in order to edit it.", MessageDialog.WARNING, new String[] {
-							JFaceResources.getString(IDialogLabelKeys.OK_LABEL_KEY) }, 0);
+						"No Table Selection", null, //$NON-NLS-1$
+						"You must select one element in order to edit it.", MessageDialog.WARNING, new String[] { //$NON-NLS-1$
+						JFaceResources.getString(IDialogLabelKeys.OK_LABEL_KEY) }, 0);
 
 					new ECPDialogExecutor(dialog) {
 

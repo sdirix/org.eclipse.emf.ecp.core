@@ -12,9 +12,12 @@ Export-Package: org.eclipse.emf.ecp.view.core.swt.test.model;x-internal:=true,
  org.eclipse.emf.ecp.view.core.swt.test.model.impl;x-internal:=true,
  org.eclipse.emf.ecp.view.core.swt.test.model.util;x-internal:=true
 Require-Bundle: org.junit,
- org.mockito.mockito-all;bundle-version="1.9.5",
  org.eclipse.emf.ecp.view.test.common.swt,
  org.eclipse.emf.ecp.ui.view.swt,
  org.eclipse.core.runtime,
  org.eclipse.emf.ecore;visibility:=reexport
 Bundle-ActivationPolicy: lazy
+Import-Package: org.mockito;version="1.9.5",
+ org.mockito.invocation;version="1.9.5",
+ org.mockito.stubbing;version="1.9.5",
+ org.objenesis;version="1.0.0"
