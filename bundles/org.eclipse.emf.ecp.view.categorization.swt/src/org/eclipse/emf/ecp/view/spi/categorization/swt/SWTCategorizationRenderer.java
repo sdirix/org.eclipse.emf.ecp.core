@@ -17,6 +17,7 @@ import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorization;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
+import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescription;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
@@ -35,6 +36,22 @@ import org.eclipse.swt.widgets.Label;
  */
 public class SWTCategorizationRenderer extends AbstractSWTRenderer<VCategorization> {
 	private GridDescription rendererGridDescription;
+
+	/**
+	 * Default constructor.
+	 */
+	public SWTCategorizationRenderer() {
+		super();
+	}
+
+	/**
+	 * Test constructor.
+	 * 
+	 * @param factory the {@link SWTRendererFactory} to use.
+	 */
+	SWTCategorizationRenderer(SWTRendererFactory factory) {
+		super(factory);
+	}
 
 	/**
 	 * {@inheritDoc}

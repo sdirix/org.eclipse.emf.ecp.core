@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -7,9 +7,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- * Edagr Mueller - initial API and implementation
- * Eugen Neufeld - Refactoring
- * Johannes Falterimeier - Refactoring
+ * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.categorization.swt;
 
@@ -19,14 +17,17 @@ import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationElement;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 
 /**
- * The Class ViewSWTRenderer.
+ * Tab renderer for VCategorizationElement.
+ * 
+ * @author Eugen Neufeld
+ * 
  */
-public class SWTCategorizationElementRenderer extends AbstractJFaceTreeRenderer<VCategorizationElement> {
+public class CategorizationElementTabbedSWTRenderer extends AbstractSWTTabRenderer<VCategorizationElement> {
 
 	/**
 	 * Default constructor.
 	 */
-	public SWTCategorizationElementRenderer() {
+	public CategorizationElementTabbedSWTRenderer() {
 		super();
 	}
 
@@ -35,28 +36,18 @@ public class SWTCategorizationElementRenderer extends AbstractJFaceTreeRenderer<
 	 * 
 	 * @param factory the {@link SWTRendererFactory} to use.
 	 */
-	SWTCategorizationElementRenderer(SWTRendererFactory factory) {
+	CategorizationElementTabbedSWTRenderer(SWTRendererFactory factory) {
 		super(factory);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.categorization.swt.AbstractJFaceTreeRenderer#getCategorizations()
+	 * @see org.eclipse.emf.ecp.view.spi.categorization.swt.AbstractSWTTabRenderer#getCategorizations()
 	 */
 	@Override
 	protected EList<VAbstractCategorization> getCategorizations() {
 		return getVElement().getCategorizations();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.categorization.swt.AbstractJFaceTreeRenderer#getCategorizationElement()
-	 */
-	@Override
-	protected VCategorizationElement getCategorizationElement() {
-		return getVElement();
 	}
 
 }

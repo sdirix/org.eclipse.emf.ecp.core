@@ -38,6 +38,8 @@ import org.eclipse.emf.ecp.view.spi.model.impl.VContainedElementImpl;
  * Categorizations</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.spi.categorization.model.impl.VCategorizationElementImpl#getCurrentSelection <em>
  * Current Selection</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.categorization.model.impl.VCategorizationElementImpl#getMainCategoryDepth
+ * <em>Main Category Depth</em>}</li>
  * </ul>
  * </p>
  * 
@@ -66,6 +68,28 @@ public class VCategorizationElementImpl extends VContainedElementImpl implements
 	 * @ordered
 	 */
 	protected VCategorizableElement currentSelection;
+
+	/**
+	 * The default value of the '{@link #getMainCategoryDepth() <em>Main Category Depth</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see #getMainCategoryDepth()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final int MAIN_CATEGORY_DEPTH_EDEFAULT = 0;
+
+	/**
+	 * The cached value of the '{@link #getMainCategoryDepth() <em>Main Category Depth</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see #getMainCategoryDepth()
+	 * @generated
+	 * @ordered
+	 */
+	protected int mainCategoryDepth = MAIN_CATEGORY_DEPTH_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -161,6 +185,33 @@ public class VCategorizationElementImpl extends VContainedElementImpl implements
 	 * 
 	 * @generated
 	 */
+	public int getMainCategoryDepth()
+	{
+		return mainCategoryDepth;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public void setMainCategoryDepth(int newMainCategoryDepth)
+	{
+		int oldMainCategoryDepth = mainCategoryDepth;
+		mainCategoryDepth = newMainCategoryDepth;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET,
+				VCategorizationPackage.CATEGORIZATION_ELEMENT__MAIN_CATEGORY_DEPTH, oldMainCategoryDepth,
+				mainCategoryDepth));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
 	{
@@ -189,6 +240,8 @@ public class VCategorizationElementImpl extends VContainedElementImpl implements
 			if (resolve)
 				return getCurrentSelection();
 			return basicGetCurrentSelection();
+		case VCategorizationPackage.CATEGORIZATION_ELEMENT__MAIN_CATEGORY_DEPTH:
+			return getMainCategoryDepth();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -212,6 +265,9 @@ public class VCategorizationElementImpl extends VContainedElementImpl implements
 		case VCategorizationPackage.CATEGORIZATION_ELEMENT__CURRENT_SELECTION:
 			setCurrentSelection((VCategorizableElement) newValue);
 			return;
+		case VCategorizationPackage.CATEGORIZATION_ELEMENT__MAIN_CATEGORY_DEPTH:
+			setMainCategoryDepth((Integer) newValue);
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -233,6 +289,9 @@ public class VCategorizationElementImpl extends VContainedElementImpl implements
 		case VCategorizationPackage.CATEGORIZATION_ELEMENT__CURRENT_SELECTION:
 			setCurrentSelection((VCategorizableElement) null);
 			return;
+		case VCategorizationPackage.CATEGORIZATION_ELEMENT__MAIN_CATEGORY_DEPTH:
+			setMainCategoryDepth(MAIN_CATEGORY_DEPTH_EDEFAULT);
+			return;
 		}
 		super.eUnset(featureID);
 	}
@@ -252,8 +311,29 @@ public class VCategorizationElementImpl extends VContainedElementImpl implements
 			return categorizations != null && !categorizations.isEmpty();
 		case VCategorizationPackage.CATEGORIZATION_ELEMENT__CURRENT_SELECTION:
 			return currentSelection != null;
+		case VCategorizationPackage.CATEGORIZATION_ELEMENT__MAIN_CATEGORY_DEPTH:
+			return mainCategoryDepth != MAIN_CATEGORY_DEPTH_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	@Override
+	public String toString()
+	{
+		if (eIsProxy())
+			return super.toString();
+
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (mainCategoryDepth: "); //$NON-NLS-1$
+		result.append(mainCategoryDepth);
+		result.append(')');
+		return result.toString();
 	}
 
 } // VCategorizationElementImpl
