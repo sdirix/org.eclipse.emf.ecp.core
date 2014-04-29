@@ -13,7 +13,9 @@ package org.eclipse.emf.ecp.view.spi.table.swt;
 
 import java.net.URL;
 
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Plugin;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.swt.graphics.Image;
@@ -27,6 +29,7 @@ import org.osgi.framework.BundleContext;
  */
 public class Activator extends Plugin {
 
+	private static final String PLUGIN_ID = "org.eclipse.emf.ecp.view.table.ui.swt"; //$NON-NLS-1$
 	private static Activator instance;
 	private ImageRegistry registry;
 
@@ -68,5 +71,14 @@ public class Activator extends Plugin {
 			instance.registry.put(path, image);
 		}
 		return image;
+	}
+
+	/**
+	 * Logs a {@link Throwable}.
+	 * 
+	 * @param t the {@link Throwable} to log
+	 */
+	public static void log(Throwable t) {
+		instance.getLog().log(new Status(IStatus.ERROR, PLUGIN_ID, t.getMessage(), t));
 	}
 }

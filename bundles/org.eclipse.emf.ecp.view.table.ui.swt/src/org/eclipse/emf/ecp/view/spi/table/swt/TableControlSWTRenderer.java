@@ -5,7 +5,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
@@ -41,6 +41,7 @@ import org.eclipse.emf.ecp.edit.internal.swt.table.TableControlConfiguration;
 import org.eclipse.emf.ecp.edit.internal.swt.util.CellEditorFactory;
 import org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor;
 import org.eclipse.emf.ecp.edit.internal.swt.util.ECPDialogExecutor;
+import org.eclipse.emf.ecp.view.internal.table.swt.CellReadOnlyTesterHelper;
 import org.eclipse.emf.ecp.view.spi.core.swt.AbstractControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.provider.ECPTooltipModifierHelper;
@@ -105,9 +106,9 @@ import org.eclipse.swt.widgets.TableColumn;
 
 /**
  * SWT Renderer for Table Control.
- *
+ * 
  * @author Eugen Neufeld
- *
+ * 
  */
 public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableControl> {
 	private GridDescription rendererGridDescription;
@@ -125,7 +126,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 	/**
 	 * {@inheritDoc}
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#getGridDescription(GridDescription)
 	 */
 	@Override
@@ -138,7 +139,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 	/**
 	 * {@inheritDoc}
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#renderControl(int, org.eclipse.swt.widgets.Composite,
 	 *      org.eclipse.emf.ecp.view.spi.model.VElement, org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
@@ -275,7 +276,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 			/**
 			 * {@inheritDoc}
-			 *
+			 * 
 			 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
 			 */
 			@Override
@@ -522,7 +523,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 	/**
 	 * This method shows a user confirmation dialog when the user attempts to delete a row in the table.
-	 *
+	 * 
 	 * @param deletionList the list of selected EObjects to delete
 	 * @param mainSetting the containment reference setting
 	 * @param addButton the add button
@@ -560,7 +561,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	/**
 	 * This is called by {@link #deleteRowUserConfirmDialog(List)} after the user confirmed to delete the selected
 	 * elements.
-	 *
+	 * 
 	 * @param deletionList the list of {@link EObject EObjects} to delete
 	 * @param mainSetting the containment reference setting
 	 */
@@ -575,7 +576,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 * This method is called to add a new entry in the domain model and thus to create a new row in the table. The
 	 * element to create is defined by the provided class.
 	 * You can override this method but you have to call super nonetheless.
-	 *
+	 * 
 	 * @param clazz the {@link EClass} defining the EObject to create
 	 * @param mainSetting the containment reference setting
 	 */
@@ -622,7 +623,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 	/**
 	 * {@inheritDoc}
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#applyEnable()
 	 */
 	@Override
@@ -637,7 +638,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 	/**
 	 * {@inheritDoc}
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#applyReadOnly()
 	 */
 	@Override
@@ -652,7 +653,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 	/**
 	 * {@inheritDoc}
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#dispose()
 	 */
 	@Override
@@ -664,9 +665,9 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	/**
 	 * The {@link ViewerComparator} for this table which allows 3 states for sort order:
 	 * none, up and down.
-	 *
+	 * 
 	 * @author Eugen Neufeld
-	 *
+	 * 
 	 */
 	private class ECPTableViewerComparator extends ViewerComparator {
 		private int propertyIndex;
@@ -735,9 +736,9 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	/**
 	 * ECP specficic cell label provider that does also implement {@link IColorProvider} in
 	 * order to correctly.
-	 *
+	 * 
 	 * @author emueller
-	 *
+	 * 
 	 */
 	public class ECPCellLabelProvider extends ObservableMapCellLabelProvider implements IColorProvider {
 
@@ -747,7 +748,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 		/**
 		 * Constructor.
-		 *
+		 * 
 		 * @param feature
 		 *            the {@link EStructuralFeature} the cell is bound to
 		 * @param cellEditor
@@ -766,7 +767,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 		/**
 		 * {@inheritDoc}
-		 *
+		 * 
 		 * @see org.eclipse.jface.viewers.CellLabelProvider#getToolTipText(java.lang.Object)
 		 */
 		@Override
@@ -811,7 +812,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 		/**
 		 * {@inheritDoc}
-		 *
+		 * 
 		 * @see org.eclipse.jface.viewers.IColorProvider#getForeground(java.lang.Object)
 		 */
 		@Override
@@ -821,7 +822,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 		/**
 		 * {@inheritDoc}
-		 *
+		 * 
 		 * @see org.eclipse.jface.viewers.IColorProvider#getBackground(java.lang.Object)
 		 */
 		@Override
@@ -838,9 +839,9 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 	/**
 	 * Implementation of the {@link EditingSupport} for the generic ECP Table.
-	 *
+	 * 
 	 * @author Eugen Neufeld
-	 *
+	 * 
 	 */
 	private class ECPTableEditingSupport extends EditingSupport {
 
@@ -870,13 +871,17 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 		/**
 		 * Default implementation always returns <code>true</code>.
-		 *
+		 * 
 		 * @see org.eclipse.jface.viewers.EditingSupport#canEdit(java.lang.Object)
 		 */
 		@Override
 		protected boolean canEdit(Object element) {
-			final boolean editable = itemPropertyDescriptor.canSetProperty(null) && tableControl.isEnabled()
+			boolean editable = itemPropertyDescriptor.canSetProperty(null) && tableControl.isEnabled()
 				&& !tableControl.isReadonly();
+
+			editable &= !CellReadOnlyTesterHelper.getInstance().isReadOnly(getVElement(),
+				InternalEObject.class.cast(element).eSetting(cellFeature));
+
 			if (ECPCellEditor.class.isInstance(cellEditor)) {
 				ECPCellEditor.class.cast(cellEditor).setEditable(editable);
 				return true;
@@ -887,7 +892,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		/**
 		 * Default implementation always returns <code>null</code> as this will be
 		 * handled by the Binding.
-		 *
+		 * 
 		 * @see org.eclipse.jface.viewers.EditingSupport#getValue(java.lang.Object)
 		 */
 		@Override
@@ -899,7 +904,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		/**
 		 * Default implementation does nothing as this will be handled by the
 		 * Binding.
-		 *
+		 * 
 		 * @see org.eclipse.jface.viewers.EditingSupport#setValue(java.lang.Object, java.lang.Object)
 		 */
 		@Override
@@ -965,9 +970,9 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 		/**
 		 * A ColumnViewerEditorActivationListener to reset the cells after focus lost.
-		 *
+		 * 
 		 * @author Eugen Neufeld
-		 *
+		 * 
 		 */
 		private class ColumnViewerEditorActivationListenerHelper extends ColumnViewerEditorActivationListener {
 
@@ -1026,9 +1031,9 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 	/**
 	 * The {@link CellLabelProvider} to update the validation status on the cells.
-	 *
+	 * 
 	 * @author Eugen Neufeld
-	 *
+	 * 
 	 */
 	private class ValidationStatusCellLabelProvider extends CellLabelProvider {
 		private final VTableControl vTableControl;

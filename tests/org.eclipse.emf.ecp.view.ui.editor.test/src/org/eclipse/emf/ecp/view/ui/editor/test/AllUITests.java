@@ -28,7 +28,8 @@ import org.junit.runners.Suite;
 	DynamicContainmentTreeSWTBotTest.class,
 	ControlsSWTBotTest.class,
 	TableControlSWTBotTest.class,
-	XmlDateControlSWTBotTest.class
+	XmlDateControlSWTBotTest.class,
+	CellReadOnlyTest.class
 })
 public class AllUITests {
 

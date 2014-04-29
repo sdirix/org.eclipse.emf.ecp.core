@@ -5,10 +5,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
  * Johannes Faltermeier
- *
+ * 
  *******************************************************************************/
 package org.eclipse.emf.ecp.view.table.ui.swt.test;
 
@@ -259,10 +259,7 @@ public class SWTTableTest {
 		return tableControlHandle;
 	}
 
-	/**
-	 * @return
-	 */
-	private static VTableColumn createTableColumn() {
+	public static VTableColumn createTableColumn() {
 		return VTableFactory.eINSTANCE.createTableColumn();
 	}
 
@@ -292,9 +289,9 @@ public class SWTTableTest {
 
 	/**
 	 * Stub implementation without getting services from ex. point.
-	 *
+	 * 
 	 * @author jfaltermeier
-	 *
+	 * 
 	 */
 	private class ViewModelContextWithoutServices implements ViewModelContext {
 
@@ -307,7 +304,7 @@ public class SWTTableTest {
 
 		/**
 		 * {@inheritDoc}
-		 *
+		 * 
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getViewModel()
 		 */
 		@Override
@@ -317,7 +314,7 @@ public class SWTTableTest {
 
 		/**
 		 * {@inheritDoc}
-		 *
+		 * 
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getDomainModel()
 		 */
 		@Override
@@ -327,7 +324,7 @@ public class SWTTableTest {
 
 		/**
 		 * {@inheritDoc}
-		 *
+		 * 
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#registerViewChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener)
 		 */
 		@Override
@@ -337,7 +334,7 @@ public class SWTTableTest {
 
 		/**
 		 * {@inheritDoc}
-		 *
+		 * 
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#unregisterViewChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener)
 		 */
 		@Override
@@ -347,7 +344,7 @@ public class SWTTableTest {
 
 		/**
 		 * {@inheritDoc}
-		 *
+		 * 
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#registerDomainChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener)
 		 */
 		@Override
@@ -357,7 +354,7 @@ public class SWTTableTest {
 
 		/**
 		 * {@inheritDoc}
-		 *
+		 * 
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#unregisterDomainChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener)
 		 */
 		@Override
@@ -367,7 +364,7 @@ public class SWTTableTest {
 
 		/**
 		 * {@inheritDoc}
-		 *
+		 * 
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#dispose()
 		 */
 		@Override
@@ -377,7 +374,7 @@ public class SWTTableTest {
 
 		/**
 		 * {@inheritDoc}
-		 *
+		 * 
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#hasService(java.lang.Class)
 		 */
 		@Override
@@ -387,7 +384,7 @@ public class SWTTableTest {
 
 		/**
 		 * {@inheritDoc}
-		 *
+		 * 
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getService(java.lang.Class)
 		 */
 		@Override
@@ -397,7 +394,7 @@ public class SWTTableTest {
 
 		/**
 		 * {@inheritDoc}
-		 *
+		 * 
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getControlsFor(org.eclipse.emf.ecore.EStructuralFeature.Setting)
 		 */
 		@Override
@@ -408,7 +405,7 @@ public class SWTTableTest {
 
 		/**
 		 * {@inheritDoc}
-		 *
+		 * 
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getControlsFor(org.eclipse.emf.ecp.common.UniqueSetting)
 		 */
 		@Override
@@ -429,7 +426,7 @@ public class SWTTableTest {
 
 		/**
 		 * {@inheritDoc}
-		 *
+		 * 
 		 * @see java.io.PrintStream#print(java.lang.String)
 		 */
 		@Override
