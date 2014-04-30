@@ -121,6 +121,7 @@ public class MEEditorPage extends FormPage {
 		final Composite body = form.getBody();
 		body.setLayout(new GridLayout());
 		body.setBackground(body.getDisplay().getSystemColor(SWT.COLOR_WHITE));
+		body.setBackgroundMode(SWT.INHERIT_FORCE);
 
 		final EObject domainObject = modelElementContext.getDomainObject();
 		final VView view = ViewProviderHelper.getView(domainObject);

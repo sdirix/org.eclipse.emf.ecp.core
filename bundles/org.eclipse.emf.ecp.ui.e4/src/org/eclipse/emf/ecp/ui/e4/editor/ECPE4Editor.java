@@ -76,6 +76,7 @@ public class ECPE4Editor {
 		parent = new ScrolledComposite(composite, SWT.V_SCROLL
 			| SWT.H_SCROLL);
 		parent.setBackground(shell.getDisplay().getSystemColor(SWT.COLOR_WHITE));
+		parent.setBackgroundMode(SWT.INHERIT_FORCE);
 	}
 
 	/**
@@ -121,6 +122,7 @@ public class ECPE4Editor {
 			@Override
 			public void notifyChanged(Notification msg) {
 				Display.getDefault().asyncExec(new Runnable() {
+					@Override
 					public void run() {
 						updateImageAndText();
 					}
