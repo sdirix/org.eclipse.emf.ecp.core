@@ -13,6 +13,7 @@ package org.eclipse.emf.ecp.view.spi.table.model.impl;
 
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import org.eclipse.emf.common.util.EList;
@@ -69,6 +70,10 @@ public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 			return settings.iterator();
 		}
 		final VTableControl control = findTableControl();
+		if (!EReference.class.isInstance(getDomainModelEFeature())) {
+			final Set<Setting> settings = Collections.emptySet();
+			return settings.iterator();
+		}
 		final EList<EStructuralFeature> allFeatures = EReference.class.cast(getDomainModelEFeature())
 			.getEReferenceType().getEAllStructuralFeatures();
 		int numColumns = 1;
@@ -78,7 +83,10 @@ public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 		else {
 			numColumns = allFeatures.size();
 		}
-
+		if (!lastResolvedEObject.eClass().getEAllStructuralFeatures().contains(getDomainModelEFeature())) {
+			final List<Setting> settings = Collections.emptyList();
+			return settings.iterator();
+		}
 		final int numElems = 1 + ((EList<?>) lastResolvedEObject.eGet(getDomainModelEFeature())).size()
 			* numColumns;
 		return new Iterator<EStructuralFeature.Setting>() {

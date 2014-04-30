@@ -5,11 +5,16 @@ Bundle-SymbolicName: org.eclipse.emf.ecp.ide.editor.view;singleton:=true
 Bundle-Version: 1.2.1.qualifier
 Bundle-Activator: org.eclipse.emf.ecp.ide.editor.view.Activator
 Bundle-Vendor: Eclipse Modeling Project
-Require-Bundle: org.eclipse.ui,
- org.eclipse.core.runtime,
+Require-Bundle: org.eclipse.ui;bundle-version="[3.0.0,4.0.0)",
+ org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.emf.ecp.ui.view.swt;bundle-version="[1.2.0,2.0.0)",
- org.eclipse.ui.ide;bundle-version="3.9.1",
- org.eclipse.emf.edit,
- org.eclipse.emf.ecp.ide.view.service;bundle-version="[1.2.0,2.0.0)"
+ org.eclipse.ui.ide;bundle-version="[3.9.1,4.0.0)",
+ org.eclipse.emf.ecp.ide.view.service;bundle-version="[1.2.0,2.0.0)",
+ org.eclipse.emf.ecp.ecore;bundle-version="[1.2.1,2.0.0)",
+ org.eclipse.emf.ecp.view.treemasterdetail.ui.swt;bundle-version="[1.2.1,2.0.0)",
+ org.eclipse.core.resources,
+ org.eclipse.emf.ecp.ui,
+ org.eclipse.emf.ecp.edit;bundle-version="[1.2.1,2.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
+Export-Package: org.eclipse.emf.ecp.ide.editor.view;version="1.2.1";x-friends:="org.eclipse.emf.ecp.view.model.preview.e3"

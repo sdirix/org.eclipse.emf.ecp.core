@@ -18,15 +18,16 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.view.editor.controls.Helper;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -60,7 +61,7 @@ public class SelectAttributesDialog extends Dialog {
 
 	private ComposedAdapterFactory composedAdapterFactory;
 	private AdapterFactoryLabelProvider labelProvider;
-	private final ECPProject project;
+	private final VView view;
 	private final Set<EStructuralFeature> selectedFeatures = new LinkedHashSet<EStructuralFeature>();
 	private EClass dataSegment;
 	private final EClass rootClass;
@@ -68,13 +69,13 @@ public class SelectAttributesDialog extends Dialog {
 	/**
 	 * Constructor.
 	 * 
-	 * @param project for identifying the attributes which are not referenced yet
+	 * @param view for identifying the attributes which are not referenced yet
 	 * @param rootClass the rootClass of the view
 	 * @param parentShell the shell for creating the dialog
 	 */
-	public SelectAttributesDialog(ECPProject project, EClass rootClass, Shell parentShell) {
+	public SelectAttributesDialog(VView view, EClass rootClass, Shell parentShell) {
 		super(parentShell);
-		this.project = project;
+		this.view = view;
 		this.rootClass = rootClass;
 		setShellStyle(getShellStyle() | SWT.RESIZE);
 	}
@@ -85,22 +86,26 @@ public class SelectAttributesDialog extends Dialog {
 		((GridLayout) composite.getLayout()).numColumns = 2;
 
 		final Label labelDatasegment = new Label(composite, SWT.NONE);
-		labelDatasegment.setText("Select Datasegment");
+		labelDatasegment.setText("Select Datasegment"); //$NON-NLS-1$
 
 		final ComboViewer cvDatasegment = new ComboViewer(composite, SWT.READ_ONLY);
-		composedAdapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+
+		composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
+			new ReflectiveItemProviderAdapterFactory(),
+			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
+
 		labelProvider = new AdapterFactoryLabelProvider(composedAdapterFactory);
 
 		cvDatasegment.setLabelProvider(labelProvider);
 		cvDatasegment.setContentProvider(ArrayContentProvider.getInstance());
 
 		final Button bUnreferenced = new Button(composite, SWT.CHECK);
-		bUnreferenced.setText("Show only unreferenced Attributes?");
+		bUnreferenced.setText("Show only unreferenced Attributes?"); //$NON-NLS-1$
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING).grab(true, false).span(2, 1)
 			.applyTo(bUnreferenced);
 
 		final Label labelAttributes = new Label(composite, SWT.NONE);
-		labelAttributes.setText("Select Attributes");
+		labelAttributes.setText("Select Attributes"); //$NON-NLS-1$
 
 		final CheckboxTableViewer tvAttributes = CheckboxTableViewer.newCheckList(composite, SWT.BORDER);
 		tvAttributes.setLabelProvider(labelProvider);
@@ -110,6 +115,7 @@ public class SelectAttributesDialog extends Dialog {
 
 		tvAttributes.addCheckStateListener(new ICheckStateListener() {
 
+			@Override
 			public void checkStateChanged(CheckStateChangedEvent event) {
 				final EStructuralFeature object = (EStructuralFeature) event.getElement();
 				if (event.getChecked()) {
@@ -123,6 +129,7 @@ public class SelectAttributesDialog extends Dialog {
 
 		cvDatasegment.addSelectionChangedListener(new ISelectionChangedListener() {
 
+			@Override
 			public void selectionChanged(SelectionChangedEvent event) {
 				dataSegment = (EClass) ((IStructuredSelection) event.getSelection()).getFirstElement();
 				List<EStructuralFeature> attributes = null;
@@ -158,7 +165,7 @@ public class SelectAttributesDialog extends Dialog {
 			.applyTo(compositeButtons);
 
 		final Button bSelectAll = new Button(compositeButtons, SWT.PUSH);
-		bSelectAll.setText("Select All");
+		bSelectAll.setText("Select All"); //$NON-NLS-1$
 		bSelectAll.addSelectionListener(new SelectionAdapter() {
 
 			@Override
@@ -171,7 +178,7 @@ public class SelectAttributesDialog extends Dialog {
 		});
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING).grab(true, false).applyTo(bSelectAll);
 		final Button bDeSelectAll = new Button(compositeButtons, SWT.PUSH);
-		bDeSelectAll.setText("Deselect All");
+		bDeSelectAll.setText("Deselect All"); //$NON-NLS-1$
 		bDeSelectAll.addSelectionListener(new SelectionAdapter() {
 
 			@Override
@@ -203,27 +210,23 @@ public class SelectAttributesDialog extends Dialog {
 		final List<EStructuralFeature> result = new ArrayList<EStructuralFeature>();
 		final List<EStructuralFeature> allStructuralFeatures = new ArrayList<EStructuralFeature>(
 			eClass.getEAllStructuralFeatures());
-		for (final Object rootElement : project.getContents()) {
-			if (VView.class.isInstance(rootElement)) {
-				final VView viewConfiguration = (VView) rootElement;
-				final TreeIterator<EObject> eAllContents = viewConfiguration.eAllContents();
-				while (eAllContents.hasNext()) {
-					final EObject eObject = eAllContents.next();
-					if (org.eclipse.emf.ecp.view.spi.model.VControl.class.isInstance(eObject)) {
-						final org.eclipse.emf.ecp.view.spi.model.VControl control = (org.eclipse.emf.ecp.view.spi.model.VControl) eObject;
-						final VDomainModelReference domainModelReference = control.getDomainModelReference();
-						final Iterator<EStructuralFeature> structuralFeatureIterator = domainModelReference
-							.getEStructuralFeatureIterator();
-						while (structuralFeatureIterator.hasNext()) {
-							final EStructuralFeature feature = structuralFeatureIterator.next();
-							if (feature != null && feature.getEContainingClass().equals(eClass)) {
-								result.add(feature);
-							}
-						}
+
+		final TreeIterator<EObject> eAllContents = view.eAllContents();
+		while (eAllContents.hasNext()) {
+			final EObject eObject = eAllContents.next();
+			if (org.eclipse.emf.ecp.view.spi.model.VControl.class.isInstance(eObject)) {
+				final org.eclipse.emf.ecp.view.spi.model.VControl control = (org.eclipse.emf.ecp.view.spi.model.VControl) eObject;
+				final VDomainModelReference domainModelReference = control.getDomainModelReference();
+				final Iterator<EStructuralFeature> structuralFeatureIterator = domainModelReference
+					.getEStructuralFeatureIterator();
+				while (structuralFeatureIterator.hasNext()) {
+					final EStructuralFeature feature = structuralFeatureIterator.next();
+					if (feature != null && feature.getEContainingClass().equals(eClass)) {
+						result.add(feature);
 					}
 				}
-
 			}
+
 		}
 
 		allStructuralFeatures.removeAll(result);

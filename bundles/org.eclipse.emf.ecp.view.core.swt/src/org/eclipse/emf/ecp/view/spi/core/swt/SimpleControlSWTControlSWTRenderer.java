@@ -63,13 +63,14 @@ public abstract class SimpleControlSWTControlSWTRenderer extends SimpleControlSW
 		final Binding[] bindings = createBindings(control, setting);
 
 		// write initial values to model (if they differ from the default value of the model-element)
-		if (!setting.getEStructuralFeature().isUnsettable() && !setting.isSet() && bindings != null) {
-			for (final Binding binding : bindings) {
-				binding.updateTargetToModel();
-			}
-		}
+		// if (!setting.getEStructuralFeature().isUnsettable() && !setting.isSet() && bindings != null) {
+		// for (final Binding binding : bindings) {
+		// binding.updateModelToTarget();
+		// }
+		// }
 
 		control.addDisposeListener(new DisposeListener() {
+			@Override
 			public void widgetDisposed(DisposeEvent e) {
 				if (bindings != null) {
 					for (final Binding binding : bindings) {

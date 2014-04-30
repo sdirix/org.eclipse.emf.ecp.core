@@ -17,6 +17,8 @@ import org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -50,10 +52,21 @@ public class BooleanControlSWTRenderer extends SimpleControlSWTControlSWTRendere
 	}
 
 	@Override
-	protected Control createSWTControl(Composite parent, Setting setting) {
+	protected Control createSWTControl(final Composite parent, Setting setting) {
 		final Button check = new Button(parent, SWT.CHECK);
+		// workaround for bug: https://bugs.eclipse.org/bugs/show_bug.cgi?id=23837
+		// button background cannot be set in Windows
+		check.addPaintListener(new PaintListener() {
+			@Override
+			public void paintControl(PaintEvent arg0) {
+				check.setBackground(parent.getBackground());
+				arg0.gc.setBackground(parent.getBackground());
+				arg0.gc.fillRectangle(13, 0, check.getBounds().width, check.getBounds().height);
+			}
+		});
 		check.setBackground(parent.getBackground());
 		check.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_boolean"); //$NON-NLS-1$
+
 		return check;
 	}
 

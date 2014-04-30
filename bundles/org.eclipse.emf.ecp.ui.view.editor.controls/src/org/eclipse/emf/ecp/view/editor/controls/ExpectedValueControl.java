@@ -51,13 +51,12 @@ import org.eclipse.ui.dialogs.ListDialog;
  * 
  */
 // APITODO no api yet
-@SuppressWarnings("restriction")
 public class ExpectedValueControl extends SingleControl {
 
 	private Label text;
 
 	private String getTextVariantID() {
-		return "org_eclipse_emf_ecp_view_editor_controls_ruleattribute";
+		return "org_eclipse_emf_ecp_view_editor_controls_ruleattribute"; //$NON-NLS-1$
 	}
 
 	@Override
@@ -76,7 +75,7 @@ public class ExpectedValueControl extends SingleControl {
 		GridLayoutFactory.fillDefaults().numColumns(2).applyTo(composite);
 		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(composite);
 		final Button bSelectObject = new Button(composite, SWT.PUSH);
-		bSelectObject.setText("Select Object");
+		bSelectObject.setText("Select Object"); //$NON-NLS-1$
 
 		text = new Label(composite, SWT.SINGLE | SWT.BORDER);
 		text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
@@ -91,8 +90,8 @@ public class ExpectedValueControl extends SingleControl {
 				final EStructuralFeature structuralFeature = ((VFeaturePathDomainModelReference) condition
 					.getDomainModelReference()).getDomainModelEFeature();
 				if (structuralFeature == null) {
-					MessageDialog.openError(text.getShell(), "No Attribute selected",
-						"Please select an attribute first. Without the attribute we can't provide you with support!");
+					MessageDialog.openError(text.getShell(), "No Attribute selected", //$NON-NLS-1$
+						"Please select an attribute first. Without the attribute we can't provide you with support!"); //$NON-NLS-1$
 					return;
 				}
 				if (EReference.class.isInstance(structuralFeature)) {
@@ -124,8 +123,8 @@ public class ExpectedValueControl extends SingleControl {
 					ld.setContentProvider(ArrayContentProvider.getInstance());
 					ld.setInput(enumValues);
 					ld.setInitialSelections(new Object[] { enumValues[0] });
-					ld.setMessage("Please select the enum value to set.");
-					ld.setTitle("Select a value");
+					ld.setMessage("Please select the enum value to set."); //$NON-NLS-1$
+					ld.setTitle("Select a value"); //$NON-NLS-1$
 					final int enumSelectionResult = ld.open();
 					if (Window.OK == enumSelectionResult) {
 						object = ld.getResult()[0];
@@ -136,10 +135,10 @@ public class ExpectedValueControl extends SingleControl {
 						final Constructor<?> constructor = attribuetClazz.getConstructor(String.class);
 						final InputDialog id = new InputDialog(
 							text.getShell(),
-							"Insert the value",
-							"The value must be parseable by the "
+							"Insert the value", //$NON-NLS-1$
+							"The value must be parseable by the " //$NON-NLS-1$
 								+ attribuetClazz.getSimpleName()
-								+ " class. For a double value please use the #.# format. For boolean values 'true' or 'false'.",
+								+ " class. For a double value please use the #.# format. For boolean values 'true' or 'false'.", //$NON-NLS-1$
 							null, null);
 						final int inputResult = id.open();
 						if (Window.OK == inputResult) {
@@ -155,8 +154,8 @@ public class ExpectedValueControl extends SingleControl {
 					} catch (final InvocationTargetException ex) {
 					}
 				} else {
-					MessageDialog.openError(text.getShell(), "Not primitive Attribute selected",
-						"The selected attribute has a not primitive type. We can't provide you support for it!");
+					MessageDialog.openError(text.getShell(), "Not primitive Attribute selected", //$NON-NLS-1$
+						"The selected attribute has a not primitive type. We can't provide you support for it!"); //$NON-NLS-1$
 				}
 
 				if (object != null) {
@@ -191,7 +190,7 @@ public class ExpectedValueControl extends SingleControl {
 
 	@Override
 	protected String getHelpText() {
-		return "";
+		return ""; //$NON-NLS-1$
 	}
 
 	@Override
@@ -202,12 +201,12 @@ public class ExpectedValueControl extends SingleControl {
 
 	@Override
 	protected String getUnsetButtonTooltip() {
-		return "Unset Button";
+		return "Unset Button"; //$NON-NLS-1$
 	}
 
 	@Override
 	protected String getUnsetLabelText() {
-		return "Unset Button";
+		return "Unset Button"; //$NON-NLS-1$
 	}
 
 }

@@ -12,15 +12,26 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.view.editor.handler;
 
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.emf.ecp.core.ECPProject;
+import org.eclipse.emf.ecp.view.editor.controls.Activator;
 import org.eclipse.emf.ecp.view.editor.controls.Helper;
 import org.eclipse.emf.ecp.view.spi.model.VContainer;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
@@ -63,7 +74,7 @@ public final class ControlGenerator {
 
 		for (final EStructuralFeature feature : features) {
 			final VControl control = VViewFactory.eINSTANCE.createControl();
-			control.setName("Control " + feature.getName());
+			control.setName("Control " + feature.getName()); //$NON-NLS-1$
 			control.setReadonly(false);
 
 			final VFeaturePathDomainModelReference modelReference = VViewFactory.eINSTANCE
@@ -83,4 +94,57 @@ public final class ControlGenerator {
 		}
 	}
 
+	/**
+	 * Create all the controls for the given view.
+	 * 
+	 * @param view the view for which the controls are created for
+	 */
+	public static void generateAllControls(final VView view) {
+		// load resource
+		// final String path = getViewModelRegistry().getEcorePath(view);
+		final URI uri = EcoreUtil.getURI(view);
+		// // ensure URI is platform URI
+		// if (!uri.isPlatform()) {
+		// final java.net.URI locationURI = ResourcesPlugin.getWorkspace().getRoot().getLocationURI();
+		// final URI newURI = URI.createURI(locationURI.toString() + "/");
+		// if (newURI.fragment() == null) {
+		// // newURI = newURI.appendSegment("/");
+		// }
+		// uri = uri.deresolve(newURI, false, true, false);
+		// if (uri.fragment() != null) {
+		// uri = uri.trimFragment();
+		// }
+		// uri = URI.createPlatformResourceURI(uri.toString(), false);
+		// }
+		final Resource.Factory.Registry reg = Resource.Factory.Registry.INSTANCE;
+		final Map<String, Object> m = reg.getExtensionToFactoryMap();
+		m.put("*", new XMIResourceFactoryImpl()); //$NON-NLS-1$
+
+		final ResourceSet resSet = new ResourceSetImpl();
+		final Resource resource = resSet.getResource(uri, true);
+		try {
+			resource.load(null);
+		} catch (final IOException e) {
+			Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
+		}
+		// resolve the proxies
+		int rsSize = resSet.getResources().size();
+		EcoreUtil.resolveAll(resSet);
+		while (rsSize != resSet.getResources().size()) {
+			EcoreUtil.resolveAll(resSet);
+			rsSize = resSet.getResources().size();
+		}
+		final VView vview = (VView) resource.getContents().get(0);
+
+		final EClass rootEClass = vview.getRootEClass();
+		final Set<EStructuralFeature> mySet = new
+			LinkedHashSet<EStructuralFeature>(rootEClass.getEAllStructuralFeatures());
+		addControls(rootEClass, (VView) resource.getContents().get(0), rootEClass,
+			mySet);
+		try {
+			resource.save(null);
+		} catch (final IOException e) {
+			Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
+		}
+	}
 }

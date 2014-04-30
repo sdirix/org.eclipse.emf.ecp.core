@@ -13,10 +13,12 @@ package org.eclipse.emf.ecp.internal.ui.validation;
 
 import java.util.List;
 
+import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.internal.ui.view.emf.AdapterFactoryLabelProvider;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.swt.graphics.Image;
@@ -39,7 +41,9 @@ public class ValidationLabelProvider implements ITableLabelProvider {
 	 * Default constructor.
 	 */
 	public ValidationLabelProvider() {
-		composedAdapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+		composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
+			new ReflectiveItemProviderAdapterFactory(),
+			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
 		labelProvider = new AdapterFactoryLabelProvider(composedAdapterFactory);
 		error = Activator.getImageDescriptor("icons/error_decorate.png").createImage(); //$NON-NLS-1$
 		warning = Activator.getImageDescriptor("icons/warning_decorate.png").createImage(); //$NON-NLS-1$

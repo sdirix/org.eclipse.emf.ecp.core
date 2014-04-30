@@ -24,8 +24,6 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecp.view.editor.controls.ControlRootEClassControl;
-import org.eclipse.emf.ecp.view.ideconfig.model.IDEConfig;
-import org.eclipse.emf.ecp.view.ideconfig.model.IdeconfigFactory;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
@@ -71,11 +69,11 @@ public class ViewEditorIDEViewRootControl extends ControlRootEClassControl {
 						}
 					}
 				}
-				return new Status(IStatus.ERROR, PLUGIN_ID, IStatus.ERROR, "Please Select a File",
+				return new Status(IStatus.ERROR, PLUGIN_ID, IStatus.ERROR, "Please Select a File", //$NON-NLS-1$
 					null);
 			}
 		});
-		dialog.setTitle("Select XMI");
+		dialog.setTitle("Select XMI"); //$NON-NLS-1$
 
 		if (dialog.open() == Window.OK) {
 			final VView view = (VView) getFirstSetting().getEObject();
@@ -95,33 +93,15 @@ public class ViewEditorIDEViewRootControl extends ControlRootEClassControl {
 					resource.load(null);
 					final EPackage ePackage = (EPackage) resource.getContents().get(0);
 					EPackage.Registry.INSTANCE.put(ePackage.getNsURI(), ePackage);
-					persistSelectedEcore(file);
+					final String viewModelPath = getFirstSetting().getEObject().eResource().getURI().toString();
+					Activator.getViewModelRegistry().persistSelectedEcore(file.getFullPath().toString(), viewModelPath);
 					return ePackage;
 				} catch (final IOException ex) {
 					MessageDialog.openError(Display.getDefault()
-						.getActiveShell(), "Error", "Error parsing XMI-File!");
+						.getActiveShell(), "Error", "Error parsing XMI-File!"); //$NON-NLS-1$ //$NON-NLS-2$
 				}
 			}
 		}
 		return null;
 	}
-
-	private void persistSelectedEcore(IFile file) {
-		final ResourceSet resourceSet = new ResourceSetImpl();
-
-		final String viewModelPath = getFirstSetting().getEObject().eResource().getURI().toString();
-		final String newModelPath = viewModelPath.substring(0, viewModelPath.lastIndexOf(".")) + ".ideconfig";
-		final Resource resource = resourceSet.createResource(URI.createURI(newModelPath, true));
-		final IDEConfig config = IdeconfigFactory.eINSTANCE.createIDEConfig();
-		config.setEcorePath(file.getFullPath().toString());
-
-		resource.getContents().add(config);
-		try {
-			resource.save(null);
-		} catch (final IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
 }

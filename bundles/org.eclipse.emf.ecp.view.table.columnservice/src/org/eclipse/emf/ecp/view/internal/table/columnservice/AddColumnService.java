@@ -40,6 +40,7 @@ public class AddColumnService implements ViewModelService {
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#instantiate(org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
+	@Override
 	public void instantiate(ViewModelContext context) {
 		final VElement viewModel = context.getViewModel();
 		if (viewModel instanceof VTableControl) {
@@ -57,6 +58,9 @@ public class AddColumnService implements ViewModelService {
 	}
 
 	private void addColumnsIfNeeded(VTableControl tableControl) {
+		if (tableControl.getDomainModelReference() == null) {
+			return;
+		}
 		if (tableControl.getColumns() == null || tableControl.getColumns().size() < 1) {
 			final Iterator<Setting> settings = tableControl.getDomainModelReference().getIterator();
 			if (!settings.hasNext()) {
@@ -77,6 +81,7 @@ public class AddColumnService implements ViewModelService {
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#dispose()
 	 */
+	@Override
 	public void dispose() {
 		// nothing to dispose
 	}
@@ -86,6 +91,7 @@ public class AddColumnService implements ViewModelService {
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#getPriority()
 	 */
+	@Override
 	public int getPriority() {
 		return -1;
 	}

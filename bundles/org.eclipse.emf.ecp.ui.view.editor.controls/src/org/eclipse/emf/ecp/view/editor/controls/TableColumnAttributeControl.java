@@ -94,7 +94,7 @@ public class TableColumnAttributeControl extends LinkControl {
 			ld.setLabelProvider(labelProvider);
 			ld.setContentProvider(ArrayContentProvider.getInstance());
 			ld.setInput(eref.getEReferenceType().getEAllAttributes());
-			ld.setTitle("Select Attribute for TableColumn");
+			ld.setTitle("Select Attribute for TableColumn"); //$NON-NLS-1$
 			final int result = ld.open();
 			if (Window.OK == result) {
 				final Object selection = ld.getResult()[0];

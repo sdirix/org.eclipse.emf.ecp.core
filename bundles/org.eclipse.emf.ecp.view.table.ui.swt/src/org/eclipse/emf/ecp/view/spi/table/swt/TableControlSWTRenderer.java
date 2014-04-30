@@ -359,6 +359,9 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		}
 
 		for (final EStructuralFeature feature : structuralFeatures) {
+			if (feature == null) {
+				continue;
+			}
 			final IItemPropertyDescriptor itemPropertyDescriptor = getItemPropertyDescriptor(tempInstance
 				.eSetting(feature));
 			if (itemPropertyDescriptor == null) {
@@ -496,8 +499,9 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		final Image image = Activator.getImage(ICON_DELETE);
 		removeButton.setImage(image);
 		removeButton.setEnabled(false);
+		final String instanceName = clazz.getInstanceClass() == null ? "" : clazz.getInstanceClass().getSimpleName(); //$NON-NLS-1$
 		removeButton.setToolTipText(String.format(ControlMessages.TableControl_RemoveSelected
-			, clazz.getInstanceClass().getSimpleName()));
+			, instanceName));
 
 		final List<?> containments = (List<?>) mainSetting.get(true);
 		if (containments.size() <= mainSetting.getEStructuralFeature().getLowerBound()) {
@@ -510,8 +514,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		addButton = new Button(buttonComposite, SWT.None);
 		final Image image = Activator.getImage(ICON_ADD);
 		addButton.setImage(image);
-		addButton.setToolTipText(String.format(ControlMessages.TableControl_AddInstanceOf, clazz.getInstanceClass()
-			.getSimpleName()));
+		final String instanceName = clazz.getInstanceClass() == null ? "" : clazz.getInstanceClass().getSimpleName(); //$NON-NLS-1$
+		addButton.setToolTipText(String.format(ControlMessages.TableControl_AddInstanceOf, instanceName));
 
 		final List<?> containments = (List<?>) mainSetting.get(true);
 		if (mainSetting.getEStructuralFeature().getUpperBound() != -1
@@ -584,6 +588,9 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		final EObject modelElement = mainSetting.getEObject();
 		final EObject instance = clazz.getEPackage().getEFactoryInstance().create(clazz);
 		final EditingDomain editingDomain = getEditingDomain(mainSetting);
+		if (editingDomain == null) {
+			return;
+		}
 		editingDomain.getCommandStack().execute(
 			AddCommand.create(editingDomain, modelElement, mainSetting.getEStructuralFeature(), instance));
 

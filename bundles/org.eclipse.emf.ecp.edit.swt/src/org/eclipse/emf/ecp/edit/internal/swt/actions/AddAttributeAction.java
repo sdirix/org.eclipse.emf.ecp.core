@@ -42,6 +42,9 @@ public class AddAttributeAction extends ECPSWTAction {
 	@Override
 	public void run() {
 		super.run();
+		if (getEditingDomain() == null) {
+			return;
+		}
 		// TODO show message if something goes wrong
 		Object defaultValue = getSetting().getEStructuralFeature().getEType().getDefaultValue();
 		if (defaultValue == null) {

@@ -12,27 +12,49 @@
 package org.eclipse.emf.ecp.ide.editor.view;
 
 import java.io.IOException;
+import java.util.EventObject;
 
+import org.eclipse.core.resources.IResourceChangeEvent;
+import org.eclipse.core.resources.IResourceChangeListener;
+import org.eclipse.core.resources.IResourceDelta;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.command.BasicCommandStack;
+import org.eclipse.emf.common.command.CommandStackListener;
+import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.ide.view.service.ViewModelEditorCallback;
+import org.eclipse.emf.ecp.internal.ecore.util.EcoreHelper;
+import org.eclipse.emf.ecp.spi.ui.ECPReferenceServiceImpl;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorSite;
+import org.eclipse.ui.IPartListener2;
+import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.internal.ErrorViewPart;
 import org.eclipse.ui.part.EditorPart;
 import org.eclipse.ui.part.FileEditorInput;
 
@@ -42,6 +64,7 @@ import org.eclipse.ui.part.FileEditorInput;
  * @author Eugen Neufeld
  * 
  */
+@SuppressWarnings("restriction")
 public class ViewEditorPart extends EditorPart implements
 	ViewModelEditorCallback {
 
@@ -50,10 +73,27 @@ public class ViewEditorPart extends EditorPart implements
 	private Composite parent;
 	private ECPSWTView render;
 
+	private ViewModelContext viewContext;
+	private ModelChangeListener modelChangeListener;
+
+	private boolean ecoreOutOfSync;
+	private IPartListener2 partListener;
+	private IResourceChangeListener resourceChangeListener;
+	private final ViewEditorPart instance;
+	private ViewModelService referenceService;
+
+	/** Default constructor for {@link ViewEditorPart}. */
+	public ViewEditorPart() {
+		super();
+		instance = this;
+	}
+
 	@Override
 	public void doSave(IProgressMonitor monitor) {
 		try {
 			resource.save(null);
+			basicCommandStack.saveIsDone();
+			firePropertyChange(IEditorPart.PROP_DIRTY);
 		} catch (final IOException e) {
 			Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
 		}
@@ -69,15 +109,61 @@ public class ViewEditorPart extends EditorPart implements
 		throws PartInitException {
 		super.setSite(site);
 		super.setInput(input);
+		super.setPartName(input.getName());
+
+		referenceService = new ECPReferenceServiceImpl();
+
 		basicCommandStack = new BasicCommandStack();
+		basicCommandStack.addCommandStackListener
+			(new CommandStackListener()
+			{
+				@Override
+				public void commandStackChanged(final EventObject event)
+				{
+					parent.getDisplay().asyncExec
+						(new Runnable()
+						{
+							@Override
+							public void run()
+							{
+								firePropertyChange(IEditorPart.PROP_DIRTY);
+							}
+						});
+				}
+			});
+
+		partListener = new ViewPartListener();
+		getSite().getPage().addPartListener(partListener);
+
+		resourceChangeListener = new IResourceChangeListener() {
+
+			@Override
+			public void resourceChanged(IResourceChangeEvent event) {
+				IResourceDelta delta = event.getDelta();
+				if (delta != null) {
+					while (delta.getAffectedChildren().length != 0) {
+						delta = delta.getAffectedChildren()[0];
+					}
+					final VView view = getView();
+					final String ecorePath = Activator.getViewModelRegistry().getEcorePath(view);
+					if (ecorePath.contains(delta.getResource().getFullPath().toString())) {
+						ecoreOutOfSync = true;
+					}
+				}
+			}
+
+		};
+		// add resource change listener
+		ResourcesPlugin.getWorkspace().addResourceChangeListener(resourceChangeListener);
 	}
 
 	private ResourceSet createResourceSet() {
 		final ResourceSet resourceSet = new ResourceSetImpl();
 
 		final AdapterFactoryEditingDomain domain = new AdapterFactoryEditingDomain(
-			new ComposedAdapterFactory(
-				ComposedAdapterFactory.Descriptor.Registry.INSTANCE),
+			new ComposedAdapterFactory(new AdapterFactory[] {
+				new ReflectiveItemProviderAdapterFactory(),
+				new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) }),
 			basicCommandStack, resourceSet);
 		resourceSet.eAdapters().add(
 			new AdapterFactoryEditingDomain.EditingDomainProvider(domain));
@@ -94,17 +180,71 @@ public class ViewEditorPart extends EditorPart implements
 		return false;
 	}
 
+	private void loadView() {
+		final FileEditorInput fei = (FileEditorInput) getEditorInput();
+
+		final ResourceSet resourceSet = createResourceSet();
+		try {
+			resource = resourceSet.getResource(URI.createURI(fei.getURI().toURL().toExternalForm()), true);
+			resource.load(null);
+			// resolve all proxies
+			int rsSize = resourceSet.getResources().size();
+			EcoreUtil.resolveAll(resourceSet);
+			while (rsSize != resourceSet.getResources().size()) {
+				EcoreUtil.resolveAll(resourceSet);
+				rsSize = resourceSet.getResources().size();
+			}
+
+		} catch (final IOException ex) {
+		}
+	}
+
 	@Override
 	public void createPartControl(Composite parent) {
 		this.parent = parent;
 
-		loadAndShowView();
-		final VView view = (VView) resource.getContents().get(0);
-		Activator.getViewModelRegistry().registerViewModelEditor(view, this);
-		if (view.getRootEClass() != null) {
-			Activator.getViewModelRegistry().register(view.getRootEClass().eResource().getURI().toString(), view);
+		loadView();
+		VView view = getView();
+
+		final String ecorePath = Activator.getViewModelRegistry().getEcorePath(view);
+		try {
+			EcoreHelper.registerEcore(ecorePath);
+		} catch (final IOException e) {
+			Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
 		}
 
+		// reload view resource after EClass' package resource was loaded into the package registry
+		try {
+			loadView();
+			view = getView();
+
+			Activator.getViewModelRegistry().registerViewModel(view, resource.getURI().toString());
+			try {
+				Activator.getViewModelRegistry().registerViewModelEditor(view, this);
+			} catch (final IOException e) {
+				Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
+			}
+			if (view.getRootEClass() != null) {
+				Activator.getViewModelRegistry().register(view.getRootEClass().eResource().getURI().toString(), view);
+			}
+			showView();
+			// BEGIN SUPRESS CATCH EXCEPTION
+		} catch (final RuntimeException e) {
+			displayError(e);
+		}// END SUPRESS CATCH EXCEPTION
+	}
+
+	private void showView() {
+		final VView view = getView();
+
+		viewContext = ViewModelContextFactory.INSTANCE.createViewModelContext(
+			view, view.getRootEClass(), referenceService);
+
+		try {
+			render = ECPSWTViewRenderer.INSTANCE.render(parent, view);
+		} catch (final ECPRendererException ex) {
+			Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, ex.getMessage(), ex));
+		}
 	}
 
 	private void loadAndShowView() {
@@ -112,13 +252,23 @@ public class ViewEditorPart extends EditorPart implements
 			final FileEditorInput fei = (FileEditorInput) getEditorInput();
 
 			final ResourceSet resourceSet = createResourceSet();
-			resource = resourceSet.getResource(
-				URI.createURI(fei.getURI().toURL().toExternalForm()), true);
+			resource = resourceSet.getResource(URI.createURI(fei.getURI().toURL().toExternalForm()), true);
 			resource.load(null);
-			final VView view = (VView) resource.getContents().get(0);
+			// resolve all proxies
+			// TODO delete?
+			int rsSize = resourceSet.getResources().size();
+			EcoreUtil.resolveAll(resourceSet);
+			while (rsSize != resourceSet.getResources().size()) {
+				EcoreUtil.resolveAll(resourceSet);
+				rsSize = resourceSet.getResources().size();
+			}
 
-			render = ECPSWTViewRenderer.INSTANCE
-				.render(parent, view);
+			final VView view = getView();
+
+			viewContext = ViewModelContextFactory.INSTANCE.createViewModelContext(
+				view, view.getRootEClass(), referenceService);
+
+			render = ECPSWTViewRenderer.INSTANCE.render(parent, view);
 		} catch (final ECPRendererException e) {
 			Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
 		} catch (final IOException e) {
@@ -128,7 +278,6 @@ public class ViewEditorPart extends EditorPart implements
 
 	@Override
 	public void setFocus() {
-
 	}
 
 	/**
@@ -136,9 +285,11 @@ public class ViewEditorPart extends EditorPart implements
 	 * 
 	 * @see org.eclipse.emf.ecp.ide.view.service.ViewModelEditorCallback#reloadViewModel()
 	 */
+	@Override
 	public void reloadViewModel() {
 		Display.getDefault().asyncExec(new Runnable() {
 
+			@Override
 			public void run() {
 				if (render != null) {
 					render.dispose();
@@ -151,9 +302,86 @@ public class ViewEditorPart extends EditorPart implements
 
 	@Override
 	public void dispose() {
-		final VView view = (VView) resource.getContents().get(0);
+		final VView view = getView();
 		Activator.getViewModelRegistry().unregisterViewModelEditor(view, this);
+		if (viewContext != null && modelChangeListener != null) {
+			viewContext.unregisterViewChangeListener(modelChangeListener);
+		}
+		getSite().getPage().removePartListener(partListener);
+		ResourcesPlugin.getWorkspace().removeResourceChangeListener(resourceChangeListener);
 		super.dispose();
 	}
 
+	/**
+	 * @return the VView object
+	 */
+	public VView getView() {
+		return (VView) resource.getContents().get(0);
+	}
+
+	private void displayError(Exception e) {
+		Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
+		final IStatus status = new Status(IStatus.ERROR, Activator.PLUGIN_ID, "Current view cannot be displayed", e); //$NON-NLS-1$
+		final ErrorViewPart part = new ErrorViewPart(status);
+		part.createPartControl(parent);
+	}
+
+	/**
+	 * 
+	 * */
+	private class ViewPartListener implements IPartListener2 {
+		@Override
+		public void partActivated(IWorkbenchPartReference partRef) {
+
+			if (instance.equals(partRef.getPart(true))) {
+				if (ecoreOutOfSync) {
+					PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
+						@Override
+						public void run() {
+							final Shell activeShell = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+								.getShell();
+							final MessageDialog dialog = new MessageDialog(
+								activeShell,
+								"Warning", //$NON-NLS-1$
+								null,
+								"The ECore or Genmodel of your ViewModel just changed. This change is not reflected in this View Model Editor.", //$NON-NLS-1$
+								MessageDialog.WARNING,
+								new String[] { "Ok" }, //$NON-NLS-1$ 
+								0);
+							dialog.open();
+							ecoreOutOfSync = false;
+						}
+					});
+				}
+			}
+		}
+
+		@Override
+		public void partBroughtToTop(IWorkbenchPartReference partRef) {
+		}
+
+		@Override
+		public void partClosed(IWorkbenchPartReference partRef) {
+		}
+
+		@Override
+		public void partDeactivated(IWorkbenchPartReference partRef) {
+		}
+
+		@Override
+		public void partOpened(IWorkbenchPartReference partRef) {
+		}
+
+		@Override
+		public void partHidden(IWorkbenchPartReference partRef) {
+		}
+
+		@Override
+		public void partVisible(IWorkbenchPartReference partRef) {
+		}
+
+		@Override
+		public void partInputChanged(IWorkbenchPartReference partRef) {
+		}
+	}
 }

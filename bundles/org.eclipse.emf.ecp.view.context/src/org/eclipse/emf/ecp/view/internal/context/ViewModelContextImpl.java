@@ -80,6 +80,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 	private final SortedSet<ViewModelService> viewServices = new TreeSet<ViewModelService>(
 		new Comparator<ViewModelService>() {
 
+			@Override
 			public int compare(ViewModelService arg0, ViewModelService arg1) {
 				return arg0.getPriority() - arg1.getPriority();
 			}
@@ -255,6 +256,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getControlsFor(org.eclipse.emf.ecore.EStructuralFeature.Setting)
 	 */
+	@Override
 	public Set<VControl> getControlsFor(Setting setting) {
 		return settingToControlMap.get(UniqueSetting.createSetting(setting));
 	}
@@ -264,6 +266,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getControlsFor(org.eclipse.emf.ecp.common.UniqueSetting)
 	 */
+	@Override
 	public Set<VControl> getControlsFor(UniqueSetting setting) {
 		return settingToControlMap.get(setting);
 	}
@@ -294,6 +297,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getViewModel()
 	 */
+	@Override
 	public VElement getViewModel() {
 		if (isDisposed) {
 			throw new IllegalStateException(THE_VIEW_MODEL_CONTEXT_WAS_ALREADY_DISPOSED);
@@ -306,6 +310,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getDomainModel()
 	 */
+	@Override
 	public EObject getDomainModel() {
 		if (isDisposed) {
 			throw new IllegalStateException(THE_VIEW_MODEL_CONTEXT_WAS_ALREADY_DISPOSED);
@@ -316,6 +321,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 	/**
 	 * Dispose.
 	 */
+	@Override
 	public void dispose() {
 		if (isDisposed) {
 			return;
@@ -342,6 +348,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#registerViewChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener)
 	 */
+	@Override
 	public void registerViewChangeListener(ModelChangeListener modelChangeListener) {
 		if (isDisposed) {
 			throw new IllegalStateException(THE_VIEW_MODEL_CONTEXT_WAS_ALREADY_DISPOSED);
@@ -357,6 +364,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#unregisterViewChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener)
 	 */
+	@Override
 	public void unregisterViewChangeListener(ModelChangeListener modelChangeListener) {
 		// if (isDisposed) {
 		// throw new IllegalStateException("The ViewModelContext was already disposed.");
@@ -369,6 +377,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#registerDomainChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener)
 	 */
+	@Override
 	public void registerDomainChangeListener(ModelChangeListener modelChangeListener) {
 		if (isDisposed) {
 			throw new IllegalStateException(THE_VIEW_MODEL_CONTEXT_WAS_ALREADY_DISPOSED);
@@ -384,6 +393,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#unregisterDomainChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener)
 	 */
+	@Override
 	public void unregisterDomainChangeListener(ModelChangeListener modelChangeListener) {
 		// if (isDisposed) {
 		// throw new IllegalStateException("The ViewModelContext was already disposed.");
@@ -396,6 +406,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#hasService(java.lang.Class)
 	 */
+	@Override
 	public <T> boolean hasService(Class<T> serviceType) {
 		for (final ViewModelService service : viewServices) {
 			if (serviceType.isInstance(service)) {
@@ -410,6 +421,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getService(java.lang.Class)
 	 */
+	@Override
 	@SuppressWarnings("unchecked")
 	public <T> T getService(Class<T> serviceType) {
 		for (final ViewModelService service : viewServices) {
@@ -417,7 +429,6 @@ public class ViewModelContextImpl implements ViewModelContext {
 				return (T) service;
 			}
 		}
-
 		Activator.log(new IllegalArgumentException(String.format(NO_VIEW_SERVICE_OF_TYPE_FOUND,
 			serviceType.getCanonicalName())));
 		return null;
@@ -455,7 +466,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 		protected void addAdapter(Notifier notifier) {
 			super.addAdapter(notifier);
 			// do not notify while being disposed
-			if (isDisposing) {
+			if (isDisposing || isDisposed) {
 				return;
 			}
 			if (VElement.class.isInstance(notifier)) {

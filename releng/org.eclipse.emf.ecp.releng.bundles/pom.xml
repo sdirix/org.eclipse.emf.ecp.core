@@ -15,6 +15,12 @@
 	<packaging>pom</packaging>
 
 	<modules>
+		<!-- Tooling -->
+		<module>../../bundles/org.eclipse.emf.ecp.view.model.preview.common</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.model.editor.project.installer</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.model.preview.e3</module>
+		<module>../../bundles/org.eclipse.emf.ecp.ecore</module>
+				
 		<module>../../bundles/org.eclipse.emf.ecp.core</module>
 		<module>../../bundles/org.eclipse.emf.ecp.core.emffilter</module>
 		<module>../../bundles/org.eclipse.emf.ecp.common</module>

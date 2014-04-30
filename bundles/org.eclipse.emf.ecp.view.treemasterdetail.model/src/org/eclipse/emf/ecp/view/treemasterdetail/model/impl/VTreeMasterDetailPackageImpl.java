@@ -79,12 +79,11 @@ public class VTreeMasterDetailPackageImpl extends EPackageImpl implements VTreeM
 	 */
 	public static VTreeMasterDetailPackage init()
 	{
-		if (isInited) {
+		if (isInited)
 			return (VTreeMasterDetailPackage) EPackage.Registry.INSTANCE.getEPackage(VTreeMasterDetailPackage.eNS_URI);
-		}
 
 		// Obtain or create and register package
-		final VTreeMasterDetailPackageImpl theTreeMasterDetailPackage = (VTreeMasterDetailPackageImpl) (EPackage.Registry.INSTANCE
+		VTreeMasterDetailPackageImpl theTreeMasterDetailPackage = (VTreeMasterDetailPackageImpl) (EPackage.Registry.INSTANCE
 			.get(eNS_URI) instanceof VTreeMasterDetailPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI)
 			: new VTreeMasterDetailPackageImpl());
 
@@ -158,9 +157,8 @@ public class VTreeMasterDetailPackageImpl extends EPackageImpl implements VTreeM
 	 */
 	public void createPackageContents()
 	{
-		if (isCreated) {
+		if (isCreated)
 			return;
-		}
 		isCreated = true;
 
 		// Create classes and their features
@@ -186,9 +184,8 @@ public class VTreeMasterDetailPackageImpl extends EPackageImpl implements VTreeM
 	 */
 	public void initializePackageContents()
 	{
-		if (isInitialized) {
+		if (isInitialized)
 			return;
-		}
 		isInitialized = true;
 
 		// Initialize package
@@ -197,7 +194,7 @@ public class VTreeMasterDetailPackageImpl extends EPackageImpl implements VTreeM
 		setNsURI(eNS_URI);
 
 		// Obtain other dependent packages
-		final VViewPackage theViewPackage = (VViewPackage) EPackage.Registry.INSTANCE.getEPackage(VViewPackage.eNS_URI);
+		VViewPackage theViewPackage = (VViewPackage) EPackage.Registry.INSTANCE.getEPackage(VViewPackage.eNS_URI);
 
 		// Create type parameters
 

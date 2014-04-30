@@ -109,13 +109,13 @@ public class ControlTargetFeatureControl extends LinkControl {
 									.getEContainingClass(), treePath)) {
 								return new Status(IStatus.ERROR,
 									org.eclipse.emf.ecp.view.editor.controls.Activator.PLUGIN_ID,
-									"The selected " + EStructuralFeature.class.getSimpleName()
-										+ " has no PropertyDescriptor.");
+									"The selected " + EStructuralFeature.class.getSimpleName() //$NON-NLS-1$
+										+ " has no PropertyDescriptor."); //$NON-NLS-1$
 							}
 							return Status.OK_STATUS;
 						}
 						return new Status(IStatus.ERROR, org.eclipse.emf.ecp.view.editor.controls.Activator.PLUGIN_ID,
-							"This is not an " + EStructuralFeature.class.getSimpleName() + ".");
+							"This is not an " + EStructuralFeature.class.getSimpleName() + "."); //$NON-NLS-1$ //$NON-NLS-2$
 					}
 				}, allowMultiSelection());
 		}

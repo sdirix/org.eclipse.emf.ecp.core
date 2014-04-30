@@ -20,46 +20,6 @@
    </license>
 
    <includes
-         id="org.eclipse.emf.ecp.cdo.feature.source"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.ecp.emfstore.feature.source"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.ecp.workspace.feature.source"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.ecp.emfforms.runtime.feature.source"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.ecp.feature.source"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.ecp.demo.e3.feature.source"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.ecp.e3.feature.source"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.ecp.license.feature.source"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.ecp.view.model.editor.feature.source"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.ecp.view.template.helper.feature.source"
-         version="0.0.0"/>
-
-   <includes
          id="org.eclipse.emf.ecp.cdo.feature"
          version="0.0.0"/>
 
@@ -104,7 +64,7 @@
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.emf.ecp.view.model.controls.feature.source"
+         id="org.eclipse.emf.ecp.emfforms.idetooling.feature"
          version="0.0.0"/>
 
 </feature>

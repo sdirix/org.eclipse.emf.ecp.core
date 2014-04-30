@@ -11,7 +11,12 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.core.swt.renderer;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.core.databinding.Binding;
+import org.eclipse.emf.ecore.EEnum;
+import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlJFaceViewerSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
@@ -76,7 +81,11 @@ public class EnumComboViewerSWTRenderer extends SimpleControlJFaceViewerSWTRende
 			}
 
 		});
-		combo.setInput(setting.getEStructuralFeature().getEType().getInstanceClass().getEnumConstants());
+		final List<Object> inputValues = new ArrayList<Object>();
+		for (final EEnumLiteral literal : EEnum.class.cast(setting.getEStructuralFeature().getEType()).getELiterals()) {
+			inputValues.add(literal.getInstance());
+		}
+		combo.setInput(inputValues);
 		combo.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_enum"); //$NON-NLS-1$
 		return combo;
 	}

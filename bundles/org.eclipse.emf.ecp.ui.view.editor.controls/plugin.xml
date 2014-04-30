@@ -67,6 +67,16 @@
                testClass="org.eclipse.emf.ecp.view.editor.controls.RuleFeaturePathTester">
          </dynamicTest>
       </control>
+      <control
+            class="org.eclipse.emf.ecp.view.editor.controls.ControlRootEClassControl2"
+            id="org.eclipse.emf.ecp.view.editor.controls.rootEClass2">
+         <staticTest
+               priority="10"
+               singleValue="true"
+               supportedClassType="org.eclipse.emf.ecore.EClass"
+               supportedEObject="org.eclipse.emf.ecp.view.spi.model.VView">
+         </staticTest>
+      </control>
    </extension>
    <extension
          point="org.eclipse.ui.menus">
@@ -75,6 +85,7 @@
             locationURI="popup:org.eclipse.emf.ecp.ui.ModelExplorerView">
          <command
                commandId="org.eclipse.emf.ecp.view.editor.controls.generateDefault"
+               icon="icons/generate.png"
                label="Generate Controls"
                style="push">
             <visibleWhen
@@ -96,6 +107,7 @@
          </command>
          <command
                commandId="org.eclipse.emf.ecp.view.editor.controls.generateDefaultOnView"
+               icon="icons/generate.png"
                label="Generate Controls"
                style="push">
             <visibleWhen
@@ -139,6 +151,54 @@
          </command>
          -->
       </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.eclipse.emf.ecp.ide.editor.view.editor">
+         <command
+               commandId="org.eclipse.emf.ecp.view.editor.controls.generateDefault"
+               icon="icons/generate.png"
+               label="Generate Controls"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="activeMenuSelection">
+                  <and>
+                     <count
+                           value="1">
+                     </count>
+                     <iterate>
+                        <instanceof
+                              value="org.eclipse.emf.ecp.view.spi.model.VContainer">
+                        </instanceof>
+                     </iterate>
+                  </and>
+               </with>
+            </visibleWhen>
+         </command>
+         <command
+               commandId="org.eclipse.emf.ecp.view.editor.controls.generateDefaultOnView"
+               icon="icons/generate.png"
+               label="Generate Controls"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="activeMenuSelection">
+                  <and>
+                     <count
+                           value="1">
+                     </count>
+                     <iterate>
+                        <instanceof
+                              value="org.eclipse.emf.ecp.view.spi.model.VView">
+                        </instanceof>
+                     </iterate>
+                  </and>
+               </with>
+            </visibleWhen>
+         </command>
+      </menuContribution>
    </extension>
    <extension
          point="org.eclipse.ui.commands">
@@ -163,6 +223,15 @@
       <ECPDropAdapter
             class="org.eclipse.emf.ecp.view.editor.handler.ViewEditorDropAdapter">
       </ECPDropAdapter>
+   </extension>
+   <extension
+         point="org.eclipse.emf.ecp.view.treemasterdetail.ui.swt.masterDetailActions">
+      <MasterDetailAction
+            command="org.eclipse.emf.ecp.view.editor.handler.GenerateControlsHandler"
+            imagePath="icons/generate.png"
+            label="Generate Controls"
+            location="menu">
+      </MasterDetailAction>
    </extension>
 
 </plugin>

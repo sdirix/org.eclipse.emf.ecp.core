@@ -12,19 +12,30 @@
 package org.eclipse.emf.ecp.view.editor.controls;
 
 import java.util.LinkedHashSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.notify.Notifier;
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EPackage.Descriptor;
 import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.emf.ecp.edit.internal.swt.reference.DeleteReferenceAction;
 import org.eclipse.emf.ecp.edit.internal.swt.reference.LinkControl;
+import org.eclipse.emf.ecp.edit.spi.ReferenceService;
+import org.eclipse.emf.ecp.ide.view.internal.service.IDEViewModelRegistryImpl;
+import org.eclipse.emf.ecp.ide.view.service.IDEViewModelRegistry;
 import org.eclipse.emf.ecp.edit.spi.ReferenceService;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.edit.command.ChangeCommand;
@@ -40,6 +51,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.dialogs.ElementTreeSelectionDialog;
 import org.eclipse.ui.dialogs.ISelectionStatusValidator;
+import org.osgi.framework.ServiceReference;
 
 /**
  * This control is used to select the root {@link EClass} of a {@link VView}.
@@ -106,23 +118,77 @@ public class ControlRootEClassControl extends LinkControl {
 						return Status.OK_STATUS;
 					}
 					return new Status(IStatus.ERROR, org.eclipse.emf.ecp.view.editor.controls.Activator.PLUGIN_ID,
-						"This is not an EClass.");
+						"This is not an EClass."); //$NON-NLS-1$
 				}
 			});
 			dialog.setInput(getInput());
-			dialog.setMessage("Select an EClass.");
-			dialog.setTitle("Select an EClass.");
+			dialog.setMessage("Select an EClass."); //$NON-NLS-1$
+			dialog.setTitle("Select an EClass."); //$NON-NLS-1$
 			dialog.setComparator(new ViewerComparator());
 			final int result = dialog.open();
 			if (Window.OK == result) {
 				final Object selection = dialog.getFirstResult();
 				if (EClass.class.isInstance(selection)) {
 					final EClass selectedFeature = (EClass) selection;
+					final VView view = (VView) getFirstSetting().getEObject();
 
-					((VView) getFirstSetting().getEObject()).setRootEClass(selectedFeature);
+					if (view.getRootEClass() != null) {
+						getViewModelRegistry().unregister(
+							view.getRootEClass().eResource().getURI().toString(), view);
+					}
+
+					view.setRootEClass(selectedFeature);
+					getViewModelRegistry().register(view.getRootEClass().eResource().getURI().toString(), view);
+
+					final ResourceSet resourceSet = new ResourceSetImpl();
+					final Map<String, Object> map =
+						resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap();
+					map.put("*", new XMIResourceFactoryImpl()); //$NON-NLS-1$
+
+					final ResourceSet rs = selectedFeature.eContainer().eResource().getResourceSet();
+					URI uri = null;
+					for (final Resource r : rs.getResources()) {
+						if (r.getURI().isPlatform()) {
+							uri = r.getURI();
+						}
+					}
+
+					final Resource ecore = resourceSet.getResource(uri, true);
+
+					if (ecore != null) {
+						// put the file in the registry
+						final EList<EObject> contents = ecore.getContents();
+						if (contents.size() != 1) {
+							return;
+						}
+
+						final EObject object = contents.get(0);
+						if (!(object instanceof EPackage)) {
+							return;
+						}
+
+						// Update the VView-EClass mapping
+						final IDEViewModelRegistryImpl registry = (IDEViewModelRegistryImpl) getViewModelRegistry();
+						registry.persistSelectedEcore(ecore.getURI().toPlatformString(true), view);
+
+					}
 				}
 			}
 			labelProvider.dispose();
+		}
+
+		/**
+		 * Return the {@link IDEViewModelRegistry}.
+		 * 
+		 * @return the {@link IDEViewModelRegistry}
+		 */
+		public IDEViewModelRegistry getViewModelRegistry() {
+			final ServiceReference<IDEViewModelRegistry> serviceReference = Activator.getDefault().getBundle()
+				.getBundleContext().getServiceReference(IDEViewModelRegistry.class);
+			if (serviceReference == null) {
+				return null;
+			}
+			return Activator.getDefault().getBundle().getBundleContext().getService(serviceReference);
 		}
 
 		private ITreeContentProvider getContentProvider() {
@@ -186,7 +252,7 @@ public class ControlRootEClassControl extends LinkControl {
 	}
 
 	/**
-	 * @return
+	 * @return an instance of the {@link org.eclipse.emf.ecore.EPackage.Registry}
 	 */
 	protected Object getInput() {
 		return Registry.INSTANCE;

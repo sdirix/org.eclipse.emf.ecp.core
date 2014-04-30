@@ -1,15 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
-   <extension
+  <extension
          point="org.eclipse.ui.editors">
       <editor
             class="org.eclipse.emf.ecp.ide.editor.view.ViewEditorPart"
             default="false"
-            extensions="viewmodel"
+            extensions="view"
+            icon="icons/view.png"
             id="org.eclipse.emf.ecp.ide.editor.view.editor"
             name="View Model Editor">
       </editor>
    </extension>
-
+  <extension
+        point="org.eclipse.ui.menus">
+    <menuContribution
+            allPopups="false"
+            locationURI="popup:org.eclipse.jdt.ui.PackageExplorer">
+         <separator
+               name="org.eclipse.emf.ecp.ui.e3.viewModelSeparator"
+               visible="true">
+         </separator>
+	</menuContribution>
+  </extension>
+  <extension
+        point="org.eclipse.ui.commands">
+     <command
+           defaultHandler="org.eclipse.emf.ecp.ide.editor.view.handlers.OpenPreviewView"
+           id="org.eclipse.emf.ecp.ide.editor.view.openPreviewCommand"
+           name="Open Preview">
+     </command>
+  </extension>
 </plugin>

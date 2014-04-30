@@ -40,6 +40,7 @@ public class ECPSWTViewRendererImpl implements ECPSWTViewRenderer {
 	 * @see org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer#render(org.eclipse.swt.widgets.Composite,
 	 *      org.eclipse.emf.ecore.EObject)
 	 */
+	@Override
 	public ECPSWTView render(Composite parent, EObject domainObject) throws ECPRendererException {
 		return render(parent, domainObject, ViewProviderHelper.getView(domainObject));
 	}
@@ -50,6 +51,7 @@ public class ECPSWTViewRendererImpl implements ECPSWTViewRenderer {
 	 * @see org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer#render(org.eclipse.swt.widgets.Composite,
 	 *      org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecp.view.spi.model.VView)
 	 */
+	@Override
 	public ECPSWTView render(Composite parent, EObject domainObject, VView viewModel) throws ECPRendererException {
 		final ViewModelContext viewContext = ViewModelContextFactory.INSTANCE.createViewModelContext(viewModel,
 			domainObject);
@@ -62,6 +64,7 @@ public class ECPSWTViewRendererImpl implements ECPSWTViewRenderer {
 	 * @see org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer#render(org.eclipse.swt.widgets.Composite,
 	 *      org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
+	@Override
 	public ECPSWTView render(Composite parent, ViewModelContext viewModelContext) throws ECPRendererException {
 		final SWTRendererFactory factory = new SWTRendererFactoryImpl();
 		final AbstractSWTRenderer<VElement> renderer = factory.getRenderer(

@@ -26,6 +26,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.BasicDiagnostic;
@@ -52,6 +53,7 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 
 /**
  * Validation service that, once instantiated, synchronizes the validation result of a model element with its
@@ -73,6 +75,7 @@ public class ValidationServiceImpl implements ValidationService {
 		 * 
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener#notifyChange(org.eclipse.emf.ecp.view.spi.context.ModelChangeNotification)
 		 */
+		@Override
 		public void notifyChange(ModelChangeNotification notification) {
 			if (VViewPackage.eINSTANCE.getElement_Enabled() == notification.getRawNotification()
 				.getFeature()
@@ -109,6 +112,7 @@ public class ValidationServiceImpl implements ValidationService {
 		 * 
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener#notifyAdd(org.eclipse.emf.common.notify.Notifier)
 		 */
+		@Override
 		public void notifyAdd(Notifier notifier) {
 			if (VControl.class.isInstance(notifier)) {
 				final VDomainModelReference domainModelReference = VControl.class.cast(notifier)
@@ -132,6 +136,7 @@ public class ValidationServiceImpl implements ValidationService {
 		 * 
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener#notifyRemove(org.eclipse.emf.common.notify.Notifier)
 		 */
+		@Override
 		public void notifyRemove(Notifier notifier) {
 			// TODO Auto-generated method stub
 
@@ -150,6 +155,7 @@ public class ValidationServiceImpl implements ValidationService {
 		 * 
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener#notifyChange(org.eclipse.emf.ecp.view.spi.context.ModelChangeNotification)
 		 */
+		@Override
 		public void notifyChange(ModelChangeNotification notification) {
 			if (ValidationNotification.class.isInstance(notification.getRawNotification())) {
 				validate(notification.getNotifier());
@@ -184,6 +190,7 @@ public class ValidationServiceImpl implements ValidationService {
 		 * 
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener#notifyAdd(org.eclipse.emf.common.notify.Notifier)
 		 */
+		@Override
 		public void notifyAdd(Notifier notifier) {
 			// do nothing
 		}
@@ -193,6 +200,7 @@ public class ValidationServiceImpl implements ValidationService {
 		 * 
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener#notifyRemove(org.eclipse.emf.common.notify.Notifier)
 		 */
+		@Override
 		public void notifyRemove(Notifier notifier) {
 			// do nothing
 		}
@@ -213,6 +221,7 @@ public class ValidationServiceImpl implements ValidationService {
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#instantiate(org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
+	@Override
 	public void instantiate(ViewModelContext context) {
 		this.context = context;
 		final VElement renderable = context.getViewModel();
@@ -286,6 +295,7 @@ public class ValidationServiceImpl implements ValidationService {
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#dispose()
 	 */
+	@Override
 	public void dispose() {
 		context.unregisterDomainChangeListener(domainChangeListener);
 		context.unregisterViewChangeListener(viewChangeListener);
@@ -296,6 +306,7 @@ public class ValidationServiceImpl implements ValidationService {
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#getPriority()
 	 */
+	@Override
 	public int getPriority() {
 		return 3;
 	}
@@ -321,6 +332,7 @@ public class ValidationServiceImpl implements ValidationService {
 	 * 
 	 * @see org.eclipse.emf.ecp.view.internal.validation.ValidationService#validate(java.util.Collection)
 	 */
+	@Override
 	public void validate(Collection<EObject> eObjects) {
 
 		EObject firstObject = null;
@@ -504,9 +516,9 @@ public class ValidationServiceImpl implements ValidationService {
 		if (validator == null) {
 			validator = new EObjectValidator();
 		}
-		final ComposedAdapterFactory adapterFactory = new ComposedAdapterFactory(
-			ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
-
+		final ComposedAdapterFactory adapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
+			new ReflectiveItemProviderAdapterFactory(),
+			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
 		final Map<Object, Object> context = new LinkedHashMap<Object, Object>();
 		context.put(EValidator.SubstitutionLabelProvider.class, new ECPSubstitutionLabelProvider(adapterFactory));
 		context.put(EValidator.class, validator);
@@ -542,6 +554,7 @@ public class ValidationServiceImpl implements ValidationService {
 	 * 
 	 * @see org.eclipse.emf.ecp.view.internal.validation.ValidationService#addValidationProvider(org.eclipse.emf.ecp.view.internal.validation.ValidationProvider)
 	 */
+	@Override
 	public void addValidationProvider(ValidationProvider validationProvider) {
 		validationProviders.add(validationProvider);
 		validate(getAllEObjects(context.getDomainModel()));
@@ -553,6 +566,7 @@ public class ValidationServiceImpl implements ValidationService {
 	 * 
 	 * @see org.eclipse.emf.ecp.view.internal.validation.ValidationService#removeValidationProvider(org.eclipse.emf.ecp.view.internal.validation.ValidationProvider)
 	 */
+	@Override
 	public void removeValidationProvider(ValidationProvider validationProvider) {
 		validationProviders.remove(validationProvider);
 		validate(getAllEObjects(context.getDomainModel()));
@@ -565,6 +579,7 @@ public class ValidationServiceImpl implements ValidationService {
 	 * 
 	 * @see org.eclipse.emf.ecp.view.internal.validation.ValidationService#registerValidationListener(org.eclipse.emf.ecp.view.internal.validation.ViewValidationListener)
 	 */
+	@Override
 	public void registerValidationListener(ViewValidationListener listener) {
 		validationListener.add(listener);
 
@@ -587,6 +602,7 @@ public class ValidationServiceImpl implements ValidationService {
 	 * 
 	 * @see org.eclipse.emf.ecp.view.internal.validation.ValidationService#deregisterValidationListener(org.eclipse.emf.ecp.view.internal.validation.ViewValidationListener)
 	 */
+	@Override
 	public void deregisterValidationListener(ViewValidationListener listener) {
 		validationListener.add(listener);
 		listener.onNewValidation(getDiagnosticResult());
