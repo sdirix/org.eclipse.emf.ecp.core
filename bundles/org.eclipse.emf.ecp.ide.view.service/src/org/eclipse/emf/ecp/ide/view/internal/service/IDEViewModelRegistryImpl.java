@@ -37,7 +37,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.emf.ecp.ide.view.service.IDEViewModelRegistry;
 import org.eclipse.emf.ecp.ide.view.service.ViewModelEditorCallback;
-import org.eclipse.emf.ecp.internal.ecore.util.EcoreHelper;
+import org.eclipse.emf.ecp.internal.ide.util.EcoreHelper;
 import org.eclipse.emf.ecp.view.ideconfig.model.IDEConfig;
 import org.eclipse.emf.ecp.view.ideconfig.model.IdeconfigFactory;
 import org.eclipse.emf.ecp.view.spi.model.VView;

@@ -19,7 +19,7 @@
 		<module>../../bundles/org.eclipse.emf.ecp.view.model.preview.common</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.model.editor.project.installer</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.model.preview.e3</module>
-		<module>../../bundles/org.eclipse.emf.ecp.ecore</module>
+		<module>../../bundles/org.eclipse.emf.ecp.ide.util</module>
 				
 		<module>../../bundles/org.eclipse.emf.ecp.core</module>
 		<module>../../bundles/org.eclipse.emf.ecp.core.emffilter</module>

@@ -9,7 +9,7 @@
  * Contributors:
  * Alexandra Buzila - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.internal.ecore.util;
+package org.eclipse.emf.ecp.internal.ide.util;
 
 import java.io.IOException;
 import java.util.Map;

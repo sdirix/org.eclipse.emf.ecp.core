@@ -10,7 +10,7 @@
  * Alexandra Buzila - initial API and implementation
  ******************************************************************************/
 
-package org.eclipse.emf.ecp.ecore;
+package org.eclipse.emf.ecp.ide.util;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
@@ -21,7 +21,7 @@ import org.osgi.framework.BundleContext;
 public class Activator extends AbstractUIPlugin {
 
 	/** The plug-in ID. */
-	public static final String PLUGIN_ID = "org.eclipse.emf.ecp.ecore"; //$NON-NLS-1$
+	public static final String PLUGIN_ID = "org.eclipse.emf.ecp.ide.util"; //$NON-NLS-1$
 
 	// The shared instance
 	private static Activator plugin;
