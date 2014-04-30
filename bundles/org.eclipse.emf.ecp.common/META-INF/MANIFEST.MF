@@ -12,7 +12,6 @@ Export-Package: org.eclipse.emf.ecp.common;version="1.2.0";
    org.eclipse.emf.ecp.ui,
    org.eclipse.emf.ecp.view.context,
    org.eclipse.emf.ecp.view.treemasterdetail.ui.swt",
-   org.eclipse.emf.ecp.view.table.ui.swt.test",
  org.eclipse.emf.ecp.common.cachetree;version="1.2.0";x-friends:="org.eclipse.emf.ecp.validation,org.eclipse.emf.ecp.view.validation,org.eclipse.emf.ecp.emfstore.ui"
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: Eclipse Modeling Project
