@@ -70,7 +70,7 @@ public final class EcoreHelper {
 		}
 		EPackage.Registry.INSTANCE.put(ePackage.getNsURI(), ePackage);
 		{
-		
+
 		}
 		// load the resource
 		final IResource f = ResourcesPlugin.getWorkspace().getRoot().findMember(ecorePath);
@@ -117,7 +117,7 @@ public final class EcoreHelper {
 	 * Remove the ecore's {@link EPackage} from the {@link org.eclipse.emf.ecore.EPackage.Registry}.
 	 * It also removes the packages of referenced ecores.
 	 * 
-	 * @param ecoreURI - URI of the ecore to be removed.
+	 * @param ecorePath - the path of the ecore to be removed.
 	 * 
 	 * */
 	public static void unregisterEcore(String ecorePath) {
