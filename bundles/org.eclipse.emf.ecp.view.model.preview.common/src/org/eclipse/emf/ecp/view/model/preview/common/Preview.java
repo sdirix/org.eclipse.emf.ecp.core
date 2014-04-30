@@ -31,6 +31,7 @@ import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.internal.ErrorViewPart;
 
 /** This class renders the contents of a {@link VView} in a {@link Composite}. */
@@ -151,7 +152,15 @@ public class Preview {
 			composite.dispose();
 			composite = null;
 		}
-		// composite = new Composite(parent, SWT.NONE);
+		if (parent.isDisposed()) {
+			return;
+		}
+		for (final Control c : parent.getChildren()) {
+			// if (c.isDisposed()) {
+			// continue;
+			// }
+			c.dispose();
+		}
 	}
 
 	/** Removes the cached view. */

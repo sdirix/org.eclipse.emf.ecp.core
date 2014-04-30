@@ -16,6 +16,7 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecore.impl.DynamicEObjectImpl;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.ecp.edit.internal.swt.actions.ECPSWTAction;
 import org.eclipse.emf.ecp.edit.spi.ReferenceService;
@@ -58,7 +59,11 @@ public class DeleteReferenceAction extends ECPSWTAction {
 	public void run() {
 		super.run();
 		// TODO: Reactivate
+		if (DynamicEObjectImpl.class.isInstance(getSetting().getEObject())) {
+			return;
+		}
 		final EReference reference = (EReference) getSetting().getEStructuralFeature();
+
 		if (reference.isContainment()) // &&
 										// context.getMetaModelElementContext().isNonDomainElement(opposite.eClass())||
 										// context.getMetaModelElementContext().isAssociationClassElement(opposite)
