@@ -4,13 +4,13 @@
       label="Example Model UI Feature"
       version="1.2.1.qualifier"
       provider-name="Eclipse Modeling Project"
-      plugin="org.eclipse.emf.ecp.ui.e3"
+      plugin="org.eclipse.emf.ecp.examplemodel.ui"
       image="eclipse_update_120.jpg"
       license-feature="org.eclipse.emf.ecp.license.feature"
       license-feature-version="1.2.1.qualifier">
 
    <description>
-      Integration of the EMFStore model repository.
+      %description
    </description>
 
    <copyright url="%copyrightURL">
