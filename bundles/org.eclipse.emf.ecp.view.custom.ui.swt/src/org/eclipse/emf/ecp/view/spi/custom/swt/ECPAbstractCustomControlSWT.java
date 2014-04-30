@@ -665,7 +665,18 @@ public abstract class ECPAbstractCustomControlSWT
 		}
 	}
 
-	private void setControlEnabled(GridCell gridCell, Control control, boolean enabled) {
+	/**
+	 * Override this to control which and how controls should be enabled/disabled.
+	 * 
+	 * @param gridCell the {@link GridCell} to enable/disable
+	 * @param control the {@link Control} to enable/disable
+	 * @param enabled true if the control should be enabled false otherwise
+	 */
+	protected void setControlEnabled(GridCell gridCell, Control control, boolean enabled) {
+		// ignore labels as they are readonly per definition
+		if (Label.class.isInstance(control)) {
+			return;
+		}
 		control.setEnabled(enabled);
 	}
 
