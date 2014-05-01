@@ -45,10 +45,20 @@ public class CustomControlSWTRenderer extends AbstractSWTRenderer<VCustomControl
 	protected void preInit() {
 		super.preInit();
 		final VCustomControl customControl = getVElement();
-		swtCustomControl = loadObject(customControl.getBundleName(), customControl.getClassName());
+		String bundleName = customControl.getBundleName();
+		String className = customControl.getClassName();
+		if (customControl.getBundleName() != null) {
+		}
+		if (bundleName == null) {
+			bundleName = ""; //$NON-NLS-1$
+		}
+		if (className == null) {
+			className = ""; //$NON-NLS-1$
+		}
+		swtCustomControl = loadObject(bundleName, className);
 		if (swtCustomControl == null) {
 			// TODO
-			throw new IllegalStateException(String.format("The  %1$s/%2$s cannot be loaded!",
+			throw new IllegalStateException(String.format("The  %1$s/%2$s cannot be loaded!", //$NON-NLS-1$
 				customControl.getBundleName(), customControl.getClassName()));
 		}
 		swtCustomControl.init(getVElement(), getViewModelContext());

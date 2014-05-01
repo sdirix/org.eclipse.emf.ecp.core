@@ -26,7 +26,7 @@ import org.eclipse.emf.edit.domain.EditingDomain;
  */
 public abstract class ECPCommand extends ChangeCommand {
 
-	private EditingDomain domain;
+	private final EditingDomain domain;
 
 	private RuntimeException runtimeException;
 
@@ -52,7 +52,7 @@ public abstract class ECPCommand extends ChangeCommand {
 		try {
 			doRun();
 			// BEGIN SUPRESS CATCH EXCEPTION
-		} catch (RuntimeException e) {
+		} catch (final RuntimeException e) {
 			// END SUPRESS CATCH EXCEPTION
 			runtimeException = e;
 			throw e;
@@ -74,6 +74,9 @@ public abstract class ECPCommand extends ChangeCommand {
 		runtimeException = null;
 
 		// EditingDomain domain = AdapterFactoryEditingDomain.getEditingDomainFor(eObject);
+		if (domain == null) {
+			return;
+		}
 		domain.getCommandStack().execute(this);
 
 		if (!ignoreExceptions && runtimeException != null) {

@@ -217,6 +217,9 @@ public class SelectAttributesDialog extends Dialog {
 			if (org.eclipse.emf.ecp.view.spi.model.VControl.class.isInstance(eObject)) {
 				final org.eclipse.emf.ecp.view.spi.model.VControl control = (org.eclipse.emf.ecp.view.spi.model.VControl) eObject;
 				final VDomainModelReference domainModelReference = control.getDomainModelReference();
+				if (domainModelReference == null) {
+					continue;
+				}
 				final Iterator<EStructuralFeature> structuralFeatureIterator = domainModelReference
 					.getEStructuralFeatureIterator();
 				while (structuralFeatureIterator.hasNext()) {
