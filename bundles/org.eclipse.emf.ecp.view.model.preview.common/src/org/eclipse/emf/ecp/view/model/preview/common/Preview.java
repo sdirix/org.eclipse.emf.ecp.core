@@ -60,7 +60,7 @@ public class Preview {
 	 * @param view -the {@link VView}
 	 * @throws ECPRendererException on rendering fail
 	 * */
-	public void render(final VView view) throws ECPRendererException {
+	public void render(final VView view) {
 		this.view = view;
 		adapter = new EContentAdapter() {
 
@@ -95,24 +95,22 @@ public class Preview {
 	}
 
 	private void internalRender(VView view) {
-		clear();
-
-		final EClass myPreviewEClass = view.getRootEClass();
-		final EObject dummyData = EcoreUtil.create(myPreviewEClass);
-		final PreviewReferenceService previewRefServ = new PreviewReferenceService();
-		final ViewModelContext viewModelContext = ViewModelContextFactory.INSTANCE.createViewModelContext(view,
-			dummyData, previewRefServ);
-
-		composite = createComposite(parent);
 		try {
+			clear();
+			final EClass myPreviewEClass = view.getRootEClass();
+			final EObject dummyData = EcoreUtil.create(myPreviewEClass);
+			final PreviewReferenceService previewRefServ = new PreviewReferenceService();
+			final ViewModelContext viewModelContext = ViewModelContextFactory.INSTANCE.createViewModelContext(view,
+				dummyData, previewRefServ);
+			composite = createComposite(parent);
 			render = ECPSWTViewRenderer.INSTANCE.render(composite, viewModelContext);
+			composite.layout();
+			parent.layout();
 		} catch (final RuntimeException e) {
 			displayError(e);
 		} catch (final ECPRendererException ex) {
 			displayError(ex);
 		}
-		composite.layout();
-		parent.layout();
 
 	}
 

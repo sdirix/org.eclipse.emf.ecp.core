@@ -12,8 +12,6 @@
 
 package org.eclipse.emf.ecp.view.model.internal.preview.e3.views;
 
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.util.EContentAdapter;
@@ -41,7 +39,6 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
-import org.eclipse.ui.internal.ErrorViewPart;
 import org.eclipse.ui.part.ViewPart;
 
 /** The {@link ViewPart} containing a rendered version a {@link VView}. */
@@ -221,12 +218,7 @@ public class PreviewView extends ViewPart implements ISelectionListener {
 		};
 
 		view.eAdapters().add(adapter);
-
-		try {
-			preView.render(view);
-		} catch (final Exception ex) {
-			displayError(ex);
-		}
+		preView.render(view);
 		form.reflow(true);
 	}
 
@@ -280,13 +272,5 @@ public class PreviewView extends ViewPart implements ISelectionListener {
 			}
 
 		}
-	}
-
-	private void displayError(Exception e) {
-		Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
-		final IStatus status = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
-			"Rendering failed. Please re-check your model.", e); //$NON-NLS-1$
-		final ErrorViewPart part = new ErrorViewPart(status);
-		part.createPartControl(parent);
 	}
 }
