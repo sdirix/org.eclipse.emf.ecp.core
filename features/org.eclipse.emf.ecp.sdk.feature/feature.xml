@@ -32,10 +32,6 @@
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.emf.ecp.emfforms.runtime.feature"
-         version="0.0.0"/>
-
-   <includes
          id="org.eclipse.emf.ecp.feature"
          version="0.0.0"/>
 
@@ -64,7 +60,7 @@
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.emf.ecp.emfforms.idetooling.feature"
+         id="org.eclipse.emf.ecp.emfforms.sdk.feature"
          version="0.0.0"/>
 
 </feature>
