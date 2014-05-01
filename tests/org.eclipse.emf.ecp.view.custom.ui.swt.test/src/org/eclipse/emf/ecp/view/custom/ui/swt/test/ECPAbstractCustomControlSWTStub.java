@@ -30,6 +30,7 @@ import org.eclipse.emf.ecp.view.spi.swt.layout.GridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescription;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
@@ -51,6 +52,7 @@ public class ECPAbstractCustomControlSWTStub extends ECPAbstractCustomControlSWT
 	private final boolean withControl;
 	private boolean validationReseted;
 	private Label validationLabel;
+	private Button button;
 
 	/**
 	 * @return the validationLabel
@@ -101,7 +103,7 @@ public class ECPAbstractCustomControlSWTStub extends ECPAbstractCustomControlSWT
 	@Override
 	public GridDescription getGridDescription() {
 		if (!withControl) {
-			return GridDescriptionFactory.INSTANCE.createSimpleGrid(1, 1, null);
+			return GridDescriptionFactory.INSTANCE.createSimpleGrid(1, 2, null);
 		}
 		return GridDescriptionFactory.INSTANCE.createSimpleGrid(1, 3, null);
 	}
@@ -120,6 +122,10 @@ public class ECPAbstractCustomControlSWTStub extends ECPAbstractCustomControlSWT
 			label.setText(ECPAbstractCustomControlSWTTest.LABELTEXT);
 			setRendered(true);
 			return label;
+		}
+		if (cell.getColumn() == 1 && !withControl) {
+			button = new Button(parent, SWT.PUSH);
+			return getButton();
 		}
 		if (cell.getColumn() == 1) {
 			validationLabel = createValidationIcon(parent);
@@ -254,6 +260,7 @@ public class ECPAbstractCustomControlSWTStub extends ECPAbstractCustomControlSWT
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.custom.model.ECPHardcodedReferences#getNeededDomainModelReferences()
 	 */
+	@Override
 	public Set<VDomainModelReference> getNeededDomainModelReferences() {
 		return Collections.emptySet();
 	}
@@ -264,6 +271,10 @@ public class ECPAbstractCustomControlSWTStub extends ECPAbstractCustomControlSWT
 
 	public SWTCustomControlHelper getStubSWTHelper() {
 		return super.getHelper();
+	}
+
+	public Button getButton() {
+		return button;
 	}
 
 }

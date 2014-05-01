@@ -656,13 +656,13 @@ public class ECPAbstractCustomControlSWTTest {
 
 	@Test
 	public void testSetEditable() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
-		customControl.renderControl(new GridCell(0, 0, null), testComposite);
-		assertTrue(customControl.getLabel().isEnabled());
+		customControl.renderControl(new GridCell(0, 1, null), testComposite);
+		assertTrue(customControl.getButton().isEnabled());
 		controlModel.setEnabled(false);
-		customControl.applyEnable(createControlMap(customControl.getLabel()));
-		assertFalse(customControl.getLabel().isEnabled());
+		customControl.applyEnable(createControlMap(customControl.getButton()));
+		assertFalse(customControl.getButton().isEnabled());
 		controlModel.setEnabled(true);
-		customControl.applyEnable(createControlMap(customControl.getLabel()));
-		assertTrue(customControl.getLabel().isEnabled());
+		customControl.applyEnable(createControlMap(customControl.getButton()));
+		assertTrue(customControl.getButton().isEnabled());
 	}
 }

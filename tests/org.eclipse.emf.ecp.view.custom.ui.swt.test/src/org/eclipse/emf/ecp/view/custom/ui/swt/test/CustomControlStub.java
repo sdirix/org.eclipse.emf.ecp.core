@@ -23,9 +23,9 @@ import org.eclipse.emf.ecp.view.spi.swt.layout.GridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescription;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Label;
 
 /**
  * @author Jonas
@@ -34,7 +34,7 @@ import org.eclipse.swt.widgets.Label;
 public class CustomControlStub extends ECPAbstractCustomControlSWT implements ECPHardcodedReferences {
 
 	public static final String LABEL_TEXT = "labelText";
-	private static Label label;
+	private static Button label;
 	private static Composite parent;
 
 	public CustomControlStub() {
@@ -55,14 +55,14 @@ public class CustomControlStub extends ECPAbstractCustomControlSWT implements EC
 	/**
 	 * @return the label
 	 */
-	public static Label getLabel() {
+	public static Button getLabel() {
 		return label;
 	}
 
 	/**
 	 * @param label the label to set
 	 */
-	public static void setLabel(Label label) {
+	public static void setLabel(Button label) {
 		CustomControlStub.label = label;
 	}
 
@@ -85,6 +85,7 @@ public class CustomControlStub extends ECPAbstractCustomControlSWT implements EC
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.custom.model.ECPHardcodedReferences#getNeededDomainModelReferences()
 	 */
+	@Override
 	public Set<VDomainModelReference> getNeededDomainModelReferences() {
 		// TODO Auto-generated method stub
 		return Collections.emptySet();
@@ -122,7 +123,7 @@ public class CustomControlStub extends ECPAbstractCustomControlSWT implements EC
 	public Control renderControl(GridCell cell, Composite parent) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
 		setParent(parent);
-		setLabel(new Label(parent, SWT.NONE));
+		setLabel(new Button(parent, SWT.NONE));
 		return label;
 	}
 
