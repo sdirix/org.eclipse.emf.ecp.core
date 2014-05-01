@@ -415,6 +415,9 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 	 */
 	@Override
 	public boolean resolve(EObject eObject) {
+		if (getBundleName() == null || getClassName() == null) {
+			return false;
+		}
 		final ECPHardcodedReferences customControl = loadObject(getBundleName(), getClassName());
 		if (customControl == null) {
 			return false;
