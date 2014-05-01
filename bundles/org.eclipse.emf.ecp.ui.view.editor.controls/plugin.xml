@@ -120,6 +120,27 @@
                </with>
             </visibleWhen>
          </command>
+         <command
+               commandId="org.eclipse.emf.ecp.ui.view.editor.controls.unsetRootEclass"
+               label="Unset Root EClass"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="activeMenuSelection">
+                  <and>
+                     <count
+                           value="1">
+                     </count>
+                     <iterate>
+                        <instanceof
+                              value="org.eclipse.emf.ecp.view.spi.model.VView">
+                        </instanceof>
+                     </iterate>
+                  </and>
+               </with>
+            </visibleWhen>
+         </command>
          <!--
          <command
                commandId="org.eclipse.emf.ecp.view.editor.controls.migrate"
@@ -209,6 +230,11 @@
             defaultHandler="org.eclipse.emf.ecp.view.editor.handler.GenerateControlsHandler"
             id="org.eclipse.emf.ecp.view.editor.controls.generateDefaultOnView"
             name="Generate Controls">
+      </command>
+      <command
+            defaultHandler="org.eclipse.emf.ecp.view.editor.handler.UnsetRootEClass"
+            id="org.eclipse.emf.ecp.ui.view.editor.controls.unsetRootEclass"
+            name="Unset Root EClass">
       </command>
    </extension>
    <extension
