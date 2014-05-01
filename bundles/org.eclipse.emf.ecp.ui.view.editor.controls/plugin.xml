@@ -28,13 +28,9 @@
       <control
             class="org.eclipse.emf.ecp.view.editor.controls.ControlRootEClassControl"
             id="org.eclipse.emf.ecp.view.editor.controls.rootEClass">
-         <staticTest
-               priority="3"
-               singleValue="true"
-               supportedClassType="org.eclipse.emf.ecore.EClass"
-               supportedEObject="org.eclipse.emf.ecp.view.spi.model.VView"
-               supportedFeature="rootEClass">
-         </staticTest>
+         <dynamicTest
+               testClass="org.eclipse.emf.ecp.view.editor.controls.RootEClassControlECPTester">
+         </dynamicTest>
       </control>
       <!--
       <control
@@ -70,12 +66,9 @@
       <control
             class="org.eclipse.emf.ecp.view.editor.controls.ControlRootEClassControl2"
             id="org.eclipse.emf.ecp.view.editor.controls.rootEClass2">
-         <staticTest
-               priority="10"
-               singleValue="true"
-               supportedClassType="org.eclipse.emf.ecore.EClass"
-               supportedEObject="org.eclipse.emf.ecp.view.spi.model.VView">
-         </staticTest>
+         <dynamicTest
+               testClass="org.eclipse.emf.ecp.view.editor.controls.RootEClassControlIDETester">
+         </dynamicTest>
       </control>
    </extension>
    <extension
