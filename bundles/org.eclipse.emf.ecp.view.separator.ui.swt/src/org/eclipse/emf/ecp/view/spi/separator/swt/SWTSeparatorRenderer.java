@@ -52,6 +52,11 @@ public class SWTSeparatorRenderer extends AbstractSWTRenderer<VSeparator> {
 	public GridDescription getGridDescription(GridDescription gridDescription) {
 		if (rendererGridDescription == null) {
 			rendererGridDescription = GridDescriptionFactory.INSTANCE.createSimpleGrid(1, 1, this);
+			final GridCell gridCell = rendererGridDescription.getGrid().get(0);
+			gridCell.setVerticalGrab(false);
+			gridCell.setVerticalFill(false);
+			gridCell.setHorizontalFill(true);
+			gridCell.setHorizontalGrab(true);
 		}
 		return rendererGridDescription;
 	}
