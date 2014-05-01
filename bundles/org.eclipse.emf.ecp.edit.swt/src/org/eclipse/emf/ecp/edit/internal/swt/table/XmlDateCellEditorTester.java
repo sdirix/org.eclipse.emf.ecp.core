@@ -38,6 +38,7 @@ public class XmlDateCellEditorTester implements ECPApplicableTester {
 	 *      org.eclipse.emf.ecore.EObject)
 	 * @deprecated
 	 */
+	@Override
 	@Deprecated
 	public int isApplicable(IItemPropertyDescriptor itemPropertyDescriptor, EObject eObject) {
 		final EStructuralFeature feature = (EStructuralFeature) itemPropertyDescriptor.getFeature(null);
@@ -51,6 +52,7 @@ public class XmlDateCellEditorTester implements ECPApplicableTester {
 	 * 
 	 */
 
+	@Override
 	public int isApplicable(VDomainModelReference domainModelReference) {
 		final Iterator<Setting> iterator = domainModelReference.getIterator();
 		int count = 0;
@@ -71,9 +73,13 @@ public class XmlDateCellEditorTester implements ECPApplicableTester {
 	 * @see org.eclipse.emf.ecp.edit.spi.util.ECPApplicableTester#isApplicable(org.eclipse.emf.ecore.EObject,
 	 *      org.eclipse.emf.ecore.EStructuralFeature)
 	 */
+	@Override
 	public int isApplicable(EObject eObject, EStructuralFeature feature) {
 		if (EAttribute.class.isInstance(feature)) {
 			final Class<?> instanceClass = ((EAttribute) feature).getEAttributeType().getInstanceClass();
+			if (instanceClass == null) {
+				return NOT_APPLICABLE;
+			}
 			if (XMLGregorianCalendar.class.isAssignableFrom(instanceClass)) {
 				return 1;
 			}

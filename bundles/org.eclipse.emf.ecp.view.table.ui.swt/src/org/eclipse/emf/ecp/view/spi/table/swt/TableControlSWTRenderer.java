@@ -178,7 +178,12 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 		final Label label = new Label(titleComposite, SWT.NONE);
 		label.setBackground(parent.getBackground());
-		label.setText(getItemPropertyDescriptor(mainSetting).getDisplayName(null));
+		final IItemPropertyDescriptor propDescriptor = getItemPropertyDescriptor(mainSetting);
+		String labelText = ""; //$NON-NLS-1$
+		if (propDescriptor != null) {
+			labelText = propDescriptor.getDisplayName(null);
+		}
+		label.setText(labelText);
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING).grab(true, false).applyTo(label);
 
 		// VALIDATION
