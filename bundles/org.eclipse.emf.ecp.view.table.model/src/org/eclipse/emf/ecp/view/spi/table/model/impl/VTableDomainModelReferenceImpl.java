@@ -166,6 +166,12 @@ public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	@Override
 	public Iterator<EStructuralFeature> getEStructuralFeatureIterator() {
 		final VTableControl control = findTableControl();
+		final EStructuralFeature structuralFeature = getDomainModelEFeature();
+
+		if (!EReference.class.isInstance(structuralFeature)) {
+			final List<EStructuralFeature> features = Collections.emptyList();
+			return features.iterator();
+		}
 		final EList<EStructuralFeature> allFeatures = EReference.class.cast(getDomainModelEFeature())
 			.getEReferenceType().getEAllStructuralFeatures();
 		return new Iterator<EStructuralFeature>() {
@@ -201,5 +207,4 @@ public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 			}
 		};
 	}
-
 } // VTableDomainModelReferenceImpl

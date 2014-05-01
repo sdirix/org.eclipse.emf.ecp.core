@@ -87,6 +87,9 @@ public class ValidationServiceImpl implements ValidationService {
 					// control.getDomainModelReference().());
 					// REFACTORING test
 					final VDomainModelReference domainModelReference = control.getDomainModelReference();
+					if (domainModelReference == null) {
+						return;
+					}
 					final Iterator<Setting> settings = domainModelReference.getIterator();
 					final Set<EObject> eObjectsToValidate = new LinkedHashSet<EObject>();
 					while (settings.hasNext()) {
