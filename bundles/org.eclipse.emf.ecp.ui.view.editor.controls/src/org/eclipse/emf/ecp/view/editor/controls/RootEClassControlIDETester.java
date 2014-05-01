@@ -58,7 +58,7 @@ public class RootEClassControlIDETester implements ECPApplicableTester {
 		if (eObject.eGet(feature) == null) {
 			return NOT_APPLICABLE;
 		}
-		return 3;
+		return 10;
 	}
 
 	/**
