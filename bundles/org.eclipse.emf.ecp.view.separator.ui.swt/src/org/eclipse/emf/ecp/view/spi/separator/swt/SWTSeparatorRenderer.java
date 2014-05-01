@@ -69,7 +69,7 @@ public class SWTSeparatorRenderer extends AbstractSWTRenderer<VSeparator> {
 			label.setText(getVElement().getName());
 		}
 		label.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_ui_seperator"); //$NON-NLS-1$
-		label.setBackground(parent.getBackground());
+
 		return label;
 
 	}
