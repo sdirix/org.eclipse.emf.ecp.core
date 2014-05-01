@@ -69,6 +69,7 @@ public class LabelSWTRenderer extends AbstractSWTRenderer<VLabel> {
 			label.setText(getVElement().getName());
 		}
 		label.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_ui_" + getVElement().getStyle()); //$NON-NLS-1$
+		label.setBackground(parent.getBackground());
 		return label;
 	}
 
