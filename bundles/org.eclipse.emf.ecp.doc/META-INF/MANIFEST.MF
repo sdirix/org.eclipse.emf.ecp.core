@@ -4,3 +4,4 @@ Bundle-Name: Doc
 Bundle-SymbolicName: org.eclipse.emf.ecp.doc; singleton:=true
 Bundle-Version: 1.2.1.qualifier
 Bundle-Vendor: Eclipse Modeling Project
+Require-Bundle: org.eclipse.ui.intro;bundle-version="[3.4.0,4.0.0)"
