@@ -20,46 +20,6 @@
    </license>
 
    <includes
-         id="org.eclipse.emf.ecp.cdo.feature"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.ecp.emfstore.feature"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.ecp.workspace.feature"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.ecp.feature"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.ecp.demo.e3.feature"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.ecp.e3.feature"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.ecp.license.feature"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.ecp.view.model.editor.feature"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.ecp.view.template.helper.feature"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.ecp.view.model.controls.feature"
-         version="0.0.0"/>
-
-   <includes
          id="org.eclipse.emf.ecp.emfforms.sdk.feature"
          version="0.0.0"/>
 
