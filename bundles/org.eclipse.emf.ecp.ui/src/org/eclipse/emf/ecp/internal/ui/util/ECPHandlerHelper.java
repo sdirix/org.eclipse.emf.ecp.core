@@ -441,6 +441,9 @@ public final class ECPHandlerHelper {
 		// TODO: find solution
 		// ECPWorkspaceManager.getObserverBus().notify(ModelElementOpenObserver.class).onOpen(me, sourceView, name);
 		// BEGIN SUPRESS CATCH EXCEPTION
+		if (bestCandidate == null) {
+			return;
+		}
 		try {
 			bestCandidate.openModelElement(me, ecpProject);
 		} catch (final RuntimeException e) {

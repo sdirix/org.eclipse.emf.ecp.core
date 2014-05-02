@@ -271,12 +271,7 @@ public class PreviewView extends ViewPart implements ISelectionListener {
 		};
 
 		view.eAdapters().add(adapter);
-
-		try {
-			preView.render(view);
-		} catch (final Exception ex) {
-			displayError(ex);
-		}
+		preView.render(view);
 		form.reflow(true);
 	}
 

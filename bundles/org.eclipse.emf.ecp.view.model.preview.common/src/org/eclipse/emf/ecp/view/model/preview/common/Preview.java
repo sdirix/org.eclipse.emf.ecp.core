@@ -60,7 +60,7 @@ public class Preview {
 	 * @param view -the {@link VView}
 	 * @throws ECPRendererException on rendering fail
 	 * */
-	public void render(final VView view) throws ECPRendererException {
+	public void render(final VView view) {
 		this.view = view;
 		adapter = new EContentAdapter() {
 
@@ -95,24 +95,22 @@ public class Preview {
 	}
 
 	private void internalRender(VView view) {
-		clear();
-
-		final EClass myPreviewEClass = view.getRootEClass();
-		final EObject dummyData = EcoreUtil.create(myPreviewEClass);
-		final PreviewReferenceService previewRefServ = new PreviewReferenceService();
-		final ViewModelContext viewModelContext = ViewModelContextFactory.INSTANCE.createViewModelContext(view,
-			dummyData, previewRefServ);
-
-		composite = createComposite(parent);
 		try {
+			clear();
+			final EClass myPreviewEClass = view.getRootEClass();
+			final EObject dummyData = EcoreUtil.create(myPreviewEClass);
+			final PreviewReferenceService previewRefServ = new PreviewReferenceService();
+			final ViewModelContext viewModelContext = ViewModelContextFactory.INSTANCE.createViewModelContext(view,
+				dummyData, previewRefServ);
+			composite = createComposite(parent);
 			render = ECPSWTViewRenderer.INSTANCE.render(composite, viewModelContext);
+			composite.layout();
+			parent.layout();
 		} catch (final RuntimeException e) {
 			displayError(e);
 		} catch (final ECPRendererException ex) {
 			displayError(ex);
 		}
-		composite.layout();
-		parent.layout();
 
 	}
 
@@ -156,9 +154,6 @@ public class Preview {
 			return;
 		}
 		for (final Control c : parent.getChildren()) {
-			// if (c.isDisposed()) {
-			// continue;
-			// }
 			c.dispose();
 		}
 	}
@@ -176,8 +171,8 @@ public class Preview {
 	 */
 	private Composite createComposite(Composite parent) {
 		final Composite composite = new Composite(parent, SWT.NONE);
+		parent.setBackgroundMode(SWT.INHERIT_FORCE);
 		composite.setBackground(parent.getBackground());
-
 		GridLayoutFactory.fillDefaults().numColumns(1).equalWidth(false).applyTo(composite);
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(composite);
 		return composite;

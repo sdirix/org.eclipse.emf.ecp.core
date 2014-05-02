@@ -1,0 +1,350 @@
+--- Q7 testcase ---
+Format-Version: 1.0
+Q7-vendor: www.xored.com/q7
+Contexts: _f_riUdFkEeOaWaHMz6ciDA,_QlA1ANFtEeOaWaHMz6ciDA
+Element-Name: RefreshPreview
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _6q500KkBEeOqzuXz5neTeA
+Q7-Runtime-Version: 1.3.10.201312200736
+Save-Time: 5/1/14 8:40 PM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+get-menu "Window/Show View/Other..." | click
+with [get-window "Show View"] {
+    get-tree | select "EMF Forms/EMF Forms Preview"
+    get-button OK | click
+}
+get-view "Package Explorer" | get-tree | select "com.eclipsesource.makeithappen.model.viewmodel/viewmodels/User.view" 
+    | double-click
+
+if -condition [get-view "EMF Forms Preview" | get-button Refresh | get-property enablement -raw |equals false]
+-then{
+get-view "EMF Forms Preview" | get-button "Automatic Update" | click
+}
+	
+with [get-view "EMF Forms Preview"] {
+    get-button Refresh | get-property enablement | equals true | verify-true
+    get-button "Automatic Update" | get-property selected | equals false | verify-true
+   }
+get-view "EMF Forms Preview" | get-button "Automatic Update" | click
+get-editor "User.view" | get-tree | select View
+with [get-view "EMF Forms Preview" | get-control Any -after [get-label "View Model Preview"] -index 1] {
+    get-property "getChildren().getClassName()" | equals "org.eclipse.swt.widgets.Control[]" | verify-true
+    get-property "getChildren().length" | equals 1 | verify-true
+    get-property "getChildren().Control[0].getClassName()" | equals "org.eclipse.swt.widgets.Composite" | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().getClassName()" 
+        | equals "org.eclipse.swt.widgets.Control[]" | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().length" | equals 33 | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getClassName()" 
+        | equals "org.eclipse.swt.widgets.Label" | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getText()" 
+        | equals "First Name" | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getImage()" | equals null 
+        | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getAlignment()" 
+        | equals 16384 | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getRegion()" | equals null 
+        | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].isEnabled()" | equals true 
+        | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getForeground()" 
+        | equals "#000000" | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getCursor()" | equals null 
+        | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getBackground()" 
+        | equals "#FFFFFF" | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getEnabled()" 
+        | equals true | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getVisible()" 
+        | equals true | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getMenu()" | equals null 
+        | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getDragDetect()" 
+        | equals true | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getTouchEnabled()" 
+        | equals false | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].isVisible()" | equals true 
+        | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].isFocusControl()" 
+        | equals false | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].isReparentable()" 
+        | equals true | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getBorderWidth()" 
+        | equals 0 | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getBackgroundImage()" 
+        | equals null | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getTextDirection()" 
+        | equals 33554432 | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getOrientation()" 
+        | equals 33554432 | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getToolTipText()" 
+        | equals "The First Name feature of type EString" | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getData()" | equals null 
+        | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getStyle()" 
+        | equals "[NO_FOCUS, LEFT_TO_RIGHT, LEAD]" | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].toString()" 
+        | equals "Label {First Name}" | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[1].getClassName()" 
+        | equals "org.eclipse.swt.widgets.Label" | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[1].getText()" | equals "" 
+        | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[1].getImage()" | equals null 
+        | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[1].getAlignment()" 
+        | equals 16384 | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[1].getRegion()" | equals null 
+        | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[1].isEnabled()" | equals true 
+        | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[1].getForeground()" 
+        | equals "#000000" | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[1].getCursor()" | equals null 
+        | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[1].getBackground()" 
+        | equals "#FFFFFF" | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[1].getEnabled()" 
+        | equals true | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[1].getVisible()" 
+        | equals true | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[1].getMenu()" | equals null 
+        | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[1].getDragDetect()" 
+        | equals true | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[1].getTouchEnabled()" 
+        | equals false | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[1].isVisible()" | equals true 
+        | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[1].isFocusControl()" 
+        | equals false | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[1].isReparentable()" 
+        | equals true | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[1].getBorderWidth()" 
+        | equals 0 | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[1].getBackgroundImage()" 
+        | equals null | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[1].getTextDirection()" 
+        | equals 33554432 | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[1].getOrientation()" 
+        | equals 33554432 | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[1].getToolTipText()" 
+        | equals "" | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[1].getData()" | equals null 
+        | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[1].getStyle()" 
+        | equals "[NO_FOCUS, LEFT_TO_RIGHT, LEAD]" | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[1].toString()" 
+        | equals "Label {}" | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[13].getClassName()" 
+        | equals "org.eclipse.swt.widgets.Label" | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[13].getText()" | equals "" 
+        | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[13].getImage()" | equals null 
+        | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[13].getAlignment()" 
+        | equals 16384 | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[13].getRegion()" 
+        | equals null | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[13].isEnabled()" 
+        | equals true | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[13].getForeground()" 
+        | equals "#000000" | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[13].getCursor()" 
+        | equals null | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[13].getBackground()" 
+        | equals "#FFFFFF" | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[13].getEnabled()" 
+        | equals true | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[13].getVisible()" 
+        | equals true | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[13].getMenu()" | equals null 
+        | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[13].getDragDetect()" 
+        | equals true | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[13].getTouchEnabled()" 
+        | equals false | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[13].isVisible()" 
+        | equals true | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[13].isFocusControl()" 
+        | equals false | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[13].isReparentable()" 
+        | equals true | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[13].getBorderWidth()" 
+        | equals 0 | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[13].getBackgroundImage()" 
+        | equals null | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[13].getTextDirection()" 
+        | equals 33554432 | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[13].getOrientation()" 
+        | equals 33554432 | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[13].getToolTipText()" 
+        | equals "" | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[13].getData()" | equals null 
+        | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[13].getStyle()" 
+        | equals "[NO_FOCUS, LEFT_TO_RIGHT, LEAD]" | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[13].toString()" 
+        | equals "Label {}" | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[27].getClassName()" 
+        | equals "org.eclipse.swt.widgets.Label" | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[27].getText()" 
+        | equals "EMails*" | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[27].getImage()" | equals null 
+        | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[27].getAlignment()" 
+        | equals 16384 | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[27].getRegion()" 
+        | equals null | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[27].isEnabled()" 
+        | equals true | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[27].getForeground()" 
+        | equals "#000000" | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[27].getCursor()" 
+        | equals null | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[27].getBackground()" 
+        | equals "#FFFFFF" | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[27].getEnabled()" 
+        | equals true | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[27].getVisible()" 
+        | equals true | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[27].getMenu()" | equals null 
+        | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[27].getDragDetect()" 
+        | equals true | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[27].getTouchEnabled()" 
+        | equals false | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[27].isVisible()" 
+        | equals true | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[27].isFocusControl()" 
+        | equals false | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[27].isReparentable()" 
+        | equals true | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[27].getBorderWidth()" 
+        | equals 0 | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[27].getBackgroundImage()" 
+        | equals null | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[27].getTextDirection()" 
+        | equals 33554432 | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[27].getOrientation()" 
+        | equals 33554432 | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[27].getToolTipText()" 
+        | equals "The EMails feature of type EString" | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[27].getData()" | equals null 
+        | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[27].getStyle()" 
+        | equals "[NO_FOCUS, LEFT_TO_RIGHT, LEAD]" | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[27].toString()" 
+        | equals "Label {EMails*}" | verify-true
+    get-property "getChildren().Control[0].getBackgroundMode()" | equals 0 | verify-true
+    get-property "getChildren().Control[0].getLayoutDeferred()" | equals false | verify-true
+    get-property "getChildren().Control[0].isLayoutDeferred()" | equals false | verify-true
+    get-property "getChildren().Control[0].getScrollbarsMode()" | equals 0 | verify-true
+    get-property "getChildren().Control[0].getHorizontalBar()" | equals null | verify-true
+    get-property "getChildren().Control[0].getVerticalBar()" | equals null | verify-true
+    get-property "getChildren().Control[0].getRegion()" | equals null | verify-true
+    get-property "getChildren().Control[0].isEnabled()" | equals true | verify-true
+    get-property "getChildren().Control[0].getForeground()" | equals "#000000" | verify-true
+    get-property "getChildren().Control[0].getCursor()" | equals null | verify-true
+    get-property "getChildren().Control[0].getBackground()" | equals "#FFFFFF" | verify-true
+    get-property "getChildren().Control[0].getEnabled()" | equals true | verify-true
+    get-property "getChildren().Control[0].getVisible()" | equals true | verify-true
+    get-property "getChildren().Control[0].getMenu()" | equals null | verify-true
+    get-property "getChildren().Control[0].getDragDetect()" | equals true | verify-true
+    get-property "getChildren().Control[0].getTouchEnabled()" | equals false | verify-true
+    get-property "getChildren().Control[0].isVisible()" | equals true | verify-true
+    get-property "getChildren().Control[0].isFocusControl()" | equals false | verify-true
+    get-property "getChildren().Control[0].isReparentable()" | equals true | verify-true
+    get-property "getChildren().Control[0].getBorderWidth()" | equals 0 | verify-true
+    get-property "getChildren().Control[0].getBackgroundImage()" | equals null | verify-true
+    get-property "getChildren().Control[0].getTextDirection()" | equals 33554432 | verify-true
+    get-property "getChildren().Control[0].getOrientation()" | equals 33554432 | verify-true
+    get-property "getChildren().Control[0].getToolTipText()" | equals "" | verify-true
+    get-property "getChildren().Control[0].getData()" | equals null | verify-true
+    get-property "getChildren().Control[0].getStyle()" | equals "[LEFT_TO_RIGHT]" | verify-true
+    get-property "getChildren().Control[0].toString()" | equals "Composite {}" | verify-true
+}
+get-view "Package Explorer" | get-tree | select "com.eclipsesource.makeithappen.model/model/task.ecore" | double-click
+get-editor "task.ecore" | close
+get-view "Package Explorer" | get-tree | select "com.eclipsesource.makeithappen.model/model/task.ecore" 
+    | get-menu "EMF Forms/Create View Model" | click
+with [get-window -class WizardDialog] {
+    get-tree | select "task/Task"
+    get-button "Next >" | click
+    get-tree | select "com.eclipsesource.makeithappen.model.viewmodel/viewmodels"
+    get-button Finish | click
+}
+
+with [get-view "EMF Forms Preview"] {
+    get-label Name | get-property caption | equals Name | verify-true
+    get-label Description | get-property caption | equals Description | verify-true
+    get-label Assignee | get-property caption | equals Assignee | verify-true
+    get-label "Due Date" | get-property caption | equals "Due Date" | verify-true
+    get-label Done | get-property caption | equals Done | verify-true
+}
+
+get-view "Package Explorer" | get-tree | select "com.eclipsesource.makeithappen.model.viewmodel/viewmodels/User.view" 
+    | double-click
+    
+    with [get-view "EMF Forms Preview"] {
+    get-label "First Name" | get-property caption | equals "First Name" | verify-true
+    get-label "Time Of Registration" | get-property caption | equals "Time Of Registration" | verify-true
+    get-label Nationality | get-property caption | equals Nationality | verify-true
+    get-label "EMails*" | get-property caption | equals "EMails*" | verify-true
+    with [get-control Any -after [get-label "View Model Preview"] -index 1] {
+        get-property "getChildren().Control[0].getChildren().Control[0].getChildren().length" | equals 33 | verify-true
+        get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[12].getText()" 
+            | equals "Time Of Registration" | verify-true
+    }
+}
+
+with [get-view "EMF Forms Preview"] {
+    get-button Refresh | get-property enablement | equals false | verify-true
+    with [get-button "Automatic Update"] {
+        get-property enablement | equals true | verify-true
+        get-property selected | equals true | verify-true
+    }
+}
+
+get-view "EMF Forms Preview" | get-button "Automatic Update" | click
+with [get-view "EMF Forms Preview"] {
+    with [get-button "Automatic Update"] {
+        get-property enablement | equals true | verify-true
+        get-property selected | equals false | verify-true
+    }
+    get-button Refresh | get-property enablement | equals true | verify-true
+}
+
+get-view "EMF Forms Preview" | get-label "First Name" | get-property caption | equals "First Name" | verify-true
+
+
+
+    
+get-view "Package Explorer" | get-tree | select "com.eclipsesource.makeithappen.model.viewmodel/viewmodels/Task.view" 
+    | double-click
+get-view "EMF Forms Preview" | get-label "Time Of Registration" | get-property caption | equals "Time Of Registration" 
+    | verify-true
+    
+get-view "Package Explorer" | get-tree | select "com.eclipsesource.makeithappen.model.viewmodel/viewmodels/User.view" 
+    | double-click
+get-view "EMF Forms Preview" | get-label "Time Of Registration" | get-property caption | equals "Time Of Registration" 
+    | verify-true
+
+    
+get-view "Package Explorer" | get-tree | select "com.eclipsesource.makeithappen.model.viewmodel/viewmodels/Task.view" 
+    | double-click
+get-view "EMF Forms Preview" | get-button Refresh | click
+with [get-view "EMF Forms Preview"] {
+    get-label Assignee | get-property caption | equals Assignee | verify-true
+    get-label "Due Date" | get-property caption | equals "Due Date" | verify-true
+}
+    
+    
+    
+    
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

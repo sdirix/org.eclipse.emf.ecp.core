@@ -107,7 +107,9 @@ public class ControlTargetFeatureControl extends LinkControl {
 							if (!Helper
 								.hasFeaturePropertyDescriptor(EStructuralFeature.class.cast(selection[0])
 									.getEContainingClass(), treePath)) {
-								return new Status(IStatus.ERROR,
+								// FIXME Hack, for allowing the selection of EStructuralFeatures w/o property
+								// descriptors. Should return error.
+								return new Status(IStatus.WARNING,
 									org.eclipse.emf.ecp.view.editor.controls.Activator.PLUGIN_ID,
 									"The selected " + EStructuralFeature.class.getSimpleName() //$NON-NLS-1$
 										+ " has no PropertyDescriptor."); //$NON-NLS-1$
