@@ -19,6 +19,7 @@ import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.exceptions.ECPProjectWithNameExistsException;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -27,26 +28,32 @@ import org.junit.Test;
  */
 public class ECPInitializationTest {
 
-	@Test
-	public void createProjectAddElementTest() {
+	private ECPProject project;
+
+	@Before
+	public void before() {
 		try {
-			final ECPProject project = ECPUtil.getECPProjectManager().createProject(
+			project = ECPUtil.getECPProjectManager().createProject(
 				ECPUtil.getECPProviderRegistry().getProvider(EMFStoreProvider.NAME), "test");
-			final long startTimeMillis = System.currentTimeMillis();
-			for (int i = 0; i < 60000; i++) {
-				project.getContents().add(EcoreFactory.eINSTANCE.createEClass());
-				if (i % 1000 == 0) {
-					if (System.currentTimeMillis() - startTimeMillis > 20000) {
-						fail("Taking too long");
-					}
-					System.out
-						.println("Added " + i + "Items, Time passed " + (System.currentTimeMillis() - startTimeMillis));
-				}
-			}
-			assertTrue(System.currentTimeMillis() - startTimeMillis < 20000);
 		} catch (final ECPProjectWithNameExistsException e) {
-			fail();
+			fail(e.getMessage());
 		}
+		System.out.println("DEBUG: There are " + ECPUtil.getECPProjectManager().getProjects().size() + " projects");
 	}
 
+	@Test
+	public void createProjectAddElementTest() {
+		final long startTimeMillis = System.currentTimeMillis();
+		for (int i = 0; i < 60000; i++) {
+			project.getContents().add(EcoreFactory.eINSTANCE.createEClass());
+			if (i % 1000 == 0) {
+				if (System.currentTimeMillis() - startTimeMillis > 20000) {
+					fail("Taking too long");
+				}
+				System.out
+					.println("Added " + i + "Items, Time passed " + (System.currentTimeMillis() - startTimeMillis));
+			}
+		}
+		assertTrue(System.currentTimeMillis() - startTimeMillis < 20000);
+	}
 }
