@@ -16,3 +16,4 @@ Import-Package: org.eclipse.core.commands,
  org.eclipse.jface.wizard,
  org.eclipse.swt.widgets,
  org.eclipse.ui.handlers
+Bundle-Vendor: Eclipse Modeling Project
