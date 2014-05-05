@@ -21,7 +21,7 @@
       <renderer
             renderer="org.eclipse.emf.ecp.view.internal.core.swt.renderer.TextControlSWTRenderer">
          <dynamicTest
-               testClass="org.eclipse.emf.ecp.view.internal.core.swt.renderer.TextControlSWTRendererTester">
+               testClass="org.eclipse.emf.ecp.view.model.common.TextControlRendererTester">
          </dynamicTest>
       </renderer>
       <renderer

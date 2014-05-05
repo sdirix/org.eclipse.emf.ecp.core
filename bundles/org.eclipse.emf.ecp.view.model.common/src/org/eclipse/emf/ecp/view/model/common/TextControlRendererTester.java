@@ -9,9 +9,8 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.internal.core.swt.renderer;
+package org.eclipse.emf.ecp.view.model.common;
 
-import org.eclipse.emf.ecp.view.model.common.SimpleControlRendererTester;
 
 /**
  * Tester for Text Renderer.
@@ -19,7 +18,7 @@ import org.eclipse.emf.ecp.view.model.common.SimpleControlRendererTester;
  * @author Eugen Neufeld
  * 
  */
-public class TextControlSWTRendererTester extends SimpleControlRendererTester {
+public class TextControlRendererTester extends SimpleControlRendererTester {
 
 	/**
 	 * {@inheritDoc}
