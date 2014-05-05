@@ -43,6 +43,7 @@ public class NumberControlRendererTester implements ECPRendererTester {
 	 * @see org.eclipse.emf.ecp.view.model.common.ECPRendererTester#isApplicable(org.eclipse.emf.ecp.view.spi.model.VElement,
 	 *      org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
+	@Override
 	public int isApplicable(VElement vElement, ViewModelContext viewModelContext) {
 		int maxResult = NOT_APPLICABLE;
 		for (final NumberTester tester : testers) {

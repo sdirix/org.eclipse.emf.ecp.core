@@ -42,6 +42,7 @@ public class ECPStaticRendererTester implements ECPRendererTester {
 	 * 
 	 * @see org.eclipse.emf.ecp.view.model.common.ECPRendererTester#isApplicable(VElement, ViewModelContext)
 	 */
+	@Override
 	public int isApplicable(VElement vElement, ViewModelContext viewModelContext) {
 		if (!supportedVElement.isInstance(vElement)) {
 			return NOT_APPLICABLE;
