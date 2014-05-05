@@ -33,7 +33,7 @@
       <renderer
             renderer="org.eclipse.emf.ecp.view.internal.core.swt.renderer.EnumComboViewerSWTRenderer">
          <dynamicTest
-               testClass="org.eclipse.emf.ecp.view.internal.core.swt.renderer.EnumComboViewerSWTRendererTester">
+               testClass="org.eclipse.emf.ecp.view.model.common.EnumComboViewerRendererTester">
          </dynamicTest>
       </renderer>
       <renderer
