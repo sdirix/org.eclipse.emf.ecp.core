@@ -18,9 +18,9 @@ import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
-import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescription;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
+import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
@@ -53,7 +53,7 @@ public abstract class AbstractSWTTabRenderer<VELEMENT extends VElement> extends 
 	}
 
 	@Override
-	public GridDescription getGridDescription(GridDescription gridDescription) {
+	public SWTGridDescription getGridDescription(SWTGridDescription gridDescription) {
 		return GridDescriptionFactory.INSTANCE.createSimpleGrid(1, 1, this);
 	}
 
@@ -70,7 +70,7 @@ public abstract class AbstractSWTTabRenderer<VELEMENT extends VElement> extends 
 
 			final AbstractSWTRenderer<VElement> renderer = getSWTRendererFactory().getRenderer(categorization,
 				getViewModelContext());
-			final GridDescription gridDescription = renderer.getGridDescription(GridDescriptionFactory.INSTANCE
+			final SWTGridDescription gridDescription = renderer.getGridDescription(GridDescriptionFactory.INSTANCE
 				.createEmptyGridDescription());
 			for (final SWTGridCell gridCell : gridDescription.getGrid()) {
 				final Control render = renderer.render(gridCell, folder);

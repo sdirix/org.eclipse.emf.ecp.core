@@ -26,7 +26,7 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
-import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescription;
+import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -103,7 +103,7 @@ public abstract class AbstractControlTest {
 	public void testGridDescriptionLabelAlignmentNone() {
 		setMockLabelAlignment(LabelAlignment.NONE);
 		renderer.init(control, context);
-		GridDescription gridDescription = renderer.getGridDescription(GridDescriptionFactory.INSTANCE.createEmptyGridDescription());
+		SWTGridDescription gridDescription = renderer.getGridDescription(GridDescriptionFactory.INSTANCE.createEmptyGridDescription());
 		assertEquals(2, gridDescription.getColumns());
 		assertEquals(1, gridDescription.getRows());
 	}
@@ -112,7 +112,7 @@ public abstract class AbstractControlTest {
 	public void testGridDescriptionLabelAlignmentLeft() {
 		setMockLabelAlignment(LabelAlignment.LEFT);
 		renderer.init(control, context);
-		GridDescription gridDescription = renderer.getGridDescription(GridDescriptionFactory.INSTANCE.createEmptyGridDescription());
+		SWTGridDescription gridDescription = renderer.getGridDescription(GridDescriptionFactory.INSTANCE.createEmptyGridDescription());
 		assertEquals(3, gridDescription.getColumns());
 		assertEquals(1, gridDescription.getRows());
 	}

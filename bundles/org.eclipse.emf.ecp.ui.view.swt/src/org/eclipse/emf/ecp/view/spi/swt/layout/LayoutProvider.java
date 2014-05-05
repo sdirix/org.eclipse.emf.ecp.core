@@ -36,15 +36,15 @@ public interface LayoutProvider {
 	 * The LayoutData to use.
 	 * 
 	 * @param gridCell the current {@link SWTGridCell}
-	 * @param controlGridDescription the {@link GridDescription} of the rendered {@link VElement}
-	 * @param currentRowGridDescription the {@link GridDescription} of the current row
-	 * @param fullGridDescription the {@link GridDescription} of the whole container
+	 * @param controlGridDescription the {@link SWTGridDescription} of the rendered {@link VElement}
+	 * @param currentRowGridDescription the {@link SWTGridDescription} of the current row
+	 * @param fullGridDescription the {@link SWTGridDescription} of the whole container
 	 * @param vElement the {@link VElement} which is currently rendered
 	 * @param control the rendered {@link Control}
 	 * @return the Object being the layout data to set
 	 */
-	Object getLayoutData(SWTGridCell gridCell, GridDescription controlGridDescription,
-		GridDescription currentRowGridDescription, GridDescription fullGridDescription, VElement vElement,
+	Object getLayoutData(SWTGridCell gridCell, SWTGridDescription controlGridDescription,
+		SWTGridDescription currentRowGridDescription, SWTGridDescription fullGridDescription, VElement vElement,
 		Control control);
 
 	/**

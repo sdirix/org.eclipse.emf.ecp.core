@@ -16,7 +16,7 @@ import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
-import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescription;
+import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.ecp.view.test.common.swt.DatabindingClassRunner;
 import org.eclipse.swt.SWT;
@@ -62,7 +62,7 @@ public class ViewRendererTest {
 	public void testGridDescription() throws NoRendererFoundException,
 			NoPropertyDescriptorFoundExeption {
 		viewRenderer.init(view, context);
-		GridDescription gridDescription = viewRenderer.getGridDescription(GridDescriptionFactory.INSTANCE.createEmptyGridDescription());
+		SWTGridDescription gridDescription = viewRenderer.getGridDescription(GridDescriptionFactory.INSTANCE.createEmptyGridDescription());
 		assertEquals(1, gridDescription.getColumns());
 		assertEquals(1, gridDescription.getRows());
 	}
@@ -140,7 +140,7 @@ public class ViewRendererTest {
 			VContainedElement control1, int numColumns) throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		AbstractSWTRenderer<VElement> mockRenderer=mock(AbstractSWTRenderer.class);
 		
-		GridDescription gd=GridDescriptionFactory.INSTANCE.createSimpleGrid(1, numColumns,viewRenderer);
+		SWTGridDescription gd=GridDescriptionFactory.INSTANCE.createSimpleGrid(1, numColumns,viewRenderer);
 		when(mockRenderer.getGridDescription(GridDescriptionFactory.INSTANCE.createEmptyGridDescription())).thenReturn(gd);
 		when(mockRenderer.render(any(SWTGridCell.class), any(Composite.class))).thenAnswer(new Answer<Control>() {
 

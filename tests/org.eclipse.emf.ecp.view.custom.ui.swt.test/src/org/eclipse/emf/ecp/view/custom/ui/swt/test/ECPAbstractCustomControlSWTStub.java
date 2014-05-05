@@ -27,7 +27,7 @@ import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
-import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescription;
+import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
@@ -101,7 +101,7 @@ public class ECPAbstractCustomControlSWTStub extends ECPAbstractCustomControlSWT
 	 * @see org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT#getGridDescription()
 	 */
 	@Override
-	public GridDescription getGridDescription() {
+	public SWTGridDescription getGridDescription() {
 		if (!withControl) {
 			return GridDescriptionFactory.INSTANCE.createSimpleGrid(1, 2, null);
 		}

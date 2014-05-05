@@ -47,9 +47,9 @@ import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescription;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
+import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
@@ -620,7 +620,7 @@ public abstract class ECPAbstractCustomControlSWT
 	 * @return the GridDescription
 	 * @since 1.3
 	 */
-	public abstract GridDescription getGridDescription();
+	public abstract SWTGridDescription getGridDescription();
 
 	/**
 	 * Renders the control.
@@ -714,7 +714,7 @@ public abstract class ECPAbstractCustomControlSWT
 	 * @return the {@link GridDescription}
 	 * @since 1.3
 	 */
-	protected final GridDescription createSimpleGrid(int rows, int columns) {
+	protected final SWTGridDescription createSimpleGrid(int rows, int columns) {
 		return GridDescriptionFactory.INSTANCE.createSimpleGrid(rows, columns, null);
 	}
 }

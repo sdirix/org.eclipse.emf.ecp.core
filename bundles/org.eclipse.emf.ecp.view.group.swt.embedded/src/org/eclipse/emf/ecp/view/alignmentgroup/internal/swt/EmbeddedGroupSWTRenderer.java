@@ -24,9 +24,9 @@ import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractAdditionalSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
-import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescription;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
+import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -40,7 +40,7 @@ import org.eclipse.swt.widgets.Label;
  */
 public class EmbeddedGroupSWTRenderer extends AbstractSWTRenderer<VGroup> {
 
-	private GridDescription currentGridDescription;
+	private SWTGridDescription currentGridDescription;
 
 	/**
 	 * {@inheritDoc}
@@ -48,8 +48,8 @@ public class EmbeddedGroupSWTRenderer extends AbstractSWTRenderer<VGroup> {
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#getGridDescription(org.eclipse.emf.ecp.view.spi.swt.layout.GridDescription)
 	 */
 	@Override
-	public GridDescription getGridDescription(GridDescription gridDescription) {
-		currentGridDescription = new GridDescription();
+	public SWTGridDescription getGridDescription(SWTGridDescription gridDescription) {
+		currentGridDescription = new SWTGridDescription();
 		final List<SWTGridCell> grid = new ArrayList<SWTGridCell>();
 		currentGridDescription.setRows(getVElement().getChildren().size() + 1);
 		currentGridDescription.setGrid(grid);
@@ -62,7 +62,7 @@ public class EmbeddedGroupSWTRenderer extends AbstractSWTRenderer<VGroup> {
 				getViewModelContext());
 			final Collection<AbstractAdditionalSWTRenderer<VElement>> additionalRenderers = getSWTRendererFactory()
 				.getAdditionalRenderer(containedElement, getViewModelContext());
-			GridDescription rendererGridDescription = renderer.getGridDescription(GridDescriptionFactory.INSTANCE
+			SWTGridDescription rendererGridDescription = renderer.getGridDescription(GridDescriptionFactory.INSTANCE
 				.createEmptyGridDescription());
 			for (final AbstractAdditionalSWTRenderer<VElement> additionalRenderer : additionalRenderers) {
 				rendererGridDescription = additionalRenderer.getGridDescription(rendererGridDescription);

@@ -26,9 +26,9 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescription;
 import org.eclipse.emf.ecp.view.spi.swt.layout.LayoutProviderHelper;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
+import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.layout.GridData;
@@ -42,7 +42,7 @@ import org.eclipse.swt.widgets.Control;
  * A renderer using other renderers to render its contents must call this methods in this order:
  * 
  * <pre>
- *  {@link #getGridDescription(GridDescription)}
+ *  {@link #getGridDescription(SWTGridDescription)}
  *  for each SWTGridCell
  *  	{@link #render(SWTGridCell, Composite)}
  * {@link #finalizeRendering(Composite)}
@@ -87,7 +87,7 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 	 * @return the number of controls per row
 	 * @since 1.3
 	 */
-	public abstract GridDescription getGridDescription(GridDescription gridDescription);
+	public abstract SWTGridDescription getGridDescription(SWTGridDescription gridDescription);
 
 	@Override
 	public final void init(final VELEMENT vElement, final ViewModelContext viewContext) {
@@ -332,8 +332,8 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 	 * @param control the control to set the layout to
 	 * @since 1.3
 	 */
-	protected void setLayoutDataForControl(SWTGridCell gridCell, GridDescription gridDescription,
-		GridDescription currentRowGridDescription, GridDescription fullGridDescription, VElement vElement,
+	protected void setLayoutDataForControl(SWTGridCell gridCell, SWTGridDescription gridDescription,
+		SWTGridDescription currentRowGridDescription, SWTGridDescription fullGridDescription, VElement vElement,
 		Control control) {
 
 		control.setLayoutData(LayoutProviderHelper.getLayoutData(gridCell, gridDescription, currentRowGridDescription,

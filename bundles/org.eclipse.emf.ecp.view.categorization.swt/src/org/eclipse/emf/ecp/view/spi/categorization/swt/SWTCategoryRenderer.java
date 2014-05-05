@@ -71,7 +71,7 @@ public class SWTCategoryRenderer extends ContainerSWTRenderer<VCategory> {
 	//						"No Renderer for %s found.", getVElement().getComposite().eClass().getName()))); //$NON-NLS-1$
 	// return categoryComposite;
 	// }
-	// final GridDescription gridDescription = renderer.getGridDescription(GridDescriptionFactory.INSTANCE
+	// final SWTGridDescription gridDescription = renderer.getGridDescription(GridDescriptionFactory.INSTANCE
 	// .createEmptyGridDescription());
 	// categoryComposite.setLayout(getLayoutHelper().getColumnLayout(
 	// gridDescription.getColumns(), false));
@@ -101,10 +101,10 @@ public class SWTCategoryRenderer extends ContainerSWTRenderer<VCategory> {
 	// /**
 	// * {@inheritDoc}
 	// *
-	// * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#getGridDescription(GridDescription)
+	// * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#getGridDescription(SWTGridDescription)
 	// */
 	// @Override
-	// public GridDescription getGridDescription(GridDescription gridDescription) {
+	// public SWTGridDescription getGridDescription(SWTGridDescription gridDescription) {
 	// if (rendererGridDescription == null) {
 	// rendererGridDescription = GridDescriptionFactory.INSTANCE.createSimpleGrid(1, 1, this);
 	// }
