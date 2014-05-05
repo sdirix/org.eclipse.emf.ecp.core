@@ -51,7 +51,7 @@
       <renderer
             renderer="org.eclipse.emf.ecp.view.internal.core.swt.renderer.XMLDateControlSWTRenderer">
          <dynamicTest
-               testClass="org.eclipse.emf.ecp.view.internal.core.swt.renderer.XMLDateControlSWTRendererTester">
+               testClass="org.eclipse.emf.ecp.view.model.common.XMLDateControlRendererTester">
          </dynamicTest>
       </renderer>
    </extension>

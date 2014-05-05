@@ -9,11 +9,9 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.internal.core.swt.renderer;
+package org.eclipse.emf.ecp.view.model.common;
 
 import javax.xml.datatype.XMLGregorianCalendar;
-
-import org.eclipse.emf.ecp.view.model.common.SimpleControlRendererTester;
 
 /**
  * Tester for Text Renderer.
@@ -21,7 +19,7 @@ import org.eclipse.emf.ecp.view.model.common.SimpleControlRendererTester;
  * @author Eugen Neufeld
  * 
  */
-public class XMLDateControlSWTRendererTester extends SimpleControlRendererTester {
+public class XMLDateControlRendererTester extends SimpleControlRendererTester {
 
 	/**
 	 * {@inheritDoc}
