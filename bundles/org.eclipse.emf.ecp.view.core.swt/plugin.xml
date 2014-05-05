@@ -27,7 +27,7 @@
       <renderer
             renderer="org.eclipse.emf.ecp.view.internal.core.swt.renderer.BooleanControlSWTRenderer">
          <dynamicTest
-               testClass="org.eclipse.emf.ecp.view.internal.core.swt.renderer.BooleanControlSWTRendererTester">
+               testClass="org.eclipse.emf.ecp.view.model.common.BooleanControlRendererTester">
          </dynamicTest>
       </renderer>
       <renderer
