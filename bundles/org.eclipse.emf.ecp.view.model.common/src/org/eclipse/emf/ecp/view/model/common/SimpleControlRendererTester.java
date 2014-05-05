@@ -9,7 +9,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.internal.core.swt.renderer;
+package org.eclipse.emf.ecp.view.model.common;
 
 import java.util.Iterator;
 
@@ -18,7 +18,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
-import org.eclipse.emf.ecp.view.model.common.ECPRendererTester;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
@@ -29,7 +28,7 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
  * @author Eugen Neufeld
  * 
  */
-public abstract class SimpleControlSWTRendererTester implements ECPRendererTester {
+public abstract class SimpleControlRendererTester implements ECPRendererTester {
 
 	/**
 	 * {@inheritDoc}
@@ -37,7 +36,6 @@ public abstract class SimpleControlSWTRendererTester implements ECPRendererTeste
 	 * @see org.eclipse.emf.ecp.view.model.common.ECPRendererTester#isApplicable(org.eclipse.emf.ecp.view.spi.model.VElement,
 	 *      org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
-	@Override
 	public int isApplicable(VElement vElement, ViewModelContext viewModelContext) {
 		if (!VControl.class.isInstance(vElement)) {
 			return NOT_APPLICABLE;

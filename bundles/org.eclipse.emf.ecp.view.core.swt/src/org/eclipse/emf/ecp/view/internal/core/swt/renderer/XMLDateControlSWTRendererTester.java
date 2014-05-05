@@ -13,18 +13,20 @@ package org.eclipse.emf.ecp.view.internal.core.swt.renderer;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 
+import org.eclipse.emf.ecp.view.model.common.SimpleControlRendererTester;
+
 /**
  * Tester for Text Renderer.
  * 
  * @author Eugen Neufeld
  * 
  */
-public class XMLDateControlSWTRendererTester extends SimpleControlSWTRendererTester {
+public class XMLDateControlSWTRendererTester extends SimpleControlRendererTester {
 
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.internal.core.swt.renderer.SimpleControlSWTRendererTester#isSingleValue()
+	 * @see org.eclipse.emf.ecp.view.model.common.SimpleControlRendererTester#isSingleValue()
 	 */
 	@Override
 	protected boolean isSingleValue() {
@@ -34,7 +36,7 @@ public class XMLDateControlSWTRendererTester extends SimpleControlSWTRendererTes
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.internal.core.swt.renderer.SimpleControlSWTRendererTester#getPriority()
+	 * @see org.eclipse.emf.ecp.view.model.common.SimpleControlRendererTester#getPriority()
 	 */
 	@Override
 	protected int getPriority() {
@@ -44,7 +46,7 @@ public class XMLDateControlSWTRendererTester extends SimpleControlSWTRendererTes
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.internal.core.swt.renderer.SimpleControlSWTRendererTester#getSupportedClassType()
+	 * @see org.eclipse.emf.ecp.view.model.common.SimpleControlRendererTester#getSupportedClassType()
 	 */
 	@Override
 	protected Class<?> getSupportedClassType() {

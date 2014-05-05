@@ -11,18 +11,20 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.core.swt.renderer;
 
+import org.eclipse.emf.ecp.view.model.common.SimpleControlRendererTester;
+
 /**
  * Tester for Text Renderer.
  * 
  * @author Eugen Neufeld
  * 
  */
-public class BooleanControlSWTRendererTester extends SimpleControlSWTRendererTester {
+public class BooleanControlSWTRendererTester extends SimpleControlRendererTester {
 
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.internal.core.swt.renderer.SimpleControlSWTRendererTester#isSingleValue()
+	 * @see org.eclipse.emf.ecp.view.model.common.SimpleControlRendererTester#isSingleValue()
 	 */
 	@Override
 	protected boolean isSingleValue() {
@@ -32,7 +34,7 @@ public class BooleanControlSWTRendererTester extends SimpleControlSWTRendererTes
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.internal.core.swt.renderer.SimpleControlSWTRendererTester#getPriority()
+	 * @see org.eclipse.emf.ecp.view.model.common.SimpleControlRendererTester#getPriority()
 	 */
 	@Override
 	protected int getPriority() {
@@ -42,7 +44,7 @@ public class BooleanControlSWTRendererTester extends SimpleControlSWTRendererTes
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.internal.core.swt.renderer.SimpleControlSWTRendererTester#getSupportedClassType()
+	 * @see org.eclipse.emf.ecp.view.model.common.SimpleControlRendererTester#getSupportedClassType()
 	 */
 	@Override
 	protected Class<?> getSupportedClassType() {

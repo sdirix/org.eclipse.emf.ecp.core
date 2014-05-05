@@ -13,18 +13,20 @@ package org.eclipse.emf.ecp.view.internal.core.swt.renderer;
 
 import java.util.Date;
 
+import org.eclipse.emf.ecp.view.model.common.SimpleControlRendererTester;
+
 /**
  * Tester for Text Renderer.
  * 
  * @author Eugen Neufeld
  * 
  */
-public class DateTimeControlSWTRendererTester extends SimpleControlSWTRendererTester {
+public class DateTimeControlSWTRendererTester extends SimpleControlRendererTester {
 
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.internal.core.swt.renderer.SimpleControlSWTRendererTester#isSingleValue()
+	 * @see org.eclipse.emf.ecp.view.model.common.SimpleControlRendererTester#isSingleValue()
 	 */
 	@Override
 	protected boolean isSingleValue() {
@@ -34,7 +36,7 @@ public class DateTimeControlSWTRendererTester extends SimpleControlSWTRendererTe
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.internal.core.swt.renderer.SimpleControlSWTRendererTester#getPriority()
+	 * @see org.eclipse.emf.ecp.view.model.common.SimpleControlRendererTester#getPriority()
 	 */
 	@Override
 	protected int getPriority() {
@@ -44,7 +46,7 @@ public class DateTimeControlSWTRendererTester extends SimpleControlSWTRendererTe
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.internal.core.swt.renderer.SimpleControlSWTRendererTester#getSupportedClassType()
+	 * @see org.eclipse.emf.ecp.view.model.common.SimpleControlRendererTester#getSupportedClassType()
 	 */
 	@Override
 	protected Class<?> getSupportedClassType() {

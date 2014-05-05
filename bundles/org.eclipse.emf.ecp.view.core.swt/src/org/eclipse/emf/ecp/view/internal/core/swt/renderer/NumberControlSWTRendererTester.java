@@ -17,6 +17,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.eclipse.emf.ecp.view.model.common.ECPRendererTester;
+import org.eclipse.emf.ecp.view.model.common.SimpleControlRendererTester;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 
@@ -61,7 +62,7 @@ public class NumberControlSWTRendererTester implements ECPRendererTester {
 	 * @author Eugen Neufeld
 	 * 
 	 */
-	private static class NumberTester extends SimpleControlSWTRendererTester {
+	private static class NumberTester extends SimpleControlRendererTester {
 		private final Class<?> clazz;
 
 		public NumberTester(Class<?> clazz) {
@@ -71,7 +72,7 @@ public class NumberControlSWTRendererTester implements ECPRendererTester {
 		/**
 		 * {@inheritDoc}
 		 * 
-		 * @see org.eclipse.emf.ecp.view.internal.core.swt.renderer.SimpleControlSWTRendererTester#isSingleValue()
+		 * @see org.eclipse.emf.ecp.view.model.common.SimpleControlRendererTester#isSingleValue()
 		 */
 		@Override
 		protected boolean isSingleValue() {
@@ -81,7 +82,7 @@ public class NumberControlSWTRendererTester implements ECPRendererTester {
 		/**
 		 * {@inheritDoc}
 		 * 
-		 * @see org.eclipse.emf.ecp.view.internal.core.swt.renderer.SimpleControlSWTRendererTester#getPriority()
+		 * @see org.eclipse.emf.ecp.view.model.common.SimpleControlRendererTester#getPriority()
 		 */
 		@Override
 		protected int getPriority() {
@@ -91,7 +92,7 @@ public class NumberControlSWTRendererTester implements ECPRendererTester {
 		/**
 		 * {@inheritDoc}
 		 * 
-		 * @see org.eclipse.emf.ecp.view.internal.core.swt.renderer.SimpleControlSWTRendererTester#getSupportedClassType()
+		 * @see org.eclipse.emf.ecp.view.model.common.SimpleControlRendererTester#getSupportedClassType()
 		 */
 		@Override
 		protected Class<?> getSupportedClassType() {
