@@ -47,7 +47,7 @@ import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.view.spi.swt.layout.GridCell;
+import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.test.common.swt.DatabindingClassRunner;
 import org.eclipse.emf.ecp.view.test.common.swt.SWTViewTestHelper;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
@@ -185,7 +185,7 @@ public class ECPAbstractCustomControlSWTTest {
 		// .createControls(new Composite(SWTViewTestHelper.createShell(), SWT.NONE));
 
 		final Composite composite = new Composite(SWTViewTestHelper.createShell(), SWT.NONE);
-		customControl.renderControl(new GridCell(0, 0, null), composite);
+		customControl.renderControl(new SWTGridCell(0, 0, null), composite);
 
 		assertTrue(customControl.isRendered());
 		final Composite parentCompositeFromView = composite;
@@ -229,7 +229,7 @@ public class ECPAbstractCustomControlSWTTest {
 	 */
 	@Test
 	public void testCreateContentControl() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
-		customControl.renderControl(new GridCell(0, 0, null), testComposite);
+		customControl.renderControl(new SWTGridCell(0, 0, null), testComposite);
 		assertTrue(testComposite.getChildren()[0] instanceof Label);
 	}
 
@@ -338,7 +338,7 @@ public class ECPAbstractCustomControlSWTTest {
 		// SWTViewTestHelper.createShell()), null);
 		customControl.init(
 			controlModel, ViewModelContextFactory.INSTANCE.createViewModelContext(controlModel, domainObject));
-		customControl.renderControl(new GridCell(0, 0, null), testComposite);
+		customControl.renderControl(new SWTGridCell(0, 0, null), testComposite);
 		customControl.applyValidation();
 		// Check Label, Check Image
 		assertEquals(Diagnostic.ERROR, customControl.getLastValidationSeverity());
@@ -346,7 +346,7 @@ public class ECPAbstractCustomControlSWTTest {
 		assertSame(VCustomPackage.eINSTANCE.getCustomDomainModelReference_BundleName(),
 			customControl.getLastValidationFeature());
 
-		customControl.renderControl(new GridCell(0, 0, null), testComposite);
+		customControl.renderControl(new SWTGridCell(0, 0, null), testComposite);
 		customControl.applyValidation();
 
 		// assertNotNull(customControl.getValidationLabel().getImage());
@@ -429,7 +429,7 @@ public class ECPAbstractCustomControlSWTTest {
 	// @Test
 	// public void testDisposeOnShellDispose() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 	// final Composite composite = new Composite(SWTViewTestHelper.createShell(), SWT.NONE);
-	// customControl.renderControl(new GridCell(0, 0, new GridCellDescription()), composite);
+	// customControl.renderControl(new SWTGridCell(0, 0, new GridCellDescription()), composite);
 	// assertFalse(customControl.isDisposed());
 	// composite.dispose();
 	// assertTrue(customControl.isDisposed());
@@ -646,17 +646,17 @@ public class ECPAbstractCustomControlSWTTest {
 		assertFalse(control.getEnabled());
 	}
 
-	private Map<GridCell, Control> createControlMap(Control... controls) {
-		final Map<GridCell, Control> result = new LinkedHashMap<GridCell, Control>();
+	private Map<SWTGridCell, Control> createControlMap(Control... controls) {
+		final Map<SWTGridCell, Control> result = new LinkedHashMap<SWTGridCell, Control>();
 		for (int i = 0; i < controls.length; i++) {
-			result.put(new GridCell(0, i, null), controls[i]);
+			result.put(new SWTGridCell(0, i, null), controls[i]);
 		}
 		return result;
 	}
 
 	@Test
 	public void testSetEditable() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
-		customControl.renderControl(new GridCell(0, 1, null), testComposite);
+		customControl.renderControl(new SWTGridCell(0, 1, null), testComposite);
 		assertTrue(customControl.getButton().isEnabled());
 		controlModel.setEnabled(false);
 		customControl.applyEnable(createControlMap(customControl.getButton()));

@@ -24,9 +24,9 @@ import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractAdditionalSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
-import org.eclipse.emf.ecp.view.spi.swt.layout.GridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescription;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
+import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -50,14 +50,14 @@ public class EmbeddedGroupSWTRenderer extends AbstractSWTRenderer<VGroup> {
 	@Override
 	public GridDescription getGridDescription(GridDescription gridDescription) {
 		currentGridDescription = new GridDescription();
-		final List<GridCell> grid = new ArrayList<GridCell>();
+		final List<SWTGridCell> grid = new ArrayList<SWTGridCell>();
 		currentGridDescription.setRows(getVElement().getChildren().size() + 1);
 		currentGridDescription.setGrid(grid);
 
 		int row = 1;
-		final Map<Integer, List<GridCell>> gridCellsPerRow = new LinkedHashMap<Integer, List<GridCell>>();
+		final Map<Integer, List<SWTGridCell>> gridCellsPerRow = new LinkedHashMap<Integer, List<SWTGridCell>>();
 		for (final VContainedElement containedElement : getVElement().getChildren()) {
-			gridCellsPerRow.put(row, new ArrayList<GridCell>());
+			gridCellsPerRow.put(row, new ArrayList<SWTGridCell>());
 			final AbstractSWTRenderer<VElement> renderer = getSWTRendererFactory().getRenderer(containedElement,
 				getViewModelContext());
 			final Collection<AbstractAdditionalSWTRenderer<VElement>> additionalRenderers = getSWTRendererFactory()
@@ -70,15 +70,16 @@ public class EmbeddedGroupSWTRenderer extends AbstractSWTRenderer<VGroup> {
 			if (currentGridDescription.getColumns() < rendererGridDescription.getColumns()) {
 				currentGridDescription.setColumns(rendererGridDescription.getColumns());
 			}
-			for (final GridCell rendererGridCell : rendererGridDescription.getGrid()) {
-				final GridCell gc = new GridCell(row, rendererGridCell.getColumn(), rendererGridCell.getRenderer());
+			for (final SWTGridCell rendererGridCell : rendererGridDescription.getGrid()) {
+				final SWTGridCell gc = new SWTGridCell(row, rendererGridCell.getColumn(),
+					rendererGridCell.getRenderer());
 				currentGridDescription.getGrid().add(gc);
 				gridCellsPerRow.get(row).add(gc);
 			}
 			row++;
 		}
 		for (int i = 0; i < currentGridDescription.getColumns(); i++) {
-			final GridCell gridCell = new GridCell(0, i, this);
+			final SWTGridCell gridCell = new SWTGridCell(0, i, this);
 			gridCell.setVerticalGrab(false);
 			gridCell.setVerticalFill(false);
 			gridCell.setHorizontalFill(false);
@@ -87,7 +88,7 @@ public class EmbeddedGroupSWTRenderer extends AbstractSWTRenderer<VGroup> {
 		}
 
 		for (final Integer gdRow : gridCellsPerRow.keySet()) {
-			final List<GridCell> rowGridCells = gridCellsPerRow.get(gdRow);
+			final List<SWTGridCell> rowGridCells = gridCellsPerRow.get(gdRow);
 			if (currentGridDescription.getColumns() > rowGridCells.size()) {
 				// span last cell -> x columns - #cells + 1 as the current cell already was subtracted
 				rowGridCells.get(rowGridCells.size() - 1).setHorizontalSpan(
@@ -104,7 +105,7 @@ public class EmbeddedGroupSWTRenderer extends AbstractSWTRenderer<VGroup> {
 	 *      org.eclipse.swt.widgets.Composite)
 	 */
 	@Override
-	protected Control renderControl(GridCell cell, Composite parent) throws NoRendererFoundException,
+	protected Control renderControl(SWTGridCell cell, Composite parent) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
 		if (cell.getRenderer().equals(this)) {
 			final Label l = new Label(parent, SWT.NONE);

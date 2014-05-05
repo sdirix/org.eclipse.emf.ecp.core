@@ -24,10 +24,10 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
-import org.eclipse.emf.ecp.view.spi.swt.layout.GridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescription;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.LayoutProviderHelper;
+import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -75,7 +75,7 @@ public class HorizontalLayoutSWTRenderer extends AbstractSWTRenderer<VHorizontal
 	 *      org.eclipse.emf.ecp.view.spi.model.VElement, org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
 	@Override
-	protected Control renderControl(GridCell gridCell, Composite parent) throws NoRendererFoundException,
+	protected Control renderControl(SWTGridCell gridCell, Composite parent) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
 		if (gridCell.getColumn() != 0) {
 			return null;
@@ -115,7 +115,7 @@ public class HorizontalLayoutSWTRenderer extends AbstractSWTRenderer<VHorizontal
 			column.setLayout(LayoutProviderHelper.getColumnLayout(gridDescription.getColumns(), false));
 
 			try {
-				for (final GridCell childGridCell : gridDescription.getGrid()) {
+				for (final SWTGridCell childGridCell : gridDescription.getGrid()) {
 					final Control control = childGridCell.getRenderer().render(childGridCell, column);
 					if (control == null) {
 						continue;
@@ -126,7 +126,7 @@ public class HorizontalLayoutSWTRenderer extends AbstractSWTRenderer<VHorizontal
 						gridDescription, childGridCell.getRenderer().getVElement(),
 						control));
 				}
-				for (final GridCell childGridCell : gridDescription.getGrid()) {
+				for (final SWTGridCell childGridCell : gridDescription.getGrid()) {
 					childGridCell.getRenderer().finalizeRendering(column);
 				}
 			} catch (final NoPropertyDescriptorFoundExeption e) {

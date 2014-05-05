@@ -26,9 +26,9 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.view.spi.swt.layout.GridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescription;
 import org.eclipse.emf.ecp.view.spi.swt.layout.LayoutProviderHelper;
+import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.layout.GridData;
@@ -43,8 +43,8 @@ import org.eclipse.swt.widgets.Control;
  * 
  * <pre>
  *  {@link #getGridDescription(GridDescription)}
- *  for each GridCell
- *  	{@link #render(GridCell, Composite)}
+ *  for each SWTGridCell
+ *  	{@link #render(SWTGridCell, Composite)}
  * {@link #finalizeRendering(Composite)}
  * </pre>
  * 
@@ -59,7 +59,7 @@ import org.eclipse.swt.widgets.Control;
 public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends AbstractRenderer<VELEMENT> {
 
 	private ModelChangeListener listener;
-	private Map<GridCell, Control> controls;
+	private Map<SWTGridCell, Control> controls;
 	private SWTRendererFactory rendererFactory;
 	private boolean renderingFinished;
 
@@ -93,7 +93,7 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 	public final void init(final VELEMENT vElement, final ViewModelContext viewContext) {
 		super.init(vElement, viewContext);
 		preInit();
-		controls = new LinkedHashMap<GridCell, Control>();
+		controls = new LinkedHashMap<SWTGridCell, Control>();
 		if (getViewModelContext() != null) {
 			listener = new ModelChangeListener() {
 
@@ -139,11 +139,11 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 	 * @return a copy of the controls map
 	 * @since 1.3
 	 */
-	protected final Map<GridCell, Control> getControls() {
+	protected final Map<SWTGridCell, Control> getControls() {
 		if (controls == null) {
 			return Collections.emptyMap();
 		}
-		return new LinkedHashMap<GridCell, Control>(controls);
+		return new LinkedHashMap<SWTGridCell, Control>(controls);
 	}
 
 	/**
@@ -181,14 +181,14 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 	/**
 	 * Renders the passed {@link VElement}.
 	 * 
-	 * @param cell the {@link GridCell} of the control to render
+	 * @param cell the {@link SWTGridCell} of the control to render
 	 * @param parent the {@link Composite} to render on
 	 * @return the rendered {@link Control}
 	 * @throws NoRendererFoundException this is thrown when a renderer cannot be found
 	 * @throws NoPropertyDescriptorFoundExeption this is thrown when no property descriptor can be found
 	 * @since 1.3
 	 */
-	public Control render(final GridCell cell, Composite parent)
+	public Control render(final SWTGridCell cell, Composite parent)
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 
 		Control control = controls.get(cell);
@@ -253,7 +253,7 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 	 * @throws NoPropertyDescriptorFoundExeption this is thrown when no property descriptor can be found
 	 * @since 1.3
 	 */
-	protected abstract Control renderControl(final GridCell cell, Composite parent) throws NoRendererFoundException,
+	protected abstract Control renderControl(final SWTGridCell cell, Composite parent) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption;
 
 	/**
@@ -263,7 +263,7 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 	 * 
 	 */
 	protected void applyReadOnly() {
-		for (final GridCell gridCell : controls.keySet()) {
+		for (final SWTGridCell gridCell : controls.keySet()) {
 			setControlEnabled(gridCell, controls.get(gridCell), !getVElement().isReadonly());
 		}
 	}
@@ -275,7 +275,7 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 	 * 
 	 */
 	protected void applyEnable() {
-		for (final GridCell gridCell : controls.keySet()) {
+		for (final SWTGridCell gridCell : controls.keySet()) {
 			setControlEnabled(gridCell, controls.get(gridCell), getVElement().isEnabled());
 		}
 	}
@@ -283,12 +283,12 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 	/**
 	 * Wraps the call to enable/disable a control.
 	 * 
-	 * @param gridCell the {@link GridCell} to enable/disable
+	 * @param gridCell the {@link SWTGridCell} to enable/disable
 	 * @param control the {@link Control} to enable/disable
 	 * @param enabled true if control should be enabled, false otherwise
 	 * @since 1.3
 	 */
-	protected void setControlEnabled(GridCell gridCell, Control control, boolean enabled) {
+	protected void setControlEnabled(SWTGridCell gridCell, Control control, boolean enabled) {
 		control.setEnabled(enabled);
 	}
 
@@ -299,7 +299,7 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 	 * 
 	 */
 	protected void applyVisible() {
-		for (final GridCell gridCell : controls.keySet()) {
+		for (final SWTGridCell gridCell : controls.keySet()) {
 			final Object layoutData = controls.get(gridCell).getLayoutData();
 			if (GridData.class.isInstance(layoutData)) {
 				final GridData gridData = (GridData) layoutData;
@@ -332,7 +332,7 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 	 * @param control the control to set the layout to
 	 * @since 1.3
 	 */
-	protected void setLayoutDataForControl(GridCell gridCell, GridDescription gridDescription,
+	protected void setLayoutDataForControl(SWTGridCell gridCell, GridDescription gridDescription,
 		GridDescription currentRowGridDescription, GridDescription fullGridDescription, VElement vElement,
 		Control control) {
 

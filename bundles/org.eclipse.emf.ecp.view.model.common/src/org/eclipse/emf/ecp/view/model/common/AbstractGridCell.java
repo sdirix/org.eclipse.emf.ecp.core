@@ -25,12 +25,18 @@ public abstract class AbstractGridCell<RENDERER extends AbstractRenderer<?>> {
 	private final int column;
 	private RENDERER renderer;
 
+	private int horizontalSpan = 1;
+	private boolean verticalGrab = true;
+	private boolean verticalFill = true;
+	private boolean horizontalGrab = true;
+	private boolean horizontalFill = true;
+
 	/**
 	 * Default constructor to create a grid cell.
 	 * 
 	 * @param row the row of the cell
 	 * @param column the column of the cell
-	 * @param renderer the renderer that renderes the cell
+	 * @param renderer the {@link AbstractRenderer} that renderes the cell
 	 */
 	public AbstractGridCell(int row, int column, RENDERER renderer) {
 		super();
@@ -72,6 +78,96 @@ public abstract class AbstractGridCell<RENDERER extends AbstractRenderer<?>> {
 	}
 
 	/**
+	 * Return the horizontalSpan of this control. Default is 1.
+	 * 
+	 * @return the horizontalSpan
+	 */
+	public int getHorizontalSpan() {
+		return horizontalSpan;
+	}
+
+	/**
+	 * Set the horizontal span of this cell.
+	 * 
+	 * @param horizontalSpan the horizontalSpan to set
+	 */
+	public void setHorizontalSpan(int horizontalSpan) {
+		this.horizontalSpan = horizontalSpan;
+	}
+
+	/**
+	 * Returns whether this cell will take all available vertical space.
+	 * 
+	 * @return the verticalGrab
+	 */
+	public boolean isVerticalGrab() {
+		return verticalGrab;
+	}
+
+	/**
+	 * True if all available vertical space should be taken.
+	 * 
+	 * @param verticalGrab the verticalGrab to set
+	 */
+	public void setVerticalGrab(boolean verticalGrab) {
+		this.verticalGrab = verticalGrab;
+	}
+
+	/**
+	 * Returns whether the control should fill the available vertical space.
+	 * 
+	 * @return the verticalFill
+	 */
+	public boolean isVerticalFill() {
+		return verticalFill;
+	}
+
+	/**
+	 * True if the available vertical space should be filled.
+	 * 
+	 * @param verticalFill the verticalFill to set
+	 */
+	public void setVerticalFill(boolean verticalFill) {
+		this.verticalFill = verticalFill;
+	}
+
+	/**
+	 * Returns whether this cell will take all available horizontal space.
+	 * 
+	 * @return the horizontalGrab
+	 */
+	public boolean isHorizontalGrab() {
+		return horizontalGrab;
+	}
+
+	/**
+	 * True if all available horizontal space should be taken.
+	 * 
+	 * @param horizontalGrab the horizontalGrab to set
+	 */
+	public void setHorizontalGrab(boolean horizontalGrab) {
+		this.horizontalGrab = horizontalGrab;
+	}
+
+	/**
+	 * Returns whether the control should fill the available horizontal space.
+	 * 
+	 * @return the horizontalFill
+	 */
+	public boolean isHorizontalFill() {
+		return horizontalFill;
+	}
+
+	/**
+	 * True if the available horizontal space should be filled.
+	 * 
+	 * @param horizontalFill the horizontalFill to set
+	 */
+	public void setHorizontalFill(boolean horizontalFill) {
+		this.horizontalFill = horizontalFill;
+	}
+
+	/**
 	 * {@inheritDoc}
 	 * 
 	 * @see java.lang.Object#hashCode()
@@ -82,7 +178,6 @@ public abstract class AbstractGridCell<RENDERER extends AbstractRenderer<?>> {
 		int result = 1;
 		result = prime * result + column;
 		result = prime * result + (renderer == null ? 0 : renderer.hashCode());
-		result = prime * result + row;
 		return result;
 	}
 
@@ -112,9 +207,6 @@ public abstract class AbstractGridCell<RENDERER extends AbstractRenderer<?>> {
 				return false;
 			}
 		} else if (!renderer.equals(other.renderer)) {
-			return false;
-		}
-		if (row != other.row) {
 			return false;
 		}
 		return true;

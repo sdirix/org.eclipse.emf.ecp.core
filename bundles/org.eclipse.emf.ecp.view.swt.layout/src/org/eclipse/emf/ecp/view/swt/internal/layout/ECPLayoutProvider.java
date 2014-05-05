@@ -4,7 +4,7 @@ import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.swt.layout.AbstractLayoutProvider;
-import org.eclipse.emf.ecp.view.spi.swt.layout.GridCell;
+import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescription;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -23,7 +23,7 @@ public class ECPLayoutProvider extends AbstractLayoutProvider {
 	}
 
 	@Override
-	public Object getLayoutData(GridCell gridCell,
+	public Object getLayoutData(SWTGridCell gridCell,
 		GridDescription controlGridDescription,
 		GridDescription currentRowGridDescription, GridDescription fullGridDescription, VElement vElement,
 		Control control) {

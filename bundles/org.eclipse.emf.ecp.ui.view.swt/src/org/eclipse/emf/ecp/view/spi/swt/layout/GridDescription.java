@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A {@link GridDescription} describes the grid of the renderer using a list of {@link GridCell GridCells} and the
+ * A {@link GridDescription} describes the grid of the renderer using a list of {@link SWTGridCell GridCells} and the
  * number of rows and columns it has.
  * 
  * Use the {@link GridDescriptionFactory} to create {@link GridDescription GridDescriptions}.
@@ -26,7 +26,7 @@ import java.util.List;
  */
 public class GridDescription {
 
-	private List<GridCell> grid;
+	private List<SWTGridCell> grid;
 	private int rows;
 
 	private int columns;
@@ -43,20 +43,20 @@ public class GridDescription {
 	 * 
 	 * @param rows number of rows in this description
 	 * @param columns number of columns in this description
-	 * @param grid the List of {@link GridCell GridCells} describing the grid
+	 * @param grid the List of {@link SWTGridCell GridCells} describing the grid
 	 */
-	public GridDescription(int rows, int columns, List<GridCell> grid) {
+	public GridDescription(int rows, int columns, List<SWTGridCell> grid) {
 		this.grid = grid;
 		this.rows = rows;
 		this.columns = columns;
 	}
 
 	/**
-	 * The {@link GridCell GridCells} describing the grid.
+	 * The {@link SWTGridCell GridCells} describing the grid.
 	 * 
 	 * @return the grid
 	 */
-	public List<GridCell> getGrid() {
+	public List<SWTGridCell> getGrid() {
 		return grid;
 	}
 
@@ -79,11 +79,11 @@ public class GridDescription {
 	}
 
 	/**
-	 * List of {@link GridCell GridCells}.
+	 * List of {@link SWTGridCell GridCells}.
 	 * 
 	 * @param grid the grid to set
 	 */
-	public void setGrid(List<GridCell> grid) {
+	public void setGrid(List<SWTGridCell> grid) {
 		this.grid = grid;
 	}
 
@@ -111,7 +111,7 @@ public class GridDescription {
 	 * @return a copy of the grid
 	 */
 	public GridDescription copy() {
-		final GridDescription gd = new GridDescription(rows, columns, new ArrayList<GridCell>(grid));
+		final GridDescription gd = new GridDescription(rows, columns, new ArrayList<SWTGridCell>(grid));
 		return gd;
 	}
 }

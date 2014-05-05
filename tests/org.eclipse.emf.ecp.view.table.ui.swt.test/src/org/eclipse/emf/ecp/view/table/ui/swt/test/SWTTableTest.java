@@ -40,7 +40,7 @@ import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
-import org.eclipse.emf.ecp.view.spi.swt.layout.GridCell;
+import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableColumn;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableFactory;
@@ -191,7 +191,7 @@ public class SWTTableTest {
 		final AbstractSWTRenderer<VElement> tableRenderer = rendererFactory.getRenderer(handle.getTableControl(),
 			new ViewModelContextWithoutServices(handle.getTableControl()));
 
-		final Control render = tableRenderer.render(new GridCell(0, 0, tableRenderer), shell);
+		final Control render = tableRenderer.render(new SWTGridCell(0, 0, tableRenderer), shell);
 		if (render == null) {
 			fail();
 		}
@@ -227,7 +227,7 @@ public class SWTTableTest {
 		final AbstractSWTRenderer<VElement> tableRenderer = rendererFactory.getRenderer(handle.getTableControl(),
 			new ViewModelContextWithoutServices(handle.getTableControl()));
 
-		final Control render = tableRenderer.render(new GridCell(0, 0, tableRenderer), shell);
+		final Control render = tableRenderer.render(new SWTGridCell(0, 0, tableRenderer), shell);
 		if (render == null) {
 			fail();
 		}

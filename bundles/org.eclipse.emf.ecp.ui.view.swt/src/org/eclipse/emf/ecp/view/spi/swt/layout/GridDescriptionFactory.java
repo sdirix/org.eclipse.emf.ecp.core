@@ -53,10 +53,10 @@ public final class GridDescriptionFactory {
 	 * @return the {@link GridDescription}
 	 */
 	public GridDescription createSimpleGrid(int rows, int columns, AbstractSWTRenderer<? extends VElement> renderer) {
-		final List<GridCell> gridCells = new ArrayList<GridCell>(rows * columns);
+		final List<SWTGridCell> gridCells = new ArrayList<SWTGridCell>(rows * columns);
 		for (int row = 0; row < rows; row++) {
 			for (int column = 0; column < columns; column++) {
-				gridCells.add(new GridCell(row, column, renderer));
+				gridCells.add(new SWTGridCell(row, column, renderer));
 			}
 		}
 		return new GridDescription(rows, columns, gridCells);

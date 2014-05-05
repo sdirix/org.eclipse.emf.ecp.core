@@ -54,7 +54,7 @@ public class SWTCategoryRenderer extends ContainerSWTRenderer<VCategory> {
 	// * org.eclipse.emf.ecp.view.spi.model.VElement, org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	// */
 	// @Override
-	// protected Control renderControl(GridCell gridCell, Composite parent)
+	// protected Control renderControl(SWTGridCell gridCell, Composite parent)
 	// throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 	// final Composite categoryComposite = new Composite(parent, SWT.NONE);
 	// categoryComposite.setBackground(parent.getBackground());
@@ -76,7 +76,7 @@ public class SWTCategoryRenderer extends ContainerSWTRenderer<VCategory> {
 	// categoryComposite.setLayout(getLayoutHelper().getColumnLayout(
 	// gridDescription.getColumns(), false));
 	//
-	// for (final GridCell childGridCell : gridDescription.getGrid()) {
+	// for (final SWTGridCell childGridCell : gridDescription.getGrid()) {
 	// try {
 	// final Control control = renderer.render(
 	// childGridCell,

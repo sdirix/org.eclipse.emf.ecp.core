@@ -35,7 +35,7 @@ public interface LayoutProvider {
 	/**
 	 * The LayoutData to use.
 	 * 
-	 * @param gridCell the current {@link GridCell}
+	 * @param gridCell the current {@link SWTGridCell}
 	 * @param controlGridDescription the {@link GridDescription} of the rendered {@link VElement}
 	 * @param currentRowGridDescription the {@link GridDescription} of the current row
 	 * @param fullGridDescription the {@link GridDescription} of the whole container
@@ -43,7 +43,7 @@ public interface LayoutProvider {
 	 * @param control the rendered {@link Control}
 	 * @return the Object being the layout data to set
 	 */
-	Object getLayoutData(GridCell gridCell, GridDescription controlGridDescription,
+	Object getLayoutData(SWTGridCell gridCell, GridDescription controlGridDescription,
 		GridDescription currentRowGridDescription, GridDescription fullGridDescription, VElement vElement,
 		Control control);
 
