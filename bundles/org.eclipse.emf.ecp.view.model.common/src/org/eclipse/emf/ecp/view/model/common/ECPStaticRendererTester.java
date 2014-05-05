@@ -9,9 +9,8 @@
  * Contributors:
  * Eugen - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.internal.swt;
+package org.eclipse.emf.ecp.view.model.common;
 
-import org.eclipse.emf.ecp.view.model.common.ECPRendererTester;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 

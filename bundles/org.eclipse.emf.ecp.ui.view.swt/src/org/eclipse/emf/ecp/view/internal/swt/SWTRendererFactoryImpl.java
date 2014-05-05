@@ -22,6 +22,7 @@ import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.InvalidRegistryObjectException;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecp.view.model.common.ECPRendererTester;
+import org.eclipse.emf.ecp.view.model.common.ECPStaticRendererTester;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractAdditionalSWTRenderer;
