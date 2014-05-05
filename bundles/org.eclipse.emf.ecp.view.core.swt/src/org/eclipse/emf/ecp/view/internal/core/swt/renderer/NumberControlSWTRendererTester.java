@@ -16,9 +16,9 @@ import java.math.BigInteger;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import org.eclipse.emf.ecp.view.model.common.ECPRendererTester;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
-import org.eclipse.emf.ecp.view.spi.swt.ECPRendererTester;
 
 /**
  * Tester for Text Renderer.
@@ -41,7 +41,7 @@ public class NumberControlSWTRendererTester implements ECPRendererTester {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.swt.ECPRendererTester#isApplicable(org.eclipse.emf.ecp.view.spi.model.VElement,
+	 * @see org.eclipse.emf.ecp.view.model.common.ECPRendererTester#isApplicable(org.eclipse.emf.ecp.view.spi.model.VElement,
 	 *      org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
 	public int isApplicable(VElement vElement, ViewModelContext viewModelContext) {

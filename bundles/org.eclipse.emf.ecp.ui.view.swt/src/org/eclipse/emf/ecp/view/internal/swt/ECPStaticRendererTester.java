@@ -11,9 +11,9 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.swt;
 
+import org.eclipse.emf.ecp.view.model.common.ECPRendererTester;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
-import org.eclipse.emf.ecp.view.spi.swt.ECPRendererTester;
 
 /**
  * The static tester for renderer.
@@ -41,7 +41,7 @@ public class ECPStaticRendererTester implements ECPRendererTester {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.swt.ECPRendererTester#isApplicable(VElement, ViewModelContext)
+	 * @see org.eclipse.emf.ecp.view.model.common.ECPRendererTester#isApplicable(VElement, ViewModelContext)
 	 */
 	public int isApplicable(VElement vElement, ViewModelContext viewModelContext) {
 		if (!supportedVElement.isInstance(vElement)) {

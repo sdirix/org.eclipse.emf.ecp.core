@@ -20,10 +20,10 @@ import org.eclipse.emf.ecp.view.internal.categorization.swt.CategorizationTreeRe
 import org.eclipse.emf.ecp.view.internal.categorization.swt.CompositeCategoryDefaultRendererTester;
 import org.eclipse.emf.ecp.view.internal.categorization.swt.CompositeCategoryTabRendererTester;
 import org.eclipse.emf.ecp.view.internal.categorization.swt.CompositeCategoryTreeRendererTester;
+import org.eclipse.emf.ecp.view.model.common.ECPRendererTester;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorization;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationElement;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.spi.swt.ECPRendererTester;
 import org.junit.Before;
 import org.junit.Test;
 
