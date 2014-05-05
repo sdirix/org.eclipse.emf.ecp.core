@@ -39,7 +39,7 @@
       <renderer
             renderer="org.eclipse.emf.ecp.view.internal.core.swt.renderer.NumberControlSWTRenderer">
          <dynamicTest
-               testClass="org.eclipse.emf.ecp.view.internal.core.swt.renderer.NumberControlSWTRendererTester">
+               testClass="org.eclipse.emf.ecp.view.model.common.NumberControlRendererTester">
          </dynamicTest>
       </renderer>
       <renderer

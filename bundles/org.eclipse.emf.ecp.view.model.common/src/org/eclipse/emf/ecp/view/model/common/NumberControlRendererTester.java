@@ -9,15 +9,13 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.internal.core.swt.renderer;
+package org.eclipse.emf.ecp.view.model.common;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import org.eclipse.emf.ecp.view.model.common.ECPRendererTester;
-import org.eclipse.emf.ecp.view.model.common.SimpleControlRendererTester;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 
@@ -27,9 +25,9 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
  * @author Eugen Neufeld
  * 
  */
-public class NumberControlSWTRendererTester implements ECPRendererTester {
+public class NumberControlRendererTester implements ECPRendererTester {
 
-	private static Set<NumberTester> testers = new LinkedHashSet<NumberControlSWTRendererTester.NumberTester>();
+	private static Set<NumberTester> testers = new LinkedHashSet<NumberControlRendererTester.NumberTester>();
 	static {
 		testers.add(new NumberTester(Integer.class));
 		testers.add(new NumberTester(Long.class));
