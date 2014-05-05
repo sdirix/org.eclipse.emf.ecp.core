@@ -9,7 +9,7 @@
  * Contributors:
  * Eugen - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.spi.swt;
+package org.eclipse.emf.ecp.view.model.common;
 
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
@@ -19,7 +19,6 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
  * 
  * @author Eugen Neufeld
  * @param <VELEMENT> the {@link VElement} this renderer is applicable for
- * @since 1.3
  * 
  */
 public abstract class AbstractRenderer<VELEMENT extends VElement> {
@@ -49,7 +48,7 @@ public abstract class AbstractRenderer<VELEMENT extends VElement> {
 	 * 
 	 * @return the {@link ViewModelContext}
 	 */
-	protected final ViewModelContext getViewModelContext() {
+	public final ViewModelContext getViewModelContext() {
 		return viewModelContext;
 	}
 
