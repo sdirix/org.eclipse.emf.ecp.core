@@ -239,6 +239,58 @@ public class SWTTableTest {
 		assertEquals(2, table.getColumnCount());
 	}
 
+	@Test
+	public void testTableWithTwoColumnsAdd() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		final TableControlHandle handle = createTableWithTwoTableColumns();
+		final AbstractSWTRenderer<VElement> tableRenderer = rendererFactory.getRenderer(handle.getTableControl(),
+			new ViewModelContextWithoutServices(handle.getTableControl()));
+
+		final Control control = tableRenderer.render(new GridCell(0, 0, tableRenderer), shell);
+		if (control == null) {
+			fail("No control was rendered");
+		}
+		final Table table = (Table) getTable(control);
+		assertEquals(1, table.getItemCount());
+		final EClass eClass = EcoreFactory.eINSTANCE.createEClass();
+		((EClass) domainElement).getESuperTypes().add(eClass);
+		assertEquals(2, table.getItemCount());
+	}
+
+	@Test
+	public void testTableWithTwoColumnsRemove() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		final TableControlHandle handle = createTableWithTwoTableColumns();
+		final AbstractSWTRenderer<VElement> tableRenderer = rendererFactory.getRenderer(handle.getTableControl(),
+			new ViewModelContextWithoutServices(handle.getTableControl()));
+
+		final Control control = tableRenderer.render(new GridCell(0, 0, tableRenderer), shell);
+		if (control == null) {
+			fail("No control was rendered");
+		}
+		final Table table = (Table) getTable(control);
+		assertEquals(1, table.getItemCount());
+		final EClass eClass = ((EClass) domainElement).getESuperTypes().get(0);
+		((EClass) domainElement).getESuperTypes().remove(eClass);
+		assertEquals(0, table.getItemCount());
+	}
+
+	@Test
+	public void testTableWithTwoColumnsClear() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		final EClass eClass = EcoreFactory.eINSTANCE.createEClass();
+		((EClass) domainElement).getESuperTypes().add(eClass);
+		final TableControlHandle handle = createTableWithTwoTableColumns();
+		final AbstractSWTRenderer<VElement> tableRenderer = rendererFactory.getRenderer(handle.getTableControl(),
+			new ViewModelContextWithoutServices(handle.getTableControl()));
+
+		final Control control = tableRenderer.render(new GridCell(0, 0, tableRenderer), shell);
+		if (control == null) {
+			fail("No control was rendered");
+		}
+		final Table table = (Table) getTable(control);
+		assertEquals(2, table.getItemCount());
+		((EClass) domainElement).getESuperTypes().clear();
+		assertEquals(0, table.getItemCount());
+	}
+
 	private Control getTable(Control render) {
 		Composite composite = (Composite) render;
 		composite = (Composite) composite.getChildren()[1];
