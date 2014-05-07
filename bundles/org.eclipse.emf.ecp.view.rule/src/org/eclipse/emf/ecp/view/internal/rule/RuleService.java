@@ -72,6 +72,8 @@ public class RuleService implements ViewModelService {
 	@Override
 	public void instantiate(final ViewModelContext context) {
 		this.context = context;
+		enableRuleRegistry.setContext(context);
+		showRuleRegistry.setContext(context);
 		final VElement view = context.getViewModel();
 		domainChangeListener = new DomainModelChangeListener() {
 

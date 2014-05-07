@@ -33,6 +33,7 @@ import org.eclipse.emf.ecp.internal.edit.EditMessages;
 import org.eclipse.emf.ecp.view.spi.custom.model.ECPHardcodedReferences;
 import org.eclipse.emf.ecp.view.spi.custom.model.VCustomDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage;
+import org.eclipse.emf.ecp.view.spi.model.DomainModelChangeNotifier;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.util.ViewModelUtil;
 import org.osgi.framework.Bundle;
@@ -408,14 +409,7 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 		return result.toString();
 	}
 
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReference#resolve(org.eclipse.emf.ecore.EObject)
-	 * @generated NOT
-	 */
-	@Override
-	public boolean resolve(EObject eObject,) {
+	private boolean resolve(EObject eObject, DomainModelChangeNotifier notifier) {
 		if (getBundleName() == null || getClassName() == null) {
 			return false;
 		}
@@ -435,9 +429,57 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 		// resolve references from control
 		boolean result = true;
 		for (final VDomainModelReference domainModelReference : getDomainModelReferences()) {
-			result &= domainModelReference.resolve(eObject);
+			result &= domainModelReference.init(eObject, notifier);
 		}
 		return result;
+	}
+
+	@Override
+	public boolean init(EObject object, DomainModelChangeNotifier notifier) {
+
+		// // add domain model listener/adapter
+		// final DomainModelChangeListener modelChangeListener = new DomainModelChangeListener() {
+		//
+		// @Override
+		// public void notifyRemove(Notifier notifier) {
+		// // TODO Auto-generated method stub
+		//
+		// }
+		//
+		// @Override
+		// public void notifyChange(ModelChangeNotification notification) {
+		//
+		// if (Notification.SET == notification.getRawNotification().getEventType()) {
+		// // notification.getNotifier(); // Fan
+		// // notification.getStructuralFeature(); // fan_favPlayer
+		// // notification.getRawNotification().getNewValue(); // player new
+		// // notification.getRawNotification().getOldValue(); // player old
+		// //
+		// // getVElement().getDomainModelReference().getIterator().next(); // setting bound in control
+		// // (eobject ,
+		// // // feaure) (player (old), name of
+		// // // player)
+		// if (EReference.class.isInstance(notification.getStructuralFeature())
+		// && EReference.class.cast(notification.getStructuralFeature()).getEReferenceType()
+		// .isInstance(getVElement().getDomainModelReference().getIterator().next().getEObject())
+		// && getVElement().getDomainModelReference().getIterator().next().getEObject() == notification
+		// .getRawNotification().getOldValue()) {
+		// value.setValue(notification.getRawNotification().getNewValue());
+		// }
+		// }
+		// }
+		//
+		// @Override
+		// public void notifyAdd(Notifier notifier) {
+		//
+		// }
+		// };
+		// getViewModelContext().registerDomainChangeListener(modelChangeListener);
+
+		// TODO
+		final boolean init = resolve(object, notifier);
+		return false;
+
 	}
 
 	private static ECPHardcodedReferences loadObject(String bundleName, String clazz) {

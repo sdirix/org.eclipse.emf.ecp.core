@@ -26,6 +26,7 @@ import java.util.Locale;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecp.view.spi.model.DomainModelChangeNotifier;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition;
@@ -139,7 +140,7 @@ public class ConditionEvaluatorTest {
 		leafCondition.setDomainModelReference(modelReference);
 		leafCondition.setExpectedValue(expectedValue);
 		modelReference.getDomainModelEReferencePath().addAll(eReferences);
-		final boolean result = modelReference.resolve(resolveObject);
+		final boolean result = modelReference.init(resolveObject, new DomainModelChangeNotifierStub());
 		if (!result) {
 			throw new IllegalStateException("the ModelReference was not resolved.");
 		}
@@ -385,4 +386,28 @@ public class ConditionEvaluatorTest {
 		assertTrue(leafCondition1.evaluate());
 
 	}
+
+	// TODO
+	private class DomainModelChangeNotifierStub implements DomainModelChangeNotifier {
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @see org.eclipse.emf.ecp.view.spi.model.DomainModelChangeNotifier#registerDomainChangeListener(org.eclipse.emf.ecp.view.spi.model.DomainModelChangeNotifier.DomainModelChangeListener)
+		 */
+		@Override
+		public void registerDomainChangeListener(DomainModelChangeListener modelChangeListener) {
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @see org.eclipse.emf.ecp.view.spi.model.DomainModelChangeNotifier#unregisterDomainChangeListener(org.eclipse.emf.ecp.view.spi.model.DomainModelChangeNotifier.DomainModelChangeListener)
+		 */
+		@Override
+		public void unregisterDomainChangeListener(DomainModelChangeListener modelChangeListener) {
+		}
+
+	}
+
 }

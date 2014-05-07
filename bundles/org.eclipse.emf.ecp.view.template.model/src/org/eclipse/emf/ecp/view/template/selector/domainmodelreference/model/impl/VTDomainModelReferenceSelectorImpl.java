@@ -251,7 +251,7 @@ public class VTDomainModelReferenceSelectorImpl extends MinimalEObjectImpl.Conta
 		if (controlDomainModelReference == null) {
 			return NOT_APPLICABLE;
 		}
-		final boolean resolve = getDomainModelReference().resolve(viewModelContext.getDomainModel());
+		final boolean resolve = getDomainModelReference().init(viewModelContext.getDomainModel(), viewModelContext);
 		if (!resolve) {
 			return NOT_APPLICABLE;
 		}

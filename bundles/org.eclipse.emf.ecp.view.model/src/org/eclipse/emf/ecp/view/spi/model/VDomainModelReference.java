@@ -38,8 +38,6 @@ public interface VDomainModelReference extends EObject
 	 * @param eObject the root domain model to use to resolve the path
 	 * @return true if resolution succeeded and false otherwise
 	 */
-	// boolean resolve(EObject eObject);
-
 	boolean init(EObject object, DomainModelChangeNotifier context);
 
 	/**
