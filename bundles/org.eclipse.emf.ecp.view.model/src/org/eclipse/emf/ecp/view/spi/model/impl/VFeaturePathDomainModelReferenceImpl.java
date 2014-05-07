@@ -31,6 +31,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecp.view.spi.model.DomainModelChangeNotifier;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 
@@ -105,6 +106,7 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EStructuralFeature getDomainModelEFeature()
 	{
 		if (domainModelEFeature != null && domainModelEFeature.eIsProxy())
@@ -140,6 +142,7 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setDomainModelEFeature(EStructuralFeature newDomainModelEFeature)
 	{
 		final EStructuralFeature oldDomainModelEFeature = domainModelEFeature;
@@ -157,6 +160,7 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EList<EReference> getDomainModelEReferencePath()
 	{
 		if (domainModelEReferencePath == null)
@@ -282,12 +286,7 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 	// return true;
 	// }
 
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReference#resolve(org.eclipse.emf.ecore.EObject)
-	 */
-	public boolean resolve(EObject domainModel) {
+	private boolean resolve(EObject domainModel) {
 		final EStructuralFeature domainModelEFeatureValue = getDomainModelEFeature();
 		if (domainModel == null || domainModelEFeatureValue == null) {
 			return false;
@@ -330,6 +329,7 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReference#getIterator()
 	 */
+	@Override
 	public Iterator<Setting> getIterator() {
 		if (lastResolvedEObject == null || leftReferences == null) {
 			final Set<Setting> settings = Collections.emptySet();
@@ -344,15 +344,18 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReference#getEStructuralFeatureIterator()
 	 */
+	@Override
 	public Iterator<EStructuralFeature> getEStructuralFeatureIterator() {
 		return new Iterator<EStructuralFeature>() {
 
 			private int counter = 1;
 
+			@Override
 			public boolean hasNext() {
 				return counter == 1;
 			}
 
+			@Override
 			public EStructuralFeature next() {
 				if (counter != 1) {
 					throw new NoSuchElementException(
@@ -362,11 +365,24 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 				return getDomainModelEFeature();
 			}
 
+			@Override
 			public void remove() {
 				// TODO Auto-generated method stub
 
 			}
 		};
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReference#init(org.eclipse.emf.ecore.EObject,
+	 *      org.eclipse.emf.ecp.view.spi.model.DomainModelChangeNotifier)
+	 */
+	@Override
+	public boolean init(EObject object, DomainModelChangeNotifier context) {
+		// TODO register notifier
+		return resolve(object);
 	}
 
 } // VFeaturePathDomainModelReferenceImpl

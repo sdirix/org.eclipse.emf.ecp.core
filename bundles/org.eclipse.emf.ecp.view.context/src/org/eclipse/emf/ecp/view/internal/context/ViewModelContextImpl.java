@@ -37,9 +37,10 @@ import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.emf.ecp.common.UniqueSetting;
-import org.eclipse.emf.ecp.view.spi.context.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
+import org.eclipse.emf.ecp.view.spi.model.DomainModelChangeNotifier;
+import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
@@ -65,10 +66,10 @@ public class ViewModelContextImpl implements ViewModelContext {
 	private final EObject domainObject;
 
 	/** The view model change listener. Needs to be thread safe. */
-	private final List<ModelChangeListener> viewModelChangeListener = new CopyOnWriteArrayList<ModelChangeListener>();
+	private final List<DomainModelChangeListener> viewModelChangeListener = new CopyOnWriteArrayList<DomainModelChangeListener>();
 
 	/** The domain model change listener. */
-	private final List<ModelChangeListener> domainModelChangeListener = new ArrayList<ModelChangeListener>();
+	private final List<DomainModelChangeListener> domainModelChangeListener = new ArrayList<DomainModelChangeListener>();
 
 	/** The domain model content adapter. */
 	private EContentAdapter domainModelContentAdapter;
@@ -136,7 +137,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 	 */
 	private void instantiate() {
 
-		ViewModelUtil.resolveDomainReferences(getViewModel(), getDomainModel());
+		ViewModelUtil.resolveDomainReferences(this, getViewModel(), getDomainModel());
 
 		viewModelContentAdapter = new ViewModelContentAdapter();
 
@@ -346,7 +347,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#registerViewChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener)
+	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#registerViewChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.DomainModelChangeListener)
 	 */
 	@Override
 	public void registerViewChangeListener(ModelChangeListener modelChangeListener) {
@@ -362,7 +363,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#unregisterViewChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener)
+	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#unregisterViewChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.DomainModelChangeListener)
 	 */
 	@Override
 	public void unregisterViewChangeListener(ModelChangeListener modelChangeListener) {
@@ -375,10 +376,10 @@ public class ViewModelContextImpl implements ViewModelContext {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#registerDomainChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener)
+	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#registerDomainChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.DomainModelChangeListener)
 	 */
 	@Override
-	public void registerDomainChangeListener(ModelChangeListener modelChangeListener) {
+	public void registerDomainChangeListener(DomainModelChangeListener modelChangeListener) {
 		if (isDisposed) {
 			throw new IllegalStateException(THE_VIEW_MODEL_CONTEXT_WAS_ALREADY_DISPOSED);
 		}
@@ -391,10 +392,10 @@ public class ViewModelContextImpl implements ViewModelContext {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#unregisterDomainChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener)
+	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#unregisterDomainChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.DomainModelChangeListener)
 	 */
 	@Override
-	public void unregisterDomainChangeListener(ModelChangeListener modelChangeListener) {
+	public void unregisterDomainChangeListener(DomainModelChangeListener modelChangeListener) {
 		// if (isDisposed) {
 		// throw new IllegalStateException("The ViewModelContext was already disposed.");
 		// }
@@ -457,7 +458,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 				}
 			}
 			final ModelChangeNotification modelChangeNotification = new ModelChangeNotification(notification);
-			for (final ModelChangeListener modelChangeListener : viewModelChangeListener) {
+			for (final DomainModelChangeListener modelChangeListener : viewModelChangeListener) {
 				modelChangeListener.notifyChange(modelChangeNotification);
 			}
 		}
@@ -470,7 +471,8 @@ public class ViewModelContextImpl implements ViewModelContext {
 				return;
 			}
 			if (VElement.class.isInstance(notifier)) {
-				ViewModelUtil.resolveDomainReferences((VElement) notifier, getDomainModel());
+				ViewModelUtil.resolveDomainReferences((DomainModelChangeNotifier) this, (VElement) notifier,
+					getDomainModel());
 			}
 			if (VControl.class.isInstance(notifier)) {
 				vControlAdded((VControl) notifier);
@@ -479,7 +481,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 				&& VControl.class.isInstance(VDomainModelReference.class.cast(notifier).eContainer())) {
 				vControlAdded((VControl) VDomainModelReference.class.cast(notifier).eContainer());
 			}
-			for (final ModelChangeListener modelChangeListener : viewModelChangeListener) {
+			for (final DomainModelChangeListener modelChangeListener : viewModelChangeListener) {
 				modelChangeListener.notifyAdd(notifier);
 			}
 		}
@@ -494,7 +496,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 			if (VControl.class.isInstance(notifier)) {
 				vControlRemoved((VControl) notifier);
 			}
-			for (final ModelChangeListener modelChangeListener : viewModelChangeListener) {
+			for (final DomainModelChangeListener modelChangeListener : viewModelChangeListener) {
 				modelChangeListener.notifyRemove(notifier);
 			}
 		}
@@ -516,7 +518,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 			}
 
 			final ModelChangeNotification modelChangeNotification = new ModelChangeNotification(notification);
-			for (final ModelChangeListener modelChangeListener : domainModelChangeListener) {
+			for (final DomainModelChangeListener modelChangeListener : domainModelChangeListener) {
 				modelChangeListener.notifyChange(modelChangeNotification);
 			}
 		}
@@ -531,7 +533,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 			if (EObject.class.isInstance(notifier)) {
 				eObjectAdded((EObject) notifier);
 			}
-			for (final ModelChangeListener modelChangeListener : domainModelChangeListener) {
+			for (final DomainModelChangeListener modelChangeListener : domainModelChangeListener) {
 				modelChangeListener.notifyAdd(notifier);
 			}
 		}
@@ -546,7 +548,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 			if (EObject.class.isInstance(notifier)) {
 				eObjectRemoved((EObject) notifier);
 			}
-			for (final ModelChangeListener modelChangeListener : domainModelChangeListener) {
+			for (final DomainModelChangeListener modelChangeListener : domainModelChangeListener) {
 				modelChangeListener.notifyRemove(notifier);
 			}
 		}

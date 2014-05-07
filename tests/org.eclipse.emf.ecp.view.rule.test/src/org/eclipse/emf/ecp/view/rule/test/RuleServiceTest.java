@@ -105,39 +105,48 @@ public class RuleServiceTest extends CommonRuleTest {
 		private boolean hasRegisteredViewListener;
 		private boolean hasRegisteredDomainListener;
 
+		@Override
 		public void unregisterViewChangeListener(ModelChangeListener modelChangeListener) {
 			hasRegisteredViewListener = false;
 		}
 
-		public void unregisterDomainChangeListener(ModelChangeListener modelChangeListener) {
+		@Override
+		public void unregisterDomainChangeListener(DomainModelChangeListener modelChangeListener) {
 			hasRegisteredDomainListener = false;
 		}
 
+		@Override
 		public void registerViewChangeListener(ModelChangeListener modelChangeListener) {
 			hasRegisteredViewListener = true;
 		}
 
-		public void registerDomainChangeListener(ModelChangeListener modelChangeListener) {
+		@Override
+		public void registerDomainChangeListener(DomainModelChangeListener modelChangeListener) {
 			hasRegisteredDomainListener = true;
 		}
 
+		@Override
 		public VElement getViewModel() {
 			return view;
 		}
 
+		@Override
 		public EObject getDomainModel() {
 			return null;
 		}
 
+		@Override
 		public void dispose() {
 
 		}
 
+		@Override
 		public <T> boolean hasService(Class<T> serviceType) {
 			// not used in tests
 			return false;
 		}
 
+		@Override
 		public <T> T getService(Class<T> serviceType) {
 			// not used in tests
 			return null;
@@ -148,6 +157,7 @@ public class RuleServiceTest extends CommonRuleTest {
 		 * 
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getControlsFor(org.eclipse.emf.ecore.EStructuralFeature.Setting)
 		 */
+		@Override
 		public Set<VControl> getControlsFor(Setting setting) {
 			// TODO Auto-generated method stub
 			return null;
@@ -158,6 +168,7 @@ public class RuleServiceTest extends CommonRuleTest {
 		 * 
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getControlsFor(org.eclipse.emf.ecp.common.UniqueSetting)
 		 */
+		@Override
 		public Set<VControl> getControlsFor(UniqueSetting setting) {
 			// TODO Auto-generated method stub
 			return null;
@@ -270,7 +281,8 @@ public class RuleServiceTest extends CommonRuleTest {
 		leafCondition.setDomainModelReference(modelReference);
 		leafCondition.setExpectedValue(expectedValue);
 		modelReference.getDomainModelEReferencePath().addAll(eReferences);
-		final boolean result = modelReference.resolve(resolveObject);
+		final ViewModelContextStub contextStub = new ViewModelContextStub();
+		final boolean result = modelReference.init(resolveObject, contextStub);
 		if (!result) {
 			throw new IllegalStateException("the ModelReference was not resolved.");
 		}

@@ -351,7 +351,7 @@ public class SWTTableTest {
 
 		public ViewModelContextWithoutServices(VElement view) {
 			this.view = view;
-			ViewModelUtil.resolveDomainReferences(getViewModel(), getDomainModel());
+			ViewModelUtil.resolveDomainReferences(this, getViewModel(), getDomainModel());
 		}
 
 		/**
@@ -377,7 +377,7 @@ public class SWTTableTest {
 		/**
 		 * {@inheritDoc}
 		 * 
-		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#registerViewChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener)
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#registerViewChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.DomainModelChangeListener)
 		 */
 		@Override
 		public void registerViewChangeListener(ModelChangeListener modelChangeListener) {
@@ -387,7 +387,7 @@ public class SWTTableTest {
 		/**
 		 * {@inheritDoc}
 		 * 
-		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#unregisterViewChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener)
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#unregisterViewChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.DomainModelChangeListener)
 		 */
 		@Override
 		public void unregisterViewChangeListener(ModelChangeListener modelChangeListener) {
@@ -397,20 +397,20 @@ public class SWTTableTest {
 		/**
 		 * {@inheritDoc}
 		 * 
-		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#registerDomainChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener)
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#registerDomainChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.DomainModelChangeListener)
 		 */
 		@Override
-		public void registerDomainChangeListener(ModelChangeListener modelChangeListener) {
+		public void registerDomainChangeListener(DomainModelChangeListener modelChangeListener) {
 			// not needed
 		}
 
 		/**
 		 * {@inheritDoc}
 		 * 
-		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#unregisterDomainChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener)
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#unregisterDomainChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.DomainModelChangeListener)
 		 */
 		@Override
-		public void unregisterDomainChangeListener(ModelChangeListener modelChangeListener) {
+		public void unregisterDomainChangeListener(DomainModelChangeListener modelChangeListener) {
 			// not needed
 		}
 

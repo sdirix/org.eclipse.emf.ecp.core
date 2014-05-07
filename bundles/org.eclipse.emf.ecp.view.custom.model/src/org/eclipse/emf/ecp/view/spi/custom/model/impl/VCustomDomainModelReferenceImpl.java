@@ -34,6 +34,7 @@ import org.eclipse.emf.ecp.view.spi.custom.model.ECPHardcodedReferences;
 import org.eclipse.emf.ecp.view.spi.custom.model.VCustomDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.util.ViewModelUtil;
 import org.osgi.framework.Bundle;
 
 /**
@@ -414,7 +415,7 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 	 * @generated NOT
 	 */
 	@Override
-	public boolean resolve(EObject eObject) {
+	public boolean resolve(EObject eObject,) {
 		if (getBundleName() == null || getClassName() == null) {
 			return false;
 		}

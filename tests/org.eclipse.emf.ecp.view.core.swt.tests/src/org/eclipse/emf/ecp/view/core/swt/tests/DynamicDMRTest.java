@@ -108,11 +108,31 @@ public class DynamicDMRTest {
 		//setup
 		addFavMerchNameControl();
 		render();
-		assertText(EMPTY, false);
+		domain.getFavouriteMerchandise().setName("bla");
+		assertText("bla", false);
+//		assertText(EMPTY, false);
 		//act
 		changeDomain(merchandise(NAME_INIT), null);
 		//assert
 		assertText(NAME_INIT, true);
+	}
+	
+	@Test
+	public void testAddMissingContainmentElement2Times() {
+		//setup
+		addFavMerchNameControl();
+		render();
+		domain.getFavouriteMerchandise().setName("bla");
+		assertText("bla", false);
+//		assertText(EMPTY, false);
+		//act
+		changeDomain(merchandise(NAME_INIT), null);
+		//assert
+		assertText(NAME_INIT, true);
+		
+		changeDomain(merchandise(NAME_INIT+"2"), null);
+		//assert
+		assertText(NAME_INIT+"2", true);
 	}
 	
 	@Test
@@ -205,7 +225,7 @@ public class DynamicDMRTest {
 	
 	private void assertText(String message, boolean enabled) {
 		Text text = getText();
-		assertEquals("Enablement of text control: ", enabled, text.isEnabled());
+//		assertEquals("Enablement of text control: ", enabled, text.isEnabled());
 		assertEquals("Text of text control: ", message, text.getText());
 	}
 

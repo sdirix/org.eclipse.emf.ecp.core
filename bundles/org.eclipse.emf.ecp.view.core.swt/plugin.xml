@@ -55,4 +55,36 @@
          </dynamicTest>
       </renderer>
    </extension>
+   
+      <extension
+         point="org.eclipse.ui.commands">
+      <command
+            defaultHandler="org.eclipse.emf.ecp.view.internal.core.swt.AddNewFavPlayerHandler"
+            id="org.eclipse.emf.ecp.view.core.swt.ui.AddFavPlayerCommand"
+            name="New Favorite Player">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.eclipse.emf.ecp.ui.ModelExplorerView">
+         <command
+               commandId="org.eclipse.emf.ecp.view.core.swt.ui.AddFavPlayerCommand"
+               style="push">
+            <visibleWhen
+                  checkEnabled="true">
+               <with
+                     variable="selection">
+                  <iterate
+                        ifEmpty="false">
+                     <instanceof
+                           value="org.eclipse.emf.emfstore.bowling.Fan">
+                     </instanceof>
+                  </iterate>
+               </with>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+   </extension>
 </plugin>

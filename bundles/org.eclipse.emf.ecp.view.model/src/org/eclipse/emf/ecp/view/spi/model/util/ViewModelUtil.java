@@ -14,8 +14,8 @@ package org.eclipse.emf.ecp.view.spi.model.util;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecp.view.spi.model.DomainModelChangeNotifier;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
-import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.impl.Activator;
 
 /**
@@ -40,24 +40,25 @@ public final class ViewModelUtil {
 	 *            VDomainModelReferences}
 	 * @param domainModelRoot the domain model to use for resolving
 	 */
-	public static void resolveDomainReferences(VElement renderable, EObject domainModelRoot) {
-		checkAndResolve(renderable, domainModelRoot);
+	public static void resolveDomainReferences(DomainModelChangeNotifier context, EObject renderable,
+		EObject domainModelRoot) {
+		checkAndResolve(context, renderable, domainModelRoot);
 		final TreeIterator<EObject> eAllContents = renderable.eAllContents();
 		while (eAllContents.hasNext()) {
 			final EObject eObject = eAllContents.next();
-			checkAndResolve(eObject, domainModelRoot);
+			checkAndResolve(context, eObject, domainModelRoot);
 
 		}
 	}
 
-	private static void checkAndResolve(EObject renderable, EObject domainModelRoot) {
+	private static void checkAndResolve(DomainModelChangeNotifier context, EObject renderable, EObject domainModelRoot) {
 		if (VControl.class.isInstance(renderable)) {
 			final VControl control = (VControl) renderable;
 			if (control.getDomainModelReference() == null) {
 				return;
 			}
-			final boolean resolve = control.getDomainModelReference().resolve(domainModelRoot);
-			if (!resolve) {
+			final boolean init = control.getDomainModelReference().init(domainModelRoot, context);
+			if (!init) {
 				Activator.logMessage(IStatus.WARNING, "Not resolved: " + control.getDomainModelReference() //$NON-NLS-1$
 					+ " on control " + control); //$NON-NLS-1$
 			}

@@ -20,10 +20,11 @@ import static org.junit.Assert.fail;
 import java.util.Set;
 
 import org.eclipse.emf.common.notify.Notifier;
-import org.eclipse.emf.ecp.view.spi.context.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
+import org.eclipse.emf.ecp.view.spi.model.DomainModelChangeNotifier.DomainModelChangeListener;
+import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
@@ -128,18 +129,21 @@ public class ViewModelContextTest {
 	@Test(expected = IllegalStateException.class)
 	public void testDisposeRegisterDomainListner() {
 		viewModelContext.dispose();
-		viewModelContext.registerDomainChangeListener(new ModelChangeListener() {
+		viewModelContext.registerDomainChangeListener(new DomainModelChangeListener() {
 
+			@Override
 			public void notifyChange(ModelChangeNotification notification) {
 				// TODO Auto-generated method stub
 
 			}
 
+			@Override
 			public void notifyAdd(Notifier notifier) {
 				// TODO Auto-generated method stub
 
 			}
 
+			@Override
 			public void notifyRemove(Notifier notifier) {
 				// TODO Auto-generated method stub
 
@@ -181,18 +185,21 @@ public class ViewModelContextTest {
 	@Ignore
 	public void testDisposeUnRegisterDomainListner() {
 		viewModelContext.dispose();
-		viewModelContext.unregisterDomainChangeListener(new ModelChangeListener() {
+		viewModelContext.unregisterDomainChangeListener(new DomainModelChangeListener() {
 
+			@Override
 			public void notifyChange(ModelChangeNotification notification) {
 				// TODO Auto-generated method stub
 
 			}
 
+			@Override
 			public void notifyAdd(Notifier notifier) {
 				// TODO Auto-generated method stub
 
 			}
 
+			@Override
 			public void notifyRemove(Notifier notifier) {
 				// TODO Auto-generated method stub
 
@@ -230,7 +237,7 @@ public class ViewModelContextTest {
 
 	/**
 	 * Test method for
-	 * {@link ViewModelContext#registerViewChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener)}
+	 * {@link ViewModelContext#registerViewChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.DomainModelChangeListener)}
 	 * .
 	 */
 	private boolean correctNotificationArrived;
@@ -299,7 +306,7 @@ public class ViewModelContextTest {
 
 	/**
 	 * Test method for
-	 * {@link ViewModelContext#unregisterViewChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener)}
+	 * {@link ViewModelContext#unregisterViewChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.DomainModelChangeListener)}
 	 * .
 	 */
 	@Test
@@ -355,23 +362,26 @@ public class ViewModelContextTest {
 
 	/**
 	 * Test method for
-	 * {@link ViewModelContext#registerDomainChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener)}
+	 * {@link ViewModelContext#registerDomainChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.DomainModelChangeListener)}
 	 * .
 	 */
 	@Test
 	public void testRegisterDomainChangeListener() {
-		viewModelContext.registerDomainChangeListener(new ModelChangeListener() {
+		viewModelContext.registerDomainChangeListener(new DomainModelChangeListener() {
 
+			@Override
 			public void notifyChange(ModelChangeNotification notification) {
 				correctNotificationArrived = notification.getNotifier() == player
 					&& notification.getStructuralFeature() == BowlingPackage.eINSTANCE.getPlayer_Name();
 			}
 
+			@Override
 			public void notifyAdd(Notifier notifier) {
 				// TODO Auto-generated method stub
 
 			}
 
+			@Override
 			public void notifyRemove(Notifier notifier) {
 				// TODO Auto-generated method stub
 
@@ -395,17 +405,20 @@ public class ViewModelContextTest {
 	 */
 	@Test
 	public void testRegisterDomainChangeListenerChangeOnView() {
-		viewModelContext.registerDomainChangeListener(new ModelChangeListener() {
+		viewModelContext.registerDomainChangeListener(new DomainModelChangeListener() {
 
+			@Override
 			public void notifyChange(ModelChangeNotification notification) {
 				correctNotificationArrived = true;
 			}
 
+			@Override
 			public void notifyAdd(Notifier notifier) {
 				// TODO Auto-generated method stub
 
 			}
 
+			@Override
 			public void notifyRemove(Notifier notifier) {
 				// TODO Auto-generated method stub
 
@@ -417,22 +430,25 @@ public class ViewModelContextTest {
 
 	/**
 	 * Test method for
-	 * {@link ViewModelContext#unregisterDomainChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener)}
+	 * {@link ViewModelContext#unregisterDomainChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.DomainModelChangeListener)}
 	 * .
 	 */
 	@Test
 	public void testUnregisterDomainChangeListener() {
-		final ModelChangeListener modelChangeListener = new ModelChangeListener() {
+		final DomainModelChangeListener modelChangeListener = new DomainModelChangeListener() {
 
+			@Override
 			public void notifyChange(ModelChangeNotification notification) {
 				correctNotificationArrived = true;
 			}
 
+			@Override
 			public void notifyAdd(Notifier notifier) {
 				// TODO Auto-generated method stub
 
 			}
 
+			@Override
 			public void notifyRemove(Notifier notifier) {
 				// TODO Auto-generated method stub
 
@@ -449,17 +465,20 @@ public class ViewModelContextTest {
 	 */
 	@Test
 	public void testUnregisterDomainChangeListenerChangeOnView() {
-		final ModelChangeListener modelChangeListener = new ModelChangeListener() {
+		final DomainModelChangeListener modelChangeListener = new DomainModelChangeListener() {
 
+			@Override
 			public void notifyChange(ModelChangeNotification notification) {
 				correctNotificationArrived = true;
 			}
 
+			@Override
 			public void notifyAdd(Notifier notifier) {
 				// TODO Auto-generated method stub
 
 			}
 
+			@Override
 			public void notifyRemove(Notifier notifier) {
 				// TODO Auto-generated method stub
 

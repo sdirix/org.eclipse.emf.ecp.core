@@ -13,10 +13,10 @@ package org.eclipse.emf.ecp.view.spi.context;
 
 import java.util.Set;
 
-import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.common.UniqueSetting;
+import org.eclipse.emf.ecp.view.spi.model.DomainModelChangeNotifier;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 
@@ -26,37 +26,10 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
  * @author Eugen Neufeld
  * @since 1.2
  */
-public interface ViewModelContext {
-	/**
-	 * The listener interface for receiving modelChange events.
-	 * The class that is interested in processing a modelChange
-	 * event implements this interface, and the object created
-	 * with that class is registered with a component using the
-	 * component's <code>registerViewChangeListener</code> or <code>registerDomainChangeListener</code> method. When
-	 * the modelChange event occurs, that object's appropriate
-	 * method is invoked.
-	 * 
-	 * @since 1.2
-	 * 
-	 */
-	public interface ModelChangeListener {
+public interface ViewModelContext extends DomainModelChangeNotifier {
 
-		/**
-		 * Notify about a change.
-		 * 
-		 * @param notification the {@link ModelChangeNotification}
-		 */
-		void notifyChange(ModelChangeNotification notification);
+	public interface ModelChangeListener extends DomainModelChangeListener {
 
-		/**
-		 * @param notifier the notifier
-		 */
-		void notifyAdd(Notifier notifier);
-
-		/**
-		 * @param notifier the notifier
-		 */
-		void notifyRemove(Notifier notifier);
 	}
 
 	/**
@@ -86,20 +59,6 @@ public interface ViewModelContext {
 	 * @param modelChangeListener the model change listener
 	 */
 	void unregisterViewChangeListener(ModelChangeListener modelChangeListener);
-
-	/**
-	 * Register domain change listener.
-	 * 
-	 * @param modelChangeListener the model change listener
-	 */
-	void registerDomainChangeListener(ModelChangeListener modelChangeListener);
-
-	/**
-	 * Unregister domain change listener.
-	 * 
-	 * @param modelChangeListener the model change listener
-	 */
-	void unregisterDomainChangeListener(ModelChangeListener modelChangeListener);
 
 	/**
 	 * Disposes the context.
