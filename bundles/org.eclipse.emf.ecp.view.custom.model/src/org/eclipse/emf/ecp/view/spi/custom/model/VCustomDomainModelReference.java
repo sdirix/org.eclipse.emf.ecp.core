@@ -34,7 +34,6 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
  * @see org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage#getCustomDomainModelReference()
  * @model
  * @generated
- * @since 1.3
  */
 public interface VCustomDomainModelReference extends VDomainModelReference
 {

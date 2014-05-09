@@ -32,7 +32,6 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * @see org.eclipse.emf.ecp.view.spi.custom.model.VCustomFactory
  * @model kind="package"
  * @generated
- * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface VCustomPackage extends EPackage {
 	/**
@@ -80,7 +79,6 @@ public interface VCustomPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.spi.custom.model.impl.VCustomControlImpl
 	 * @see org.eclipse.emf.ecp.view.spi.custom.model.impl.VCustomPackageImpl#getCustomControl()
 	 * @generated
-	 * @since 1.3
 	 */
 	int CUSTOM_CONTROL = 0;
 
@@ -91,7 +89,6 @@ public interface VCustomPackage extends EPackage {
 	 * 
 	 * @generated
 	 * @ordered
-	 * @since 1.3
 	 */
 	int CUSTOM_CONTROL__NAME = VViewPackage.CONTROL__NAME;
 
@@ -102,7 +99,6 @@ public interface VCustomPackage extends EPackage {
 	 * 
 	 * @generated
 	 * @ordered
-	 * @since 1.3
 	 */
 	int CUSTOM_CONTROL__VISIBLE = VViewPackage.CONTROL__VISIBLE;
 
@@ -113,7 +109,6 @@ public interface VCustomPackage extends EPackage {
 	 * 
 	 * @generated
 	 * @ordered
-	 * @since 1.3
 	 */
 	int CUSTOM_CONTROL__ENABLED = VViewPackage.CONTROL__ENABLED;
 
@@ -124,7 +119,6 @@ public interface VCustomPackage extends EPackage {
 	 * 
 	 * @generated
 	 * @ordered
-	 * @since 1.3
 	 */
 	int CUSTOM_CONTROL__READONLY = VViewPackage.CONTROL__READONLY;
 
@@ -135,7 +129,6 @@ public interface VCustomPackage extends EPackage {
 	 * 
 	 * @generated
 	 * @ordered
-	 * @since 1.3
 	 */
 	int CUSTOM_CONTROL__DIAGNOSTIC = VViewPackage.CONTROL__DIAGNOSTIC;
 
@@ -146,7 +139,6 @@ public interface VCustomPackage extends EPackage {
 	 * 
 	 * @generated
 	 * @ordered
-	 * @since 1.3
 	 */
 	int CUSTOM_CONTROL__ATTACHMENTS = VViewPackage.CONTROL__ATTACHMENTS;
 
@@ -157,7 +149,6 @@ public interface VCustomPackage extends EPackage {
 	 * 
 	 * @generated
 	 * @ordered
-	 * @since 1.3
 	 */
 	int CUSTOM_CONTROL__LABEL_ALIGNMENT = VViewPackage.CONTROL__LABEL_ALIGNMENT;
 
@@ -168,7 +159,6 @@ public interface VCustomPackage extends EPackage {
 	 * 
 	 * @generated
 	 * @ordered
-	 * @since 1.3
 	 */
 	int CUSTOM_CONTROL__DOMAIN_MODEL_REFERENCE = VViewPackage.CONTROL__DOMAIN_MODEL_REFERENCE;
 
@@ -179,7 +169,6 @@ public interface VCustomPackage extends EPackage {
 	 * 
 	 * @generated
 	 * @ordered
-	 * @since 1.3
 	 */
 	int CUSTOM_CONTROL__BUNDLE_NAME = VViewPackage.CONTROL_FEATURE_COUNT + 0;
 
@@ -190,7 +179,6 @@ public interface VCustomPackage extends EPackage {
 	 * 
 	 * @generated
 	 * @ordered
-	 * @since 1.3
 	 */
 	int CUSTOM_CONTROL__CLASS_NAME = VViewPackage.CONTROL_FEATURE_COUNT + 1;
 
@@ -201,7 +189,6 @@ public interface VCustomPackage extends EPackage {
 	 * 
 	 * @generated
 	 * @ordered
-	 * @since 1.3
 	 */
 	int CUSTOM_CONTROL_FEATURE_COUNT = VViewPackage.CONTROL_FEATURE_COUNT + 2;
 
@@ -215,9 +202,18 @@ public interface VCustomPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.spi.custom.model.impl.VCustomDomainModelReferenceImpl
 	 * @see org.eclipse.emf.ecp.view.spi.custom.model.impl.VCustomPackageImpl#getCustomDomainModelReference()
 	 * @generated
-	 * @since 1.3
 	 */
 	int CUSTOM_DOMAIN_MODEL_REFERENCE = 1;
+
+	/**
+	 * The feature id for the '<em><b>Change Listener</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CUSTOM_DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER = VViewPackage.DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER;
 
 	/**
 	 * The feature id for the '<em><b>Domain Model References</b></em>' containment reference list.
@@ -226,7 +222,6 @@ public interface VCustomPackage extends EPackage {
 	 * 
 	 * @generated
 	 * @ordered
-	 * @since 1.3
 	 */
 	int CUSTOM_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCES = VViewPackage.DOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 0;
 
@@ -237,7 +232,6 @@ public interface VCustomPackage extends EPackage {
 	 * 
 	 * @generated
 	 * @ordered
-	 * @since 1.3
 	 */
 	int CUSTOM_DOMAIN_MODEL_REFERENCE__BUNDLE_NAME = VViewPackage.DOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 1;
 
@@ -248,7 +242,6 @@ public interface VCustomPackage extends EPackage {
 	 * 
 	 * @generated
 	 * @ordered
-	 * @since 1.3
 	 */
 	int CUSTOM_DOMAIN_MODEL_REFERENCE__CLASS_NAME = VViewPackage.DOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 2;
 
@@ -259,7 +252,6 @@ public interface VCustomPackage extends EPackage {
 	 * 
 	 * @generated
 	 * @ordered
-	 * @since 1.3
 	 */
 	int CUSTOM_DOMAIN_MODEL_REFERENCE__CONTROL_CHECKED = VViewPackage.DOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 3;
 
@@ -270,7 +262,6 @@ public interface VCustomPackage extends EPackage {
 	 * 
 	 * @generated
 	 * @ordered
-	 * @since 1.3
 	 */
 	int CUSTOM_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT = VViewPackage.DOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 4;
 
@@ -283,7 +274,6 @@ public interface VCustomPackage extends EPackage {
 	 * @return the meta object for class '<em>Control</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.custom.model.VCustomControl
 	 * @generated
-	 * @since 1.3
 	 */
 	EClass getCustomControl();
 
@@ -297,7 +287,6 @@ public interface VCustomPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.spi.custom.model.VCustomControl#getBundleName()
 	 * @see #getCustomControl()
 	 * @generated
-	 * @since 1.3
 	 */
 	EAttribute getCustomControl_BundleName();
 
@@ -311,7 +300,6 @@ public interface VCustomPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.spi.custom.model.VCustomControl#getClassName()
 	 * @see #getCustomControl()
 	 * @generated
-	 * @since 1.3
 	 */
 	EAttribute getCustomControl_ClassName();
 
@@ -324,7 +312,6 @@ public interface VCustomPackage extends EPackage {
 	 * @return the meta object for class '<em>Domain Model Reference</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.custom.model.VCustomDomainModelReference
 	 * @generated
-	 * @since 1.3
 	 */
 	EClass getCustomDomainModelReference();
 
@@ -339,7 +326,6 @@ public interface VCustomPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.spi.custom.model.VCustomDomainModelReference#getDomainModelReferences()
 	 * @see #getCustomDomainModelReference()
 	 * @generated
-	 * @since 1.3
 	 */
 	EReference getCustomDomainModelReference_DomainModelReferences();
 
@@ -354,7 +340,6 @@ public interface VCustomPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.spi.custom.model.VCustomDomainModelReference#getBundleName()
 	 * @see #getCustomDomainModelReference()
 	 * @generated
-	 * @since 1.3
 	 */
 	EAttribute getCustomDomainModelReference_BundleName();
 
@@ -368,7 +353,6 @@ public interface VCustomPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.spi.custom.model.VCustomDomainModelReference#getClassName()
 	 * @see #getCustomDomainModelReference()
 	 * @generated
-	 * @since 1.3
 	 */
 	EAttribute getCustomDomainModelReference_ClassName();
 
@@ -383,7 +367,6 @@ public interface VCustomPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.spi.custom.model.VCustomDomainModelReference#isControlChecked()
 	 * @see #getCustomDomainModelReference()
 	 * @generated
-	 * @since 1.3
 	 */
 	EAttribute getCustomDomainModelReference_ControlChecked();
 
@@ -394,7 +377,6 @@ public interface VCustomPackage extends EPackage {
 	 * 
 	 * @return the factory that creates the instances of the model.
 	 * @generated
-	 * @since 1.3
 	 */
 	VCustomFactory getCustomFactory();
 
@@ -410,7 +392,6 @@ public interface VCustomPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
-	 * @noimplement This interface is not intended to be implemented by clients.
 	 */
 	interface Literals {
 		/**
@@ -422,8 +403,6 @@ public interface VCustomPackage extends EPackage {
 		 * @see org.eclipse.emf.ecp.view.spi.custom.model.impl.VCustomControlImpl
 		 * @see org.eclipse.emf.ecp.view.spi.custom.model.impl.VCustomPackageImpl#getCustomControl()
 		 * @generated
-		 * @since 1.3
-		 * 
 		 */
 		EClass CUSTOM_CONTROL = eINSTANCE.getCustomControl();
 
@@ -433,7 +412,6 @@ public interface VCustomPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * 
 		 * @generated
-		 * @since 1.3
 		 */
 		EAttribute CUSTOM_CONTROL__BUNDLE_NAME = eINSTANCE.getCustomControl_BundleName();
 
@@ -443,7 +421,6 @@ public interface VCustomPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * 
 		 * @generated
-		 * @since 1.3
 		 */
 		EAttribute CUSTOM_CONTROL__CLASS_NAME = eINSTANCE.getCustomControl_ClassName();
 
@@ -457,7 +434,6 @@ public interface VCustomPackage extends EPackage {
 		 * @see org.eclipse.emf.ecp.view.spi.custom.model.impl.VCustomDomainModelReferenceImpl
 		 * @see org.eclipse.emf.ecp.view.spi.custom.model.impl.VCustomPackageImpl#getCustomDomainModelReference()
 		 * @generated
-		 * @since 1.3
 		 */
 		EClass CUSTOM_DOMAIN_MODEL_REFERENCE = eINSTANCE.getCustomDomainModelReference();
 
@@ -467,7 +443,6 @@ public interface VCustomPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * 
 		 * @generated
-		 * @since 1.3
 		 */
 		EReference CUSTOM_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCES = eINSTANCE
 			.getCustomDomainModelReference_DomainModelReferences();
@@ -478,7 +453,6 @@ public interface VCustomPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * 
 		 * @generated
-		 * @since 1.3
 		 */
 		EAttribute CUSTOM_DOMAIN_MODEL_REFERENCE__BUNDLE_NAME = eINSTANCE.getCustomDomainModelReference_BundleName();
 
@@ -488,7 +462,6 @@ public interface VCustomPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * 
 		 * @generated
-		 * @since 1.3
 		 */
 		EAttribute CUSTOM_DOMAIN_MODEL_REFERENCE__CLASS_NAME = eINSTANCE.getCustomDomainModelReference_ClassName();
 
@@ -498,7 +471,6 @@ public interface VCustomPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * 
 		 * @generated
-		 * @since 1.3
 		 */
 		EAttribute CUSTOM_DOMAIN_MODEL_REFERENCE__CONTROL_CHECKED = eINSTANCE
 			.getCustomDomainModelReference_ControlChecked();

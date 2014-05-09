@@ -125,7 +125,7 @@ public class DiffMergeModelContextImpl extends ViewModelContextImpl implements
 
 	private void readAlreadyMerged(Set<VDomainModelReference> mergedReferences) {
 		for (final VDomainModelReference domainModelReference : mergedReferences) {
-			domainModelReference.init(getDomainModel(), this);
+			domainModelReference.init(getDomainModel());
 			final Iterator<Setting> iterator = domainModelReference.getIterator();
 			while (iterator.hasNext()) {
 				final Setting setting = iterator.next();
@@ -145,8 +145,8 @@ public class DiffMergeModelContextImpl extends ViewModelContextImpl implements
 		final VElement viewModelLeft = EcoreUtil.copy(getViewModel());
 		final VElement viewModelRight = EcoreUtil.copy(getViewModel());
 
-		ViewModelUtil.resolveDomainReferences(this, viewModelLeft, getLeftModel());
-		ViewModelUtil.resolveDomainReferences(this, viewModelRight, getRightModel());
+		ViewModelUtil.resolveDomainReferences(viewModelLeft, getLeftModel());
+		ViewModelUtil.resolveDomainReferences(viewModelRight, getRightModel());
 
 		final TreeIterator<EObject> mainViewModel = getViewModel().eAllContents();
 		final TreeIterator<EObject> leftViewModel = viewModelLeft.eAllContents();

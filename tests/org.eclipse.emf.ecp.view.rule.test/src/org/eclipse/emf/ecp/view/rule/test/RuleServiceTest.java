@@ -34,6 +34,7 @@ import org.eclipse.emf.ecp.view.internal.rule.RuleService;
 import org.eclipse.emf.ecp.view.internal.rule.RuleServiceHelperImpl;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
+import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.VAttachment;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
@@ -111,7 +112,7 @@ public class RuleServiceTest extends CommonRuleTest {
 		}
 
 		@Override
-		public void unregisterDomainChangeListener(DomainModelChangeListener modelChangeListener) {
+		public void unregisterDomainChangeListener(ModelChangeListener modelChangeListener) {
 			hasRegisteredDomainListener = false;
 		}
 
@@ -121,7 +122,7 @@ public class RuleServiceTest extends CommonRuleTest {
 		}
 
 		@Override
-		public void registerDomainChangeListener(DomainModelChangeListener modelChangeListener) {
+		public void registerDomainChangeListener(ModelChangeListener modelChangeListener) {
 			hasRegisteredDomainListener = true;
 		}
 
@@ -281,8 +282,7 @@ public class RuleServiceTest extends CommonRuleTest {
 		leafCondition.setDomainModelReference(modelReference);
 		leafCondition.setExpectedValue(expectedValue);
 		modelReference.getDomainModelEReferencePath().addAll(eReferences);
-		final ViewModelContextStub contextStub = new ViewModelContextStub();
-		final boolean result = modelReference.init(resolveObject, contextStub);
+		final boolean result = modelReference.init(resolveObject);
 		if (!result) {
 			throw new IllegalStateException("the ModelReference was not resolved.");
 		}

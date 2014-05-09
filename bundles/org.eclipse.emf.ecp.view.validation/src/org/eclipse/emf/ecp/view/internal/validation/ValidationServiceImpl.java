@@ -44,8 +44,7 @@ import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.common.UniqueSetting;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener;
-import org.eclipse.emf.ecp.view.spi.model.DomainModelChangeNotifier.DomainModelChangeListener;
+import org.eclipse.emf.ecp.view.spi.model.ModelChangeAddRemoveListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
@@ -69,12 +68,12 @@ public class ValidationServiceImpl implements ValidationService {
 	 * The {@link ValidationDomainModelChangeListener} for the view model.
 	 * 
 	 */
-	private class ViewModelChangeListener implements ModelChangeListener {
+	private class ViewModelChangeListener implements ModelChangeAddRemoveListener {
 
 		/**
 		 * {@inheritDoc}
 		 * 
-		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext.DomainModelChangeListener#notifyChange(org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification)
+		 * @see org.eclipse.emf.ecp.view.spi.context.ModelChangeAddRemoveListener#notifyChange(org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification)
 		 */
 		@Override
 		public void notifyChange(ModelChangeNotification notification) {
@@ -114,7 +113,7 @@ public class ValidationServiceImpl implements ValidationService {
 		/**
 		 * {@inheritDoc}
 		 * 
-		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext.DomainModelChangeListener#notifyAdd(org.eclipse.emf.common.notify.Notifier)
+		 * @see org.eclipse.emf.ecp.view.spi.context.ModelChangeAddRemoveListener#notifyAdd(org.eclipse.emf.common.notify.Notifier)
 		 */
 		@Override
 		public void notifyAdd(Notifier notifier) {
@@ -138,7 +137,7 @@ public class ValidationServiceImpl implements ValidationService {
 		/**
 		 * {@inheritDoc}
 		 * 
-		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext.DomainModelChangeListener#notifyRemove(org.eclipse.emf.common.notify.Notifier)
+		 * @see org.eclipse.emf.ecp.view.spi.context.ModelChangeAddRemoveListener#notifyRemove(org.eclipse.emf.common.notify.Notifier)
 		 */
 		@Override
 		public void notifyRemove(Notifier notifier) {
@@ -152,12 +151,12 @@ public class ValidationServiceImpl implements ValidationService {
 	 * The {@link ValidationDomainModelChangeListener} for the domain model.
 	 * 
 	 */
-	private class ValidationDomainModelChangeListener implements DomainModelChangeListener {
+	private class ValidationDomainModelChangeListener implements ModelChangeAddRemoveListener {
 
 		/**
 		 * {@inheritDoc}
 		 * 
-		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext.DomainModelChangeListener#notifyChange(org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification)
+		 * @see org.eclipse.emf.ecp.view.spi.context.ModelChangeAddRemoveListener#notifyChange(org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification)
 		 */
 		@Override
 		public void notifyChange(ModelChangeNotification notification) {
@@ -192,7 +191,7 @@ public class ValidationServiceImpl implements ValidationService {
 		/**
 		 * {@inheritDoc}
 		 * 
-		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext.DomainModelChangeListener#notifyAdd(org.eclipse.emf.common.notify.Notifier)
+		 * @see org.eclipse.emf.ecp.view.spi.context.ModelChangeAddRemoveListener#notifyAdd(org.eclipse.emf.common.notify.Notifier)
 		 */
 		@Override
 		public void notifyAdd(Notifier notifier) {
@@ -202,7 +201,7 @@ public class ValidationServiceImpl implements ValidationService {
 		/**
 		 * {@inheritDoc}
 		 * 
-		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext.DomainModelChangeListener#notifyRemove(org.eclipse.emf.common.notify.Notifier)
+		 * @see org.eclipse.emf.ecp.view.spi.context.ModelChangeAddRemoveListener#notifyRemove(org.eclipse.emf.common.notify.Notifier)
 		 */
 		@Override
 		public void notifyRemove(Notifier notifier) {

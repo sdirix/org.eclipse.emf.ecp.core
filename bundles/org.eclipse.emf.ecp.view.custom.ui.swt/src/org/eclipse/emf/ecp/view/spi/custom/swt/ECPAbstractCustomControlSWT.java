@@ -392,7 +392,7 @@ public abstract class ECPAbstractCustomControlSWT
 		final T createControl = controlFactory.createControl(clazz, domainModelReference);
 		final VControl vControl = VViewFactory.eINSTANCE.createControl();
 		final VDomainModelReference modelReference = EcoreUtil.copy(domainModelReference);
-		modelReference.init(getViewModelContext().getDomainModel(), getViewModelContext());
+		modelReference.init(getViewModelContext().getDomainModel());
 		vControl.setDomainModelReference(modelReference);
 		vControl.setDiagnostic(VViewFactory.eINSTANCE.createDiagnostic());
 		createControl.init(getViewModelContext(), vControl);

@@ -71,17 +71,18 @@ public class ValidationPerformanceTest {
 	@Parameters
 	public static Collection<Object[]> data() {
 		final List<Object[]> data = new ArrayList<Object[]>();
-		data.add(createParameters(4, 1, 120, 30)); // 0
-		data.add(createParameters(8, 1, 100, 60));// 1
-		data.add(createParameters(11, 1, 350, 110));// 2
+		// #domainObjects, #viewmodels, init, add
+		data.add(createParameters(4, 1, 100, 100)); // 0
+		data.add(createParameters(8, 1, 100, 100));// 1
+		data.add(createParameters(11, 1, 100, 200));// 2
 
-		data.add(createParameters(4, 5, 40, 40));// 3
-		data.add(createParameters(8, 5, 350, 150));// 4
-		data.add(createParameters(11, 5, 700, 360));// 5
+		data.add(createParameters(4, 5, 100, 200));// 3
+		data.add(createParameters(8, 5, 100, 400));// 4
+		data.add(createParameters(11, 5, 200, 700));// 5
 
-		data.add(createParameters(4, 10, 80, 80));// 6
-		data.add(createParameters(8, 10, 670, 300));// 7
-		data.add(createParameters(11, 10, 2000, 650));// 8
+		data.add(createParameters(4, 10, 100, 400));// 6
+		data.add(createParameters(8, 10, 200, 800));// 7
+		data.add(createParameters(11, 10, 500, 1500));// 8
 		return data;
 	}
 
@@ -246,7 +247,7 @@ public class ValidationPerformanceTest {
 			allDiffs = allDiffs + diff;
 		}
 		final long avgDiff = allDiffs / loops;
-		System.out.print(avgDiff);
+		System.out.print("Init:" + avgDiff);
 		assertTrue(avgDiff < timeGateStartup);
 	}
 
@@ -267,7 +268,7 @@ public class ValidationPerformanceTest {
 			allDiffs = allDiffs + diff;
 		}
 		final long avgDiff = allDiffs / loops;
-		System.out.print(avgDiff);
+		System.out.print("Add:" + avgDiff);
 		assertTrue(avgDiff < timeGateAdd);
 	}
 

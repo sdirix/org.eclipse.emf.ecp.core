@@ -19,6 +19,7 @@ import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.databinding.edit.EMFEditProperties;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTValidationHelper;
+import org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
@@ -76,6 +77,13 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
 		adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(
 			composedAdapterFactory);
+		getVElement().getDomainModelReference().getChangeListener().add(new DomainModelReferenceChangeListener() {
+
+			@Override
+			public void notifyChange() {
+				value.setValue(getVElement().getDomainModelReference().getIterator().next().getEObject());
+			}
+		});
 		value.setValue(getVElement().getDomainModelReference().getIterator().next().getEObject());
 	}
 

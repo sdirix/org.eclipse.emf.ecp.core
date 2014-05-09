@@ -13,6 +13,7 @@ package org.eclipse.emf.ecp.view.spi.model;
 
 import java.util.Iterator;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
@@ -20,16 +21,41 @@ import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>VDomain Model Reference</b></em>'.
- * <!-- end-user-doc -->
  * 
+ * @implements ModelChangeListener
+ *             <!-- end-user-doc -->
+ * 
+ *             <p>
+ *             The following features are supported:
+ *             <ul>
+ *             <li>{@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReference#getChangeListener <em>Change Listener
+ *             </em>}</li>
+ *             </ul>
+ *             </p>
  * 
  * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getDomainModelReference()
  * @model interface="true" abstract="true"
  * @generated
- * @since 1.2
  */
-public interface VDomainModelReference extends EObject
+public interface VDomainModelReference extends EObject, ModelChangeListener
 {
+	/**
+	 * Returns the value of the '<em><b>Change Listener</b></em>' attribute list.
+	 * The list contents are of type {@link org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Change Listener</em>' attribute list isn't clear, there really should be more of a
+	 * description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the value of the '<em>Change Listener</em>' attribute list.
+	 * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getDomainModelReference_ChangeListener()
+	 * @model dataType="org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener" transient="true"
+	 * @generated
+	 */
+	EList<DomainModelReferenceChangeListener> getChangeListener();
+
 	/**
 	 * Resolve attempts to resolve the domain model reference. If it fails existing results will be kept. Thus even
 	 * after
@@ -38,7 +64,7 @@ public interface VDomainModelReference extends EObject
 	 * @param eObject the root domain model to use to resolve the path
 	 * @return true if resolution succeeded and false otherwise
 	 */
-	boolean init(EObject object, DomainModelChangeNotifier context);
+	boolean init(EObject object);
 
 	/**
 	 * Returns an iterator allowing to iterate over found settings for this domain model reference.
@@ -56,5 +82,7 @@ public interface VDomainModelReference extends EObject
 	 *         reference
 	 */
 	Iterator<EStructuralFeature> getEStructuralFeatureIterator();
+
+	Iterator<SettingPath> getFullPathIterator();
 
 } // VDomainModelReference

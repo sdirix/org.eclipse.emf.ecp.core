@@ -116,7 +116,6 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
-	 * @since 1.3
 	 */
 	protected CustomControlItemProvider customControlItemProvider;
 
@@ -145,7 +144,6 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
-	 * @since 1.3
 	 */
 	protected CustomDomainModelReferenceItemProvider customDomainModelReferenceItemProvider;
 
@@ -224,8 +222,8 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 	public Object adapt(Object object, Object type) {
 		if (isFactoryForType(type))
 		{
-			final Object adapter = super.adapt(object, type);
-			if (!(type instanceof Class<?>) || ((Class<?>) type).isInstance(adapter))
+			Object adapter = super.adapt(object, type);
+			if (!(type instanceof Class<?>) || (((Class<?>) type).isInstance(adapter)))
 			{
 				return adapter;
 			}
@@ -316,12 +314,10 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 	 */
 	@Override
 	public void dispose() {
-		if (customControlItemProvider != null) {
+		if (customControlItemProvider != null)
 			customControlItemProvider.dispose();
-		}
-		if (customDomainModelReferenceItemProvider != null) {
+		if (customDomainModelReferenceItemProvider != null)
 			customDomainModelReferenceItemProvider.dispose();
-		}
 	}
 
 	/**
@@ -440,7 +436,7 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 		 */
 		@Override
 		public Collection<Object> getNewChildDescriptors(Object object, EditingDomain editingDomain) {
-			final ArrayList<Object> result = new ArrayList<Object>();
+			ArrayList<Object> result = new ArrayList<Object>();
 			new CreationSwitch(result, editingDomain).doSwitch((EObject) object);
 			return result;
 		}

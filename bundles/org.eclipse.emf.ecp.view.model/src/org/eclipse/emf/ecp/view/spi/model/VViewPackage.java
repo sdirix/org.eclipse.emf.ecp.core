@@ -13,6 +13,7 @@ package org.eclipse.emf.ecp.view.spi.model;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
@@ -171,6 +172,16 @@ public interface VViewPackage extends EPackage {
 	int DOMAIN_MODEL_REFERENCE = 2;
 
 	/**
+	 * The feature id for the '<em><b>Change Listener</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER = 0;
+
+	/**
 	 * The number of structural features of the '<em>Domain Model Reference</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -178,7 +189,7 @@ public interface VViewPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOMAIN_MODEL_REFERENCE_FEATURE_COUNT = 0;
+	int DOMAIN_MODEL_REFERENCE_FEATURE_COUNT = 1;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.model.impl.VFeaturePathDomainModelReferenceImpl
@@ -191,6 +202,16 @@ public interface VViewPackage extends EPackage {
 	 * @generated
 	 */
 	int FEATURE_PATH_DOMAIN_MODEL_REFERENCE = 3;
+
+	/**
+	 * The feature id for the '<em><b>Change Listener</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int FEATURE_PATH_DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER = DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER;
 
 	/**
 	 * The feature id for the '<em><b>Domain Model EFeature</b></em>' reference.
@@ -659,6 +680,17 @@ public interface VViewPackage extends EPackage {
 	int LABEL_ALIGNMENT = 9;
 
 	/**
+	 * The meta object id for the '<em>Domain Model Reference Change Listener</em>' data type.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener
+	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getDomainModelReferenceChangeListener()
+	 * @generated
+	 */
+	int DOMAIN_MODEL_REFERENCE_CHANGE_LISTENER = 10;
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.model.VElement <em>Element</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -894,6 +926,20 @@ public interface VViewPackage extends EPackage {
 	EEnum getLabelAlignment();
 
 	/**
+	 * Returns the meta object for data type '
+	 * {@link org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener
+	 * <em>Domain Model Reference Change Listener</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for data type '<em>Domain Model Reference Change Listener</em>'.
+	 * @see org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener
+	 * @model instanceClass="org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener"
+	 * @generated
+	 */
+	EDataType getDomainModelReferenceChangeListener();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReference
 	 * <em>Domain Model Reference</em>}'.
 	 * <!-- begin-user-doc -->
@@ -904,6 +950,19 @@ public interface VViewPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getDomainModelReference();
+
+	/**
+	 * Returns the meta object for the attribute list '
+	 * {@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReference#getChangeListener <em>Change Listener</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for the attribute list '<em>Change Listener</em>'.
+	 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReference#getChangeListener()
+	 * @see #getDomainModelReference()
+	 * @generated
+	 */
+	EAttribute getDomainModelReference_ChangeListener();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference
@@ -1173,6 +1232,17 @@ public interface VViewPackage extends EPackage {
 		EEnum LABEL_ALIGNMENT = eINSTANCE.getLabelAlignment();
 
 		/**
+		 * The meta object literal for the '<em>Domain Model Reference Change Listener</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @see org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener
+		 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getDomainModelReferenceChangeListener()
+		 * @generated
+		 */
+		EDataType DOMAIN_MODEL_REFERENCE_CHANGE_LISTENER = eINSTANCE.getDomainModelReferenceChangeListener();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReference
 		 * <em>Domain Model Reference</em>}' class.
 		 * <!-- begin-user-doc -->
@@ -1183,6 +1253,15 @@ public interface VViewPackage extends EPackage {
 		 * @generated
 		 */
 		EClass DOMAIN_MODEL_REFERENCE = eINSTANCE.getDomainModelReference();
+
+		/**
+		 * The meta object literal for the '<em><b>Change Listener</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @generated
+		 */
+		EAttribute DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER = eINSTANCE.getDomainModelReference_ChangeListener();
 
 		/**
 		 * The meta object literal for the '

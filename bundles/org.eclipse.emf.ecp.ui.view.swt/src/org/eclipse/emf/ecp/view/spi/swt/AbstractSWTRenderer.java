@@ -16,11 +16,10 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecp.view.internal.swt.SWTRendererFactoryImpl;
 import org.eclipse.emf.ecp.view.model.common.AbstractRenderer;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener;
+import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
@@ -98,11 +97,6 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 			listener = new ModelChangeListener() {
 
 				@Override
-				public void notifyRemove(Notifier notifier) {
-					// nothing to do
-				}
-
-				@Override
 				public void notifyChange(ModelChangeNotification notification) {
 					if (!renderingFinished) {
 						return;
@@ -123,10 +117,6 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 					}
 				}
 
-				@Override
-				public void notifyAdd(Notifier notifier) {
-					// nothing to do
-				}
 			};
 			getViewModelContext().registerViewChangeListener(listener);
 		}

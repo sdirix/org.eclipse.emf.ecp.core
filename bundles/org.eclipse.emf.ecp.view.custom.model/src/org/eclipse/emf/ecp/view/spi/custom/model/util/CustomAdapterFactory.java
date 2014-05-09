@@ -157,7 +157,6 @@ public class CustomAdapterFactory extends AdapterFactoryImpl {
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.spi.custom.model.VCustomControl
 	 * @generated
-	 * @since 1.3
 	 */
 	public Adapter createCustomControlAdapter()
 	{
@@ -175,7 +174,6 @@ public class CustomAdapterFactory extends AdapterFactoryImpl {
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.spi.custom.model.VCustomDomainModelReference
 	 * @generated
-	 * @since 1.3
 	 */
 	public Adapter createCustomDomainModelReferenceAdapter()
 	{
@@ -209,7 +207,6 @@ public class CustomAdapterFactory extends AdapterFactoryImpl {
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VElement
 	 * @generated
-	 * @since 1.3
 	 */
 	public Adapter createElementAdapter()
 	{
@@ -227,7 +224,6 @@ public class CustomAdapterFactory extends AdapterFactoryImpl {
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VContainedElement
 	 * @generated
-	 * @since 1.3
 	 */
 	public Adapter createContainedElementAdapter()
 	{
@@ -245,7 +241,6 @@ public class CustomAdapterFactory extends AdapterFactoryImpl {
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VControl
 	 * @generated
-	 * @since 1.3
 	 */
 	public Adapter createControlAdapter()
 	{

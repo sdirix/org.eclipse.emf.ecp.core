@@ -1,17 +1,18 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- *
+ * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.validation.test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import java.util.Arrays;
 
@@ -30,12 +31,11 @@ import org.eclipse.emf.ecp.view.validation.test.model.TestFactory;
 import org.eclipse.emf.ecp.view.validation.test.model.TestPackage;
 import org.eclipse.emf.ecp.view.validation.test.model.Writer;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
  * @author jfaltermeier
- *
+ * 
  */
 public class DynamicDMRTest {
 
@@ -50,7 +50,6 @@ public class DynamicDMRTest {
 		view = VViewFactory.eINSTANCE.createView();
 	}
 
-	@Ignore
 	@Test
 	public void testInitMissingContainmentElement() {
 		// setup
@@ -62,7 +61,6 @@ public class DynamicDMRTest {
 		assertValidation(Diagnostic.OK, false, true);
 	}
 
-	@Ignore
 	@Test
 	public void testInitMissingReferencedElement() {
 		// setup
@@ -71,10 +69,9 @@ public class DynamicDMRTest {
 		// act
 		initService();
 		// assert
-		assertValidation(Diagnostic.OK, false, true);
+		assertValidation(Diagnostic.CANCEL, false, true);
 	}
 
-	@Ignore
 	@Test
 	public void testRemoveContainmentElement() {
 		// setup
@@ -86,10 +83,9 @@ public class DynamicDMRTest {
 		// act
 		changeDomain((Librarian) null);
 		// assert
-		assertValidation(Diagnostic.OK, false, true);
+		assertValidation(Diagnostic.CANCEL, false, true);
 	}
 
-	@Ignore
 	@Test
 	public void testRemoveReferencedElement() {
 		// setup
@@ -101,10 +97,9 @@ public class DynamicDMRTest {
 		// act
 		changeDomain((Writer) null);
 		// assert
-		assertValidation(Diagnostic.OK, false, true);
+		assertValidation(Diagnostic.CANCEL, false, true);
 	}
 
-	@Ignore
 	@Test
 	public void testAddMissingContainmentElement() {
 		// setup
@@ -118,7 +113,6 @@ public class DynamicDMRTest {
 		assertValidation(Diagnostic.ERROR, true, false);
 	}
 
-	@Ignore
 	@Test
 	public void testAddMissingReferencedElement() {
 		// setup
@@ -132,7 +126,6 @@ public class DynamicDMRTest {
 		assertValidation(Diagnostic.ERROR, true, false);
 	}
 
-	@Ignore
 	@Test
 	public void testReplaceContainmentElement() {
 		// setup
@@ -147,7 +140,6 @@ public class DynamicDMRTest {
 		assertValidation(Diagnostic.OK, true, false);
 	}
 
-	@Ignore
 	@Test
 	public void testReplaceReferencedElement() {
 		// setup
@@ -216,7 +208,11 @@ public class DynamicDMRTest {
 
 	private void assertValidation(int severity, boolean enablement, boolean readOnly) {
 		final VControl control = (VControl) view.getChildren().get(0);
-		assertEquals(severity, control.getDiagnostic().getHighestSeverity());
+		if (severity == Diagnostic.CANCEL) {
+			assertNull(control.getDiagnostic());
+		} else {
+			assertEquals(severity, control.getDiagnostic().getHighestSeverity());
+		}
 		assertEquals(enablement, control.isEnabled());
 		assertEquals(readOnly, control.isReadonly());
 	}

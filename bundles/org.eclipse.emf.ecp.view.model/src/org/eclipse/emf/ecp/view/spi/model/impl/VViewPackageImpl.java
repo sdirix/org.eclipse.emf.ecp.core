@@ -15,11 +15,13 @@ import static org.eclipse.emf.ecp.view.spi.model.VViewPackage.CONTAINER;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
+import org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.VAttachment;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
@@ -101,6 +103,14 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * 
 	 * @generated
 	 */
+	private EDataType domainModelReferenceChangeListenerEDataType = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
 	private EClass domainModelReferenceEClass = null;
 
 	/**
@@ -158,14 +168,12 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * @generated
 	 */
 	public static VViewPackage init() {
-		if (isInited) {
+		if (isInited)
 			return (VViewPackage) EPackage.Registry.INSTANCE.getEPackage(VViewPackage.eNS_URI);
-		}
 
 		// Obtain or create and register package
-		final VViewPackageImpl theViewPackage = (VViewPackageImpl) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof VViewPackageImpl ? EPackage.Registry.INSTANCE
-			.get(eNS_URI)
-			: new VViewPackageImpl());
+		VViewPackageImpl theViewPackage = (VViewPackageImpl) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof VViewPackageImpl ? EPackage.Registry.INSTANCE
+			.get(eNS_URI) : new VViewPackageImpl());
 
 		isInited = true;
 
@@ -394,9 +402,31 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * 
 	 * @generated
 	 */
+	public EDataType getDomainModelReferenceChangeListener()
+	{
+		return domainModelReferenceChangeListenerEDataType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
 	public EClass getDomainModelReference()
 	{
 		return domainModelReferenceEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public EAttribute getDomainModelReference_ChangeListener()
+	{
+		return (EAttribute) domainModelReferenceEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -469,9 +499,8 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * @generated
 	 */
 	public void createPackageContents() {
-		if (isCreated) {
+		if (isCreated)
 			return;
-		}
 		isCreated = true;
 
 		// Create classes and their features
@@ -481,6 +510,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 		attachmentEClass = createEClass(ATTACHMENT);
 
 		domainModelReferenceEClass = createEClass(DOMAIN_MODEL_REFERENCE);
+		createEAttribute(domainModelReferenceEClass, DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER);
 
 		featurePathDomainModelReferenceEClass = createEClass(FEATURE_PATH_DOMAIN_MODEL_REFERENCE);
 		createEReference(featurePathDomainModelReferenceEClass,
@@ -511,6 +541,9 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 
 		// Create enums
 		labelAlignmentEEnum = createEEnum(LABEL_ALIGNMENT);
+
+		// Create data types
+		domainModelReferenceChangeListenerEDataType = createEDataType(DOMAIN_MODEL_REFERENCE_CHANGE_LISTENER);
 	}
 
 	/**
@@ -528,9 +561,8 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * @generated
 	 */
 	public void initializePackageContents() {
-		if (isInitialized) {
+		if (isInitialized)
 			return;
-		}
 		isInitialized = true;
 
 		// Initialize package
@@ -539,19 +571,18 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 		setNsURI(eNS_URI);
 
 		// Obtain other dependent packages
-		final EcorePackage theEcorePackage = (EcorePackage) EPackage.Registry.INSTANCE
-			.getEPackage(EcorePackage.eNS_URI);
+		EcorePackage theEcorePackage = (EcorePackage) EPackage.Registry.INSTANCE.getEPackage(EcorePackage.eNS_URI);
 
 		// Create type parameters
 
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
-		featurePathDomainModelReferenceEClass.getESuperTypes().add(getDomainModelReference());
-		viewEClass.getESuperTypes().add(getElement());
-		containedElementEClass.getESuperTypes().add(getElement());
-		containerEClass.getESuperTypes().add(getContainedElement());
-		controlEClass.getESuperTypes().add(getContainedElement());
+		featurePathDomainModelReferenceEClass.getESuperTypes().add(this.getDomainModelReference());
+		viewEClass.getESuperTypes().add(this.getElement());
+		containedElementEClass.getESuperTypes().add(this.getElement());
+		containerEClass.getESuperTypes().add(this.getContainedElement());
+		controlEClass.getESuperTypes().add(this.getContainedElement());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(diagnosticEClass, VDiagnostic.class,
@@ -566,6 +597,10 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 
 		initEClass(domainModelReferenceEClass, VDomainModelReference.class,
 			"DomainModelReference", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(
+			getDomainModelReference_ChangeListener(),
+			this.getDomainModelReferenceChangeListener(),
+			"changeListener", null, 0, -1, VDomainModelReference.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(featurePathDomainModelReferenceEClass, VFeaturePathDomainModelReference.class,
 			"FeaturePathDomainModelReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
@@ -599,12 +634,12 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 			"readonly", "false", 0, 1, VElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEReference(
 			getElement_Diagnostic(),
-			getDiagnostic(),
+			this.getDiagnostic(),
 			null,
 			"diagnostic", null, 0, 1, VElement.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(
 			getElement_Attachments(),
-			getAttachment(),
+			this.getAttachment(),
 			null,
 			"attachments", null, 0, -1, VElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
@@ -616,7 +651,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 			"rootEClass", null, 1, 1, VView.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(
 			getView_Children(),
-			getContainedElement(),
+			this.getContainedElement(),
 			null,
 			"children", null, 0, -1, VView.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
@@ -627,18 +662,18 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 			"Container", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(
 			getContainer_Children(),
-			getContainedElement(),
+			this.getContainedElement(),
 			null,
 			"children", null, 0, -1, VContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(controlEClass, VControl.class, "Control", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEAttribute(
 			getControl_LabelAlignment(),
-			getLabelAlignment(),
+			this.getLabelAlignment(),
 			"labelAlignment", "Left", 1, 1, VControl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEReference(
 			getControl_DomainModelReference(),
-			getDomainModelReference(),
+			this.getDomainModelReference(),
 			null,
 			"domainModelReference", null, 1, 1, VControl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
@@ -646,6 +681,10 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 		initEEnum(labelAlignmentEEnum, LabelAlignment.class, "LabelAlignment"); //$NON-NLS-1$
 		addEEnumLiteral(labelAlignmentEEnum, LabelAlignment.LEFT);
 		addEEnumLiteral(labelAlignmentEEnum, LabelAlignment.NONE);
+
+		// Initialize data types
+		initEDataType(domainModelReferenceChangeListenerEDataType, DomainModelReferenceChangeListener.class,
+			"DomainModelReferenceChangeListener", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
 		// Create resource
 		createResource(eNS_URI);

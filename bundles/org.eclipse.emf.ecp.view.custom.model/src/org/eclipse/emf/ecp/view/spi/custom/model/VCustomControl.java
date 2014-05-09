@@ -29,7 +29,6 @@ import org.eclipse.emf.ecp.view.spi.model.VControl;
  * @see org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage#getCustomControl()
  * @model
  * @generated
- * @since 1.3
  */
 public interface VCustomControl extends VControl
 {

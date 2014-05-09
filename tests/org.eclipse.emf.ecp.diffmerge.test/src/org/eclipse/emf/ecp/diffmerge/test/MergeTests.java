@@ -21,7 +21,6 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecp.diffmerge.spi.context.DefaultMergeUtil;
-import org.eclipse.emf.ecp.view.spi.model.DomainModelChangeNotifier;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
@@ -69,7 +68,7 @@ public class MergeTests {
 		dmr.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Name());
 		controlToCopyFrom.setDomainModelReference(dmr);
 
-		dmr.init(player1, new DomainModelChangeNotifierStub());
+		dmr.init(player1);
 
 		final Player player2 = BowlingFactory.eINSTANCE.createPlayer();
 		addEobjectToResource(player2);
@@ -77,7 +76,7 @@ public class MergeTests {
 		final VFeaturePathDomainModelReference dmr2 = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
 		dmr2.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Name());
 		controlToCopyTo.setDomainModelReference(dmr2);
-		dmr2.init(player2, new DomainModelChangeNotifierStub());
+		dmr2.init(player2);
 
 		DefaultMergeUtil.copyValues(controlToCopyFrom, controlToCopyTo);
 
@@ -96,7 +95,7 @@ public class MergeTests {
 		final VFeaturePathDomainModelReference dmr = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
 		dmr.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_EMails());
 		controlToCopyFrom.setDomainModelReference(dmr);
-		dmr.init(player1, new DomainModelChangeNotifierStub());
+		dmr.init(player1);
 
 		final Player player2 = BowlingFactory.eINSTANCE.createPlayer();
 		addEobjectToResource(player2);
@@ -105,7 +104,7 @@ public class MergeTests {
 		final VFeaturePathDomainModelReference dmr2 = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
 		dmr2.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_EMails());
 		controlToCopyTo.setDomainModelReference(dmr2);
-		dmr2.init(player2, new DomainModelChangeNotifierStub());
+		dmr2.init(player2);
 
 		DefaultMergeUtil.copyValues(controlToCopyFrom, controlToCopyTo);
 
@@ -128,7 +127,7 @@ public class MergeTests {
 		dmr.setDomainModelEFeature(BowlingPackage.eINSTANCE.getMerchandise_Name());
 		dmr.getDomainModelEReferencePath().add(BowlingPackage.eINSTANCE.getFan_FavouriteMerchandise());
 		controlToCopyFrom.setDomainModelReference(dmr);
-		dmr.init(fan1, new DomainModelChangeNotifierStub());
+		dmr.init(fan1);
 
 		final Fan fan2 = BowlingFactory.eINSTANCE.createFan();
 		fan2.setFavouriteMerchandise(BowlingFactory.eINSTANCE.createMerchandise());
@@ -138,7 +137,7 @@ public class MergeTests {
 		dmr2.setDomainModelEFeature(BowlingPackage.eINSTANCE.getMerchandise_Name());
 		dmr2.getDomainModelEReferencePath().add(BowlingPackage.eINSTANCE.getFan_FavouriteMerchandise());
 		controlToCopyTo.setDomainModelReference(dmr2);
-		dmr2.init(fan2, new DomainModelChangeNotifierStub());
+		dmr2.init(fan2);
 
 		DefaultMergeUtil.copyValues(controlToCopyFrom, controlToCopyTo);
 
@@ -168,7 +167,7 @@ public class MergeTests {
 				.createTableDomainModelReference();
 			dmr.setDomainModelEFeature(BowlingPackage.eINSTANCE.getFan_FanMerchandise());
 			controlToCopyFrom.setDomainModelReference(dmr);
-			dmr.init(fan1, new DomainModelChangeNotifierStub());
+			dmr.init(fan1);
 		}
 
 		final Fan fan2 = BowlingFactory.eINSTANCE.createFan();
@@ -184,7 +183,7 @@ public class MergeTests {
 				.createTableDomainModelReference();
 			dmr2.setDomainModelEFeature(BowlingPackage.eINSTANCE.getFan_FanMerchandise());
 			controlToCopyTo.setDomainModelReference(dmr2);
-			dmr2.init(fan2, new DomainModelChangeNotifierStub());
+			dmr2.init(fan2);
 		}
 
 		DefaultMergeUtil.copyValues(controlToCopyFrom, controlToCopyTo);
@@ -228,29 +227,6 @@ public class MergeTests {
 		 * |-c2'
 		 * what should a merge do? how do you identify the object to set the reference to?
 		 */
-	}
-
-	// TODO
-	private class DomainModelChangeNotifierStub implements DomainModelChangeNotifier {
-
-		/**
-		 * {@inheritDoc}
-		 * 
-		 * @see org.eclipse.emf.ecp.view.spi.model.DomainModelChangeNotifier#registerDomainChangeListener(org.eclipse.emf.ecp.view.spi.model.DomainModelChangeNotifier.DomainModelChangeListener)
-		 */
-		@Override
-		public void registerDomainChangeListener(DomainModelChangeListener modelChangeListener) {
-		}
-
-		/**
-		 * {@inheritDoc}
-		 * 
-		 * @see org.eclipse.emf.ecp.view.spi.model.DomainModelChangeNotifier#unregisterDomainChangeListener(org.eclipse.emf.ecp.view.spi.model.DomainModelChangeNotifier.DomainModelChangeListener)
-		 */
-		@Override
-		public void unregisterDomainChangeListener(DomainModelChangeListener modelChangeListener) {
-		}
-
 	}
 
 }

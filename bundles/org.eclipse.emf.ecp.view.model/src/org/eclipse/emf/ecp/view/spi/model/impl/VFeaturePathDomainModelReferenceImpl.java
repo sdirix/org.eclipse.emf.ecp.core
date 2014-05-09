@@ -21,6 +21,7 @@ import java.util.Set;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -29,19 +30,24 @@ import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecp.view.spi.model.DomainModelChangeNotifier;
+import org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener;
+import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
+import org.eclipse.emf.ecp.view.spi.model.SettingPath;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>VFeature Path Domain Model Reference</b></em>'.
+ * An implementation of the model rootEObject '<em><b>VFeature Path Domain Model Reference</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VFeaturePathDomainModelReferenceImpl#getChangeListener <em>Change
+ * Listener</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VFeaturePathDomainModelReferenceImpl#getDomainModelEFeature <em>
  * Domain Model EFeature</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VFeaturePathDomainModelReferenceImpl#getDomainModelEReferencePath
@@ -50,11 +56,20 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * </p>
  * 
  * @generated
- * @since 1.2
  */
 public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 	VFeaturePathDomainModelReference
 {
+	/**
+	 * The cached value of the '{@link #getChangeListener() <em>Change Listener</em>}' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see #getChangeListener()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<DomainModelReferenceChangeListener> changeListener;
 	/**
 	 * The cached value of the '{@link #getDomainModelEFeature() <em>Domain Model EFeature</em>}' reference.
 	 * <!-- begin-user-doc -->
@@ -98,6 +113,24 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 	protected EClass eStaticClass()
 	{
 		return VViewPackage.Literals.FEATURE_PATH_DOMAIN_MODEL_REFERENCE;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	@Override
+	public EList<DomainModelReferenceChangeListener> getChangeListener()
+	{
+		if (changeListener == null)
+		{
+			changeListener = new EDataTypeUniqueEList<DomainModelReferenceChangeListener>(
+				DomainModelReferenceChangeListener.class, this,
+				VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER);
+		}
+		return changeListener;
 	}
 
 	/**
@@ -182,6 +215,8 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 	{
 		switch (featureID)
 		{
+		case VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER:
+			return getChangeListener();
 		case VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EFEATURE:
 			if (resolve) {
 				return getDomainModelEFeature();
@@ -205,6 +240,10 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 	{
 		switch (featureID)
 		{
+		case VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER:
+			getChangeListener().clear();
+			getChangeListener().addAll((Collection<? extends DomainModelReferenceChangeListener>) newValue);
+			return;
 		case VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EFEATURE:
 			setDomainModelEFeature((EStructuralFeature) newValue);
 			return;
@@ -227,6 +266,9 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 	{
 		switch (featureID)
 		{
+		case VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER:
+			getChangeListener().clear();
+			return;
 		case VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EFEATURE:
 			setDomainModelEFeature((EStructuralFeature) null);
 			return;
@@ -248,12 +290,34 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 	{
 		switch (featureID)
 		{
+		case VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER:
+			return changeListener != null && !changeListener.isEmpty();
 		case VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EFEATURE:
 			return domainModelEFeature != null;
 		case VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EREFERENCE_PATH:
 			return domainModelEReferencePath != null && !domainModelEReferencePath.isEmpty();
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	@Override
+	public String toString()
+	{
+		if (eIsProxy()) {
+			return super.toString();
+		}
+
+		final StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (changeListener: "); //$NON-NLS-1$
+		result.append(changeListener);
+		result.append(')');
+		return result.toString();
 	}
 
 	// /**
@@ -286,6 +350,8 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 	// return true;
 	// }
 
+	private final List<Setting> resolvedSetting = new ArrayList<Setting>();
+
 	private boolean resolve(EObject domainModel) {
 		final EStructuralFeature domainModelEFeatureValue = getDomainModelEFeature();
 		if (domainModel == null || domainModelEFeatureValue == null) {
@@ -306,6 +372,7 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 				child = EcoreUtil.create(eReference.getEReferenceType());
 				currentResolvedEObject.eSet(eReference, child);
 			}
+			resolvedSetting.add(InternalEObject.class.cast(currentResolvedEObject).eSetting(eReference));
 			currentResolvedEObject = child;
 			currentLeftReferences.remove(eReference);
 		}
@@ -323,6 +390,7 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 
 	protected List<EReference> leftReferences;
 	protected EObject lastResolvedEObject;
+	private EObject rootEObject;
 
 	/**
 	 * {@inheritDoc}
@@ -374,15 +442,104 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 	}
 
 	/**
+	 * 
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReference#init(org.eclipse.emf.ecore.EObject,
-	 *      org.eclipse.emf.ecp.view.spi.model.DomainModelChangeNotifier)
+	 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReference#init(org.eclipse.emf.ecore.EObject)
 	 */
 	@Override
-	public boolean init(EObject object, DomainModelChangeNotifier context) {
-		// TODO register notifier
+	public boolean init(final EObject object) {
+		rootEObject = object;
 		return resolve(object);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReference#getFullPathIterator()
+	 */
+	@Override
+	public Iterator<SettingPath> getFullPathIterator() {
+		return new Iterator<SettingPath>() {
+
+			int leftWaysToCheck = 1;
+
+			@Override
+			public boolean hasNext() {
+				return leftWaysToCheck != 0;
+			}
+
+			@Override
+			public SettingPath next() {
+				leftWaysToCheck--;
+				return new SettingPath() {
+
+					@Override
+					public Iterator<Setting> getPath() {
+						return new Iterator<EStructuralFeature.Setting>() {
+
+							private final Iterator<Setting> pathIterator = resolvedSetting.iterator();
+							private Iterator<Setting> childIterator;
+
+							@Override
+							public void remove() {
+								// TODO Auto-generated method stub
+
+							}
+
+							@Override
+							public Setting next() {
+								if (pathIterator.hasNext()) {
+									return pathIterator.next();
+								}
+								if (childIterator != null && childIterator.hasNext()) {
+									return childIterator.next();
+								}
+								return null;
+							}
+
+							@Override
+							public boolean hasNext() {
+								if (pathIterator.hasNext()) {
+									return true;
+								}
+								// get the iterator once
+								if (childIterator == null) {
+									childIterator = getIterator();
+								}
+								return childIterator.hasNext();
+							}
+						};
+					}
+				};
+			}
+
+			@Override
+			public void remove() {
+				// TODO Auto-generated method stub
+
+			}
+		};
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.spi.model.ModelChangeListener#notifyChange(org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification)
+	 */
+	@Override
+	public void notifyChange(ModelChangeNotification notification) {
+		if (EAttribute.class.isInstance(notification.getStructuralFeature())) {
+			return;
+		}
+		if (getDomainModelEReferencePath().contains(notification.getStructuralFeature())
+			|| getDomainModelEFeature().equals(notification.getStructuralFeature())) {
+
+			resolve(rootEObject);
+			for (final DomainModelReferenceChangeListener listener : getChangeListener()) {
+				listener.notifyChange();
+			}
+		}
 	}
 
 } // VFeaturePathDomainModelReferenceImpl

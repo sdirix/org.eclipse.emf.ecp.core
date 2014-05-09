@@ -283,14 +283,14 @@ public class DynamicContainmentTreeTest {
 	}
 
 	private static void resolveDomainReferences(VElement renderable,
-		EObject domainModelRoot, ViewModelContext context) {
+		EObject domainModelRoot) {
 		final TreeIterator<EObject> eAllContents = renderable.eAllContents();
 		while (eAllContents.hasNext()) {
 			final EObject eObject = eAllContents.next();
 
 			if (VDomainModelReference.class.isInstance(eObject)) {
 				final VDomainModelReference modelReference = (VDomainModelReference) eObject;
-				final boolean resolve = modelReference.init(domainModelRoot, context);
+				final boolean resolve = modelReference.init(domainModelRoot);
 				if (!resolve) {
 					// log
 				}

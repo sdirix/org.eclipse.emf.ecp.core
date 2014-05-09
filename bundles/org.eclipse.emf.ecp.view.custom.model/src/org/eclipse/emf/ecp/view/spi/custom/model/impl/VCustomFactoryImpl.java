@@ -39,13 +39,13 @@ public class VCustomFactoryImpl extends EFactoryImpl implements VCustomFactory {
 	public static VCustomFactory init() {
 		try
 		{
-			final VCustomFactory theCustomFactory = (VCustomFactory) EPackage.Registry.INSTANCE
+			VCustomFactory theCustomFactory = (VCustomFactory) EPackage.Registry.INSTANCE
 				.getEFactory(VCustomPackage.eNS_URI);
 			if (theCustomFactory != null)
 			{
 				return theCustomFactory;
 			}
-		} catch (final Exception exception)
+		} catch (Exception exception)
 		{
 			EcorePlugin.INSTANCE.log(exception);
 		}
@@ -87,12 +87,11 @@ public class VCustomFactoryImpl extends EFactoryImpl implements VCustomFactory {
 	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
-	 * @since 1.3
 	 */
 	@Override
 	public VCustomControl createCustomControl()
 	{
-		final VCustomControlImpl customControl = new VCustomControlImpl();
+		VCustomControlImpl customControl = new VCustomControlImpl();
 		return customControl;
 	}
 
@@ -101,12 +100,11 @@ public class VCustomFactoryImpl extends EFactoryImpl implements VCustomFactory {
 	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
-	 * @since 1.3
 	 */
 	@Override
 	public VCustomDomainModelReference createCustomDomainModelReference()
 	{
-		final VCustomDomainModelReferenceImpl customDomainModelReference = new VCustomDomainModelReferenceImpl();
+		VCustomDomainModelReferenceImpl customDomainModelReference = new VCustomDomainModelReferenceImpl();
 		return customDomainModelReference;
 	}
 

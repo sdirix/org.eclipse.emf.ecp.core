@@ -23,7 +23,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.internal.edit.Activator;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener;
+import org.eclipse.emf.ecp.view.spi.model.ModelChangeAddRemoveListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
@@ -54,7 +54,7 @@ public abstract class ECPAbstractControl {
 	private VControl control;
 	private Setting firstSetting;
 	private EStructuralFeature firstFeature;
-	private ModelChangeListener viewChangeListener;
+	private ModelChangeAddRemoveListener viewChangeListener;
 
 	/**
 	 * This method is called by the framework to instantiate the {@link ECPAbstractControl}.
@@ -71,7 +71,7 @@ public abstract class ECPAbstractControl {
 			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
 		adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(composedAdapterFactory);
 
-		viewChangeListener = new ModelChangeListener() {
+		viewChangeListener = new ModelChangeAddRemoveListener() {
 
 			@Override
 			public void notifyRemove(Notifier notifier) {

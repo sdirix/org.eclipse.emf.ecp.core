@@ -29,6 +29,7 @@ import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationFactory;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategory;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
+import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.VContainer;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
@@ -1453,7 +1454,7 @@ public class UnsetServiceTest {
 		}
 
 		@Override
-		public void unregisterDomainChangeListener(DomainModelChangeListener modelChangeListener) {
+		public void unregisterDomainChangeListener(ModelChangeListener modelChangeListener) {
 			hasRegisteredDomainListener = false;
 		}
 
@@ -1463,7 +1464,7 @@ public class UnsetServiceTest {
 		}
 
 		@Override
-		public void registerDomainChangeListener(DomainModelChangeListener modelChangeListener) {
+		public void registerDomainChangeListener(ModelChangeListener modelChangeListener) {
 			hasRegisteredDomainListener = true;
 		}
 

@@ -16,7 +16,7 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.common.UniqueSetting;
-import org.eclipse.emf.ecp.view.spi.model.DomainModelChangeNotifier;
+import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 
@@ -26,11 +26,21 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
  * @author Eugen Neufeld
  * @since 1.2
  */
-public interface ViewModelContext extends DomainModelChangeNotifier {
+public interface ViewModelContext {
 
-	public interface ModelChangeListener extends DomainModelChangeListener {
+	/**
+	 * Register domain change listener.
+	 * 
+	 * @param modelChangeListener the model change listener
+	 */
+	void registerDomainChangeListener(ModelChangeListener modelChangeListener);
 
-	}
+	/**
+	 * Unregister domain change listener.
+	 * 
+	 * @param modelChangeListener the model change listener
+	 */
+	void unregisterDomainChangeListener(ModelChangeListener modelChangeListener);
 
 	/**
 	 * Gets the view model.

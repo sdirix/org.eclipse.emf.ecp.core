@@ -22,7 +22,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.common.BidirectionalMap;
-import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.rule.model.AndCondition;
 import org.eclipse.emf.ecp.view.spi.rule.model.Condition;
@@ -49,7 +48,6 @@ public class RuleRegistry<T extends Rule> {
 	private static NoCondition noCondition = new NoCondition();
 	private final Map<EStructuralFeature, BidirectionalMap<Condition, T>> featuresToRules;
 	private final BidirectionalMap<T, VElement> rulesToRenderables;
-	private ViewModelContext context;
 
 	/**
 	 * Default constructor.
@@ -78,7 +76,7 @@ public class RuleRegistry<T extends Rule> {
 		if (condition instanceof LeafCondition) {
 			final LeafCondition leafCondition = (LeafCondition) condition;
 
-			leafCondition.getDomainModelReference().init(domainModel, context);
+			leafCondition.getDomainModelReference().init(domainModel);
 
 			final Iterator<EStructuralFeature> featureIterator = leafCondition.getDomainModelReference()
 				.getEStructuralFeatureIterator();
@@ -214,14 +212,5 @@ public class RuleRegistry<T extends Rule> {
 		}
 
 		return result;
-	}
-
-	/**
-	 * Sets the {@link ViewModelContext}.
-	 * 
-	 * @param context the {@link ViewModelContext} to be set
-	 */
-	public void setContext(ViewModelContext context) {
-		this.context = context;
 	}
 }
