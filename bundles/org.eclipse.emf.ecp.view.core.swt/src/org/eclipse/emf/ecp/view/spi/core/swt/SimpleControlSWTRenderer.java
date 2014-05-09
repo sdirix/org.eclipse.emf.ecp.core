@@ -18,8 +18,8 @@ import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
-import org.eclipse.emf.ecp.view.spi.swt.layout.GridCell;
-import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescription;
+import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
+import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -41,7 +41,7 @@ import org.eclipse.swt.widgets.Label;
  * 
  */
 public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRenderer<VControl> {
-	private GridDescription rendererGridDescription;
+	private SWTGridDescription rendererGridDescription;
 
 	/**
 	 * Default constructor.
@@ -62,10 +62,10 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#getGridDescription(GridDescription)
+	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#getGridDescription(SWTGridDescription)
 	 */
 	@Override
-	public final GridDescription getGridDescription(GridDescription gridDescription) {
+	public final SWTGridDescription getGridDescription(SWTGridDescription gridDescription) {
 		if (rendererGridDescription == null) {
 			rendererGridDescription = GridDescriptionFactory.INSTANCE.createSimpleGrid(1,
 				getVElement().getLabelAlignment() == LabelAlignment.NONE ? 2 : 3, this);
@@ -80,7 +80,7 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 	 *      org.eclipse.emf.ecp.view.spi.model.VElement, org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
 	@Override
-	protected final Control renderControl(GridCell gridCell, Composite parent)
+	protected final Control renderControl(SWTGridCell gridCell, Composite parent)
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		int controlIndex = gridCell.getColumn();
 		if (getVElement().getLabelAlignment() == LabelAlignment.NONE) {
@@ -100,7 +100,7 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 			throw new IllegalArgumentException(
 				String
 					.format(
-						"The provided GridCell (%1$s) cannot be used by this (%2$s) renderer.", gridCell.toString(), toString())); //$NON-NLS-1$
+						"The provided SWTGridCell (%1$s) cannot be used by this (%2$s) renderer.", gridCell.toString(), toString())); //$NON-NLS-1$
 		}
 	}
 
@@ -193,7 +193,7 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 	}
 
 	@Override
-	protected void setControlEnabled(GridCell gridCell, Control control, boolean enabled) {
+	protected void setControlEnabled(SWTGridCell gridCell, Control control, boolean enabled) {
 		int controlIndex = gridCell.getColumn();
 		if (getVElement().getLabelAlignment() == LabelAlignment.NONE) {
 			controlIndex++;
@@ -223,13 +223,13 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 		switch (getControls().size()) {
 		case 2:
 			validationIcon = Label.class.cast(getControls().get(
-				new GridCell(0, 0, SimpleControlSWTRenderer.this)));
-			editControl = getControls().get(new GridCell(0, 1, SimpleControlSWTRenderer.this));
+				new SWTGridCell(0, 0, SimpleControlSWTRenderer.this)));
+			editControl = getControls().get(new SWTGridCell(0, 1, SimpleControlSWTRenderer.this));
 			break;
 		case 3:
 			validationIcon = Label.class.cast(getControls().get(
-				new GridCell(0, 1, SimpleControlSWTRenderer.this)));
-			editControl = getControls().get(new GridCell(0, 2, SimpleControlSWTRenderer.this));
+				new SWTGridCell(0, 1, SimpleControlSWTRenderer.this)));
+			editControl = getControls().get(new SWTGridCell(0, 2, SimpleControlSWTRenderer.this));
 			break;
 		default: // TODO log error ;
 			return;

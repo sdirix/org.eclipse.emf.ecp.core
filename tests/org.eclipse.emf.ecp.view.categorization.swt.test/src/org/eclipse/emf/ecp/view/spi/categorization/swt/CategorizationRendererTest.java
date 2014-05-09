@@ -27,7 +27,7 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
-import org.eclipse.emf.ecp.view.spi.swt.layout.GridCell;
+import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.widgets.Composite;
@@ -57,7 +57,7 @@ public class CategorizationRendererTest {
 		final SWTCategorizationElementRenderer categorizatrionElementRenderer = new SWTCategorizationElementRenderer(
 			factory);
 
-		final GridCell gridCell = mock(GridCell.class);
+		final SWTGridCell gridCell = mock(SWTGridCell.class);
 		final Shell shell = new Shell();
 		final VCategorizationElement categorizationElement = mock(VCategorizationElement.class);
 		final EList<VAbstractCategorization> categorizations = new BasicEList<VAbstractCategorization>();
@@ -81,7 +81,7 @@ public class CategorizationRendererTest {
 		final CategorizationElementTabbedSWTRenderer categorizatrionElementRenderer = new CategorizationElementTabbedSWTRenderer(
 			factory);
 
-		final GridCell gridCell = mock(GridCell.class);
+		final SWTGridCell gridCell = mock(SWTGridCell.class);
 		final Shell shell = new Shell();
 		final VCategorizationElement categorizationElement = mock(VCategorizationElement.class);
 		final EList<VAbstractCategorization> categorizations = new BasicEList<VAbstractCategorization>();
@@ -99,7 +99,7 @@ public class CategorizationRendererTest {
 		final CompositeCategoryJFaceTreeRenderer categorizatrionElementRenderer = new CompositeCategoryJFaceTreeRenderer(
 			factory);
 
-		final GridCell gridCell = mock(GridCell.class);
+		final SWTGridCell gridCell = mock(SWTGridCell.class);
 		final Shell shell = new Shell();
 		final VCategorizationElement categorizationElement = mock(VCategorizationElement.class);
 		final EList<VAbstractCategorization> categorizations = new BasicEList<VAbstractCategorization>();
@@ -129,7 +129,7 @@ public class CategorizationRendererTest {
 		final CompositeCategorySWTTabRenderer categorizatrionElementRenderer = new CompositeCategorySWTTabRenderer(
 			factory);
 
-		final GridCell gridCell = mock(GridCell.class);
+		final SWTGridCell gridCell = mock(SWTGridCell.class);
 		final Shell shell = new Shell();
 		final VCategorizationElement categorizationElement = mock(VCategorizationElement.class);
 		final EList<VAbstractCategorization> categorizations = new BasicEList<VAbstractCategorization>();

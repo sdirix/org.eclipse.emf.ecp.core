@@ -9,7 +9,9 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.internal.core.swt.renderer;
+package org.eclipse.emf.ecp.view.model.common;
+
+import javax.xml.datatype.XMLGregorianCalendar;
 
 /**
  * Tester for Text Renderer.
@@ -17,12 +19,12 @@ package org.eclipse.emf.ecp.view.internal.core.swt.renderer;
  * @author Eugen Neufeld
  * 
  */
-public class BooleanControlSWTRendererTester extends SimpleControlSWTRendererTester {
+public class XMLDateControlRendererTester extends SimpleControlRendererTester {
 
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.internal.core.swt.renderer.SimpleControlSWTRendererTester#isSingleValue()
+	 * @see org.eclipse.emf.ecp.view.model.common.SimpleControlRendererTester#isSingleValue()
 	 */
 	@Override
 	protected boolean isSingleValue() {
@@ -32,7 +34,7 @@ public class BooleanControlSWTRendererTester extends SimpleControlSWTRendererTes
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.internal.core.swt.renderer.SimpleControlSWTRendererTester#getPriority()
+	 * @see org.eclipse.emf.ecp.view.model.common.SimpleControlRendererTester#getPriority()
 	 */
 	@Override
 	protected int getPriority() {
@@ -42,10 +44,10 @@ public class BooleanControlSWTRendererTester extends SimpleControlSWTRendererTes
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.internal.core.swt.renderer.SimpleControlSWTRendererTester#getSupportedClassType()
+	 * @see org.eclipse.emf.ecp.view.model.common.SimpleControlRendererTester#getSupportedClassType()
 	 */
 	@Override
 	protected Class<?> getSupportedClassType() {
-		return Boolean.class;
+		return XMLGregorianCalendar.class;
 	}
 }

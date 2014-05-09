@@ -4,8 +4,8 @@ import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.swt.layout.AbstractLayoutProvider;
-import org.eclipse.emf.ecp.view.spi.swt.layout.GridCell;
-import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescription;
+import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
+import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
@@ -23,9 +23,9 @@ public class ECPLayoutProvider extends AbstractLayoutProvider {
 	}
 
 	@Override
-	public Object getLayoutData(GridCell gridCell,
-		GridDescription controlGridDescription,
-		GridDescription currentRowGridDescription, GridDescription fullGridDescription, VElement vElement,
+	public Object getLayoutData(SWTGridCell gridCell,
+		SWTGridDescription controlGridDescription,
+		SWTGridDescription currentRowGridDescription, SWTGridDescription fullGridDescription, VElement vElement,
 		Control control) {
 		if (VControl.class.isInstance(vElement)) {
 			// last column of control

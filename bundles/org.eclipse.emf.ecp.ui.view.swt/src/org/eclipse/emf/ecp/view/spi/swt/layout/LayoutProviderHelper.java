@@ -121,8 +121,8 @@ public final class LayoutProviderHelper {
 	 * @param control the rendered {@link Control}
 	 * @return the Object being the layout data to set
 	 */
-	public static Object getLayoutData(GridCell gridCell, GridDescription controlGridDescription,
-		GridDescription currentRowGridDescription, GridDescription fullGridDescription, VElement vElement,
+	public static Object getLayoutData(SWTGridCell gridCell, SWTGridDescription controlGridDescription,
+		SWTGridDescription currentRowGridDescription, SWTGridDescription fullGridDescription, VElement vElement,
 		Control control) {
 		checkProviderLength();
 		return getLayoutProvider().get(0).getLayoutData(gridCell, controlGridDescription, currentRowGridDescription,

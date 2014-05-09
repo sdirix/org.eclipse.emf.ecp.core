@@ -23,8 +23,8 @@ import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
-import org.eclipse.emf.ecp.view.spi.swt.layout.GridCell;
-import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescription;
+import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
+import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -57,9 +57,9 @@ public class ViewSWTRenderer extends ContainerSWTRenderer<VView> {
 	}
 
 	@Override
-	protected final void setLayoutDataForControl(GridCell gridCell,
-		GridDescription controlGridDescription,
-		GridDescription currentRowGridDescription, GridDescription fullGridDescription, VElement vElement,
+	protected final void setLayoutDataForControl(SWTGridCell gridCell,
+		SWTGridDescription controlGridDescription,
+		SWTGridDescription currentRowGridDescription, SWTGridDescription fullGridDescription, VElement vElement,
 		Control control) {
 		if (VControl.class.isInstance(vElement)) {
 			// last column of control

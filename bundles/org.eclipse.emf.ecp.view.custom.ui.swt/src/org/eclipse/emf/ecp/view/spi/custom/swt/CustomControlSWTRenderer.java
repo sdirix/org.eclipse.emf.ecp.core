@@ -18,8 +18,8 @@ import org.eclipse.emf.ecp.view.spi.custom.model.VCustomControl;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
-import org.eclipse.emf.ecp.view.spi.swt.layout.GridCell;
-import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescription;
+import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
+import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
@@ -102,12 +102,12 @@ public class CustomControlSWTRenderer extends AbstractSWTRenderer<VCustomControl
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#getGridDescription(GridDescription)
+	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#getGridDescription(SWTGridDescription)
 	 */
 	@Override
-	public GridDescription getGridDescription(GridDescription gridDescription) {
-		final GridDescription gd = swtCustomControl.getGridDescription();
-		for (final GridCell gridCell : gd.getGrid()) {
+	public SWTGridDescription getGridDescription(SWTGridDescription gridDescription) {
+		final SWTGridDescription gd = swtCustomControl.getGridDescription();
+		for (final SWTGridCell gridCell : gd.getGrid()) {
 			gridCell.setRenderer(this);
 		}
 		return gd;
@@ -117,11 +117,11 @@ public class CustomControlSWTRenderer extends AbstractSWTRenderer<VCustomControl
 	 * 
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#renderControl(org.eclipse.emf.ecp.view.spi.swt.layout.GridCell,
+	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#renderControl(org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell,
 	 *      org.eclipse.swt.widgets.Composite)
 	 */
 	@Override
-	protected Control renderControl(GridCell cell, Composite parent) throws NoRendererFoundException,
+	protected Control renderControl(SWTGridCell cell, Composite parent) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
 		return swtCustomControl.renderControl(cell, parent);
 	}
@@ -138,7 +138,7 @@ public class CustomControlSWTRenderer extends AbstractSWTRenderer<VCustomControl
 
 	@Override
 	protected void applyVisible() {
-		for (final GridCell gridCell : getControls().keySet()) {
+		for (final SWTGridCell gridCell : getControls().keySet()) {
 			final Object layoutData = getControls().get(gridCell).getLayoutData();
 			if (GridData.class.isInstance(layoutData)) {
 				final GridData gridData = (GridData) layoutData;
@@ -164,7 +164,7 @@ public class CustomControlSWTRenderer extends AbstractSWTRenderer<VCustomControl
 				switch (getControls().size()) {
 				case 3:
 					validationIcon = Label.class.cast(getControls().get(
-						new GridCell(0, 1, CustomControlSWTRenderer.this)));
+						new SWTGridCell(0, 1, CustomControlSWTRenderer.this)));
 					break;
 				default:
 					break;

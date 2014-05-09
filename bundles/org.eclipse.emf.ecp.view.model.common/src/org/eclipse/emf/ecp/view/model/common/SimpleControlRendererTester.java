@@ -9,7 +9,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.internal.core.swt.renderer;
+package org.eclipse.emf.ecp.view.model.common;
 
 import java.util.Iterator;
 
@@ -21,7 +21,6 @@ import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
-import org.eclipse.emf.ecp.view.spi.swt.ECPRendererTester;
 
 /**
  * Tester for Control Renderer.
@@ -29,12 +28,12 @@ import org.eclipse.emf.ecp.view.spi.swt.ECPRendererTester;
  * @author Eugen Neufeld
  * 
  */
-public abstract class SimpleControlSWTRendererTester implements ECPRendererTester {
+public abstract class SimpleControlRendererTester implements ECPRendererTester {
 
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.swt.ECPRendererTester#isApplicable(org.eclipse.emf.ecp.view.spi.model.VElement,
+	 * @see org.eclipse.emf.ecp.view.model.common.ECPRendererTester#isApplicable(org.eclipse.emf.ecp.view.spi.model.VElement,
 	 *      org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
 	@Override

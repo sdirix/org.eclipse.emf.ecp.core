@@ -28,10 +28,10 @@ import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractAdditionalSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
-import org.eclipse.emf.ecp.view.spi.swt.layout.GridCell;
-import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescription;
+import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.LayoutProviderHelper;
+import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -45,7 +45,7 @@ import org.eclipse.swt.widgets.Layout;
  * 
  */
 public abstract class ContainerSWTRenderer<VELEMENT extends VElement> extends AbstractSWTRenderer<VELEMENT> {
-	private GridDescription rendererGridDescription;
+	private SWTGridDescription rendererGridDescription;
 
 	/**
 	 * Default constructor.
@@ -66,10 +66,10 @@ public abstract class ContainerSWTRenderer<VELEMENT extends VElement> extends Ab
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#getGridDescription(GridDescription)
+	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#getGridDescription(SWTGridDescription)
 	 */
 	@Override
-	public GridDescription getGridDescription(GridDescription gridDescription) {
+	public SWTGridDescription getGridDescription(SWTGridDescription gridDescription) {
 		if (rendererGridDescription == null) {
 			rendererGridDescription = GridDescriptionFactory.INSTANCE.createSimpleGrid(1, 1, this);
 		}
@@ -83,7 +83,7 @@ public abstract class ContainerSWTRenderer<VELEMENT extends VElement> extends Ab
 	 *      org.eclipse.emf.ecp.view.spi.model.VElement, org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
 	@Override
-	protected Control renderControl(GridCell gridCell, Composite parent)
+	protected Control renderControl(SWTGridCell gridCell, Composite parent)
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		if (gridCell.getColumn() != 0) {
 			return null;
@@ -93,9 +93,9 @@ public abstract class ContainerSWTRenderer<VELEMENT extends VElement> extends Ab
 		columnComposite.setBackground(parent.getBackground());
 
 		final Map<VContainedElement, Collection<AbstractSWTRenderer<VElement>>> elementRendererMap = new LinkedHashMap<VContainedElement, Collection<AbstractSWTRenderer<VElement>>>();
-		GridDescription maximalGridDescription = null;
-		final Map<VContainedElement, GridDescription> rowGridDescription = new LinkedHashMap<VContainedElement, GridDescription>();
-		final Map<VContainedElement, GridDescription> controlGridDescription = new LinkedHashMap<VContainedElement, GridDescription>();
+		SWTGridDescription maximalGridDescription = null;
+		final Map<VContainedElement, SWTGridDescription> rowGridDescription = new LinkedHashMap<VContainedElement, SWTGridDescription>();
+		final Map<VContainedElement, SWTGridDescription> controlGridDescription = new LinkedHashMap<VContainedElement, SWTGridDescription>();
 		for (final VContainedElement child : getChildren()) {
 			if (VControl.class.isInstance(child) && VControl.class.cast(child).getDomainModelReference() == null) {
 				continue;
@@ -114,7 +114,7 @@ public abstract class ContainerSWTRenderer<VELEMENT extends VElement> extends Ab
 			final Collection<AbstractAdditionalSWTRenderer<VElement>> additionalRenderers = getSWTRendererFactory()
 				.getAdditionalRenderer(child,
 					getViewModelContext());
-			GridDescription gridDescription = renderer.getGridDescription(GridDescriptionFactory.INSTANCE
+			SWTGridDescription gridDescription = renderer.getGridDescription(GridDescriptionFactory.INSTANCE
 				.createEmptyGridDescription());
 			controlGridDescription.put(child, gridDescription);
 
@@ -141,8 +141,8 @@ public abstract class ContainerSWTRenderer<VELEMENT extends VElement> extends Ab
 				if (VControl.class.isInstance(child) && VControl.class.cast(child).getDomainModelReference() == null) {
 					continue;
 				}
-				final GridDescription gridDescription = rowGridDescription.get(child);
-				for (final GridCell childGridCell : gridDescription.getGrid()) {
+				final SWTGridDescription gridDescription = rowGridDescription.get(child);
+				for (final SWTGridCell childGridCell : gridDescription.getGrid()) {
 
 					final Control control = childGridCell.getRenderer().render(childGridCell,
 						columnComposite);
@@ -157,7 +157,7 @@ public abstract class ContainerSWTRenderer<VELEMENT extends VElement> extends Ab
 						childGridCell.getRenderer().getVElement(), control);
 
 				}
-				for (final GridCell childGridCell : gridDescription.getGrid()) {
+				for (final SWTGridCell childGridCell : gridDescription.getGrid()) {
 					childGridCell.getRenderer().finalizeRendering(columnComposite);
 				}
 			} catch (final NoPropertyDescriptorFoundExeption ex) {

@@ -13,9 +13,9 @@ package org.eclipse.emf.ecp.view.internal.swt;
 
 import java.util.Set;
 
+import org.eclipse.emf.ecp.view.model.common.ECPRendererTester;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
-import org.eclipse.emf.ecp.view.spi.swt.ECPRendererTester;
 
 /**
  * A class describing a rendererClass.

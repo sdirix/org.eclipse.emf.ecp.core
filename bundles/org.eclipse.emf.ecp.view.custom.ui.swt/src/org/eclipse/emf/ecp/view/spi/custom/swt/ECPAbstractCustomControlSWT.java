@@ -47,9 +47,9 @@ import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.view.spi.swt.layout.GridCell;
-import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescription;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
+import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
+import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
@@ -620,7 +620,7 @@ public abstract class ECPAbstractCustomControlSWT
 	 * @return the GridDescription
 	 * @since 1.3
 	 */
-	public abstract GridDescription getGridDescription();
+	public abstract SWTGridDescription getGridDescription();
 
 	/**
 	 * Renders the control.
@@ -632,7 +632,7 @@ public abstract class ECPAbstractCustomControlSWT
 	 * @throws NoPropertyDescriptorFoundExeption this is thrown when no property descriptor can be found
 	 * @since 1.3
 	 */
-	public abstract Control renderControl(GridCell cell, Composite parent) throws NoRendererFoundException,
+	public abstract Control renderControl(SWTGridCell cell, Composite parent) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption;
 
 	/**
@@ -657,9 +657,9 @@ public abstract class ECPAbstractCustomControlSWT
 	 * @param controls the controls provided
 	 * @since 1.3
 	 */
-	public final void applyReadOnly(Map<GridCell, Control> controls) {
+	public final void applyReadOnly(Map<SWTGridCell, Control> controls) {
 		if (setEditable(!getCustomControl().isReadonly())) {
-			for (final GridCell gridCell : controls.keySet()) {
+			for (final SWTGridCell gridCell : controls.keySet()) {
 				setControlEnabled(gridCell, controls.get(gridCell), !getCustomControl().isReadonly());
 			}
 		}
@@ -668,11 +668,11 @@ public abstract class ECPAbstractCustomControlSWT
 	/**
 	 * Override this to control which and how controls should be enabled/disabled.
 	 * 
-	 * @param gridCell the {@link GridCell} to enable/disable
+	 * @param gridCell the {@link SWTGridCell} to enable/disable
 	 * @param control the {@link Control} to enable/disable
 	 * @param enabled true if the control should be enabled false otherwise
 	 */
-	protected void setControlEnabled(GridCell gridCell, Control control, boolean enabled) {
+	protected void setControlEnabled(SWTGridCell gridCell, Control control, boolean enabled) {
 		// ignore labels as they are readonly per definition
 		if (Label.class.isInstance(control)) {
 			return;
@@ -686,9 +686,9 @@ public abstract class ECPAbstractCustomControlSWT
 	 * @param controls the controls
 	 * @since 1.3
 	 */
-	public final void applyEnable(Map<GridCell, Control> controls) {
+	public final void applyEnable(Map<SWTGridCell, Control> controls) {
 		if (setEditable(getCustomControl().isEnabled())) {
-			for (final GridCell gridCell : controls.keySet()) {
+			for (final SWTGridCell gridCell : controls.keySet()) {
 				setControlEnabled(gridCell, controls.get(gridCell), getCustomControl().isEnabled());
 			}
 		}
@@ -714,7 +714,7 @@ public abstract class ECPAbstractCustomControlSWT
 	 * @return the {@link GridDescription}
 	 * @since 1.3
 	 */
-	protected final GridDescription createSimpleGrid(int rows, int columns) {
+	protected final SWTGridDescription createSimpleGrid(int rows, int columns) {
 		return GridDescriptionFactory.INSTANCE.createSimpleGrid(rows, columns, null);
 	}
 }

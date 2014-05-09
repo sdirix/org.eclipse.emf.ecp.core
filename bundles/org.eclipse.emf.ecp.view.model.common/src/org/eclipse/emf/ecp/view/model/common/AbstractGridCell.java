@@ -7,25 +7,23 @@
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- * Eugen - initial API and implementation
+ * Eugen Neufeld - initial API and implementation
+ * Lucas Köhler - Refactoring
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.spi.swt.layout;
-
-import org.eclipse.emf.ecp.view.spi.model.VElement;
-import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
+package org.eclipse.emf.ecp.view.model.common;
 
 /**
- * A {@link GridCell} has a row, a column and a renderer it is rendered by.
+ * A {@link AbstractGridCell} has a row, a column and a renderer it is rendered by a renderer.
  * 
  * @author Eugen Neufeld
- * @since 1.3
- * 
+ * @author Lucas Köhler
+ * @param <RENDERER> the renderer type (e.g. SWT or JavaFX renderer)
  */
-public class GridCell {
+public abstract class AbstractGridCell<RENDERER extends AbstractRenderer<?>> {
 
 	private final int row;
 	private final int column;
-	private AbstractSWTRenderer<? extends VElement> renderer;
+	private RENDERER renderer;
 
 	private int horizontalSpan = 1;
 	private boolean verticalGrab = true;
@@ -38,9 +36,9 @@ public class GridCell {
 	 * 
 	 * @param row the row of the cell
 	 * @param column the column of the cell
-	 * @param renderer the {@link AbstractSWTRenderer} that renderes the cell
+	 * @param renderer the {@link AbstractRenderer} that renderes the cell
 	 */
-	public GridCell(int row, int column, AbstractSWTRenderer<? extends VElement> renderer) {
+	public AbstractGridCell(int row, int column, RENDERER renderer) {
 		super();
 		this.row = row;
 		this.column = column;
@@ -68,14 +66,14 @@ public class GridCell {
 	/**
 	 * @return the renderer
 	 */
-	public AbstractSWTRenderer<? extends VElement> getRenderer() {
+	public RENDERER getRenderer() {
 		return renderer;
 	}
 
 	/**
 	 * @param renderer the renderer to set
 	 */
-	public void setRenderer(AbstractSWTRenderer<? extends VElement> renderer) {
+	public void setRenderer(RENDERER renderer) {
 		this.renderer = renderer;
 	}
 
@@ -199,7 +197,8 @@ public class GridCell {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		final GridCell other = (GridCell) obj;
+		@SuppressWarnings("unchecked")
+		final AbstractGridCell<RENDERER> other = (AbstractGridCell<RENDERER>) obj;
 		if (column != other.column) {
 			return false;
 		}

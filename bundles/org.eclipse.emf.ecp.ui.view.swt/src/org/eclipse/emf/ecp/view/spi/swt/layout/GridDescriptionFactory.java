@@ -18,7 +18,7 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
 
 /**
- * A Factory to create {@link GridDescription GridDescriptions}.
+ * A Factory to create {@link SWTGridDescription GridDescriptions}.
  * 
  * @author Eugen Neufeld
  * @since 1.3
@@ -38,10 +38,10 @@ public final class GridDescriptionFactory {
 	/**
 	 * Creates an empty grid description.
 	 * 
-	 * @return the {@link GridDescription}
+	 * @return the {@link SWTGridDescription}
 	 */
-	public GridDescription createEmptyGridDescription() {
-		return new GridDescription();
+	public SWTGridDescription createEmptyGridDescription() {
+		return new SWTGridDescription();
 	}
 
 	/**
@@ -50,15 +50,15 @@ public final class GridDescriptionFactory {
 	 * @param rows the number of rows in this grid
 	 * @param columns the number of columns in this grid
 	 * @param renderer the {@link AbstractSWTRenderer}
-	 * @return the {@link GridDescription}
+	 * @return the {@link SWTGridDescription}
 	 */
-	public GridDescription createSimpleGrid(int rows, int columns, AbstractSWTRenderer<? extends VElement> renderer) {
-		final List<GridCell> gridCells = new ArrayList<GridCell>(rows * columns);
+	public SWTGridDescription createSimpleGrid(int rows, int columns, AbstractSWTRenderer<? extends VElement> renderer) {
+		final List<SWTGridCell> gridCells = new ArrayList<SWTGridCell>(rows * columns);
 		for (int row = 0; row < rows; row++) {
 			for (int column = 0; column < columns; column++) {
-				gridCells.add(new GridCell(row, column, renderer));
+				gridCells.add(new SWTGridCell(row, column, renderer));
 			}
 		}
-		return new GridDescription(rows, columns, gridCells);
+		return new SWTGridDescription(rows, columns, gridCells);
 	}
 }

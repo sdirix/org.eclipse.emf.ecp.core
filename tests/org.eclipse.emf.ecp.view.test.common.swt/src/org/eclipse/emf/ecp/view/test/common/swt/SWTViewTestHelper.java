@@ -24,7 +24,7 @@ import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
-import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescription;
+import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
@@ -55,7 +55,7 @@ public final class SWTViewTestHelper {
 		final ViewModelContext viewContext = ViewModelContextFactory.INSTANCE.createViewModelContext(renderable, input);
 		final AbstractSWTRenderer<VElement> renderer = factory
 			.getRenderer(renderable, viewContext);
-		final GridDescription gridDescription = renderer.getGridDescription(GridDescriptionFactory.INSTANCE
+		final SWTGridDescription gridDescription = renderer.getGridDescription(GridDescriptionFactory.INSTANCE
 			.createEmptyGridDescription());
 		final Control control = renderer.render(gridDescription.getGrid().get(gridDescription.getColumns() - 1), shell);
 		renderer.finalizeRendering(shell);

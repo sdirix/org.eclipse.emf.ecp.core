@@ -7,26 +7,25 @@
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- * Eugen - initial API and implementation
+ * Eugen Neufeld - initial API and implementation
+ * Lucas Köhler - Refactoring
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.spi.swt.layout;
+package org.eclipse.emf.ecp.view.model.common;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A {@link GridDescription} describes the grid of the renderer using a list of {@link GridCell GridCells} and the
- * number of rows and columns it has.
- * 
- * Use the {@link GridDescriptionFactory} to create {@link GridDescription GridDescriptions}.
+ * A {@link AbstractGridDescription} describes the grid of the renderer using a list of {@link AbstractGridCell
+ * GridCells} and the number of rows and columns it has.
  * 
  * @author Eugen Neufeld
- * @since 1.3
+ * @author Lucas Köhler
+ * @param <GRIDCELL> the grid cell type (e.g. SWT or JavaFX grid cell)
  * 
  */
-public class GridDescription {
+public abstract class AbstractGridDescription<GRIDCELL extends AbstractGridCell<?>> {
 
-	private List<GridCell> grid;
+	private List<GRIDCELL> grid;
 	private int rows;
 
 	private int columns;
@@ -34,7 +33,7 @@ public class GridDescription {
 	/**
 	 * Creating an empty grid.
 	 */
-	public GridDescription() {
+	public AbstractGridDescription() {
 
 	}
 
@@ -43,20 +42,20 @@ public class GridDescription {
 	 * 
 	 * @param rows number of rows in this description
 	 * @param columns number of columns in this description
-	 * @param grid the List of {@link GridCell GridCells} describing the grid
+	 * @param grid the List of {@link AbstractGridCell GridCells} describing the grid
 	 */
-	public GridDescription(int rows, int columns, List<GridCell> grid) {
+	public AbstractGridDescription(int rows, int columns, List<GRIDCELL> grid) {
 		this.grid = grid;
 		this.rows = rows;
 		this.columns = columns;
 	}
 
 	/**
-	 * The {@link GridCell GridCells} describing the grid.
+	 * The {@link AbstractGridCell GridCells} describing the grid.
 	 * 
 	 * @return the grid
 	 */
-	public List<GridCell> getGrid() {
+	public List<GRIDCELL> getGrid() {
 		return grid;
 	}
 
@@ -79,11 +78,11 @@ public class GridDescription {
 	}
 
 	/**
-	 * List of {@link GridCell GridCells}.
+	 * List of {@link AbstractGridCell GridCells}.
 	 * 
 	 * @param grid the grid to set
 	 */
-	public void setGrid(List<GridCell> grid) {
+	public void setGrid(List<GRIDCELL> grid) {
 		this.grid = grid;
 	}
 
@@ -103,15 +102,5 @@ public class GridDescription {
 	 */
 	public void setColumns(int columns) {
 		this.columns = columns;
-	}
-
-	/**
-	 * Creates a copy of the grid.
-	 * 
-	 * @return a copy of the grid
-	 */
-	public GridDescription copy() {
-		final GridDescription gd = new GridDescription(rows, columns, new ArrayList<GridCell>(grid));
-		return gd;
 	}
 }

@@ -11,10 +11,10 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.categorization.swt;
 
+import org.eclipse.emf.ecp.view.model.common.ECPRendererTester;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationElement;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
-import org.eclipse.emf.ecp.view.spi.swt.ECPRendererTester;
 
 /**
  * @author Eugen

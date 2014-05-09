@@ -25,7 +25,7 @@ import org.eclipse.emf.ecp.view.spi.custom.model.VCustomDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.custom.model.VCustomFactory;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.view.spi.swt.layout.GridCell;
+import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.test.common.swt.DatabindingClassRunner;
 import org.eclipse.emf.ecp.view.test.common.swt.SWTViewTestHelper;
 import org.eclipse.emf.emfstore.bowling.BowlingFactory;
@@ -84,8 +84,8 @@ public class CustomControlTwoRowWithViewerTest {
 		// modelReference.resolve(league);
 		// }
 
-		label = (Label) customControl.renderControl(new GridCell(0, 0, null), parent);
-		Composite composite = (Composite) customControl.renderControl(new GridCell(0, 1, null),
+		label = (Label) customControl.renderControl(new SWTGridCell(0, 0, null), parent);
+		Composite composite = (Composite) customControl.renderControl(new SWTGridCell(0, 1, null),
 			parent);
 		// final List<RenderingResultRow<Control>> rows = customControl.createControls(parent);
 		// final DoubleColumnRow doubleRow = (DoubleColumnRow) rows.get(0);
@@ -116,10 +116,10 @@ public class CustomControlTwoRowWithViewerTest {
 		assertEquals(player2.getName(), table.getItem(0).getText());
 	}
 
-	private Map<GridCell, Control> createControlMap(Control... controls) {
-		final Map<GridCell, Control> result = new LinkedHashMap<GridCell, Control>();
+	private Map<SWTGridCell, Control> createControlMap(Control... controls) {
+		final Map<SWTGridCell, Control> result = new LinkedHashMap<SWTGridCell, Control>();
 		for (int i = 0; i < controls.length; i++) {
-			result.put(new GridCell(0, i, null), controls[i]);
+			result.put(new SWTGridCell(0, i, null), controls[i]);
 		}
 		return result;
 	}

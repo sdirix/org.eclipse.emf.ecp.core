@@ -25,8 +25,8 @@ import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.view.spi.swt.layout.GridCell;
-import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescription;
+import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
+import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -103,7 +103,7 @@ public abstract class AbstractControlTest {
 	public void testGridDescriptionLabelAlignmentNone() {
 		setMockLabelAlignment(LabelAlignment.NONE);
 		renderer.init(control, context);
-		GridDescription gridDescription = renderer.getGridDescription(GridDescriptionFactory.INSTANCE.createEmptyGridDescription());
+		SWTGridDescription gridDescription = renderer.getGridDescription(GridDescriptionFactory.INSTANCE.createEmptyGridDescription());
 		assertEquals(2, gridDescription.getColumns());
 		assertEquals(1, gridDescription.getRows());
 	}
@@ -112,7 +112,7 @@ public abstract class AbstractControlTest {
 	public void testGridDescriptionLabelAlignmentLeft() {
 		setMockLabelAlignment(LabelAlignment.LEFT);
 		renderer.init(control, context);
-		GridDescription gridDescription = renderer.getGridDescription(GridDescriptionFactory.INSTANCE.createEmptyGridDescription());
+		SWTGridDescription gridDescription = renderer.getGridDescription(GridDescriptionFactory.INSTANCE.createEmptyGridDescription());
 		assertEquals(3, gridDescription.getColumns());
 		assertEquals(1, gridDescription.getRows());
 	}
@@ -121,17 +121,17 @@ public abstract class AbstractControlTest {
 	public void renderValidationIconLabelAlignmentNone()
 			throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		setMockLabelAlignment(LabelAlignment.NONE);
-		renderValidationIcon(new GridCell(0, 0,renderer));
+		renderValidationIcon(new SWTGridCell(0, 0,renderer));
 	}
 
 	@Test
 	public void renderValidationIconLabelAlignmentLeft()
 			throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		setMockLabelAlignment(LabelAlignment.LEFT);
-		renderValidationIcon(new GridCell(0, 1,renderer));
+		renderValidationIcon(new SWTGridCell(0, 1,renderer));
 	}
 
-	private void renderValidationIcon(GridCell gridCell)
+	private void renderValidationIcon(SWTGridCell gridCell)
 			throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		renderer.init(control, context);
 		Control render = renderer.render(gridCell, shell);
@@ -145,12 +145,12 @@ public abstract class AbstractControlTest {
 		setMockLabelAlignment(LabelAlignment.LEFT);
 		mockControl();
 		renderer.init(control, context);
-		Control render = renderer.render(new GridCell(0, 0,renderer), shell);
+		Control render = renderer.render(new SWTGridCell(0, 0,renderer), shell);
 		assertTrue(Label.class.isInstance(render));
 		assertEquals(text, Label.class.cast(render).getText());
 	}
 
-	protected Control renderControl(GridCell gridCell)
+	protected Control renderControl(SWTGridCell gridCell)
 			throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		mockControl();
 		renderer.init(control, context);

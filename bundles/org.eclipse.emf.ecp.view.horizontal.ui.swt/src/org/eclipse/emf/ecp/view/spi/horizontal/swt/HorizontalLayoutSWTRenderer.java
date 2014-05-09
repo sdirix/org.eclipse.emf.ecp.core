@@ -24,10 +24,10 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
-import org.eclipse.emf.ecp.view.spi.swt.layout.GridCell;
-import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescription;
+import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.LayoutProviderHelper;
+import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -42,7 +42,7 @@ import org.eclipse.swt.widgets.Control;
 public class HorizontalLayoutSWTRenderer extends AbstractSWTRenderer<VHorizontalLayout> {
 
 	private static final String CONTROL_COLUMN_COMPOSITE = "org_eclipse_emf_ecp_ui_layout_horizontal"; //$NON-NLS-1$
-	private GridDescription rendererGridDescription;
+	private SWTGridDescription rendererGridDescription;
 
 	/**
 	 * {@inheritDoc}
@@ -58,10 +58,10 @@ public class HorizontalLayoutSWTRenderer extends AbstractSWTRenderer<VHorizontal
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#getGridDescription(GridDescription)
+	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#getGridDescription(SWTGridDescription)
 	 */
 	@Override
-	public GridDescription getGridDescription(GridDescription gridDescription) {
+	public SWTGridDescription getGridDescription(SWTGridDescription gridDescription) {
 		if (rendererGridDescription == null) {
 			rendererGridDescription = GridDescriptionFactory.INSTANCE.createSimpleGrid(1, 1, this);
 		}
@@ -75,7 +75,7 @@ public class HorizontalLayoutSWTRenderer extends AbstractSWTRenderer<VHorizontal
 	 *      org.eclipse.emf.ecp.view.spi.model.VElement, org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
 	@Override
-	protected Control renderControl(GridCell gridCell, Composite parent) throws NoRendererFoundException,
+	protected Control renderControl(SWTGridCell gridCell, Composite parent) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
 		if (gridCell.getColumn() != 0) {
 			return null;
@@ -110,12 +110,12 @@ public class HorizontalLayoutSWTRenderer extends AbstractSWTRenderer<VHorizontal
 
 			column.setLayoutData(LayoutProviderHelper.getSpanningLayoutData(1, 1));
 
-			final GridDescription gridDescription = renderer.getGridDescription(GridDescriptionFactory.INSTANCE
+			final SWTGridDescription gridDescription = renderer.getGridDescription(GridDescriptionFactory.INSTANCE
 				.createEmptyGridDescription());
 			column.setLayout(LayoutProviderHelper.getColumnLayout(gridDescription.getColumns(), false));
 
 			try {
-				for (final GridCell childGridCell : gridDescription.getGrid()) {
+				for (final SWTGridCell childGridCell : gridDescription.getGrid()) {
 					final Control control = childGridCell.getRenderer().render(childGridCell, column);
 					if (control == null) {
 						continue;
@@ -126,7 +126,7 @@ public class HorizontalLayoutSWTRenderer extends AbstractSWTRenderer<VHorizontal
 						gridDescription, childGridCell.getRenderer().getVElement(),
 						control));
 				}
-				for (final GridCell childGridCell : gridDescription.getGrid()) {
+				for (final SWTGridCell childGridCell : gridDescription.getGrid()) {
 					childGridCell.getRenderer().finalizeRendering(column);
 				}
 			} catch (final NoPropertyDescriptorFoundExeption e) {

@@ -22,7 +22,7 @@ import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
-import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescription;
+import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -70,7 +70,7 @@ public class ECPSWTViewRendererImpl implements ECPSWTViewRenderer {
 		final AbstractSWTRenderer<VElement> renderer = factory.getRenderer(
 			viewModelContext.getViewModel(),
 			viewModelContext);
-		final GridDescription gridDescription = renderer.getGridDescription(GridDescriptionFactory.INSTANCE
+		final SWTGridDescription gridDescription = renderer.getGridDescription(GridDescriptionFactory.INSTANCE
 			.createEmptyGridDescription());
 		if (gridDescription.getGrid().size() != 1) {
 			// do sth. if wrong number of controls

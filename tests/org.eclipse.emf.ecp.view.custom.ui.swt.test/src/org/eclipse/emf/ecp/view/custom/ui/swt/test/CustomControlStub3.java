@@ -24,8 +24,8 @@ import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.view.spi.swt.layout.GridCell;
-import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescription;
+import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
+import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.emfstore.bowling.BowlingPackage;
 import org.eclipse.jface.layout.TableColumnLayout;
@@ -88,7 +88,7 @@ public class CustomControlStub3 extends ECPAbstractCustomControlSWT implements E
 	 * @see org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT#getGridDescription()
 	 */
 	@Override
-	public GridDescription getGridDescription() {
+	public SWTGridDescription getGridDescription() {
 		// TODO Auto-generated method stub
 		return GridDescriptionFactory.INSTANCE.createSimpleGrid(1, 2, null);
 	}
@@ -96,11 +96,11 @@ public class CustomControlStub3 extends ECPAbstractCustomControlSWT implements E
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT#renderControl(org.eclipse.emf.ecp.view.spi.swt.layout.GridCell,
+	 * @see org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT#renderControl(org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell,
 	 *      org.eclipse.swt.widgets.Composite)
 	 */
 	@Override
-	public Control renderControl(GridCell cell, Composite parent) throws NoRendererFoundException,
+	public Control renderControl(SWTGridCell cell, Composite parent) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
 		if (cell.getColumn() == 0) {
 			label = new Label(parent, SWT.NONE);

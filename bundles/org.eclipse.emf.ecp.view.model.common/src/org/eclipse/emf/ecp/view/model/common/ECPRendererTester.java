@@ -9,7 +9,7 @@
  * Contributors:
  * Eugen - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.spi.swt;
+package org.eclipse.emf.ecp.view.model.common;
 
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
@@ -18,7 +18,6 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
  * EPCRendererTester is used by the framework to find the best fitting renderer for a specific {@link ViewModelContext}.
  * 
  * @author Eugen Neufeld
- * @since 1.3
  * 
  */
 public interface ECPRendererTester {

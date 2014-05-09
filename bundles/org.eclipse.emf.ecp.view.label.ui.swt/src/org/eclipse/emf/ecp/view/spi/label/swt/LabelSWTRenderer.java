@@ -15,9 +15,9 @@ import org.eclipse.emf.ecp.view.spi.label.model.VLabel;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
-import org.eclipse.emf.ecp.view.spi.swt.layout.GridCell;
-import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescription;
+import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
+import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -30,7 +30,7 @@ import org.eclipse.swt.widgets.Label;
  * 
  */
 public class LabelSWTRenderer extends AbstractSWTRenderer<VLabel> {
-	private GridDescription rendererGridDescription;
+	private SWTGridDescription rendererGridDescription;
 
 	/**
 	 * {@inheritDoc}
@@ -46,13 +46,13 @@ public class LabelSWTRenderer extends AbstractSWTRenderer<VLabel> {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#getGridDescription(GridDescription)
+	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#getGridDescription(SWTGridDescription)
 	 */
 	@Override
-	public GridDescription getGridDescription(GridDescription gridDescription) {
+	public SWTGridDescription getGridDescription(SWTGridDescription gridDescription) {
 		if (rendererGridDescription == null) {
 			rendererGridDescription = GridDescriptionFactory.INSTANCE.createSimpleGrid(1, 1, this);
-			final GridCell gridCell = rendererGridDescription.getGrid().get(0);
+			final SWTGridCell gridCell = rendererGridDescription.getGrid().get(0);
 			gridCell.setVerticalGrab(false);
 			gridCell.setVerticalFill(false);
 			gridCell.setHorizontalFill(true);
@@ -62,7 +62,7 @@ public class LabelSWTRenderer extends AbstractSWTRenderer<VLabel> {
 	}
 
 	@Override
-	protected Control renderControl(GridCell cell, Composite parent)
+	protected Control renderControl(SWTGridCell cell, Composite parent)
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		final Label label = new Label(parent, SWT.NONE);
 		if (getVElement().getName() != null) {

@@ -25,8 +25,8 @@ import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractAdditionalSWTRenderer;
-import org.eclipse.emf.ecp.view.spi.swt.layout.GridCell;
-import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescription;
+import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
+import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -60,11 +60,11 @@ public class SWTDiffMergeAddition extends AbstractAdditionalSWTRenderer<VControl
 	// * {@inheritDoc}
 	// *
 	// * @see
-	// org.eclipse.emf.ecp.view.spi.swt.AbstractAdditionalSWTRenderer#preCellRenderControl(org.eclipse.emf.ecp.view.spi.swt.layout.GridDescription,
-	// * org.eclipse.emf.ecp.view.spi.swt.layout.GridCell, org.eclipse.swt.widgets.Composite)
+	// org.eclipse.emf.ecp.view.spi.swt.AbstractAdditionalSWTRenderer#preCellRenderControl(org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription,
+	// * org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell, org.eclipse.swt.widgets.Composite)
 	// */
 	// @Override
-	// public GridCellDescription preCellRenderControl(GridDescription gridDescription, GridCell cell, Composite parent)
+	// public GridCellDescription preCellRenderControl(SWTGridDescription gridDescription, SWTGridCell cell, Composite parent)
 	// {
 	// // TODO Auto-generated method stub
 	// return null;
@@ -74,11 +74,11 @@ public class SWTDiffMergeAddition extends AbstractAdditionalSWTRenderer<VControl
 	// * {@inheritDoc}
 	// *
 	// * @see
-	// org.eclipse.emf.ecp.view.spi.swt.AbstractAdditionalSWTRenderer#postCellRenderControl(org.eclipse.emf.ecp.view.spi.swt.layout.GridDescription,
-	// * org.eclipse.emf.ecp.view.spi.swt.layout.GridCell, org.eclipse.swt.widgets.Composite)
+	// org.eclipse.emf.ecp.view.spi.swt.AbstractAdditionalSWTRenderer#postCellRenderControl(org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription,
+	// * org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell, org.eclipse.swt.widgets.Composite)
 	// */
 	// @Override
-	// public GridCellDescription postCellRenderControl(GridDescription gridDescription, GridCell cell, Composite
+	// public GridCellDescription postCellRenderControl(SWTGridDescription gridDescription, SWTGridCell cell, Composite
 	// parent) {
 	// if (gridDescription.getColumns() == cell.getColumn() + 1) {
 	// // if (cell.getColumn() == 1) {
@@ -90,12 +90,12 @@ public class SWTDiffMergeAddition extends AbstractAdditionalSWTRenderer<VControl
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#getGridDescription(org.eclipse.emf.ecp.view.spi.swt.layout.GridDescription)
+	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#getGridDescription(org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription)
 	 */
 	@Override
-	public GridDescription getGridDescription(GridDescription gridDescription) {
-		final GridDescription addGridDescription = gridDescription.copy();
-		addGridDescription.getGrid().add(new GridCell(0, addGridDescription.getColumns(), this));
+	public SWTGridDescription getGridDescription(SWTGridDescription gridDescription) {
+		final SWTGridDescription addGridDescription = gridDescription.copy();
+		addGridDescription.getGrid().add(new SWTGridCell(0, addGridDescription.getColumns(), this));
 		addGridDescription.setColumns(addGridDescription.getColumns() + 1);
 		return addGridDescription;
 	}
@@ -103,11 +103,11 @@ public class SWTDiffMergeAddition extends AbstractAdditionalSWTRenderer<VControl
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#renderControl(org.eclipse.emf.ecp.view.spi.swt.layout.GridCell,
+	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#renderControl(org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell,
 	 *      org.eclipse.swt.widgets.Composite)
 	 */
 	@Override
-	protected Control renderControl(GridCell cell, Composite parent) throws NoRendererFoundException,
+	protected Control renderControl(SWTGridCell cell, Composite parent) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
 		// if (gridDescription.getColumns() == cell.getColumn() + 1) {
 		if (cell.getRenderer() == this) {
