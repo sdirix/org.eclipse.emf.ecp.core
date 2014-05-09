@@ -131,7 +131,8 @@ public class IDEViewModelRegistryImpl implements IDEViewModelRegistry {
 
 	}
 
-	private void persistSelectedEcore(String ecorePath, String viewModelPath) {
+	@Override
+	public void persistSelectedEcore(String ecorePath, String viewModelPath) {
 
 		final ResourceSet resourceSet = new ResourceSetImpl();
 		final int nameStart = viewModelPath.lastIndexOf("/") + 1; //$NON-NLS-1$

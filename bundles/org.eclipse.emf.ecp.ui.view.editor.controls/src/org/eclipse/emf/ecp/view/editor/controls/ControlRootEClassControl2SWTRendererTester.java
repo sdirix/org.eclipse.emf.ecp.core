@@ -13,7 +13,7 @@ package org.eclipse.emf.ecp.view.editor.controls;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.view.internal.core.swt.renderer.SimpleControlSWTRendererTester;
+import org.eclipse.emf.ecp.view.model.common.SimpleControlRendererTester;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
@@ -23,12 +23,12 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * @author Alexandra Buzila
  * 
  */
-public class ControlRootEClassControl2SWTRendererTester extends SimpleControlSWTRendererTester {
+public class ControlRootEClassControl2SWTRendererTester extends SimpleControlRendererTester {
 
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.internal.core.swt.renderer.SimpleControlSWTRendererTester#isSingleValue()
+	 * @see org.eclipse.emf.ecp.view.internal.core.swt.renderer.SimpleControlRendererTester#isSingleValue()
 	 */
 	@Override
 	protected boolean isSingleValue() {
@@ -38,7 +38,7 @@ public class ControlRootEClassControl2SWTRendererTester extends SimpleControlSWT
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.internal.core.swt.renderer.SimpleControlSWTRendererTester#getPriority()
+	 * @see org.eclipse.emf.ecp.view.internal.core.swt.renderer.SimpleControlRendererTester#getPriority()
 	 */
 	@Override
 	protected int getPriority() {
@@ -55,7 +55,7 @@ public class ControlRootEClassControl2SWTRendererTester extends SimpleControlSWT
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.internal.core.swt.renderer.SimpleControlSWTRendererTester#getSupportedClassType()
+	 * @see org.eclipse.emf.ecp.view.internal.core.swt.renderer.SimpleControlRendererTester#getSupportedClassType()
 	 */
 	@Override
 	public int isApplicable(VElement vElement, ViewModelContext context) {
@@ -70,7 +70,7 @@ public class ControlRootEClassControl2SWTRendererTester extends SimpleControlSWT
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.internal.core.swt.renderer.SimpleControlSWTRendererTester#getSupportedClassType()
+	 * @see org.eclipse.emf.ecp.view.internal.core.swt.renderer.SimpleControlRendererTester#getSupportedClassType()
 	 */
 	@Override
 	protected Class<?> getSupportedClassType() {

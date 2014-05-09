@@ -59,14 +59,14 @@ public interface IDEViewModelRegistry {
 	 */
 	void unregisterViewModelEditor(VView viewModel, ViewModelEditorCallback viewModelEditor);
 
-	// /**
-	// * Saves the path {@code ecorePath} of the Ecore associated with the {@linkplain VView} located at the path
-	// * {@code viewModelPath} in an IDEConfig file.
-	// *
-	// * @param ecorePath path to the Ecore associated with the {@code viewModel}
-	// * @param viewModelPath the path to the VView
-	// */
-	// void persistSelectedEcore(String ecorePath, String viewModelPath);
+	/**
+	 * Saves the path {@code ecorePath} of the Ecore associated with the {@linkplain VView} located at the path
+	 * {@code viewModelPath} in an IDEConfig file.
+	 * 
+	 * @param ecorePath path to the Ecore associated with the {@code viewModel}
+	 * @param viewModelPath the path to the VView
+	 */
+	void persistSelectedEcore(String ecorePath, String viewModelPath);
 
 	/**
 	 * Saves the path {@code ecorePath} of the Ecore associated with the {@code viewModel} in an {@link IDEConfig} file.
