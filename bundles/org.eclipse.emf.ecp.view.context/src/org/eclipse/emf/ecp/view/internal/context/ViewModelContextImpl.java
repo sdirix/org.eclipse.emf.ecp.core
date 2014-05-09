@@ -191,6 +191,10 @@ public class ViewModelContextImpl implements ViewModelContext {
 
 	private void updateControlMapping(VControl vControl) {
 		final Iterator<Setting> iterator = vControl.getDomainModelReference().getIterator();
+		// delete old mapping
+		for (final UniqueSetting setting : settingToControlMap.keySet()) {
+			settingToControlMap.get(setting).remove(vControl);
+		}
 		while (iterator.hasNext()) {
 			final Setting setting = iterator.next();
 			final UniqueSetting uniqueSetting = UniqueSetting.createSetting(setting);

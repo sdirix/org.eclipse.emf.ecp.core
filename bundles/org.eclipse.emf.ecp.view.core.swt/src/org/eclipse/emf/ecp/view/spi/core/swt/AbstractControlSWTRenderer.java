@@ -11,6 +11,9 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.core.swt;
 
+import java.util.Iterator;
+import java.util.Map.Entry;
+
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.observable.value.WritableValue;
@@ -25,6 +28,7 @@ import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
+import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
@@ -81,10 +85,10 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 
 			@Override
 			public void notifyChange() {
-				value.setValue(getVElement().getDomainModelReference().getIterator().next().getEObject());
+				updateControl();
 			}
 		});
-		value.setValue(getVElement().getDomainModelReference().getIterator().next().getEObject());
+		updateControl();
 	}
 
 	@Override
@@ -226,5 +230,19 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 		final Label validationLabel = new Label(composite, SWT.NONE);
 		validationLabel.setBackground(composite.getBackground());
 		return validationLabel;
+	}
+
+	private void updateControl() {
+		final Iterator<Setting> settings = getVElement().getDomainModelReference().getIterator();
+		if (settings.hasNext()) {
+			value.setValue(settings.next().getEObject());
+			applyEnable();
+		} else {
+			value.setValue(null);
+			for (final Entry<SWTGridCell, Control> entry : getControls().entrySet()) {
+				setControlEnabled(entry.getKey(), entry.getValue(), false);
+
+			}
+		}
 	}
 }

@@ -15,11 +15,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -36,6 +38,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.SettingPath;
+import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 
@@ -352,7 +355,7 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 
 	private final List<Setting> resolvedSetting = new ArrayList<Setting>();
 
-	private boolean resolve(EObject domainModel) {
+	private boolean resolve(EObject domainModel, boolean createMissingChildren) {
 		final EStructuralFeature domainModelEFeatureValue = getDomainModelEFeature();
 		if (domainModel == null || domainModelEFeatureValue == null) {
 			return false;
@@ -361,6 +364,7 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 		EObject currentResolvedEObject = domainModel;
 		final ArrayList<EReference> currentLeftReferences = new ArrayList<EReference>(getDomainModelEReferencePath());
 		for (final EReference eReference : getDomainModelEReferencePath()) {
+			resolvedSetting.add(InternalEObject.class.cast(currentResolvedEObject).eSetting(eReference));
 			if (eReference.isMany()) {
 				break;
 			}
@@ -368,11 +372,13 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 				return false;
 			}
 			EObject child = (EObject) currentResolvedEObject.eGet(eReference);
-			if (child == null) {
+			if (createMissingChildren && child == null) {
 				child = EcoreUtil.create(eReference.getEReferenceType());
 				currentResolvedEObject.eSet(eReference, child);
 			}
-			resolvedSetting.add(InternalEObject.class.cast(currentResolvedEObject).eSetting(eReference));
+			if (child == null) {
+				break;
+			}
 			currentResolvedEObject = child;
 			currentLeftReferences.remove(eReference);
 		}
@@ -450,7 +456,8 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 	@Override
 	public boolean init(final EObject object) {
 		rootEObject = object;
-		return resolve(object);
+
+		return resolve(object, true);
 	}
 
 	/**
@@ -533,11 +540,42 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 			return;
 		}
 		if (getDomainModelEReferencePath().contains(notification.getStructuralFeature())
-			|| getDomainModelEFeature().equals(notification.getStructuralFeature())) {
+			||
+			getDomainModelEFeature().equals(notification.getStructuralFeature())) { //
 
-			resolve(rootEObject);
+			cleanDiagnostic(getDomainModelEFeature().equals(notification.getStructuralFeature()), notification);
+
+			resolve(rootEObject, false);
 			for (final DomainModelReferenceChangeListener listener : getChangeListener()) {
 				listener.notifyChange();
+			}
+		}
+	}
+
+	/**
+	 * @param notification
+	 */
+	private void cleanDiagnostic(boolean baseFeatureChanged, ModelChangeNotification notification) {
+		final VControl vControl = (VControl) eContainer();
+		if (vControl.getDiagnostic() == null) {
+			return;
+		}
+		if (!baseFeatureChanged) {
+			vControl.setDiagnostic(null);
+		} else if (!notification.getStructuralFeature().isMany()) {
+			vControl.setDiagnostic(null);
+		} else if (Notification.REMOVE == notification.getRawNotification().getEventType()
+			|| Notification.REMOVE_MANY == notification.getRawNotification().getEventType()) {
+			final EObject oldValue = (EObject) notification.getRawNotification().getOldValue();
+			final Set<Diagnostic> toDelete = new LinkedHashSet<Diagnostic>();
+			for (final Object diagnosticObject : vControl.getDiagnostic().getDiagnostics()) {
+				final Diagnostic diagnostic = (Diagnostic) diagnosticObject;
+				if (diagnostic.getData().get(0) == oldValue) {
+					toDelete.add(diagnostic);
+				}
+			}
+			for (final Diagnostic diagnostic : toDelete) {
+				vControl.getDiagnostic().getDiagnostics().remove(diagnostic);
 			}
 		}
 	}

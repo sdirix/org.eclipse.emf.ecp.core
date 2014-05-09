@@ -39,11 +39,11 @@ import static org.junit.Assert.*;
 
 @RunWith(DatabindingClassRunner.class)
 public class DynamicDMRTest {
-	
+
 	private static final String EMPTY = "";
 	private static final String NAME_INIT = "name";
 	private static final String NAME_OTHER = "other";
-	
+
 	private Shell shell;
 	private VView view;
 	private Fan domain;
@@ -56,123 +56,137 @@ public class DynamicDMRTest {
 		view.setRootEClass(BowlingPackage.eINSTANCE.getFan());
 		domain = BowlingFactory.eINSTANCE.createFan();
 	}
-	
+
 	@Test
 	public void testInitMissingContainmentElement() {
-		//setup
+		// setup
 		addFavMerchNameControl();
-		//act
+		// act
 		render();
-		//assert
-		assertText(EMPTY, false);
+		// assert
+		assertText(EMPTY, true);
 	}
-	
+
 	@Test
 	public void testInitMissingReferencedElement() {
-		//setup
+		// setup
 		addFavPlayerNameControl();
-		//act
+		// act
 		render();
-		//assert
-		assertText(EMPTY, false);
+		// assert
+		assertText(EMPTY, true);
 	}
-	
+
 	@Test
 	public void testRemoveContainmentElement() {
-		//setup
+		// setup
 		addFavMerchNameControl();
 		changeDomain(merchandise(NAME_INIT), null);
 		render();
 		assertText(NAME_INIT, true);
-		//act
+		// act
 		changeDomain(null, null);
-		//assert
+		// assert
 		assertText(EMPTY, false);
 	}
-	
+
 	@Test
 	public void testRemoveReferencedElement() {
-		//setup
+		// setup
 		addFavPlayerNameControl();
 		changeDomain(null, player(NAME_INIT));
 		render();
 		assertText(NAME_INIT, true);
-		//act
+		// act
 		changeDomain(null, null);
-		//assert
+		// assert
 		assertText(EMPTY, false);
 	}
-	
+
 	@Test
 	public void testAddMissingContainmentElement() {
-		//setup
+		// setup
 		addFavMerchNameControl();
 		render();
-		domain.getFavouriteMerchandise().setName("bla");
-		assertText("bla", false);
-//		assertText(EMPTY, false);
-		//act
+		 assertText(EMPTY, true);
+		// act
 		changeDomain(merchandise(NAME_INIT), null);
-		//assert
+		// assert
 		assertText(NAME_INIT, true);
 	}
-	
+
 	@Test
 	public void testAddMissingContainmentElement2Times() {
-		//setup
+		// setup
 		addFavMerchNameControl();
 		render();
-		domain.getFavouriteMerchandise().setName("bla");
-		assertText("bla", false);
-//		assertText(EMPTY, false);
-		//act
+		assertText(EMPTY, true);
+		// act
 		changeDomain(merchandise(NAME_INIT), null);
-		//assert
+		// assert
 		assertText(NAME_INIT, true);
-		
-		changeDomain(merchandise(NAME_INIT+"2"), null);
-		//assert
-		assertText(NAME_INIT+"2", true);
+
+		changeDomain(merchandise(NAME_INIT + "2"), null);
+		// assert
+		assertText(NAME_INIT + "2", true);
 	}
-	
+
+	@Test
+	public void testAddRemovedContainmentElement() {
+		// setup
+		addFavMerchNameControl();
+		changeDomain(merchandise(NAME_INIT), null);
+		render();
+		assertText(NAME_INIT, true);
+		// act
+		changeDomain(null, null);
+		// assert
+		assertText(EMPTY, false);
+
+		// act
+		changeDomain(merchandise(NAME_INIT), null);
+		// assert
+		assertText(NAME_INIT, true);
+	}
+
 	@Test
 	public void testAddMissingReferencedElement() {
-		//setup
+		// setup
 		addFavPlayerNameControl();
 		render();
-		assertText(EMPTY, false);
-		//act
+		assertText(EMPTY, true);
+		// act
 		changeDomain(null, player(NAME_INIT));
-		//assert
+		// assert
 		assertText(NAME_INIT, true);
 	}
-	
+
 	@Test
 	public void testReplaceContainmentElement() {
-		//setup
+		// setup
 		addFavMerchNameControl();
 		changeDomain(merchandise(NAME_INIT), null);
 		render();
 		assertText(NAME_INIT, true);
-		//act
+		// act
 		changeDomain(merchandise(NAME_OTHER), null);
-		//assert
+		// assert
 		assertText(NAME_OTHER, true);
 	}
-	
+
 	@Test
 	public void testReplaceReferencedElement() {
-		//setup
+		// setup
 		addFavPlayerNameControl();
 		changeDomain(null, player(NAME_INIT));
 		render();
 		assertText(NAME_INIT, true);
-		//act
+		// act
 		changeDomain(null, player(NAME_OTHER));
-		//assert
+		// assert
 		assertText(NAME_OTHER, true);
 	}
-	
+
 	private void render() {
 		try {
 			control = SWTViewTestHelper.render(view, domain, shell);
@@ -182,50 +196,54 @@ public class DynamicDMRTest {
 			fail("Could not render view: " + e.getMessage());
 		}
 	}
-	
-	private void changeDomain(Merchandise favMerchandise, Player favPlayer, Merchandise... merchandise) {
+
+	private void changeDomain(Merchandise favMerchandise, Player favPlayer,
+			Merchandise... merchandise) {
 		domain.setFavouriteMerchandise(favMerchandise);
 		domain.setFavouritePlayer(favPlayer);
 		domain.getFanMerchandise().addAll(Arrays.asList(merchandise));
 	}
-	
+
 	private Merchandise merchandise(String name) {
 		Merchandise merchandise = BowlingFactory.eINSTANCE.createMerchandise();
 		merchandise.setName(name);
 		return merchandise;
 	}
-	
+
 	private Player player(String name) {
 		Player player = BowlingFactory.eINSTANCE.createPlayer();
 		player.setName(name);
 		return player;
 	}
-	
+
 	private void addFavMerchNameControl() {
 		VControl control = VViewFactory.eINSTANCE.createControl();
-		initControl(control, BowlingPackage.eINSTANCE.getMerchandise_Name(), BowlingPackage.eINSTANCE.getFan_FavouriteMerchandise());
+		initControl(control, BowlingPackage.eINSTANCE.getMerchandise_Name(),
+				BowlingPackage.eINSTANCE.getFan_FavouriteMerchandise());
 		view.getChildren().add(control);
 	}
-	
+
 	private void addFavPlayerNameControl() {
 		VControl control = VViewFactory.eINSTANCE.createControl();
-		initControl(control, BowlingPackage.eINSTANCE.getPlayer_Name(), BowlingPackage.eINSTANCE.getFan_FavouritePlayer());
+		initControl(control, BowlingPackage.eINSTANCE.getPlayer_Name(),
+				BowlingPackage.eINSTANCE.getFan_FavouritePlayer());
 		view.getChildren().add(control);
 	}
-	
-	private void initControl(VControl control, EStructuralFeature feature, EReference... references) {
+
+	private void initControl(VControl control, EStructuralFeature feature,
+			EReference... references) {
 		control.setDomainModelReference(feature, Arrays.asList(references));
 	}
-	
+
 	private Text getText() {
 		Composite composite = (Composite) control;
 		Control text = composite.getChildren()[2];
 		return (Text) text;
 	}
-	
+
 	private void assertText(String message, boolean enabled) {
 		Text text = getText();
-//		assertEquals("Enablement of text control: ", enabled, text.isEnabled());
+		assertEquals("Enablement of text control: ", enabled, text.isEnabled()&& text.getEditable());
 		assertEquals("Text of text control: ", message, text.getText());
 	}
 

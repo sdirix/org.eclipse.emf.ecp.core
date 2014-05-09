@@ -635,7 +635,7 @@ public class ViewModelContextTest {
 
 		final Set<VControl> controls2 = viewModelContext.getControlsFor(((PlayerImpl) player)
 			.eSetting(BowlingPackage.eINSTANCE.getPlayer_Name()));
-		assertNull(controls2);
+		assertEquals(0, controls2.size());
 
 		final Set<VControl> controls3 = viewModelContext.getControlsFor(((PlayerImpl) player2)
 			.eSetting(BowlingPackage.eINSTANCE.getPlayer_Name()));

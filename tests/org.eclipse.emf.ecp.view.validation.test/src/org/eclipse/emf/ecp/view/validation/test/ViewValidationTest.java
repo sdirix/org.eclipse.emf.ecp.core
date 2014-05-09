@@ -1403,6 +1403,7 @@ public class ViewValidationTest extends CommonValidationTest {
 		final Set<Diagnostic> result = new LinkedHashSet<Diagnostic>();
 
 		final ViewValidationListener listener = new ViewValidationListener() {
+			@Override
 			public void onNewValidation(Set<Diagnostic> validationResults) {
 				result.addAll(validationResults);
 			}
@@ -1427,6 +1428,7 @@ public class ViewValidationTest extends CommonValidationTest {
 		final Set<Diagnostic> lastResult = new LinkedHashSet<Diagnostic>();
 
 		final ViewValidationListener listener = new ViewValidationListener() {
+			@Override
 			public void onNewValidation(Set<Diagnostic> validationResults) {
 				lastResult.clear();
 				lastResult.addAll(validationResults);

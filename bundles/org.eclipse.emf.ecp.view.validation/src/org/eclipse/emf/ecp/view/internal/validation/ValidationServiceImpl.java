@@ -100,6 +100,9 @@ public class ValidationServiceImpl implements ValidationService {
 					}
 				}
 			}
+			if (!VElement.class.isInstance(notification.getNotifier())) {
+				return;
+			}
 			switch (notification.getRawNotification().getEventType()) {
 			case Notification.REMOVE:
 			case Notification.REMOVE_MANY:
@@ -166,9 +169,24 @@ public class ValidationServiceImpl implements ValidationService {
 			}
 			final Notification rawNotification = notification.getRawNotification();
 			switch (rawNotification.getEventType()) {
+			// FIXME: move add, remove to add/remove instead of doing here
 			case Notification.ADD:
+				validate(notification.getNotifier());
+				// in case of not containment references
+				if (EReference.class.isInstance(notification.getStructuralFeature())
+				// && !EReference.class.cast(notification.getStructuralFeature()).isContainment()
+				) {
+					validate((EObject) notification.getRawNotification().getNewValue());
+				}
+				break;
 			case Notification.ADD_MANY:
-				validate(getAllEObjects(notification.getNotifier()));
+				validate(notification.getNotifier());
+				// in case of not containment references
+				if (EReference.class.isInstance(notification.getStructuralFeature())
+				// && !EReference.class.cast(notification.getStructuralFeature()).isContainment()
+				) {
+					validate((Collection<EObject>) notification.getRawNotification().getNewValue());
+				}
 				break;
 			case Notification.REMOVE:
 				if (EReference.class.isInstance(rawNotification.getFeature())) {
@@ -178,13 +196,17 @@ public class ValidationServiceImpl implements ValidationService {
 				}
 				//$FALL-THROUGH$
 			case Notification.REMOVE_MANY:
-				validate(getAllEObjects(notification.getNotifier()));
-
+				validate(notification.getNotifier());
 				break;
 			case Notification.REMOVING_ADAPTER:
 				break;
 			default:
-				validate(getAllEObjects(notification.getNotifier()));
+				validate(notification.getNotifier());
+				if (EReference.class.isInstance(notification.getStructuralFeature())) {
+					if (notification.getRawNotification().getNewValue() != null) {
+						validate((EObject) notification.getRawNotification().getNewValue());
+					}
+				}
 			}
 		}
 
@@ -195,7 +217,7 @@ public class ValidationServiceImpl implements ValidationService {
 		 */
 		@Override
 		public void notifyAdd(Notifier notifier) {
-			// do nothing
+			// validate((EObject) notifier);
 		}
 
 		/**
@@ -205,7 +227,7 @@ public class ValidationServiceImpl implements ValidationService {
 		 */
 		@Override
 		public void notifyRemove(Notifier notifier) {
-			// do nothing
+			// validate((EObject) notifier);
 		}
 
 	}

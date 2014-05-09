@@ -18,6 +18,7 @@ import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.databinding.EMFUpdateValueStrategy;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.view.internal.core.swt.Activator;
 import org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer;
@@ -175,12 +176,13 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 	protected void setControlEnabled(SWTGridCell gridCell, Control control, boolean enabled) {
 		if (getVElement().getLabelAlignment() == LabelAlignment.NONE && gridCell.getColumn() == 1
 			|| getVElement().getLabelAlignment() == LabelAlignment.LEFT && gridCell.getColumn() == 2) {
-			final Setting setting = getVElement().getDomainModelReference().getIterator().next();
+			final EStructuralFeature feature = getVElement().getDomainModelReference().getEStructuralFeatureIterator()
+				.next();
 			Control controlToUnset = control;
-			if (setting.getEStructuralFeature().isUnsettable()) {
-				if (!setting.isSet()) {
-					return;
-				}
+			if (feature.isUnsettable()) {
+				// if (!setting.isSet()) {
+				// return;
+				// }
 				controlToUnset = Composite.class.cast(Composite.class.cast(control).getChildren()[0]).getChildren()[0];
 			}
 			Text.class.cast(controlToUnset).setEditable(enabled);
