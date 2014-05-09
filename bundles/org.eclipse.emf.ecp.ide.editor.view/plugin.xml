@@ -12,23 +12,4 @@
             name="View Model Editor">
       </editor>
    </extension>
-  <extension
-        point="org.eclipse.ui.menus">
-    <menuContribution
-            allPopups="false"
-            locationURI="popup:org.eclipse.jdt.ui.PackageExplorer">
-         <separator
-               name="org.eclipse.emf.ecp.ui.e3.viewModelSeparator"
-               visible="true">
-         </separator>
-	</menuContribution>
-  </extension>
-  <extension
-        point="org.eclipse.ui.commands">
-     <command
-           defaultHandler="org.eclipse.emf.ecp.ide.editor.view.handlers.OpenPreviewView"
-           id="org.eclipse.emf.ecp.ide.editor.view.openPreviewCommand"
-           name="Open Preview">
-     </command>
-  </extension>
 </plugin>

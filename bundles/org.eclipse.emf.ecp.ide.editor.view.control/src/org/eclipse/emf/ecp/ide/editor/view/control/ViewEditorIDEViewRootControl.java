@@ -60,6 +60,7 @@ public class ViewEditorIDEViewRootControl extends ControlRootEClassControl {
 		dialog.setAllowMultiple(false);
 		dialog.setValidator(new ISelectionStatusValidator() {
 
+			@Override
 			public IStatus validate(Object[] selection) {
 				if (selection.length == 1) {
 					if (selection[0] instanceof IFile) {

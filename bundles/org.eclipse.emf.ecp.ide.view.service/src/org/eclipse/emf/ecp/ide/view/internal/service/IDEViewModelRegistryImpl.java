@@ -23,6 +23,8 @@ import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.util.URI;
@@ -35,6 +37,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
+import org.eclipse.emf.ecp.ide.view.service.Activator;
 import org.eclipse.emf.ecp.ide.view.service.IDEViewModelRegistry;
 import org.eclipse.emf.ecp.ide.view.service.ViewModelEditorCallback;
 import org.eclipse.emf.ecp.internal.ide.util.EcoreHelper;
@@ -95,14 +98,16 @@ public class IDEViewModelRegistryImpl implements IDEViewModelRegistry {
 						while (delta.getAffectedChildren().length != 0) {
 							delta = delta.getAffectedChildren()[0];
 						}
-						if (ecorePath.contains(delta.getResource().getFullPath().toString())) {
-							for (final VView view : ecoreViewMapping.get(ecorePath)) {
+						for (final VView view : ecoreViewMapping.get(ecorePath)) {
+							final String ecorePath = getEcorePath(view);
+							if (ecorePath.contains(delta.getResource().getFullPath().toString())) {
 								final ViewModelEditorCallback viewModelEditorCallback = viewModelViewModelEditorMapping
 									.get(view);
 								if (viewModelEditorCallback == null) {
 									continue;
 								}
-								viewModelEditorCallback.reloadViewModel();
+								// viewModelEditorCallback.reloadViewModel();
+								viewModelEditorCallback.signalEcoreOutOfSync();
 							}
 						}
 					}
@@ -121,15 +126,12 @@ public class IDEViewModelRegistryImpl implements IDEViewModelRegistry {
 	public void registerViewModelEditor(VView viewModel, ViewModelEditorCallback viewModelEditor) throws IOException {
 
 		viewModelViewModelEditorMapping.put(viewModel, viewModelEditor);
-		// TODO remove
-		// resolve proxies and register referenced ecores
 		final String ecorePath = getEcorePath(viewModel);
 		EcoreHelper.registerEcore(ecorePath);
 
 	}
 
-	@Override
-	public void persistSelectedEcore(String ecorePath, String viewModelPath) {
+	private void persistSelectedEcore(String ecorePath, String viewModelPath) {
 
 		final ResourceSet resourceSet = new ResourceSetImpl();
 		final int nameStart = viewModelPath.lastIndexOf("/") + 1; //$NON-NLS-1$
@@ -145,8 +147,7 @@ public class IDEViewModelRegistryImpl implements IDEViewModelRegistry {
 		try {
 			resource.save(null);
 		} catch (final IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
 		}
 	}
 

@@ -19,9 +19,10 @@ import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
-import org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl;
 import org.eclipse.emf.ecp.edit.spi.util.ECPModelElementChangeListener;
+import org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
@@ -38,9 +39,7 @@ import org.eclipse.swt.widgets.Label;
  * @author Alexandra Buzila
  * 
  */
-@SuppressWarnings("deprecation")
-public class ControlRootEClassControl2 extends SWTControl {
-	// TODO extend SimpleControlSWTControlSWTRenderer instead of SWTControl
+public class ControlRootEClassControl2SWTRenderer extends SimpleControlSWTControlSWTRenderer {
 
 	private Composite labelComposite;
 	private Label label;
@@ -52,47 +51,20 @@ public class ControlRootEClassControl2 extends SWTControl {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl#fillControlComposite(org.eclipse.swt.widgets.Composite)
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer#createBindings(org.eclipse.swt.widgets.Control,
+	 *      org.eclipse.emf.ecore.EStructuralFeature.Setting)
 	 */
 	@Override
-	protected void fillControlComposite(Composite composite) {
-		final Composite parent = new Composite(composite, SWT.NONE);
-		parent.setBackground(composite.getBackground());
-		GridLayoutFactory.fillDefaults().numColumns(1).spacing(0, 0).equalWidth(false).applyTo(parent);
-		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(parent);
+	protected Binding[] createBindings(Control control, final Setting setting) {
 
-		labelComposite = new Composite(parent, SWT.NONE);
-		GridLayoutFactory.fillDefaults().numColumns(2).equalWidth(false).applyTo(labelComposite);
-		labelComposite.setBackground(parent.getBackground());
-
-		// create labels
-
-		imageLabel = new Label(labelComposite, SWT.NONE);
-		imageLabel.setBackground(labelComposite.getBackground());
-		label = new Label(labelComposite, SWT.NONE);
-		label.setBackground(labelComposite.getBackground());
-
-		composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
-			new ReflectiveItemProviderAdapterFactory(),
-			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
-		adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(composedAdapterFactory);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl#bindValue()
-	 */
-	@Override
-	public Binding bindValue() {
-
+		final Binding[] bindings = new Binding[3];
 		final IObservableValue value = SWTObservables.observeText(label);
 
-		getDataBindingContext().bindValue(value, getModelValue(), new UpdateValueStrategy() {
+		bindings[0] = getDataBindingContext().bindValue(value, getModelValue(setting), new UpdateValueStrategy() {
 
 			@Override
 			public Object convert(Object value) {
-				return getModelValue().getValue();
+				return getModelValue(setting).getValue();
 			}
 		}, new UpdateValueStrategy() {
 			@Override
@@ -102,25 +74,26 @@ public class ControlRootEClassControl2 extends SWTControl {
 			}
 		});
 		final IObservableValue tooltipValue = SWTObservables.observeTooltipText(label);
-		getDataBindingContext().bindValue(tooltipValue, getModelValue(), new UpdateValueStrategy() {
+		bindings[1] = getDataBindingContext().bindValue(tooltipValue, getModelValue(setting),
+			new UpdateValueStrategy() {
 
-			@Override
-			public Object convert(Object value) {
-				return getModelValue().getValue();
-			}
-		}, new UpdateValueStrategy() {
-			@Override
-			public Object convert(Object value) {
-				return getText(value);
-			}
-		});
+				@Override
+				public Object convert(Object value) {
+					return getModelValue(setting).getValue();
+				}
+			}, new UpdateValueStrategy() {
+				@Override
+				public Object convert(Object value) {
+					return getText(value);
+				}
+			});
 
 		final IObservableValue imageValue = SWTObservables.observeImage(imageLabel);
-		getDataBindingContext().bindValue(imageValue, getModelValue(), new UpdateValueStrategy() {
+		bindings[2] = getDataBindingContext().bindValue(imageValue, getModelValue(setting), new UpdateValueStrategy() {
 
 			@Override
 			public Object convert(Object value) {
-				return getModelValue().getValue();
+				return getModelValue(setting).getValue();
 			}
 		}, new UpdateValueStrategy() {
 			@Override
@@ -129,7 +102,7 @@ public class ControlRootEClassControl2 extends SWTControl {
 			}
 		});
 
-		return null;
+		return bindings;
 	}
 
 	private Object getImage(Object value) {
@@ -139,26 +112,6 @@ public class ControlRootEClassControl2 extends SWTControl {
 	private Object getText(Object value) {
 		final String textName = adapterFactoryItemDelegator.getText(value);
 		return textName == null ? "" : textName; //$NON-NLS-1$
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl#getUnsetLabelText()
-	 */
-	@Override
-	protected String getUnsetLabelText() {
-		return "(Not Set)"; //$NON-NLS-1$
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl#getUnsetButtonTooltip()
-	 */
-	@Override
-	protected String getUnsetButtonTooltip() {
-		return "Unset"; //$NON-NLS-1$
 	}
 
 	private void updateChangeListener(final EObject value) {
@@ -193,12 +146,42 @@ public class ControlRootEClassControl2 extends SWTControl {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl#getControlsForTooltip()
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer#createSWTControl(org.eclipse.swt.widgets.Composite,
+	 *      org.eclipse.emf.ecore.EStructuralFeature.Setting)
 	 */
 	@Override
-	protected Control[] getControlsForTooltip() {
-		// TODO Auto-generated method stub
-		return null;
+	protected Control createSWTControl(Composite parent2, Setting setting) {
+		final Composite composite2 = new Composite(parent2, SWT.NONE);
+		composite2.setBackground(parent2.getBackground());
+		GridLayoutFactory.fillDefaults().numColumns(1).spacing(0, 0).equalWidth(false).applyTo(composite2);
+		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(composite2);
+
+		labelComposite = new Composite(composite2, SWT.NONE);
+		GridLayoutFactory.fillDefaults().numColumns(2).equalWidth(false).applyTo(labelComposite);
+		labelComposite.setBackground(composite2.getBackground());
+
+		// create labels
+		imageLabel = new Label(labelComposite, SWT.NONE);
+		imageLabel.setBackground(labelComposite.getBackground());
+		label = new Label(labelComposite, SWT.NONE);
+		label.setBackground(labelComposite.getBackground());
+
+		composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
+			new ReflectiveItemProviderAdapterFactory(),
+			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
+		adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(composedAdapterFactory);
+
+		return composite2;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTRenderer#getUnsetText()
+	 */
+	@Override
+	protected String getUnsetText() {
+		return "Not set"; //$NON-NLS-1$
 	}
 
 	@Override
@@ -210,4 +193,5 @@ public class ControlRootEClassControl2 extends SWTControl {
 		label.dispose();
 		super.dispose();
 	}
+
 }

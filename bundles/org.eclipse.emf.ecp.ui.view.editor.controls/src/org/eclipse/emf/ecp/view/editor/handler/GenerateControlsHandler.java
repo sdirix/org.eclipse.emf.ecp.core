@@ -19,6 +19,7 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.ListenerList;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.ecore.EClass;
@@ -51,6 +52,10 @@ import org.eclipse.ui.handlers.HandlerUtil;
  * 
  */
 public class GenerateControlsHandler extends MasterDetailAction {
+
+	private final boolean enabled = true;
+
+	private transient ListenerList listenerList;
 
 	/**
 	 * {@inheritDoc}
@@ -210,4 +215,64 @@ public class GenerateControlsHandler extends MasterDetailAction {
 		return object instanceof VView || object instanceof VContainer;
 	}
 
+	// /**
+	// * {@inheritDoc}
+	// *
+	// * @see org.eclipse.core.commands.IHandler#addHandlerListener(org.eclipse.core.commands.IHandlerListener)
+	// */
+	// @Override
+	// public void addHandlerListener(IHandlerListener handlerListener) {
+	// if (listenerList == null) {
+	// listenerList = new ListenerList(ListenerList.IDENTITY);
+	// }
+	//
+	// listenerList.add(handlerListener);
+	// }
+	//
+	// /**
+	// * {@inheritDoc}
+	// *
+	// * @see org.eclipse.core.commands.IHandler#dispose()
+	// */
+	// @Override
+	// public void dispose() {
+	// // TODO Auto-generated method stub
+	//
+	// }
+	//
+	// /**
+	// * {@inheritDoc}
+	// *
+	// * @see org.eclipse.core.commands.IHandler#isEnabled()
+	// */
+	// @Override
+	// public boolean isEnabled() {
+	// return enabled;
+	// }
+	//
+	// /**
+	// * {@inheritDoc}
+	// *
+	// * @see org.eclipse.core.commands.IHandler#isHandled()
+	// */
+	// @Override
+	// public boolean isHandled() {
+	// return true;
+	// }
+	//
+	// /**
+	// * {@inheritDoc}
+	// *
+	// * @see org.eclipse.core.commands.IHandler#removeHandlerListener(org.eclipse.core.commands.IHandlerListener)
+	// */
+	// @Override
+	// public void removeHandlerListener(IHandlerListener handlerListener) {
+	// if (listenerList != null) {
+	// listenerList.remove(handlerListener);
+	//
+	// if (listenerList.isEmpty()) {
+	// listenerList = null;
+	// }
+	// }
+	// }
 }

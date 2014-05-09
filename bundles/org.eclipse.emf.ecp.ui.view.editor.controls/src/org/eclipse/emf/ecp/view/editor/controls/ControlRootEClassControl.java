@@ -36,7 +36,6 @@ import org.eclipse.emf.ecp.edit.internal.swt.reference.LinkControl;
 import org.eclipse.emf.ecp.edit.spi.ReferenceService;
 import org.eclipse.emf.ecp.ide.view.internal.service.IDEViewModelRegistryImpl;
 import org.eclipse.emf.ecp.ide.view.service.IDEViewModelRegistry;
-import org.eclipse.emf.ecp.edit.spi.ReferenceService;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.edit.command.ChangeCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -106,12 +105,14 @@ public class ControlRootEClassControl extends LinkControl {
 		@Override
 		protected void doExecute() {
 
-			final AdapterFactoryLabelProvider labelProvider = new AdapterFactoryLabelProvider(getComposedAdapterFactory());
+			final AdapterFactoryLabelProvider labelProvider = new AdapterFactoryLabelProvider(
+				getComposedAdapterFactory());
 			final ElementTreeSelectionDialog dialog = new ElementTreeSelectionDialog(shell, labelProvider,
 				getContentProvider());
 			dialog.setAllowMultiple(false);
 			dialog.setValidator(new ISelectionStatusValidator() {
 
+				@Override
 				public IStatus validate(Object[] selection) {
 					if (selection.length != 0 && EClass.class.isInstance(selection[0])) {
 
@@ -155,23 +156,28 @@ public class ControlRootEClassControl extends LinkControl {
 
 					final Resource ecore = resourceSet.getResource(uri, true);
 
-					if (ecore != null) {
-						// put the file in the registry
-						final EList<EObject> contents = ecore.getContents();
-						if (contents.size() != 1) {
-							return;
-						}
-
-						final EObject object = contents.get(0);
-						if (!(object instanceof EPackage)) {
-							return;
-						}
-
-						// Update the VView-EClass mapping
-						final IDEViewModelRegistryImpl registry = (IDEViewModelRegistryImpl) getViewModelRegistry();
-						registry.persistSelectedEcore(ecore.getURI().toPlatformString(true), view);
-
+					if (ecore == null) {
+						return;
 					}
+					// put the file in the registry
+					final EList<EObject> contents = ecore.getContents();
+					if (contents.size() != 1) {
+						return;
+					}
+
+					final EObject object = contents.get(0);
+					if (!(object instanceof EPackage)) {
+						return;
+					}
+
+					// Update the VView-EClass mapping
+					final IDEViewModelRegistryImpl registry = (IDEViewModelRegistryImpl) getViewModelRegistry();
+					if (registry == null) {
+						return;
+					}
+
+					registry.persistSelectedEcore(ecore.getURI().toPlatformString(true), view);
+
 				}
 			}
 			labelProvider.dispose();
@@ -194,16 +200,19 @@ public class ControlRootEClassControl extends LinkControl {
 		private ITreeContentProvider getContentProvider() {
 			return new ITreeContentProvider() {
 
+				@Override
 				public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
 					// TODO Auto-generated method stub
 
 				}
 
+				@Override
 				public void dispose() {
 					// TODO Auto-generated method stub
 
 				}
 
+				@Override
 				public boolean hasChildren(Object element) {
 					if (EPackage.class.isInstance(element)) {
 						return true;
@@ -216,6 +225,7 @@ public class ControlRootEClassControl extends LinkControl {
 					return false;
 				}
 
+				@Override
 				public Object getParent(Object element) {
 					if (EClass.class.isInstance(element)) {
 						return ((EClass) element).eContainer();
@@ -223,10 +233,12 @@ public class ControlRootEClassControl extends LinkControl {
 					return null;
 				}
 
+				@Override
 				public Object[] getElements(Object inputElement) {
 					return getChildren(inputElement);
 				}
 
+				@Override
 				public Object[] getChildren(Object parentElement) {
 					if (EPackage.class.isInstance(parentElement)) {
 						final EPackage ePackage = (EPackage) parentElement;

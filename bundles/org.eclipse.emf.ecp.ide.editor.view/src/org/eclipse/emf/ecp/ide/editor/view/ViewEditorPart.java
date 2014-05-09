@@ -14,10 +14,6 @@ package org.eclipse.emf.ecp.ide.editor.view;
 import java.io.IOException;
 import java.util.EventObject;
 
-import org.eclipse.core.resources.IResourceChangeEvent;
-import org.eclipse.core.resources.IResourceChangeListener;
-import org.eclipse.core.resources.IResourceDelta;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -78,7 +74,6 @@ public class ViewEditorPart extends EditorPart implements
 
 	private boolean ecoreOutOfSync;
 	private IPartListener2 partListener;
-	private IResourceChangeListener resourceChangeListener;
 	private final ViewEditorPart instance;
 	private ViewModelService referenceService;
 
@@ -134,27 +129,6 @@ public class ViewEditorPart extends EditorPart implements
 
 		partListener = new ViewPartListener();
 		getSite().getPage().addPartListener(partListener);
-
-		resourceChangeListener = new IResourceChangeListener() {
-
-			@Override
-			public void resourceChanged(IResourceChangeEvent event) {
-				IResourceDelta delta = event.getDelta();
-				if (delta != null) {
-					while (delta.getAffectedChildren().length != 0) {
-						delta = delta.getAffectedChildren()[0];
-					}
-					final VView view = getView();
-					final String ecorePath = Activator.getViewModelRegistry().getEcorePath(view);
-					if (ecorePath.contains(delta.getResource().getFullPath().toString())) {
-						ecoreOutOfSync = true;
-					}
-				}
-			}
-
-		};
-		// add resource change listener
-		ResourcesPlugin.getWorkspace().addResourceChangeListener(resourceChangeListener);
 	}
 
 	private ResourceSet createResourceSet() {
@@ -195,7 +169,8 @@ public class ViewEditorPart extends EditorPart implements
 				rsSize = resourceSet.getResources().size();
 			}
 
-		} catch (final IOException ex) {
+		} catch (final IOException e) {
+			Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
 		}
 	}
 
@@ -213,8 +188,8 @@ public class ViewEditorPart extends EditorPart implements
 			Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
 		}
 
-		// reload view resource after EClass' package resource was loaded into the package registry
 		try {
+			// reload view resource after EClass' package resource was loaded into the package registry
 			loadView();
 			view = getView();
 
@@ -227,7 +202,9 @@ public class ViewEditorPart extends EditorPart implements
 			if (view.getRootEClass() != null) {
 				Activator.getViewModelRegistry().register(view.getRootEClass().eResource().getURI().toString(), view);
 			}
+
 			showView();
+
 			// BEGIN SUPRESS CATCH EXCEPTION
 		} catch (final RuntimeException e) {
 			displayError(e);
@@ -244,35 +221,6 @@ public class ViewEditorPart extends EditorPart implements
 			render = ECPSWTViewRenderer.INSTANCE.render(parent, view);
 		} catch (final ECPRendererException ex) {
 			Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, ex.getMessage(), ex));
-		}
-	}
-
-	private void loadAndShowView() {
-		try {
-			final FileEditorInput fei = (FileEditorInput) getEditorInput();
-
-			final ResourceSet resourceSet = createResourceSet();
-			resource = resourceSet.getResource(URI.createURI(fei.getURI().toURL().toExternalForm()), true);
-			resource.load(null);
-			// resolve all proxies
-			// TODO delete?
-			int rsSize = resourceSet.getResources().size();
-			EcoreUtil.resolveAll(resourceSet);
-			while (rsSize != resourceSet.getResources().size()) {
-				EcoreUtil.resolveAll(resourceSet);
-				rsSize = resourceSet.getResources().size();
-			}
-
-			final VView view = getView();
-
-			viewContext = ViewModelContextFactory.INSTANCE.createViewModelContext(
-				view, view.getRootEClass(), referenceService);
-
-			render = ECPSWTViewRenderer.INSTANCE.render(parent, view);
-		} catch (final ECPRendererException e) {
-			Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
-		} catch (final IOException e) {
-			Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
 		}
 	}
 
@@ -295,7 +243,8 @@ public class ViewEditorPart extends EditorPart implements
 					render.dispose();
 					render.getSWTControl().dispose();
 				}
-				loadAndShowView();
+				loadView();
+				showView();
 			}
 		});
 	}
@@ -308,7 +257,6 @@ public class ViewEditorPart extends EditorPart implements
 			viewContext.unregisterViewChangeListener(modelChangeListener);
 		}
 		getSite().getPage().removePartListener(partListener);
-		ResourcesPlugin.getWorkspace().removeResourceChangeListener(resourceChangeListener);
 		super.dispose();
 	}
 
@@ -383,5 +331,16 @@ public class ViewEditorPart extends EditorPart implements
 		@Override
 		public void partInputChanged(IWorkbenchPartReference partRef) {
 		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.ide.view.service.ViewModelEditorCallback#signalEcoreOutOfSync()
+	 */
+	@Override
+	public void signalEcoreOutOfSync() {
+		ecoreOutOfSync = true;
+
 	}
 }

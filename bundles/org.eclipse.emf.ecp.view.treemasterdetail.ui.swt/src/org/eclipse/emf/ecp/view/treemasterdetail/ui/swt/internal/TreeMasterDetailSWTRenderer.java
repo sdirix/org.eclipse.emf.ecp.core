@@ -31,10 +31,10 @@ import org.eclipse.emf.ecp.common.ChildrenDescriptorCollector;
 import org.eclipse.emf.ecp.edit.spi.ReferenceService;
 import org.eclipse.emf.ecp.internal.ui.view.emf.AdapterFactoryContentProvider;
 import org.eclipse.emf.ecp.internal.ui.view.emf.AdapterFactoryLabelProvider;
-import org.eclipse.emf.ecp.spi.ui.DynamicReferenceService;
 import org.eclipse.emf.ecp.spi.ui.ECPReferenceServiceImpl;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
+import org.eclipse.emf.ecp.view.model.preview.common.PreviewReferenceService;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.model.VView;
@@ -100,7 +100,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 	private SWTGridDescription rendererGridDescription;
 	private ScrolledForm form;
 
-	private List<MasterDetailAction> commands;
+	private List<MasterDetailAction> menuActions;
 	/**
 	 * Static string.
 	 * 
@@ -233,7 +233,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 
 		treeViewer.setContentProvider(adapterFactoryContentProvider);
 		treeViewer.setLabelProvider(adapterFactoryLabelProvider);
-		treeViewer.setAutoExpandLevel(2);
+		treeViewer.setAutoExpandLevel(2); // top level element is expanded, but not the children
 		treeViewer.setInput(new RootObject(modelElement));
 
 		// Drag and Drop
@@ -266,7 +266,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 			readToolbarActions(treeViewer, editingDomain);
 
 		}
-		commands = readMasterDetailActions();
+		menuActions = readMasterDetailActions();
 		return form;
 	}
 
@@ -294,7 +294,6 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 				final String label = e.getAttribute("label"); //$NON-NLS-1$
 				final String imagePath = e.getAttribute("imagePath"); //$NON-NLS-1$
 				final MasterDetailAction command = (MasterDetailAction) e.createExecutableExtension("command"); //$NON-NLS-1$
-				// if (command.shouldShow(view)) {
 				final Action newAction = new Action() {
 					@Override
 					public void run() {
@@ -310,8 +309,6 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 				final IToolBarManager mToolbar = form.getToolBarManager();
 				mToolbar.add(newAction);
 				mToolbar.update(true);
-
-				// }
 			} catch (final CoreException e1) {
 				e1.printStackTrace();
 			}
@@ -367,20 +364,20 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 
 					if (selection.getFirstElement() != null && EObject.class.isInstance(selection.getFirstElement())) {
 						final EObject selectedObject = (EObject) selection.getFirstElement();
-						for (final MasterDetailAction command : commands) {
-							if (command.shouldShow(selectedObject)) {
+						for (final MasterDetailAction menuAction : menuActions) {
+							if (menuAction.shouldShow(selectedObject)) {
 								final Action newAction = new Action() {
 									@Override
 									public void run() {
 										super.run();
-										command.execute(selectedObject);
+										menuAction.execute(selectedObject);
 									}
 								};
 
 								newAction.setImageDescriptor(ImageDescriptor.createFromURL(FrameworkUtil.getBundle(
-									command.getClass())
-									.getResource(command.getImagePath())));
-								newAction.setText(command.getLabel());
+									menuAction.getClass())
+									.getResource(menuAction.getImagePath())));
+								newAction.setText(menuAction.getLabel());
 
 								manager.add(newAction);
 							}
@@ -543,7 +540,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 						if (DynamicEObjectImpl.class.isInstance(selected)) {
 							final ViewModelContext viewContext = ViewModelContextFactory.INSTANCE
 								.createViewModelContext(vView,
-									(EObject) selected, new DynamicReferenceService());
+									(EObject) selected, new PreviewReferenceService());
 							ECPSWTViewRenderer.INSTANCE.render(childComposite, viewContext);
 
 						} else {
@@ -553,7 +550,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 					} else {
 						ReferenceService refServ;
 						if (DynamicEObjectImpl.class.isInstance(selected)) {
-							refServ = new DynamicReferenceService();
+							refServ = new PreviewReferenceService();
 						}
 						else {
 							refServ = new ECPReferenceServiceImpl();
@@ -563,8 +560,6 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 							.createViewModelContext(view,
 								(EObject) selected, refServ);
 						ECPSWTViewRenderer.INSTANCE.render(childComposite, viewContext);
-						// ECPSWTViewRenderer.INSTANCE
-						// .render(childComposite, (EObject) selected);
 					}
 					parent.layout();
 					childComposite.layout();
