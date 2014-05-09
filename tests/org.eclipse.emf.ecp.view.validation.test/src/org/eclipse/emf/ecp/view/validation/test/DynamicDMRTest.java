@@ -31,6 +31,7 @@ import org.eclipse.emf.ecp.view.validation.test.model.TestFactory;
 import org.eclipse.emf.ecp.view.validation.test.model.TestPackage;
 import org.eclipse.emf.ecp.view.validation.test.model.Writer;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -61,6 +62,7 @@ public class DynamicDMRTest {
 		assertValidation(Diagnostic.ERROR, true);
 	}
 
+	@Ignore("Not Contained Elements are not validated")
 	@Test
 	public void testInitMissingReferencedElement() {
 		// setup
