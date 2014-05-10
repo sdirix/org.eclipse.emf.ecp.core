@@ -39,20 +39,20 @@
 <repository location="http://download.eclipse.org/rt/rap/2.2"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.sdk.ide" version="4.4.0.I20140306-1200"/>
-<unit id="org.eclipse.emf.sdk.feature.group" version="2.10.0.v20140310-0546"/>
-<unit id="org.eclipse.graphiti.feature.feature.group" version="0.11.0.v20140312-0950"/>
-<unit id="org.eclipse.rap.sdk.feature.feature.group" version="2.3.0.20140311-0943"/>
-<unit id="org.eclipse.emf.transaction.sdk.feature.group" version="1.8.0.201403111732"/>
+<unit id="org.eclipse.sdk.ide" version="4.4.0.I20140501-0200"/>
+<unit id="org.eclipse.emf.sdk.feature.group" version="2.10.0.v20140428-0403"/>
+<unit id="org.eclipse.graphiti.feature.feature.group" version="0.11.0.v20140507-0848"/>
+<unit id="org.eclipse.rap.sdk.feature.feature.group" version="2.3.0.20140506-1410"/>
+<unit id="org.eclipse.emf.transaction.sdk.feature.group" version="1.8.0.201405051603"/>
 <unit id="org.eclipse.net4j.sdk.feature.group" version="4.3.0.v20140308-0604"/>
-<unit id="org.eclipse.rap.equinox.target.feature.feature.group" version="2.3.0.20140310-0716"/>
-<unit id="org.eclipse.jdt.feature.group" version="3.10.0.v20140306-1200"/>
-<unit id="org.eclipse.rap.feature.feature.group" version="2.3.0.20140311-0943"/>
-<unit id="org.eclipse.graphiti.export.feature.feature.group" version="0.11.0.v20140312-0950"/>
-<unit id="org.eclipse.gef.sdk.feature.group" version="3.10.0.201401270305"/>
+<unit id="org.eclipse.rap.equinox.target.feature.feature.group" version="2.3.0.20140503-1040"/>
+<unit id="org.eclipse.jdt.feature.group" version="3.10.0.v20140501-0200"/>
+<unit id="org.eclipse.rap.feature.feature.group" version="2.3.0.20140506-1410"/>
+<unit id="org.eclipse.graphiti.export.feature.feature.group" version="0.11.0.v20140507-0848"/>
+<unit id="org.eclipse.gef.sdk.feature.group" version="3.9.100.201405050205"/>
 <unit id="org.eclipse.emf.cdo.sdk.feature.group" version="4.3.0.v20140312-0617"/>
-<unit id="org.eclipse.emf.validation.sdk.feature.group" version="1.8.0.201403111711"/>
-<unit id="org.eclipse.emf.rap.sdk.feature.group" version="2.10.0.v20140310-0546"/>
+<unit id="org.eclipse.emf.validation.sdk.feature.group" version="1.8.0.201405051541"/>
+<unit id="org.eclipse.emf.rap.sdk.feature.group" version="2.10.0.v20140428-0403"/>
 <repository location="http://download.eclipse.org/releases/luna"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
