@@ -170,6 +170,8 @@
 
 		<!-- RAP -->
 		<module>../../bundles/org.eclipse.emf.ecp.rap.util</module>
+		<module>../../bundles/org.eclipse.emf.rap.edit.ui.minimal</module>
+		
 		<module>../../bundles/org.eclipse.emf.ecp.rap</module>
 		<module>../../bundles/org.eclipse.emf.ecp.ui.rap</module>
 
