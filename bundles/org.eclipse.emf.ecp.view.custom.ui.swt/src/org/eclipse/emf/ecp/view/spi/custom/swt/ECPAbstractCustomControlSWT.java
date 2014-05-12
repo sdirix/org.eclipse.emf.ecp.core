@@ -47,9 +47,9 @@ import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
+import org.eclipse.emf.ecp.view.spi.swt.layout.GridCell;
+import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescription;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
-import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
-import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
@@ -335,7 +335,7 @@ public abstract class ECPAbstractCustomControlSWT
 	 * @since 1.3
 	 */
 	protected final IObservableList getObservableList(VDomainModelReference domainModelReference) {
-		final Setting setting = getFirstSetting(domainModelReference);
+		final Setting setting = domainModelReference.getIterator().next();
 		return EMFEditObservables.observeList(
 			getEditingDomain(setting),
 			setting.getEObject(), setting.getEStructuralFeature());
