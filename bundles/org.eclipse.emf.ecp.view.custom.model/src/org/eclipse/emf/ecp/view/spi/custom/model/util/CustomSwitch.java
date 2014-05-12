@@ -88,25 +88,31 @@ public class CustomSwitch<T> extends Switch<T> {
 		switch (classifierID)
 		{
 		case VCustomPackage.CUSTOM_CONTROL: {
-			VCustomControl customControl = (VCustomControl) theEObject;
+			final VCustomControl customControl = (VCustomControl) theEObject;
 			T result = caseCustomControl(customControl);
-			if (result == null)
+			if (result == null) {
 				result = caseControl(customControl);
-			if (result == null)
+			}
+			if (result == null) {
 				result = caseContainedElement(customControl);
-			if (result == null)
+			}
+			if (result == null) {
 				result = caseElement(customControl);
-			if (result == null)
+			}
+			if (result == null) {
 				result = defaultCase(theEObject);
+			}
 			return result;
 		}
 		case VCustomPackage.CUSTOM_DOMAIN_MODEL_REFERENCE: {
-			VCustomDomainModelReference customDomainModelReference = (VCustomDomainModelReference) theEObject;
+			final VCustomDomainModelReference customDomainModelReference = (VCustomDomainModelReference) theEObject;
 			T result = caseCustomDomainModelReference(customDomainModelReference);
-			if (result == null)
+			if (result == null) {
 				result = caseDomainModelReference(customDomainModelReference);
-			if (result == null)
+			}
+			if (result == null) {
 				result = defaultCase(theEObject);
+			}
 			return result;
 		}
 		default:
@@ -119,7 +125,9 @@ public class CustomSwitch<T> extends Switch<T> {
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.3
+	 *        <!-- end-user-doc -->
 	 * 
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Control</em>'.
@@ -136,7 +144,9 @@ public class CustomSwitch<T> extends Switch<T> {
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.3
+	 *        <!-- end-user-doc -->
 	 * 
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Domain Model Reference</em>'.
@@ -169,7 +179,9 @@ public class CustomSwitch<T> extends Switch<T> {
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.3
+	 *        <!-- end-user-doc -->
 	 * 
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Element</em>'.
@@ -186,7 +198,9 @@ public class CustomSwitch<T> extends Switch<T> {
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.3
+	 *        <!-- end-user-doc -->
 	 * 
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Contained Element</em>'.
@@ -203,7 +217,9 @@ public class CustomSwitch<T> extends Switch<T> {
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.3
+	 *        <!-- end-user-doc -->
 	 * 
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Control</em>'.

@@ -17,7 +17,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-import org.eclipse.emf.ecp.view.spi.model.*;
+import org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
@@ -44,12 +44,13 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 	public static VViewFactory init() {
 		try
 		{
-			VViewFactory theViewFactory = (VViewFactory) EPackage.Registry.INSTANCE.getEFactory(VViewPackage.eNS_URI);
+			final VViewFactory theViewFactory = (VViewFactory) EPackage.Registry.INSTANCE
+				.getEFactory(VViewPackage.eNS_URI);
 			if (theViewFactory != null)
 			{
 				return theViewFactory;
 			}
-		} catch (Exception exception)
+		} catch (final Exception exception)
 		{
 			EcorePlugin.INSTANCE.log(exception);
 		}
@@ -135,9 +136,10 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public VDiagnostic createDiagnostic()
 	{
-		VDiagnosticImpl diagnostic = new VDiagnosticImpl();
+		final VDiagnosticImpl diagnostic = new VDiagnosticImpl();
 		return diagnostic;
 	}
 
@@ -146,8 +148,9 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public VView createView() {
-		VViewImpl view = new VViewImpl();
+		final VViewImpl view = new VViewImpl();
 		return view;
 	}
 
@@ -156,8 +159,9 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public VControl createControl() {
-		VControlImpl control = new VControlImpl();
+		final VControlImpl control = new VControlImpl();
 		return control;
 	}
 
@@ -169,10 +173,12 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 	 */
 	public LabelAlignment createLabelAlignmentFromString(EDataType eDataType, String initialValue)
 	{
-		LabelAlignment result = LabelAlignment.get(initialValue);
+		final LabelAlignment result = LabelAlignment.get(initialValue);
 		if (result == null)
+		{
 			throw new IllegalArgumentException(
 				"The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+		}
 		return result;
 	}
 
@@ -189,7 +195,9 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.3
+	 *        <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 */
@@ -201,7 +209,9 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.3
+	 *        <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 */
@@ -216,9 +226,10 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public VFeaturePathDomainModelReference createFeaturePathDomainModelReference()
 	{
-		VFeaturePathDomainModelReferenceImpl featurePathDomainModelReference = new VFeaturePathDomainModelReferenceImpl();
+		final VFeaturePathDomainModelReferenceImpl featurePathDomainModelReference = new VFeaturePathDomainModelReferenceImpl();
 		return featurePathDomainModelReference;
 	}
 
@@ -227,6 +238,7 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public VViewPackage getViewPackage() {
 		return (VViewPackage) getEPackage();
 	}

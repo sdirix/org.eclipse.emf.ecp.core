@@ -38,6 +38,7 @@ public final class ViewModelUtil {
 	 * @param renderable the renderable to analyze for {@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReference
 	 *            VDomainModelReferences}
 	 * @param domainModelRoot the domain model to use for resolving
+	 * @since 1.3
 	 */
 	public static void resolveDomainReferences(EObject renderable,
 		EObject domainModelRoot) {

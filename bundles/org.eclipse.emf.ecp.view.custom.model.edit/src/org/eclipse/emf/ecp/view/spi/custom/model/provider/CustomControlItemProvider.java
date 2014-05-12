@@ -34,7 +34,9 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
 /**
  * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.spi.custom.model.VCustomControl} object.
  * <!-- begin-user-doc -->
- * <!-- end-user-doc -->
+ * 
+ * @since 1.3
+ *        <!-- end-user-doc -->
  * 
  * @generated
  */
@@ -154,7 +156,7 @@ public class CustomControlItemProvider
 	@Override
 	public String getText(Object object)
 	{
-		String label = ((VCustomControl) object).getName();
+		final String label = ((VCustomControl) object).getName();
 		return label == null || label.length() == 0 ?
 			getString("_UI_CustomControl_type") : //$NON-NLS-1$
 			getString("_UI_CustomControl_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$

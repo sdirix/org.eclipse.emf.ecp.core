@@ -671,6 +671,7 @@ public abstract class ECPAbstractCustomControlSWT
 	 * @param gridCell the {@link SWTGridCell} to enable/disable
 	 * @param control the {@link Control} to enable/disable
 	 * @param enabled true if the control should be enabled false otherwise
+	 * @since 1.3
 	 */
 	protected void setControlEnabled(SWTGridCell gridCell, Control control, boolean enabled) {
 		// ignore labels as they are readonly per definition

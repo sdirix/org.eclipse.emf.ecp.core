@@ -7,18 +7,22 @@
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- * Eugen - initial API and implementation
+ * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.model;
 
 /**
- * @author Eugen
+ * The {@link DomainModelReferenceChangeListener} allows to subscribe to {@link VDomainModelReference
+ * DomainModelReferences} and thus be notified when the {@link VDomainModelReference} changes.
+ * 
+ * @author Eugen Neufeld
+ * @since 1.3
  * 
  */
 public interface DomainModelReferenceChangeListener {
 
 	/**
-	 * 
+	 * Gets called in order to notify the listener, that the {@link VDomainModelReference} has changed.
 	 */
 	void notifyChange();
 

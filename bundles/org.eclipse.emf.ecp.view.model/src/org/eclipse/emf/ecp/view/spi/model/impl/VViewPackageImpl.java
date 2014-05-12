@@ -168,12 +168,14 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * @generated
 	 */
 	public static VViewPackage init() {
-		if (isInited)
+		if (isInited) {
 			return (VViewPackage) EPackage.Registry.INSTANCE.getEPackage(VViewPackage.eNS_URI);
+		}
 
 		// Obtain or create and register package
-		VViewPackageImpl theViewPackage = (VViewPackageImpl) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof VViewPackageImpl ? EPackage.Registry.INSTANCE
-			.get(eNS_URI) : new VViewPackageImpl());
+		final VViewPackageImpl theViewPackage = (VViewPackageImpl) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof VViewPackageImpl ? EPackage.Registry.INSTANCE
+			.get(eNS_URI)
+			: new VViewPackageImpl());
 
 		isInited = true;
 
@@ -200,6 +202,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EClass getElement()
 	{
 		return elementEClass;
@@ -211,6 +214,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EAttribute getElement_Name()
 	{
 		return (EAttribute) elementEClass.getEStructuralFeatures().get(0);
@@ -222,6 +226,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EAttribute getElement_Visible()
 	{
 		return (EAttribute) elementEClass.getEStructuralFeatures().get(1);
@@ -233,6 +238,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EAttribute getElement_Enabled()
 	{
 		return (EAttribute) elementEClass.getEStructuralFeatures().get(2);
@@ -244,6 +250,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EAttribute getElement_Readonly()
 	{
 		return (EAttribute) elementEClass.getEStructuralFeatures().get(3);
@@ -255,6 +262,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EReference getElement_Diagnostic()
 	{
 		return (EReference) elementEClass.getEStructuralFeatures().get(4);
@@ -266,6 +274,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EReference getElement_Attachments()
 	{
 		return (EReference) elementEClass.getEStructuralFeatures().get(5);
@@ -277,6 +286,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EClass getDiagnostic()
 	{
 		return diagnosticEClass;
@@ -288,6 +298,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EAttribute getDiagnostic_Diagnostics()
 	{
 		return (EAttribute) diagnosticEClass.getEStructuralFeatures().get(0);
@@ -298,6 +309,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EClass getView() {
 		return viewEClass;
 	}
@@ -307,6 +319,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EReference getView_RootEClass() {
 		return (EReference) viewEClass.getEStructuralFeatures().get(0);
 	}
@@ -317,6 +330,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EReference getView_Children() {
 		return (EReference) viewEClass.getEStructuralFeatures().get(1);
 	}
@@ -327,6 +341,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EClass getContainedElement()
 	{
 		return containedElementEClass;
@@ -337,6 +352,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EClass getControl() {
 		return controlEClass;
 	}
@@ -347,6 +363,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EReference getControl_DomainModelReference()
 	{
 		return (EReference) controlEClass.getEStructuralFeatures().get(1);
@@ -358,6 +375,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EClass getContainer()
 	{
 		return containerEClass;
@@ -369,6 +387,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EReference getContainer_Children()
 	{
 		return (EReference) containerEClass.getEStructuralFeatures().get(0);
@@ -380,6 +399,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EAttribute getControl_LabelAlignment()
 	{
 		return (EAttribute) controlEClass.getEStructuralFeatures().get(0);
@@ -390,7 +410,9 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
+	 * @since 1.3
 	 */
+	@Override
 	public EEnum getLabelAlignment()
 	{
 		return labelAlignmentEEnum;
@@ -398,10 +420,13 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.3
+	 *        <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EDataType getDomainModelReferenceChangeListener()
 	{
 		return domainModelReferenceChangeListenerEDataType;
@@ -413,6 +438,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EClass getDomainModelReference()
 	{
 		return domainModelReferenceEClass;
@@ -420,10 +446,13 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.3
+	 *        <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EAttribute getDomainModelReference_ChangeListener()
 	{
 		return (EAttribute) domainModelReferenceEClass.getEStructuralFeatures().get(0);
@@ -435,6 +464,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EClass getFeaturePathDomainModelReference()
 	{
 		return featurePathDomainModelReferenceEClass;
@@ -446,6 +476,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EReference getFeaturePathDomainModelReference_DomainModelEFeature()
 	{
 		return (EReference) featurePathDomainModelReferenceEClass.getEStructuralFeatures().get(0);
@@ -457,6 +488,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EReference getFeaturePathDomainModelReference_DomainModelEReferencePath()
 	{
 		return (EReference) featurePathDomainModelReferenceEClass.getEStructuralFeatures().get(1);
@@ -468,6 +500,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EClass getAttachment()
 	{
 		return attachmentEClass;
@@ -479,6 +512,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public VViewFactory getViewFactory() {
 		return (VViewFactory) getEFactoryInstance();
 	}
@@ -499,8 +533,9 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * @generated
 	 */
 	public void createPackageContents() {
-		if (isCreated)
+		if (isCreated) {
 			return;
+		}
 		isCreated = true;
 
 		// Create classes and their features
@@ -561,8 +596,9 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * @generated
 	 */
 	public void initializePackageContents() {
-		if (isInitialized)
+		if (isInitialized) {
 			return;
+		}
 		isInitialized = true;
 
 		// Initialize package
@@ -571,18 +607,19 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 		setNsURI(eNS_URI);
 
 		// Obtain other dependent packages
-		EcorePackage theEcorePackage = (EcorePackage) EPackage.Registry.INSTANCE.getEPackage(EcorePackage.eNS_URI);
+		final EcorePackage theEcorePackage = (EcorePackage) EPackage.Registry.INSTANCE
+			.getEPackage(EcorePackage.eNS_URI);
 
 		// Create type parameters
 
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
-		featurePathDomainModelReferenceEClass.getESuperTypes().add(this.getDomainModelReference());
-		viewEClass.getESuperTypes().add(this.getElement());
-		containedElementEClass.getESuperTypes().add(this.getElement());
-		containerEClass.getESuperTypes().add(this.getContainedElement());
-		controlEClass.getESuperTypes().add(this.getContainedElement());
+		featurePathDomainModelReferenceEClass.getESuperTypes().add(getDomainModelReference());
+		viewEClass.getESuperTypes().add(getElement());
+		containedElementEClass.getESuperTypes().add(getElement());
+		containerEClass.getESuperTypes().add(getContainedElement());
+		controlEClass.getESuperTypes().add(getContainedElement());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(diagnosticEClass, VDiagnostic.class,
@@ -599,7 +636,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 			"DomainModelReference", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEAttribute(
 			getDomainModelReference_ChangeListener(),
-			this.getDomainModelReferenceChangeListener(),
+			getDomainModelReferenceChangeListener(),
 			"changeListener", null, 0, -1, VDomainModelReference.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(featurePathDomainModelReferenceEClass, VFeaturePathDomainModelReference.class,
@@ -634,12 +671,12 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 			"readonly", "false", 0, 1, VElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEReference(
 			getElement_Diagnostic(),
-			this.getDiagnostic(),
+			getDiagnostic(),
 			null,
 			"diagnostic", null, 0, 1, VElement.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(
 			getElement_Attachments(),
-			this.getAttachment(),
+			getAttachment(),
 			null,
 			"attachments", null, 0, -1, VElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
@@ -651,7 +688,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 			"rootEClass", null, 1, 1, VView.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(
 			getView_Children(),
-			this.getContainedElement(),
+			getContainedElement(),
 			null,
 			"children", null, 0, -1, VView.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
@@ -662,18 +699,18 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 			"Container", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(
 			getContainer_Children(),
-			this.getContainedElement(),
+			getContainedElement(),
 			null,
 			"children", null, 0, -1, VContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(controlEClass, VControl.class, "Control", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEAttribute(
 			getControl_LabelAlignment(),
-			this.getLabelAlignment(),
+			getLabelAlignment(),
 			"labelAlignment", "Left", 1, 1, VControl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEReference(
 			getControl_DomainModelReference(),
-			this.getDomainModelReference(),
+			getDomainModelReference(),
 			null,
 			"domainModelReference", null, 1, 1, VControl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 

@@ -47,7 +47,9 @@ public interface VDomainModelReference extends EObject, ModelChangeListener
 	 * If the meaning of the '<em>Change Listener</em>' attribute list isn't clear, there really should be more of a
 	 * description here...
 	 * </p>
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.3
+	 *        <!-- end-user-doc -->
 	 * 
 	 * @return the value of the '<em>Change Listener</em>' attribute list.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getDomainModelReference_ChangeListener()
@@ -63,6 +65,7 @@ public interface VDomainModelReference extends EObject, ModelChangeListener
 	 * 
 	 * @param eObject the root domain model to use to resolve the path
 	 * @return true if resolution succeeded and false otherwise
+	 * @since 1.3
 	 */
 	boolean init(EObject object);
 
@@ -80,9 +83,17 @@ public interface VDomainModelReference extends EObject, ModelChangeListener
 	 * 
 	 * @return the {@link Iterator} over all {@link EStructuralFeature EStructuralFeatures} for this domain model
 	 *         reference
+	 * @since 1.3
 	 */
 	Iterator<EStructuralFeature> getEStructuralFeatureIterator();
 
+	/**
+	 * Returns an iterator allowing to iterate over all setting paths for this domain model reference.
+	 * Will return an empty Iterator if resolve was not successfully completed.
+	 * 
+	 * @return the {@link Iterator} over setting paths for this domain model reference
+	 * @since 1.3
+	 */
 	Iterator<SettingPath> getFullPathIterator();
 
 } // VDomainModelReference

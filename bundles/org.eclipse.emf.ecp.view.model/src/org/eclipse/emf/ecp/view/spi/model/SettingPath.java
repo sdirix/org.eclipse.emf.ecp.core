@@ -7,7 +7,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- * Eugen - initial API and implementation
+ * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.model;
 
@@ -16,10 +16,19 @@ import java.util.Iterator;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 
 /**
- * @author Eugen
+ * Provides the whole path for the a {@link Setting}. So by iterating over the path, each step through the domain model
+ * is contained.
+ * 
+ * @author Eugen Neufeld
+ * @since 1.3
  * 
  */
 public interface SettingPath {
 
+	/**
+	 * The path to the bound {@link Setting}.
+	 * 
+	 * @return the iterator for the path
+	 */
 	Iterator<Setting> getPath();
 }

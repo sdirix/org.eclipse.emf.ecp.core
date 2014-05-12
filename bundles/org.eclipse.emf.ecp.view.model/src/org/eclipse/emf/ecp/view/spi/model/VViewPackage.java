@@ -28,7 +28,9 @@ import org.eclipse.emf.ecore.EReference;
  * <li>each enum,</li>
  * <li>and each data type</li>
  * </ul>
- * <!-- end-user-doc -->
+ * 
+ * @noimplement This interface is not intended to be implemented by clients.
+ *              <!-- end-user-doc -->
  * 
  * @see org.eclipse.emf.ecp.view.spi.model.VViewFactory
  * @model kind="package"
@@ -174,7 +176,9 @@ public interface VViewPackage extends EPackage {
 	/**
 	 * The feature id for the '<em><b>Change Listener</b></em>' attribute list.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.3
+	 *        <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 * @ordered
@@ -210,6 +214,7 @@ public interface VViewPackage extends EPackage {
 	 * 
 	 * @generated
 	 * @ordered
+	 * @since 1.3
 	 */
 	int FEATURE_PATH_DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER = DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER;
 
@@ -682,7 +687,9 @@ public interface VViewPackage extends EPackage {
 	/**
 	 * The meta object id for the '<em>Domain Model Reference Change Listener</em>' data type.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.3
+	 *        <!-- end-user-doc -->
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener
 	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getDomainModelReferenceChangeListener()
@@ -930,7 +937,9 @@ public interface VViewPackage extends EPackage {
 	 * {@link org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener
 	 * <em>Domain Model Reference Change Listener</em>}'.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.3
+	 *        <!-- end-user-doc -->
 	 * 
 	 * @return the meta object for data type '<em>Domain Model Reference Change Listener</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener
@@ -955,7 +964,9 @@ public interface VViewPackage extends EPackage {
 	 * Returns the meta object for the attribute list '
 	 * {@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReference#getChangeListener <em>Change Listener</em>}'.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.3
+	 *        <!-- end-user-doc -->
 	 * 
 	 * @return the meta object for the attribute list '<em>Change Listener</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReference#getChangeListener()
@@ -1034,7 +1045,9 @@ public interface VViewPackage extends EPackage {
 	 * <li>each enum,</li>
 	 * <li>and each data type</li>
 	 * </ul>
-	 * <!-- end-user-doc -->
+	 * 
+	 * @noimplement This interface is not intended to be implemented by clients.
+	 *              <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 */
@@ -1239,6 +1252,7 @@ public interface VViewPackage extends EPackage {
 		 * @see org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener
 		 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getDomainModelReferenceChangeListener()
 		 * @generated
+		 * @since 1.3
 		 */
 		EDataType DOMAIN_MODEL_REFERENCE_CHANGE_LISTENER = eINSTANCE.getDomainModelReferenceChangeListener();
 
@@ -1257,7 +1271,9 @@ public interface VViewPackage extends EPackage {
 		/**
 		 * The meta object literal for the '<em><b>Change Listener</b></em>' attribute list feature.
 		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * 
+		 * @since 1.3
+		 *        <!-- end-user-doc -->
 		 * 
 		 * @generated
 		 */

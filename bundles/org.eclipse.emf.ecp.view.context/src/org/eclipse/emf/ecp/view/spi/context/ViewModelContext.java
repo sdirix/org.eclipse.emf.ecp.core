@@ -32,6 +32,7 @@ public interface ViewModelContext {
 	 * Register domain change listener.
 	 * 
 	 * @param modelChangeListener the model change listener
+	 * @since 1.3
 	 */
 	void registerDomainChangeListener(ModelChangeListener modelChangeListener);
 
@@ -39,6 +40,7 @@ public interface ViewModelContext {
 	 * Unregister domain change listener.
 	 * 
 	 * @param modelChangeListener the model change listener
+	 * @since 1.3
 	 */
 	void unregisterDomainChangeListener(ModelChangeListener modelChangeListener);
 
@@ -60,6 +62,7 @@ public interface ViewModelContext {
 	 * Register view change listener.
 	 * 
 	 * @param modelChangeListener the model change listener
+	 * @since 1.3
 	 */
 	void registerViewChangeListener(ModelChangeListener modelChangeListener);
 
@@ -67,6 +70,7 @@ public interface ViewModelContext {
 	 * Unregister view change listener.
 	 * 
 	 * @param modelChangeListener the model change listener
+	 * @since 1.3
 	 */
 	void unregisterViewChangeListener(ModelChangeListener modelChangeListener);
 

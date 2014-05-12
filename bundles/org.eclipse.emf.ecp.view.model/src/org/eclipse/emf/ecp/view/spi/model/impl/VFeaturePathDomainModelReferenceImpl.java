@@ -66,7 +66,9 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 	/**
 	 * The cached value of the '{@link #getChangeListener() <em>Change Listener</em>}' attribute list.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.3
+	 *        <!-- end-user-doc -->
 	 * 
 	 * @see #getChangeListener()
 	 * @generated
@@ -120,7 +122,9 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.3
+	 *        <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 */
@@ -452,6 +456,7 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 	 * {@inheritDoc}
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReference#init(org.eclipse.emf.ecore.EObject)
+	 * @since 1.3
 	 */
 	@Override
 	public boolean init(final EObject object) {
@@ -464,6 +469,7 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 	 * {@inheritDoc}
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReference#getFullPathIterator()
+	 * @since 1.3
 	 */
 	@Override
 	public Iterator<SettingPath> getFullPathIterator() {
@@ -533,6 +539,7 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 	 * {@inheritDoc}
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.model.ModelChangeListener#notifyChange(org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification)
+	 * @since 1.3
 	 */
 	@Override
 	public void notifyChange(ModelChangeNotification notification) {

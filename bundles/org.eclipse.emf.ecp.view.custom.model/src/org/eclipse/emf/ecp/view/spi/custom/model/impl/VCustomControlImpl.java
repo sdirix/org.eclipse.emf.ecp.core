@@ -21,14 +21,18 @@ import org.eclipse.emf.ecp.view.spi.model.impl.VControlImpl;
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Control</b></em>'.
- * <!-- end-user-doc -->
- * <p>
- * The following features are implemented:
- * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.spi.custom.model.impl.VCustomControlImpl#getBundleName <em>Bundle Name</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.spi.custom.model.impl.VCustomControlImpl#getClassName <em>Class Name</em>}</li>
- * </ul>
- * </p>
+ * 
+ * @since 1.3
+ *        <!-- end-user-doc -->
+ *        <p>
+ *        The following features are implemented:
+ *        <ul>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.custom.model.impl.VCustomControlImpl#getBundleName <em>Bundle Name
+ *        </em>}</li>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.custom.model.impl.VCustomControlImpl#getClassName <em>Class Name</em>}
+ *        </li>
+ *        </ul>
+ *        </p>
  * 
  * @generated
  */
@@ -122,11 +126,12 @@ public class VCustomControlImpl extends VControlImpl implements VCustomControl
 	@Override
 	public void setBundleName(String newBundleName)
 	{
-		String oldBundleName = bundleName;
+		final String oldBundleName = bundleName;
 		bundleName = newBundleName;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, VCustomPackage.CUSTOM_CONTROL__BUNDLE_NAME,
 				oldBundleName, bundleName));
+		}
 	}
 
 	/**
@@ -150,11 +155,12 @@ public class VCustomControlImpl extends VControlImpl implements VCustomControl
 	@Override
 	public void setClassName(String newClassName)
 	{
-		String oldClassName = className;
+		final String oldClassName = className;
 		className = newClassName;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, VCustomPackage.CUSTOM_CONTROL__CLASS_NAME,
 				oldClassName, className));
+		}
 	}
 
 	/**
@@ -246,10 +252,11 @@ public class VCustomControlImpl extends VControlImpl implements VCustomControl
 	@Override
 	public String toString()
 	{
-		if (eIsProxy())
+		if (eIsProxy()) {
 			return super.toString();
+		}
 
-		StringBuffer result = new StringBuffer(super.toString());
+		final StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (bundleName: "); //$NON-NLS-1$
 		result.append(bundleName);
 		result.append(", className: "); //$NON-NLS-1$

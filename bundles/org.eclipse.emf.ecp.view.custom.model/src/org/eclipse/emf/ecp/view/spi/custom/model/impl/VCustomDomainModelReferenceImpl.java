@@ -43,22 +43,25 @@ import org.osgi.framework.Bundle;
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Domain Model Reference</b></em>'.
- * <!-- end-user-doc -->
- * <p>
- * The following features are implemented:
- * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.spi.custom.model.impl.VCustomDomainModelReferenceImpl#getChangeListener <em>
- * Change Listener</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.spi.custom.model.impl.VCustomDomainModelReferenceImpl#getDomainModelReferences
- * <em>Domain Model References</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.spi.custom.model.impl.VCustomDomainModelReferenceImpl#getBundleName <em>Bundle
- * Name</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.spi.custom.model.impl.VCustomDomainModelReferenceImpl#getClassName <em>Class Name
- * </em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.spi.custom.model.impl.VCustomDomainModelReferenceImpl#isControlChecked <em>
- * Control Checked</em>}</li>
- * </ul>
- * </p>
+ * 
+ * @since 1.3
+ *        <!-- end-user-doc -->
+ *        <p>
+ *        The following features are implemented:
+ *        <ul>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.custom.model.impl.VCustomDomainModelReferenceImpl#getChangeListener
+ *        <em> Change Listener</em>}</li>
+ *        <li>
+ *        {@link org.eclipse.emf.ecp.view.spi.custom.model.impl.VCustomDomainModelReferenceImpl#getDomainModelReferences
+ *        <em>Domain Model References</em>}</li>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.custom.model.impl.VCustomDomainModelReferenceImpl#getBundleName <em>
+ *        Bundle Name</em>}</li>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.custom.model.impl.VCustomDomainModelReferenceImpl#getClassName <em>
+ *        Class Name </em>}</li>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.custom.model.impl.VCustomDomainModelReferenceImpl#isControlChecked
+ *        <em> Control Checked</em>}</li>
+ *        </ul>
+ *        </p>
  * 
  * @generated
  */

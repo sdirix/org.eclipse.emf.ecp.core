@@ -113,7 +113,9 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.view.spi.custom.model.VCustomControl}
 	 * instances.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.3
+	 *        <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 */
@@ -141,7 +143,9 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 	 * This keeps track of the one adapter used for all
 	 * {@link org.eclipse.emf.ecp.view.spi.custom.model.VCustomDomainModelReference} instances.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.3
+	 *        <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 */
@@ -222,8 +226,8 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 	public Object adapt(Object object, Object type) {
 		if (isFactoryForType(type))
 		{
-			Object adapter = super.adapt(object, type);
-			if (!(type instanceof Class<?>) || (((Class<?>) type).isInstance(adapter)))
+			final Object adapter = super.adapt(object, type);
+			if (!(type instanceof Class<?>) || ((Class<?>) type).isInstance(adapter))
 			{
 				return adapter;
 			}
@@ -314,10 +318,12 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 	 */
 	@Override
 	public void dispose() {
-		if (customControlItemProvider != null)
+		if (customControlItemProvider != null) {
 			customControlItemProvider.dispose();
-		if (customDomainModelReferenceItemProvider != null)
+		}
+		if (customDomainModelReferenceItemProvider != null) {
 			customDomainModelReferenceItemProvider.dispose();
+		}
 	}
 
 	/**
@@ -436,7 +442,7 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 		 */
 		@Override
 		public Collection<Object> getNewChildDescriptors(Object object, EditingDomain editingDomain) {
-			ArrayList<Object> result = new ArrayList<Object>();
+			final ArrayList<Object> result = new ArrayList<Object>();
 			new CreationSwitch(result, editingDomain).doSwitch((EObject) object);
 			return result;
 		}
