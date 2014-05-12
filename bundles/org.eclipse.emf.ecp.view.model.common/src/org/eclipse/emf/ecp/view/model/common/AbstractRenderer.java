@@ -22,10 +22,7 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
  * 
  */
 public abstract class AbstractRenderer<VELEMENT extends VElement> {
-	/**
-	 * Variant constant for indicating RAP controls.
-	 */
-	protected static final String CUSTOM_VARIANT = "org.eclipse.rap.rwt.customVariant"; //$NON-NLS-1$
+
 	private VELEMENT vElement;
 	private ViewModelContext viewModelContext;
 

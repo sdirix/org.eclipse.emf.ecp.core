@@ -76,7 +76,7 @@ public class RuleRegistry<T extends Rule> {
 		if (condition instanceof LeafCondition) {
 			final LeafCondition leafCondition = (LeafCondition) condition;
 
-			leafCondition.getDomainModelReference().resolve(domainModel);
+			leafCondition.getDomainModelReference().init(domainModel);
 
 			final Iterator<EStructuralFeature> featureIterator = leafCondition.getDomainModelReference()
 				.getEStructuralFeatureIterator();

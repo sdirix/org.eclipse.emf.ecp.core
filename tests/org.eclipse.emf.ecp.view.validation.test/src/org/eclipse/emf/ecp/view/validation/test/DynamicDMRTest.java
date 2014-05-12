@@ -1,17 +1,18 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- *
+ * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.validation.test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import java.util.Arrays;
 
@@ -35,7 +36,7 @@ import org.junit.Test;
 
 /**
  * @author jfaltermeier
- *
+ * 
  */
 public class DynamicDMRTest {
 
@@ -50,7 +51,6 @@ public class DynamicDMRTest {
 		view = VViewFactory.eINSTANCE.createView();
 	}
 
-	@Ignore
 	@Test
 	public void testInitMissingContainmentElement() {
 		// setup
@@ -59,10 +59,10 @@ public class DynamicDMRTest {
 		// act
 		initService();
 		// assert
-		assertValidation(Diagnostic.OK, false, true);
+		assertValidation(Diagnostic.ERROR, true);
 	}
 
-	@Ignore
+	@Ignore("Not Contained Elements are not validated")
 	@Test
 	public void testInitMissingReferencedElement() {
 		// setup
@@ -71,10 +71,9 @@ public class DynamicDMRTest {
 		// act
 		initService();
 		// assert
-		assertValidation(Diagnostic.OK, false, true);
+		assertValidation(Diagnostic.ERROR, false);
 	}
 
-	@Ignore
 	@Test
 	public void testRemoveContainmentElement() {
 		// setup
@@ -82,57 +81,57 @@ public class DynamicDMRTest {
 		addLibrarianNameControl();
 		changeDomain(librarian(EMPTY));
 		initService();
-		assertValidation(Diagnostic.ERROR, true, false);
+		assertValidation(Diagnostic.ERROR, true);
 		// act
 		changeDomain((Librarian) null);
 		// assert
-		assertValidation(Diagnostic.OK, false, true);
+		assertValidation(Diagnostic.CANCEL, false);
 	}
 
-	@Ignore
 	@Test
 	public void testRemoveReferencedElement() {
 		// setup
 		bookAsDomain();
 		addWriterNameControl();
-		changeDomain(writer(EMPTY));
 		initService();
-		assertValidation(Diagnostic.ERROR, true, false);
+		// bug
+		changeDomain(writer(EMPTY));
+		assertValidation(Diagnostic.ERROR, true);
 		// act
 		changeDomain((Writer) null);
 		// assert
-		assertValidation(Diagnostic.OK, false, true);
+		assertValidation(Diagnostic.CANCEL, false);
 	}
 
-	@Ignore
 	@Test
 	public void testAddMissingContainmentElement() {
 		// setup
 		libraryAsDomain();
 		addLibrarianNameControl();
 		initService();
-		assertValidation(Diagnostic.OK, false, true);
+		assertValidation(Diagnostic.ERROR, true);
 		// act
 		changeDomain(librarian(EMPTY));
 		// assert
-		assertValidation(Diagnostic.ERROR, true, false);
+		assertValidation(Diagnostic.ERROR, true);
 	}
 
-	@Ignore
 	@Test
 	public void testAddMissingReferencedElement() {
 		// setup
 		bookAsDomain();
 		addWriterNameControl();
 		initService();
-		assertValidation(Diagnostic.OK, false, true);
+		// act
+		changeDomain((Writer) null);
+		// assert
+		assertValidation(Diagnostic.OK, false);
 		// act
 		changeDomain(writer(EMPTY));
 		// assert
-		assertValidation(Diagnostic.ERROR, true, false);
+		assertValidation(Diagnostic.ERROR, true);
 	}
 
-	@Ignore
 	@Test
 	public void testReplaceContainmentElement() {
 		// setup
@@ -140,26 +139,26 @@ public class DynamicDMRTest {
 		addLibrarianNameControl();
 		changeDomain(librarian(EMPTY));
 		initService();
-		assertValidation(Diagnostic.ERROR, true, false);
+		assertValidation(Diagnostic.ERROR, true);
 		// act
 		changeDomain(librarian(NAME_OK));
 		// assert
-		assertValidation(Diagnostic.OK, true, false);
+		assertValidation(Diagnostic.OK, true);
 	}
 
-	@Ignore
 	@Test
 	public void testReplaceReferencedElement() {
 		// setup
 		bookAsDomain();
 		addWriterNameControl();
-		changeDomain(writer(EMPTY));
 		initService();
-		assertValidation(Diagnostic.ERROR, true, false);
+		// bug
+		changeDomain(writer(EMPTY));
+		assertValidation(Diagnostic.ERROR, true);
 		// act
 		changeDomain(writer(NAME_OK));
 		// assert
-		assertValidation(Diagnostic.OK, true, false);
+		assertValidation(Diagnostic.OK, true);
 	}
 
 	private void initService() {
@@ -214,11 +213,17 @@ public class DynamicDMRTest {
 		book.setWriters(writer);
 	}
 
-	private void assertValidation(int severity, boolean enablement, boolean readOnly) {
+	private void assertValidation(int severity, boolean enablement) {
 		final VControl control = (VControl) view.getChildren().get(0);
-		assertEquals(severity, control.getDiagnostic().getHighestSeverity());
-		assertEquals(enablement, control.isEnabled());
-		assertEquals(readOnly, control.isReadonly());
+		if (severity == Diagnostic.CANCEL) {
+			assertNull(control.getDiagnostic());
+		} else if (control.getDiagnostic() != null) {
+			assertEquals(severity, control.getDiagnostic().getHighestSeverity());
+		}
+		else {
+			assertEquals(Diagnostic.OK, severity);
+		}
+		// assertEquals(enablement, control.isEnabled());
 	}
 
 }

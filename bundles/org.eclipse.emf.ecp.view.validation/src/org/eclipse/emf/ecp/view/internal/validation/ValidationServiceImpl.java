@@ -43,9 +43,9 @@ import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.common.UniqueSetting;
-import org.eclipse.emf.ecp.view.spi.context.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener;
+import org.eclipse.emf.ecp.view.spi.model.ModelChangeAddRemoveListener;
+import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
@@ -65,15 +65,15 @@ import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 public class ValidationServiceImpl implements ValidationService {
 
 	/**
-	 * The {@link ModelChangeListener} for the view model.
+	 * The {@link ValidationDomainModelChangeListener} for the view model.
 	 * 
 	 */
-	private class ViewModelChangeListener implements ModelChangeListener {
+	private class ViewModelChangeListener implements ModelChangeAddRemoveListener {
 
 		/**
 		 * {@inheritDoc}
 		 * 
-		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener#notifyChange(org.eclipse.emf.ecp.view.spi.context.ModelChangeNotification)
+		 * @see org.eclipse.emf.ecp.view.spi.context.ModelChangeAddRemoveListener#notifyChange(org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification)
 		 */
 		@Override
 		public void notifyChange(ModelChangeNotification notification) {
@@ -100,6 +100,9 @@ public class ValidationServiceImpl implements ValidationService {
 					}
 				}
 			}
+			if (!VElement.class.isInstance(notification.getNotifier())) {
+				return;
+			}
 			switch (notification.getRawNotification().getEventType()) {
 			case Notification.REMOVE:
 			case Notification.REMOVE_MANY:
@@ -113,7 +116,7 @@ public class ValidationServiceImpl implements ValidationService {
 		/**
 		 * {@inheritDoc}
 		 * 
-		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener#notifyAdd(org.eclipse.emf.common.notify.Notifier)
+		 * @see org.eclipse.emf.ecp.view.spi.context.ModelChangeAddRemoveListener#notifyAdd(org.eclipse.emf.common.notify.Notifier)
 		 */
 		@Override
 		public void notifyAdd(Notifier notifier) {
@@ -137,7 +140,7 @@ public class ValidationServiceImpl implements ValidationService {
 		/**
 		 * {@inheritDoc}
 		 * 
-		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener#notifyRemove(org.eclipse.emf.common.notify.Notifier)
+		 * @see org.eclipse.emf.ecp.view.spi.context.ModelChangeAddRemoveListener#notifyRemove(org.eclipse.emf.common.notify.Notifier)
 		 */
 		@Override
 		public void notifyRemove(Notifier notifier) {
@@ -148,15 +151,15 @@ public class ValidationServiceImpl implements ValidationService {
 	}
 
 	/**
-	 * The {@link ModelChangeListener} for the domain model.
+	 * The {@link ValidationDomainModelChangeListener} for the domain model.
 	 * 
 	 */
-	private class DomainModelChangeListener implements ModelChangeListener {
+	private class ValidationDomainModelChangeListener implements ModelChangeAddRemoveListener {
 
 		/**
 		 * {@inheritDoc}
 		 * 
-		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener#notifyChange(org.eclipse.emf.ecp.view.spi.context.ModelChangeNotification)
+		 * @see org.eclipse.emf.ecp.view.spi.context.ModelChangeAddRemoveListener#notifyChange(org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification)
 		 */
 		@Override
 		public void notifyChange(ModelChangeNotification notification) {
@@ -166,9 +169,24 @@ public class ValidationServiceImpl implements ValidationService {
 			}
 			final Notification rawNotification = notification.getRawNotification();
 			switch (rawNotification.getEventType()) {
+			// FIXME: move add, remove to add/remove instead of doing here
 			case Notification.ADD:
+				validate(notification.getNotifier());
+				// in case of not containment references
+				if (EReference.class.isInstance(notification.getStructuralFeature())
+				// && !EReference.class.cast(notification.getStructuralFeature()).isContainment()
+				) {
+					validate((EObject) notification.getRawNotification().getNewValue());
+				}
+				break;
 			case Notification.ADD_MANY:
-				validate(getAllEObjects(notification.getNotifier()));
+				validate(notification.getNotifier());
+				// in case of not containment references
+				if (EReference.class.isInstance(notification.getStructuralFeature())
+				// && !EReference.class.cast(notification.getStructuralFeature()).isContainment()
+				) {
+					validate((Collection<EObject>) notification.getRawNotification().getNewValue());
+				}
 				break;
 			case Notification.REMOVE:
 				if (EReference.class.isInstance(rawNotification.getFeature())) {
@@ -178,40 +196,44 @@ public class ValidationServiceImpl implements ValidationService {
 				}
 				//$FALL-THROUGH$
 			case Notification.REMOVE_MANY:
-				validate(getAllEObjects(notification.getNotifier()));
-
+				validate(notification.getNotifier());
 				break;
 			case Notification.REMOVING_ADAPTER:
 				break;
 			default:
-				validate(getAllEObjects(notification.getNotifier()));
+				validate(notification.getNotifier());
+				if (EReference.class.isInstance(notification.getStructuralFeature())) {
+					if (notification.getRawNotification().getNewValue() != null) {
+						validate((EObject) notification.getRawNotification().getNewValue());
+					}
+				}
 			}
 		}
 
 		/**
 		 * {@inheritDoc}
 		 * 
-		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener#notifyAdd(org.eclipse.emf.common.notify.Notifier)
+		 * @see org.eclipse.emf.ecp.view.spi.context.ModelChangeAddRemoveListener#notifyAdd(org.eclipse.emf.common.notify.Notifier)
 		 */
 		@Override
 		public void notifyAdd(Notifier notifier) {
-			// do nothing
+			// validate((EObject) notifier);
 		}
 
 		/**
 		 * {@inheritDoc}
 		 * 
-		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener#notifyRemove(org.eclipse.emf.common.notify.Notifier)
+		 * @see org.eclipse.emf.ecp.view.spi.context.ModelChangeAddRemoveListener#notifyRemove(org.eclipse.emf.common.notify.Notifier)
 		 */
 		@Override
 		public void notifyRemove(Notifier notifier) {
-			// do nothing
+			// validate((EObject) notifier);
 		}
 
 	}
 
 	private final Set<ValidationProvider> validationProviders = new LinkedHashSet<ValidationProvider>();
-	private DomainModelChangeListener domainChangeListener;
+	private ValidationDomainModelChangeListener domainChangeListener;
 	private ViewModelChangeListener viewChangeListener;
 	private ViewModelContext context;
 	private final Queue<EObject> validationQueue = new LinkedList<EObject>();
@@ -241,7 +263,7 @@ public class ValidationServiceImpl implements ValidationService {
 
 		readValidationProvider();
 
-		domainChangeListener = new DomainModelChangeListener();
+		domainChangeListener = new ValidationDomainModelChangeListener();
 		viewChangeListener = new ViewModelChangeListener();
 
 		context.registerDomainChangeListener(domainChangeListener);

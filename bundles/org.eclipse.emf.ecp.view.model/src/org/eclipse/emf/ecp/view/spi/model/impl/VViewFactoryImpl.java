@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+import org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
@@ -102,6 +103,8 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 		{
 		case VViewPackage.LABEL_ALIGNMENT:
 			return createLabelAlignmentFromString(eDataType, initialValue);
+		case VViewPackage.DOMAIN_MODEL_REFERENCE_CHANGE_LISTENER:
+			return createDomainModelReferenceChangeListenerFromString(eDataType, initialValue);
 		default:
 			throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -120,6 +123,8 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 		{
 		case VViewPackage.LABEL_ALIGNMENT:
 			return convertLabelAlignmentToString(eDataType, instanceValue);
+		case VViewPackage.DOMAIN_MODEL_REFERENCE_CHANGE_LISTENER:
+			return convertDomainModelReferenceChangeListenerToString(eDataType, instanceValue);
 		default:
 			throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -131,6 +136,7 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public VDiagnostic createDiagnostic()
 	{
 		final VDiagnosticImpl diagnostic = new VDiagnosticImpl();
@@ -142,6 +148,7 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public VView createView() {
 		final VViewImpl view = new VViewImpl();
 		return view;
@@ -152,6 +159,7 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public VControl createControl() {
 		final VControlImpl control = new VControlImpl();
 		return control;
@@ -187,10 +195,38 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 
 	/**
 	 * <!-- begin-user-doc -->
+	 * 
+	 * @since 1.3
+	 *        <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public DomainModelReferenceChangeListener createDomainModelReferenceChangeListenerFromString(EDataType eDataType,
+		String initialValue)
+	{
+		return (DomainModelReferenceChangeListener) super.createFromString(eDataType, initialValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * 
+	 * @since 1.3
+	 *        <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public String convertDomainModelReferenceChangeListenerToString(EDataType eDataType, Object instanceValue)
+	{
+		return super.convertToString(eDataType, instanceValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 */
+	@Override
 	public VFeaturePathDomainModelReference createFeaturePathDomainModelReference()
 	{
 		final VFeaturePathDomainModelReferenceImpl featurePathDomainModelReference = new VFeaturePathDomainModelReferenceImpl();
@@ -202,6 +238,7 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public VViewPackage getViewPackage() {
 		return (VViewPackage) getEPackage();
 	}

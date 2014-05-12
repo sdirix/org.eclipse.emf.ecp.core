@@ -34,10 +34,11 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
 /**
  * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.spi.custom.model.VCustomControl} object.
  * <!-- begin-user-doc -->
- * <!-- end-user-doc -->
+ * 
+ * @since 1.3
+ *        <!-- end-user-doc -->
  * 
  * @generated
- * @since 1.3
  */
 public class CustomControlItemProvider
 	extends ControlItemProvider

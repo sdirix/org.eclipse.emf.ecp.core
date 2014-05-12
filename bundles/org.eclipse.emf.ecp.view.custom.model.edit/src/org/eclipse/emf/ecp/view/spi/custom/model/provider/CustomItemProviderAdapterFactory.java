@@ -113,10 +113,11 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.view.spi.custom.model.VCustomControl}
 	 * instances.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.3
+	 *        <!-- end-user-doc -->
 	 * 
 	 * @generated
-	 * @since 1.3
 	 */
 	protected CustomControlItemProvider customControlItemProvider;
 
@@ -142,10 +143,11 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 	 * This keeps track of the one adapter used for all
 	 * {@link org.eclipse.emf.ecp.view.spi.custom.model.VCustomDomainModelReference} instances.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.3
+	 *        <!-- end-user-doc -->
 	 * 
 	 * @generated
-	 * @since 1.3
 	 */
 	protected CustomDomainModelReferenceItemProvider customDomainModelReferenceItemProvider;
 

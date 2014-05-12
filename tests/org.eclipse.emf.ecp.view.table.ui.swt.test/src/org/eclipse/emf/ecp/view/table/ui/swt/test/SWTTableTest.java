@@ -29,6 +29,7 @@ import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecp.common.UniqueSetting;
 import org.eclipse.emf.ecp.view.internal.swt.SWTRendererFactoryImpl;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
@@ -377,7 +378,7 @@ public class SWTTableTest {
 		/**
 		 * {@inheritDoc}
 		 * 
-		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#registerViewChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener)
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#registerViewChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeAddRemoveListener)
 		 */
 		@Override
 		public void registerViewChangeListener(ModelChangeListener modelChangeListener) {
@@ -387,7 +388,7 @@ public class SWTTableTest {
 		/**
 		 * {@inheritDoc}
 		 * 
-		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#unregisterViewChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener)
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#unregisterViewChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeAddRemoveListener)
 		 */
 		@Override
 		public void unregisterViewChangeListener(ModelChangeListener modelChangeListener) {
@@ -397,7 +398,7 @@ public class SWTTableTest {
 		/**
 		 * {@inheritDoc}
 		 * 
-		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#registerDomainChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener)
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#registerDomainChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeAddRemoveListener)
 		 */
 		@Override
 		public void registerDomainChangeListener(ModelChangeListener modelChangeListener) {
@@ -407,7 +408,7 @@ public class SWTTableTest {
 		/**
 		 * {@inheritDoc}
 		 * 
-		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#unregisterDomainChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener)
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#unregisterDomainChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeAddRemoveListener)
 		 */
 		@Override
 		public void unregisterDomainChangeListener(ModelChangeListener modelChangeListener) {

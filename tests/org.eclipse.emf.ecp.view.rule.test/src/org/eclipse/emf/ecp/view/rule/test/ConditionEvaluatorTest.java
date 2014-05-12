@@ -139,7 +139,7 @@ public class ConditionEvaluatorTest {
 		leafCondition.setDomainModelReference(modelReference);
 		leafCondition.setExpectedValue(expectedValue);
 		modelReference.getDomainModelEReferencePath().addAll(eReferences);
-		final boolean result = modelReference.resolve(resolveObject);
+		final boolean result = modelReference.init(resolveObject);
 		if (!result) {
 			throw new IllegalStateException("the ModelReference was not resolved.");
 		}

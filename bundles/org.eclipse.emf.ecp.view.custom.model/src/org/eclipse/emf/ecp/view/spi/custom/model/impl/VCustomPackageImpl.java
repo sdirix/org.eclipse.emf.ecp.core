@@ -28,7 +28,6 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * <!-- end-user-doc -->
  * 
  * @generated
- * @since 1.3
  */
 public class VCustomPackageImpl extends EPackageImpl implements VCustomPackage {
 	/**
@@ -116,10 +115,11 @@ public class VCustomPackageImpl extends EPackageImpl implements VCustomPackage {
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.3
+	 *        <!-- end-user-doc -->
 	 * 
 	 * @generated
-	 * @since 1.3
 	 */
 	@Override
 	public EClass getCustomControl()
@@ -129,10 +129,11 @@ public class VCustomPackageImpl extends EPackageImpl implements VCustomPackage {
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.3
+	 *        <!-- end-user-doc -->
 	 * 
 	 * @generated
-	 * @since 1.3
 	 */
 	@Override
 	public EAttribute getCustomControl_BundleName()
@@ -142,10 +143,11 @@ public class VCustomPackageImpl extends EPackageImpl implements VCustomPackage {
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.3
+	 *        <!-- end-user-doc -->
 	 * 
 	 * @generated
-	 * @since 1.3
 	 */
 	@Override
 	public EAttribute getCustomControl_ClassName()
@@ -155,10 +157,11 @@ public class VCustomPackageImpl extends EPackageImpl implements VCustomPackage {
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.3
+	 *        <!-- end-user-doc -->
 	 * 
 	 * @generated
-	 * @since 1.3
 	 */
 	@Override
 	public EClass getCustomDomainModelReference()
@@ -168,10 +171,11 @@ public class VCustomPackageImpl extends EPackageImpl implements VCustomPackage {
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.3
+	 *        <!-- end-user-doc -->
 	 * 
 	 * @generated
-	 * @since 1.3
 	 */
 	@Override
 	public EReference getCustomDomainModelReference_DomainModelReferences()
@@ -181,10 +185,11 @@ public class VCustomPackageImpl extends EPackageImpl implements VCustomPackage {
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.3
+	 *        <!-- end-user-doc -->
 	 * 
 	 * @generated
-	 * @since 1.3
 	 */
 	@Override
 	public EAttribute getCustomDomainModelReference_BundleName()
@@ -194,10 +199,11 @@ public class VCustomPackageImpl extends EPackageImpl implements VCustomPackage {
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.3
+	 *        <!-- end-user-doc -->
 	 * 
 	 * @generated
-	 * @since 1.3
 	 */
 	@Override
 	public EAttribute getCustomDomainModelReference_ClassName()
@@ -207,10 +213,11 @@ public class VCustomPackageImpl extends EPackageImpl implements VCustomPackage {
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.3
+	 *        <!-- end-user-doc -->
 	 * 
 	 * @generated
-	 * @since 1.3
 	 */
 	@Override
 	public EAttribute getCustomDomainModelReference_ControlChecked()

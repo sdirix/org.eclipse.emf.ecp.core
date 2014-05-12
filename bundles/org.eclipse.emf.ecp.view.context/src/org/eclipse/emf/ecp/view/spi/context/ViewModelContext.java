@@ -13,10 +13,10 @@ package org.eclipse.emf.ecp.view.spi.context;
 
 import java.util.Set;
 
-import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.common.UniqueSetting;
+import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 
@@ -27,37 +27,22 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
  * @since 1.2
  */
 public interface ViewModelContext {
+
 	/**
-	 * The listener interface for receiving modelChange events.
-	 * The class that is interested in processing a modelChange
-	 * event implements this interface, and the object created
-	 * with that class is registered with a component using the
-	 * component's <code>registerViewChangeListener</code> or <code>registerDomainChangeListener</code> method. When
-	 * the modelChange event occurs, that object's appropriate
-	 * method is invoked.
+	 * Register domain change listener.
 	 * 
-	 * @since 1.2
-	 * 
+	 * @param modelChangeListener the model change listener
+	 * @since 1.3
 	 */
-	public interface ModelChangeListener {
+	void registerDomainChangeListener(ModelChangeListener modelChangeListener);
 
-		/**
-		 * Notify about a change.
-		 * 
-		 * @param notification the {@link ModelChangeNotification}
-		 */
-		void notifyChange(ModelChangeNotification notification);
-
-		/**
-		 * @param notifier the notifier
-		 */
-		void notifyAdd(Notifier notifier);
-
-		/**
-		 * @param notifier the notifier
-		 */
-		void notifyRemove(Notifier notifier);
-	}
+	/**
+	 * Unregister domain change listener.
+	 * 
+	 * @param modelChangeListener the model change listener
+	 * @since 1.3
+	 */
+	void unregisterDomainChangeListener(ModelChangeListener modelChangeListener);
 
 	/**
 	 * Gets the view model.
@@ -77,6 +62,7 @@ public interface ViewModelContext {
 	 * Register view change listener.
 	 * 
 	 * @param modelChangeListener the model change listener
+	 * @since 1.3
 	 */
 	void registerViewChangeListener(ModelChangeListener modelChangeListener);
 
@@ -84,22 +70,9 @@ public interface ViewModelContext {
 	 * Unregister view change listener.
 	 * 
 	 * @param modelChangeListener the model change listener
+	 * @since 1.3
 	 */
 	void unregisterViewChangeListener(ModelChangeListener modelChangeListener);
-
-	/**
-	 * Register domain change listener.
-	 * 
-	 * @param modelChangeListener the model change listener
-	 */
-	void registerDomainChangeListener(ModelChangeListener modelChangeListener);
-
-	/**
-	 * Unregister domain change listener.
-	 * 
-	 * @param modelChangeListener the model change listener
-	 */
-	void unregisterDomainChangeListener(ModelChangeListener modelChangeListener);
 
 	/**
 	 * Disposes the context.

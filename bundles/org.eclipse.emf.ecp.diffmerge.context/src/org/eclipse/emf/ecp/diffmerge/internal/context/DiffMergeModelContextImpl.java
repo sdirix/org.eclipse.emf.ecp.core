@@ -125,7 +125,7 @@ public class DiffMergeModelContextImpl extends ViewModelContextImpl implements
 
 	private void readAlreadyMerged(Set<VDomainModelReference> mergedReferences) {
 		for (final VDomainModelReference domainModelReference : mergedReferences) {
-			domainModelReference.resolve(getDomainModel());
+			domainModelReference.init(getDomainModel());
 			final Iterator<Setting> iterator = domainModelReference.getIterator();
 			while (iterator.hasNext()) {
 				final Setting setting = iterator.next();

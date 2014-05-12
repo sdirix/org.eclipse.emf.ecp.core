@@ -36,9 +36,9 @@ import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
+import org.eclipse.emf.ecp.view.spi.model.ModelChangeAddRemoveListener;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -74,7 +74,7 @@ public class ViewEditorPart extends EditorPart implements
 	private ECPSWTView render;
 
 	private ViewModelContext viewContext;
-	private ModelChangeListener modelChangeListener;
+	private ModelChangeAddRemoveListener modelChangeListener;
 
 	private boolean ecoreOutOfSync;
 	private IPartListener2 partListener;

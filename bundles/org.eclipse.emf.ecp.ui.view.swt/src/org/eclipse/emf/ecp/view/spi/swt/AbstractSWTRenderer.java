@@ -16,12 +16,11 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecp.view.internal.swt.SWTRendererFactoryImpl;
 import org.eclipse.emf.ecp.view.model.common.AbstractRenderer;
-import org.eclipse.emf.ecp.view.spi.context.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener;
+import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
+import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
@@ -58,6 +57,10 @@ import org.eclipse.swt.widgets.Control;
  */
 public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends AbstractRenderer<VELEMENT> {
 
+	/**
+	 * Variant constant for indicating RAP controls.
+	 */
+	protected static final String CUSTOM_VARIANT = "org.eclipse.rap.rwt.customVariant"; //$NON-NLS-1$
 	private ModelChangeListener listener;
 	private Map<SWTGridCell, Control> controls;
 	private SWTRendererFactory rendererFactory;
@@ -89,6 +92,14 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 	 */
 	public abstract SWTGridDescription getGridDescription(SWTGridDescription gridDescription);
 
+	/**
+	 * 
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.model.common.AbstractRenderer#init(org.eclipse.emf.ecp.view.spi.model.VElement,
+	 *      org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
+	 * @since 1.3
+	 */
 	@Override
 	public final void init(final VELEMENT vElement, final ViewModelContext viewContext) {
 		super.init(vElement, viewContext);
@@ -96,11 +107,6 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 		controls = new LinkedHashMap<SWTGridCell, Control>();
 		if (getViewModelContext() != null) {
 			listener = new ModelChangeListener() {
-
-				@Override
-				public void notifyRemove(Notifier notifier) {
-					// nothing to do
-				}
 
 				@Override
 				public void notifyChange(ModelChangeNotification notification) {
@@ -123,10 +129,6 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 					}
 				}
 
-				@Override
-				public void notifyAdd(Notifier notifier) {
-					// nothing to do
-				}
 			};
 			getViewModelContext().registerViewChangeListener(listener);
 		}
@@ -167,6 +169,8 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 	/**
 	 * Disposes all resources used by the renderer.
 	 * Don't forget to call super.dispose if overwriting this method.
+	 * 
+	 * @since 1.3
 	 */
 	@Override
 	protected void dispose() {

@@ -152,12 +152,13 @@ public class CustomAdapterFactory extends AdapterFactoryImpl {
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.3
+	 *        <!-- end-user-doc -->
 	 * 
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.spi.custom.model.VCustomControl
 	 * @generated
-	 * @since 1.3
 	 */
 	public Adapter createCustomControlAdapter()
 	{
@@ -170,12 +171,13 @@ public class CustomAdapterFactory extends AdapterFactoryImpl {
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.3
+	 *        <!-- end-user-doc -->
 	 * 
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.spi.custom.model.VCustomDomainModelReference
 	 * @generated
-	 * @since 1.3
 	 */
 	public Adapter createCustomDomainModelReferenceAdapter()
 	{
@@ -204,12 +206,13 @@ public class CustomAdapterFactory extends AdapterFactoryImpl {
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.3
+	 *        <!-- end-user-doc -->
 	 * 
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VElement
 	 * @generated
-	 * @since 1.3
 	 */
 	public Adapter createElementAdapter()
 	{
@@ -222,12 +225,13 @@ public class CustomAdapterFactory extends AdapterFactoryImpl {
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.3
+	 *        <!-- end-user-doc -->
 	 * 
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VContainedElement
 	 * @generated
-	 * @since 1.3
 	 */
 	public Adapter createContainedElementAdapter()
 	{
@@ -240,12 +244,13 @@ public class CustomAdapterFactory extends AdapterFactoryImpl {
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.3
+	 *        <!-- end-user-doc -->
 	 * 
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VControl
 	 * @generated
-	 * @since 1.3
 	 */
 	public Adapter createControlAdapter()
 	{

@@ -392,7 +392,7 @@ public abstract class ECPAbstractCustomControlSWT
 		final T createControl = controlFactory.createControl(clazz, domainModelReference);
 		final VControl vControl = VViewFactory.eINSTANCE.createControl();
 		final VDomainModelReference modelReference = EcoreUtil.copy(domainModelReference);
-		modelReference.resolve(getViewModelContext().getDomainModel());
+		modelReference.init(getViewModelContext().getDomainModel());
 		vControl.setDomainModelReference(modelReference);
 		vControl.setDiagnostic(VViewFactory.eINSTANCE.createDiagnostic());
 		createControl.init(getViewModelContext(), vControl);
@@ -671,6 +671,7 @@ public abstract class ECPAbstractCustomControlSWT
 	 * @param gridCell the {@link SWTGridCell} to enable/disable
 	 * @param control the {@link Control} to enable/disable
 	 * @param enabled true if the control should be enabled false otherwise
+	 * @since 1.3
 	 */
 	protected void setControlEnabled(SWTGridCell gridCell, Control control, boolean enabled) {
 		// ignore labels as they are readonly per definition

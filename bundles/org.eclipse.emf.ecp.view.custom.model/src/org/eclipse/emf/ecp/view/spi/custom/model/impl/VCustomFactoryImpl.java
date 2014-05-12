@@ -84,10 +84,11 @@ public class VCustomFactoryImpl extends EFactoryImpl implements VCustomFactory {
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.3
+	 *        <!-- end-user-doc -->
 	 * 
 	 * @generated
-	 * @since 1.3
 	 */
 	@Override
 	public VCustomControl createCustomControl()
@@ -98,10 +99,11 @@ public class VCustomFactoryImpl extends EFactoryImpl implements VCustomFactory {
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.3
+	 *        <!-- end-user-doc -->
 	 * 
 	 * @generated
-	 * @since 1.3
 	 */
 	@Override
 	public VCustomDomainModelReference createCustomDomainModelReference()

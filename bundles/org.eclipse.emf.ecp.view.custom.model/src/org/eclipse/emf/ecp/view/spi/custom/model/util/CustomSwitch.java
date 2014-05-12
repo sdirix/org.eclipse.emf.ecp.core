@@ -125,13 +125,14 @@ public class CustomSwitch<T> extends Switch<T> {
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.3
+	 *        <!-- end-user-doc -->
 	 * 
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Control</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
-	 * @since 1.3
 	 */
 	public T caseCustomControl(VCustomControl object)
 	{
@@ -143,13 +144,14 @@ public class CustomSwitch<T> extends Switch<T> {
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.3
+	 *        <!-- end-user-doc -->
 	 * 
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Domain Model Reference</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
-	 * @since 1.3
 	 */
 	public T caseCustomDomainModelReference(VCustomDomainModelReference object)
 	{
@@ -177,13 +179,14 @@ public class CustomSwitch<T> extends Switch<T> {
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.3
+	 *        <!-- end-user-doc -->
 	 * 
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Element</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
-	 * @since 1.3
 	 */
 	public T caseElement(VElement object)
 	{
@@ -195,13 +198,14 @@ public class CustomSwitch<T> extends Switch<T> {
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.3
+	 *        <!-- end-user-doc -->
 	 * 
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Contained Element</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
-	 * @since 1.3
 	 */
 	public T caseContainedElement(VContainedElement object)
 	{
@@ -213,13 +217,14 @@ public class CustomSwitch<T> extends Switch<T> {
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.3
+	 *        <!-- end-user-doc -->
 	 * 
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Control</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
-	 * @since 1.3
 	 */
 	public T caseControl(VControl object)
 	{

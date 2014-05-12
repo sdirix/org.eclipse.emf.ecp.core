@@ -15,8 +15,8 @@ import java.util.List;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.util.EContentAdapter;
-import org.eclipse.emf.ecp.view.spi.context.ModelChangeNotification;
-import org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener;
+import org.eclipse.emf.ecp.view.spi.model.ModelChangeAddRemoveListener;
+import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 
 /**
  * @author Edgar
@@ -24,9 +24,9 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener
  */
 public class TestViewContentAdapter extends EContentAdapter {
 
-	private final List<ModelChangeListener> viewChangeListeners;
+	private final List<ModelChangeAddRemoveListener> viewChangeListeners;
 
-	public TestViewContentAdapter(List<ModelChangeListener> listeners) {
+	public TestViewContentAdapter(List<ModelChangeAddRemoveListener> listeners) {
 		viewChangeListeners = listeners;
 	}
 
@@ -39,7 +39,7 @@ public class TestViewContentAdapter extends EContentAdapter {
 			return;
 		}
 
-		for (final ModelChangeListener listener : viewChangeListeners) {
+		for (final ModelChangeAddRemoveListener listener : viewChangeListeners) {
 			listener.notifyChange(new ModelChangeNotification(notification));
 		}
 	}

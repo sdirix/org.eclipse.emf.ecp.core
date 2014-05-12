@@ -33,6 +33,7 @@ import org.eclipse.emf.ecp.view.dynamictree.model.ModelPackage;
 import org.eclipse.emf.ecp.view.dynamictree.model.TestElement;
 import org.eclipse.emf.ecp.view.dynamictree.model.TestElementContainer;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VAction;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
@@ -52,6 +53,7 @@ public class DynamicContainmentTreeTest {
 
 	private static final String ELEMENT_CONTAINER_ID = "111";
 	private static final String ELEMENT_ID = "222";
+	private ViewModelContext viewModelContext;
 
 	@Before
 	public void setUp() throws Exception {
@@ -93,7 +95,7 @@ public class DynamicContainmentTreeTest {
 		viewControl.setDomainModelReference(createFeaturePathDomainModelReference);
 		tree.setComposite(viewControl);
 
-		ViewModelContextFactory.INSTANCE.createViewModelContext(tree, root);
+		viewModelContext = ViewModelContextFactory.INSTANCE.createViewModelContext(tree, root);
 		// node = NodeBuilders.INSTANCE.build(tree, new DynamicContainmentTreeTestEditContext(
 		// root, new ViewModelContextImpl(tree, root)));
 	}
@@ -288,7 +290,7 @@ public class DynamicContainmentTreeTest {
 
 			if (VDomainModelReference.class.isInstance(eObject)) {
 				final VDomainModelReference modelReference = (VDomainModelReference) eObject;
-				final boolean resolve = modelReference.resolve(domainModelRoot);
+				final boolean resolve = modelReference.init(domainModelRoot);
 				if (!resolve) {
 					// log
 				}

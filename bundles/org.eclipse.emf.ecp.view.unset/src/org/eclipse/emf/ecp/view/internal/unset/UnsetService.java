@@ -24,10 +24,10 @@ import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
-import org.eclipse.emf.ecp.view.spi.context.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
+import org.eclipse.emf.ecp.view.spi.model.ModelChangeAddRemoveListener;
+import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
@@ -47,7 +47,7 @@ public class UnsetService implements ViewModelService {
 	private static final String VIEW_MODEL_NULL_EXCEPTION = "View model must not be null."; //$NON-NLS-1$
 
 	private ViewModelContext context;
-	private ModelChangeListener viewChangeListener;
+	private ModelChangeAddRemoveListener viewChangeListener;
 
 	private final Map<EObject, Set<FeatureWrapper>> objectToFeatureMap;
 	private final Map<FeatureWrapper, Set<VControl>> settingToControlMap;
@@ -72,10 +72,12 @@ public class UnsetService implements ViewModelService {
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#instantiate(org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
+	@Override
 	public void instantiate(ViewModelContext context) {
 		this.context = context;
 
-		viewChangeListener = new ModelChangeListener() {
+		viewChangeListener = new ModelChangeAddRemoveListener() {
+			@Override
 			public void notifyChange(ModelChangeNotification notification) {
 				if (notification.getStructuralFeature() == VViewPackage.eINSTANCE.getElement_Visible()) {
 					final EObject notifier = notification.getNotifier();
@@ -91,9 +93,11 @@ public class UnsetService implements ViewModelService {
 				}
 			}
 
+			@Override
 			public void notifyAdd(Notifier notifier) {
 			}
 
+			@Override
 			public void notifyRemove(Notifier notifier) {
 			}
 		};
@@ -275,6 +279,7 @@ public class UnsetService implements ViewModelService {
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#dispose()
 	 */
+	@Override
 	public void dispose() {
 		context.unregisterViewChangeListener(viewChangeListener);
 	}
@@ -284,6 +289,7 @@ public class UnsetService implements ViewModelService {
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#getPriority()
 	 */
+	@Override
 	public int getPriority() {
 		return 5;
 	}

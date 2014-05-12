@@ -21,17 +21,20 @@ import org.eclipse.emf.ecp.view.spi.model.impl.VControlImpl;
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Control</b></em>'.
- * <!-- end-user-doc -->
- * <p>
- * The following features are implemented:
- * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.spi.custom.model.impl.VCustomControlImpl#getBundleName <em>Bundle Name</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.spi.custom.model.impl.VCustomControlImpl#getClassName <em>Class Name</em>}</li>
- * </ul>
- * </p>
+ * 
+ * @since 1.3
+ *        <!-- end-user-doc -->
+ *        <p>
+ *        The following features are implemented:
+ *        <ul>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.custom.model.impl.VCustomControlImpl#getBundleName <em>Bundle Name
+ *        </em>}</li>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.custom.model.impl.VCustomControlImpl#getClassName <em>Class Name</em>}
+ *        </li>
+ *        </ul>
+ *        </p>
  * 
  * @generated
- * @since 1.3
  */
 public class VCustomControlImpl extends VControlImpl implements VCustomControl
 {
