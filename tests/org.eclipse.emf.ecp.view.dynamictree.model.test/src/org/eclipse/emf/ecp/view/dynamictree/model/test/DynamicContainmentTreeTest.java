@@ -18,7 +18,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.eclipse.emf.common.util.Diagnostic;
-import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -37,7 +36,6 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
-import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
@@ -53,7 +51,6 @@ public class DynamicContainmentTreeTest {
 
 	private static final String ELEMENT_CONTAINER_ID = "111";
 	private static final String ELEMENT_ID = "222";
-	private ViewModelContext viewModelContext;
 
 	@Before
 	public void setUp() throws Exception {
@@ -95,9 +92,7 @@ public class DynamicContainmentTreeTest {
 		viewControl.setDomainModelReference(createFeaturePathDomainModelReference);
 		tree.setComposite(viewControl);
 
-		viewModelContext = ViewModelContextFactory.INSTANCE.createViewModelContext(tree, root);
-		// node = NodeBuilders.INSTANCE.build(tree, new DynamicContainmentTreeTestEditContext(
-		// root, new ViewModelContextImpl(tree, root)));
+		final ViewModelContext viewModelContext = ViewModelContextFactory.INSTANCE.createViewModelContext(tree, root);
 	}
 
 	@After
@@ -228,9 +223,32 @@ public class DynamicContainmentTreeTest {
 		assertEquals(ELEMENT_ID, testElement.getParentId());
 	}
 
-	public static DynamicContainmentItem addItem(String id, VElement viewModelParent, EObject virtualParent) {
+	@Test
+	public void testRemoveNodeFromTestElement() {
+		final DynamicContainmentItem dynamicContainmentItem = tree.getItems().get(tree.getItems().size() - 1);
+		removeItem(dynamicContainmentItem, dynamicContainmentItem.getDomainModel());
 
-		// EObject virtualParent = (EObject) virtualParentNode.getLabelObject();
+		assertEquals(0, tree.getItems().size());
+	}
+
+	private void removeItem(VElement treeItem, EObject treeItemDomain) {
+		final EObject eObject = treeItemDomain.eContainer();
+		if (TestElementContainer.class.isInstance(eObject)) {
+			TestElementContainer.class.cast(eObject).getTestElements().remove(treeItemDomain);
+		} else if (TestElement.class.isInstance(eObject)) {
+			TestElement.class.cast(eObject).getElements().remove(treeItemDomain);
+		}
+
+		final EObject treeItemParent = treeItem.eContainer();
+		if (DynamicContainmentTree.class.isInstance(treeItemParent)) {
+			DynamicContainmentTree.class.cast(treeItemParent).getItems().remove(treeItem);
+		} else if (DynamicContainmentItem.class.isInstance(treeItemParent)) {
+			DynamicContainmentItem.class.cast(treeItemParent).getItems().remove(treeItem);
+		}
+
+	}
+
+	public static DynamicContainmentItem addItem(String id, VElement viewModelParent, EObject virtualParent) {
 
 		final TestElement newValue = ModelFactory.eINSTANCE.createTestElement();
 		newValue.setParentId((String) virtualParent.eGet(virtualParent
@@ -258,44 +276,18 @@ public class DynamicContainmentTreeTest {
 		actions = tree.getActions();
 		renderable = tree.getChildComposite();
 
-		// final ECPControlContext childContext = virtualParentNode.getControlContext()
-		// .createSubContext(newValue);
 		final DynamicContainmentItem pi = ModelFactory.eINSTANCE.createDynamicContainmentItem();
 		pi.setComposite((VContainedElement) EcoreUtil.copy(renderable));
 		pi.setDomainModel(newValue);
-		// resolveDomainReferences(pi, newValue);
 		if (DynamicContainmentItem.class.isInstance(viewModelParent)) {
 			final DynamicContainmentItem parent = (DynamicContainmentItem) viewModelParent;
 			parent.getItems().add(pi);
 		} else {
 			tree.getItems().add(pi);
 		}
-		// final Node<?> n = NodeBuilders.INSTANCE.build(pi, childContext);
-
-		// virtualParentNode.addChild(n);
-		// n.setLabelObject(newValue);
-		// n.setActions(actions);
 
 		((TestElementContainer) virtualParent).getTestElements().add(newValue);
-
-		// return n;
 		return pi;
 	}
 
-	private static void resolveDomainReferences(VElement renderable,
-		EObject domainModelRoot) {
-		final TreeIterator<EObject> eAllContents = renderable.eAllContents();
-		while (eAllContents.hasNext()) {
-			final EObject eObject = eAllContents.next();
-
-			if (VDomainModelReference.class.isInstance(eObject)) {
-				final VDomainModelReference modelReference = (VDomainModelReference) eObject;
-				final boolean resolve = modelReference.init(domainModelRoot);
-				if (!resolve) {
-					// log
-				}
-
-			}
-		}
-	}
 }
