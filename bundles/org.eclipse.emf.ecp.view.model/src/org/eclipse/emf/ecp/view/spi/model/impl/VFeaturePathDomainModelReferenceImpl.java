@@ -571,13 +571,24 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 			vControl.setDiagnostic(null);
 		} else if (!notification.getStructuralFeature().isMany()) {
 			vControl.setDiagnostic(null);
-		} else if (Notification.REMOVE == notification.getRawNotification().getEventType()
-			|| Notification.REMOVE_MANY == notification.getRawNotification().getEventType()) {
+		} else if (Notification.REMOVE == notification.getRawNotification().getEventType()) {
 			final EObject oldValue = (EObject) notification.getRawNotification().getOldValue();
 			final Set<Diagnostic> toDelete = new LinkedHashSet<Diagnostic>();
 			for (final Object diagnosticObject : vControl.getDiagnostic().getDiagnostics()) {
 				final Diagnostic diagnostic = (Diagnostic) diagnosticObject;
 				if (diagnostic.getData().get(0) == oldValue) {
+					toDelete.add(diagnostic);
+				}
+			}
+			for (final Diagnostic diagnostic : toDelete) {
+				vControl.getDiagnostic().getDiagnostics().remove(diagnostic);
+			}
+		} else if (Notification.REMOVE_MANY == notification.getRawNotification().getEventType()) {
+			final Collection<?> oldValue = (Collection<?>) notification.getRawNotification().getOldValue();
+			final Set<Diagnostic> toDelete = new LinkedHashSet<Diagnostic>();
+			for (final Object diagnosticObject : vControl.getDiagnostic().getDiagnostics()) {
+				final Diagnostic diagnostic = (Diagnostic) diagnosticObject;
+				if (oldValue.contains(diagnostic.getData().get(0))) {
 					toDelete.add(diagnostic);
 				}
 			}
