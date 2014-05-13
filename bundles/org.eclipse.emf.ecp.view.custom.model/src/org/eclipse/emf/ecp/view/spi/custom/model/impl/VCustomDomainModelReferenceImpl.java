@@ -484,50 +484,7 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 
 	@Override
 	public boolean init(EObject object) {
-
-		// // add domain model listener/adapter
-		// final DomainModelChangeListener modelChangeListener = new DomainModelChangeListener() {
-		//
-		// @Override
-		// public void notifyRemove(Notifier notifier) {
-		// // TODO Auto-generated method stub
-		//
-		// }
-		//
-		// @Override
-		// public void notifyChange(ModelChangeNotification notification) {
-		//
-		// if (Notification.SET == notification.getRawNotification().getEventType()) {
-		// // notification.getNotifier(); // Fan
-		// // notification.getStructuralFeature(); // fan_favPlayer
-		// // notification.getRawNotification().getNewValue(); // player new
-		// // notification.getRawNotification().getOldValue(); // player old
-		// //
-		// // getVElement().getDomainModelReference().getIterator().next(); // setting bound in control
-		// // (eobject ,
-		// // // feaure) (player (old), name of
-		// // // player)
-		// if (EReference.class.isInstance(notification.getStructuralFeature())
-		// && EReference.class.cast(notification.getStructuralFeature()).getEReferenceType()
-		// .isInstance(getVElement().getDomainModelReference().getIterator().next().getEObject())
-		// && getVElement().getDomainModelReference().getIterator().next().getEObject() == notification
-		// .getRawNotification().getOldValue()) {
-		// value.setValue(notification.getRawNotification().getNewValue());
-		// }
-		// }
-		// }
-		//
-		// @Override
-		// public void notifyAdd(Notifier notifier) {
-		//
-		// }
-		// };
-		// getViewModelContext().registerDomainChangeListener(modelChangeListener);
-
-		// TODO
-		final boolean init = resolve(object);
-		return false;
-
+		return resolve(object);
 	}
 
 	private static ECPHardcodedReferences loadObject(String bundleName, String clazz) {
@@ -629,8 +586,12 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 	 */
 	@Override
 	public Iterator<SettingPath> getFullPathIterator() {
-		// TODO Auto-generated method stub
-		return null;
+		return new ExistingIteratorIterator<SettingPath>() {
+			@Override
+			protected Iterator<SettingPath> getSubIterator(VDomainModelReference domainModelReference) {
+				return domainModelReference.getFullPathIterator();
+			}
+		};
 	}
 
 	/**
@@ -640,8 +601,7 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 	 */
 	@Override
 	public void notifyChange(ModelChangeNotification notification) {
-		// TODO Auto-generated method stub
-
+		// TODO needed here
 	}
 
 } // VCustomDomainModelReferenceImpl
