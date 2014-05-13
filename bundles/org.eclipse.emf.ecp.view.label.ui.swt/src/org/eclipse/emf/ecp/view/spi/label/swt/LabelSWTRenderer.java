@@ -12,13 +12,16 @@
 package org.eclipse.emf.ecp.view.spi.label.swt;
 
 import org.eclipse.emf.ecp.view.spi.label.model.VLabel;
+import org.eclipse.emf.ecp.view.spi.label.model.VLabelStyle;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
-import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
+import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
@@ -31,6 +34,7 @@ import org.eclipse.swt.widgets.Label;
  */
 public class LabelSWTRenderer extends AbstractSWTRenderer<VLabel> {
 	private SWTGridDescription rendererGridDescription;
+	private Font font;
 
 	/**
 	 * {@inheritDoc}
@@ -40,6 +44,9 @@ public class LabelSWTRenderer extends AbstractSWTRenderer<VLabel> {
 	@Override
 	protected void dispose() {
 		rendererGridDescription = null;
+		if (font != null) {
+			font.dispose();
+		}
 		super.dispose();
 	}
 
@@ -64,7 +71,21 @@ public class LabelSWTRenderer extends AbstractSWTRenderer<VLabel> {
 	@Override
 	protected Control renderControl(SWTGridCell cell, Composite parent)
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
-		final Label label = new Label(parent, SWT.NONE);
+		final VLabelStyle style = getVElement().getStyle();
+		final Label label;
+		if (VLabelStyle.SEPARATOR == style) {
+			label = new Label(parent, SWT.SEPARATOR | SWT.HORIZONTAL);
+		}
+		else {
+			label = new Label(parent, SWT.None);
+			final FontData[] fD = label.getFont().getFontData();
+			fD[0].setStyle(style.getValue());
+			if (font != null) {
+				font.dispose();
+			}
+			font = new Font(parent.getDisplay(), fD[0]);
+			label.setFont(font);
+		}
 		if (getVElement().getName() != null) {
 			label.setText(getVElement().getName());
 		}

@@ -50,11 +50,6 @@
 						</dependency>
 						<dependency>
 							<type>eclipse-feature</type>
-							<artifactId>org.eclipse.emf.ecp.view.separator.feature</artifactId>
-							<version>0.0.0</version>
-						</dependency>
-						<dependency>
-							<type>eclipse-feature</type>
 							<artifactId>org.eclipse.emf.ecp.view.groupedgrid.feature</artifactId>
 							<version>0.0.0</version>
 						</dependency>

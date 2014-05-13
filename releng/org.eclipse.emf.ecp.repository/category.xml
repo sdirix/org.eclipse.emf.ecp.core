@@ -24,9 +24,6 @@
    <feature url="features/org.eclipse.emf.ecp.viewmodel.feature_1.2.1.qualifier.jar" id="org.eclipse.emf.ecp.viewmodel.feature" version="1.2.1.qualifier">
       <category name="org.eclipse.emf.ecp.view"/>
    </feature>
-   <feature url="features/org.eclipse.emf.ecp.view.separator.feature_1.2.1.qualifier.jar" id="org.eclipse.emf.ecp.view.separator.feature" version="1.2.1.qualifier">
-      <category name="org.eclipse.emf.ecp.view"/>
-   </feature>
    <feature url="features/org.eclipse.emf.ecp.view.groupedgrid.feature_1.2.1.qualifier.jar" id="org.eclipse.emf.ecp.view.groupedgrid.feature" version="1.2.1.qualifier">
       <category name="org.eclipse.emf.ecp.view"/>
    </feature>
@@ -61,9 +58,6 @@
       <category name="org.eclipse.emf.ecp.view"/>
    </feature>
    <feature url="features/org.eclipse.emf.ecp.view.rule.feature_1.2.1.qualifier.jar" id="org.eclipse.emf.ecp.view.rule.feature" version="1.2.1.qualifier">
-      <category name="org.eclipse.emf.ecp.view"/>
-   </feature>
-   <feature url="features/org.eclipse.emf.ecp.view.separator.feature_1.2.1.qualifier.jar" id="org.eclipse.emf.ecp.view.separator.feature" version="1.2.1.qualifier">
       <category name="org.eclipse.emf.ecp.view"/>
    </feature>
    <feature url="features/org.eclipse.emf.ecp.view.table.feature_1.2.1.qualifier.jar" id="org.eclipse.emf.ecp.view.table.feature" version="1.2.1.qualifier">

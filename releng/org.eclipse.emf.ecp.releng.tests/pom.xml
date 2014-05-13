@@ -41,7 +41,6 @@
 		<module>../../tests/org.eclipse.emf.ecp.view.rule.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.rule.ui.swt.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.unset.test</module>
-		<module>../../tests/org.eclipse.emf.ecp.view.separator.ui.swt.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.table.ui.swt.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.validation.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.vertical.ui.swt.test</module>

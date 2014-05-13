@@ -98,11 +98,6 @@
 		<module>../../bundles/org.eclipse.emf.ecp.view.custom.model.edit</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.custom.ui.swt</module>
 
-		<!-- Separator Feature -->
-		<module>../../bundles/org.eclipse.emf.ecp.view.separator.model</module>
-		<module>../../bundles/org.eclipse.emf.ecp.view.separator.model.edit</module>
-		<module>../../bundles/org.eclipse.emf.ecp.view.separator.ui.swt</module>
-
 		<!-- GroupedGrid Feature -->
 		<module>../../bundles/org.eclipse.emf.ecp.view.groupedgrid.model</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.groupedgrid.model.edit</module>

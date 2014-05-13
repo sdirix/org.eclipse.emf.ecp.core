@@ -31,7 +31,6 @@
 		<module>../../features/org.eclipse.emf.ecp.examplemodel.ui.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.view.categorization.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.view.custom.feature</module>
-		<module>../../features/org.eclipse.emf.ecp.view.separator.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.view.groupedgrid.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.view.label.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.view.group.feature</module>
