@@ -47,6 +47,18 @@
          id="org.eclipse.emf.ecp.view.sdk.fx.feature"
          version="0.0.0"/>
 
+   <includes
+         id="org.eclipse.emf.ecp.ecore.editor.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.ecp.ecore.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.ecp.view.groupedgrid.feature"
+         version="0.0.0"/>
+
    <plugin
          id="org.eclipse.emf.ecp.doc"
          download-size="0"
