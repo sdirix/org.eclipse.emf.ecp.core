@@ -196,7 +196,7 @@ public class ValidationServiceImpl implements ValidationService {
 				}
 				//$FALL-THROUGH$
 			case Notification.REMOVE_MANY:
-				validate(notification.getNotifier());
+				validate(getAllEObjects(notification.getNotifier()));
 				break;
 			case Notification.REMOVING_ADAPTER:
 				break;
