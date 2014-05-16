@@ -12,6 +12,7 @@
 package org.eclipse.emf.ecp.view.spi.core.swt;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
@@ -21,17 +22,19 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecp.view.internal.core.swt.Activator;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
+import org.eclipse.emf.ecp.view.spi.model.VContainer;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractAdditionalSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
-import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.LayoutProviderHelper;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
+import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -175,14 +178,21 @@ public abstract class ContainerSWTRenderer<VELEMENT extends VElement> extends Ab
 	 * 
 	 * @return the string used by rap for styling
 	 */
-	protected abstract String getCustomVariant();
+	protected String getCustomVariant() {
+		return "org_eclipse_emf_ecp_view_container"; //$NON-NLS-1$
+	}
 
 	/**
 	 * The collection of children to iterate over.
 	 * 
 	 * @return the collection of children to render
 	 */
-	protected abstract Collection<VContainedElement> getChildren();
+	protected Collection<VContainedElement> getChildren() {
+		if (VViewPackage.eINSTANCE.getContainer().isInstance(getVElement())) {
+			return VContainer.class.cast(getVElement()).getChildren();
+		}
+		return Collections.emptySet();
+	}
 
 	/**
 	 * Allows to customize the composite which is used to render the children onto.
