@@ -7,9 +7,9 @@
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- * Alexandra Buzila - initial API and implementation
+ * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.spi.ui;
+package org.eclipse.emf.ecp.view.treemasterdetail.ui.swt.internal;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -17,10 +17,12 @@ import org.eclipse.emf.ecp.edit.spi.ReferenceService;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 
 /**
- * @author Alexandra Buzila
+ * A dummy service.
+ * 
+ * @author Eugen Neufeld
  * 
  */
-public class DynamicReferenceService implements ReferenceService {
+public class DummyReferenceService implements ReferenceService {
 
 	/**
 	 * {@inheritDoc}
@@ -29,6 +31,8 @@ public class DynamicReferenceService implements ReferenceService {
 	 */
 	@Override
 	public void instantiate(ViewModelContext context) {
+		// TODO Auto-generated method stub
+
 	}
 
 	/**
@@ -38,6 +42,8 @@ public class DynamicReferenceService implements ReferenceService {
 	 */
 	@Override
 	public void dispose() {
+		// TODO Auto-generated method stub
+
 	}
 
 	/**
@@ -59,7 +65,8 @@ public class DynamicReferenceService implements ReferenceService {
 	 */
 	@Override
 	public void addModelElement(EObject eObject, EReference eReference) {
-		// preview should not change the model
+		// TODO Auto-generated method stub
+
 	}
 
 	/**
@@ -69,7 +76,7 @@ public class DynamicReferenceService implements ReferenceService {
 	 */
 	@Override
 	public EObject getNewElementFor(EReference eReference) {
-		// preview should not change the model
+		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -80,6 +87,7 @@ public class DynamicReferenceService implements ReferenceService {
 	 */
 	@Override
 	public EObject getExistingElementFor(EReference eReference) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -90,6 +98,8 @@ public class DynamicReferenceService implements ReferenceService {
 	 */
 	@Override
 	public void openInNewContext(EObject eObject) {
+		// TODO Auto-generated method stub
+
 	}
 
 }

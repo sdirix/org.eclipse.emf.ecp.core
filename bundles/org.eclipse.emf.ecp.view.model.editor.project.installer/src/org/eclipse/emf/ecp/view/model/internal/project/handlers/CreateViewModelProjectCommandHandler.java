@@ -33,6 +33,11 @@ import org.eclipse.ui.handlers.HandlerUtil;
  */
 public class CreateViewModelProjectCommandHandler extends AbstractHandler {
 
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.core.commands.AbstractHandler#execute(org.eclipse.core.commands.ExecutionEvent)
+	 */
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		// get selected ecore
 		final IStructuredSelection selection = (IStructuredSelection) HandlerUtil.getCurrentSelection(event);

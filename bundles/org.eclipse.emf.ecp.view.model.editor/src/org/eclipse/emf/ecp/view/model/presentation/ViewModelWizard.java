@@ -193,9 +193,6 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 		selectEcorePage = new SelectEcorePage(PLUGIN_ID);
 		addPage(selectEcorePage);
 
-		// selectEClassPage = new SelectEClassWizardPage();
-		// addPage(selectEClassPage);
-
 		newFileCreationPage = getNewFileCreationPage();
 		addPage(newFileCreationPage);
 

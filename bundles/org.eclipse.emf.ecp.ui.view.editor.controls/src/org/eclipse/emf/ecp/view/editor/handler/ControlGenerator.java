@@ -40,18 +40,27 @@ import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 
+/** Generates and sets a list of controls to a {@link VView}. */
 public final class ControlGenerator {
 
 	private ControlGenerator() {
 
 	}
 
+	/**
+	 * Create controls and set them to the view.
+	 * 
+	 * @param project the {@link ECPProject} from which the rootClass is retrieved. It is assumed that the project
+	 *            contains only one {@link VView}.
+	 * @param compositeToFill the {@link VElement} to fill , must be of type {@link VView} or {@link VContainer}
+	 * @param datasegment the class to parse
+	 * @param features the list of features to create
+	 */
 	public static void addControls(ECPProject project, VContainer compositeToFill,
 		EClass datasegment, Set<EStructuralFeature> features) {
 
 		final EClass rootClass = Helper.getRootEClass(project);
 		addControls(rootClass, compositeToFill, datasegment, features);
-
 	}
 
 	/**
@@ -81,8 +90,6 @@ public final class ControlGenerator {
 				.createFeaturePathDomainModelReference();
 			modelReference.setDomainModelEFeature(feature);
 			modelReference.getDomainModelEReferencePath().addAll(bottomUpPath);
-			// control.setTargetFeature(feature);
-			// control.getPathToFeature().addAll(bottomUpPath);
 			control.setDomainModelReference(modelReference);
 
 			// add to the composite
@@ -95,27 +102,13 @@ public final class ControlGenerator {
 	}
 
 	/**
-	 * Create all the controls for the given view.
+	 * Create all the controls and set them to the given view.
 	 * 
 	 * @param view the view for which the controls are created for
 	 */
 	public static void generateAllControls(final VView view) {
 		// load resource
-		// final String path = getViewModelRegistry().getEcorePath(view);
 		final URI uri = EcoreUtil.getURI(view);
-		// // ensure URI is platform URI
-		// if (!uri.isPlatform()) {
-		// final java.net.URI locationURI = ResourcesPlugin.getWorkspace().getRoot().getLocationURI();
-		// final URI newURI = URI.createURI(locationURI.toString() + "/");
-		// if (newURI.fragment() == null) {
-		// // newURI = newURI.appendSegment("/");
-		// }
-		// uri = uri.deresolve(newURI, false, true, false);
-		// if (uri.fragment() != null) {
-		// uri = uri.trimFragment();
-		// }
-		// uri = URI.createPlatformResourceURI(uri.toString(), false);
-		// }
 		final Resource.Factory.Registry reg = Resource.Factory.Registry.INSTANCE;
 		final Map<String, Object> m = reg.getExtensionToFactoryMap();
 		m.put("*", new XMIResourceFactoryImpl()); //$NON-NLS-1$

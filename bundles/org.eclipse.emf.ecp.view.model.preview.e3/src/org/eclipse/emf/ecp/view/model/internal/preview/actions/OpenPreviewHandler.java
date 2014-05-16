@@ -23,24 +23,9 @@ import org.eclipse.emf.ecp.view.treemasterdetail.ui.swt.internal.MasterDetailAct
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.handlers.HandlerUtil;
 
 /** Opens the {@link PreviewView}. */
 public class OpenPreviewHandler extends MasterDetailAction {
-
-	@Override
-	public Object execute(ExecutionEvent event) throws ExecutionException {
-		try {
-			HandlerUtil.getActiveWorkbenchWindow(event).getActivePage()
-				.showView("org.eclipse.emf.ecp.view.model.internal.preview.e3.views.PreviewView"); //$NON-NLS-1$
-		} catch (final PartInitException e) {
-			Activator
-				.getDefault()
-				.getLog()
-				.log(new Status(IStatus.ERROR, Activator.getDefault().getBundle().getSymbolicName(), e.getMessage(), e));
-		}
-		return null;
-	}
 
 	/**
 	 * {@inheritDoc}
@@ -73,6 +58,17 @@ public class OpenPreviewHandler extends MasterDetailAction {
 	@Override
 	public boolean shouldShow(EObject eObject) {
 		return true;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.core.commands.IHandler#execute(org.eclipse.core.commands.ExecutionEvent)
+	 */
+	@Override
+	public Object execute(ExecutionEvent event) throws ExecutionException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

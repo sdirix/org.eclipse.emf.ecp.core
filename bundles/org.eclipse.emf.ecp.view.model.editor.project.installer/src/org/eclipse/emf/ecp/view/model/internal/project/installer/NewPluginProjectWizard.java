@@ -18,10 +18,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.Map;
-import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
@@ -39,12 +35,6 @@ import org.eclipse.emf.common.ui.wizard.AbstractExampleInstallerWizard;
 import org.eclipse.emf.common.ui.wizard.ExampleInstallerWizard;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.emf.ecp.ide.view.service.IDEViewModelRegistry;
 import org.eclipse.emf.ecp.view.editor.handler.ControlGenerator;
 import org.eclipse.emf.ecp.view.model.presentation.SelectEClassWizardPage;
@@ -112,8 +102,7 @@ public class NewPluginProjectWizard extends ExampleInstallerWizard {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.emf.common.ui.wizard.ExampleInstallerWizard#
-	 * loadFromExtensionPoints()
+	 * @see org.eclipse.emf.common.ui.wizard.ExampleInstallerWizard# loadFromExtensionPoints()
 	 */
 	@Override
 	protected void loadFromExtensionPoints() {
@@ -262,7 +251,7 @@ public class NewPluginProjectWizard extends ExampleInstallerWizard {
 	@Override
 	public boolean canFinish() {
 		if (selectEClassPage != null) {
-			selectedEClass = ((SelectEClassWizardPage) selectEClassPage)
+			selectedEClass = selectEClassPage
 				.getSelectedEClass();
 			return selectedEClass != null;
 		}
@@ -353,25 +342,24 @@ public class NewPluginProjectWizard extends ExampleInstallerWizard {
 
 	private boolean createViewModelFile() {
 		final IProject p = projectDescriptors.get(0).getProject();
-		final IPath path = p.getFolder("viewmodels").getFullPath().append(selectedEClass.getName() + ".view");
+		final IPath path = p.getFolder("viewmodels").getFullPath().append(selectedEClass.getName() + ".view"); //$NON-NLS-1$ //$NON-NLS-2$
 		final File f = new File(path.toString());
 		try {
 			f.createNewFile();
-		} catch (final IOException ex1) {
-			// TODO
+		} catch (final IOException e) {
+			Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
 		}
 		viewModelFile = ResourcesPlugin.getWorkspace().getRoot().getFile(path);
 
-		final boolean generateViewModelControls = ((SelectEClassWizardPage) selectEClassPage)
+		final boolean generateViewModelControls = selectEClassPage
 			.isGenerateViewModelOptionSelected();
 		try {
 			final IDEViewModelRegistry registry = getViewModelRegistry();
 			if (registry != null) {
 				final VView view = registry.createViewModel(viewModelFile, selectedEClass, selectedEcore);
 				if (generateViewModelControls) {
-					generate(view);
+					ControlGenerator.generateAllControls(view);
 				}
-
 			}
 
 		} catch (final IOException e) {
@@ -387,58 +375,6 @@ public class NewPluginProjectWizard extends ExampleInstallerWizard {
 	 */
 	public void setSelection(IStructuredSelection selection) {
 		this.selection = selection;
-	}
-
-	/**
-	 * @param view
-	 */
-	// FIXME
-	private void generate(final VView view2) {
-		// load resource
-		// final String path = getViewModelRegistry().getEcorePath(view);
-		final URI uri = EcoreUtil.getURI(view2);
-		final Resource.Factory.Registry reg = Resource.Factory.Registry.INSTANCE;
-		final Map<String, Object> m = reg.getExtensionToFactoryMap();
-		m.put("*", new XMIResourceFactoryImpl()); //$NON-NLS-1$
-
-		final ResourceSet resSet = new ResourceSetImpl();
-		final Resource resource = resSet.getResource(uri, true);
-		try {
-			resource.load(null);
-		} catch (final IOException ex) {
-			// TODO Auto-generated catch block
-		}
-		// resolve the proxies
-		int rsSize = resSet.getResources().size();
-		EcoreUtil.resolveAll(resSet);
-		while (rsSize != resSet.getResources().size()) {
-			EcoreUtil.resolveAll(resSet);
-			rsSize = resSet.getResources().size();
-		}
-		final VView view = (VView) resource.getContents().get(0);
-
-		final EClass rootEClass = view.getRootEClass();
-		final Set<EStructuralFeature> mySet = new
-			LinkedHashSet<EStructuralFeature>(rootEClass.getEAllStructuralFeatures());
-		ControlGenerator.addControls(rootEClass, view, rootEClass,
-			mySet);
-		// AdapterFactoryEditingDomain.getEditingDomainFor(view).getCommandStack()
-		// .execute(new ChangeCommand(view) {
-		//
-		// @Override
-		// protected void doExecute() {
-		// ControlGenerator.addControls(rootEClass, view, rootEClass,
-		// mySet);
-		//
-		// }
-		// });
-		// Save the contents of the resource to the file system.
-		final Map<Object, Object> options = new HashMap<Object, Object>();
-		try {
-			resource.save(options);
-		} catch (final IOException ex) {
-			// TODO Auto-generated catch block
-		}
 	}
 
 	/**

@@ -20,37 +20,53 @@ import org.eclipse.emf.ecp.view.spi.model.VView;
 
 /**
  * The View Model registry handling the update of open view model editors.
+ * 
  * @author Eugen Neufeld
- *
+ * 
  */
 public interface IDEViewModelRegistry {
 
 	/**
 	 * Register an ECore with a VView.
+	 * 
 	 * @param ecorePath the path to the ECore connected to the VView
-	 * @param viewModel the VView 
+	 * @param viewModel the VView
 	 */
 	void register(String ecorePath, VView viewModel);
+
 	/**
 	 * Unregister a VView from an ECore. eg when the root class changes.
+	 * 
 	 * @param registeredEcorePath the path to the ECore connected to the VView
-	 * @param viewModel the VView 
+	 * @param viewModel the VView
 	 */
 	void unregister(String registeredEcorePath, VView viewModel);
-	
+
 	/**
 	 * Register a view model editor with a view.
+	 * 
 	 * @param viewModel the VView
 	 * @param viewModelEditor the view model editor
 	 * @throws IOException if a resource cannot be loaded
 	 */
 	void registerViewModelEditor(VView viewModel, ViewModelEditorCallback viewModelEditor) throws IOException;
+
 	/**
-	 * Unregister a view model editor, called when the view model editor closes. 
+	 * Unregister a view model editor, called when the view model editor closes.
+	 * 
 	 * @param viewModel the VView
 	 * @param viewModelEditor the view model editor
 	 */
 	void unregisterViewModelEditor(VView viewModel, ViewModelEditorCallback viewModelEditor);
+
+	/**
+	 * Saves the path {@code ecorePath} of the Ecore associated with the {@linkplain VView} located at the path
+	 * {@code viewModelPath} in an IDEConfig file.
+	 * 
+	 * @param ecorePath path to the Ecore associated with the {@code viewModel}
+	 * @param viewModelPath the path to the VView
+	 */
+	void persistSelectedEcore(String ecorePath, String viewModelPath);
 
 	/**
 	 * Saves the path {@code ecorePath} of the Ecore associated with the {@code viewModel} in an {@link IDEConfig} file.
@@ -61,15 +77,6 @@ public interface IDEViewModelRegistry {
 	void persistSelectedEcore(String ecorePath, VView viewModel);
 
 	/**
-	 * Saves the path {@code ecorePath} of the Ecore associated with the {@linkplain VView} located at the path
-	 * {@code viewModelPath} in an {@link IDEConfig} file.
-	 * 
-	 * @param ecorePath path to the Ecore associated with the {@code viewModel}
-	 * @param viewModelPath the path to the VView
-	 */
-	void persistSelectedEcore(String ecorePath, String viewModelPath);
-
-	/**
 	 * Register a view with its absolute path.
 	 * 
 	 * @param view the VView
@@ -78,17 +85,17 @@ public interface IDEViewModelRegistry {
 	void registerViewModel(VView view, String viewPath);
 
 	/**
-	 * Unregister a view model editor, called when the view model editor closes.
+	 * Creates a new view model file.
 	 * 
-	 * @param modelFile the file in which the view is to be saved
-	 * @param selectedEClass the rootEClass of the view
-	 * @param selectedEcore the Ecore the {@code selectedEClass} belongs to
+	 * @param modelFile the file in which the view should be saved
+	 * @param selectedEClass the <em>Root EClass</em> for the new {@link VView}
+	 * @param selectedEcore the ecore containing the <em>selectedEClass</em>
 	 * 
-	 * @return a new instance of {@link VView}
+	 * @return the newly created {@link VView}
 	 * 
-	 * @throws IOException if the resource cannot be saved
+	 * @throws IOException when something goes wrong while loading or saving the resource
+	 * 
 	 */
-	//TODO javadoc
 	VView createViewModel(IFile modelFile, EClass selectedEClass, IFile selectedEcore)
 		throws IOException;
 

@@ -6,7 +6,7 @@
          <meta.schema plugin="org.eclipse.emf.ecp.view.treemasterdetail.ui.swt" id="masterDetailActions" name="Action registry for master detail"/>
       </appinfo>
       <documentation>
-         [Enter description of this extension point.]
+         This extension point allows to register actions which can be contributed to a menu.
       </documentation>
    </annotation>
 
@@ -102,7 +102,7 @@
          <meta.section type="since"/>
       </appinfo>
       <documentation>
-         [Enter the first release in which this extension point appears.]
+         1.3.0
       </documentation>
    </annotation>
 
