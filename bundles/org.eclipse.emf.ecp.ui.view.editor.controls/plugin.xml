@@ -25,13 +25,6 @@
                supportedFeature="expectedValue">
          </staticTest>
       </control>
-      <control
-            class="org.eclipse.emf.ecp.view.editor.controls.ControlRootEClassControl"
-            id="org.eclipse.emf.ecp.view.editor.controls.rootEClass">
-         <dynamicTest
-               testClass="org.eclipse.emf.ecp.view.editor.controls.RootEClassControlECPTester">
-         </dynamicTest>
-      </control>
       <!--
       <control
             class="org.eclipse.emf.ecp.view.editor.controls.TreeCategoryTargetFeatureControl"
@@ -258,6 +251,12 @@
             renderer="org.eclipse.emf.ecp.view.editor.controls.ControlRootEClassControl2SWTRenderer">
          <dynamicTest
                testClass="org.eclipse.emf.ecp.view.editor.controls.ControlRootEClassControl2SWTRendererTester">
+         </dynamicTest>
+      </renderer>
+      <renderer
+            renderer="org.eclipse.emf.ecp.view.editor.controls.ControlRootEClassControlChangeableSWTRenderer">
+         <dynamicTest
+               testClass="org.eclipse.emf.ecp.view.editor.controls.RootEClassControlECPTester">
          </dynamicTest>
       </renderer>
    </extension>

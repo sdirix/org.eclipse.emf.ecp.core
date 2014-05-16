@@ -11,46 +11,19 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.editor.controls;
 
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.view.model.common.SimpleControlRendererTester;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecp.view.model.common.ECPRendererTester;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 
 /**
  * @author Alexandra Buzila
  * 
  */
-public class ControlRootEClassControl2SWTRendererTester extends SimpleControlRendererTester {
-
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see org.eclipse.emf.ecp.view.internal.core.swt.renderer.SimpleControlRendererTester#isSingleValue()
-	 */
-	@Override
-	protected boolean isSingleValue() {
-		return true;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see org.eclipse.emf.ecp.view.internal.core.swt.renderer.SimpleControlRendererTester#getPriority()
-	 */
-	@Override
-	protected int getPriority() {
-		return 3;
-	}
-
-	private int isApplicableForFeature(EStructuralFeature feature, VElement vElement, ViewModelContext context) {
-		if (feature.equals(VViewPackage.eINSTANCE.getView_RootEClass())) {
-			return 10;
-		}
-		return NOT_APPLICABLE;
-	}
+public class ControlRootEClassControl2SWTRendererTester implements ECPRendererTester {
 
 	/**
 	 * {@inheritDoc}
@@ -62,19 +35,27 @@ public class ControlRootEClassControl2SWTRendererTester extends SimpleControlRen
 		if (!VControl.class.isInstance(vElement)) {
 			return NOT_APPLICABLE;
 		}
-		final EStructuralFeature feature = VControl.class.cast(vElement).getDomainModelReference()
-			.getEStructuralFeatureIterator().next();
-		return isApplicableForFeature(feature, vElement, context);
+		final Setting setting = VControl.class.cast(vElement).getDomainModelReference().getIterator().next();
+		return isApplicable(setting);
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Test if setting contains the correct data.
 	 * 
-	 * @see org.eclipse.emf.ecp.view.internal.core.swt.renderer.SimpleControlRendererTester#getSupportedClassType()
+	 * @param setting the {@link Setting} to check
+	 * @return the priority of the control
 	 */
-	@Override
-	protected Class<?> getSupportedClassType() {
-		return EClass.class;
+	protected int isApplicable(Setting setting) {
+		if (!VView.class.isInstance(setting.getEObject())) {
+			return NOT_APPLICABLE;
+		}
+		if (VViewPackage.eINSTANCE.getView_RootEClass() != setting.getEStructuralFeature()) {
+			return NOT_APPLICABLE;
+		}
+		if (setting.get(true) == null) {
+			return NOT_APPLICABLE;
+		}
+		return 3;
 	}
 
 }
