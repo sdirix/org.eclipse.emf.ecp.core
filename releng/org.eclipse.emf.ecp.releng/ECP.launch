@@ -29,14 +29,15 @@
 <setEntry value="org.eclipse.emf.ecp.emfforms.runtime.feature:default"/>
 <setEntry value="org.eclipse.emf.ecp.emfstore.feature:default"/>
 <setEntry value="org.eclipse.emf.ecp.feature:default"/>
+<setEntry value="org.eclipse.emf.ecp.test.model.feature:default"/>
 <setEntry value="org.eclipse.emf.ecp.view.categorization.feature:default"/>
 <setEntry value="org.eclipse.emf.ecp.view.custom.feature:default"/>
 <setEntry value="org.eclipse.emf.ecp.view.group.feature:default"/>
 <setEntry value="org.eclipse.emf.ecp.view.horizontal.feature:default"/>
 <setEntry value="org.eclipse.emf.ecp.view.label.feature:default"/>
+<setEntry value="org.eclipse.emf.ecp.view.model.controls.feature:default"/>
 <setEntry value="org.eclipse.emf.ecp.view.model.editor.feature:default"/>
 <setEntry value="org.eclipse.emf.ecp.view.rule.feature:default"/>
-<setEntry value="org.eclipse.emf.ecp.view.separator.feature:default"/>
 <setEntry value="org.eclipse.emf.ecp.view.table.feature:default"/>
 <setEntry value="org.eclipse.emf.ecp.view.template.feature:default"/>
 <setEntry value="org.eclipse.emf.ecp.view.template.helper.feature:default"/>

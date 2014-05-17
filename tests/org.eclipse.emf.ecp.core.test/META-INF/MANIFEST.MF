@@ -2,14 +2,14 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: ECP Core Test
 Bundle-SymbolicName: org.eclipse.emf.ecp.core.test
-Bundle-Version: 1.2.1.qualifier
+Bundle-Version: 1.3.0.qualifier
 Fragment-Host: org.eclipse.emf.ecp.core;bundle-version="1.2.0"
 Bundle-ClassPath: .
 Require-Bundle: org.eclipse.ui;bundle-version="3.1.0",
  org.eclipse.core.runtime;bundle-version="3.8.0",
- org.eclipse.emf.ecp.emfstore.core;bundle-version="[1.2.0,2.0.0)",
+ org.eclipse.emf.ecp.emfstore.core;bundle-version="[1.3.0,2.0.0)",
  org.junit;bundle-version="4.0.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Export-Package: org.eclipse.emf.ecp.core.test;version="1.2.0";x-internal:=true
+Export-Package: org.eclipse.emf.ecp.core.test;version="1.3.0";x-internal:=true
 Bundle-Vendor: Eclipse Modeling Project
