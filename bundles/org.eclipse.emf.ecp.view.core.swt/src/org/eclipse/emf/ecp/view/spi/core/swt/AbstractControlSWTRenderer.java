@@ -40,6 +40,7 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 
 /**
@@ -85,7 +86,13 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 
 			@Override
 			public void notifyChange() {
-				updateControl();
+				Display.getDefault().asyncExec(new Runnable() {
+
+					@Override
+					public void run() {
+						updateControl();
+					}
+				});
 			}
 		});
 		updateControl();
