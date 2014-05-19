@@ -120,6 +120,9 @@
    <feature url="features/org.eclipse.emf.ecp.sdk.e4.feature_1.3.0.qualifier.jar" id="org.eclipse.emf.ecp.sdk.e4.feature" version="1.3.0.qualifier">
       <category name="org.eclipse.emf.ecp.category"/>
    </feature>
+   <feature url="features/org.eclipse.emf.ecp.ide.feature_1.3.0.qualifier.jar" id="org.eclipse.emf.ecp.ide.feature" version="1.3.0.qualifier">
+      <category name="org.eclipse.emf.ecp.ide"/>
+   </feature>
    <category-def name="org.eclipse.emf.ecp.category" label="EMF Client Platform">
       <description>
          If you are unsure, which features to select, please use the ECP SDK including all important features.
@@ -140,4 +143,5 @@
          Provides support for creating RAP applications with ECP. Should be added to a target platform, but not installed into the IDE.
       </description>
    </category-def>
+   <category-def name="org.eclipse.emf.ecp.ide" label="IDE Integration"/>
 </site>
