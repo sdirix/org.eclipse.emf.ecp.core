@@ -18,9 +18,9 @@ Entry-Name: .content
 try {
 with [get-editor View] {
     get-label "Root EClass*" | get-property caption | equals "Root EClass*" | verify-true
-    get-button "Link Root EClas" | get-property tooltip | equals "Link Root EClas" | verify-true
+    get-button "Link Root EClass" | get-property tooltip | equals "Link Root EClass" | verify-true
 }
-get-editor View | get-button "Link Root EClas" | click
+get-editor View | get-button "Link Root EClass" | click
 get-window "Select an EClass." | get-tree | select accesscontrol
 with [get-window "Select an EClass."] {
     get-label "Select an EClass." | get-property caption | equals "Select an EClass." | verify-true

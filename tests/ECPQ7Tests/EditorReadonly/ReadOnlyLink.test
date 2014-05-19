@@ -16,7 +16,7 @@ Content-Type: text/ecl
 Entry-Name: .content
 
 try {
-	get-editor View | get-button "Link Root EClas" | click
+	get-editor View | get-button "Link Root EClass" | click
 	get-window "Select an EClass." | get-tree | select "bowling/Game \\[org.eclipse.emf.emfstore.bowling.Game\\]" 
 	    | double-click
 	get-view "Model Explorer" | get-tree | select "Project/View" | get-menu Control | click

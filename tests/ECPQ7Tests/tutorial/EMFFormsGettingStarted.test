@@ -46,7 +46,7 @@ get-view "Model Explorer" | get-tree | select DomainModelInstance | get-menu "Ne
 get-window "Add new model element" | get-tree | select "bowling/Player" | double-click
 get-view "Model Explorer" | get-tree | select "TaskViewModel/View" | double-click
 get-editor View | get-editbox -after [get-label Name] | set-text "Player View"
-get-editor "Player View" | get-button "Link Root EClas" | click
+get-editor "Player View" | get-button "Link Root EClass" | click
 get-window "Select an EClass." | get-tree | select "bowling/Player \\[org.eclipse.emf.emfstore.bowling.Player\\]" 
     | double-click
 get-editor "Player View" | get-link "<a>Player [org.eclipse.emf.emfstore.bowling.Player]</a>" | get-property caption 

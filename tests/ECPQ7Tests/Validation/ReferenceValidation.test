@@ -17,7 +17,7 @@ Entry-Name: .content
 
 	try{
 	get-editor View | get-label -after [get-label "Root EClass*"] | get-property "getImage().getBounds().toString()" | equals "Rectangle {0, 0, 16, 17}" | verify-true
-	get-editor View | get-button "Link Root EClas" | click
+	get-editor View | get-button "Link Root EClass" | click
 	with [get-window "Select an EClass."] {
 	    get-tree | select "bowling/Referee \\[org.eclipse.emf.emfstore.bowling.Referee\\]"
 	    get-button OK | click

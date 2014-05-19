@@ -20,7 +20,7 @@ try {
 	get-editor "Tournament Amateur" | close
 	get-editor Game | close
 	get-editor Matchup | close
-	get-editor View | get-button "Link Root EClas" | click
+	get-editor View | get-button "Link Root EClass" | click
 	get-window "Select an EClass." | get-tree | select "bowling/Referee \\[org.eclipse.emf.emfstore.bowling.Referee\\]" 
 	    | double-click
 	get-view "Model Explorer" | get-tree | select TestProject | get-menu "New Model Element" | click

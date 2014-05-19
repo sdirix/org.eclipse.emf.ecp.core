@@ -20,7 +20,7 @@ get-editor View | get-editbox -after [get-label "Name*"] | set-text View
 get-view "Model Explorer" | get-tree | select "Project/View" | get-menu Control | click
 get-editor Control | get-editbox -after [get-label "Name*"] | set-text NrOfSpectators
 get-view "Model Explorer" | get-tree | select "Project/View"
-get-editor View | get-button "Link Root EClas" | click
+get-editor View | get-button "Link Root EClass" | click
 get-window "Select an EClass." | get-tree | select "bowling/Matchup \\[org.eclipse.emf.emfstore.bowling.Matchup\\]" 
     | double-click
 get-view "Model Explorer" | get-tree | select "Project/View/NrOfSpectators" 

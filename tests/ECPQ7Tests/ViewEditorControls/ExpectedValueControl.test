@@ -16,7 +16,7 @@ Content-Type: text/ecl
 Entry-Name: .content
 
 try {
-get-editor View | get-button "Link Root EClas" | click
+get-editor View | get-button "Link Root EClass" | click
 with [get-window "Select an EClass."] {
     get-tree | select "bowling/Player \\[org.eclipse.emf.emfstore.bowling.Player\\]"
     get-button OK | click

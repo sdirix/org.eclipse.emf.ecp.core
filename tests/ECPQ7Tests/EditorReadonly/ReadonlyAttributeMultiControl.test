@@ -21,7 +21,7 @@ try {
 	get-editor Matchup | close
 	get-editor "Tournament Amateur" | close
 	get-editor "Player John" | close
-	get-editor View | get-button "Link Root EClas" | click
+	get-editor View | get-button "Link Root EClass" | click
 	get-window "Select an EClass." | get-tree | select "bowling/Player \\[org.eclipse.emf.emfstore.bowling.Player\\]" 
 	    | double-click
 	get-view "Model Explorer" | get-tree | select "Project/View" | get-menu "Generate Controls" | click
