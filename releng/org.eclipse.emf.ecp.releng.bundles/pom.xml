@@ -188,6 +188,7 @@
 		<module>../../bundles/org.eclipse.emf.ecp.diffmerge.swt</module>
 		<module>../../bundles/org.eclipse.emf.ecp.diffmerge.model</module>
 		<module>../../bundles/org.eclipse.emf.ecp.diffmerge.model.edit</module>
+
 	</modules>
 
 	<build>
