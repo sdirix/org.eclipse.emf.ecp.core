@@ -23,6 +23,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
@@ -80,11 +81,20 @@ public class ViewTemplateProviderImpl implements VTViewTemplateProvider {
 		resourceSet.getPackageRegistry().put(VTTemplatePackage.eNS_URI,
 			VTTemplatePackage.eINSTANCE);
 		final Resource resource = resourceSet.createResource(uri);
+
 		try {
 			resource.load(null);
 		} catch (final IOException exception) {
 
 		}
+
+		int rsSize = resourceSet.getResources().size();
+		EcoreUtil.resolveAll(resourceSet);
+		while (rsSize != resourceSet.getResources().size()) {
+			EcoreUtil.resolveAll(resourceSet);
+			rsSize = resourceSet.getResources().size();
+		}
+
 		return resource;
 	}
 

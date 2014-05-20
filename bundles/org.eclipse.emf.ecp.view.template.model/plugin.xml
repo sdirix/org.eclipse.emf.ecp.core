@@ -48,4 +48,21 @@
             genModel="model/domainModelReferenceSelector.genmodel"/>
    </extension>
 
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated fontPropertiesStyle -->
+      <package
+            uri="http://www.eclipse.org/emf/ecp/view/template/style/fontProperties/model"
+            class="org.eclipse.emf.ecp.view.template.style.fontProperties.model.VTFontPropertiesPackage"
+            genModel="model/fontPropertiesStyle.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated viewModelElementSelector -->
+      <package
+            uri="http://www.eclipse.org/emf/ecp/view/template/selector/viewmodelelement/model"
+            class="org.eclipse.emf.ecp.view.template.selector.viewModelElement.model.VTViewModelElementPackage"
+            genModel="model/viewModelElementSelector.genmodel"/>
+   </extension>
+
+
 </plugin>

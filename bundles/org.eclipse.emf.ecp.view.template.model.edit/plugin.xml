@@ -87,4 +87,44 @@
             uri="http://org/eclipse/emf/ecp/view/template/model"
             class="org.eclipse.emf.ecp.view.template.style.validation.model.provider.ValidationItemProviderAdapterFactory$TemplateChildCreationExtender"/>
    </extension>
+   <extension point="org.eclipse.emf.edit.itemProviderAdapterFactories">
+      <!-- @generated fontPropertiesStyle -->
+      <factory
+            uri="http://www.eclipse.org/emf/ecp/view/template/style/fontProperties/model"
+            class="org.eclipse.emf.ecp.view.template.style.fontProperties.model.provider.FontPropertiesItemProviderAdapterFactory"
+            supportedTypes=
+              "org.eclipse.emf.edit.provider.IEditingDomainItemProvider
+               org.eclipse.emf.edit.provider.IStructuredItemContentProvider
+               org.eclipse.emf.edit.provider.ITreeItemContentProvider
+               org.eclipse.emf.edit.provider.IItemLabelProvider
+               org.eclipse.emf.edit.provider.IItemPropertySource"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.edit.childCreationExtenders">
+      <!-- @generated fontPropertiesStyle -->
+      <extender
+            uri="http://org/eclipse/emf/ecp/view/template/model"
+            class="org.eclipse.emf.ecp.view.template.style.fontProperties.model.provider.FontPropertiesItemProviderAdapterFactory$TemplateChildCreationExtender"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.edit.itemProviderAdapterFactories">
+      <!-- @generated viewModelElementSelector -->
+      <factory
+            uri="http://www.eclipse.org/emf/ecp/view/template/selector/viewmodelelement/model"
+            class="org.eclipse.emf.ecp.view.template.selector.viewModelElement.model.provider.ViewModelElementItemProviderAdapterFactory"
+            supportedTypes=
+              "org.eclipse.emf.edit.provider.IEditingDomainItemProvider
+               org.eclipse.emf.edit.provider.IStructuredItemContentProvider
+               org.eclipse.emf.edit.provider.ITreeItemContentProvider
+               org.eclipse.emf.edit.provider.IItemLabelProvider
+               org.eclipse.emf.edit.provider.IItemPropertySource"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.edit.childCreationExtenders">
+      <!-- @generated viewModelElementSelector -->
+      <extender
+            uri="http://org/eclipse/emf/ecp/view/template/model"
+            class="org.eclipse.emf.ecp.view.template.selector.viewModelElement.model.provider.ViewModelElementItemProviderAdapterFactory$TemplateChildCreationExtender"/>
+   </extension>
+
 </plugin>

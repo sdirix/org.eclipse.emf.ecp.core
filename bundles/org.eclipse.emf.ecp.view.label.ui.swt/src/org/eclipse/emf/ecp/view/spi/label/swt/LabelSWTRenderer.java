@@ -11,6 +11,10 @@
  */
 package org.eclipse.emf.ecp.view.spi.label.swt;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
 import org.eclipse.emf.ecp.view.spi.label.model.VLabel;
 import org.eclipse.emf.ecp.view.spi.label.model.VLabelStyle;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
@@ -19,11 +23,16 @@ import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
+import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
+import org.eclipse.emf.ecp.view.template.style.fontProperties.model.VTFontPropertiesFactory;
+import org.eclipse.emf.ecp.view.template.style.fontProperties.model.VTFontPropertiesStyleProperty;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 
 /**
@@ -35,6 +44,10 @@ import org.eclipse.swt.widgets.Label;
 public class LabelSWTRenderer extends AbstractSWTRenderer<VLabel> {
 	private SWTGridDescription rendererGridDescription;
 	private Font font;
+	private org.eclipse.swt.graphics.Color labelColor;
+
+	private Map<VLabelStyle, VTFontPropertiesStyleProperty> defaultStyles;
+	private Composite parent;
 
 	/**
 	 * {@inheritDoc}
@@ -46,6 +59,9 @@ public class LabelSWTRenderer extends AbstractSWTRenderer<VLabel> {
 		rendererGridDescription = null;
 		if (font != null) {
 			font.dispose();
+		}
+		if (labelColor != null) {
+			labelColor.dispose();
 		}
 		super.dispose();
 	}
@@ -71,26 +87,110 @@ public class LabelSWTRenderer extends AbstractSWTRenderer<VLabel> {
 	@Override
 	protected Control renderControl(SWTGridCell cell, Composite parent)
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
-		final VLabelStyle style = getVElement().getStyle();
+		this.parent = parent;
 		final Label label;
-		if (VLabelStyle.SEPARATOR == style) {
+		if (getVElement().getStyle() == VLabelStyle.SEPARATOR) {
 			label = new Label(parent, SWT.SEPARATOR | SWT.HORIZONTAL);
-		}
-		else {
-			label = new Label(parent, SWT.None);
-			final FontData[] fD = label.getFont().getFontData();
-			fD[0].setStyle(style.getValue());
-			if (font != null) {
-				font.dispose();
+		} else {
+			label = new Label(parent, SWT.NONE);
+			if (getVElement().getName() != null) {
+				label.setText(getVElement().getName());
 			}
-			font = new Font(parent.getDisplay(), fD[0]);
-			label.setFont(font);
+			applyStyle(label);
 		}
-		if (getVElement().getName() != null) {
-			label.setText(getVElement().getName());
-		}
-		label.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_ui_" + getVElement().getStyle()); //$NON-NLS-1$
 		return label;
 	}
 
+	/** Applies the style defined in the StyleProperty */
+	protected void applyStyle(Label label) {
+		final VTFontPropertiesStyleProperty fontProperties = getFontProperty();
+		if (fontProperties == null) {
+			return;
+		}
+		final FontData[] fD = label.getFont().getFontData();
+
+		int style = SWT.NORMAL;
+		if (fontProperties.isBold()) {
+			style = style | SWT.BOLD;
+		}
+		if (fontProperties.isItalic()) {
+			style = style | SWT.ITALIC;
+		}
+
+		fD[0].setStyle(style);
+
+		fD[0].setHeight(fontProperties.getHeight());
+
+		if (font != null) {
+			font.dispose();
+		}
+		if (labelColor != null) {
+			labelColor.dispose();
+		}
+		font = new Font(label.getDisplay(), fontProperties.getFontName(), fontProperties.getHeight(), style);
+		label.setFont(font);
+		labelColor = getColor(fontProperties.getColorHEX());
+		label.setForeground(labelColor);
+
+	}
+
+	private Color getColor(String colorHex) {
+		final String redString = colorHex.substring(0, 2);
+		final String greenString = colorHex.substring(2, 4);
+		final String blueString = colorHex.substring(4, 6);
+		final int red = Integer.parseInt(redString, 16);
+		final int green = Integer.parseInt(greenString, 16);
+		final int blue = Integer.parseInt(blueString, 16);
+		return new Color(Display.getDefault(), red, green, blue);
+	}
+
+	private VTFontPropertiesStyleProperty getFontProperty() {
+		VTFontPropertiesStyleProperty fontProperties;
+		final Set<VTStyleProperty> styleProperties = Activator.getDefault().getVTViewTemplateProvider()
+			.getStyleProperties(getVElement(), getViewModelContext());
+		for (final VTStyleProperty styleProperty : styleProperties) {
+			if (VTFontPropertiesStyleProperty.class.isInstance(styleProperty)) {
+				fontProperties = VTFontPropertiesStyleProperty.class
+					.cast(styleProperty);
+				return fontProperties;
+			}
+		}
+
+		fontProperties = getDefaultFontProperties().get(getVElement().getStyle());
+		return fontProperties;
+	}
+
+	private Map<VLabelStyle, VTFontPropertiesStyleProperty> getDefaultFontProperties() {
+		if (defaultStyles == null) {
+			defaultStyles = new HashMap<VLabelStyle, VTFontPropertiesStyleProperty>();
+			final String defaultFontName = parent.getDisplay().getSystemFont().getFontData()[0].getName();
+			defaultStyles.put(VLabelStyle.H0, createStyle(false, false, "000000", defaultFontName, 10)); //$NON-NLS-1$
+			defaultStyles.put(VLabelStyle.H1, createStyle(false, false, "000000", defaultFontName, 12)); //$NON-NLS-1$
+			defaultStyles.put(VLabelStyle.H2, createStyle(false, false, "000000", defaultFontName, 14)); //$NON-NLS-1$
+			defaultStyles.put(VLabelStyle.H3, createStyle(true, true, "000000", defaultFontName, 10)); //$NON-NLS-1$
+			defaultStyles.put(VLabelStyle.H4, createStyle(true, false, "000000", defaultFontName, 10)); //$NON-NLS-1$
+			defaultStyles.put(VLabelStyle.H5, createStyle(true, false, "000000", defaultFontName, 12)); //$NON-NLS-1$
+			defaultStyles.put(VLabelStyle.H6, createStyle(true, false, "000000", defaultFontName, 14)); //$NON-NLS-1$
+			defaultStyles.put(VLabelStyle.H7, createStyle(false, true, "000000", defaultFontName, 10)); //$NON-NLS-1$
+			defaultStyles.put(VLabelStyle.H8, createStyle(false, true, "000000", defaultFontName, 12)); //$NON-NLS-1$
+			defaultStyles.put(VLabelStyle.H9, createStyle(false, true, "000000", defaultFontName, 14)); //$NON-NLS-1$
+		}
+		return defaultStyles;
+	}
+
+	private VTFontPropertiesStyleProperty createStyle(boolean bold, boolean italic, String colorHex, String fontName,
+		int fontHeight) {
+
+		final VTFontPropertiesStyleProperty fontProp = VTFontPropertiesFactory.eINSTANCE
+			.createFontPropertiesStyleProperty();
+
+		fontProp.setBold(bold);
+		fontProp.setColorHEX(colorHex); // "ff0000"
+		fontProp.setFontName(fontName);
+		fontProp.setHeight(fontHeight);
+		fontProp.setItalic(italic);
+
+		return fontProp;
+
+	}
 }
