@@ -148,7 +148,6 @@ public class ViewModelContextImpl implements ViewModelContext {
 		domainObject.eAdapters().add(domainModelContentAdapter);
 
 		createSettingToControlMapping();
-
 		readAbstractViewServices();
 
 		for (final ViewModelService viewService : viewServices) {
@@ -190,11 +189,12 @@ public class ViewModelContextImpl implements ViewModelContext {
 	}
 
 	private void updateControlMapping(VControl vControl) {
-		final Iterator<Setting> iterator = vControl.getDomainModelReference().getIterator();
 		// delete old mapping
 		for (final UniqueSetting setting : settingToControlMap.keySet()) {
 			settingToControlMap.get(setting).remove(vControl);
 		}
+		vControl.getDomainModelReference().init(getDomainModel());
+		final Iterator<Setting> iterator = vControl.getDomainModelReference().getIterator();
 		while (iterator.hasNext()) {
 			final Setting setting = iterator.next();
 			final UniqueSetting uniqueSetting = UniqueSetting.createSetting(setting);
@@ -503,15 +503,27 @@ public class ViewModelContextImpl implements ViewModelContext {
 			if (VControl.class.isInstance(notifier)) {
 				vControlAdded((VControl) notifier);
 			}
-			if (VDomainModelReference.class.isInstance(notifier)
-				&& VControl.class.isInstance(VDomainModelReference.class.cast(notifier).eContainer())) {
-				vControlAdded((VControl) VDomainModelReference.class.cast(notifier).eContainer());
+			if (VDomainModelReference.class.isInstance(notifier)) {
+				updateControlMapping(findControl(VDomainModelReference.class.cast(notifier)));
+
 			}
 			for (final ModelChangeListener modelChangeListener : viewModelChangeListener) {
 				if (ModelChangeAddRemoveListener.class.isInstance(modelChangeListener)) {
 					ModelChangeAddRemoveListener.class.cast(modelChangeListener).notifyAdd(notifier);
 				}
 			}
+		}
+
+		/**
+		 * @param cast
+		 * @return
+		 */
+		private VControl findControl(VDomainModelReference dmr) {
+			EObject parent = dmr.eContainer();
+			while (!VControl.class.isInstance(parent)) {
+				parent = parent.eContainer();
+			}
+			return (VControl) parent;
 		}
 
 		@Override

@@ -4,6 +4,7 @@
    <extension-point id="viewModelProviders" name="View Model Providers" schema="schema/viewModelProviders.exsd"/>
    <extension-point id="renderingConfiguration" name="Rendering Configuration" schema="schema/renderingConfiguration.exsd"/>
    <extension-point id="tooltipModifier" name="ECP Tooltip Modifier" schema="schema/tooltipModifier.exsd"/>
+   <extension-point id="manualMigrator" name="Manual Migrator" schema="schema/manualMigrator.exsd"/>
    <extension
          point="org.eclipse.emf.ecp.ui.view.tooltipModifier">
       <modifier

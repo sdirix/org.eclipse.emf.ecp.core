@@ -149,6 +149,8 @@
 		<module>../../bundles/org.eclipse.emf.ecp.view.table.ui.swt</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.table.editor</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.table.columnservice</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.table.migrate</module>
+		
 
 		<!-- Template Feature -->
 		<module>../../bundles/org.eclipse.emf.ecp.view.template.model</module>
