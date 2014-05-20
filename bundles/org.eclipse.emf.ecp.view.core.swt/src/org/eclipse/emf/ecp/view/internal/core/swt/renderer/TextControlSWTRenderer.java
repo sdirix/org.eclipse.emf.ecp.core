@@ -27,6 +27,7 @@ import org.eclipse.emf.ecp.view.spi.provider.ECPTooltipModifierHelper;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
+import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.ecp.view.template.style.alignment.model.AlignmentType;
 import org.eclipse.emf.ecp.view.template.style.alignment.model.VTAlignmentStyleProperty;
 import org.eclipse.emf.edit.command.SetCommand;
@@ -139,7 +140,11 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 	}
 
 	private int getAlignment() {
-		final Set<VTStyleProperty> styleProperties = Activator.getDefault().getVTViewTemplateProvider()
+		final VTViewTemplateProvider vtViewTemplateProvider = Activator.getDefault().getVTViewTemplateProvider();
+		if (vtViewTemplateProvider == null) {
+			return getDefaultAlignment();
+		}
+		final Set<VTStyleProperty> styleProperties = vtViewTemplateProvider
 			.getStyleProperties(getVElement(), getViewModelContext());
 		for (final VTStyleProperty styleProperty : styleProperties) {
 			if (VTAlignmentStyleProperty.class.isInstance(styleProperty)) {
