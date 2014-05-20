@@ -169,6 +169,8 @@
 		
 		<module>../../bundles/org.eclipse.emf.ecp.rap</module>
 		<module>../../bundles/org.eclipse.emf.ecp.ui.rap</module>
+		
+		<module>../../bundles/org.eclipse.emf.ecp.view.label.rap</module>
 
 		<!-- e4 demo application -->
 		<module>../../bundles/org.eclipse.emf.ecp.application.e4</module>
