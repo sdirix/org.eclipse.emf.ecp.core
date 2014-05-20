@@ -41,6 +41,7 @@ public class AttributeMultiControlTester implements ECPApplicableTester {
 	 * 
 	 * @deprecated
 	 **/
+	@Override
 	@Deprecated
 	public int isApplicable(IItemPropertyDescriptor itemPropertyDescriptor, EObject eObject) {
 		return isApplicable(eObject, (EStructuralFeature) itemPropertyDescriptor.getFeature(eObject));
@@ -52,6 +53,7 @@ public class AttributeMultiControlTester implements ECPApplicableTester {
 	 * @see org.eclipse.emf.ecp.edit.spi.util.ECPApplicableTester#isApplicable(org.eclipse.emf.ecore.EObject,
 	 *      org.eclipse.emf.ecore.EStructuralFeature)
 	 */
+	@Override
 	public int isApplicable(EObject eObject, EStructuralFeature feature) {
 		int bestPriority = NOT_APPLICABLE;
 		final ECPControlFactory controlFactory = Activator.getDefault().getECPControlFactory();
@@ -92,24 +94,26 @@ public class AttributeMultiControlTester implements ECPApplicableTester {
 
 		if (EAttribute.class.isInstance(feature)) {
 			final Class<?> instanceClass = ((EAttribute) feature).getEAttributeType().getInstanceClass();
-			if (instanceClass.isPrimitive()) {
-				try {
-					final Class<?> primitive = (Class<?>) tester.getSupportedClassType().getField("TYPE").get(null);//$NON-NLS-1$
-					if (!primitive.equals(instanceClass)) {
+			if (instanceClass != null) {
+				if (instanceClass.isPrimitive()) {
+					try {
+						final Class<?> primitive = (Class<?>) tester.getSupportedClassType().getField("TYPE").get(null);//$NON-NLS-1$
+						if (!primitive.equals(instanceClass)) {
+							return NOT_APPLICABLE;
+						}
+
+					} catch (final IllegalArgumentException e) {
+						return NOT_APPLICABLE;
+					} catch (final SecurityException e) {
+						return NOT_APPLICABLE;
+					} catch (final IllegalAccessException e) {
+						return NOT_APPLICABLE;
+					} catch (final NoSuchFieldException e) {
 						return NOT_APPLICABLE;
 					}
-
-				} catch (final IllegalArgumentException e) {
-					return NOT_APPLICABLE;
-				} catch (final SecurityException e) {
-					return NOT_APPLICABLE;
-				} catch (final IllegalAccessException e) {
-					return NOT_APPLICABLE;
-				} catch (final NoSuchFieldException e) {
+				} else if (!tester.getSupportedClassType().isAssignableFrom(instanceClass)) {
 					return NOT_APPLICABLE;
 				}
-			} else if (!tester.getSupportedClassType().isAssignableFrom(instanceClass)) {
-				return NOT_APPLICABLE;
 			}
 		} else if (EReference.class.isInstance(feature)) {
 			return NOT_APPLICABLE;
@@ -132,6 +136,7 @@ public class AttributeMultiControlTester implements ECPApplicableTester {
 	 * @deprecated
 	 * 
 	 */
+	@Override
 	@Deprecated
 	public int isApplicable(VDomainModelReference domainModelReference) {
 		final Iterator<Setting> iterator = domainModelReference.getIterator();
