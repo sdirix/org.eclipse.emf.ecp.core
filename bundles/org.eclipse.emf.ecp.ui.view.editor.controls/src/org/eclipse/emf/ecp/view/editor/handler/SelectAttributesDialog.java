@@ -23,7 +23,6 @@ import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.view.editor.controls.Helper;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -35,12 +34,7 @@ import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
-import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.ICheckStateListener;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
-import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
-import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -63,7 +57,6 @@ public class SelectAttributesDialog extends Dialog {
 	private AdapterFactoryLabelProvider labelProvider;
 	private final VView view;
 	private final Set<EStructuralFeature> selectedFeatures = new LinkedHashSet<EStructuralFeature>();
-	private EClass dataSegment;
 	private final EClass rootClass;
 
 	/**
@@ -85,19 +78,11 @@ public class SelectAttributesDialog extends Dialog {
 		final Composite composite = (Composite) super.createDialogArea(parent);
 		((GridLayout) composite.getLayout()).numColumns = 2;
 
-		final Label labelDatasegment = new Label(composite, SWT.NONE);
-		labelDatasegment.setText("Select Datasegment"); //$NON-NLS-1$
-
-		final ComboViewer cvDatasegment = new ComboViewer(composite, SWT.READ_ONLY);
-
 		composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
 			new ReflectiveItemProviderAdapterFactory(),
 			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
 
 		labelProvider = new AdapterFactoryLabelProvider(composedAdapterFactory);
-
-		cvDatasegment.setLabelProvider(labelProvider);
-		cvDatasegment.setContentProvider(ArrayContentProvider.getInstance());
 
 		final Button bUnreferenced = new Button(composite, SWT.CHECK);
 		bUnreferenced.setText("Show only unreferenced Attributes?"); //$NON-NLS-1$
@@ -127,32 +112,23 @@ public class SelectAttributesDialog extends Dialog {
 			}
 		});
 
-		cvDatasegment.addSelectionChangedListener(new ISelectionChangedListener() {
-
-			@Override
-			public void selectionChanged(SelectionChangedEvent event) {
-				dataSegment = (EClass) ((IStructuredSelection) event.getSelection()).getFirstElement();
-				List<EStructuralFeature> attributes = null;
-				if (!bUnreferenced.getSelection()) {
-					attributes = dataSegment.getEAllStructuralFeatures();
-				} else {
-					attributes = getUnreferencedSegmentAttributes(dataSegment);
-				}
-				tvAttributes.setInput(attributes);
-			}
-		});
+		List<EStructuralFeature> attributes = null;
+		if (!bUnreferenced.getSelection()) {
+			attributes = rootClass.getEAllStructuralFeatures();
+		} else {
+			attributes = getUnreferencedSegmentAttributes(rootClass);
+		}
+		tvAttributes.setInput(attributes);
 
 		bUnreferenced.addSelectionListener(new SelectionAdapter() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				final EClass dataSegment = (EClass) ((IStructuredSelection) cvDatasegment.getSelection())
-					.getFirstElement();
 				List<EStructuralFeature> attributes = null;
 				if (!bUnreferenced.getSelection()) {
-					attributes = dataSegment.getEAllStructuralFeatures();
+					attributes = rootClass.getEAllStructuralFeatures();
 				} else {
-					attributes = getUnreferencedSegmentAttributes(dataSegment);
+					attributes = getUnreferencedSegmentAttributes(rootClass);
 				}
 				tvAttributes.setInput(attributes);
 			}
@@ -170,6 +146,7 @@ public class SelectAttributesDialog extends Dialog {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				@SuppressWarnings("unchecked")
 				final List<EStructuralFeature> segments = (List<EStructuralFeature>) tvAttributes.getInput();
 				tvAttributes.setAllChecked(true);
 				selectedFeatures.addAll(segments);
@@ -183,6 +160,7 @@ public class SelectAttributesDialog extends Dialog {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				@SuppressWarnings("unchecked")
 				final List<EStructuralFeature> segments = (List<EStructuralFeature>) tvAttributes.getInput();
 				tvAttributes.setAllChecked(false);
 				selectedFeatures.removeAll(segments);
@@ -191,11 +169,6 @@ public class SelectAttributesDialog extends Dialog {
 		});
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING).grab(true, false).applyTo(bDeSelectAll);
 
-		final Set<EClass> datasegments = Helper.getDatasegmentSubclasses(rootClass);
-		cvDatasegment.setInput(datasegments);
-		if (datasegments.size() > 0) {
-			cvDatasegment.setSelection(new StructuredSelection(datasegments.iterator().next()));
-		}
 		return composite;
 	}
 
@@ -236,12 +209,14 @@ public class SelectAttributesDialog extends Dialog {
 		return allStructuralFeatures;
 	}
 
+	/** @return the set of features selected in the dialog, for which controls should be generated. */
 	public Set<EStructuralFeature> getSelectedFeatures() {
 		return selectedFeatures;
 	}
 
-	public EClass getDataSegment() {
-		return dataSegment;
+	/** @return the rootEClass the dialog is displaying the attributes for. */
+	public EClass getRootClass() {
+		return rootClass;
 	}
 
 }

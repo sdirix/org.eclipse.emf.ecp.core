@@ -60,7 +60,7 @@ public final class ControlGenerator {
 		EClass datasegment, Set<EStructuralFeature> features) {
 
 		final EClass rootClass = Helper.getRootEClass(project);
-		addControls(rootClass, compositeToFill, datasegment, features);
+		addControls(rootClass, compositeToFill, features);
 	}
 
 	/**
@@ -68,18 +68,15 @@ public final class ControlGenerator {
 	 * 
 	 * @param rootClass the rootClass for identifying the path
 	 * @param compositeToFill the {@link VElement} to fill , must be of type {@link VView} or {@link VContainer}
-	 * @param datasegment the class to parse
 	 * @param features the list of features to create
 	 */
-	public static void addControls(EClass rootClass, VElement compositeToFill, EClass datasegment,
-		Set<EStructuralFeature> features) {
+	public static void addControls(EClass rootClass, VElement compositeToFill, Set<EStructuralFeature> features) {
 		if (!VContainer.class.isInstance(compositeToFill) && !VView.class.isInstance(compositeToFill)) {
 			return;
 		}
 		final Map<EClass, EReference> childParentReferenceMap = new HashMap<EClass, EReference>();
 		Helper.getReferenceMap(rootClass, childParentReferenceMap);
-		final List<EReference> bottomUpPath = Helper.getReferencePath(datasegment,
-			childParentReferenceMap);
+		final List<EReference> bottomUpPath = Helper.getReferencePath(rootClass, childParentReferenceMap);
 
 		for (final EStructuralFeature feature : features) {
 			final VControl control = VViewFactory.eINSTANCE.createControl();
@@ -132,8 +129,7 @@ public final class ControlGenerator {
 		final EClass rootEClass = vview.getRootEClass();
 		final Set<EStructuralFeature> mySet = new
 			LinkedHashSet<EStructuralFeature>(rootEClass.getEAllStructuralFeatures());
-		addControls(rootEClass, (VView) resource.getContents().get(0), rootEClass,
-			mySet);
+		addControls(rootEClass, (VView) resource.getContents().get(0), mySet);
 		try {
 			resource.save(null);
 		} catch (final IOException e) {
