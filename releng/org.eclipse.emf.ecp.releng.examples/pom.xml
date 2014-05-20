@@ -22,6 +22,7 @@
 		<module>../../examples/org.eclipse.emf.ecp.makeithappen.model.edit</module>
 		<module>../../examples/org.eclipse.emf.ecp.makeithappen.emailControlRenderer</module>
 		<module>../../examples/org.eclipse.emf.ecp.makeithappen.view.group.renderer</module>
+		<module>../../examples/org.eclipse.emf.ecp.makeithappen.wizards</module>
 	</modules>
 
 	<build>
