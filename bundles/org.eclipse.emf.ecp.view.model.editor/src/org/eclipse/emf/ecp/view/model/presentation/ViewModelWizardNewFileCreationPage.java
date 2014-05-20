@@ -116,7 +116,6 @@ public class ViewModelWizardNewFileCreationPage extends
 					}
 					setFileName(modelFilename);
 					setPageComplete(true);
-					// getWizard().canFinish();
 				}
 			}
 		}

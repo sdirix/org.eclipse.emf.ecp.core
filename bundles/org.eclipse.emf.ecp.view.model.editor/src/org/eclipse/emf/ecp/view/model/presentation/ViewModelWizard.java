@@ -11,6 +11,10 @@
  */
 package org.eclipse.emf.ecp.view.model.presentation;
 
+import java.io.BufferedReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -18,7 +22,12 @@ import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.CommonPlugin;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
@@ -108,6 +117,8 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 	 */
 	protected ViewModelWizardNewFileCreationPage newFileCreationPage;
 
+	private IncludeViewModelProviderXmiFileExtensionPage contributeToFileExtensionPage;
+
 	/**
 	 * Remember the selection during initialization for populating the default
 	 * container. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -196,6 +207,9 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 		newFileCreationPage = getNewFileCreationPage();
 		addPage(newFileCreationPage);
 
+		contributeToFileExtensionPage = new IncludeViewModelProviderXmiFileExtensionPage(PLUGIN_ID);
+		addPage(contributeToFileExtensionPage);
+
 	}
 
 	/**
@@ -245,6 +259,9 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 				newFileCreationPage.setSelectedEClassName(selectedEClass.getName());
 				return newFileCreationPage;
 			}
+		}
+		if (page == newFileCreationPage) {
+			return contributeToFileExtensionPage;
 		}
 		return null;
 	}
@@ -304,7 +321,8 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 	public boolean canFinish() {
 		if (selectEClassPage != null) {
 			selectedEClass = selectEClassPage.getSelectedEClass();
-			return selectedEClass != null && newFileCreationPage.isPageComplete();
+			return selectedEClass != null
+				&& (newFileCreationPage.isPageComplete() || contributeToFileExtensionPage.isPageComplete());
 		}
 		return false;
 	}
@@ -331,11 +349,21 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 							.isGenerateViewModelOptionSelected();
 
 						final IDEViewModelRegistry registry = getViewModelRegistry();
-						if (registry != null) {
-							final VView view = registry.createViewModel(modelFile, selectedEClass, selectedEcore);
-							if (generateViewModelControls) {
-								ControlGenerator.generateAllControls(view);
-							}
+						if (registry == null) {
+							ViewEditorPlugin.INSTANCE.log(new Status(IStatus.ERROR, PLUGIN_ID,
+								"No View Model Registry", null)); //$NON-NLS-1$
+							return;
+						}
+						// create view
+						final VView view = registry.createViewModel(modelFile, selectedEClass, selectedEcore);
+						// generate controls
+						if (generateViewModelControls) {
+							ControlGenerator.generateAllControls(view);
+						}
+
+						// contribute to ..provider.xmi.file extension point
+						if (contributeToFileExtensionPage.isContributeToExtensionOptionSelected()) {
+							addContribution(modelFile);
 						}
 
 						// Open the view
@@ -399,4 +427,57 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 		this.workbench = workbench;
 	}
 
+	/**
+	 * @param modelFile
+	 */
+	protected void addContribution(IFile modelFile) {
+
+		final IProject project = modelFile.getProject();
+		final IFile pluginFile = project.getFile("plugin.xml"); //$NON-NLS-1$
+		try {
+			final BufferedReader in = new BufferedReader(new InputStreamReader(pluginFile.getContents()));
+			final String extension = "org.eclipse.emf.ecp.view.model.provider.xmi.file"; //$NON-NLS-1$
+			String line = null;
+			final StringBuffer contents = new StringBuffer();
+			boolean extensionAdded = false;
+			while ((line = in.readLine()) != null) {
+				if (line.contains(extension)) {
+					final int end = line.indexOf("/>"); //$NON-NLS-1$
+					if (end != -1) {
+						final String filePathAttribute = "<file filePath=\"" //$NON-NLS-1$
+							+ modelFile.getProjectRelativePath().toString() + "\"/>"; //$NON-NLS-1$
+
+						line = line.substring(0, end)
+							+ ">\n" + filePathAttribute + "\n</extension>\n" + line.substring(end + 2, line.length()); //$NON-NLS-1$ //$NON-NLS-2$
+					}
+					else {
+						final String filePathAttribute = "<file filePath=\"" //$NON-NLS-1$
+							+ modelFile.getProjectRelativePath().toString() + "\"/>"; //$NON-NLS-1$
+						line = line.concat("\n" + filePathAttribute + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
+					}
+					extensionAdded = true;
+				}
+				if (line.contains("</plugin>") && !extensionAdded) { //$NON-NLS-1$
+					final int end = line.indexOf("</plugin>"); //$NON-NLS-1$
+					line = line.substring(0, end)
+						+ "\n<extension  point=\"org.eclipse.emf.ecp.view.model.provider.xmi.file\">\n<file filePath=\"" //$NON-NLS-1$
+						+ modelFile.getProjectRelativePath().toString() + "\"/>\n</extension>\n" + line.substring(end); //$NON-NLS-1$
+				}
+
+				contents.append(line + "\n"); //$NON-NLS-1$
+			}
+			in.close();
+
+			final FileWriter out = new FileWriter(pluginFile.getRawLocation().makeAbsolute().toFile());
+			out.write(String.valueOf(contents));
+			out.flush();
+			out.close();
+
+			project.refreshLocal(IResource.DEPTH_INFINITE, null);
+		} catch (final CoreException e) {
+			ViewEditorPlugin.INSTANCE.log(new Status(IStatus.ERROR, PLUGIN_ID, e.getMessage(), e));
+		} catch (final IOException e) {
+			ViewEditorPlugin.INSTANCE.log(new Status(IStatus.ERROR, PLUGIN_ID, e.getMessage(), e));
+		}
+	}
 }
