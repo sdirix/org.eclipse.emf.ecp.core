@@ -121,9 +121,12 @@ public class PreviewView extends ViewPart implements ISelectionListener {
 			public void partActivated(IWorkbenchPartReference partRef) {
 				if (ViewEditorPart.class.isInstance(partRef.getPart(true))) {
 					final ViewEditorPart part = (ViewEditorPart) partRef.getPart(true);
-					setView(part.getView());
-					if (updateAutomatic) {
+					if (part.getView() != view) {
+						setView(part.getView());
 						render(view);
+					}
+					if (updateAutomatic) {
+						preView.registerForViewModelChanges();
 					}
 				}
 			}
@@ -271,6 +274,7 @@ public class PreviewView extends ViewPart implements ISelectionListener {
 		};
 
 		view.eAdapters().add(adapter);
+		preView.registerForViewModelChanges();
 		preView.render(view);
 		form.reflow(true);
 	}

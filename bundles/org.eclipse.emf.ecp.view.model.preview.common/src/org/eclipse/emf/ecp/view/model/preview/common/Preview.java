@@ -13,10 +13,16 @@ package org.eclipse.emf.ecp.view.model.preview.common;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
@@ -27,6 +33,9 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
@@ -58,10 +67,23 @@ public class Preview {
 	 * Render the contents of the {@link VView}.
 	 * 
 	 * @param view -the {@link VView}
-	 * @throws ECPRendererException on rendering fail
 	 * */
 	public void render(final VView view) {
+		if (adapter != null) {
+			removeAdapter();
+		}
 		this.view = view;
+		internalRender(view);
+	}
+
+	/** Adds adapter to listen to changes in the currently cached view model. */
+	public void registerForViewModelChanges() {
+		if (view == null) {
+			return;
+		}
+		if (adapter != null) {
+			removeAdapter();
+		}
 		adapter = new EContentAdapter() {
 
 			/**
@@ -79,7 +101,6 @@ public class Preview {
 					return;
 				}
 
-				// TODO needed?
 				if (notification.getFeature() == VViewPackage.eINSTANCE.getElement_Diagnostic()) {
 					return;
 				}
@@ -96,14 +117,25 @@ public class Preview {
 			}
 		};
 		view.eAdapters().add(adapter);
-		internalRender(view);
 	}
 
 	private void internalRender(VView view) {
 		try {
 			clear();
 			final EClass myPreviewEClass = view.getRootEClass();
+
 			final EObject dummyData = EcoreUtil.create(myPreviewEClass);
+			final ResourceSet resourceSet = new ResourceSetImpl();
+			final AdapterFactoryEditingDomain domain = new AdapterFactoryEditingDomain(
+				new ComposedAdapterFactory(new AdapterFactory[] {
+					new ReflectiveItemProviderAdapterFactory(),
+					new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) }),
+				new BasicCommandStack(), resourceSet);
+			resourceSet.eAdapters().add(
+				new AdapterFactoryEditingDomain.EditingDomainProvider(domain));
+			final Resource resource = new ResourceImpl();
+			resourceSet.getResources().add(resource);
+			resource.getContents().add(dummyData);
 			final PreviewReferenceService previewRefServ = new PreviewReferenceService();
 			final ViewModelContext viewModelContext = ViewModelContextFactory.INSTANCE.createViewModelContext(view,
 				dummyData, previewRefServ);
@@ -111,7 +143,9 @@ public class Preview {
 			render = ECPSWTViewRenderer.INSTANCE.render(composite, viewModelContext);
 			composite.layout();
 			parent.layout();
+			// BEGIN SUPRESS CATCH EXCEPTION
 		} catch (final RuntimeException e) {
+			// END SUPRESS CATCH EXCEPTION
 			displayError(e);
 		} catch (final ECPRendererException ex) {
 			displayError(ex);
@@ -133,12 +167,13 @@ public class Preview {
 	 * 
 	 */
 	public void removeAdapter() {
-		if (view == null) {
+		if (view == null || adapter == null) {
 			return;
 		}
 		for (final Adapter a : view.eAdapters()) {
 			if (a == adapter) {
 				view.eAdapters().remove(adapter);
+				adapter = null;
 				return;
 			}
 		}
@@ -166,6 +201,7 @@ public class Preview {
 	/** Removes the cached view. */
 	public void removeView() {
 		view = null;
+		removeAdapter();
 	}
 
 	/**

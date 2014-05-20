@@ -18,7 +18,6 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.model.internal.preview.Activator;
 import org.eclipse.emf.ecp.view.model.internal.preview.e3.views.PreviewView;
-import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.treemasterdetail.ui.swt.internal.MasterDetailAction;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
@@ -30,17 +29,15 @@ public class OpenPreviewHandler extends MasterDetailAction {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.treemasterdetail.ui.swt.internal.MasterDetailAction#execute(VView)
+	 * @see org.eclipse.emf.ecp.view.treemasterdetail.ui.swt.internal.MasterDetailAction#execute(EObject)
 	 */
 	@Override
 	public void execute(EObject object) {
 		final IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 
 		try {
-			// page.op
-			page.showView("org.eclipse.emf.ecp.view.model.preview.e3.views.PreviewView", null,
+			page.showView("org.eclipse.emf.ecp.view.model.preview.e3.views.PreviewView", null, //$NON-NLS-1$
 				IWorkbenchPage.VIEW_VISIBLE);
-			//			page.showView("org.eclipse.emf.ecp.view.model.preview.e3.views.PreviewView"); //$NON-NLS-1$
 		} catch (final PartInitException e) {
 			Activator
 				.getDefault()
