@@ -198,7 +198,7 @@ public class ViewEditorPart extends EditorPart implements
 		loadView();
 		VView view = getView();
 
-		final String ecorePath = Activator.getViewModelRegistry().getEcorePath(view);
+		final String ecorePath = view.getEcorePath();
 		try {
 			EcoreHelper.registerEcore(ecorePath);
 		} catch (final IOException e) {

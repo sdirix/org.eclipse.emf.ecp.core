@@ -176,7 +176,7 @@ public class ControlRootEClassControl extends LinkControl {
 						return;
 					}
 
-					registry.persistSelectedEcore(ecore.getURI().toPlatformString(true), view);
+					view.setEcorePath(ecore.getURI().toPlatformString(true));
 
 				}
 			}

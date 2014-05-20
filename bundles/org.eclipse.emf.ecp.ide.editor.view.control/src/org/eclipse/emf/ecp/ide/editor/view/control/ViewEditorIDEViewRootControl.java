@@ -94,8 +94,6 @@ public class ViewEditorIDEViewRootControl extends ControlRootEClassControl {
 					resource.load(null);
 					final EPackage ePackage = (EPackage) resource.getContents().get(0);
 					EPackage.Registry.INSTANCE.put(ePackage.getNsURI(), ePackage);
-					final String viewModelPath = getFirstSetting().getEObject().eResource().getURI().toString();
-					Activator.getViewModelRegistry().persistSelectedEcore(file.getFullPath().toString(), viewModelPath);
 					return ePackage;
 				} catch (final IOException ex) {
 					MessageDialog.openError(Display.getDefault()

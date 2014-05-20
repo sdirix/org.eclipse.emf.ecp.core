@@ -342,6 +342,18 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * @generated
 	 */
 	@Override
+	public EAttribute getView_EcorePath()
+	{
+		return (EAttribute) viewEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	@Override
 	public EClass getContainedElement()
 	{
 		return containedElementEClass;
@@ -564,6 +576,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 		viewEClass = createEClass(VIEW);
 		createEReference(viewEClass, VIEW__ROOT_ECLASS);
 		createEReference(viewEClass, VIEW__CHILDREN);
+		createEAttribute(viewEClass, VIEW__ECORE_PATH);
 
 		containedElementEClass = createEClass(CONTAINED_ELEMENT);
 
@@ -691,6 +704,10 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 			getContainedElement(),
 			null,
 			"children", null, 0, -1, VView.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(
+			getView_EcorePath(),
+			theEcorePackage.getEString(),
+			"ecorePath", null, 0, 1, VView.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(containedElementEClass, VContainedElement.class,
 			"ContainedElement", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$

@@ -23,8 +23,6 @@ import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.util.URI;
@@ -33,16 +31,9 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
-import org.eclipse.emf.ecp.ide.view.service.Activator;
 import org.eclipse.emf.ecp.ide.view.service.IDEViewModelRegistry;
 import org.eclipse.emf.ecp.ide.view.service.ViewModelEditorCallback;
 import org.eclipse.emf.ecp.internal.ide.util.EcoreHelper;
-import org.eclipse.emf.ecp.view.ideconfig.model.IDEConfig;
-import org.eclipse.emf.ecp.view.ideconfig.model.IdeconfigFactory;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
@@ -99,7 +90,10 @@ public class IDEViewModelRegistryImpl implements IDEViewModelRegistry {
 							delta = delta.getAffectedChildren()[0];
 						}
 						for (final VView view : ecoreViewMapping.get(ecorePath)) {
-							final String ecorePath = getEcorePath(view);
+							final String ecorePath = view.getEcorePath();
+							if (ecorePath == null) {
+								return;
+							}
 							if (ecorePath.contains(delta.getResource().getFullPath().toString())) {
 								final ViewModelEditorCallback viewModelEditorCallback = viewModelViewModelEditorMapping
 									.get(view);
@@ -126,78 +120,18 @@ public class IDEViewModelRegistryImpl implements IDEViewModelRegistry {
 	public void registerViewModelEditor(VView viewModel, ViewModelEditorCallback viewModelEditor) throws IOException {
 
 		viewModelViewModelEditorMapping.put(viewModel, viewModelEditor);
-		final String ecorePath = getEcorePath(viewModel);
+		final String ecorePath = viewModel.getEcorePath();
 		EcoreHelper.registerEcore(ecorePath);
 
 	}
 
 	@Override
-	public void persistSelectedEcore(String ecorePath, String viewModelPath) {
-
-		final ResourceSet resourceSet = new ResourceSetImpl();
-		final int nameStart = viewModelPath.lastIndexOf("/") + 1; //$NON-NLS-1$
-		final int nameEnd = viewModelPath.lastIndexOf("."); //$NON-NLS-1$
-		final String newModelPath = viewModelPath.substring(0, nameStart)
-			+ "." + viewModelPath.substring(nameStart, nameEnd) + ".ideconfig"; //$NON-NLS-1$ //$NON-NLS-2$
-		final Resource resource = resourceSet.createResource(URI.createURI(newModelPath, true));
-
-		final IDEConfig config = IdeconfigFactory.eINSTANCE.createIDEConfig();
-		config.setEcorePath(ecorePath);
-
-		resource.getContents().add(config);
-		try {
-			resource.save(null);
-		} catch (final IOException e) {
-			Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
-		}
-	}
-
-	private IDEConfig getIDEConfig(VView view) {
-		// load the config
-		final Resource.Factory.Registry reg = Resource.Factory.Registry.INSTANCE;
-		final Map<String, Object> m = reg.getExtensionToFactoryMap();
-		m.put("ideconfig", new XMIResourceFactoryImpl()); //$NON-NLS-1$
-		// TODO move code
-		final ResourceSet resSet = new ResourceSetImpl();
-		final URI uri = EcoreUtil.getURI(view);
-		final String viewName = uri.lastSegment();
-		final String viewModelPath = uri.toString();
-		final int nameStart = viewModelPath.lastIndexOf(viewName);
-		final int nameEnd = viewModelPath.lastIndexOf("."); //$NON-NLS-1$
-		final String newModelPath = viewModelPath.substring(0, nameStart)
-			+ "." + viewModelPath.substring(nameStart, nameEnd) + ".ideconfig"; //$NON-NLS-1$ //$NON-NLS-2$
-
-		// Get the config
-		final Resource resource = resSet.getResource(URI.createURI(newModelPath), true);
-		final IDEConfig config = (IDEConfig) resource.getContents().get(0);
-		return config;
-	}
-
-	@Override
-	public String getEcorePath(VView view) {
-		final IDEConfig config = getIDEConfig(view);
-		if (config != null) {
-			return config.getEcorePath();
-		}
-		return null;
-	}
-
-	@Override
-	public void persistSelectedEcore(String ecorePath, VView viewModel) {
-		final String viewModelPath = viewModelviewModelFileMapping.get(viewModel);
-		if (viewModelPath != null) {
-			persistSelectedEcore(ecorePath, viewModelPath);
-		}
-	}
-
-	@Override
 	public void unregisterViewModelEditor(VView viewModel, ViewModelEditorCallback viewModelEditor) {
 		viewModelViewModelEditorMapping.remove(viewModel);
-		final String ecorePath = getEcorePath(viewModel);
+		final String ecorePath = viewModel.getEcorePath();
 		if (ecorePath != null) {
 			EcoreHelper.unregisterEcore(ecorePath);
 		}
-
 	}
 
 	@Override
@@ -244,14 +178,12 @@ public class IDEViewModelRegistryImpl implements IDEViewModelRegistry {
 		final EClass ec = (EClass) ep.getEClassifier(selectedEClass.getName());
 
 		view.setRootEClass(ec);
+		// Update the VView-EClass mapping
+		view.setEcorePath(selectedEcore.getFullPath().toString());
 
 		// Save the contents of the resource to the file system.
 		final Map<Object, Object> options = new HashMap<Object, Object>();
 		resource.save(options);
-
-		// Update the VView-EClass mapping
-		persistSelectedEcore(selectedEcore.getFullPath().toString(), modelFile.getLocationURI().toURL()
-			.toExternalForm());
 
 		return view;
 	}

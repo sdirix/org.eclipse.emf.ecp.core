@@ -399,6 +399,16 @@ public interface VViewPackage extends EPackage {
 	int VIEW__CHILDREN = ELEMENT_FEATURE_COUNT + 1;
 
 	/**
+	 * The feature id for the '<em><b>Ecore Path</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int VIEW__ECORE_PATH = ELEMENT_FEATURE_COUNT + 2;
+
+	/**
 	 * The number of structural features of the '<em>View</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -406,7 +416,7 @@ public interface VViewPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VIEW_FEATURE_COUNT = ELEMENT_FEATURE_COUNT + 2;
+	int VIEW_FEATURE_COUNT = ELEMENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.model.impl.VContainedElementImpl
@@ -848,6 +858,19 @@ public interface VViewPackage extends EPackage {
 	EReference getView_Children();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecp.view.spi.model.VView#getEcorePath
+	 * <em>Ecore Path</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for the attribute '<em>Ecore Path</em>'.
+	 * @see org.eclipse.emf.ecp.view.spi.model.VView#getEcorePath()
+	 * @see #getView()
+	 * @generated
+	 */
+	EAttribute getView_EcorePath();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.model.VContainedElement
 	 * <em>Contained Element</em>}'.
 	 * <!-- begin-user-doc -->
@@ -1168,6 +1191,15 @@ public interface VViewPackage extends EPackage {
 		 * @generated
 		 */
 		EReference VIEW__CHILDREN = eINSTANCE.getView_Children();
+
+		/**
+		 * The meta object literal for the '<em><b>Ecore Path</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @generated
+		 */
+		EAttribute VIEW__ECORE_PATH = eINSTANCE.getView_EcorePath();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.model.impl.VContainedElementImpl

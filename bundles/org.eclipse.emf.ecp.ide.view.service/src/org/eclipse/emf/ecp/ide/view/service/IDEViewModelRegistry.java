@@ -15,7 +15,6 @@ import java.io.IOException;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecp.view.ideconfig.model.IDEConfig;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 
 /**
@@ -60,23 +59,6 @@ public interface IDEViewModelRegistry {
 	void unregisterViewModelEditor(VView viewModel, ViewModelEditorCallback viewModelEditor);
 
 	/**
-	 * Saves the path {@code ecorePath} of the Ecore associated with the {@linkplain VView} located at the path
-	 * {@code viewModelPath} in an IDEConfig file.
-	 * 
-	 * @param ecorePath path to the Ecore associated with the {@code viewModel}
-	 * @param viewModelPath the path to the VView
-	 */
-	void persistSelectedEcore(String ecorePath, String viewModelPath);
-
-	/**
-	 * Saves the path {@code ecorePath} of the Ecore associated with the {@code viewModel} in an {@link IDEConfig} file.
-	 * 
-	 * @param ecorePath path to the Ecore associated with the {@code viewModel}
-	 * @param viewModel the VView
-	 */
-	void persistSelectedEcore(String ecorePath, VView viewModel);
-
-	/**
 	 * Register a view with its absolute path.
 	 * 
 	 * @param view the VView
@@ -98,11 +80,5 @@ public interface IDEViewModelRegistry {
 	 */
 	VView createViewModel(IFile modelFile, EClass selectedEClass, IFile selectedEcore)
 		throws IOException;
-
-	/**
-	 * @param view a VView
-	 * @return the path to the Ecore file to which the rootEClass of the view belongs to.
-	 */
-	String getEcorePath(VView view);
 
 }
