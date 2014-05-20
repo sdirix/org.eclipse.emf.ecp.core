@@ -87,6 +87,11 @@ public class Preview {
 				if (VCategorizationElementImpl.class.isInstance(notification.getNotifier())) {
 					return;
 				}
+
+				if (VViewPackage.eINSTANCE.getDomainModelReference_ChangeListener() == notification.getFeature()) {
+					return;
+				}
+
 				internalRender(view);
 			}
 		};
