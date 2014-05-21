@@ -200,7 +200,17 @@ public class ViewEditorPart extends EditorPart implements
 				Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
 			}
 			if (view.getRootEClass() != null) {
-				Activator.getViewModelRegistry().register(view.getRootEClass().eResource().getURI().toString(), view);
+				if (view.getRootEClass().eResource() != null) {
+					Activator.getViewModelRegistry().register(view.getRootEClass().eResource().getURI().toString(),
+						view);
+				} else {
+					Activator
+						.getDefault()
+						.getLog()
+						.log(
+							new Status(IStatus.WARNING, Activator.PLUGIN_ID,
+								"The Root EClass of the view cannot be resolved. " + view.getRootEClass())); //$NON-NLS-1$
+				}
 			}
 
 			showView();
