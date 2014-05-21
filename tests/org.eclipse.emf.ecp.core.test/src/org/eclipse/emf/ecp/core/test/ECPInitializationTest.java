@@ -31,7 +31,7 @@ import org.osgi.framework.FrameworkUtil;
  */
 public class ECPInitializationTest {
 
-	private static final int MAXIMAL_ALLOWED_DURATION = 80000;
+	private static final int MAXIMAL_ALLOWED_DURATION = 120000;
 	private ECPProject project;
 
 	@Before
