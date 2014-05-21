@@ -13,6 +13,8 @@ package org.eclipse.emf.ecp.ide.editor.view;
 
 import java.io.IOException;
 import java.util.EventObject;
+import java.util.Iterator;
+import java.util.Map;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -21,10 +23,13 @@ import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.command.CommandStackListener;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.xmi.XMLResource;
+import org.eclipse.emf.ecore.xml.type.AnyType;
 import org.eclipse.emf.ecp.ide.view.service.ViewModelEditorCallback;
 import org.eclipse.emf.ecp.internal.ide.util.EcoreHelper;
 import org.eclipse.emf.ecp.spi.ui.ECPReferenceServiceImpl;
@@ -159,8 +164,20 @@ public class ViewEditorPart extends EditorPart implements
 
 		final ResourceSet resourceSet = createResourceSet();
 		try {
+
+			resourceSet.getLoadOptions().put(XMLResource.OPTION_RECORD_UNKNOWN_FEATURE, Boolean.TRUE);
 			resource = resourceSet.getResource(URI.createURI(fei.getURI().toURL().toExternalForm()), true);
 			resource.load(null);
+
+			// Log unknown features
+			final Map<EObject, AnyType> extMap = ((XMLResource) resource).getEObjectToExtensionMap();
+			for (final Iterator<?> itr = extMap.entrySet().iterator(); itr.hasNext();) {
+				@SuppressWarnings("rawtypes")
+				final Map.Entry entry = (Map.Entry) itr.next();
+				Activator.getDefault().getLog().log(new Status(IStatus.WARNING, Activator.PLUGIN_ID,
+					"Model contains unknown element " + entry.getValue() + " for " + entry.getKey())); //$NON-NLS-1$ //$NON-NLS-2$
+			}
+
 			// resolve all proxies
 			int rsSize = resourceSet.getResources().size();
 			EcoreUtil.resolveAll(resourceSet);
