@@ -36,6 +36,8 @@ public class ECPLayoutProvider extends AbstractLayoutProvider {
 				return getLabelGridData();
 			} else if (controlGridDescription.getColumns() == 3 && gridCell.getColumn() == 1) {
 				return getValidationGridData();
+			} else if (controlGridDescription.getColumns() == 2 && gridCell.getColumn() == 0) {
+				return getValidationGridData();
 			}
 		}
 		// we have some kind of container -> render with necessary span

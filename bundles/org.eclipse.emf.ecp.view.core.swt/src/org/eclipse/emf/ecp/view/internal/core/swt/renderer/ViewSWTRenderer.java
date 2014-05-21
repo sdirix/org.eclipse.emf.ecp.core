@@ -19,6 +19,7 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
+import org.eclipse.emf.ecp.view.spi.model.VContainer;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
@@ -66,14 +67,26 @@ public class ViewSWTRenderer extends ContainerSWTRenderer<VView> {
 			if (gridCell.getColumn() + gridCell.getHorizontalSpan() == controlGridDescription.getColumns()) {
 				getControlGridData(gridCell.getHorizontalSpan() + fullGridDescription.getColumns()
 					- currentRowGridDescription.getColumns(), VControl.class.cast(vElement), control).applyTo(control);
-			} else if (gridCell.getColumn() == 0) { // controlGridDescription.getColumns() == 3 &&
+			} else if (controlGridDescription.getColumns() == 3 && gridCell.getColumn() == 0) {
 				GridDataFactory.fillDefaults().grab(false, false)
 					.align(SWT.BEGINNING, SWT.CENTER).applyTo(control);
-			} else if (gridCell.getColumn() == 1) { // controlGridDescription.getColumns() == 3 &&
+			} else if (controlGridDescription.getColumns() == 3 && gridCell.getColumn() == 1) {
+				GridDataFactory.fillDefaults().align(SWT.CENTER, SWT.CENTER)
+					.hint(16, 17).grab(false, false).applyTo(control);
+			} else if (controlGridDescription.getColumns() == 2 && gridCell.getColumn() == 0) {
 				GridDataFactory.fillDefaults().align(SWT.CENTER, SWT.CENTER)
 					.hint(16, 17).grab(false, false).applyTo(control);
 			}
-		} else {
+		} else if (VContainer.class.isInstance(vElement)) {
+			GridDataFactory
+				.fillDefaults()
+				.align(gridCell.isHorizontalFill() ? SWT.FILL : SWT.BEGINNING,
+					gridCell.isVerticalFill() ? SWT.FILL : SWT.CENTER)
+				.grab(gridCell.isHorizontalGrab(), false)
+				.span(gridCell.getHorizontalSpan() + fullGridDescription.getColumns()
+					- currentRowGridDescription.getColumns(), 1).applyTo(control);
+		}
+		else {
 			// we have some kind of container -> render with necessary span
 			GridDataFactory
 				.fillDefaults()
