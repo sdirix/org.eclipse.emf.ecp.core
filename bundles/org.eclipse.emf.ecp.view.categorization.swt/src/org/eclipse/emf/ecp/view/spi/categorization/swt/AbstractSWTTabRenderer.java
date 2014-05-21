@@ -11,6 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.categorization.swt;
 
+import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VAbstractCategorization;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
@@ -21,6 +22,10 @@ import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
+import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
@@ -62,11 +67,25 @@ public abstract class AbstractSWTTabRenderer<VELEMENT extends VElement> extends 
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		final CTabFolder folder = new CTabFolder(parent, SWT.BOTTOM);
 		folder.setBackground(parent.getBackground());
-
+		final ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
+			new ReflectiveItemProviderAdapterFactory(),
+			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
+		final AdapterFactoryItemDelegator adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(
+			composedAdapterFactory);
 		final EList<VAbstractCategorization> categorizations = getCategorizations();
 		for (final VAbstractCategorization categorization : categorizations) {
 			final CTabItem item = new CTabItem(folder, SWT.NULL);
-			item.setText(categorization.getName());
+
+			final IItemPropertyDescriptor itemPropertyDescriptor = adapterFactoryItemDelegator.getPropertyDescriptor(
+				categorization, categorization);
+
+			String categorizationName;
+			if (itemPropertyDescriptor == null) {
+				categorizationName = "Categorization"; //$NON-NLS-1$
+			} else {
+				categorizationName = itemPropertyDescriptor.getDisplayName(null);
+			}
+			item.setText(categorizationName);
 
 			final AbstractSWTRenderer<VElement> renderer = getSWTRendererFactory().getRenderer(categorization,
 				getViewModelContext());
