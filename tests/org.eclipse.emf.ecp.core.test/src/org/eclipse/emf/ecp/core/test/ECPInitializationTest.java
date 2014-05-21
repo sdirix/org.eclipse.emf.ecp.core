@@ -31,7 +31,7 @@ import org.osgi.framework.FrameworkUtil;
  */
 public class ECPInitializationTest {
 
-	private static final int MAXIMAL_ALLOWED_DURATION = 25000; // FIXME: this was taking 8 secs before emfstore 1.2
+	private static final int MAXIMAL_ALLOWED_DURATION = 80000;
 	private ECPProject project;
 
 	@Before
