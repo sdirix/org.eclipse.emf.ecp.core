@@ -22,9 +22,8 @@ import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
-import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
-import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.swt.SWT;
@@ -70,20 +69,18 @@ public abstract class AbstractSWTTabRenderer<VELEMENT extends VElement> extends 
 		final ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
 			new ReflectiveItemProviderAdapterFactory(),
 			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
-		final AdapterFactoryItemDelegator adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(
-			composedAdapterFactory);
 		final EList<VAbstractCategorization> categorizations = getCategorizations();
 		for (final VAbstractCategorization categorization : categorizations) {
 			final CTabItem item = new CTabItem(folder, SWT.NULL);
 
-			final IItemPropertyDescriptor itemPropertyDescriptor = adapterFactoryItemDelegator.getPropertyDescriptor(
-				categorization, categorization);
+			final IItemLabelProvider itemLabelProvider = (IItemLabelProvider) composedAdapterFactory.adapt(
+				categorization, IItemLabelProvider.class);
 
 			String categorizationName;
-			if (itemPropertyDescriptor == null) {
-				categorizationName = "Categorization"; //$NON-NLS-1$
+			if (itemLabelProvider == null) {
+				categorizationName = "Leaf Category"; //$NON-NLS-1$
 			} else {
-				categorizationName = itemPropertyDescriptor.getDisplayName(null);
+				categorizationName = itemLabelProvider.getText(categorization);
 			}
 			item.setText(categorizationName);
 
