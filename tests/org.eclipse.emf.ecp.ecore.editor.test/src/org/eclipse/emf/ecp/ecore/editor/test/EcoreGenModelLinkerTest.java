@@ -1,20 +1,20 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * David Soto Setzke - initial API and implementation
  ******************************************************************************/
 package org.eclipse.emf.ecp.ecore.editor.test;
 
+import static org.junit.Assert.assertTrue;
+
 import java.io.File;
 import java.io.IOException;
-
-import junit.framework.TestCase;
 
 import org.eclipse.emf.ecp.ecore.editor.IEcoreGenModelLinker;
 import org.eclipse.emf.ecp.ecore.editor.factory.EcoreGenModelLinkerFactory;
@@ -23,15 +23,17 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
-public class EcoreGenModelLinkerTest extends TestCase {
+public class EcoreGenModelLinkerTest {
 
+	// JUnit rule needs to be public.
+	// REUSED CLASS
 	@Rule
-	private final TemporaryFolder folder = new TemporaryFolder();
+	public TemporaryFolder folder = new TemporaryFolder();
+
+	// END REUSED CLASS
 
 	@Test
 	public void test() throws EcoreGenException, IOException {
-		// createFiles();
-		folder.create();
 		final String absPath = folder.newFolder("tmp").getAbsolutePath();
 		final IEcoreGenModelLinker linker = EcoreGenModelLinkerFactory.getEcoreGenModelLinker();
 		final String ecorePath = new File(".").getAbsolutePath() + "/resources/model/library.ecore";
