@@ -36,6 +36,7 @@ import org.eclipse.emf.ecp.spi.ui.ECPReferenceServiceImpl;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
+import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
@@ -43,7 +44,6 @@ import org.eclipse.emf.ecp.view.spi.model.ModelChangeAddRemoveListener;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
-import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
@@ -141,7 +141,7 @@ public class ViewEditorPart extends EditorPart implements
 
 		final AdapterFactoryEditingDomain domain = new AdapterFactoryEditingDomain(
 			new ComposedAdapterFactory(new AdapterFactory[] {
-				new ReflectiveItemProviderAdapterFactory(),
+				new CustomReflectiveItemProviderAdapterFactory(),
 				new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) }),
 			basicCommandStack, resourceSet);
 		resourceSet.eAdapters().add(

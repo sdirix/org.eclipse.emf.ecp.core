@@ -22,6 +22,7 @@ import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.internal.edit.Activator;
+import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeAddRemoveListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
@@ -34,7 +35,6 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 
 /**
  * The {@link ECPAbstractControl} is the abstract class describing a control.
@@ -67,7 +67,7 @@ public abstract class ECPAbstractControl {
 		this.viewModelContext = viewModelContext;
 		this.control = control;
 		composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
-			new ReflectiveItemProviderAdapterFactory(),
+			new CustomReflectiveItemProviderAdapterFactory(),
 			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
 		adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(composedAdapterFactory);
 

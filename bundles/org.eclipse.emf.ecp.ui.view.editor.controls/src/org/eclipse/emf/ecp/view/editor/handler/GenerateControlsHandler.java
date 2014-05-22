@@ -12,7 +12,7 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.view.editor.handler;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.eclipse.core.commands.ExecutionEvent;
@@ -27,6 +27,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.view.editor.controls.Activator;
 import org.eclipse.emf.ecp.view.editor.controls.Helper;
+import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.ecp.view.spi.model.VContainer;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
@@ -36,7 +37,6 @@ import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Shell;
@@ -91,11 +91,11 @@ public class GenerateControlsHandler extends MasterDetailAction {
 	private Set<EStructuralFeature> getFeaturesToCreate(final SelectAttributesDialog sad) {
 		final Set<EStructuralFeature> features = sad.getSelectedFeatures();
 		final ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
-			new ReflectiveItemProviderAdapterFactory(),
+			new CustomReflectiveItemProviderAdapterFactory(),
 			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
 		final AdapterFactoryItemDelegator adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(
 			composedAdapterFactory);
-		final Set<EStructuralFeature> featuresToAdd = new HashSet<EStructuralFeature>();
+		final Set<EStructuralFeature> featuresToAdd = new LinkedHashSet<EStructuralFeature>();
 		IItemPropertyDescriptor propertyDescriptor = null;
 		for (final EStructuralFeature feature : features) {
 			propertyDescriptor =

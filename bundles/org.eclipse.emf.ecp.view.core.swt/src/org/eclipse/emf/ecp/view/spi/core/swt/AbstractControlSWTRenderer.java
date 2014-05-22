@@ -22,6 +22,7 @@ import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.databinding.edit.EMFEditProperties;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTValidationHelper;
+import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
@@ -34,7 +35,6 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
@@ -78,7 +78,7 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 	protected void postInit() {
 		super.postInit();
 		composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
-			new ReflectiveItemProviderAdapterFactory(),
+			new CustomReflectiveItemProviderAdapterFactory(),
 			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
 		adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(
 			composedAdapterFactory);
