@@ -99,6 +99,7 @@ public abstract class AbstractSWTTabRenderer<VELEMENT extends VElement> extends 
 			}
 
 		}
+		composedAdapterFactory.dispose();
 		if (folder.getItemCount() > 0) {
 			folder.setSelection(0);
 		}
