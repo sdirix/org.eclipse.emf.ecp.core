@@ -43,7 +43,6 @@ import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
-import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.model.util.ViewModelUtil;
 
 /**
@@ -479,13 +478,8 @@ public class ViewModelContextImpl implements ViewModelContext {
 			}
 			// FIXME possible side effects?
 			if (notification.getEventType() == Notification.ADD) {
-				if (VViewPackage.eINSTANCE.getElement_Attachments() == notification.getFeature()) {
-					// don't do anything if attachment was added
-				}
-				else {
-					if (VControl.class.isInstance(notification.getNotifier())) {
-						checkAndUpdateSettingToControlMapping(VControl.class.cast(notification.getNotifier()));
-					}
+				if (VControl.class.isInstance(notification.getNewValue())) {
+					checkAndUpdateSettingToControlMapping(VControl.class.cast(notification.getNewValue()));
 				}
 			}
 			final ModelChangeNotification modelChangeNotification = new ModelChangeNotification(notification);
