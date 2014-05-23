@@ -11,15 +11,13 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.table.swt;
 
-import java.net.URL;
-
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.jface.resource.ImageRegistry;
+import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
 import org.eclipse.swt.graphics.Image;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 
 /**
  * Activator for this plugin.
@@ -31,7 +29,6 @@ public class Activator extends Plugin {
 
 	private static final String PLUGIN_ID = "org.eclipse.emf.ecp.view.table.ui.swt"; //$NON-NLS-1$
 	private static Activator instance;
-	private ImageRegistry registry;
 
 	// BEGIN SUPRESS CATCH EXCEPTION
 	@Override
@@ -43,9 +40,6 @@ public class Activator extends Plugin {
 	@Override
 	public void stop(BundleContext bundleContext) throws Exception {
 		instance = null;
-		if (registry != null) {
-			registry.dispose();
-		}
 		super.stop(bundleContext);
 	}
 
@@ -58,19 +52,22 @@ public class Activator extends Plugin {
 	 * @return the image or null if nothing could be found
 	 */
 	public static Image getImage(String path) {
-		if (instance.registry == null) {
-			instance.registry = new ImageRegistry();
-		}
-		Image image = instance.registry.get(path);
-		if (image == null) {
-			final URL url = instance.getBundle().getResource(path);
-			if (url == null) {
-				return null;
-			}
-			image = ImageDescriptor.createFromURL(url).createImage();
-			instance.registry.put(path, image);
-		}
+
+		final Image image = instance.getImageRegistryService().getImage(instance.getBundle(), path);
+
+		instance.getBundle().getBundleContext().ungetService(instance.imageRegistryServiceReference);
+
 		return image;
+	}
+
+	private ServiceReference<ImageRegistryService> imageRegistryServiceReference;
+
+	private ImageRegistryService getImageRegistryService() {
+		if (imageRegistryServiceReference == null) {
+			imageRegistryServiceReference = getBundle().getBundleContext()
+				.getServiceReference(ImageRegistryService.class);
+		}
+		return getBundle().getBundleContext().getService(imageRegistryServiceReference);
 	}
 
 	/**

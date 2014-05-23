@@ -97,7 +97,9 @@ public class ViewItemProvider
 	/**
 	 * This adds a property descriptor for the Ecore Path feature.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.3
+	 *        <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 */

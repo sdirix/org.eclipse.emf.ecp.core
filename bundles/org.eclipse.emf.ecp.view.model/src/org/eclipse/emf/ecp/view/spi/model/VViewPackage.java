@@ -401,7 +401,9 @@ public interface VViewPackage extends EPackage {
 	/**
 	 * The feature id for the '<em><b>Ecore Path</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.3
+	 *        <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 * @ordered
@@ -411,7 +413,9 @@ public interface VViewPackage extends EPackage {
 	/**
 	 * The number of structural features of the '<em>View</em>' class.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.3
+	 *        <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 * @ordered
@@ -867,6 +871,7 @@ public interface VViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.spi.model.VView#getEcorePath()
 	 * @see #getView()
 	 * @generated
+	 * @since 1.3
 	 */
 	EAttribute getView_EcorePath();
 
@@ -1195,7 +1200,9 @@ public interface VViewPackage extends EPackage {
 		/**
 		 * The meta object literal for the '<em><b>Ecore Path</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * 
+		 * @since 1.3
+		 *        <!-- end-user-doc -->
 		 * 
 		 * @generated
 		 */

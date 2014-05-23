@@ -63,6 +63,13 @@
                 <message_argument value="1"/>
             </message_arguments>
         </filter>
+        <filter comment="Internal Model Changes" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage"/>
+                <message_argument value="VIEW_FEATURE_COUNT"/>
+                <message_argument value="8"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/emf/ecp/view/spi/model/VViewPackage.java" type="org.eclipse.emf.ecp.view.spi.model.VViewPackage$Literals">
         <filter comment="SPI change (1.3)" id="403767336">
@@ -75,6 +82,12 @@
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage.Literals"/>
                 <message_argument value="DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Internal Model Changes" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage.Literals"/>
+                <message_argument value="VIEW__ECORE_PATH"/>
             </message_arguments>
         </filter>
     </resource>

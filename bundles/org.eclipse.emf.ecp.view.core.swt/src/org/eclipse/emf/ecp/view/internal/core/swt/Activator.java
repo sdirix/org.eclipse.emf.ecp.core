@@ -11,13 +11,10 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.core.swt;
 
-import java.net.URL;
-
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.emf.ecp.edit.spi.ECPControlFactory;
+import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
-import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.swt.graphics.Image;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -32,8 +29,6 @@ public class Activator extends Plugin {
 
 	// The shared instance
 	private static Activator plugin;
-
-	private ImageRegistry registry;
 
 	/**
 	 * The constructor.
@@ -58,9 +53,6 @@ public class Activator extends Plugin {
 	@Override
 	public void stop(BundleContext context) throws Exception {
 		plugin = null;
-		if (registry != null) {
-			registry.dispose();
-		}
 		super.stop(context);
 	}
 
@@ -106,19 +98,22 @@ public class Activator extends Plugin {
 	 * @return the image or null if nothing could be found
 	 */
 	public static Image getImage(String path) {
-		if (plugin.registry == null) {
-			plugin.registry = new ImageRegistry();
-		}
-		Image image = plugin.registry.get(path);
-		if (image == null) {
-			final URL url = plugin.getBundle().getResource(path);
-			if (url == null) {
-				return null;
-			}
-			image = ImageDescriptor.createFromURL(url).createImage();
-			plugin.registry.put(path, image);
-		}
+
+		final Image image = plugin.getImageRegistryService().getImage(plugin.getBundle(), path);
+
+		plugin.getBundle().getBundleContext().ungetService(plugin.imageRegistryServiceReference);
+
 		return image;
+	}
+
+	private ServiceReference<ImageRegistryService> imageRegistryServiceReference;
+
+	private ImageRegistryService getImageRegistryService() {
+		if (imageRegistryServiceReference == null) {
+			imageRegistryServiceReference = getBundle().getBundleContext()
+				.getServiceReference(ImageRegistryService.class);
+		}
+		return getBundle().getBundleContext().getService(imageRegistryServiceReference);
 	}
 
 	private VTViewTemplateProvider viewTemplate;
