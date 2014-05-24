@@ -589,7 +589,7 @@ public class ViewValidationTest extends CommonValidationTest {
 		final VTableControl control = VTableFactory.eINSTANCE.createTableControl();
 		control
 			.setDomainModelReference(
-			getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getLibrary_Writers()));
+			getVTableDomainModelReference(TestPackage.eINSTANCE.getLibrary_Writers()));
 
 		ViewModelContextFactory.INSTANCE.createViewModelContext(control, lib);
 

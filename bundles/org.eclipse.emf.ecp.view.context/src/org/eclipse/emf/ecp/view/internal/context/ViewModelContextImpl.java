@@ -366,7 +366,9 @@ public class ViewModelContextImpl implements ViewModelContext {
 		settingToControlMap.clear();
 
 		for (final VControl vControl : controlChangeListener.keySet()) {
-			vControl.getDomainModelReference().getChangeListener().remove(controlChangeListener.get(vControl));
+			if (vControl.getDomainModelReference() != null) {
+				vControl.getDomainModelReference().getChangeListener().remove(controlChangeListener.get(vControl));
+			}
 			unregisterDomainChangeListener(vControl.getDomainModelReference());
 		}
 		controlChangeListener.clear();
