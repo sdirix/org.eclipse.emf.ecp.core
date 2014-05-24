@@ -18,7 +18,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -194,6 +196,35 @@ public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 			return columnDomainModelReferences != null && !columnDomainModelReferences.isEmpty();
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VFeaturePathDomainModelReferenceImpl#init(org.eclipse.emf.ecore.EObject)
+	 */
+	@Override
+	public boolean init(final EObject object) {
+		final boolean init = super.init(object);
+		eAdapters().add(new AdapterImpl() {
+
+			/**
+			 * {@inheritDoc}
+			 * 
+			 * @see org.eclipse.emf.common.notify.impl.AdapterImpl#notifyChanged(org.eclipse.emf.common.notify.Notification)
+			 */
+			@Override
+			public void notifyChanged(Notification msg) {
+				super.notifyChanged(msg);
+				if (msg.getFeature() == VTablePackage.eINSTANCE
+					.getTableDomainModelReference_ColumnDomainModelReferences()
+					&& msg.getEventType() == Notification.ADD) {
+					resolve(object, false);
+				}
+			}
+
+		});
+		return init;
 	}
 
 	@Override

@@ -193,7 +193,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 		for (final UniqueSetting setting : settingToControlMap.keySet()) {
 			settingToControlMap.get(setting).remove(vControl);
 		}
-		vControl.getDomainModelReference().init(getDomainModel());
+		// vControl.getDomainModelReference().init(getDomainModel());
 		final Iterator<Setting> iterator = vControl.getDomainModelReference().getIterator();
 		while (iterator.hasNext()) {
 			final Setting setting = iterator.next();
@@ -365,6 +365,12 @@ public class ViewModelContextImpl implements ViewModelContext {
 		viewServices.clear();
 		settingToControlMap.clear();
 
+		for (final VControl vControl : controlChangeListener.keySet()) {
+			vControl.getDomainModelReference().getChangeListener().remove(controlChangeListener.get(vControl));
+			unregisterDomainChangeListener(vControl.getDomainModelReference());
+		}
+		controlChangeListener.clear();
+
 		isDisposing = false;
 		isDisposed = true;
 	}
@@ -504,7 +510,10 @@ public class ViewModelContextImpl implements ViewModelContext {
 				vControlAdded((VControl) notifier);
 			}
 			if (VDomainModelReference.class.isInstance(notifier)) {
-				updateControlMapping(findControl(VDomainModelReference.class.cast(notifier)));
+				final VControl control = findControl(VDomainModelReference.class.cast(notifier));
+				if (control != null) {
+					updateControlMapping(control);
+				}
 
 			}
 			for (final ModelChangeListener modelChangeListener : viewModelChangeListener) {
@@ -520,7 +529,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 		 */
 		private VControl findControl(VDomainModelReference dmr) {
 			EObject parent = dmr.eContainer();
-			while (!VControl.class.isInstance(parent)) {
+			while (!VControl.class.isInstance(parent) && parent != null) {
 				parent = parent.eContainer();
 			}
 			return (VControl) parent;
