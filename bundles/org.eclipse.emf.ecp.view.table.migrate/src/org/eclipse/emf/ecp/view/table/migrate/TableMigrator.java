@@ -7,6 +7,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.FeatureMap;
 import org.eclipse.emf.ecore.xml.type.AnyType;
 import org.eclipse.emf.ecp.view.internal.provider.Migrator;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.table.model.VReadOnlyColumnConfiguration;
@@ -46,7 +47,10 @@ public class TableMigrator implements Migrator{
 				EObject eObject = cast.eResource().getResourceSet().getEObject(uri, true);
 				VFeaturePathDomainModelReference dmr=VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
 				dmr.setDomainModelEFeature((EStructuralFeature) eObject);
-				VTableDomainModelReference.class.cast(cast.getDomainModelReference()).getColumnDomainModelReferences().add(dmr);
+				VTableDomainModelReference tdmr=getTableDomainModelReference(cast);
+				if(tdmr==null)
+					continue;
+				tdmr.getColumnDomainModelReferences().add(dmr);
 				if(readOnly){
 					VReadOnlyColumnConfiguration readOnlyColumnConfiguration=getReadOnlyColumnConfiguration(cast);
 					readOnlyColumnConfiguration.getColumnDomainReferences().add(dmr);
@@ -54,6 +58,19 @@ public class TableMigrator implements Migrator{
 			}
 		}
 		
+	}
+	
+	private static VTableDomainModelReference getTableDomainModelReference(VTableControl tableControl){
+		VDomainModelReference dmr=tableControl.getDomainModelReference();
+		if(VTableDomainModelReference.class.isInstance(dmr))
+			return (VTableDomainModelReference) dmr;
+		else{
+			for(EObject eObject:dmr.eContents()){
+				if(VTableDomainModelReference.class.isInstance(eObject))
+					return (VTableDomainModelReference) eObject;
+			}
+		}
+		return null;
 	}
 
 	private static VReadOnlyColumnConfiguration getReadOnlyColumnConfiguration(
