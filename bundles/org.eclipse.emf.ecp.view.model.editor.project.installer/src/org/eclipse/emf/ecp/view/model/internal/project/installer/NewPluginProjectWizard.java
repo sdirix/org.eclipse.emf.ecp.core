@@ -15,8 +15,21 @@ package org.eclipse.emf.ecp.view.model.internal.project.installer;
 import java.io.BufferedReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.StringWriter;
 import java.util.ArrayList;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
@@ -48,6 +61,10 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.dialogs.WizardNewProjectCreationPage;
 import org.eclipse.ui.part.FileEditorInput;
 import org.osgi.framework.ServiceReference;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 /**
  * @author Alexandra Buzila
@@ -287,9 +304,12 @@ public class NewPluginProjectWizard extends ExampleInstallerWizard {
 
 		// get manifest file
 		final IProject p = projectDescriptors.get(0).getProject();
-		final IFile manifestFile = ResourcesPlugin.getWorkspace().getRoot()
-			.getFile(p.getFolder("META-INF").getFullPath().append("MANIFEST.MF")); //$NON-NLS-1$ //$NON-NLS-2$
+
 		try {
+			// rename project description (in .project file)
+			updateProjectDescriptionFile(p);
+			final IFile manifestFile = ResourcesPlugin.getWorkspace().getRoot()
+				.getFile(p.getFolder("META-INF").getFullPath().append("MANIFEST.MF")); //$NON-NLS-1$ //$NON-NLS-2$
 			// change bundle-name and bundle-symbolicname
 			final BufferedReader in = new BufferedReader(new InputStreamReader(manifestFile.getContents()));
 
@@ -336,6 +356,57 @@ public class NewPluginProjectWizard extends ExampleInstallerWizard {
 			Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
 		}
 		return true;
+	}
+
+	/**
+	 * Changes the name of the project in the project description file (.project)
+	 */
+	private void updateProjectDescriptionFile(IProject p) {
+		final IPath filePath = p.getFullPath().append(".project"); //$NON-NLS-1$
+		final IFile descriptionFile = ResourcesPlugin.getWorkspace().getRoot()
+			.getFile(filePath);
+		final DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder dBuilder;
+		try {
+			dBuilder = dbFactory.newDocumentBuilder();
+			final InputStream in = descriptionFile.getContents();
+			final Document doc = dBuilder.parse(in);
+
+			final NodeList nList = doc.getElementsByTagName("projectDescription"); //$NON-NLS-1$
+			final Element eElement = (Element) nList.item(0);
+			eElement.getElementsByTagName("name") //$NON-NLS-1$
+				.item(0).getChildNodes().item(0).setNodeValue(p.getName());
+
+			// write the content into xml file
+			final TransformerFactory transformerFactory = TransformerFactory.newInstance();
+			final Transformer transformer = transformerFactory.newTransformer();
+			transformer.setOutputProperty(OutputKeys.INDENT, "yes"); //$NON-NLS-1$
+			final DOMSource source = new DOMSource(doc);
+			final StreamResult result = new StreamResult(new StringWriter());
+			transformer.transform(source, result);
+
+			final String xmlContent = result.getWriter().toString();
+			final FileWriter out = new FileWriter(descriptionFile.getRawLocation().makeAbsolute().toFile());
+			out.write(xmlContent);
+			out.flush();
+			out.close();
+
+			ResourcesPlugin.getWorkspace().getRoot().getProject(p.getName())
+				.refreshLocal(IResource.DEPTH_INFINITE, null);
+		} catch (final ParserConfigurationException ex) {
+			Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, ex.getMessage(), ex));
+		} catch (final CoreException ex) {
+			Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, ex.getMessage(), ex));
+		} catch (final SAXException ex) {
+			Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, ex.getMessage(), ex));
+		} catch (final IOException ex) {
+			Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, ex.getMessage(), ex));
+		} catch (final TransformerConfigurationException ex) {
+			Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, ex.getMessage(), ex));
+		} catch (final TransformerException ex) {
+			Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, ex.getMessage(), ex));
+		}
+
 	}
 
 	private boolean createViewModelFile() {
