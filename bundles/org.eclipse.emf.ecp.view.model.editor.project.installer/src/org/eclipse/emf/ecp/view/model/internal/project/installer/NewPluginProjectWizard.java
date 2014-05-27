@@ -13,7 +13,6 @@
 package org.eclipse.emf.ecp.view.model.internal.project.installer;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -269,7 +268,7 @@ public class NewPluginProjectWizard extends ExampleInstallerWizard {
 		// install the project template in the workspace
 		boolean result = super.performFinish();
 		// update the project and project files
-		result &= createViewModelFile() && updateViewModelPluginFilePath() && renamePlugin(); //
+		result &= createViewModelFile() && updateViewModelPluginFilePath() && renamePlugin();
 
 		if (result) {
 			final IWorkbenchPage page = workbench.getActiveWorkbenchWindow().getActivePage();
@@ -287,7 +286,6 @@ public class NewPluginProjectWizard extends ExampleInstallerWizard {
 	private boolean renamePlugin() {
 
 		// get manifest file
-		//
 		final IProject p = projectDescriptors.get(0).getProject();
 		final IFile manifestFile = ResourcesPlugin.getWorkspace().getRoot()
 			.getFile(p.getFolder("META-INF").getFullPath().append("MANIFEST.MF")); //$NON-NLS-1$ //$NON-NLS-2$
@@ -343,12 +341,6 @@ public class NewPluginProjectWizard extends ExampleInstallerWizard {
 	private boolean createViewModelFile() {
 		final IProject p = projectDescriptors.get(0).getProject();
 		final IPath path = p.getFolder("viewmodels").getFullPath().append(selectedEClass.getName() + ".view"); //$NON-NLS-1$ //$NON-NLS-2$
-		final File f = new File(path.toString());
-		try {
-			f.createNewFile();
-		} catch (final IOException e) {
-			Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
-		}
 		viewModelFile = ResourcesPlugin.getWorkspace().getRoot().getFile(path);
 
 		final boolean generateViewModelControls = selectEClassPage
@@ -378,11 +370,10 @@ public class NewPluginProjectWizard extends ExampleInstallerWizard {
 	}
 
 	/**
-	 * Update the name of the view model file in the ... extension point
+	 * Update the name of the view model file in the plugin.xml file
 	 */
 	private boolean updateViewModelPluginFilePath() {
 		// get plugin.xml file
-		//
 		final IProject p = projectDescriptors.get(0).getProject();
 		final IFile pluginFile = ResourcesPlugin.getWorkspace().getRoot()
 			.getFile(p.getFile("plugin.xml").getFullPath()); //$NON-NLS-1$ 
@@ -394,11 +385,9 @@ public class NewPluginProjectWizard extends ExampleInstallerWizard {
 			String line = null;
 			final StringBuffer contents = new StringBuffer();
 			while ((line = in.readLine()) != null) {
-				// Process each line and add output to Dest.txt file
 				if (line.contains(viewModelName)) {
 					line = line.replace(viewModelName, selectedEClass.getName() + ".view"); //$NON-NLS-1$
 				}
-
 				contents.append(line + "\n"); //$NON-NLS-1$
 			}
 			in.close();
