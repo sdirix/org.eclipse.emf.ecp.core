@@ -84,4 +84,9 @@ public class TableMigrator implements Migrator{
 		cast.getColumnConfigurations().add(config);
 		return config;
 	}
+
+	@Override
+	public boolean isApplicable(EObject eObject) {		
+		return VTableControl.class.isInstance(eObject);
+	}
 }

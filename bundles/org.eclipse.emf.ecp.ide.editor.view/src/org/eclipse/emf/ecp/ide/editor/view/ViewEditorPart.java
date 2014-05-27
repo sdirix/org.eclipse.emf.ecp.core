@@ -12,11 +12,9 @@
 package org.eclipse.emf.ecp.ide.editor.view;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.EventObject;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -35,9 +33,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecore.util.FeatureMap;
 import org.eclipse.emf.ecore.xmi.XMLResource;
-import org.eclipse.emf.ecore.xmi.impl.BasicResourceHandler;
 import org.eclipse.emf.ecore.xml.type.AnyType;
 import org.eclipse.emf.ecp.ide.view.service.ViewModelEditorCallback;
 import org.eclipse.emf.ecp.internal.ide.util.EcoreHelper;
@@ -45,8 +41,8 @@ import org.eclipse.emf.ecp.spi.ui.ECPReferenceServiceImpl;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
-import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.ecp.view.internal.provider.Migrator;
+import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
@@ -91,6 +87,9 @@ public class ViewEditorPart extends EditorPart implements
 	private IPartListener2 partListener;
 	private final ViewEditorPart instance;
 	private ViewModelService referenceService;
+	private ArrayList<Migrator> migrators;
+
+	private boolean showMigrateDialog;
 
 	/** Default constructor for {@link ViewEditorPart}. */
 	public ViewEditorPart() {
@@ -178,55 +177,8 @@ public class ViewEditorPart extends EditorPart implements
 			loadOptions
 				.put(XMLResource.OPTION_RECORD_UNKNOWN_FEATURE, Boolean.TRUE);
 
-			final List<Migrator> migrators = new ArrayList<Migrator>();
-			final IConfigurationElement[] migratorExtensions = Platform.getExtensionRegistry()
-				.getConfigurationElementsFor("org.eclipse.emf.ecp.ui.view.manualMigrator"); //$NON-NLS-1$
-			for (final IConfigurationElement migratorExtension : migratorExtensions) {
-				try {
-					final Migrator migrator = (Migrator) migratorExtension.createExecutableExtension("class"); //$NON-NLS-1$
-					migrators.add(migrator);
-				} catch (final CoreException ex) {
-					Activator.getDefault().getLog().log(new Status(IStatus.WARNING, Activator.PLUGIN_ID,
-						ex.getMessage(), ex));
-				}
-			}
-			final boolean migrate = MessageDialog.openQuestion(getSite().getShell(), "Migrate Models",
-				"Should outdated models be migrated and saved?");
-
-			loadOptions.put(XMLResource.OPTION_RESOURCE_HANDLER,
-				new BasicResourceHandler() {
-					@Override
-					@SuppressWarnings("rawtypes")
-					public void postLoad(XMLResource resource,
-						InputStream inputStream, Map options) {
-						final Map extMap = resource.getEObjectToExtensionMap();
-						for (final Iterator itr = extMap.entrySet().iterator(); itr
-							.hasNext();) {
-							final Map.Entry entry = (Map.Entry) itr.next();
-							final EObject key = (EObject) entry.getKey();
-							final AnyType value = (AnyType) entry.getValue();
-							final FeatureMap anyAttribute = value.getAnyAttribute();
-							final FeatureMap mixed = value.getMixed();
-							if (migrate) {
-								for (final Migrator migrator : migrators) {
-									migrator.migrate(key, anyAttribute, mixed);
-								}
-							}
-							Activator.getDefault().getLog().log(new Status(IStatus.WARNING, Activator.PLUGIN_ID,
-								"Model contains unknown element " + entry.getValue() + " for " + entry.getKey())); //$NON-NLS-1$ //$NON-NLS-2$
-						}
-						if (migrate) {
-							resource.getEObjectToExtensionMap().clear();
-						}
-					}
-				});
-
 			resource = resourceSet.createResource(URI.createURI(fei.getURI().toURL().toExternalForm()));
 			resource.load(loadOptions);
-
-			if (migrate) {
-				resource.save(null);
-			}
 
 			// resolve all proxies
 			int rsSize = resourceSet.getResources().size();
@@ -352,13 +304,46 @@ public class ViewEditorPart extends EditorPart implements
 	}
 
 	/**
+	 * @return
+	 */
+	private List<Migrator> getMigrators() {
+		if (migrators == null) {
+			migrators = new ArrayList<Migrator>();
+			final IConfigurationElement[] migratorExtensions = Platform.getExtensionRegistry()
+				.getConfigurationElementsFor("org.eclipse.emf.ecp.ui.view.manualMigrator"); //$NON-NLS-1$
+			for (final IConfigurationElement migratorExtension : migratorExtensions) {
+				try {
+					final Migrator migrator = (Migrator) migratorExtension.createExecutableExtension("class"); //$NON-NLS-1$
+					migrators.add(migrator);
+				} catch (final CoreException ex) {
+					Activator.getDefault().getLog().log(new Status(IStatus.WARNING, Activator.PLUGIN_ID,
+						ex.getMessage(), ex));
+				}
+			}
+		}
+		return migrators;
+	}
+
+	/**
 	 * 
 	 * */
 	private class ViewPartListener implements IPartListener2 {
 		@Override
 		public void partActivated(IWorkbenchPartReference partRef) {
-
 			if (instance.equals(partRef.getPart(true))) {
+
+				final Map<EObject, AnyType> extMap = ((XMLResource) resource).getEObjectToExtensionMap();
+
+				if (!extMap.isEmpty() && showMigrateDialog) {
+					final Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
+					final UnknownFeaturesDialog dialog = new UnknownFeaturesMigrationDialog(shell, "Unknown features", //$NON-NLS-1$
+						extMap,
+						getMigrators());
+					dialog.open();
+					extMap.clear();
+					showMigrateDialog = false;
+				}
+
 				if (ecoreOutOfSync) {
 					PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
 						@Override
@@ -395,6 +380,9 @@ public class ViewEditorPart extends EditorPart implements
 
 		@Override
 		public void partOpened(IWorkbenchPartReference partRef) {
+			if (instance.equals(partRef.getPart(true))) {
+				showMigrateDialog = true;
+			}
 		}
 
 		@Override
