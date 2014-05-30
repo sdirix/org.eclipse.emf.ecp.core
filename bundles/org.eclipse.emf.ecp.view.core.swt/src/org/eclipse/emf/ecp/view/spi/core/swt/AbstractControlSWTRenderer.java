@@ -57,6 +57,7 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 	private DataBindingContext dataBindingContext;
 	private IObservableValue modelValue;
 	private final WritableValue value = new WritableValue();
+	private DomainModelReferenceChangeListener domainModelReferenceChangeListener;
 
 	/**
 	 * Default constructor.
@@ -82,7 +83,7 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
 		adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(
 			composedAdapterFactory);
-		getVElement().getDomainModelReference().getChangeListener().add(new DomainModelReferenceChangeListener() {
+		domainModelReferenceChangeListener = new DomainModelReferenceChangeListener() {
 
 			@Override
 			public void notifyChange() {
@@ -94,13 +95,15 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 					}
 				});
 			}
-		});
+		};
+		getVElement().getDomainModelReference().getChangeListener().add(domainModelReferenceChangeListener);
 		updateControl();
 	}
 
 	@Override
 	protected void dispose() {
-		super.dispose();
+		getVElement().getDomainModelReference().getChangeListener().remove(domainModelReferenceChangeListener);
+		domainModelReferenceChangeListener = null;
 		if (composedAdapterFactory != null) {
 			composedAdapterFactory.dispose();
 		}
@@ -110,6 +113,7 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 		if (modelValue != null) {
 			modelValue.dispose();
 		}
+		super.dispose();
 	}
 
 	/**
