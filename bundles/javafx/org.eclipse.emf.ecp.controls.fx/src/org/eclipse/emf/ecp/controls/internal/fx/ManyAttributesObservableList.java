@@ -19,21 +19,22 @@ public class ManyAttributesObservableList<T> implements ObservableList<T> {
 
 	private static final String CHANGES_THROUGH_MODEL = "An AdapterFactoryObservableList cannot be manipulated directly. Changes must be made via the model.";
 
-	private ObservableList<T> elements = FXCollections.observableArrayList();
+	private final ObservableList<T> elements = FXCollections.observableArrayList();
 
 	@SuppressWarnings("unchecked")
 	public ManyAttributesObservableList(final EObject eObject,
-			final EStructuralFeature feature) {
+		final EStructuralFeature feature) {
 		super();
-		elements.addAll((Collection<? extends T>) eObject.eGet(feature));
+		// elements.addAll((Collection<? extends T>) eObject.eGet(feature));
 
-		AdapterImpl adapter = new AdapterImpl() {
+		final AdapterImpl adapter = new AdapterImpl() {
 
 			@Override
 			public void notifyChanged(Notification msg) {
-				if (msg.getFeature() == feature)
+				if (msg.getFeature() == feature) {
 					elements.setAll((Collection<? extends T>) eObject
-							.eGet(feature));
+						.eGet(feature));
+				}
 			}
 
 		};

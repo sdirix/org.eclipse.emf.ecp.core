@@ -2,10 +2,13 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
-         point="org.eclipse.emf.ecp.view.model.renderer">
+         point="org.eclipse.emf.ecp.view.model.fx.renderer">
       <renderer
-            renderable="org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalLayout"
             renderer="org.eclipse.emf.ecp.view.vertical.fx.VerticalLayoutRendererFX">
+         <staticTest
+               element="org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalLayout"
+               priority="1">
+         </staticTest>
       </renderer>
    </extension>
 

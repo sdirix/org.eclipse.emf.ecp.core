@@ -1,48 +1,74 @@
 package org.eclipse.emf.ecp.view.horizontal.fx;
 
-import java.util.Set;
-
 import javafx.scene.Node;
 import javafx.scene.control.Pagination;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 
+import org.eclipse.emf.ecp.view.model.internal.fx.GridCellFX;
+import org.eclipse.emf.ecp.view.model.internal.fx.GridDescriptionFX;
+import org.eclipse.emf.ecp.view.model.internal.fx.GridDescriptionFXFactory;
 import org.eclipse.emf.ecp.view.model.internal.fx.RendererFX;
 import org.eclipse.emf.ecp.view.model.internal.fx.RendererFactory;
-import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.horizontal.model.VHorizontalLayout;
-import org.eclipse.emf.ecp.view.spi.renderer.RenderingResultRow;
+import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
+import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 
 public class HorizontalLayoutPageRendererFX extends
 		RendererFX<VHorizontalLayout> {
 
+	private GridDescriptionFX gridDescription;
+
 	@Override
-	public Set<RenderingResultRow<Node>> render(
-			final VHorizontalLayout renderable,
-			final ViewModelContext viewModelContext) {
-		final Pagination pagination = new Pagination(renderable.getChildren()
+	public GridDescriptionFX getGridDescription() {
+		if (gridDescription == null) {
+			gridDescription = GridDescriptionFXFactory.INSTANCE.createSimpleGrid(1, 1, this);
+		}
+		return gridDescription;
+	}
+
+	@Override
+	protected Node renderNode(GridCellFX cell) throws NoRendererFoundException,
+			NoPropertyDescriptorFoundExeption {
+		// TODO Auto-generated method stub
+		if (cell.getColumn() != 0) {
+			return null;
+		}
+
+		final VHorizontalLayout vHorizontal = getVElement();
+		final Pagination pagination = new Pagination(vHorizontal.getChildren()
 				.size(), 0);
 		pagination.setPageFactory(new Callback<Integer, Node>() {
 
 			public Node call(Integer param) {
 				VBox box = new VBox();
-				Set<RenderingResultRow<Node>> render = RendererFactory.INSTANCE
-						.render(renderable.getChildren().get(param),
-								viewModelContext);
+				RendererFX<VElement> compositeRenderer = RendererFactory.INSTANCE
+						.getRenderer(vHorizontal.getChildren().get(param), getViewModelContext());
+				GridDescriptionFX rendererGrid = compositeRenderer.getGridDescription();
+				final int rows = rendererGrid.getRows();
+				final int columns = rendererGrid.getColumns();
 
-				for (RenderingResultRow<Node> row : render) {
+				for (int i = 0; i < rows; i++) {
 					HBox hBox = new HBox();
-					for (Node node : row.getControls())
+					for (int j = 0; j < columns; j++) {
+						Node node = null;
+						try {
+							node = compositeRenderer.render(rendererGrid.getGrid().get(i * columns + j));
+						} catch (NoRendererFoundException e) {
+							e.printStackTrace();
+						} catch (NoPropertyDescriptorFoundExeption e) {
+							e.printStackTrace();
+						}
 						hBox.getChildren().add(node);
+					}
 					box.getChildren().add(hBox);
 				}
-
 				return box;
-
 			}
 		});
-		return createSingletonRow(pagination);
+		return pagination;
 	}
 
 }

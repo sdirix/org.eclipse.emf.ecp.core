@@ -1,7 +1,5 @@
 package org.eclipse.emf.ecp.view.treemasterdetail.fx;
 
-import java.util.Set;
-
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
@@ -19,9 +17,12 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.util.fx.EMFUtil;
 import org.eclipse.emf.ecp.view.model.fx.ECPFXView;
 import org.eclipse.emf.ecp.view.model.fx.ECPFXViewRenderer;
+import org.eclipse.emf.ecp.view.model.internal.fx.GridCellFX;
+import org.eclipse.emf.ecp.view.model.internal.fx.GridDescriptionFX;
+import org.eclipse.emf.ecp.view.model.internal.fx.GridDescriptionFXFactory;
 import org.eclipse.emf.ecp.view.model.internal.fx.RendererFX;
-import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.spi.renderer.RenderingResultRow;
+import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
+import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.treemasterdetail.model.VTreeMasterDetail;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.fx.emf.edit.ui.AdapterFactoryCellFactory.ICellUpdateListener;
@@ -31,17 +32,25 @@ import org.eclipse.fx.emf.edit.ui.AdapterFactoryTreeItem;
 //TODO api
 @SuppressWarnings("restriction")
 public class TreeMasterDetailRendererFX extends RendererFX<VTreeMasterDetail> {
+	private GridDescriptionFX gridDescription;
 
 	@Override
-	public Set<RenderingResultRow<Node>> render(
-			final VTreeMasterDetail renderable,
-			final ViewModelContext viewModelContext) {
+	public GridDescriptionFX getGridDescription() {
+		if (gridDescription == null) {
+			gridDescription = GridDescriptionFXFactory.INSTANCE.createSimpleGrid(1, 1, this);
+		}
+		return gridDescription;
+	}
+
+	@Override
+	protected Node renderNode(GridCellFX gridCell) throws NoRendererFoundException,
+			NoPropertyDescriptorFoundExeption {
 		GridPane grid = new GridPane();
 		ComposedAdapterFactory adapterFactory = new ComposedAdapterFactory(
 				ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 		final TreeView<Object> treeView = new TreeView<>();
 		final AdapterFactoryTreeItem rootItem = new AdapterFactoryTreeItem(
-				viewModelContext.getDomainModel(), treeView, adapterFactory);
+				getViewModelContext().getDomainModel(), treeView, adapterFactory);
 		treeView.setRoot(rootItem);
 		treeView.setShowRoot(true);
 		AdapterFactoryTreeCellFactory cellFactory = new AdapterFactoryTreeCellFactory(
@@ -85,8 +94,9 @@ public class TreeMasterDetailRendererFX extends RendererFX<VTreeMasterDetail> {
 							TreeItem<Object> old_val, TreeItem<Object> new_val) {
 
 						ECPFXView render = null;
-						if (new_val.getValue() == viewModelContext
+						if (new_val.getValue() == getViewModelContext()
 								.getDomainModel()) {
+							final VTreeMasterDetail renderable = getVElement();
 							render = ECPFXViewRenderer.INSTANCE.render(
 									renderable.getDetailView(),
 									(EObject) new_val.getValue());
@@ -113,7 +123,7 @@ public class TreeMasterDetailRendererFX extends RendererFX<VTreeMasterDetail> {
 		GridPane.setVgrow(sp, Priority.ALWAYS);
 		GridPane.setVgrow(treeView, Priority.ALWAYS);
 
-		return createSingletonRow(grid);
+		return grid;
 	}
 
 }

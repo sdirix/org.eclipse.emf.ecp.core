@@ -7,7 +7,7 @@
 		
 		<property name="applicationXMI" value="org.eclipse.emf.ecp.application.e4.fx/Application.e4xmi" />
 		
-		<property name="cssTheme" value="theme.default" />
+		<property name="cssTheme" value="theme.generated" />
 		
 	</product>
 	
