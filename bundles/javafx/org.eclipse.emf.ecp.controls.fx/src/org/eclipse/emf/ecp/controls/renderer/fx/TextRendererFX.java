@@ -1,10 +1,22 @@
+/*******************************************************************************
+ * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ * Lucas - initial API and implementation
+ ******************************************************************************/
 package org.eclipse.emf.ecp.controls.renderer.fx;
 
-import java.util.Collections;
-
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
 import javafx.scene.control.TextField;
 
+import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.common.notify.Notification;
@@ -22,11 +34,21 @@ public class TextRendererFX extends SimpleControlRendererFX {
 		final VControl control = getVElement();
 		final TextField text = new TextField();
 		text.setEditable(!control.isReadonly());
-		IObservableValue targetValue = getTargetObservable(text, "text");
-		IObservableValue modelValue = getModelObservable(control
-				.getDomainModelReference().getIterator().next());
-		bindModelToTarget(targetValue, modelValue, getTargetToModelStrategy(control),
-				getModelToTargetStrategy(control));
+		final IObservableValue targetValue = getTargetObservable(text, "text"); //$NON-NLS-1$
+		final IObservableValue modelValue = getModelObservable(control
+			.getDomainModelReference().getIterator().next());
+		final Binding binding = bindModelToTarget(targetValue, modelValue, getTargetToModelStrategy(control),
+			getModelToTargetStrategy(control));
+
+		text.focusedProperty().addListener(new ChangeListener<Boolean>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+				if (!newValue) {
+					binding.updateTargetToModel();
+				}
+			}
+		});
 
 		control.eAdapters().add(new AdapterImpl() {
 
@@ -34,7 +56,7 @@ public class TextRendererFX extends SimpleControlRendererFX {
 			public void notifyChanged(Notification msg) {
 				super.notifyChanged(msg);
 				if (msg.getFeature() == VViewPackage.eINSTANCE
-						.getElement_Diagnostic()) {
+					.getElement_Diagnostic()) {
 					applyValidation(control, text);
 				}
 			}
