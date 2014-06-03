@@ -91,7 +91,9 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 
 					@Override
 					public void run() {
-						updateControl();
+						if (!value.isDisposed()) {
+							updateControl();
+						}
 					}
 				});
 			}
@@ -104,14 +106,21 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 	protected void dispose() {
 		getVElement().getDomainModelReference().getChangeListener().remove(domainModelReferenceChangeListener);
 		domainModelReferenceChangeListener = null;
+		if (value != null) {
+			value.dispose();
+		}
+
 		if (composedAdapterFactory != null) {
 			composedAdapterFactory.dispose();
+			composedAdapterFactory = null;
 		}
 		if (dataBindingContext != null) {
 			dataBindingContext.dispose();
+			dataBindingContext = null;
 		}
 		if (modelValue != null) {
 			modelValue.dispose();
+			modelValue = null;
 		}
 		super.dispose();
 	}
