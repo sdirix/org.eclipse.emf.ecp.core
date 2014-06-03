@@ -24,6 +24,7 @@ import org.eclipse.core.databinding.observable.map.IObservableMap;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.emf.common.util.Diagnostic;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.databinding.EMFProperties;
 import org.eclipse.emf.databinding.EObjectObservableMap;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
@@ -161,8 +162,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		final TableControlConfiguration tableControlConfiguration = new TableControlConfiguration();
 		tableControlConfiguration.setAddRemoveDisabled(getVElement().isAddRemoveDisabled());
 
-		for (final VDomainModelReference column : VTableDomainModelReference.class.cast(
-			getVElement().getDomainModelReference()).getColumnDomainModelReferences()) {
+		for (final VDomainModelReference column : getTableDomainModelReference().getColumnDomainModelReferences()) {
 			final boolean readOnly = TableConfigurationHelper.isReadOnly(getVElement(), column);
 			tableControlConfiguration.getColumns().add(
 				new TableColumnConfiguration(readOnly, (EAttribute) column.getEStructuralFeatureIterator().next()));
@@ -275,6 +275,21 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		}
 
 		return composite;
+	}
+
+	private VTableDomainModelReference getTableDomainModelReference() {
+		final VDomainModelReference vdmr = getVElement().getDomainModelReference();
+		if (VTableDomainModelReference.class.isInstance(vdmr)) {
+			return VTableDomainModelReference.class.cast(vdmr);
+		}
+
+		final EList<EObject> contents = vdmr.eContents();
+		for (final EObject eObject : contents) {
+			if (VTableDomainModelReference.class.isInstance(eObject)) {
+				return VTableDomainModelReference.class.cast(eObject);
+			}
+		}
+		return null;
 	}
 
 	private void createDetailEditButton(final Composite buttonComposite) {
