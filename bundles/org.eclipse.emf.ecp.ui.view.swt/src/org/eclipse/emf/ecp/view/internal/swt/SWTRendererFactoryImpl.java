@@ -29,6 +29,7 @@ import org.eclipse.emf.ecp.view.spi.swt.AbstractAdditionalSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.swt.ECPAdditionalRendererTester;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
+import org.eclipse.emf.ecp.view.spi.swt.UnknownVElementSWTRenderer;
 import org.osgi.framework.Bundle;
 
 /**
@@ -50,11 +51,19 @@ public final class SWTRendererFactoryImpl implements SWTRendererFactory {
 
 	private final Set<ECPRendererDescription> rendererDescriptors = new LinkedHashSet<ECPRendererDescription>();
 	private final Set<ECPAdditionalRendererDescription> additionalRendererDescriptors = new LinkedHashSet<ECPAdditionalRendererDescription>();
+	private boolean debugMode = false;
 
 	/**
 	 * Default constructor for the renderer factory.
 	 */
 	public SWTRendererFactoryImpl() {
+		final String[] commandLineArgs = Platform.getCommandLineArgs();
+		for (int i = 0; i < commandLineArgs.length; i++) {
+			final String arg = commandLineArgs[i];
+			if ("-debugEMFForms".equalsIgnoreCase(arg)) { //$NON-NLS-1$
+				debugMode = true;
+			}
+		}
 		readRenderer();
 		readAdditionalRenderer();
 	}
@@ -172,6 +181,7 @@ public final class SWTRendererFactoryImpl implements SWTRendererFactory {
 	 * @see org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory#getRenderer(org.eclipse.emf.ecp.view.spi.model.VElement,
 	 *      org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
+	@Override
 	public AbstractSWTRenderer<VElement> getRenderer(VElement vElement, ViewModelContext viewContext) {
 		int highestPriority = -1;
 		AbstractSWTRenderer<VElement> bestCandidate = null;
@@ -200,8 +210,17 @@ public final class SWTRendererFactoryImpl implements SWTRendererFactory {
 				}
 			}
 		}
+
+		if (bestCandidate == null && showUnknownRenderer(viewContext)) {
+			bestCandidate = new UnknownVElementSWTRenderer();
+		}
 		bestCandidate.init(vElement, viewContext);
 		return bestCandidate;
+	}
+
+	private boolean showUnknownRenderer(ViewModelContext viewModelContext) {
+
+		return debugMode || viewModelContext.hasService(DebugViewModelService.class);
 	}
 
 	/**
@@ -211,6 +230,7 @@ public final class SWTRendererFactoryImpl implements SWTRendererFactory {
 	 * @see org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory#getAdditionalRenderer(org.eclipse.emf.ecp.view.spi.model.VElement,
 	 *      org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
+	@Override
 	public Collection<AbstractAdditionalSWTRenderer<VElement>> getAdditionalRenderer(VElement vElement,
 		ViewModelContext viewModelContext) {
 		final Set<AbstractAdditionalSWTRenderer<VElement>> renderers = new LinkedHashSet<AbstractAdditionalSWTRenderer<VElement>>();
