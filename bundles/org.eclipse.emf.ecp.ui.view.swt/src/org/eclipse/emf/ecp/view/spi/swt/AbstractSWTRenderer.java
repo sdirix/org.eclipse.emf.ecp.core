@@ -113,6 +113,9 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 					if (!renderingFinished) {
 						return;
 					}
+					if (notification.getRawNotification().isTouch()) {
+						return;
+					}
 					if (notification.getNotifier() != getVElement()) {
 						return;
 					}
