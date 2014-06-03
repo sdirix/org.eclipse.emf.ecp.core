@@ -137,6 +137,9 @@ public final class EcoreHelper {
 		if (ePackage == null) {
 			return;
 		}
+		if (ePackage.eResource().getURI().scheme().equals("platform")) { //$NON-NLS-1$
+			return;
+		}
 
 		final Registry instance = org.eclipse.emf.ecore.EPackage.Registry.INSTANCE;
 		if (!instance.containsKey(ePackage.getNsURI())) {
