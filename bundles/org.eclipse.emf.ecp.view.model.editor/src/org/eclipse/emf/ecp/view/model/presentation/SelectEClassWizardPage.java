@@ -26,6 +26,7 @@ import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
+import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITreeContentProvider;
@@ -34,7 +35,6 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
@@ -97,9 +97,11 @@ public class SelectEClassWizardPage extends WizardPage {
 	public void createControl(Composite parent) {
 
 		container = new Composite(parent, SWT.NONE);
-
 		final GridLayout layout = new GridLayout();
+		layout.verticalSpacing = 10;
+		layout.horizontalSpacing = 5;
 		container.setLayout(layout);
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).applyTo(container);
 		layout.numColumns = 1;
 
 		final Label label1 = new Label(container, SWT.NONE);
@@ -107,14 +109,11 @@ public class SelectEClassWizardPage extends WizardPage {
 
 		if (selectedEcore != null) {
 
-			final GridData gd = new GridData(GridData.FILL_HORIZONTAL);
-
 			final ComposedAdapterFactory adapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
 				new ReflectiveItemProviderAdapterFactory(),
 				new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
 			final AdapterFactoryLabelProvider labelProvider = new AdapterFactoryLabelProvider(adapterFactory);
-
-			treeViewer = new TreeViewer(container);
+			treeViewer = new TreeViewer(container, SWT.H_SCROLL | SWT.V_SCROLL);
 			treeViewer.setContentProvider(getContentProvider(adapterFactory));
 			treeViewer.setLabelProvider(labelProvider);
 			treeViewer.setInput(selectedEcore);
@@ -131,7 +130,11 @@ public class SelectEClassWizardPage extends WizardPage {
 				}
 			});
 			treeViewer.expandToLevel(2);
-			treeViewer.getControl().setLayoutData(gd);
+			GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).hint(SWT.DEFAULT, 200)
+				.applyTo(treeViewer.getControl());
+			container.layout(true);
+			container.pack();
+
 		}
 
 		generateViewModelChkBox = new Button(container, SWT.CHECK);
