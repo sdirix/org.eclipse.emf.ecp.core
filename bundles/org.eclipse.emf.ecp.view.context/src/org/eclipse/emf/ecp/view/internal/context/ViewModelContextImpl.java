@@ -509,6 +509,9 @@ public class ViewModelContextImpl implements ViewModelContext {
 			if (isDisposing) {
 				return;
 			}
+			if (isDisposed) {
+				return;
+			}
 			if (notification.isTouch()) {
 				return;
 			}
