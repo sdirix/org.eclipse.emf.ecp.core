@@ -87,7 +87,8 @@ public final class Helper {
 	public static void getReferenceMap(EClass parent,
 		Map<EClass, EReference> childParentReferenceMap) {
 		for (final EReference eReference : parent.getEAllContainments()) {
-			if (eReference.getEReferenceType() != parent) {
+			if (eReference.getEReferenceType() != parent
+				&& childParentReferenceMap.get(eReference.getEReferenceType()) != eReference) {
 				childParentReferenceMap.put(eReference.getEReferenceType(), eReference);
 				getReferenceMap(eReference.getEReferenceType(), childParentReferenceMap);
 			}
@@ -103,12 +104,14 @@ public final class Helper {
 	 */
 	public static List<EReference> getReferencePath(EClass selectedClass,
 		Map<EClass, EReference> childParentReferenceMap) {
+
 		final List<EReference> bottomUpPath = new ArrayList<EReference>();
 
-		while (childParentReferenceMap.containsKey(selectedClass)) {
-			final EReference parentReference = childParentReferenceMap.get(selectedClass);
+		EReference parentReference = childParentReferenceMap.get(selectedClass);
+		while (parentReference != null && !bottomUpPath.contains(parentReference)) {
 			bottomUpPath.add(parentReference);
 			selectedClass = parentReference.getEContainingClass();
+			parentReference = childParentReferenceMap.get(selectedClass);
 		}
 		Collections.reverse(bottomUpPath);
 		return bottomUpPath;

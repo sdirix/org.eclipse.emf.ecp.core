@@ -37,16 +37,11 @@ import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xml.type.AnyType;
 import org.eclipse.emf.ecp.ide.view.service.ViewModelEditorCallback;
 import org.eclipse.emf.ecp.internal.ide.util.EcoreHelper;
-import org.eclipse.emf.ecp.spi.ui.ECPReferenceServiceImpl;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
 import org.eclipse.emf.ecp.view.internal.provider.Migrator;
 import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
-import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
-import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
-import org.eclipse.emf.ecp.view.spi.model.ModelChangeAddRemoveListener;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -80,13 +75,9 @@ public class ViewEditorPart extends EditorPart implements
 	private Composite parent;
 	private ECPSWTView render;
 
-	private ViewModelContext viewContext;
-	private ModelChangeAddRemoveListener modelChangeListener;
-
 	private boolean ecoreOutOfSync;
 	private IPartListener2 partListener;
 	private final ViewEditorPart instance;
-	private ViewModelService referenceService;
 	private ArrayList<Migrator> migrators;
 
 	private boolean showMigrateDialog;
@@ -119,8 +110,6 @@ public class ViewEditorPart extends EditorPart implements
 		super.setSite(site);
 		super.setInput(input);
 		super.setPartName(input.getName());
-
-		referenceService = new ECPReferenceServiceImpl();
 
 		basicCommandStack = new BasicCommandStack();
 		basicCommandStack.addCommandStackListener
@@ -243,9 +232,6 @@ public class ViewEditorPart extends EditorPart implements
 	private void showView() {
 		final VView view = getView();
 
-		viewContext = ViewModelContextFactory.INSTANCE.createViewModelContext(
-			view, view.getRootEClass(), referenceService);
-
 		try {
 			render = ECPSWTViewRenderer.INSTANCE.render(parent, view);
 		} catch (final ECPRendererException ex) {
@@ -282,9 +268,6 @@ public class ViewEditorPart extends EditorPart implements
 	public void dispose() {
 		final VView view = getView();
 		Activator.getViewModelRegistry().unregisterViewModelEditor(view, this);
-		if (viewContext != null && modelChangeListener != null) {
-			viewContext.unregisterViewChangeListener(modelChangeListener);
-		}
 		getSite().getPage().removePartListener(partListener);
 		super.dispose();
 	}
