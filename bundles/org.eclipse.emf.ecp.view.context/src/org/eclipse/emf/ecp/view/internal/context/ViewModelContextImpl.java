@@ -432,6 +432,12 @@ public class ViewModelContextImpl implements ViewModelContext {
 		// throw new IllegalStateException("The ViewModelContext was already disposed.");
 		// }
 		viewModelChangeListener.remove(modelChangeListener);
+
+		// Every renderer is registered here, as it needs to know when the view model changes (rules, validations, etc).
+		// If no listener is left, we can dispose the context
+		if (viewModelChangeListener.isEmpty()) {
+			dispose();
+		}
 	}
 
 	/**
@@ -642,5 +648,4 @@ public class ViewModelContextImpl implements ViewModelContext {
 		}
 
 	}
-
 }
