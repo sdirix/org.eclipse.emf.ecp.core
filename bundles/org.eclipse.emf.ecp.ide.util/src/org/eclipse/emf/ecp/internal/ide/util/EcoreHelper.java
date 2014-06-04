@@ -12,6 +12,8 @@
 package org.eclipse.emf.ecp.internal.ide.util;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.core.resources.IFile;
@@ -41,6 +43,8 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
  */
 public final class EcoreHelper {
 
+	private final static List<String> registeredEPackages = new ArrayList<String>();
+
 	private EcoreHelper() {
 	}
 
@@ -68,10 +72,10 @@ public final class EcoreHelper {
 		if (isContainedInPackageRegistry(ePackage.getNsURI())) {
 			return;
 		}
-		EPackage.Registry.INSTANCE.put(ePackage.getNsURI(), ePackage);
-		{
 
-		}
+		EPackage.Registry.INSTANCE.put(ePackage.getNsURI(), ePackage);
+		registeredEPackages.add(ePackage.getNsURI());
+
 		// load the resource
 		final IResource f = ResourcesPlugin.getWorkspace().getRoot().findMember(ecorePath);
 		final ResourceSet rs = new ResourceSetImpl();
@@ -137,7 +141,7 @@ public final class EcoreHelper {
 		if (ePackage == null) {
 			return;
 		}
-		if (ePackage.eResource().getURI().scheme().equals("platform")) { //$NON-NLS-1$
+		if (!registeredEPackages.contains(ePackage.getNsURI())) {
 			return;
 		}
 
@@ -146,6 +150,7 @@ public final class EcoreHelper {
 			return;
 		}
 		instance.remove(ePackage.getNsURI());
+		registeredEPackages.remove(ePackage.getNsURI());
 		for (final EClassifier classifier : ePackage.getEClassifiers()) {
 			if (EClass.class.isInstance(classifier)) {
 				final EClass c = (EClass) classifier;
