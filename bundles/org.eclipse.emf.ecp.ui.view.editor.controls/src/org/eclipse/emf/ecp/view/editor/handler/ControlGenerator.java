@@ -15,7 +15,6 @@ package org.eclipse.emf.ecp.view.editor.handler;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -76,7 +75,6 @@ public final class ControlGenerator {
 		}
 		final Map<EClass, EReference> childParentReferenceMap = new HashMap<EClass, EReference>();
 		Helper.getReferenceMap(rootClass, childParentReferenceMap);
-		final List<EReference> bottomUpPath = Helper.getReferencePath(rootClass, childParentReferenceMap);
 
 		for (final EStructuralFeature feature : features) {
 			final VControl control = VViewFactory.eINSTANCE.createControl();
@@ -86,7 +84,8 @@ public final class ControlGenerator {
 			final VFeaturePathDomainModelReference modelReference = VViewFactory.eINSTANCE
 				.createFeaturePathDomainModelReference();
 			modelReference.setDomainModelEFeature(feature);
-			modelReference.getDomainModelEReferencePath().addAll(bottomUpPath);
+			// FIXME
+			// modelReference.getDomainModelEReferencePath().addAll(bottomUpPath);
 			control.setDomainModelReference(modelReference);
 
 			// add to the composite
