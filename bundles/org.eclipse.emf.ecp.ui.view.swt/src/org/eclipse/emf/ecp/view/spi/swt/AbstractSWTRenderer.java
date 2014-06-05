@@ -136,7 +136,9 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 			};
 			getViewModelContext().registerViewChangeListener(listener);
 		}
-		ViewModelContextImpl.class.cast(getViewModelContext()).addContextUser(this);
+		if (ViewModelContextImpl.class.isInstance(getViewModelContext())) {
+			ViewModelContextImpl.class.cast(getViewModelContext()).addContextUser(this);
+		}
 		postInit();
 	}
 
@@ -184,7 +186,9 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 		}
 		listener = null;
 		controls = null;
-		ViewModelContextImpl.class.cast(getViewModelContext()).removeContextUser(this);
+		if (ViewModelContextImpl.class.isInstance(getViewModelContext())) {
+			ViewModelContextImpl.class.cast(getViewModelContext()).removeContextUser(this);
+		}
 		super.dispose();
 	}
 
