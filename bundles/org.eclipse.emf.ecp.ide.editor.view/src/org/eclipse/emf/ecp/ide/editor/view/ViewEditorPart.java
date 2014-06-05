@@ -258,8 +258,42 @@ public class ViewEditorPart extends EditorPart implements
 					render.dispose();
 					render.getSWTControl().dispose();
 				}
+
+				final String ecorePath = getView().getEcorePath();
+				try {
+					EcoreHelper.registerEcore(ecorePath);
+				} catch (final IOException e) {
+					Activator.getDefault().getLog()
+						.log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
+				}
+
+				// reload view resource after EClass' package resource was loaded into the package registry
 				loadView();
+				final VView view = getView();
+
+				try {
+					Activator.getViewModelRegistry().registerViewModelEditor(view, instance);
+				} catch (final IOException e) {
+					Activator.getDefault().getLog()
+						.log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
+				}
+
+				if (view.getRootEClass() != null) {
+					if (view.getRootEClass().eResource() != null) {
+						Activator.getViewModelRegistry().register(
+							view.getRootEClass().eResource().getURI().toString(),
+							view);
+					} else {
+						Activator
+							.getDefault()
+							.getLog()
+							.log(
+								new Status(IStatus.WARNING, Activator.PLUGIN_ID,
+									"The Root EClass of the view cannot be resolved." + view.getRootEClass())); //$NON-NLS-1$
+					}
+				}
 				showView();
+				parent.layout(true);
 			}
 		});
 	}
@@ -337,11 +371,18 @@ public class ViewEditorPart extends EditorPart implements
 								activeShell,
 								"Warning", //$NON-NLS-1$
 								null,
-								"The ECore or Genmodel of your ViewModel just changed. This change is not reflected in this View Model Editor.", //$NON-NLS-1$
+								"The ECore of your ViewModel just changed. This change is not reflected in this View Model Editor. Do you want to reload now?", //$NON-NLS-1$
 								MessageDialog.WARNING,
-								new String[] { "Ok" }, //$NON-NLS-1$ 
+								new String[] { "Yes", "No" }, //$NON-NLS-1$ //$NON-NLS-2$ 
 								0);
-							dialog.open();
+							final int result = dialog.open();
+							if (result == 0) {
+								Activator.getViewModelRegistry().unregisterViewModelEditor(getView(), instance);
+								Activator.getViewModelRegistry().unregister(
+									getView().getRootEClass().eResource().getURI().toString(),
+									getView());
+								reloadViewModel();
+							}
 							ecoreOutOfSync = false;
 						}
 					});

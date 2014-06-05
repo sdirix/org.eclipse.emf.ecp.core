@@ -69,50 +69,63 @@ public class IDEViewModelRegistryImpl implements IDEViewModelRegistry {
 
 	private final Map<VView, String> viewModelviewModelFileMapping = new LinkedHashMap<VView, String>();
 
+	private final Map<String, IResourceChangeListener> resourceChangeListeners = new LinkedHashMap<String, IResourceChangeListener>();
+
 	@Override
 	public void register(String ecorePath, VView viewModel) {
-		if (!ecoreViewMapping.containsKey(ecorePath)) {
-			ecoreViewMapping.put(ecorePath, new LinkedHashSet<VView>());
-			addECoreChangeListener(ecorePath);
+		if (!ecoreViewMapping.containsKey(ecorePath) || ecoreViewMapping.get(ecorePath).isEmpty()) {
+			if (ecoreViewMapping.get(ecorePath) == null) {
+				ecoreViewMapping.put(ecorePath, new LinkedHashSet<VView>());
+			}
+			if (!resourceChangeListeners.containsKey(ecorePath)) {
+				addECoreChangeListener(ecorePath);
+			}
 		}
 		ecoreViewMapping.get(ecorePath).add(viewModel);
 	}
 
 	private void addECoreChangeListener(final String ecorePath) {
-		ResourcesPlugin.getWorkspace().addResourceChangeListener(
-			new IResourceChangeListener() {
-
-				@Override
-				public void resourceChanged(IResourceChangeEvent event) {
-					IResourceDelta delta = event.getDelta();
-					if (delta != null) {
-						while (delta.getAffectedChildren().length != 0) {
-							delta = delta.getAffectedChildren()[0];
+		final IResourceChangeListener listener = new IResourceChangeListener() {
+			@Override
+			public void resourceChanged(IResourceChangeEvent event) {
+				IResourceDelta delta = event.getDelta();
+				if (delta != null) {
+					while (delta.getAffectedChildren().length != 0) {
+						delta = delta.getAffectedChildren()[0];
+					}
+					for (final VView view : ecoreViewMapping.get(ecorePath)) {
+						final String ecorePath = view.getEcorePath();
+						if (ecorePath == null) {
+							return;
 						}
-						for (final VView view : ecoreViewMapping.get(ecorePath)) {
-							final String ecorePath = view.getEcorePath();
-							if (ecorePath == null) {
-								return;
+						if (ecorePath.contains(delta.getResource().getFullPath().toString())) {
+							final ViewModelEditorCallback viewModelEditorCallback = viewModelViewModelEditorMapping
+								.get(view);
+							if (viewModelEditorCallback == null) {
+								continue;
 							}
-							if (ecorePath.contains(delta.getResource().getFullPath().toString())) {
-								final ViewModelEditorCallback viewModelEditorCallback = viewModelViewModelEditorMapping
-									.get(view);
-								if (viewModelEditorCallback == null) {
-									continue;
-								}
-								// viewModelEditorCallback.reloadViewModel();
-								viewModelEditorCallback.signalEcoreOutOfSync();
-							}
+							viewModelEditorCallback.signalEcoreOutOfSync();
 						}
 					}
 				}
-			});
+			}
+		};
+		ResourcesPlugin.getWorkspace().addResourceChangeListener(listener);
+		resourceChangeListeners.put(ecorePath, listener);
 	}
 
 	@Override
 	public void unregister(String registeredEcorePath, VView viewModel) {
 		if (ecoreViewMapping.containsKey(registeredEcorePath)) {
 			ecoreViewMapping.get(registeredEcorePath).remove(viewModel);
+			if (ecoreViewMapping.get(registeredEcorePath).size() == 0)
+			{
+				final IResourceChangeListener listener = resourceChangeListeners.get(registeredEcorePath);
+				if (listener != null) {
+					ResourcesPlugin.getWorkspace().removeResourceChangeListener(listener);
+					resourceChangeListeners.remove(registeredEcorePath);
+				}
+			}
 		}
 	}
 
