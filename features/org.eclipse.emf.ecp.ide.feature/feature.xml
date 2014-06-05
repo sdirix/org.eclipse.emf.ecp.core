@@ -25,6 +25,10 @@
          id="org.eclipse.emf.ecp.view.model.editor.feature"
          version="0.0.0"/>
 
+   <includes
+         id="org.eclipse.emf.ecp.makeithappen.feature"
+         version="0.0.0"/>
+
    <plugin
          id="org.eclipse.emf.ecp.ide.editor.view"
          download-size="0"
