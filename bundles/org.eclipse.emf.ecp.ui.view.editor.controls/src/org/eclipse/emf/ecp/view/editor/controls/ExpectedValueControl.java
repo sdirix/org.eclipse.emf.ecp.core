@@ -87,6 +87,12 @@ public class ExpectedValueControl extends SingleControl {
 			public void widgetSelected(SelectionEvent e) {
 				super.widgetSelected(e);
 				final LeafCondition condition = (LeafCondition) getFirstSetting().getEObject();
+				if (condition.getDomainModelReference() == null) {
+					MessageDialog.openError(text.getShell(),
+						"No Feature Path Domain Model Reference found", //$NON-NLS-1$
+						"A Feature Path Domain Model Reference needs to be added to the condition first. Without it we can't provide you with support!"); //$NON-NLS-1$
+					return;
+				}
 				final EStructuralFeature structuralFeature = ((VFeaturePathDomainModelReference) condition
 					.getDomainModelReference()).getDomainModelEFeature();
 				if (structuralFeature == null) {
