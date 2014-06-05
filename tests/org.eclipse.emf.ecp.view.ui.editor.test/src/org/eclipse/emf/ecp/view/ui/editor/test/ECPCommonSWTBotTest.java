@@ -53,6 +53,7 @@ public abstract class ECPCommonSWTBotTest extends SWTBotTestCase {
 	public void setUp() {
 		display = Display.getDefault();
 		shell = UIThreadRunnable.syncExec(display, new Result<Shell>() {
+			@Override
 			public Shell run() {
 				final Shell shell = new Shell(display);
 				shell.setLayout(new FillLayout());
@@ -87,9 +88,9 @@ public abstract class ECPCommonSWTBotTest extends SWTBotTestCase {
 	public void assertions(double memBefore, double memAfter) {
 	}
 
-	public EObject getDomainObject() {
-		return swtView.getViewModelContext().getDomainModel();
-	}
+	// public EObject getDomainObject() {
+	// return swtView.getViewModelContext().getDomainModel();
+	// }
 
 	public void disposeSWTView() {
 		swtView.dispose();
@@ -101,11 +102,13 @@ public abstract class ECPCommonSWTBotTest extends SWTBotTestCase {
 		private double memBefore;
 		private double memAfter;
 
+		@Override
 		public void run() {
 			final List<ECPSWTView> holdingList = new ArrayList<ECPSWTView>();
 			try {
 				holdingList.add(UIThreadRunnable.syncExec(new Result<ECPSWTView>() {
 
+					@Override
 					public ECPSWTView run() {
 						try {
 							final EObject domainObject = createDomainObject();
@@ -134,6 +137,7 @@ public abstract class ECPCommonSWTBotTest extends SWTBotTestCase {
 				logic();
 			} finally {
 				UIThreadRunnable.syncExec(new VoidResult() {
+					@Override
 					public void run() {
 						shell.close();
 						if (holdingList.size() > 0) {

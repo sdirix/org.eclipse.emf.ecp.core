@@ -149,14 +149,16 @@ public class TableControlSWTBotTest extends ECPCommonSWTBotTest {
 		TableControlSWTBotTest.memBefore += before;
 		TableControlSWTBotTest.memAfter += after;
 
-		assertTrue("More than four adapter left on domain model element after dispose of ECPSWTView: "
-			+ getDomainObject().eAdapters().size()
-			+ " adapters. Not all adapters can be removed, but it's maybe time to get suspicious.", getDomainObject()
-			.eAdapters().size() < 5);
-		assertTrue("More than four adapter left on domain model element after dispose of ECPSWTView: "
-			+ ((League) getDomainObject()).getPlayers().get(0).eAdapters().size()
-			+ " adapters. Not all adapters can be removed, but it's maybe time to get suspicious.",
-			((League) getDomainObject()).getPlayers().get(0).eAdapters().size() < 5);
+		if (domainObject != null) {
+			assertTrue("More than four adapter left on domain model element after dispose of ECPSWTView: "
+				+ domainObject.eAdapters().size()
+				+ " adapters. Not all adapters can be removed, but it's maybe time to get suspicious.", domainObject
+				.eAdapters().size() < 5);
+			assertTrue("More than four adapter left on domain model element after dispose of ECPSWTView: "
+				+ ((League) domainObject).getPlayers().get(0).eAdapters().size()
+				+ " adapters. Not all adapters can be removed, but it's maybe time to get suspicious.",
+				((League) domainObject).getPlayers().get(0).eAdapters().size() < 5);
+		}
 
 		disposeSWTView();
 		assertTrue(getSWTViewCollectable().isCollectable());

@@ -165,6 +165,7 @@ public class ControlsSWTBotTest extends ECPCommonSWTBotTest {
 
 	private void doActionStringControl(final int myIndex) {
 		UIThreadRunnable.syncExec(new VoidResult() {
+			@Override
 			public void run() {
 				final SWTBotText text = bot.textWithLabel("Name");
 				text.setFocus();
@@ -176,6 +177,7 @@ public class ControlsSWTBotTest extends ECPCommonSWTBotTest {
 
 	private void doActionDateTimeControl(final int myIndex) {
 		UIThreadRunnable.syncExec(new VoidResult() {
+			@Override
 			public void run() {
 				final SWTBotDateTime date = bot.dateTime(0);
 				final SWTBotDateTime time = bot.dateTime(1);
@@ -190,6 +192,7 @@ public class ControlsSWTBotTest extends ECPCommonSWTBotTest {
 
 	private void doActionNumericalControlDouble(final int myIndex) {
 		UIThreadRunnable.syncExec(new VoidResult() {
+			@Override
 			public void run() {
 				final SWTBotText text = bot.textWithLabel("Height");
 				text.setFocus();
@@ -203,6 +206,7 @@ public class ControlsSWTBotTest extends ECPCommonSWTBotTest {
 
 	private void doActionBooleanControl(final int myIndex) {
 		UIThreadRunnable.syncExec(new VoidResult() {
+			@Override
 			public void run() {
 				final SWTBotCheckBox check = bot.checkBox();
 				check.setFocus();
@@ -214,8 +218,9 @@ public class ControlsSWTBotTest extends ECPCommonSWTBotTest {
 
 	private void doActionAttributeMultiControl(final int myIndex) {
 		UIThreadRunnable.syncExec(new VoidResult() {
+			@Override
 			public void run() {
-				final int addEntryIndex = getFirstButtonIndex(myIndex);
+				final int addEntryIndex = getFirstButtonIndex(myIndex) + 2;
 				final SWTBotButton addEntry = bot.button(addEntryIndex);
 				addEntry.click();
 				final SWTBotButton delete = bot.button(addEntryIndex + 1);
@@ -227,6 +232,7 @@ public class ControlsSWTBotTest extends ECPCommonSWTBotTest {
 
 	private void doActionNumericalControlInteger(final int myIndex) {
 		UIThreadRunnable.syncExec(new VoidResult() {
+			@Override
 			public void run() {
 				final SWTBotText text = bot.textWithLabel("Number Of Victories");
 				text.setFocus();
@@ -238,6 +244,7 @@ public class ControlsSWTBotTest extends ECPCommonSWTBotTest {
 
 	private void doActionMultiControlEEnum(final int myIndex) {
 		UIThreadRunnable.syncExec(new VoidResult() {
+			@Override
 			public void run() {
 				final int addEntryIndex = getFirstButtonIndex(myIndex);
 				final SWTBotButton addEntry = bot.button(addEntryIndex);
@@ -251,6 +258,7 @@ public class ControlsSWTBotTest extends ECPCommonSWTBotTest {
 
 	private void doActionNumericalControlBigDec(final int myIndex) {
 		UIThreadRunnable.syncExec(new VoidResult() {
+			@Override
 			public void run() {
 				final SWTBotText text = bot.textWithLabel("Win Loss Ratio");
 				text.setFocus();
@@ -264,6 +272,7 @@ public class ControlsSWTBotTest extends ECPCommonSWTBotTest {
 
 	private void doActionEEnumControl(final int myIndex) {
 		UIThreadRunnable.syncExec(new VoidResult() {
+			@Override
 			public void run() {
 				final SWTBotCombo combo = bot.comboBox("Male");
 				combo.setSelection(0);
@@ -275,6 +284,7 @@ public class ControlsSWTBotTest extends ECPCommonSWTBotTest {
 
 	private void doActionReferenceMultiControl(final int myIndex) {
 		UIThreadRunnable.syncExec(new VoidResult() {
+			@Override
 			public void run() {
 				// delete game2
 				final SWTBotButton button = bot.button(getFirstButtonIndex(myIndex) + 5);
@@ -286,6 +296,7 @@ public class ControlsSWTBotTest extends ECPCommonSWTBotTest {
 
 	private void doActionLinkControl(final int myIndex) {
 		UIThreadRunnable.syncExec(new VoidResult() {
+			@Override
 			public void run() {
 				final SWTBotButton button = bot.button(getFirstButtonIndex(myIndex));
 				button.click();
@@ -323,10 +334,12 @@ public class ControlsSWTBotTest extends ECPCommonSWTBotTest {
 		ControlsSWTBotTest.memBefore += before;
 		ControlsSWTBotTest.memAfter += after;
 
-		assertTrue("More than four adapter left on domain model element after dispose of ECPSWTView: "
-			+ getDomainObject().eAdapters().size()
-			+ " adapters. Not all adapters can be removed, but it's maybe time to get suspicious.", getDomainObject()
-			.eAdapters().size() < 5);
+		if (domainObject != null) {
+			assertTrue("More than four adapter left on domain model element after dispose of ECPSWTView: "
+				+ domainObject.eAdapters().size()
+				+ " adapters. Not all adapters can be removed, but it's maybe time to get suspicious.", domainObject
+				.eAdapters().size() < 5);
+		}
 
 		disposeSWTView();
 
@@ -396,7 +409,7 @@ public class ControlsSWTBotTest extends ECPCommonSWTBotTest {
 		player.setName("Max Morlock");
 		final Calendar calendar = Calendar.getInstance();
 		calendar.clear();
-		calendar.set(11, 5, 1925);
+		calendar.set(1925, 5, 11);
 		player.setDateOfBirth(calendar.getTime());
 		player.setHeight(1.80d);
 		player.setIsProfessional(true);

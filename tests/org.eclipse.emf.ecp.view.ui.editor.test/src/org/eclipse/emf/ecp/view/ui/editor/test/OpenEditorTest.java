@@ -91,10 +91,12 @@ public class OpenEditorTest extends ECPCommonSWTBotTest {
 		OpenEditorTest.memBefore += before;
 		OpenEditorTest.memAfter += after;
 
-		assertTrue("More than four adapter left on domain model element after dispose of ECPSWTView: "
-			+ getDomainObject().eAdapters().size()
-			+ " adapters. Not all adapters can be removed, but it's maybe time to get suspicious.", getDomainObject()
-			.eAdapters().size() < 5);
+		if (domainObject != null) {
+			assertTrue("More than four adapter left on domain model element after dispose of ECPSWTView: "
+				+ domainObject.eAdapters().size()
+				+ " adapters. Not all adapters can be removed, but it's maybe time to get suspicious.", domainObject
+				.eAdapters().size() < 5);
+		}
 		disposeSWTView();
 		assertTrue(getSWTViewCollectable().isCollectable());
 		unsetSWTViewCollectable();

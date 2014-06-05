@@ -118,22 +118,23 @@ public class XmlDateControlSWTBotTest extends ECPCommonSWTBotTest {
 		XmlDateControlSWTBotTest.memBefore += before;
 		XmlDateControlSWTBotTest.memAfter += after;
 
-		final XMLGregorianCalendar cal = (XMLGregorianCalendar) getDomainObject().eGet(
-			BowlingPackage.eINSTANCE.getReferee_DateOfBirth(), true);
-		assertEquals(DatatypeConstants.FIELD_UNDEFINED, cal.getTimezone());
-		assertEquals(DatatypeConstants.FIELD_UNDEFINED, cal.getHour());
-		assertEquals(DatatypeConstants.FIELD_UNDEFINED, cal.getMinute());
-		assertEquals(DatatypeConstants.FIELD_UNDEFINED, cal.getSecond());
-		assertEquals(DatatypeConstants.FIELD_UNDEFINED, cal.getMillisecond());
-		assertEquals(1986, cal.getYear());
-		assertEquals(10, cal.getMonth());
-		assertEquals(2, cal.getDay());
+		if (domainObject != null) {
+			final XMLGregorianCalendar cal = (XMLGregorianCalendar) domainObject.eGet(
+				BowlingPackage.eINSTANCE.getReferee_DateOfBirth(), true);
+			assertEquals(DatatypeConstants.FIELD_UNDEFINED, cal.getTimezone());
+			assertEquals(DatatypeConstants.FIELD_UNDEFINED, cal.getHour());
+			assertEquals(DatatypeConstants.FIELD_UNDEFINED, cal.getMinute());
+			assertEquals(DatatypeConstants.FIELD_UNDEFINED, cal.getSecond());
+			assertEquals(DatatypeConstants.FIELD_UNDEFINED, cal.getMillisecond());
+			assertEquals(1986, cal.getYear());
+			assertEquals(10, cal.getMonth());
+			assertEquals(2, cal.getDay());
 
-		assertTrue("More than four adapter left on domain model element after dispose of ECPSWTView: "
-			+ getDomainObject().eAdapters().size()
-			+ " adapters. Not all adapters can be removed, but it's maybe time to get suspicious.", getDomainObject()
-			.eAdapters().size() < 5);
-
+			assertTrue("More than four adapter left on domain model element after dispose of ECPSWTView: "
+				+ domainObject.eAdapters().size()
+				+ " adapters. Not all adapters can be removed, but it's maybe time to get suspicious.", domainObject
+				.eAdapters().size() < 5);
+		}
 		disposeSWTView();
 		assertTrue(getSWTViewCollectable().isCollectable());
 		unsetSWTViewCollectable();

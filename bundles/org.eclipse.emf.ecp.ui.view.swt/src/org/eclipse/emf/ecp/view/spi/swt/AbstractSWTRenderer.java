@@ -16,6 +16,7 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.eclipse.emf.ecp.view.internal.context.ViewModelContextImpl;
 import org.eclipse.emf.ecp.view.internal.swt.SWTRendererFactoryImpl;
 import org.eclipse.emf.ecp.view.model.common.AbstractRenderer;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
@@ -135,6 +136,7 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 			};
 			getViewModelContext().registerViewChangeListener(listener);
 		}
+		ViewModelContextImpl.class.cast(getViewModelContext()).addContextUser(this);
 		postInit();
 	}
 
@@ -182,6 +184,7 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 		}
 		listener = null;
 		controls = null;
+		ViewModelContextImpl.class.cast(getViewModelContext()).removeContextUser(this);
 		super.dispose();
 	}
 
