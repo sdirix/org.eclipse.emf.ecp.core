@@ -29,7 +29,6 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.DynamicEObjectImpl;
 import org.eclipse.emf.ecp.common.ChildrenDescriptorCollector;
 import org.eclipse.emf.ecp.edit.spi.ReferenceService;
-import org.eclipse.emf.ecp.spi.ui.ECPReferenceServiceImpl;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
@@ -549,12 +548,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 
 					} else {
 						ReferenceService refServ;
-						if (DynamicEObjectImpl.class.isInstance(selected)) {
-							refServ = new DummyReferenceService();// TODO do we need the reference service?
-						}
-						else {
-							refServ = new ECPReferenceServiceImpl();
-						}
+						refServ = new DummyReferenceService();// TODO do we need the reference service?
 						final VView view = ViewProviderHelper.getView((EObject) selected);
 						final ViewModelContext viewContext = ViewModelContextFactory.INSTANCE
 							.createViewModelContext(view,
