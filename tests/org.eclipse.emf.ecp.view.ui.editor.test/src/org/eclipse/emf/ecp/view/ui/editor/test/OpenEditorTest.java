@@ -48,7 +48,6 @@ public class OpenEditorTest extends ECPCommonSWTBotTest {
 
 	private static double memBefore;
 	private static double memAfter;
-	private static EObject domainObject;
 
 	private final boolean isDomainCollectable;
 
@@ -91,20 +90,22 @@ public class OpenEditorTest extends ECPCommonSWTBotTest {
 		OpenEditorTest.memBefore += before;
 		OpenEditorTest.memAfter += after;
 
-		if (domainObject != null) {
+		if (getDomainObject() != null) {
+
 			assertTrue("More than four adapter left on domain model element after dispose of ECPSWTView: "
-				+ domainObject.eAdapters().size()
-				+ " adapters. Not all adapters can be removed, but it's maybe time to get suspicious.", domainObject
-				.eAdapters().size() < 5);
+				+ getDomainObject().eAdapters().size()
+				+ " adapters. Not all adapters can be removed, but it's maybe time to get suspicious.",
+				getDomainObject()
+					.eAdapters().size() < 5);
+
 		}
-		disposeSWTView();
+
 		assertTrue(getSWTViewCollectable().isCollectable());
 		unsetSWTViewCollectable();
+		unsetDomainObject();
 		assertTrue(viewCollectable.isCollectable());
-		if (isDomainCollectable) {
-
-			assertTrue(domainCollectable.isCollectable());
-		}
+		viewCollectable = null;
+		assertTrue(domainCollectable.isCollectable());
 	}
 
 	/**
@@ -114,11 +115,11 @@ public class OpenEditorTest extends ECPCommonSWTBotTest {
 	 */
 	@Override
 	public EObject createDomainObject() {
-		Player player = (Player) domainObject;
+		Player player = (Player) getDomainObject();
 
 		if (isDomainCollectable) {
 			// remove reference to domain object, since gc will be tested
-			domainObject = null;
+			setDomainObject(null);
 		}
 
 		if (player == null) {
@@ -129,7 +130,7 @@ public class OpenEditorTest extends ECPCommonSWTBotTest {
 		}
 
 		if (!isDomainCollectable) {
-			domainObject = player;
+			setDomainObject(player);
 		}
 
 		domainCollectable = new GCCollectable(player);

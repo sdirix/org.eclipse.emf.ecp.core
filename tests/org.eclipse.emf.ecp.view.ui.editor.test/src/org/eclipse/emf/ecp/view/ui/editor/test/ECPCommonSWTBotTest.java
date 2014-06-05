@@ -7,12 +7,9 @@
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- * Edgar - initial API and implementation
+ * Edgar Mueller - initial API and implementation
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.ui.editor.test;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import org.eclipse.core.databinding.observable.Realm;
 import org.eclipse.emf.ecore.EObject;
@@ -38,7 +35,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * @author Edgar
+ * Common base class for SWTBot tests.
+ * 
+ * @author emueller
+ * @author jfaltermeier
  * 
  */
 public abstract class ECPCommonSWTBotTest extends SWTBotTestCase {
@@ -46,7 +46,7 @@ public abstract class ECPCommonSWTBotTest extends SWTBotTestCase {
 	private static Shell shell;
 	private Display display;
 	private GCCollectable swtViewCollectable;
-	private ECPSWTView swtView;
+	private EObject domainObject;
 
 	@Override
 	@Before
@@ -82,19 +82,22 @@ public abstract class ECPCommonSWTBotTest extends SWTBotTestCase {
 		swtViewCollectable = null;
 	}
 
+	public void unsetDomainObject() {
+		domainObject = null;
+	}
+
 	/**
 	 * Can be overridden to add assertions at end of execution.
 	 */
 	public void assertions(double memBefore, double memAfter) {
 	}
 
-	// public EObject getDomainObject() {
-	// return swtView.getViewModelContext().getDomainModel();
-	// }
+	public EObject getDomainObject() {
+		return domainObject;
+	}
 
-	public void disposeSWTView() {
-		swtView.dispose();
-		swtView = null;
+	public void setDomainObject(EObject eObject) {
+		domainObject = eObject;
 	}
 
 	private class TestRunnable implements Runnable {
@@ -104,26 +107,24 @@ public abstract class ECPCommonSWTBotTest extends SWTBotTestCase {
 
 		@Override
 		public void run() {
-			final List<ECPSWTView> holdingList = new ArrayList<ECPSWTView>();
 			try {
-				holdingList.add(UIThreadRunnable.syncExec(new Result<ECPSWTView>() {
+				UIThreadRunnable.syncExec(new Result<Void>() {
 
 					@Override
-					public ECPSWTView run() {
+					public Void run() {
 						try {
 							final EObject domainObject = createDomainObject();
-							final VView view = createView();
-
 							memBefore = usedMemory();
 
-							swtView = ECPSWTViewRenderer.INSTANCE.render(shell, domainObject, view);
+							final ECPSWTView swtView = ECPSWTViewRenderer.INSTANCE.render(shell, domainObject,
+								createView());
 							swtViewCollectable = new GCCollectable(swtView);
 							final Composite composite = (Composite) swtView.getSWTControl();
 							final GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
 							composite.setLayoutData(gridData);
 
 							shell.open();
-							return swtView;
+							return null;
 						} catch (final NoRendererFoundException e) {
 							fail(e.getMessage());
 						} catch (final NoPropertyDescriptorFoundExeption e) {
@@ -133,16 +134,13 @@ public abstract class ECPCommonSWTBotTest extends SWTBotTestCase {
 						}
 						return null;
 					}
-				}));
+				});
 				logic();
 			} finally {
 				UIThreadRunnable.syncExec(new VoidResult() {
 					@Override
 					public void run() {
 						shell.close();
-						if (holdingList.size() > 0) {
-							holdingList.clear();
-						}
 						shell.dispose();
 						memAfter = usedMemory();
 					}

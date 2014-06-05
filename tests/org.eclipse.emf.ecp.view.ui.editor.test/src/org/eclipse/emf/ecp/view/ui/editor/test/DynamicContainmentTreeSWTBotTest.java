@@ -202,12 +202,12 @@ public class DynamicContainmentTreeSWTBotTest extends ECPCommonSWTBotTest {
 
 		final String id = "123";
 		UIThreadRunnable.syncExec(new VoidResult() {
+			@Override
 			public void run() {
 				addItem(id, tree, tree.getDomainModel());
 			}
 		});
-		// final List<Node<?>> children = node.getChildren();
-		// final Node<?> lastChild = children.get(children.size() - 1);
+
 		final Object labelObjectOfLastChild = tree.getItems().get(tree.getItems().size() - 1).getDomainModel();
 		assertTrue(TestElement.class.isInstance(labelObjectOfLastChild));
 
@@ -215,6 +215,7 @@ public class DynamicContainmentTreeSWTBotTest extends ECPCommonSWTBotTest {
 
 		UIThreadRunnable.syncExec(new VoidResult() {
 
+			@Override
 			public void run() {
 				// causes UI update
 				testElement.setName(TEST_ELEMENT_NAME_2);
