@@ -185,15 +185,12 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 
 			@Override
 			public Object[] getElements(Object object) {
-
 				return new Object[] { ((RootObject) object).getRoot() };
 			}
-
 		};
 		final AdapterFactoryLabelProvider adapterFactoryLabelProvider = new
 			AdapterFactoryLabelProvider(adapterFactory);
 
-		// final FormToolkit toolkit = new FormToolkit(parent.getDisplay());
 		/* The tree's composites */
 		form = new Composite(parent, SWT.BORDER);
 		final GridLayout layout = GridLayoutFactory.fillDefaults().create();

@@ -23,13 +23,30 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.action.ToolBarManager;
+import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.events.ControlEvent;
+import org.eclipse.swt.events.ControlListener;
+import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.RGB;
+import org.eclipse.swt.layout.FormAttachment;
+import org.eclipse.swt.layout.FormData;
+import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IPartListener2;
@@ -40,8 +57,6 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.forms.widgets.FormToolkit;
-import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.part.ViewPart;
 
 /** The {@link ViewPart} containing a rendered version a {@link VView}. */
@@ -49,12 +64,17 @@ public class PreviewView extends ViewPart implements ISelectionListener {
 
 	private Preview preView;
 	private IPartListener2 partListener;
-	private ScrolledForm form;
+	private Composite form;
 	private EContentAdapter adapter;
 	private VView view;
 	private boolean updateAutomatic;
 	private Composite parent;
 	private Action automaticToggleButton, manualRefreshButton;
+	private Color headerBgColor;
+	private Font titleFont;
+	private Color titleColor;
+	private ScrolledComposite scrolledComposite;
+	private Composite container;
 
 	/** The constructor. */
 	public PreviewView() {
@@ -78,25 +98,80 @@ public class PreviewView extends ViewPart implements ISelectionListener {
 	@Override
 	public void createPartControl(Composite parent) {
 		this.parent = parent;
-		final FormToolkit toolkit = new FormToolkit(parent.getDisplay());
-		form = toolkit.createScrolledForm(parent);
+		/* The container composite */
+		form = new Composite(parent, SWT.BORDER);
+		form.setBackground(parent.getDisplay().getSystemColor(SWT.COLOR_WHITE));
+		form.setLayout(GridLayoutFactory.fillDefaults().create());
 
-		final GridLayout layout = GridLayoutFactory.fillDefaults().create();
-		layout.marginTop = 10;
-		layout.marginLeft = 10;
-		layout.marginRight = 10;
-		form.getBody().setLayout(layout);
+		/* The header */
+		final Composite headerComposite = new Composite(form, SWT.FILL);
+		final GridLayout headerLayout = GridLayoutFactory.fillDefaults().create();
+		headerComposite.setLayout(headerLayout);
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, false).applyTo(headerComposite);
+		headerBgColor = new Color(parent.getDisplay(), new RGB(220, 240, 247));
+		headerComposite.setBackground(headerBgColor);
 
-		toolkit.decorateFormHeading(form.getForm());
-		form.setText("View Model Preview"); //$NON-NLS-1$
-		final ImageDescriptor imageDescriptor = ImageDescriptor.createFromURL(Activator.getDefault()
-			.getBundle()
-			.getResource("icons/preview.png")); //$NON-NLS-1$
-		form.setImage(new Image(parent.getDisplay(), imageDescriptor.getImageData()));
+		final Composite header = getPageHeader(headerComposite);
+		final ToolBar toolBar = new ToolBar(header, SWT.FLAT | SWT.RIGHT);
+		final FormData formData = new FormData();
+		formData.right = new FormAttachment(100, 0);
+		toolBar.setLayoutData(formData);
+		toolBar.layout();
+		final ToolBarManager toolBarManager = new ToolBarManager(toolBar);
+		addButtonsToFormToolbar(toolBarManager);
+		header.layout();
 
-		addButtonsToFormToolbar(form.getToolBarManager());
+		/* The body */
+		scrolledComposite = new ScrolledComposite(form, SWT.V_SCROLL | SWT.H_SCROLL);
+		scrolledComposite.setShowFocusedControl(true);
+		scrolledComposite.setExpandVertical(true);
+		scrolledComposite.setExpandHorizontal(true);
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).applyTo(scrolledComposite);
+		scrolledComposite.setLayout(GridLayoutFactory.fillDefaults().create());
+		scrolledComposite.setBackground(parent.getDisplay().getSystemColor(SWT.COLOR_WHITE));
 
-		preView = new Preview(form.getBody());
+		container = new Composite(scrolledComposite, SWT.FILL);
+		final GridLayout containerLayout = GridLayoutFactory.fillDefaults().create();
+		containerLayout.marginLeft = 10;
+		containerLayout.marginRight = 10;
+		container.setLayout(containerLayout);
+
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).applyTo(container);
+		container.setBackground(scrolledComposite.getBackground());
+		scrolledComposite.setContent(container);
+		container.addPaintListener(new PaintListener() {
+
+			@Override
+			public void paintControl(PaintEvent e) {
+				// super.paintControl(e);
+				final Point point = container.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+				scrolledComposite.setMinSize(point);
+				container.layout(true);
+				scrolledComposite.layout(true);
+
+			}
+		});
+		container.addControlListener(new ControlListener() {
+
+			@Override
+			public void controlResized(ControlEvent e) {
+				final Point point = container.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+				scrolledComposite.setMinSize(point);
+				container.layout(true);
+				scrolledComposite.layout(true);
+
+			}
+
+			@Override
+			public void controlMoved(ControlEvent e) {
+				final Point point = container.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+				scrolledComposite.setMinSize(point);
+				container.layout(true);
+				scrolledComposite.layout(true);
+			}
+		});
+
+		preView = new Preview(container);
 
 		final IWorkbench wb = PlatformUI.getWorkbench();
 		final IWorkbenchWindow win = wb.getActiveWorkbenchWindow();
@@ -178,6 +253,58 @@ public class PreviewView extends ViewPart implements ISelectionListener {
 		};
 		getSite().getPage().addPartListener(partListener);
 
+	}
+
+	/**
+	 * @param parent
+	 * @return
+	 */
+	private Composite getPageHeader(Composite parent) {
+		final Composite header = new Composite(parent, SWT.FILL);
+		final FormLayout layout = new FormLayout();
+		layout.marginHeight = 5;
+		layout.marginWidth = 5;
+		header.setLayout(layout);
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, false).applyTo(header);
+
+		header.setBackground(parent.getBackground());
+
+		final Label titleImage = new Label(header, SWT.FILL);
+		final ImageDescriptor imageDescriptor = ImageDescriptor.createFromURL(Activator.getDefault()
+			.getBundle()
+			.getResource("icons/preview.png")); //$NON-NLS-1$
+		titleImage.setImage(new Image(parent.getDisplay(), imageDescriptor.getImageData()));
+		final FormData titleImageData = new FormData();
+		final int imageOffset = -titleImage.computeSize(SWT.DEFAULT, SWT.DEFAULT).y / 2;
+		titleImageData.top = new FormAttachment(50, imageOffset);
+		titleImageData.left = new FormAttachment(0, 10);
+		titleImage.setLayoutData(titleImageData);
+
+		final Label title = new Label(header, SWT.WRAP);
+		title.setText("View Editor Preview"); //$NON-NLS-1$
+		titleFont = new Font(title.getDisplay(), getDefaultFontName(title), 12, SWT.BOLD);
+		title.setFont(titleFont);
+		title.setForeground(getTitleColor());
+		final FormData titleData = new FormData();
+		title.setLayoutData(titleData);
+		titleData.left = new FormAttachment(titleImage, 5, SWT.DEFAULT);
+
+		return header;
+	}
+
+	/**
+	 * @param control
+	 * @return
+	 */
+	private String getDefaultFontName(Label control) {
+		return control.getDisplay().getSystemFont().getFontData()[0].getName();
+	}
+
+	private Color getTitleColor() {
+		if (titleColor == null) {
+			titleColor = new Color(form.getDisplay(), new RGB(25, 76, 127));
+		}
+		return titleColor;
 	}
 
 	/**
@@ -269,18 +396,22 @@ public class PreviewView extends ViewPart implements ISelectionListener {
 					return;
 				}
 
-				form.reflow(true);
+				final Point point = container.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+				scrolledComposite.setMinSize(point);
+				scrolledComposite.layout(true);
 			}
 		};
 
 		view.eAdapters().add(adapter);
 		preView.registerForViewModelChanges();
 		preView.render(view);
-		form.reflow(true);
+		final Point point = container.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+		scrolledComposite.setMinSize(point);
+		scrolledComposite.layout(true);
 	}
 
 	private void setView(VView view) {
-		if (view != this.view) {
+		if (this.view != view) {
 			removeAdapters();
 			this.view = view;
 		}
@@ -313,7 +444,9 @@ public class PreviewView extends ViewPart implements ISelectionListener {
 		this.updateAutomatic = updateAutomatic;
 		if (preView != null) {
 			preView.setUpdateAutomatic(updateAutomatic);
-			form.reflow(true);
+			final Point point = container.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+			scrolledComposite.setMinSize(point);
+			scrolledComposite.layout(true);
 		}
 	}
 
@@ -321,8 +454,9 @@ public class PreviewView extends ViewPart implements ISelectionListener {
 		if (preView != null) {
 			if (view != null) {
 				render(view);
-				form.reflow(true);
-				form.getBody().layout();
+				final Point point = container.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+				scrolledComposite.setMinSize(point);
+				scrolledComposite.layout(true);
 				parent.layout();
 			} else {
 				preView.clear();
