@@ -19,6 +19,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -73,9 +76,18 @@ import org.xml.sax.SAXException;
 public class NewPluginProjectWizard extends ExampleInstallerWizard {
 	private static final String PLUGIN_ID = "org.eclipse.emf.ecp.view.model.internal.project.installer"; //$NON-NLS-1$
 	private SelectEClassWizardPage selectEClassPage;
-	private EClass selectedEClass;
-
+	private List<EClass> selectedEClasses;
 	private IFile selectedEcore;
+	/**
+	 * The supported extensions for created files. <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public static final List<String> FILE_EXTENSIONS = Collections
+		.unmodifiableList(Arrays.asList(ViewEditorPlugin.INSTANCE
+			.getString("_UI_ViewEditorFilenameExtensions").split( //$NON-NLS-1$
+				"\\s*,\\s*"))); //$NON-NLS-1$
 
 	/**
 	 * @param selectedEcore
@@ -88,7 +100,7 @@ public class NewPluginProjectWizard extends ExampleInstallerWizard {
 	private WizardNewProjectCreationPage firstPage;
 	private SelectEcorePage selectEcorePage;
 	private String projectName;
-	private IFile viewModelFile;
+	private final List<IFile> viewModelFiles = new ArrayList<IFile>();
 	/**
 	 * Remember the selection during initialization for populating the default
 	 * container. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -233,9 +245,7 @@ public class NewPluginProjectWizard extends ExampleInstallerWizard {
 			addPage(selectEClassPage);
 			selectEClassPage.setPageComplete(true);
 			return selectEClassPage;
-		}
-
-		if (page == selectEcorePage) {
+		} else if (page == selectEcorePage) {
 			selectedEcore = selectEcorePage.getSelectedEcore();
 			selectEClassPage = new SelectEClassWizardPage();
 			selectEClassPage.setSelectedEcore(selectedEcore);
@@ -243,7 +253,7 @@ public class NewPluginProjectWizard extends ExampleInstallerWizard {
 			selectEClassPage.setPageComplete(true);
 			return selectEClassPage;
 		}
-		return super.getNextPage(page);
+		return null;
 	}
 
 	/**
@@ -255,7 +265,7 @@ public class NewPluginProjectWizard extends ExampleInstallerWizard {
 	public IWizardPage getPreviousPage(IWizardPage page) {
 		if (page == selectEClassPage) {
 			// deactivate Finish button
-			selectedEClass = null;
+			selectedEClasses.clear();
 		}
 		return super.getPreviousPage(page);
 	}
@@ -267,9 +277,9 @@ public class NewPluginProjectWizard extends ExampleInstallerWizard {
 	@Override
 	public boolean canFinish() {
 		if (selectEClassPage != null) {
-			selectedEClass = selectEClassPage
-				.getSelectedEClass();
-			return selectedEClass != null;
+			selectedEClasses = selectEClassPage
+				.getSelectedEClasses();
+			return selectedEClasses != null && !selectedEClasses.isEmpty();
 		}
 		return false;
 	}
@@ -285,13 +295,15 @@ public class NewPluginProjectWizard extends ExampleInstallerWizard {
 		// install the project template in the workspace
 		boolean result = super.performFinish();
 		// update the project and project files
-		result &= createViewModelFile() && updateViewModelPluginFilePath() && renamePlugin();
+		result &= createViewModelFiles() && renamePlugin();// updateViewModelPluginFilePath() &&
 
 		if (result) {
 			final IWorkbenchPage page = workbench.getActiveWorkbenchWindow().getActivePage();
 			try {
-				page.openEditor(new FileEditorInput(viewModelFile),
-					workbench.getEditorRegistry().getDefaultEditor(viewModelFile.getFullPath().toString()).getId());
+				for (final IFile viewModelFile : viewModelFiles) {
+					page.openEditor(new FileEditorInput(viewModelFile),
+						workbench.getEditorRegistry().getDefaultEditor(viewModelFile.getFullPath().toString()).getId());
+				}
 			} catch (final PartInitException ex) {
 				Activator.getDefault().getLog()
 					.log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, ex.getMessage(), ex));
@@ -318,7 +330,6 @@ public class NewPluginProjectWizard extends ExampleInstallerWizard {
 			String line = null;
 			final StringBuffer contents = new StringBuffer();
 			while ((line = in.readLine()) != null) {
-				// Process each line and add output to Dest.txt file
 				if (line.contains(bundleNameQualifier)) {
 					final int startIndex = line.indexOf(bundleNameQualifier) + bundleNameQualifier.length();
 					int endIndex = line.indexOf(";", startIndex); //$NON-NLS-1$
@@ -409,56 +420,72 @@ public class NewPluginProjectWizard extends ExampleInstallerWizard {
 
 	}
 
-	private boolean createViewModelFile() {
+	private boolean createViewModelFiles() {
 		final IProject p = projectDescriptors.get(0).getProject();
-		final IPath path = p.getFolder("viewmodels").getFullPath().append(selectedEClass.getName() + ".view"); //$NON-NLS-1$ //$NON-NLS-2$
-		viewModelFile = ResourcesPlugin.getWorkspace().getRoot().getFile(path);
+		final IPath folderPath = p.getFolder("viewmodels").getFullPath(); //$NON-NLS-1$
+		final boolean generateViewModelControls = selectEClassPage.isGenerateViewModelOptionSelected();
 
-		final boolean generateViewModelControls = selectEClassPage
-			.isGenerateViewModelOptionSelected();
-		try {
-			final IDEViewModelRegistry registry = getViewModelRegistry();
-			if (registry != null) {
-				final VView view = registry.createViewModel(viewModelFile, selectedEClass, selectedEcore);
-				if (generateViewModelControls) {
-					ControlGenerator.generateAllControls(view);
+		for (final EClass eclass : selectedEClasses) {
+			final IPath filePath = folderPath.append(eclass.getName() + ".view"); //$NON-NLS-1$
+			final IFile viewModelFile = ResourcesPlugin.getWorkspace().getRoot().getFile(filePath);
+
+			try {
+				final IDEViewModelRegistry registry = getViewModelRegistry();
+				if (registry != null) {
+					final VView view = registry.createViewModel(viewModelFile, eclass, selectedEcore);
+					if (generateViewModelControls) {
+						ControlGenerator.generateAllControls(view);
+					}
+					addContribution(viewModelFile);
+					viewModelFiles.add(viewModelFile);
 				}
-			}
 
-		} catch (final IOException e) {
-			Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
-			return false;
+			} catch (final IOException e) {
+				Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
+				return false;
+			}
 		}
 
 		return true;
 	}
 
 	/**
-	 * @param selection the selection to set
+	 * @param modelFile
 	 */
-	public void setSelection(IStructuredSelection selection) {
-		this.selection = selection;
-	}
+	protected void addContribution(IFile modelFile) {
 
-	/**
-	 * Update the name of the view model file in the plugin.xml file
-	 */
-	private boolean updateViewModelPluginFilePath() {
-		// get plugin.xml file
-		final IProject p = projectDescriptors.get(0).getProject();
-		final IFile pluginFile = ResourcesPlugin.getWorkspace().getRoot()
-			.getFile(p.getFile("plugin.xml").getFullPath()); //$NON-NLS-1$ 
+		final IProject project = modelFile.getProject();
+		final IFile pluginFile = project.getFile("plugin.xml"); //$NON-NLS-1$
 		try {
-			// change bundle-name and bundle-symbolicname
 			final BufferedReader in = new BufferedReader(new InputStreamReader(pluginFile.getContents()));
-
-			final String viewModelName = "$$viewmodel$$"; //$NON-NLS-1$
+			final String extension = "org.eclipse.emf.ecp.view.model.provider.xmi.file"; //$NON-NLS-1$
 			String line = null;
 			final StringBuffer contents = new StringBuffer();
+			boolean extensionAdded = false;
 			while ((line = in.readLine()) != null) {
-				if (line.contains(viewModelName)) {
-					line = line.replace(viewModelName, selectedEClass.getName() + ".view"); //$NON-NLS-1$
+				if (line.contains(extension)) {
+					final int end = line.indexOf("/>"); //$NON-NLS-1$
+					if (end != -1) {
+						final String filePathAttribute = "<file filePath=\"" //$NON-NLS-1$
+							+ modelFile.getProjectRelativePath().toString() + "\"/>"; //$NON-NLS-1$
+
+						line = line.substring(0, end)
+							+ ">\n" + filePathAttribute + "\n</extension>\n" + line.substring(end + 2, line.length()); //$NON-NLS-1$ //$NON-NLS-2$
+					}
+					else {
+						final String filePathAttribute = "<file filePath=\"" //$NON-NLS-1$
+							+ modelFile.getProjectRelativePath().toString() + "\"/>"; //$NON-NLS-1$
+						line = line.concat("\n" + filePathAttribute + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
+					}
+					extensionAdded = true;
 				}
+				if (line.contains("</plugin>") && !extensionAdded) { //$NON-NLS-1$
+					final int end = line.indexOf("</plugin>"); //$NON-NLS-1$
+					line = line.substring(0, end)
+						+ "\n<extension  point=\"org.eclipse.emf.ecp.view.model.provider.xmi.file\">\n<file filePath=\"" //$NON-NLS-1$
+						+ modelFile.getProjectRelativePath().toString() + "\"/>\n</extension>\n" + line.substring(end); //$NON-NLS-1$
+				}
+
 				contents.append(line + "\n"); //$NON-NLS-1$
 			}
 			in.close();
@@ -468,15 +495,19 @@ public class NewPluginProjectWizard extends ExampleInstallerWizard {
 			out.flush();
 			out.close();
 
-			ResourcesPlugin.getWorkspace().getRoot().getProject(p.getName())
-				.refreshLocal(IResource.DEPTH_INFINITE, null);
-
+			project.refreshLocal(IResource.DEPTH_INFINITE, null);
 		} catch (final CoreException e) {
-			Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
+			ViewEditorPlugin.INSTANCE.log(new Status(IStatus.ERROR, PLUGIN_ID, e.getMessage(), e));
 		} catch (final IOException e) {
-			Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
+			ViewEditorPlugin.INSTANCE.log(new Status(IStatus.ERROR, PLUGIN_ID, e.getMessage(), e));
 		}
-		return true;
+	}
+
+	/**
+	 * @param selection the selection to set
+	 */
+	public void setSelection(IStructuredSelection selection) {
+		this.selection = selection;
 	}
 
 	/**

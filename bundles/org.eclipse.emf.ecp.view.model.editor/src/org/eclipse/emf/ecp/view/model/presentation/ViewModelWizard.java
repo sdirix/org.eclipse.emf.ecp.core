@@ -37,19 +37,14 @@ import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
-import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.IWorkbenchPart;
-import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.actions.WorkspaceModifyOperation;
 import org.eclipse.ui.part.FileEditorInput;
-import org.eclipse.ui.part.ISetSelectionTarget;
 import org.osgi.framework.ServiceReference;
 
 /**
@@ -62,6 +57,7 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 
 	private static final String PLUGIN_ID = "org.eclipse.emf.ecp.view.model.presentation"; //$NON-NLS-1$
 	private IFile selectedEcore;
+	private List<ViewModelWizardNewFileCreationPage> fileCreationPages;
 
 	/**
 	 * @param selectedEcore the selectedEcore to set
@@ -70,7 +66,7 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 		this.selectedEcore = selectedEcore;
 	}
 
-	private EClass selectedEClass;
+	private List<EClass> selectedEClasses;
 
 	/**
 	 * The supported extensions for created files. <!-- begin-user-doc --> <!--
@@ -115,7 +111,6 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 	 * 
 	 * @generated
 	 */
-	protected ViewModelWizardNewFileCreationPage newFileCreationPage;
 
 	private IncludeViewModelProviderXmiFileExtensionPage contributeToFileExtensionPage;
 
@@ -204,9 +199,6 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 		selectEcorePage = new SelectEcorePage(PLUGIN_ID);
 		addPage(selectEcorePage);
 
-		newFileCreationPage = getNewFileCreationPage();
-		addPage(newFileCreationPage);
-
 		contributeToFileExtensionPage = new IncludeViewModelProviderXmiFileExtensionPage(PLUGIN_ID);
 		addPage(contributeToFileExtensionPage);
 
@@ -240,7 +232,7 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 	public IWizardPage getNextPage(IWizardPage page) {
 
 		if (page == selectEcorePage) {
-			selectedEClass = null;
+			selectedEClasses = null;
 			selectedEcore = selectEcorePage.getSelectedEcore();
 			if (selectedEcore != null) {
 				if (selectEClassPage == null) {
@@ -252,17 +244,29 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 				return selectEClassPage;
 			}
 			return null;
-		}
-		if (page == selectEClassPage) {
-			selectedEClass = selectEClassPage.getSelectedEClass();
-			if (selectedEClass != null) {
-				newFileCreationPage.setSelectedEClassName(selectedEClass.getName());
-				return newFileCreationPage;
+		} else if (page == selectEClassPage) {
+			selectedEClasses = selectEClassPage.getSelectedEClasses();
+			fileCreationPages = new ArrayList<ViewModelWizardNewFileCreationPage>();
+			if (selectedEClasses != null && !selectedEClasses.isEmpty()) {
+				for (final EClass eclass : selectedEClasses) {
+					final ViewModelWizardNewFileCreationPage fileCreationPage = getNewFileCreationPage();
+					fileCreationPage.setEClass(eclass);
+					fileCreationPage.setWizard(this);
+					fileCreationPages.add(fileCreationPage);
+				}
+				if (fileCreationPages.isEmpty()) {
+					return null;
+				}
+				return fileCreationPages.get(0);
 			}
-		}
-		if (page == newFileCreationPage) {
+		} else if (ViewModelWizardNewFileCreationPage.class.isInstance(page)) {
+			final int i = fileCreationPages.indexOf(page);
+			if (i < fileCreationPages.size() - 1) {
+				return fileCreationPages.get(i + 1);
+			}
 			return contributeToFileExtensionPage;
 		}
+
 		return null;
 	}
 
@@ -271,7 +275,8 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 	 */
 	private ViewModelWizardNewFileCreationPage getNewFileCreationPage() {
 		// Create page, set title and the initial model file name.
-		newFileCreationPage = new ViewModelWizardNewFileCreationPage("Whatever", selection); //$NON-NLS-1$
+		final ViewModelWizardNewFileCreationPage newFileCreationPage = new ViewModelWizardNewFileCreationPage(
+			"Whatever", selection); //$NON-NLS-1$
 		newFileCreationPage.setTitle(ViewEditorPlugin.INSTANCE
 			.getString("_UI_ViewModelWizard_label")); //$NON-NLS-1$
 		newFileCreationPage.setDescription(ViewEditorPlugin.INSTANCE
@@ -295,21 +300,12 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 		if (page == selectEClassPage) {
 			return selectEcorePage;
 		}
-		else if (page == newFileCreationPage) {
+		else if (ViewModelWizardNewFileCreationPage.class.isInstance(page)) {
 			return selectEClassPage;
 		}
 
 		return null;
 
-	}
-
-	/**
-	 * Get the file from the page. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	public IFile getModelFile() {
-		return newFileCreationPage.getModelFile();
 	}
 
 	/**
@@ -320,9 +316,10 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 	@Override
 	public boolean canFinish() {
 		if (selectEClassPage != null) {
-			selectedEClass = selectEClassPage.getSelectedEClass();
-			return selectedEClass != null
-				&& (newFileCreationPage.isPageComplete() || contributeToFileExtensionPage.isPageComplete());
+			final List<EClass> selectedClasses = selectEClassPage.getSelectedEClasses();
+			return selectedClasses != null && !selectedClasses.isEmpty()
+				&& contributeToFileExtensionPage.isPageComplete();
+
 		}
 		return false;
 	}
@@ -336,8 +333,6 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 	@Override
 	public boolean performFinish() {
 		try {
-			// Remember the file.
-			final IFile modelFile = getModelFile();
 
 			// Do the work within an operation.
 			final WorkspaceModifyOperation operation = new WorkspaceModifyOperation() {
@@ -354,23 +349,27 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 								"No View Model Registry", null)); //$NON-NLS-1$
 							return;
 						}
-						// create view
-						final VView view = registry.createViewModel(modelFile, selectedEClass, selectedEcore);
-						// generate controls
-						if (generateViewModelControls) {
-							ControlGenerator.generateAllControls(view);
+						for (final ViewModelWizardNewFileCreationPage filePage : fileCreationPages) {
+							// Remember the file.
+							final IFile modelFile = filePage.getModelFile();
+							// create view
+							final VView view = registry.createViewModel(modelFile, filePage.getEClass(), selectedEcore);
+							// generate controls
+							if (generateViewModelControls) {
+								ControlGenerator.generateAllControls(view);
+							}
+
+							// contribute to ..provider.xmi.file extension point
+							if (contributeToFileExtensionPage.isContributeToExtensionOptionSelected()) {
+								addContribution(modelFile);
+							}
+
+							// Open the view
+							final IWorkbenchPage page = workbench.getActiveWorkbenchWindow().getActivePage();
+							page.openEditor(new FileEditorInput(modelFile),
+								workbench.getEditorRegistry().getDefaultEditor(modelFile.getFullPath().toString())
+									.getId());
 						}
-
-						// contribute to ..provider.xmi.file extension point
-						if (contributeToFileExtensionPage.isContributeToExtensionOptionSelected()) {
-							addContribution(modelFile);
-						}
-
-						// Open the view
-						final IWorkbenchPage page = workbench.getActiveWorkbenchWindow().getActivePage();
-						page.openEditor(new FileEditorInput(modelFile),
-							workbench.getEditorRegistry().getDefaultEditor(modelFile.getFullPath().toString()).getId());
-
 					} catch (final Exception exception) {
 						ViewEditorPlugin.INSTANCE.log(exception);
 					} finally {
@@ -380,51 +379,11 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 			};
 
 			getContainer().run(false, false, operation);
-
-			// Select the new file resource in the current view.
-			final IWorkbenchWindow workbenchWindow = workbench
-				.getActiveWorkbenchWindow();
-			final IWorkbenchPage page = workbenchWindow.getActivePage();
-			final IWorkbenchPart activePart = page.getActivePart();
-			if (activePart instanceof ISetSelectionTarget) {
-				final ISelection targetSelection = new StructuredSelection(
-					modelFile);
-				getShell().getDisplay().asyncExec(new Runnable() {
-					@Override
-					public void run() {
-						((ISetSelectionTarget) activePart)
-							.selectReveal(targetSelection);
-					}
-				});
-			}
 			return true;
 		} catch (final Exception exception) {
 			ViewEditorPlugin.INSTANCE.log(exception);
 			return false;
 		}
-	}
-
-	/**
-	 * Return the {@link IDEViewModelRegistry}.
-	 * 
-	 * @return the {@link IDEViewModelRegistry}
-	 */
-	public static IDEViewModelRegistry getViewModelRegistry() {
-
-		final ServiceReference<IDEViewModelRegistry> serviceReference = ViewEditorPlugin.getPlugin().getBundle()
-			.getBundleContext()
-			.getServiceReference(IDEViewModelRegistry.class);
-		if (serviceReference == null) {
-			return null;
-		}
-		return ViewEditorPlugin.getPlugin().getBundle().getBundleContext().getService(serviceReference);
-	}
-
-	/**
-	 * @param workbench the workbench to set
-	 */
-	public void setWorkbench(IWorkbench workbench) {
-		this.workbench = workbench;
 	}
 
 	/**
@@ -480,4 +439,28 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 			ViewEditorPlugin.INSTANCE.log(new Status(IStatus.ERROR, PLUGIN_ID, e.getMessage(), e));
 		}
 	}
+
+	/**
+	 * Return the {@link IDEViewModelRegistry}.
+	 * 
+	 * @return the {@link IDEViewModelRegistry}
+	 */
+	public static IDEViewModelRegistry getViewModelRegistry() {
+
+		final ServiceReference<IDEViewModelRegistry> serviceReference = ViewEditorPlugin.getPlugin().getBundle()
+			.getBundleContext()
+			.getServiceReference(IDEViewModelRegistry.class);
+		if (serviceReference == null) {
+			return null;
+		}
+		return ViewEditorPlugin.getPlugin().getBundle().getBundleContext().getService(serviceReference);
+	}
+
+	/**
+	 * @param workbench the workbench to set
+	 */
+	public void setWorkbench(IWorkbench workbench) {
+		this.workbench = workbench;
+	}
+
 }

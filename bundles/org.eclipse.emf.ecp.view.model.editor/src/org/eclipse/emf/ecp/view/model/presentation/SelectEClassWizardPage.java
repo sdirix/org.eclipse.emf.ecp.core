@@ -11,8 +11,11 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.model.presentation;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
@@ -22,9 +25,9 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
-import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -48,6 +51,7 @@ public class SelectEClassWizardPage extends WizardPage {
 	private Composite container;
 	private Button generateViewModelChkBox;
 	private IFile selectedEcore;
+	private List<EClass> selectedEClasses;
 
 	/**
 	 * @return the selectedEcore
@@ -63,14 +67,13 @@ public class SelectEClassWizardPage extends WizardPage {
 		this.selectedEcore = selectedEcore;
 	}
 
-	private EClass selectedEClass;
 	private TreeViewer treeViewer;
 
 	/**
-	 * @param selectedEClass the selectedEClass to set
+	 * @param selectedEClasses the selectedEClasses to set
 	 */
-	public void setSelectedEClass(EClass selectedEClass) {
-		this.selectedEClass = selectedEClass;
+	public void setSelectedEClasses(List<EClass> selectedEClasses) {
+		this.selectedEClasses = selectedEClasses;
 	}
 
 	public SelectEClassWizardPage() {
@@ -110,10 +113,13 @@ public class SelectEClassWizardPage extends WizardPage {
 		if (selectedEcore != null) {
 
 			final ComposedAdapterFactory adapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
-				new ReflectiveItemProviderAdapterFactory(),
+				new CustomReflectiveItemProviderAdapterFactory(),
 				new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
 			final AdapterFactoryLabelProvider labelProvider = new AdapterFactoryLabelProvider(adapterFactory);
-			treeViewer = new TreeViewer(container, SWT.H_SCROLL | SWT.V_SCROLL);
+
+			selectedEClasses = new ArrayList<EClass>();
+
+			treeViewer = new TreeViewer(container, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
 			treeViewer.setContentProvider(getContentProvider(adapterFactory));
 			treeViewer.setLabelProvider(labelProvider);
 			treeViewer.setInput(selectedEcore);
@@ -121,12 +127,20 @@ public class SelectEClassWizardPage extends WizardPage {
 
 				@Override
 				public void selectionChanged(SelectionChangedEvent event) {
-					if (((IStructuredSelection) event.getSelection()).getFirstElement() instanceof EClass) {
-						setSelectedEClass((EClass) ((IStructuredSelection) event.getSelection()).getFirstElement());
-					} else {
-						setSelectedEClass(null);
+					selectedEClasses = new ArrayList<EClass>();
+					if (event.getSelection() instanceof IStructuredSelection) {
+						final IStructuredSelection selection = (IStructuredSelection) event.getSelection();
+						for (final Iterator<?> iterator = selection.iterator(); iterator.hasNext();) {
+							final Object selectedItem = iterator.next();
+							if (EClass.class.isInstance(selectedItem)) {
+								selectedEClasses.add((EClass) selectedItem);
+								setPageComplete(true);
+							}
+						}
 					}
-					setPageComplete(getSelectedEClass() != null);
+					if (selectedEClasses.isEmpty()) {
+						setPageComplete(false);
+					}
 				}
 			});
 			treeViewer.expandToLevel(2);
@@ -213,8 +227,17 @@ public class SelectEClassWizardPage extends WizardPage {
 		return generateViewModelChkBox.getSelection();
 	}
 
-	public EClass getSelectedEClass() {
-		return selectedEClass;
+	public List<EClass> getSelectedEClasses() {
+		return selectedEClasses;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.jface.wizard.WizardPage#isPageComplete()
+	 */
+	@Override
+	public boolean isPageComplete() {
+		return selectedEClasses != null && !selectedEClasses.isEmpty();
+	}
 }

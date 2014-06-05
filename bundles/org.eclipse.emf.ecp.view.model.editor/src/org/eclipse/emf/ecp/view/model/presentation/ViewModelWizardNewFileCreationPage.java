@@ -22,6 +22,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.dialogs.WizardNewFileCreationPage;
@@ -60,8 +61,22 @@ public class ViewModelWizardNewFileCreationPage extends
 		.getString("_UI_ViewEditorFilenameExtensions").replaceAll( //$NON-NLS-1$
 			"\\s*,\\s*", ", "); //$NON-NLS-1$ //$NON-NLS-2$
 
-	private String eClassName;
+	private EClass eClass;
 	private final IStructuredSelection selection;
+
+	/**
+	 * @return the eClass
+	 */
+	public EClass getEClass() {
+		return eClass;
+	}
+
+	/**
+	 * @param eClass the eClass to set
+	 */
+	public void setEClass(EClass eClass) {
+		this.eClass = eClass;
+	}
 
 	/**
 	 * Pass in the selection. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -83,7 +98,6 @@ public class ViewModelWizardNewFileCreationPage extends
 	public void setVisible(boolean visible) {
 		super.setVisible(visible);
 		if (visible) {
-
 			// Try and get the resource selection to determine a current directory
 			// for the file dialog.
 			if (selection != null && !selection.isEmpty()) {
@@ -104,7 +118,7 @@ public class ViewModelWizardNewFileCreationPage extends
 							.getFullPath());
 					}
 					// Make up a unique new name here.
-					final String defaultModelBaseFilename = eClassName;
+					final String defaultModelBaseFilename = eClass.getName();
 					final String defaultModelFilenameExtension = FILE_EXTENSIONS
 						.get(0);
 					String modelFilename = defaultModelBaseFilename + "." //$NON-NLS-1$
@@ -122,6 +136,7 @@ public class ViewModelWizardNewFileCreationPage extends
 		else {
 			setPageComplete(false);
 		}
+
 	}
 
 	/**
@@ -132,13 +147,6 @@ public class ViewModelWizardNewFileCreationPage extends
 	@Override
 	public void createControl(Composite parent) {
 		super.createControl(parent);
-	}
-
-	/**
-	 * @param name
-	 */
-	public void setSelectedEClassName(String name) {
-		eClassName = name;
 	}
 
 	/**
@@ -172,4 +180,5 @@ public class ViewModelWizardNewFileCreationPage extends
 		return ResourcesPlugin.getWorkspace().getRoot()
 			.getFile(getContainerFullPath().append(getFileName()));
 	}
+
 }

@@ -3,9 +3,6 @@
 <plugin>
    <extension
          point="org.eclipse.emf.ecp.view.model.provider.xmi.file">
-      <file
-            filePath="viewmodels/$$viewmodel$$">
-      </file>
    </extension>
 
 </plugin>
