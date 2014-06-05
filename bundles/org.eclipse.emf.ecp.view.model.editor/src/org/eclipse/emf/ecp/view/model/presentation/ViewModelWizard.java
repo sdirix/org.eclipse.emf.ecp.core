@@ -12,6 +12,7 @@
 package org.eclipse.emf.ecp.view.model.presentation;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -394,6 +395,13 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 		final IProject project = modelFile.getProject();
 		final IFile pluginFile = project.getFile("plugin.xml"); //$NON-NLS-1$
 		try {
+			if (!pluginFile.exists())
+			{
+				final String pluginXmlContents = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<?eclipse version=\"3.4\"?>\n<plugin>\n</plugin>"; //$NON-NLS-1$
+				pluginFile.create(new ByteArrayInputStream(pluginXmlContents.getBytes()), true, null);
+				project.refreshLocal(IResource.DEPTH_INFINITE, null);
+
+			}
 			final BufferedReader in = new BufferedReader(new InputStreamReader(pluginFile.getContents()));
 			final String extension = "org.eclipse.emf.ecp.view.model.provider.xmi.file"; //$NON-NLS-1$
 			String line = null;
@@ -420,7 +428,8 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 					final int end = line.indexOf("</plugin>"); //$NON-NLS-1$
 					line = line.substring(0, end)
 						+ "\n<extension  point=\"org.eclipse.emf.ecp.view.model.provider.xmi.file\">\n<file filePath=\"" //$NON-NLS-1$
-						+ modelFile.getProjectRelativePath().toString() + "\"/>\n</extension>\n" + line.substring(end); //$NON-NLS-1$
+						+ modelFile.getProjectRelativePath().toString()
+						+ "\"/>\n</extension>\n" + line.substring(end); //$NON-NLS-1$
 				}
 
 				contents.append(line + "\n"); //$NON-NLS-1$
