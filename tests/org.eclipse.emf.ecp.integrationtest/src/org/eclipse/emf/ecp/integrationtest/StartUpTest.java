@@ -3,7 +3,9 @@ package org.eclipse.emf.ecp.integrationtest;
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.Test;
 import org.osgi.framework.Bundle;
@@ -21,14 +23,18 @@ public class StartUpTest {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
+		final Set<String> bundlesToIgnore = new LinkedHashSet<String>();
+		bundlesToIgnore.add("org.eclipse.emf.ecp.integrationtest");
+		bundlesToIgnore.add("org.eclipse.emf.ecp.makeithappen.wizards");
+
 		final Bundle[] bundles = ctx.getBundles();
 		final List<String> list = new ArrayList<String>();
 		String result = "";
 
 		for (final Bundle bundle : bundles) {
 			if (bundle.getSymbolicName().contains("ecp")
-				&& !bundle.getSymbolicName().contains(
-					"org.eclipse.emf.ecp.integrationtest")) {
+				&& !bundlesToIgnore.contains(bundle.getSymbolicName())) {
 				final int state = bundle.getState();
 
 				if ((state & (Bundle.RESOLVED | Bundle.STARTING)) == 0) {
