@@ -29,6 +29,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EPackage.Descriptor;
 import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecp.ide.view.service.IDEViewModelRegistry;
@@ -182,7 +183,16 @@ public class IDEViewModelRegistryImpl implements IDEViewModelRegistry {
 		final EPackage ePackage = (EPackage) r.getContents().get(0);
 
 		final Registry instance = org.eclipse.emf.ecore.EPackage.Registry.INSTANCE;
-		EPackage ep = (EPackage) instance.get(ePackage.getNsURI());
+		final Object ePackageObject = instance.get(ePackage.getNsURI());
+		EPackage ep;
+		if (EPackage.Descriptor.class.isInstance(ePackageObject)) {
+			final Descriptor descriptor = EPackage.Descriptor.class.cast(ePackageObject);
+			ep = descriptor.getEPackage();
+		} else if (EPackage.class.isInstance(ePackageObject)) {
+			ep = (EPackage) ePackageObject;
+		} else {
+			ep = null;
+		}
 		if (ep == null)
 		{
 			EcoreHelper.registerEcore(selectedEcore.getFullPath().toString());
