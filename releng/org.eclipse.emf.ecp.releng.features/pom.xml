@@ -43,7 +43,6 @@
 		<module>../../features/org.eclipse.emf.ecp.view.table.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.view.template.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.view.template.helper.feature</module>
-		<module>../../features/org.eclipse.emf.ecp.ide.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.e4.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.rap.util.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.transaction.feature</module>

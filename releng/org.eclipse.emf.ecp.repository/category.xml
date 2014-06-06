@@ -91,7 +91,7 @@
       <category name="org.eclipse.emf.ecp.emfforms"/>
    </feature>
    <feature url="features/org.eclipse.emf.ecp.emfforms.sdk.feature_1.3.0.qualifier.jar" id="org.eclipse.emf.ecp.emfforms.sdk.feature" version="1.3.0.qualifier">
-      <category name="org.eclipse.emf.ecp.emfforms"/>
+      <category name="org.eclipse.emf.emfforms.sdk"/>
    </feature>
    <feature url="features/org.eclipse.emf.ecp.demo.e4.feature_1.3.0.qualifier.jar" id="org.eclipse.emf.ecp.demo.e4.feature" version="1.3.0.qualifier">
       <category name="org.eclipse.emf.ecp.category"/>
@@ -114,8 +114,11 @@
    <feature url="features/org.eclipse.emf.ecp.sdk.e4.feature_1.3.0.qualifier.jar" id="org.eclipse.emf.ecp.sdk.e4.feature" version="1.3.0.qualifier">
       <category name="org.eclipse.emf.ecp.category"/>
    </feature>
-   <feature url="features/org.eclipse.emf.ecp.ide.feature_1.3.0.qualifier.jar" id="org.eclipse.emf.ecp.ide.feature" version="1.3.0.qualifier">
-      <category name="org.eclipse.emf.ecp.ide"/>
+   <feature url="features/org.eclipse.emf.ecp.emfforms.idetooling.feature_1.3.0.qualifier.jar" id="org.eclipse.emf.ecp.emfforms.idetooling.feature" version="1.3.0.qualifier">
+      <category name="org.eclipse.emf.ecp.emfforms"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.ecp.makeithappen.feature_1.3.0.qualifier.jar" id="org.eclipse.emf.ecp.makeithappen.feature" version="1.3.0.qualifier">
+      <category name="org.eclipse.emf.emfforms.examples"/>
    </feature>
    <category-def name="org.eclipse.emf.ecp.category" label="EMF Client Platform">
       <description>
@@ -137,5 +140,14 @@
          Provides support for creating RAP applications with ECP. Should be added to a target platform, but not installed into the IDE.
       </description>
    </category-def>
-   <category-def name="org.eclipse.emf.ecp.ide" label="IDE Integration"/>
+   <category-def name="org.eclipse.emf.emfforms.sdk" label="EMF Forms SDK">
+      <description>
+         Contains the EMF Forms SDK
+      </description>
+   </category-def>
+   <category-def name="org.eclipse.emf.emfforms.examples" label="EMF Forms Examples  (Do not install into IDE)">
+      <description>
+         Contains example data, which can be used in a target platform.
+      </description>
+   </category-def>
 </site>
