@@ -365,6 +365,9 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 								addContribution(modelFile);
 							}
 
+							// add containing folder to the build.properties file
+							addToBuildProperties(modelFile);
+
 							// Open the view
 							final IWorkbenchPage page = workbench.getActiveWorkbenchWindow().getActivePage();
 							page.openEditor(new FileEditorInput(modelFile),
@@ -385,6 +388,77 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 			ViewEditorPlugin.INSTANCE.log(exception);
 			return false;
 		}
+	}
+
+	/**
+	 * @param modelFile
+	 */
+	protected void addToBuildProperties(IFile modelFile) {
+		final IProject project = modelFile.getProject();
+		final String projectRelPath = modelFile.getProjectRelativePath().toString();
+		final int lastPathDelimiter = projectRelPath.lastIndexOf("/"); //$NON-NLS-1$
+		final String path;
+		if (lastPathDelimiter == -1) {
+			path = projectRelPath;
+		}
+		else {
+			path = projectRelPath.substring(0, projectRelPath.lastIndexOf("/") + 1); //$NON-NLS-1$
+		}
+		final String includes = "bin.includes"; //$NON-NLS-1$
+		final IFile buildFile = project.getFile("build.properties"); //$NON-NLS-1$
+		try {
+			final BufferedReader in = new BufferedReader(new InputStreamReader(buildFile.getContents()));
+			String line = null;
+			final StringBuffer contents = new StringBuffer();
+			while ((line = in.readLine()) != null) {
+				if (line.contains(includes)) {
+					boolean found = false;
+					while (line.contains(",\\")) //$NON-NLS-1$
+					{
+						// entry start
+						int start = line.indexOf("="); //$NON-NLS-1$
+						if (start == -1) {
+							start = 0;
+						}
+
+						final String entry = line.substring(start + 1, line.indexOf(",\\")).trim(); //$NON-NLS-1$
+
+						if (entry.equals(path)) {
+							found = true;
+							break;
+						}
+						contents.append(line + "\n"); //$NON-NLS-1$
+						line = in.readLine();
+
+					}
+					if (!found) {
+						// check last line
+						int start = line.indexOf("="); //$NON-NLS-1$
+						if (start == -1) {
+							start = 0;
+						}
+						final String entry = line.substring(start).trim();
+						if (!entry.equals(path)) {
+							contents.append(path + ",\\\n"); //$NON-NLS-1$
+						}
+					}
+				}
+				contents.append(line + "\n"); //$NON-NLS-1$
+			}
+			in.close();
+
+			final FileWriter out = new FileWriter(buildFile.getRawLocation().makeAbsolute().toFile());
+			out.write(String.valueOf(contents));
+			out.flush();
+			out.close();
+
+			project.refreshLocal(IResource.DEPTH_INFINITE, null);
+		} catch (final CoreException e) {
+			ViewEditorPlugin.INSTANCE.log(new Status(IStatus.ERROR, PLUGIN_ID, e.getMessage(), e));
+		} catch (final IOException e) {
+			ViewEditorPlugin.INSTANCE.log(new Status(IStatus.ERROR, PLUGIN_ID, e.getMessage(), e));
+		}
+
 	}
 
 	/**
