@@ -18,6 +18,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.core.resources.IResourceChangeEvent;
+import org.eclipse.core.resources.IResourceChangeListener;
+import org.eclipse.core.resources.IResourceDelta;
+import org.eclipse.core.resources.IResourceDeltaVisitor;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -53,6 +58,7 @@ import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.IPartListener2;
+import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
@@ -132,6 +138,39 @@ public class ViewEditorPart extends EditorPart implements
 
 		partListener = new ViewPartListener();
 		getSite().getPage().addPartListener(partListener);
+
+		final IResourceChangeListener listener = new IResourceChangeListener() {
+			@Override
+			public void resourceChanged(IResourceChangeEvent event) {
+				final IResourceDelta delta = event.getDelta();
+				final IResourceDeltaVisitor visitor = new IResourceDeltaVisitor()
+				{
+					@Override
+					public boolean visit(IResourceDelta delta)
+					{
+						if (delta.getKind() == IResourceDelta.REMOVED) {
+							final FileEditorInput fei = (FileEditorInput) instance.getEditorInput();
+							if (delta.getFullPath().equals(fei.getFile().getFullPath())) {
+								final IWorkbenchPage page = instance.getSite().getPage();
+								Display.getDefault().asyncExec(new Runnable() {
+									@Override
+									public void run() {
+										page.closeEditor(instance, false);
+									}
+								});
+								return false;
+							}
+						}
+						return true;
+					}
+				};
+				try {
+					delta.accept(visitor);
+				} catch (final CoreException ex) {
+				}
+			}
+		};
+		ResourcesPlugin.getWorkspace().addResourceChangeListener(listener);
 	}
 
 	private ResourceSet createResourceSet() {
@@ -217,7 +256,7 @@ public class ViewEditorPart extends EditorPart implements
 						.getLog()
 						.log(
 							new Status(IStatus.WARNING, Activator.PLUGIN_ID,
-								"The Root EClass of the view cannot be resolved. " + view.getRootEClass())); //$NON-NLS-1$
+								"The Root EClass of the view cannot be resolved." + view.getRootEClass())); //$NON-NLS-1$
 				}
 			}
 
