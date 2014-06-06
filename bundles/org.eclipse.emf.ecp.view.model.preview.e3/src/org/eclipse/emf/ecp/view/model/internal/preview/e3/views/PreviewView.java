@@ -93,6 +93,9 @@ public class PreviewView extends ViewPart implements ISelectionListener {
 		getSite().getPage().removePartListener(partListener);
 		preView.clear();
 		preView.removeAdapter();
+		titleColor.dispose();
+		titleFont.dispose();
+		headerBgColor.dispose();
 	}
 
 	@Override
