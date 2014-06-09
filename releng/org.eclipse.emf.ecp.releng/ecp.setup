@@ -51,7 +51,7 @@
       <p2Repositories url="http://download.eclipse.org/releases/luna"/>
       <p2Repositories url="http://download.eclipse.org/technology/swtbot/releases/latest"/>
       <p2Repositories url="http://download.eclipse.org/eclipse/updates/4.4milestones"/>
-      <p2Repositories url="http://download.eclipse.org/emf-store/releases_11"/>
+      <p2Repositories url="http://download.eclipse.org/emf-store/releases_13"/>
       <p2Repositories url="http://download.eclipse.org/efxclipse/runtime-nightly/site"/>
     </repositoryLists>
   </setupTasks>
