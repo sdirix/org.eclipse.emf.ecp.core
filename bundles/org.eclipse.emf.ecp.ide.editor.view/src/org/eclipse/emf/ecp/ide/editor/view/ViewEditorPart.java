@@ -18,6 +18,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.IResourceDelta;
@@ -51,6 +53,7 @@ import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
@@ -62,7 +65,11 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.dialogs.ElementTreeSelectionDialog;
+import org.eclipse.ui.dialogs.ISelectionStatusValidator;
 import org.eclipse.ui.internal.ErrorViewPart;
+import org.eclipse.ui.model.BaseWorkbenchContentProvider;
+import org.eclipse.ui.model.WorkbenchLabelProvider;
 import org.eclipse.ui.part.EditorPart;
 import org.eclipse.ui.part.FileEditorInput;
 
@@ -228,12 +235,7 @@ public class ViewEditorPart extends EditorPart implements
 		loadView();
 		VView view = getView();
 
-		final String ecorePath = view.getEcorePath();
-		try {
-			EcoreHelper.registerEcore(ecorePath);
-		} catch (final IOException e) {
-			Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
-		}
+		registerEcore(view);
 
 		try {
 			// reload view resource after EClass' package resource was loaded into the package registry
@@ -266,6 +268,60 @@ public class ViewEditorPart extends EditorPart implements
 		} catch (final RuntimeException e) {
 			displayError(e);
 		}// END SUPRESS CATCH EXCEPTION
+	}
+
+	private void registerEcore(VView view) {
+		final String ecorePath = view.getEcorePath();
+
+		try {
+			EcoreHelper.registerEcore(ecorePath);
+		} catch (final IOException e) {
+			Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
+
+		}
+	}
+
+	/**
+	 * @param view
+	 */
+	private void saveChangedView(VView view) {
+		try {
+			view.eResource().save(null);
+		} catch (final IOException e) {
+			Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
+		}
+	}
+
+	private String selectEcoreFromWorkspace() {
+		final ElementTreeSelectionDialog dialog = new ElementTreeSelectionDialog(Display.getDefault()
+			.getActiveShell(), new WorkbenchLabelProvider(), new BaseWorkbenchContentProvider());
+		dialog.setInput(ResourcesPlugin.getWorkspace().getRoot());
+		dialog.setAllowMultiple(false);
+		dialog.setValidator(new ISelectionStatusValidator() {
+
+			@Override
+			public IStatus validate(Object[] selection) {
+				if (selection.length == 1) {
+					if (selection[0] instanceof IFile) {
+						final IFile file = (IFile) selection[0];
+						if (file.getType() == IResource.FILE) {
+							return new Status(IStatus.OK, Activator.PLUGIN_ID, IStatus.OK, null, null);
+						}
+					}
+				}
+				return new Status(IStatus.ERROR, Activator.PLUGIN_ID, IStatus.ERROR, "Please Select a File", //$NON-NLS-1$
+					null);
+			}
+		});
+		dialog.setTitle("Select XMI"); //$NON-NLS-1$
+
+		if (dialog.open() == Window.OK) {
+
+			final IFile file = (IFile) dialog.getFirstResult();
+			return file.getFullPath()
+				.toString();
+		}
+		return null;
 	}
 
 	private void showView() {
@@ -399,7 +455,18 @@ public class ViewEditorPart extends EditorPart implements
 					extMap.clear();
 					showMigrateDialog = false;
 				}
+				final VView view = getView();
 
+				if (view.getEcorePath() == null
+					|| ResourcesPlugin.getWorkspace().getRoot().findMember(view.getEcorePath()) == null) {
+
+					final String selectedECorePath = selectEcoreFromWorkspace();
+					if (selectedECorePath != null) {
+						view.setEcorePath(selectedECorePath);
+						saveChangedView(view);
+						reloadViewModel();
+					}
+				}
 				if (ecoreOutOfSync) {
 					PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
 						@Override
