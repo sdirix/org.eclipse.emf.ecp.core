@@ -30,4 +30,10 @@ public interface Migrator {
 	 * @param mixed the {@link FeatureMap} containing the missing references
 	 */
 	void migrate(EObject eObject, FeatureMap anyAttribute, FeatureMap mixed);
+
+	/**
+	 * @param eObject the {@link EObject} to migrate
+	 * @return true if the instance can migrate the {@link EObject}
+	 */
+	boolean isApplicable(EObject eObject);
 }

@@ -546,6 +546,9 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 	 */
 	@Override
 	public void notifyChange(ModelChangeNotification notification) {
+		if (notification.getRawNotification().isTouch()) {
+			return;
+		}
 		if (EAttribute.class.isInstance(notification.getStructuralFeature())) {
 			return;
 		}

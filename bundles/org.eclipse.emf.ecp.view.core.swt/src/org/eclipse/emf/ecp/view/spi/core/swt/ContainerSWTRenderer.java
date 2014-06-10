@@ -100,7 +100,8 @@ public abstract class ContainerSWTRenderer<VELEMENT extends VElement> extends Ab
 		final Map<VContainedElement, SWTGridDescription> rowGridDescription = new LinkedHashMap<VContainedElement, SWTGridDescription>();
 		final Map<VContainedElement, SWTGridDescription> controlGridDescription = new LinkedHashMap<VContainedElement, SWTGridDescription>();
 		for (final VContainedElement child : getChildren()) {
-			if (VControl.class.isInstance(child) && VControl.class.cast(child).getDomainModelReference() == null) {
+			if (VControl.class.isInstance(child) && (VControl.class.cast(child).getDomainModelReference() == null
+				|| !VControl.class.cast(child).getDomainModelReference().getIterator().hasNext())) {
 				continue;
 			}
 			final AbstractSWTRenderer<VElement> renderer = getSWTRendererFactory().getRenderer(child,
@@ -141,10 +142,14 @@ public abstract class ContainerSWTRenderer<VELEMENT extends VElement> extends Ab
 		columnComposite.setLayout(getLayout(maximalGridDescription.getColumns(), false));
 		for (final VContainedElement child : getChildren()) {
 			try {
-				if (VControl.class.isInstance(child) && VControl.class.cast(child).getDomainModelReference() == null) {
+				if (VControl.class.isInstance(child) && (VControl.class.cast(child).getDomainModelReference() == null
+					|| !VControl.class.cast(child).getDomainModelReference().getIterator().hasNext())) {
 					continue;
 				}
 				final SWTGridDescription gridDescription = rowGridDescription.get(child);
+				if (gridDescription == null) {
+					continue;
+				}
 				for (final SWTGridCell childGridCell : gridDescription.getGrid()) {
 
 					final Control control = childGridCell.getRenderer().render(childGridCell,

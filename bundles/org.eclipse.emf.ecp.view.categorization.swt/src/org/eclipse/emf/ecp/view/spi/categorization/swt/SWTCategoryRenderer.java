@@ -44,7 +44,11 @@ public class SWTCategoryRenderer extends ContainerSWTRenderer<VCategory> {
 	 */
 	@Override
 	protected Collection<VContainedElement> getChildren() {
-		return Collections.singleton(getVElement().getComposite());
+		final VContainedElement element = getVElement().getComposite();
+		if (element == null) {
+			return Collections.emptySet();
+		}
+		return Collections.singleton(element);
 	}
 
 	// /**

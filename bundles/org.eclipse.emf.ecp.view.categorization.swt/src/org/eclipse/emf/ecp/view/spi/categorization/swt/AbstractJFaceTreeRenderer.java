@@ -52,6 +52,7 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.custom.TreeEditor;
 import org.eclipse.swt.events.DisposeEvent;
@@ -147,14 +148,17 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 			return render;
 
 		}
-		final Composite composite = createComposite(parent);
-		treeViewer = new TreeViewer(composite);
-		final ScrolledComposite editorComposite = createdEditorPane(composite);
+		final SashForm sashForm = new SashForm(parent, SWT.HORIZONTAL);
+		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(sashForm);
+
+		treeViewer = new TreeViewer(sashForm);
+		final ScrolledComposite editorComposite = createdEditorPane(sashForm);
 		setupTreeViewer(treeViewer,
 			editorComposite);
 
 		initTreeViewer(treeViewer);
-		return composite;
+		sashForm.setWeights(new int[] { 1, 3 });
+		return sashForm;
 	}
 
 	/**
@@ -330,10 +334,6 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 		final List<TreeEditor> editors) {
 		// The text column
 		final Tree tree = treeViewer.getTree();
-		final TreeColumn columnText = new TreeColumn(tree, SWT.NONE);
-		columnText.setWidth(300);
-		columnText.setAlignment(SWT.FILL);
-
 		int maxActions = 0;
 		final Iterator<EObject> viewContents = view.eAllContents();
 		while (viewContents.hasNext()) {
@@ -345,6 +345,13 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 				}
 			}
 		}
+		if (maxActions == 0) {
+			return;
+		}
+		final TreeColumn columnText = new TreeColumn(tree, SWT.NONE);
+		columnText.setWidth(300);
+		columnText.setAlignment(SWT.FILL);
+
 		for (int i = 0; i < maxActions; i++) {
 			// The column
 			final TreeColumn column = new TreeColumn(tree, SWT.NONE);

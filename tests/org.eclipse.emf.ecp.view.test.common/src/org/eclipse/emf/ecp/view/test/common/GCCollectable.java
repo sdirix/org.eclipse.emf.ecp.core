@@ -12,7 +12,6 @@
 package org.eclipse.emf.ecp.view.test.common;
 
 import java.lang.ref.PhantomReference;
-import java.lang.ref.Reference;
 import java.lang.ref.ReferenceQueue;
 
 /**
@@ -23,15 +22,14 @@ import java.lang.ref.ReferenceQueue;
  */
 public class GCCollectable {
 
-	private static final int DEFAULT_TIMEOUT = 1000;
 
 	private final ReferenceQueue<Object> queue;
 	private final PhantomReference<Object> phantomRef;
 
 	private boolean result;
+	private GCPhantomThread t;
 
-	private boolean runMe;
-	private Thread t;
+
 
 	/**
 	 * Constructor.
@@ -41,30 +39,9 @@ public class GCCollectable {
 	 */
 	public GCCollectable(Object obj) {
 		queue = new ReferenceQueue<Object>();
-		runMe = true;
-		phantomRef = new PhantomReference<Object>(obj, queue);
-		result = false;
-		t = new Thread() {
-			@Override
-			public void run() {
-				while (runMe) {
-					
-					Reference<?> ref = null;
-					try {
-						ref = queue.remove(DEFAULT_TIMEOUT);
-					} catch (final IllegalArgumentException e) {
-						// ignore
-					} catch (final InterruptedException e) {
-						// ignore
-					}
-					if (phantomRef == ref) {
-						result = true;
-						runMe = false;
-					}
-				}
-			}
-		};
-		
+		phantomRef = new PhantomReference<Object>(obj, getQueue());
+		setResult(false);
+		t = new GCPhantomThread(queue, phantomRef);
 		t.start();
 	}
 
@@ -74,24 +51,28 @@ public class GCCollectable {
 	 * @return {@code true}, if the contained object may be finalized, {@code false} otherwise 
 	 */
 	public boolean isCollectable() {
-		int retry = 0;
-		// FIXME: GC is non-deterministic :(
-		while (retry < 100 && !result) {
-			System.gc();
-			System.runFinalization();
-			try {
-				Thread.sleep(50);
-			} catch (InterruptedException e) {
-				// ignore
-			}
-			retry++;
+		try {
+			t.join();
+		} catch (InterruptedException e) {
+			return false;
 		}
-		runMe = false;
+		return t.didCollectReference();
+	}
+
+	public synchronized ReferenceQueue<Object> getQueue() {
+		return queue;
+	}
+
+	public synchronized boolean isResult() {
 		return result;
 	}
-	
-	public Object getObject(){
-		return phantomRef.get();
+
+	public synchronized void setResult(boolean result) {
+		this.result = result;
+	}
+
+	public synchronized PhantomReference<Object> getPhantomRef() {
+		return phantomRef;
 	}
 
 }

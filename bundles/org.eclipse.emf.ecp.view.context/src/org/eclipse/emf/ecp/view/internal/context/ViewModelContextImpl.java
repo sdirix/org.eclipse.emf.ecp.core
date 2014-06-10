@@ -27,11 +27,16 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.TreeIterator;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.emf.ecp.common.UniqueSetting;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
@@ -44,6 +49,8 @@ import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.util.ViewModelUtil;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 
 /**
  * The Class ViewModelContextImpl.
@@ -103,6 +110,8 @@ public class ViewModelContextImpl implements ViewModelContext {
 
 	private final Map<VControl, DomainModelReferenceChangeListener> controlChangeListener = new LinkedHashMap<VControl, DomainModelReferenceChangeListener>();
 
+	private Resource resource;
+
 	/**
 	 * Instantiates a new view model context impl.
 	 * 
@@ -138,6 +147,8 @@ public class ViewModelContextImpl implements ViewModelContext {
 	 */
 	private void instantiate() {
 
+		addResourceIfNecessary();
+
 		ViewModelUtil.resolveDomainReferences(getViewModel(), getDomainModel());
 
 		viewModelContentAdapter = new ViewModelContentAdapter();
@@ -153,6 +164,19 @@ public class ViewModelContextImpl implements ViewModelContext {
 		for (final ViewModelService viewService : viewServices) {
 			viewService.instantiate(this);
 		}
+	}
+
+	private void addResourceIfNecessary() {
+		if (domainObject.eResource() != null) {
+			return;
+		}
+		final ResourceSet rs = new ResourceSetImpl();
+		final AdapterFactoryEditingDomain domain = new AdapterFactoryEditingDomain(
+			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE),
+			new BasicCommandStack(), rs);
+		rs.eAdapters().add(new AdapterFactoryEditingDomain.EditingDomainProvider(domain));
+		resource = rs.createResource(URI.createURI("VIRTAUAL_URI")); //$NON-NLS-1$
+		resource.getContents().add(domainObject);
 	}
 
 	private void createSettingToControlMapping() {
@@ -353,6 +377,10 @@ public class ViewModelContextImpl implements ViewModelContext {
 			return;
 		}
 		isDisposing = true;
+		if (resource != null) {
+			resource.getContents().remove(domainObject);
+		}
+
 		view.eAdapters().remove(viewModelContentAdapter);
 		domainObject.eAdapters().remove(domainModelContentAdapter);
 
@@ -479,6 +507,9 @@ public class ViewModelContextImpl implements ViewModelContext {
 
 			// do not notify while being disposed
 			if (isDisposing) {
+				return;
+			}
+			if (isDisposed) {
 				return;
 			}
 			if (notification.isTouch()) {
@@ -615,4 +646,18 @@ public class ViewModelContextImpl implements ViewModelContext {
 
 	}
 
+	private final Set<Object> users = new LinkedHashSet<Object>();
+
+	public void addContextUser(Object user) {
+		users.add(user);
+	}
+
+	public void removeContextUser(Object user) {
+		users.remove(user);
+		// Every renderer is registered here, as it needs to know when the view model changes (rules, validations, etc).
+		// If no listener is left, we can dispose the context
+		if (users.isEmpty()) {
+			dispose();
+		}
+	}
 }

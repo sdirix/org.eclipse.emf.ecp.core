@@ -108,12 +108,14 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 			});
 			calendar.addFocusListener(new FocusListener() {
 
+				@Override
 				public void focusLost(FocusEvent event) {
 					binding.updateTargetToModel();
 					binding.dispose();
 					dialog.close();
 				}
 
+				@Override
 				public void focusGained(FocusEvent event) {
 				}
 			});
@@ -203,16 +205,9 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 				}
 			}.execute();
 
-			if (result == null) {
-				text.setText(""); //$NON-NLS-1$
-			} else {
-				final XMLGregorianCalendar gregorianCalendar = (XMLGregorianCalendar) result;
-				final Date date = gregorianCalendar.toGregorianCalendar().getTime();
-				text.setText(setupFormat().format(date));
-			}
+			getDataBindingContext().updateTargets();
 
 			if (eStructuralFeature.isUnsettable() && result == null) {
-				// showUnsetLabel();
 				return SetCommand.UNSET_VALUE;
 			}
 			return result;
@@ -261,13 +256,18 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 		button.addSelectionListener(new SelectionAdapterExtension(text, button, getModelValue(setting),
 			getViewModelContext(),
 			getDataBindingContext(), setting.getEStructuralFeature()));
+
 		final IObservableValue value = SWTObservables.observeText(text, SWT.FocusOut);
+
 		final DateTargetToModelUpdateStrategy targetToModelUpdateStrategy = new DateTargetToModelUpdateStrategy(
 			setting.getEStructuralFeature(), getModelValue(setting), getDataBindingContext(),
 			text);
+
 		final DateModelToTargetUpdateStrategy modelToTargetUpdateStrategy = new DateModelToTargetUpdateStrategy(false);
+
 		final Binding binding = getDataBindingContext().bindValue(value, getModelValue(setting),
 			targetToModelUpdateStrategy, modelToTargetUpdateStrategy);
+
 		final Binding tooltipBinding = createTooltipBinding(control, getModelValue(setting), getDataBindingContext(),
 			targetToModelUpdateStrategy, new DateModelToTargetUpdateStrategy(true));
 		return new Binding[] { binding, tooltipBinding };

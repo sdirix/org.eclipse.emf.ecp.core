@@ -35,6 +35,9 @@ public class ControlRootEClassControl2SWTRendererTester implements ECPRendererTe
 		if (!VControl.class.isInstance(vElement)) {
 			return NOT_APPLICABLE;
 		}
+		if (!VControl.class.cast(vElement).getDomainModelReference().getIterator().hasNext()) {
+			return NOT_APPLICABLE;
+		}
 		final Setting setting = VControl.class.cast(vElement).getDomainModelReference().getIterator().next();
 		return isApplicable(setting);
 	}

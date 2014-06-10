@@ -12,9 +12,10 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.view.custom.ui.swt.test;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.assertTrue;
 
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.custom.model.VCustomControl;
@@ -32,6 +33,7 @@ import org.eclipse.emf.emfstore.bowling.BowlingFactory;
 import org.eclipse.emf.emfstore.bowling.Fan;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -80,8 +82,9 @@ public class SWTCustomControlTest {
 	/**
 	 * 
 	 */
-
+	// FIXME what to expect
 	@Test
+	@Ignore
 	public void testCustomControlinView() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		final VElement controlInView = createCustomControlInView();
 		final Shell shell = SWTViewTestHelper.createShell();
@@ -109,7 +112,7 @@ public class SWTCustomControlTest {
 		return view;
 	}
 
-	@Test(expected = IllegalStateException.class)
+	@Test
 	public void testCustomControlinViewWithoutClass() throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
 		final VView view = VViewFactory.eINSTANCE.createView();
@@ -129,7 +132,10 @@ public class SWTCustomControlTest {
 		final Shell shell = SWTViewTestHelper.createShell();
 		SWTViewTestHelper.render(view, shell);
 		// TODO: What to expect
-		fail("Renderer should fail!");
+		assertEquals(1, shell.getChildren().length);
+		assertTrue(Composite.class.isInstance(shell.getChildren()[0]));
+		assertEquals(0, Composite.class.cast(shell.getChildren()[0]).getChildren().length);
+		// fail("Renderer should fail!");
 	}
 
 	@Test

@@ -13,6 +13,7 @@ package org.eclipse.emf.ecp.view.context;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -20,6 +21,10 @@ import static org.junit.Assert.fail;
 import java.util.Set;
 
 import org.eclipse.emf.common.notify.Notifier;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeAddRemoveListener;
@@ -71,6 +76,7 @@ public class ViewModelContextTest {
 	 */
 	@After
 	public void tearDown() throws Exception {
+		viewModelContext.dispose();
 	}
 
 	/**
@@ -512,11 +518,11 @@ public class ViewModelContextTest {
 	 */
 	@Test
 	public void testSettingToControlMapSingleControlStatic() {
+		viewModelContext.dispose();
 		final VView view = VViewFactory.eINSTANCE.createView();
 		final VControl control = VViewFactory.eINSTANCE.createControl();
 		control.setDomainModelReference(BowlingPackage.eINSTANCE.getPlayer_Name());
 		view.getChildren().add(control);
-
 		viewModelContext = ViewModelContextFactory.INSTANCE.createViewModelContext(view, player);
 
 		final Set<VControl> controls = viewModelContext.getControlsFor(((PlayerImpl) player)
@@ -530,6 +536,7 @@ public class ViewModelContextTest {
 	 */
 	@Test
 	public void testSettingToControlMapMultipleControlsStatic() {
+		viewModelContext.dispose();
 		final VView view = VViewFactory.eINSTANCE.createView();
 		final VControl control = VViewFactory.eINSTANCE.createControl();
 		control.setDomainModelReference(BowlingPackage.eINSTANCE.getPlayer_Name());
@@ -538,7 +545,6 @@ public class ViewModelContextTest {
 		final VControl control2 = VViewFactory.eINSTANCE.createControl();
 		control2.setDomainModelReference(BowlingPackage.eINSTANCE.getPlayer_Name());
 		view.getChildren().add(control2);
-
 		viewModelContext = ViewModelContextFactory.INSTANCE.createViewModelContext(view, player);
 
 		final Set<VControl> controls = viewModelContext.getControlsFor(((PlayerImpl) player)
@@ -554,6 +560,7 @@ public class ViewModelContextTest {
 	 */
 	@Test
 	public void testSettingToTableMapSingleControlStatic() {
+		viewModelContext.dispose();
 		final VView view = VViewFactory.eINSTANCE.createView();
 		final VTableControl control = VTableFactory.eINSTANCE.createTableControl();
 		final VTableDomainModelReference domRef = VTableFactory.eINSTANCE.createTableDomainModelReference();
@@ -567,7 +574,6 @@ public class ViewModelContextTest {
 
 		final League league = BowlingFactory.eINSTANCE.createLeague();
 		league.getPlayers().add(player);
-
 		viewModelContext = ViewModelContextFactory.INSTANCE.createViewModelContext(view, league);
 
 		final Set<VControl> controls = viewModelContext.getControlsFor(((LeagueImpl) league)
@@ -586,6 +592,7 @@ public class ViewModelContextTest {
 	 */
 	@Test
 	public void testSettingToTableMapSingleControlDynamicDomainAdd() {
+		viewModelContext.dispose();
 		final VView view = VViewFactory.eINSTANCE.createView();
 		final VTableControl control = VTableFactory.eINSTANCE.createTableControl();
 		final VTableDomainModelReference domRef = VTableFactory.eINSTANCE.createTableDomainModelReference();
@@ -616,6 +623,7 @@ public class ViewModelContextTest {
 	 */
 	@Test
 	public void testSettingToTableMapSingleControlDynamicDomainRemove() {
+		viewModelContext.dispose();
 		final VView view = VViewFactory.eINSTANCE.createView();
 		final VTableControl control = VTableFactory.eINSTANCE.createTableControl();
 		final VTableDomainModelReference domRef = VTableFactory.eINSTANCE.createTableDomainModelReference();
@@ -651,6 +659,7 @@ public class ViewModelContextTest {
 	 */
 	@Test
 	public void testSettingToControlMapDynamicViewAdd() {
+		viewModelContext.dispose();
 		final VView view = VViewFactory.eINSTANCE.createView();
 		final VControl control = VViewFactory.eINSTANCE.createControl();
 		control.setDomainModelReference(BowlingPackage.eINSTANCE.getPlayer_Name());
@@ -673,6 +682,7 @@ public class ViewModelContextTest {
 	 */
 	@Test
 	public void testSettingToControlMapDynamicViewRemove() {
+		viewModelContext.dispose();
 		final VView view = VViewFactory.eINSTANCE.createView();
 		final VControl control = VViewFactory.eINSTANCE.createControl();
 		control.setDomainModelReference(BowlingPackage.eINSTANCE.getPlayer_Name());
@@ -695,4 +705,24 @@ public class ViewModelContextTest {
 		assertEquals(control2, controls2.iterator().next());
 	}
 
+	@Test
+	public void testResourceIsAdded() {
+		assertNotNull(player.eResource());
+	}
+
+	@Test
+	public void testResourceIsRemoved() {
+		viewModelContext.dispose();
+		assertNull(player.eResource());
+	}
+
+	@Test
+	public void testResourceIsNotAdded() {
+		viewModelContext.dispose();
+		final ResourceSet rs = new ResourceSetImpl();
+		final Resource resource = rs.createResource(URI.createURI("VIRTUAL_URI"));
+		resource.getContents().add(player);
+		viewModelContext = ViewModelContextFactory.INSTANCE.createViewModelContext(view, player);
+		assertEquals(resource, player.eResource());
+	}
 }

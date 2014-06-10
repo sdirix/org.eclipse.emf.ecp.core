@@ -64,6 +64,7 @@ public class ModifyNavigatorTest extends SWTBotTestCase {
 	public void init() {
 		display = Display.getDefault();
 		shell = UIThreadRunnable.syncExec(display, new Result<Shell>() {
+			@Override
 			public Shell run() {
 				final Shell shell = new Shell(display);
 				shell.setLayout(new FillLayout());
@@ -80,6 +81,7 @@ public class ModifyNavigatorTest extends SWTBotTestCase {
 	@After
 	public void after() {
 		UIThreadRunnable.syncExec(new VoidResult() {
+			@Override
 			public void run() {
 				shell.dispose();
 				shell.close();
@@ -109,6 +111,7 @@ public class ModifyNavigatorTest extends SWTBotTestCase {
 		 * 
 		 * @see java.lang.Runnable#run()
 		 */
+		@Override
 		public void run() {
 			final ECPProject[] project = new ECPProject[1];
 			final Object monitor = new Object();
@@ -119,6 +122,7 @@ public class ModifyNavigatorTest extends SWTBotTestCase {
 			}
 			UIThreadRunnable.syncExec(display, new VoidResult() {
 
+				@Override
 				public void run() {
 					viewer = TreeViewerFactory.createModelExplorerViewer(shell, false,
 						PlatformUI.getWorkbench().getDecoratorManager().getLabelDecorator());
@@ -148,6 +152,7 @@ public class ModifyNavigatorTest extends SWTBotTestCase {
 			}.start();
 
 			UIThreadRunnable.syncExec(new VoidResult() {
+				@Override
 				public void run() {
 					bot.tree().getTreeItem(PROJECTNAME).expand();
 					if (project[0].getContents().size() != viewer.getTree().getItems()[0].getItems().length) {
@@ -165,6 +170,7 @@ public class ModifyNavigatorTest extends SWTBotTestCase {
 			}
 
 			UIThreadRunnable.syncExec(new VoidResult() {
+				@Override
 				public void run() {
 					shell.close();
 				}

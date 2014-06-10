@@ -12,26 +12,19 @@
 package org.eclipse.emf.ecp.internal.ide.util;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.Path;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EPackage.Registry;
-import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 
 /**
  * Helper methods for dealing with ecores.
@@ -40,6 +33,9 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
  * 
  */
 public final class EcoreHelper {
+
+	/** Contains mapping between an ecore path and the ns-uris of all the EPackages that ecore registered. */
+	private static final Map<String, List<String>> registeredEPackages = new HashMap<String, List<String>>();
 
 	private EcoreHelper() {
 	}
@@ -54,56 +50,41 @@ public final class EcoreHelper {
 	 * */
 
 	public static void registerEcore(String ecorePath) throws IOException {
-
 		if (ecorePath == null) {
 			return;
 		}
 
+		final ResourceSet physicalResourceSet = new ResourceSetImpl();
 		// put the package in the registry
 		final URI uri = URI.createPlatformResourceURI(ecorePath, false);
-		final EPackage ePackage = getEPackage(uri);
-		if (ePackage == null) {
-			return;
-		}
-		if (isContainedInPackageRegistry(ePackage.getNsURI())) {
-			return;
-		}
-		EPackage.Registry.INSTANCE.put(ePackage.getNsURI(), ePackage);
-		{
-
-		}
-		// load the resource
-		final IResource f = ResourcesPlugin.getWorkspace().getRoot().findMember(ecorePath);
-		final ResourceSet rs = new ResourceSetImpl();
-		final Resource r = rs.createResource(URI.createURI(f.getLocationURI().toString()));
+		final Resource r = physicalResourceSet.createResource(uri);
 		r.load(null);
 
 		// resolve the proxies
-		int rsSize = rs.getResources().size();
-		EcoreUtil.resolveAll(rs);
-		while (rsSize != rs.getResources().size()) {
-			EcoreUtil.resolveAll(rs);
-			rsSize = rs.getResources().size();
+		int rsSize = physicalResourceSet.getResources().size();
+		EcoreUtil.resolveAll(physicalResourceSet);
+		while (rsSize != physicalResourceSet.getResources().size()) {
+			EcoreUtil.resolveAll(physicalResourceSet);
+			rsSize = physicalResourceSet.getResources().size();
 		}
-		final EPackage ep = (EPackage) r.getContents().get(0);
-		for (final EClassifier classifier : ep.getEClassifiers()) {
-			if (EClass.class.isInstance(classifier)) {
-				final EClass c = (EClass) classifier;
-				// register all referenced ecores
-				for (final EReference ref : c.getEAllReferences()) {
-					final EClass refClass = (EClass) ref.getEType();
-					if (isContainedInPackageRegistry(refClass.getEPackage().getNsURI())) {
-						continue;
-					}
-					final URI refClassPackageURI = EcoreUtil.getURI(refClass.eContainer());
-					if (!refClassPackageURI.isPlatform()) {
-						final IPath path = new Path(refClassPackageURI.toFileString());
-						final IFile file = ResourcesPlugin.getWorkspace().getRoot().getFileForLocation(path);
-
-						EcoreHelper.registerEcore(file.getFullPath().toString());
-					}
-				}
+		final ResourceSetImpl virtualResourceSet = new ResourceSetImpl();
+		for (final Resource physicalResource : physicalResourceSet.getResources()) {
+			// check for physical uri
+			final EObject eObject = physicalResource.getContents().get(0);
+			final EPackage ePackage = EPackage.class.cast(eObject);
+			if (isContainedInPackageRegistry(ePackage.getNsURI())) {
+				return;
 			}
+			physicalResource.getContents().remove(ePackage);
+			final Resource virtualResource = virtualResourceSet.createResource(URI.createURI(ePackage.getNsURI()));
+			virtualResource.getContents().add(ePackage);
+			EPackage.Registry.INSTANCE.put(ePackage.getNsURI(), ePackage);
+
+			// add ePackage URI to local cache
+			if (registeredEPackages.get(ecorePath) == null) {
+				registeredEPackages.put(ecorePath, new ArrayList<String>());
+			}
+			registeredEPackages.get(ecorePath).add(ePackage.getNsURI());
 		}
 
 	}
@@ -121,9 +102,8 @@ public final class EcoreHelper {
 	 * 
 	 * */
 	public static void unregisterEcore(String ecorePath) {
-		final URI uri = URI.createPlatformResourceURI(ecorePath, false);
-		final EPackage ePackage = getEPackage(uri);
-		unregisterEcore(ePackage);
+		final List<String> nsURIs = new ArrayList<String>(registeredEPackages.get(ecorePath));
+		unregisterEcore(ecorePath, nsURIs);
 	}
 
 	/**
@@ -133,69 +113,32 @@ public final class EcoreHelper {
 	 * @param ePackage - the ePackage to be removed.
 	 * 
 	 * */
-	private static void unregisterEcore(EPackage ePackage) {
-		if (ePackage == null) {
+	private static void unregisterEcore(String ecorePath, List<String> nsURIs) {
+		if (nsURIs == null) {
 			return;
 		}
-
-		final Registry instance = org.eclipse.emf.ecore.EPackage.Registry.INSTANCE;
-		if (!instance.containsKey(ePackage.getNsURI())) {
-			return;
+		for (final String nsURI : nsURIs) {
+			if (getUsageCount(nsURI) == 1) {
+				final Registry registry = org.eclipse.emf.ecore.EPackage.Registry.INSTANCE;
+				registry.remove(nsURI);
+				registeredEPackages.get(ecorePath).remove(nsURI);
+			}
 		}
-		instance.remove(ePackage.getNsURI());
-		for (final EClassifier classifier : ePackage.getEClassifiers()) {
-			if (EClass.class.isInstance(classifier)) {
-				final EClass c = (EClass) classifier;
-				// unregister all referenced packages
+	}
 
-				// FIXME need to count usages
-				for (final EReference ref : c.getEReferences()) {
-					final EClass refClass = (EClass) ref.getEType();
-					unregisterEcore((EPackage) refClass.eContainer());
+	/**
+	 * @param nsURI
+	 * @return the number of ecores which use the package with the given nsURI
+	 */
+	private static int getUsageCount(String nsURI) {
+		int usage = 0;
+		for (final String ecore : registeredEPackages.keySet()) {
+			for (final String uri : registeredEPackages.get(ecore)) {
+				if (nsURI.equals(uri)) {
+					usage++;
 				}
 			}
 		}
+		return usage;
 	}
-
-	private static EPackage getEPackage(URI ecorePlatformResourceURI) {
-
-		EPackage ePackage = null;
-
-		final ResourceSet resourceSet = new ResourceSetImpl();
-		final Map<String, Object> map = resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap();
-		map.put("*", new XMIResourceFactoryImpl()); //$NON-NLS-1$
-
-		// ensure URI is platform URI
-		if (!ecorePlatformResourceURI.isPlatform()) {
-			ecorePlatformResourceURI = URI.createPlatformResourceURI(ecorePlatformResourceURI.toString(), false);
-		}
-
-		if (!ecorePlatformResourceURI.segment(0).equals("resource")) { //$NON-NLS-1$
-			return null;
-		}
-		final Resource ecore = resourceSet.getResource(ecorePlatformResourceURI, true);
-
-		if (ecore != null) {
-
-			final EList<EObject> contents = ecore.getContents();
-			if (contents.size() != 1) {
-				return null;
-			}
-
-			final EObject object = contents.get(0);
-			if (!(object instanceof EPackage)) {
-				return null;
-			}
-
-			ePackage = (EPackage) object;
-
-			// correct hrefs
-			ecore.getContents().remove(ePackage);
-			final Resource resource2 = resourceSet.createResource(URI.createURI(ePackage.getNsURI()));
-			resource2.getContents().add(ePackage);
-
-		}
-		return ePackage;
-	}
-
 }

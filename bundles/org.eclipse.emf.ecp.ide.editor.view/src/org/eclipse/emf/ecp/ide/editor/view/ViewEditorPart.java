@@ -12,14 +12,19 @@
 package org.eclipse.emf.ecp.ide.editor.view;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.EventObject;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IResourceChangeEvent;
+import org.eclipse.core.resources.IResourceChangeListener;
+import org.eclipse.core.resources.IResourceDelta;
+import org.eclipse.core.resources.IResourceDeltaVisitor;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -35,26 +40,20 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecore.util.FeatureMap;
 import org.eclipse.emf.ecore.xmi.XMLResource;
-import org.eclipse.emf.ecore.xmi.impl.BasicResourceHandler;
 import org.eclipse.emf.ecore.xml.type.AnyType;
 import org.eclipse.emf.ecp.ide.view.service.ViewModelEditorCallback;
 import org.eclipse.emf.ecp.internal.ide.util.EcoreHelper;
-import org.eclipse.emf.ecp.spi.ui.ECPReferenceServiceImpl;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
-import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.ecp.view.internal.provider.Migrator;
-import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
-import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
-import org.eclipse.emf.ecp.view.spi.model.ModelChangeAddRemoveListener;
+import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
@@ -62,10 +61,15 @@ import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.IPartListener2;
+import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.dialogs.ElementTreeSelectionDialog;
+import org.eclipse.ui.dialogs.ISelectionStatusValidator;
 import org.eclipse.ui.internal.ErrorViewPart;
+import org.eclipse.ui.model.BaseWorkbenchContentProvider;
+import org.eclipse.ui.model.WorkbenchLabelProvider;
 import org.eclipse.ui.part.EditorPart;
 import org.eclipse.ui.part.FileEditorInput;
 
@@ -84,13 +88,12 @@ public class ViewEditorPart extends EditorPart implements
 	private Composite parent;
 	private ECPSWTView render;
 
-	private ViewModelContext viewContext;
-	private ModelChangeAddRemoveListener modelChangeListener;
-
 	private boolean ecoreOutOfSync;
 	private IPartListener2 partListener;
 	private final ViewEditorPart instance;
-	private ViewModelService referenceService;
+	private ArrayList<Migrator> migrators;
+
+	private boolean showMigrateDialog;
 
 	/** Default constructor for {@link ViewEditorPart}. */
 	public ViewEditorPart() {
@@ -121,8 +124,6 @@ public class ViewEditorPart extends EditorPart implements
 		super.setInput(input);
 		super.setPartName(input.getName());
 
-		referenceService = new ECPReferenceServiceImpl();
-
 		basicCommandStack = new BasicCommandStack();
 		basicCommandStack.addCommandStackListener
 			(new CommandStackListener()
@@ -144,6 +145,39 @@ public class ViewEditorPart extends EditorPart implements
 
 		partListener = new ViewPartListener();
 		getSite().getPage().addPartListener(partListener);
+
+		final IResourceChangeListener listener = new IResourceChangeListener() {
+			@Override
+			public void resourceChanged(IResourceChangeEvent event) {
+				final IResourceDelta delta = event.getDelta();
+				final IResourceDeltaVisitor visitor = new IResourceDeltaVisitor()
+				{
+					@Override
+					public boolean visit(IResourceDelta delta)
+					{
+						if (delta.getKind() == IResourceDelta.REMOVED) {
+							final FileEditorInput fei = (FileEditorInput) instance.getEditorInput();
+							if (delta.getFullPath().equals(fei.getFile().getFullPath())) {
+								final IWorkbenchPage page = instance.getSite().getPage();
+								Display.getDefault().asyncExec(new Runnable() {
+									@Override
+									public void run() {
+										page.closeEditor(instance, false);
+									}
+								});
+								return false;
+							}
+						}
+						return true;
+					}
+				};
+				try {
+					delta.accept(visitor);
+				} catch (final CoreException ex) {
+				}
+			}
+		};
+		ResourcesPlugin.getWorkspace().addResourceChangeListener(listener);
 	}
 
 	private ResourceSet createResourceSet() {
@@ -178,55 +212,8 @@ public class ViewEditorPart extends EditorPart implements
 			loadOptions
 				.put(XMLResource.OPTION_RECORD_UNKNOWN_FEATURE, Boolean.TRUE);
 
-			final List<Migrator> migrators = new ArrayList<Migrator>();
-			final IConfigurationElement[] migratorExtensions = Platform.getExtensionRegistry()
-				.getConfigurationElementsFor("org.eclipse.emf.ecp.ui.view.manualMigrator"); //$NON-NLS-1$
-			for (final IConfigurationElement migratorExtension : migratorExtensions) {
-				try {
-					final Migrator migrator = (Migrator) migratorExtension.createExecutableExtension("class"); //$NON-NLS-1$
-					migrators.add(migrator);
-				} catch (final CoreException ex) {
-					Activator.getDefault().getLog().log(new Status(IStatus.WARNING, Activator.PLUGIN_ID,
-						ex.getMessage(), ex));
-				}
-			}
-			final boolean migrate = MessageDialog.openQuestion(getSite().getShell(), "Migrate Models",
-				"Should outdated models be migrated and saved?");
-
-			loadOptions.put(XMLResource.OPTION_RESOURCE_HANDLER,
-				new BasicResourceHandler() {
-					@Override
-					@SuppressWarnings("rawtypes")
-					public void postLoad(XMLResource resource,
-						InputStream inputStream, Map options) {
-						final Map extMap = resource.getEObjectToExtensionMap();
-						for (final Iterator itr = extMap.entrySet().iterator(); itr
-							.hasNext();) {
-							final Map.Entry entry = (Map.Entry) itr.next();
-							final EObject key = (EObject) entry.getKey();
-							final AnyType value = (AnyType) entry.getValue();
-							final FeatureMap anyAttribute = value.getAnyAttribute();
-							final FeatureMap mixed = value.getMixed();
-							if (migrate) {
-								for (final Migrator migrator : migrators) {
-									migrator.migrate(key, anyAttribute, mixed);
-								}
-							}
-							Activator.getDefault().getLog().log(new Status(IStatus.WARNING, Activator.PLUGIN_ID,
-								"Model contains unknown element " + entry.getValue() + " for " + entry.getKey())); //$NON-NLS-1$ //$NON-NLS-2$
-						}
-						if (migrate) {
-							resource.getEObjectToExtensionMap().clear();
-						}
-					}
-				});
-
 			resource = resourceSet.createResource(URI.createURI(fei.getURI().toURL().toExternalForm()));
 			resource.load(loadOptions);
-
-			if (migrate) {
-				resource.save(null);
-			}
 
 			// resolve all proxies
 			int rsSize = resourceSet.getResources().size();
@@ -248,12 +235,7 @@ public class ViewEditorPart extends EditorPart implements
 		loadView();
 		VView view = getView();
 
-		final String ecorePath = view.getEcorePath();
-		try {
-			EcoreHelper.registerEcore(ecorePath);
-		} catch (final IOException e) {
-			Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
-		}
+		registerEcore(view);
 
 		try {
 			// reload view resource after EClass' package resource was loaded into the package registry
@@ -276,7 +258,7 @@ public class ViewEditorPart extends EditorPart implements
 						.getLog()
 						.log(
 							new Status(IStatus.WARNING, Activator.PLUGIN_ID,
-								"The Root EClass of the view cannot be resolved. " + view.getRootEClass())); //$NON-NLS-1$
+								"The Root EClass of the view cannot be resolved." + view.getRootEClass())); //$NON-NLS-1$
 				}
 			}
 
@@ -288,11 +270,62 @@ public class ViewEditorPart extends EditorPart implements
 		}// END SUPRESS CATCH EXCEPTION
 	}
 
+	private void registerEcore(VView view) {
+		final String ecorePath = view.getEcorePath();
+
+		try {
+			EcoreHelper.registerEcore(ecorePath);
+		} catch (final IOException e) {
+			Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
+
+		}
+	}
+
+	/**
+	 * @param view
+	 */
+	private void saveChangedView(VView view) {
+		try {
+			view.eResource().save(null);
+		} catch (final IOException e) {
+			Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
+		}
+	}
+
+	private String selectEcoreFromWorkspace() {
+		final ElementTreeSelectionDialog dialog = new ElementTreeSelectionDialog(Display.getDefault()
+			.getActiveShell(), new WorkbenchLabelProvider(), new BaseWorkbenchContentProvider());
+		dialog.setInput(ResourcesPlugin.getWorkspace().getRoot());
+		dialog.setAllowMultiple(false);
+		dialog.setValidator(new ISelectionStatusValidator() {
+
+			@Override
+			public IStatus validate(Object[] selection) {
+				if (selection.length == 1) {
+					if (selection[0] instanceof IFile) {
+						final IFile file = (IFile) selection[0];
+						if (file.getType() == IResource.FILE) {
+							return new Status(IStatus.OK, Activator.PLUGIN_ID, IStatus.OK, null, null);
+						}
+					}
+				}
+				return new Status(IStatus.ERROR, Activator.PLUGIN_ID, IStatus.ERROR, "Please Select a File", //$NON-NLS-1$
+					null);
+			}
+		});
+		dialog.setTitle("Select XMI"); //$NON-NLS-1$
+
+		if (dialog.open() == Window.OK) {
+
+			final IFile file = (IFile) dialog.getFirstResult();
+			return file.getFullPath()
+				.toString();
+		}
+		return null;
+	}
+
 	private void showView() {
 		final VView view = getView();
-
-		viewContext = ViewModelContextFactory.INSTANCE.createViewModelContext(
-			view, view.getRootEClass(), referenceService);
 
 		try {
 			render = ECPSWTViewRenderer.INSTANCE.render(parent, view);
@@ -320,8 +353,42 @@ public class ViewEditorPart extends EditorPart implements
 					render.dispose();
 					render.getSWTControl().dispose();
 				}
+
+				final String ecorePath = getView().getEcorePath();
+				try {
+					EcoreHelper.registerEcore(ecorePath);
+				} catch (final IOException e) {
+					Activator.getDefault().getLog()
+						.log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
+				}
+
+				// reload view resource after EClass' package resource was loaded into the package registry
 				loadView();
+				final VView view = getView();
+
+				try {
+					Activator.getViewModelRegistry().registerViewModelEditor(view, instance);
+				} catch (final IOException e) {
+					Activator.getDefault().getLog()
+						.log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
+				}
+
+				if (view.getRootEClass() != null) {
+					if (view.getRootEClass().eResource() != null) {
+						Activator.getViewModelRegistry().register(
+							view.getRootEClass().eResource().getURI().toString(),
+							view);
+					} else {
+						Activator
+							.getDefault()
+							.getLog()
+							.log(
+								new Status(IStatus.WARNING, Activator.PLUGIN_ID,
+									"The Root EClass of the view cannot be resolved." + view.getRootEClass())); //$NON-NLS-1$
+					}
+				}
 				showView();
+				parent.layout(true);
 			}
 		});
 	}
@@ -330,9 +397,6 @@ public class ViewEditorPart extends EditorPart implements
 	public void dispose() {
 		final VView view = getView();
 		Activator.getViewModelRegistry().unregisterViewModelEditor(view, this);
-		if (viewContext != null && modelChangeListener != null) {
-			viewContext.unregisterViewChangeListener(modelChangeListener);
-		}
 		getSite().getPage().removePartListener(partListener);
 		super.dispose();
 	}
@@ -352,13 +416,57 @@ public class ViewEditorPart extends EditorPart implements
 	}
 
 	/**
+	 * @return
+	 */
+	private List<Migrator> getMigrators() {
+		if (migrators == null) {
+			migrators = new ArrayList<Migrator>();
+			final IConfigurationElement[] migratorExtensions = Platform.getExtensionRegistry()
+				.getConfigurationElementsFor("org.eclipse.emf.ecp.ui.view.manualMigrator"); //$NON-NLS-1$
+			for (final IConfigurationElement migratorExtension : migratorExtensions) {
+				try {
+					final Migrator migrator = (Migrator) migratorExtension.createExecutableExtension("class"); //$NON-NLS-1$
+					migrators.add(migrator);
+				} catch (final CoreException ex) {
+					Activator.getDefault().getLog().log(new Status(IStatus.WARNING, Activator.PLUGIN_ID,
+						ex.getMessage(), ex));
+				}
+			}
+		}
+		return migrators;
+	}
+
+	/**
 	 * 
 	 * */
 	private class ViewPartListener implements IPartListener2 {
 		@Override
 		public void partActivated(IWorkbenchPartReference partRef) {
-
 			if (instance.equals(partRef.getPart(true))) {
+
+				final Map<EObject, AnyType> extMap = ((XMLResource) resource).getEObjectToExtensionMap();
+
+				if (!extMap.isEmpty() && showMigrateDialog) {
+					final Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
+					final UnknownFeaturesDialog dialog = new UnknownFeaturesMigrationDialog(shell, "Unknown features", //$NON-NLS-1$
+						extMap,
+						getMigrators());
+					dialog.open();
+					extMap.clear();
+					showMigrateDialog = false;
+				}
+				final VView view = getView();
+
+				if (view.getEcorePath() == null
+					|| ResourcesPlugin.getWorkspace().getRoot().findMember(view.getEcorePath()) == null) {
+
+					final String selectedECorePath = selectEcoreFromWorkspace();
+					if (selectedECorePath != null) {
+						view.setEcorePath(selectedECorePath);
+						saveChangedView(view);
+						reloadViewModel();
+					}
+				}
 				if (ecoreOutOfSync) {
 					PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
 						@Override
@@ -369,11 +477,18 @@ public class ViewEditorPart extends EditorPart implements
 								activeShell,
 								"Warning", //$NON-NLS-1$
 								null,
-								"The ECore or Genmodel of your ViewModel just changed. This change is not reflected in this View Model Editor.", //$NON-NLS-1$
+								"The ECore of your ViewModel just changed. This change is not reflected in this View Model Editor. Do you want to reload now?", //$NON-NLS-1$
 								MessageDialog.WARNING,
-								new String[] { "Ok" }, //$NON-NLS-1$ 
+								new String[] { "Yes", "No" }, //$NON-NLS-1$ //$NON-NLS-2$ 
 								0);
-							dialog.open();
+							final int result = dialog.open();
+							if (result == 0) {
+								Activator.getViewModelRegistry().unregisterViewModelEditor(getView(), instance);
+								Activator.getViewModelRegistry().unregister(
+									getView().getRootEClass().eResource().getURI().toString(),
+									getView());
+								reloadViewModel();
+							}
 							ecoreOutOfSync = false;
 						}
 					});
@@ -395,6 +510,9 @@ public class ViewEditorPart extends EditorPart implements
 
 		@Override
 		public void partOpened(IWorkbenchPartReference partRef) {
+			if (instance.equals(partRef.getPart(true))) {
+				showMigrateDialog = true;
+			}
 		}
 
 		@Override

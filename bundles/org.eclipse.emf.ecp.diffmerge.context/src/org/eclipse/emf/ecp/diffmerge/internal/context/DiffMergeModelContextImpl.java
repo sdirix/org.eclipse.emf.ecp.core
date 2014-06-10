@@ -33,6 +33,7 @@ import org.eclipse.emf.ecp.view.spi.model.VAttachment;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.util.ViewModelUtil;
 
 /**
@@ -129,15 +130,30 @@ public class DiffMergeModelContextImpl extends ViewModelContextImpl implements
 			final Iterator<Setting> iterator = domainModelReference.getIterator();
 			while (iterator.hasNext()) {
 				final Setting setting = iterator.next();
-				final Set<VControl> controls = getControlsFor(setting);
+				Set<VControl> controls = getControlsFor(setting);
+				controls = getValidMergeControls(controls);
 				if (controls == null) {
 					continue;
 				}
 				for (final VControl vControl : controls) {
 					markControl(vControl, true);
 				}
+				// break for table not for custom
+				if (VFeaturePathDomainModelReference.class.isInstance(domainModelReference)) {
+					break;
+				}
 			}
 		}
+	}
+
+	/**
+	 * Filter for valid controls. E.g. filter out controls which should not be mergable.
+	 * 
+	 * @param controls the controls to validate
+	 * @return the controls which should get a merge marker
+	 */
+	protected Set<VControl> getValidMergeControls(Set<VControl> controls) {
+		return controls;
 	}
 
 	private void initComparison() {
@@ -331,13 +347,16 @@ public class DiffMergeModelContextImpl extends ViewModelContextImpl implements
 	 */
 	@Override
 	public void markControl(VControl vControl, boolean merged) {
+		if (vControl.isReadonly()) {
+			return;
+		}
 		if (merged) {
 			mergedControls.add(vControl);
 		} else {
 			mergedControls.remove(vControl);
 		}
 		final VDiffAttachment diffAttachment = getDiffAttachment(vControl);
-		diffAttachment.setMergedDiffs(merged ? 1 : 0);
+		diffAttachment.setMergedDiffs(merged && diffAttachment.getTotalNumberOfDiffs() != 0 ? 1 : 0);
 		propagateDiffAttachment(vControl, diffAttachment);
 	}
 

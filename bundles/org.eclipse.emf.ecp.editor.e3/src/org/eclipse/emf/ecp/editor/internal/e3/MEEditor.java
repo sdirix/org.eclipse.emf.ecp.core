@@ -45,13 +45,13 @@ import org.eclipse.ui.forms.editor.SharedHeaderFormEditor;
  */
 public class MEEditor extends SharedHeaderFormEditor {
 
-	private static final String STATUS_EXTENSIONPOINT_ID = "org.eclipse.emf.ecp.editor.internal.e3.statusmessage"; //$NON-NLS-1$
+	private static final String STATUS_EXTENSIONPOINT_ID = "org.eclipse.emf.ecp.editor.statusmessage"; //$NON-NLS-1$
 
 	private static final String DEFAULT_PAGE_ID = "Edit"; //$NON-NLS-1$
 
 	private static final String REPLACE_ATTRIBUTE = "replace"; //$NON-NLS-1$
 
-	private static final String EDITOR_PAGES_EXTENSIONPOINT_ID = "org.eclipse.emf.ecp.editor.internal.e3.pages"; //$NON-NLS-1$
+	private static final String EDITOR_PAGES_EXTENSIONPOINT_ID = "org.eclipse.emf.ecp.editor.pages"; //$NON-NLS-1$
 
 	/**
 	 * The Id for MEEditor. We need this to open a model element.
@@ -210,6 +210,7 @@ public class MEEditor extends SharedHeaderFormEditor {
 
 			modelElementContextListener = new ECPContextDisposedListener() {
 
+				@Override
 				public void contextDisposed() {
 					close(false);
 				}
@@ -221,6 +222,7 @@ public class MEEditor extends SharedHeaderFormEditor {
 				@Override
 				public void onChange(Notification notification) {
 					Display.getDefault().asyncExec(new Runnable() {
+						@Override
 						public void run() {
 							updateIcon();
 							setPartName(shortLabelProvider.getText(modelElementContext.getDomainObject()));

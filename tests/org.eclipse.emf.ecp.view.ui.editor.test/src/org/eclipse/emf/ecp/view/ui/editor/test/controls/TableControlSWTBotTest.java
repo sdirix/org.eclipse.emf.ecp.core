@@ -64,7 +64,6 @@ public class TableControlSWTBotTest extends ECPCommonSWTBotTest {
 
 	private static double memBefore;
 	private static double memAfter;
-	private static EObject domainObject;
 
 	private final boolean isDomainCollectable;
 
@@ -149,23 +148,26 @@ public class TableControlSWTBotTest extends ECPCommonSWTBotTest {
 		TableControlSWTBotTest.memBefore += before;
 		TableControlSWTBotTest.memAfter += after;
 
-		assertTrue("More than four adapter left on domain model element after dispose of ECPSWTView: "
-			+ getDomainObject().eAdapters().size()
-			+ " adapters. Not all adapters can be removed, but it's maybe time to get suspicious.", getDomainObject()
-			.eAdapters().size() < 5);
-		assertTrue("More than four adapter left on domain model element after dispose of ECPSWTView: "
-			+ ((League) getDomainObject()).getPlayers().get(0).eAdapters().size()
-			+ " adapters. Not all adapters can be removed, but it's maybe time to get suspicious.",
-			((League) getDomainObject()).getPlayers().get(0).eAdapters().size() < 5);
+		if (getDomainObject() != null) {
+			assertTrue("More than four adapter left on domain model element after dispose of ECPSWTView: "
+				+ getDomainObject().eAdapters().size()
+				+ " adapters. Not all adapters can be removed, but it's maybe time to get suspicious.",
+				getDomainObject()
+					.eAdapters().size() < 5);
+			assertTrue("More than four adapter left on domain model element after dispose of ECPSWTView: "
+				+ ((League) getDomainObject()).getPlayers().get(0).eAdapters().size()
+				+ " adapters. Not all adapters can be removed, but it's maybe time to get suspicious.",
+				((League) getDomainObject()).getPlayers().get(0).eAdapters().size() < 5);
+		}
 
-		disposeSWTView();
 		assertTrue(getSWTViewCollectable().isCollectable());
 		unsetSWTViewCollectable();
+		unsetDomainObject();
+		adapterFactory.dispose();
 		assertTrue(viewCollectable.isCollectable());
+		viewCollectable = null;
+		assertTrue(domainCollectable.isCollectable());
 
-		if (isDomainCollectable) {
-			assertTrue(domainCollectable.isCollectable());
-		}
 	}
 
 	/**
@@ -175,11 +177,11 @@ public class TableControlSWTBotTest extends ECPCommonSWTBotTest {
 	 */
 	@Override
 	public EObject createDomainObject() {
-		League league = (League) domainObject;
+		League league = (League) getDomainObject();
 
 		if (isDomainCollectable) {
 			// remove reference to domain object, since gc will be tested
-			domainObject = null;
+			setDomainObject(null);
 		}
 
 		if (league == null) {
@@ -195,20 +197,21 @@ public class TableControlSWTBotTest extends ECPCommonSWTBotTest {
 			memBefore = 0d;
 			memAfter = 0d;
 		} else {
-			league.getPlayers().get(0).setName("Max Morlock");
-			league.getPlayers().get(0).setHeight(1.8);
-			league.getPlayers().get(0).getEMails().clear();
-			league.getPlayers().get(0).getEMails().add("maxl@foobar.com");
-			league.getPlayers().get(0).setNumberOfVictories(249);
-			league.getPlayers().get(0).getPlayedTournamentTypes().clear();
-			league.getPlayers().get(0).getPlayedTournamentTypes().add(TournamentType.AMATEUR);
-			league.getPlayers().get(0).setWinLossRatio(new BigDecimal(0.8));
-			league.getPlayers().get(0).setGender(Gender.MALE);
+			final Player player = league.getPlayers().get(0);
+			player.setName("Max Morlock");
+			player.setHeight(1.8);
+			player.getEMails().clear();
+			player.getEMails().add("maxl@foobar.com");
+			player.setNumberOfVictories(249);
+			player.getPlayedTournamentTypes().clear();
+			player.getPlayedTournamentTypes().add(TournamentType.AMATEUR);
+			player.setWinLossRatio(new BigDecimal(0.8));
+			player.setGender(Gender.MALE);
 			league.getPlayers().remove(1);
 		}
 
 		if (!isDomainCollectable) {
-			domainObject = league;
+			setDomainObject(league);
 		}
 
 		domainCollectable = new GCCollectable(league);
