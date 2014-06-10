@@ -14,12 +14,12 @@ package org.eclipse.emf.ecp.view.model.internal.preview.e3.views;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.emf.ecp.ide.editor.view.ViewEditorPart;
 import org.eclipse.emf.ecp.view.model.internal.preview.Activator;
 import org.eclipse.emf.ecp.view.model.preview.common.Preview;
 import org.eclipse.emf.ecp.view.spi.model.VView;
-import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IToolBarManager;
@@ -395,7 +395,7 @@ public class PreviewView extends ViewPart implements ISelectionListener {
 				}
 
 				// TODO needed?
-				if (notification.getFeature() == VViewPackage.eINSTANCE.getElement_Diagnostic()) {
+				if (EStructuralFeature.class.cast(notification.getFeature()).isTransient()) {
 					return;
 				}
 

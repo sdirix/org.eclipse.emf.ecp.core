@@ -190,6 +190,9 @@ public class UnsetService implements ViewModelService {
 		final Set<FeatureWrapper> wrappers = objectToFeatureMap
 			.get(eObject);
 		FeatureWrapper wrapper = null;
+		if (wrappers == null) {
+			return;
+		}
 		for (final FeatureWrapper w : wrappers) {
 			if (w.isWrapperFor(eStructuralFeature)) {
 				wrapper = w;
