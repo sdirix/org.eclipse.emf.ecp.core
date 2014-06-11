@@ -60,7 +60,7 @@ public class Activator extends Plugin {
 	private VTViewTemplateProvider viewTemplate;
 
 	/**
-	 * Returns the currentInstance of the {@link VTViewTemplateProvider}.
+	 * Returns the current Instance of the {@link VTViewTemplateProvider}.
 	 * 
 	 * @return the {@link VTViewTemplateProvider}
 	 */

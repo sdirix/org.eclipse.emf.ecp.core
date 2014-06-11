@@ -11,10 +11,13 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.table.swt;
 
+import java.net.URL;
+
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
+import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.swt.graphics.Image;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -60,6 +63,20 @@ public class Activator extends Plugin {
 		return image;
 	}
 
+	/**
+	 * Finds and returns an image for the provided {@link URL}.
+	 * 
+	 * @param url the {@link URL} to get the image from
+	 * @return the image or null if nothing could be found
+	 */
+	public static Image getImage(URL url) {
+		final Image image = instance.getImageRegistryService().getImage(url);
+
+		instance.getBundle().getBundleContext().ungetService(instance.imageRegistryServiceReference);
+
+		return image;
+	}
+
 	private ServiceReference<ImageRegistryService> imageRegistryServiceReference;
 
 	private ImageRegistryService getImageRegistryService() {
@@ -77,6 +94,25 @@ public class Activator extends Plugin {
 	 */
 	public static void log(Throwable t) {
 		instance.getLog().log(new Status(IStatus.ERROR, PLUGIN_ID, t.getMessage(), t));
+	}
+
+	private VTViewTemplateProvider viewTemplate;
+
+	/**
+	 * Returns the current Instance of the {@link VTViewTemplateProvider}.
+	 * 
+	 * @return the {@link ECPControlFactory}
+	 */
+	public VTViewTemplateProvider getVTViewTemplateProvider() {
+		if (viewTemplate == null) {
+			final ServiceReference<VTViewTemplateProvider> viewTemplateReference = instance.getBundle()
+				.getBundleContext()
+				.getServiceReference(VTViewTemplateProvider.class);
+			if (viewTemplateReference != null) {
+				viewTemplate = instance.getBundle().getBundleContext().getService(viewTemplateReference);
+			}
+		}
+		return viewTemplate;
 	}
 
 	/**

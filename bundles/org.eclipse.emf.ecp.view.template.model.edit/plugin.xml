@@ -127,4 +127,17 @@
             class="org.eclipse.emf.ecp.view.template.selector.viewModelElement.model.provider.ViewModelElementItemProviderAdapterFactory$TemplateChildCreationExtender"/>
    </extension>
 
+   <extension point="org.eclipse.emf.edit.itemProviderAdapterFactories">
+      <!-- @generated tableValidationColumnStyleProperty -->
+      <factory
+            uri="http://www.eclipse.org/emf/ecp/view/template/style/table/validation/model"
+            class="org.eclipse.emf.ecp.view.template.style.tableValidation.model.provider.TableValidationItemProviderAdapterFactory"
+            supportedTypes=
+              "org.eclipse.emf.edit.provider.IEditingDomainItemProvider
+               org.eclipse.emf.edit.provider.IStructuredItemContentProvider
+               org.eclipse.emf.edit.provider.ITreeItemContentProvider
+               org.eclipse.emf.edit.provider.IItemLabelProvider
+               org.eclipse.emf.edit.provider.IItemPropertySource"/>
+   </extension>
+
 </plugin>

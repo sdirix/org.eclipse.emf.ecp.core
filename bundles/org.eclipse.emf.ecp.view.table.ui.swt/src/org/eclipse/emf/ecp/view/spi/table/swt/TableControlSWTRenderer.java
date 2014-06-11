@@ -11,10 +11,13 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.table.swt;
 
+import java.io.File;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.observable.list.IObservableList;
@@ -53,6 +56,9 @@ import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
+import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
+import org.eclipse.emf.ecp.view.template.style.tableValidation.model.VTTableValidationFactory;
+import org.eclipse.emf.ecp.view.template.style.tableValidation.model.VTTableValidationStyleProperty;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -509,13 +515,53 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	}
 
 	private void createFixedValidationStatusColumn(TableViewer tableViewer) {
+		final VTTableValidationStyleProperty tableValidationStyleProperty = getTableValidationStyleProperty();
+		final int columnWidth = tableValidationStyleProperty.getColumnWidth();
+		final String columnName = tableValidationStyleProperty.getColumnName();
+		final String imagePath = tableValidationStyleProperty.getImagePath();
 		final TableViewerColumn column = TableViewerColumnBuilder.create()
 			.setMoveable(false)
-			.setText(ControlMessages.TableControl_ValidationStatusColumn)
-			.setWidth(80)
+			.setText(columnName)
+			.setWidth(columnWidth)
 			.build(tableViewer);
 
+		if (imagePath != null && !imagePath.isEmpty()) {
+			Image image = null;
+			try {
+				image = Activator.getImage(new File(imagePath).toURI().toURL());
+			} catch (final MalformedURLException ex) {
+				ex.printStackTrace();
+			}
+			if (image != null) {
+				column.getColumn().setImage(image);
+			}
+		}
 		column.setLabelProvider(new ValidationStatusCellLabelProvider(getVElement()));
+	}
+
+	private VTTableValidationStyleProperty getTableValidationStyleProperty() {
+		VTTableValidationStyleProperty tableValidationStyleProperties;
+		final Set<VTStyleProperty> styleProperties = Activator.getInstance().getVTViewTemplateProvider()
+			.getStyleProperties(getVElement(), getViewModelContext());
+		for (final VTStyleProperty styleProperty : styleProperties) {
+			if (VTTableValidationStyleProperty.class.isInstance(styleProperty)) {
+				tableValidationStyleProperties = VTTableValidationStyleProperty.class
+					.cast(styleProperty);
+				return tableValidationStyleProperties;
+			}
+		}
+
+		tableValidationStyleProperties = getDefaultTableValidationStyleProperty();
+		return tableValidationStyleProperties;
+	}
+
+	private VTTableValidationStyleProperty getDefaultTableValidationStyleProperty() {
+		final VTTableValidationStyleProperty tableValidationProp = VTTableValidationFactory.eINSTANCE
+			.createTableValidationStyleProperty();
+		tableValidationProp.setColumnWidth(80);
+		tableValidationProp.setColumnName(ControlMessages.TableControl_ValidationStatusColumn);
+		tableValidationProp.setImagePath(null);
+		return tableValidationProp;
 	}
 
 	private CellEditor createCellEditor(final EObject tempInstance, final EStructuralFeature feature, Table table) {
