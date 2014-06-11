@@ -16,7 +16,7 @@
       <category name="org.eclipse.emf.ecp.category"/>
    </feature>
    <feature url="features/org.eclipse.emf.ecp.sdk.feature_1.3.0.qualifier.jar" id="org.eclipse.emf.ecp.sdk.feature" version="1.3.0.qualifier">
-      <category name="org.eclipse.emf.ecp.category"/>
+      <category name="org.eclipse.emf.ecp.sdk"/>
    </feature>
    <feature url="features/org.eclipse.emf.ecp.view.custom.feature_1.3.0.qualifier.jar" id="org.eclipse.emf.ecp.view.custom.feature" version="1.3.0.qualifier">
       <category name="org.eclipse.emf.ecp.view"/>
@@ -91,7 +91,7 @@
       <category name="org.eclipse.emf.ecp.emfforms"/>
    </feature>
    <feature url="features/org.eclipse.emf.ecp.emfforms.sdk.feature_1.3.0.qualifier.jar" id="org.eclipse.emf.ecp.emfforms.sdk.feature" version="1.3.0.qualifier">
-      <category name="org.eclipse.emf.emfforms.sdk"/>
+      <category name="org.eclipse.emf.ecp.sdk"/>
    </feature>
    <feature url="features/org.eclipse.emf.ecp.demo.e4.feature_1.3.0.qualifier.jar" id="org.eclipse.emf.ecp.demo.e4.feature" version="1.3.0.qualifier">
       <category name="org.eclipse.emf.ecp.category"/>
@@ -140,9 +140,9 @@
          Provides support for creating RAP applications with ECP. Should be added to a target platform, but not installed into the IDE.
       </description>
    </category-def>
-   <category-def name="org.eclipse.emf.emfforms.sdk" label="EMF Forms SDK">
+   <category-def name="org.eclipse.emf.ecp.sdk" label="ECP SDKs  (install one of these)">
       <description>
-         Contains the EMF Forms SDK
+         Contains the ECP SDKs. Please install only one of these.
       </description>
    </category-def>
    <category-def name="org.eclipse.emf.emfforms.examples" label="EMF Forms Examples  (Do not install into IDE)">

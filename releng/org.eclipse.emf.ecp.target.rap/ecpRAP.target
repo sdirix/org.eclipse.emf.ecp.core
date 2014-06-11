@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?><target name="ECP RAP" sequenceNumber="241">
+<?pde version="3.8"?><target name="ECP RAP" sequenceNumber="242">
 <locations>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.swtbot.forms.feature.group" version="2.2.1.201402241301"/>
@@ -52,13 +52,13 @@
 <repository location="http://download.eclipse.org/releases/luna/"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.emf.emfstore.client.transaction.feature.feature.group" version="1.3.0.v20140609-0439"/>
-<unit id="org.eclipse.emf.emfstore.client.feature.feature.group" version="1.3.0.v20140609-0439"/>
-<unit id="org.eclipse.emf.emfstore.common.feature.feature.group" version="1.3.0.v20140609-0439"/>
-<unit id="org.eclipse.emf.emfstore.server.feature.feature.group" version="1.3.0.v20140609-0439"/>
-<unit id="org.eclipse.emf.emfstore.example.feature.feature.group" version="1.3.0.v20140609-0439"/>
-<unit id="org.eclipse.emf.emfstore.client.ui.feature.feature.group" version="1.3.0.v20140609-0439"/>
-<unit id="org.eclipse.emf.emfstore.ecore.feature.feature.group" version="1.3.0.v20140609-0439"/>
+<unit id="org.eclipse.emf.emfstore.client.transaction.feature.feature.group" version="1.3.0.v20140610-1211"/>
+<unit id="org.eclipse.emf.emfstore.client.feature.feature.group" version="1.3.0.v20140610-1211"/>
+<unit id="org.eclipse.emf.emfstore.common.feature.feature.group" version="1.3.0.v20140610-1211"/>
+<unit id="org.eclipse.emf.emfstore.server.feature.feature.group" version="1.3.0.v20140610-1211"/>
+<unit id="org.eclipse.emf.emfstore.example.feature.feature.group" version="1.3.0.v20140610-1211"/>
+<unit id="org.eclipse.emf.emfstore.client.ui.feature.feature.group" version="1.3.0.v20140610-1211"/>
+<unit id="org.eclipse.emf.emfstore.ecore.feature.feature.group" version="1.3.0.v20140610-1211"/>
 <repository location="http://download.eclipse.org/emf-store/releases_13"/>
 </location>
 </locations>
