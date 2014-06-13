@@ -120,6 +120,9 @@
    <feature url="features/org.eclipse.emf.ecp.makeithappen.feature_1.3.0.qualifier.jar" id="org.eclipse.emf.ecp.makeithappen.feature" version="1.3.0.qualifier">
       <category name="org.eclipse.emf.emfforms.examples"/>
    </feature>
+   <feature url="features/org.eclipse.emf.ecp.view.mappingdmr.feature_1.3.0.qualifier.jar" id="org.eclipse.emf.ecp.view.mappingdmr.feature" version="1.3.0.qualifier">
+      <category name="org.eclipse.emf.ecp.emfforms"/>
+   </feature>
    <category-def name="org.eclipse.emf.ecp.category" label="EMF Client Platform">
       <description>
          If you are unsure, which features to select, please use the ECP SDK including all important features.
