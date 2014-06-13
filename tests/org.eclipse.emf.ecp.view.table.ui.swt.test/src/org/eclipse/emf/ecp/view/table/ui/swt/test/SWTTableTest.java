@@ -221,7 +221,7 @@ public class SWTTableTest {
 		final Control control = getTable(render);
 		assertTrue(control instanceof Table);
 		final Table table = (Table) control;
-		assertEquals(2, table.getColumnCount());
+		assertEquals(2 + 1, table.getColumnCount());
 
 	}
 
@@ -242,7 +242,7 @@ public class SWTTableTest {
 		final Control control = getTable(render);
 		assertTrue(control instanceof Table);
 		final Table table = (Table) control;
-		assertEquals(2, table.getColumnCount());
+		assertEquals(2 + 1, table.getColumnCount());
 	}
 
 	@Test
