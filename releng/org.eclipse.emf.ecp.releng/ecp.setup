@@ -56,6 +56,17 @@
     </repositoryLists>
   </setupTasks>
   <setupTasks xsi:type="setup:WorkingSetTask">
+    <workingSets name="ECP" id="CDO CDO">
+      <predicates xsi:type="predicates:AndPredicate">
+        <operands xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.emf\.ecp.*"/>
+        <operands xsi:type="workingsets:ExclusionPredicate"/>
+      </predicates>
+    </workingSets>
+    <workingSets name="ECP Tests" id="CDO CDO Tests">
+      <predicates xsi:type="predicates:AndPredicate">
+        <operands xsi:type="predicates:NamePredicate" pattern=".*test.*"/>
+      </predicates>
+    </workingSets>
     <workingSets name="EMF Forms" id="CDO CDO Dawn">
       <predicates xsi:type="predicates:AndPredicate">
         <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@setupTasks.9/@workingSets.1 //@setupTasks.9/@workingSets.8 //@setupTasks.9/@workingSets.6 //@setupTasks.9/@workingSets.5 //@setupTasks.9/@workingSets.3 //@setupTasks.9/@workingSets.7 //@setupTasks.9/@workingSets.4"/>
