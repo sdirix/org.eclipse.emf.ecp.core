@@ -394,20 +394,20 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 				continue;
 			}
 			final EStructuralFeature eStructuralFeature = eStructuralFeatureIterator.next();
-			// final IItemPropertyDescriptor itemPropertyDescriptor = getItemPropertyDescriptor(tempInstance
-			// .eSetting(eStructuralFeature));
-			// if (itemPropertyDescriptor == null) {
-			// // if we can't render because no edit information is available, do nothing
-			// continue;
-			// }
+			final IItemPropertyDescriptor itemPropertyDescriptor = getItemPropertyDescriptor(tempInstance
+				.eSetting(eStructuralFeature));
+			if (itemPropertyDescriptor == null) {
+				// if we can't render because no edit information is available, do nothing
+				continue;
+			}
 
 			final CellEditor cellEditor = createCellEditor(tempInstance, eStructuralFeature, tableViewer.getTable());
 			final TableViewerColumn column = TableViewerColumnBuilder
 				.create()
-				// .setText(itemPropertyDescriptor.getDisplayName(null))
-				// .setToolTipText(itemPropertyDescriptor.getDescription(null))
-				.setText(eStructuralFeature.getName())
-				.setToolTipText(eStructuralFeature.getName())
+				.setText(itemPropertyDescriptor.getDisplayName(null))
+				.setToolTipText(itemPropertyDescriptor.getDescription(null))
+				// .setText(eStructuralFeature.getName())
+				// .setToolTipText(eStructuralFeature.getName())
 				.setResizable(true)
 				.setMoveable(false)
 				.setStyle(SWT.NONE)
@@ -951,13 +951,15 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		 */
 		@Override
 		protected boolean canEdit(Object element) {
+
 			boolean editable = tableControl.isEnabled()
-				&& !tableControl.isReadonly();// && itemPropertyDescriptor.canSetProperty(null);
+				&& !tableControl.isReadonly();
 
 			final Setting setting = getCellSetting(domainModelReference, element);
 			if (setting == null) {
 				return false;
 			}
+			editable &= getItemPropertyDescriptor(setting).canSetProperty(null);
 			editable &= !CellReadOnlyTesterHelper.getInstance().isReadOnly(getVElement(), setting
 				);
 
@@ -1164,11 +1166,5 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			return iterator.next();
 		}
 		return null;
-		// final EStructuralFeature[] path = featurePath.getFeaturePath();
-		// for (int i = 0; i < path.length - 1; i++) {
-		// eObject = (InternalEObject) eObject.eGet(path[i]);
-		// }
-		// Setting setting = eObject.eSetting(cellFeature);
-		// return setting;
 	}
 }
