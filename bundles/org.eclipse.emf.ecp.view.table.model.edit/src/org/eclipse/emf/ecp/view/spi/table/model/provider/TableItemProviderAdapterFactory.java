@@ -137,33 +137,6 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.view.spi.table.model.VTableColumn}
-	 * instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	protected TableColumnItemProvider tableColumnItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.spi.table.model.VTableColumn}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	@Override
-	public Adapter createTableColumnAdapter() {
-		if (tableColumnItemProvider == null)
-		{
-			tableColumnItemProvider = new TableColumnItemProvider(this);
-		}
-
-		return tableColumnItemProvider;
-	}
-
-	/**
 	 * This keeps track of the one adapter used for all
 	 * {@link org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference} instances.
 	 * <!-- begin-user-doc -->
@@ -192,12 +165,41 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all
+	 * {@link org.eclipse.emf.ecp.view.spi.table.model.VReadOnlyColumnConfiguration} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	protected ReadOnlyColumnConfigurationItemProvider readOnlyColumnConfigurationItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.spi.table.model.VReadOnlyColumnConfiguration}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	@Override
+	public Adapter createReadOnlyColumnConfigurationAdapter()
+	{
+		if (readOnlyColumnConfigurationItemProvider == null)
+		{
+			readOnlyColumnConfigurationItemProvider = new ReadOnlyColumnConfigurationItemProvider(this);
+		}
+
+		return readOnlyColumnConfigurationItemProvider;
+	}
+
+	/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 */
+	@Override
 	public ComposeableAdapterFactory getRootAdapterFactory() {
 		return parentAdapterFactory == null ? this : parentAdapterFactory.getRootAdapterFactory();
 	}
@@ -209,6 +211,7 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setParentAdapterFactory(ComposedAdapterFactory parentAdapterFactory) {
 		this.parentAdapterFactory = parentAdapterFactory;
 	}
@@ -272,6 +275,7 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 	 * 
 	 * @generated
 	 */
+	@Override
 	public Collection<?> getNewChildDescriptors(Object object, EditingDomain editingDomain) {
 		return childCreationExtenderManager.getNewChildDescriptors(object, editingDomain);
 	}
@@ -282,6 +286,7 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 	 * 
 	 * @generated
 	 */
+	@Override
 	public ResourceLocator getResourceLocator() {
 		return childCreationExtenderManager;
 	}
@@ -293,6 +298,7 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void addListener(INotifyChangedListener notifyChangedListener) {
 		changeNotifier.addListener(notifyChangedListener);
 	}
@@ -304,6 +310,7 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void removeListener(INotifyChangedListener notifyChangedListener) {
 		changeNotifier.removeListener(notifyChangedListener);
 	}
@@ -315,6 +322,7 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void fireNotifyChanged(Notification notification) {
 		changeNotifier.fireNotifyChanged(notification);
 
@@ -331,13 +339,14 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void dispose() {
 		if (tableControlItemProvider != null)
 			tableControlItemProvider.dispose();
-		if (tableColumnItemProvider != null)
-			tableColumnItemProvider.dispose();
 		if (tableDomainModelReferenceItemProvider != null)
 			tableDomainModelReferenceItemProvider.dispose();
+		if (readOnlyColumnConfigurationItemProvider != null)
+			readOnlyColumnConfigurationItemProvider.dispose();
 	}
 
 	/**
@@ -409,12 +418,12 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 			 * @generated
 			 */
 			@Override
-			public Object caseControl(VControl object)
+			public Object caseContainer(VContainer object)
 			{
 				newChildDescriptors.add
 					(createChildParameter
-					(VViewPackage.Literals.CONTROL__DOMAIN_MODEL_REFERENCE,
-						VTableFactory.eINSTANCE.createTableDomainModelReference()));
+					(VViewPackage.Literals.CONTAINER__CHILDREN,
+						VTableFactory.eINSTANCE.createTableControl()));
 
 				return null;
 			}
@@ -426,12 +435,12 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 			 * @generated
 			 */
 			@Override
-			public Object caseContainer(VContainer object)
+			public Object caseControl(VControl object)
 			{
 				newChildDescriptors.add
 					(createChildParameter
-					(VViewPackage.Literals.CONTAINER__CHILDREN,
-						VTableFactory.eINSTANCE.createTableControl()));
+					(VViewPackage.Literals.CONTROL__DOMAIN_MODEL_REFERENCE,
+						VTableFactory.eINSTANCE.createTableDomainModelReference()));
 
 				return null;
 			}
@@ -454,6 +463,7 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 		 * 
 		 * @generated
 		 */
+		@Override
 		public Collection<Object> getNewChildDescriptors(Object object, EditingDomain editingDomain) {
 			ArrayList<Object> result = new ArrayList<Object>();
 			new CreationSwitch(result, editingDomain).doSwitch((EObject) object);
@@ -466,6 +476,7 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 		 * 
 		 * @generated
 		 */
+		@Override
 		public ResourceLocator getResourceLocator() {
 			return TableEditPlugin.INSTANCE;
 		}

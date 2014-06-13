@@ -99,21 +99,25 @@ public class ControlTargetFeatureControl extends LinkControl {
 			super(notifier, composedAdapterFactory, shell, Helper.getRootEClass((EObject) notifier),
 				new ECPSelectionStatusValidator() {
 
+					@Override
 					public IStatus validate(Object[] selection) {
 
 						if (selection.length != 0 && EStructuralFeature.class.isInstance(selection[0])) {
 							final TreePath treePath = getTreePath();
 							if (!Helper
-								.hasFeaturePropertyDescriptor(Helper.getRootEClass((EObject) notifier), treePath)) {
-								return new Status(IStatus.ERROR,
+								.hasFeaturePropertyDescriptor(EStructuralFeature.class.cast(selection[0])
+									.getEContainingClass(), treePath)) {
+								// FIXME Hack, for allowing the selection of EStructuralFeatures w/o property
+								// descriptors. Should return error.
+								return new Status(IStatus.WARNING,
 									org.eclipse.emf.ecp.view.editor.controls.Activator.PLUGIN_ID,
-									"The selected " + EStructuralFeature.class.getSimpleName()
-										+ " has no PropertyDescriptor.");
+									"The selected " + EStructuralFeature.class.getSimpleName() //$NON-NLS-1$
+										+ " has no PropertyDescriptor."); //$NON-NLS-1$
 							}
 							return Status.OK_STATUS;
 						}
 						return new Status(IStatus.ERROR, org.eclipse.emf.ecp.view.editor.controls.Activator.PLUGIN_ID,
-							"This is not an " + EStructuralFeature.class.getSimpleName() + ".");
+							"This is not an " + EStructuralFeature.class.getSimpleName() + "."); //$NON-NLS-1$ //$NON-NLS-2$
 					}
 				}, allowMultiSelection());
 		}

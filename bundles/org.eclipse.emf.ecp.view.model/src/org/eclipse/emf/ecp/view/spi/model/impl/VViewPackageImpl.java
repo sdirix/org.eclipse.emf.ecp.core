@@ -15,11 +15,13 @@ import static org.eclipse.emf.ecp.view.spi.model.VViewPackage.CONTAINER;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
+import org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.VAttachment;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
@@ -94,6 +96,14 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * @generated
 	 */
 	private EEnum labelAlignmentEEnum = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	private EDataType domainModelReferenceChangeListenerEDataType = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -192,6 +202,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EClass getElement()
 	{
 		return elementEClass;
@@ -203,6 +214,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EAttribute getElement_Name()
 	{
 		return (EAttribute) elementEClass.getEStructuralFeatures().get(0);
@@ -214,6 +226,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EAttribute getElement_Visible()
 	{
 		return (EAttribute) elementEClass.getEStructuralFeatures().get(1);
@@ -225,6 +238,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EAttribute getElement_Enabled()
 	{
 		return (EAttribute) elementEClass.getEStructuralFeatures().get(2);
@@ -236,6 +250,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EAttribute getElement_Readonly()
 	{
 		return (EAttribute) elementEClass.getEStructuralFeatures().get(3);
@@ -247,6 +262,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EReference getElement_Diagnostic()
 	{
 		return (EReference) elementEClass.getEStructuralFeatures().get(4);
@@ -258,6 +274,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EReference getElement_Attachments()
 	{
 		return (EReference) elementEClass.getEStructuralFeatures().get(5);
@@ -269,6 +286,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EClass getDiagnostic()
 	{
 		return diagnosticEClass;
@@ -280,6 +298,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EAttribute getDiagnostic_Diagnostics()
 	{
 		return (EAttribute) diagnosticEClass.getEStructuralFeatures().get(0);
@@ -290,6 +309,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EClass getView() {
 		return viewEClass;
 	}
@@ -299,6 +319,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EReference getView_RootEClass() {
 		return (EReference) viewEClass.getEStructuralFeatures().get(0);
 	}
@@ -309,8 +330,23 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EReference getView_Children() {
 		return (EReference) viewEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * 
+	 * @since 1.3
+	 *        <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	@Override
+	public EAttribute getView_EcorePath()
+	{
+		return (EAttribute) viewEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -319,6 +355,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EClass getContainedElement()
 	{
 		return containedElementEClass;
@@ -329,6 +366,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EClass getControl() {
 		return controlEClass;
 	}
@@ -339,6 +377,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EReference getControl_DomainModelReference()
 	{
 		return (EReference) controlEClass.getEStructuralFeatures().get(1);
@@ -350,6 +389,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EClass getContainer()
 	{
 		return containerEClass;
@@ -361,6 +401,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EReference getContainer_Children()
 	{
 		return (EReference) containerEClass.getEStructuralFeatures().get(0);
@@ -372,6 +413,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EAttribute getControl_LabelAlignment()
 	{
 		return (EAttribute) controlEClass.getEStructuralFeatures().get(0);
@@ -382,7 +424,9 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
+	 * @since 1.3
 	 */
+	@Override
 	public EEnum getLabelAlignment()
 	{
 		return labelAlignmentEEnum;
@@ -390,13 +434,16 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.3
+	 *        <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 */
-	public EClass getDomainModelReference()
+	@Override
+	public EDataType getDomainModelReferenceChangeListener()
 	{
-		return domainModelReferenceEClass;
+		return domainModelReferenceChangeListenerEDataType;
 	}
 
 	/**
@@ -405,6 +452,33 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
+	public EClass getDomainModelReference()
+	{
+		return domainModelReferenceEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * 
+	 * @since 1.3
+	 *        <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	@Override
+	public EAttribute getDomainModelReference_ChangeListener()
+	{
+		return (EAttribute) domainModelReferenceEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	@Override
 	public EClass getFeaturePathDomainModelReference()
 	{
 		return featurePathDomainModelReferenceEClass;
@@ -416,6 +490,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EReference getFeaturePathDomainModelReference_DomainModelEFeature()
 	{
 		return (EReference) featurePathDomainModelReferenceEClass.getEStructuralFeatures().get(0);
@@ -427,6 +502,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EReference getFeaturePathDomainModelReference_DomainModelEReferencePath()
 	{
 		return (EReference) featurePathDomainModelReferenceEClass.getEStructuralFeatures().get(1);
@@ -438,6 +514,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EClass getAttachment()
 	{
 		return attachmentEClass;
@@ -449,6 +526,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public VViewFactory getViewFactory() {
 		return (VViewFactory) getEFactoryInstance();
 	}
@@ -481,6 +559,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 		attachmentEClass = createEClass(ATTACHMENT);
 
 		domainModelReferenceEClass = createEClass(DOMAIN_MODEL_REFERENCE);
+		createEAttribute(domainModelReferenceEClass, DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER);
 
 		featurePathDomainModelReferenceEClass = createEClass(FEATURE_PATH_DOMAIN_MODEL_REFERENCE);
 		createEReference(featurePathDomainModelReferenceEClass,
@@ -499,6 +578,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 		viewEClass = createEClass(VIEW);
 		createEReference(viewEClass, VIEW__ROOT_ECLASS);
 		createEReference(viewEClass, VIEW__CHILDREN);
+		createEAttribute(viewEClass, VIEW__ECORE_PATH);
 
 		containedElementEClass = createEClass(CONTAINED_ELEMENT);
 
@@ -511,6 +591,9 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 
 		// Create enums
 		labelAlignmentEEnum = createEEnum(LABEL_ALIGNMENT);
+
+		// Create data types
+		domainModelReferenceChangeListenerEDataType = createEDataType(DOMAIN_MODEL_REFERENCE_CHANGE_LISTENER);
 	}
 
 	/**
@@ -566,6 +649,10 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 
 		initEClass(domainModelReferenceEClass, VDomainModelReference.class,
 			"DomainModelReference", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(
+			getDomainModelReference_ChangeListener(),
+			getDomainModelReferenceChangeListener(),
+			"changeListener", null, 0, -1, VDomainModelReference.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(featurePathDomainModelReferenceEClass, VFeaturePathDomainModelReference.class,
 			"FeaturePathDomainModelReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
@@ -619,6 +706,10 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 			getContainedElement(),
 			null,
 			"children", null, 0, -1, VView.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(
+			getView_EcorePath(),
+			theEcorePackage.getEString(),
+			"ecorePath", null, 0, 1, VView.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(containedElementEClass, VContainedElement.class,
 			"ContainedElement", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
@@ -646,6 +737,10 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 		initEEnum(labelAlignmentEEnum, LabelAlignment.class, "LabelAlignment"); //$NON-NLS-1$
 		addEEnumLiteral(labelAlignmentEEnum, LabelAlignment.LEFT);
 		addEEnumLiteral(labelAlignmentEEnum, LabelAlignment.NONE);
+
+		// Initialize data types
+		initEDataType(domainModelReferenceChangeListenerEDataType, DomainModelReferenceChangeListener.class,
+			"DomainModelReferenceChangeListener", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
 		// Create resource
 		createResource(eNS_URI);

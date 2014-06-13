@@ -14,6 +14,7 @@ package org.eclipse.emf.ecp.common;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecore.InternalEObject;
 
 /**
  * <p>
@@ -47,8 +48,9 @@ public class UniqueSetting {
 	/**
 	 * Convenience method for creating a setting.
 	 * 
-	 * @param setting the {@link Setting} to create a {@link UniqueSetting} from
+	 * @param setting the {@link Setting} to wrap
 	 * @return the constructed setting
+	 * 
 	 */
 	public static UniqueSetting createSetting(Setting setting) {
 		return new UniqueSetting(setting.getEObject(), setting.getEStructuralFeature());
@@ -131,5 +133,14 @@ public class UniqueSetting {
 	 */
 	public EStructuralFeature getEStructuralFeature() {
 		return structuralFeature;
+	}
+
+	/**
+	 * Return the {@link Setting} wrapped in this {@link UniqueSetting}.
+	 * 
+	 * @return the wrapped {@link Setting}
+	 */
+	public Setting getSetting() {
+		return ((InternalEObject) eObject).eSetting(structuralFeature);
 	}
 }

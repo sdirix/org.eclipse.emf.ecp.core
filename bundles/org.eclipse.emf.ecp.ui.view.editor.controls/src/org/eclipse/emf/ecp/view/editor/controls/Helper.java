@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -30,6 +31,7 @@ import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.jface.viewers.TreePath;
 
 /**
@@ -51,7 +53,10 @@ public final class Helper {
 	 * @return the root {@link EClass}
 	 */
 	public static EClass getRootEClass(ECPProject project) {
-		return ((VView) project.getContents().get(0)).getRootEClass();
+		if (VView.class.isInstance(project.getContents().get(0))) {
+			return VView.class.cast(project.getContents().get(0)).getRootEClass();
+		}
+		return null;
 	}
 
 	/**
@@ -82,7 +87,8 @@ public final class Helper {
 	public static void getReferenceMap(EClass parent,
 		Map<EClass, EReference> childParentReferenceMap) {
 		for (final EReference eReference : parent.getEAllContainments()) {
-			if (eReference.getEReferenceType() != parent) {
+			if (eReference.getEReferenceType() != parent
+				&& childParentReferenceMap.get(eReference.getEReferenceType()) != eReference) {
 				childParentReferenceMap.put(eReference.getEReferenceType(), eReference);
 				getReferenceMap(eReference.getEReferenceType(), childParentReferenceMap);
 			}
@@ -98,12 +104,14 @@ public final class Helper {
 	 */
 	public static List<EReference> getReferencePath(EClass selectedClass,
 		Map<EClass, EReference> childParentReferenceMap) {
+
 		final List<EReference> bottomUpPath = new ArrayList<EReference>();
 
-		while (childParentReferenceMap.containsKey(selectedClass)) {
-			final EReference parentReference = childParentReferenceMap.get(selectedClass);
+		EReference parentReference = childParentReferenceMap.get(selectedClass);
+		while (parentReference != null && !bottomUpPath.contains(parentReference)) {
 			bottomUpPath.add(parentReference);
 			selectedClass = parentReference.getEContainingClass();
+			parentReference = childParentReferenceMap.get(selectedClass);
 		}
 		Collections.reverse(bottomUpPath);
 		return bottomUpPath;
@@ -140,8 +148,9 @@ public final class Helper {
 	 */
 	public static boolean hasFeaturePropertyDescriptor(EStructuralFeature featureToCheck) {
 
-		final ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(
-			ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+		final ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
+			new ReflectiveItemProviderAdapterFactory(),
+			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
 		final AdapterFactoryItemDelegator adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(
 			composedAdapterFactory);
 		final IItemPropertyDescriptor propertyDescriptor =
@@ -169,8 +178,9 @@ public final class Helper {
 			}
 		}
 
-		final ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(
-			ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+		final ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
+			new ReflectiveItemProviderAdapterFactory(),
+			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
 		final AdapterFactoryItemDelegator adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(
 			composedAdapterFactory);
 		final IItemPropertyDescriptor propertyDescriptor =

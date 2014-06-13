@@ -18,7 +18,7 @@
       testsPackageSuffix="model.tests" extensibleProviderFactory="true" childCreationExtenders="true"
       ecorePackage="treeMasterDetail.ecore#/">
     <genClasses ecoreClass="treeMasterDetail.ecore#//TreeMasterDetail">
-      <genFeatures children="true" createChild="true" ecoreFeature="ecore:EReference treeMasterDetail.ecore#//TreeMasterDetail/detailView"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference treeMasterDetail.ecore#//TreeMasterDetail/detailView"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

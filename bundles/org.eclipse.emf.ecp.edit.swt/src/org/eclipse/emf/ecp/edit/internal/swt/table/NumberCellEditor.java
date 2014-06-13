@@ -36,20 +36,43 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
 
+/**
+ * A number cell Editor which displays numbers.
+ * 
+ * @author Eugen Neufeld
+ * 
+ */
 public class NumberCellEditor extends TextCellEditor implements ECPCellEditor {
 
 	private EStructuralFeature eStructuralFeature;
 	private ViewModelContext viewModelContext;
 	private ViewLocaleService localeService;
 
+	/**
+	 * The constructor which only takes a parent composite.
+	 * 
+	 * @param parent the {@link Composite} to use as a parent.
+	 */
 	public NumberCellEditor(Composite parent) {
 		super(parent, SWT.RIGHT);
 	}
 
+	/**
+	 * A constructor which takes a parent and the style to use, the style is ignored by this cell editor.
+	 * 
+	 * @param parent the {@link Composite} to use as a parent
+	 * @param style the SWT style to set
+	 */
 	public NumberCellEditor(Composite parent, int style) {
 		super(parent, style | SWT.RIGHT);
 	}
 
+	/**
+	 * 
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor#getValueProperty()
+	 */
 	public IValueProperty getValueProperty() {
 		return CellEditorProperties.control().value(WidgetProperties.text(SWT.FocusOut));
 	}
@@ -68,8 +91,10 @@ public class NumberCellEditor extends TextCellEditor implements ECPCellEditor {
 		localeService = viewModelContext.getService(ViewLocaleService.class);
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * 
+	 * {@inheritDoc}
+	 * 
 	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor#getFormatedString(java.lang.Object)
 	 */
 	public String getFormatedString(Object value) {
@@ -95,16 +120,20 @@ public class NumberCellEditor extends TextCellEditor implements ECPCellEditor {
 		return Locale.getDefault();
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * 
+	 * {@inheritDoc}
+	 * 
 	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor#getColumnWidthWeight()
 	 */
 	public int getColumnWidthWeight() {
 		return 50;
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * 
+	 * {@inheritDoc}
+	 * 
 	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor#getTargetToModelStrategy()
 	 */
 	public UpdateValueStrategy getTargetToModelStrategy() {
@@ -112,7 +141,7 @@ public class NumberCellEditor extends TextCellEditor implements ECPCellEditor {
 
 			@Override
 			public Object convert(final Object value) {
-				DecimalFormat format = format = NumericalHelper.setupFormat(getLocale(),
+				final DecimalFormat format = NumericalHelper.setupFormat(getLocale(),
 					getInstanceClass());
 				try {
 					Number number = null;
@@ -202,7 +231,7 @@ public class NumberCellEditor extends TextCellEditor implements ECPCellEditor {
 				if (result == null) {
 					getText().setText(""); //$NON-NLS-1$
 				} else {
-					DecimalFormat format = format = NumericalHelper.setupFormat(getLocale(),
+					final DecimalFormat format = NumericalHelper.setupFormat(getLocale(),
 						getInstanceClass());
 					getText().setText(format.format(result));
 				}
@@ -216,8 +245,10 @@ public class NumberCellEditor extends TextCellEditor implements ECPCellEditor {
 		};
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * 
+	 * {@inheritDoc}
+	 * 
 	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor#getModelToTargetStrategy()
 	 */
 	public UpdateValueStrategy getModelToTargetStrategy() {
@@ -240,5 +271,16 @@ public class NumberCellEditor extends TextCellEditor implements ECPCellEditor {
 
 	private Text getText() {
 		return text;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor#setEditable(boolean)
+	 */
+	public void setEditable(boolean editable) {
+		if (getText() != null) {
+			getText().setEditable(editable);
+		}
 	}
 }

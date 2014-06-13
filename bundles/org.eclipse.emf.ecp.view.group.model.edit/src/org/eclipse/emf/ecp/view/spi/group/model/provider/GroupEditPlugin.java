@@ -22,7 +22,6 @@ import org.eclipse.emf.ecp.view.spi.model.provider.ViewEditPlugin;
  * <!-- end-user-doc -->
  * 
  * @generated
- * @since 1.2
  */
 public final class GroupEditPlugin extends EMFPlugin
 {

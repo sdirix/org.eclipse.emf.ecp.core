@@ -20,8 +20,11 @@ import java.util.Map;
 
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EValidator;
+import org.eclipse.emf.ecore.EcoreFactory;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecp.view.internal.validation.VDiagnosticHelper;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
@@ -194,6 +197,30 @@ public class VDiagnosticHelperTest {
 		vDiagnostic2.getDiagnostics().add(writerDiagnostic);
 
 		assertTrue(VDiagnosticHelper.isEqual(vDiagnostic1, vDiagnostic2));
+	}
+
+	@Test
+	public void testEqualMultipleShortenedDiagnostics() {
+		final VDiagnostic vDiagnostic1 = VViewFactory.eINSTANCE.createDiagnostic();
+		final VDiagnostic vDiagnostic2 = VViewFactory.eINSTANCE.createDiagnostic();
+
+		final EClass eClass = EcoreFactory.eINSTANCE.createEClass();
+
+		for (int i = 0; i < 3; i++) {
+			final BasicDiagnostic bd = new BasicDiagnostic(Diagnostic.OK, "", 0, "OK", new Object[] { eClass,
+				EcorePackage.eINSTANCE.getENamedElement_Name() });
+
+			vDiagnostic1.getDiagnostics().add(bd);
+		}
+
+		for (int i = 0; i < 2; i++) {
+			final BasicDiagnostic bd = new BasicDiagnostic(Diagnostic.OK, "", 0, "OK", new Object[] { eClass,
+				EcorePackage.eINSTANCE.getENamedElement_Name() });
+
+			vDiagnostic2.getDiagnostics().add(bd);
+		}
+
+		assertFalse(VDiagnosticHelper.isEqual(vDiagnostic1, vDiagnostic2));
 	}
 
 }

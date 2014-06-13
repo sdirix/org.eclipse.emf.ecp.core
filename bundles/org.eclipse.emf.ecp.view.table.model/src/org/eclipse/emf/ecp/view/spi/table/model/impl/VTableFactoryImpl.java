@@ -16,7 +16,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-import org.eclipse.emf.ecp.view.spi.table.model.VTableColumn;
+import org.eclipse.emf.ecp.view.spi.table.model.VReadOnlyColumnConfiguration;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableFactory;
@@ -42,13 +42,13 @@ public class VTableFactoryImpl extends EFactoryImpl implements VTableFactory
 	{
 		try
 		{
-			VTableFactory theTableFactory = (VTableFactory) EPackage.Registry.INSTANCE
+			final VTableFactory theTableFactory = (VTableFactory) EPackage.Registry.INSTANCE
 				.getEFactory(VTablePackage.eNS_URI);
 			if (theTableFactory != null)
 			{
 				return theTableFactory;
 			}
-		} catch (Exception exception)
+		} catch (final Exception exception)
 		{
 			EcorePlugin.INSTANCE.log(exception);
 		}
@@ -80,10 +80,10 @@ public class VTableFactoryImpl extends EFactoryImpl implements VTableFactory
 		{
 		case VTablePackage.TABLE_CONTROL:
 			return createTableControl();
-		case VTablePackage.TABLE_COLUMN:
-			return createTableColumn();
 		case VTablePackage.TABLE_DOMAIN_MODEL_REFERENCE:
 			return createTableDomainModelReference();
+		case VTablePackage.READ_ONLY_COLUMN_CONFIGURATION:
+			return createReadOnlyColumnConfiguration();
 		default:
 			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -95,9 +95,10 @@ public class VTableFactoryImpl extends EFactoryImpl implements VTableFactory
 	 * 
 	 * @generated
 	 */
+	@Override
 	public VTableControl createTableControl()
 	{
-		VTableControlImpl tableControl = new VTableControlImpl();
+		final VTableControlImpl tableControl = new VTableControlImpl();
 		return tableControl;
 	}
 
@@ -107,21 +108,10 @@ public class VTableFactoryImpl extends EFactoryImpl implements VTableFactory
 	 * 
 	 * @generated
 	 */
-	public VTableColumn createTableColumn()
-	{
-		VTableColumnImpl tableColumn = new VTableColumnImpl();
-		return tableColumn;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
+	@Override
 	public VTableDomainModelReference createTableDomainModelReference()
 	{
-		VTableDomainModelReferenceImpl tableDomainModelReference = new VTableDomainModelReferenceImpl();
+		final VTableDomainModelReferenceImpl tableDomainModelReference = new VTableDomainModelReferenceImpl();
 		return tableDomainModelReference;
 	}
 
@@ -131,6 +121,20 @@ public class VTableFactoryImpl extends EFactoryImpl implements VTableFactory
 	 * 
 	 * @generated
 	 */
+	@Override
+	public VReadOnlyColumnConfiguration createReadOnlyColumnConfiguration()
+	{
+		final VReadOnlyColumnConfigurationImpl readOnlyColumnConfiguration = new VReadOnlyColumnConfigurationImpl();
+		return readOnlyColumnConfiguration;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	@Override
 	public VTablePackage getTablePackage()
 	{
 		return (VTablePackage) getEPackage();

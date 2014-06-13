@@ -13,6 +13,9 @@ package org.eclipse.emf.ecp.view.internal.core.swt;
 
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.emf.ecp.edit.spi.ECPControlFactory;
+import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
+import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
+import org.eclipse.swt.graphics.Image;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 
@@ -86,5 +89,49 @@ public class Activator extends Plugin {
 		}
 		plugin.getBundle().getBundleContext().ungetService(controlFactoryReference);
 		controlFactoryReference = null;
+	}
+
+	/**
+	 * Finds and returns an image for the provided path.
+	 * 
+	 * @param path the path to get the image from
+	 * @return the image or null if nothing could be found
+	 */
+	public static Image getImage(String path) {
+
+		final Image image = plugin.getImageRegistryService().getImage(plugin.getBundle(), path);
+
+		plugin.getBundle().getBundleContext().ungetService(plugin.imageRegistryServiceReference);
+
+		return image;
+	}
+
+	private ServiceReference<ImageRegistryService> imageRegistryServiceReference;
+
+	private ImageRegistryService getImageRegistryService() {
+		if (imageRegistryServiceReference == null) {
+			imageRegistryServiceReference = getBundle().getBundleContext()
+				.getServiceReference(ImageRegistryService.class);
+		}
+		return getBundle().getBundleContext().getService(imageRegistryServiceReference);
+	}
+
+	private VTViewTemplateProvider viewTemplate;
+
+	/**
+	 * Returns the currentInstance of the {@link VTViewTemplateProvider}.
+	 * 
+	 * @return the {@link ECPControlFactory}
+	 */
+	public VTViewTemplateProvider getVTViewTemplateProvider() {
+		if (viewTemplate == null) {
+			final ServiceReference<VTViewTemplateProvider> viewTemplateReference = plugin.getBundle()
+				.getBundleContext()
+				.getServiceReference(VTViewTemplateProvider.class);
+			if (viewTemplateReference != null) {
+				viewTemplate = plugin.getBundle().getBundleContext().getService(viewTemplateReference);
+			}
+		}
+		return viewTemplate;
 	}
 }

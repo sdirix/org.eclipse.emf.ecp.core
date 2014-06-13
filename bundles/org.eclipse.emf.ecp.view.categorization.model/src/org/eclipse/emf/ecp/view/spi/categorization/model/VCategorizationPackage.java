@@ -628,6 +628,16 @@ public interface VCategorizationPackage extends EPackage
 	int CATEGORIZATION_ELEMENT__CURRENT_SELECTION = VViewPackage.CONTAINED_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
+	 * The feature id for the '<em><b>Main Category Depth</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int CATEGORIZATION_ELEMENT__MAIN_CATEGORY_DEPTH = VViewPackage.CONTAINED_ELEMENT_FEATURE_COUNT + 2;
+
+	/**
 	 * The number of structural features of the '<em>Element</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -635,7 +645,7 @@ public interface VCategorizationPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int CATEGORIZATION_ELEMENT_FEATURE_COUNT = VViewPackage.CONTAINED_ELEMENT_FEATURE_COUNT + 2;
+	int CATEGORIZATION_ELEMENT_FEATURE_COUNT = VViewPackage.CONTAINED_ELEMENT_FEATURE_COUNT + 3;
 
 	/**
 	 * Returns the meta object for class '
@@ -791,6 +801,20 @@ public interface VCategorizationPackage extends EPackage
 	 * @generated
 	 */
 	EReference getCategorizationElement_CurrentSelection();
+
+	/**
+	 * Returns the meta object for the attribute '
+	 * {@link org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationElement#getMainCategoryDepth
+	 * <em>Main Category Depth</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for the attribute '<em>Main Category Depth</em>'.
+	 * @see org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationElement#getMainCategoryDepth()
+	 * @see #getCategorizationElement()
+	 * @generated
+	 */
+	EAttribute getCategorizationElement_MainCategoryDepth();
 
 	/**
 	 * Returns the meta object for class '
@@ -968,6 +992,15 @@ public interface VCategorizationPackage extends EPackage
 		 * @generated
 		 */
 		EReference CATEGORIZATION_ELEMENT__CURRENT_SELECTION = eINSTANCE.getCategorizationElement_CurrentSelection();
+
+		/**
+		 * The meta object literal for the '<em><b>Main Category Depth</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @generated
+		 */
+		EAttribute CATEGORIZATION_ELEMENT__MAIN_CATEGORY_DEPTH = eINSTANCE.getCategorizationElement_MainCategoryDepth();
 
 		/**
 		 * The meta object literal for the '

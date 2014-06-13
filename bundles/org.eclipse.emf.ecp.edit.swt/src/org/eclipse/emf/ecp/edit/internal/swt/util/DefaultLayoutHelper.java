@@ -51,8 +51,8 @@ public final class DefaultLayoutHelper implements LayoutHelper<Layout> {
 	 * @see org.eclipse.emf.ecp.view.spi.renderer.LayoutHelper#getLeftColumnLayoutData()
 	 */
 	public Object getLeftColumnLayoutData() {
-		return GridDataFactory.fillDefaults()
-			.align(SWT.BEGINNING, SWT.CENTER)
+		return GridDataFactory.fillDefaults().grab(false, false)
+			.align(SWT.FILL, SWT.CENTER)
 			.create();
 	}
 

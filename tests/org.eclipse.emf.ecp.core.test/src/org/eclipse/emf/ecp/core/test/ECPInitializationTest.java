@@ -19,7 +19,11 @@ import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.exceptions.ECPProjectWithNameExistsException;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
+import org.junit.Before;
 import org.junit.Test;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Eugen
@@ -27,26 +31,47 @@ import org.junit.Test;
  */
 public class ECPInitializationTest {
 
-	@Test
-	public void createProjectAddElementTest() {
-		try {
-			final ECPProject project = ECPUtil.getECPProjectManager().createProject(
-				ECPUtil.getECPProviderRegistry().getProvider(EMFStoreProvider.NAME), "test");
-			final long startTimeMillis = System.currentTimeMillis();
-			for (int i = 0; i < 60000; i++) {
-				project.getContents().add(EcoreFactory.eINSTANCE.createEClass());
-				if (i % 1000 == 0) {
-					if (System.currentTimeMillis() - startTimeMillis > 20000) {
-						fail("Taking too long");
-					}
-					System.out
-						.println("Added " + i + "Items, Time passed " + (System.currentTimeMillis() - startTimeMillis));
-				}
+	private static final int MAXIMAL_ALLOWED_DURATION = 150000;
+	private ECPProject project;
+
+	@Before
+	public void before() {
+
+		final BundleContext ctx = FrameworkUtil.getBundle(this.getClass()).getBundleContext();
+		final Bundle[] bundles = ctx.getBundles();
+
+		for (final Bundle bundle : bundles) {
+			if (bundle.getSymbolicName().contains("transaction")) {
+				final int state = bundle.getState();
+				System.out.println("DEBUG: Transactional plugin " + bundle.getSymbolicName() + " is in state " + state
+					+ ".");
 			}
-			assertTrue(System.currentTimeMillis() - startTimeMillis < 20000);
-		} catch (final ECPProjectWithNameExistsException e) {
-			fail();
 		}
+
+		try {
+			project = ECPUtil.getECPProjectManager().createProject(
+				ECPUtil.getECPProviderRegistry().getProvider(EMFStoreProvider.NAME), "test");
+		} catch (final ECPProjectWithNameExistsException e) {
+			fail(e.getMessage());
+		}
+		System.out.println("DEBUG: There are " + ECPUtil.getECPProjectManager().getProjects().size() + " projects");
 	}
 
+	@Test
+	public void createProjectAddElementTest() {
+		final long startTimeMillis = System.currentTimeMillis();
+		for (int i = 0; i < 60000; i++) {
+
+			project.getContents().add(EcoreFactory.eINSTANCE.createEClass());
+
+			if (i % 1000 == 0) {
+				if (System.currentTimeMillis() - startTimeMillis > MAXIMAL_ALLOWED_DURATION) {
+					fail("Taking too long");
+				}
+				System.out
+					.println("Added " + i + "Items, Time passed " + (System.currentTimeMillis() - startTimeMillis));
+			}
+		}
+		assertTrue(System.currentTimeMillis() - startTimeMillis < MAXIMAL_ALLOWED_DURATION);
+	}
 }

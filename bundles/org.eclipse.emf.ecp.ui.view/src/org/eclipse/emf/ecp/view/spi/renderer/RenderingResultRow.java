@@ -21,6 +21,7 @@ import java.util.Set;
  * @since 1.2
  * 
  */
+@Deprecated
 public interface RenderingResultRow<T> {
 
 	/**

@@ -104,6 +104,7 @@ public class VControlImpl extends VContainedElementImpl implements VControl {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public VDomainModelReference getDomainModelReference()
 	{
 		return domainModelReference;
@@ -139,6 +140,7 @@ public class VControlImpl extends VContainedElementImpl implements VControl {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setDomainModelReference(VDomainModelReference newDomainModelReference)
 	{
 		if (newDomainModelReference != domainModelReference)
@@ -186,6 +188,7 @@ public class VControlImpl extends VContainedElementImpl implements VControl {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public LabelAlignment getLabelAlignment()
 	{
 		return labelAlignment;
@@ -197,8 +200,12 @@ public class VControlImpl extends VContainedElementImpl implements VControl {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setLabelAlignment(LabelAlignment newLabelAlignment)
 	{
+		if (labelAlignment == newLabelAlignment) {
+			return;
+		}
 		final LabelAlignment oldLabelAlignment = labelAlignment;
 		labelAlignment = newLabelAlignment == null ? LABEL_ALIGNMENT_EDEFAULT : newLabelAlignment;
 		if (eNotificationRequired()) {
@@ -307,6 +314,7 @@ public class VControlImpl extends VContainedElementImpl implements VControl {
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.model.VControl#setDomainModelReference(org.eclipse.emf.ecore.EStructuralFeature)
 	 */
+	@Override
 	public void setDomainModelReference(EStructuralFeature feature) {
 		setDomainModelReference(ModelReferenceHelper.createDomainModelReference(feature));
 	}
@@ -317,6 +325,7 @@ public class VControlImpl extends VContainedElementImpl implements VControl {
 	 * @see org.eclipse.emf.ecp.view.spi.model.VControl#setDomainModelReference(org.eclipse.emf.ecore.EStructuralFeature,
 	 *      java.util.Collection)
 	 */
+	@Override
 	public void setDomainModelReference(EStructuralFeature feature, Collection<EReference> eReferences) {
 		setDomainModelReference(ModelReferenceHelper.createDomainModelReference(feature, eReferences));
 	}

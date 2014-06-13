@@ -17,6 +17,8 @@ import java.net.URL;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate;
@@ -40,7 +42,7 @@ public final class SWTValidationHelper {
 	 * The instance of the SWTValidationHelper.
 	 */
 	public static final SWTValidationHelper INSTANCE = new SWTValidationHelper();
-
+	private final String NO_CONTROLVALIDATIONCONFIG_WARNING = "Template has no control validation configuration."; //$NON-NLS-1$
 	private final Map<String, Color> colorMap = new LinkedHashMap<String, Color>();
 	private VTViewTemplate defaultTemplate;
 
@@ -56,6 +58,16 @@ public final class SWTValidationHelper {
 	 */
 	public Color getValidationBackgroundColor(int severity) {
 		final VTViewTemplate template = getTemplate();
+
+		if (template.getControlValidationConfiguration() == null) {
+			Activator.getDefault();
+			Activator
+				.getDefault()
+				.getLog()
+				.log(
+					new Status(IStatus.WARNING, Activator.PLUGIN_ID, NO_CONTROLVALIDATIONCONFIG_WARNING));
+			return null;
+		}
 		String colorHex = null;
 
 		switch (severity) {
@@ -96,6 +108,15 @@ public final class SWTValidationHelper {
 	 */
 	public Image getValidationIcon(int severity) {
 		final VTViewTemplate template = getTemplate();
+		if (template.getControlValidationConfiguration() == null) {
+			Activator.getDefault();
+			Activator
+				.getDefault()
+				.getLog()
+				.log(
+					new Status(IStatus.WARNING, Activator.PLUGIN_ID, NO_CONTROLVALIDATIONCONFIG_WARNING));
+			return null;
+		}
 		String imageUrl = null;
 
 		switch (severity) {
@@ -138,6 +159,15 @@ public final class SWTValidationHelper {
 	 */
 	public ImageDescriptor getValidationOverlayDescriptor(int severity) {
 		final VTViewTemplate template = getTemplate();
+		if (template.getControlValidationConfiguration() == null) {
+			Activator.getDefault();
+			Activator
+				.getDefault()
+				.getLog()
+				.log(
+					new Status(IStatus.WARNING, Activator.PLUGIN_ID, NO_CONTROLVALIDATIONCONFIG_WARNING));
+			return null;
+		}
 		String imageUrl = null;
 
 		switch (severity) {
@@ -179,6 +209,7 @@ public final class SWTValidationHelper {
 				final VTControlValidationTemplate validationTemplate = VTTemplateFactory.eINSTANCE
 					.createControlValidationTemplate();
 				defaultTemplate.setControlValidationConfiguration(validationTemplate);
+				validationTemplate.setOkColorHEX("ffffff"); //$NON-NLS-1$
 				validationTemplate.setErrorColorHEX("ff0000"); //$NON-NLS-1$
 				validationTemplate.setWarningColorHEX("FFD800");//$NON-NLS-1$
 				validationTemplate.setErrorImageURL(Activator.getDefault().getBundle()

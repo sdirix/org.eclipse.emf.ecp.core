@@ -24,6 +24,7 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
+import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 
 /**
  * This service will iterate over all contents of the {@link org.eclipse.emf.ecp.view.spi.model.VView VView} and will
@@ -40,6 +41,7 @@ public class AddColumnService implements ViewModelService {
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#instantiate(org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
+	@Override
 	public void instantiate(ViewModelContext context) {
 		final VElement viewModel = context.getViewModel();
 		if (viewModel instanceof VTableControl) {
@@ -57,7 +59,11 @@ public class AddColumnService implements ViewModelService {
 	}
 
 	private void addColumnsIfNeeded(VTableControl tableControl) {
-		if (tableControl.getColumns() == null || tableControl.getColumns().size() < 1) {
+		if (tableControl.getDomainModelReference() == null) {
+			return;
+		}
+		if (VTableDomainModelReference.class.cast(tableControl.getDomainModelReference())
+			.getColumnDomainModelReferences().size() < 1) {
 			final Iterator<Setting> settings = tableControl.getDomainModelReference().getIterator();
 			if (!settings.hasNext()) {
 				return;
@@ -77,6 +83,7 @@ public class AddColumnService implements ViewModelService {
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#dispose()
 	 */
+	@Override
 	public void dispose() {
 		// nothing to dispose
 	}
@@ -86,6 +93,7 @@ public class AddColumnService implements ViewModelService {
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#getPriority()
 	 */
+	@Override
 	public int getPriority() {
 		return -1;
 	}

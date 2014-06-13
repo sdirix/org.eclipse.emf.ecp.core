@@ -11,9 +11,12 @@
  */
 package org.eclipse.emf.ecp.view.spi.group.model.impl;
 
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
+import org.eclipse.emf.ecp.view.spi.group.model.GroupLabelAlignment;
 import org.eclipse.emf.ecp.view.spi.group.model.VGroup;
 import org.eclipse.emf.ecp.view.spi.group.model.VGroupFactory;
 import org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage;
@@ -25,7 +28,6 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * <!-- end-user-doc -->
  * 
  * @generated
- * @since 1.2
  */
 public class VGroupPackageImpl extends EPackageImpl implements VGroupPackage
 {
@@ -36,6 +38,14 @@ public class VGroupPackageImpl extends EPackageImpl implements VGroupPackage
 	 * @generated
 	 */
 	private EClass groupEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	private EEnum groupLabelAlignmentEEnum = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with {@link org.eclipse.emf.ecore.EPackage.Registry
@@ -113,6 +123,7 @@ public class VGroupPackageImpl extends EPackageImpl implements VGroupPackage
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EClass getGroup()
 	{
 		return groupEClass;
@@ -123,7 +134,47 @@ public class VGroupPackageImpl extends EPackageImpl implements VGroupPackage
 	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
+	 * @since 1.3
 	 */
+	@Override
+	public EAttribute getGroup_ContainerLayoutEmbedding()
+	{
+		return (EAttribute) groupEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @since 1.3
+	 */
+	@Override
+	public EAttribute getGroup_LabelAlignment()
+	{
+		return (EAttribute) groupEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @since 1.3
+	 */
+	@Override
+	public EEnum getGroupLabelAlignment()
+	{
+		return groupLabelAlignmentEEnum;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	@Override
 	public VGroupFactory getGroupFactory()
 	{
 		return (VGroupFactory) getEFactoryInstance();
@@ -154,6 +205,11 @@ public class VGroupPackageImpl extends EPackageImpl implements VGroupPackage
 
 		// Create classes and their features
 		groupEClass = createEClass(GROUP);
+		createEAttribute(groupEClass, GROUP__CONTAINER_LAYOUT_EMBEDDING);
+		createEAttribute(groupEClass, GROUP__LABEL_ALIGNMENT);
+
+		// Create enums
+		groupLabelAlignmentEEnum = createEEnum(GROUP_LABEL_ALIGNMENT);
 	}
 
 	/**
@@ -196,6 +252,19 @@ public class VGroupPackageImpl extends EPackageImpl implements VGroupPackage
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(groupEClass, VGroup.class, "Group", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(
+			getGroup_ContainerLayoutEmbedding(),
+			ecorePackage.getEBoolean(),
+			"containerLayoutEmbedding", "false", 0, 1, VGroup.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEAttribute(
+			getGroup_LabelAlignment(),
+			getGroupLabelAlignment(),
+			"labelAlignment", "LabelAligned", 0, 1, VGroup.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+
+		// Initialize enums and add enum literals
+		initEEnum(groupLabelAlignmentEEnum, GroupLabelAlignment.class, "GroupLabelAlignment"); //$NON-NLS-1$
+		addEEnumLiteral(groupLabelAlignmentEEnum, GroupLabelAlignment.LABEL_ALIGNED);
+		addEEnumLiteral(groupLabelAlignmentEEnum, GroupLabelAlignment.INPUT_ALIGNED);
 
 		// Create resource
 		createResource(eNS_URI);

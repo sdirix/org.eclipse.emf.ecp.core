@@ -11,6 +11,11 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.template.model;
 
+import java.util.Set;
+
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.model.VElement;
+
 /**
  * This interface defines a service cappable of providing an instance of the {@link VTViewTemplate}.
  * 
@@ -25,4 +30,14 @@ public interface VTViewTemplateProvider {
 	 * @return the {@link VTViewTemplate}
 	 */
 	VTViewTemplate getViewTemplate();
+
+	/**
+	 * Return all {@link VTStyleProperty StyleProperties} which are applicable to the provided {@link VElement}.
+	 * 
+	 * @param vElement the {@link VElement} to get the {@link VTStyleProperty StyleProperties} for
+	 * @param viewModelContext the {@link ViewModelContext} currently in use
+	 * @return the collection of all {@link VTStyleProperty StyleProperties} which are applicable to the provided
+	 *         {@link VElement} or an empty set
+	 */
+	Set<VTStyleProperty> getStyleProperties(VElement vElement, ViewModelContext viewModelContext);
 }

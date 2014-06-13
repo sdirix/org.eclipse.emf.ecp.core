@@ -25,6 +25,7 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
  * @author Eugen Neufeld
  * 
  */
+@Deprecated
 public interface ECPApplicableTester {
 	/**
 	 * Return this whenever the control should not be drawn for the tested feature.

@@ -16,6 +16,9 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate;
+import org.eclipse.emf.ecp.view.template.model.VTStyle;
+import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
+import org.eclipse.emf.ecp.view.template.model.VTStyleSelector;
 import org.eclipse.emf.ecp.view.template.model.VTTemplatePackage;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplate;
 
@@ -101,6 +104,24 @@ public class TemplateAdapterFactory extends AdapterFactoryImpl
 			}
 
 			@Override
+			public Adapter caseStyle(VTStyle object)
+			{
+				return createStyleAdapter();
+			}
+
+			@Override
+			public Adapter caseStyleProperty(VTStyleProperty object)
+			{
+				return createStylePropertyAdapter();
+			}
+
+			@Override
+			public Adapter caseStyleSelector(VTStyleSelector object)
+			{
+				return createStyleSelectorAdapter();
+			}
+
+			@Override
 			public Adapter defaultCase(EObject object)
 			{
 				return createEObjectAdapter();
@@ -153,6 +174,57 @@ public class TemplateAdapterFactory extends AdapterFactoryImpl
 	 * @generated
 	 */
 	public Adapter createControlValidationTemplateAdapter()
+	{
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.template.model.VTStyle
+	 * <em>Style</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.template.model.VTStyle
+	 * @generated
+	 */
+	public Adapter createStyleAdapter()
+	{
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.template.model.VTStyleProperty
+	 * <em>Style Property</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.template.model.VTStyleProperty
+	 * @generated
+	 */
+	public Adapter createStylePropertyAdapter()
+	{
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.template.model.VTStyleSelector
+	 * <em>Style Selector</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.template.model.VTStyleSelector
+	 * @generated
+	 */
+	public Adapter createStyleSelectorAdapter()
 	{
 		return null;
 	}

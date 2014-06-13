@@ -13,6 +13,12 @@ package org.eclipse.emf.ecp.edit.internal.swt.table;
 
 import org.eclipse.emf.ecore.EAttribute;
 
+/**
+ * The table column configuration defines whether a column is visible and what attribute should be bound to the column.
+ * 
+ * @author Eugen Neufeld
+ * 
+ */
 public class TableColumnConfiguration {
 	private final boolean readOnly;
 	private final EAttribute columnAttribute;
@@ -28,6 +34,7 @@ public class TableColumnConfiguration {
 	}
 
 	/**
+	 * Whether the column is read only.
 	 * 
 	 * @return if the column is read-only
 	 */
@@ -35,6 +42,11 @@ public class TableColumnConfiguration {
 		return readOnly;
 	}
 
+	/**
+	 * The {@link EAttribute} to bind to the column.
+	 * 
+	 * @return the {@link EAttribute} to bind
+	 */
 	public EAttribute getColumnAttribute() {
 		return columnAttribute;
 	}

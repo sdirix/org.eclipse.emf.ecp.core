@@ -42,7 +42,7 @@ public interface VTTemplatePackage extends EPackage
 	 * 
 	 * @generated
 	 */
-	String eNAME = "model"; //$NON-NLS-1$
+	String eNAME = "template"; //$NON-NLS-1$
 
 	/**
 	 * The package namespace URI.
@@ -94,6 +94,16 @@ public interface VTTemplatePackage extends EPackage
 	int VIEW_TEMPLATE__CONTROL_VALIDATION_CONFIGURATION = 0;
 
 	/**
+	 * The feature id for the '<em><b>Styles</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int VIEW_TEMPLATE__STYLES = 1;
+
+	/**
 	 * The number of structural features of the '<em>View Template</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -101,7 +111,7 @@ public interface VTTemplatePackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int VIEW_TEMPLATE_FEATURE_COUNT = 1;
+	int VIEW_TEMPLATE_FEATURE_COUNT = 2;
 
 	/**
 	 * The number of operations of the '<em>View Template</em>' class.
@@ -296,6 +306,122 @@ public interface VTTemplatePackage extends EPackage
 	int CONTROL_VALIDATION_TEMPLATE_OPERATION_COUNT = 0;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.template.model.impl.VTStyleImpl <em>Style</em>}'
+	 * class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see org.eclipse.emf.ecp.view.template.model.impl.VTStyleImpl
+	 * @see org.eclipse.emf.ecp.view.template.model.impl.VTTemplatePackageImpl#getStyle()
+	 * @generated
+	 */
+	int STYLE = 2;
+
+	/**
+	 * The feature id for the '<em><b>Selector</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int STYLE__SELECTOR = 0;
+
+	/**
+	 * The feature id for the '<em><b>Properties</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int STYLE__PROPERTIES = 1;
+
+	/**
+	 * The number of structural features of the '<em>Style</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int STYLE_FEATURE_COUNT = 2;
+
+	/**
+	 * The number of operations of the '<em>Style</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int STYLE_OPERATION_COUNT = 0;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.template.model.VTStyleProperty
+	 * <em>Style Property</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see org.eclipse.emf.ecp.view.template.model.VTStyleProperty
+	 * @see org.eclipse.emf.ecp.view.template.model.impl.VTTemplatePackageImpl#getStyleProperty()
+	 * @generated
+	 */
+	int STYLE_PROPERTY = 3;
+
+	/**
+	 * The number of structural features of the '<em>Style Property</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int STYLE_PROPERTY_FEATURE_COUNT = 0;
+
+	/**
+	 * The number of operations of the '<em>Style Property</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int STYLE_PROPERTY_OPERATION_COUNT = 0;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.template.model.VTStyleSelector
+	 * <em>Style Selector</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see org.eclipse.emf.ecp.view.template.model.VTStyleSelector
+	 * @see org.eclipse.emf.ecp.view.template.model.impl.VTTemplatePackageImpl#getStyleSelector()
+	 * @generated
+	 */
+	int STYLE_SELECTOR = 4;
+
+	/**
+	 * The number of structural features of the '<em>Style Selector</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int STYLE_SELECTOR_FEATURE_COUNT = 0;
+
+	/**
+	 * The number of operations of the '<em>Style Selector</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int STYLE_SELECTOR_OPERATION_COUNT = 0;
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.template.model.VTViewTemplate
 	 * <em>View Template</em>}'.
 	 * <!-- begin-user-doc -->
@@ -320,6 +446,19 @@ public interface VTTemplatePackage extends EPackage
 	 * @generated
 	 */
 	EReference getViewTemplate_ControlValidationConfiguration();
+
+	/**
+	 * Returns the meta object for the containment reference list '
+	 * {@link org.eclipse.emf.ecp.view.template.model.VTViewTemplate#getStyles <em>Styles</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for the containment reference list '<em>Styles</em>'.
+	 * @see org.eclipse.emf.ecp.view.template.model.VTViewTemplate#getStyles()
+	 * @see #getViewTemplate()
+	 * @generated
+	 */
+	EReference getViewTemplate_Styles();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate
@@ -542,6 +681,67 @@ public interface VTTemplatePackage extends EPackage
 	EAttribute getControlValidationTemplate_CancelOverlayURL();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.template.model.VTStyle <em>Style</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for class '<em>Style</em>'.
+	 * @see org.eclipse.emf.ecp.view.template.model.VTStyle
+	 * @generated
+	 */
+	EClass getStyle();
+
+	/**
+	 * Returns the meta object for the containment reference '
+	 * {@link org.eclipse.emf.ecp.view.template.model.VTStyle#getSelector <em>Selector</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for the containment reference '<em>Selector</em>'.
+	 * @see org.eclipse.emf.ecp.view.template.model.VTStyle#getSelector()
+	 * @see #getStyle()
+	 * @generated
+	 */
+	EReference getStyle_Selector();
+
+	/**
+	 * Returns the meta object for the containment reference list '
+	 * {@link org.eclipse.emf.ecp.view.template.model.VTStyle#getProperties <em>Properties</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for the containment reference list '<em>Properties</em>'.
+	 * @see org.eclipse.emf.ecp.view.template.model.VTStyle#getProperties()
+	 * @see #getStyle()
+	 * @generated
+	 */
+	EReference getStyle_Properties();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.template.model.VTStyleProperty
+	 * <em>Style Property</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for class '<em>Style Property</em>'.
+	 * @see org.eclipse.emf.ecp.view.template.model.VTStyleProperty
+	 * @generated
+	 */
+	EClass getStyleProperty();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.template.model.VTStyleSelector
+	 * <em>Style Selector</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for class '<em>Style Selector</em>'.
+	 * @see org.eclipse.emf.ecp.view.template.model.VTStyleSelector
+	 * @generated
+	 */
+	EClass getStyleSelector();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -589,6 +789,15 @@ public interface VTTemplatePackage extends EPackage
 		 */
 		EReference VIEW_TEMPLATE__CONTROL_VALIDATION_CONFIGURATION = eINSTANCE
 			.getViewTemplate_ControlValidationConfiguration();
+
+		/**
+		 * The meta object literal for the '<em><b>Styles</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @generated
+		 */
+		EReference VIEW_TEMPLATE__STYLES = eINSTANCE.getViewTemplate_Styles();
 
 		/**
 		 * The meta object literal for the '
@@ -747,6 +956,60 @@ public interface VTTemplatePackage extends EPackage
 		 */
 		EAttribute CONTROL_VALIDATION_TEMPLATE__CANCEL_OVERLAY_URL = eINSTANCE
 			.getControlValidationTemplate_CancelOverlayURL();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.template.model.impl.VTStyleImpl
+		 * <em>Style</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @see org.eclipse.emf.ecp.view.template.model.impl.VTStyleImpl
+		 * @see org.eclipse.emf.ecp.view.template.model.impl.VTTemplatePackageImpl#getStyle()
+		 * @generated
+		 */
+		EClass STYLE = eINSTANCE.getStyle();
+
+		/**
+		 * The meta object literal for the '<em><b>Selector</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @generated
+		 */
+		EReference STYLE__SELECTOR = eINSTANCE.getStyle_Selector();
+
+		/**
+		 * The meta object literal for the '<em><b>Properties</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @generated
+		 */
+		EReference STYLE__PROPERTIES = eINSTANCE.getStyle_Properties();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.template.model.VTStyleProperty
+		 * <em>Style Property</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @see org.eclipse.emf.ecp.view.template.model.VTStyleProperty
+		 * @see org.eclipse.emf.ecp.view.template.model.impl.VTTemplatePackageImpl#getStyleProperty()
+		 * @generated
+		 */
+		EClass STYLE_PROPERTY = eINSTANCE.getStyleProperty();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.template.model.VTStyleSelector
+		 * <em>Style Selector</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @see org.eclipse.emf.ecp.view.template.model.VTStyleSelector
+		 * @see org.eclipse.emf.ecp.view.template.model.impl.VTTemplatePackageImpl#getStyleSelector()
+		 * @generated
+		 */
+		EClass STYLE_SELECTOR = eINSTANCE.getStyleSelector();
 
 	}
 

@@ -23,7 +23,7 @@ with [get-window "Add new model element"] {
     try { get-tree | select "Player" } -catch { get-tree | select "bowling/Player" }
     get-button Finish | click
 }
-get-editor View | get-button "Link Root EClas" | click
+get-editor View | get-button "Link Root EClass" | click
 with [get-window "Select an EClass."] {
     get-tree | select "bowling/Player \\[org.eclipse.emf.emfstore.bowling.Player\\]"
     get-button OK | click

@@ -68,4 +68,6 @@ public interface ECPCellEditor {
 	UpdateValueStrategy getTargetToModelStrategy();
 
 	UpdateValueStrategy getModelToTargetStrategy();
+
+	void setEditable(boolean editable);
 }

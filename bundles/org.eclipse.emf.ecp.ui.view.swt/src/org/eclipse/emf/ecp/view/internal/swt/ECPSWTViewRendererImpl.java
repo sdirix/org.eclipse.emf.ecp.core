@@ -11,22 +11,22 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.swt;
 
-import java.util.List;
-
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
+import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
-import org.eclipse.emf.ecp.view.spi.renderer.RenderingResultRow;
+import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
+import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
+import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 
 /**
  * @author Jonas
@@ -40,6 +40,7 @@ public class ECPSWTViewRendererImpl implements ECPSWTViewRenderer {
 	 * @see org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer#render(org.eclipse.swt.widgets.Composite,
 	 *      org.eclipse.emf.ecore.EObject)
 	 */
+	@Override
 	public ECPSWTView render(Composite parent, EObject domainObject) throws ECPRendererException {
 		return render(parent, domainObject, ViewProviderHelper.getView(domainObject));
 	}
@@ -50,6 +51,7 @@ public class ECPSWTViewRendererImpl implements ECPSWTViewRenderer {
 	 * @see org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer#render(org.eclipse.swt.widgets.Composite,
 	 *      org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecp.view.spi.model.VView)
 	 */
+	@Override
 	public ECPSWTView render(Composite parent, EObject domainObject, VView viewModel) throws ECPRendererException {
 		final ViewModelContext viewContext = ViewModelContextFactory.INSTANCE.createViewModelContext(viewModel,
 			domainObject);
@@ -62,13 +64,21 @@ public class ECPSWTViewRendererImpl implements ECPSWTViewRenderer {
 	 * @see org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer#render(org.eclipse.swt.widgets.Composite,
 	 *      org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
+	@Override
 	public ECPSWTView render(Composite parent, ViewModelContext viewModelContext) throws ECPRendererException {
-		final List<RenderingResultRow<Control>> render = SWTRendererFactory.INSTANCE.render(parent,
+		final SWTRendererFactory factory = new SWTRendererFactoryImpl();
+		final AbstractSWTRenderer<VElement> renderer = factory.getRenderer(
 			viewModelContext.getViewModel(),
 			viewModelContext);
-
+		final SWTGridDescription gridDescription = renderer.getGridDescription(GridDescriptionFactory.INSTANCE
+			.createEmptyGridDescription());
+		if (gridDescription.getGrid().size() != 1) {
+			// do sth. if wrong number of controls
+			throw new IllegalStateException("Invalid number of cells, expected exactly one cell!"); //$NON-NLS-1$
+		}
 		// a view returns always a composite and always only one row with one control
-		final Composite composite = (Composite) render.get(0).getControls().iterator().next();
+		final Composite composite = (Composite) renderer.render(gridDescription.getGrid().get(0), parent);
+		renderer.finalizeRendering(parent);
 
 		final GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
 		composite.setLayoutData(gridData);

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.eclipse.emf.ecp.view.core.swt.tests/src" modelPluginID="org.eclipse.emf.ecp.view.core.swt.tests"
+    modelName="Test" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0" copyrightFields="false"
+    operationReflection="true" importOrganizing="true">
+  <foreignModel>test.ecore</foreignModel>
+  <genPackages prefix="Test" basePackage="org.eclipse.emf.ecp.view.core.swt" disposableProviderFactory="true"
+      interfacePackageSuffix="model" metaDataPackageSuffix="model" classPackageSuffix="model.impl"
+      utilityPackageSuffix="model.util" providerPackageSuffix="model.provider" presentationPackageSuffix="model.presentation"
+      testsPackageSuffix="model.tests" ecorePackage="test.ecore#/">
+    <genDataTypes ecoreDataType="test.ecore#//XMLDate"/>
+    <genClasses ecoreClass="test.ecore#//SimpleTestObject">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute test.ecore#//SimpleTestObject/date"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute test.ecore#//SimpleTestObject/xmlDate"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

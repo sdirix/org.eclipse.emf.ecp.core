@@ -41,23 +41,47 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.DateTime;
 
+/**
+ * A cell editor for editing an {@link XMLGregorianCalendar}.
+ * 
+ * @author Eugen Neufeld
+ * 
+ */
 public class XmlDateCellEditor extends CellEditor implements ECPCellEditor {
 
 	private DateTime dateWidget;
 	private final DateFormat dateFormat = SimpleDateFormat.getDateInstance(DateFormat.MEDIUM);
 
+	/**
+	 * Default constructor.
+	 */
 	public XmlDateCellEditor() {
-		// TODO Auto-generated constructor stub
 	}
 
+	/**
+	 * A constructor which takes only a parent.
+	 * 
+	 * @param parent the {@link Composite} to use as a parent.
+	 */
 	public XmlDateCellEditor(Composite parent) {
 		super(parent);
 	}
 
+	/**
+	 * A constructor which takes the parent and the style.
+	 * 
+	 * @param parent the {@link Composite} to use as a parent
+	 * @param style the Style to set
+	 */
 	public XmlDateCellEditor(Composite parent, int style) {
 		super(parent, style);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor#getValueProperty()
+	 */
 	public IValueProperty getValueProperty() {
 		return new WidgetValueProperty() {
 
@@ -100,6 +124,8 @@ public class XmlDateCellEditor extends CellEditor implements ECPCellEditor {
 		dateWidget = new DateTime(parent, SWT.DATE | SWT.DROP_DOWN);
 		dateWidget.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_edit_cellEditor_xmlDate"); //$NON-NLS-1$
 		dateWidget.addKeyListener(new KeyAdapter() {
+			private static final long serialVersionUID = 1L;
+
 			// hook key pressed - see PR 14201
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -107,6 +133,8 @@ public class XmlDateCellEditor extends CellEditor implements ECPCellEditor {
 			}
 		});
 		dateWidget.addSelectionListener(new SelectionAdapter() {
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void widgetDefaultSelected(SelectionEvent event) {
 				applyEditorValueAndDeactivate();
@@ -115,6 +143,8 @@ public class XmlDateCellEditor extends CellEditor implements ECPCellEditor {
 		});
 
 		dateWidget.addTraverseListener(new TraverseListener() {
+			private static final long serialVersionUID = 1L;
+
 			public void keyTraversed(TraverseEvent e) {
 				if (e.detail == SWT.TRAVERSE_ESCAPE || e.detail == SWT.TRAVERSE_RETURN) {
 					e.doit = false;
@@ -123,6 +153,8 @@ public class XmlDateCellEditor extends CellEditor implements ECPCellEditor {
 		});
 
 		dateWidget.addFocusListener(new FocusAdapter() {
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void focusLost(FocusEvent e) {
 				XmlDateCellEditor.this.focusLost();
@@ -198,8 +230,10 @@ public class XmlDateCellEditor extends CellEditor implements ECPCellEditor {
 		deactivate();
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * 
+	 * {@inheritDoc}
+	 * 
 	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor#getFormatedString(java.lang.Object)
 	 */
 	public String getFormatedString(Object value) {
@@ -210,29 +244,44 @@ public class XmlDateCellEditor extends CellEditor implements ECPCellEditor {
 		return dateFormat.format(cal.toGregorianCalendar().getTime());
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * 
+	 * {@inheritDoc}
+	 * 
 	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor#getColumnWidthWeight()
 	 */
 	public int getColumnWidthWeight() {
 		return 75;
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * 
+	 * {@inheritDoc}
+	 * 
 	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor#getTargetToModelStrategy()
 	 */
 	public UpdateValueStrategy getTargetToModelStrategy() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * 
+	 * {@inheritDoc}
+	 * 
 	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor#getModelToTargetStrategy()
 	 */
 	public UpdateValueStrategy getModelToTargetStrategy() {
-		// TODO Auto-generated method stub
 		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor#setEditable(boolean)
+	 */
+	public void setEditable(boolean editable) {
+		if (dateWidget != null) {
+			dateWidget.setEnabled(editable);
+		}
 	}
 }

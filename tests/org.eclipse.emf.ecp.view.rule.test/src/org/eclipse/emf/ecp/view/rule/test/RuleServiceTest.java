@@ -29,10 +29,12 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.impl.BasicEObjectImpl;
+import org.eclipse.emf.ecp.common.UniqueSetting;
 import org.eclipse.emf.ecp.view.internal.rule.RuleService;
 import org.eclipse.emf.ecp.view.internal.rule.RuleServiceHelperImpl;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
+import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.VAttachment;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
@@ -104,41 +106,72 @@ public class RuleServiceTest extends CommonRuleTest {
 		private boolean hasRegisteredViewListener;
 		private boolean hasRegisteredDomainListener;
 
+		@Override
 		public void unregisterViewChangeListener(ModelChangeListener modelChangeListener) {
 			hasRegisteredViewListener = false;
 		}
 
+		@Override
 		public void unregisterDomainChangeListener(ModelChangeListener modelChangeListener) {
 			hasRegisteredDomainListener = false;
 		}
 
+		@Override
 		public void registerViewChangeListener(ModelChangeListener modelChangeListener) {
 			hasRegisteredViewListener = true;
 		}
 
+		@Override
 		public void registerDomainChangeListener(ModelChangeListener modelChangeListener) {
 			hasRegisteredDomainListener = true;
 		}
 
+		@Override
 		public VElement getViewModel() {
 			return view;
 		}
 
+		@Override
 		public EObject getDomainModel() {
 			return null;
 		}
 
+		@Override
 		public void dispose() {
 
 		}
 
+		@Override
 		public <T> boolean hasService(Class<T> serviceType) {
 			// not used in tests
 			return false;
 		}
 
+		@Override
 		public <T> T getService(Class<T> serviceType) {
 			// not used in tests
+			return null;
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getControlsFor(org.eclipse.emf.ecore.EStructuralFeature.Setting)
+		 */
+		@Override
+		public Set<VControl> getControlsFor(Setting setting) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getControlsFor(org.eclipse.emf.ecp.common.UniqueSetting)
+		 */
+		@Override
+		public Set<VControl> getControlsFor(UniqueSetting setting) {
+			// TODO Auto-generated method stub
 			return null;
 		}
 	}
@@ -249,7 +282,7 @@ public class RuleServiceTest extends CommonRuleTest {
 		leafCondition.setDomainModelReference(modelReference);
 		leafCondition.setExpectedValue(expectedValue);
 		modelReference.getDomainModelEReferencePath().addAll(eReferences);
-		final boolean result = modelReference.resolve(resolveObject);
+		final boolean result = modelReference.init(resolveObject);
 		if (!result) {
 			throw new IllegalStateException("the ModelReference was not resolved.");
 		}

@@ -58,6 +58,7 @@ public class Activator extends AbstractUIPlugin {
 		 */
 		ECPUtil.getECPObserverBus().register(new ECPProjectContentChangedObserver() {
 
+			@Override
 			public Collection<Object> objectsChanged(ECPProject project, Collection<Object> objects) {
 				if (project.getProvider().getName().equals(WorkspaceProvider.NAME)) {
 					final EList<Object> contents = project.getContents();
@@ -92,5 +93,4 @@ public class Activator extends AbstractUIPlugin {
 	public static Activator getDefault() {
 		return plugin;
 	}
-
 }

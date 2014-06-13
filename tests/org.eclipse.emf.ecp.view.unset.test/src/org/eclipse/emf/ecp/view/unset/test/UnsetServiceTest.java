@@ -16,9 +16,12 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
+import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecp.common.UniqueSetting;
 import org.eclipse.emf.ecp.view.internal.unset.UnsetService;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorization;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationElement;
@@ -26,6 +29,7 @@ import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationFactory;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategory;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
+import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.VContainer;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
@@ -33,7 +37,6 @@ import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
-import org.eclipse.emf.ecp.view.spi.table.model.VTableColumn;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableFactory;
@@ -1322,12 +1325,15 @@ public class UnsetServiceTest {
 		tableDomainModelReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getFan_FanMerchandise());
 		table.setDomainModelReference(tableDomainModelReference);
 
-		final VTableColumn nameCol = VTableFactory.eINSTANCE.createTableColumn();
-		nameCol.setAttribute(BowlingPackage.eINSTANCE.getMerchandise_Name());
-		final VTableColumn priceCol = VTableFactory.eINSTANCE.createTableColumn();
-		priceCol.setAttribute(BowlingPackage.eINSTANCE.getMerchandise_Price());
-		table.getColumns().add(nameCol);
-		table.getColumns().add(priceCol);
+		final VFeaturePathDomainModelReference nameCol = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
+		nameCol.setDomainModelEFeature(BowlingPackage.eINSTANCE.getMerchandise_Name());
+		final VFeaturePathDomainModelReference priceCol = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
+		priceCol.setDomainModelEFeature(BowlingPackage.eINSTANCE.getMerchandise_Price());
+		VTableDomainModelReference.class.cast(table.getDomainModelReference()).getColumnDomainModelReferences()
+			.add(nameCol);
+		VTableDomainModelReference.class.cast(table.getDomainModelReference()).getColumnDomainModelReferences()
+			.add(priceCol);
 
 		view.getChildren().add(table);
 
@@ -1444,40 +1450,72 @@ public class UnsetServiceTest {
 		private boolean hasRegisteredViewListener;
 		private boolean hasRegisteredDomainListener;
 
+		@Override
 		public void unregisterViewChangeListener(ModelChangeListener modelChangeListener) {
 			hasRegisteredViewListener = false;
 		}
 
+		@Override
 		public void unregisterDomainChangeListener(ModelChangeListener modelChangeListener) {
 			hasRegisteredDomainListener = false;
 		}
 
+		@Override
 		public void registerViewChangeListener(ModelChangeListener modelChangeListener) {
 			hasRegisteredViewListener = true;
 		}
 
+		@Override
 		public void registerDomainChangeListener(ModelChangeListener modelChangeListener) {
 			hasRegisteredDomainListener = true;
 		}
 
+		@Override
 		public VElement getViewModel() {
 			return view;
 		}
 
+		@Override
 		public EObject getDomainModel() {
 			return fan;
 		}
 
+		@Override
 		public void dispose() {
 		}
 
+		@Override
 		public <T> boolean hasService(Class<T> serviceType) {
 			return false;
 		}
 
+		@Override
 		public <T> T getService(Class<T> serviceType) {
 			return null;
 		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getControlsFor(org.eclipse.emf.ecore.EStructuralFeature.Setting)
+		 */
+		@Override
+		public Set<VControl> getControlsFor(Setting setting) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getControlsFor(org.eclipse.emf.ecp.view.spi.context.UniqueSetting)
+		 */
+		@Override
+		public Set<VControl> getControlsFor(UniqueSetting setting) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
 	}
 
 }

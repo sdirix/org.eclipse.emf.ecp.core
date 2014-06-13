@@ -2,10 +2,10 @@
 <feature
       id="org.eclipse.emf.ecp.emfforms.runtime.feature"
       label="EMF Forms Runtime"
-      version="1.2.1.qualifier"
+      version="1.3.0.qualifier"
       provider-name="%providerName"
       license-feature="org.eclipse.emf.ecp.license.feature"
-      license-feature-version="1.2.1.qualifier">
+      license-feature-version="1.3.0.qualifier">
 
    <description>
       %description
@@ -41,10 +41,6 @@
 
    <includes
          id="org.eclipse.emf.ecp.view.rule.feature"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.ecp.view.separator.feature"
          version="0.0.0"/>
 
    <includes

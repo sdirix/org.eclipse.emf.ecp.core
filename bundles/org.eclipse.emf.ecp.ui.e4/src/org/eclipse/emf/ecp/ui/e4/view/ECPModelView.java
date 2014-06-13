@@ -21,11 +21,11 @@ import org.eclipse.e4.ui.di.Focus;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.model.application.ui.menu.MToolBarElement;
 import org.eclipse.e4.ui.model.application.ui.menu.MToolItem;
+import org.eclipse.e4.ui.services.EMenuService;
 import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
 import org.eclipse.e4.ui.workbench.modeling.EPartService.PartState;
 import org.eclipse.e4.ui.workbench.modeling.ESelectionService;
-import org.eclipse.e4.ui.workbench.swt.modeling.EMenuService;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.util.ECPContainer;
@@ -34,7 +34,6 @@ import org.eclipse.emf.ecp.internal.ui.model.ModelContentProvider;
 import org.eclipse.emf.ecp.internal.ui.util.ECPHandlerHelper;
 import org.eclipse.emf.ecp.ui.common.TreeViewerFactory;
 import org.eclipse.emf.ecp.ui.e4.editor.ECPE4Editor;
-import org.eclipse.emf.ecp.ui.e4.util.EPartServiceHelper;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelection;
@@ -48,19 +47,21 @@ import org.eclipse.swt.widgets.Composite;
 /**
  * Because {@link EMenuService} is still internal.
  */
-@SuppressWarnings("restriction")
 /**
  * Model Explorer View Part.
+ * 
  * @author Jonas
- *
+ * 
  */
 public class ECPModelView {
 
-	public static final String P_LINK_WITH_EDITOR = "linkWithEditor";
+	public static final String P_LINK_WITH_EDITOR = "linkWithEditor"; //$NON-NLS-1$
 	private static final String POPUPMENU_NAVIGATOR = "org.eclipse.emf.ecp.e4.application.popupmenu.navigator"; //$NON-NLS-1$
 	private TreeViewer modelExplorerTree;
 	private ModelContentProvider contentProvider;
-	private final EPartService partService = EPartServiceHelper.getEPartService();
+
+	@Inject
+	private EPartService partService;
 
 	private MPart modelViewPart;
 

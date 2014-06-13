@@ -58,7 +58,7 @@ public class Activator extends Plugin {
 	/**
 	 * {@inheritDoc}
 	 */
-	// BEGIN SUPRESS CATCH EXCEPTION
+	@Override
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		this.context = context;
@@ -71,6 +71,7 @@ public class Activator extends Plugin {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void stop(BundleContext context) throws Exception {
 		ECPUtil.getECPObserverBus().unregister(validationObserver);
 		plugin = null;
@@ -99,17 +100,17 @@ public class Activator extends Plugin {
 	public IValidationService getValidationService(ECPProject project) {
 		return getValidationServiceProvider().getValidationService(project);
 	}
-	
+
 	private IValidationServiceProvider getValidationServiceProvider() {
 		if (validationServiceProvider == null) {
 			// Register directly with the service
-			ServiceReference<IValidationServiceProvider> reference = context
+			final ServiceReference<IValidationServiceProvider> reference = context
 				.getServiceReference(IValidationServiceProvider.class);
-			validationServiceProvider = (IValidationServiceProvider) context.getService(reference);
+			validationServiceProvider = context.getService(reference);
 		}
 		return validationServiceProvider;
 	}
-	
+
 	/**
 	 * Project change observer that validates changed objects.
 	 */
@@ -117,36 +118,37 @@ public class Activator extends Plugin {
 
 		// BEGIN SUPRESS CATCH EXCEPTION
 		/** {@inheritDoc} **/
-		public void projectsChanged(Collection<ECPProject> oldProjects, Collection<ECPProject> newProjects)  {
-//			List<ECPProject> newProjectList = Arrays.asList(newProjects);
-			for (ECPProject project : oldProjects) {
+		public void projectsChanged(Collection<ECPProject> oldProjects, Collection<ECPProject> newProjects) {
+			// List<ECPProject> newProjectList = Arrays.asList(newProjects);
+			for (final ECPProject project : oldProjects) {
 				if (!newProjects.contains(project)) {
 					getValidationServiceProvider().deleteValidationService(project);
 				}
 			}
 		}
+
 		/** {@inheritDoc} **/
-		public Collection<Object> objectsChanged(ECPProject project, Collection<Object> objects)  {
-			Set<Object> allAffectedElements = new HashSet<Object>();
-			
-			for (Object object : objects) {
+		public Collection<Object> objectsChanged(ECPProject project, Collection<Object> objects) {
+			final Set<Object> allAffectedElements = new HashSet<Object>();
+
+			for (final Object object : objects) {
 				if (object instanceof EObject) {
-					EObject eObject = (EObject) object;
-					
+					final EObject eObject = (EObject) object;
+
 					if (eObject.eContainer() == null && eObject.eResource() == null) {
 						// if an object was deleted it must be removed from the cachedTree.
-						for (EObject childObject : eObject.eContents()) {
+						for (final EObject childObject : eObject.eContents()) {
 							getValidationService(project).remove(childObject);
 						}
 						getValidationService(project).remove(eObject);
 					} else {
-					  Set<EObject> affected = getValidationService(project).validate(eObject);
-					  allAffectedElements.addAll(affected);
+						final Set<EObject> affected = getValidationService(project).validate(eObject);
+						allAffectedElements.addAll(affected);
 					}
 				}
 			}
 			return allAffectedElements;
-		}		
+		}
 	}
 
 	/**
@@ -159,7 +161,7 @@ public class Activator extends Plugin {
 	 */
 	public static ImageDescriptor getImageDescriptor(String path) {
 		return ImageDescriptor.createFromURL(getDefault().getBundle().getResource(path));
-//		return imageDescriptorFromPlugin(PLUGIN_ID, path);
+		// return imageDescriptorFromPlugin(PLUGIN_ID, path);
 	}
 
 }

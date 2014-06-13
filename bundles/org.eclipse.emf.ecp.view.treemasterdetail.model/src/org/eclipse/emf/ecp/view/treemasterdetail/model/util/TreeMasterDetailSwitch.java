@@ -89,17 +89,14 @@ public class TreeMasterDetailSwitch<T> extends Switch<T>
 		switch (classifierID)
 		{
 		case VTreeMasterDetailPackage.TREE_MASTER_DETAIL: {
-			final VTreeMasterDetail treeMasterDetail = (VTreeMasterDetail) theEObject;
+			VTreeMasterDetail treeMasterDetail = (VTreeMasterDetail) theEObject;
 			T result = caseTreeMasterDetail(treeMasterDetail);
-			if (result == null) {
+			if (result == null)
 				result = caseContainedElement(treeMasterDetail);
-			}
-			if (result == null) {
+			if (result == null)
 				result = caseElement(treeMasterDetail);
-			}
-			if (result == null) {
+			if (result == null)
 				result = defaultCase(theEObject);
-			}
 			return result;
 		}
 		default:

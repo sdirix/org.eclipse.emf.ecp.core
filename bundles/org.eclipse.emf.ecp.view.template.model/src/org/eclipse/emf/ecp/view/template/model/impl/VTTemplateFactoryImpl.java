@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate;
+import org.eclipse.emf.ecp.view.template.model.VTStyle;
 import org.eclipse.emf.ecp.view.template.model.VTTemplateFactory;
 import org.eclipse.emf.ecp.view.template.model.VTTemplatePackage;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplate;
@@ -41,13 +42,13 @@ public class VTTemplateFactoryImpl extends EFactoryImpl implements VTTemplateFac
 	{
 		try
 		{
-			VTTemplateFactory theTemplateFactory = (VTTemplateFactory) EPackage.Registry.INSTANCE
+			final VTTemplateFactory theTemplateFactory = (VTTemplateFactory) EPackage.Registry.INSTANCE
 				.getEFactory(VTTemplatePackage.eNS_URI);
 			if (theTemplateFactory != null)
 			{
 				return theTemplateFactory;
 			}
-		} catch (Exception exception)
+		} catch (final Exception exception)
 		{
 			EcorePlugin.INSTANCE.log(exception);
 		}
@@ -81,6 +82,8 @@ public class VTTemplateFactoryImpl extends EFactoryImpl implements VTTemplateFac
 			return createViewTemplate();
 		case VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE:
 			return createControlValidationTemplate();
+		case VTTemplatePackage.STYLE:
+			return createStyle();
 		default:
 			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -92,9 +95,10 @@ public class VTTemplateFactoryImpl extends EFactoryImpl implements VTTemplateFac
 	 * 
 	 * @generated
 	 */
+	@Override
 	public VTViewTemplate createViewTemplate()
 	{
-		VTViewTemplateImpl viewTemplate = new VTViewTemplateImpl();
+		final VTViewTemplateImpl viewTemplate = new VTViewTemplateImpl();
 		return viewTemplate;
 	}
 
@@ -104,9 +108,10 @@ public class VTTemplateFactoryImpl extends EFactoryImpl implements VTTemplateFac
 	 * 
 	 * @generated
 	 */
+	@Override
 	public VTControlValidationTemplate createControlValidationTemplate()
 	{
-		VTControlValidationTemplateImpl controlValidationTemplate = new VTControlValidationTemplateImpl();
+		final VTControlValidationTemplateImpl controlValidationTemplate = new VTControlValidationTemplateImpl();
 		return controlValidationTemplate;
 	}
 
@@ -116,6 +121,20 @@ public class VTTemplateFactoryImpl extends EFactoryImpl implements VTTemplateFac
 	 * 
 	 * @generated
 	 */
+	@Override
+	public VTStyle createStyle()
+	{
+		final VTStyleImpl style = new VTStyleImpl();
+		return style;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	@Override
 	public VTTemplatePackage getTemplatePackage()
 	{
 		return (VTTemplatePackage) getEPackage();

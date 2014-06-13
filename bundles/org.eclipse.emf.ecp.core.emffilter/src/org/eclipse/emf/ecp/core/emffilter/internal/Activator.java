@@ -14,13 +14,14 @@ package org.eclipse.emf.ecp.core.emffilter.internal;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
+
 /**
  * The activator class controls the plug-in life cycle.
  */
 public class Activator implements BundleActivator {
 
 	private static BundleContext context;
-	
+
 	/**
 	 * Returns the shared instance.
 	 * 
@@ -29,16 +30,17 @@ public class Activator implements BundleActivator {
 	static BundleContext getContext() {
 		return context;
 	}
+
 	// BEGIN SUPRESS CATCH EXCEPTION
 	/**
-	 * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext)
+	 * {@inheritDoc}
 	 */
 	public void start(BundleContext bundleContext) throws Exception {
 		Activator.context = bundleContext;
 	}
 
 	/**
-	 * @see org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
+	 * {@inheritDoc}
 	 */
 	public void stop(BundleContext bundleContext) throws Exception {
 		Activator.context = null;

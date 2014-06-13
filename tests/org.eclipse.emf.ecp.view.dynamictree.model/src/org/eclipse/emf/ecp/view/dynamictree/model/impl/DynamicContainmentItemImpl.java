@@ -36,16 +36,13 @@ import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.impl.DynamicContainmentItemImpl#getDomainModel <em>Domain Model
- * </em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.impl.DynamicContainmentItemImpl#getItems <em>Items</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.impl.DynamicContainmentItemImpl#getComposite <em>Composite
- * </em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.impl.DynamicContainmentItemImpl#getBaseItemIndex <em>Base Item
- * Index</em>}</li>
+ *   <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.impl.DynamicContainmentItemImpl#getDomainModel <em>Domain Model</em>}</li>
+ *   <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.impl.DynamicContainmentItemImpl#getItems <em>Items</em>}</li>
+ *   <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.impl.DynamicContainmentItemImpl#getComposite <em>Composite</em>}</li>
+ *   <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.impl.DynamicContainmentItemImpl#getBaseItemIndex <em>Base Item Index</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class DynamicContainmentItemImpl extends VCategorizableElementImpl implements DynamicContainmentItem
@@ -54,7 +51,6 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 	 * The cached value of the '{@link #getDomainModel() <em>Domain Model</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @see #getDomainModel()
 	 * @generated
 	 * @ordered
@@ -65,7 +61,6 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 	 * The cached value of the '{@link #getItems() <em>Items</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @see #getItems()
 	 * @generated
 	 * @ordered
@@ -76,7 +71,6 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 	 * The cached value of the '{@link #getComposite() <em>Composite</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @see #getComposite()
 	 * @generated
 	 * @ordered
@@ -87,7 +81,6 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 	 * The default value of the '{@link #getBaseItemIndex() <em>Base Item Index</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @see #getBaseItemIndex()
 	 * @generated
 	 * @ordered
@@ -98,7 +91,6 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 	 * The cached value of the '{@link #getBaseItemIndex() <em>Base Item Index</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @see #getBaseItemIndex()
 	 * @generated
 	 * @ordered
@@ -120,7 +112,6 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -132,19 +123,16 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public EObject getDomainModel()
 	{
 		if (domainModel != null && domainModel.eIsProxy()) {
-			final InternalEObject oldDomainModel = (InternalEObject) domainModel;
+			InternalEObject oldDomainModel = (InternalEObject)domainModel;
 			domainModel = eResolveProxy(oldDomainModel);
 			if (domainModel != oldDomainModel) {
-				if (eNotificationRequired()) {
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE,
-						ModelPackage.DYNAMIC_CONTAINMENT_ITEM__DOMAIN_MODEL, oldDomainModel, domainModel));
-				}
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ModelPackage.DYNAMIC_CONTAINMENT_ITEM__DOMAIN_MODEL, oldDomainModel, domainModel));
 			}
 		}
 		return domainModel;
@@ -153,7 +141,6 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public EObject basicGetDomainModel()
@@ -164,30 +151,25 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public void setDomainModel(EObject newDomainModel)
 	{
-		final EObject oldDomainModel = domainModel;
+		EObject oldDomainModel = domainModel;
 		domainModel = newDomainModel;
-		if (eNotificationRequired()) {
-			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.DYNAMIC_CONTAINMENT_ITEM__DOMAIN_MODEL,
-				oldDomainModel, domainModel));
-		}
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.DYNAMIC_CONTAINMENT_ITEM__DOMAIN_MODEL, oldDomainModel, domainModel));
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public EList<DynamicContainmentItem> getItems()
 	{
 		if (items == null) {
-			items = new EObjectContainmentEList<DynamicContainmentItem>(DynamicContainmentItem.class, this,
-				ModelPackage.DYNAMIC_CONTAINMENT_ITEM__ITEMS);
+			items = new EObjectContainmentEList<DynamicContainmentItem>(DynamicContainmentItem.class, this, ModelPackage.DYNAMIC_CONTAINMENT_ITEM__ITEMS);
 		}
 		return items;
 	}
@@ -195,7 +177,6 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public VContainedElement getComposite()
@@ -206,21 +187,15 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public NotificationChain basicSetComposite(VContainedElement newComposite, NotificationChain msgs)
 	{
-		final VContainedElement oldComposite = composite;
+		VContainedElement oldComposite = composite;
 		composite = newComposite;
 		if (eNotificationRequired()) {
-			final ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
-				ModelPackage.DYNAMIC_CONTAINMENT_ITEM__COMPOSITE, oldComposite, newComposite);
-			if (msgs == null) {
-				msgs = notification;
-			} else {
-				msgs.add(notification);
-			}
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ModelPackage.DYNAMIC_CONTAINMENT_ITEM__COMPOSITE, oldComposite, newComposite);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
 	}
@@ -228,36 +203,26 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public void setComposite(VContainedElement newComposite)
 	{
 		if (newComposite != composite) {
 			NotificationChain msgs = null;
-			if (composite != null) {
-				msgs = ((InternalEObject) composite).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
-					- ModelPackage.DYNAMIC_CONTAINMENT_ITEM__COMPOSITE, null, msgs);
-			}
-			if (newComposite != null) {
-				msgs = ((InternalEObject) newComposite).eInverseAdd(this, EOPPOSITE_FEATURE_BASE
-					- ModelPackage.DYNAMIC_CONTAINMENT_ITEM__COMPOSITE, null, msgs);
-			}
+			if (composite != null)
+				msgs = ((InternalEObject)composite).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ModelPackage.DYNAMIC_CONTAINMENT_ITEM__COMPOSITE, null, msgs);
+			if (newComposite != null)
+				msgs = ((InternalEObject)newComposite).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ModelPackage.DYNAMIC_CONTAINMENT_ITEM__COMPOSITE, null, msgs);
 			msgs = basicSetComposite(newComposite, msgs);
-			if (msgs != null) {
-				msgs.dispatch();
-			}
+			if (msgs != null) msgs.dispatch();
 		}
-		else if (eNotificationRequired()) {
-			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.DYNAMIC_CONTAINMENT_ITEM__COMPOSITE,
-				newComposite, newComposite));
-		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.DYNAMIC_CONTAINMENT_ITEM__COMPOSITE, newComposite, newComposite));
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public Integer getBaseItemIndex() {
@@ -267,32 +232,28 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public void setBaseItemIndex(Integer newBaseItemIndex) {
-		final Integer oldBaseItemIndex = baseItemIndex;
+		Integer oldBaseItemIndex = baseItemIndex;
 		baseItemIndex = newBaseItemIndex;
-		if (eNotificationRequired()) {
-			eNotify(new ENotificationImpl(this, Notification.SET,
-				ModelPackage.DYNAMIC_CONTAINMENT_ITEM__BASE_ITEM_INDEX, oldBaseItemIndex, baseItemIndex));
-		}
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.DYNAMIC_CONTAINMENT_ITEM__BASE_ITEM_INDEX, oldBaseItemIndex, baseItemIndex));
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
 	{
 		switch (featureID) {
-		case ModelPackage.DYNAMIC_CONTAINMENT_ITEM__ITEMS:
-			return ((InternalEList<?>) getItems()).basicRemove(otherEnd, msgs);
-		case ModelPackage.DYNAMIC_CONTAINMENT_ITEM__COMPOSITE:
-			return basicSetComposite(null, msgs);
+			case ModelPackage.DYNAMIC_CONTAINMENT_ITEM__ITEMS:
+				return ((InternalEList<?>)getItems()).basicRemove(otherEnd, msgs);
+			case ModelPackage.DYNAMIC_CONTAINMENT_ITEM__COMPOSITE:
+				return basicSetComposite(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -300,24 +261,21 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType)
 	{
 		switch (featureID) {
-		case ModelPackage.DYNAMIC_CONTAINMENT_ITEM__DOMAIN_MODEL:
-			if (resolve) {
-				return getDomainModel();
-			}
-			return basicGetDomainModel();
-		case ModelPackage.DYNAMIC_CONTAINMENT_ITEM__ITEMS:
-			return getItems();
-		case ModelPackage.DYNAMIC_CONTAINMENT_ITEM__COMPOSITE:
-			return getComposite();
-		case ModelPackage.DYNAMIC_CONTAINMENT_ITEM__BASE_ITEM_INDEX:
-			return getBaseItemIndex();
+			case ModelPackage.DYNAMIC_CONTAINMENT_ITEM__DOMAIN_MODEL:
+				if (resolve) return getDomainModel();
+				return basicGetDomainModel();
+			case ModelPackage.DYNAMIC_CONTAINMENT_ITEM__ITEMS:
+				return getItems();
+			case ModelPackage.DYNAMIC_CONTAINMENT_ITEM__COMPOSITE:
+				return getComposite();
+			case ModelPackage.DYNAMIC_CONTAINMENT_ITEM__BASE_ITEM_INDEX:
+				return getBaseItemIndex();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -325,7 +283,6 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
@@ -333,19 +290,19 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 	public void eSet(int featureID, Object newValue)
 	{
 		switch (featureID) {
-		case ModelPackage.DYNAMIC_CONTAINMENT_ITEM__DOMAIN_MODEL:
-			setDomainModel((EObject) newValue);
-			return;
-		case ModelPackage.DYNAMIC_CONTAINMENT_ITEM__ITEMS:
-			getItems().clear();
-			getItems().addAll((Collection<? extends DynamicContainmentItem>) newValue);
-			return;
-		case ModelPackage.DYNAMIC_CONTAINMENT_ITEM__COMPOSITE:
-			setComposite((VContainedElement) newValue);
-			return;
-		case ModelPackage.DYNAMIC_CONTAINMENT_ITEM__BASE_ITEM_INDEX:
-			setBaseItemIndex((Integer) newValue);
-			return;
+			case ModelPackage.DYNAMIC_CONTAINMENT_ITEM__DOMAIN_MODEL:
+				setDomainModel((EObject)newValue);
+				return;
+			case ModelPackage.DYNAMIC_CONTAINMENT_ITEM__ITEMS:
+				getItems().clear();
+				getItems().addAll((Collection<? extends DynamicContainmentItem>)newValue);
+				return;
+			case ModelPackage.DYNAMIC_CONTAINMENT_ITEM__COMPOSITE:
+				setComposite((VContainedElement)newValue);
+				return;
+			case ModelPackage.DYNAMIC_CONTAINMENT_ITEM__BASE_ITEM_INDEX:
+				setBaseItemIndex((Integer)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -353,25 +310,24 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public void eUnset(int featureID)
 	{
 		switch (featureID) {
-		case ModelPackage.DYNAMIC_CONTAINMENT_ITEM__DOMAIN_MODEL:
-			setDomainModel((EObject) null);
-			return;
-		case ModelPackage.DYNAMIC_CONTAINMENT_ITEM__ITEMS:
-			getItems().clear();
-			return;
-		case ModelPackage.DYNAMIC_CONTAINMENT_ITEM__COMPOSITE:
-			setComposite((VContainedElement) null);
-			return;
-		case ModelPackage.DYNAMIC_CONTAINMENT_ITEM__BASE_ITEM_INDEX:
-			setBaseItemIndex(BASE_ITEM_INDEX_EDEFAULT);
-			return;
+			case ModelPackage.DYNAMIC_CONTAINMENT_ITEM__DOMAIN_MODEL:
+				setDomainModel((EObject)null);
+				return;
+			case ModelPackage.DYNAMIC_CONTAINMENT_ITEM__ITEMS:
+				getItems().clear();
+				return;
+			case ModelPackage.DYNAMIC_CONTAINMENT_ITEM__COMPOSITE:
+				setComposite((VContainedElement)null);
+				return;
+			case ModelPackage.DYNAMIC_CONTAINMENT_ITEM__BASE_ITEM_INDEX:
+				setBaseItemIndex(BASE_ITEM_INDEX_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -379,22 +335,20 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public boolean eIsSet(int featureID)
 	{
 		switch (featureID) {
-		case ModelPackage.DYNAMIC_CONTAINMENT_ITEM__DOMAIN_MODEL:
-			return domainModel != null;
-		case ModelPackage.DYNAMIC_CONTAINMENT_ITEM__ITEMS:
-			return items != null && !items.isEmpty();
-		case ModelPackage.DYNAMIC_CONTAINMENT_ITEM__COMPOSITE:
-			return composite != null;
-		case ModelPackage.DYNAMIC_CONTAINMENT_ITEM__BASE_ITEM_INDEX:
-			return BASE_ITEM_INDEX_EDEFAULT == null ? baseItemIndex != null : !BASE_ITEM_INDEX_EDEFAULT
-				.equals(baseItemIndex);
+			case ModelPackage.DYNAMIC_CONTAINMENT_ITEM__DOMAIN_MODEL:
+				return domainModel != null;
+			case ModelPackage.DYNAMIC_CONTAINMENT_ITEM__ITEMS:
+				return items != null && !items.isEmpty();
+			case ModelPackage.DYNAMIC_CONTAINMENT_ITEM__COMPOSITE:
+				return composite != null;
+			case ModelPackage.DYNAMIC_CONTAINMENT_ITEM__BASE_ITEM_INDEX:
+				return BASE_ITEM_INDEX_EDEFAULT == null ? baseItemIndex != null : !BASE_ITEM_INDEX_EDEFAULT.equals(baseItemIndex);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -402,16 +356,13 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy()) {
-			return super.toString();
-		}
+		if (eIsProxy()) return super.toString();
 
-		final StringBuffer result = new StringBuffer(super.toString());
+		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (baseItemIndex: ");
 		result.append(baseItemIndex);
 		result.append(')');

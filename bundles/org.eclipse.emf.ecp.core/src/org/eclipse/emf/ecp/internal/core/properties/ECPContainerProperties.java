@@ -22,12 +22,13 @@ import org.eclipse.net4j.util.properties.Property;
  * @author Eugen Neufeld
  */
 public final class ECPContainerProperties extends Properties<ECPContainer> {
+	private static final String CAN_DELETE = "canDelete"; //$NON-NLS-1$
 	private static final IProperties<ECPContainer> INSTANCE = new ECPContainerProperties();
 
 	private ECPContainerProperties() {
 		super(ECPContainer.class);
 
-		add(new Property<ECPContainer>("canDelete") {
+		add(new Property<ECPContainer>(CAN_DELETE) {
 			@Override
 			protected Object eval(ECPContainer deletable) {
 				return deletable.canDelete();
@@ -39,7 +40,7 @@ public final class ECPContainerProperties extends Properties<ECPContainer> {
 	 * @author Eike Stepper
 	 */
 	public static final class Tester extends DefaultPropertyTester<ECPContainer> {
-		private static final String NAMESPACE = "org.eclipse.emf.ecp.core.container";
+		private static final String NAMESPACE = "org.eclipse.emf.ecp.core.container"; //$NON-NLS-1$
 
 		/** The tester constructor. */
 		public Tester() {

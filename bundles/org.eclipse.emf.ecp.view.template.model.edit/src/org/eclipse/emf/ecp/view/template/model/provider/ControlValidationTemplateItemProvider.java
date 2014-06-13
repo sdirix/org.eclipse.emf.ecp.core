@@ -506,7 +506,7 @@ public class ControlValidationTemplateItemProvider
 	@Override
 	public String getText(Object object)
 	{
-		String label = ((VTControlValidationTemplate) object).getOkColorHEX();
+		final String label = ((VTControlValidationTemplate) object).getOkColorHEX();
 		return label == null || label.length() == 0 ?
 			getString("_UI_ControlValidationTemplate_type") : //$NON-NLS-1$
 			getString("_UI_ControlValidationTemplate_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$

@@ -71,15 +71,15 @@ public class MEEditorPage extends FormPage {
 	 *            the {@link FormPage#id}
 	 * @param title
 	 *            the title
-	 * @param modelElementContext
+	 * @param ecpEditorContext
 	 *            the {@link ECPEditorContext}
 	 * @param modelElement
 	 *            the modelElement
 	 */
-	public MEEditorPage(MEEditor editor, String id, String title, ECPEditorContext modelElementContext,
+	public MEEditorPage(MEEditor editor, String id, String title, ECPEditorContext ecpEditorContext,
 		EObject modelElement) {
 		super(editor, id, title);
-		this.modelElementContext = modelElementContext;
+		modelElementContext = ecpEditorContext;
 
 	}
 
@@ -121,6 +121,7 @@ public class MEEditorPage extends FormPage {
 		final Composite body = form.getBody();
 		body.setLayout(new GridLayout());
 		body.setBackground(body.getDisplay().getSystemColor(SWT.COLOR_WHITE));
+		body.setBackgroundMode(SWT.INHERIT_FORCE);
 
 		final EObject domainObject = modelElementContext.getDomainObject();
 		final VView view = ViewProviderHelper.getView(domainObject);

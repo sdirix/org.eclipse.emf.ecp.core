@@ -34,6 +34,12 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Link;
 
+/**
+ * A cell editor displaying a link.
+ * 
+ * @author Eugen Neufeld
+ * 
+ */
 public class LinkCellEditor extends CellEditor implements ECPCellEditor {
 
 	private Link link;
@@ -60,6 +66,12 @@ public class LinkCellEditor extends CellEditor implements ECPCellEditor {
 		super(parent, style);
 	}
 
+	/**
+	 * 
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor#getValueProperty()
+	 */
 	public IValueProperty getValueProperty() {
 		return new WidgetValueProperty() {
 
@@ -107,6 +119,8 @@ public class LinkCellEditor extends CellEditor implements ECPCellEditor {
 		link = new Link(parent, SWT.NONE);
 		link.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_edit_cellEditor_reference"); //$NON-NLS-1$
 		link.addSelectionListener(new SelectionAdapter() {
+
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
@@ -192,24 +206,30 @@ public class LinkCellEditor extends CellEditor implements ECPCellEditor {
 		deactivate();
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * 
+	 * {@inheritDoc}
+	 * 
 	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor#getFormatedString(java.lang.Object)
 	 */
 	public String getFormatedString(Object value) {
 		return adapterFactoryItemDelegator.getText(value);
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * 
+	 * {@inheritDoc}
+	 * 
 	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor#getColumnWidthWeight()
 	 */
 	public int getColumnWidthWeight() {
 		return 100;
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * 
+	 * {@inheritDoc}
+	 * 
 	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor#getTargetToModelStrategy()
 	 */
 	public UpdateValueStrategy getTargetToModelStrategy() {
@@ -217,12 +237,25 @@ public class LinkCellEditor extends CellEditor implements ECPCellEditor {
 		return null;
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * 
+	 * {@inheritDoc}
+	 * 
 	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor#getModelToTargetStrategy()
 	 */
 	public UpdateValueStrategy getModelToTargetStrategy() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor#setEditable(boolean)
+	 */
+	public void setEditable(boolean editable) {
+		if (link != null) {
+			link.setEnabled(editable);
+		}
 	}
 }

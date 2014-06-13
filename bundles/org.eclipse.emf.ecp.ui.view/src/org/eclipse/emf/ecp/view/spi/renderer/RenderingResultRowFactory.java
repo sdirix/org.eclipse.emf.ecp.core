@@ -19,6 +19,7 @@ package org.eclipse.emf.ecp.view.spi.renderer;
  * @since 1.2
  * 
  */
+@Deprecated
 public interface RenderingResultRowFactory<CONTROL> {
 	/**
 	 * Creates a {@link RenderingResultRow} from a list of controls. If the Factory can't handle the provided amount of

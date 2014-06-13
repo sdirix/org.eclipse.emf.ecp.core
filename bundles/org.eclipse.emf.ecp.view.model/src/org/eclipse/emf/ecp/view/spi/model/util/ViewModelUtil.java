@@ -15,7 +15,6 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
-import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.impl.Activator;
 
 /**
@@ -39,8 +38,10 @@ public final class ViewModelUtil {
 	 * @param renderable the renderable to analyze for {@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReference
 	 *            VDomainModelReferences}
 	 * @param domainModelRoot the domain model to use for resolving
+	 * @since 1.3
 	 */
-	public static void resolveDomainReferences(VElement renderable, EObject domainModelRoot) {
+	public static void resolveDomainReferences(EObject renderable,
+		EObject domainModelRoot) {
 		checkAndResolve(renderable, domainModelRoot);
 		final TreeIterator<EObject> eAllContents = renderable.eAllContents();
 		while (eAllContents.hasNext()) {
@@ -56,8 +57,8 @@ public final class ViewModelUtil {
 			if (control.getDomainModelReference() == null) {
 				return;
 			}
-			final boolean resolve = control.getDomainModelReference().resolve(domainModelRoot);
-			if (!resolve) {
+			final boolean init = control.getDomainModelReference().init(domainModelRoot);
+			if (!init) {
 				Activator.logMessage(IStatus.WARNING, "Not resolved: " + control.getDomainModelReference() //$NON-NLS-1$
 					+ " on control " + control); //$NON-NLS-1$
 			}

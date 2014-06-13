@@ -17,10 +17,12 @@ import java.util.List;
 
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.ecp.edit.spi.ECPAbstractControl;
+import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.renderer.RenderingResultRow;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -51,6 +53,7 @@ import org.eclipse.swt.widgets.Label;
  * @author Eugen Neufeld
  * 
  */
+@Deprecated
 public abstract class SWTControl extends ECPAbstractControl implements ECPControlSWT {
 
 	/**
@@ -317,7 +320,7 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 	 */
 	protected Button createButtonForAction(final Action action, final Composite composite) {
 		final Button selectButton = new Button(composite, SWT.PUSH);
-		selectButton.setImage(action.getImageDescriptor().createImage());
+		selectButton.setImage(Activator.getImage(action));
 		selectButton.setEnabled(!getControl().isReadonly());
 		selectButton.setToolTipText(action.getToolTipText());
 		selectButton.addSelectionListener(new SelectionAdapter() {
@@ -430,5 +433,29 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 			unsetLabel = null;
 		}
 		super.dispose();
+	}
+
+	/**
+	 * Helper method to keep the old validation.
+	 * 
+	 * @since 1.2
+	 */
+	@Override
+	protected void backwardCompatibleHandleValidation() {
+		final VDiagnostic diagnostic = getControl().getDiagnostic();
+		if (diagnostic == null) {
+			return;
+		}
+		Display.getDefault().asyncExec(new Runnable() {
+			public void run() {
+				if (getControl() == null) {
+					return;
+				}
+				resetValidation();
+				for (final Object object : diagnostic.getDiagnostics()) {
+					handleValidation((Diagnostic) object);
+				}
+			}
+		});
 	}
 }

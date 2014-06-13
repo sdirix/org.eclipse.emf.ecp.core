@@ -185,8 +185,8 @@ public class TreeMasterDetailItemProviderAdapterFactory extends
 	public Object adapt(Object object, Object type) {
 		if (isFactoryForType(type))
 		{
-			final Object adapter = super.adapt(object, type);
-			if (!(type instanceof Class<?>) || ((Class<?>) type).isInstance(adapter))
+			Object adapter = super.adapt(object, type);
+			if (!(type instanceof Class<?>) || (((Class<?>) type).isInstance(adapter)))
 			{
 				return adapter;
 			}
@@ -266,9 +266,8 @@ public class TreeMasterDetailItemProviderAdapterFactory extends
 	 * @generated
 	 */
 	public void dispose() {
-		if (treeMasterDetailItemProvider != null) {
+		if (treeMasterDetailItemProvider != null)
 			treeMasterDetailItemProvider.dispose();
-		}
 	}
 
 	/**
@@ -335,9 +334,11 @@ public class TreeMasterDetailItemProviderAdapterFactory extends
 				final VTreeMasterDetail createTreeMasterDetail = VTreeMasterDetailFactory.eINSTANCE
 					.createTreeMasterDetail();
 
-				final VView createView = VViewFactory.eINSTANCE.createView();
-				createView.setRootEClass(view.getRootEClass());
-				createTreeMasterDetail.setDetailView(createView);
+				if (view != null) {
+					final VView createView = VViewFactory.eINSTANCE.createView();
+					createView.setRootEClass(view.getRootEClass());
+					createTreeMasterDetail.setDetailView(createView);
+				}
 
 				return createTreeMasterDetail;
 
@@ -387,7 +388,7 @@ public class TreeMasterDetailItemProviderAdapterFactory extends
 		 */
 		public Collection<Object> getNewChildDescriptors(Object object,
 			EditingDomain editingDomain) {
-			final ArrayList<Object> result = new ArrayList<Object>();
+			ArrayList<Object> result = new ArrayList<Object>();
 			new CreationSwitch(result, editingDomain).doSwitch((EObject) object);
 			return result;
 		}

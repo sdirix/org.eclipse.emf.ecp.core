@@ -13,6 +13,7 @@ package org.eclipse.emf.ecp.view.internal.rule;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,14 +26,15 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
-import org.eclipse.emf.ecp.view.spi.context.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
+import org.eclipse.emf.ecp.view.spi.model.ModelChangeAddRemoveListener;
+import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VAttachment;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.rule.model.Condition;
 import org.eclipse.emf.ecp.view.spi.rule.model.EnableRule;
+import org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition;
 import org.eclipse.emf.ecp.view.spi.rule.model.Rule;
 import org.eclipse.emf.ecp.view.spi.rule.model.ShowRule;
 
@@ -47,8 +49,8 @@ public class RuleService implements ViewModelService {
 	private static final String DOMAIN_MODEL_NULL_EXCEPTION = "Domain model must not be null."; //$NON-NLS-1$
 	private static final String VIEW_MODEL_NULL_EXCEPTION = "View model must not be null."; //$NON-NLS-1$
 	private ViewModelContext context;
-	private ModelChangeListener domainChangeListener;
-	private ModelChangeListener viewChangeListener;
+	private ModelChangeAddRemoveListener domainChangeListener;
+	private ModelChangeAddRemoveListener viewChangeListener;
 
 	private final RuleRegistry<EnableRule> enableRuleRegistry;
 	private final RuleRegistry<ShowRule> showRuleRegistry;
@@ -66,11 +68,13 @@ public class RuleService implements ViewModelService {
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#instantiate(org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
-	public void instantiate(ViewModelContext context) {
+	@Override
+	public void instantiate(final ViewModelContext context) {
 		this.context = context;
 		final VElement view = context.getViewModel();
-		domainChangeListener = new ModelChangeListener() {
+		domainChangeListener = new ModelChangeAddRemoveListener() {
 
+			@Override
 			public void notifyChange(ModelChangeNotification notification) {
 				if (isAttributeNotification(notification)) {
 					final EAttribute attribute = (EAttribute) notification.getStructuralFeature();
@@ -86,22 +90,60 @@ public class RuleService implements ViewModelService {
 				}
 			}
 
+			@Override
 			public void notifyAdd(Notifier notifier) {
 			}
 
+			@Override
 			public void notifyRemove(Notifier notifier) {
 			}
 		};
 		context.registerDomainChangeListener(domainChangeListener);
-		viewChangeListener = new ModelChangeListener() {
+		viewChangeListener = new ModelChangeAddRemoveListener() {
+			@Override
 			public void notifyChange(ModelChangeNotification notification) {
 				// do nothing for now, dynamic registration of rules isn't possible yet
 			}
 
+			@Override
 			public void notifyAdd(Notifier notifier) {
-				// TODO Auto-generated method stub
+				if (VElement.class.isInstance(notifier)) {
+					register(enableRuleRegistry, EnableRule.class, context.getDomainModel(),
+						VElement.class.cast(notifier));
+					register(showRuleRegistry, ShowRule.class, context.getDomainModel(), VElement.class.cast(notifier));
+
+					final Rule rule = getRule(VElement.class.cast(notifier));
+					if (rule == null) {
+						return;
+					}
+					if (LeafCondition.class.isInstance(rule.getCondition())) {
+						evalNewRules(LeafCondition.class.cast(rule.getCondition()));
+					}
+					else {
+						final TreeIterator<EObject> eAllContents = rule.getCondition().eAllContents();
+						while (eAllContents.hasNext()) {
+							final EObject eObject = eAllContents.next();
+							if (LeafCondition.class.isInstance(eObject)) {
+								evalNewRules(LeafCondition.class.cast(eObject));
+							}
+						}
+					}
+
+				}
 			}
 
+			private void evalNewRules(LeafCondition leafCondition) {
+				leafCondition.getDomainModelReference().init(context.getDomainModel());
+				final Iterator<EStructuralFeature> eStructuralFeatureIterator = leafCondition.getDomainModelReference()
+					.getEStructuralFeatureIterator();
+				while (eStructuralFeatureIterator.hasNext()) {
+					final EStructuralFeature feature = eStructuralFeatureIterator.next();
+					evalEnable(feature);
+					evalShow(feature);
+				}
+			}
+
+			@Override
 			public void notifyRemove(Notifier notifier) {
 
 				if (VElement.class.isInstance(notifier)) {
@@ -438,6 +480,7 @@ public class RuleService implements ViewModelService {
 	/**
 	 * Dispose.
 	 */
+	@Override
 	public void dispose() {
 		// dispose stuff
 		context.unregisterDomainChangeListener(domainChangeListener);
@@ -470,6 +513,7 @@ public class RuleService implements ViewModelService {
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#getPriority()
 	 */
+	@Override
 	public int getPriority() {
 		return 1;
 	}

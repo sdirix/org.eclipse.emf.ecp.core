@@ -51,7 +51,7 @@
       <p2Repositories url="http://download.eclipse.org/releases/luna"/>
       <p2Repositories url="http://download.eclipse.org/technology/swtbot/releases/latest"/>
       <p2Repositories url="http://download.eclipse.org/eclipse/updates/4.4milestones"/>
-      <p2Repositories url="http://download.eclipse.org/emf-store/releases_11"/>
+      <p2Repositories url="http://download.eclipse.org/emf-store/releases_13"/>
       <p2Repositories url="http://download.eclipse.org/efxclipse/runtime-nightly/site"/>
     </repositoryLists>
   </setupTasks>
@@ -69,7 +69,7 @@
     </workingSets>
     <workingSets name="EMF Forms" id="CDO CDO Dawn">
       <predicates xsi:type="predicates:AndPredicate">
-        <operands xsi:type="workingsets:ExclusionPredicate"/>
+        <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@setupTasks.9/@workingSets.1 //@setupTasks.9/@workingSets.8 //@setupTasks.9/@workingSets.6 //@setupTasks.9/@workingSets.5 //@setupTasks.9/@workingSets.3 //@setupTasks.9/@workingSets.7 //@setupTasks.9/@workingSets.4"/>
         <operands xsi:type="predicates:OrPredicate">
           <operands xsi:type="predicates:NamePredicate" pattern=".*view.*"/>
           <operands xsi:type="predicates:NamePredicate" pattern=".*ecp.edit"/>
@@ -78,26 +78,65 @@
         </operands>
       </predicates>
     </workingSets>
+    <workingSets name="ECP DiffMerge">
+      <predicates xsi:type="predicates:AndPredicate">
+        <operands xsi:type="predicates:NamePredicate" pattern=".*diffmerge.*"/>
+        <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@setupTasks.9/@workingSets.3 //@setupTasks.9/@workingSets.7"/>
+      </predicates>
+    </workingSets>
+    <workingSets name="ECP" id="CDO CDO">
+      <predicates xsi:type="predicates:AndPredicate">
+        <operands xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.emf\.ecp.*"/>
+        <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@setupTasks.9/@workingSets.1 //@setupTasks.9/@workingSets.8 //@setupTasks.9/@workingSets.6 //@setupTasks.9/@workingSets.5 //@setupTasks.9/@workingSets.3 //@setupTasks.9/@workingSets.7 //@setupTasks.9/@workingSets.4 //@setupTasks.9/@workingSets.0"/>
+      </predicates>
+    </workingSets>
     <workingSets name="ECP Releng" id="CDO Net4j DB">
       <predicates xsi:type="predicates:OrPredicate">
         <operands xsi:type="predicates:NamePredicate" pattern=".*releng.*"/>
         <operands xsi:type="predicates:NamePredicate" pattern=".*feature"/>
+        <operands xsi:type="predicates:NamePredicate" pattern=".*product.*"/>
+        <operands xsi:type="predicates:NamePredicate" pattern=".*\.parent"/>
+        <operands xsi:type="predicates:NamePredicate" pattern=".*\.repository"/>
+        <operands xsi:type="predicates:NamePredicate" pattern=".*\.target.*"/>
       </predicates>
     </workingSets>
-    <workingSets name="ECP IDE">
+    <workingSets name="ECP Validation">
       <predicates xsi:type="predicates:AndPredicate">
-        <operands xsi:type="predicates:NamePredicate" pattern=".*ide.*"/>
-        <operands xsi:type="workingsets:ExclusionPredicate"/>
-        <operands xsi:type="predicates:NotPredicate">
-          <operand xsi:type="predicates:NamePredicate" pattern=".*provider.*"/>
+        <operands xsi:type="predicates:OrPredicate">
+          <operands xsi:type="predicates:NamePredicate" pattern=".*\.ecp\.validation.*"/>
+          <operands xsi:type="predicates:NamePredicate" pattern=".*\.ecp\.ui\.validation.*"/>
         </operands>
+        <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@setupTasks.9/@workingSets.3 //@setupTasks.9/@workingSets.7"/>
       </predicates>
     </workingSets>
     <workingSets name="ECP RAP">
       <predicates xsi:type="predicates:NamePredicate" pattern=".*\.rap.*"/>
+      <predicates xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@setupTasks.9/@workingSets.3 //@setupTasks.9/@workingSets.7"/>
     </workingSets>
-    <workingSets name="ECP DiffMerge">
-      <predicates xsi:type="predicates:NamePredicate" pattern=".*diffmerge.*"/>
+    <workingSets name="ECP IDE">
+      <predicates xsi:type="predicates:AndPredicate">
+        <operands xsi:type="predicates:OrPredicate">
+          <operands xsi:type="predicates:NamePredicate" pattern=".*ide.*"/>
+          <operands xsi:type="predicates:NamePredicate" pattern=".*\.editor.*"/>
+          <operands xsi:type="predicates:NamePredicate" pattern=".*\.preview.*"/>
+          <operands xsi:type="predicates:NamePredicate" pattern=".*\.project\..*"/>
+          <operands xsi:type="predicates:NamePredicate" pattern=".*\.controls.*"/>
+        </operands>
+        <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@setupTasks.9/@workingSets.8 //@setupTasks.9/@workingSets.3 //@setupTasks.9/@workingSets.7"/>
+        <operands xsi:type="predicates:NotPredicate">
+          <operand xsi:type="predicates:OrPredicate">
+            <operands xsi:type="predicates:NamePredicate" pattern=".*provider.*"/>
+            <operands xsi:type="predicates:NamePredicate" pattern=".*editorbridge.*"/>
+            <operands xsi:type="predicates:NamePredicate" pattern=".*\.editor.e3"/>
+          </operand>
+        </operands>
+      </predicates>
+    </workingSets>
+    <workingSets name="ECP Tests" id="CDO CDO Tests">
+      <predicates xsi:type="predicates:AndPredicate">
+        <operands xsi:type="predicates:NamePredicate" pattern=".*test.*"/>
+        <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@setupTasks.9/@workingSets.8"/>
+      </predicates>
     </workingSets>
     <workingSets name="ECP FX">
       <predicates xsi:type="predicates:NamePredicate" pattern=".*fx.*"/>
@@ -109,6 +148,7 @@
     <queries summary="Backlog" url="https://bugs.eclipse.org/bugs/buglist.cgi?bug_status=UNCONFIRMED&amp;bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=REOPENED&amp;bug_status=RESOLVED&amp;bug_status=VERIFIED&amp;bug_status=CLOSED&amp;classification=Modeling&amp;component=Common&amp;component=Editor&amp;component=EMF%20Forms&amp;component=Model%20Workspace&amp;component=Navigator&amp;component=Validation&amp;list_id=8330721&amp;product=ECP&amp;query_format=advanced&amp;target_milestone=backlog"/>
     <queries summary="Open Bugs in next Milestone ${ecp.bugzilla.nextmilestone}" url="https://bugs.eclipse.org/bugs/buglist.cgi?bug_status=UNCONFIRMED&amp;bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=REOPENED&amp;bug_status=VERIFIED&amp;classification=Modeling&amp;component=Common&amp;component=Editor&amp;component=EMF%20Forms&amp;component=Model%20Workspace&amp;component=Navigator&amp;component=Validation&amp;list_id=8330574&amp;product=ECP&amp;query_format=advanced&amp;target_milestone=${ecp.bugzilla.nextmilestone}"/>
   </setupTasks>
+  <setupTasks xsi:type="setup:ApiBaselineTask" version="ECP 1.2.1" zipLocation="http://www.eclipse.org/downloads/download.php?file=/ecp/releases/releases_12/121/121.zip"/>
   <branches name="develop">
     <setupTasks xsi:type="setup:ContextVariableTask" name="ecp.git.branch" value="develop" stringSubstitution="true"/>
     <setupTasks xsi:type="setup:ContextVariableTask" name="ecp.baseline.version" value="1.2" stringSubstitution="true"/>

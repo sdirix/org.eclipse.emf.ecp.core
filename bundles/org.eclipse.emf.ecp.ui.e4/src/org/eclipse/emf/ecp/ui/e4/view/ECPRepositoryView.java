@@ -15,8 +15,8 @@ package org.eclipse.emf.ecp.ui.e4.view;
 import javax.annotation.PostConstruct;
 
 import org.eclipse.e4.ui.di.Focus;
+import org.eclipse.e4.ui.services.EMenuService;
 import org.eclipse.e4.ui.workbench.modeling.ESelectionService;
-import org.eclipse.e4.ui.workbench.swt.modeling.EMenuService;
 import org.eclipse.emf.ecp.ui.common.TreeViewerFactory;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -31,7 +31,6 @@ import org.eclipse.swt.widgets.Composite;
  * @author Jonas
  * 
  */
-@SuppressWarnings("restriction")
 public class ECPRepositoryView {
 
 	private static final String POPUPMENU_REPOSITORY = "org.eclipse.emf.ecp.e4.application.popupmenu.repository"; //$NON-NLS-1$

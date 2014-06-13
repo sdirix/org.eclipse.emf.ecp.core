@@ -98,7 +98,7 @@ public class ReferenceMultiControlTester implements ECPApplicableTester {
 			// return NOT_APPLICABLE;
 			// }
 			final Class<?> instanceClass = feature.getEType().getInstanceClass();
-			if (!tester.getSupportedClassType().isAssignableFrom(instanceClass)) {
+			if (instanceClass != null && !tester.getSupportedClassType().isAssignableFrom(instanceClass)) {
 				return NOT_APPLICABLE;
 			}
 		}

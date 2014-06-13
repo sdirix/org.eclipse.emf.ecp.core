@@ -11,7 +11,9 @@
  */
 package org.eclipse.emf.ecp.view.spi.group.model;
 
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 
@@ -30,7 +32,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * @see org.eclipse.emf.ecp.view.spi.group.model.VGroupFactory
  * @model kind="package"
  * @generated
- * @since 1.2
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface VGroupPackage extends EPackage
 {
@@ -153,6 +155,28 @@ public interface VGroupPackage extends EPackage
 	int GROUP__CHILDREN = VViewPackage.CONTAINER__CHILDREN;
 
 	/**
+	 * The feature id for the '<em><b>Container Layout Embedding</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 * @since 1.3
+	 */
+	int GROUP__CONTAINER_LAYOUT_EMBEDDING = VViewPackage.CONTAINER_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Label Alignment</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 * @since 1.3
+	 */
+	int GROUP__LABEL_ALIGNMENT = VViewPackage.CONTAINER_FEATURE_COUNT + 1;
+
+	/**
 	 * The number of structural features of the '<em>Group</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -160,7 +184,20 @@ public interface VGroupPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int GROUP_FEATURE_COUNT = VViewPackage.CONTAINER_FEATURE_COUNT + 0;
+	int GROUP_FEATURE_COUNT = VViewPackage.CONTAINER_FEATURE_COUNT + 2;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.group.model.GroupLabelAlignment
+	 * <em>Label Alignment</em>}' enum.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see org.eclipse.emf.ecp.view.spi.group.model.GroupLabelAlignment
+	 * @see org.eclipse.emf.ecp.view.spi.group.model.impl.VGroupPackageImpl#getGroupLabelAlignment()
+	 * @generated
+	 * @since 1.3
+	 */
+	int GROUP_LABEL_ALIGNMENT = 1;
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.group.model.VGroup <em>Group</em>}'.
@@ -172,6 +209,48 @@ public interface VGroupPackage extends EPackage
 	 * @generated
 	 */
 	EClass getGroup();
+
+	/**
+	 * Returns the meta object for the attribute '
+	 * {@link org.eclipse.emf.ecp.view.spi.group.model.VGroup#isContainerLayoutEmbedding
+	 * <em>Container Layout Embedding</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for the attribute '<em>Container Layout Embedding</em>'.
+	 * @see org.eclipse.emf.ecp.view.spi.group.model.VGroup#isContainerLayoutEmbedding()
+	 * @see #getGroup()
+	 * @generated
+	 * @since 1.3
+	 */
+	EAttribute getGroup_ContainerLayoutEmbedding();
+
+	/**
+	 * Returns the meta object for the attribute '
+	 * {@link org.eclipse.emf.ecp.view.spi.group.model.VGroup#getLabelAlignment <em>Label Alignment</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for the attribute '<em>Label Alignment</em>'.
+	 * @see org.eclipse.emf.ecp.view.spi.group.model.VGroup#getLabelAlignment()
+	 * @see #getGroup()
+	 * @generated
+	 * @since 1.3
+	 */
+	EAttribute getGroup_LabelAlignment();
+
+	/**
+	 * Returns the meta object for enum '{@link org.eclipse.emf.ecp.view.spi.group.model.GroupLabelAlignment
+	 * <em>Label Alignment</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for enum '<em>Label Alignment</em>'.
+	 * @see org.eclipse.emf.ecp.view.spi.group.model.GroupLabelAlignment
+	 * @generated
+	 * @since 1.3
+	 */
+	EEnum getGroupLabelAlignment();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -195,6 +274,8 @@ public interface VGroupPackage extends EPackage
 	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
+	 * @noimplement This interface is not intended to be implemented by clients.
+	 * @noextend This interface is not intended to be extended by clients.
 	 */
 	interface Literals
 	{
@@ -209,6 +290,36 @@ public interface VGroupPackage extends EPackage
 		 * @generated
 		 */
 		EClass GROUP = eINSTANCE.getGroup();
+		/**
+		 * The meta object literal for the '<em><b>Container Layout Embedding</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @generated
+		 * @since 1.3
+		 */
+		EAttribute GROUP__CONTAINER_LAYOUT_EMBEDDING = eINSTANCE.getGroup_ContainerLayoutEmbedding();
+		/**
+		 * The meta object literal for the '<em><b>Label Alignment</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @generated
+		 * @since 1.3
+		 */
+		EAttribute GROUP__LABEL_ALIGNMENT = eINSTANCE.getGroup_LabelAlignment();
+		/**
+		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.group.model.GroupLabelAlignment
+		 * <em>Label Alignment</em>}' enum.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @see org.eclipse.emf.ecp.view.spi.group.model.GroupLabelAlignment
+		 * @see org.eclipse.emf.ecp.view.spi.group.model.impl.VGroupPackageImpl#getGroupLabelAlignment()
+		 * @generated
+		 * @since 1.3
+		 */
+		EEnum GROUP_LABEL_ALIGNMENT = eINSTANCE.getGroupLabelAlignment();
 
 	}
 

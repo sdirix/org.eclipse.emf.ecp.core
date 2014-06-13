@@ -13,13 +13,12 @@
 package org.eclipse.emf.ecp.edit.internal.swt.controls;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.observable.list.IObservableList;
@@ -44,7 +43,6 @@ import org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor;
 import org.eclipse.emf.ecp.edit.internal.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTRenderingHelper;
-import org.eclipse.emf.ecp.view.internal.validation.ValidationService;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.renderer.RenderingResultRow;
 import org.eclipse.emf.edit.command.AddCommand;
@@ -158,8 +156,8 @@ public class TableControl extends SWTControl {
 		final List<RenderingResultRow<Control>> list = Collections.singletonList(SWTRenderingHelper.INSTANCE
 			.getResultRowFactory().createRenderingResultRow(
 				createControl(parent)));
-		// TODO remove asap
-		backwardCompatibleHandleValidation();
+
+		applyValidation(getControl().getDiagnostic());
 		return list;
 
 	}
@@ -555,20 +553,56 @@ public class TableControl extends SWTControl {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @deprecated
+	 * @see org.eclipse.emf.ecp.edit.spi.ECPAbstractControl#applyValidation(org.eclipse.emf.ecp.view.spi.model.VDiagnostic)
 	 */
-	@Deprecated
 	@Override
-	public void handleValidation(Diagnostic diagnostic) {
-		if (diagnostic.getData().isEmpty()) {
+	protected void applyValidation(VDiagnostic diagnostic) {
+
+		if (validationLabel == null || validationLabel.isDisposed()) {
 			return;
 		}
-		final Image image = getValidationIcon(diagnostic.getSeverity());
-		validationLabel.setImage(image);
-		validationLabel.setToolTipText(getTableTooltipMessage(diagnostic));
-		final EObject object = (EObject) diagnostic.getData().get(0);
-		tableViewer.update(object, null);
+		if (diagnostic != null) {
+			final Image image = getValidationIcon(diagnostic.getHighestSeverity());
+			validationLabel.setImage(image);
+			validationLabel.setToolTipText(diagnostic.getMessage());
+			for (final Object object : (Collection<?>) mainSetting.get(true)) {
+				tableViewer.update(object, null);
+			}
+		}
 	}
+
+	// /**
+	// * {@inheritDoc}
+	// *
+	// * @deprecated
+	// */
+	// @Deprecated
+	// @Override
+	// public void resetValidation() {
+	// if (validationLabel == null || validationLabel.isDisposed()) {
+	// return;
+	// }
+	//		validationLabel.setToolTipText(""); //$NON-NLS-1$
+	// validationLabel.setImage(null);
+	// tableViewer.refresh();
+	// }
+	// /**
+	// * {@inheritDoc}
+	// *
+	// * @deprecated
+	// */
+	// @Deprecated
+	// @Override
+	// public void handleValidation(Diagnostic diagnostic) {
+	// if (diagnostic.getData().isEmpty()) {
+	// return;
+	// }
+	// final Image image = getValidationIcon(diagnostic.getSeverity());
+	// validationLabel.setImage(image);
+	// validationLabel.setToolTipText(getTableTooltipMessage(diagnostic));
+	// final EObject object = (EObject) diagnostic.getData().get(0);
+	// tableViewer.update(object, null);
+	// }
 
 	/**
 	 * Returns the message of the validation tool tip shown in the table header.
@@ -618,22 +652,6 @@ public class TableControl extends SWTControl {
 	 */
 	@Deprecated
 	@Override
-	public void resetValidation() {
-		if (validationLabel == null || validationLabel.isDisposed()) {
-			return;
-		}
-		validationLabel.setToolTipText(""); //$NON-NLS-1$
-		validationLabel.setImage(null);
-
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @deprecated
-	 */
-	@Deprecated
-	@Override
 	public void setEditable(boolean isEditable) {
 		if (addButton != null) {
 			addButton.setVisible(isEditable);
@@ -660,40 +678,54 @@ public class TableControl extends SWTControl {
 
 		@Override
 		public void update(ViewerCell cell) {
-			final Set<VDiagnostic> allDiagnostics = getAllDiagnostics((EObject) cell.getElement(),
-				structuralFeatures);
 			Integer mostSevere = Diagnostic.OK;
-
-			for (final VDiagnostic vDiagnostic : allDiagnostics) {
-				if (vDiagnostic.getHighestSeverity() > mostSevere) {
-					mostSevere = vDiagnostic.getHighestSeverity();
-				}
-			}
-
-			cell.setImage(getValidationIcon(mostSevere));
-
-			// switch (mostSevere) {
-			// case Diagnostic.OK:
-			// cell.setImage(null);
-			// return;
-			// default:
-			// cell.setImage(Activator.getImage(ICON_VALIDATION_ERROR));
+			final VDiagnostic vDiagnostic = getControl().getDiagnostic();
+			// for (final Object diagObject : vDiagnostic.getDiagnostics()) {
+			// final Diagnostic diagnostic = (Diagnostic) diagObject;
+			// if (diagnostic.getData().size() == 0) {
+			// continue;
 			// }
+			// if (diagnostic.getData().get(0).equals(cell.getElement())) {
+			// final int currentSeverity = diagnostic.getSeverity();
+			// if (currentSeverity > mostSevere) {
+			// mostSevere = currentSeverity;
+			// }
+			// }
+			// }
+			final List<Diagnostic> diagnostics = vDiagnostic.getDiagnostics((EObject) cell.getElement());
+			if (diagnostics.size() != 0) {
+				mostSevere = diagnostics.get(0).getSeverity();
+			}
+			cell.setImage(getValidationIcon(mostSevere));
 		}
 
 		@Override
 		public String getToolTipText(Object element) {
 			final StringBuffer tooltip = new StringBuffer();
-			final Set<VDiagnostic> allDiagnostics = getAllDiagnostics((EObject) element, structuralFeatures);
+			final VDiagnostic vDiagnostic = getControl().getDiagnostic();
+			// for (final Object diagObject : vDiagnostic.getDiagnostics()) {
+			// final Diagnostic diagnostic = (Diagnostic) diagObject;
+			// if (diagnostic.getData().size() < 2) {
+			// continue;
+			// }
+			// if (diagnostic.getSeverity() == Diagnostic.OK) {
+			// continue;
+			// }
+			// if (diagnostic.getData().get(0).equals(element)
+			// && structuralFeatures.contains(diagnostic.getData().get(1))) {
+			// if (tooltip.length() > 0) {
+			//						tooltip.append("\n"); //$NON-NLS-1$
+			// }
+			// tooltip.append(diagnostic.getMessage());
+			// }
+			// }
 
-			for (final VDiagnostic vDiagnostic : allDiagnostics) {
-				if (vDiagnostic.getHighestSeverity() == Diagnostic.OK) {
-					continue;
-				}
+			final List<Diagnostic> diagnostics = vDiagnostic.getDiagnostics((EObject) element);
+			for (final Diagnostic diagnostic : diagnostics) {
 				if (tooltip.length() > 0) {
 					tooltip.append("\n"); //$NON-NLS-1$
 				}
-				tooltip.append(getRowTooltipMessage(vDiagnostic));
+				tooltip.append(diagnostic.getMessage());
 			}
 
 			return tooltip.toString();
@@ -807,9 +839,59 @@ public class TableControl extends SWTControl {
 		@Override
 		public String getToolTipText(Object element) {
 			final EObject domainObject = (EObject) element;
-			final VDiagnostic vDiagnostic = getDiagnosticForFeature(domainObject, feature);
-			return getCellTooltipMessage(vDiagnostic);
 
+			final StringBuffer tooltip = new StringBuffer();
+			final VDiagnostic vDiagnostic = getControl().getDiagnostic();
+			final List<Diagnostic> diagnostics = vDiagnostic.getDiagnostic(domainObject, feature);
+			for (final Diagnostic diagnostic : diagnostics) {
+				if (tooltip.length() > 0) {
+					tooltip.append("\n"); //$NON-NLS-1$
+				}
+				tooltip.append(diagnostic.getMessage());
+			}
+			return tooltip.toString();
+
+			// final VDiagnostic vDiagnostic = getControl().getDiagnostic();
+			// for (final Object diagObject : vDiagnostic.getDiagnostics()) {
+			// final Diagnostic diagnostic = (Diagnostic) diagObject;
+			// if (diagnostic.getData().size() < 2) {
+			// continue;
+			// }
+			// if (diagnostic.getData().get(0).equals(element) && diagnostic.getData().get(1).equals(feature)) {
+			//
+			// if (diagnostic.getChildren() != null && diagnostic.getChildren().size() != 0) {
+			// boolean childrenUsefull = false;
+			// for (final Diagnostic diagnostic2 : diagnostic.getChildren()) {
+			// if (diagnostic2.getSeverity() != Diagnostic.OK) {
+			// if (tooltip.length() > 0) {
+			//									tooltip.append("\n"); //$NON-NLS-1$
+			// }
+			// tooltip.append(diagnostic2.getMessage());
+			// childrenUsefull = true;
+			// }
+			// }
+			// if (!childrenUsefull) {
+			// if (tooltip.length() > 0) {
+			//								tooltip.append("\n"); //$NON-NLS-1$
+			// }
+			// tooltip.append(diagnostic.getMessage());
+			// }
+			// } else {
+			// if (tooltip.length() > 0) {
+			//							tooltip.append("\n"); //$NON-NLS-1$
+			// }
+			// tooltip.append(diagnostic.getMessage());
+			// }
+			// }
+			// }
+			// if (tooltip.length() != 0) {
+			// return tooltip.toString();
+			// }
+			// final Object value = ((EObject) element).eGet(feature);
+			// if (value == null) {
+			// return null;
+			// }
+			// return String.valueOf(value);
 		}
 
 		@Override
@@ -847,21 +929,24 @@ public class TableControl extends SWTControl {
 			if (isDisposing) {
 				return null;
 			}
-			final VDiagnostic vDiagnostic = getDiagnosticForFeature((EObject) element, feature);
 
-			if (vDiagnostic == null) {
-				return null;
-			}
-
-			return getValidationBackgroundColor(vDiagnostic.getHighestSeverity());
-			// switch (vDiagnostic.getHighestSeverity()) {
-			// case Diagnostic.ERROR:
-			// return Display.getDefault().getSystemColor(SWT.COLOR_RED);
-			// case Diagnostic.WARNING:
-			// return Display.getDefault().getSystemColor(SWT.COLOR_YELLOW);
-			// default:
-			// return null;
+			final Integer mostSevere = Diagnostic.OK;
+			final VDiagnostic vDiagnostic = getControl().getDiagnostic();
+			// for (final Object diagObject : vDiagnostic.getDiagnostics()) {
+			// final Diagnostic diagnostic = (Diagnostic) diagObject;
+			// if (diagnostic.getData().size() < 2) {
+			// continue;
 			// }
+			// if (diagnostic.getData().get(0).equals(element) && diagnostic.getData().get(1).equals(feature)) {
+			// final int currentSeverity = diagnostic.getSeverity();
+			// if (currentSeverity > mostSevere) {
+			// mostSevere = currentSeverity;
+			// }
+			// }
+			// }
+			final List<Diagnostic> diagnostic = vDiagnostic.getDiagnostic((EObject) element, feature);
+			return getValidationBackgroundColor(diagnostic.size() == 0 ? Diagnostic.OK : diagnostic.get(0)
+				.getSeverity());
 		}
 	}
 
@@ -904,32 +989,6 @@ public class TableControl extends SWTControl {
 		return false;
 	}
 
-	private VDiagnostic getDiagnosticForFeature(EObject domainObject, EStructuralFeature feature) {
-		final ValidationService validationService = getViewModelContext().getService(ValidationService.class);
-		if (getControl().isReadonly() || validationService == null) {
-			return null;
-		}
-		final Map<EStructuralFeature, VDiagnostic> diagnosticPerFeature = validationService
-			.getDiagnosticPerFeature(domainObject);
-		return diagnosticPerFeature.get(feature);
-	}
-
-	private Set<VDiagnostic> getAllDiagnostics(EObject domainObject, List<EStructuralFeature> features) {
-		final ValidationService validationService = getViewModelContext().getService(ValidationService.class);
-		if (getControl().isReadonly() || validationService == null) {
-			return Collections.emptySet();
-		}
-		final Map<EStructuralFeature, VDiagnostic> diagnosticPerFeature =
-			validationService.getDiagnosticPerFeature(domainObject);
-		final Set<VDiagnostic> result = new LinkedHashSet<VDiagnostic>();
-		for (final EStructuralFeature feature : features) {
-			if (diagnosticPerFeature.containsKey(feature)) {
-				result.add(diagnosticPerFeature.get(feature));
-			}
-		}
-		return result;
-	}
-
 	/**
 	 * Implementation of the {@link EditingSupport} for the generic ECP Table.
 	 * 
@@ -962,6 +1021,10 @@ public class TableControl extends SWTControl {
 		 */
 		@Override
 		protected boolean canEdit(Object element) {
+			if (ECPCellEditor.class.isInstance(cellEditor)) {
+				ECPCellEditor.class.cast(cellEditor).setEditable(editable);
+				return true;
+			}
 			return editable;
 		}
 
@@ -1056,6 +1119,10 @@ public class TableControl extends SWTControl {
 				editingState = null;
 
 				getViewer().getColumnViewerEditor().removeEditorActivationListener(this);
+				final ViewerCell focusCell = getViewer().getColumnViewerEditor().getFocusCell();
+				if (focusCell != null) {
+					getViewer().update(focusCell.getElement(), null);
+				}
 			}
 
 			@Override

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -13,204 +13,356 @@
 package org.eclipse.emf.ecp.view.spi.swt;
 
 import java.util.Collections;
-import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
-import org.eclipse.emf.common.notify.Notifier;
-import org.eclipse.emf.ecp.edit.internal.swt.util.DoubleColumnRow;
-import org.eclipse.emf.ecp.edit.internal.swt.util.SWTRenderingHelper;
-import org.eclipse.emf.ecp.edit.internal.swt.util.SingleColumnRow;
-import org.eclipse.emf.ecp.edit.internal.swt.util.ThreeColumnRow;
-import org.eclipse.emf.ecp.view.spi.context.ModelChangeNotification;
+import org.eclipse.emf.ecp.view.internal.context.ViewModelContextImpl;
+import org.eclipse.emf.ecp.view.internal.swt.SWTRendererFactoryImpl;
+import org.eclipse.emf.ecp.view.model.common.AbstractRenderer;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener;
+import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
+import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
-import org.eclipse.emf.ecp.view.spi.renderer.LayoutHelper;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.view.spi.renderer.RenderingResultRow;
+import org.eclipse.emf.ecp.view.spi.swt.layout.LayoutProviderHelper;
+import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
+import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Layout;
 
 /**
- * Common base class for all SWT specific renderer classes.
+ * Common base class for all SWT specific renderer classes. {@link #init(VElement, ViewModelContext)} is called by the
+ * framework when providing the renderer. You don't need to call this.
  * 
- * @author emueller
+ * A renderer using other renderers to render its contents must call this methods in this order:
  * 
- * @param <R> the actual type of the {@link VElement} to be drawn
+ * <pre>
+ *  {@link #getGridDescription(SWTGridDescription)}
+ *  for each SWTGridCell
+ *  	{@link #render(SWTGridCell, Composite)}
+ * {@link #finalizeRendering(Composite)}
+ * </pre>
+ * 
+ * If you don't call {@link #finalizeRendering(Composite)} after the rendering, the automatic disposing of the renderer
+ * will not work, as well as the initial validation check.
+ * 
+ * @author Eugen Neufeld
+ * 
+ * @param <VELEMENT> the actual type of the {@link VElement} to be drawn
  * @since 1.2
  */
-public abstract class AbstractSWTRenderer<R extends VElement> {
+public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends AbstractRenderer<VELEMENT> {
 
 	/**
 	 * Variant constant for indicating RAP controls.
 	 */
 	protected static final String CUSTOM_VARIANT = "org.eclipse.rap.rwt.customVariant"; //$NON-NLS-1$
+	private ModelChangeListener listener;
+	private Map<SWTGridCell, Control> controls;
+	private SWTRendererFactory rendererFactory;
+	private boolean renderingFinished;
+
+	/**
+	 * Default constructor.
+	 */
+	public AbstractSWTRenderer() {
+		this(new SWTRendererFactoryImpl());
+	}
+
+	/**
+	 * Constructor for testing purpose.
+	 * 
+	 * @param factory the factory to use
+	 * @since 1.3
+	 */
+	protected AbstractSWTRenderer(SWTRendererFactory factory) {
+		this.rendererFactory = factory;
+	}
+
+	/**
+	 * Returns the GridDescription for this Renderer.
+	 * 
+	 * @param gridDescription the current {@link GridDescription}
+	 * @return the number of controls per row
+	 * @since 1.3
+	 */
+	public abstract SWTGridDescription getGridDescription(SWTGridDescription gridDescription);
+
+	/**
+	 * 
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.model.common.AbstractRenderer#init(org.eclipse.emf.ecp.view.spi.model.VElement,
+	 *      org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
+	 * @since 1.3
+	 */
+	@Override
+	public final void init(final VELEMENT vElement, final ViewModelContext viewContext) {
+		super.init(vElement, viewContext);
+		preInit();
+		controls = new LinkedHashMap<SWTGridCell, Control>();
+		if (getViewModelContext() != null) {
+			listener = new ModelChangeListener() {
+
+				@Override
+				public void notifyChange(ModelChangeNotification notification) {
+					if (!renderingFinished) {
+						return;
+					}
+					if (notification.getRawNotification().isTouch()) {
+						return;
+					}
+					if (notification.getNotifier() != getVElement()) {
+						return;
+					}
+					if (notification.getStructuralFeature() == VViewPackage.eINSTANCE.getElement_Visible()) {
+						applyVisible();
+					}
+					if (notification.getStructuralFeature() == VViewPackage.eINSTANCE.getElement_Enabled()
+						&& !vElement.isReadonly()) {
+						applyEnable();
+					}
+					if (notification.getStructuralFeature() == VViewPackage.eINSTANCE
+						.getElement_Diagnostic()) {
+						applyValidation();
+					}
+				}
+
+			};
+			getViewModelContext().registerViewChangeListener(listener);
+		}
+		if (ViewModelContextImpl.class.isInstance(getViewModelContext())) {
+			ViewModelContextImpl.class.cast(getViewModelContext()).addContextUser(this);
+		}
+		postInit();
+	}
+
+	/**
+	 * Returns a copy of the {@link GridCell} to {@link Control} map.
+	 * 
+	 * @return a copy of the controls map
+	 * @since 1.3
+	 */
+	protected final Map<SWTGridCell, Control> getControls() {
+		if (controls == null) {
+			return Collections.emptyMap();
+		}
+		return new LinkedHashMap<SWTGridCell, Control>(controls);
+	}
+
+	/**
+	 * Use this method to initialize objects which are needed already before rendering.
+	 * 
+	 * @since 1.3
+	 */
+	protected void preInit() {
+
+	}
+
+	/**
+	 * Use this method to initialize objects which are needed during rendering.
+	 * 
+	 * @since 1.3
+	 */
+	protected void postInit() {
+
+	}
+
+	/**
+	 * Disposes all resources used by the renderer.
+	 * Don't forget to call super.dispose if overwriting this method.
+	 * 
+	 * @since 1.3
+	 */
+	@Override
+	protected void dispose() {
+		if (getViewModelContext() != null) {
+			getViewModelContext().unregisterViewChangeListener(listener);
+		}
+		listener = null;
+		controls = null;
+		if (ViewModelContextImpl.class.isInstance(getViewModelContext())) {
+			ViewModelContextImpl.class.cast(getViewModelContext()).removeContextUser(this);
+		}
+		super.dispose();
+	}
 
 	/**
 	 * Renders the passed {@link VElement}.
 	 * 
+	 * @param cell the {@link SWTGridCell} of the control to render
 	 * @param parent the {@link Composite} to render on
-	 * @param vElement the {@link VElement} to render
-	 * @param viewContext the {@link ViewModelContext} to use
-	 * @return a list of {@link RenderingResultRow}
+	 * @return the rendered {@link Control}
 	 * @throws NoRendererFoundException this is thrown when a renderer cannot be found
 	 * @throws NoPropertyDescriptorFoundExeption this is thrown when no property descriptor can be found
+	 * @since 1.3
 	 */
-	public List<RenderingResultRow<Control>> render(Composite parent, final R vElement,
-		final ViewModelContext viewContext)
+	public Control render(final SWTGridCell cell, Composite parent)
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
-		final List<RenderingResultRow<Control>> result = renderModel(parent, vElement, viewContext);
-		if (result == null) {
+
+		Control control = controls.get(cell);
+		if (control != null) {
+			return control;
+		}
+
+		control = renderControl(cell, parent);
+		if (control == null) {
+			// something went wrong, log
 			return null;
 		}
-		final ModelChangeListener listener = new ModelChangeListener() {
+		controls.put(cell, control);
 
-			public void notifyRemove(Notifier notifier) {
-				// TODO Auto-generated method stub
+		// register dispose listener to rerender if disposed
+		control.addDisposeListener(new DisposeListener() {
 
-			}
-
-			public void notifyChange(ModelChangeNotification notification) {
-				if (notification.getNotifier() != vElement) {
-					return;
-				}
-				if (notification.getStructuralFeature() == VViewPackage.eINSTANCE.getElement_Visible()) {
-					applyVisible(vElement, result);
-				}
-				if (notification.getStructuralFeature() == VViewPackage.eINSTANCE.getElement_Enabled()
-					&& !vElement.isReadonly()) {
-					applyEnable(vElement, result);
-				}
-			}
-
-			public void notifyAdd(Notifier notifier) {
-				// TODO Auto-generated method stub
-
-			}
-		};
-		viewContext.registerViewChangeListener(listener);
-		parent.addDisposeListener(new DisposeListener() {
-
-			private static final long serialVersionUID = 1L;
-
+			@Override
 			public void widgetDisposed(DisposeEvent e) {
-				viewContext.unregisterViewChangeListener(listener);
+				if (controls != null) {
+					controls.remove(cell);
+				}
 			}
 		});
-		applyVisible(vElement, result);
-		applyReadOnly(vElement, result);
-		if (!vElement.isReadonly()) {
-			applyEnable(vElement, result);
-		}
 
-		return result;
+		return control;
 	}
 
-	private static void applyReadOnly(VElement vElement, List<RenderingResultRow<Control>> resultRows) {
-		for (final RenderingResultRow<Control> row : resultRows) {
-			for (final Control control : row.getControls()) {
-				control.setEnabled(!vElement.isReadonly());
+	/**
+	 * Called by the framework to initialize listener.
+	 * 
+	 * @param parent the parent used during render
+	 * @since 1.3
+	 */
+	public final void finalizeRendering(Composite parent) {
+		if (renderingFinished) {
+			return;
+		}
+		renderingFinished = true;
+		applyVisible();
+		applyReadOnly();
+		if (!getVElement().isReadonly()) {
+			applyEnable();
+		}
+		applyValidation();
+		parent.addDisposeListener(new DisposeListener() {
+
+			@Override
+			public void widgetDisposed(DisposeEvent event) {
+				dispose();
 			}
+		});
+	}
+
+	/**
+	 * Renders the passed {@link VElement}.
+	 * 
+	 * @param cell the {@link GridCell} of the control to render
+	 * @param parent the {@link Composite} to render on
+	 * @return the rendered {@link Control}
+	 * @throws NoRendererFoundException this is thrown when a renderer cannot be found
+	 * @throws NoPropertyDescriptorFoundExeption this is thrown when no property descriptor can be found
+	 * @since 1.3
+	 */
+	protected abstract Control renderControl(final SWTGridCell cell, Composite parent) throws NoRendererFoundException,
+		NoPropertyDescriptorFoundExeption;
+
+	/**
+	 * Marks a controls as readonly.
+	 * 
+	 * @since 1.3
+	 * 
+	 */
+	protected void applyReadOnly() {
+		for (final SWTGridCell gridCell : controls.keySet()) {
+			setControlEnabled(gridCell, controls.get(gridCell), !getVElement().isReadonly());
 		}
 	}
 
 	/**
-	 * Allows implementers to set the whole result row to enabled.
+	 * Allows implementers to set a control to enabled.
 	 * 
-	 * @param vElement the current {@link VElement}
-	 * @param resultRows the list of {@link RenderingResultRow} elements to check
+	 * @since 1.3
+	 * 
 	 */
-	protected static void applyEnable(VElement vElement, List<RenderingResultRow<Control>> resultRows) {
-		for (final RenderingResultRow<Control> row : resultRows) {
-			for (final Control control : row.getControls()) {
-				control.setEnabled(vElement.isEnabled());
-			}
+	protected void applyEnable() {
+		for (final SWTGridCell gridCell : controls.keySet()) {
+			setControlEnabled(gridCell, controls.get(gridCell), getVElement().isEnabled());
 		}
+	}
+
+	/**
+	 * Wraps the call to enable/disable a control.
+	 * 
+	 * @param gridCell the {@link SWTGridCell} to enable/disable
+	 * @param control the {@link Control} to enable/disable
+	 * @param enabled true if control should be enabled, false otherwise
+	 * @since 1.3
+	 */
+	protected void setControlEnabled(SWTGridCell gridCell, Control control, boolean enabled) {
+		control.setEnabled(enabled);
 	}
 
 	/**
 	 * Allows implementers to check and set the visibility on the whole result row.
 	 * 
-	 * @param vElement the current {@link VElement}
-	 * @param resultRows the list of {@link RenderingResultRow} elements to check
+	 * @since 1.3
+	 * 
 	 */
-	protected static void applyVisible(VElement vElement, List<RenderingResultRow<Control>> resultRows) {
-		for (final RenderingResultRow<Control> row : resultRows) {
-			for (final Control control : row.getControls()) {
-				final Object layoutData = control.getLayoutData();
-				if (GridData.class.isInstance(layoutData)) {
-					final GridData gridData = (GridData) layoutData;
-					if (gridData != null) {
-						gridData.exclude = false;
-					}
+	protected void applyVisible() {
+		for (final SWTGridCell gridCell : controls.keySet()) {
+			final Object layoutData = controls.get(gridCell).getLayoutData();
+			if (GridData.class.isInstance(layoutData)) {
+				final GridData gridData = (GridData) layoutData;
+				if (gridData != null) {
+					gridData.exclude = false;
 				}
-				control.setVisible(vElement.isVisible());
 			}
+			controls.get(gridCell).setVisible(getVElement().isVisible());
 		}
 	}
 
 	/**
-	 * Renders the passed {@link VElement}.
+	 * Allows implementers to display the validation state of the control.
+	 * The default implementation does nothing.
 	 * 
-	 * @param parent the {@link Composite} to render on
-	 * @param vElement the {@link VElement} to render
-	 * @param viewContext the {@link ViewModelContext} to use
-	 * @return a list of {@link RenderingResultRow}
-	 * @throws NoRendererFoundException this is thrown when a renderer cannot be found
-	 * @throws NoPropertyDescriptorFoundExeption this is thrown when no property descriptor can be found
+	 * @since 1.3
 	 */
-	protected abstract List<RenderingResultRow<Control>> renderModel(Composite parent, R vElement,
-		ViewModelContext viewContext) throws NoRendererFoundException, NoPropertyDescriptorFoundExeption;
+	protected void applyValidation() {
 
-	/**
-	 * Using the LayoutHelper this method sets the default layout data for a single, a doublecolumn or a three column
-	 * row.
-	 * 
-	 * @param resultRows the list or {@link RenderingResultRow RenderingResultRows} to set the layout data to
-	 */
-	protected void setLayoutDataForResultRows(final List<RenderingResultRow<Control>> resultRows) {
-		for (final RenderingResultRow<Control> row : resultRows) {
-			if (SingleColumnRow.class.isInstance(row)) {
-				((SingleColumnRow) row).getControl().setLayoutData(getLayoutHelper().getSpanningLayoutData(3, 1));
-			}
-			else if (DoubleColumnRow.class.isInstance(row)) {
-				((DoubleColumnRow) row).getLeftControl().setLayoutData(getLayoutHelper().getLeftColumnLayoutData());
-				((DoubleColumnRow) row).getRightControl().setLayoutData(getLayoutHelper().getRightColumnLayoutData(2));
-			}
-			else if (ThreeColumnRow.class.isInstance(row)) {
-				((ThreeColumnRow) row).getLeftControl().setLayoutData(getLayoutHelper().getLeftColumnLayoutData());
-				((ThreeColumnRow) row).getMiddleControl().setLayoutData(
-					getLayoutHelper().getValidationColumnLayoutData());
-				((ThreeColumnRow) row).getRightControl().setLayoutData(getLayoutHelper().getRightColumnLayoutData(1));
-			}
-		}
 	}
 
 	/**
-	 * Helper Method to create a list containing a single {@link RenderingResultRow} based on the provided list of
-	 * {@link Control Controls}.
+	 * Sets the LayoutData for the specified control.
 	 * 
-	 * @param controls the list of controls to add into one {@link RenderingResultRow}
-	 * @return a list containing a single {@link RenderingResultRow}
+	 * @param gridCell the {@link GridCell} used to render the control
+	 * @param gridDescription the {@link GridDescription} of the parent which rendered the control
+	 * @param currentRowGridDescription the {@link GridDescription} of the current row
+	 * @param fullGridDescription the {@link GridDescription} of the whole container
+	 * @param vElement the {@link VElement} to set the layoutData for
+	 * @param control the control to set the layout to
+	 * @since 1.3
 	 */
-	protected List<RenderingResultRow<Control>> createResult(
-		final Control... controls) {
-		return Collections.singletonList(SWTRenderingHelper.INSTANCE.getResultRowFactory()
-			.createRenderingResultRow(controls));
+	protected void setLayoutDataForControl(SWTGridCell gridCell, SWTGridDescription gridDescription,
+		SWTGridDescription currentRowGridDescription, SWTGridDescription fullGridDescription, VElement vElement,
+		Control control) {
+
+		control.setLayoutData(LayoutProviderHelper.getLayoutData(gridCell, gridDescription, currentRowGridDescription,
+			fullGridDescription,
+			vElement, control));
+
 	}
 
 	/**
-	 * Return the {@link LayoutHelper} allowing to set layout data manually.
+	 * The {@link SWTRendererFactory} to use.
 	 * 
-	 * @return the {@link LayoutHelper}
+	 * @return the {@link SWTRendererFactory}
+	 * @since 1.3
 	 */
-	protected LayoutHelper<Layout> getLayoutHelper() {
-		return SWTRenderingHelper.INSTANCE.getLayoutHelper();
+	protected final SWTRendererFactory getSWTRendererFactory() {
+		return rendererFactory;
 	}
-
 }

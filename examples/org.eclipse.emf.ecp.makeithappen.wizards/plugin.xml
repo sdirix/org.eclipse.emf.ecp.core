@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            id="org.eclipse.emf.ecp.makeithappen.wizards.EMFForms"
+            name="EMF Forms"
+            parentCategory="org.eclipse.ui.Examples">
+      </category>
+      <wizard
+            canFinishEarly="true"
+            category="org.eclipse.ui.Examples/org.eclipse.emf.ecp.makeithappen.wizards.EMFForms"
+            class="org.eclipse.emf.ecp.makeithappen.internal.wizards.MakeItHappenWizard"
+            icon="icons/emf_forms_icon.png"
+            id="org.eclipse.emf.ecp.makeithappen.wizards.ExampleModelWizard"
+            name="Make it happen: example model"
+            project="true">
+      </wizard>
+      <wizard
+            canFinishEarly="true"
+            category="org.eclipse.ui.Examples/org.eclipse.emf.ecp.makeithappen.wizards.EMFForms"
+            class="org.eclipse.emf.ecp.makeithappen.internal.wizards.MakeItHappenWizard"
+            icon="icons/emf_forms_icon.png"
+            id="org.eclipse.emf.ecp.makeithappen.wizards.CustomControlRendererWizard"
+            name="Make it happen: custom control renderer"
+            project="true">
+      </wizard>
+      <wizard
+            canFinishEarly="true"
+            category="org.eclipse.ui.Examples/org.eclipse.emf.ecp.makeithappen.wizards.EMFForms"
+            class="org.eclipse.emf.ecp.makeithappen.internal.wizards.MakeItHappenWizard"
+            icon="icons/emf_forms_icon.png"
+            id="org.eclipse.emf.ecp.makeithappen.wizards.CustomGroupRendererWizard"
+            name="Make it happen: custom group renderer"
+            project="true">
+      </wizard>
+      <wizard
+            canFinishEarly="true"
+            category="org.eclipse.ui.Examples/org.eclipse.emf.ecp.makeithappen.wizards.EMFForms"
+            class="org.eclipse.emf.ecp.makeithappen.internal.wizards.MakeItHappenWizard"
+            icon="icons/emf_forms_icon.png"
+            id="org.eclipse.emf.ecp.makeithappen.wizards.ViewModelWizard"
+            name="Make it happen: view model"
+            project="true">
+      </wizard>
+   </extension>
+   <extension
+         point="org.eclipse.emf.common.ui.examples">
+      <example
+            id="org.eclipse.emf.ecp.makeithappen.wizards.ExampleModel"
+            pageImage="icons/emf_forms_logo_56x48.png"
+            wizardID="org.eclipse.emf.ecp.makeithappen.wizards.ExampleModelWizard">
+         <projectDescriptor
+               contentURI="examples/org.eclipse.emf.ecp.makeithappen.model/"
+               description="Make It Happen model"
+               name="org.eclipse.emf.ecp.makeithappen.model">
+         </projectDescriptor>
+         <projectDescriptor
+               contentURI="examples/org.eclipse.emf.ecp.makeithappen.model.edit/"
+               description="Make It Happen model edit"
+               name="org.eclipse.emf.ecp.makeithappen.model.edit">
+         </projectDescriptor>
+      </example>
+      <example
+            id="org.eclipse.emf.ecp.makeithappen.wizards.CustomControlRenderer"
+            pageImage="icons/emf_forms_logo_56x48.png"
+            wizardID="org.eclipse.emf.ecp.makeithappen.wizards.CustomControlRendererWizard">
+         <projectDescriptor
+               contentURI="examples/org.eclipse.emf.ecp.makeithappen.model/"
+               description="Make It Happen model"
+               name="org.eclipse.emf.ecp.makeithappen.model">
+         </projectDescriptor>
+         <projectDescriptor
+               contentURI="examples/org.eclipse.emf.ecp.makeithappen.model.edit/"
+               description="Make It Happen model edit"
+               name="org.eclipse.emf.ecp.makeithappen.model.edit">
+         </projectDescriptor>
+         <projectDescriptor
+               contentURI="examples/org.eclipse.emf.ecp.makeithappen.emailControlRenderer/"
+               description="Make It Happen custom control renderer"
+               name="org.eclipse.emf.ecp.makeithappen.emailControlRenderer">
+         </projectDescriptor>
+      </example>
+      <example
+            id="org.eclipse.emf.ecp.makeithappen.wizards.CustomGroupRenderer"
+            pageImage="icons/emf_forms_logo_56x48.png"
+            wizardID="org.eclipse.emf.ecp.makeithappen.wizards.CustomGroupRendererWizard">
+         <projectDescriptor
+               contentURI="examples/org.eclipse.emf.ecp.makeithappen.model/"
+               description="Make It Happen model"
+               name="org.eclipse.emf.ecp.makeithappen.model">
+         </projectDescriptor>
+         <projectDescriptor
+               contentURI="examples/org.eclipse.emf.ecp.makeithappen.model.edit/"
+               description="Make It Happen model edit"
+               name="org.eclipse.emf.ecp.makeithappen.model.edit">
+         </projectDescriptor>
+         <projectDescriptor
+               contentURI="examples/org.eclipse.emf.ecp.makeithappen.view.group.renderer/"
+               description="Make It Happen custom group renderer"
+               name="org.eclipse.emf.ecp.makeithappen.view.group.renderer">
+         </projectDescriptor>
+      </example>
+      <example
+            id="org.eclipse.emf.ecp.makeithappen.wizards.ViewModel"
+            pageImage="icons/emf_forms_logo_56x48.png"
+            wizardID="org.eclipse.emf.ecp.makeithappen.wizards.ViewModelWizard">
+         <projectDescriptor
+               contentURI="examples/org.eclipse.emf.ecp.makeithappen.model/"
+               description="Make It Happen model"
+               name="org.eclipse.emf.ecp.makeithappen.model">
+         </projectDescriptor>
+         <projectDescriptor
+               contentURI="examples/org.eclipse.emf.ecp.makeithappen.model.edit/"
+               description="Make It Happen model edit"
+               name="org.eclipse.emf.ecp.makeithappen.model.edit">
+         </projectDescriptor>
+         <projectDescriptor
+               contentURI="examples/org.eclipse.emf.ecp.makeithappen.model.viewmodel/"
+               description="Make It Happen viewmodel"
+               name="org.eclipse.emf.ecp.makeithappen.model.viewmodel">
+         </projectDescriptor>
+      </example>
+   </extension>
+
+</plugin>

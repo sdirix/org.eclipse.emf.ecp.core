@@ -298,6 +298,7 @@ public class LinkControl extends SingleControl {
 				public void onChange(Notification notification) {
 					Display.getDefault().syncExec(new Runnable() {
 
+						@Override
 						public void run() {
 							getDataBindingContext().updateTargets();
 							linkComposite.layout();

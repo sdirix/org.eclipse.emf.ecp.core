@@ -80,16 +80,16 @@ public abstract class AbstractFilteredReferenceCommand<T extends EStructuralFeat
 
 	@Override
 	protected void doExecute() {
-		if (rootClass == null) {
-			return;
-		}
+		// if (rootClass == null) {
+		// return;
+		// }
 		final AdapterFactoryLabelProvider labelProvider = new AdapterFactoryLabelProvider(composedAdapterFactory);
 		final ECPViewEditorTreeSelectionDialog dialog = new ECPViewEditorTreeSelectionDialog(shell, labelProvider,
 			getContentProvider(rootClass));
 		validator.setECPViewEditorTreeSelectionDialog(dialog);
 		dialog.setAllowMultiple(false);
 		dialog.setValidator(validator);
-		dialog.setInput(rootClass);
+		dialog.setInput(rootClass != null ? rootClass : EPackage.Registry.INSTANCE);
 		dialog.setMessage("Select a " + returnedClass().getSimpleName());
 		dialog.setTitle("Select a " + returnedClass().getSimpleName());
 		final int result = dialog.open();
@@ -125,16 +125,19 @@ public abstract class AbstractFilteredReferenceCommand<T extends EStructuralFeat
 	private ITreeContentProvider getContentProvider(EClass rootClass) {
 		return new ITreeContentProvider() {
 
+			@Override
 			public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
 				// TODO Auto-generated method stub
 
 			}
 
+			@Override
 			public void dispose() {
 				// TODO Auto-generated method stub
 
 			}
 
+			@Override
 			public boolean hasChildren(Object element) {
 
 				if (EPackage.class.isInstance(element)) {
@@ -156,15 +159,18 @@ public abstract class AbstractFilteredReferenceCommand<T extends EStructuralFeat
 				return false;
 			}
 
+			@Override
 			public Object getParent(Object element) {
 				// TODO Auto-generated method stub
 				return null;
 			}
 
+			@Override
 			public Object[] getElements(Object inputElement) {
 				return getChildren(inputElement);
 			}
 
+			@Override
 			public Object[] getChildren(Object parentElement) {
 				if (EClass.class.isInstance(parentElement)) {
 					final EClass eClass = (EClass) parentElement;
@@ -175,6 +181,15 @@ public abstract class AbstractFilteredReferenceCommand<T extends EStructuralFeat
 					final EReference eReference = (EReference) parentElement;
 					final Set<Object> result = getElementsForEClass(eReference.getEReferenceType());
 					return result.toArray();
+				}
+				if (EPackage.Registry.class.isInstance(parentElement)) {
+					return EPackage.Registry.class.cast(parentElement).values().toArray();
+				}
+				if (EPackage.class.isInstance(parentElement)) {
+					final Set<Object> children = new LinkedHashSet<Object>();
+					children.addAll(EPackage.class.cast(parentElement).getESubpackages());
+					children.addAll(EPackage.class.cast(parentElement).getEClassifiers());
+					return children.toArray();
 				}
 				return null;
 			}
@@ -243,13 +258,24 @@ public abstract class AbstractFilteredReferenceCommand<T extends EStructuralFeat
 		// }
 	}
 
-	static abstract class ECPSelectionStatusValidator implements ISelectionStatusValidator {
+	/**
+	 * An ISelectionStatusValidator allowing to get the {@link TreePath} of the current selection.
+	 * 
+	 * @author Eugen Neufeld
+	 * 
+	 */
+	protected abstract static class ECPSelectionStatusValidator implements ISelectionStatusValidator {
 		private ECPViewEditorTreeSelectionDialog dialog;
 
 		private void setECPViewEditorTreeSelectionDialog(ECPViewEditorTreeSelectionDialog dialog) {
 			this.dialog = dialog;
 		}
 
+		/**
+		 * The {@link TreePath} of the current selection.
+		 * 
+		 * @return the {@link TreePath}
+		 */
 		protected TreePath getTreePath() {
 			return dialog.getTreePath();
 		}

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
-   <extension-point id="customSWTRenderers" name="%extension-point.name" schema="schema/customSWTRenderers.exsd"/>
    <extension-point id="renderers" name="ECP View SWT Renderer" schema="schema/renderers.exsd"/>
+   <extension-point id="additionalRenderers" name="Addition Renderers" schema="schema/additionalRenderers.exsd"/>
+   <extension-point id="layoutProvider" name="Layout Provider" schema="schema/layoutProvider.exsd"/>
 
 </plugin>

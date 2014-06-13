@@ -58,7 +58,6 @@ public class XmlDateControlSWTBotTest extends ECPCommonSWTBotTest {
 
 	private static double memBefore;
 	private static double memAfter;
-	private static EObject domainObject;
 
 	private final boolean isDomainCollectable;
 
@@ -118,29 +117,33 @@ public class XmlDateControlSWTBotTest extends ECPCommonSWTBotTest {
 		XmlDateControlSWTBotTest.memBefore += before;
 		XmlDateControlSWTBotTest.memAfter += after;
 
-		final XMLGregorianCalendar cal = (XMLGregorianCalendar) getDomainObject().eGet(
-			BowlingPackage.eINSTANCE.getReferee_DateOfBirth(), true);
-		assertEquals(DatatypeConstants.FIELD_UNDEFINED, cal.getTimezone());
-		assertEquals(DatatypeConstants.FIELD_UNDEFINED, cal.getHour());
-		assertEquals(DatatypeConstants.FIELD_UNDEFINED, cal.getMinute());
-		assertEquals(DatatypeConstants.FIELD_UNDEFINED, cal.getSecond());
-		assertEquals(DatatypeConstants.FIELD_UNDEFINED, cal.getMillisecond());
-		assertEquals(1986, cal.getYear());
-		assertEquals(10, cal.getMonth());
-		assertEquals(2, cal.getDay());
+		if (getDomainObject() != null) {
+			final XMLGregorianCalendar cal = (XMLGregorianCalendar) getDomainObject().eGet(
+				BowlingPackage.eINSTANCE.getReferee_DateOfBirth(), true);
+			assertEquals(DatatypeConstants.FIELD_UNDEFINED, cal.getTimezone());
+			assertEquals(DatatypeConstants.FIELD_UNDEFINED, cal.getHour());
+			assertEquals(DatatypeConstants.FIELD_UNDEFINED, cal.getMinute());
+			assertEquals(DatatypeConstants.FIELD_UNDEFINED, cal.getSecond());
+			assertEquals(DatatypeConstants.FIELD_UNDEFINED, cal.getMillisecond());
+			assertEquals(1986, cal.getYear());
+			assertEquals(10, cal.getMonth());
+			assertEquals(2, cal.getDay());
+			assertTrue("More than four adapter left on domain model element after dispose of ECPSWTView: "
+				+ getDomainObject().eAdapters().size()
+				+ " adapters. Not all adapters can be removed, but it's maybe time to get suspicious.",
+				getDomainObject()
+					.eAdapters().size() < 5);
+		}
 
-		assertTrue("More than four adapter left on domain model element after dispose of ECPSWTView: "
-			+ getDomainObject().eAdapters().size()
-			+ " adapters. Not all adapters can be removed, but it's maybe time to get suspicious.", getDomainObject()
-			.eAdapters().size() < 5);
-
-		disposeSWTView();
 		assertTrue(getSWTViewCollectable().isCollectable());
 		unsetSWTViewCollectable();
+		unsetDomainObject();
+		// if (isDomainCollectable) {
+		// }
+		// domainCollectable = null;
 		assertTrue(viewCollectable.isCollectable());
-		if (isDomainCollectable) {
-			assertTrue(domainCollectable.isCollectable());
-		}
+		viewCollectable = null;
+		assertTrue(domainCollectable.isCollectable());
 	}
 
 	/**
@@ -150,11 +153,11 @@ public class XmlDateControlSWTBotTest extends ECPCommonSWTBotTest {
 	 */
 	@Override
 	public EObject createDomainObject() {
-		Referee ref = (Referee) domainObject;
+		Referee ref = (Referee) getDomainObject();
 
 		if (isDomainCollectable) {
 			// remove reference to domain object, since gc will be tested
-			domainObject = null;
+			unsetDomainObject();
 		}
 
 		if (ref == null) {
@@ -176,7 +179,7 @@ public class XmlDateControlSWTBotTest extends ECPCommonSWTBotTest {
 		}
 
 		if (!isDomainCollectable) {
-			domainObject = ref;
+			setDomainObject(ref);
 		}
 
 		domainCollectable = new GCCollectable(ref);

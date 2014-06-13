@@ -13,20 +13,36 @@ package org.eclipse.emf.ecp.view.context;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.util.Set;
+
 import org.eclipse.emf.common.notify.Notifier;
-import org.eclipse.emf.ecp.view.spi.context.ModelChangeNotification;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
+import org.eclipse.emf.ecp.view.spi.model.ModelChangeAddRemoveListener;
+import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
+import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
+import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
+import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.table.model.VTableFactory;
 import org.eclipse.emf.emfstore.bowling.BowlingFactory;
 import org.eclipse.emf.emfstore.bowling.BowlingPackage;
+import org.eclipse.emf.emfstore.bowling.League;
 import org.eclipse.emf.emfstore.bowling.Player;
+import org.eclipse.emf.emfstore.bowling.impl.LeagueImpl;
+import org.eclipse.emf.emfstore.bowling.impl.PlayerImpl;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -60,6 +76,7 @@ public class ViewModelContextTest {
 	 */
 	@After
 	public void tearDown() throws Exception {
+		viewModelContext.dispose();
 	}
 
 	/**
@@ -117,18 +134,21 @@ public class ViewModelContextTest {
 	@Test(expected = IllegalStateException.class)
 	public void testDisposeRegisterDomainListner() {
 		viewModelContext.dispose();
-		viewModelContext.registerDomainChangeListener(new ModelChangeListener() {
+		viewModelContext.registerDomainChangeListener(new ModelChangeAddRemoveListener() {
 
+			@Override
 			public void notifyChange(ModelChangeNotification notification) {
 				// TODO Auto-generated method stub
 
 			}
 
+			@Override
 			public void notifyAdd(Notifier notifier) {
 				// TODO Auto-generated method stub
 
 			}
 
+			@Override
 			public void notifyRemove(Notifier notifier) {
 				// TODO Auto-generated method stub
 
@@ -143,18 +163,21 @@ public class ViewModelContextTest {
 	@Test(expected = IllegalStateException.class)
 	public void testDisposeRegisterViewListner() {
 		viewModelContext.dispose();
-		viewModelContext.registerViewChangeListener(new ModelChangeListener() {
+		viewModelContext.registerViewChangeListener(new ModelChangeAddRemoveListener() {
 
+			@Override
 			public void notifyChange(ModelChangeNotification notification) {
 				// TODO Auto-generated method stub
 
 			}
 
+			@Override
 			public void notifyAdd(Notifier notifier) {
 				// TODO Auto-generated method stub
 
 			}
 
+			@Override
 			public void notifyRemove(Notifier notifier) {
 				// TODO Auto-generated method stub
 
@@ -170,18 +193,21 @@ public class ViewModelContextTest {
 	@Ignore
 	public void testDisposeUnRegisterDomainListner() {
 		viewModelContext.dispose();
-		viewModelContext.unregisterDomainChangeListener(new ModelChangeListener() {
+		viewModelContext.unregisterDomainChangeListener(new ModelChangeAddRemoveListener() {
 
+			@Override
 			public void notifyChange(ModelChangeNotification notification) {
 				// TODO Auto-generated method stub
 
 			}
 
+			@Override
 			public void notifyAdd(Notifier notifier) {
 				// TODO Auto-generated method stub
 
 			}
 
+			@Override
 			public void notifyRemove(Notifier notifier) {
 				// TODO Auto-generated method stub
 
@@ -197,18 +223,21 @@ public class ViewModelContextTest {
 	@Ignore
 	public void testDisposeUnRegisterViewListner() {
 		viewModelContext.dispose();
-		viewModelContext.unregisterViewChangeListener(new ModelChangeListener() {
+		viewModelContext.unregisterViewChangeListener(new ModelChangeAddRemoveListener() {
 
+			@Override
 			public void notifyChange(ModelChangeNotification notification) {
 				// TODO Auto-generated method stub
 
 			}
 
+			@Override
 			public void notifyAdd(Notifier notifier) {
 				// TODO Auto-generated method stub
 
 			}
 
+			@Override
 			public void notifyRemove(Notifier notifier) {
 				// TODO Auto-generated method stub
 
@@ -219,7 +248,7 @@ public class ViewModelContextTest {
 
 	/**
 	 * Test method for
-	 * {@link ViewModelContext#registerViewChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener)}
+	 * {@link ViewModelContext#registerViewChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeAddRemoveListener)}
 	 * .
 	 */
 	private boolean correctNotificationArrived;
@@ -231,18 +260,21 @@ public class ViewModelContextTest {
 	 */
 	@Test
 	public void testRegisterViewChangeListener() {
-		viewModelContext.registerViewChangeListener(new ModelChangeListener() {
+		viewModelContext.registerViewChangeListener(new ModelChangeAddRemoveListener() {
 
+			@Override
 			public void notifyChange(ModelChangeNotification notification) {
 				correctNotificationArrived = notification.getNotifier() == view
 					&& notification.getStructuralFeature() == VViewPackage.eINSTANCE.getElement_Name();
 			}
 
+			@Override
 			public void notifyAdd(Notifier notifier) {
 				// TODO Auto-generated method stub
 
 			}
 
+			@Override
 			public void notifyRemove(Notifier notifier) {
 				// TODO Auto-generated method stub
 
@@ -266,17 +298,20 @@ public class ViewModelContextTest {
 	 */
 	@Test
 	public void testRegisterViewChangeListenerChangeOnDomain() {
-		viewModelContext.registerViewChangeListener(new ModelChangeListener() {
+		viewModelContext.registerViewChangeListener(new ModelChangeAddRemoveListener() {
 
+			@Override
 			public void notifyChange(ModelChangeNotification notification) {
 				correctNotificationArrived = true;
 			}
 
+			@Override
 			public void notifyAdd(Notifier notifier) {
 				// TODO Auto-generated method stub
 
 			}
 
+			@Override
 			public void notifyRemove(Notifier notifier) {
 				// TODO Auto-generated method stub
 
@@ -288,22 +323,25 @@ public class ViewModelContextTest {
 
 	/**
 	 * Test method for
-	 * {@link ViewModelContext#unregisterViewChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener)}
+	 * {@link ViewModelContext#unregisterViewChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeAddRemoveListener)}
 	 * .
 	 */
 	@Test
 	public void testUnregisterViewChangeListener() {
-		final ModelChangeListener modelChangeListener = new ModelChangeListener() {
+		final ModelChangeAddRemoveListener modelChangeListener = new ModelChangeAddRemoveListener() {
 
+			@Override
 			public void notifyChange(ModelChangeNotification notification) {
 				correctNotificationArrived = true;
 			}
 
+			@Override
 			public void notifyAdd(Notifier notifier) {
 				// TODO Auto-generated method stub
 
 			}
 
+			@Override
 			public void notifyRemove(Notifier notifier) {
 				// TODO Auto-generated method stub
 
@@ -320,17 +358,20 @@ public class ViewModelContextTest {
 	 */
 	@Test
 	public void testUnregisterViewChangeListenerChangeOnDomain() {
-		final ModelChangeListener modelChangeListener = new ModelChangeListener() {
+		final ModelChangeAddRemoveListener modelChangeListener = new ModelChangeAddRemoveListener() {
 
+			@Override
 			public void notifyChange(ModelChangeNotification notification) {
 				correctNotificationArrived = true;
 			}
 
+			@Override
 			public void notifyAdd(Notifier notifier) {
 				// TODO Auto-generated method stub
 
 			}
 
+			@Override
 			public void notifyRemove(Notifier notifier) {
 				// TODO Auto-generated method stub
 
@@ -344,23 +385,26 @@ public class ViewModelContextTest {
 
 	/**
 	 * Test method for
-	 * {@link ViewModelContext#registerDomainChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener)}
+	 * {@link ViewModelContext#registerDomainChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeAddRemoveListener)}
 	 * .
 	 */
 	@Test
 	public void testRegisterDomainChangeListener() {
-		viewModelContext.registerDomainChangeListener(new ModelChangeListener() {
+		viewModelContext.registerDomainChangeListener(new ModelChangeAddRemoveListener() {
 
+			@Override
 			public void notifyChange(ModelChangeNotification notification) {
 				correctNotificationArrived = notification.getNotifier() == player
 					&& notification.getStructuralFeature() == BowlingPackage.eINSTANCE.getPlayer_Name();
 			}
 
+			@Override
 			public void notifyAdd(Notifier notifier) {
 				// TODO Auto-generated method stub
 
 			}
 
+			@Override
 			public void notifyRemove(Notifier notifier) {
 				// TODO Auto-generated method stub
 
@@ -384,17 +428,20 @@ public class ViewModelContextTest {
 	 */
 	@Test
 	public void testRegisterDomainChangeListenerChangeOnView() {
-		viewModelContext.registerDomainChangeListener(new ModelChangeListener() {
+		viewModelContext.registerDomainChangeListener(new ModelChangeAddRemoveListener() {
 
+			@Override
 			public void notifyChange(ModelChangeNotification notification) {
 				correctNotificationArrived = true;
 			}
 
+			@Override
 			public void notifyAdd(Notifier notifier) {
 				// TODO Auto-generated method stub
 
 			}
 
+			@Override
 			public void notifyRemove(Notifier notifier) {
 				// TODO Auto-generated method stub
 
@@ -406,22 +453,25 @@ public class ViewModelContextTest {
 
 	/**
 	 * Test method for
-	 * {@link ViewModelContext#unregisterDomainChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener)}
+	 * {@link ViewModelContext#unregisterDomainChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeAddRemoveListener)}
 	 * .
 	 */
 	@Test
 	public void testUnregisterDomainChangeListener() {
-		final ModelChangeListener modelChangeListener = new ModelChangeListener() {
+		final ModelChangeAddRemoveListener modelChangeListener = new ModelChangeAddRemoveListener() {
 
+			@Override
 			public void notifyChange(ModelChangeNotification notification) {
 				correctNotificationArrived = true;
 			}
 
+			@Override
 			public void notifyAdd(Notifier notifier) {
 				// TODO Auto-generated method stub
 
 			}
 
+			@Override
 			public void notifyRemove(Notifier notifier) {
 				// TODO Auto-generated method stub
 
@@ -438,17 +488,20 @@ public class ViewModelContextTest {
 	 */
 	@Test
 	public void testUnregisterDomainChangeListenerChangeOnView() {
-		final ModelChangeListener modelChangeListener = new ModelChangeListener() {
+		final ModelChangeAddRemoveListener modelChangeListener = new ModelChangeAddRemoveListener() {
 
+			@Override
 			public void notifyChange(ModelChangeNotification notification) {
 				correctNotificationArrived = true;
 			}
 
+			@Override
 			public void notifyAdd(Notifier notifier) {
 				// TODO Auto-generated method stub
 
 			}
 
+			@Override
 			public void notifyRemove(Notifier notifier) {
 				// TODO Auto-generated method stub
 
@@ -460,4 +513,216 @@ public class ViewModelContextTest {
 		assertFalse(correctNotificationArrived);
 	}
 
+	/**
+	 * Tests setting to control mapping static.
+	 */
+	@Test
+	public void testSettingToControlMapSingleControlStatic() {
+		viewModelContext.dispose();
+		final VView view = VViewFactory.eINSTANCE.createView();
+		final VControl control = VViewFactory.eINSTANCE.createControl();
+		control.setDomainModelReference(BowlingPackage.eINSTANCE.getPlayer_Name());
+		view.getChildren().add(control);
+		viewModelContext = ViewModelContextFactory.INSTANCE.createViewModelContext(view, player);
+
+		final Set<VControl> controls = viewModelContext.getControlsFor(((PlayerImpl) player)
+			.eSetting(BowlingPackage.eINSTANCE.getPlayer_Name()));
+		assertEquals(1, controls.size());
+		assertEquals(control, controls.iterator().next());
+	}
+
+	/**
+	 * Tests setting to control mapping static.
+	 */
+	@Test
+	public void testSettingToControlMapMultipleControlsStatic() {
+		viewModelContext.dispose();
+		final VView view = VViewFactory.eINSTANCE.createView();
+		final VControl control = VViewFactory.eINSTANCE.createControl();
+		control.setDomainModelReference(BowlingPackage.eINSTANCE.getPlayer_Name());
+		view.getChildren().add(control);
+
+		final VControl control2 = VViewFactory.eINSTANCE.createControl();
+		control2.setDomainModelReference(BowlingPackage.eINSTANCE.getPlayer_Name());
+		view.getChildren().add(control2);
+		viewModelContext = ViewModelContextFactory.INSTANCE.createViewModelContext(view, player);
+
+		final Set<VControl> controls = viewModelContext.getControlsFor(((PlayerImpl) player)
+			.eSetting(BowlingPackage.eINSTANCE.getPlayer_Name()));
+		assertEquals(2, controls.size());
+
+		assertTrue(controls.contains(control));
+		assertTrue(controls.contains(control2));
+	}
+
+	/**
+	 * Tests setting to control mapping static.
+	 */
+	@Test
+	public void testSettingToTableMapSingleControlStatic() {
+		viewModelContext.dispose();
+		final VView view = VViewFactory.eINSTANCE.createView();
+		final VTableControl control = VTableFactory.eINSTANCE.createTableControl();
+		final VTableDomainModelReference domRef = VTableFactory.eINSTANCE.createTableDomainModelReference();
+		domRef.setDomainModelEFeature(BowlingPackage.eINSTANCE.getLeague_Players());
+		control.setDomainModelReference(domRef);
+		final VFeaturePathDomainModelReference col = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
+		col.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Name());
+		VTableDomainModelReference.class.cast(control.getDomainModelReference()).getColumnDomainModelReferences()
+			.add(col);
+		view.getChildren().add(control);
+
+		final League league = BowlingFactory.eINSTANCE.createLeague();
+		league.getPlayers().add(player);
+		viewModelContext = ViewModelContextFactory.INSTANCE.createViewModelContext(view, league);
+
+		final Set<VControl> controls = viewModelContext.getControlsFor(((LeagueImpl) league)
+			.eSetting(BowlingPackage.eINSTANCE.getLeague_Players()));
+		assertEquals(1, controls.size());
+		assertEquals(control, controls.iterator().next());
+
+		final Set<VControl> controls2 = viewModelContext.getControlsFor(((PlayerImpl) player)
+			.eSetting(BowlingPackage.eINSTANCE.getPlayer_Name()));
+		assertEquals(1, controls2.size());
+		assertEquals(control, controls2.iterator().next());
+	}
+
+	/**
+	 * Tests dynamic domain add.
+	 */
+	@Test
+	public void testSettingToTableMapSingleControlDynamicDomainAdd() {
+		viewModelContext.dispose();
+		final VView view = VViewFactory.eINSTANCE.createView();
+		final VTableControl control = VTableFactory.eINSTANCE.createTableControl();
+		final VTableDomainModelReference domRef = VTableFactory.eINSTANCE.createTableDomainModelReference();
+		domRef.setDomainModelEFeature(BowlingPackage.eINSTANCE.getLeague_Players());
+		control.setDomainModelReference(domRef);
+		final VFeaturePathDomainModelReference col = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
+		col.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Name());
+		VTableDomainModelReference.class.cast(control.getDomainModelReference()).getColumnDomainModelReferences()
+			.add(col);
+		view.getChildren().add(control);
+
+		final League league = BowlingFactory.eINSTANCE.createLeague();
+		league.getPlayers().add(player);
+
+		viewModelContext = ViewModelContextFactory.INSTANCE.createViewModelContext(view, league);
+
+		final Player player2 = BowlingFactory.eINSTANCE.createPlayer();
+		league.getPlayers().add(player2);
+
+		final Set<VControl> controls2 = viewModelContext.getControlsFor(((PlayerImpl) player2)
+			.eSetting(BowlingPackage.eINSTANCE.getPlayer_Name()));
+		assertEquals(1, controls2.size());
+		assertEquals(control, controls2.iterator().next());
+	}
+
+	/**
+	 * Tests dynamic domain remove.
+	 */
+	@Test
+	public void testSettingToTableMapSingleControlDynamicDomainRemove() {
+		viewModelContext.dispose();
+		final VView view = VViewFactory.eINSTANCE.createView();
+		final VTableControl control = VTableFactory.eINSTANCE.createTableControl();
+		final VTableDomainModelReference domRef = VTableFactory.eINSTANCE.createTableDomainModelReference();
+		domRef.setDomainModelEFeature(BowlingPackage.eINSTANCE.getLeague_Players());
+		control.setDomainModelReference(domRef);
+		final VFeaturePathDomainModelReference col = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
+		col.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Name());
+		VTableDomainModelReference.class.cast(control.getDomainModelReference()).getColumnDomainModelReferences()
+			.add(col);
+		view.getChildren().add(control);
+
+		final League league = BowlingFactory.eINSTANCE.createLeague();
+		league.getPlayers().add(player);
+		final Player player2 = BowlingFactory.eINSTANCE.createPlayer();
+		league.getPlayers().add(player2);
+
+		viewModelContext = ViewModelContextFactory.INSTANCE.createViewModelContext(view, league);
+
+		league.getPlayers().remove(player);
+
+		final Set<VControl> controls2 = viewModelContext.getControlsFor(((PlayerImpl) player)
+			.eSetting(BowlingPackage.eINSTANCE.getPlayer_Name()));
+		assertEquals(0, controls2.size());
+
+		final Set<VControl> controls3 = viewModelContext.getControlsFor(((PlayerImpl) player2)
+			.eSetting(BowlingPackage.eINSTANCE.getPlayer_Name()));
+		assertEquals(1, controls3.size());
+		assertEquals(control, controls3.iterator().next());
+	}
+
+	/**
+	 * Tests dynamic view model add.
+	 */
+	@Test
+	public void testSettingToControlMapDynamicViewAdd() {
+		viewModelContext.dispose();
+		final VView view = VViewFactory.eINSTANCE.createView();
+		final VControl control = VViewFactory.eINSTANCE.createControl();
+		control.setDomainModelReference(BowlingPackage.eINSTANCE.getPlayer_Name());
+		view.getChildren().add(control);
+
+		viewModelContext = ViewModelContextFactory.INSTANCE.createViewModelContext(view, player);
+
+		final VControl control2 = VViewFactory.eINSTANCE.createControl();
+		control2.setDomainModelReference(BowlingPackage.eINSTANCE.getPlayer_Gender());
+		view.getChildren().add(control2);
+
+		final Set<VControl> controls = viewModelContext.getControlsFor(((PlayerImpl) player)
+			.eSetting(BowlingPackage.eINSTANCE.getPlayer_Gender()));
+		assertEquals(1, controls.size());
+		assertEquals(control2, controls.iterator().next());
+	}
+
+	/**
+	 * Tests dynamic view model remove.
+	 */
+	@Test
+	public void testSettingToControlMapDynamicViewRemove() {
+		viewModelContext.dispose();
+		final VView view = VViewFactory.eINSTANCE.createView();
+		final VControl control = VViewFactory.eINSTANCE.createControl();
+		control.setDomainModelReference(BowlingPackage.eINSTANCE.getPlayer_Name());
+		view.getChildren().add(control);
+		final VControl control2 = VViewFactory.eINSTANCE.createControl();
+		control2.setDomainModelReference(BowlingPackage.eINSTANCE.getPlayer_Gender());
+		view.getChildren().add(control2);
+
+		viewModelContext = ViewModelContextFactory.INSTANCE.createViewModelContext(view, player);
+
+		view.getChildren().remove(control);
+
+		final Set<VControl> controls = viewModelContext.getControlsFor(((PlayerImpl) player)
+			.eSetting(BowlingPackage.eINSTANCE.getPlayer_Name()));
+		assertNull(controls);
+
+		final Set<VControl> controls2 = viewModelContext.getControlsFor(((PlayerImpl) player)
+			.eSetting(BowlingPackage.eINSTANCE.getPlayer_Gender()));
+		assertEquals(1, controls2.size());
+		assertEquals(control2, controls2.iterator().next());
+	}
+
+	@Test
+	public void testResourceIsAdded() {
+		assertNotNull(player.eResource());
+	}
+
+	@Test
+	public void testResourceIsRemoved() {
+		viewModelContext.dispose();
+		assertNull(player.eResource());
+	}
+
+	@Test
+	public void testResourceIsNotAdded() {
+		viewModelContext.dispose();
+		final ResourceSet rs = new ResourceSetImpl();
+		final Resource resource = rs.createResource(URI.createURI("VIRTUAL_URI"));
+		resource.getContents().add(player);
+		viewModelContext = ViewModelContextFactory.INSTANCE.createViewModelContext(view, player);
+		assertEquals(resource, player.eResource());
+	}
 }

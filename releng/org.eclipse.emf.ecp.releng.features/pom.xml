@@ -6,15 +6,16 @@
 	<parent>
 		<groupId>org.eclipse.emf.ecp</groupId>
 		<artifactId>ecp-parent</artifactId>
-		<version>1.2.1-SNAPSHOT</version>
+		<version>1.3.0-SNAPSHOT</version>
 		<relativePath>../../releng/org.eclipse.emf.ecp.releng/</relativePath>
 	</parent>
 	<groupId>org.eclipse.emf.ecp</groupId>
 	<artifactId>ecp-features-parent</artifactId>
-	<version>1.2.1-SNAPSHOT</version>
+	<version>1.3.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<modules>
+		<module>../../features/org.eclipse.emf.ecp.emfforms.idetooling.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.target.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.cdo.feature</module>
@@ -30,7 +31,6 @@
 		<module>../../features/org.eclipse.emf.ecp.examplemodel.ui.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.view.categorization.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.view.custom.feature</module>
-		<module>../../features/org.eclipse.emf.ecp.view.separator.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.view.groupedgrid.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.view.label.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.view.group.feature</module>
@@ -43,10 +43,11 @@
 		<module>../../features/org.eclipse.emf.ecp.view.table.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.view.template.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.view.template.helper.feature</module>
-		<module>../../features/org.eclipse.emf.ecp.ide.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.e4.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.rap.util.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.transaction.feature</module>
+		<module>../../features/org.eclipse.emf.ecp.diffmerge.feature</module>
+		<module>../../features/org.eclipse.emf.ecp.validation.view.feature</module>
 		<!-- demo -->
 		<module>../../features/org.eclipse.emf.ecp.demo.e4.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.demo.e3.feature</module>
@@ -55,7 +56,9 @@
 		<module>../../features/org.eclipse.emf.ecp.emfforms.runtime.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.emfforms.sdk.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.sdk.feature</module>
+		<module>../../features/org.eclipse.emf.ecp.sdk.e4.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.rap.sdk.feature</module>
+		
 	</modules>
 
 	<!-- Parent used for features. This POM contains all build steps for code signing. -->

@@ -21,7 +21,6 @@ import org.eclipse.emf.ecore.EFactory;
  * 
  * @see org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage
  * @generated
- * @since 1.2
  */
 public interface VCustomFactory extends EFactory {
 	/**
@@ -34,14 +33,26 @@ public interface VCustomFactory extends EFactory {
 	VCustomFactory eINSTANCE = org.eclipse.emf.ecp.view.spi.custom.model.impl.VCustomFactoryImpl.init();
 
 	/**
-	 * Returns a new object of class '<em>Hardcoded Domain Model Reference</em>'.
+	 * Returns a new object of class '<em>Control</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
-	 * @return a new object of class '<em>Hardcoded Domain Model Reference</em>'.
+	 * @return a new object of class '<em>Control</em>'.
 	 * @generated
+	 * @since 1.3
 	 */
-	VHardcodedDomainModelReference createHardcodedDomainModelReference();
+	VCustomControl createCustomControl();
+
+	/**
+	 * Returns a new object of class '<em>Domain Model Reference</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return a new object of class '<em>Domain Model Reference</em>'.
+	 * @generated
+	 * @since 1.3
+	 */
+	VCustomDomainModelReference createCustomDomainModelReference();
 
 	/**
 	 * Returns the package supported by this factory.

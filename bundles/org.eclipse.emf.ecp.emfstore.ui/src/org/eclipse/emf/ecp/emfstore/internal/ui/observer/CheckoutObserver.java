@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
@@ -30,19 +30,25 @@ import org.eclipse.swt.widgets.Display;
 
 /**
  * Creates a new {@link ECPProject} on checkout.
- * 
+ *
  * @author Jonas
- * 
+ *
  */
 public class CheckoutObserver implements ESCheckoutObserver {
 
 	/**
-	 * 
+	 *
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.emfstore.client.observer.ESCheckoutObserver#checkoutDone(org.eclipse.emf.emfstore.client.ESLocalProject)
 	 */
+	@Override
 	public void checkoutDone(ESLocalProject project) {
+
+		// The project with this name is just temporary used to debug EMFStore. Therefore it should be ignored.
+		if ("log_error_checksum_debug_checkout".equals(project.getProjectName())) { //$NON-NLS-1$
+			return;
+		}
 
 		final ECPRepository repository = EMFStoreProvider.INSTANCE.getRepository(
 			project.getUsersession().getServer());
@@ -73,6 +79,7 @@ public class CheckoutObserver implements ESCheckoutObserver {
 						"Enter name for checked out project:", project.getProjectName() + "@" + createDateString(),
 						new IInputValidator() {
 
+							@Override
 							public String isValid(String newText) {
 								if (ECPUtil.getECPProjectManager().getProject(newText) == null) {
 									return null;

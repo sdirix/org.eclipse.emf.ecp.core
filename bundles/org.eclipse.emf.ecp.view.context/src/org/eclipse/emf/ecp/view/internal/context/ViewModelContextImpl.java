@@ -13,7 +13,12 @@ package org.eclipse.emf.ecp.view.internal.context;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -22,15 +27,30 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
+import org.eclipse.emf.common.util.TreeIterator;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EContentAdapter;
-import org.eclipse.emf.ecp.view.spi.context.ModelChangeNotification;
+import org.eclipse.emf.ecp.common.UniqueSetting;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
+import org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener;
+import org.eclipse.emf.ecp.view.spi.model.ModelChangeAddRemoveListener;
+import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
+import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
+import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.util.ViewModelUtil;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 
 /**
  * The Class ViewModelContextImpl.
@@ -41,7 +61,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 
 	private static final String NO_VIEW_SERVICE_OF_TYPE_FOUND = "No view service of type '%1$s' found."; //$NON-NLS-1$
 
-	private static final String MODEL_CHANGE_LISTENER_MUST_NOT_BE_NULL = "ModelChangeListener must not be null."; //$NON-NLS-1$
+	private static final String MODEL_CHANGE_LISTENER_MUST_NOT_BE_NULL = "ModelChangeAddRemoveListener must not be null."; //$NON-NLS-1$
 
 	private static final String THE_VIEW_MODEL_CONTEXT_WAS_ALREADY_DISPOSED = "The ViewModelContext was already disposed."; //$NON-NLS-1$
 
@@ -67,6 +87,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 	private final SortedSet<ViewModelService> viewServices = new TreeSet<ViewModelService>(
 		new Comparator<ViewModelService>() {
 
+			@Override
 			public int compare(ViewModelService arg0, ViewModelService arg1) {
 				return arg0.getPriority() - arg1.getPriority();
 			}
@@ -81,6 +102,15 @@ public class ViewModelContextImpl implements ViewModelContext {
 	 * Whether the context is being disposed.
 	 */
 	private boolean isDisposing;
+
+	/**
+	 * A mapping between settings and controls.
+	 */
+	private final Map<UniqueSetting, Set<VControl>> settingToControlMap = new LinkedHashMap<UniqueSetting, Set<VControl>>();
+
+	private final Map<VControl, DomainModelReferenceChangeListener> controlChangeListener = new LinkedHashMap<VControl, DomainModelReferenceChangeListener>();
+
+	private Resource resource;
 
 	/**
 	 * Instantiates a new view model context impl.
@@ -117,6 +147,8 @@ public class ViewModelContextImpl implements ViewModelContext {
 	 */
 	private void instantiate() {
 
+		addResourceIfNecessary();
+
 		ViewModelUtil.resolveDomainReferences(getViewModel(), getDomainModel());
 
 		viewModelContentAdapter = new ViewModelContentAdapter();
@@ -126,11 +158,167 @@ public class ViewModelContextImpl implements ViewModelContext {
 		domainModelContentAdapter = new DomainModelContentAdapter();
 		domainObject.eAdapters().add(domainModelContentAdapter);
 
+		createSettingToControlMapping();
 		readAbstractViewServices();
 
 		for (final ViewModelService viewService : viewServices) {
 			viewService.instantiate(this);
 		}
+	}
+
+	private void addResourceIfNecessary() {
+		if (domainObject.eResource() != null) {
+			return;
+		}
+		final ResourceSet rs = new ResourceSetImpl();
+		final AdapterFactoryEditingDomain domain = new AdapterFactoryEditingDomain(
+			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE),
+			new BasicCommandStack(), rs);
+		rs.eAdapters().add(new AdapterFactoryEditingDomain.EditingDomainProvider(domain));
+		resource = rs.createResource(URI.createURI("VIRTAUAL_URI")); //$NON-NLS-1$
+		resource.getContents().add(domainObject);
+	}
+
+	private void createSettingToControlMapping() {
+		checkAndUpdateSettingToControlMapping(view);
+
+		final TreeIterator<EObject> eAllContents = view.eAllContents();
+		while (eAllContents.hasNext()) {
+			final EObject eObject = eAllContents.next();
+			checkAndUpdateSettingToControlMapping(eObject);
+		}
+	}
+
+	private void checkAndUpdateSettingToControlMapping(EObject eObject) {
+		if (VControl.class.isInstance(eObject)) {
+			final VControl vControl = (VControl) eObject;
+			if (vControl.getDomainModelReference() == null) {
+				return;
+			}
+
+			updateControlMapping(vControl);
+
+			final DomainModelReferenceChangeListener changeListener = new DomainModelReferenceChangeListener() {
+
+				@Override
+				public void notifyChange() {
+					updateControlMapping(vControl);
+				}
+			};
+			controlChangeListener.put(vControl, changeListener);
+
+			vControl.getDomainModelReference().getChangeListener().add(changeListener);
+			registerDomainChangeListener(vControl.getDomainModelReference());
+		}
+	}
+
+	private void updateControlMapping(VControl vControl) {
+		// delete old mapping
+		for (final UniqueSetting setting : settingToControlMap.keySet()) {
+			settingToControlMap.get(setting).remove(vControl);
+		}
+		// vControl.getDomainModelReference().init(getDomainModel());
+		final Iterator<Setting> iterator = vControl.getDomainModelReference().getIterator();
+		while (iterator.hasNext()) {
+			final Setting setting = iterator.next();
+			final UniqueSetting uniqueSetting = UniqueSetting.createSetting(setting);
+			if (!settingToControlMap.containsKey(uniqueSetting)) {
+				settingToControlMap.put(uniqueSetting, new LinkedHashSet<VControl>());
+			}
+			settingToControlMap.get(uniqueSetting).add(vControl);
+		}
+	}
+
+	private void vControlRemoved(VControl vControl) {
+		if (vControl.getDomainModelReference() == null) {
+			return;
+		}
+		final Iterator<Setting> iterator = vControl.getDomainModelReference().getIterator();
+		while (iterator.hasNext()) {
+			final Setting next = iterator.next();
+			final UniqueSetting uniqueSetting = UniqueSetting.createSetting(next);
+			if (settingToControlMap.containsKey(uniqueSetting)) {
+				settingToControlMap.get(uniqueSetting).remove(vControl);
+				if (settingToControlMap.get(uniqueSetting).size() == 0) {
+					settingToControlMap.remove(uniqueSetting);
+				}
+			}
+		}
+
+		vControl.getDomainModelReference().getChangeListener().remove(controlChangeListener.get(vControl));
+		controlChangeListener.remove(vControl);
+		unregisterDomainChangeListener(vControl.getDomainModelReference());
+	}
+
+	private void vControlAdded(VControl vControl) {
+		if (vControl.getDomainModelReference() == null) {
+			return;
+		}
+		final Iterator<Setting> iterator = vControl.getDomainModelReference().getIterator();
+		while (iterator.hasNext()) {
+			final Setting next = iterator.next();
+			final UniqueSetting uniqueSetting = UniqueSetting.createSetting(next);
+			if (!settingToControlMap.containsKey(uniqueSetting)) {
+				settingToControlMap.put(uniqueSetting, new LinkedHashSet<VControl>());
+			}
+			settingToControlMap.get(uniqueSetting).add(vControl);
+		}
+
+	}
+
+	// private void eObjectRemoved(EObject eObject) {
+	// for (final EStructuralFeature eStructuralFeature : eObject.eClass().getEAllStructuralFeatures()) {
+	// final Setting setting = InternalEObject.class.cast(eObject).eSetting(eStructuralFeature);
+	// final UniqueSetting uniqueSetting = UniqueSetting.createSetting(setting);
+	// if (settingToControlMap.containsKey(uniqueSetting)) {
+	// settingToControlMap.remove(uniqueSetting);
+	// }
+	// }
+	// }
+	//
+	// private void eObjectAdded(EObject eObject) {
+	// final InternalEObject internalParent = InternalEObject.class.cast(eObject.eContainer());
+	// if (internalParent == null) {
+	// return;
+	// }
+	// // FIXME how to add??
+	// // TODO hack:
+	// for (final EReference eReference : internalParent.eClass().getEAllContainments()) {
+	// if (eReference.getEReferenceType().isInstance(eObject)) {
+	// final Setting setting = internalParent.eSetting(eReference);
+	// final UniqueSetting uniqueSetting = UniqueSetting.createSetting(setting);
+	// final Set<VControl> controls = settingToControlMap.get(uniqueSetting);
+	// if (controls == null) {
+	// continue;
+	// }
+	// final Set<VControl> iterateControls = new LinkedHashSet<VControl>(controls);
+	// for (final VControl control : iterateControls) {
+	// vControlAdded(control);
+	// }
+	//
+	// }
+	// }
+	//
+	// }
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getControlsFor(org.eclipse.emf.ecore.EStructuralFeature.Setting)
+	 */
+	@Override
+	public Set<VControl> getControlsFor(Setting setting) {
+		return settingToControlMap.get(UniqueSetting.createSetting(setting));
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getControlsFor(org.eclipse.emf.ecp.common.UniqueSetting)
+	 */
+	@Override
+	public Set<VControl> getControlsFor(UniqueSetting setting) {
+		return settingToControlMap.get(setting);
 	}
 
 	/**
@@ -159,6 +347,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getViewModel()
 	 */
+	@Override
 	public VElement getViewModel() {
 		if (isDisposed) {
 			throw new IllegalStateException(THE_VIEW_MODEL_CONTEXT_WAS_ALREADY_DISPOSED);
@@ -171,6 +360,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getDomainModel()
 	 */
+	@Override
 	public EObject getDomainModel() {
 		if (isDisposed) {
 			throw new IllegalStateException(THE_VIEW_MODEL_CONTEXT_WAS_ALREADY_DISPOSED);
@@ -181,11 +371,16 @@ public class ViewModelContextImpl implements ViewModelContext {
 	/**
 	 * Dispose.
 	 */
+	@Override
 	public void dispose() {
 		if (isDisposed) {
 			return;
 		}
 		isDisposing = true;
+		if (resource != null) {
+			resource.getContents().remove(domainObject);
+		}
+
 		view.eAdapters().remove(viewModelContentAdapter);
 		domainObject.eAdapters().remove(domainModelContentAdapter);
 
@@ -196,6 +391,15 @@ public class ViewModelContextImpl implements ViewModelContext {
 			viewService.dispose();
 		}
 		viewServices.clear();
+		settingToControlMap.clear();
+
+		for (final VControl vControl : controlChangeListener.keySet()) {
+			if (vControl.getDomainModelReference() != null) {
+				vControl.getDomainModelReference().getChangeListener().remove(controlChangeListener.get(vControl));
+			}
+			unregisterDomainChangeListener(vControl.getDomainModelReference());
+		}
+		controlChangeListener.clear();
 
 		isDisposing = false;
 		isDisposed = true;
@@ -204,8 +408,9 @@ public class ViewModelContextImpl implements ViewModelContext {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#registerViewChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener)
+	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#registerViewChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeAddRemoveListener)
 	 */
+	@Override
 	public void registerViewChangeListener(ModelChangeListener modelChangeListener) {
 		if (isDisposed) {
 			throw new IllegalStateException(THE_VIEW_MODEL_CONTEXT_WAS_ALREADY_DISPOSED);
@@ -219,8 +424,9 @@ public class ViewModelContextImpl implements ViewModelContext {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#unregisterViewChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener)
+	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#unregisterViewChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeAddRemoveListener)
 	 */
+	@Override
 	public void unregisterViewChangeListener(ModelChangeListener modelChangeListener) {
 		// if (isDisposed) {
 		// throw new IllegalStateException("The ViewModelContext was already disposed.");
@@ -231,8 +437,9 @@ public class ViewModelContextImpl implements ViewModelContext {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#registerDomainChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener)
+	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#registerDomainChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeAddRemoveListener)
 	 */
+	@Override
 	public void registerDomainChangeListener(ModelChangeListener modelChangeListener) {
 		if (isDisposed) {
 			throw new IllegalStateException(THE_VIEW_MODEL_CONTEXT_WAS_ALREADY_DISPOSED);
@@ -246,8 +453,9 @@ public class ViewModelContextImpl implements ViewModelContext {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#unregisterDomainChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener)
+	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#unregisterDomainChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeAddRemoveListener)
 	 */
+	@Override
 	public void unregisterDomainChangeListener(ModelChangeListener modelChangeListener) {
 		// if (isDisposed) {
 		// throw new IllegalStateException("The ViewModelContext was already disposed.");
@@ -260,6 +468,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#hasService(java.lang.Class)
 	 */
+	@Override
 	public <T> boolean hasService(Class<T> serviceType) {
 		for (final ViewModelService service : viewServices) {
 			if (serviceType.isInstance(service)) {
@@ -274,6 +483,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getService(java.lang.Class)
 	 */
+	@Override
 	@SuppressWarnings("unchecked")
 	public <T> T getService(Class<T> serviceType) {
 		for (final ViewModelService service : viewServices) {
@@ -281,7 +491,6 @@ public class ViewModelContextImpl implements ViewModelContext {
 				return (T) service;
 			}
 		}
-
 		Activator.log(new IllegalArgumentException(String.format(NO_VIEW_SERVICE_OF_TYPE_FOUND,
 			serviceType.getCanonicalName())));
 		return null;
@@ -300,10 +509,18 @@ public class ViewModelContextImpl implements ViewModelContext {
 			if (isDisposing) {
 				return;
 			}
+			if (isDisposed) {
+				return;
+			}
 			if (notification.isTouch()) {
 				return;
 			}
-
+			// FIXME possible side effects?
+			if (notification.getEventType() == Notification.ADD) {
+				if (VControl.class.isInstance(notification.getNewValue())) {
+					checkAndUpdateSettingToControlMapping(VControl.class.cast(notification.getNewValue()));
+				}
+			}
 			final ModelChangeNotification modelChangeNotification = new ModelChangeNotification(notification);
 			for (final ModelChangeListener modelChangeListener : viewModelChangeListener) {
 				modelChangeListener.notifyChange(modelChangeNotification);
@@ -314,25 +531,41 @@ public class ViewModelContextImpl implements ViewModelContext {
 		protected void addAdapter(Notifier notifier) {
 			super.addAdapter(notifier);
 			// do not notify while being disposed
-			if (isDisposing) {
+			if (isDisposing || isDisposed) {
 				return;
 			}
-			// if (VControl.class.isInstance(notifier)) {
-			// final VControl control = (VControl) notifier;
-			// control.getDomainModelReference().resolve(domainObject);
-			// }
 			if (VElement.class.isInstance(notifier)) {
-				ViewModelUtil.resolveDomainReferences((VElement) notifier, getDomainModel());
+				ViewModelUtil.resolveDomainReferences(
+					(VElement) notifier,
+					getDomainModel());
+			}
+			if (VControl.class.isInstance(notifier)) {
+				vControlAdded((VControl) notifier);
+			}
+			if (VDomainModelReference.class.isInstance(notifier)) {
+				final VControl control = findControl(VDomainModelReference.class.cast(notifier));
+				if (control != null) {
+					updateControlMapping(control);
+				}
+
 			}
 			for (final ModelChangeListener modelChangeListener : viewModelChangeListener) {
-				modelChangeListener.notifyAdd(notifier);
+				if (ModelChangeAddRemoveListener.class.isInstance(modelChangeListener)) {
+					ModelChangeAddRemoveListener.class.cast(modelChangeListener).notifyAdd(notifier);
+				}
 			}
-			// if (VDomainModelReference.class.isInstance(notifier)) {
-			// final EObject container = ((EObject) notifier).eContainer();
-			// if (VElement.class.isInstance(container)) {
-			// ViewModelUtil.resolveDomainReferences((VElement) container, getDomainModel());
-			// }
-			// }
+		}
+
+		/**
+		 * @param cast
+		 * @return
+		 */
+		private VControl findControl(VDomainModelReference dmr) {
+			EObject parent = dmr.eContainer();
+			while (!VControl.class.isInstance(parent) && parent != null) {
+				parent = parent.eContainer();
+			}
+			return (VControl) parent;
 		}
 
 		@Override
@@ -342,8 +575,16 @@ public class ViewModelContextImpl implements ViewModelContext {
 			if (isDisposing) {
 				return;
 			}
+			if (VElement.class.isInstance(notifier)) {
+				VElement.class.cast(notifier).setDiagnostic(null);
+			}
+			if (VControl.class.isInstance(notifier)) {
+				vControlRemoved((VControl) notifier);
+			}
 			for (final ModelChangeListener modelChangeListener : viewModelChangeListener) {
-				modelChangeListener.notifyRemove(notifier);
+				if (ModelChangeAddRemoveListener.class.isInstance(modelChangeListener)) {
+					ModelChangeAddRemoveListener.class.cast(modelChangeListener).notifyRemove(notifier);
+				}
 			}
 		}
 
@@ -362,9 +603,6 @@ public class ViewModelContextImpl implements ViewModelContext {
 			if (isDisposing) {
 				return;
 			}
-			if (notification.isTouch()) {
-				return;
-			}
 
 			final ModelChangeNotification modelChangeNotification = new ModelChangeNotification(notification);
 			for (final ModelChangeListener modelChangeListener : domainModelChangeListener) {
@@ -379,8 +617,13 @@ public class ViewModelContextImpl implements ViewModelContext {
 			if (isDisposing) {
 				return;
 			}
+			// if (EObject.class.isInstance(notifier)) {
+			// eObjectAdded((EObject) notifier);
+			// }
 			for (final ModelChangeListener modelChangeListener : domainModelChangeListener) {
-				modelChangeListener.notifyAdd(notifier);
+				if (ModelChangeAddRemoveListener.class.isInstance(modelChangeListener)) {
+					ModelChangeAddRemoveListener.class.cast(modelChangeListener).notifyAdd(notifier);
+				}
 			}
 		}
 
@@ -391,10 +634,30 @@ public class ViewModelContextImpl implements ViewModelContext {
 			if (isDisposing) {
 				return;
 			}
+			// if (EObject.class.isInstance(notifier)) {
+			// eObjectRemoved((EObject) notifier);
+			// }
 			for (final ModelChangeListener modelChangeListener : domainModelChangeListener) {
-				modelChangeListener.notifyRemove(notifier);
+				if (ModelChangeAddRemoveListener.class.isInstance(modelChangeListener)) {
+					ModelChangeAddRemoveListener.class.cast(modelChangeListener).notifyRemove(notifier);
+				}
 			}
 		}
 
+	}
+
+	private final Set<Object> users = new LinkedHashSet<Object>();
+
+	public void addContextUser(Object user) {
+		users.add(user);
+	}
+
+	public void removeContextUser(Object user) {
+		users.remove(user);
+		// Every renderer is registered here, as it needs to know when the view model changes (rules, validations, etc).
+		// If no listener is left, we can dispose the context
+		if (users.isEmpty()) {
+			dispose();
+		}
 	}
 }

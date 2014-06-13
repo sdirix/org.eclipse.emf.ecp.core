@@ -15,6 +15,7 @@ import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -26,6 +27,7 @@ import org.eclipse.emf.ecp.view.spi.provider.IViewProvider;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 
 /**
  * View Provider.
@@ -38,6 +40,7 @@ public class ViewProvider implements IViewProvider {
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.provider.IViewProvider#generate(org.eclipse.emf.ecore.EObject)
 	 */
+	@Override
 	public VView generate(EObject eObject) {
 		final VView view = VViewFactory.eINSTANCE.createView();
 		for (final EStructuralFeature feature : getValidFeatures(eObject)) {
@@ -79,8 +82,9 @@ public class ViewProvider implements IViewProvider {
 
 	private Set<EStructuralFeature> getValidFeatures(EObject eObject) {
 		final Collection<EStructuralFeature> features = eObject.eClass().getEAllStructuralFeatures();
-		final ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(
-			ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+		final ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
+			new ReflectiveItemProviderAdapterFactory(),
+			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
 		final AdapterFactoryItemDelegator adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(
 			composedAdapterFactory);
 		final Set<EStructuralFeature> featuresToAdd = new LinkedHashSet<EStructuralFeature>();
@@ -106,6 +110,7 @@ public class ViewProvider implements IViewProvider {
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.provider.IViewProvider#canRender(org.eclipse.emf.ecore.EObject)
 	 */
+	@Override
 	public int canRender(EObject eObject) {
 		return 1;
 	}

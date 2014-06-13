@@ -67,6 +67,30 @@ public class VViewImpl extends VElementImpl implements VView {
 	protected EList<VContainedElement> children;
 
 	/**
+	 * The default value of the '{@link #getEcorePath() <em>Ecore Path</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see #getEcorePath()
+	 * @generated
+	 * @ordered
+	 * @since 1.3
+	 */
+	protected static final String ECORE_PATH_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getEcorePath() <em>Ecore Path</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see #getEcorePath()
+	 * @generated
+	 * @ordered
+	 * @since 1.3
+	 */
+	protected String ecorePath = ECORE_PATH_EDEFAULT;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
@@ -93,6 +117,7 @@ public class VViewImpl extends VElementImpl implements VView {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EClass getRootEClass() {
 		if (rootEClass != null && rootEClass.eIsProxy())
 		{
@@ -125,6 +150,7 @@ public class VViewImpl extends VElementImpl implements VView {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setRootEClass(EClass newRootEClass) {
 		final EClass oldRootEClass = rootEClass;
 		rootEClass = newRootEClass;
@@ -140,6 +166,7 @@ public class VViewImpl extends VElementImpl implements VView {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EList<VContainedElement> getChildren() {
 		if (children == null)
 		{
@@ -147,6 +174,37 @@ public class VViewImpl extends VElementImpl implements VView {
 				VViewPackage.VIEW__CHILDREN);
 		}
 		return children;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @since 1.3
+	 */
+	@Override
+	public String getEcorePath()
+	{
+		return ecorePath;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @since 1.3
+	 */
+	@Override
+	public void setEcorePath(String newEcorePath)
+	{
+		final String oldEcorePath = ecorePath;
+		ecorePath = newEcorePath;
+		if (eNotificationRequired()) {
+			eNotify(new ENotificationImpl(this, Notification.SET, VViewPackage.VIEW__ECORE_PATH, oldEcorePath,
+				ecorePath));
+		}
 	}
 
 	/**
@@ -182,6 +240,8 @@ public class VViewImpl extends VElementImpl implements VView {
 			return basicGetRootEClass();
 		case VViewPackage.VIEW__CHILDREN:
 			return getChildren();
+		case VViewPackage.VIEW__ECORE_PATH:
+			return getEcorePath();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -204,6 +264,9 @@ public class VViewImpl extends VElementImpl implements VView {
 			getChildren().clear();
 			getChildren().addAll((Collection<? extends VContainedElement>) newValue);
 			return;
+		case VViewPackage.VIEW__ECORE_PATH:
+			setEcorePath((String) newValue);
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -224,6 +287,9 @@ public class VViewImpl extends VElementImpl implements VView {
 		case VViewPackage.VIEW__CHILDREN:
 			getChildren().clear();
 			return;
+		case VViewPackage.VIEW__ECORE_PATH:
+			setEcorePath(ECORE_PATH_EDEFAULT);
+			return;
 		}
 		super.eUnset(featureID);
 	}
@@ -242,8 +308,30 @@ public class VViewImpl extends VElementImpl implements VView {
 			return rootEClass != null;
 		case VViewPackage.VIEW__CHILDREN:
 			return children != null && !children.isEmpty();
+		case VViewPackage.VIEW__ECORE_PATH:
+			return ECORE_PATH_EDEFAULT == null ? ecorePath != null : !ECORE_PATH_EDEFAULT.equals(ecorePath);
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	@Override
+	public String toString()
+	{
+		if (eIsProxy()) {
+			return super.toString();
+		}
+
+		final StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (ecorePath: "); //$NON-NLS-1$
+		result.append(ecorePath);
+		result.append(')');
+		return result.toString();
 	}
 
 	/**
@@ -251,6 +339,7 @@ public class VViewImpl extends VElementImpl implements VView {
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.model.VView#setAllContentsReadOnly()
 	 */
+	@Override
 	public void setAllContentsReadOnly() {
 		final TreeIterator<EObject> contents = super.eAllContents();
 		setReadonly(true);

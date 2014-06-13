@@ -15,15 +15,17 @@ import java.util.Iterator;
 import java.util.Locale;
 
 import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.internal.edit.Activator;
-import org.eclipse.emf.ecp.view.spi.context.ModelChangeNotification;
+import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener;
+import org.eclipse.emf.ecp.view.spi.model.ModelChangeAddRemoveListener;
+import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
@@ -33,7 +35,6 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.swt.widgets.Display;
 
 /**
  * The {@link ECPAbstractControl} is the abstract class describing a control.
@@ -42,6 +43,7 @@ import org.eclipse.swt.widgets.Display;
  * @author Eugen Neufeld
  * 
  */
+@Deprecated
 public abstract class ECPAbstractControl {
 
 	private boolean embedded;
@@ -52,7 +54,7 @@ public abstract class ECPAbstractControl {
 	private VControl control;
 	private Setting firstSetting;
 	private EStructuralFeature firstFeature;
-	private ModelChangeListener viewChangeListener;
+	private ModelChangeAddRemoveListener viewChangeListener;
 
 	/**
 	 * This method is called by the framework to instantiate the {@link ECPAbstractControl}.
@@ -64,16 +66,20 @@ public abstract class ECPAbstractControl {
 	public final void init(ViewModelContext viewModelContext, final VControl control) {
 		this.viewModelContext = viewModelContext;
 		this.control = control;
-		composedAdapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+		composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
+			new CustomReflectiveItemProviderAdapterFactory(),
+			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
 		adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(composedAdapterFactory);
 
-		viewChangeListener = new ModelChangeListener() {
+		viewChangeListener = new ModelChangeAddRemoveListener() {
 
+			@Override
 			public void notifyRemove(Notifier notifier) {
 				// TODO Auto-generated method stub
 
 			}
 
+			@Override
 			public void notifyChange(ModelChangeNotification notification) {
 				if (notification.getNotifier() != ECPAbstractControl.this.control) {
 					return;
@@ -90,6 +96,7 @@ public abstract class ECPAbstractControl {
 				}
 			}
 
+			@Override
 			public void notifyAdd(Notifier notifier) {
 				// TODO Auto-generated method stub
 
@@ -237,14 +244,18 @@ public abstract class ECPAbstractControl {
 	 * @since 1.1
 	 */
 	public void dispose() {
-		composedAdapterFactory.dispose();
+		if (composedAdapterFactory != null) {
+			composedAdapterFactory.dispose();
+		}
 		composedAdapterFactory = null;
 		adapterFactoryItemDelegator = null;
 		if (dataBindingContext != null) {
 			dataBindingContext.dispose();
 		}
 		dataBindingContext = null;
-		viewModelContext.unregisterViewChangeListener(viewChangeListener);
+		if (viewModelContext != null) {
+			viewModelContext.unregisterViewChangeListener(viewChangeListener);
+		}
 		viewModelContext = null;
 
 		viewChangeListener = null;
@@ -334,26 +345,11 @@ public abstract class ECPAbstractControl {
 	}
 
 	/**
-	 * Helper method to keep the old validation.
+	 * Helper method to keep the old validation. Does nothing.
 	 * 
 	 * @since 1.2
 	 */
-	protected final void backwardCompatibleHandleValidation() {
-		final VDiagnostic diagnostic = control.getDiagnostic();
-		if (diagnostic == null) {
-			return;
-		}
-		Display.getDefault().asyncExec(new Runnable() {
-			public void run() {
-				if (control == null) {
-					return;
-				}
-				resetValidation();
-				for (final Object object : diagnostic.getDiagnostics()) {
-					handleValidation((Diagnostic) object);
-				}
-			}
-		});
+	protected void backwardCompatibleHandleValidation() {
 	}
 
 	/**

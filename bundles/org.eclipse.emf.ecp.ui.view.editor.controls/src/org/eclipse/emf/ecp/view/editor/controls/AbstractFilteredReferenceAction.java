@@ -63,13 +63,13 @@ public abstract class AbstractFilteredReferenceAction extends ECPSWTAction {
 
 		String attribute = descriptor.getDisplayName(eReference);
 		// make singular attribute labels
-		if (attribute.endsWith("ies")) {
-			attribute = attribute.substring(0, attribute.length() - 3) + "y";
-		} else if (attribute.endsWith("s")) {
+		if (attribute.endsWith("ies")) { //$NON-NLS-1$
+			attribute = attribute.substring(0, attribute.length() - 3) + "y"; //$NON-NLS-1$
+		} else if (attribute.endsWith("s")) { //$NON-NLS-1$
 			attribute = attribute.substring(0, attribute.length() - 1);
 		}
 
-		setToolTipText("Link " + attribute);
+		setToolTipText("Link " + attribute); //$NON-NLS-1$
 
 	}
 }

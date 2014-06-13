@@ -291,6 +291,17 @@ public class VCategorizationPackageImpl extends EPackageImpl implements VCategor
 	 * 
 	 * @generated
 	 */
+	public EAttribute getCategorizationElement_MainCategoryDepth()
+	{
+		return (EAttribute) categorizationElementEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
 	public EClass getCategorizableElement()
 	{
 		return categorizableElementEClass;
@@ -357,6 +368,7 @@ public class VCategorizationPackageImpl extends EPackageImpl implements VCategor
 		categorizationElementEClass = createEClass(CATEGORIZATION_ELEMENT);
 		createEReference(categorizationElementEClass, CATEGORIZATION_ELEMENT__CATEGORIZATIONS);
 		createEReference(categorizationElementEClass, CATEGORIZATION_ELEMENT__CURRENT_SELECTION);
+		createEAttribute(categorizationElementEClass, CATEGORIZATION_ELEMENT__MAIN_CATEGORY_DEPTH);
 
 		categorizableElementEClass = createEClass(CATEGORIZABLE_ELEMENT);
 		createEReference(categorizableElementEClass, CATEGORIZABLE_ELEMENT__LABEL_OBJECT);
@@ -451,6 +463,10 @@ public class VCategorizationPackageImpl extends EPackageImpl implements VCategor
 			this.getCategorizableElement(),
 			null,
 			"currentSelection", null, 0, 1, VCategorizationElement.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(
+			getCategorizationElement_MainCategoryDepth(),
+			ecorePackage.getEInt(),
+			"mainCategoryDepth", "0", 0, 1, VCategorizationElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 
 		initEClass(categorizableElementEClass, VCategorizableElement.class,
 			"CategorizableElement", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$

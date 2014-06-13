@@ -90,7 +90,7 @@ public class XmlDateControlText extends AbstractTextControl {
 		super.fillControlComposite(main);
 		// ((GridLayout) composite.getLayout()).numColumns = 2;
 		bDate = new Button(main, SWT.PUSH);
-		bDate.setImage(Activator.getImageDescriptor("icons/date.png").createImage()); //$NON-NLS-1$
+		bDate.setImage(Activator.getImage("icons/date.png")); //$NON-NLS-1$
 		bDate.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_xmldate"); //$NON-NLS-1$
 		bDate.addSelectionListener(new SelectionAdapterExtension());
 	}
@@ -100,8 +100,11 @@ public class XmlDateControlText extends AbstractTextControl {
 		// TODO: FocusOut doesn't seem to fire in case the same invalid text is
 		// entered twice
 		final IObservableValue value = SWTObservables.observeText(getText(), SWT.FocusOut);
+		final DateTargetToModelUpdateStrategy targetToModelUpdateStrategy = new DateTargetToModelUpdateStrategy();
+		final DateModelToTargetUpdateStrategy modelToTargetUpdateStrategy = new DateModelToTargetUpdateStrategy();
 		final Binding binding = getDataBindingContext().bindValue(value, getModelValue(),
-			new DateTargetToModelUpdateStrategy(), new DateModelToTargetUpdateStrategy());
+			targetToModelUpdateStrategy, modelToTargetUpdateStrategy);
+		createTooltipBinding(targetToModelUpdateStrategy, modelToTargetUpdateStrategy);
 		return binding;
 	}
 

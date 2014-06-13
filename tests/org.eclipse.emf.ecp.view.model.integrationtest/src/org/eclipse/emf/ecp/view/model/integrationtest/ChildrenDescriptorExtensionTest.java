@@ -26,7 +26,6 @@ import org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage;
 import org.eclipse.emf.ecp.view.spi.groupedgrid.model.VGroupedGridPackage;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.rule.model.RulePackage;
-import org.eclipse.emf.ecp.view.spi.separator.model.VSeparatorPackage;
 import org.eclipse.emf.ecp.view.spi.table.model.VTablePackage;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -44,7 +43,7 @@ public class ChildrenDescriptorExtensionTest {
 	private static final int COMPOSITE_CHILD_COUNT = RENDERABLE_CHILD_COUNT;
 	private static final int ABSTRACTCATEGORIZATION_CHILD_COUNT = RENDERABLE_CHILD_COUNT + 1;
 	private static final int NUMBER_OF_MAIN_COMPOSITES = 1;
-	// label, separator, table, vertical, horizontal, group, groupedgrid, categorizationElement
+	// label, table, vertical, horizontal, group, groupedgrid, categorizationElement, custom control
 	private static final int NUMBER_OF_EXTERNAL_COMPOSITES = 8;
 	private static final int NUMBER_OF_COMPOSITES = NUMBER_OF_MAIN_COMPOSITES + NUMBER_OF_EXTERNAL_COMPOSITES;
 	// categorization, category
@@ -58,22 +57,22 @@ public class ChildrenDescriptorExtensionTest {
 	private static final int LEAFCONDITION_CHILD_COUNT = 1;
 	private static final int ORCONDITION_CHILD_COUNT = 3;
 	private static final int ANDCONDITION_CHILD_COUNT = 3;
-	// TODO: Should be not -10, labels, groupedgrid, span, 2 rules, vertical, horizontal, separator,table, group
+	// TODO: Should be not -10, labels, groupedgrid, span, 2 rules, vertical, horizontal, table, group
 	// are missing
-	// TODO: upper hierarchy is missing, can't find children
-	private static final int CATEGORY_CHILD_COUNT = NUMBER_OF_COMPOSITES + ABSTRACTCATEGORIZATION_CHILD_COUNT - 10 + 3;
+	// TODO: upper hierarchy is missing, can't find children +2 because of hardcoded layouts
+	private static final int CATEGORY_CHILD_COUNT = NUMBER_OF_COMPOSITES + ABSTRACTCATEGORIZATION_CHILD_COUNT - 10 + 3
+		+ 2;
 	// VDomainModelReference -> VFeaturePathDR, VPredefinedDR, VTableDR
 	private static final int CONTROL_CHILD_COUNT = COMPOSITE_CHILD_COUNT + 3;
 	private static final int TABLECONTROL_CHILD_COUNT = CONTROL_CHILD_COUNT + 1;
-	private static final int TABLECOLUMN_CHILD_COUNT = 0;
 	private static final int SEPARATOR_CHILD_COUNT = RENDERABLE_CHILD_COUNT;
-	private static final int COLUMNCOMPOSITE_CHILD_COUNT = COMPOSITECOLLECTION_CHILD_COUNT;
-	private static final int COLUMN_CHILD_COUNT = COMPOSITECOLLECTION_CHILD_COUNT;
+	// private static final int COLUMNCOMPOSITE_CHILD_COUNT = COMPOSITECOLLECTION_CHILD_COUNT;
+	// private static final int COLUMN_CHILD_COUNT = COMPOSITECOLLECTION_CHILD_COUNT;
 	private static final int GROUP_CHILD_COUNT = COMPOSITECOLLECTION_CHILD_COUNT;
 	private static final int ACTION_CHILD_COUNT = 0;
 	private static final int GROUPEDGRID_CHILD_COUNT = RENDERABLE_CHILD_COUNT + 1;
 	private static final int GRIDEDGROUP_CHILD_COUNT = 1;
-	// TODO: Should be not -7, labels, group, vertical, horizontal, separator ,table,categorizationelement are missing
+	// TODO: Should be not -7, labels, group, vertical, horizontal, table,categorizationelement are missing
 	// TODO: upper hierarchy is missing, can't find children
 	private static final int GRIDEDGROUPROW_CHILD_COUNT = NUMBER_OF_COMPOSITES - 7;
 	private static final int GRIDEDGROUPSPAN_CHILD_COUNT = 0;
@@ -196,17 +195,6 @@ public class ChildrenDescriptorExtensionTest {
 		assertEquals(TABLECONTROL_CHILD_COUNT, size);
 	}
 
-	@Test
-	public void testTableColumnChildDescriptors() {
-		final int size = getChildrenSize(VTablePackage.eINSTANCE.getTableColumn());
-		assertEquals(TABLECOLUMN_CHILD_COUNT, size);
-	}
-
-	@Test
-	public void testSeparatorChildDescriptors() {
-		final int size = getChildrenSize(VSeparatorPackage.eINSTANCE.getSeparator());
-		assertEquals(SEPARATOR_CHILD_COUNT, size);
-	}
 
 	/**
 	 * Class is abstract, Exception expected

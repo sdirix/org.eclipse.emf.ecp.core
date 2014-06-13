@@ -15,9 +15,9 @@ import static org.junit.Assert.assertEquals;
 
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
+import org.eclipse.emf.ecp.view.spi.custom.model.VCustomControl;
+import org.eclipse.emf.ecp.view.spi.custom.model.VCustomDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.custom.model.VCustomFactory;
-import org.eclipse.emf.ecp.view.spi.custom.model.VHardcodedDomainModelReference;
-import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.test.common.swt.DatabindingClassRunner;
@@ -34,20 +34,24 @@ import org.junit.runner.RunWith;
 @RunWith(DatabindingClassRunner.class)
 public class CustomControlValidationTest {
 
-	private VControl modelControl;
+	private VCustomControl modelControl;
 	private VView view;
 
 	@Before
 	public void init() {
 		view = VViewFactory.eINSTANCE.createView();
-		modelControl = VViewFactory.eINSTANCE.createControl();
-		final VHardcodedDomainModelReference domainModelReference = VCustomFactory.eINSTANCE
-			.createHardcodedDomainModelReference();
+		modelControl = VCustomFactory.eINSTANCE.createCustomControl();
+		final VCustomDomainModelReference domainModelReference = VCustomFactory.eINSTANCE
+			.createCustomDomainModelReference();
 		modelControl.setDomainModelReference(domainModelReference);
-		domainModelReference.setControlId("org.eclipse.emf.ecp.view.custom.ui.swt.test.ValidatiuonCustomControl");
-		// modelControl.setBundle("org.eclipse.emf.ecp.view.custom.ui.swt.test");
-		// modelControl
-		// .setClassName("org.eclipse.emf.ecp.view.custom.ui.swt.test.ValidationCustomControl");
+		// domainModelReference.setControlId("org.eclipse.emf.ecp.view.custom.ui.swt.test.ValidatiuonCustomControl");
+		modelControl.setBundleName("org.eclipse.emf.ecp.view.custom.ui.swt.test");
+		modelControl
+			.setClassName("org.eclipse.emf.ecp.view.custom.ui.swt.test.ValidationCustomControl");
+
+		domainModelReference.setBundleName("org.eclipse.emf.ecp.view.custom.ui.swt.test");
+		domainModelReference
+			.setClassName("org.eclipse.emf.ecp.view.custom.ui.swt.test.ValidationCustomControl");
 
 		view.getChildren().add(modelControl);
 	}

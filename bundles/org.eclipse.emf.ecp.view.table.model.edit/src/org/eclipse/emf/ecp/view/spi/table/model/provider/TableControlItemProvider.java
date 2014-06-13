@@ -23,12 +23,7 @@ import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableFactory;
 import org.eclipse.emf.ecp.view.spi.table.model.VTablePackage;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
-import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
-import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.IItemPropertySource;
-import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
-import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
@@ -40,8 +35,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * @generated
  */
 public class TableControlItemProvider
-	extends ControlItemProvider implements IEditingDomainItemProvider, IStructuredItemContentProvider,
-	ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
+	extends ControlItemProvider {
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
@@ -67,6 +61,7 @@ public class TableControlItemProvider
 			super.getPropertyDescriptors(object);
 
 			addAddRemoveDisabledPropertyDescriptor(object);
+			addEnableDetailEditingDialogPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -97,6 +92,32 @@ public class TableControlItemProvider
 	}
 
 	/**
+	 * This adds a property descriptor for the Enable Detail Editing Dialog feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	protected void addEnableDetailEditingDialogPropertyDescriptor(Object object)
+	{
+		itemPropertyDescriptors
+			.add
+			(createItemPropertyDescriptor
+			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(),
+				getString("_UI_TableControl_enableDetailEditingDialog_feature"), //$NON-NLS-1$
+				getString(
+					"_UI_PropertyDescriptor_description", "_UI_TableControl_enableDetailEditingDialog_feature", "_UI_TableControl_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				VTablePackage.Literals.TABLE_CONTROL__ENABLE_DETAIL_EDITING_DIALOG,
+				true,
+				false,
+				false,
+				ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
+				null,
+				null));
+	}
+
+	/**
 	 * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
 	 * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
 	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
@@ -106,11 +127,12 @@ public class TableControlItemProvider
 	 * @generated
 	 */
 	@Override
-	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
+	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object)
+	{
 		if (childrenFeatures == null)
 		{
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(VTablePackage.Literals.TABLE_CONTROL__COLUMNS);
+			childrenFeatures.add(VTablePackage.Literals.TABLE_CONTROL__COLUMN_CONFIGURATIONS);
 		}
 		return childrenFeatures;
 	}
@@ -122,7 +144,8 @@ public class TableControlItemProvider
 	 * @generated
 	 */
 	@Override
-	protected EStructuralFeature getChildFeature(Object object, Object child) {
+	protected EStructuralFeature getChildFeature(Object object, Object child)
+	{
 		// Check the type of the specified child object and return the proper feature to use for
 		// adding (see {@link AddCommand}) it as a child.
 
@@ -171,9 +194,10 @@ public class TableControlItemProvider
 		switch (notification.getFeatureID(VTableControl.class))
 		{
 		case VTablePackage.TABLE_CONTROL__ADD_REMOVE_DISABLED:
+		case VTablePackage.TABLE_CONTROL__ENABLE_DETAIL_EDITING_DIALOG:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 			return;
-		case VTablePackage.TABLE_CONTROL__COLUMNS:
+		case VTablePackage.TABLE_CONTROL__COLUMN_CONFIGURATIONS:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 			return;
 		}
@@ -199,8 +223,8 @@ public class TableControlItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
-			(VTablePackage.Literals.TABLE_CONTROL__COLUMNS,
-				VTableFactory.eINSTANCE.createTableColumn()));
+			(VTablePackage.Literals.TABLE_CONTROL__COLUMN_CONFIGURATIONS,
+				VTableFactory.eINSTANCE.createReadOnlyColumnConfiguration()));
 	}
 
 }

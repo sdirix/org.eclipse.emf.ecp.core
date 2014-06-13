@@ -90,17 +90,16 @@ public class VTreeMasterDetailImpl extends VContainedElementImpl implements VTre
 	 */
 	public NotificationChain basicSetDetailView(VView newDetailView, NotificationChain msgs)
 	{
-		final VView oldDetailView = detailView;
+		VView oldDetailView = detailView;
 		detailView = newDetailView;
 		if (eNotificationRequired())
 		{
-			final ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
 				VTreeMasterDetailPackage.TREE_MASTER_DETAIL__DETAIL_VIEW, oldDetailView, newDetailView);
-			if (msgs == null) {
+			if (msgs == null)
 				msgs = notification;
-			} else {
+			else
 				msgs.add(notification);
-			}
 		}
 		return msgs;
 	}
@@ -116,23 +115,19 @@ public class VTreeMasterDetailImpl extends VContainedElementImpl implements VTre
 		if (newDetailView != detailView)
 		{
 			NotificationChain msgs = null;
-			if (detailView != null) {
+			if (detailView != null)
 				msgs = ((InternalEObject) detailView).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
 					- VTreeMasterDetailPackage.TREE_MASTER_DETAIL__DETAIL_VIEW, null, msgs);
-			}
-			if (newDetailView != null) {
+			if (newDetailView != null)
 				msgs = ((InternalEObject) newDetailView).eInverseAdd(this, EOPPOSITE_FEATURE_BASE
 					- VTreeMasterDetailPackage.TREE_MASTER_DETAIL__DETAIL_VIEW, null, msgs);
-			}
 			msgs = basicSetDetailView(newDetailView, msgs);
-			if (msgs != null) {
+			if (msgs != null)
 				msgs.dispatch();
-			}
 		}
-		else if (eNotificationRequired()) {
+		else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				VTreeMasterDetailPackage.TREE_MASTER_DETAIL__DETAIL_VIEW, newDetailView, newDetailView));
-		}
 	}
 
 	/**
