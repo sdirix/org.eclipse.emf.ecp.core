@@ -14,6 +14,7 @@ package org.eclipse.emf.ecp.workspace.internal.ui;
 
 import org.eclipse.core.expressions.PropertyTester;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
+import org.eclipse.emf.ecp.workspace.internal.core.WorkspaceProvider;
 
 /**
  * Test weather an undo is possible on a project.
@@ -23,9 +24,14 @@ import org.eclipse.emf.ecp.spi.core.InternalProject;
 public class WorkspaceCanUndoTester extends PropertyTester {
 
 	/** {@inheritDoc} **/
+	@Override
 	public boolean test(Object receiver, String property, Object[] args, Object expectedValue) {
-		InternalProject project = (InternalProject) receiver;
+		final InternalProject project = (InternalProject) receiver;
+		if (!WorkspaceProvider.class.isInstance(project.getProvider())) {
+			return false;
+		}
 		return Boolean.valueOf(project.getEditingDomain().getCommandStack().canUndo()).equals(expectedValue);
+
 	}
 
 }

@@ -7,7 +7,7 @@ Element-Type: context
 Element-Version: 2.0
 Id: _qKLa8G60EeKbTKOCBYPcow
 Q7-Runtime-Version: 1.3.10.201312200736
-Save-Time: 2/11/14 1:23 PM
+Save-Time: 6/13/14 9:46 AM
 
 ------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998
 Content-Type: text/ecl
@@ -72,5 +72,6 @@ with [get-window "Authentication required"] {
     get-button OK | click
 }
 } -catch {}
-get-window "Progress Information"|get-window "Share succeeded" | get-button OK | click
+//get-window "Progress Information"|
+get-window "Share succeeded" | get-button OK | click
 ------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998--
