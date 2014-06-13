@@ -260,7 +260,12 @@ public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 					result = ((InternalEObject) lastResolvedEObject).eSetting(getDomainModelEFeature());
 				}
 				else {
-					result = resolvedColumns.get(returnedElements - 1).getIterator().next();
+					final Iterator<Setting> iterator = resolvedColumns.get(returnedElements - 1).getIterator();
+					if (iterator.hasNext()) {
+						result = iterator.next();
+					} else {
+						result = null;
+					}
 				}
 				returnedElements++;
 				return result;

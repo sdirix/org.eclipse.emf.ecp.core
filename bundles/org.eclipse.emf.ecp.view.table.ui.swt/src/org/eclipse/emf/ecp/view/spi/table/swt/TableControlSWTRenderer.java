@@ -14,37 +14,34 @@ package org.eclipse.emf.ecp.view.spi.table.swt;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.core.databinding.observable.map.IObservableMap;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.databinding.EMFProperties;
 import org.eclipse.emf.databinding.EObjectObservableMap;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
-import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.edit.internal.swt.controls.ControlMessages;
 import org.eclipse.emf.ecp.edit.internal.swt.controls.ECPFocusCellDrawHighlighter;
 import org.eclipse.emf.ecp.edit.internal.swt.controls.TableViewerColumnBuilder;
-import org.eclipse.emf.ecp.edit.internal.swt.table.TableColumnConfiguration;
-import org.eclipse.emf.ecp.edit.internal.swt.table.TableControlConfiguration;
 import org.eclipse.emf.ecp.edit.internal.swt.util.CellEditorFactory;
 import org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor;
 import org.eclipse.emf.ecp.edit.internal.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.ecp.view.internal.table.swt.CellReadOnlyTesterHelper;
 import org.eclipse.emf.ecp.view.internal.table.swt.TableConfigurationHelper;
+import org.eclipse.emf.ecp.view.model.common.spi.databinding.DatabindingProviderService;
 import org.eclipse.emf.ecp.view.spi.core.swt.AbstractControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
@@ -107,6 +104,8 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
+import org.osgi.framework.InvalidSyntaxException;
+import org.osgi.framework.ServiceReference;
 
 /**
  * SWT Renderer for Table Control.
@@ -159,14 +158,15 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 		final EClass clazz = ((EReference) mainSetting.getEStructuralFeature()).getEReferenceType();
 
-		final TableControlConfiguration tableControlConfiguration = new TableControlConfiguration();
-		tableControlConfiguration.setAddRemoveDisabled(getVElement().isAddRemoveDisabled());
+		// final TableControlConfiguration tableControlConfiguration = new TableControlConfiguration();
+		// tableControlConfiguration.setAddRemoveDisabled(getVElement().isAddRemoveDisabled());
 
-		for (final VDomainModelReference column : getTableDomainModelReference().getColumnDomainModelReferences()) {
-			final boolean readOnly = TableConfigurationHelper.isReadOnly(getVElement(), column);
-			tableControlConfiguration.getColumns().add(
-				new TableColumnConfiguration(readOnly, (EAttribute) column.getEStructuralFeatureIterator().next()));
-		}
+		// for (final VDomainModelReference column : VTableDomainModelReference.class.cast(
+		// getVElement().getDomainModelReference()).getColumnDomainModelReferences()) {
+		// final boolean readOnly = TableConfigurationHelper.isReadOnly(getVElement(), column);
+		// tableControlConfiguration.getColumns().add(
+		// new TableColumnConfiguration(readOnly, (EAttribute) column.getEStructuralFeatureIterator().next()));
+		// }
 
 		final Composite composite = new Composite(parent, SWT.NONE);
 		composite.setLayout(new GridLayout(1, false));
@@ -208,7 +208,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			numButtons++;
 			createDetailEditButton(buttonComposite);
 		}
-		if (!tableControlConfiguration.isAddRemoveDisabled()) {
+		if (!getVElement().isAddRemoveDisabled()) {
 			// addButtons
 			addButton = createAddRowButton(clazz, buttonComposite, mainSetting);
 			removeButton = createRemoveRowButton(clazz, buttonComposite, mainSetting);
@@ -223,7 +223,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			.applyTo(controlComposite);
 		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(controlComposite);
 		tableViewer = createTableViewer(controlComposite, clazz,
-			mainSetting, tableControlConfiguration);
+			mainSetting);
 
 		if (addButton != null && removeButton != null) {
 			final Button finalAddButton = addButton;
@@ -343,8 +343,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	}
 
 	private TableViewer createTableViewer(Composite composite, EClass clazz,
-		Setting mainSetting,
-		TableControlConfiguration tableControlConfiguration) {
+		Setting mainSetting) {
 
 		final TableViewer tableViewer = new TableViewer(composite, SWT.MULTI | SWT.V_SCROLL | SWT.FULL_SELECTION
 			| SWT.BORDER);
@@ -376,29 +375,39 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		final ECPTableViewerComparator comparator = new ECPTableViewerComparator();
 		tableViewer.setComparator(comparator);
 		int columnNumber = 0;
-		final Map<EStructuralFeature, Boolean> readOnlyConfig = createReadOnlyConfig(clazz, tableControlConfiguration);
-		final List<EStructuralFeature> structuralFeatures = new ArrayList<EStructuralFeature>();
-		structuralFeatures.addAll(readOnlyConfig.keySet());
+
+		// final Map<EStructuralFeature, Boolean> readOnlyConfig = createReadOnlyConfig(clazz,
+		// tableControlConfiguration);
+		// final List<EStructuralFeature> structuralFeatures = new ArrayList<EStructuralFeature>();
+		// structuralFeatures.addAll(readOnlyConfig.keySet());
 		if (!getVElement().isReadonly()) {
 			createFixedValidationStatusColumn(tableViewer);
 		}
-
-		for (final EStructuralFeature feature : structuralFeatures) {
-			if (feature == null) {
+		final VTableDomainModelReference tableDomainModelReference = VTableDomainModelReference.class.cast(
+			getVElement().getDomainModelReference());
+		for (final VDomainModelReference dmr : tableDomainModelReference.getColumnDomainModelReferences()) {
+			if (dmr == null) {
 				continue;
 			}
-			final IItemPropertyDescriptor itemPropertyDescriptor = getItemPropertyDescriptor(tempInstance
-				.eSetting(feature));
-			if (itemPropertyDescriptor == null) {
-				// if we can't render because no edit information is available, do nothing
+			final Iterator<EStructuralFeature> eStructuralFeatureIterator = dmr.getEStructuralFeatureIterator();
+			if (eStructuralFeatureIterator == null || !eStructuralFeatureIterator.hasNext()) {
 				continue;
 			}
+			final EStructuralFeature eStructuralFeature = eStructuralFeatureIterator.next();
+			// final IItemPropertyDescriptor itemPropertyDescriptor = getItemPropertyDescriptor(tempInstance
+			// .eSetting(eStructuralFeature));
+			// if (itemPropertyDescriptor == null) {
+			// // if we can't render because no edit information is available, do nothing
+			// continue;
+			// }
 
-			final CellEditor cellEditor = createCellEditor(tempInstance, feature, tableViewer.getTable());
+			final CellEditor cellEditor = createCellEditor(tempInstance, eStructuralFeature, tableViewer.getTable());
 			final TableViewerColumn column = TableViewerColumnBuilder
 				.create()
-				.setText(itemPropertyDescriptor.getDisplayName(null))
-				.setToolTipText(itemPropertyDescriptor.getDescription(null))
+				// .setText(itemPropertyDescriptor.getDisplayName(null))
+				// .setToolTipText(itemPropertyDescriptor.getDescription(null))
+				.setText(eStructuralFeature.getName())
+				.setToolTipText(eStructuralFeature.getName())
 				.setResizable(true)
 				.setMoveable(false)
 				.setStyle(SWT.NONE)
@@ -407,16 +416,18 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 						.getColumnWidthWeight() : 100)
 				.build(tableViewer);
 
-			column.setLabelProvider(new ECPCellLabelProvider(feature, cellEditor, feature.isMany() ?
-				new EObjectObservableMap(cp.getKnownElements(), feature) :
-				EMFProperties.value(feature).observeDetail(cp.getKnownElements()), getVElement()));
+			column.setLabelProvider(new ECPCellLabelProvider(eStructuralFeature, cellEditor, getObservableMap(dmr,
+				eStructuralFeature, cp), getVElement(), dmr));
 			column.getColumn().addSelectionListener(
 				getSelectionAdapter(tableViewer, comparator, column.getColumn(), columnNumber));
 
-			if (!isReadOnlyFeature(readOnlyConfig, feature)) {
+			if (!TableConfigurationHelper.isReadOnly(getVElement(), dmr)) {
 				// remove if no editing needed
-				final EditingSupport observableSupport = new ECPTableEditingSupport(tableViewer, cellEditor, feature,
-					itemPropertyDescriptor, getVElement());
+				final EditingSupport observableSupport = new ECPTableEditingSupport(tableViewer, cellEditor,
+					// eStructuralFeature,
+					// itemPropertyDescriptor
+					// null,
+					getVElement(), dmr);
 				column.setEditingSupport(observableSupport);
 			}
 			columnNumber++;
@@ -463,14 +474,45 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		return tableViewer;
 	}
 
-	private static boolean isReadOnlyFeature(Map<EStructuralFeature, Boolean> readOnlyConfig, EStructuralFeature feature) {
-		if (readOnlyConfig != null) {
-			final Boolean isReadOnly = readOnlyConfig.get(feature);
-			if (isReadOnly != null) {
-				return isReadOnly;
-			}
+	private IObservableMap getObservableMap(VDomainModelReference dmr, EStructuralFeature eStructuralFeature,
+		ObservableListContentProvider cp) {
+		if (eStructuralFeature
+			.isMany()) {
+			return new EObjectObservableMap(cp.getKnownElements(), eStructuralFeature);
 		}
-		return false;
+
+		return getValueProperty(dmr).observeDetail(
+			cp.getKnownElements());
+	}
+
+	private IValueProperty getValueProperty(VDomainModelReference dmr) {
+		ServiceReference<DatabindingProviderService> databindingProviderServiceReference = null;
+
+		try {
+			final Collection<ServiceReference<DatabindingProviderService>> serviceReferences = Activator.getInstance()
+				.getBundle()
+				.getBundleContext()
+				.getServiceReferences(DatabindingProviderService.class,
+					String.format("(domainModelReference=%s)", dmr.getClass().getName()));
+			final Iterator<ServiceReference<DatabindingProviderService>> iterator = serviceReferences.iterator();
+			if (iterator.hasNext()) {
+				databindingProviderServiceReference = iterator.next();
+			}
+			if (databindingProviderServiceReference == null) {
+				throw new IllegalStateException("No DatabindingProviderService available.");
+			}
+		} catch (final InvalidSyntaxException e) {
+			throw new IllegalStateException(e);
+		}
+
+		final DatabindingProviderService<VDomainModelReference> databindingProviderService = Activator.getInstance()
+			.getBundle().getBundleContext().getService(databindingProviderServiceReference);
+		final IValueProperty result = databindingProviderService.getProperty(dmr, IValueProperty.class);
+		Activator.getInstance()
+			.getBundle()
+			.getBundleContext().ungetService(databindingProviderServiceReference);
+
+		return result;
 	}
 
 	private SelectionAdapter getSelectionAdapter(final TableViewer tableViewer,
@@ -506,17 +548,6 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 	private InternalEObject getInstanceOf(EClass clazz) {
 		return InternalEObject.class.cast(clazz.getEPackage().getEFactoryInstance().create(clazz));
-	}
-
-	private Map<EStructuralFeature, Boolean> createReadOnlyConfig(EClass clazz,
-		TableControlConfiguration tableControlConfiguration) {
-		final Map<EStructuralFeature, Boolean> readOnlyConfig = new LinkedHashMap<EStructuralFeature, Boolean>();
-
-		for (final TableColumnConfiguration tcc : tableControlConfiguration.getColumns()) {
-			readOnlyConfig.put(tcc.getColumnAttribute(), tcc.isReadOnly());
-		}
-
-		return readOnlyConfig;
 	}
 
 	private Button createRemoveRowButton(EClass clazz, final Composite buttonComposite, Setting mainSetting) {
@@ -777,6 +808,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		private final EStructuralFeature feature;
 		private final CellEditor cellEditor;
 		private final VTableControl vTableControl;
+		private final VDomainModelReference dmr;
 
 		/**
 		 * Constructor.
@@ -790,11 +822,12 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		 * @param vTableControl the {@link VTableControl}
 		 */
 		public ECPCellLabelProvider(EStructuralFeature feature, CellEditor cellEditor, IObservableMap attributeMap,
-			VTableControl vTableControl) {
+			VTableControl vTableControl, VDomainModelReference dmr) {
 			super(attributeMap);
 			this.vTableControl = vTableControl;
 			this.feature = feature;
 			this.cellEditor = cellEditor;
+			this.dmr = dmr;
 		}
 
 		/**
@@ -805,7 +838,17 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		@Override
 		public String getToolTipText(Object element) {
 			final EObject domainObject = (EObject) element;
-			final Setting setting = InternalEObject.class.cast(domainObject).eSetting(feature);
+			final VDomainModelReference copy = EcoreUtil.copy(dmr);
+			copy.init(domainObject);
+			final Iterator<Setting> iterator = copy.getIterator();
+			Setting setting = null;
+			if (iterator.hasNext()) {
+				setting = iterator.next();
+			} else {
+				return null;
+			}
+
+			// final Setting setting = InternalEObject.class.cast(domainObject).eSetting(feature);
 			final StringBuffer tooltip = new StringBuffer();
 			final VDiagnostic vDiagnostic = vTableControl.getDiagnostic();
 			final List<Diagnostic> diagnostics = vDiagnostic.getDiagnostic(domainObject, feature);
@@ -818,7 +861,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			if (tooltip.length() != 0) {
 				return ECPTooltipModifierHelper.modifyString(tooltip.toString(), setting);
 			}
-			final Object value = ((EObject) element).eGet(feature);
+			final Object value = setting.get(true);
 			if (value == null) {
 				return null;
 			}
@@ -879,22 +922,22 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 		private final CellEditor cellEditor;
 
-		private final EStructuralFeature cellFeature;
-
-		private final IItemPropertyDescriptor itemPropertyDescriptor;
+		// private final IItemPropertyDescriptor itemPropertyDescriptor;
 
 		private final VTableControl tableControl;
+
+		private final VDomainModelReference domainModelReference;
 
 		/**
 		 * @param viewer
 		 */
-		public ECPTableEditingSupport(ColumnViewer viewer, CellEditor cellEditor, EStructuralFeature feature,
-			IItemPropertyDescriptor itemPropertyDescriptor, VTableControl tableControl) {
+		public ECPTableEditingSupport(ColumnViewer viewer, CellEditor cellEditor,
+			VTableControl tableControl, VDomainModelReference domainModelReference) {
 			super(viewer);
 			this.cellEditor = cellEditor;
-			cellFeature = feature;
-			this.itemPropertyDescriptor = itemPropertyDescriptor;
 			this.tableControl = tableControl;
+			this.domainModelReference = domainModelReference;
+			// itemPropertyDescriptor = getItemPropertyDescriptor(domainModelReference.getIterator().next());
 		}
 
 		private EditingState editingState;
@@ -908,11 +951,15 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		 */
 		@Override
 		protected boolean canEdit(Object element) {
-			boolean editable = itemPropertyDescriptor.canSetProperty(null) && tableControl.isEnabled()
-				&& !tableControl.isReadonly();
+			boolean editable = tableControl.isEnabled()
+				&& !tableControl.isReadonly();// && itemPropertyDescriptor.canSetProperty(null);
 
-			editable &= !CellReadOnlyTesterHelper.getInstance().isReadOnly(getVElement(),
-				InternalEObject.class.cast(element).eSetting(cellFeature));
+			final Setting setting = getCellSetting(domainModelReference, element);
+			if (setting == null) {
+				return false;
+			}
+			editable &= !CellReadOnlyTesterHelper.getInstance().isReadOnly(getVElement(), setting
+				);
 
 			if (ECPCellEditor.class.isInstance(cellEditor)) {
 				ECPCellEditor.class.cast(cellEditor).setEditable(editable);
@@ -983,9 +1030,11 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		}
 
 		protected IObservableValue doCreateElementObservable(Object element, ViewerCell cell) {
-			return EMFEditObservables.observeValue(
-				getEditingDomain(InternalEObject.class.cast(element).eSetting(cellFeature)),
-				(EObject) element, cellFeature);
+			return getValueProperty(domainModelReference).observe(element);
+
+			// return EMFEditObservables..observeValue(
+			// getEditingDomain(InternalEObject.class.cast(element).eSetting(cellFeature)),
+			// (EObject) element, cellFeature);
 		}
 
 		protected IObservableValue doCreateCellEditorObservable(CellEditor cellEditor) {
@@ -1104,5 +1153,22 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 			return tooltip.toString();
 		}
+	}
+
+	private Setting getCellSetting(VDomainModelReference domainModelReference, Object element) {
+		final InternalEObject eObject = InternalEObject.class.cast(element);
+		final VDomainModelReference copy = EcoreUtil.copy(domainModelReference);
+		copy.init(eObject);
+		final Iterator<Setting> iterator = copy.getIterator();
+		if (iterator.hasNext()) {
+			return iterator.next();
+		}
+		return null;
+		// final EStructuralFeature[] path = featurePath.getFeaturePath();
+		// for (int i = 0; i < path.length - 1; i++) {
+		// eObject = (InternalEObject) eObject.eGet(path[i]);
+		// }
+		// Setting setting = eObject.eSetting(cellFeature);
+		// return setting;
 	}
 }

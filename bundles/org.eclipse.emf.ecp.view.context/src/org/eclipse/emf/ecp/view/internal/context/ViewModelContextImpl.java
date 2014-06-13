@@ -221,6 +221,9 @@ public class ViewModelContextImpl implements ViewModelContext {
 		final Iterator<Setting> iterator = vControl.getDomainModelReference().getIterator();
 		while (iterator.hasNext()) {
 			final Setting setting = iterator.next();
+			if (setting == null) {
+				continue;
+			}
 			final UniqueSetting uniqueSetting = UniqueSetting.createSetting(setting);
 			if (!settingToControlMap.containsKey(uniqueSetting)) {
 				settingToControlMap.put(uniqueSetting, new LinkedHashSet<VControl>());
@@ -257,6 +260,9 @@ public class ViewModelContextImpl implements ViewModelContext {
 		final Iterator<Setting> iterator = vControl.getDomainModelReference().getIterator();
 		while (iterator.hasNext()) {
 			final Setting next = iterator.next();
+			if (next == null) {
+				continue;
+			}
 			final UniqueSetting uniqueSetting = UniqueSetting.createSetting(next);
 			if (!settingToControlMap.containsKey(uniqueSetting)) {
 				settingToControlMap.put(uniqueSetting, new LinkedHashSet<VControl>());

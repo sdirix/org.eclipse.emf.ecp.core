@@ -398,6 +398,7 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 		// workaround block end
 		lastResolvedEObject = currentResolvedEObject;
 		leftReferences = currentLeftReferences;
+		// resolvedSetting.add(InternalEObject.class.cast(lastResolvedEObject).eSetting(getDomainModelEFeature()));
 		return true;
 	}
 
@@ -495,7 +496,7 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 						return new Iterator<EStructuralFeature.Setting>() {
 
 							private final Iterator<Setting> pathIterator = resolvedSetting.iterator();
-							private Iterator<Setting> childIterator;
+							private final Iterator<Setting> childIterator = getIterator();
 
 							@Override
 							public void remove() {
@@ -520,9 +521,9 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 									return true;
 								}
 								// get the iterator once
-								if (childIterator == null) {
-									childIterator = getIterator();
-								}
+								// if (childIterator == null) {
+								// childIterator = getIterator();
+								// }
 								return childIterator.hasNext();
 							}
 						};
