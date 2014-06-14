@@ -217,6 +217,7 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 * 
 	 * @generated
 	 */
+	@Override
 	public ComposeableAdapterFactory getRootAdapterFactory() {
 		return parentAdapterFactory == null ? this : parentAdapterFactory.getRootAdapterFactory();
 	}
@@ -228,6 +229,7 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setParentAdapterFactory(ComposedAdapterFactory parentAdapterFactory) {
 		this.parentAdapterFactory = parentAdapterFactory;
 	}
@@ -291,6 +293,7 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 * 
 	 * @generated
 	 */
+	@Override
 	public Collection<?> getNewChildDescriptors(Object object, EditingDomain editingDomain) {
 		return childCreationExtenderManager.getNewChildDescriptors(object, editingDomain);
 	}
@@ -301,6 +304,7 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 * 
 	 * @generated
 	 */
+	@Override
 	public ResourceLocator getResourceLocator() {
 		return childCreationExtenderManager;
 	}
@@ -312,6 +316,7 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void addListener(INotifyChangedListener notifyChangedListener) {
 		changeNotifier.addListener(notifyChangedListener);
 	}
@@ -323,6 +328,7 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void removeListener(INotifyChangedListener notifyChangedListener) {
 		changeNotifier.removeListener(notifyChangedListener);
 	}
@@ -334,6 +340,7 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void fireNotifyChanged(Notification notification) {
 		changeNotifier.fireNotifyChanged(notification);
 
@@ -350,6 +357,7 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void dispose() {
 		if (diagnosticItemProvider != null) {
 			diagnosticItemProvider.dispose();

@@ -72,6 +72,7 @@ public class DomainRootImpl extends EObjectImpl implements DomainRoot
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public DomainIntermediate getIntermediate()
 	{
 		return intermediate;
@@ -97,6 +98,7 @@ public class DomainRootImpl extends EObjectImpl implements DomainRoot
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setIntermediate(DomainIntermediate newIntermediate)
 	{
 		if (newIntermediate != intermediate) {

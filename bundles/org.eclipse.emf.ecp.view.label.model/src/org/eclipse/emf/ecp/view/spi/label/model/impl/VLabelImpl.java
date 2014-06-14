@@ -86,6 +86,7 @@ public class VLabelImpl extends VContainedElementImpl implements VLabel
 	 * 
 	 * @generated
 	 */
+	@Override
 	public VLabelStyle getStyle()
 	{
 		return style;
@@ -97,6 +98,7 @@ public class VLabelImpl extends VContainedElementImpl implements VLabel
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setStyle(VLabelStyle newStyle)
 	{
 		final VLabelStyle oldStyle = style;

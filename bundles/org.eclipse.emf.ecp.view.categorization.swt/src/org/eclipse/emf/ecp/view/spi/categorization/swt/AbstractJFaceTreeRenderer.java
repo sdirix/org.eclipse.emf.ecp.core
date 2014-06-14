@@ -24,6 +24,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.edit.internal.swt.util.OverlayImageDescriptor;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTValidationHelper;
+import org.eclipse.emf.ecp.view.internal.categorization.swt.Activator;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VAbstractCategorization;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizableElement;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationElement;
@@ -74,6 +75,7 @@ import org.eclipse.swt.widgets.TreeItem;
  * 
  * @param <VELEMENT> the {@link VElement}
  */
+@SuppressWarnings("restriction")
 public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> extends AbstractSWTRenderer<VELEMENT> {
 
 	private SWTGridDescription gridDescription;
@@ -94,11 +96,6 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 		super(factory);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#getGridDescription(GridDescription)
-	 */
 	@Override
 	public SWTGridDescription getGridDescription(SWTGridDescription gridDescription) {
 		if (this.gridDescription == null) {
@@ -124,6 +121,7 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#renderControl(int, org.eclipse.swt.widgets.Composite,
 	 *      org.eclipse.emf.ecp.view.spi.model.VElement, org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
+
 	@Override
 	protected Control renderControl(SWTGridCell cell, Composite parent) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
@@ -239,11 +237,6 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 		final AdapterFactoryContentProvider contentProvider = new AdapterFactoryContentProvider(
 			adapterFactory) {
 
-			/**
-			 * {@inheritDoc}
-			 * 
-			 * @see org.eclipse.emf.ecp.internal.ui.view.emf.AdapterFactoryContentProvider#hasChildren(java.lang.Object)
-			 */
 			@Override
 			public boolean hasChildren(Object object) {
 
@@ -430,7 +423,9 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 	}
 
 	/**
-	 * @author Jonas
+	 * The change listener for selections of the tree.
+	 * 
+	 * @author Jonas Helming
 	 * 
 	 */
 	private final class TreeSelectionChangedListener implements ISelectionChangedListener {
@@ -441,13 +436,6 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 		private final List<TreeEditor> editors;
 		private Composite childComposite;
 
-		/**
-		 * @param viewModelContext
-		 * @param editorComposite
-		 * @param vCategorizationElement
-		 * @param treeViewer
-		 * @param editors
-		 */
 		private TreeSelectionChangedListener(ViewModelContext viewModelContext,
 			ScrolledComposite editorComposite, VCategorizationElement vCategorizationElement, TreeViewer treeViewer,
 			List<TreeEditor> editors) {
@@ -500,17 +488,14 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 					.applyTo(render);
 				vCategorizationElement.setCurrentSelection((VCategorizableElement) child);
 			} catch (final NoRendererFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Activator.log(e);
 			} catch (final NoPropertyDescriptorFoundExeption e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Activator.log(e);
 			}
 
 			childComposite.layout();
 			final Point point = childComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT);
 			editorComposite.setMinSize(point);
-			// }
 
 		}
 	}
@@ -529,12 +514,6 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 			super(adapterFactory);
 		}
 
-		/**
-		 * {@inheritDoc}
-		 * 
-		 * @see org.eclipse.emf.ecp.internal.ui.view.emf.AdapterFactoryLabelProvider#getColumnText(java.lang.Object,
-		 *      int)
-		 */
 		@Override
 		public String getColumnText(Object object, int columnIndex) {
 
@@ -545,12 +524,6 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 			return text;
 		}
 
-		/**
-		 * {@inheritDoc}
-		 * 
-		 * @see org.eclipse.emf.ecp.internal.ui.view.emf.AdapterFactoryLabelProvider#getColumnImage(java.lang.Object,
-		 *      int)
-		 */
 		@Override
 		public Image getColumnImage(Object object, int columnIndex) {
 

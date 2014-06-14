@@ -17,17 +17,14 @@ import org.eclipse.emf.ecp.view.spi.group.model.VGroup;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 
 /**
+ * Tester for an embedded group renderer.
+ * 
  * @author Eugen
  * 
  */
+@SuppressWarnings("restriction")
 public class EmbeddedGroupTester implements ECPRendererTester {
 
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.swt.ECPRendererTester#isApplicable(org.eclipse.emf.ecp.view.spi.model.VElement,
-	 *      org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
-	 */
 	@Override
 	public int isApplicable(VElement vElement, ViewModelContext viewModelContext) {
 		if (!VGroup.class.isInstance(vElement)) {

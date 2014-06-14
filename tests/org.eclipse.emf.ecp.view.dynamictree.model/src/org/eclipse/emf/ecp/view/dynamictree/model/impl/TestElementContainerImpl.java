@@ -98,6 +98,7 @@ public class TestElementContainerImpl extends EObjectImpl implements TestElement
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<TestElement> getTestElements()
 	{
 		if (testElements == null) {
@@ -111,6 +112,7 @@ public class TestElementContainerImpl extends EObjectImpl implements TestElement
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String getId()
 	{
 		return id;
@@ -121,6 +123,7 @@ public class TestElementContainerImpl extends EObjectImpl implements TestElement
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setId(String newId)
 	{
 		String oldId = id;

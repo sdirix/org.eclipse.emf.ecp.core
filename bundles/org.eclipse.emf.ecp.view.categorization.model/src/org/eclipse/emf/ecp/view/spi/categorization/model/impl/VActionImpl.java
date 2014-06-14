@@ -107,6 +107,7 @@ public class VActionImpl extends MinimalEObjectImpl.Container implements VAction
 	 * 
 	 * @generated
 	 */
+	@Override
 	public String getBundle()
 	{
 		return bundle;
@@ -118,13 +119,15 @@ public class VActionImpl extends MinimalEObjectImpl.Container implements VAction
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setBundle(String newBundle)
 	{
-		String oldBundle = bundle;
+		final String oldBundle = bundle;
 		bundle = newBundle;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, VCategorizationPackage.ACTION__BUNDLE, oldBundle,
 				bundle));
+		}
 	}
 
 	/**
@@ -133,6 +136,7 @@ public class VActionImpl extends MinimalEObjectImpl.Container implements VAction
 	 * 
 	 * @generated
 	 */
+	@Override
 	public String getClassName()
 	{
 		return className;
@@ -144,13 +148,15 @@ public class VActionImpl extends MinimalEObjectImpl.Container implements VAction
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setClassName(String newClassName)
 	{
-		String oldClassName = className;
+		final String oldClassName = className;
 		className = newClassName;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, VCategorizationPackage.ACTION__CLASS_NAME,
 				oldClassName, className));
+		}
 	}
 
 	/**
@@ -242,10 +248,11 @@ public class VActionImpl extends MinimalEObjectImpl.Container implements VAction
 	@Override
 	public String toString()
 	{
-		if (eIsProxy())
+		if (eIsProxy()) {
 			return super.toString();
+		}
 
-		StringBuffer result = new StringBuffer(super.toString());
+		final StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (bundle: "); //$NON-NLS-1$
 		result.append(bundle);
 		result.append(", className: "); //$NON-NLS-1$

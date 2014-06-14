@@ -90,6 +90,7 @@ public class VHorizontalFactoryImpl extends EFactoryImpl implements VHorizontalF
 	 * 
 	 * @generated
 	 */
+	@Override
 	public VHorizontalLayout createHorizontalLayout()
 	{
 		final VHorizontalLayoutImpl horizontalLayout = new VHorizontalLayoutImpl();
@@ -102,6 +103,7 @@ public class VHorizontalFactoryImpl extends EFactoryImpl implements VHorizontalF
 	 * 
 	 * @generated
 	 */
+	@Override
 	public VHorizontalPackage getHorizontalPackage()
 	{
 		return (VHorizontalPackage) getEPackage();

@@ -91,43 +91,53 @@ public class TableSwitch<T> extends Switch<T> {
 		switch (classifierID)
 		{
 		case VTablePackage.TABLE_CONTROL: {
-			VTableControl tableControl = (VTableControl) theEObject;
+			final VTableControl tableControl = (VTableControl) theEObject;
 			T result = caseTableControl(tableControl);
-			if (result == null)
+			if (result == null) {
 				result = caseControl(tableControl);
-			if (result == null)
+			}
+			if (result == null) {
 				result = caseContainedElement(tableControl);
-			if (result == null)
+			}
+			if (result == null) {
 				result = caseElement(tableControl);
-			if (result == null)
+			}
+			if (result == null) {
 				result = defaultCase(theEObject);
+			}
 			return result;
 		}
 		case VTablePackage.TABLE_COLUMN_CONFIGURATION: {
-			VTableColumnConfiguration tableColumnConfiguration = (VTableColumnConfiguration) theEObject;
+			final VTableColumnConfiguration tableColumnConfiguration = (VTableColumnConfiguration) theEObject;
 			T result = caseTableColumnConfiguration(tableColumnConfiguration);
-			if (result == null)
+			if (result == null) {
 				result = defaultCase(theEObject);
+			}
 			return result;
 		}
 		case VTablePackage.TABLE_DOMAIN_MODEL_REFERENCE: {
-			VTableDomainModelReference tableDomainModelReference = (VTableDomainModelReference) theEObject;
+			final VTableDomainModelReference tableDomainModelReference = (VTableDomainModelReference) theEObject;
 			T result = caseTableDomainModelReference(tableDomainModelReference);
-			if (result == null)
+			if (result == null) {
 				result = caseFeaturePathDomainModelReference(tableDomainModelReference);
-			if (result == null)
+			}
+			if (result == null) {
 				result = caseDomainModelReference(tableDomainModelReference);
-			if (result == null)
+			}
+			if (result == null) {
 				result = defaultCase(theEObject);
+			}
 			return result;
 		}
 		case VTablePackage.READ_ONLY_COLUMN_CONFIGURATION: {
-			VReadOnlyColumnConfiguration readOnlyColumnConfiguration = (VReadOnlyColumnConfiguration) theEObject;
+			final VReadOnlyColumnConfiguration readOnlyColumnConfiguration = (VReadOnlyColumnConfiguration) theEObject;
 			T result = caseReadOnlyColumnConfiguration(readOnlyColumnConfiguration);
-			if (result == null)
+			if (result == null) {
 				result = caseTableColumnConfiguration(readOnlyColumnConfiguration);
-			if (result == null)
+			}
+			if (result == null) {
 				result = defaultCase(theEObject);
+			}
 			return result;
 		}
 		default:

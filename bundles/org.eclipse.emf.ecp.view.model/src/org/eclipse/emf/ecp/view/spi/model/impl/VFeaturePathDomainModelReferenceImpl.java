@@ -441,7 +441,7 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 			public EStructuralFeature next() {
 				if (counter != 1) {
 					throw new NoSuchElementException(
-						"There is only one EStructuralFeature in this VFeaturePathDomainModelReference.");
+						"There is only one EStructuralFeature in this VFeaturePathDomainModelReference."); //$NON-NLS-1$
 				}
 				counter--;
 				return getDomainModelEFeature();

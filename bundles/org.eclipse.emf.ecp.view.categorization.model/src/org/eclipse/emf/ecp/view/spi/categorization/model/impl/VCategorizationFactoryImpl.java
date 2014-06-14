@@ -98,6 +98,7 @@ public class VCategorizationFactoryImpl extends EFactoryImpl implements VCategor
 	 * 
 	 * @generated
 	 */
+	@Override
 	public VCategorization createCategorization()
 	{
 		VCategorizationImpl categorization = new VCategorizationImpl();
@@ -110,6 +111,7 @@ public class VCategorizationFactoryImpl extends EFactoryImpl implements VCategor
 	 * 
 	 * @generated
 	 */
+	@Override
 	public VCategory createCategory()
 	{
 		VCategoryImpl category = new VCategoryImpl();
@@ -122,6 +124,7 @@ public class VCategorizationFactoryImpl extends EFactoryImpl implements VCategor
 	 * 
 	 * @generated
 	 */
+	@Override
 	public VAction createAction()
 	{
 		VActionImpl action = new VActionImpl();
@@ -134,6 +137,7 @@ public class VCategorizationFactoryImpl extends EFactoryImpl implements VCategor
 	 * 
 	 * @generated
 	 */
+	@Override
 	public VCategorizationElement createCategorizationElement()
 	{
 		VCategorizationElementImpl categorizationElement = new VCategorizationElementImpl();
@@ -146,6 +150,7 @@ public class VCategorizationFactoryImpl extends EFactoryImpl implements VCategor
 	 * 
 	 * @generated
 	 */
+	@Override
 	public VCategorizationPackage getCategorizationPackage()
 	{
 		return (VCategorizationPackage) getEPackage();

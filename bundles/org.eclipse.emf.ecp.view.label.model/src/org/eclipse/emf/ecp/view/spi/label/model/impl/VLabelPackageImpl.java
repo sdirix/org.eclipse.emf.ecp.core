@@ -124,6 +124,7 @@ public class VLabelPackageImpl extends EPackageImpl implements VLabelPackage
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EClass getLabel()
 	{
 		return labelEClass;
@@ -135,6 +136,7 @@ public class VLabelPackageImpl extends EPackageImpl implements VLabelPackage
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EAttribute getLabel_Style()
 	{
 		return (EAttribute) labelEClass.getEStructuralFeatures().get(0);
@@ -146,6 +148,7 @@ public class VLabelPackageImpl extends EPackageImpl implements VLabelPackage
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EEnum getVLabelStyle()
 	{
 		return vLabelStyleEEnum;
@@ -157,6 +160,7 @@ public class VLabelPackageImpl extends EPackageImpl implements VLabelPackage
 	 * 
 	 * @generated
 	 */
+	@Override
 	public VLabelFactory getLabelFactory()
 	{
 		return (VLabelFactory) getEFactoryInstance();

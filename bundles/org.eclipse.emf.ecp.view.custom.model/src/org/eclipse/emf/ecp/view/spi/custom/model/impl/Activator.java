@@ -23,6 +23,7 @@ import org.osgi.framework.ServiceReference;
  * @since 1.2
  * 
  */
+@SuppressWarnings("deprecation")
 public class Activator extends Plugin {
 
 	private static Activator plugin;

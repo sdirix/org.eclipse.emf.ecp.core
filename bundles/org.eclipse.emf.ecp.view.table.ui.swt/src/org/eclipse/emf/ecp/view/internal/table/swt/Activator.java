@@ -9,7 +9,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.spi.table.swt;
+package org.eclipse.emf.ecp.view.internal.table.swt;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Plugin;
@@ -79,37 +79,11 @@ public class Activator extends Plugin {
 		instance.getLog().log(new Status(IStatus.ERROR, PLUGIN_ID, t.getMessage(), t));
 	}
 
-	// private static ServiceReference<DatabindingProviderService> databindingProviderServiceReference;
-	//
-	// /**
-	// * Return a {@link DatabindingProviderService} for the requested {@link VDomainModelReference} class.
-	// *
-	// * @param clazz the {@link VDomainModelReference}
-	// * @return the {@link DatabindingProviderService}
-	// */
-	// public static DatabindingProviderService<VDomainModelReference> getDatabindingProviderService(
-	// Class<? extends VDomainModelReference> clazz) {
-	// if (databindingProviderServiceReference == null) {
-	// try {
-	// final Collection<ServiceReference<DatabindingProviderService>> serviceReferences = instance
-	// .getBundle()
-	// .getBundleContext()
-	// .getServiceReferences(DatabindingProviderService.class,
-	// String.format("(domainModelReference=%s)", clazz.getName()));
-	// final Iterator<ServiceReference<DatabindingProviderService>> iterator = serviceReferences.iterator();
-	// if (iterator.hasNext()) {
-	// databindingProviderServiceReference = iterator.next();
-	// }
-	// if (databindingProviderServiceReference == null) {
-	// throw new IllegalStateException("No DatabindingProviderService available.");
-	// }
-	// } catch (final InvalidSyntaxException e) {
-	// throw new IllegalStateException(e);
-	// }
-	// }
-	// return instance.getBundle().getBundleContext().getService(databindingProviderServiceReference);
-	// }
-
+	/**
+	 * The current instance.
+	 * 
+	 * @return the current {@link Activator} instance
+	 */
 	public static Activator getInstance() {
 		return instance;
 	}

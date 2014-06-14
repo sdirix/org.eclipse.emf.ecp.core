@@ -144,13 +144,14 @@ public class VTViewModelElementSelectorImpl extends MinimalEObjectImpl.Container
 	public EClass getClassType() {
 		if (classType != null && classType.eIsProxy())
 		{
-			InternalEObject oldClassType = (InternalEObject) classType;
+			final InternalEObject oldClassType = (InternalEObject) classType;
 			classType = (EClass) eResolveProxy(oldClassType);
 			if (classType != oldClassType)
 			{
-				if (eNotificationRequired())
+				if (eNotificationRequired()) {
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE,
 						VTViewModelElementPackage.VIEW_MODEL_ELEMENT_SELECTOR__CLASS_TYPE, oldClassType, classType));
+				}
 			}
 		}
 		return classType;
@@ -176,11 +177,12 @@ public class VTViewModelElementSelectorImpl extends MinimalEObjectImpl.Container
 	@Override
 	public void setClassType(EClass newClassType)
 	{
-		EClass oldClassType = classType;
+		final EClass oldClassType = classType;
 		classType = newClassType;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				VTViewModelElementPackage.VIEW_MODEL_ELEMENT_SELECTOR__CLASS_TYPE, oldClassType, classType));
+		}
 	}
 
 	/**
@@ -194,13 +196,14 @@ public class VTViewModelElementSelectorImpl extends MinimalEObjectImpl.Container
 	{
 		if (attribute != null && attribute.eIsProxy())
 		{
-			InternalEObject oldAttribute = (InternalEObject) attribute;
+			final InternalEObject oldAttribute = (InternalEObject) attribute;
 			attribute = (EAttribute) eResolveProxy(oldAttribute);
 			if (attribute != oldAttribute)
 			{
-				if (eNotificationRequired())
+				if (eNotificationRequired()) {
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE,
 						VTViewModelElementPackage.VIEW_MODEL_ELEMENT_SELECTOR__ATTRIBUTE, oldAttribute, attribute));
+				}
 			}
 		}
 		return attribute;
@@ -226,11 +229,12 @@ public class VTViewModelElementSelectorImpl extends MinimalEObjectImpl.Container
 	@Override
 	public void setAttribute(EAttribute newAttribute)
 	{
-		EAttribute oldAttribute = attribute;
+		final EAttribute oldAttribute = attribute;
 		attribute = newAttribute;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				VTViewModelElementPackage.VIEW_MODEL_ELEMENT_SELECTOR__ATTRIBUTE, oldAttribute, attribute));
+		}
 	}
 
 	/**
@@ -254,12 +258,13 @@ public class VTViewModelElementSelectorImpl extends MinimalEObjectImpl.Container
 	@Override
 	public void setAttributeValue(Object newAttributeValue)
 	{
-		Object oldAttributeValue = attributeValue;
+		final Object oldAttributeValue = attributeValue;
 		attributeValue = newAttributeValue;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				VTViewModelElementPackage.VIEW_MODEL_ELEMENT_SELECTOR__ATTRIBUTE_VALUE, oldAttributeValue,
 				attributeValue));
+		}
 	}
 
 	/**
@@ -281,12 +286,13 @@ public class VTViewModelElementSelectorImpl extends MinimalEObjectImpl.Container
 	 */
 	@Override
 	public void setSelectSubclasses(boolean newSelectSubclasses) {
-		boolean oldSelectSubclasses = selectSubclasses;
+		final boolean oldSelectSubclasses = selectSubclasses;
 		selectSubclasses = newSelectSubclasses;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				VTViewModelElementPackage.VIEW_MODEL_ELEMENT_SELECTOR__SELECT_SUBCLASSES, oldSelectSubclasses,
 				selectSubclasses));
+		}
 	}
 
 	/**
@@ -302,12 +308,14 @@ public class VTViewModelElementSelectorImpl extends MinimalEObjectImpl.Container
 		case VTViewModelElementPackage.VIEW_MODEL_ELEMENT_SELECTOR__SELECT_SUBCLASSES:
 			return isSelectSubclasses();
 		case VTViewModelElementPackage.VIEW_MODEL_ELEMENT_SELECTOR__CLASS_TYPE:
-			if (resolve)
+			if (resolve) {
 				return getClassType();
+			}
 			return basicGetClassType();
 		case VTViewModelElementPackage.VIEW_MODEL_ELEMENT_SELECTOR__ATTRIBUTE:
-			if (resolve)
+			if (resolve) {
 				return getAttribute();
+			}
 			return basicGetAttribute();
 		case VTViewModelElementPackage.VIEW_MODEL_ELEMENT_SELECTOR__ATTRIBUTE_VALUE:
 			return getAttributeValue();
@@ -398,10 +406,11 @@ public class VTViewModelElementSelectorImpl extends MinimalEObjectImpl.Container
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy())
+		if (eIsProxy()) {
 			return super.toString();
+		}
 
-		StringBuffer result = new StringBuffer(super.toString());
+		final StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (selectSubclasses: "); //$NON-NLS-1$
 		result.append(selectSubclasses);
 		result.append(", attributeValue: "); //$NON-NLS-1$

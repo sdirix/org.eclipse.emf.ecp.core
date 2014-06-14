@@ -14,13 +14,10 @@ package org.eclipse.emf.ecp.spi.diffmerge.model.impl;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-
 import org.eclipse.emf.ecp.spi.diffmerge.model.VDiffAttachment;
 import org.eclipse.emf.ecp.spi.diffmerge.model.VDiffmergeFactory;
 import org.eclipse.emf.ecp.spi.diffmerge.model.VDiffmergePackage;
-
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 
 /**
@@ -78,11 +75,13 @@ public class VDiffmergePackageImpl extends EPackageImpl implements
 	 * @generated
 	 */
 	public static VDiffmergePackage init() {
-		if (isInited)
+		if (isInited) {
 			return (VDiffmergePackage) EPackage.Registry.INSTANCE.getEPackage(VDiffmergePackage.eNS_URI);
+		}
 
 		// Obtain or create and register package
-		VDiffmergePackageImpl theDiffmergePackage = (VDiffmergePackageImpl) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof VDiffmergePackageImpl ? EPackage.Registry.INSTANCE
+		final VDiffmergePackageImpl theDiffmergePackage = (VDiffmergePackageImpl) (EPackage.Registry.INSTANCE
+			.get(eNS_URI) instanceof VDiffmergePackageImpl ? EPackage.Registry.INSTANCE
 			.get(eNS_URI) : new VDiffmergePackageImpl());
 
 		isInited = true;
@@ -109,6 +108,7 @@ public class VDiffmergePackageImpl extends EPackageImpl implements
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EClass getDiffAttachment() {
 		return diffAttachmentEClass;
 	}
@@ -119,6 +119,7 @@ public class VDiffmergePackageImpl extends EPackageImpl implements
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EAttribute getDiffAttachment_TotalNumberOfDiffs()
 	{
 		return (EAttribute) diffAttachmentEClass.getEStructuralFeatures().get(0);
@@ -130,6 +131,7 @@ public class VDiffmergePackageImpl extends EPackageImpl implements
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EAttribute getDiffAttachment_MergedDiffs()
 	{
 		return (EAttribute) diffAttachmentEClass.getEStructuralFeatures().get(1);
@@ -140,6 +142,7 @@ public class VDiffmergePackageImpl extends EPackageImpl implements
 	 * 
 	 * @generated
 	 */
+	@Override
 	public VDiffmergeFactory getDiffmergeFactory() {
 		return (VDiffmergeFactory) getEFactoryInstance();
 	}
@@ -160,8 +163,9 @@ public class VDiffmergePackageImpl extends EPackageImpl implements
 	 * @generated
 	 */
 	public void createPackageContents() {
-		if (isCreated)
+		if (isCreated) {
 			return;
+		}
 		isCreated = true;
 
 		// Create classes and their features
@@ -185,8 +189,9 @@ public class VDiffmergePackageImpl extends EPackageImpl implements
 	 * @generated
 	 */
 	public void initializePackageContents() {
-		if (isInitialized)
+		if (isInitialized) {
 			return;
+		}
 		isInitialized = true;
 
 		// Initialize package
@@ -195,7 +200,7 @@ public class VDiffmergePackageImpl extends EPackageImpl implements
 		setNsURI(eNS_URI);
 
 		// Obtain other dependent packages
-		VViewPackage theViewPackage = (VViewPackage) EPackage.Registry.INSTANCE.getEPackage(VViewPackage.eNS_URI);
+		final VViewPackage theViewPackage = (VViewPackage) EPackage.Registry.INSTANCE.getEPackage(VViewPackage.eNS_URI);
 
 		// Create type parameters
 

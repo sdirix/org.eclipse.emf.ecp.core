@@ -20,7 +20,10 @@ import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 
 /**
  * The Class ViewSWTRenderer.
+ * 
+ * @author Eugen Neufeld
  */
+@SuppressWarnings("restriction")
 public class SWTCategorizationElementRenderer extends AbstractJFaceTreeRenderer<VCategorizationElement> {
 
 	/**

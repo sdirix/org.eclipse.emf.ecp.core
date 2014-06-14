@@ -140,6 +140,7 @@ public class TreeMasterDetailItemProviderAdapterFactory extends
 	 * 
 	 * @generated
 	 */
+	@Override
 	public ComposeableAdapterFactory getRootAdapterFactory() {
 		return parentAdapterFactory == null ? this : parentAdapterFactory.getRootAdapterFactory();
 	}
@@ -150,6 +151,7 @@ public class TreeMasterDetailItemProviderAdapterFactory extends
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setParentAdapterFactory(
 		ComposedAdapterFactory parentAdapterFactory) {
 		this.parentAdapterFactory = parentAdapterFactory;
@@ -185,8 +187,8 @@ public class TreeMasterDetailItemProviderAdapterFactory extends
 	public Object adapt(Object object, Object type) {
 		if (isFactoryForType(type))
 		{
-			Object adapter = super.adapt(object, type);
-			if (!(type instanceof Class<?>) || (((Class<?>) type).isInstance(adapter)))
+			final Object adapter = super.adapt(object, type);
+			if (!(type instanceof Class<?>) || ((Class<?>) type).isInstance(adapter))
 			{
 				return adapter;
 			}
@@ -209,6 +211,7 @@ public class TreeMasterDetailItemProviderAdapterFactory extends
 	 * 
 	 * @generated
 	 */
+	@Override
 	public Collection<?> getNewChildDescriptors(Object object,
 		EditingDomain editingDomain) {
 		return childCreationExtenderManager.getNewChildDescriptors(object, editingDomain);
@@ -219,6 +222,7 @@ public class TreeMasterDetailItemProviderAdapterFactory extends
 	 * 
 	 * @generated
 	 */
+	@Override
 	public ResourceLocator getResourceLocator() {
 		return childCreationExtenderManager;
 	}
@@ -229,6 +233,7 @@ public class TreeMasterDetailItemProviderAdapterFactory extends
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void addListener(INotifyChangedListener notifyChangedListener) {
 		changeNotifier.addListener(notifyChangedListener);
 	}
@@ -239,6 +244,7 @@ public class TreeMasterDetailItemProviderAdapterFactory extends
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void removeListener(INotifyChangedListener notifyChangedListener) {
 		changeNotifier.removeListener(notifyChangedListener);
 	}
@@ -250,6 +256,7 @@ public class TreeMasterDetailItemProviderAdapterFactory extends
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void fireNotifyChanged(Notification notification) {
 		changeNotifier.fireNotifyChanged(notification);
 
@@ -265,9 +272,11 @@ public class TreeMasterDetailItemProviderAdapterFactory extends
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void dispose() {
-		if (treeMasterDetailItemProvider != null)
+		if (treeMasterDetailItemProvider != null) {
 			treeMasterDetailItemProvider.dispose();
+		}
 	}
 
 	/**
@@ -386,9 +395,10 @@ public class TreeMasterDetailItemProviderAdapterFactory extends
 		 * 
 		 * @generated
 		 */
+		@Override
 		public Collection<Object> getNewChildDescriptors(Object object,
 			EditingDomain editingDomain) {
-			ArrayList<Object> result = new ArrayList<Object>();
+			final ArrayList<Object> result = new ArrayList<Object>();
 			new CreationSwitch(result, editingDomain).doSwitch((EObject) object);
 			return result;
 		}
@@ -398,6 +408,7 @@ public class TreeMasterDetailItemProviderAdapterFactory extends
 		 * 
 		 * @generated
 		 */
+		@Override
 		public ResourceLocator getResourceLocator() {
 			return TreeMasterDetailEditPlugin.INSTANCE;
 		}

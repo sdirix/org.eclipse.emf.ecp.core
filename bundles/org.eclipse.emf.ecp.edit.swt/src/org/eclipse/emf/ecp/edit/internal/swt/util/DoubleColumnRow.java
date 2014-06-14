@@ -21,6 +21,7 @@ import org.eclipse.swt.widgets.Control;
  * @author Eugen Neufeld
  * 
  */
+@Deprecated
 public class DoubleColumnRow implements RenderingResultRow<Control> {
 
 	private final Control leftControl;
@@ -56,6 +57,7 @@ public class DoubleColumnRow implements RenderingResultRow<Control> {
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.renderer.RenderingResultRow#getMainControl()
 	 */
+	@Override
 	@Deprecated
 	public Control getMainControl() {
 		return getRightControl();
@@ -66,6 +68,7 @@ public class DoubleColumnRow implements RenderingResultRow<Control> {
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.renderer.RenderingResultRow#getControls()
 	 */
+	@Override
 	public Set<Control> getControls() {
 		final Set<Control> controls = new LinkedHashSet<Control>(2);
 		controls.add(leftControl);

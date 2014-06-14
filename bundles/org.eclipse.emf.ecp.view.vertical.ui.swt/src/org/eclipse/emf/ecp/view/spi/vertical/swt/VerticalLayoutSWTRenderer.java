@@ -25,6 +25,7 @@ import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalLayout;
  * @since 1.2
  * 
  */
+@SuppressWarnings("restriction")
 public class VerticalLayoutSWTRenderer extends ContainerSWTRenderer<VVerticalLayout> {
 
 	private static final String CONTROL_COLUMN = "org_eclipse_emf_ecp_ui_layout_vertical"; //$NON-NLS-1$

@@ -154,7 +154,7 @@ public class ControlItemProvider
 	@Override
 	public String getText(Object object) {
 		final String label = ((VControl) object).getName();
-		return label == null || label.length() == 0 ? getString("_UI_Control_type") : label;
+		return label == null || label.length() == 0 ? getString("_UI_Control_type") : label; //$NON-NLS-1$
 	}
 
 	/**

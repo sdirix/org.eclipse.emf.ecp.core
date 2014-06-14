@@ -98,6 +98,7 @@ public class RuleFactoryImpl extends EFactoryImpl implements RuleFactory {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public LeafCondition createLeafCondition() {
 		final LeafConditionImpl leafCondition = new LeafConditionImpl();
 		return leafCondition;
@@ -109,6 +110,7 @@ public class RuleFactoryImpl extends EFactoryImpl implements RuleFactory {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public OrCondition createOrCondition() {
 		final OrConditionImpl orCondition = new OrConditionImpl();
 		return orCondition;
@@ -120,6 +122,7 @@ public class RuleFactoryImpl extends EFactoryImpl implements RuleFactory {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public AndCondition createAndCondition() {
 		final AndConditionImpl andCondition = new AndConditionImpl();
 		return andCondition;
@@ -131,6 +134,7 @@ public class RuleFactoryImpl extends EFactoryImpl implements RuleFactory {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public ShowRule createShowRule() {
 		final ShowRuleImpl showRule = new ShowRuleImpl();
 		return showRule;
@@ -142,6 +146,7 @@ public class RuleFactoryImpl extends EFactoryImpl implements RuleFactory {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EnableRule createEnableRule() {
 		final EnableRuleImpl enableRule = new EnableRuleImpl();
 		return enableRule;
@@ -153,6 +158,7 @@ public class RuleFactoryImpl extends EFactoryImpl implements RuleFactory {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public RulePackage getRulePackage() {
 		return (RulePackage) getEPackage();
 	}

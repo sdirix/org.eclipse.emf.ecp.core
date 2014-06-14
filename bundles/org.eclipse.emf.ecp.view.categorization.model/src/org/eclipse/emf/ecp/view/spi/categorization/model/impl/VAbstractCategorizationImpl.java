@@ -82,6 +82,7 @@ public abstract class VAbstractCategorizationImpl extends VCategorizableElementI
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EList<VAction> getActions()
 	{
 		if (actions == null)
@@ -198,6 +199,7 @@ public abstract class VAbstractCategorizationImpl extends VCategorizableElementI
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizableElement#getECPActions()
 	 */
+	@Override
 	public List<ECPAction> getECPActions() {
 		return ecpActions;
 	}
@@ -207,6 +209,7 @@ public abstract class VAbstractCategorizationImpl extends VCategorizableElementI
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizableElement#setECPActions(java.util.List)
 	 */
+	@Override
 	public void setECPActions(List<ECPAction> actions) {
 		ecpActions = actions;
 	}

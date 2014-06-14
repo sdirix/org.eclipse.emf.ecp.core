@@ -18,7 +18,9 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.swt.ECPAdditionalRendererTester;
 
 /**
- * @author Eugen
+ * The tester for {@link SWTDiffMergeAddition}.
+ * 
+ * @author Eugen Neufeld
  * 
  */
 public class SWTDiffMergeAdditionTester implements ECPAdditionalRendererTester {
@@ -29,6 +31,7 @@ public class SWTDiffMergeAdditionTester implements ECPAdditionalRendererTester {
 	 * @see org.eclipse.emf.ecp.view.spi.swt.ECPAdditionalRendererTester#isApplicable(org.eclipse.emf.ecp.view.spi.model.VElement,
 	 *      org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
+	@Override
 	public boolean isApplicable(VElement vElement, ViewModelContext viewModelContext) {
 		if (!DiffMergeModelContext.class.isInstance(viewModelContext)) {
 			return false;

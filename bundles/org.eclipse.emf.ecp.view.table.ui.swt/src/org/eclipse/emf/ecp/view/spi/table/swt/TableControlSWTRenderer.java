@@ -23,7 +23,6 @@ import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.emf.common.util.Diagnostic;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.databinding.EObjectObservableMap;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.emf.ecore.EClass;
@@ -39,6 +38,7 @@ import org.eclipse.emf.ecp.edit.internal.swt.controls.TableViewerColumnBuilder;
 import org.eclipse.emf.ecp.edit.internal.swt.util.CellEditorFactory;
 import org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor;
 import org.eclipse.emf.ecp.edit.internal.swt.util.ECPDialogExecutor;
+import org.eclipse.emf.ecp.view.internal.table.swt.Activator;
 import org.eclipse.emf.ecp.view.internal.table.swt.CellReadOnlyTesterHelper;
 import org.eclipse.emf.ecp.view.internal.table.swt.TableConfigurationHelper;
 import org.eclipse.emf.ecp.view.model.common.spi.databinding.DatabindingProviderService;
@@ -113,6 +113,7 @@ import org.osgi.framework.ServiceReference;
  * @author Eugen Neufeld
  * 
  */
+@SuppressWarnings("restriction")
 public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableControl> {
 	private SWTGridDescription rendererGridDescription;
 	private static final String FIXED_COLUMNS = "org.eclipse.rap.rwt.fixedColumns"; //$NON-NLS-1$
@@ -157,16 +158,6 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		final Setting mainSetting = settings.next();
 
 		final EClass clazz = ((EReference) mainSetting.getEStructuralFeature()).getEReferenceType();
-
-		// final TableControlConfiguration tableControlConfiguration = new TableControlConfiguration();
-		// tableControlConfiguration.setAddRemoveDisabled(getVElement().isAddRemoveDisabled());
-
-		// for (final VDomainModelReference column : VTableDomainModelReference.class.cast(
-		// getVElement().getDomainModelReference()).getColumnDomainModelReferences()) {
-		// final boolean readOnly = TableConfigurationHelper.isReadOnly(getVElement(), column);
-		// tableControlConfiguration.getColumns().add(
-		// new TableColumnConfiguration(readOnly, (EAttribute) column.getEStructuralFeatureIterator().next()));
-		// }
 
 		final Composite composite = new Composite(parent, SWT.NONE);
 		composite.setLayout(new GridLayout(1, false));
@@ -275,21 +266,6 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		}
 
 		return composite;
-	}
-
-	private VTableDomainModelReference getTableDomainModelReference() {
-		final VDomainModelReference vdmr = getVElement().getDomainModelReference();
-		if (VTableDomainModelReference.class.isInstance(vdmr)) {
-			return VTableDomainModelReference.class.cast(vdmr);
-		}
-
-		final EList<EObject> contents = vdmr.eContents();
-		for (final EObject eObject : contents) {
-			if (VTableDomainModelReference.class.isInstance(eObject)) {
-				return VTableDomainModelReference.class.cast(eObject);
-			}
-		}
-		return null;
 	}
 
 	private void createDetailEditButton(final Composite buttonComposite) {
@@ -485,6 +461,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			cp.getKnownElements());
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private IValueProperty getValueProperty(VDomainModelReference dmr) {
 		ServiceReference<DatabindingProviderService> databindingProviderServiceReference = null;
 
@@ -493,13 +470,13 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 				.getBundle()
 				.getBundleContext()
 				.getServiceReferences(DatabindingProviderService.class,
-					String.format("(domainModelReference=%s)", dmr.getClass().getName()));
+					String.format("(domainModelReference=%s)", dmr.getClass().getName())); //$NON-NLS-1$
 			final Iterator<ServiceReference<DatabindingProviderService>> iterator = serviceReferences.iterator();
 			if (iterator.hasNext()) {
 				databindingProviderServiceReference = iterator.next();
 			}
 			if (databindingProviderServiceReference == null) {
-				throw new IllegalStateException("No DatabindingProviderService available.");
+				throw new IllegalStateException("No DatabindingProviderService available."); //$NON-NLS-1$
 			}
 		} catch (final InvalidSyntaxException e) {
 			throw new IllegalStateException(e);
@@ -820,6 +797,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		 * @param attributeMap
 		 *            an {@link IObservableMap} instance that is passed to the {@link ObservableMapCellLabelProvider}
 		 * @param vTableControl the {@link VTableControl}
+		 * @param dmr the {@link VDomainModelReference} for this cell
 		 */
 		public ECPCellLabelProvider(EStructuralFeature feature, CellEditor cellEditor, IObservableMap attributeMap,
 			VTableControl vTableControl, VDomainModelReference dmr) {

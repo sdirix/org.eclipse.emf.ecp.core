@@ -159,6 +159,7 @@ public class VCategorizationPackageImpl extends EPackageImpl implements VCategor
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EClass getAbstractCategorization()
 	{
 		return abstractCategorizationEClass;
@@ -170,6 +171,7 @@ public class VCategorizationPackageImpl extends EPackageImpl implements VCategor
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EReference getAbstractCategorization_Actions()
 	{
 		return (EReference) abstractCategorizationEClass.getEStructuralFeatures().get(0);
@@ -181,6 +183,7 @@ public class VCategorizationPackageImpl extends EPackageImpl implements VCategor
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EClass getCategorization()
 	{
 		return categorizationEClass;
@@ -192,6 +195,7 @@ public class VCategorizationPackageImpl extends EPackageImpl implements VCategor
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EReference getCategorization_Categorizations()
 	{
 		return (EReference) categorizationEClass.getEStructuralFeatures().get(0);
@@ -203,6 +207,7 @@ public class VCategorizationPackageImpl extends EPackageImpl implements VCategor
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EClass getCategory()
 	{
 		return categoryEClass;
@@ -214,6 +219,7 @@ public class VCategorizationPackageImpl extends EPackageImpl implements VCategor
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EReference getCategory_Composite()
 	{
 		return (EReference) categoryEClass.getEStructuralFeatures().get(0);
@@ -225,6 +231,7 @@ public class VCategorizationPackageImpl extends EPackageImpl implements VCategor
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EClass getAction()
 	{
 		return actionEClass;
@@ -236,6 +243,7 @@ public class VCategorizationPackageImpl extends EPackageImpl implements VCategor
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EAttribute getAction_Bundle()
 	{
 		return (EAttribute) actionEClass.getEStructuralFeatures().get(0);
@@ -247,6 +255,7 @@ public class VCategorizationPackageImpl extends EPackageImpl implements VCategor
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EAttribute getAction_ClassName()
 	{
 		return (EAttribute) actionEClass.getEStructuralFeatures().get(1);
@@ -258,6 +267,7 @@ public class VCategorizationPackageImpl extends EPackageImpl implements VCategor
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EClass getCategorizationElement()
 	{
 		return categorizationElementEClass;
@@ -269,6 +279,7 @@ public class VCategorizationPackageImpl extends EPackageImpl implements VCategor
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EReference getCategorizationElement_Categorizations()
 	{
 		return (EReference) categorizationElementEClass.getEStructuralFeatures().get(0);
@@ -280,6 +291,7 @@ public class VCategorizationPackageImpl extends EPackageImpl implements VCategor
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EReference getCategorizationElement_CurrentSelection()
 	{
 		return (EReference) categorizationElementEClass.getEStructuralFeatures().get(1);
@@ -291,6 +303,7 @@ public class VCategorizationPackageImpl extends EPackageImpl implements VCategor
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EAttribute getCategorizationElement_MainCategoryDepth()
 	{
 		return (EAttribute) categorizationElementEClass.getEStructuralFeatures().get(2);
@@ -302,6 +315,7 @@ public class VCategorizationPackageImpl extends EPackageImpl implements VCategor
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EClass getCategorizableElement()
 	{
 		return categorizableElementEClass;
@@ -313,6 +327,7 @@ public class VCategorizationPackageImpl extends EPackageImpl implements VCategor
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EReference getCategorizableElement_LabelObject()
 	{
 		return (EReference) categorizableElementEClass.getEStructuralFeatures().get(0);
@@ -324,6 +339,7 @@ public class VCategorizationPackageImpl extends EPackageImpl implements VCategor
 	 * 
 	 * @generated
 	 */
+	@Override
 	public VCategorizationFactory getCategorizationFactory()
 	{
 		return (VCategorizationFactory) getEFactoryInstance();

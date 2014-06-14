@@ -167,6 +167,7 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EClass getCondition() {
 		return conditionEClass;
 	}
@@ -177,6 +178,7 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EClass getLeafCondition() {
 		return leafConditionEClass;
 	}
@@ -187,6 +189,7 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EAttribute getLeafCondition_ExpectedValue() {
 		return (EAttribute) leafConditionEClass.getEStructuralFeatures().get(0);
 	}
@@ -197,6 +200,7 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EReference getLeafCondition_DomainModelReference()
 	{
 		return (EReference) leafConditionEClass.getEStructuralFeatures().get(1);
@@ -208,6 +212,7 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EClass getOrCondition() {
 		return orConditionEClass;
 	}
@@ -218,6 +223,7 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EReference getOrCondition_Conditions() {
 		return (EReference) orConditionEClass.getEStructuralFeatures().get(0);
 	}
@@ -228,6 +234,7 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EClass getAndCondition() {
 		return andConditionEClass;
 	}
@@ -238,6 +245,7 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EReference getAndCondition_Conditions() {
 		return (EReference) andConditionEClass.getEStructuralFeatures().get(0);
 	}
@@ -248,6 +256,7 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EClass getRule() {
 		return ruleEClass;
 	}
@@ -258,6 +267,7 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EReference getRule_Condition() {
 		return (EReference) ruleEClass.getEStructuralFeatures().get(0);
 	}
@@ -268,6 +278,7 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EClass getShowRule() {
 		return showRuleEClass;
 	}
@@ -278,6 +289,7 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EAttribute getShowRule_Hide() {
 		return (EAttribute) showRuleEClass.getEStructuralFeatures().get(0);
 	}
@@ -288,6 +300,7 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EClass getEnableRule() {
 		return enableRuleEClass;
 	}
@@ -298,6 +311,7 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EAttribute getEnableRule_Disable() {
 		return (EAttribute) enableRuleEClass.getEStructuralFeatures().get(0);
 	}
@@ -308,6 +322,7 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public RuleFactory getRuleFactory() {
 		return (RuleFactory) getEFactoryInstance();
 	}

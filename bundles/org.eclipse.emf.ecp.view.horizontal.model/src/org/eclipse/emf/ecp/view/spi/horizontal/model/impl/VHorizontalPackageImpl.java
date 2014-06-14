@@ -113,6 +113,7 @@ public class VHorizontalPackageImpl extends EPackageImpl implements VHorizontalP
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EClass getHorizontalLayout()
 	{
 		return horizontalLayoutEClass;
@@ -124,6 +125,7 @@ public class VHorizontalPackageImpl extends EPackageImpl implements VHorizontalP
 	 * 
 	 * @generated
 	 */
+	@Override
 	public VHorizontalFactory getHorizontalFactory()
 	{
 		return (VHorizontalFactory) getEFactoryInstance();

@@ -65,12 +65,13 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 
 /**
- * Extend this class in order to provide an own implementation of an {@link ECPAbstractCustomControl}.
+ * Extend this class in order to provide an own implementation of an {@link ECPAbstractCustomControlSWT}.
  * 
  * @author Eugen Neufeld
  * @since 1.2
  * 
  */
+@SuppressWarnings("deprecation")
 public abstract class ECPAbstractCustomControlSWT
 {
 	/**
@@ -625,7 +626,7 @@ public abstract class ECPAbstractCustomControlSWT
 	/**
 	 * Renders the control.
 	 * 
-	 * @param cell the {@link GridCell} of the control to render
+	 * @param cell the {@link SWTGridCell} of the control to render
 	 * @param parent the {@link Composite} to render on
 	 * @return the rendered {@link Control}
 	 * @throws NoRendererFoundException this is thrown when a renderer cannot be found

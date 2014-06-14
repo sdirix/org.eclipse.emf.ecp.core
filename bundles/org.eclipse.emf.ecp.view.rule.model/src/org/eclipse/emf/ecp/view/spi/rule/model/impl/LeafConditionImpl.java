@@ -106,6 +106,7 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public Object getExpectedValue() {
 		return expectedValue;
 	}
@@ -116,6 +117,7 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setExpectedValue(Object newExpectedValue) {
 		final Object oldExpectedValue = expectedValue;
 		expectedValue = newExpectedValue;
@@ -131,6 +133,7 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public VDomainModelReference getDomainModelReference()
 	{
 		return domainModelReference;
@@ -166,6 +169,7 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setDomainModelReference(VDomainModelReference newDomainModelReference)
 	{
 		if (newDomainModelReference != domainModelReference)
@@ -308,6 +312,7 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.rule.model.Condition#evaluate()
 	 */
+	@Override
 	public boolean evaluate() {
 		final Iterator<Setting> settingIterator = getDomainModelReference().getIterator();
 		boolean result = false;
@@ -356,6 +361,7 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.rule.model.Condition#evaluateChangedValues(java.util.Map)
 	 */
+	@Override
 	public boolean evaluateChangedValues(Map<Setting, Object> possibleNewValues) {
 		boolean result = false;
 		final Object expectedValue = getExpectedValue();

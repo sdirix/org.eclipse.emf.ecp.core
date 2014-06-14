@@ -43,6 +43,7 @@ import org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.VTD
  * 
  * @generated
  */
+@SuppressWarnings("restriction")
 public class VTDomainModelReferenceSelectorImpl extends MinimalEObjectImpl.Container implements
 	VTDomainModelReferenceSelector
 {

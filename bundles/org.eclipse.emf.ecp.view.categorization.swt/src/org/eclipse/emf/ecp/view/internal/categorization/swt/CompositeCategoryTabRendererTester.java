@@ -19,17 +19,14 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 
 /**
- * @author Eugen
+ * Renderer Tester for composite category as tabs.
+ * 
+ * @author Eugen Neufeld
  * 
  */
+@SuppressWarnings("restriction")
 public class CompositeCategoryTabRendererTester implements ECPRendererTester {
 
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.swt.ECPRendererTester#isApplicable(org.eclipse.emf.ecp.view.spi.model.VElement,
-	 *      org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
-	 */
 	@Override
 	public int isApplicable(VElement vElement, ViewModelContext viewModelContext) {
 		if (VCategorization.class.isInstance(vElement)) {

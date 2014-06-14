@@ -187,6 +187,7 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	 * 
 	 * @generated
 	 */
+	@Override
 	public String getName()
 	{
 		return name;
@@ -198,6 +199,7 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setName(String newName)
 	{
 		final String oldName = name;
@@ -213,6 +215,7 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	 * 
 	 * @generated
 	 */
+	@Override
 	public boolean isVisible()
 	{
 		return visible;
@@ -224,6 +227,7 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setVisible(boolean newVisible)
 	{
 		final boolean oldVisible = visible;
@@ -239,6 +243,7 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	 * 
 	 * @generated
 	 */
+	@Override
 	public boolean isEnabled()
 	{
 		return enabled;
@@ -250,6 +255,7 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setEnabled(boolean newEnabled)
 	{
 		final boolean oldEnabled = enabled;
@@ -265,6 +271,7 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	 * 
 	 * @generated
 	 */
+	@Override
 	public boolean isReadonly()
 	{
 		return readonly;
@@ -276,6 +283,7 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setReadonly(boolean newReadonly)
 	{
 		final boolean oldReadonly = readonly;
@@ -291,6 +299,7 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	 * 
 	 * @generated
 	 */
+	@Override
 	public VDiagnostic getDiagnostic()
 	{
 		return diagnostic;
@@ -325,6 +334,7 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setDiagnostic(VDiagnostic newDiagnostic)
 	{
 		if (newDiagnostic != diagnostic)
@@ -355,6 +365,7 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EList<VAttachment> getAttachments()
 	{
 		if (attachments == null)

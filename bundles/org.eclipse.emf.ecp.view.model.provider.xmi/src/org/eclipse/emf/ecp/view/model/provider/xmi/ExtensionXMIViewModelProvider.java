@@ -16,7 +16,9 @@ import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.provider.IViewProvider;
 
 /**
- * @author Jonas
+ * An {@link IViewProvider} which loads view models from extension points.
+ * 
+ * @author Jonas Helming
  * 
  */
 public class ExtensionXMIViewModelProvider implements IViewProvider {
@@ -26,6 +28,7 @@ public class ExtensionXMIViewModelProvider implements IViewProvider {
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.provider.IViewProvider#canRender(org.eclipse.emf.ecore.EObject)
 	 */
+	@Override
 	public int canRender(EObject eObject) {
 		if (ViewModelFileExtensionsManager.getInstance().hasViewModelFor(eObject)) {
 			return 2;
@@ -38,6 +41,7 @@ public class ExtensionXMIViewModelProvider implements IViewProvider {
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.provider.IViewProvider#generate(org.eclipse.emf.ecore.EObject)
 	 */
+	@Override
 	public VView generate(EObject eObject) {
 		return ViewModelFileExtensionsManager.getInstance().createView(eObject);
 	}

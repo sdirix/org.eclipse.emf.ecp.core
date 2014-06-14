@@ -13,11 +13,9 @@ package org.eclipse.emf.ecp.spi.diffmerge.model.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecp.spi.diffmerge.model.VDiffAttachment;
 import org.eclipse.emf.ecp.spi.diffmerge.model.VDiffmergePackage;
-
 import org.eclipse.emf.ecp.view.spi.model.impl.VAttachmentImpl;
 
 /**
@@ -102,6 +100,7 @@ public class VDiffAttachmentImpl extends VAttachmentImpl implements
 	 * 
 	 * @generated
 	 */
+	@Override
 	public int getTotalNumberOfDiffs()
 	{
 		return totalNumberOfDiffs;
@@ -113,13 +112,15 @@ public class VDiffAttachmentImpl extends VAttachmentImpl implements
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setTotalNumberOfDiffs(int newTotalNumberOfDiffs)
 	{
-		int oldTotalNumberOfDiffs = totalNumberOfDiffs;
+		final int oldTotalNumberOfDiffs = totalNumberOfDiffs;
 		totalNumberOfDiffs = newTotalNumberOfDiffs;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				VDiffmergePackage.DIFF_ATTACHMENT__TOTAL_NUMBER_OF_DIFFS, oldTotalNumberOfDiffs, totalNumberOfDiffs));
+		}
 	}
 
 	/**
@@ -128,6 +129,7 @@ public class VDiffAttachmentImpl extends VAttachmentImpl implements
 	 * 
 	 * @generated
 	 */
+	@Override
 	public int getMergedDiffs()
 	{
 		return mergedDiffs;
@@ -139,13 +141,15 @@ public class VDiffAttachmentImpl extends VAttachmentImpl implements
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setMergedDiffs(int newMergedDiffs)
 	{
-		int oldMergedDiffs = mergedDiffs;
+		final int oldMergedDiffs = mergedDiffs;
 		mergedDiffs = newMergedDiffs;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, VDiffmergePackage.DIFF_ATTACHMENT__MERGED_DIFFS,
 				oldMergedDiffs, mergedDiffs));
+		}
 	}
 
 	/**
@@ -237,10 +241,11 @@ public class VDiffAttachmentImpl extends VAttachmentImpl implements
 	@Override
 	public String toString()
 	{
-		if (eIsProxy())
+		if (eIsProxy()) {
 			return super.toString();
+		}
 
-		StringBuffer result = new StringBuffer(super.toString());
+		final StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (totalNumberOfDiffs: "); //$NON-NLS-1$
 		result.append(totalNumberOfDiffs);
 		result.append(", mergedDiffs: "); //$NON-NLS-1$

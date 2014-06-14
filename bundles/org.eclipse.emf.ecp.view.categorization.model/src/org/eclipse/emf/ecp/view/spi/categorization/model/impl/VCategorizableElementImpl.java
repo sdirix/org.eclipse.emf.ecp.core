@@ -68,6 +68,7 @@ public abstract class VCategorizableElementImpl extends VElementImpl implements 
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EObject getLabelObject()
 	{
 		// TODO: implement this method to return the 'Label Object' reference

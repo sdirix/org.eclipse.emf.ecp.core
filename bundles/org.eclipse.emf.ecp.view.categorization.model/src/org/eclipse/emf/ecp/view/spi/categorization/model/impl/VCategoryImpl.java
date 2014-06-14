@@ -75,6 +75,7 @@ public class VCategoryImpl extends VAbstractCategorizationImpl implements VCateg
 	 * 
 	 * @generated
 	 */
+	@Override
 	public VContainedElement getComposite()
 	{
 		return composite;
@@ -108,6 +109,7 @@ public class VCategoryImpl extends VAbstractCategorizationImpl implements VCateg
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setComposite(VContainedElement newComposite)
 	{
 		if (newComposite != composite)

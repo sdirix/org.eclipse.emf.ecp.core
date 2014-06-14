@@ -21,7 +21,7 @@ import org.eclipse.emf.ecp.view.spi.provider.IViewProvider;
 /**
  * Abstract class to implement a view provider reading the view model from an xmi file.
  * 
- * @author Jonas
+ * @author Jonas Helming
  * 
  */
 public abstract class XMIViewModelProvider implements IViewProvider {
@@ -32,6 +32,7 @@ public abstract class XMIViewModelProvider implements IViewProvider {
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.provider.IViewProvider#generate(org.eclipse.emf.ecore.EObject)
 	 */
+	@Override
 	public VView generate(EObject eObject) {
 		final Resource resource = ViewModelFileExtensionsManager.loadResource(getXMIPath());
 		final VView result = EcoreUtil.copy((VView) resource.getContents().get(0));

@@ -411,11 +411,6 @@ public class ViewModelContextImpl implements ViewModelContext {
 		isDisposed = true;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#registerViewChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeAddRemoveListener)
-	 */
 	@Override
 	public void registerViewChangeListener(ModelChangeListener modelChangeListener) {
 		if (isDisposed) {
@@ -427,11 +422,6 @@ public class ViewModelContextImpl implements ViewModelContext {
 		viewModelChangeListener.add(modelChangeListener);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#unregisterViewChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeAddRemoveListener)
-	 */
 	@Override
 	public void unregisterViewChangeListener(ModelChangeListener modelChangeListener) {
 		// if (isDisposed) {
@@ -440,11 +430,6 @@ public class ViewModelContextImpl implements ViewModelContext {
 		viewModelChangeListener.remove(modelChangeListener);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#registerDomainChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeAddRemoveListener)
-	 */
 	@Override
 	public void registerDomainChangeListener(ModelChangeListener modelChangeListener) {
 		if (isDisposed) {
@@ -456,11 +441,6 @@ public class ViewModelContextImpl implements ViewModelContext {
 		domainModelChangeListener.add(modelChangeListener);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#unregisterDomainChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeAddRemoveListener)
-	 */
 	@Override
 	public void unregisterDomainChangeListener(ModelChangeListener modelChangeListener) {
 		// if (isDisposed) {
@@ -654,10 +634,20 @@ public class ViewModelContextImpl implements ViewModelContext {
 
 	private final Set<Object> users = new LinkedHashSet<Object>();
 
+	/**
+	 * Inner method for registering context users (not {@link ViewModelService}).
+	 * 
+	 * @param user the user of the context
+	 */
 	public void addContextUser(Object user) {
 		users.add(user);
 	}
 
+	/**
+	 * Inner method for unregistering the context user.
+	 * 
+	 * @param user the user of the context
+	 */
 	public void removeContextUser(Object user) {
 		users.remove(user);
 		// Every renderer is registered here, as it needs to know when the view model changes (rules, validations, etc).

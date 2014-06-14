@@ -28,8 +28,8 @@ import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 
 /**
  * This service will iterate over all contents of the {@link org.eclipse.emf.ecp.view.spi.model.VView VView} and will
- * add {@link org.eclipse.emf.ecp.view.spi.table.model.VTableColumn VTableColumn}s for every {@link VTableControl}
- * without columns.
+ * add {@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReference VDomainModelReferences} for every
+ * {@link VTableControl} without columns.
  * 
  * @author jfaltermeier
  * 

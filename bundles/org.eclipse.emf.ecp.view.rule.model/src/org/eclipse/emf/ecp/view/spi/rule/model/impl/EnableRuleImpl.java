@@ -81,6 +81,7 @@ public class EnableRuleImpl extends RuleImpl implements EnableRule {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public boolean isDisable() {
 		return disable;
 	}
@@ -91,6 +92,7 @@ public class EnableRuleImpl extends RuleImpl implements EnableRule {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setDisable(boolean newDisable) {
 		final boolean oldDisable = disable;
 		disable = newDisable;

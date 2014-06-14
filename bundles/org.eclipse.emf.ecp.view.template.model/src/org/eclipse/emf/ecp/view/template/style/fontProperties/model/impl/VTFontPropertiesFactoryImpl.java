@@ -24,6 +24,7 @@ import org.eclipse.emf.ecp.view.template.style.fontProperties.model.VTFontProper
  * <!-- begin-user-doc -->
  * An implementation of the model <b>Factory</b>.
  * <!-- end-user-doc -->
+ * 
  * @generated
  */
 public class VTFontPropertiesFactoryImpl extends EFactoryImpl implements VTFontPropertiesFactory {
@@ -31,16 +32,17 @@ public class VTFontPropertiesFactoryImpl extends EFactoryImpl implements VTFontP
 	 * Creates the default factory implementation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public static VTFontPropertiesFactory init() {
 		try {
-			VTFontPropertiesFactory theFontPropertiesFactory = (VTFontPropertiesFactory)EPackage.Registry.INSTANCE.getEFactory(VTFontPropertiesPackage.eNS_URI);
+			final VTFontPropertiesFactory theFontPropertiesFactory = (VTFontPropertiesFactory) EPackage.Registry.INSTANCE
+				.getEFactory(VTFontPropertiesPackage.eNS_URI);
 			if (theFontPropertiesFactory != null) {
 				return theFontPropertiesFactory;
 			}
-		}
-		catch (Exception exception) {
+		} catch (final Exception exception) {
 			EcorePlugin.INSTANCE.log(exception);
 		}
 		return new VTFontPropertiesFactoryImpl();
@@ -50,6 +52,7 @@ public class VTFontPropertiesFactoryImpl extends EFactoryImpl implements VTFontP
 	 * Creates an instance of the factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public VTFontPropertiesFactoryImpl() {
@@ -59,41 +62,46 @@ public class VTFontPropertiesFactoryImpl extends EFactoryImpl implements VTFontP
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
-			case VTFontPropertiesPackage.FONT_PROPERTIES_STYLE_PROPERTY: return createFontPropertiesStyleProperty();
-			default:
-				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
+		case VTFontPropertiesPackage.FONT_PROPERTIES_STYLE_PROPERTY:
+			return createFontPropertiesStyleProperty();
+		default:
+			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public VTFontPropertiesStyleProperty createFontPropertiesStyleProperty() {
-		VTFontPropertiesStylePropertyImpl fontPropertiesStyleProperty = new VTFontPropertiesStylePropertyImpl();
+		final VTFontPropertiesStylePropertyImpl fontPropertiesStyleProperty = new VTFontPropertiesStylePropertyImpl();
 		return fontPropertiesStyleProperty;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public VTFontPropertiesPackage getFontPropertiesPackage() {
-		return (VTFontPropertiesPackage)getEPackage();
+		return (VTFontPropertiesPackage) getEPackage();
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @deprecated
 	 * @generated
 	 */

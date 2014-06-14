@@ -30,7 +30,9 @@ public class CustomReflectiveItemProvider extends ReflectiveItemProvider
 
 {
 	/**
-	 * @param adapterFactory
+	 * A custom reflective item provider.
+	 * 
+	 * @param adapterFactory the parent {@link AdapterFactory}
 	 */
 	public CustomReflectiveItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);

@@ -146,6 +146,7 @@ public class HorizontalItemProviderAdapterFactory extends HorizontalAdapterFacto
 	 * 
 	 * @generated
 	 */
+	@Override
 	public ComposeableAdapterFactory getRootAdapterFactory()
 	{
 		return parentAdapterFactory == null ? this : parentAdapterFactory.getRootAdapterFactory();
@@ -158,6 +159,7 @@ public class HorizontalItemProviderAdapterFactory extends HorizontalAdapterFacto
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setParentAdapterFactory(ComposedAdapterFactory parentAdapterFactory)
 	{
 		this.parentAdapterFactory = parentAdapterFactory;
@@ -226,6 +228,7 @@ public class HorizontalItemProviderAdapterFactory extends HorizontalAdapterFacto
 	 * 
 	 * @generated
 	 */
+	@Override
 	public Collection<?> getNewChildDescriptors(Object object, EditingDomain editingDomain)
 	{
 		return childCreationExtenderManager.getNewChildDescriptors(object, editingDomain);
@@ -237,6 +240,7 @@ public class HorizontalItemProviderAdapterFactory extends HorizontalAdapterFacto
 	 * 
 	 * @generated
 	 */
+	@Override
 	public ResourceLocator getResourceLocator()
 	{
 		return childCreationExtenderManager;
@@ -249,6 +253,7 @@ public class HorizontalItemProviderAdapterFactory extends HorizontalAdapterFacto
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void addListener(INotifyChangedListener notifyChangedListener)
 	{
 		changeNotifier.addListener(notifyChangedListener);
@@ -261,6 +266,7 @@ public class HorizontalItemProviderAdapterFactory extends HorizontalAdapterFacto
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void removeListener(INotifyChangedListener notifyChangedListener)
 	{
 		changeNotifier.removeListener(notifyChangedListener);
@@ -273,6 +279,7 @@ public class HorizontalItemProviderAdapterFactory extends HorizontalAdapterFacto
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void fireNotifyChanged(Notification notification)
 	{
 		changeNotifier.fireNotifyChanged(notification);
@@ -290,6 +297,7 @@ public class HorizontalItemProviderAdapterFactory extends HorizontalAdapterFacto
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void dispose()
 	{
 		if (horizontalLayoutItemProvider != null) {
@@ -399,6 +407,7 @@ public class HorizontalItemProviderAdapterFactory extends HorizontalAdapterFacto
 		 * 
 		 * @generated
 		 */
+		@Override
 		public Collection<Object> getNewChildDescriptors(Object object, EditingDomain editingDomain)
 		{
 			final ArrayList<Object> result = new ArrayList<Object>();
@@ -412,6 +421,7 @@ public class HorizontalItemProviderAdapterFactory extends HorizontalAdapterFacto
 		 * 
 		 * @generated
 		 */
+		@Override
 		public ResourceLocator getResourceLocator()
 		{
 			return HorizontalEditPlugin.INSTANCE;

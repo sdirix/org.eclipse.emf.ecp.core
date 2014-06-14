@@ -113,6 +113,7 @@ public class VVerticalPackageImpl extends EPackageImpl implements VVerticalPacka
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EClass getVerticalLayout()
 	{
 		return verticalLayoutEClass;
@@ -124,6 +125,7 @@ public class VVerticalPackageImpl extends EPackageImpl implements VVerticalPacka
 	 * 
 	 * @generated
 	 */
+	@Override
 	public VVerticalFactory getVerticalFactory()
 	{
 		return (VVerticalFactory) getEFactoryInstance();

@@ -41,6 +41,7 @@ import org.eclipse.swt.widgets.Label;
  * @since 1.3
  * 
  */
+@SuppressWarnings("restriction")
 public class LabelSWTRenderer extends AbstractSWTRenderer<VLabel> {
 	private SWTGridDescription rendererGridDescription;
 	private Font font;
@@ -101,7 +102,11 @@ public class LabelSWTRenderer extends AbstractSWTRenderer<VLabel> {
 		return label;
 	}
 
-	/** Applies the style defined in the StyleProperty */
+	/**
+	 * Applies the style defined in the StyleProperty.
+	 * 
+	 * @param label the {@link Label} to apply the styles onto
+	 */
 	protected void applyStyle(Label label) {
 		final VTFontPropertiesStyleProperty fontProperties = getFontProperty();
 		if (fontProperties == null) {

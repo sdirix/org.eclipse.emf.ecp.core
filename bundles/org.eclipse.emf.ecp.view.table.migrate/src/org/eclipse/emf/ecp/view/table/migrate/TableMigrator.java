@@ -1,3 +1,14 @@
+/*******************************************************************************
+ * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * Eugen Neufeld - initial API and implementation
+ ******************************************************************************/
 package org.eclipse.emf.ecp.view.table.migrate;
 
 import org.eclipse.emf.common.util.URI;
@@ -16,77 +27,86 @@ import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableFactory;
 
-public class TableMigrator implements Migrator{
+/**
+ * A special migrator for tables.
+ * 
+ * @author Eugen Neufeld
+ * 
+ */
+@SuppressWarnings("restriction")
+public class TableMigrator implements Migrator {
 
-	
 	@Override
-	public void migrate(EObject eObject,FeatureMap anyAttribute,FeatureMap mixed){
-		if (!VTableControl.class.isInstance(eObject))
+	public void migrate(EObject eObject, FeatureMap anyAttribute, FeatureMap mixed) {
+		if (!VTableControl.class.isInstance(eObject)) {
 			return;
-		for(int i=0;i<mixed.size();i++){
-			EStructuralFeature feature=mixed.getEStructuralFeature(i);
-			AnyType object = (AnyType) mixed.getValue(i);
-			if("columns".equals(feature.getName())){
-				migrateColumns(VTableControl.class.cast(eObject),object.getAnyAttribute(),object.getMixed());
+		}
+		for (int i = 0; i < mixed.size(); i++) {
+			final EStructuralFeature feature = mixed.getEStructuralFeature(i);
+			final AnyType object = (AnyType) mixed.getValue(i);
+			if ("columns".equals(feature.getName())) { //$NON-NLS-1$
+				migrateColumns(VTableControl.class.cast(eObject), object.getAnyAttribute(), object.getMixed());
 			}
 		}
 	}
 
 	private static void migrateColumns(VTableControl cast,
-			FeatureMap anyAttribute, FeatureMap mixed) {
-		boolean readOnly=false;
-		for(int i=0;i<anyAttribute.size();i++){
-			if("readOnly".equals(anyAttribute.getEStructuralFeature(i).getName())){
+		FeatureMap anyAttribute, FeatureMap mixed) {
+		boolean readOnly = false;
+		for (int i = 0; i < anyAttribute.size(); i++) {
+			if ("readOnly".equals(anyAttribute.getEStructuralFeature(i).getName())) { //$NON-NLS-1$
 				readOnly = Boolean.parseBoolean((String) anyAttribute.getValue(i));
 			}
 		}
-		for(int i=0;i<mixed.size();i++){
-			if("attribute".equals(mixed.getEStructuralFeature(i).getName())){
-				AnyType object = (AnyType) mixed.getValue(i);
-				URI uri = EcoreUtil.getURI(object);
-				EObject eObject = cast.eResource().getResourceSet().getEObject(uri, true);
-				VFeaturePathDomainModelReference dmr=VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
+		for (int i = 0; i < mixed.size(); i++) {
+			if ("attribute".equals(mixed.getEStructuralFeature(i).getName())) { //$NON-NLS-1$
+				final AnyType object = (AnyType) mixed.getValue(i);
+				final URI uri = EcoreUtil.getURI(object);
+				final EObject eObject = cast.eResource().getResourceSet().getEObject(uri, true);
+				final VFeaturePathDomainModelReference dmr = VViewFactory.eINSTANCE
+					.createFeaturePathDomainModelReference();
 				dmr.setDomainModelEFeature((EStructuralFeature) eObject);
-				VTableDomainModelReference tdmr=getTableDomainModelReference(cast);
-				if(tdmr==null)
+				final VTableDomainModelReference tdmr = getTableDomainModelReference(cast);
+				if (tdmr == null) {
 					continue;
+				}
 				tdmr.getColumnDomainModelReferences().add(dmr);
-				if(readOnly){
-					VReadOnlyColumnConfiguration readOnlyColumnConfiguration=getReadOnlyColumnConfiguration(cast);
+				if (readOnly) {
+					final VReadOnlyColumnConfiguration readOnlyColumnConfiguration = getReadOnlyColumnConfiguration(cast);
 					readOnlyColumnConfiguration.getColumnDomainReferences().add(dmr);
 				}
 			}
 		}
-		
+
 	}
-	
-	private static VTableDomainModelReference getTableDomainModelReference(VTableControl tableControl){
-		VDomainModelReference dmr=tableControl.getDomainModelReference();
-		if(VTableDomainModelReference.class.isInstance(dmr))
+
+	private static VTableDomainModelReference getTableDomainModelReference(VTableControl tableControl) {
+		final VDomainModelReference dmr = tableControl.getDomainModelReference();
+		if (VTableDomainModelReference.class.isInstance(dmr)) {
 			return (VTableDomainModelReference) dmr;
-		else{
-			for(EObject eObject:dmr.eContents()){
-				if(VTableDomainModelReference.class.isInstance(eObject))
-					return (VTableDomainModelReference) eObject;
+		}
+		for (final EObject eObject : dmr.eContents()) {
+			if (VTableDomainModelReference.class.isInstance(eObject)) {
+				return (VTableDomainModelReference) eObject;
 			}
 		}
 		return null;
 	}
 
 	private static VReadOnlyColumnConfiguration getReadOnlyColumnConfiguration(
-			VTableControl cast) {
-		for(VTableColumnConfiguration cc:cast.getColumnConfigurations()){
-			if(VReadOnlyColumnConfiguration.class.isInstance(cc)){
+		VTableControl cast) {
+		for (final VTableColumnConfiguration cc : cast.getColumnConfigurations()) {
+			if (VReadOnlyColumnConfiguration.class.isInstance(cc)) {
 				return (VReadOnlyColumnConfiguration) cc;
 			}
 		}
-		VReadOnlyColumnConfiguration config=VTableFactory.eINSTANCE.createReadOnlyColumnConfiguration();
+		final VReadOnlyColumnConfiguration config = VTableFactory.eINSTANCE.createReadOnlyColumnConfiguration();
 		cast.getColumnConfigurations().add(config);
 		return config;
 	}
 
 	@Override
-	public boolean isApplicable(EObject eObject) {		
+	public boolean isApplicable(EObject eObject) {
 		return VTableControl.class.isInstance(eObject);
 	}
 }

@@ -33,8 +33,8 @@ import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
  * 
- * Handler for generation the {@link org.eclipse.emf.ecp.view.spi.table.model.VTableColumn VTableColumn}s of a
- * {@link VTableControl}.
+ * Handler for generation the child {@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReference
+ * VDomainModelReferences} of a {@link VTableControl}.
  * 
  * @author jfaltermeier
  * 
@@ -46,6 +46,7 @@ public class GenerateColumnsHandler extends AbstractHandler {
 	 * 
 	 * @see org.eclipse.core.commands.IHandler#execute(org.eclipse.core.commands.ExecutionEvent)
 	 */
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final Object selection = ((IStructuredSelection) HandlerUtil.getActiveMenuSelection(event)).getFirstElement();
 		if (selection == null || !(selection instanceof VTableControl)) {

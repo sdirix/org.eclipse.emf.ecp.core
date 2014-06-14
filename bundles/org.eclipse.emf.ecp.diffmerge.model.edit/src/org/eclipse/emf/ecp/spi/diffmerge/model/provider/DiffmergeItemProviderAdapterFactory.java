@@ -18,25 +18,16 @@ import java.util.List;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
-
 import org.eclipse.emf.common.util.ResourceLocator;
-
 import org.eclipse.emf.ecore.EObject;
-
 import org.eclipse.emf.ecp.spi.diffmerge.model.VDiffmergeFactory;
 import org.eclipse.emf.ecp.spi.diffmerge.model.VDiffmergePackage;
-
 import org.eclipse.emf.ecp.spi.diffmerge.model.util.DiffmergeAdapterFactory;
-
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
-
 import org.eclipse.emf.ecp.view.spi.model.util.ViewSwitch;
-
 import org.eclipse.emf.edit.command.CommandParameter;
-
 import org.eclipse.emf.edit.domain.EditingDomain;
-
 import org.eclipse.emf.edit.provider.ChangeNotifier;
 import org.eclipse.emf.edit.provider.ChildCreationExtenderManager;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
@@ -62,8 +53,8 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
  * @generated
  */
 public class DiffmergeItemProviderAdapterFactory extends
-		DiffmergeAdapterFactory implements ComposeableAdapterFactory,
-		IChangeNotifier, IDisposable, IChildCreationExtender {
+	DiffmergeAdapterFactory implements ComposeableAdapterFactory,
+	IChangeNotifier, IDisposable, IChildCreationExtender {
 	/**
 	 * This keeps track of the root adapter factory that delegates to this
 	 * adapter factory. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -73,8 +64,7 @@ public class DiffmergeItemProviderAdapterFactory extends
 	protected ComposedAdapterFactory parentAdapterFactory;
 
 	/**
-	 * This is used to implement
-	 * {@link org.eclipse.emf.edit.provider.IChangeNotifier}. <!--
+	 * This is used to implement {@link org.eclipse.emf.edit.provider.IChangeNotifier}. <!--
 	 * begin-user-doc --> <!-- end-user-doc -->
 	 * 
 	 * @generated
@@ -88,11 +78,11 @@ public class DiffmergeItemProviderAdapterFactory extends
 	 * @generated
 	 */
 	protected ChildCreationExtenderManager childCreationExtenderManager = new ChildCreationExtenderManager(
-			DiffmergeEditPlugin.INSTANCE, VDiffmergePackage.eNS_URI);
+		DiffmergeEditPlugin.INSTANCE, VDiffmergePackage.eNS_URI);
 
 	/**
-	 * This keeps track of all the supported types checked by
-	 * {@link #isFactoryForType isFactoryForType}. <!-- begin-user-doc --> <!--
+	 * This keeps track of all the supported types checked by {@link #isFactoryForType isFactoryForType}. <!--
+	 * begin-user-doc --> <!--
 	 * end-user-doc -->
 	 * 
 	 * @generated
@@ -114,8 +104,7 @@ public class DiffmergeItemProviderAdapterFactory extends
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all
-	 * {@link org.eclipse.emf.ecp.spi.diffmerge.model.VDiffAttachment}
+	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.spi.diffmerge.model.VDiffAttachment}
 	 * instances. <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * 
 	 * @generated
@@ -123,8 +112,7 @@ public class DiffmergeItemProviderAdapterFactory extends
 	protected DiffAttachmentItemProvider diffAttachmentItemProvider;
 
 	/**
-	 * This creates an adapter for a
-	 * {@link org.eclipse.emf.ecp.spi.diffmerge.model.VDiffAttachment}. <!--
+	 * This creates an adapter for a {@link org.eclipse.emf.ecp.spi.diffmerge.model.VDiffAttachment}. <!--
 	 * begin-user-doc --> <!-- end-user-doc -->
 	 * 
 	 * @generated
@@ -144,9 +132,10 @@ public class DiffmergeItemProviderAdapterFactory extends
 	 * 
 	 * @generated
 	 */
+	@Override
 	public ComposeableAdapterFactory getRootAdapterFactory() {
 		return parentAdapterFactory == null ? this : parentAdapterFactory
-				.getRootAdapterFactory();
+			.getRootAdapterFactory();
 	}
 
 	/**
@@ -155,8 +144,9 @@ public class DiffmergeItemProviderAdapterFactory extends
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setParentAdapterFactory(
-			ComposedAdapterFactory parentAdapterFactory) {
+		ComposedAdapterFactory parentAdapterFactory) {
 		this.parentAdapterFactory = parentAdapterFactory;
 	}
 
@@ -189,9 +179,9 @@ public class DiffmergeItemProviderAdapterFactory extends
 	@Override
 	public Object adapt(Object object, Object type) {
 		if (isFactoryForType(type)) {
-			Object adapter = super.adapt(object, type);
+			final Object adapter = super.adapt(object, type);
 			if (!(type instanceof Class<?>)
-					|| (((Class<?>) type).isInstance(adapter))) {
+				|| ((Class<?>) type).isInstance(adapter)) {
 				return adapter;
 			}
 		}
@@ -213,10 +203,11 @@ public class DiffmergeItemProviderAdapterFactory extends
 	 * 
 	 * @generated
 	 */
+	@Override
 	public Collection<?> getNewChildDescriptors(Object object,
-			EditingDomain editingDomain) {
+		EditingDomain editingDomain) {
 		return childCreationExtenderManager.getNewChildDescriptors(object,
-				editingDomain);
+			editingDomain);
 	}
 
 	/**
@@ -224,6 +215,7 @@ public class DiffmergeItemProviderAdapterFactory extends
 	 * 
 	 * @generated
 	 */
+	@Override
 	public ResourceLocator getResourceLocator() {
 		return childCreationExtenderManager;
 	}
@@ -233,6 +225,7 @@ public class DiffmergeItemProviderAdapterFactory extends
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void addListener(INotifyChangedListener notifyChangedListener) {
 		changeNotifier.addListener(notifyChangedListener);
 	}
@@ -242,17 +235,19 @@ public class DiffmergeItemProviderAdapterFactory extends
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void removeListener(INotifyChangedListener notifyChangedListener) {
 		changeNotifier.removeListener(notifyChangedListener);
 	}
 
 	/**
-	 * This delegates to {@link #changeNotifier} and to
-	 * {@link #parentAdapterFactory}. <!-- begin-user-doc --> <!-- end-user-doc
+	 * This delegates to {@link #changeNotifier} and to {@link #parentAdapterFactory}. <!-- begin-user-doc --> <!--
+	 * end-user-doc
 	 * -->
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void fireNotifyChanged(Notification notification) {
 		changeNotifier.fireNotifyChanged(notification);
 
@@ -267,9 +262,11 @@ public class DiffmergeItemProviderAdapterFactory extends
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void dispose() {
-		if (diffAttachmentItemProvider != null)
+		if (diffAttachmentItemProvider != null) {
 			diffAttachmentItemProvider.dispose();
+		}
 	}
 
 	/**
@@ -279,7 +276,7 @@ public class DiffmergeItemProviderAdapterFactory extends
 	 * @generated
 	 */
 	public static class ViewChildCreationExtender implements
-			IChildCreationExtender {
+		IChildCreationExtender {
 		/**
 		 * The switch for creating child descriptors specific to each extended
 		 * class. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -310,7 +307,7 @@ public class DiffmergeItemProviderAdapterFactory extends
 			 * @generated
 			 */
 			CreationSwitch(List<Object> newChildDescriptors,
-					EditingDomain editingDomain) {
+				EditingDomain editingDomain) {
 				this.newChildDescriptors = newChildDescriptors;
 				this.editingDomain = editingDomain;
 			}
@@ -323,8 +320,8 @@ public class DiffmergeItemProviderAdapterFactory extends
 			@Override
 			public Object caseElement(VElement object) {
 				newChildDescriptors.add(createChildParameter(
-						VViewPackage.Literals.ELEMENT__ATTACHMENTS,
-						VDiffmergeFactory.eINSTANCE.createDiffAttachment()));
+					VViewPackage.Literals.ELEMENT__ATTACHMENTS,
+					VDiffmergeFactory.eINSTANCE.createDiffAttachment()));
 
 				return null;
 			}
@@ -335,7 +332,7 @@ public class DiffmergeItemProviderAdapterFactory extends
 			 * @generated
 			 */
 			protected CommandParameter createChildParameter(Object feature,
-					Object child) {
+				Object child) {
 				return new CommandParameter(null, feature, child);
 			}
 
@@ -346,11 +343,12 @@ public class DiffmergeItemProviderAdapterFactory extends
 		 * 
 		 * @generated
 		 */
+		@Override
 		public Collection<Object> getNewChildDescriptors(Object object,
-				EditingDomain editingDomain) {
-			ArrayList<Object> result = new ArrayList<Object>();
+			EditingDomain editingDomain) {
+			final ArrayList<Object> result = new ArrayList<Object>();
 			new CreationSwitch(result, editingDomain)
-					.doSwitch((EObject) object);
+				.doSwitch((EObject) object);
 			return result;
 		}
 
@@ -359,6 +357,7 @@ public class DiffmergeItemProviderAdapterFactory extends
 		 * 
 		 * @generated
 		 */
+		@Override
 		public ResourceLocator getResourceLocator() {
 			return DiffmergeEditPlugin.INSTANCE;
 		}

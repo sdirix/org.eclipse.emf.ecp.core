@@ -20,7 +20,6 @@ import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
@@ -30,8 +29,12 @@ import org.eclipse.swt.widgets.Label;
 import org.osgi.framework.Bundle;
 
 /**
+ * The renderer for custom control view models.
+ * 
+ * @author Eugen Neufeld
  * @since 1.3
  */
+@SuppressWarnings("restriction")
 public class CustomControlSWTRenderer extends AbstractSWTRenderer<VCustomControl> {
 
 	private ECPAbstractCustomControlSWT swtCustomControl;
@@ -183,9 +186,5 @@ public class CustomControlSWTRenderer extends AbstractSWTRenderer<VCustomControl
 
 	private Image getValidationIcon(int severity) {
 		return SWTValidationHelper.INSTANCE.getValidationIcon(severity);
-	}
-
-	private Color getValidationBackgroundColor(int severity) {
-		return SWTValidationHelper.INSTANCE.getValidationBackgroundColor(severity);
 	}
 }

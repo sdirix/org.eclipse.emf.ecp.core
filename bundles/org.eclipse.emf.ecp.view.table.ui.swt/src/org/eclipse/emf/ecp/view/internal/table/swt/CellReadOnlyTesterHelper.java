@@ -20,7 +20,6 @@ import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
-import org.eclipse.emf.ecp.view.spi.table.swt.Activator;
 import org.eclipse.emf.ecp.view.spi.table.swt.ECPCellReadOnlyTester;
 
 /**

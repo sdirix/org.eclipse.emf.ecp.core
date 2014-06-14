@@ -12,7 +12,6 @@
 package org.eclipse.emf.ecp.view.spi.label.swt;
 
 import org.eclipse.core.runtime.Plugin;
-import org.eclipse.emf.ecp.edit.spi.ECPControlFactory;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -63,7 +62,7 @@ public class Activator extends Plugin {
 	/**
 	 * Returns the currentInstance of the {@link VTViewTemplateProvider}.
 	 * 
-	 * @return the {@link ECPControlFactory}
+	 * @return the {@link VTViewTemplateProvider}
 	 */
 	public VTViewTemplateProvider getVTViewTemplateProvider() {
 		if (viewTemplate == null) {

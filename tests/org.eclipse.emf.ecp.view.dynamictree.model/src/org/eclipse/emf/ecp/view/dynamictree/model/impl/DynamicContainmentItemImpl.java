@@ -125,6 +125,7 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EObject getDomainModel()
 	{
 		if (domainModel != null && domainModel.eIsProxy()) {
@@ -153,6 +154,7 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setDomainModel(EObject newDomainModel)
 	{
 		EObject oldDomainModel = domainModel;
@@ -166,6 +168,7 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<DynamicContainmentItem> getItems()
 	{
 		if (items == null) {
@@ -179,6 +182,7 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public VContainedElement getComposite()
 	{
 		return composite;
@@ -205,6 +209,7 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setComposite(VContainedElement newComposite)
 	{
 		if (newComposite != composite) {
@@ -225,6 +230,7 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Integer getBaseItemIndex() {
 		return baseItemIndex;
 	}
@@ -234,6 +240,7 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setBaseItemIndex(Integer newBaseItemIndex) {
 		Integer oldBaseItemIndex = baseItemIndex;
 		baseItemIndex = newBaseItemIndex;
@@ -386,6 +393,7 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizableElement#getECPActions()
 	 */
+	@Override
 	public List<ECPAction> getECPActions() {
 		return ecpActions;
 	}
@@ -395,6 +403,7 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizableElement#setECPActions(java.util.List)
 	 */
+	@Override
 	public void setECPActions(List<ECPAction> actions) {
 		ecpActions = actions;
 	}

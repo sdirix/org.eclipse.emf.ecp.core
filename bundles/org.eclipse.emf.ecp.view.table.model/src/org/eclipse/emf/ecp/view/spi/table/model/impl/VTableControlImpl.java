@@ -147,11 +147,12 @@ public class VTableControlImpl extends VControlImpl implements VTableControl
 	@Override
 	public void setAddRemoveDisabled(boolean newAddRemoveDisabled)
 	{
-		boolean oldAddRemoveDisabled = addRemoveDisabled;
+		final boolean oldAddRemoveDisabled = addRemoveDisabled;
 		addRemoveDisabled = newAddRemoveDisabled;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, VTablePackage.TABLE_CONTROL__ADD_REMOVE_DISABLED,
 				oldAddRemoveDisabled, addRemoveDisabled));
+		}
 	}
 
 	/**
@@ -175,12 +176,13 @@ public class VTableControlImpl extends VControlImpl implements VTableControl
 	@Override
 	public void setEnableDetailEditingDialog(boolean newEnableDetailEditingDialog)
 	{
-		boolean oldEnableDetailEditingDialog = enableDetailEditingDialog;
+		final boolean oldEnableDetailEditingDialog = enableDetailEditingDialog;
 		enableDetailEditingDialog = newEnableDetailEditingDialog;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				VTablePackage.TABLE_CONTROL__ENABLE_DETAIL_EDITING_DIALOG, oldEnableDetailEditingDialog,
 				enableDetailEditingDialog));
+		}
 	}
 
 	/**
@@ -318,10 +320,11 @@ public class VTableControlImpl extends VControlImpl implements VTableControl
 	@Override
 	public String toString()
 	{
-		if (eIsProxy())
+		if (eIsProxy()) {
 			return super.toString();
+		}
 
-		StringBuffer result = new StringBuffer(super.toString());
+		final StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (addRemoveDisabled: "); //$NON-NLS-1$
 		result.append(addRemoveDisabled);
 		result.append(", enableDetailEditingDialog: "); //$NON-NLS-1$

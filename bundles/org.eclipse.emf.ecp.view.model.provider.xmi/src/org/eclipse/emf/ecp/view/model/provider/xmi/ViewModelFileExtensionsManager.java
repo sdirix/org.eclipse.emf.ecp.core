@@ -41,10 +41,13 @@ import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 
 /**
- * @author Jonas
- *         Manages the view models provided by the file extension point.
+ * Manages the view models provided by the file extension point.
+ * 
+ * @author Jonas Helming
+ * 
  * 
  */
+@SuppressWarnings("restriction")
 public final class ViewModelFileExtensionsManager {
 
 	private static final String FILE_EXTENSION = "org.eclipse.emf.ecp.view.model.provider.xmi.file"; //$NON-NLS-1$

@@ -27,6 +27,7 @@ import org.eclipse.swt.widgets.Group;
  * @since 1.3
  * 
  */
+@SuppressWarnings("restriction")
 public class GroupSWTRenderer extends ContainerSWTRenderer<VGroup> {
 	private static final String CONTROL_GROUP = "org_eclipse_emf_ecp_ui_control_group"; //$NON-NLS-1$
 
@@ -61,6 +62,7 @@ public class GroupSWTRenderer extends ContainerSWTRenderer<VGroup> {
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer#getChildren()
 	 */
+
 	@Override
 	protected Collection<VContainedElement> getChildren() {
 		return getVElement().getChildren();

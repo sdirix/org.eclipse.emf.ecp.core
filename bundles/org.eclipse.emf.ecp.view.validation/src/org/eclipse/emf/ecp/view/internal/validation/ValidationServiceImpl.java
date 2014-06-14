@@ -70,11 +70,6 @@ public class ValidationServiceImpl implements ValidationService {
 	 */
 	private class ViewModelChangeListener implements ModelChangeAddRemoveListener {
 
-		/**
-		 * {@inheritDoc}
-		 * 
-		 * @see org.eclipse.emf.ecp.view.spi.context.ModelChangeAddRemoveListener#notifyChange(org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification)
-		 */
 		@Override
 		public void notifyChange(ModelChangeNotification notification) {
 			if (VViewPackage.eINSTANCE.getElement_Enabled() == notification.getRawNotification()
@@ -113,11 +108,6 @@ public class ValidationServiceImpl implements ValidationService {
 			}
 		}
 
-		/**
-		 * {@inheritDoc}
-		 * 
-		 * @see org.eclipse.emf.ecp.view.spi.context.ModelChangeAddRemoveListener#notifyAdd(org.eclipse.emf.common.notify.Notifier)
-		 */
 		@Override
 		public void notifyAdd(Notifier notifier) {
 			if (VControl.class.isInstance(notifier)) {
@@ -137,15 +127,9 @@ public class ValidationServiceImpl implements ValidationService {
 			}
 		}
 
-		/**
-		 * {@inheritDoc}
-		 * 
-		 * @see org.eclipse.emf.ecp.view.spi.context.ModelChangeAddRemoveListener#notifyRemove(org.eclipse.emf.common.notify.Notifier)
-		 */
 		@Override
 		public void notifyRemove(Notifier notifier) {
-			// TODO Auto-generated method stub
-
+			// do nothing
 		}
 
 	}
@@ -156,11 +140,7 @@ public class ValidationServiceImpl implements ValidationService {
 	 */
 	private class ValidationDomainModelChangeListener implements ModelChangeAddRemoveListener {
 
-		/**
-		 * {@inheritDoc}
-		 * 
-		 * @see org.eclipse.emf.ecp.view.spi.context.ModelChangeAddRemoveListener#notifyChange(org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification)
-		 */
+		@SuppressWarnings("unchecked")
 		@Override
 		public void notifyChange(ModelChangeNotification notification) {
 			if (ValidationNotification.class.isInstance(notification.getRawNotification())) {
@@ -194,6 +174,7 @@ public class ValidationServiceImpl implements ValidationService {
 						EReference.class.cast(rawNotification.getFeature()),
 						EObject.class.cast(rawNotification.getOldValue()));
 				}
+
 				//$FALL-THROUGH$
 			case Notification.REMOVE_MANY:
 				validate(getAllEObjects(notification.getNotifier()));
@@ -210,21 +191,11 @@ public class ValidationServiceImpl implements ValidationService {
 			}
 		}
 
-		/**
-		 * {@inheritDoc}
-		 * 
-		 * @see org.eclipse.emf.ecp.view.spi.context.ModelChangeAddRemoveListener#notifyAdd(org.eclipse.emf.common.notify.Notifier)
-		 */
 		@Override
 		public void notifyAdd(Notifier notifier) {
 			// validate((EObject) notifier);
 		}
 
-		/**
-		 * {@inheritDoc}
-		 * 
-		 * @see org.eclipse.emf.ecp.view.spi.context.ModelChangeAddRemoveListener#notifyRemove(org.eclipse.emf.common.notify.Notifier)
-		 */
 		@Override
 		public void notifyRemove(Notifier notifier) {
 			// validate((EObject) notifier);

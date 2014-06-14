@@ -22,6 +22,7 @@ import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
  * @author Eugen Neufeld
  * 
  */
+@SuppressWarnings("restriction")
 public class CategorizationElementTabbedSWTRenderer extends AbstractSWTTabRenderer<VCategorizationElement> {
 
 	/**

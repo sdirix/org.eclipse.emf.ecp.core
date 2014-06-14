@@ -47,6 +47,7 @@ public class RuleServiceHelperImpl implements ViewModelService, RuleServiceHelpe
 	 * @see org.eclipse.emf.ecp.view.spi.rule.RuleServiceHelper#getInvolvedEObjects(org.eclipse.emf.ecore.EStructuralFeature.Setting,
 	 *      java.lang.Object, org.eclipse.emf.ecore.EAttribute, java.lang.Class)
 	 */
+	@Override
 	public <T extends VElement> Set<T> getInvolvedEObjects(Setting setting, Object newValue, EAttribute attribute,
 		Class<T> renderableClass) {
 
@@ -71,6 +72,7 @@ public class RuleServiceHelperImpl implements ViewModelService, RuleServiceHelpe
 	 */
 	private RenderablePredicate createDisabledRenderablePredicate() {
 		return new RenderablePredicate() {
+			@Override
 			public boolean checkCurrentState(VElement renderable) {
 				return renderable.isEnabled();
 			}
@@ -82,6 +84,7 @@ public class RuleServiceHelperImpl implements ViewModelService, RuleServiceHelpe
 	 */
 	private RenderablePredicate createHiddenRenderablePredicate() {
 		return new RenderablePredicate() {
+			@Override
 			public boolean checkCurrentState(VElement renderable) {
 				return renderable.isVisible();
 			}
@@ -95,6 +98,7 @@ public class RuleServiceHelperImpl implements ViewModelService, RuleServiceHelpe
 	 * @see org.eclipse.emf.ecp.view.spi.rule.RuleServiceHelper#getInvolvedEObjects(java.util.Map,
 	 *      org.eclipse.emf.ecore.EAttribute, java.lang.Class)
 	 */
+	@Override
 	public <T extends VElement> Set<T> getInvolvedEObjects(Map<Setting, Object> possibleNewValues,
 		EAttribute changedAttribute,
 		Class<T> renderableClass) {
@@ -152,6 +156,7 @@ public class RuleServiceHelperImpl implements ViewModelService, RuleServiceHelpe
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#instantiate(org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
+	@Override
 	public void instantiate(ViewModelContext context) {
 		this.context = context;
 	}
@@ -161,6 +166,7 @@ public class RuleServiceHelperImpl implements ViewModelService, RuleServiceHelpe
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#dispose()
 	 */
+	@Override
 	public void dispose() {
 
 	}
@@ -170,6 +176,7 @@ public class RuleServiceHelperImpl implements ViewModelService, RuleServiceHelpe
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#getPriority()
 	 */
+	@Override
 	public int getPriority() {
 		return 2;
 	}

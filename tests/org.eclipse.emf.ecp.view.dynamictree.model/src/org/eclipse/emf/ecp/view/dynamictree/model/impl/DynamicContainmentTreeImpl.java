@@ -127,6 +127,7 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EObject getDomainModel()
 	{
 		if (domainModel != null && domainModel.eIsProxy()) {
@@ -155,6 +156,7 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setDomainModel(EObject newDomainModel)
 	{
 		EObject oldDomainModel = domainModel;
@@ -168,6 +170,7 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getChildReference()
 	{
 		if (childReference != null && childReference.eIsProxy()) {
@@ -196,6 +199,7 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setChildReference(EReference newChildReference)
 	{
 		EReference oldChildReference = childReference;
@@ -209,6 +213,7 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<EReference> getPathToRoot()
 	{
 		if (pathToRoot == null) {
@@ -222,6 +227,7 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public VContainedElement getChildComposite()
 	{
 		return childComposite;
@@ -248,6 +254,7 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setChildComposite(VContainedElement newChildComposite)
 	{
 		if (newChildComposite != childComposite) {
@@ -268,6 +275,7 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<DynamicContainmentItem> getItems()
 	{
 		if (items == null) {

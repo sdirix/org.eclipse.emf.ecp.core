@@ -78,12 +78,13 @@ public class VTViewModelElementPackageImpl extends EPackageImpl implements VTVie
 	 * @generated
 	 */
 	public static VTViewModelElementPackage init() {
-		if (isInited)
+		if (isInited) {
 			return (VTViewModelElementPackage) EPackage.Registry.INSTANCE
 				.getEPackage(VTViewModelElementPackage.eNS_URI);
+		}
 
 		// Obtain or create and register package
-		VTViewModelElementPackageImpl theViewModelElementPackage = (VTViewModelElementPackageImpl) (EPackage.Registry.INSTANCE
+		final VTViewModelElementPackageImpl theViewModelElementPackage = (VTViewModelElementPackageImpl) (EPackage.Registry.INSTANCE
 			.get(eNS_URI) instanceof VTViewModelElementPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI)
 			: new VTViewModelElementPackageImpl());
 
@@ -192,8 +193,9 @@ public class VTViewModelElementPackageImpl extends EPackageImpl implements VTVie
 	 * @generated
 	 */
 	public void createPackageContents() {
-		if (isCreated)
+		if (isCreated) {
 			return;
+		}
 		isCreated = true;
 
 		// Create classes and their features
@@ -221,8 +223,9 @@ public class VTViewModelElementPackageImpl extends EPackageImpl implements VTVie
 	 * @generated
 	 */
 	public void initializePackageContents() {
-		if (isInitialized)
+		if (isInitialized) {
 			return;
+		}
 		isInitialized = true;
 
 		// Initialize package
@@ -231,9 +234,10 @@ public class VTViewModelElementPackageImpl extends EPackageImpl implements VTVie
 		setNsURI(eNS_URI);
 
 		// Obtain other dependent packages
-		VTTemplatePackage theTemplatePackage = (VTTemplatePackage) EPackage.Registry.INSTANCE
+		final VTTemplatePackage theTemplatePackage = (VTTemplatePackage) EPackage.Registry.INSTANCE
 			.getEPackage(VTTemplatePackage.eNS_URI);
-		EcorePackage theEcorePackage = (EcorePackage) EPackage.Registry.INSTANCE.getEPackage(EcorePackage.eNS_URI);
+		final EcorePackage theEcorePackage = (EcorePackage) EPackage.Registry.INSTANCE
+			.getEPackage(EcorePackage.eNS_URI);
 
 		// Create type parameters
 

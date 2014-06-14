@@ -76,6 +76,7 @@ public abstract class VContainerImpl extends VContainedElementImpl implements VC
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EList<VContainedElement> getChildren() {
 		if (children == null)
 		{

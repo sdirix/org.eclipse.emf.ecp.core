@@ -90,6 +90,7 @@ public class VVerticalFactoryImpl extends EFactoryImpl implements VVerticalFacto
 	 * 
 	 * @generated
 	 */
+	@Override
 	public VVerticalLayout createVerticalLayout()
 	{
 		final VVerticalLayoutImpl verticalLayout = new VVerticalLayoutImpl();
@@ -102,6 +103,7 @@ public class VVerticalFactoryImpl extends EFactoryImpl implements VVerticalFacto
 	 * 
 	 * @generated
 	 */
+	@Override
 	public VVerticalPackage getVerticalPackage()
 	{
 		return (VVerticalPackage) getEPackage();

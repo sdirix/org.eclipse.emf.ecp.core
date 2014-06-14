@@ -72,6 +72,7 @@ public class DomainIntermediateImpl extends EObjectImpl implements DomainInterme
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public TestElementContainer getTestElementContainer()
 	{
 		return testElementContainer;
@@ -97,6 +98,7 @@ public class DomainIntermediateImpl extends EObjectImpl implements DomainInterme
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setTestElementContainer(TestElementContainer newTestElementContainer)
 	{
 		if (newTestElementContainer != testElementContainer) {

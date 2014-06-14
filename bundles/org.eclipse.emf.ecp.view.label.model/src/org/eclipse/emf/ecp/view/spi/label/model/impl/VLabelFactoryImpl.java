@@ -128,6 +128,7 @@ public class VLabelFactoryImpl extends EFactoryImpl implements VLabelFactory
 	 * 
 	 * @generated
 	 */
+	@Override
 	public VLabel createLabel()
 	{
 		final VLabelImpl label = new VLabelImpl();
@@ -168,6 +169,7 @@ public class VLabelFactoryImpl extends EFactoryImpl implements VLabelFactory
 	 * 
 	 * @generated
 	 */
+	@Override
 	public VLabelPackage getLabelPackage()
 	{
 		return (VLabelPackage) getEPackage();

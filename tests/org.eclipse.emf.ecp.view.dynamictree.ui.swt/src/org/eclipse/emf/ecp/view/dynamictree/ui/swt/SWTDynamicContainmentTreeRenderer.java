@@ -23,6 +23,7 @@ import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
  * 
  * @author emueller
  */
+@SuppressWarnings("restriction")
 public class SWTDynamicContainmentTreeRenderer extends ContainerSWTRenderer<DynamicContainmentTree> {
 
 	/**
