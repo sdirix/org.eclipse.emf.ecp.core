@@ -2,17 +2,17 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: MPI UI View
 Bundle-SymbolicName: org.eclipse.emf.ecp.ui.view;singleton:=true
-Bundle-Version: 1.3.0.qualifier
+Bundle-Version: 1.4.0.qualifier
 Bundle-Activator: org.eclipse.emf.ecp.view.internal.ui.Activator
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)",
- org.eclipse.emf.ecp.view.model;bundle-version="[1.3.0,2.0.0)";visibility:=reexport,
- org.eclipse.emf.ecp.view.context;bundle-version="[1.3.0,2.0.0)";visibility:=reexport,
- org.eclipse.emf.ecp.edit;bundle-version="[1.3.0,2.0.0)"
+ org.eclipse.emf.ecp.view.model;bundle-version="[1.4.0,2.0.0)";visibility:=reexport,
+ org.eclipse.emf.ecp.view.context;bundle-version="[1.4.0,2.0.0)";visibility:=reexport,
+ org.eclipse.emf.ecp.edit;bundle-version="[1.4.0,2.0.0)"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Export-Package: org.eclipse.emf.ecp.ui.view;version="1.3.0",
- org.eclipse.emf.ecp.view.internal.provider;version="1.3.0";x-internal:=true,
- org.eclipse.emf.ecp.view.internal.ui;version="1.3.0";x-friends:="org.eclipse.emf.ecp.view.table.ui.swt",
- org.eclipse.emf.ecp.view.spi.provider;version="1.3.0",
- org.eclipse.emf.ecp.view.spi.renderer;version="1.3.0"
+Export-Package: org.eclipse.emf.ecp.ui.view;version="1.4.0",org.eclips
+ e.emf.ecp.view.internal.provider;version="1.4.0";x-internal:=true,org
+ .eclipse.emf.ecp.view.internal.ui;version="1.4.0";x-friends:="org.ecl
+ ipse.emf.ecp.view.table.ui.swt",org.eclipse.emf.ecp.view.spi.provider
+ ;version="1.4.0",org.eclipse.emf.ecp.view.spi.renderer;version="1.4.0"
 Bundle-Vendor: Eclipse Modeling Project
