@@ -194,6 +194,8 @@
 		<module>../../bundles/org.eclipse.emf.ecp.view.mappingdmr.databinding</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.mappingdmr.model</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.mappingdmr.model.edit</module>
+		
+		<module>../../bundles/org.eclipse.emf.ecp.view.template.tooling</module>
 	</modules>
 
 	<build>

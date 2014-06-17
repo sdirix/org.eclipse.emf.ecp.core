@@ -24,7 +24,6 @@ import org.eclipse.emf.ecp.view.template.style.tableValidation.model.VTTableVali
  * <!-- begin-user-doc -->
  * An implementation of the model <b>Factory</b>.
  * <!-- end-user-doc -->
- * 
  * @generated
  */
 public class VTTableValidationFactoryImpl extends EFactoryImpl implements VTTableValidationFactory {
@@ -32,17 +31,16 @@ public class VTTableValidationFactoryImpl extends EFactoryImpl implements VTTabl
 	 * Creates the default factory implementation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public static VTTableValidationFactory init() {
 		try {
-			final VTTableValidationFactory theTableValidationFactory = (VTTableValidationFactory) EPackage.Registry.INSTANCE
-				.getEFactory(VTTableValidationPackage.eNS_URI);
+			VTTableValidationFactory theTableValidationFactory = (VTTableValidationFactory)EPackage.Registry.INSTANCE.getEFactory(VTTableValidationPackage.eNS_URI);
 			if (theTableValidationFactory != null) {
 				return theTableValidationFactory;
 			}
-		} catch (final Exception exception) {
+		}
+		catch (Exception exception) {
 			EcorePlugin.INSTANCE.log(exception);
 		}
 		return new VTTableValidationFactoryImpl();
@@ -52,7 +50,6 @@ public class VTTableValidationFactoryImpl extends EFactoryImpl implements VTTabl
 	 * Creates an instance of the factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public VTTableValidationFactoryImpl() {
@@ -62,46 +59,41 @@ public class VTTableValidationFactoryImpl extends EFactoryImpl implements VTTabl
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
-		case VTTableValidationPackage.TABLE_VALIDATION_STYLE_PROPERTY:
-			return createTableValidationStyleProperty();
-		default:
-			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
+			case VTTableValidationPackage.TABLE_VALIDATION_STYLE_PROPERTY: return createTableValidationStyleProperty();
+			default:
+				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public VTTableValidationStyleProperty createTableValidationStyleProperty() {
-		final VTTableValidationStylePropertyImpl tableValidationStyleProperty = new VTTableValidationStylePropertyImpl();
+		VTTableValidationStylePropertyImpl tableValidationStyleProperty = new VTTableValidationStylePropertyImpl();
 		return tableValidationStyleProperty;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public VTTableValidationPackage getTableValidationPackage() {
-		return (VTTableValidationPackage) getEPackage();
+		return (VTTableValidationPackage)getEPackage();
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @deprecated
 	 * @generated
 	 */

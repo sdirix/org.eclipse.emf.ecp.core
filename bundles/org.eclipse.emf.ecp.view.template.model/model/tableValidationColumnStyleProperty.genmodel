@@ -14,7 +14,7 @@
       disposableProviderFactory="true" interfacePackageSuffix="model" metaDataPackageSuffix="model"
       classPackageSuffix="model.impl" utilityPackageSuffix="model.util" providerPackageSuffix="model.provider"
       presentationPackageSuffix="model.presentation" testsPackageSuffix="model.tests"
-      ecorePackage="tableValidationColumnStyleProperty.ecore#/">
+      extensibleProviderFactory="true" childCreationExtenders="true" ecorePackage="tableValidationColumnStyleProperty.ecore#/">
     <genClasses ecoreClass="tableValidationColumnStyleProperty.ecore#//TableValidationStyleProperty">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute tableValidationColumnStyleProperty.ecore#//TableValidationStyleProperty/columnWidth"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute tableValidationColumnStyleProperty.ecore#//TableValidationStyleProperty/columnName"/>

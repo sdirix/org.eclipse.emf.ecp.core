@@ -26,18 +26,12 @@ import org.eclipse.emf.ecp.view.template.style.tableValidation.model.VTTableVali
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>
- * {@link org.eclipse.emf.ecp.view.template.style.tableValidation.model.impl.VTTableValidationStylePropertyImpl#getColumnWidth
- * <em>Column Width</em>}</li>
- * <li>
- * {@link org.eclipse.emf.ecp.view.template.style.tableValidation.model.impl.VTTableValidationStylePropertyImpl#getColumnName
- * <em>Column Name</em>}</li>
- * <li>
- * {@link org.eclipse.emf.ecp.view.template.style.tableValidation.model.impl.VTTableValidationStylePropertyImpl#getImagePath
- * <em>Image Path</em>}</li>
+ *   <li>{@link org.eclipse.emf.ecp.view.template.style.tableValidation.model.impl.VTTableValidationStylePropertyImpl#getColumnWidth <em>Column Width</em>}</li>
+ *   <li>{@link org.eclipse.emf.ecp.view.template.style.tableValidation.model.impl.VTTableValidationStylePropertyImpl#getColumnName <em>Column Name</em>}</li>
+ *   <li>{@link org.eclipse.emf.ecp.view.template.style.tableValidation.model.impl.VTTableValidationStylePropertyImpl#getImagePath <em>Image Path</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class VTTableValidationStylePropertyImpl extends MinimalEObjectImpl.Container implements
@@ -46,7 +40,6 @@ public class VTTableValidationStylePropertyImpl extends MinimalEObjectImpl.Conta
 	 * The default value of the '{@link #getColumnWidth() <em>Column Width</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @see #getColumnWidth()
 	 * @generated
 	 * @ordered
@@ -57,7 +50,6 @@ public class VTTableValidationStylePropertyImpl extends MinimalEObjectImpl.Conta
 	 * The cached value of the '{@link #getColumnWidth() <em>Column Width</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @see #getColumnWidth()
 	 * @generated
 	 * @ordered
@@ -68,7 +60,6 @@ public class VTTableValidationStylePropertyImpl extends MinimalEObjectImpl.Conta
 	 * The default value of the '{@link #getColumnName() <em>Column Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @see #getColumnName()
 	 * @generated
 	 * @ordered
@@ -79,7 +70,6 @@ public class VTTableValidationStylePropertyImpl extends MinimalEObjectImpl.Conta
 	 * The cached value of the '{@link #getColumnName() <em>Column Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @see #getColumnName()
 	 * @generated
 	 * @ordered
@@ -90,7 +80,6 @@ public class VTTableValidationStylePropertyImpl extends MinimalEObjectImpl.Conta
 	 * The default value of the '{@link #getImagePath() <em>Image Path</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @see #getImagePath()
 	 * @generated
 	 * @ordered
@@ -101,7 +90,6 @@ public class VTTableValidationStylePropertyImpl extends MinimalEObjectImpl.Conta
 	 * The cached value of the '{@link #getImagePath() <em>Image Path</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @see #getImagePath()
 	 * @generated
 	 * @ordered
@@ -111,7 +99,6 @@ public class VTTableValidationStylePropertyImpl extends MinimalEObjectImpl.Conta
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	protected VTTableValidationStylePropertyImpl() {
@@ -121,7 +108,6 @@ public class VTTableValidationStylePropertyImpl extends MinimalEObjectImpl.Conta
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -132,7 +118,6 @@ public class VTTableValidationStylePropertyImpl extends MinimalEObjectImpl.Conta
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -143,23 +128,19 @@ public class VTTableValidationStylePropertyImpl extends MinimalEObjectImpl.Conta
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public void setColumnWidth(int newColumnWidth) {
-		final int oldColumnWidth = columnWidth;
+		int oldColumnWidth = columnWidth;
 		columnWidth = newColumnWidth;
-		if (eNotificationRequired()) {
-			eNotify(new ENotificationImpl(this, Notification.SET,
-				VTTableValidationPackage.TABLE_VALIDATION_STYLE_PROPERTY__COLUMN_WIDTH, oldColumnWidth, columnWidth));
-		}
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, VTTableValidationPackage.TABLE_VALIDATION_STYLE_PROPERTY__COLUMN_WIDTH, oldColumnWidth, columnWidth));
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -170,23 +151,19 @@ public class VTTableValidationStylePropertyImpl extends MinimalEObjectImpl.Conta
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public void setColumnName(String newColumnName) {
-		final String oldColumnName = columnName;
+		String oldColumnName = columnName;
 		columnName = newColumnName;
-		if (eNotificationRequired()) {
-			eNotify(new ENotificationImpl(this, Notification.SET,
-				VTTableValidationPackage.TABLE_VALIDATION_STYLE_PROPERTY__COLUMN_NAME, oldColumnName, columnName));
-		}
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, VTTableValidationPackage.TABLE_VALIDATION_STYLE_PROPERTY__COLUMN_NAME, oldColumnName, columnName));
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -197,34 +174,30 @@ public class VTTableValidationStylePropertyImpl extends MinimalEObjectImpl.Conta
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public void setImagePath(String newImagePath) {
-		final String oldImagePath = imagePath;
+		String oldImagePath = imagePath;
 		imagePath = newImagePath;
-		if (eNotificationRequired()) {
-			eNotify(new ENotificationImpl(this, Notification.SET,
-				VTTableValidationPackage.TABLE_VALIDATION_STYLE_PROPERTY__IMAGE_PATH, oldImagePath, imagePath));
-		}
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, VTTableValidationPackage.TABLE_VALIDATION_STYLE_PROPERTY__IMAGE_PATH, oldImagePath, imagePath));
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-		case VTTableValidationPackage.TABLE_VALIDATION_STYLE_PROPERTY__COLUMN_WIDTH:
-			return getColumnWidth();
-		case VTTableValidationPackage.TABLE_VALIDATION_STYLE_PROPERTY__COLUMN_NAME:
-			return getColumnName();
-		case VTTableValidationPackage.TABLE_VALIDATION_STYLE_PROPERTY__IMAGE_PATH:
-			return getImagePath();
+			case VTTableValidationPackage.TABLE_VALIDATION_STYLE_PROPERTY__COLUMN_WIDTH:
+				return getColumnWidth();
+			case VTTableValidationPackage.TABLE_VALIDATION_STYLE_PROPERTY__COLUMN_NAME:
+				return getColumnName();
+			case VTTableValidationPackage.TABLE_VALIDATION_STYLE_PROPERTY__IMAGE_PATH:
+				return getImagePath();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -232,21 +205,20 @@ public class VTTableValidationStylePropertyImpl extends MinimalEObjectImpl.Conta
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-		case VTTableValidationPackage.TABLE_VALIDATION_STYLE_PROPERTY__COLUMN_WIDTH:
-			setColumnWidth((Integer) newValue);
-			return;
-		case VTTableValidationPackage.TABLE_VALIDATION_STYLE_PROPERTY__COLUMN_NAME:
-			setColumnName((String) newValue);
-			return;
-		case VTTableValidationPackage.TABLE_VALIDATION_STYLE_PROPERTY__IMAGE_PATH:
-			setImagePath((String) newValue);
-			return;
+			case VTTableValidationPackage.TABLE_VALIDATION_STYLE_PROPERTY__COLUMN_WIDTH:
+				setColumnWidth((Integer)newValue);
+				return;
+			case VTTableValidationPackage.TABLE_VALIDATION_STYLE_PROPERTY__COLUMN_NAME:
+				setColumnName((String)newValue);
+				return;
+			case VTTableValidationPackage.TABLE_VALIDATION_STYLE_PROPERTY__IMAGE_PATH:
+				setImagePath((String)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -254,21 +226,20 @@ public class VTTableValidationStylePropertyImpl extends MinimalEObjectImpl.Conta
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-		case VTTableValidationPackage.TABLE_VALIDATION_STYLE_PROPERTY__COLUMN_WIDTH:
-			setColumnWidth(COLUMN_WIDTH_EDEFAULT);
-			return;
-		case VTTableValidationPackage.TABLE_VALIDATION_STYLE_PROPERTY__COLUMN_NAME:
-			setColumnName(COLUMN_NAME_EDEFAULT);
-			return;
-		case VTTableValidationPackage.TABLE_VALIDATION_STYLE_PROPERTY__IMAGE_PATH:
-			setImagePath(IMAGE_PATH_EDEFAULT);
-			return;
+			case VTTableValidationPackage.TABLE_VALIDATION_STYLE_PROPERTY__COLUMN_WIDTH:
+				setColumnWidth(COLUMN_WIDTH_EDEFAULT);
+				return;
+			case VTTableValidationPackage.TABLE_VALIDATION_STYLE_PROPERTY__COLUMN_NAME:
+				setColumnName(COLUMN_NAME_EDEFAULT);
+				return;
+			case VTTableValidationPackage.TABLE_VALIDATION_STYLE_PROPERTY__IMAGE_PATH:
+				setImagePath(IMAGE_PATH_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -276,18 +247,17 @@ public class VTTableValidationStylePropertyImpl extends MinimalEObjectImpl.Conta
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-		case VTTableValidationPackage.TABLE_VALIDATION_STYLE_PROPERTY__COLUMN_WIDTH:
-			return columnWidth != COLUMN_WIDTH_EDEFAULT;
-		case VTTableValidationPackage.TABLE_VALIDATION_STYLE_PROPERTY__COLUMN_NAME:
-			return COLUMN_NAME_EDEFAULT == null ? columnName != null : !COLUMN_NAME_EDEFAULT.equals(columnName);
-		case VTTableValidationPackage.TABLE_VALIDATION_STYLE_PROPERTY__IMAGE_PATH:
-			return IMAGE_PATH_EDEFAULT == null ? imagePath != null : !IMAGE_PATH_EDEFAULT.equals(imagePath);
+			case VTTableValidationPackage.TABLE_VALIDATION_STYLE_PROPERTY__COLUMN_WIDTH:
+				return columnWidth != COLUMN_WIDTH_EDEFAULT;
+			case VTTableValidationPackage.TABLE_VALIDATION_STYLE_PROPERTY__COLUMN_NAME:
+				return COLUMN_NAME_EDEFAULT == null ? columnName != null : !COLUMN_NAME_EDEFAULT.equals(columnName);
+			case VTTableValidationPackage.TABLE_VALIDATION_STYLE_PROPERTY__IMAGE_PATH:
+				return IMAGE_PATH_EDEFAULT == null ? imagePath != null : !IMAGE_PATH_EDEFAULT.equals(imagePath);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -295,16 +265,13 @@ public class VTTableValidationStylePropertyImpl extends MinimalEObjectImpl.Conta
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy()) {
-			return super.toString();
-		}
+		if (eIsProxy()) return super.toString();
 
-		final StringBuffer result = new StringBuffer(super.toString());
+		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (columnWidth: "); //$NON-NLS-1$
 		result.append(columnWidth);
 		result.append(", columnName: "); //$NON-NLS-1$

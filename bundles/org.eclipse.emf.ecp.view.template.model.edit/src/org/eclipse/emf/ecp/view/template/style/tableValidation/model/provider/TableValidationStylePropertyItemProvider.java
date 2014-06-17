@@ -24,6 +24,7 @@ import org.eclipse.emf.ecp.view.template.style.tableValidation.model.VTTableVali
 import org.eclipse.emf.ecp.view.template.style.tableValidation.model.VTTableValidationStyleProperty;
 
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
+import org.eclipse.emf.edit.provider.IChildCreationExtender;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -208,7 +209,7 @@ public class TableValidationStylePropertyItemProvider
 	 */
 	@Override
 	public ResourceLocator getResourceLocator() {
-		return TableValidationColumnStylePropertyEditPlugin.INSTANCE;
+		return ((IChildCreationExtender)adapterFactory).getResourceLocator();
 	}
 
 }
