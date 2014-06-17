@@ -176,7 +176,9 @@ public class ViewModelContextImpl implements ViewModelContext {
 			new BasicCommandStack(), rs);
 		rs.eAdapters().add(new AdapterFactoryEditingDomain.EditingDomainProvider(domain));
 		resource = rs.createResource(URI.createURI("VIRTAUAL_URI")); //$NON-NLS-1$
-		resource.getContents().add(domainObject);
+		if (resource != null) {
+			resource.getContents().add(domainObject);
+		}
 	}
 
 	private void createSettingToControlMapping() {

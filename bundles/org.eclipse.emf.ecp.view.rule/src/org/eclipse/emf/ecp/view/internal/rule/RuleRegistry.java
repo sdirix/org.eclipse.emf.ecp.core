@@ -15,6 +15,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -22,6 +23,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.common.BidirectionalMap;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.rule.model.AndCondition;
 import org.eclipse.emf.ecp.view.spi.rule.model.Condition;
@@ -70,36 +72,45 @@ public class RuleRegistry<T extends Rule> {
 	 * @param domainModel
 	 *            the domain object that owns the attribute possibly being
 	 *            changed
+	 * @return the registered {@link EStructuralFeature EStructuralFeatures}
 	 */
-	public void register(VElement renderable, T rule, Condition condition, EObject domainModel) {
+	public Set<EStructuralFeature> register(VElement renderable, T rule, Condition condition, EObject domainModel) {
 
+		final Set<EStructuralFeature> registeredFeatures = new LinkedHashSet<EStructuralFeature>();
 		if (condition instanceof LeafCondition) {
 			final LeafCondition leafCondition = (LeafCondition) condition;
 
-			leafCondition.getDomainModelReference().init(domainModel);
+			final VDomainModelReference domainModelReference = leafCondition.getDomainModelReference();
+			if (domainModelReference == null) {
+				return registeredFeatures;
+			}
+			domainModelReference.init(domainModel);
 
-			final Iterator<EStructuralFeature> featureIterator = leafCondition.getDomainModelReference()
+			final Iterator<EStructuralFeature> featureIterator = domainModelReference
 				.getEStructuralFeatureIterator();
 			while (featureIterator.hasNext()) {
 				final EStructuralFeature eStructuralFeature = featureIterator.next();
 				mapFeatureToRule(eStructuralFeature, leafCondition, rule);
+				registeredFeatures.add(eStructuralFeature);
 			}
 			rulesToRenderables.put(rule, renderable);
 
 		} else if (condition instanceof OrCondition) {
 			final OrCondition orCondition = (OrCondition) condition;
 			for (final Condition cond : orCondition.getConditions()) {
-				register(renderable, rule, cond, domainModel);
+				registeredFeatures.addAll(register(renderable, rule, cond, domainModel));
 			}
 		} else if (condition instanceof AndCondition) {
 			final AndCondition andCondition = (AndCondition) condition;
 			for (final Condition cond : andCondition.getConditions()) {
-				register(renderable, rule, cond, domainModel);
+				registeredFeatures.addAll(register(renderable, rule, cond, domainModel));
 			}
 		} else {
 			mapFeatureToRule(AllEAttributes.get(), noCondition, rule);
 			rulesToRenderables.put(rule, renderable);
 		}
+
+		return registeredFeatures;
 	}
 
 	/**
@@ -163,10 +174,9 @@ public class RuleRegistry<T extends Rule> {
 		}
 
 		if (bidirectionalMap != null) {
-			final T removeByKey = bidirectionalMap.removeByKey(condition);
-			ret = rulesToRenderables.removeByKey(removeByKey);
+			final T removedRule = bidirectionalMap.removeByKey(condition);
+			ret = rulesToRenderables.removeByKey(removedRule);
 		}
-
 		return ret;
 	}
 
@@ -212,5 +222,21 @@ public class RuleRegistry<T extends Rule> {
 		}
 
 		return result;
+	}
+
+	/**
+	 * Removes a {@link EStructuralFeature} from the mapping.
+	 * 
+	 * @param esf the {@link EStructuralFeature} to remove
+	 * @param condition the container {@link Condition}
+	 * @return the {@link VElement} being cleaned
+	 */
+	public VElement removeEFeature(EStructuralFeature esf, Condition condition) {
+		if (!featuresToRules.containsKey(esf)) {
+			return null;
+		}
+		final T removeByKey = featuresToRules.get(esf).removeByKey(condition);
+		return rulesToRenderables.removeByKey(removeByKey);
+
 	}
 }

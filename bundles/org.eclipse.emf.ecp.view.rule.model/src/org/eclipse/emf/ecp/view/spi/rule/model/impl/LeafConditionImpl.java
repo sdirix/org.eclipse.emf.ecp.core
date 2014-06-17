@@ -315,6 +315,9 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	@Override
 	public boolean evaluate() {
 		final Iterator<Setting> settingIterator = getDomainModelReference().getIterator();
+		if (!settingIterator.hasNext()) {
+			return true;
+		}
 		boolean result = false;
 		final Object expectedValue = getExpectedValue();
 		while (settingIterator.hasNext()) {

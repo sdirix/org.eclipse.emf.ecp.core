@@ -434,7 +434,7 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 
 			@Override
 			public boolean hasNext() {
-				return counter == 1;
+				return counter == 1 && getDomainModelEFeature() != null;
 			}
 
 			@Override
