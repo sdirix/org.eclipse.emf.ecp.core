@@ -37,7 +37,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 public final class EcoreHelper {
 
 	/** Contains mapping between an ecore path and the ns-uris of all the EPackages that ecore registered. */
-	private static final Map<String, List<String>> registeredEPackages = new HashMap<String, List<String>>();
+	private static final Map<String, Set<String>> registeredEPackages = new HashMap<String, Set<String>>();
 
 	private EcoreHelper() {
 	}
@@ -74,19 +74,20 @@ public final class EcoreHelper {
 			// check for physical uri
 			final EObject eObject = physicalResource.getContents().get(0);
 			final EPackage ePackage = EPackage.class.cast(eObject);
+
+			// add ePackage URI to local cache
+			if (registeredEPackages.get(ecorePath) == null) {
+				registeredEPackages.put(ecorePath, new HashSet<String>());
+			}
+			registeredEPackages.get(ecorePath).add(ePackage.getNsURI());
 			if (isContainedInPackageRegistry(ePackage.getNsURI())) {
-				return;
+				continue;
 			}
 			physicalResource.getContents().remove(ePackage);
 			final Resource virtualResource = virtualResourceSet.createResource(URI.createURI(ePackage.getNsURI()));
 			virtualResource.getContents().add(ePackage);
 			EPackage.Registry.INSTANCE.put(ePackage.getNsURI(), ePackage);
 
-			// add ePackage URI to local cache
-			if (registeredEPackages.get(ecorePath) == null) {
-				registeredEPackages.put(ecorePath, new ArrayList<String>());
-			}
-			registeredEPackages.get(ecorePath).add(ePackage.getNsURI());
 		}
 
 	}
@@ -104,6 +105,9 @@ public final class EcoreHelper {
 	 * 
 	 * */
 	public static void unregisterEcore(String ecorePath) {
+		if (ecorePath == null || registeredEPackages.get(ecorePath) == null) {
+			return;
+		}
 		final List<String> nsURIs = new ArrayList<String>(registeredEPackages.get(ecorePath));
 		unregisterEcore(ecorePath, nsURIs);
 	}
@@ -116,7 +120,7 @@ public final class EcoreHelper {
 	 * 
 	 * */
 	private static void unregisterEcore(String ecorePath, List<String> nsURIs) {
-		if (nsURIs == null) {
+		if (nsURIs == null || ecorePath == null) {
 			return;
 		}
 		for (final String nsURI : nsURIs) {
@@ -126,6 +130,7 @@ public final class EcoreHelper {
 				registeredEPackages.get(ecorePath).remove(nsURI);
 			}
 		}
+		registeredEPackages.remove(ecorePath);
 	}
 
 	/**
@@ -152,7 +157,7 @@ public final class EcoreHelper {
 
 		final Set<String> packages = new HashSet<String>();
 		packages.addAll(EPackage.Registry.INSTANCE.keySet());
-		for (final List<String> values : registeredEPackages.values()) {
+		for (final Set<String> values : registeredEPackages.values()) {
 			packages.removeAll(values);
 		}
 
