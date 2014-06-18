@@ -70,7 +70,7 @@ public class RuleSWTTest {
 	public void testEnableRuleWithFalse() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		addEnableRule();
 		render();
-		assertFalse(isControlEnabled());
+		assertTrue(isControlEnabled());
 	}
 
 	@Test
@@ -84,7 +84,7 @@ public class RuleSWTTest {
 	public void testVisibleRuleWithFalse() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		addVisibleRule();
 		render();
-		assertFalse(isControlVisible());
+		assertTrue(isControlVisible());
 	}
 
 	@Test
