@@ -14,8 +14,10 @@ package org.eclipse.emf.ecp.internal.ide.util;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -140,5 +142,20 @@ public final class EcoreHelper {
 			}
 		}
 		return usage;
+	}
+
+	/**
+	 * @return the EPackages which are registered in the EPackage registry by default (without the ones registered
+	 *         during runtime by the tooling).
+	 */
+	public static Object[] getDefaultPackageRegistryContents() {
+
+		final Set<String> packages = new HashSet<String>();
+		packages.addAll(EPackage.Registry.INSTANCE.keySet());
+		for (final List<String> values : registeredEPackages.values()) {
+			packages.removeAll(values);
+		}
+
+		return packages.toArray();
 	}
 }

@@ -30,8 +30,14 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.CommonPlugin;
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecp.ide.view.service.IDEViewModelRegistry;
 import org.eclipse.emf.ecp.view.editor.handler.ControlGenerator;
 import org.eclipse.emf.ecp.view.spi.model.VView;
@@ -57,14 +63,21 @@ import org.osgi.framework.ServiceReference;
 public class ViewModelWizard extends Wizard implements INewWizard {
 
 	private static final String PLUGIN_ID = "org.eclipse.emf.ecp.view.model.presentation"; //$NON-NLS-1$
-	private IFile selectedEcore;
+	private Object selectedContainer;
 	private List<ViewModelWizardNewFileCreationPage> fileCreationPages;
 
 	/**
-	 * @param selectedEcore the selectedEcore to set
+	 * @param selectedContainer the selectedContainer to set
 	 */
-	public void setSelectedEcore(IFile selectedEcore) {
-		this.selectedEcore = selectedEcore;
+	public void setSelectedContainer(Object selectedContainer) {
+		this.selectedContainer = selectedContainer;
+	}
+
+	public void clearSelectedContainer() {
+		selectedContainer = null;
+		if (selectEcorePage != null) {
+			selectEcorePage.setSelectedContainer(null);
+		}
 	}
 
 	private List<EClass> selectedEClasses;
@@ -212,13 +225,13 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 	 */
 	@Override
 	public IWizardPage getStartingPage() {
-		if (selectedEcore == null)
+		if (selectedContainer == null)
 		{
 			return selectEcorePage;
 		}
 
 		selectEClassPage = new SelectEClassWizardPage();
-		selectEClassPage.setSelectedEcore(selectedEcore);
+		selectEClassPage.setSelectedEPackage(getEPackage());
 		selectEClassPage.setPageComplete(true);
 		addPage(selectEClassPage);
 		return selectEClassPage;
@@ -234,14 +247,14 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 
 		if (page == selectEcorePage) {
 			selectedEClasses = null;
-			selectedEcore = selectEcorePage.getSelectedEcore();
-			if (selectedEcore != null) {
+			selectedContainer = selectEcorePage.getSelectedContainer();
+			if (selectedContainer != null) {
 				if (selectEClassPage == null) {
 					selectEClassPage = new SelectEClassWizardPage();
 					selectEClassPage.setPageComplete(true);
 					addPage(selectEClassPage);
 				}
-				selectEClassPage.setSelectedEcore(selectedEcore);
+				selectEClassPage.setSelectedEPackage(getEPackage());
 				return selectEClassPage;
 			}
 			return null;
@@ -269,6 +282,39 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 		}
 
 		return null;
+	}
+
+	/**
+	 * @return
+	 */
+	private EPackage getEPackage() {
+		EPackage ePackage = null;
+		if (EPackage.class.isInstance(selectedContainer)) {
+			ePackage = EPackage.class.cast(selectedContainer);
+		}
+		else if (IFile.class.isInstance(selectedContainer)) {
+			final ResourceSetImpl resourceSet = new ResourceSetImpl();
+			final String path = ((IFile) selectedContainer).getFullPath().toString();
+			final URI uri = URI.createPlatformResourceURI(path, true);
+
+			final Resource resource = resourceSet.getResource(uri, true);
+			if (resource != null) {
+
+				final EList<EObject> contents = resource.getContents();
+				if (contents.size() != 1) {
+					return null;
+				}
+
+				final EObject object = contents.get(0);
+				if (!(object instanceof EPackage)) {
+					return null;
+				}
+
+				ePackage = (EPackage) object;
+			}
+		}
+		return ePackage;
+
 	}
 
 	/**
@@ -354,7 +400,8 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 							// Remember the file.
 							final IFile modelFile = filePage.getModelFile();
 							// create view
-							final VView view = registry.createViewModel(modelFile, filePage.getEClass(), selectedEcore);
+							final VView view = registry.createViewModel(modelFile, filePage.getEClass(),
+								getSelectedEcore());
 							// generate controls
 							if (generateViewModelControls) {
 								ControlGenerator.generateAllControls(view);
@@ -388,6 +435,16 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 			ViewEditorPlugin.INSTANCE.log(exception);
 			return false;
 		}
+	}
+
+	/**
+	 * @return
+	 */
+	protected IFile getSelectedEcore() {
+		if (IFile.class.isInstance(selectedContainer)) {
+			return (IFile) selectedContainer;
+		}
+		return null;
 	}
 
 	/**

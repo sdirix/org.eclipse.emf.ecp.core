@@ -135,6 +135,9 @@ public class IDEViewModelRegistryImpl implements IDEViewModelRegistry {
 
 		viewModelViewModelEditorMapping.put(viewModel, viewModelEditor);
 		final String ecorePath = viewModel.getEcorePath();
+		if (ecorePath == null) {
+			return;
+		}
 		EcoreHelper.registerEcore(ecorePath);
 
 	}
@@ -193,16 +196,19 @@ public class IDEViewModelRegistryImpl implements IDEViewModelRegistry {
 		} else {
 			ep = null;
 		}
-		if (ep == null)
+		if (ep == null && selectedEcore != null)
 		{
 			EcoreHelper.registerEcore(selectedEcore.getFullPath().toString());
 			ep = (EPackage) instance.get(ePackage.getNsURI());
 		}
+
 		final EClass ec = (EClass) ep.getEClassifier(selectedEClass.getName());
 
 		view.setRootEClass(ec);
 		// Update the VView-EClass mapping
-		view.setEcorePath(selectedEcore.getFullPath().toString());
+		if (selectedEcore != null) {
+			view.setEcorePath(selectedEcore.getFullPath().toString());
+		}
 
 		// Save the contents of the resource to the file system.
 		final Map<Object, Object> options = new HashMap<Object, Object>();

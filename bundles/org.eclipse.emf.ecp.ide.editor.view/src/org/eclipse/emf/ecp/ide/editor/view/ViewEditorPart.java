@@ -272,7 +272,9 @@ public class ViewEditorPart extends EditorPart implements
 
 	private void registerEcore(VView view) {
 		final String ecorePath = view.getEcorePath();
-
+		if (ecorePath == null) {
+			return;
+		}
 		try {
 			EcoreHelper.registerEcore(ecorePath);
 		} catch (final IOException e) {
@@ -355,11 +357,13 @@ public class ViewEditorPart extends EditorPart implements
 				}
 
 				final String ecorePath = getView().getEcorePath();
-				try {
-					EcoreHelper.registerEcore(ecorePath);
-				} catch (final IOException e) {
-					Activator.getDefault().getLog()
-						.log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
+				if (ecorePath != null) {
+					try {
+						EcoreHelper.registerEcore(ecorePath);
+					} catch (final IOException e) {
+						Activator.getDefault().getLog()
+							.log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
+					}
 				}
 
 				// reload view resource after EClass' package resource was loaded into the package registry
@@ -457,8 +461,9 @@ public class ViewEditorPart extends EditorPart implements
 				}
 				final VView view = getView();
 
-				if (view.getEcorePath() == null
-					|| ResourcesPlugin.getWorkspace().getRoot().findMember(view.getEcorePath()) == null) {
+				if ((view.getEcorePath() == null
+					|| ResourcesPlugin.getWorkspace().getRoot().findMember(view.getEcorePath()) == null)
+					&& view.getRootEClass().eIsProxy()) {
 
 					final String selectedECorePath = selectEcoreFromWorkspace();
 					if (selectedECorePath != null) {

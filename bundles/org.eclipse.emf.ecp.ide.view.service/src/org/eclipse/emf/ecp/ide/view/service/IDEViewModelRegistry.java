@@ -71,7 +71,10 @@ public interface IDEViewModelRegistry {
 	 * 
 	 * @param modelFile the file in which the view should be saved
 	 * @param selectedEClass the <em>Root EClass</em> for the new {@link VView}
-	 * @param selectedEcore the ecore containing the <em>selectedEClass</em>
+	 * @param selectedEcore the ecore containing the <em>selectedEClass</em>. If the <em>selectedEcore</em> is null,
+	 *            then the <em>selectedEClass</em> must come from an EPackage which is registered by default in
+	 *            the
+	 *            package registry.
 	 * 
 	 * @return the newly created {@link VView}
 	 * 

@@ -82,7 +82,8 @@ public interface VView extends VElement {
 	EList<VContainedElement> getChildren();
 
 	/**
-	 * Returns the value of the '<em><b>Ecore Path</b></em>' attribute.
+	 * Returns the value of the '<em><b>Ecore Path</b></em>' attribute. If the value is null, then the containing
+	 * EPackage of the rootEClass must be registered by default in the EPackage registry.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Ecore Path</em>' attribute isn't clear, there really should be more of a description
