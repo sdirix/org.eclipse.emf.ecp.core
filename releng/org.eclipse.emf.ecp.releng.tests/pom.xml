@@ -52,6 +52,7 @@
 		<module>../../tests/org.eclipse.emf.ecp.ui.validation.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.validation.diagnostician.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.model.test</module>
+		<module>../../tests/org.eclipse.emf.ecp.ide.util.test</module>	
 		
 	</modules>
 </project>
