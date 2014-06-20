@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen - initial API and implementation
  ******************************************************************************/
@@ -14,8 +14,11 @@ package org.eclipse.emf.ecp.view.rule.test;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.NoSuchElementException;
+
 import org.eclipse.emf.ecp.view.internal.rule.RuleService;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
+import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VContainer;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
@@ -23,6 +26,7 @@ import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.rule.model.EnableRule;
 import org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition;
+import org.eclipse.emf.ecp.view.spi.rule.model.OrCondition;
 import org.eclipse.emf.ecp.view.spi.rule.model.RuleFactory;
 import org.eclipse.emf.ecp.view.spi.rule.model.ShowRule;
 import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalFactory;
@@ -35,12 +39,13 @@ import org.junit.Test;
 
 /**
  * @author Eugen
- * 
+ * @author jfaltermeier
+ *
  */
-
 public class DynamicRuleService_Test {
 
 	private static final double HEIGHT = 2;
+	private static final double HEIGHT_ALT = 3;
 	private static final double PLAYER_HEIGHT = 1;
 
 	private RuleService rs;
@@ -90,6 +95,30 @@ public class DynamicRuleService_Test {
 		return enabelRule;
 	}
 
+	private EnableRule createEnableRule(double expectedValue1, double expectedValue2) {
+		final EnableRule enableRule = RuleFactory.eINSTANCE.createEnableRule();
+
+		final OrCondition oc = RuleFactory.eINSTANCE.createOrCondition();
+
+		final LeafCondition lc1 = RuleFactory.eINSTANCE.createLeafCondition();
+		final VFeaturePathDomainModelReference dmr1 = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
+		dmr1.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Height());
+		lc1.setDomainModelReference(dmr1);
+		lc1.setExpectedValue(expectedValue1);
+		oc.getConditions().add(lc1);
+
+		final LeafCondition lc2 = RuleFactory.eINSTANCE.createLeafCondition();
+		final VFeaturePathDomainModelReference dmr2 = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
+		dmr2.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Height());
+		lc2.setDomainModelReference(dmr2);
+		lc2.setExpectedValue(expectedValue2);
+		oc.getConditions().add(lc2);
+
+		enableRule.setCondition(oc);
+
+		return enableRule;
+	}
+
 	private VView createSimpleView() {
 		final VView view = VViewFactory.eINSTANCE.createView();
 		final VControl controlName = VViewFactory.eINSTANCE.createControl();
@@ -110,6 +139,15 @@ public class DynamicRuleService_Test {
 		controlName.setDomainModelReference(dmrName);
 		verticalLayout.getChildren().add(controlName);
 		return view;
+	}
+
+	private VVerticalLayout getVerticalLayout(VView view) {
+		for (final VContainedElement element : view.getChildren()) {
+			if (element instanceof VVerticalLayout) {
+				return (VVerticalLayout) element;
+			}
+		}
+		throw new NoSuchElementException("No vertical layout found in the view's children.");
 	}
 
 	@Test
@@ -518,4 +556,69 @@ public class DynamicRuleService_Test {
 		assertTrue(container.isEnabled());
 		assertFalse(container.getChildren().get(0).isEnabled());
 	}
+
+	@Test
+	public void testAddNewVElementWithoutRule() {
+		// setup
+		view = createContainerView();
+		initialize();
+
+		// act
+		final VVerticalLayout verticalLayout = getVerticalLayout(view);
+		final VControl controlName = VViewFactory.eINSTANCE.createControl();
+		final VFeaturePathDomainModelReference dmrName = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
+		dmrName.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Name());
+		controlName.setDomainModelReference(dmrName);
+		verticalLayout.getChildren().add(controlName);
+
+		// assert
+		// no exceptions expected
+	}
+
+	@Test
+	public void testAddNewVElementWithLeafCondition() {
+		// setup
+		view = createContainerView();
+		initialize();
+
+		// act
+		final VVerticalLayout verticalLayout = getVerticalLayout(view);
+		final VControl controlName = VViewFactory.eINSTANCE.createControl();
+		final VFeaturePathDomainModelReference dmrName = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
+		dmrName.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Name());
+		controlName.setDomainModelReference(dmrName);
+
+		final EnableRule er = createEnableRule(HEIGHT);
+		controlName.getAttachments().add(er);
+
+		verticalLayout.getChildren().add(controlName);
+
+		// assert
+		assertTrue(verticalLayout.getChildren().get(0).isEnabled());
+		assertFalse(verticalLayout.getChildren().get(1).isEnabled());
+	}
+
+	@Test
+	public void testAddNewVElementWithNonLeafCondition() {
+		// setup
+		view = createContainerView();
+		initialize();
+
+		// act
+		final VVerticalLayout verticalLayout = getVerticalLayout(view);
+		final VControl controlName = VViewFactory.eINSTANCE.createControl();
+		final VFeaturePathDomainModelReference dmrName = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
+		dmrName.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Name());
+		controlName.setDomainModelReference(dmrName);
+
+		final EnableRule er = createEnableRule(HEIGHT, HEIGHT_ALT);
+		controlName.getAttachments().add(er);
+
+		verticalLayout.getChildren().add(controlName);
+
+		// assert
+		assertTrue(verticalLayout.getChildren().get(0).isEnabled());
+		assertFalse(verticalLayout.getChildren().get(1).isEnabled());
+	}
+
 }

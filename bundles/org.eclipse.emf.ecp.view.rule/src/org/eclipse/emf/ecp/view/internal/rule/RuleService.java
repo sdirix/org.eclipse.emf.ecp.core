@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Edgar Mueller - initial API and implementation
  ******************************************************************************/
@@ -46,7 +46,7 @@ import org.eclipse.emf.ecp.view.spi.rule.model.ShowRule;
 /**
  * Rule service that, once instantiated, maintains and synchronizes
  * the state of a rule with its {@link VElement}.
- * 
+ *
  * @author emueller
  */
 public class RuleService implements ViewModelService {
@@ -70,7 +70,7 @@ public class RuleService implements ViewModelService {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#instantiate(org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
 	@Override
@@ -109,7 +109,7 @@ public class RuleService implements ViewModelService {
 			public void notifyChange(ModelChangeNotification notification) {
 				if (VFeaturePathDomainModelReference.class.isInstance(notification.getNotifier())
 					&& VViewPackage.eINSTANCE.getFeaturePathDomainModelReference_DomainModelEFeature() == notification
-						.getStructuralFeature()) {
+					.getStructuralFeature()) {
 					final VDomainModelReference domainModelReference = VDomainModelReference.class.cast(notification
 						.getNotifier());
 					final EObject eContainer = domainModelReference.eContainer();
@@ -163,7 +163,7 @@ public class RuleService implements ViewModelService {
 				else if (ShowRule.class.isInstance(notifier)) {
 					final Set<EStructuralFeature> register = register(showRuleRegistry, ShowRule.class,
 						context.getDomainModel(), ShowRule.class.cast(notifier)
-							.eContainer());
+						.eContainer());
 
 					for (final EStructuralFeature esf : register) {
 						evalShow(esf);
@@ -471,18 +471,6 @@ public class RuleService implements ViewModelService {
 		}
 	}
 
-	private <T extends Rule> void evalShow() {
-		for (final EStructuralFeature feature : showRuleRegistry.getAttributes()) {
-			evalShow(feature);
-		}
-	}
-
-	private <T extends Rule> void evalEnable() {
-		for (final EStructuralFeature feature : enableRuleRegistry.getAttributes()) {
-			evalEnable(feature);
-		}
-	}
-
 	private <T extends Rule> Set<EStructuralFeature> init(RuleRegistry<T> registry, Class<T> ruleType,
 		EObject viewModel,
 		EObject domainObject) {
@@ -512,7 +500,7 @@ public class RuleService implements ViewModelService {
 	/**
 	 * Returns all {@link VElement}s, that would we disabled if {@code possibleValues} would be set for the given
 	 * {@code setting}s.
-	 * 
+	 *
 	 * @param possibleValues
 	 *            a mapping of settings to their would-be new value
 	 * @param changedAttribute the changed attribute
@@ -528,7 +516,7 @@ public class RuleService implements ViewModelService {
 	/**
 	 * Returns all {@link VElement}s, that would we hidden if {@code possibleValues} would be set for the given
 	 * {@code setting}s.
-	 * 
+	 *
 	 * @param possibleValues
 	 *            a mapping of settings to their would-be new value
 	 * @param changedAttribute the attribute that was changed
@@ -573,7 +561,7 @@ public class RuleService implements ViewModelService {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#getPriority()
 	 */
 	@Override
