@@ -1,4 +1,4 @@
-package org.elipse.emf.ecp.view.model.test;
+package org.eclipse.emf.ecp.view.model.test;
 
 import static org.junit.Assert.assertEquals;
 

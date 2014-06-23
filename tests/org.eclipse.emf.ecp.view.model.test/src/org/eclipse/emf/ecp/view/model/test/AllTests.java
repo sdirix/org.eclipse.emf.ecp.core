@@ -9,7 +9,7 @@
  * Contributors:
  * Eugen - initial API and implementation
  ******************************************************************************/
-package org.elipse.emf.ecp.view.model.test;
+package org.eclipse.emf.ecp.view.model.test;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
