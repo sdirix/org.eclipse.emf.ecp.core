@@ -34,6 +34,7 @@ public final class Messages extends NLS {
 	public static String EMFFormsTemplateWizardPage_errorNoFilename;
 	public static String EMFFormsTemplateWizardPage_errorProjectReadOnly;
 	public static String EMFFormsTemplateWizardPage_errorWrongFileExtension;
+	public static String EMFFormsTemplateWizardPage_FileAlreadyExist;
 	public static String EMFFormsTemplateWizardPage_fileSelection;
 	public static String EMFFormsTemplateWizardPage_title;
 	static {

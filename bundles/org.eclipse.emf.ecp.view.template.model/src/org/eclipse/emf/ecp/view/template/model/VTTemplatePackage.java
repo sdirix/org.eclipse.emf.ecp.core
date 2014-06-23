@@ -104,6 +104,16 @@ public interface VTTemplatePackage extends EPackage
 	int VIEW_TEMPLATE__STYLES = 1;
 
 	/**
+	 * The feature id for the '<em><b>Referenced Ecores</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int VIEW_TEMPLATE__REFERENCED_ECORES = 2;
+
+	/**
 	 * The number of structural features of the '<em>View Template</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -111,7 +121,7 @@ public interface VTTemplatePackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int VIEW_TEMPLATE_FEATURE_COUNT = 2;
+	int VIEW_TEMPLATE_FEATURE_COUNT = 3;
 
 	/**
 	 * The number of operations of the '<em>View Template</em>' class.
@@ -461,6 +471,19 @@ public interface VTTemplatePackage extends EPackage
 	EReference getViewTemplate_Styles();
 
 	/**
+	 * Returns the meta object for the attribute list '
+	 * {@link org.eclipse.emf.ecp.view.template.model.VTViewTemplate#getReferencedEcores <em>Referenced Ecores</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for the attribute list '<em>Referenced Ecores</em>'.
+	 * @see org.eclipse.emf.ecp.view.template.model.VTViewTemplate#getReferencedEcores()
+	 * @see #getViewTemplate()
+	 * @generated
+	 */
+	EAttribute getViewTemplate_ReferencedEcores();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate
 	 * <em>Control Validation Template</em>}'.
 	 * <!-- begin-user-doc -->
@@ -798,6 +821,15 @@ public interface VTTemplatePackage extends EPackage
 		 * @generated
 		 */
 		EReference VIEW_TEMPLATE__STYLES = eINSTANCE.getViewTemplate_Styles();
+
+		/**
+		 * The meta object literal for the '<em><b>Referenced Ecores</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @generated
+		 */
+		EAttribute VIEW_TEMPLATE__REFERENCED_ECORES = eINSTANCE.getViewTemplate_ReferencedEcores();
 
 		/**
 		 * The meta object literal for the '

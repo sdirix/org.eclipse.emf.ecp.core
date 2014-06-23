@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.EObject;
  * <li>{@link org.eclipse.emf.ecp.view.template.model.VTViewTemplate#getControlValidationConfiguration <em>Control
  * Validation Configuration</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.template.model.VTViewTemplate#getStyles <em>Styles</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.template.model.VTViewTemplate#getReferencedEcores <em>Referenced Ecores</em>}</li>
  * </ul>
  * </p>
  * 
@@ -80,5 +81,22 @@ public interface VTViewTemplate extends EObject
 	 * @generated
 	 */
 	EList<VTStyle> getStyles();
+
+	/**
+	 * Returns the value of the '<em><b>Referenced Ecores</b></em>' attribute list.
+	 * The list contents are of type {@link java.lang.String}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Referenced Ecores</em>' attribute list isn't clear, there really should be more of a
+	 * description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the value of the '<em>Referenced Ecores</em>' attribute list.
+	 * @see org.eclipse.emf.ecp.view.template.model.VTTemplatePackage#getViewTemplate_ReferencedEcores()
+	 * @model
+	 * @generated
+	 */
+	EList<String> getReferencedEcores();
 
 } // VTViewTemplate

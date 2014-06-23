@@ -24,12 +24,14 @@ import org.eclipse.emf.ecp.view.template.style.tableValidation.model.VTTableVali
  * <!-- begin-user-doc -->
  * An implementation of the model <b>Package</b>.
  * <!-- end-user-doc -->
+ * 
  * @generated
  */
 public class VTTableValidationPackageImpl extends EPackageImpl implements VTTableValidationPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	private EClass tableValidationStylePropertyEClass = null;
@@ -55,6 +57,7 @@ public class VTTableValidationPackageImpl extends EPackageImpl implements VTTabl
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	private static boolean isInited = false;
@@ -73,10 +76,14 @@ public class VTTableValidationPackageImpl extends EPackageImpl implements VTTabl
 	 * @generated
 	 */
 	public static VTTableValidationPackage init() {
-		if (isInited) return (VTTableValidationPackage)EPackage.Registry.INSTANCE.getEPackage(VTTableValidationPackage.eNS_URI);
+		if (isInited) {
+			return (VTTableValidationPackage) EPackage.Registry.INSTANCE.getEPackage(VTTableValidationPackage.eNS_URI);
+		}
 
 		// Obtain or create and register package
-		VTTableValidationPackageImpl theTableValidationPackage = (VTTableValidationPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof VTTableValidationPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new VTTableValidationPackageImpl());
+		final VTTableValidationPackageImpl theTableValidationPackage = (VTTableValidationPackageImpl) (EPackage.Registry.INSTANCE
+			.get(eNS_URI) instanceof VTTableValidationPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI)
+			: new VTTableValidationPackageImpl());
 
 		isInited = true;
 
@@ -92,7 +99,6 @@ public class VTTableValidationPackageImpl extends EPackageImpl implements VTTabl
 		// Mark meta-data to indicate it can't be changed
 		theTableValidationPackage.freeze();
 
-  
 		// Update the registry and return the package
 		EPackage.Registry.INSTANCE.put(VTTableValidationPackage.eNS_URI, theTableValidationPackage);
 		return theTableValidationPackage;
@@ -101,6 +107,7 @@ public class VTTableValidationPackageImpl extends EPackageImpl implements VTTabl
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -111,59 +118,67 @@ public class VTTableValidationPackageImpl extends EPackageImpl implements VTTabl
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public EAttribute getTableValidationStyleProperty_ColumnWidth() {
-		return (EAttribute)tableValidationStylePropertyEClass.getEStructuralFeatures().get(0);
+		return (EAttribute) tableValidationStylePropertyEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public EAttribute getTableValidationStyleProperty_ColumnName() {
-		return (EAttribute)tableValidationStylePropertyEClass.getEStructuralFeatures().get(1);
+		return (EAttribute) tableValidationStylePropertyEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public EAttribute getTableValidationStyleProperty_ImagePath() {
-		return (EAttribute)tableValidationStylePropertyEClass.getEStructuralFeatures().get(2);
+		return (EAttribute) tableValidationStylePropertyEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public VTTableValidationFactory getTableValidationFactory() {
-		return (VTTableValidationFactory)getEFactoryInstance();
+		return (VTTableValidationFactory) getEFactoryInstance();
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	private boolean isCreated = false;
 
 	/**
-	 * Creates the meta-model objects for the package.  This method is
+	 * Creates the meta-model objects for the package. This method is
 	 * guarded to have no affect on any invocation but its first.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public void createPackageContents() {
-		if (isCreated) return;
+		if (isCreated) {
+			return;
+		}
 		isCreated = true;
 
 		// Create classes and their features
@@ -176,19 +191,23 @@ public class VTTableValidationPackageImpl extends EPackageImpl implements VTTabl
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	private boolean isInitialized = false;
 
 	/**
-	 * Complete the initialization of the package and its meta-model.  This
+	 * Complete the initialization of the package and its meta-model. This
 	 * method is guarded to have no affect on any invocation but its first.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public void initializePackageContents() {
-		if (isInitialized) return;
+		if (isInitialized) {
+			return;
+		}
 		isInitialized = true;
 
 		// Initialize package
@@ -197,7 +216,8 @@ public class VTTableValidationPackageImpl extends EPackageImpl implements VTTabl
 		setNsURI(eNS_URI);
 
 		// Obtain other dependent packages
-		VTTemplatePackage theTemplatePackage = (VTTemplatePackage)EPackage.Registry.INSTANCE.getEPackage(VTTemplatePackage.eNS_URI);
+		final VTTemplatePackage theTemplatePackage = (VTTemplatePackage) EPackage.Registry.INSTANCE
+			.getEPackage(VTTemplatePackage.eNS_URI);
 
 		// Create type parameters
 
@@ -207,10 +227,20 @@ public class VTTableValidationPackageImpl extends EPackageImpl implements VTTabl
 		tableValidationStylePropertyEClass.getESuperTypes().add(theTemplatePackage.getStyleProperty());
 
 		// Initialize classes, features, and operations; add parameters
-		initEClass(tableValidationStylePropertyEClass, VTTableValidationStyleProperty.class, "TableValidationStyleProperty", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEAttribute(getTableValidationStyleProperty_ColumnWidth(), ecorePackage.getEInt(), "columnWidth", null, 0, 1, VTTableValidationStyleProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEAttribute(getTableValidationStyleProperty_ColumnName(), ecorePackage.getEString(), "columnName", null, 0, 1, VTTableValidationStyleProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEAttribute(getTableValidationStyleProperty_ImagePath(), ecorePackage.getEString(), "imagePath", null, 0, 1, VTTableValidationStyleProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEClass(tableValidationStylePropertyEClass, VTTableValidationStyleProperty.class,
+			"TableValidationStyleProperty", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(
+			getTableValidationStyleProperty_ColumnWidth(),
+			ecorePackage.getEInt(),
+			"columnWidth", null, 0, 1, VTTableValidationStyleProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(
+			getTableValidationStyleProperty_ColumnName(),
+			ecorePackage.getEString(),
+			"columnName", null, 0, 1, VTTableValidationStyleProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(
+			getTableValidationStyleProperty_ImagePath(),
+			ecorePackage.getEString(),
+			"imagePath", null, 0, 1, VTTableValidationStyleProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		// Create resource
 		createResource(eNS_URI);

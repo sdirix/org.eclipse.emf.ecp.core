@@ -175,6 +175,11 @@ public class EMFFormsTemplateWizardPage extends WizardPage {
 			updateStatus(Messages.EMFFormsTemplateWizardPage_errorInvalidFilename);
 			return;
 		}
+
+		if (ResourcesPlugin.getWorkspace().getRoot().getFile(container.getFullPath().append(fileName)).exists()) {
+			updateStatus(String.format(Messages.EMFFormsTemplateWizardPage_FileAlreadyExist, fileName));
+			return;
+		}
 		final int dotLoc = fileName.lastIndexOf('.');
 		if (dotLoc != -1) {
 			final String ext = fileName.substring(dotLoc + 1);

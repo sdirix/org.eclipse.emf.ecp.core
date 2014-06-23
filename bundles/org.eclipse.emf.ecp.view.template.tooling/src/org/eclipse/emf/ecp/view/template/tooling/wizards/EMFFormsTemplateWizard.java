@@ -14,8 +14,19 @@ package org.eclipse.emf.ecp.view.template.tooling.wizards;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -28,6 +39,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecp.view.template.internal.tooling.Activator;
 import org.eclipse.emf.ecp.view.template.internal.tooling.Messages;
 import org.eclipse.emf.ecp.view.template.model.VTTemplateFactory;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplate;
@@ -42,6 +54,9 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.ide.IDE;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.xml.sax.SAXException;
 
 /**
  * This is a sample new wizard. Its role is to create a new file
@@ -104,6 +119,37 @@ public class EMFFormsTemplateWizard extends Wizard implements INewWizard {
 		return true;
 	}
 
+	private void addToPluginXML(IFile modelFile, IProgressMonitor monitor) {
+		final IProject project = modelFile.getProject();
+		final IFile pluginFile = project.getFile("plugin.xml"); //$NON-NLS-1$
+
+		try {
+			final DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+			final DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+			final Document doc = dBuilder.parse(pluginFile.getLocationURI().toString());
+			final Element element = doc.createElement("extension"); //$NON-NLS-1$
+			element.setAttribute("point", "org.eclipse.emf.ecp.view.template"); //$NON-NLS-1$ //$NON-NLS-2$
+			final Element templateElement = doc.createElement("viewTemplate"); //$NON-NLS-1$
+			templateElement.setAttribute("xmi", modelFile.getProjectRelativePath().toString()); //$NON-NLS-1$
+			element.appendChild(templateElement);
+			doc.getDocumentElement().appendChild(element);
+
+			final Transformer tf = TransformerFactory.newInstance().newTransformer();
+			tf.setOutputProperty(OutputKeys.ENCODING, "UTF-8"); //$NON-NLS-1$
+			tf.setOutputProperty(OutputKeys.INDENT, "yes"); //$NON-NLS-1$
+			final StreamResult file = new StreamResult(pluginFile.getLocation().toFile());
+			tf.transform(new DOMSource(doc), file);
+		} catch (final SAXException ex) {
+			Activator.log(ex);
+		} catch (final IOException ex) {
+			Activator.log(ex);
+		} catch (final ParserConfigurationException ex) {
+			Activator.log(ex);
+		} catch (final TransformerException ex) {
+			Activator.log(ex);
+		}
+	}
+
 	/**
 	 * The worker method. It will find the container, create the
 	 * file if missing or just replace its contents, and open
@@ -149,6 +195,7 @@ public class EMFFormsTemplateWizard extends Wizard implements INewWizard {
 			}
 		});
 		monitor.worked(1);
+		addToPluginXML(file, monitor);
 	}
 
 	private void throwCoreException(String message) throws CoreException {
