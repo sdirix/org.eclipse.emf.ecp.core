@@ -38,6 +38,8 @@ public final class EcoreHelper {
 
 	/** Contains mapping between an ecore path and the ns-uris of all the EPackages that ecore registered. */
 	private static final Map<String, Set<String>> registeredEPackages = new HashMap<String, Set<String>>();
+	private static final Map<String, Integer> registeredEcores = new HashMap<String, Integer>();
+	private static final Set<String> runtimeRegisteredPackages = new HashSet<String>();
 
 	private EcoreHelper() {
 	}
@@ -55,6 +57,12 @@ public final class EcoreHelper {
 		if (ecorePath == null) {
 			return;
 		}
+
+		Integer previousValue = registeredEcores.get(ecorePath);
+		if (previousValue == null || previousValue < 0) {
+			previousValue = 0;
+		}
+		registeredEcores.put(ecorePath, ++previousValue);
 
 		final ResourceSet physicalResourceSet = new ResourceSetImpl();
 		// put the package in the registry
@@ -80,13 +88,16 @@ public final class EcoreHelper {
 				registeredEPackages.put(ecorePath, new HashSet<String>());
 			}
 			registeredEPackages.get(ecorePath).add(ePackage.getNsURI());
+
 			if (isContainedInPackageRegistry(ePackage.getNsURI())) {
 				continue;
 			}
+
 			physicalResource.getContents().remove(ePackage);
 			final Resource virtualResource = virtualResourceSet.createResource(URI.createURI(ePackage.getNsURI()));
 			virtualResource.getContents().add(ePackage);
 			EPackage.Registry.INSTANCE.put(ePackage.getNsURI(), ePackage);
+			runtimeRegisteredPackages.add(ePackage.getNsURI());
 
 		}
 
@@ -108,6 +119,11 @@ public final class EcoreHelper {
 		if (ecorePath == null || registeredEPackages.get(ecorePath) == null) {
 			return;
 		}
+		int usages = registeredEcores.get(ecorePath);
+		registeredEcores.put(ecorePath, --usages);
+		if (usages > 0) {
+			return;
+		}
 		final List<String> nsURIs = new ArrayList<String>(registeredEPackages.get(ecorePath));
 		unregisterEcore(ecorePath, nsURIs);
 	}
@@ -124,7 +140,7 @@ public final class EcoreHelper {
 			return;
 		}
 		for (final String nsURI : nsURIs) {
-			if (getUsageCount(nsURI) == 1) {
+			if (getUsageCount(nsURI) == 1 && runtimeRegisteredPackages.contains(nsURI)) {
 				final Registry registry = org.eclipse.emf.ecore.EPackage.Registry.INSTANCE;
 				registry.remove(nsURI);
 				registeredEPackages.get(ecorePath).remove(nsURI);
@@ -157,10 +173,7 @@ public final class EcoreHelper {
 
 		final Set<String> packages = new HashSet<String>();
 		packages.addAll(EPackage.Registry.INSTANCE.keySet());
-		for (final Set<String> values : registeredEPackages.values()) {
-			packages.removeAll(values);
-		}
-
+		packages.removeAll(runtimeRegisteredPackages);
 		return packages.toArray();
 	}
 }
