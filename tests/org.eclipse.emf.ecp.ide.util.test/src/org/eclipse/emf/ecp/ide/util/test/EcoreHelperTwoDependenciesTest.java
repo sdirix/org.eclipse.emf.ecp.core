@@ -3,7 +3,8 @@
  */
 package org.eclipse.emf.ecp.ide.util.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 
@@ -20,113 +21,113 @@ import org.junit.Test;
 
 /**
  * @author Alexandra Buzila
- *
+ * 
  */
 @SuppressWarnings("restriction")
 public class EcoreHelperTwoDependenciesTest {
 
-	private Registry packageRegistry = EPackage.Registry.INSTANCE;
+	private final Registry packageRegistry = EPackage.Registry.INSTANCE;
 	private static String cEcorePath = "/TestEcoreHelperProjectResources/C.ecore";
 	private static String aEcorePath = "/TestEcoreHelperProjectResources/A.ecore";
 	private static String bEcorePath = "/TestEcoreHelperProjectResources/B.ecore";
+
 	/**
 	 * @throws java.lang.Exception
 	 */
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-		IProject project = root.getProject("TestEcoreHelperProjectResources");
+		final IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+		final IProject project = root.getProject("TestEcoreHelperProjectResources");
 		// create resources to register and unregister
-		if (!project.exists())
+		if (!project.exists()) {
 			installResourcesProject();
+		}
 	}
 
 	private static void installResourcesProject() throws Exception {
-		ProjectInstallerWizard wiz = new ProjectInstallerWizard();
+		final ProjectInstallerWizard wiz = new ProjectInstallerWizard();
 		wiz.installExample(new NullProgressMonitor());
 	}
 
 	@Test
-	public void testRegister() throws IOException {
+	public void testRegisterUnregister() throws IOException {
+
+		// check initial state
 		assertFalse("Package A is already in the registry!",
-				packageRegistry.containsKey("a.nsuri"));
+			packageRegistry.containsKey("a.nsuri"));
 		assertFalse("Package B is already in the registry!",
-				packageRegistry.containsKey("b.nsuri"));
+			packageRegistry.containsKey("b.nsuri"));
 		assertFalse("Package C is already in the registry!",
-				packageRegistry.containsKey("c.nsuri"));
+			packageRegistry.containsKey("c.nsuri"));
+
+		// register C references B references A
 		EcoreHelper.registerEcore(cEcorePath);
 		assertTrue("Package A not in the registry!",
-				packageRegistry.containsKey("a.nsuri"));
+			packageRegistry.containsKey("a.nsuri"));
 		assertTrue("Package B not in the registry!",
-				packageRegistry.containsKey("b.nsuri"));
+			packageRegistry.containsKey("b.nsuri"));
 		assertTrue("Package C not in the registry!",
-				packageRegistry.containsKey("c.nsuri"));
-	}
-	
-	@Test
-	public void testUnregister() throws IOException{
-		EcoreHelper.registerEcore(cEcorePath);
-		assertTrue("Package A not in the registry!",
-				packageRegistry.containsKey("a.nsuri"));
-		assertTrue("Package B not in the registry!",
-				packageRegistry.containsKey("b.nsuri"));
-		assertTrue("Package C not in the registry!",
-				packageRegistry.containsKey("c.nsuri"));
+			packageRegistry.containsKey("c.nsuri"));
 
 		EcoreHelper.unregisterEcore(cEcorePath);
-
 		assertFalse("Package A is already in the registry!",
-				packageRegistry.containsKey("a.nsuri"));
+			packageRegistry.containsKey("a.nsuri"));
 		assertFalse("Package B is already in the registry!",
-				packageRegistry.containsKey("b.nsuri"));
+			packageRegistry.containsKey("b.nsuri"));
 		assertFalse("Package C is already in the registry!",
-				packageRegistry.containsKey("c.nsuri"));
+			packageRegistry.containsKey("c.nsuri"));
 	}
-	
+
 	@Test
-	public void testUnregisterMultipleUsage() throws IOException{
+	public void testUnregisterMultipleUsage() throws IOException {
+		// register
 		EcoreHelper.registerEcore(aEcorePath);
 		EcoreHelper.registerEcore(bEcorePath);
 		EcoreHelper.registerEcore(cEcorePath);
-		
 		assertTrue("Package A not in the registry!",
-				packageRegistry.containsKey("a.nsuri"));
+			packageRegistry.containsKey("a.nsuri"));
 		assertTrue("Package B not in the registry!",
-				packageRegistry.containsKey("b.nsuri"));
+			packageRegistry.containsKey("b.nsuri"));
 		assertTrue("Package C not in the registry!",
-				packageRegistry.containsKey("c.nsuri"));
+			packageRegistry.containsKey("c.nsuri"));
 
+		// unregister C references B
 		EcoreHelper.unregisterEcore(cEcorePath);
 		assertTrue("Package A not in the registry!",
-				packageRegistry.containsKey("a.nsuri"));
+			packageRegistry.containsKey("a.nsuri"));
 		assertTrue("Package B not in the registry!",
-				packageRegistry.containsKey("b.nsuri"));
+			packageRegistry.containsKey("b.nsuri"));
 		assertFalse("Package C is already in the registry!",
-				packageRegistry.containsKey("c.nsuri"));
-		
+			packageRegistry.containsKey("c.nsuri"));
+
+		// unregister B references A
 		EcoreHelper.unregisterEcore(bEcorePath);
 		assertTrue("Package A not in the registry!",
-				packageRegistry.containsKey("a.nsuri"));
+			packageRegistry.containsKey("a.nsuri"));
 		assertFalse("Package B is already in the registry!",
-				packageRegistry.containsKey("b.nsuri"));
+			packageRegistry.containsKey("b.nsuri"));
 		assertFalse("Package C is already in the registry!",
-				packageRegistry.containsKey("c.nsuri"));
-		
+			packageRegistry.containsKey("c.nsuri"));
+
+		// unregister A
 		EcoreHelper.unregisterEcore(aEcorePath);
 		assertFalse("Package A is already in the registry!",
-				packageRegistry.containsKey("a.nsuri"));
+			packageRegistry.containsKey("a.nsuri"));
 		assertFalse("Package B is already in the registry!",
-				packageRegistry.containsKey("b.nsuri"));
+			packageRegistry.containsKey("b.nsuri"));
 		assertFalse("Package C is already in the registry!",
-				packageRegistry.containsKey("c.nsuri"));
+			packageRegistry.containsKey("c.nsuri"));
 	}
-	
+
 	/**
 	 * @throws java.lang.Exception
 	 */
 	@After
 	public void tearDown() throws Exception {
 		EcoreHelper.unregisterEcore(cEcorePath);
+		EcoreHelper.unregisterEcore(aEcorePath);
+		EcoreHelper.unregisterEcore(bEcorePath);
+
 	}
 
 }

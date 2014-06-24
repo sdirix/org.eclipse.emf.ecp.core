@@ -26,8 +26,9 @@ import org.junit.Test;
  */
 @SuppressWarnings("restriction")
 public class EcoreHelperNoDependenciesTest {
-	private Registry packageRegistry = EPackage.Registry.INSTANCE;
+	private final Registry packageRegistry = EPackage.Registry.INSTANCE;
 	private static String aEcorePath = "/TestEcoreHelperProjectResources/A.ecore";
+	private static String dummyEcorePath = "/TestEcoreHelperProjectResources/dummy.ecore";
 
 	/**
 	 * @throws java.lang.Exception
@@ -35,15 +36,16 @@ public class EcoreHelperNoDependenciesTest {
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 
-		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-		IProject project = root.getProject("TestEcoreHelperProjectResources");
+		final IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+		final IProject project = root.getProject("TestEcoreHelperProjectResources");
 		// create resources to register and unregister
-		if (!project.exists())
+		if (!project.exists()) {
 			installResourcesProject();
+		}
 	}
 
 	private static void installResourcesProject() throws Exception {
-		ProjectInstallerWizard wiz = new ProjectInstallerWizard();
+		final ProjectInstallerWizard wiz = new ProjectInstallerWizard();
 		wiz.installExample(new NullProgressMonitor());
 	}
 
@@ -64,40 +66,44 @@ public class EcoreHelperNoDependenciesTest {
 	}
 
 	/**
-	 * Test method for
-	 * {@link org.eclipse.emf.ecp.internal.ecore.util.EcoreHelper#registerEcore(java.lang.String)}
-	 * .
+	 * Test method for {@link org.eclipse.emf.ecp.internal.ecore.util.EcoreHelper#registerEcore(java.lang.String)} .
 	 * 
 	 * @throws IOException
 	 */
 	@Test
-	public void testRegisterIndependentEcore() throws IOException {
+	public void testRegisterUnregisterIndependentEcore() throws IOException {
+
+		// check initial setup
 		assertFalse("Package is already in the registry!",
-				packageRegistry.containsKey("a.nsuri"));
+			packageRegistry.containsKey("a.nsuri"));
+
+		// register
 		EcoreHelper.registerEcore(aEcorePath);
 		assertTrue("Package not in the registry!",
-				packageRegistry.containsKey("a.nsuri"));
+			packageRegistry.containsKey("a.nsuri"));
+
+		// unregister
+		EcoreHelper.unregisterEcore(aEcorePath);
+		assertFalse("Package is still in the registry!",
+			packageRegistry.containsKey("a.nsuri"));
 
 	}
 
 	/**
-	 * Test method for
-	 * {@link org.eclipse.emf.ecp.internal.ecore.util.EcoreHelper#unregisterEcore(org.eclipse.emf.common.util.URI)}
-	 * .
+	 * Test method for {@link org.eclipse.emf.ecp.internal.ecore.util.EcoreHelper#registerEcore(java.lang.String)} .
 	 * 
 	 * @throws IOException
 	 */
 	@Test
-	public void testUnregisterIndependentEcore() throws IOException {
-		EcoreHelper.registerEcore(aEcorePath);
-		assertTrue("Package not in the registry!",
-				packageRegistry.containsKey("a.nsuri"));
-
-		EcoreHelper.unregisterEcore(aEcorePath);
-
+	public void testUnregisterPackageNotInRegitry() throws IOException {
+		// check initial setup
 		assertFalse("Package is already in the registry!",
-				packageRegistry.containsKey("a.nsuri"));
-
+			packageRegistry.containsKey("a.nsuri"));
+		// unregister
+		EcoreHelper.unregisterEcore(aEcorePath);
+		EcoreHelper.unregisterEcore(aEcorePath);
+		assertFalse("Package is still in the registry!",
+			packageRegistry.containsKey("a.nsuri"));
 	}
 
 }

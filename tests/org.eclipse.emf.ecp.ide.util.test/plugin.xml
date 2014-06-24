@@ -4,7 +4,7 @@
    <extension
          point="org.eclipse.emf.common.ui.examples">
       <example
-            wizardID="org.eclipse.emf.ecp.ecore.test.ProjectInstallerWizard">
+            wizardID="org.eclipse.emf.ecp.ide.util.test.ProjectInstallerWizard">
          <projectDescriptor
                contentURI="resources/TestEcoreHelperProjectResources/"
                name="org.eclipse.emf.ecp.ecore.test.projectDescriptor1">
@@ -15,7 +15,7 @@
          point="org.eclipse.ui.newWizards">
       <wizard
             class="org.eclipse.emf.ecp.ide.util.test.ProjectInstallerWizard"
-            id="org.eclipse.emf.ecp.ecore.test.ProjectInstallerWizard"
+            id="org.eclipse.emf.ecp.ide.util.test.ProjectInstallerWizard"
             name="Project Installer">
       </wizard>
    </extension>
