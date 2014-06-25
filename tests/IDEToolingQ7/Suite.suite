@@ -1,0 +1,34 @@
+--- Q7 testcase ---
+Format-Version: 1.0
+Q7-vendor: www.xored.com/q7
+Element-Name: Suite
+Element-Type: testsuite
+Element-Version: 2.0
+Id: _pkTCIPxkEeOWJroCeiIXZQ
+Q7-Runtime-Version: 1.3.10.201312200736
+Save-Time: 6/25/14 6:17 PM
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8
+Content-Type: text/testcase
+Entry-Name: testcase-items
+
+_eHmx0PxjEeOWJroCeiIXZQ	// kind: 'test' name: 'Preview_Control_EDate' path: 'tests/Preview_Control_EDate.test'
+_FXRWoPxhEeOWJroCeiIXZQ	// kind: 'test' name: 'Preview_Control_Enum' path: 'tests/Preview_Control_Enum (1).test'
+_5dVewPxhEeOWJroCeiIXZQ	// kind: 'test' name: 'Preview_Control_Num' path: 'tests/Preview_Control_Num.test'
+_B3ercPxgEeOWJroCeiIXZQ	// kind: 'test' name: 'Preview_Control_String' path: 'tests/Preview_Control_String.test'
+_XzyLsPxVEeOWJroCeiIXZQ	// kind: 'test' name: 'Preview_Label' path: 'tests/Preview_Label.test'
+_wlPqcPxmEeOWJroCeiIXZQ	// kind: 'test' name: 'Preview_Control_Calendar' path: 'tests/Preview_Control_Calendar.test'
+_N0UeoPxlEeOWJroCeiIXZQ	// kind: 'test' name: 'Preview_Controol_Bool' path: 'tests/Preview_Controol_Bool.test'
+_Sl1lgPxoEeOWJroCeiIXZQ	// kind: 'test' name: 'Preview_Control_MultiAttribute' path: 'tests/Preview_Control_MultiAttribute.test'
+_KnqbwPxtEeOWJroCeiIXZQ	// kind: 'test' name: 'Preview_Control_MultiRef' path: 'tests/Preview_Control_MultiRef.test'
+_GsxeEPxuEeOWJroCeiIXZQ	// kind: 'test' name: 'Preview_Control_Table' path: 'tests/Preview_Control_Table.test'
+_dmMs4PxuEeOWJroCeiIXZQ	// kind: 'test' name: 'Preview_Table' path: 'tests/Preview_Table.test'
+_FvmQ4Px-EeOWJroCeiIXZQ	// kind: 'test' name: 'GenerateControls' path: 'tests/GenerateControls.test'
+_fC8FwPxwEeOWJroCeiIXZQ	// kind: 'test' name: 'Preview_Categorization' path: 'tests/Preview_Categorization.test'
+_3mprIPx7EeOWJroCeiIXZQ	// kind: 'test' name: 'Preview_Group' path: 'tests/Preview_Group.test'
+_GnSqsPx6EeOWJroCeiIXZQ	// kind: 'test' name: 'Preview_layouts' path: 'tests/Preview_layouts.test'
+_1IGIkPx8EeOWJroCeiIXZQ	// kind: 'test' name: 'Preview_TreeMasterDetail' path: 'tests/Preview_TreeMasterDetail.test'
+_OHzVIPyCEeOWJroCeiIXZQ	// kind: 'test' name: 'Create View Model' path: 'tests/Create View Model.test'
+_i99PMPyDEeOWJroCeiIXZQ	// kind: 'test' name: 'CreateViewModelProj' path: 'tests/CreateViewModelProj.test'
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8--
