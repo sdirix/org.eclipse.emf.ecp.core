@@ -25,9 +25,52 @@
    </extension>
    <extension
          point="org.eclipse.emf.ecp.view.model.provider.xmi.file">
+<file filePath="viewmodel/viewModelElementSelector.view"/>
+
+<file filePath="viewmodel/dmrSelector.view"/>
+
       <file
             filePath="viewmodel/template.view">
       </file>
+   </extension>
+   <extension
+         point="org.eclipse.emf.ecp.ui.view.swt.renderers">
+      <renderer
+            renderer="org.eclipse.emf.ecp.view.template.internal.tooling.controls.ViewModelSelectControlSWTRenderer">
+         <dynamicTest
+               testClass="org.eclipse.emf.ecp.view.template.internal.tooling.controls.ViewModelSelectControlTester">
+         </dynamicTest>
+      </renderer>
+      <renderer
+            renderer="org.eclipse.emf.ecp.view.template.internal.tooling.controls.AttributeSelectControlSWTRenderer">
+         <dynamicTest
+               testClass="org.eclipse.emf.ecp.view.template.internal.tooling.controls.AttributeSelectControlTester">
+         </dynamicTest>
+      </renderer>
+      <renderer
+            renderer="org.eclipse.emf.ecp.view.template.internal.tooling.controls.AttributeValueControlSWTRenderer">
+         <dynamicTest
+               testClass="org.eclipse.emf.ecp.view.template.internal.tooling.controls.AttributeValueControlTester">
+         </dynamicTest>
+      </renderer>
+      <renderer
+            renderer="org.eclipse.emf.ecp.view.template.internal.tooling.controls.DMRSelectorControlSWTRenderer">
+         <dynamicTest
+               testClass="org.eclipse.emf.ecp.view.template.internal.tooling.controls.DMRSelectorControlTester">
+         </dynamicTest>
+      </renderer>
+      <renderer
+            renderer="org.eclipse.emf.ecp.view.template.internal.tooling.controls.URLSelectionControlSWTRenderer">
+         <dynamicTest
+               testClass="org.eclipse.emf.ecp.view.template.internal.tooling.controls.TemplateImagePathControlTester">
+         </dynamicTest>
+      </renderer>
+      <renderer
+            renderer="org.eclipse.emf.ecp.view.template.internal.tooling.controls.HexColorSelectionControlSWTRenderer">
+         <dynamicTest
+               testClass="org.eclipse.emf.ecp.view.template.internal.tooling.controls.TemplateColorHexControlTester">
+         </dynamicTest>
+      </renderer>
    </extension>
 
 </plugin>

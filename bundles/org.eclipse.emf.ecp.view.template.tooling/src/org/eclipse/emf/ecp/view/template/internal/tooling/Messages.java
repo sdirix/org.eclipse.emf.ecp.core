@@ -21,6 +21,9 @@ import org.eclipse.osgi.util.NLS;
  */
 public final class Messages extends NLS {
 	private static final String BUNDLE_NAME = "org.eclipse.emf.ecp.view.template.tooling.messages"; //$NON-NLS-1$
+	public static String AttributeValueControlSWTRenderer_SelectAttributeValue;
+	public static String AttributeValueControlSWTRenderer_UnsetAttributeMessage;
+	public static String DMRCreationWizard_Title;
 	public static String EMFFormsTemplateWizard_creatingTask;
 	public static String EMFFormsTemplateWizard_editingTask;
 	public static String EMFFormsTemplateWizard_errorTitle;
@@ -37,6 +40,13 @@ public final class Messages extends NLS {
 	public static String EMFFormsTemplateWizardPage_FileAlreadyExist;
 	public static String EMFFormsTemplateWizardPage_fileSelection;
 	public static String EMFFormsTemplateWizardPage_title;
+	public static String HexColorSelectionControlSWTRenderer_SelectColorBtn;
+	public static String URLSelectionControlSWTRenderer_SelectExternalFileBtn;
+	public static String URLSelectionControlSWTRenderer_SelectWorkspaceFileBtn;
+	public static String URLSelectionControlSWTRenderer_UnsetText;
+	public static String ViewModelSelectControlSWTRenderer_ErrorNoEClass;
+	public static String ViewModelSelectControlSWTRenderer_ErrorNoSelection;
+	public static String ViewModelSelectControlSWTRenderer_ErrorNoVElement;
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

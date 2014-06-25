@@ -22,6 +22,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecp.internal.ide.util.EcoreHelper;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
 import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
@@ -43,6 +44,7 @@ import org.eclipse.ui.part.FileEditorInput;
  * @author Eugen Neufeld
  * 
  */
+@SuppressWarnings("restriction")
 public class TemplateModelEditorPart extends EditorPart {
 
 	private VTViewTemplate template;
@@ -110,12 +112,25 @@ public class TemplateModelEditorPart extends EditorPart {
 		try {
 			resource = resourceSet.createResource(URI.createURI(fei.getURI().toURL().toExternalForm()));
 			resource.load(null);
+
 			template = (VTViewTemplate) resource.getContents().get(0);
+
+			for (final String ecorePath : template.getReferencedEcores()) {
+				EcoreHelper.registerEcore(ecorePath);
+			}
+
 		} catch (final IOException e) {
-			// TODO fix
-			e.printStackTrace();
+			Activator.log(e);
 		}
 
+	}
+
+	@Override
+	public void dispose() {
+		for (final String ecorePath : template.getReferencedEcores()) {
+			EcoreHelper.unregisterEcore(ecorePath);
+		}
+		super.dispose();
 	}
 
 	@Override
@@ -125,7 +140,6 @@ public class TemplateModelEditorPart extends EditorPart {
 
 	@Override
 	public boolean isSaveAsAllowed() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -135,26 +149,13 @@ public class TemplateModelEditorPart extends EditorPart {
 		try {
 			ECPSWTViewRenderer.INSTANCE.render(parent, template);
 		} catch (final ECPRendererException ex) {
-			// TODO Auto-generated catch block
-			// Do NOT catch all Exceptions ("catch (Exception e)")
-			// Log AND handle Exceptions if possible
-			//
-			// You can just uncomment one of the lines below to log an exception:
-			// logException will show the logged excpetion to the user
-			// ModelUtil.logException(ex);
-			// ModelUtil.logException("YOUR MESSAGE HERE", ex);
-			// logWarning will only add the message to the error log
-			// ModelUtil.logWarning("YOUR MESSAGE HERE", ex);
-			// ModelUtil.logWarning("YOUR MESSAGE HERE");
-			//
-			// If handling is not possible declare and rethrow Exception
+			Activator.log(ex);
 		}
 	}
 
 	@Override
 	public void setFocus() {
-		// TODO Auto-generated method stub
-
+		// do nothing
 	}
 
 }

@@ -12,6 +12,7 @@
 package org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model;
 
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.template.model.VTStyleSelector;
 
 /**
  * <!-- begin-user-doc -->
@@ -31,7 +32,7 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
  * @model
  * @generated
  */
-public interface VTDomainModelReferenceSelector extends org.eclipse.emf.ecp.view.template.model.VTStyleSelector
+public interface VTDomainModelReferenceSelector extends VTStyleSelector
 {
 	/**
 	 * Returns the value of the '<em><b>Domain Model Reference</b></em>' containment reference.
