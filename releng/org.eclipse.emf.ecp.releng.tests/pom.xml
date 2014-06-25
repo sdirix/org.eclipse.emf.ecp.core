@@ -53,6 +53,31 @@
 		<module>../../tests/org.eclipse.emf.ecp.validation.diagnostician.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.model.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.ide.util.test</module>	
-		
 	</modules>
+	
+	<build>
+		<sourceDirectory>src</sourceDirectory>
+		<outputDirectory>bin</outputDirectory>
+		<plugins>
+			<!-- to disable use -Dcheckstyle.skip -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>2.11</version>
+				<configuration>
+					<configLocation>http://download.eclipse.org/ecp/config/esmCheckstyleTest.xml</configLocation>
+					<failsOnError>false</failsOnError>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>check</goal>
+						</goals>
+						<phase>verify</phase>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+			
 </project>
