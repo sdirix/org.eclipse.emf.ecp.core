@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="ASCII"?>
+<org.eclipse.emf.ecp.view.model:View xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:org.eclipse.emf.ecp.view.model="http://org/eclipse/emf/ecp/view/model" xmlns:org.eclipse.emf.ecp.view.rule.model="http://org/eclipse/emf/ecp/view/rule/model">
+  <rootEClass href="http://org/eclipse/emf/ecp/view/group/model#//Group"/>
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" name="Control name">
+    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference">
+      <domainModelEFeature xsi:type="ecore:EAttribute" href="http://org/eclipse/emf/ecp/view/model#//Element/name"/>
+    </domainModelReference>
+  </children>
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" name="Control readonly">
+    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference">
+      <domainModelEFeature xsi:type="ecore:EAttribute" href="http://org/eclipse/emf/ecp/view/model#//Element/readonly"/>
+    </domainModelReference>
+  </children>
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" name="Control groupType">
+    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference">
+      <domainModelEFeature xsi:type="ecore:EAttribute" href="http://org/eclipse/emf/ecp/view/group/model#//Group/groupType"/>
+    </domainModelReference>
+  </children>
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" name="Control labelAlignment">
+    <attachments xsi:type="org.eclipse.emf.ecp.view.rule.model:ShowRule">
+      <condition xsi:type="org.eclipse.emf.ecp.view.rule.model:LeafCondition" expectedValue="ACED00057E7200326F72672E65636C697073652E656D662E6563702E766965772E7370692E67726F75702E6D6F64656C2E47726F75705479706500000000000000001200007872000E6A6176612E6C616E672E456E756D00000000000000001200007870740008454D424544444544">
+        <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference">
+          <domainModelEFeature xsi:type="ecore:EAttribute" href="http://org/eclipse/emf/ecp/view/group/model#//Group/groupType"/>
+        </domainModelReference>
+      </condition>
+    </attachments>
+    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference">
+      <domainModelEFeature xsi:type="ecore:EAttribute" href="http://org/eclipse/emf/ecp/view/group/model#//Group/labelAlignment"/>
+    </domainModelReference>
+  </children>
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" name="Control collapsed">
+    <attachments xsi:type="org.eclipse.emf.ecp.view.rule.model:ShowRule">
+      <condition xsi:type="org.eclipse.emf.ecp.view.rule.model:LeafCondition" expectedValue="ACED00057E7200326F72672E65636C697073652E656D662E6563702E766965772E7370692E67726F75702E6D6F64656C2E47726F75705479706500000000000000001200007872000E6A6176612E6C616E672E456E756D0000000000000000120000787074000B434F4C4C41505349424C45">
+        <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference">
+          <domainModelEFeature xsi:type="ecore:EAttribute" href="http://org/eclipse/emf/ecp/view/group/model#//Group/groupType"/>
+        </domainModelReference>
+      </condition>
+    </attachments>
+    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference">
+      <domainModelEFeature xsi:type="ecore:EAttribute" href="http://org/eclipse/emf/ecp/view/group/model#//Group/collapsed"/>
+    </domainModelReference>
+  </children>
+</org.eclipse.emf.ecp.view.model:View>

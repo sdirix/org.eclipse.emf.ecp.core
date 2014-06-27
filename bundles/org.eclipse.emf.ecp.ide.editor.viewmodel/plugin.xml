@@ -4,7 +4,10 @@
    <extension
          point="org.eclipse.emf.ecp.view.model.provider.xmi.file">
       <file
-            filePath="view.viewmodel">
+            filePath="viewmodel/view.viewmodel">
+      </file>
+      <file
+            filePath="viewmodel/group.view">
       </file>
    </extension>
 
