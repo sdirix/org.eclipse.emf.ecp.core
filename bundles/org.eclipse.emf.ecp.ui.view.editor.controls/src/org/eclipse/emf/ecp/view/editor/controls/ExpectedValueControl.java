@@ -151,7 +151,7 @@ public class ExpectedValueControl extends SingleControl {
 							attribuetClazz = Character.class;
 						}
 					}
-					else if (Enum.class.isAssignableFrom(attribuetClazz)) {
+					if (Enum.class.isAssignableFrom(attribuetClazz)) {
 						final Object[] enumValues = attribuetClazz.getEnumConstants();
 						final ListDialog ld = new ListDialog(text.getShell());
 						ld.setLabelProvider(new LabelProvider());
