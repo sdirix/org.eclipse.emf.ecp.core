@@ -151,8 +151,21 @@ public class ExpectedValueControl extends SingleControl {
 							attribuetClazz = Character.class;
 						}
 					}
-
-					if (String.class.isAssignableFrom(attribuetClazz)
+					else if (Enum.class.isAssignableFrom(attribuetClazz)) {
+						final Object[] enumValues = attribuetClazz.getEnumConstants();
+						final ListDialog ld = new ListDialog(text.getShell());
+						ld.setLabelProvider(new LabelProvider());
+						ld.setContentProvider(ArrayContentProvider.getInstance());
+						ld.setInput(enumValues);
+						ld.setInitialSelections(new Object[] { enumValues[0] });
+						ld.setMessage("Please select the enum value to set."); //$NON-NLS-1$
+						ld.setTitle("Select a value"); //$NON-NLS-1$
+						final int enumSelectionResult = ld.open();
+						if (Window.OK == enumSelectionResult) {
+							object = ld.getResult()[0];
+						}
+					}
+					else if (String.class.isAssignableFrom(attribuetClazz)
 						|| Number.class.isAssignableFrom(attribuetClazz)
 						|| Boolean.class.isAssignableFrom(attribuetClazz)) {
 						try {
