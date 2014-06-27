@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
@@ -15,6 +15,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecp.view.spi.group.model.GroupLabelAlignment;
+import org.eclipse.emf.ecp.view.spi.group.model.GroupType;
 import org.eclipse.emf.ecp.view.spi.group.model.VGroup;
 import org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage;
 import org.eclipse.emf.ecp.view.spi.model.impl.VContainerImpl;
@@ -26,44 +27,44 @@ import org.eclipse.emf.ecp.view.spi.model.impl.VContainerImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.spi.group.model.impl.VGroupImpl#isContainerLayoutEmbedding <em>Container Layout
- * Embedding</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.group.model.impl.VGroupImpl#getGroupType <em>Group Type</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.spi.group.model.impl.VGroupImpl#getLabelAlignment <em>Label Alignment</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.group.model.impl.VGroupImpl#isCollapsed <em>Collapsed</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  * @since 1.3
  */
 public class VGroupImpl extends VContainerImpl implements VGroup
 {
 	/**
-	 * The default value of the '{@link #isContainerLayoutEmbedding() <em>Container Layout Embedding</em>}' attribute.
+	 * The default value of the '{@link #getGroupType() <em>Group Type</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
-	 * @see #isContainerLayoutEmbedding()
+	 *
+	 * @see #getGroupType()
 	 * @generated
 	 * @ordered
-	 * @since 1.3
+	 * @since 1.4
 	 */
-	protected static final boolean CONTAINER_LAYOUT_EMBEDDING_EDEFAULT = false;
+	protected static final GroupType GROUP_TYPE_EDEFAULT = GroupType.NORMAL;
 	/**
-	 * The cached value of the '{@link #isContainerLayoutEmbedding() <em>Container Layout Embedding</em>}' attribute.
+	 * The cached value of the '{@link #getGroupType() <em>Group Type</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
-	 * @see #isContainerLayoutEmbedding()
+	 *
+	 * @see #getGroupType()
 	 * @generated
 	 * @ordered
-	 * @since 1.3
+	 * @since 1.4
 	 */
-	protected boolean containerLayoutEmbedding = CONTAINER_LAYOUT_EMBEDDING_EDEFAULT;
+	protected GroupType groupType = GROUP_TYPE_EDEFAULT;
 	/**
 	 * The default value of the '{@link #getLabelAlignment() <em>Label Alignment</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getLabelAlignment()
 	 * @generated
 	 * @ordered
@@ -74,7 +75,7 @@ public class VGroupImpl extends VContainerImpl implements VGroup
 	 * The cached value of the '{@link #getLabelAlignment() <em>Label Alignment</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getLabelAlignment()
 	 * @generated
 	 * @ordered
@@ -83,9 +84,32 @@ public class VGroupImpl extends VContainerImpl implements VGroup
 	protected GroupLabelAlignment labelAlignment = LABEL_ALIGNMENT_EDEFAULT;
 
 	/**
+	 * The default value of the '{@link #isCollapsed() <em>Collapsed</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
+	 * @see #isCollapsed()
+	 * @generated
+	 * @ordered
+	 * @since 1.4
+	 */
+	protected static final boolean COLLAPSED_EDEFAULT = false;
+	/**
+	 * The cached value of the '{@link #isCollapsed() <em>Collapsed</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @see #isCollapsed()
+	 * @generated
+	 * @ordered
+	 * @since 1.4
+	 */
+	protected boolean collapsed = COLLAPSED_EDEFAULT;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	protected VGroupImpl()
@@ -96,7 +120,7 @@ public class VGroupImpl extends VContainerImpl implements VGroup
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -108,38 +132,38 @@ public class VGroupImpl extends VContainerImpl implements VGroup
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
-	 * @since 1.3
+	 * @since 1.4
 	 */
 	@Override
-	public boolean isContainerLayoutEmbedding()
+	public GroupType getGroupType()
 	{
-		return containerLayoutEmbedding;
+		return groupType;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
-	 * @since 1.3
+	 * @since 1.4
 	 */
 	@Override
-	public void setContainerLayoutEmbedding(boolean newContainerLayoutEmbedding)
+	public void setGroupType(GroupType newGroupType)
 	{
-		final boolean oldContainerLayoutEmbedding = containerLayoutEmbedding;
-		containerLayoutEmbedding = newContainerLayoutEmbedding;
+		final GroupType oldGroupType = groupType;
+		groupType = newGroupType == null ? GROUP_TYPE_EDEFAULT : newGroupType;
 		if (eNotificationRequired()) {
-			eNotify(new ENotificationImpl(this, Notification.SET, VGroupPackage.GROUP__CONTAINER_LAYOUT_EMBEDDING,
-				oldContainerLayoutEmbedding, containerLayoutEmbedding));
+			eNotify(new ENotificationImpl(this, Notification.SET, VGroupPackage.GROUP__GROUP_TYPE, oldGroupType,
+				groupType));
 		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @since 1.3
 	 */
@@ -152,7 +176,7 @@ public class VGroupImpl extends VContainerImpl implements VGroup
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @since 1.3
 	 */
@@ -170,7 +194,38 @@ public class VGroupImpl extends VContainerImpl implements VGroup
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
+	 * @generated
+	 * @since 1.4
+	 */
+	@Override
+	public boolean isCollapsed()
+	{
+		return collapsed;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @since 1.4
+	 */
+	@Override
+	public void setCollapsed(boolean newCollapsed)
+	{
+		final boolean oldCollapsed = collapsed;
+		collapsed = newCollapsed;
+		if (eNotificationRequired()) {
+			eNotify(new ENotificationImpl(this, Notification.SET, VGroupPackage.GROUP__COLLAPSED, oldCollapsed,
+				collapsed));
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	@Override
@@ -178,10 +233,12 @@ public class VGroupImpl extends VContainerImpl implements VGroup
 	{
 		switch (featureID)
 		{
-		case VGroupPackage.GROUP__CONTAINER_LAYOUT_EMBEDDING:
-			return isContainerLayoutEmbedding();
+		case VGroupPackage.GROUP__GROUP_TYPE:
+			return getGroupType();
 		case VGroupPackage.GROUP__LABEL_ALIGNMENT:
 			return getLabelAlignment();
+		case VGroupPackage.GROUP__COLLAPSED:
+			return isCollapsed();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -189,7 +246,7 @@ public class VGroupImpl extends VContainerImpl implements VGroup
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -197,11 +254,14 @@ public class VGroupImpl extends VContainerImpl implements VGroup
 	{
 		switch (featureID)
 		{
-		case VGroupPackage.GROUP__CONTAINER_LAYOUT_EMBEDDING:
-			setContainerLayoutEmbedding((Boolean) newValue);
+		case VGroupPackage.GROUP__GROUP_TYPE:
+			setGroupType((GroupType) newValue);
 			return;
 		case VGroupPackage.GROUP__LABEL_ALIGNMENT:
 			setLabelAlignment((GroupLabelAlignment) newValue);
+			return;
+		case VGroupPackage.GROUP__COLLAPSED:
+			setCollapsed((Boolean) newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);
@@ -210,7 +270,7 @@ public class VGroupImpl extends VContainerImpl implements VGroup
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -218,11 +278,14 @@ public class VGroupImpl extends VContainerImpl implements VGroup
 	{
 		switch (featureID)
 		{
-		case VGroupPackage.GROUP__CONTAINER_LAYOUT_EMBEDDING:
-			setContainerLayoutEmbedding(CONTAINER_LAYOUT_EMBEDDING_EDEFAULT);
+		case VGroupPackage.GROUP__GROUP_TYPE:
+			setGroupType(GROUP_TYPE_EDEFAULT);
 			return;
 		case VGroupPackage.GROUP__LABEL_ALIGNMENT:
 			setLabelAlignment(LABEL_ALIGNMENT_EDEFAULT);
+			return;
+		case VGroupPackage.GROUP__COLLAPSED:
+			setCollapsed(COLLAPSED_EDEFAULT);
 			return;
 		}
 		super.eUnset(featureID);
@@ -231,7 +294,7 @@ public class VGroupImpl extends VContainerImpl implements VGroup
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -239,10 +302,12 @@ public class VGroupImpl extends VContainerImpl implements VGroup
 	{
 		switch (featureID)
 		{
-		case VGroupPackage.GROUP__CONTAINER_LAYOUT_EMBEDDING:
-			return containerLayoutEmbedding != CONTAINER_LAYOUT_EMBEDDING_EDEFAULT;
+		case VGroupPackage.GROUP__GROUP_TYPE:
+			return groupType != GROUP_TYPE_EDEFAULT;
 		case VGroupPackage.GROUP__LABEL_ALIGNMENT:
 			return labelAlignment != LABEL_ALIGNMENT_EDEFAULT;
+		case VGroupPackage.GROUP__COLLAPSED:
+			return collapsed != COLLAPSED_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -250,7 +315,7 @@ public class VGroupImpl extends VContainerImpl implements VGroup
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -261,10 +326,12 @@ public class VGroupImpl extends VContainerImpl implements VGroup
 		}
 
 		final StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (containerLayoutEmbedding: "); //$NON-NLS-1$
-		result.append(containerLayoutEmbedding);
+		result.append(" (groupType: "); //$NON-NLS-1$
+		result.append(groupType);
 		result.append(", labelAlignment: "); //$NON-NLS-1$
 		result.append(labelAlignment);
+		result.append(", collapsed: "); //$NON-NLS-1$
+		result.append(collapsed);
 		result.append(')');
 		return result.toString();
 	}
