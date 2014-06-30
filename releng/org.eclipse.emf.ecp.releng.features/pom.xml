@@ -44,6 +44,7 @@
 		<module>../../features/org.eclipse.emf.ecp.view.template.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.view.mappingdmr.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.view.template.helper.feature</module>
+		<module>../../features/org.eclipse.emf.ecp.view.stack.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.e4.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.rap.util.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.transaction.feature</module>

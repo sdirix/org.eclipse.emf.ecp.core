@@ -151,6 +151,10 @@
 		<module>../../bundles/org.eclipse.emf.ecp.view.table.columnservice</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.table.migrate</module>
 		
+		<!--  Stack Feature -->
+		<module>../../bundles/org.eclipse.emf.ecp.view.stack.model</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.stack.model.edit</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.stack.ui.swt</module>
 
 		<!-- Template Feature -->
 		<module>../../bundles/org.eclipse.emf.ecp.view.template.model</module>
