@@ -69,7 +69,7 @@ public class GenerateControlsHandler extends MasterDetailAction {
 		}
 		final VView view = (VView) obj;
 		final EClass rootClass = Helper.getRootEClass((EObject) selection);
-		final SelectAttributesDialog sad = new SelectAttributesDialog(view, rootClass,
+		final SelectAttributesDialog sad = new SelectAttributesDialog(new SelectAttributesWizard(), view, rootClass,
 			HandlerUtil.getActiveShell(event));
 		final int result = sad.open();
 		if (result == Window.OK) {
@@ -145,7 +145,8 @@ public class GenerateControlsHandler extends MasterDetailAction {
 		final VElement container = getContainer(object);
 
 		final Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
-		final SelectAttributesDialog sad = new SelectAttributesDialog(view, rootEClass, shell);
+		final SelectAttributesDialog sad = new SelectAttributesDialog(new SelectAttributesWizard(), view, rootEClass,
+			shell);
 		final int result = sad.open();
 		if (result == Window.OK) {
 			final Set<EStructuralFeature> featuresToAdd = getFeaturesToCreate(sad);
