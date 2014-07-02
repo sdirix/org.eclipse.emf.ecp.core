@@ -12,18 +12,32 @@
 
 package org.eclipse.emf.ecp.view.model.internal.preview.e3.views;
 
+import java.io.IOException;
+
+import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.emf.ecp.ide.editor.view.ViewEditorPart;
+import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.ecp.view.model.internal.preview.Activator;
 import org.eclipse.emf.ecp.view.model.preview.common.Preview;
 import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.action.ToolBarManager;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -45,6 +59,7 @@ import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.ui.IEditorPart;
@@ -75,6 +90,9 @@ public class PreviewView extends ViewPart implements ISelectionListener {
 	private Color titleColor;
 	private ScrolledComposite scrolledComposite;
 	private Composite container;
+	private Action loadDataButton;
+	private EObject sampleData;
+	private Action cleanDataButton;
 
 	/** The constructor. */
 	public PreviewView() {
@@ -201,6 +219,7 @@ public class PreviewView extends ViewPart implements ISelectionListener {
 					final ViewEditorPart part = (ViewEditorPart) partRef.getPart(true);
 					if (part.getView() != view) {
 						setView(part.getView());
+						sampleData = null;
 						render(view);
 					}
 					if (updateAutomatic) {
@@ -351,10 +370,97 @@ public class PreviewView extends ViewPart implements ISelectionListener {
 		manualRefreshButton.setText("Refresh Preview View"); //$NON-NLS-1$
 		manualRefreshButton.setEnabled(true);
 
+		// load sample data
+		loadDataButton = new Action() {
+			@Override
+			public void run() {
+				super.run();
+				loadSampleData();
+			}
+		};
+		final String loadDataImagePath = "icons/loadData.png";//$NON-NLS-1$
+		loadDataButton.setImageDescriptor(ImageDescriptor.createFromURL(Activator.getDefault()
+			.getBundle()
+			.getResource(loadDataImagePath)));
+
+		loadDataButton.setText("Load Sample Data"); //$NON-NLS-1$
+		loadDataButton.setEnabled(true);
+
+		// clean sampple data
+		cleanDataButton = new Action() {
+			@Override
+			public void run() {
+				super.run();
+				sampleData = null;
+				preView.cleanSampleData();
+				render();
+			}
+		};
+		final String cleanDataImagePath = "icons/cleanData.png";//$NON-NLS-1$
+		cleanDataButton.setImageDescriptor(ImageDescriptor.createFromURL(Activator.getDefault()
+			.getBundle()
+			.getResource(cleanDataImagePath)));
+		cleanDataButton.setText("Clean Sample Data"); //$NON-NLS-1$
+		cleanDataButton.setEnabled(true);
+
+		toolBarManager.add(cleanDataButton);
+		toolBarManager.add(loadDataButton);
+		toolBarManager.add(new Separator());
 		toolBarManager.add(manualRefreshButton);
 		toolBarManager.add(automaticToggleButton);
 
 		toolBarManager.update(true);
+	}
+
+	/**
+	 * 
+	 */
+	private void loadSampleData() {
+
+		if (view == null || view.getRootEClass() == null) {
+			return;
+		}
+		final FileDialog dialog = new FileDialog(parent.getShell(), SWT.OPEN);
+		dialog.setFilterExtensions(new String[] { "*.xmi" }); //$NON-NLS-1$
+		final String result = dialog.open();
+		final ResourceSet rs = new ResourceSetImpl();
+		final AdapterFactoryEditingDomain domain = new AdapterFactoryEditingDomain(
+			new ComposedAdapterFactory(new AdapterFactory[] {
+				new CustomReflectiveItemProviderAdapterFactory(),
+				new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) }),
+			new BasicCommandStack(), rs);
+		rs.eAdapters().add(
+			new AdapterFactoryEditingDomain.EditingDomainProvider(domain));
+		final Resource resource = rs.createResource(URI.createFileURI(result));
+
+		try {
+			resource.load(null);
+		} catch (final IOException ex) {
+			// do nothing - exceptions treated below
+		}
+		if (!resource.getContents().isEmpty()) {
+			sampleData = resource.getContents().get(0);
+			if (sampleData != null && sampleData.eClass() == view.getRootEClass()) {
+				render();
+			} else {
+				new MessageDialog(
+					parent.getShell(),
+					"Wrong input type", //$NON-NLS-1$
+					null,
+					"The loaded file contains an EObject of type " //$NON-NLS-1$
+						+ sampleData.eClass().getName()
+						+ ".\n\n Please select an input file containig an EObject with the same type as the Root EClass of the view. (" + view.getRootEClass().getName() + ")", //$NON-NLS-1$ //$NON-NLS-2$
+					MessageDialog.ERROR, new String[] { "Ok" }, 0).open(); //$NON-NLS-1$
+				sampleData = null;
+			}
+		} else {
+			sampleData = null;
+			new MessageDialog(
+				parent.getShell(), "Wrong input file content", //$NON-NLS-1$
+				null, "The loaded file is incorrectly formatted.", //$NON-NLS-1$
+				MessageDialog.ERROR, new String[] { "Ok" }, 0).open(); //$NON-NLS-1$
+		}
+
 	}
 
 	/**
@@ -407,7 +513,7 @@ public class PreviewView extends ViewPart implements ISelectionListener {
 
 		view.eAdapters().add(adapter);
 		preView.registerForViewModelChanges();
-		preView.render(view);
+		preView.render(view, sampleData);
 		final Point point = container.computeSize(SWT.DEFAULT, SWT.DEFAULT);
 		scrolledComposite.setMinSize(point);
 		scrolledComposite.layout(true);
