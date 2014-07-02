@@ -115,6 +115,7 @@
 		<module>../../bundles/org.eclipse.emf.ecp.view.group.model.edit</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.group.ui.swt</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.group.swt.embedded</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.group.swt.collapsable</module>
 		
 
 		<!-- Rule Feature -->
