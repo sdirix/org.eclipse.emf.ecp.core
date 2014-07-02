@@ -156,6 +156,7 @@
 		<module>../../bundles/org.eclipse.emf.ecp.view.stack.model</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.stack.model.edit</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.stack.ui.swt</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.stack.viewmodel</module>
 
 		<!-- Template Feature -->
 		<module>../../bundles/org.eclipse.emf.ecp.view.template.model</module>

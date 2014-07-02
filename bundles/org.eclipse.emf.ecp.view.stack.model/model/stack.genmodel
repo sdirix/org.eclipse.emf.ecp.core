@@ -12,14 +12,14 @@
       utilityPackageSuffix="model.util" providerPackageSuffix="model.provider" presentationPackageSuffix="model.presentation"
       testsPackageSuffix="model.tests" extensibleProviderFactory="true" childCreationExtenders="true"
       ecorePackage="stack.ecore#/">
-    <genClasses ecoreClass="stack.ecore#//Stack">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference stack.ecore#//Stack/views"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference stack.ecore#//Stack/switchRules"/>
+    <genClasses ecoreClass="stack.ecore#//StackLayout">
+      <genFeatures children="true" createChild="true" ecoreFeature="ecore:EReference stack.ecore#//StackLayout/domainModelReference"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference stack.ecore#//StackLayout/stackItems"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference stack.ecore#//StackLayout/topElement"/>
     </genClasses>
-    <genClasses ecoreClass="stack.ecore#//SwitchRule">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference stack.ecore#//SwitchRule/domainModelReference"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute stack.ecore#//SwitchRule/value"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference stack.ecore#//SwitchRule/view"/>
+    <genClasses ecoreClass="stack.ecore#//StackItem">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute stack.ecore#//StackItem/value"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference stack.ecore#//StackItem/composite"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- *
+ * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
  */
@@ -23,23 +23,29 @@ import org.eclipse.emf.ecp.view.spi.stack.model.VStackFactory;
 import org.eclipse.emf.ecp.view.spi.stack.model.VStackLayout;
 import org.eclipse.emf.ecp.view.spi.stack.model.VStackPackage;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
+import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
+import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.emf.edit.provider.IItemPropertySource;
+import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
+import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
  * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.spi.stack.model.VStackLayout} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
- *
+ * 
  * @generated
  */
-public class StackLayoutItemProvider extends ContainedElementItemProvider
+public class StackLayoutItemProvider extends ContainedElementItemProvider implements IEditingDomainItemProvider,
+	IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public StackLayoutItemProvider(AdapterFactory adapterFactory)
@@ -51,7 +57,7 @@ public class StackLayoutItemProvider extends ContainedElementItemProvider
 	 * This returns the property descriptors for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -61,35 +67,62 @@ public class StackLayoutItemProvider extends ContainedElementItemProvider
 		{
 			super.getPropertyDescriptors(object);
 
+			addDomainModelReferencePropertyDescriptor(object);
 			addTopElementPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
 
 	/**
+	 * This adds a property descriptor for the Domain Model Reference feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	protected void addDomainModelReferencePropertyDescriptor(Object object)
+	{
+		itemPropertyDescriptors
+			.add
+			(createItemPropertyDescriptor
+			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(),
+				getString("_UI_StackLayout_domainModelReference_feature"), //$NON-NLS-1$
+				getString(
+					"_UI_PropertyDescriptor_description", "_UI_StackLayout_domainModelReference_feature", "_UI_StackLayout_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				VStackPackage.Literals.STACK_LAYOUT__DOMAIN_MODEL_REFERENCE,
+				true,
+				false,
+				false,
+				null,
+				null,
+				null));
+	}
+
+	/**
 	 * This adds a property descriptor for the Top Element feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected void addTopElementPropertyDescriptor(Object object)
 	{
 		itemPropertyDescriptors
-		.add
-		(createItemPropertyDescriptor
+			.add
+			(createItemPropertyDescriptor
 			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_StackLayout_topElement_feature"), //$NON-NLS-1$
 				getString(
 					"_UI_PropertyDescriptor_description", "_UI_StackLayout_topElement_feature", "_UI_StackLayout_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-					VStackPackage.Literals.STACK_LAYOUT__TOP_ELEMENT,
-					true,
-					false,
-					true,
-					null,
-					null,
-					null));
+				VStackPackage.Literals.STACK_LAYOUT__TOP_ELEMENT,
+				true,
+				false,
+				true,
+				null,
+				null,
+				null));
 	}
 
 	/**
@@ -98,7 +131,7 @@ public class StackLayoutItemProvider extends ContainedElementItemProvider
 	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -116,7 +149,7 @@ public class StackLayoutItemProvider extends ContainedElementItemProvider
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -132,7 +165,7 @@ public class StackLayoutItemProvider extends ContainedElementItemProvider
 	 * This returns StackLayout.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -145,16 +178,16 @@ public class StackLayoutItemProvider extends ContainedElementItemProvider
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public String getText(Object object)
 	{
-		final String label = ((VStackLayout) object).getName();
+		String label = ((VStackLayout) object).getName();
 		return label == null || label.length() == 0 ?
 			getString("_UI_StackLayout_type") : //$NON-NLS-1$
-				getString("_UI_StackLayout_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
+			getString("_UI_StackLayout_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**
@@ -162,7 +195,7 @@ public class StackLayoutItemProvider extends ContainedElementItemProvider
 	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -185,7 +218,7 @@ public class StackLayoutItemProvider extends ContainedElementItemProvider
 	 * that can be created under this object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -194,12 +227,12 @@ public class StackLayoutItemProvider extends ContainedElementItemProvider
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
 		newChildDescriptors.add
-		(createChildParameter
+			(createChildParameter
 			(VStackPackage.Literals.STACK_LAYOUT__DOMAIN_MODEL_REFERENCE,
 				VViewFactory.eINSTANCE.createFeaturePathDomainModelReference()));
 
 		newChildDescriptors.add
-		(createChildParameter
+			(createChildParameter
 			(VStackPackage.Literals.STACK_LAYOUT__STACK_ITEMS,
 				VStackFactory.eINSTANCE.createStackItem()));
 	}

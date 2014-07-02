@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- *
+ * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
  ******************************************************************************/
@@ -17,10 +17,12 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.emf.common.util.Enumerator;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
 import org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener;
@@ -35,9 +37,9 @@ import org.eclipse.emf.ecp.view.spi.stack.model.VStackLayout;
  * {@link ViewModelService} evaluating changes on the {@link VDomainModelReference} of the {@link VStackLayout} based on
  * the given value in the available {@link VStackItem VStackItems}. Sets the top element of the VStackLayout
  * accordingly.
- *
+ * 
  * @author jfaltermeier
- *
+ * 
  */
 public class StackItemViewService implements ViewModelService {
 
@@ -51,7 +53,7 @@ public class StackItemViewService implements ViewModelService {
 
 	/**
 	 * {@inheritDoc}
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#instantiate(org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
 	@Override
@@ -148,6 +150,12 @@ public class StackItemViewService implements ViewModelService {
 						break;
 					}
 				} else {
+					if (EcorePackage.eINSTANCE.getEEnum().isInstance(domainModelEFeature.getEType())) {
+						if (item.getValue().equals(Enumerator.class.cast(currentValue).getLiteral())) {
+							stack.setTopElement(item);
+							break;
+						}
+					}
 					if (currentValue.equals(item.getValue())) {
 						stack.setTopElement(item);
 						break;
@@ -180,7 +188,7 @@ public class StackItemViewService implements ViewModelService {
 
 	/**
 	 * {@inheritDoc}
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#dispose()
 	 */
 	@Override
@@ -203,7 +211,7 @@ public class StackItemViewService implements ViewModelService {
 
 	/**
 	 * {@inheritDoc}
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#getPriority()
 	 */
 	@Override
@@ -214,9 +222,9 @@ public class StackItemViewService implements ViewModelService {
 	/**
 	 * {@link DomainModelReferenceChangeListener} that updates the registry and reevaluates affected
 	 * {@link VStackLayout VStackLayouts}.
-	 *
+	 * 
 	 * @author jfaltermeier
-	 *
+	 * 
 	 */
 	private class StackItemDomainModelReferenceChangeListener implements DomainModelReferenceChangeListener {
 
@@ -225,7 +233,7 @@ public class StackItemViewService implements ViewModelService {
 
 		/**
 		 * Constructs a new {@link StackItemDomainModelReferenceChangeListener}.
-		 *
+		 * 
 		 * @param stack the affected {@link VStackLayout}.
 		 * @param oldSetting the current registered {@link Setting}.
 		 */
@@ -236,7 +244,7 @@ public class StackItemViewService implements ViewModelService {
 
 		/**
 		 * {@inheritDoc}
-		 *
+		 * 
 		 * @see org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener#notifyChange()
 		 */
 		@Override
