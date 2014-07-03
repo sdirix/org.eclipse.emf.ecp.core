@@ -21,7 +21,6 @@ import org.eclipse.emf.ecp.view.internal.stack.ui.swt.Activator;
 import org.eclipse.emf.ecp.view.internal.stack.ui.swt.messages.Messages;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
-import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
@@ -75,7 +74,7 @@ public class SWTStackLayoutRenderer extends AbstractSWTRenderer<VStackLayout> {
 	 */
 	@Override
 	protected Control renderControl(SWTGridCell cell, Composite parent) throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+	NoPropertyDescriptorFoundExeption {
 
 		if (cell.getColumn() != 0) {
 			return null;
@@ -90,17 +89,16 @@ public class SWTStackLayoutRenderer extends AbstractSWTRenderer<VStackLayout> {
 
 		final Map<VStackItem, AbstractSWTRenderer<VElement>> elementRendererMap = new LinkedHashMap<VStackItem, AbstractSWTRenderer<VElement>>();
 		for (final VStackItem item : getVElement().getStackItems()) {
-			final VContainedElement composite = item.getComposite();
-			final AbstractSWTRenderer<VElement> renderer = getSWTRendererFactory().getRenderer(composite,
+			final AbstractSWTRenderer<VElement> renderer = getSWTRendererFactory().getRenderer(item,
 				getViewModelContext());
 			if (renderer == null) {
 				Activator
-					.getDefault()
-					.getLog()
-					.log(
-						new Status(IStatus.INFO, Activator.PLUGIN_ID, String.format(
-							Messages.SWTStackLayoutRenderer_NoRendererForItemCompositeFound, composite.eClass()
-								.getName())));
+				.getDefault()
+				.getLog()
+				.log(
+					new Status(IStatus.INFO, Activator.PLUGIN_ID, String.format(
+						Messages.SWTStackLayoutRenderer_NoRendererForItemCompositeFound, item.eClass()
+						.getName())));
 				continue;
 			}
 			elementRendererMap.put(item, renderer);

@@ -197,18 +197,6 @@ public class VStackPackageImpl extends EPackageImpl implements VStackPackage
 	 * @generated
 	 */
 	@Override
-	public EReference getStackItem_Composite()
-	{
-		return (EReference) stackItemEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @generated
-	 */
-	@Override
 	public VStackFactory getStackFactory()
 	{
 		return (VStackFactory) getEFactoryInstance();
@@ -245,7 +233,6 @@ public class VStackPackageImpl extends EPackageImpl implements VStackPackage
 
 		stackItemEClass = createEClass(STACK_ITEM);
 		createEAttribute(stackItemEClass, STACK_ITEM__VALUE);
-		createEReference(stackItemEClass, STACK_ITEM__COMPOSITE);
 	}
 
 	/**
@@ -287,6 +274,7 @@ public class VStackPackageImpl extends EPackageImpl implements VStackPackage
 
 		// Add supertypes to classes
 		stackLayoutEClass.getESuperTypes().add(theViewPackage.getContainedElement());
+		stackItemEClass.getESuperTypes().add(theViewPackage.getContainer());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(stackLayoutEClass, VStackLayout.class,
@@ -313,11 +301,6 @@ public class VStackPackageImpl extends EPackageImpl implements VStackPackage
 			getStackItem_Value(),
 			theEcorePackage.getEJavaObject(),
 			"value", null, 0, 1, VStackItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-			getStackItem_Composite(),
-			theViewPackage.getContainedElement(),
-			null,
-			"composite", null, 0, 1, VStackItem.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		// Create resource
 		createResource(eNS_URI);

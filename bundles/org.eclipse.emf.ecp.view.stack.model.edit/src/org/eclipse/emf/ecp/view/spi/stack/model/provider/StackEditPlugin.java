@@ -53,10 +53,10 @@ public final class StackEditPlugin extends EMFPlugin
 	public StackEditPlugin()
 	{
 		super(new ResourceLocator[]
-			{
+		{
 			EcoreEditPlugin.INSTANCE,
 			ViewEditPlugin.INSTANCE,
-			});
+		});
 	}
 
 	/**

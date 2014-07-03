@@ -16,6 +16,7 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
+import org.eclipse.emf.ecp.view.spi.model.VContainer;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.stack.model.VStackItem;
 import org.eclipse.emf.ecp.view.spi.stack.model.VStackLayout;
@@ -90,132 +91,155 @@ public class StackAdapterFactory extends AdapterFactoryImpl
 	protected StackSwitch<Adapter> modelSwitch =
 		new StackSwitch<Adapter>()
 		{
-		@Override
-		public Adapter caseStackLayout(VStackLayout object)
-		{
-			return createStackLayoutAdapter();
-		}
+			@Override
+			public Adapter caseStackLayout(VStackLayout object)
+			{
+				return createStackLayoutAdapter();
+			}
 
-		@Override
-		public Adapter caseStackItem(VStackItem object)
-		{
-			return createStackItemAdapter();
-		}
+			@Override
+			public Adapter caseStackItem(VStackItem object)
+			{
+				return createStackItemAdapter();
+			}
 
-		@Override
-		public Adapter caseElement(VElement object)
-		{
-			return createElementAdapter();
-		}
+			@Override
+			public Adapter caseElement(VElement object)
+			{
+				return createElementAdapter();
+			}
 
-		@Override
-		public Adapter caseContainedElement(VContainedElement object)
-		{
-			return createContainedElementAdapter();
-		}
+			@Override
+			public Adapter caseContainedElement(VContainedElement object)
+			{
+				return createContainedElementAdapter();
+			}
 
-		@Override
-		public Adapter defaultCase(EObject object)
-		{
-			return createEObjectAdapter();
-		}
+			@Override
+			public Adapter caseContainer(VContainer object)
+			{
+				return createContainerAdapter();
+			}
+
+			@Override
+			public Adapter defaultCase(EObject object)
+			{
+				return createEObjectAdapter();
+			}
 		};
 
-		/**
-		 * Creates an adapter for the <code>target</code>.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 *
-		 * @param target the object to adapt.
-		 * @return the adapter for the <code>target</code>.
-		 * @generated
-		 */
-		@Override
-		public Adapter createAdapter(Notifier target)
-		{
-			return modelSwitch.doSwitch((EObject) target);
-		}
+	/**
+	 * Creates an adapter for the <code>target</code>.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @param target the object to adapt.
+	 * @return the adapter for the <code>target</code>.
+	 * @generated
+	 */
+	@Override
+	public Adapter createAdapter(Notifier target)
+	{
+		return modelSwitch.doSwitch((EObject) target);
+	}
 
-		/**
-		 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.spi.stack.model.VStackLayout
-		 * <em>Layout</em>}'.
-		 * <!-- begin-user-doc -->
-		 * This default implementation returns null so that we can easily ignore cases;
-		 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-		 * <!-- end-user-doc -->
-		 *
-		 * @return the new adapter.
-		 * @see org.eclipse.emf.ecp.view.spi.stack.model.VStackLayout
-		 * @generated
-		 */
-		public Adapter createStackLayoutAdapter()
-		{
-			return null;
-		}
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.spi.stack.model.VStackLayout
+	 * <em>Layout</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.spi.stack.model.VStackLayout
+	 * @generated
+	 */
+	public Adapter createStackLayoutAdapter()
+	{
+		return null;
+	}
 
-		/**
-		 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.spi.stack.model.VStackItem
-		 * <em>Item</em>}'.
-		 * <!-- begin-user-doc -->
-		 * This default implementation returns null so that we can easily ignore cases;
-		 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-		 * <!-- end-user-doc -->
-		 *
-		 * @return the new adapter.
-		 * @see org.eclipse.emf.ecp.view.spi.stack.model.VStackItem
-		 * @generated
-		 */
-		public Adapter createStackItemAdapter()
-		{
-			return null;
-		}
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.spi.stack.model.VStackItem
+	 * <em>Item</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.spi.stack.model.VStackItem
+	 * @generated
+	 */
+	public Adapter createStackItemAdapter()
+	{
+		return null;
+	}
 
-		/**
-		 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.spi.model.VElement
-		 * <em>Element</em>}'.
-		 * <!-- begin-user-doc -->
-		 * This default implementation returns null so that we can easily ignore cases;
-		 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-		 * <!-- end-user-doc -->
-		 *
-		 * @return the new adapter.
-		 * @see org.eclipse.emf.ecp.view.spi.model.VElement
-		 * @generated
-		 */
-		public Adapter createElementAdapter()
-		{
-			return null;
-		}
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.spi.model.VElement
+	 * <em>Element</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.spi.model.VElement
+	 * @generated
+	 */
+	public Adapter createElementAdapter()
+	{
+		return null;
+	}
 
-		/**
-		 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.spi.model.VContainedElement
-		 * <em>Contained Element</em>}'.
-		 * <!-- begin-user-doc -->
-		 * This default implementation returns null so that we can easily ignore cases;
-		 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-		 * <!-- end-user-doc -->
-		 *
-		 * @return the new adapter.
-		 * @see org.eclipse.emf.ecp.view.spi.model.VContainedElement
-		 * @generated
-		 */
-		public Adapter createContainedElementAdapter()
-		{
-			return null;
-		}
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.spi.model.VContainedElement
+	 * <em>Contained Element</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.spi.model.VContainedElement
+	 * @generated
+	 */
+	public Adapter createContainedElementAdapter()
+	{
+		return null;
+	}
 
-		/**
-		 * Creates a new adapter for the default case.
-		 * <!-- begin-user-doc -->
-		 * This default implementation returns null.
-		 * <!-- end-user-doc -->
-		 *
-		 * @return the new adapter.
-		 * @generated
-		 */
-		public Adapter createEObjectAdapter()
-		{
-			return null;
-		}
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.spi.model.VContainer
+	 * <em>Container</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.spi.model.VContainer
+	 * @generated
+	 */
+	public Adapter createContainerAdapter()
+	{
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for the default case.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null.
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the new adapter.
+	 * @generated
+	 */
+	public Adapter createEObjectAdapter()
+	{
+		return null;
+	}
 
 } // StackAdapterFactory

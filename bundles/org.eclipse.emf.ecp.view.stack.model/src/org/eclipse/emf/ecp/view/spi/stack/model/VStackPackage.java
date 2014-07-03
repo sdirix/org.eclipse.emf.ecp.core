@@ -196,6 +196,76 @@ public interface VStackPackage extends EPackage
 	int STACK_ITEM = 1;
 
 	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int STACK_ITEM__NAME = VViewPackage.CONTAINER__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Visible</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int STACK_ITEM__VISIBLE = VViewPackage.CONTAINER__VISIBLE;
+
+	/**
+	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int STACK_ITEM__ENABLED = VViewPackage.CONTAINER__ENABLED;
+
+	/**
+	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int STACK_ITEM__READONLY = VViewPackage.CONTAINER__READONLY;
+
+	/**
+	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int STACK_ITEM__DIAGNOSTIC = VViewPackage.CONTAINER__DIAGNOSTIC;
+
+	/**
+	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int STACK_ITEM__ATTACHMENTS = VViewPackage.CONTAINER__ATTACHMENTS;
+
+	/**
+	 * The feature id for the '<em><b>Children</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int STACK_ITEM__CHILDREN = VViewPackage.CONTAINER__CHILDREN;
+
+	/**
 	 * The feature id for the '<em><b>Value</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -203,17 +273,7 @@ public interface VStackPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int STACK_ITEM__VALUE = 0;
-
-	/**
-	 * The feature id for the '<em><b>Composite</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @generated
-	 * @ordered
-	 */
-	int STACK_ITEM__COMPOSITE = 1;
+	int STACK_ITEM__VALUE = VViewPackage.CONTAINER_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Item</em>' class.
@@ -223,7 +283,7 @@ public interface VStackPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int STACK_ITEM_FEATURE_COUNT = 2;
+	int STACK_ITEM_FEATURE_COUNT = VViewPackage.CONTAINER_FEATURE_COUNT + 1;
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.stack.model.VStackLayout <em>Layout</em>}
@@ -300,19 +360,6 @@ public interface VStackPackage extends EPackage
 	 * @generated
 	 */
 	EAttribute getStackItem_Value();
-
-	/**
-	 * Returns the meta object for the containment reference '
-	 * {@link org.eclipse.emf.ecp.view.spi.stack.model.VStackItem#getComposite <em>Composite</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @return the meta object for the containment reference '<em>Composite</em>'.
-	 * @see org.eclipse.emf.ecp.view.spi.stack.model.VStackItem#getComposite()
-	 * @see #getStackItem()
-	 * @generated
-	 */
-	EReference getStackItem_Composite();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -398,15 +445,6 @@ public interface VStackPackage extends EPackage
 		 * @generated
 		 */
 		EAttribute STACK_ITEM__VALUE = eINSTANCE.getStackItem_Value();
-
-		/**
-		 * The meta object literal for the '<em><b>Composite</b></em>' containment reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 *
-		 * @generated
-		 */
-		EReference STACK_ITEM__COMPOSITE = eINSTANCE.getStackItem_Composite();
 
 	}
 

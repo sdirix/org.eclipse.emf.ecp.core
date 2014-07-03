@@ -9,9 +9,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="topElement" eType="#//StackItem"
         transient="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="StackItem">
+  <eClassifiers xsi:type="ecore:EClass" name="StackItem" eSuperTypes="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//Container">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EJavaObject"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="composite" eType="ecore:EClass ../../org.eclipse.emf.ecp.view.model/model/view.ecore#//ContainedElement"
-        containment="true"/>
   </eClassifiers>
 </ecore:EPackage>

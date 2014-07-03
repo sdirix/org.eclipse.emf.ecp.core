@@ -11,8 +11,7 @@
  */
 package org.eclipse.emf.ecp.view.spi.stack.model;
 
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
+import org.eclipse.emf.ecp.view.spi.model.VContainer;
 
 /**
  * <!-- begin-user-doc -->
@@ -23,7 +22,6 @@ import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
  * The following features are supported:
  * <ul>
  * <li>{@link org.eclipse.emf.ecp.view.spi.stack.model.VStackItem#getValue <em>Value</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.spi.stack.model.VStackItem#getComposite <em>Composite</em>}</li>
  * </ul>
  * </p>
  *
@@ -31,7 +29,7 @@ import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
  * @model
  * @generated
  */
-public interface VStackItem extends EObject
+public interface VStackItem extends VContainer
 {
 	/**
 	 * Returns the value of the '<em><b>Value</b></em>' attribute.
@@ -61,34 +59,5 @@ public interface VStackItem extends EObject
 	 * @generated
 	 */
 	void setValue(Object value);
-
-	/**
-	 * Returns the value of the '<em><b>Composite</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Composite</em>' reference isn't clear, there really should be more of a description
-	 * here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 *
-	 * @return the value of the '<em>Composite</em>' containment reference.
-	 * @see #setComposite(VContainedElement)
-	 * @see org.eclipse.emf.ecp.view.spi.stack.model.VStackPackage#getStackItem_Composite()
-	 * @model containment="true"
-	 * @generated
-	 */
-	VContainedElement getComposite();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.spi.stack.model.VStackItem#getComposite
-	 * <em>Composite</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @param value the new value of the '<em>Composite</em>' containment reference.
-	 * @see #getComposite()
-	 * @generated
-	 */
-	void setComposite(VContainedElement value);
 
 } // VStackItem
