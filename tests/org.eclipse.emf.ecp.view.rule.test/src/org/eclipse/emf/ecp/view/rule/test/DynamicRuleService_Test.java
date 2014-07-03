@@ -19,7 +19,7 @@ import java.util.NoSuchElementException;
 import org.eclipse.emf.ecp.view.internal.rule.RuleService;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
-import org.eclipse.emf.ecp.view.spi.model.VContainer;
+import org.eclipse.emf.ecp.view.spi.model.VContainedContainer;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
@@ -291,7 +291,7 @@ public class DynamicRuleService_Test {
 		final ShowRule sr = RuleFactory.eINSTANCE.createShowRule();
 		view.getChildren().get(0).getAttachments().add(sr);
 		assertTrue(view.getChildren().get(0).isVisible());
-		assertTrue(VContainer.class.cast(view.getChildren().get(0)).getChildren().get(0).isVisible());
+		assertTrue(VContainedContainer.class.cast(view.getChildren().get(0)).getChildren().get(0).isVisible());
 	}
 
 	@Test
@@ -302,10 +302,10 @@ public class DynamicRuleService_Test {
 		final ShowRule sr = RuleFactory.eINSTANCE.createShowRule();
 		view.getChildren().get(0).getAttachments().add(sr);
 		assertTrue(view.getChildren().get(0).isVisible());
-		assertTrue(VContainer.class.cast(view.getChildren().get(0)).getChildren().get(0).isVisible());
+		assertTrue(VContainedContainer.class.cast(view.getChildren().get(0)).getChildren().get(0).isVisible());
 		view.getChildren().get(0).getAttachments().remove(sr);
 		assertTrue(view.getChildren().get(0).isVisible());
-		assertTrue(VContainer.class.cast(view.getChildren().get(0)).getChildren().get(0).isVisible());
+		assertTrue(VContainedContainer.class.cast(view.getChildren().get(0)).getChildren().get(0).isVisible());
 	}
 
 	@Test
@@ -316,7 +316,7 @@ public class DynamicRuleService_Test {
 		final EnableRule er = RuleFactory.eINSTANCE.createEnableRule();
 		view.getChildren().get(0).getAttachments().add(er);
 		assertTrue(view.getChildren().get(0).isEnabled());
-		assertTrue(VContainer.class.cast(view.getChildren().get(0)).getChildren().get(0).isEnabled());
+		assertTrue(VContainedContainer.class.cast(view.getChildren().get(0)).getChildren().get(0).isEnabled());
 	}
 
 	@Test
@@ -327,10 +327,10 @@ public class DynamicRuleService_Test {
 		final EnableRule er = RuleFactory.eINSTANCE.createEnableRule();
 		view.getChildren().get(0).getAttachments().add(er);
 		assertTrue(view.getChildren().get(0).isEnabled());
-		assertTrue(VContainer.class.cast(view.getChildren().get(0)).getChildren().get(0).isEnabled());
+		assertTrue(VContainedContainer.class.cast(view.getChildren().get(0)).getChildren().get(0).isEnabled());
 		view.getChildren().get(0).getAttachments().remove(er);
 		assertTrue(view.getChildren().get(0).isEnabled());
-		assertTrue(VContainer.class.cast(view.getChildren().get(0)).getChildren().get(0).isEnabled());
+		assertTrue(VContainedContainer.class.cast(view.getChildren().get(0)).getChildren().get(0).isEnabled());
 	}
 
 	@Test
@@ -338,7 +338,7 @@ public class DynamicRuleService_Test {
 		view = createContainerView();
 		initialize();
 
-		final VContainer container = VContainer.class.cast(view.getChildren().get(0));
+		final VContainedContainer container = VContainedContainer.class.cast(view.getChildren().get(0));
 		final ShowRule sr = RuleFactory.eINSTANCE.createShowRule();
 		final ShowRule sr2 = RuleFactory.eINSTANCE.createShowRule();
 		container.getAttachments().add(sr);
@@ -353,14 +353,14 @@ public class DynamicRuleService_Test {
 		view = createContainerView();
 		initialize();
 
-		final VContainer container = VContainer.class.cast(view.getChildren().get(0));
+		final VContainedContainer container = VContainedContainer.class.cast(view.getChildren().get(0));
 		final ShowRule sr = RuleFactory.eINSTANCE.createShowRule();
 		final ShowRule sr2 = RuleFactory.eINSTANCE.createShowRule();
 		container.getAttachments().add(sr);
 		container.getChildren().get(0).getAttachments().add(sr2);
 
 		assertTrue(view.getChildren().get(0).isVisible());
-		assertTrue(VContainer.class.cast(view.getChildren().get(0)).getChildren().get(0).isVisible());
+		assertTrue(VContainedContainer.class.cast(view.getChildren().get(0)).getChildren().get(0).isVisible());
 		container.getAttachments().remove(sr);
 		assertTrue(container.isVisible());
 		assertTrue(container.getChildren().get(0).isVisible());
@@ -371,7 +371,7 @@ public class DynamicRuleService_Test {
 		view = createContainerView();
 		initialize();
 
-		final VContainer container = VContainer.class.cast(view.getChildren().get(0));
+		final VContainedContainer container = VContainedContainer.class.cast(view.getChildren().get(0));
 		final EnableRule er = RuleFactory.eINSTANCE.createEnableRule();
 		final EnableRule er2 = RuleFactory.eINSTANCE.createEnableRule();
 		container.getAttachments().add(er);
@@ -385,7 +385,7 @@ public class DynamicRuleService_Test {
 		view = createContainerView();
 		initialize();
 
-		final VContainer container = VContainer.class.cast(view.getChildren().get(0));
+		final VContainedContainer container = VContainedContainer.class.cast(view.getChildren().get(0));
 		final EnableRule er = RuleFactory.eINSTANCE.createEnableRule();
 		final EnableRule er2 = RuleFactory.eINSTANCE.createEnableRule();
 		container.getAttachments().add(er);
@@ -450,7 +450,7 @@ public class DynamicRuleService_Test {
 		final ShowRule sr = createShowRule(HEIGHT);
 		view.getChildren().get(0).getAttachments().add(sr);
 		assertFalse(view.getChildren().get(0).isVisible());
-		assertFalse(VContainer.class.cast(view.getChildren().get(0)).getChildren().get(0).isVisible());
+		assertFalse(VContainedContainer.class.cast(view.getChildren().get(0)).getChildren().get(0).isVisible());
 	}
 
 	@Test
@@ -461,10 +461,10 @@ public class DynamicRuleService_Test {
 		final ShowRule sr = createShowRule(HEIGHT);
 		view.getChildren().get(0).getAttachments().add(sr);
 		assertFalse(view.getChildren().get(0).isVisible());
-		assertFalse(VContainer.class.cast(view.getChildren().get(0)).getChildren().get(0).isVisible());
+		assertFalse(VContainedContainer.class.cast(view.getChildren().get(0)).getChildren().get(0).isVisible());
 		view.getChildren().get(0).getAttachments().remove(sr);
 		assertTrue(view.getChildren().get(0).isVisible());
-		assertTrue(VContainer.class.cast(view.getChildren().get(0)).getChildren().get(0).isVisible());
+		assertTrue(VContainedContainer.class.cast(view.getChildren().get(0)).getChildren().get(0).isVisible());
 	}
 
 	@Test
@@ -475,7 +475,7 @@ public class DynamicRuleService_Test {
 		final EnableRule er = createEnableRule(HEIGHT);
 		view.getChildren().get(0).getAttachments().add(er);
 		assertFalse(view.getChildren().get(0).isEnabled());
-		assertFalse(VContainer.class.cast(view.getChildren().get(0)).getChildren().get(0).isEnabled());
+		assertFalse(VContainedContainer.class.cast(view.getChildren().get(0)).getChildren().get(0).isEnabled());
 	}
 
 	@Test
@@ -486,10 +486,10 @@ public class DynamicRuleService_Test {
 		final EnableRule er = createEnableRule(HEIGHT);
 		view.getChildren().get(0).getAttachments().add(er);
 		assertFalse(view.getChildren().get(0).isEnabled());
-		assertFalse(VContainer.class.cast(view.getChildren().get(0)).getChildren().get(0).isEnabled());
+		assertFalse(VContainedContainer.class.cast(view.getChildren().get(0)).getChildren().get(0).isEnabled());
 		view.getChildren().get(0).getAttachments().remove(er);
 		assertTrue(view.getChildren().get(0).isEnabled());
-		assertTrue(VContainer.class.cast(view.getChildren().get(0)).getChildren().get(0).isEnabled());
+		assertTrue(VContainedContainer.class.cast(view.getChildren().get(0)).getChildren().get(0).isEnabled());
 	}
 
 	@Test
@@ -497,7 +497,7 @@ public class DynamicRuleService_Test {
 		view = createContainerView();
 		initialize();
 
-		final VContainer container = VContainer.class.cast(view.getChildren().get(0));
+		final VContainedContainer container = VContainedContainer.class.cast(view.getChildren().get(0));
 		final ShowRule sr = createShowRule(HEIGHT);
 		final ShowRule sr2 = createShowRule(HEIGHT);
 		container.getAttachments().add(sr);
@@ -512,14 +512,14 @@ public class DynamicRuleService_Test {
 		view = createContainerView();
 		initialize();
 
-		final VContainer container = VContainer.class.cast(view.getChildren().get(0));
+		final VContainedContainer container = VContainedContainer.class.cast(view.getChildren().get(0));
 		final ShowRule sr = createShowRule(HEIGHT);
 		final ShowRule sr2 = createShowRule(HEIGHT);
 		container.getAttachments().add(sr);
 		container.getChildren().get(0).getAttachments().add(sr2);
 
 		assertFalse(view.getChildren().get(0).isVisible());
-		assertFalse(VContainer.class.cast(view.getChildren().get(0)).getChildren().get(0).isVisible());
+		assertFalse(VContainedContainer.class.cast(view.getChildren().get(0)).getChildren().get(0).isVisible());
 		container.getAttachments().remove(sr);
 		assertTrue(container.isVisible());
 		assertFalse(container.getChildren().get(0).isVisible());
@@ -530,7 +530,7 @@ public class DynamicRuleService_Test {
 		view = createContainerView();
 		initialize();
 
-		final VContainer container = VContainer.class.cast(view.getChildren().get(0));
+		final VContainedContainer container = VContainedContainer.class.cast(view.getChildren().get(0));
 		final EnableRule er = createEnableRule(HEIGHT);
 		final EnableRule er2 = createEnableRule(HEIGHT);
 		container.getAttachments().add(er);
@@ -544,7 +544,7 @@ public class DynamicRuleService_Test {
 		view = createContainerView();
 		initialize();
 
-		final VContainer container = VContainer.class.cast(view.getChildren().get(0));
+		final VContainedContainer container = VContainedContainer.class.cast(view.getChildren().get(0));
 		final EnableRule er = createEnableRule(HEIGHT);
 		final EnableRule er2 = createEnableRule(HEIGHT);
 		container.getAttachments().add(er);

@@ -6,7 +6,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
-import org.eclipse.emf.ecp.view.spi.model.VContainer;
+import org.eclipse.emf.ecp.view.spi.model.VContainedContainer;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
@@ -53,7 +53,7 @@ public class ViewRendererFX extends RendererFX<VView> {
 					} else {
 						GridPane.setHgrow(node, Priority.ALWAYS);
 					}
-					if (VContainer.class.isInstance(composite)) {
+					if (VContainedContainer.class.isInstance(composite)) {
 						GridPane.setVgrow(node, Priority.ALWAYS);
 					}
 				}

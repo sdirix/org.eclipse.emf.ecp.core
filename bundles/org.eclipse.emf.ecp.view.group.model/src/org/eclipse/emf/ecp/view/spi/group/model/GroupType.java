@@ -21,12 +21,12 @@ import org.eclipse.emf.common.util.Enumerator;
  * <!-- begin-user-doc -->
  * A representation of the literals of the enumeration '<em><b>Type</b></em>',
  * and utility methods for working with them.
+ * @since 1.4
  * <!-- end-user-doc -->
- *
+ * 
  * @see org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage#getGroupType()
  * @model
  * @generated
- * @since 1.4
  */
 public enum GroupType implements Enumerator
 {
@@ -34,7 +34,7 @@ public enum GroupType implements Enumerator
 	 * The '<em><b>Normal</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #NORMAL_VALUE
 	 * @generated
 	 * @ordered
@@ -45,7 +45,7 @@ public enum GroupType implements Enumerator
 	 * The '<em><b>Embedded</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #EMBEDDED_VALUE
 	 * @generated
 	 * @ordered
@@ -56,7 +56,7 @@ public enum GroupType implements Enumerator
 	 * The '<em><b>Collapsible</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #COLLAPSIBLE_VALUE
 	 * @generated
 	 * @ordered
@@ -71,7 +71,7 @@ public enum GroupType implements Enumerator
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #NORMAL
 	 * @model name="Normal"
 	 * @generated
@@ -87,7 +87,7 @@ public enum GroupType implements Enumerator
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #EMBEDDED
 	 * @model name="Embedded"
 	 * @generated
@@ -103,7 +103,7 @@ public enum GroupType implements Enumerator
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #COLLAPSIBLE
 	 * @model name="Collapsible"
 	 * @generated
@@ -115,22 +115,22 @@ public enum GroupType implements Enumerator
 	 * An array of all the '<em><b>Type</b></em>' enumerators.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	private static final GroupType[] VALUES_ARRAY =
 		new GroupType[]
-			{
-		NORMAL,
-		EMBEDDED,
-		COLLAPSIBLE,
-			};
+		{
+			NORMAL,
+			EMBEDDED,
+			COLLAPSIBLE,
+		};
 
 	/**
 	 * A public read-only list of all the '<em><b>Type</b></em>' enumerators.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public static final List<GroupType> VALUES = Collections.unmodifiableList(Arrays.asList(VALUES_ARRAY));
@@ -139,14 +139,14 @@ public enum GroupType implements Enumerator
 	 * Returns the '<em><b>Type</b></em>' literal with the specified literal value.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public static GroupType get(String literal)
 	{
 		for (int i = 0; i < VALUES_ARRAY.length; ++i)
 		{
-			final GroupType result = VALUES_ARRAY[i];
+			GroupType result = VALUES_ARRAY[i];
 			if (result.toString().equals(literal))
 			{
 				return result;
@@ -159,14 +159,14 @@ public enum GroupType implements Enumerator
 	 * Returns the '<em><b>Type</b></em>' literal with the specified name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public static GroupType getByName(String name)
 	{
 		for (int i = 0; i < VALUES_ARRAY.length; ++i)
 		{
-			final GroupType result = VALUES_ARRAY[i];
+			GroupType result = VALUES_ARRAY[i];
 			if (result.getName().equals(name))
 			{
 				return result;
@@ -179,7 +179,7 @@ public enum GroupType implements Enumerator
 	 * Returns the '<em><b>Type</b></em>' literal with the specified integer value.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public static GroupType get(int value)
@@ -199,7 +199,7 @@ public enum GroupType implements Enumerator
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	private final int value;
@@ -207,7 +207,7 @@ public enum GroupType implements Enumerator
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	private final String name;
@@ -215,7 +215,7 @@ public enum GroupType implements Enumerator
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	private final String literal;
@@ -224,7 +224,7 @@ public enum GroupType implements Enumerator
 	 * Only this class can construct instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	private GroupType(int value, String name, String literal)
@@ -237,7 +237,7 @@ public enum GroupType implements Enumerator
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -249,7 +249,7 @@ public enum GroupType implements Enumerator
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -261,7 +261,7 @@ public enum GroupType implements Enumerator
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -274,7 +274,7 @@ public enum GroupType implements Enumerator
 	 * Returns the literal value of the enumerator, which is its string representation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override

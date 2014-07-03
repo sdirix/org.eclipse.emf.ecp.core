@@ -6,12 +6,12 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
-import org.eclipse.emf.ecp.view.spi.model.VContainer;
+import org.eclipse.emf.ecp.view.spi.model.VContainedContainer;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 
-public abstract class ContainerRendererFX<T extends VContainer> extends
+public abstract class ContainerRendererFX<T extends VContainedContainer> extends
 	RendererFX<T> {
 	private GridDescriptionFX gridDescription;
 
@@ -48,7 +48,7 @@ public abstract class ContainerRendererFX<T extends VContainer> extends
 					} else {
 						GridPane.setHgrow(node, Priority.ALWAYS);
 					}
-					if (VContainer.class.isInstance(composite)) {
+					if (VContainedContainer.class.isInstance(composite)) {
 						GridPane.setVgrow(node, Priority.ALWAYS);
 					}
 				}

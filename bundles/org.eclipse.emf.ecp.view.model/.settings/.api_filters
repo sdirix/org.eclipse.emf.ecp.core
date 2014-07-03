@@ -7,6 +7,12 @@
                 <message_argument value="1.2.1"/>
             </message_arguments>
         </filter>
+        <filter comment="This is SPI" id="923795461">
+            <message_arguments>
+                <message_argument value="1.4.0"/>
+                <message_argument value="1.3.0"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/emf/ecp/view/spi/model/VDomainModelReference.java" type="org.eclipse.emf.ecp.view.spi.model.VDomainModelReference">
         <filter comment="SPI change (1.3)" id="403804204">
@@ -35,6 +41,20 @@
         </filter>
     </resource>
     <resource path="src/org/eclipse/emf/ecp/view/spi/model/VViewPackage.java" type="org.eclipse.emf.ecp.view.spi.model.VViewPackage">
+        <filter comment="SPI" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage"/>
+                <message_argument value="CONTROL"/>
+                <message_argument value="8"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage"/>
+                <message_argument value="DOMAIN_MODEL_REFERENCE_CHANGE_LISTENER"/>
+                <message_argument value="10"/>
+            </message_arguments>
+        </filter>
         <filter comment="SPI change (1.3)" id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage"/>
@@ -63,6 +83,13 @@
                 <message_argument value="1"/>
             </message_arguments>
         </filter>
+        <filter comment="SPI" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage"/>
+                <message_argument value="LABEL_ALIGNMENT"/>
+                <message_argument value="9"/>
+            </message_arguments>
+        </filter>
         <filter comment="Internal Model Changes" id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage"/>
@@ -72,6 +99,12 @@
         </filter>
     </resource>
     <resource path="src/org/eclipse/emf/ecp/view/spi/model/VViewPackage.java" type="org.eclipse.emf.ecp.view.spi.model.VViewPackage$Literals">
+        <filter comment="SPI" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage.Literals"/>
+                <message_argument value="CONTAINED_CONTAINER"/>
+            </message_arguments>
+        </filter>
         <filter comment="SPI change (1.3)" id="403767336">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage.Literals"/>

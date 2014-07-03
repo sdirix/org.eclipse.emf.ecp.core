@@ -19,7 +19,7 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
-import org.eclipse.emf.ecp.view.spi.model.VContainer;
+import org.eclipse.emf.ecp.view.spi.model.VContainedContainer;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
@@ -77,7 +77,7 @@ public class ViewSWTRenderer extends ContainerSWTRenderer<VView> {
 				GridDataFactory.fillDefaults().align(SWT.CENTER, SWT.CENTER)
 					.hint(16, 17).grab(false, false).applyTo(control);
 			}
-		} else if (VContainer.class.isInstance(vElement)) {
+		} else if (VContainedContainer.class.isInstance(vElement)) {
 			GridDataFactory
 				.fillDefaults()
 				.align(gridCell.isHorizontalFill() ? SWT.FILL : SWT.BEGINNING,

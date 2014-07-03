@@ -12,7 +12,7 @@
 package org.eclipse.emf.ecp.ui.view.test;
 
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
-import org.eclipse.emf.ecp.view.spi.model.VContainer;
+import org.eclipse.emf.ecp.view.spi.model.VContainedContainer;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 
@@ -50,7 +50,7 @@ public class HierarchyViewModelHandle {
 	 */
 	public void addFirstChildToRoot(VElement renderable) {
 		firstChild = renderable;
-		final VContainer collection = (VContainer) root;
+		final VContainedContainer collection = (VContainedContainer) root;
 		collection.getChildren().add((VContainedElement) renderable);
 
 	}
@@ -60,7 +60,7 @@ public class HierarchyViewModelHandle {
 	 */
 	public void addSecondChildToRoot(VElement renderable) {
 		setSecondChild(renderable);
-		final VContainer collection = (VContainer) root;
+		final VContainedContainer collection = (VContainedContainer) root;
 		collection.getChildren().add((VContainedElement) renderable);
 
 	}
@@ -90,7 +90,7 @@ public class HierarchyViewModelHandle {
 	 * 
 	 */
 	public void addFirstChildToFirstChild(VContainedElement composite) {
-		final VContainer collection = (VContainer) getFirstChild();
+		final VContainedContainer collection = (VContainedContainer) getFirstChild();
 		collection.getChildren().add(composite);
 		setFirstFirstChild(composite);
 	}
@@ -155,7 +155,7 @@ public class HierarchyViewModelHandle {
 	 * @param composite
 	 */
 	public void addSecondChildToFirstChild(VControl composite) {
-		final VContainer collection = (VContainer) getFirstChild();
+		final VContainedContainer collection = (VContainedContainer) getFirstChild();
 		collection.getChildren().add(composite);
 		setFirstSecondChild(composite);
 	}
@@ -164,7 +164,7 @@ public class HierarchyViewModelHandle {
 	 * @param composite
 	 */
 	public void addFirstChildToSecondChild(VControl composite) {
-		final VContainer collection = (VContainer) getSecondChild();
+		final VContainedContainer collection = (VContainedContainer) getSecondChild();
 		collection.getChildren().add(composite);
 		setSecondFirstChild(composite);
 
@@ -174,7 +174,7 @@ public class HierarchyViewModelHandle {
 	 * @param composite
 	 */
 	public void addSecondChildToSecondChild(VControl composite) {
-		final VContainer collection = (VContainer) getSecondChild();
+		final VContainedContainer collection = (VContainedContainer) getSecondChild();
 		collection.getChildren().add(composite);
 		setSecondSecondChild(composite);
 	}

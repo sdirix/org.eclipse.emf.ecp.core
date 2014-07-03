@@ -27,7 +27,7 @@ import org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage;
  * <!-- begin-user-doc -->
  * An implementation of the model <b>Factory</b>.
  * <!-- end-user-doc -->
- *
+ * 
  * @generated
  */
 public class VGroupFactoryImpl extends EFactoryImpl implements VGroupFactory
@@ -36,20 +36,20 @@ public class VGroupFactoryImpl extends EFactoryImpl implements VGroupFactory
 	 * Creates the default factory implementation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public static VGroupFactory init()
 	{
 		try
 		{
-			final VGroupFactory theGroupFactory = (VGroupFactory) EPackage.Registry.INSTANCE
+			VGroupFactory theGroupFactory = (VGroupFactory) EPackage.Registry.INSTANCE
 				.getEFactory(VGroupPackage.eNS_URI);
 			if (theGroupFactory != null)
 			{
 				return theGroupFactory;
 			}
-		} catch (final Exception exception)
+		} catch (Exception exception)
 		{
 			EcorePlugin.INSTANCE.log(exception);
 		}
@@ -60,7 +60,7 @@ public class VGroupFactoryImpl extends EFactoryImpl implements VGroupFactory
 	 * Creates an instance of the factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public VGroupFactoryImpl()
@@ -71,7 +71,7 @@ public class VGroupFactoryImpl extends EFactoryImpl implements VGroupFactory
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -89,7 +89,7 @@ public class VGroupFactoryImpl extends EFactoryImpl implements VGroupFactory
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -109,7 +109,7 @@ public class VGroupFactoryImpl extends EFactoryImpl implements VGroupFactory
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -129,40 +129,38 @@ public class VGroupFactoryImpl extends EFactoryImpl implements VGroupFactory
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public VGroup createGroup()
 	{
-		final VGroupImpl group = new VGroupImpl();
+		VGroupImpl group = new VGroupImpl();
 		return group;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @generated
 	 * @since 1.4
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
 	 */
 	public GroupType createGroupTypeFromString(EDataType eDataType, String initialValue)
 	{
-		final GroupType result = GroupType.get(initialValue);
+		GroupType result = GroupType.get(initialValue);
 		if (result == null)
-		{
 			throw new IllegalArgumentException(
 				"The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-		}
 		return result;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @generated
 	 * @since 1.4
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
 	 */
 	public String convertGroupTypeToString(EDataType eDataType, Object instanceValue)
 	{
@@ -172,26 +170,24 @@ public class VGroupFactoryImpl extends EFactoryImpl implements VGroupFactory
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public GroupLabelAlignment createGroupLabelAlignmentFromString(EDataType eDataType, String initialValue)
 	{
-		final GroupLabelAlignment result = GroupLabelAlignment.get(initialValue);
+		GroupLabelAlignment result = GroupLabelAlignment.get(initialValue);
 		if (result == null)
-		{
 			throw new IllegalArgumentException(
 				"The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-		}
 		return result;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @generated
 	 * @since 1.3
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
 	 */
 	public String convertGroupLabelAlignmentToString(EDataType eDataType, Object instanceValue)
 	{
@@ -201,7 +197,7 @@ public class VGroupFactoryImpl extends EFactoryImpl implements VGroupFactory
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -213,7 +209,7 @@ public class VGroupFactoryImpl extends EFactoryImpl implements VGroupFactory
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @deprecated
 	 * @generated
 	 */

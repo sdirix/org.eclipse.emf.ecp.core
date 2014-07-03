@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * EclipseSource Muenchen GmbH - initial API and implementation
  */
@@ -44,7 +44,7 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
  * Note that most of the adapters are shared among multiple instances.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
- * 
+ *
  * @generated
  * @since 1.2
  */
@@ -54,7 +54,7 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 * This keeps track of the root adapter factory that delegates to this adapter factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected ComposedAdapterFactory parentAdapterFactory;
@@ -63,7 +63,7 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 * This is used to implement {@link org.eclipse.emf.edit.provider.IChangeNotifier}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected IChangeNotifier changeNotifier = new ChangeNotifier();
@@ -72,7 +72,7 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 * This helps manage the child creation extenders.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected ChildCreationExtenderManager childCreationExtenderManager = new ChildCreationExtenderManager(
@@ -82,7 +82,7 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 * This keeps track of all the supported types checked by {@link #isFactoryForType isFactoryForType}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected Collection<Object> supportedTypes = new ArrayList<Object>();
@@ -91,7 +91,7 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 * This constructs an instance.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public ViewItemProviderAdapterFactory() {
@@ -107,7 +107,7 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 * instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected DiagnosticItemProvider diagnosticItemProvider;
@@ -116,7 +116,7 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.spi.model.VDiagnostic}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -134,7 +134,7 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.view.spi.model.VView} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected ViewItemProvider viewItemProvider;
@@ -143,7 +143,7 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.spi.model.VView}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -160,7 +160,7 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.view.spi.model.VControl} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected ControlItemProvider controlItemProvider;
@@ -169,7 +169,7 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.spi.model.VControl}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -187,7 +187,7 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 * {@link org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected FeaturePathDomainModelReferenceItemProvider featurePathDomainModelReferenceItemProvider;
@@ -196,7 +196,7 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -214,7 +214,7 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -226,7 +226,7 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 * This sets the composed adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -237,7 +237,7 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -249,7 +249,7 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 * This implementation substitutes the factory itself as the key for the adapter.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -260,7 +260,7 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -280,7 +280,7 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public List<IChildCreationExtender> getChildCreationExtenders() {
@@ -290,7 +290,7 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -301,7 +301,7 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -313,7 +313,7 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 * This adds a listener.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -325,7 +325,7 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 * This removes a listener.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -337,7 +337,7 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 * This delegates to {@link #changeNotifier} and to {@link #parentAdapterFactory}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -354,7 +354,7 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 * This disposes all of the item providers created by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override

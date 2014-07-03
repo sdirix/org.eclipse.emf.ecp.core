@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
@@ -37,9 +37,10 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * <ul>
  * <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VViewImpl#getRootEClass <em>Root EClass</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VViewImpl#getChildren <em>Children</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VViewImpl#getEcorePath <em>Ecore Path</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  * @since 1.2
  */
@@ -48,7 +49,7 @@ public class VViewImpl extends VElementImpl implements VView {
 	 * The cached value of the '{@link #getRootEClass() <em>Root EClass</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getRootEClass()
 	 * @generated
 	 * @ordered
@@ -59,7 +60,7 @@ public class VViewImpl extends VElementImpl implements VView {
 	 * The cached value of the '{@link #getChildren() <em>Children</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getChildren()
 	 * @generated
 	 * @ordered
@@ -70,7 +71,7 @@ public class VViewImpl extends VElementImpl implements VView {
 	 * The default value of the '{@link #getEcorePath() <em>Ecore Path</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getEcorePath()
 	 * @generated
 	 * @ordered
@@ -82,7 +83,7 @@ public class VViewImpl extends VElementImpl implements VView {
 	 * The cached value of the '{@link #getEcorePath() <em>Ecore Path</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getEcorePath()
 	 * @generated
 	 * @ordered
@@ -93,7 +94,7 @@ public class VViewImpl extends VElementImpl implements VView {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected VViewImpl() {
@@ -103,7 +104,7 @@ public class VViewImpl extends VElementImpl implements VView {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -114,7 +115,7 @@ public class VViewImpl extends VElementImpl implements VView {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -137,7 +138,7 @@ public class VViewImpl extends VElementImpl implements VView {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public EClass basicGetRootEClass() {
@@ -147,7 +148,7 @@ public class VViewImpl extends VElementImpl implements VView {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -163,7 +164,7 @@ public class VViewImpl extends VElementImpl implements VView {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -179,7 +180,7 @@ public class VViewImpl extends VElementImpl implements VView {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @since 1.3
 	 */
@@ -192,7 +193,7 @@ public class VViewImpl extends VElementImpl implements VView {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @since 1.3
 	 */
@@ -210,7 +211,7 @@ public class VViewImpl extends VElementImpl implements VView {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -226,7 +227,7 @@ public class VViewImpl extends VElementImpl implements VView {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -249,7 +250,7 @@ public class VViewImpl extends VElementImpl implements VView {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
@@ -274,7 +275,7 @@ public class VViewImpl extends VElementImpl implements VView {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -297,7 +298,7 @@ public class VViewImpl extends VElementImpl implements VView {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -317,7 +318,7 @@ public class VViewImpl extends VElementImpl implements VView {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -336,7 +337,7 @@ public class VViewImpl extends VElementImpl implements VView {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.model.VView#setAllContentsReadOnly()
 	 */
 	@Override

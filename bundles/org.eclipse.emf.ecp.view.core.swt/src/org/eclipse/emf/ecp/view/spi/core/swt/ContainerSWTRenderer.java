@@ -22,7 +22,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecp.view.internal.core.swt.Activator;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
-import org.eclipse.emf.ecp.view.spi.model.VContainer;
+import org.eclipse.emf.ecp.view.spi.model.VContainedContainer;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
@@ -194,7 +194,7 @@ public abstract class ContainerSWTRenderer<VELEMENT extends VElement> extends Ab
 	 */
 	protected Collection<VContainedElement> getChildren() {
 		if (VViewPackage.eINSTANCE.getContainer().isInstance(getVElement())) {
-			return VContainer.class.cast(getVElement()).getChildren();
+			return VContainedContainer.class.cast(getVElement()).getChildren();
 		}
 		return Collections.emptySet();
 	}

@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
 import org.eclipse.emf.ecp.view.spi.group.model.VGroup;
 import org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage;
+import org.eclipse.emf.ecp.view.spi.model.VContainedContainer;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VContainer;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
@@ -89,9 +90,11 @@ public class GroupSwitch<T> extends Switch<T> {
 			VGroup group = (VGroup) theEObject;
 			T result = caseGroup(group);
 			if (result == null)
-				result = caseContainer(group);
+				result = caseContainedContainer(group);
 			if (result == null)
 				result = caseContainedElement(group);
+			if (result == null)
+				result = caseContainer(group);
 			if (result == null)
 				result = caseElement(group);
 			if (result == null)
@@ -167,6 +170,23 @@ public class GroupSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseContainer(VContainer object)
+	{
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Contained Container</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * 
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Contained Container</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseContainedContainer(VContainedContainer object)
 	{
 		return null;
 	}

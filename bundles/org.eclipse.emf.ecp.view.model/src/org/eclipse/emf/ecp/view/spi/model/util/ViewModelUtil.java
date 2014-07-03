@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
@@ -19,10 +19,10 @@ import org.eclipse.emf.ecp.view.spi.model.impl.Activator;
 
 /**
  * This Util class provides common methods used often when working with the view model.
- * 
+ *
  * @author Eugen Neufeld
  * @since 1.2
- * 
+ *
  */
 public final class ViewModelUtil {
 
@@ -34,7 +34,7 @@ public final class ViewModelUtil {
 	 * Resolves all {@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReference VDomainModelReferences} which are
 	 * contained under the provided
 	 * renderable using the provided domain model.
-	 * 
+	 *
 	 * @param renderable the renderable to analyze for {@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReference
 	 *            VDomainModelReferences}
 	 * @param domainModelRoot the domain model to use for resolving

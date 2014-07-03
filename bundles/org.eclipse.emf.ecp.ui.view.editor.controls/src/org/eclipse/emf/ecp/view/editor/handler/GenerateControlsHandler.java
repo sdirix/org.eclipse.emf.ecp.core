@@ -28,7 +28,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.view.editor.controls.Activator;
 import org.eclipse.emf.ecp.view.editor.controls.Helper;
 import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
-import org.eclipse.emf.ecp.view.spi.model.VContainer;
+import org.eclipse.emf.ecp.view.spi.model.VContainedContainer;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.treemasterdetail.ui.swt.internal.MasterDetailAction;
@@ -44,7 +44,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
- * Handler for generating controls on a {@link org.eclipse.emf.ecp.view.spi.model.VContainer VContainer} or
+ * Handler for generating controls on a {@link org.eclipse.emf.ecp.view.spi.model.VContainedContainer VContainer} or
  * {@link org.eclipse.emf.ecp.view.spi.model.VView VView}.
  * 
  * @author Eugen Neufeld
@@ -131,7 +131,7 @@ public class GenerateControlsHandler extends MasterDetailAction {
 	 */
 	@Override
 	public void execute(final EObject object) {
-		if (!(VView.class.isInstance(object) || VContainer.class.isInstance(object))) {
+		if (!(VView.class.isInstance(object) || VContainedContainer.class.isInstance(object))) {
 			return;
 		}
 
@@ -184,7 +184,7 @@ public class GenerateControlsHandler extends MasterDetailAction {
 			return null;
 		}
 		// TODO Create test cases for this method
-		while (!(object instanceof VView || object instanceof VContainer)) {
+		while (!(object instanceof VView || object instanceof VContainedContainer)) {
 			object = object.eContainer();
 			if (object == null) {
 				return null;
@@ -204,6 +204,6 @@ public class GenerateControlsHandler extends MasterDetailAction {
 		if (object == null) {
 			return false;
 		}
-		return object instanceof VView || object instanceof VContainer;
+		return object instanceof VView || object instanceof VContainedContainer;
 	}
 }

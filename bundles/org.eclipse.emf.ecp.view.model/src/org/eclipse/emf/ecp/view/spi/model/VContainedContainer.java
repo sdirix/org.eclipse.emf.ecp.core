@@ -13,15 +13,15 @@ package org.eclipse.emf.ecp.view.spi.model;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Composite</b></em>'.
+ * A representation of the model object '<em><b>Composite Collection</b></em>'.
  * <!-- end-user-doc -->
  *
  *
- * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getContainedElement()
+ * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getContainedContainer()
  * @model abstract="true"
  * @generated
- * @since 1.2
+ * @since 1.4
  */
-public interface VContainedElement extends VElement {
+public interface VContainedContainer extends VContainedElement, VContainer {
 
-} // Composite
+} // CompositeCollection

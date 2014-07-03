@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
@@ -17,18 +17,19 @@ import org.eclipse.emf.ecore.EClass;
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>View</b></em>'.
- * 
+ *
  * @noimplement This interface is not intended to be implemented by clients.
  *              <!-- end-user-doc -->
- * 
+ *
  *              <p>
  *              The following features are supported:
  *              <ul>
  *              <li>{@link org.eclipse.emf.ecp.view.spi.model.VView#getRootEClass <em>Root EClass</em>}</li>
  *              <li>{@link org.eclipse.emf.ecp.view.spi.model.VView#getChildren <em>Children</em>}</li>
+ *              <li>{@link org.eclipse.emf.ecp.view.spi.model.VView#getEcorePath <em>Ecore Path</em>}</li>
  *              </ul>
  *              </p>
- * 
+ *
  * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getView()
  * @model
  * @generated
@@ -43,7 +44,7 @@ public interface VView extends VElement {
 	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Root EClass</em>' reference.
 	 * @see #setRootEClass(EClass)
 	 * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getView_RootEClass()
@@ -57,7 +58,7 @@ public interface VView extends VElement {
 	 * reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Root EClass</em>' reference.
 	 * @see #getRootEClass()
 	 * @generated
@@ -73,7 +74,7 @@ public interface VView extends VElement {
 	 * a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Children</em>' containment reference list.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getView_Children()
 	 * @model containment="true"
@@ -90,11 +91,11 @@ public interface VView extends VElement {
 	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Ecore Path</em>' attribute.
 	 * @see #setEcorePath(String)
 	 * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getView_EcorePath()
-	 * @model
+	 * @model required="true"
 	 * @generated
 	 * @since 1.3
 	 */
@@ -105,7 +106,7 @@ public interface VView extends VElement {
 	 * attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Ecore Path</em>' attribute.
 	 * @see #getEcorePath()
 	 * @generated

@@ -13,7 +13,7 @@ import org.eclipse.emf.ecp.view.model.internal.fx.RendererFX;
 import org.eclipse.emf.ecp.view.model.internal.fx.RendererFactory;
 import org.eclipse.emf.ecp.view.spi.horizontal.model.VHorizontalLayout;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
-import org.eclipse.emf.ecp.view.spi.model.VContainer;
+import org.eclipse.emf.ecp.view.spi.model.VContainedContainer;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
@@ -70,7 +70,7 @@ public class HorizontalLayoutRendererFX extends RendererFX<VHorizontalLayout> {
 				}
 				grid.add(hBox, gridColumn++, 0);
 				GridPane.setHgrow(hBox, Priority.ALWAYS);
-				if (VContainer.class.isInstance(composite)) {
+				if (VContainedContainer.class.isInstance(composite)) {
 					GridPane.setVgrow(hBox, Priority.ALWAYS);
 				}
 				addColumnConstraint(grid);

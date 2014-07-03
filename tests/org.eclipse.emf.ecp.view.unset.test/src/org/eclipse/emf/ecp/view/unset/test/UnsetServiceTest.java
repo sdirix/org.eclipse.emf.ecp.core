@@ -30,7 +30,7 @@ import org.eclipse.emf.ecp.view.spi.categorization.model.VCategory;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
-import org.eclipse.emf.ecp.view.spi.model.VContainer;
+import org.eclipse.emf.ecp.view.spi.model.VContainedContainer;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
@@ -191,7 +191,7 @@ public class UnsetServiceTest {
 
 	@Test
 	public void testInitSingleControlInContainerWithHiddenContainer() {
-		final VContainer container = addVerticalLayoutToView();
+		final VContainedContainer container = addVerticalLayoutToView();
 		addControlToContainer(container, merchandisePriceReferenceFromFan());
 		container.setVisible(false);
 		unsetService();
@@ -247,7 +247,7 @@ public class UnsetServiceTest {
 
 	@Test
 	public void testInitTwoControlsInOneContainerAllVisible() {
-		final VContainer container = addVerticalLayoutToView();
+		final VContainedContainer container = addVerticalLayoutToView();
 		addControlToContainer(container, merchandisePriceReferenceFromFan());
 		addControlToContainer(container, merchandisePriceReferenceFromFan());
 		unsetService();
@@ -257,7 +257,7 @@ public class UnsetServiceTest {
 
 	@Test
 	public void testInitTwoControlsInOneContainerWithOneHiddenControl() {
-		final VContainer container = addVerticalLayoutToView();
+		final VContainedContainer container = addVerticalLayoutToView();
 		addControlToContainer(container, merchandisePriceReferenceFromFan());
 		addControlToContainer(container, merchandisePriceReferenceFromFan()).setVisible(false);
 		unsetService();
@@ -267,7 +267,7 @@ public class UnsetServiceTest {
 
 	@Test
 	public void testInitTwoControlsInOneContainerWithTwoHiddenControls() {
-		final VContainer container = addVerticalLayoutToView();
+		final VContainedContainer container = addVerticalLayoutToView();
 		addControlToContainer(container, merchandisePriceReferenceFromFan()).setVisible(false);
 		addControlToContainer(container, merchandisePriceReferenceFromFan()).setVisible(false);
 		unsetService();
@@ -277,7 +277,7 @@ public class UnsetServiceTest {
 
 	@Test
 	public void testInitTwoControlsInOneContainerWithHiddenContainer() {
-		final VContainer container = addVerticalLayoutToView();
+		final VContainedContainer container = addVerticalLayoutToView();
 		addControlToContainer(container, merchandisePriceReferenceFromFan());
 		addControlToContainer(container, merchandisePriceReferenceFromFan());
 		container.setVisible(false);
@@ -288,7 +288,7 @@ public class UnsetServiceTest {
 
 	@Test
 	public void testInitTwoControlsInOneContainerWithHiddenView() {
-		final VContainer container = addVerticalLayoutToView();
+		final VContainedContainer container = addVerticalLayoutToView();
 		addControlToContainer(container, merchandisePriceReferenceFromFan());
 		addControlToContainer(container, merchandisePriceReferenceFromFan());
 		view.setVisible(false);
@@ -299,8 +299,8 @@ public class UnsetServiceTest {
 
 	@Test
 	public void testInitTwoControlsInTwoContainersAllVisible() {
-		final VContainer container1 = addVerticalLayoutToView();
-		final VContainer container2 = addVerticalLayoutToView();
+		final VContainedContainer container1 = addVerticalLayoutToView();
+		final VContainedContainer container2 = addVerticalLayoutToView();
 		addControlToContainer(container1, merchandisePriceReferenceFromFan());
 		addControlToContainer(container2, merchandisePriceReferenceFromFan());
 		unsetService();
@@ -310,8 +310,8 @@ public class UnsetServiceTest {
 
 	@Test
 	public void testInitTwoControlsInTwoContainersWithOneHiddenControl() {
-		final VContainer container1 = addVerticalLayoutToView();
-		final VContainer container2 = addVerticalLayoutToView();
+		final VContainedContainer container1 = addVerticalLayoutToView();
+		final VContainedContainer container2 = addVerticalLayoutToView();
 		addControlToContainer(container1, merchandisePriceReferenceFromFan());
 		addControlToContainer(container2, merchandisePriceReferenceFromFan()).setVisible(false);
 		unsetService();
@@ -321,8 +321,8 @@ public class UnsetServiceTest {
 
 	@Test
 	public void testInitTwoControlsInTwoContainersWithOneHiddenContainer() {
-		final VContainer container1 = addVerticalLayoutToView();
-		final VContainer container2 = addVerticalLayoutToView();
+		final VContainedContainer container1 = addVerticalLayoutToView();
+		final VContainedContainer container2 = addVerticalLayoutToView();
 		addControlToContainer(container1, merchandisePriceReferenceFromFan());
 		addControlToContainer(container2, merchandisePriceReferenceFromFan());
 		container1.setVisible(false);
@@ -333,8 +333,8 @@ public class UnsetServiceTest {
 
 	@Test
 	public void testInitTwoControlsInTwoContainersWithTwoHiddenControls() {
-		final VContainer container1 = addVerticalLayoutToView();
-		final VContainer container2 = addVerticalLayoutToView();
+		final VContainedContainer container1 = addVerticalLayoutToView();
+		final VContainedContainer container2 = addVerticalLayoutToView();
 		addControlToContainer(container1, merchandisePriceReferenceFromFan()).setVisible(false);
 		addControlToContainer(container2, merchandisePriceReferenceFromFan()).setVisible(false);
 		unsetService();
@@ -344,8 +344,8 @@ public class UnsetServiceTest {
 
 	@Test
 	public void testInitTwoControlsInTwoContainersWithTwoHiddenContainers() {
-		final VContainer container1 = addVerticalLayoutToView();
-		final VContainer container2 = addVerticalLayoutToView();
+		final VContainedContainer container1 = addVerticalLayoutToView();
+		final VContainedContainer container2 = addVerticalLayoutToView();
 		addControlToContainer(container1, merchandisePriceReferenceFromFan());
 		addControlToContainer(container2, merchandisePriceReferenceFromFan());
 		container1.setVisible(false);
@@ -357,8 +357,8 @@ public class UnsetServiceTest {
 
 	@Test
 	public void testInitTwoControlsInTwoContainersWithHiddenView() {
-		final VContainer container1 = addVerticalLayoutToView();
-		final VContainer container2 = addVerticalLayoutToView();
+		final VContainedContainer container1 = addVerticalLayoutToView();
+		final VContainedContainer container2 = addVerticalLayoutToView();
 		addControlToContainer(container1, merchandisePriceReferenceFromFan());
 		addControlToContainer(container2, merchandisePriceReferenceFromFan());
 		view.setVisible(false);
@@ -447,7 +447,7 @@ public class UnsetServiceTest {
 
 	@Test
 	public void testChangeSingleControlInContainerAllVisibleToHiddenContainer() {
-		final VContainer container = addVerticalLayoutToView();
+		final VContainedContainer container = addVerticalLayoutToView();
 		addControlToContainer(container, merchandisePriceReferenceFromFan());
 		unsetService();
 		container.setVisible(false);
@@ -457,7 +457,7 @@ public class UnsetServiceTest {
 
 	@Test
 	public void testChangeSingleControlInContainerAllVisibleToHiddenView() {
-		final VContainer container = addVerticalLayoutToView();
+		final VContainedContainer container = addVerticalLayoutToView();
 		addControlToContainer(container, merchandisePriceReferenceFromFan());
 		unsetService();
 		view.setVisible(false);
@@ -467,7 +467,7 @@ public class UnsetServiceTest {
 
 	@Test
 	public void testChangeSingleControlInContainerWithHiddenControlToHiddenContainer() {
-		final VContainer container = addVerticalLayoutToView();
+		final VContainedContainer container = addVerticalLayoutToView();
 		addControlToContainer(container, merchandisePriceReferenceFromFan()).setVisible(false);
 		unsetService();
 		container.setVisible(false);
@@ -477,7 +477,7 @@ public class UnsetServiceTest {
 
 	@Test
 	public void testChangeSingleControlInContainerWithHiddenControlToHiddenView() {
-		final VContainer container = addVerticalLayoutToView();
+		final VContainedContainer container = addVerticalLayoutToView();
 		addControlToContainer(container, merchandisePriceReferenceFromFan()).setVisible(false);
 		unsetService();
 		view.setVisible(false);
@@ -487,7 +487,7 @@ public class UnsetServiceTest {
 
 	@Test
 	public void testChangeSingleControlInContainerWithHiddenControlToVisibleControl() {
-		final VContainer container = addVerticalLayoutToView();
+		final VContainedContainer container = addVerticalLayoutToView();
 		final VControl control = addControlToContainer(container, merchandisePriceReferenceFromFan());
 		control.setVisible(false);
 		unsetService();
@@ -502,7 +502,7 @@ public class UnsetServiceTest {
 
 	@Test
 	public void testChangeSingleControlInContainerWithHiddenContainerToHiddenControl() {
-		final VContainer container = addVerticalLayoutToView();
+		final VContainedContainer container = addVerticalLayoutToView();
 		final VControl control = addControlToContainer(container, merchandisePriceReferenceFromFan());
 		container.setVisible(false);
 		unsetService();
@@ -513,7 +513,7 @@ public class UnsetServiceTest {
 
 	@Test
 	public void testChangeSingleControlInContainerWithHiddenContainerToHiddenView() {
-		final VContainer container = addVerticalLayoutToView();
+		final VContainedContainer container = addVerticalLayoutToView();
 		addControlToContainer(container, merchandisePriceReferenceFromFan());
 		container.setVisible(false);
 		unsetService();
@@ -524,7 +524,7 @@ public class UnsetServiceTest {
 
 	@Test
 	public void testChangeSingleControlInContainerWithHiddenContainerToVisibleContainer() {
-		final VContainer container = addVerticalLayoutToView();
+		final VContainedContainer container = addVerticalLayoutToView();
 		addControlToContainer(container, merchandisePriceReferenceFromFan());
 		container.setVisible(false);
 		unsetService();
@@ -549,7 +549,7 @@ public class UnsetServiceTest {
 
 	@Test
 	public void testChangeSingleControlInContainerWithHiddenViewToHiddenContainer() {
-		final VContainer container = addVerticalLayoutToView();
+		final VContainedContainer container = addVerticalLayoutToView();
 		addControlToContainer(container, merchandisePriceReferenceFromFan());
 		view.setVisible(false);
 		unsetService();
@@ -560,7 +560,7 @@ public class UnsetServiceTest {
 
 	@Test
 	public void testChangeSingleControlInContainerWithHiddenViewToVisibleView() {
-		final VContainer container = addVerticalLayoutToView();
+		final VContainedContainer container = addVerticalLayoutToView();
 		addControlToContainer(container, merchandisePriceReferenceFromFan());
 		view.setVisible(false);
 		unsetService();
@@ -677,7 +677,7 @@ public class UnsetServiceTest {
 
 	@Test
 	public void testChangeTwoControlsInOneContainerAllVisibleToOneHiddenControl() {
-		final VContainer container = addVerticalLayoutToView();
+		final VContainedContainer container = addVerticalLayoutToView();
 		addControlToContainer(container, merchandisePriceReferenceFromFan());
 		final VControl control = addControlToContainer(container, merchandisePriceReferenceFromFan());
 		unsetService();
@@ -688,7 +688,7 @@ public class UnsetServiceTest {
 
 	@Test
 	public void testChangeTwoControlsInOneContainerAllVisibleToHiddenContainer() {
-		final VContainer container = addVerticalLayoutToView();
+		final VContainedContainer container = addVerticalLayoutToView();
 		addControlToContainer(container, merchandisePriceReferenceFromFan());
 		addControlToContainer(container, merchandisePriceReferenceFromFan());
 		unsetService();
@@ -699,7 +699,7 @@ public class UnsetServiceTest {
 
 	@Test
 	public void testChangeTwoControlsInOneContainerAllVisibleToHiddenView() {
-		final VContainer container = addVerticalLayoutToView();
+		final VContainedContainer container = addVerticalLayoutToView();
 		addControlToContainer(container, merchandisePriceReferenceFromFan());
 		addControlToContainer(container, merchandisePriceReferenceFromFan());
 		unsetService();
@@ -710,7 +710,7 @@ public class UnsetServiceTest {
 
 	@Test
 	public void testChangeTwoControlsInOneContainerWithOneHiddenControlToTwoVisibleControls() {
-		final VContainer container = addVerticalLayoutToView();
+		final VContainedContainer container = addVerticalLayoutToView();
 		addControlToContainer(container, merchandisePriceReferenceFromFan());
 		final VControl control = addControlToContainer(container, merchandisePriceReferenceFromFan());
 		control.setVisible(false);
@@ -722,7 +722,7 @@ public class UnsetServiceTest {
 
 	@Test
 	public void testChangeTwoControlsInOneContainerWithOneHiddenControlToTwoHiddenControls() {
-		final VContainer container = addVerticalLayoutToView();
+		final VContainedContainer container = addVerticalLayoutToView();
 		final VControl control = addControlToContainer(container, merchandisePriceReferenceFromFan());
 		addControlToContainer(container, merchandisePriceReferenceFromFan()).setVisible(false);
 		unsetService();
@@ -733,7 +733,7 @@ public class UnsetServiceTest {
 
 	@Test
 	public void testChangeTwoControlsInOneContainerWithOneHiddenControlToHiddenContainer() {
-		final VContainer container = addVerticalLayoutToView();
+		final VContainedContainer container = addVerticalLayoutToView();
 		addControlToContainer(container, merchandisePriceReferenceFromFan());
 		addControlToContainer(container, merchandisePriceReferenceFromFan()).setVisible(false);
 		unsetService();
@@ -744,7 +744,7 @@ public class UnsetServiceTest {
 
 	@Test
 	public void testChangeTwoControlsInOneContainerWithOneHiddenControlToHiddenView() {
-		final VContainer container = addVerticalLayoutToView();
+		final VContainedContainer container = addVerticalLayoutToView();
 		addControlToContainer(container, merchandisePriceReferenceFromFan());
 		addControlToContainer(container, merchandisePriceReferenceFromFan()).setVisible(false);
 		unsetService();
@@ -755,7 +755,7 @@ public class UnsetServiceTest {
 
 	@Test
 	public void testChangeTwoControlsInOneContainerWithTwoHiddenControlsToHiddenContainer() {
-		final VContainer container = addVerticalLayoutToView();
+		final VContainedContainer container = addVerticalLayoutToView();
 		addControlToContainer(container, merchandisePriceReferenceFromFan()).setVisible(false);
 		addControlToContainer(container, merchandisePriceReferenceFromFan()).setVisible(false);
 		unsetService();
@@ -766,7 +766,7 @@ public class UnsetServiceTest {
 
 	@Test
 	public void testChangeTwoControlsInOneContainerWithTwoHiddenControlsToHiddenView() {
-		final VContainer container = addVerticalLayoutToView();
+		final VContainedContainer container = addVerticalLayoutToView();
 		addControlToContainer(container, merchandisePriceReferenceFromFan()).setVisible(false);
 		addControlToContainer(container, merchandisePriceReferenceFromFan()).setVisible(false);
 		unsetService();
@@ -777,7 +777,7 @@ public class UnsetServiceTest {
 
 	@Test
 	public void testChangeTwoControlsInOneContainerWithTwoHiddenControlsToOneVisibleControl() {
-		final VContainer container = addVerticalLayoutToView();
+		final VContainedContainer container = addVerticalLayoutToView();
 		addControlToContainer(container, merchandisePriceReferenceFromFan()).setVisible(false);
 		final VControl control = addControlToContainer(container, merchandisePriceReferenceFromFan());
 		control.setVisible(false);
@@ -793,7 +793,7 @@ public class UnsetServiceTest {
 
 	@Test
 	public void testChangeTwoControlsInOneContainerWithHiddenContainerToOneHiddenControl() {
-		final VContainer container = addVerticalLayoutToView();
+		final VContainedContainer container = addVerticalLayoutToView();
 		addControlToContainer(container, merchandisePriceReferenceFromFan());
 		final VControl control = addControlToContainer(container, merchandisePriceReferenceFromFan());
 		container.setVisible(false);
@@ -805,7 +805,7 @@ public class UnsetServiceTest {
 
 	@Test
 	public void testChangeTwoControlsInOneContainerWithHiddenContainerToHiddenView() {
-		final VContainer container = addVerticalLayoutToView();
+		final VContainedContainer container = addVerticalLayoutToView();
 		addControlToContainer(container, merchandisePriceReferenceFromFan());
 		addControlToContainer(container, merchandisePriceReferenceFromFan());
 		container.setVisible(false);
@@ -817,7 +817,7 @@ public class UnsetServiceTest {
 
 	@Test
 	public void testChangeTwoControlsInOneContainerWithHiddenContainerToVisibleContainer() {
-		final VContainer container = addVerticalLayoutToView();
+		final VContainedContainer container = addVerticalLayoutToView();
 		addControlToContainer(container, merchandisePriceReferenceFromFan());
 		addControlToContainer(container, merchandisePriceReferenceFromFan());
 		container.setVisible(false);
@@ -833,7 +833,7 @@ public class UnsetServiceTest {
 
 	@Test
 	public void testChangeTwoControlsInOneContainerWithHiddenViewToOneHiddenControl() {
-		final VContainer container = addVerticalLayoutToView();
+		final VContainedContainer container = addVerticalLayoutToView();
 		addControlToContainer(container, merchandisePriceReferenceFromFan());
 		final VControl control = addControlToContainer(container, merchandisePriceReferenceFromFan());
 		view.setVisible(false);
@@ -845,7 +845,7 @@ public class UnsetServiceTest {
 
 	@Test
 	public void testChangeTwoControlsInOneContainerWithHiddenViewToHiddenContainer() {
-		final VContainer container = addVerticalLayoutToView();
+		final VContainedContainer container = addVerticalLayoutToView();
 		addControlToContainer(container, merchandisePriceReferenceFromFan());
 		addControlToContainer(container, merchandisePriceReferenceFromFan());
 		view.setVisible(false);
@@ -857,7 +857,7 @@ public class UnsetServiceTest {
 
 	@Test
 	public void testChangeTwoControlsInOneContainerWithHiddenViewToVisibleView() {
-		final VContainer container = addVerticalLayoutToView();
+		final VContainedContainer container = addVerticalLayoutToView();
 		addControlToContainer(container, merchandisePriceReferenceFromFan());
 		addControlToContainer(container, merchandisePriceReferenceFromFan());
 		view.setVisible(false);
@@ -873,8 +873,8 @@ public class UnsetServiceTest {
 
 	@Test
 	public void testChangeTwoControlsInTwoContainersAllVisibleToOneHiddenControl() {
-		final VContainer container1 = addVerticalLayoutToView();
-		final VContainer container2 = addVerticalLayoutToView();
+		final VContainedContainer container1 = addVerticalLayoutToView();
+		final VContainedContainer container2 = addVerticalLayoutToView();
 		addControlToContainer(container1, merchandisePriceReferenceFromFan());
 		final VControl control = addControlToContainer(container2, merchandisePriceReferenceFromFan());
 		unsetService();
@@ -885,8 +885,8 @@ public class UnsetServiceTest {
 
 	@Test
 	public void testChangeTwoControlsInTwoContainersAllVisibleToOneHiddenContainer() {
-		final VContainer container1 = addVerticalLayoutToView();
-		final VContainer container2 = addVerticalLayoutToView();
+		final VContainedContainer container1 = addVerticalLayoutToView();
+		final VContainedContainer container2 = addVerticalLayoutToView();
 		addControlToContainer(container1, merchandisePriceReferenceFromFan());
 		addControlToContainer(container2, merchandisePriceReferenceFromFan());
 		unsetService();
@@ -897,8 +897,8 @@ public class UnsetServiceTest {
 
 	@Test
 	public void testChangeTwoControlsInTwoContainersAllVisibleToHiddenView() {
-		final VContainer container1 = addVerticalLayoutToView();
-		final VContainer container2 = addVerticalLayoutToView();
+		final VContainedContainer container1 = addVerticalLayoutToView();
+		final VContainedContainer container2 = addVerticalLayoutToView();
 		addControlToContainer(container1, merchandisePriceReferenceFromFan());
 		addControlToContainer(container2, merchandisePriceReferenceFromFan());
 		unsetService();
@@ -909,8 +909,8 @@ public class UnsetServiceTest {
 
 	@Test
 	public void testChangeTwoControlsInTwoContainersWithOneHiddenControlToTwoVisibleControls() {
-		final VContainer container1 = addVerticalLayoutToView();
-		final VContainer container2 = addVerticalLayoutToView();
+		final VContainedContainer container1 = addVerticalLayoutToView();
+		final VContainedContainer container2 = addVerticalLayoutToView();
 		addControlToContainer(container1, merchandisePriceReferenceFromFan());
 		final VControl control = addControlToContainer(container2, merchandisePriceReferenceFromFan());
 		control.setVisible(false);
@@ -922,8 +922,8 @@ public class UnsetServiceTest {
 
 	@Test
 	public void testChangeTwoControlsInTwoContainersWithOneHiddenControlToHiddenContainerOfHiddenControl() {
-		final VContainer container1 = addVerticalLayoutToView();
-		final VContainer container2 = addVerticalLayoutToView();
+		final VContainedContainer container1 = addVerticalLayoutToView();
+		final VContainedContainer container2 = addVerticalLayoutToView();
 		addControlToContainer(container1, merchandisePriceReferenceFromFan());
 		addControlToContainer(container2, merchandisePriceReferenceFromFan()).setVisible(false);
 		unsetService();
@@ -934,8 +934,8 @@ public class UnsetServiceTest {
 
 	@Test
 	public void testChangeTwoControlsInTwoContainersWithOneHiddenControlToTwoHiddenControls() {
-		final VContainer container1 = addVerticalLayoutToView();
-		final VContainer container2 = addVerticalLayoutToView();
+		final VContainedContainer container1 = addVerticalLayoutToView();
+		final VContainedContainer container2 = addVerticalLayoutToView();
 		final VControl control = addControlToContainer(container1, merchandisePriceReferenceFromFan());
 		addControlToContainer(container2, merchandisePriceReferenceFromFan()).setVisible(false);
 		unsetService();
@@ -946,8 +946,8 @@ public class UnsetServiceTest {
 
 	@Test
 	public void testChangeTwoControlsInTwoContainersWithOneHiddenControlToHiddenContainerOfVisibleControl() {
-		final VContainer container1 = addVerticalLayoutToView();
-		final VContainer container2 = addVerticalLayoutToView();
+		final VContainedContainer container1 = addVerticalLayoutToView();
+		final VContainedContainer container2 = addVerticalLayoutToView();
 		addControlToContainer(container1, merchandisePriceReferenceFromFan());
 		addControlToContainer(container2, merchandisePriceReferenceFromFan()).setVisible(false);
 		unsetService();
@@ -958,8 +958,8 @@ public class UnsetServiceTest {
 
 	@Test
 	public void testChangeTwoControlsInTwoContainersWithOneHiddenControlToHiddenView() {
-		final VContainer container1 = addVerticalLayoutToView();
-		final VContainer container2 = addVerticalLayoutToView();
+		final VContainedContainer container1 = addVerticalLayoutToView();
+		final VContainedContainer container2 = addVerticalLayoutToView();
 		addControlToContainer(container1, merchandisePriceReferenceFromFan());
 		addControlToContainer(container2, merchandisePriceReferenceFromFan()).setVisible(false);
 		unsetService();
@@ -970,8 +970,8 @@ public class UnsetServiceTest {
 
 	@Test
 	public void testChangeTwoControlsInTwoContainersWithOneHiddenContainerToHiddenControlInHiddenContainer() {
-		final VContainer container1 = addVerticalLayoutToView();
-		final VContainer container2 = addVerticalLayoutToView();
+		final VContainedContainer container1 = addVerticalLayoutToView();
+		final VContainedContainer container2 = addVerticalLayoutToView();
 		final VControl control = addControlToContainer(container1, merchandisePriceReferenceFromFan());
 		addControlToContainer(container2, merchandisePriceReferenceFromFan());
 		container1.setVisible(false);
@@ -983,8 +983,8 @@ public class UnsetServiceTest {
 
 	@Test
 	public void testChangeTwoControlsInTwoContainersWithOneHiddenContainerToTwoVisibleContainers() {
-		final VContainer container1 = addVerticalLayoutToView();
-		final VContainer container2 = addVerticalLayoutToView();
+		final VContainedContainer container1 = addVerticalLayoutToView();
+		final VContainedContainer container2 = addVerticalLayoutToView();
 		addControlToContainer(container1, merchandisePriceReferenceFromFan());
 		addControlToContainer(container2, merchandisePriceReferenceFromFan());
 		container1.setVisible(false);
@@ -996,8 +996,8 @@ public class UnsetServiceTest {
 
 	@Test
 	public void testChangeTwoControlsInTwoContainersWithOneHiddenContainerToHiddenControlInVisibleContainer() {
-		final VContainer container1 = addVerticalLayoutToView();
-		final VContainer container2 = addVerticalLayoutToView();
+		final VContainedContainer container1 = addVerticalLayoutToView();
+		final VContainedContainer container2 = addVerticalLayoutToView();
 		addControlToContainer(container1, merchandisePriceReferenceFromFan());
 		final VControl control = addControlToContainer(container2, merchandisePriceReferenceFromFan());
 		container1.setVisible(false);
@@ -1009,8 +1009,8 @@ public class UnsetServiceTest {
 
 	@Test
 	public void testChangeTwoControlsInTwoContainersWithOneHiddenContainerToTwoHiddenContainer() {
-		final VContainer container1 = addVerticalLayoutToView();
-		final VContainer container2 = addVerticalLayoutToView();
+		final VContainedContainer container1 = addVerticalLayoutToView();
+		final VContainedContainer container2 = addVerticalLayoutToView();
 		addControlToContainer(container1, merchandisePriceReferenceFromFan());
 		addControlToContainer(container2, merchandisePriceReferenceFromFan());
 		container1.setVisible(false);
@@ -1022,8 +1022,8 @@ public class UnsetServiceTest {
 
 	@Test
 	public void testChangeTwoControlsInTwoContainersWithOneHiddenContainerToHiddenView() {
-		final VContainer container1 = addVerticalLayoutToView();
-		final VContainer container2 = addVerticalLayoutToView();
+		final VContainedContainer container1 = addVerticalLayoutToView();
+		final VContainedContainer container2 = addVerticalLayoutToView();
 		addControlToContainer(container1, merchandisePriceReferenceFromFan());
 		addControlToContainer(container2, merchandisePriceReferenceFromFan());
 		container1.setVisible(false);
@@ -1035,8 +1035,8 @@ public class UnsetServiceTest {
 
 	@Test
 	public void testChangeTwoControlsInTwoContainersWithTwoHiddenControlsToOneHiddenContainer() {
-		final VContainer container1 = addVerticalLayoutToView();
-		final VContainer container2 = addVerticalLayoutToView();
+		final VContainedContainer container1 = addVerticalLayoutToView();
+		final VContainedContainer container2 = addVerticalLayoutToView();
 		addControlToContainer(container1, merchandisePriceReferenceFromFan()).setVisible(false);
 		addControlToContainer(container2, merchandisePriceReferenceFromFan()).setVisible(false);
 		unsetService();
@@ -1047,8 +1047,8 @@ public class UnsetServiceTest {
 
 	@Test
 	public void testChangeTwoControlsInTwoContainersWithTwoHiddenControlsToHiddenView() {
-		final VContainer container1 = addVerticalLayoutToView();
-		final VContainer container2 = addVerticalLayoutToView();
+		final VContainedContainer container1 = addVerticalLayoutToView();
+		final VContainedContainer container2 = addVerticalLayoutToView();
 		addControlToContainer(container1, merchandisePriceReferenceFromFan()).setVisible(false);
 		addControlToContainer(container2, merchandisePriceReferenceFromFan()).setVisible(false);
 		unsetService();
@@ -1059,8 +1059,8 @@ public class UnsetServiceTest {
 
 	@Test
 	public void testChangeTwoControlsInTwoContainersWithTwoHiddenControlsToOneVisibleControl() {
-		final VContainer container1 = addVerticalLayoutToView();
-		final VContainer container2 = addVerticalLayoutToView();
+		final VContainedContainer container1 = addVerticalLayoutToView();
+		final VContainedContainer container2 = addVerticalLayoutToView();
 		addControlToContainer(container1, merchandisePriceReferenceFromFan()).setVisible(false);
 		final VControl control = addControlToContainer(container2, merchandisePriceReferenceFromFan());
 		control.setVisible(false);
@@ -1076,8 +1076,8 @@ public class UnsetServiceTest {
 
 	@Test
 	public void testChangeTwoControlsInTwoContainersWithTwoHiddenContainersToOneHiddenControl() {
-		final VContainer container1 = addVerticalLayoutToView();
-		final VContainer container2 = addVerticalLayoutToView();
+		final VContainedContainer container1 = addVerticalLayoutToView();
+		final VContainedContainer container2 = addVerticalLayoutToView();
 		addControlToContainer(container1, merchandisePriceReferenceFromFan());
 		final VControl control = addControlToContainer(container2, merchandisePriceReferenceFromFan());
 		container1.setVisible(false);
@@ -1090,8 +1090,8 @@ public class UnsetServiceTest {
 
 	@Test
 	public void testChangeTwoControlsInTwoContainersWithTwoHiddenContainersToHiddenView() {
-		final VContainer container1 = addVerticalLayoutToView();
-		final VContainer container2 = addVerticalLayoutToView();
+		final VContainedContainer container1 = addVerticalLayoutToView();
+		final VContainedContainer container2 = addVerticalLayoutToView();
 		addControlToContainer(container1, merchandisePriceReferenceFromFan());
 		addControlToContainer(container2, merchandisePriceReferenceFromFan());
 		container1.setVisible(false);
@@ -1104,8 +1104,8 @@ public class UnsetServiceTest {
 
 	@Test
 	public void testChangeTwoControlsInTwoContainersWithTwoHiddenContainersToOneVisibleContainer() {
-		final VContainer container1 = addVerticalLayoutToView();
-		final VContainer container2 = addVerticalLayoutToView();
+		final VContainedContainer container1 = addVerticalLayoutToView();
+		final VContainedContainer container2 = addVerticalLayoutToView();
 		addControlToContainer(container1, merchandisePriceReferenceFromFan());
 		addControlToContainer(container2, merchandisePriceReferenceFromFan());
 		container1.setVisible(false);
@@ -1122,8 +1122,8 @@ public class UnsetServiceTest {
 
 	@Test
 	public void testChangeTwoControlsInTwoContainersWithHiddenViewToOneHiddenControl() {
-		final VContainer container1 = addVerticalLayoutToView();
-		final VContainer container2 = addVerticalLayoutToView();
+		final VContainedContainer container1 = addVerticalLayoutToView();
+		final VContainedContainer container2 = addVerticalLayoutToView();
 		addControlToContainer(container1, merchandisePriceReferenceFromFan());
 		final VControl control = addControlToContainer(container2, merchandisePriceReferenceFromFan());
 		view.setVisible(false);
@@ -1135,8 +1135,8 @@ public class UnsetServiceTest {
 
 	@Test
 	public void testChangeTwoControlsInTwoContainersWithHiddenViewToOneHiddenContainer() {
-		final VContainer container1 = addVerticalLayoutToView();
-		final VContainer container2 = addVerticalLayoutToView();
+		final VContainedContainer container1 = addVerticalLayoutToView();
+		final VContainedContainer container2 = addVerticalLayoutToView();
 		addControlToContainer(container1, merchandisePriceReferenceFromFan());
 		addControlToContainer(container2, merchandisePriceReferenceFromFan());
 		view.setVisible(false);
@@ -1148,8 +1148,8 @@ public class UnsetServiceTest {
 
 	@Test
 	public void testChangeTwoControlsInTwoContainersWithHiddenViewToVisibleView() {
-		final VContainer container1 = addVerticalLayoutToView();
-		final VContainer container2 = addVerticalLayoutToView();
+		final VContainedContainer container1 = addVerticalLayoutToView();
+		final VContainedContainer container2 = addVerticalLayoutToView();
 		addControlToContainer(container1, merchandisePriceReferenceFromFan());
 		addControlToContainer(container2, merchandisePriceReferenceFromFan());
 		view.setVisible(false);
@@ -1384,7 +1384,7 @@ public class UnsetServiceTest {
 	 * @param domainModelReference
 	 * @return the created control
 	 */
-	private VControl addControlToContainer(VContainer container, VFeaturePathDomainModelReference domainModelReference) {
+	private VControl addControlToContainer(VContainedContainer container, VFeaturePathDomainModelReference domainModelReference) {
 		final VControl control = VViewFactory.eINSTANCE.createControl();
 		control.setDomainModelReference(domainModelReference);
 		container.getChildren().add(control);

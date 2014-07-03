@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
@@ -52,16 +52,16 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
  * Note that most of the adapters are shared among multiple instances.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
- * 
+ *
  * @generated
  */
 public class CustomItemProviderAdapterFactory extends CustomAdapterFactory implements ComposeableAdapterFactory,
-	IChangeNotifier, IDisposable, IChildCreationExtender {
+IChangeNotifier, IDisposable, IChildCreationExtender {
 	/**
 	 * This keeps track of the root adapter factory that delegates to this adapter factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected ComposedAdapterFactory parentAdapterFactory;
@@ -70,7 +70,7 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 	 * This is used to implement {@link org.eclipse.emf.edit.provider.IChangeNotifier}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected IChangeNotifier changeNotifier = new ChangeNotifier();
@@ -79,7 +79,7 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 	 * This helps manage the child creation extenders.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected ChildCreationExtenderManager childCreationExtenderManager = new ChildCreationExtenderManager(
@@ -89,7 +89,7 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 	 * This keeps track of all the supported types checked by {@link #isFactoryForType isFactoryForType}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected Collection<Object> supportedTypes = new ArrayList<Object>();
@@ -98,7 +98,7 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 	 * This constructs an instance.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public CustomItemProviderAdapterFactory() {
@@ -113,10 +113,10 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.view.spi.custom.model.VCustomControl}
 	 * instances.
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.3
 	 *        <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected CustomControlItemProvider customControlItemProvider;
@@ -125,7 +125,7 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.spi.custom.model.VCustomControl}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -143,10 +143,10 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 	 * This keeps track of the one adapter used for all
 	 * {@link org.eclipse.emf.ecp.view.spi.custom.model.VCustomDomainModelReference} instances.
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.3
 	 *        <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected CustomDomainModelReferenceItemProvider customDomainModelReferenceItemProvider;
@@ -155,7 +155,7 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.spi.custom.model.VCustomDomainModelReference}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -173,7 +173,7 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -185,7 +185,7 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 	 * This sets the composed adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -196,7 +196,7 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -208,7 +208,7 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 	 * This implementation substitutes the factory itself as the key for the adapter.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -219,7 +219,7 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -239,7 +239,7 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public List<IChildCreationExtender> getChildCreationExtenders() {
@@ -249,7 +249,7 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -260,7 +260,7 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -272,7 +272,7 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 	 * This adds a listener.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -284,7 +284,7 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 	 * This removes a listener.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -296,7 +296,7 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 	 * This delegates to {@link #changeNotifier} and to {@link #parentAdapterFactory}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -313,7 +313,7 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 	 * This disposes all of the item providers created by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -330,7 +330,7 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 	 * A child creation extender for the {@link VViewPackage}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public static class ViewChildCreationExtender implements IChildCreationExtender {
@@ -338,7 +338,7 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 		 * The switch for creating child descriptors specific to each extended class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		protected static class CreationSwitch extends ViewSwitch<Object> {
@@ -346,7 +346,7 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 			 * The child descriptors being populated.
 			 * <!-- begin-user-doc -->
 			 * <!-- end-user-doc -->
-			 * 
+			 *
 			 * @generated
 			 */
 			protected List<Object> newChildDescriptors;
@@ -355,7 +355,7 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 			 * The domain in which to create the children.
 			 * <!-- begin-user-doc -->
 			 * <!-- end-user-doc -->
-			 * 
+			 *
 			 * @generated
 			 */
 			protected EditingDomain editingDomain;
@@ -364,7 +364,7 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 			 * Creates the a switch for populating child descriptors in the given domain.
 			 * <!-- begin-user-doc -->
 			 * <!-- end-user-doc -->
-			 * 
+			 *
 			 * @generated
 			 */
 			CreationSwitch(List<Object> newChildDescriptors, EditingDomain editingDomain) {
@@ -375,14 +375,14 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 			/**
 			 * <!-- begin-user-doc -->
 			 * <!-- end-user-doc -->
-			 * 
+			 *
 			 * @generated
 			 */
 			@Override
 			public Object caseView(VView object)
 			{
 				newChildDescriptors.add
-					(createChildParameter
+				(createChildParameter
 					(VViewPackage.Literals.VIEW__CHILDREN,
 						VCustomFactory.eINSTANCE.createCustomControl()));
 
@@ -392,14 +392,14 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 			/**
 			 * <!-- begin-user-doc -->
 			 * <!-- end-user-doc -->
-			 * 
+			 *
 			 * @generated
 			 */
 			@Override
 			public Object caseContainer(VContainer object)
 			{
 				newChildDescriptors.add
-					(createChildParameter
+				(createChildParameter
 					(VViewPackage.Literals.CONTAINER__CHILDREN,
 						VCustomFactory.eINSTANCE.createCustomControl()));
 
@@ -409,13 +409,13 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 			/**
 			 * <!-- begin-user-doc -->
 			 * <!-- end-user-doc -->
-			 * 
+			 *
 			 * @generated
 			 */
 			@Override
 			public Object caseControl(VControl object) {
 				newChildDescriptors.add
-					(createChildParameter
+				(createChildParameter
 					(VViewPackage.Literals.CONTROL__DOMAIN_MODEL_REFERENCE,
 						VCustomFactory.eINSTANCE.createCustomDomainModelReference()));
 
@@ -425,7 +425,7 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 			/**
 			 * <!-- begin-user-doc -->
 			 * <!-- end-user-doc -->
-			 * 
+			 *
 			 * @generated
 			 */
 			protected CommandParameter createChildParameter(Object feature, Object child) {
@@ -437,7 +437,7 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 		/**
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		@Override
@@ -450,7 +450,7 @@ public class CustomItemProviderAdapterFactory extends CustomAdapterFactory imple
 		/**
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		@Override
