@@ -568,6 +568,9 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 	 * @param notification
 	 */
 	private void cleanDiagnostic(boolean baseFeatureChanged, ModelChangeNotification notification) {
+		if (!(eContainer() instanceof VControl)) {
+			return;
+		}
 		final VControl vControl = (VControl) eContainer();
 		if (vControl.getDiagnostic() == null) {
 			return;
@@ -602,5 +605,4 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 			}
 		}
 	}
-
 } // VFeaturePathDomainModelReferenceImpl
