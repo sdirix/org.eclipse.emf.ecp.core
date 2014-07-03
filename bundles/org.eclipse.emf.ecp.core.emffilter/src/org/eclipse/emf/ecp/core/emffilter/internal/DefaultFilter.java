@@ -53,20 +53,9 @@ public class DefaultFilter implements ECPFilterProvider {
 		addQ7Models2(packages);
 		addNet4jModels(packages);
 		addViewModels(packages);
-
-		// xml
-		packages.add("http://www.eclipse.org/xsd/2002/XSD"); //$NON-NLS-1$
-		packages.add("http://www.w3.org/XML/1998/namespace"); //$NON-NLS-1$
-		// other default
-		packages.add("http://www.eclipse.org/amalgamation/discovery/1.0"); //$NON-NLS-1$
-		packages.add("http://www.eclipse.org/acceleo/profiler/3.0"); //$NON-NLS-1$
-		packages.add("http://www.eclipse.org/acceleo/mtl/3.0"); //$NON-NLS-1$
-
-		// ecl
-		packages.add("http://www.eclipse.org/ecl/filesystem.ecore"); //$NON-NLS-1$
-		packages.add("http://www.eclipse.org/ecl/interop.ecore"); //$NON-NLS-1$
-		packages.add("http://www.eclipse.org/ecl/platform/commands.ecore"); //$NON-NLS-1$
-		packages.add("http://www.eclipse.org/ecl/platform/objects.ecore"); //$NON-NLS-1$
+		addOomphModels(packages);
+		addSiriusModels(packages);
+		addOtherModels(packages);
 
 		return packages;
 	}
@@ -207,6 +196,10 @@ public class DefaultFilter implements ECPFilterProvider {
 		packages.add("http://www.eclipse.org/uml2/4.0.0/UML/Profile/L2"); //$NON-NLS-1$
 		packages.add("http://www.eclipse.org/uml2/2.0.0/UML"); //$NON-NLS-1$
 		packages.add("http://www.eclipse.org/uml2/4.0.0/UML"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/uml2/5.0.0/Types"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/uml2/5.0.0/UML"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard"); //$NON-NLS-1$
+
 	}
 
 	/**
@@ -231,6 +224,14 @@ public class DefaultFilter implements ECPFilterProvider {
 		packages.add("http://www.eclipse.org/emf/CDO/Eresource/4.0.0"); //$NON-NLS-1$
 		packages.add("http://www.eclipse.org/emf/CDO/security/4.1.0"); //$NON-NLS-1$
 		packages.add("http://www.eclipse.org/emf/CDO/Etypes/4.0.0"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/emf/CDO/admin/RepositoryCatalog/4.3.0"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/emf/CDO/expressions/4.3.0"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/CDO/releng/workingsets/1.0"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/CDO/releng/projectconfig/1.0"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/CDO/releng/preferences/1.0"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/CDO/releng/predicates/1.0"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/CDO/releng/setup/1.0"); //$NON-NLS-1$
+
 	}
 
 	/**
@@ -294,4 +295,70 @@ public class DefaultFilter implements ECPFilterProvider {
 		packages.add("http://www.eclipse.org/NET4J/util/defs/1.0.0"); //$NON-NLS-1$
 	}
 
+	private static void addSiriusModels(Set<String> packages) {
+		packages.add("http://www.eclipse.org/sirius/table/1.1.0"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/sirius/description/audit/1.1.0"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/sirius/diagram/sequence/ordering/2.0.0"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/sirius/1.1.0"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/sirius/diagram/sequence/description/2.0.0"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/sirius/description/tool/1.1.0"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/sirius/description/1.1.0"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/sirius/diagram/sequence/2.0.0"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/sirius/diagram/description/filter/1.1.0"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/sirius/diagram/sequence/description/tool/2.0.0"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/sirius/diagram/description/style/1.1.0"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/sirius/dsl/layoutdata/1.1.0"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/sirius/description/style/1.1.0"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/sirius/table/description/1.1.0"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/sirius/diagram/description/1.1.0"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/sirius/description/validation/1.1.0"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/sirius/diagram/description/tool/1.1.0"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/sirius/description/contribution/1.0.0"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/sirius/diagram/sequence/template/2.0.0"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/sirius/tree/1.0.0"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/sirius/diagram/1.1.0"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/sirius/diagram/description/concern/1.1.0"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/sirius/tree/description/1.0.0"); //$NON-NLS-1$
+	}
+
+	private static void addOomphModels(Set<String> packages) {
+		packages.add("http://www.eclipse.org/Oomph/preferences/1.0"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/Oomph/projectconfig/1.0"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/oomph/targlets/1.0"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/oomph/setup/git/1.0"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/oomph/setup/jdt/1.0"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/oomph/setup/maven/1.0"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/oomph/base/1.0"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/oomph/setup/mylyn/1.0"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/oomph/resources/1.0"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/oomph/workingsets/1.0"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/oomph/setup/targlets/1.0"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/oomph/setup/workingsets/1.0"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/oomph/p2/1.0"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/oomph/setup/p2/1.0"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/oomph/setup/pde/1.0"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/oomph/setup/projects/1.0"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/oomph/setup/1.0"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/oomph/predicates/1.0"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/oomph/setup/projectset/1.0"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/oomph/setup/workbench/1.0"); //$NON-NLS-1$
+	}
+
+	private static void addOtherModels(Set<String> packages) {
+		packages.add("http://eclipse.org/mylyn/models/build"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/acceleo/mtl/cst/3.0"); //$NON-NLS-1$
+		// xml
+		packages.add("http://www.eclipse.org/xsd/2002/XSD"); //$NON-NLS-1$
+		packages.add("http://www.w3.org/XML/1998/namespace"); //$NON-NLS-1$
+		// other default
+		packages.add("http://www.eclipse.org/amalgamation/discovery/1.0"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/acceleo/profiler/3.0"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/acceleo/mtl/3.0"); //$NON-NLS-1$
+
+		// ecl
+		packages.add("http://www.eclipse.org/ecl/filesystem.ecore"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/ecl/interop.ecore"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/ecl/platform/commands.ecore"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/ecl/platform/objects.ecore"); //$NON-NLS-1$
+	}
 }
