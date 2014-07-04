@@ -14,9 +14,11 @@
 
 package org.eclipse.emf.ecp.core.util;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EClass;
@@ -136,7 +138,11 @@ public final class ECPUtil {
 	 */
 	public static Collection<EClass> getSubClasses(EClass superClass) {
 		final Collection<EClass> classes = new HashSet<EClass>();
-		for (final String nsURI : Registry.INSTANCE.keySet()) {
+
+		// avoid ConcurrentModificationException while iterating over the registry's key set
+		final List<String> keySet = new ArrayList<String>(Registry.INSTANCE.keySet());
+		for (final String nsURI : keySet)
+		{
 			final EPackage ePackage = Registry.INSTANCE.getEPackage(nsURI);
 			for (final EClassifier eClassifier : ePackage.getEClassifiers()) {
 				if (eClassifier instanceof EClass) {

@@ -37,20 +37,22 @@ public class SelectModelElementWizard extends ECPWizard<SelectionComposite<? ext
 
 	/**
 	 * @author Jonas
-	 *
+	 * 
 	 */
-	private final class WizardPageExtension extends WizardPage {
+	public final class WizardPageExtension extends WizardPage {
 		/**
 		 * @param pageName
 		 */
-		private WizardPageExtension(String pageName) {
+		public WizardPageExtension(String pageName) {
 			super(pageName);
 		}
 
+		@Override
 		public void createControl(Composite parent) {
 			final Composite composite = getCompositeProvider().createUI(parent);
 			getCompositeProvider().getViewer().addSelectionChangedListener(new ISelectionChangedListener() {
 
+				@Override
 				public void selectionChanged(SelectionChangedEvent event) {
 					final IStructuredSelection sel = (IStructuredSelection) getCompositeProvider().getViewer()
 						.getSelection();
@@ -64,6 +66,7 @@ public class SelectModelElementWizard extends ECPWizard<SelectionComposite<? ext
 			});
 			getCompositeProvider().getViewer().addDoubleClickListener(new IDoubleClickListener() {
 
+				@Override
 				public void doubleClick(DoubleClickEvent event) {
 					if (isPageComplete() && performFinish()) {
 						((WizardDialog) getContainer()).close();
@@ -77,10 +80,10 @@ public class SelectModelElementWizard extends ECPWizard<SelectionComposite<? ext
 		}
 	}
 
-	private final String pageName;
-	private final String description;
-	private final String pageTitle;
-	private final Class<?> classtoSelect;
+	protected final String pageName;
+	protected final String description;
+	protected final String pageTitle;
+	protected final Class<?> classtoSelect;
 
 	/**
 	 * Constructor to select an EClass.

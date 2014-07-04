@@ -263,6 +263,12 @@
                testClass="org.eclipse.emf.ecp.view.editor.controls.StackItemControlRendererTester">
          </dynamicTest>
       </renderer>
+      <renderer
+            renderer="org.eclipse.emf.ecp.view.editor.controls.DomainModelReferenceControlSWTRenderer">
+         <dynamicTest
+               testClass="org.eclipse.emf.ecp.view.editor.controls.DomainModelReferenceControlSWTRendererTester">
+         </dynamicTest>
+      </renderer>
    </extension>
 
 </plugin>

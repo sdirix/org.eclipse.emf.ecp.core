@@ -110,7 +110,10 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 
 	@Override
 	protected void dispose() {
-		getVElement().getDomainModelReference().getChangeListener().remove(domainModelReferenceChangeListener);
+		if (getVElement().getDomainModelReference() != null) {
+			getVElement().getDomainModelReference().getChangeListener().remove(domainModelReferenceChangeListener);
+		}
+
 		domainModelReferenceChangeListener = null;
 		if (value != null) {
 			value.dispose();

@@ -9,6 +9,9 @@
       <file
             filePath="viewmodel/group.view">
       </file>
+      <file
+            filePath="control.view">
+      </file>
    </extension>
 
 </plugin>
