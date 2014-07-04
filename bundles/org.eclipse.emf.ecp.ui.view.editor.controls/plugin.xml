@@ -230,6 +230,12 @@
             label="Generate Controls"
             location="menu">
       </MasterDetailAction>
+      <MasterDetailAction
+            command="org.eclipse.emf.ecp.view.editor.handler.GenerateTableColumnsHandler"
+            imagePath="icons/generateColumns.png"
+            label="Generate Columns"
+            location="menu">
+      </MasterDetailAction>
    </extension>
    <extension
          point="org.eclipse.emf.ecp.ui.view.swt.renderers">
@@ -252,7 +258,7 @@
          </dynamicTest>
       </renderer>
       <renderer
-            renderer=" org.eclipse.emf.ecp.view.editor.controls.StackItemControlRenderer">
+            renderer="org.eclipse.emf.ecp.view.editor.controls.StackItemControlRenderer">
          <dynamicTest
                testClass="org.eclipse.emf.ecp.view.editor.controls.StackItemControlRendererTester">
          </dynamicTest>
