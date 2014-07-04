@@ -7,7 +7,7 @@ Element-Type: context
 Element-Version: 2.0
 Id: _ElgmoHlIEeO9Ja8zvRhhOQ
 Q7-Runtime-Version: 1.3.10.201312200736
-Save-Time: 3/6/14 6:45 PM
+Save-Time: 7/4/14 9:47 AM
 
 ------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998
 Content-Type: text/ecl
@@ -30,6 +30,8 @@ with [get-window "Select an EClass."] {
 }
 get-view "Model Explorer" | get-tree | select "Project/View" | get-menu "Generate Controls" | click
 with [get-window -class SelectAttributesDialog] {
+    get-tree | select "Player \\[org.eclipse.emf.emfstore.bowling.Player\\]"
+    get-button "Next >" | click
     with [get-table] {
         get-item "name : EString" | check
         get-item "dateOfBirth : EDate" | check
@@ -37,6 +39,6 @@ with [get-window -class SelectAttributesDialog] {
         get-item "isProfessional : EBoolean" | check
         get-item "numberOfVictories : EInt" | check
     }
-    get-button OK | click
+    get-button Finish | click
 }
 ------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998--

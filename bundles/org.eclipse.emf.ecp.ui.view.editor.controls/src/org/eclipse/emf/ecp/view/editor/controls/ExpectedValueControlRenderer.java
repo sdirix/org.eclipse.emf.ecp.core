@@ -46,6 +46,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.dialogs.ListDialog;
 
@@ -58,7 +59,7 @@ import org.eclipse.ui.dialogs.ListDialog;
 // APITODO no api yet
 public abstract class ExpectedValueControlRenderer extends SimpleControlSWTControlSWTRenderer {
 
-	private Text text;
+	private Label text;
 
 	private String getTextVariantID() {
 		return "org_eclipse_emf_ecp_view_editor_controls_ruleattribute"; //$NON-NLS-1$
@@ -78,7 +79,7 @@ public abstract class ExpectedValueControlRenderer extends SimpleControlSWTContr
 		final Button bSelectObject = new Button(composite, SWT.PUSH);
 		bSelectObject.setText("Select Object"); //$NON-NLS-1$
 
-		text = new Text(composite, SWT.SINGLE | SWT.BORDER);
+		text = new Label(composite, SWT.SINGLE | SWT.BORDER);
 		text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		text.setData(CUSTOM_VARIANT, getTextVariantID());
 
@@ -217,7 +218,7 @@ public abstract class ExpectedValueControlRenderer extends SimpleControlSWTContr
 	 * @param shell
 	 * 
 	 */
-	protected abstract void onSelectButton(Text text);
+	protected abstract void onSelectButton(Label text);
 
 	protected Setting getSetting(VControl control) {
 		final Iterator<Setting> iterator = control.getDomainModelReference().getIterator();

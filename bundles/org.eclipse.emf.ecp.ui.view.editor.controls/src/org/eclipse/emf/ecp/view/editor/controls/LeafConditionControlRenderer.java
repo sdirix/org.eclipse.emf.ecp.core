@@ -22,7 +22,7 @@ import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.Label;
 
 /**
  * @author Alexandra Buzila
@@ -36,7 +36,7 @@ public class LeafConditionControlRenderer extends ExpectedValueControlRenderer {
 	 * @see org.eclipse.emf.ecp.view.editor.controls.ExpectedValueControlRenderer#onSelectButton()
 	 */
 	@Override
-	protected void onSelectButton(Text control) {
+	protected void onSelectButton(Label control) {
 		final Setting setting = getSetting(getVElement());
 
 		final LeafCondition condition = (LeafCondition) setting.getEObject();
