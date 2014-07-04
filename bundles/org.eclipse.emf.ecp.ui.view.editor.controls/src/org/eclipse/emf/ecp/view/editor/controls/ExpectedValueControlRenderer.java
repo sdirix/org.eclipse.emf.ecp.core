@@ -102,11 +102,11 @@ public abstract class ExpectedValueControlRenderer extends SimpleControlSWTContr
 	 */
 	@Override
 	protected Binding[] createBindings(Control control, Setting setting) {
-		final Text text = (Text) control;
+		final Label text = (Label) control;
 		final TargetToModelUpdateStrategy targetToModelUpdateStrategy = new TargetToModelUpdateStrategy();
 		final ModelToTargetUpdateStrategy modelToTargetUpdateStrategy = new ModelToTargetUpdateStrategy();
 
-		final IObservableValue value = SWTObservables.observeText(text, SWT.FocusOut);
+		final IObservableValue value = SWTObservables.observeText(text);
 
 		final Binding binding = getDataBindingContext().bindValue(value, getModelValue(setting),
 			targetToModelUpdateStrategy, modelToTargetUpdateStrategy);
