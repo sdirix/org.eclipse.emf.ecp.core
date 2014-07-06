@@ -44,6 +44,24 @@
             name="Make it happen: view model"
             project="true">
       </wizard>
+      <wizard
+            canFinishEarly="true"
+            category="org.eclipse.ui.Examples/org.eclipse.emf.ecp.makeithappen.wizards.EMFForms"
+            class="org.eclipse.emf.ecp.makeithappen.internal.wizards.MakeItHappenWizard"
+            icon="icons/emf_forms_icon.png"
+            id="org.eclipse.emf.ecp.makeithappen.wizards.e3.ExampleApplicationWizard"
+            name="Make it happen: sample e3 application"
+            project="true">
+      </wizard>
+      <wizard
+            canFinishEarly="true"
+            category="org.eclipse.ui.Examples/org.eclipse.emf.ecp.makeithappen.wizards.EMFForms"
+            class="org.eclipse.emf.ecp.makeithappen.internal.wizards.MakeItHappenWizard"
+            icon="icons/emf_forms_icon.png"
+            id="org.eclipse.emf.ecp.makeithappen.wizards.e4.ExampleApplicationWizard"
+            name="Make it happen: sample e4 application"
+            project="true">
+      </wizard>
    </extension>
    <extension
          point="org.eclipse.emf.common.ui.examples">
@@ -120,6 +138,56 @@
                contentURI="examples/org.eclipse.emf.ecp.makeithappen.model.viewmodel/"
                description="Make It Happen viewmodel"
                name="org.eclipse.emf.ecp.makeithappen.model.viewmodel">
+         </projectDescriptor>
+      </example>
+      <example
+            id="org.eclipse.emf.ecp.makeithappen.wizards.e3.ExampleApplication"
+            pageImage="icons/emf_forms_logo_56x48.png"
+            wizardID="org.eclipse.emf.ecp.makeithappen.wizards.e3.ExampleApplicationWizard">
+         <projectDescriptor
+               contentURI="examples/org.eclipse.emf.ecp.makeithappen.model.viewmodel/"
+               description="Make It Happen viewmodel"
+               name="org.eclipse.emf.ecp.makeithappen.model.viewmodel">
+         </projectDescriptor>
+         <projectDescriptor
+               contentURI="examples/org.eclipse.emf.ecp.makeithappen.application.sample.e3/"
+               description="Make It Happen e3 application"
+               name="org.eclipse.emf.ecp.makeithappen.application.e3">
+         </projectDescriptor>
+         <projectDescriptor
+               contentURI="examples/org.eclipse.emf.ecp.makeithappen.model/"
+               description="Make It Happen model"
+               name="org.eclipse.emf.ecp.makeithappen.model">
+         </projectDescriptor>
+         <projectDescriptor
+               contentURI="examples/org.eclipse.emf.ecp.makeithappen.model.edit/"
+               description="Make It Happen model edit"
+               name="org.eclipse.emf.ecp.makeithappen.model.edit">
+         </projectDescriptor>
+      </example>
+      <example
+            id="org.eclipse.emf.ecp.makeithappen.wizards.e4.ExampleApplication"
+            pageImage="icons/emf_forms_logo_56x48.png"
+            wizardID="org.eclipse.emf.ecp.makeithappen.wizards.e4.ExampleApplicationWizard">
+         <projectDescriptor
+               contentURI="examples/org.eclipse.emf.ecp.makeithappen.model.viewmodel/"
+               description="Make It Happen viewmodel"
+               name="org.eclipse.emf.ecp.makeithappen.model.viewmodel">
+         </projectDescriptor>
+         <projectDescriptor
+               contentURI="examples/org.eclipse.emf.ecp.makeithappen.application.sample.e4/"
+               description="Make It Happen e4 application"
+               name="org.eclipse.emf.ecp.makeithappen.application.e4">
+         </projectDescriptor>
+         <projectDescriptor
+               contentURI="examples/org.eclipse.emf.ecp.makeithappen.model/"
+               description="Make It Happen model"
+               name="org.eclipse.emf.ecp.makeithappen.model">
+         </projectDescriptor>
+         <projectDescriptor
+               contentURI="examples/org.eclipse.emf.ecp.makeithappen.model.edit/"
+               description="Make It Happen model edit"
+               name="org.eclipse.emf.ecp.makeithappen.model.edit">
          </projectDescriptor>
       </example>
    </extension>
