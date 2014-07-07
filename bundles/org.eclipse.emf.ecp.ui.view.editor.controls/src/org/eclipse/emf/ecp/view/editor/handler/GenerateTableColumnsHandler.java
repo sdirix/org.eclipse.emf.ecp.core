@@ -13,6 +13,8 @@ package org.eclipse.emf.ecp.view.editor.handler;
 
 import java.util.Iterator;
 
+import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -23,12 +25,28 @@ import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.treemasterdetail.ui.swt.internal.MasterDetailAction;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
  * @author Eugen
  * 
  */
 public class GenerateTableColumnsHandler extends MasterDetailAction {
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.core.commands.IHandler#execute(org.eclipse.core.commands.ExecutionEvent)
+	 */
+	@Override
+	public Object execute(ExecutionEvent event) throws ExecutionException {
+		final Object selection = ((IStructuredSelection) HandlerUtil.getActiveMenuSelection(event)).getFirstElement();
+		if (selection == null || !(selection instanceof EObject)) {
+			return null;
+		}
+		execute((EObject) selection);
+		return null;
+	}
 
 	/**
 	 * {@inheritDoc}

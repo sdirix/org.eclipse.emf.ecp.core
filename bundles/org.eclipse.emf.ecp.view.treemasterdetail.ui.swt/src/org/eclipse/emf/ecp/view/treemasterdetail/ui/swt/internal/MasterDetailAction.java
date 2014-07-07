@@ -11,13 +11,14 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.treemasterdetail.ui.swt.internal;
 
+import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.emf.ecore.EObject;
 
 /**
  * @author Alexandra Buzila
  * 
  */
-public abstract class MasterDetailAction {
+public abstract class MasterDetailAction extends AbstractHandler {
 	private String label, imagePath;
 
 	/**

@@ -11,18 +11,36 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.model.internal.preview.actions;
 
+import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.model.internal.preview.Activator;
 import org.eclipse.emf.ecp.view.model.internal.preview.e3.views.PreviewView;
 import org.eclipse.emf.ecp.view.treemasterdetail.ui.swt.internal.MasterDetailAction;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.handlers.HandlerUtil;
 
 /** Opens the {@link PreviewView}. */
 public class OpenPreviewHandler extends MasterDetailAction {
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.core.commands.IHandler#execute(org.eclipse.core.commands.ExecutionEvent)
+	 */
+	@Override
+	public Object execute(ExecutionEvent event) throws ExecutionException {
+		final Object selection = ((IStructuredSelection) HandlerUtil.getActiveMenuSelection(event)).getFirstElement();
+		if (selection == null || !(selection instanceof EObject)) {
+			return null;
+		}
+		execute((EObject) selection);
+		return null;
+	}
 
 	/**
 	 * {@inheritDoc}
