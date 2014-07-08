@@ -485,6 +485,7 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 						.get(0), childComposite);
 				renderer.finalizeRendering(childComposite);
 				GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true)
+					.minSize(SWT.DEFAULT, 200)
 					.applyTo(render);
 				vCategorizationElement.setCurrentSelection((VCategorizableElement) child);
 			} catch (final NoRendererFoundException e) {
