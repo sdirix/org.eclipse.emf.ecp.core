@@ -31,7 +31,6 @@ import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
 import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
-import org.eclipse.emf.ecp.view.spi.categorization.model.impl.VCategorizationElementImpl;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
@@ -110,10 +109,6 @@ public class Preview {
 				}
 
 				if (EStructuralFeature.class.cast(notification.getFeature()).isTransient()) {
-					return;
-				}
-
-				if (VCategorizationElementImpl.class.isInstance(notification.getNotifier())) {
 					return;
 				}
 
