@@ -13,8 +13,6 @@ package org.eclipse.emf.ecp.ide.view.service;
 
 import java.io.IOException;
 
-import org.eclipse.core.resources.IFile;
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 
 /**
@@ -65,23 +63,4 @@ public interface IDEViewModelRegistry {
 	 * @param viewPath the path to the view file
 	 */
 	void registerViewModel(VView view, String viewPath);
-
-	/**
-	 * Creates a new view model file.
-	 * 
-	 * @param modelFile the file in which the view should be saved
-	 * @param selectedEClass the <em>Root EClass</em> for the new {@link VView}
-	 * @param selectedEcore the ecore containing the <em>selectedEClass</em>. If the <em>selectedEcore</em> is null,
-	 *            then the <em>selectedEClass</em> must come from an EPackage which is registered by default in
-	 *            the
-	 *            package registry.
-	 * 
-	 * @return the newly created {@link VView}
-	 * 
-	 * @throws IOException when something goes wrong while loading or saving the resource
-	 * 
-	 */
-	VView createViewModel(IFile modelFile, EClass selectedEClass, IFile selectedEcore)
-		throws IOException;
-
 }

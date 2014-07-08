@@ -57,6 +57,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecp.ide.view.service.IDEViewModelRegistry;
 import org.eclipse.emf.ecp.view.editor.handler.ControlGenerator;
+import org.eclipse.emf.ecp.view.model.common.ViewModelHelper;
 import org.eclipse.emf.ecp.view.model.presentation.SelectEClassWizardPage;
 import org.eclipse.emf.ecp.view.model.presentation.SelectEcorePage;
 import org.eclipse.emf.ecp.view.model.presentation.ViewEditorPlugin;
@@ -492,7 +493,7 @@ public class NewPluginProjectWizard extends ExampleInstallerWizard {
 			try {
 				final IDEViewModelRegistry registry = getViewModelRegistry();
 				if (registry != null) {
-					final VView view = registry.createViewModel(viewModelFile, eclass, getSelectedEcore());
+					final VView view = ViewModelHelper.createViewModel(viewModelFile, eclass, getSelectedEcore());
 					if (generateViewModelControls) {
 						ControlGenerator.generateAllControls(view);
 					}

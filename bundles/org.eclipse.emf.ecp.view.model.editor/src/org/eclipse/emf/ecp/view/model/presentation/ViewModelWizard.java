@@ -40,6 +40,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecp.ide.view.service.IDEViewModelRegistry;
 import org.eclipse.emf.ecp.view.editor.handler.ControlGenerator;
+import org.eclipse.emf.ecp.view.model.common.ViewModelHelper;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
@@ -400,7 +401,7 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 							// Remember the file.
 							final IFile modelFile = filePage.getModelFile();
 							// create view
-							final VView view = registry.createViewModel(modelFile, filePage.getEClass(),
+							final VView view = ViewModelHelper.createViewModel(modelFile, filePage.getEClass(),
 								getSelectedEcore());
 							// generate controls
 							if (generateViewModelControls) {
