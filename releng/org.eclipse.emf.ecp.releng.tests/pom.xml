@@ -54,6 +54,8 @@
 		<module>../../tests/org.eclipse.emf.ecp.validation.diagnostician.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.model.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.ide.util.test</module>	
+		<module>../../tests/org.eclipse.emf.ecp.ide.view.service.test</module>	
+		
 	</modules>
 	
 	<build>
