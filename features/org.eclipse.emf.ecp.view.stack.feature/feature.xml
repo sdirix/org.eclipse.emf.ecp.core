@@ -5,6 +5,7 @@
       version="1.4.0.qualifier"
       provider-name="%providerName"
       plugin="org.eclipse.emf.ecp.view.stack.model"
+      image="eclipse_update_120.jpg"
       license-feature="org.eclipse.emf.ecp.license.feature"
       license-feature-version="1.4.0.qualifier">
 
@@ -17,7 +18,7 @@
    </copyright>
 
    <license url="%licenseURL">
-      %licenseURL
+      %license
    </license>
 
    <plugin
