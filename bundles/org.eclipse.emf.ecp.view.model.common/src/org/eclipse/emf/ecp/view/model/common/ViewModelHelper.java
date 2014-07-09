@@ -36,6 +36,7 @@ import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
  * 
  */
 /** Helper class for view model objects. */
+@SuppressWarnings("restriction")
 public final class ViewModelHelper {
 
 	private ViewModelHelper() {
@@ -79,8 +80,7 @@ public final class ViewModelHelper {
 		// Add the selected EClass as the VView's RootEClass
 		//
 		// get the EClass from the registry, to ensure it has the correct href
-		final Resource r = selectedEClass.eResource();
-		final EPackage ePackage = (EPackage) r.getContents().get(0);
+		final EPackage ePackage = selectedEClass.getEPackage();
 
 		final Registry instance = org.eclipse.emf.ecore.EPackage.Registry.INSTANCE;
 		final Object ePackageObject = instance.get(ePackage.getNsURI());
