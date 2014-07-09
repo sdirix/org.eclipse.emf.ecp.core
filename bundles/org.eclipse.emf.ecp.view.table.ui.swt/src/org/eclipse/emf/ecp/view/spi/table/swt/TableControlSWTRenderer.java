@@ -376,20 +376,20 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 				continue;
 			}
 			final EStructuralFeature eStructuralFeature = eStructuralFeatureIterator.next();
-			final IItemPropertyDescriptor itemPropertyDescriptor = getItemPropertyDescriptor(tempInstance
-				.eSetting(eStructuralFeature));
-			if (itemPropertyDescriptor == null) {
-				// if we can't render because no edit information is available, do nothing
-				continue;
+			String text = eStructuralFeature.getName();
+			String tooltipText = eStructuralFeature.getName();
+			final IItemPropertyDescriptor itemPropertyDescriptor = getItemPropertyDescriptor(getCellSetting(dmr,
+				tempInstance));
+			if (itemPropertyDescriptor != null) {
+				text = itemPropertyDescriptor.getDisplayName(null);
+				tooltipText = itemPropertyDescriptor.getDescription(null);
 			}
 
 			final CellEditor cellEditor = createCellEditor(tempInstance, eStructuralFeature, tableViewer.getTable());
 			final TableViewerColumn column = TableViewerColumnBuilder
 				.create()
-				.setText(itemPropertyDescriptor.getDisplayName(null))
-				.setToolTipText(itemPropertyDescriptor.getDescription(null))
-				// .setText(eStructuralFeature.getName())
-				// .setToolTipText(eStructuralFeature.getName())
+				.setText(text)
+				.setToolTipText(tooltipText)
 				.setResizable(true)
 				.setMoveable(false)
 				.setStyle(SWT.NONE)
