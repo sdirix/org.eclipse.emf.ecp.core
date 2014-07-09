@@ -80,6 +80,9 @@ public final class EcoreHelper {
 		final ResourceSetImpl virtualResourceSet = new ResourceSetImpl();
 		for (final Resource physicalResource : physicalResourceSet.getResources()) {
 			// check for physical uri
+			if (physicalResource.getContents().size() == 0) {
+				continue;
+			}
 			final EObject eObject = physicalResource.getContents().get(0);
 			final EPackage ePackage = EPackage.class.cast(eObject);
 
