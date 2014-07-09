@@ -51,7 +51,8 @@ public final class ControlGenerator {
 	 * 
 	 * @param project the {@link ECPProject} from which the rootClass is retrieved. It is assumed that the project
 	 *            contains only one {@link VView}.
-	 * @param compositeToFill the {@link VElement} to fill , must be of type {@link VView} or {@link VContainedContainer}
+	 * @param compositeToFill the {@link VElement} to fill , must be of type {@link VView} or
+	 *            {@link VContainedContainer}
 	 * @param datasegment the class to parse
 	 * @param features the list of features to create
 	 */
@@ -66,7 +67,8 @@ public final class ControlGenerator {
 	 * Create controls and set them to the view.
 	 * 
 	 * @param rootClass the rootClass for identifying the path
-	 * @param compositeToFill the {@link VElement} to fill , must be of type {@link VView} or {@link VContainedContainer}
+	 * @param compositeToFill the {@link VElement} to fill , must be of type {@link VView} or
+	 *            {@link VContainedContainer}
 	 * @param features the list of features to create
 	 */
 	public static void addControls(EClass rootClass, VElement compositeToFill, Set<EStructuralFeature> features) {
@@ -84,8 +86,12 @@ public final class ControlGenerator {
 			final VFeaturePathDomainModelReference modelReference = VViewFactory.eINSTANCE
 				.createFeaturePathDomainModelReference();
 			modelReference.setDomainModelEFeature(feature);
-			// FIXME
-			// modelReference.getDomainModelEReferencePath().addAll(bottomUpPath);
+
+			final java.util.List<EReference> bottomUpPath = Helper.getReferencePath(rootClass,
+				feature.getEContainingClass(),
+				childParentReferenceMap);
+			modelReference.getDomainModelEReferencePath().addAll(bottomUpPath);
+
 			control.setDomainModelReference(modelReference);
 
 			// add to the composite

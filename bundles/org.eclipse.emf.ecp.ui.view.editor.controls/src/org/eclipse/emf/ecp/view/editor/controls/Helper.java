@@ -102,15 +102,22 @@ public final class Helper {
 	 * @param childParentReferenceMap the map to use
 	 * @return the reference path
 	 */
-	public static List<EReference> getReferencePath(EClass selectedClass,
+	public static List<EReference> getReferencePath(EClass rootEClass, EClass selectedClass,
 		Map<EClass, EReference> childParentReferenceMap) {
 
 		final List<EReference> bottomUpPath = new ArrayList<EReference>();
+
+		if (rootEClass == selectedClass) {
+			return bottomUpPath;
+		}
 
 		EReference parentReference = childParentReferenceMap.get(selectedClass);
 		while (parentReference != null && !bottomUpPath.contains(parentReference)) {
 			bottomUpPath.add(parentReference);
 			selectedClass = parentReference.getEContainingClass();
+			if (selectedClass == rootEClass) {
+				break;
+			}
 			parentReference = childParentReferenceMap.get(selectedClass);
 		}
 		Collections.reverse(bottomUpPath);

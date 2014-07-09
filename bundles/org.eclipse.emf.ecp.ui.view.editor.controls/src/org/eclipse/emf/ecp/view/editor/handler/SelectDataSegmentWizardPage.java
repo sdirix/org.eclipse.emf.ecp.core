@@ -132,7 +132,8 @@ public class SelectDataSegmentWizardPage extends WizardPage {
 				}
 				if (EReference.class.isInstance(element)) {
 					final EReference eReference = (EReference) element;
-					return !eReference.isMany() && hasChildren(eReference.getEReferenceType());
+					return eReference.isContainment() && !eReference.isMany()
+						&& hasChildren(eReference.getEReferenceType());
 				}
 				return false;
 			}
@@ -191,7 +192,7 @@ public class SelectDataSegmentWizardPage extends WizardPage {
 				}
 				else {
 					for (final EReference ref : eClass.getEAllReferences()) {
-						if (!ref.isMany()) {
+						if (!ref.isMany() && ref.isContainment()) {
 							result.add(ref);
 						}
 					}
