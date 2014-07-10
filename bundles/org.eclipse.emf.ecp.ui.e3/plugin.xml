@@ -41,16 +41,11 @@
                style="push">
             <visibleWhen
                   checkEnabled="false">
-               <with
-                     variable="activeMenuSelection">
-                  <iterate>
-                     <test
-                           args="org.eclipse.emf.ecp.ui.project.createProject"
-                           property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
-                           value="true">
-                     </test>
-                  </iterate>
-               </with>
+               <test
+                     args="org.eclipse.emf.ecp.ui.project.createProject"
+                     property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
+                     value="true">
+               </test>
             </visibleWhen>
          </command>
          <separator
