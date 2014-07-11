@@ -126,6 +126,9 @@
    <feature url="features/org.eclipse.emf.ecp.view.stack.feature_1.4.0.qualifier.jar" id="org.eclipse.emf.ecp.view.stack.feature" version="1.4.0.qualifier">
       <category name="org.eclipse.emf.ecp.view"/>
    </feature>
+   <bundle id="org.eclipse.emf.ecp.view.group.swt.collapsible.pgroup" version="1.4.0.qualifier">
+      <category name="org.eclipse.emf.ecp.view"/>
+   </bundle>
    <category-def name="org.eclipse.emf.ecp.category" label="EMF Client Platform">
       <description>
          If you are unsure, which features to select, please use the ECP SDK including all important features.
