@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.ecp.view.mappingdmr.tooling;
 
+import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -22,6 +23,8 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EPackage.Descriptor;
 import org.eclipse.emf.ecore.EPackage.Registry;
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecp.common.EMFUtils;
 import org.eclipse.emf.ecp.view.editor.controls.EditableEReferenceLabelControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.mappingdmr.model.VMappingDomainModelReference;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -47,7 +50,7 @@ public class MappedEClassControlSWTRenderer extends
 
 	/**
 	 * @author Eugen
-	 *
+	 * 
 	 */
 	private static final class EClassTreeContentProvider implements ITreeContentProvider {
 		@Override
@@ -106,12 +109,17 @@ public class MappedEClassControlSWTRenderer extends
 			if (Registry.class.isInstance(parentElement)) {
 				return ((Registry) parentElement).values().toArray();
 			}
+			if (Collection.class.isInstance(parentElement)) {
+				return Collection.class.cast(parentElement).toArray();
+			}
 			return null;
 		}
 	}
 
 	@Override
 	protected void linkValue(Shell shell) {
+		final VMappingDomainModelReference dmr = (VMappingDomainModelReference) getVElement()
+			.getDomainModelReference().getIterator().next().getEObject();
 		final ComposedAdapterFactory adapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
 			new ReflectiveItemProviderAdapterFactory(),
 			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
@@ -132,7 +140,7 @@ public class MappedEClassControlSWTRenderer extends
 					"This is not an EClass."); //$NON-NLS-1$
 			}
 		});
-		dialog.setInput(getInput());
+		dialog.setInput(getInput(dmr));
 		dialog.setMessage("Select an EClass."); //$NON-NLS-1$
 		dialog.setTitle("Select an EClass."); //$NON-NLS-1$
 		dialog.setComparator(new ViewerComparator());
@@ -141,10 +149,8 @@ public class MappedEClassControlSWTRenderer extends
 			final Object selection = dialog.getFirstResult();
 			if (EClass.class.isInstance(selection)) {
 				final EClass selectedFeature = (EClass) selection;
-				final VMappingDomainModelReference view = (VMappingDomainModelReference) getVElement()
-					.getDomainModelReference().getIterator().next().getEObject();
 
-				view.setMappedClass(selectedFeature);
+				dmr.setMappedClass(selectedFeature);
 
 			}
 		}
@@ -158,8 +164,12 @@ public class MappedEClassControlSWTRenderer extends
 	/**
 	 * @return an instance of the {@link org.eclipse.emf.ecore.EPackage.Registry}
 	 */
-	private Object getInput() {
-		return Registry.INSTANCE;
+	private Object getInput(VMappingDomainModelReference dmr) {
+		final EClass referenceMap = EReference.class.cast(dmr.getDomainModelEFeature()).getEReferenceType();
+
+		final EReference valueReference = EReference.class.cast(referenceMap.getEStructuralFeature("value")); //$NON-NLS-1$
+		return EMFUtils.getSubClasses(valueReference.getEReferenceType());
+		// return Registry.INSTANCE;
 	}
 
 }

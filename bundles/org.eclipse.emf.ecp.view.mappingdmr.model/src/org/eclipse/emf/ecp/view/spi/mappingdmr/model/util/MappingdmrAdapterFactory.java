@@ -77,7 +77,7 @@ public class MappingdmrAdapterFactory extends AdapterFactoryImpl {
 	protected MappingdmrSwitch<Adapter> modelSwitch = new MappingdmrSwitch<Adapter>() {
 		@Override
 		public Adapter caseMappingDomainModelReference(
-				VMappingDomainModelReference object) {
+			VMappingDomainModelReference object) {
 			return createMappingDomainModelReferenceAdapter();
 		}
 
@@ -88,7 +88,7 @@ public class MappingdmrAdapterFactory extends AdapterFactoryImpl {
 
 		@Override
 		public Adapter caseFeaturePathDomainModelReference(
-				VFeaturePathDomainModelReference object) {
+			VFeaturePathDomainModelReference object) {
 			return createFeaturePathDomainModelReferenceAdapter();
 		}
 
@@ -129,8 +129,7 @@ public class MappingdmrAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '
-	 * {@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReference
+	 * Creates a new adapter for an object of class ' {@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReference
 	 * <em>Domain Model Reference</em>}'. <!-- begin-user-doc --> This default
 	 * implementation returns null so that we can easily ignore cases; it's
 	 * useful to ignore a case when inheritance will catch all the cases anyway.

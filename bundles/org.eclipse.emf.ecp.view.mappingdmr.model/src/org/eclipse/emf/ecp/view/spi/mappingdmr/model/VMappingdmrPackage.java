@@ -60,7 +60,7 @@ public interface VMappingdmrPackage extends EPackage {
 	 * @generated
 	 */
 	VMappingdmrPackage eINSTANCE = org.eclipse.emf.ecp.view.spi.mappingdmr.model.impl.VMappingdmrPackageImpl
-			.init();
+		.init();
 
 	/**
 	 * The meta object id for the '
@@ -120,8 +120,8 @@ public interface VMappingdmrPackage extends EPackage {
 	int MAPPING_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCE = VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 1;
 
 	/**
-	 * The number of structural features of the '
-	 * <em>Mapping Domain Model Reference</em>' class. <!-- begin-user-doc -->
+	 * The number of structural features of the ' <em>Mapping Domain Model Reference</em>' class. <!-- begin-user-doc
+	 * -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
@@ -135,8 +135,7 @@ public interface VMappingdmrPackage extends EPackage {
 	 * <em>Mapping Domain Model Reference</em>}'. <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
 	 * 
-	 * @return the meta object for class '
-	 *         <em>Mapping Domain Model Reference</em>'.
+	 * @return the meta object for class ' <em>Mapping Domain Model Reference</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.mappingdmr.model.VMappingDomainModelReference
 	 * @generated
 	 */
@@ -160,8 +159,7 @@ public interface VMappingdmrPackage extends EPackage {
 	 * <em>Domain Model Reference</em>}'. <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
 	 * 
-	 * @return the meta object for the containment reference '
-	 *         <em>Domain Model Reference</em>'.
+	 * @return the meta object for the containment reference ' <em>Domain Model Reference</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.mappingdmr.model.VMappingDomainModelReference#getDomainModelReference()
 	 * @see #getMappingDomainModelReference()
 	 * @generated
@@ -202,7 +200,7 @@ public interface VMappingdmrPackage extends EPackage {
 		 * @generated
 		 */
 		EClass MAPPING_DOMAIN_MODEL_REFERENCE = eINSTANCE
-				.getMappingDomainModelReference();
+			.getMappingDomainModelReference();
 
 		/**
 		 * The meta object literal for the '<em><b>Mapped Class</b></em>'
@@ -211,17 +209,16 @@ public interface VMappingdmrPackage extends EPackage {
 		 * @generated
 		 */
 		EReference MAPPING_DOMAIN_MODEL_REFERENCE__MAPPED_CLASS = eINSTANCE
-				.getMappingDomainModelReference_MappedClass();
+			.getMappingDomainModelReference_MappedClass();
 
 		/**
-		 * The meta object literal for the '
-		 * <em><b>Domain Model Reference</b></em>' containment reference
+		 * The meta object literal for the ' <em><b>Domain Model Reference</b></em>' containment reference
 		 * feature. <!-- begin-user-doc --> <!-- end-user-doc -->
 		 * 
 		 * @generated
 		 */
 		EReference MAPPING_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCE = eINSTANCE
-				.getMappingDomainModelReference_DomainModelReference();
+			.getMappingDomainModelReference_DomainModelReference();
 
 	}
 

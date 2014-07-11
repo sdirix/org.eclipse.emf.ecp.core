@@ -22,6 +22,7 @@ import org.eclipse.emf.ecp.view.spi.model.provider.FeaturePathDomainModelReferen
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableFactory;
 import org.eclipse.emf.ecp.view.spi.table.model.VTablePackage;
+import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
@@ -62,8 +63,35 @@ public class TableDomainModelReferenceItemProvider
 		{
 			super.getPropertyDescriptors(object);
 
+			addColumnDomainModelReferencesPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
+	}
+
+	/**
+	 * This adds a property descriptor for the Column Domain Model References feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	protected void addColumnDomainModelReferencesPropertyDescriptor(Object object)
+	{
+		itemPropertyDescriptors
+			.add
+			(createItemPropertyDescriptor
+			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(),
+				getString("_UI_TableDomainModelReference_columnDomainModelReferences_feature"), //$NON-NLS-1$
+				getString(
+					"_UI_PropertyDescriptor_description", "_UI_TableDomainModelReference_columnDomainModelReferences_feature", "_UI_TableDomainModelReference_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				VTablePackage.Literals.TABLE_DOMAIN_MODEL_REFERENCE__COLUMN_DOMAIN_MODEL_REFERENCES,
+				true,
+				false,
+				false,
+				null,
+				null,
+				null));
 	}
 
 	/**

@@ -15,6 +15,7 @@ import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.view.model.common.ECPRendererTester;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.mappingdmr.model.VMappingDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.mappingdmr.model.VMappingdmrPackage;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
@@ -43,6 +44,11 @@ public class FeaturePathDMRSubMappedEClassReferenceTester implements
 			.eContainer())
 			&& VViewPackage.eINSTANCE
 				.getFeaturePathDomainModelReference_DomainModelEFeature() == setting
+				.getEStructuralFeature()) {
+			return 6;
+		}
+		if (VMappingDomainModelReference.class.isInstance(setting.getEObject())
+			&& VMappingdmrPackage.eINSTANCE.getMappingDomainModelReference_DomainModelReference() == setting
 				.getEStructuralFeature()) {
 			return 6;
 		}

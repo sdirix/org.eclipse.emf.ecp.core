@@ -28,7 +28,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * @generated
  */
 public class VMappingdmrPackageImpl extends EPackageImpl implements
-		VMappingdmrPackage {
+	VMappingdmrPackage {
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * 
@@ -37,13 +37,12 @@ public class VMappingdmrPackageImpl extends EPackageImpl implements
 	private EClass mappingDomainModelReferenceEClass = null;
 
 	/**
-	 * Creates an instance of the model <b>Package</b>, registered with
-	 * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the
+	 * Creates an instance of the model <b>Package</b>, registered with {@link org.eclipse.emf.ecore.EPackage.Registry
+	 * EPackage.Registry} by the
 	 * package package URI value.
 	 * <p>
-	 * Note: the correct way to create the package is via the static factory
-	 * method {@link #init init()}, which also performs initialization of the
-	 * package, or returns the registered package, if one already exists. <!--
+	 * Note: the correct way to create the package is via the static factory method {@link #init init()}, which also
+	 * performs initialization of the package, or returns the registered package, if one already exists. <!--
 	 * begin-user-doc --> <!-- end-user-doc -->
 	 * 
 	 * @see org.eclipse.emf.ecore.EPackage.Registry
@@ -67,9 +66,8 @@ public class VMappingdmrPackageImpl extends EPackageImpl implements
 	 * and for any others upon which it depends.
 	 * 
 	 * <p>
-	 * This method is used to initialize {@link VMappingdmrPackage#eINSTANCE}
-	 * when that field is accessed. Clients should not invoke it directly.
-	 * Instead, they should simply access that field to obtain the package. <!--
+	 * This method is used to initialize {@link VMappingdmrPackage#eINSTANCE} when that field is accessed. Clients
+	 * should not invoke it directly. Instead, they should simply access that field to obtain the package. <!--
 	 * begin-user-doc --> <!-- end-user-doc -->
 	 * 
 	 * @see #eNS_URI
@@ -78,14 +76,15 @@ public class VMappingdmrPackageImpl extends EPackageImpl implements
 	 * @generated
 	 */
 	public static VMappingdmrPackage init() {
-		if (isInited)
+		if (isInited) {
 			return (VMappingdmrPackage) EPackage.Registry.INSTANCE
-					.getEPackage(VMappingdmrPackage.eNS_URI);
+				.getEPackage(VMappingdmrPackage.eNS_URI);
+		}
 
 		// Obtain or create and register package
-		VMappingdmrPackageImpl theMappingdmrPackage = (VMappingdmrPackageImpl) (EPackage.Registry.INSTANCE
-				.get(eNS_URI) instanceof VMappingdmrPackageImpl ? EPackage.Registry.INSTANCE
-				.get(eNS_URI) : new VMappingdmrPackageImpl());
+		final VMappingdmrPackageImpl theMappingdmrPackage = (VMappingdmrPackageImpl) (EPackage.Registry.INSTANCE
+			.get(eNS_URI) instanceof VMappingdmrPackageImpl ? EPackage.Registry.INSTANCE
+			.get(eNS_URI) : new VMappingdmrPackageImpl());
 
 		isInited = true;
 
@@ -103,7 +102,7 @@ public class VMappingdmrPackageImpl extends EPackageImpl implements
 
 		// Update the registry and return the package
 		EPackage.Registry.INSTANCE.put(VMappingdmrPackage.eNS_URI,
-				theMappingdmrPackage);
+			theMappingdmrPackage);
 		return theMappingdmrPackage;
 	}
 
@@ -125,7 +124,7 @@ public class VMappingdmrPackageImpl extends EPackageImpl implements
 	@Override
 	public EReference getMappingDomainModelReference_MappedClass() {
 		return (EReference) mappingDomainModelReferenceEClass
-				.getEStructuralFeatures().get(0);
+			.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -136,7 +135,7 @@ public class VMappingdmrPackageImpl extends EPackageImpl implements
 	@Override
 	public EReference getMappingDomainModelReference_DomainModelReference() {
 		return (EReference) mappingDomainModelReferenceEClass
-				.getEStructuralFeatures().get(1);
+			.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -164,16 +163,17 @@ public class VMappingdmrPackageImpl extends EPackageImpl implements
 	 * @generated
 	 */
 	public void createPackageContents() {
-		if (isCreated)
+		if (isCreated) {
 			return;
+		}
 		isCreated = true;
 
 		// Create classes and their features
 		mappingDomainModelReferenceEClass = createEClass(MAPPING_DOMAIN_MODEL_REFERENCE);
 		createEReference(mappingDomainModelReferenceEClass,
-				MAPPING_DOMAIN_MODEL_REFERENCE__MAPPED_CLASS);
+			MAPPING_DOMAIN_MODEL_REFERENCE__MAPPED_CLASS);
 		createEReference(mappingDomainModelReferenceEClass,
-				MAPPING_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCE);
+			MAPPING_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCE);
 	}
 
 	/**
@@ -191,8 +191,9 @@ public class VMappingdmrPackageImpl extends EPackageImpl implements
 	 * @generated
 	 */
 	public void initializePackageContents() {
-		if (isInitialized)
+		if (isInitialized) {
 			return;
+		}
 		isInitialized = true;
 
 		// Initialize package
@@ -201,10 +202,10 @@ public class VMappingdmrPackageImpl extends EPackageImpl implements
 		setNsURI(eNS_URI);
 
 		// Obtain other dependent packages
-		VViewPackage theViewPackage = (VViewPackage) EPackage.Registry.INSTANCE
-				.getEPackage(VViewPackage.eNS_URI);
-		EcorePackage theEcorePackage = (EcorePackage) EPackage.Registry.INSTANCE
-				.getEPackage(EcorePackage.eNS_URI);
+		final VViewPackage theViewPackage = (VViewPackage) EPackage.Registry.INSTANCE
+			.getEPackage(VViewPackage.eNS_URI);
+		final EcorePackage theEcorePackage = (EcorePackage) EPackage.Registry.INSTANCE
+			.getEPackage(EcorePackage.eNS_URI);
 
 		// Create type parameters
 
@@ -212,23 +213,23 @@ public class VMappingdmrPackageImpl extends EPackageImpl implements
 
 		// Add supertypes to classes
 		mappingDomainModelReferenceEClass.getESuperTypes().add(
-				theViewPackage.getFeaturePathDomainModelReference());
+			theViewPackage.getFeaturePathDomainModelReference());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(
-				mappingDomainModelReferenceEClass,
-				VMappingDomainModelReference.class,
-				"MappingDomainModelReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+			mappingDomainModelReferenceEClass,
+			VMappingDomainModelReference.class,
+			"MappingDomainModelReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(
-				getMappingDomainModelReference_MappedClass(),
-				theEcorePackage.getEClass(),
-				null,
-				"mappedClass", null, 0, 1, VMappingDomainModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+			getMappingDomainModelReference_MappedClass(),
+			theEcorePackage.getEClass(),
+			null,
+			"mappedClass", null, 0, 1, VMappingDomainModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(
-				getMappingDomainModelReference_DomainModelReference(),
-				theViewPackage.getDomainModelReference(),
-				null,
-				"domainModelReference", null, 1, 1, VMappingDomainModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+			getMappingDomainModelReference_DomainModelReference(),
+			theViewPackage.getDomainModelReference(),
+			null,
+			"domainModelReference", null, 1, 1, VMappingDomainModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		// Create resource
 		createResource(eNS_URI);

@@ -62,7 +62,9 @@ public class ControlTargetFeatureControl extends LinkControl {
 			}
 			referencePath = referencePath + " -> " + getAdapterFactoryItemDelegator().getText(ref); //$NON-NLS-1$
 		}
-		if (className.isEmpty()) {
+		if (className.isEmpty() && modelReference.getDomainModelEFeature() != null
+			&& modelReference.getDomainModelEFeature().getEContainingClass() != null) {
+
 			className = modelReference.getDomainModelEFeature().getEContainingClass().getName();
 		}
 

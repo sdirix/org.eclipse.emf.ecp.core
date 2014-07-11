@@ -12,11 +12,8 @@
 package org.eclipse.emf.ecp.view.spi.mappingdmr.model.provider;
 
 import org.eclipse.emf.common.EMFPlugin;
-
 import org.eclipse.emf.common.util.ResourceLocator;
-
 import org.eclipse.emf.ecore.provider.EcoreEditPlugin;
-
 import org.eclipse.emf.ecp.view.spi.model.provider.ViewEditPlugin;
 
 /**
@@ -49,7 +46,7 @@ public final class MappingdmrEditPlugin extends EMFPlugin {
 	 */
 	public MappingdmrEditPlugin() {
 		super(new ResourceLocator[] { EcoreEditPlugin.INSTANCE,
-				ViewEditPlugin.INSTANCE, });
+			ViewEditPlugin.INSTANCE, });
 	}
 
 	/**

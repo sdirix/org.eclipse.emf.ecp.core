@@ -122,7 +122,9 @@ public class EReferenceLabelControlSWTRenderer extends SimpleControlSWTControlSW
 			modelElementChangeListener.remove();
 			modelElementChangeListener = null;
 		}
-
+		if (value == null) {
+			return;
+		}
 		modelElementChangeListener = new ECPModelElementChangeListener(value) {
 
 			@Override

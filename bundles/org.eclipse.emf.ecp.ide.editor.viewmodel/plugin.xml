@@ -10,7 +10,13 @@
             filePath="viewmodel/group.view">
       </file>
       <file
-            filePath="control.view">
+            filePath="viewmodel/control.view">
+      </file>
+      <file
+            filePath="viewmodel/TableControl.view">
+      </file>
+      <file
+            filePath="viewmodel/MappingDomainModelReference.view">
       </file>
    </extension>
 

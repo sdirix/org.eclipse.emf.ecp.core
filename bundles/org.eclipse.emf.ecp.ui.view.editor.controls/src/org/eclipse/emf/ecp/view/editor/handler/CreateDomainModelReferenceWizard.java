@@ -31,6 +31,7 @@ import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
 import org.eclipse.emf.ecp.view.treemasterdetail.ui.swt.internal.DummyReferenceService;
+import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -53,9 +54,9 @@ public class CreateDomainModelReferenceWizard extends SelectModelElementWizard {
 	private CustomizeDomainModelReferencePage customizeDMRPage;
 	private WizardPageExtension firstPage;
 	private final EClass eclass;
-	private final VControl vControl;
 	private final EditingDomain editingDomain;
 	private final Setting setting;
+	private final VDomainModelReference domainModelReference;
 
 	/**
 	 * A wizard used for creating a new DomainModelReference.
@@ -70,12 +71,12 @@ public class CreateDomainModelReferenceWizard extends SelectModelElementWizard {
 	 */
 	public CreateDomainModelReferenceWizard(final Setting setting, final EditingDomain editingDomain,
 		final EClass eclass, final String windowTitle,
-		final String pageName, String pageTitle, String description) {
+		final String pageName, String pageTitle, String description, VDomainModelReference domainModelReference) {
 		super(windowTitle, pageName, pageTitle, description);
 		this.setting = setting;
 		this.editingDomain = editingDomain;
 		this.eclass = eclass;
-		vControl = (VControl) setting.getEObject();
+		this.domainModelReference = domainModelReference;
 	}
 
 	/**
@@ -88,13 +89,13 @@ public class CreateDomainModelReferenceWizard extends SelectModelElementWizard {
 		customizeDMRPage = new CustomizeDomainModelReferencePage(
 			"New Domain Model Reference", "Select an EStructuralFeature", "Select a domain model EStructuralFeature for the domain model reference.", getDummyControl()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
-		if (vControl.getDomainModelReference() == null) {
+		if (domainModelReference == null) {
 			firstPage = new WizardPageExtension(pageName);
 			firstPage.setTitle(pageTitle);
 			firstPage.setDescription(description);
 			addPage(firstPage);
 		} else {
-			customizeDMRPage.setEClass(vControl.getDomainModelReference().eClass());
+			customizeDMRPage.setEClass(domainModelReference.eClass());
 		}
 
 		addPage(customizeDMRPage);
@@ -154,9 +155,16 @@ public class CreateDomainModelReferenceWizard extends SelectModelElementWizard {
 	public boolean performFinish() {
 
 		if (customizeDMRPage.getvControl().getDomainModelReference().getEStructuralFeatureIterator().next() != null) {
-			final Command setCommand = SetCommand.create(editingDomain, setting.getEObject(),
-				setting.getEStructuralFeature(), customizeDMRPage.getvControl().getDomainModelReference());
-			editingDomain.getCommandStack().execute(setCommand);
+			Command command = null;
+			if (setting.getEStructuralFeature().isMany()) {
+				command = AddCommand.create(editingDomain, setting.getEObject(),
+					setting.getEStructuralFeature(), customizeDMRPage.getvControl().getDomainModelReference());
+			}
+			else {
+				command = SetCommand.create(editingDomain, setting.getEObject(),
+					setting.getEStructuralFeature(), customizeDMRPage.getvControl().getDomainModelReference());
+			}
+			editingDomain.getCommandStack().execute(command);
 		}
 		return super.performFinish();
 	}

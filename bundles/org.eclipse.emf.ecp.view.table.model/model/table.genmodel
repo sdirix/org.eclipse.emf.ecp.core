@@ -13,14 +13,16 @@
       testsPackageSuffix="model.tests" extensibleProviderFactory="true" childCreationExtenders="true"
       ecorePackage="table.ecore#/">
     <genClasses ecoreClass="table.ecore#//TableControl">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference table.ecore#//TableControl/columns"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute table.ecore#//TableControl/addRemoveDisabled"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute table.ecore#//TableControl/enableDetailEditingDialog"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference table.ecore#//TableControl/columnConfigurations"/>
     </genClasses>
-    <genClasses ecoreClass="table.ecore#//TableColumn">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference table.ecore#//TableColumn/attribute"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute table.ecore#//TableColumn/readOnly"/>
+    <genClasses image="false" ecoreClass="table.ecore#//TableColumnConfiguration"/>
+    <genClasses ecoreClass="table.ecore#//TableDomainModelReference">
+      <genFeatures children="true" createChild="true" ecoreFeature="ecore:EReference table.ecore#//TableDomainModelReference/columnDomainModelReferences"/>
     </genClasses>
-    <genClasses ecoreClass="table.ecore#//TableDomainModelReference"/>
+    <genClasses ecoreClass="table.ecore#//ReadOnlyColumnConfiguration">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference table.ecore#//ReadOnlyColumnConfiguration/columnDomainReferences"/>
+    </genClasses>
   </genPackages>
 </genmodel:GenModel>

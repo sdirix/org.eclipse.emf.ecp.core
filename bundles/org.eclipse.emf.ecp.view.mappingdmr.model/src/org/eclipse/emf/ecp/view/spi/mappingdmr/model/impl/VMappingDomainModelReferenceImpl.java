@@ -11,7 +11,9 @@
  */
 package org.eclipse.emf.ecp.view.spi.mappingdmr.model.impl;
 
+import java.util.Collections;
 import java.util.Iterator;
+import java.util.Set;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -28,8 +30,8 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.impl.VFeaturePathDomainModelReferenceImpl;
 
 /**
- * <!-- begin-user-doc --> An implementation of the model object '
- * <em><b>Mapping Domain Model Reference</b></em>'. <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object ' <em><b>Mapping Domain Model Reference</b></em>'. <!--
+ * end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
@@ -45,8 +47,8 @@ import org.eclipse.emf.ecp.view.spi.model.impl.VFeaturePathDomainModelReferenceI
  * @generated
  */
 public class VMappingDomainModelReferenceImpl extends
-		VFeaturePathDomainModelReferenceImpl implements
-		VMappingDomainModelReference {
+	VFeaturePathDomainModelReferenceImpl implements
+	VMappingDomainModelReference {
 	/**
 	 * The cached value of the '{@link #getMappedClass() <em>Mapped Class</em>}'
 	 * reference. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -95,15 +97,16 @@ public class VMappingDomainModelReferenceImpl extends
 	@Override
 	public EClass getMappedClass() {
 		if (mappedClass != null && mappedClass.eIsProxy()) {
-			InternalEObject oldMappedClass = (InternalEObject) mappedClass;
+			final InternalEObject oldMappedClass = (InternalEObject) mappedClass;
 			mappedClass = (EClass) eResolveProxy(oldMappedClass);
 			if (mappedClass != oldMappedClass) {
-				if (eNotificationRequired())
+				if (eNotificationRequired()) {
 					eNotify(new ENotificationImpl(
-							this,
-							Notification.RESOLVE,
-							VMappingdmrPackage.MAPPING_DOMAIN_MODEL_REFERENCE__MAPPED_CLASS,
-							oldMappedClass, mappedClass));
+						this,
+						Notification.RESOLVE,
+						VMappingdmrPackage.MAPPING_DOMAIN_MODEL_REFERENCE__MAPPED_CLASS,
+						oldMappedClass, mappedClass));
+				}
 			}
 		}
 		return mappedClass;
@@ -125,14 +128,15 @@ public class VMappingDomainModelReferenceImpl extends
 	 */
 	@Override
 	public void setMappedClass(EClass newMappedClass) {
-		EClass oldMappedClass = mappedClass;
+		final EClass oldMappedClass = mappedClass;
 		mappedClass = newMappedClass;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(
-					this,
-					Notification.SET,
-					VMappingdmrPackage.MAPPING_DOMAIN_MODEL_REFERENCE__MAPPED_CLASS,
-					oldMappedClass, mappedClass));
+				this,
+				Notification.SET,
+				VMappingdmrPackage.MAPPING_DOMAIN_MODEL_REFERENCE__MAPPED_CLASS,
+				oldMappedClass, mappedClass));
+		}
 	}
 
 	/**
@@ -151,20 +155,21 @@ public class VMappingDomainModelReferenceImpl extends
 	 * @generated
 	 */
 	public NotificationChain basicSetDomainModelReference(
-			VDomainModelReference newDomainModelReference,
-			NotificationChain msgs) {
-		VDomainModelReference oldDomainModelReference = domainModelReference;
+		VDomainModelReference newDomainModelReference,
+		NotificationChain msgs) {
+		final VDomainModelReference oldDomainModelReference = domainModelReference;
 		domainModelReference = newDomainModelReference;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(
-					this,
-					Notification.SET,
-					VMappingdmrPackage.MAPPING_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCE,
-					oldDomainModelReference, newDomainModelReference);
-			if (msgs == null)
+			final ENotificationImpl notification = new ENotificationImpl(
+				this,
+				Notification.SET,
+				VMappingdmrPackage.MAPPING_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCE,
+				oldDomainModelReference, newDomainModelReference);
+			if (msgs == null) {
 				msgs = notification;
-			else
+			} else {
 				msgs.add(notification);
+			}
 		}
 		return msgs;
 	}
@@ -176,32 +181,36 @@ public class VMappingDomainModelReferenceImpl extends
 	 */
 	@Override
 	public void setDomainModelReference(
-			VDomainModelReference newDomainModelReference) {
+		VDomainModelReference newDomainModelReference) {
 		if (newDomainModelReference != domainModelReference) {
 			NotificationChain msgs = null;
-			if (domainModelReference != null)
+			if (domainModelReference != null) {
 				msgs = ((InternalEObject) domainModelReference)
-						.eInverseRemove(
-								this,
-								EOPPOSITE_FEATURE_BASE
-										- VMappingdmrPackage.MAPPING_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCE,
-								null, msgs);
-			if (newDomainModelReference != null)
+					.eInverseRemove(
+						this,
+						EOPPOSITE_FEATURE_BASE
+							- VMappingdmrPackage.MAPPING_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCE,
+						null, msgs);
+			}
+			if (newDomainModelReference != null) {
 				msgs = ((InternalEObject) newDomainModelReference)
-						.eInverseAdd(
-								this,
-								EOPPOSITE_FEATURE_BASE
-										- VMappingdmrPackage.MAPPING_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCE,
-								null, msgs);
+					.eInverseAdd(
+						this,
+						EOPPOSITE_FEATURE_BASE
+							- VMappingdmrPackage.MAPPING_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCE,
+						null, msgs);
+			}
 			msgs = basicSetDomainModelReference(newDomainModelReference, msgs);
-			if (msgs != null)
+			if (msgs != null) {
 				msgs.dispatch();
-		} else if (eNotificationRequired())
+			}
+		} else if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(
-					this,
-					Notification.SET,
-					VMappingdmrPackage.MAPPING_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCE,
-					newDomainModelReference, newDomainModelReference));
+				this,
+				Notification.SET,
+				VMappingdmrPackage.MAPPING_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCE,
+				newDomainModelReference, newDomainModelReference));
+		}
 	}
 
 	/**
@@ -211,7 +220,7 @@ public class VMappingDomainModelReferenceImpl extends
 	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
-			int featureID, NotificationChain msgs) {
+		int featureID, NotificationChain msgs) {
 		switch (featureID) {
 		case VMappingdmrPackage.MAPPING_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCE:
 			return basicSetDomainModelReference(null, msgs);
@@ -228,8 +237,9 @@ public class VMappingDomainModelReferenceImpl extends
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case VMappingdmrPackage.MAPPING_DOMAIN_MODEL_REFERENCE__MAPPED_CLASS:
-			if (resolve)
+			if (resolve) {
 				return getMappedClass();
+			}
 			return basicGetMappedClass();
 		case VMappingdmrPackage.MAPPING_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCE:
 			return getDomainModelReference();
@@ -288,24 +298,35 @@ public class VMappingDomainModelReferenceImpl extends
 		}
 		return super.eIsSet(featureID);
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public boolean init(EObject eObject) {
-		boolean init=super.init(eObject);
-		EMap<EClass, EObject> map= (EMap<EClass, EObject>) lastResolvedEObject.eGet(getDomainModelEFeature());
-		EObject mappedEObject = map.get(getMappedClass());
-		boolean subDMRInit=getDomainModelReference().init(mappedEObject);
-		return init&&subDMRInit;
+		final boolean init = super.init(eObject);
+		final EMap<EClass, EObject> map = (EMap<EClass, EObject>) lastResolvedEObject.eGet(getDomainModelEFeature());
+		if (!map.containsKey(getMappedClass())) {
+			map.put(getMappedClass(), getMappedClass().getEPackage().getEFactoryInstance().create(getMappedClass()));
+		}
+		final EObject mappedEObject = map.get(getMappedClass());
+		final boolean subDMRInit = getDomainModelReference().init(mappedEObject);
+		return init && subDMRInit;
 	}
 
 	@Override
 	public Iterator<Setting> getIterator() {
+		if (getDomainModelReference() == null) {
+			final Set<Setting> settings = Collections.emptySet();
+			return settings.iterator();
+		}
 		return getDomainModelReference().getIterator();
 	}
 
 	@Override
 	public Iterator<EStructuralFeature> getEStructuralFeatureIterator() {
+		if (getDomainModelReference() == null) {
+			final Set<EStructuralFeature> features = Collections.emptySet();
+			return features.iterator();
+		}
 		return getDomainModelReference().getEStructuralFeatureIterator();
 	}
 

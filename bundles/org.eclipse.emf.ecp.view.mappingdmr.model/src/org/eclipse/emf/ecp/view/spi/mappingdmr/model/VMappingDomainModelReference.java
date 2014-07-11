@@ -16,8 +16,8 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 
 /**
- * <!-- begin-user-doc --> A representation of the model object '
- * <em><b>Mapping Domain Model Reference</b></em>'. <!-- end-user-doc -->
+ * <!-- begin-user-doc --> A representation of the model object ' <em><b>Mapping Domain Model Reference</b></em>'. <!--
+ * end-user-doc -->
  * 
  * <p>
  * The following features are supported:
@@ -36,13 +36,13 @@ import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
  * @generated
  */
 public interface VMappingDomainModelReference extends
-		VFeaturePathDomainModelReference {
+	VFeaturePathDomainModelReference {
 	/**
 	 * Returns the value of the '<em><b>Mapped Class</b></em>' reference. <!--
 	 * begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Mapped Class</em>' reference isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Mapped Class</em>' reference isn't clear, there really should be more of a description
+	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * 
@@ -71,9 +71,8 @@ public interface VMappingDomainModelReference extends
 	 * Returns the value of the '<em><b>Domain Model Reference</b></em>'
 	 * containment reference. <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Domain Model Reference</em>' containment
-	 * reference isn't clear, there really should be more of a description
-	 * here...
+	 * If the meaning of the '<em>Domain Model Reference</em>' containment reference isn't clear, there really should be
+	 * more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * 

@@ -40,6 +40,7 @@ import org.eclipse.emf.ecp.ui.common.SelectionComposite;
 import org.eclipse.emf.ecp.view.editor.handler.CreateDomainModelReferenceWizard;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer;
+import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
@@ -109,6 +110,9 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 	private Object getText(Object object) {
 		final VFeaturePathDomainModelReference modelReference =
 			(VFeaturePathDomainModelReference) object;
+		if (modelReference == null) {
+			return null;
+		}
 		final EStructuralFeature value = modelReference.getDomainModelEFeature();
 
 		String className = ""; //$NON-NLS-1$
@@ -121,11 +125,15 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 			}
 			referencePath = referencePath + " -> " + adapterFactoryItemDelegator.getText(ref); //$NON-NLS-1$
 		}
-		if (className.isEmpty()) {
+		if (className.isEmpty() && modelReference.getDomainModelEFeature() != null
+			&& modelReference.getDomainModelEFeature().getEContainingClass() != null) {
 			className = modelReference.getDomainModelEFeature().getEContainingClass().getName();
 		}
 
 		final String linkText = className + referencePath + attributeName;
+		if (linkText.equals(" -> ")) { //$NON-NLS-1$
+			return null;
+		}
 		return linkText;
 	}
 
@@ -299,7 +307,8 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 				setting, getEditingDomain(setting), eclass, "New Reference Element", //$NON-NLS-1$
 				Messages.NewModelElementWizard_WizardTitle_AddModelElement,
 				Messages.NewModelElementWizard_PageTitle_AddModelElement,
-				Messages.NewModelElementWizard_PageDescription_AddModelElement);
+				Messages.NewModelElementWizard_PageDescription_AddModelElement, VControl.class.cast(
+					setting.getEObject()).getDomainModelReference());
 
 			final SelectionComposite<TreeViewer> helper = CompositeFactory.getSelectModelClassComposite(
 				new HashSet<EPackage>(),

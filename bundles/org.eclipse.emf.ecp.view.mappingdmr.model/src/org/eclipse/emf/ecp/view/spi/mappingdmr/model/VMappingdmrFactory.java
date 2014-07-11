@@ -28,7 +28,7 @@ public interface VMappingdmrFactory extends EFactory {
 	 * @generated
 	 */
 	VMappingdmrFactory eINSTANCE = org.eclipse.emf.ecp.view.spi.mappingdmr.model.impl.VMappingdmrFactoryImpl
-			.init();
+		.init();
 
 	/**
 	 * Returns a new object of class '<em>Mapping Domain Model Reference</em>'.

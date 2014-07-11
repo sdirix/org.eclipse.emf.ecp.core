@@ -21,8 +21,8 @@ import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 
 /**
  * <!-- begin-user-doc --> The <b>Switch</b> for the model's inheritance
- * hierarchy. It supports the call {@link #doSwitch(EObject) doSwitch(object)}
- * to invoke the <code>caseXXX</code> method for each class of the model,
+ * hierarchy. It supports the call {@link #doSwitch(EObject) doSwitch(object)} to invoke the <code>caseXXX</code> method
+ * for each class of the model,
  * starting with the actual class of the object and proceeding up the
  * inheritance hierarchy until a non-null result is returned, which is the
  * result of the switch. <!-- end-user-doc -->
@@ -68,22 +68,24 @@ public class MappingdmrSwitch<T> extends Switch<T> {
 	 * a non null result; it yields that result. <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
 	 * 
-	 * @return the first non-null result returned by a <code>caseXXX</code>
-	 *         call.
+	 * @return the first non-null result returned by a <code>caseXXX</code> call.
 	 * @generated
 	 */
 	@Override
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
 		case VMappingdmrPackage.MAPPING_DOMAIN_MODEL_REFERENCE: {
-			VMappingDomainModelReference mappingDomainModelReference = (VMappingDomainModelReference) theEObject;
+			final VMappingDomainModelReference mappingDomainModelReference = (VMappingDomainModelReference) theEObject;
 			T result = caseMappingDomainModelReference(mappingDomainModelReference);
-			if (result == null)
+			if (result == null) {
 				result = caseFeaturePathDomainModelReference(mappingDomainModelReference);
-			if (result == null)
+			}
+			if (result == null) {
 				result = caseDomainModelReference(mappingDomainModelReference);
-			if (result == null)
+			}
+			if (result == null) {
 				result = defaultCase(theEObject);
+			}
 			return result;
 		}
 		default:
@@ -92,15 +94,14 @@ public class MappingdmrSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '
-	 * <em>Mapping Domain Model Reference</em>'. <!-- begin-user-doc --> This
+	 * Returns the result of interpreting the object as an instance of ' <em>Mapping Domain Model Reference</em>'. <!--
+	 * begin-user-doc --> This
 	 * implementation returns null; returning a non-null result will terminate
 	 * the switch. <!-- end-user-doc -->
 	 * 
 	 * @param object
 	 *            the target of the switch.
-	 * @return the result of interpreting the object as an instance of '
-	 *         <em>Mapping Domain Model Reference</em>'.
+	 * @return the result of interpreting the object as an instance of ' <em>Mapping Domain Model Reference</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
@@ -109,15 +110,14 @@ public class MappingdmrSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '
-	 * <em>Domain Model Reference</em>'. <!-- begin-user-doc --> This
+	 * Returns the result of interpreting the object as an instance of ' <em>Domain Model Reference</em>'. <!--
+	 * begin-user-doc --> This
 	 * implementation returns null; returning a non-null result will terminate
 	 * the switch. <!-- end-user-doc -->
 	 * 
 	 * @param object
 	 *            the target of the switch.
-	 * @return the result of interpreting the object as an instance of '
-	 *         <em>Domain Model Reference</em>'.
+	 * @return the result of interpreting the object as an instance of ' <em>Domain Model Reference</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
@@ -126,33 +126,31 @@ public class MappingdmrSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '
-	 * <em>Feature Path Domain Model Reference</em>'. <!-- begin-user-doc -->
+	 * Returns the result of interpreting the object as an instance of ' <em>Feature Path Domain Model Reference</em>'.
+	 * <!-- begin-user-doc -->
 	 * This implementation returns null; returning a non-null result will
 	 * terminate the switch. <!-- end-user-doc -->
 	 * 
 	 * @param object
 	 *            the target of the switch.
-	 * @return the result of interpreting the object as an instance of '
-	 *         <em>Feature Path Domain Model Reference</em>'.
+	 * @return the result of interpreting the object as an instance of ' <em>Feature Path Domain Model Reference</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
 	public T caseFeaturePathDomainModelReference(
-			VFeaturePathDomainModelReference object) {
+		VFeaturePathDomainModelReference object) {
 		return null;
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '
-	 * <em>EObject</em>'. <!-- begin-user-doc --> This implementation returns
+	 * Returns the result of interpreting the object as an instance of ' <em>EObject</em>'. <!-- begin-user-doc --> This
+	 * implementation returns
 	 * null; returning a non-null result will terminate the switch, but this is
 	 * the last case anyway. <!-- end-user-doc -->
 	 * 
 	 * @param object
 	 *            the target of the switch.
-	 * @return the result of interpreting the object as an instance of '
-	 *         <em>EObject</em>'.
+	 * @return the result of interpreting the object as an instance of ' <em>EObject</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject)
 	 * @generated
 	 */

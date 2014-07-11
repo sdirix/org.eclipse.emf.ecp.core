@@ -173,7 +173,7 @@ public class TableControlItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((VTableControl) object).getName();
+		final String label = ((VTableControl) object).getName();
 		return label == null || label.length() == 0 ?
 			getString("_UI_TableControl_type") : //$NON-NLS-1$
 			getString("_UI_TableControl_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$

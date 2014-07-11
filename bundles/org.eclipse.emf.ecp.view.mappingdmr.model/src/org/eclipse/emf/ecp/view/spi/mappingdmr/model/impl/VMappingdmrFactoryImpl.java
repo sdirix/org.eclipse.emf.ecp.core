@@ -27,7 +27,7 @@ import org.eclipse.emf.ecp.view.spi.mappingdmr.model.VMappingdmrPackage;
  * @generated
  */
 public class VMappingdmrFactoryImpl extends EFactoryImpl implements
-		VMappingdmrFactory {
+	VMappingdmrFactory {
 	/**
 	 * Creates the default factory implementation. <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
@@ -36,12 +36,12 @@ public class VMappingdmrFactoryImpl extends EFactoryImpl implements
 	 */
 	public static VMappingdmrFactory init() {
 		try {
-			VMappingdmrFactory theMappingdmrFactory = (VMappingdmrFactory) EPackage.Registry.INSTANCE
-					.getEFactory(VMappingdmrPackage.eNS_URI);
+			final VMappingdmrFactory theMappingdmrFactory = (VMappingdmrFactory) EPackage.Registry.INSTANCE
+				.getEFactory(VMappingdmrPackage.eNS_URI);
 			if (theMappingdmrFactory != null) {
 				return theMappingdmrFactory;
 			}
-		} catch (Exception exception) {
+		} catch (final Exception exception) {
 			EcorePlugin.INSTANCE.log(exception);
 		}
 		return new VMappingdmrFactoryImpl();
@@ -69,7 +69,7 @@ public class VMappingdmrFactoryImpl extends EFactoryImpl implements
 			return createMappingDomainModelReference();
 		default:
 			throw new IllegalArgumentException(
-					"The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
+				"The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 	}
 
@@ -80,7 +80,7 @@ public class VMappingdmrFactoryImpl extends EFactoryImpl implements
 	 */
 	@Override
 	public VMappingDomainModelReference createMappingDomainModelReference() {
-		VMappingDomainModelReferenceImpl mappingDomainModelReference = new VMappingDomainModelReferenceImpl();
+		final VMappingDomainModelReferenceImpl mappingDomainModelReference = new VMappingDomainModelReferenceImpl();
 		return mappingDomainModelReference;
 	}
 

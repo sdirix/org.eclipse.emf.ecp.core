@@ -353,7 +353,10 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		ColumnViewerToolTipSupport.enableFor(tableViewer);
 
 		final ObservableListContentProvider cp = new ObservableListContentProvider();
-		final InternalEObject tempInstance = getInstanceOf(clazz);
+		InternalEObject tempInstance = null;
+		if (!clazz.isAbstract() && !clazz.isInterface()) {
+			tempInstance = getInstanceOf(clazz);
+		}
 		final ECPTableViewerComparator comparator = new ECPTableViewerComparator();
 		tableViewer.setComparator(comparator);
 		int columnNumber = 0;

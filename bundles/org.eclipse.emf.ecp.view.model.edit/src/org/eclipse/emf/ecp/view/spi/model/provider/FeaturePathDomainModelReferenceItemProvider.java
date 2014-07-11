@@ -126,7 +126,7 @@ public class FeaturePathDomainModelReferenceItemProvider
 	public String getText(Object object)
 	{
 		final VFeaturePathDomainModelReference dmr = (VFeaturePathDomainModelReference) object;
-		if (dmr == null)
+		if (dmr == null || dmr.getDomainModelEFeature() == null)
 		{
 			return getString("_UI_FeaturePathDomainModelReference_type"); //$NON-NLS-1$
 		}

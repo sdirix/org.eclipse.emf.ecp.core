@@ -4,5 +4,5 @@
    <service>
       <provide interface="org.eclipse.emf.ecp.view.model.common.spi.databinding.DatabindingProviderService"/>
    </service>
-   <property name="domainModelReference" type="String" value="org.eclipse.emf.ecp.view.spi.mappingdmr.model.impl.MappingDomainModelReferenceImpl"/>
+   <property name="domainModelReference" type="String" value="org.eclipse.emf.ecp.view.spi.mappingdmr.model.impl.VMappingDomainModelReferenceImpl"/>
 </scr:component>
