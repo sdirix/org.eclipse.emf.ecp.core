@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
@@ -40,7 +40,7 @@ import org.junit.Test;
 
 /**
  * @author Eugen Neufeld
- * 
+ *
  */
 public class ValidationProviderTest {
 
@@ -88,6 +88,7 @@ public class ValidationProviderTest {
 		called.add(false);
 		validationService.addValidationProvider(new ValidationProvider() {
 
+			@Override
 			public List<Diagnostic> validate(EObject eObject) {
 				called.set(0, true);
 				return Collections.emptyList();
@@ -101,6 +102,7 @@ public class ValidationProviderTest {
 	public void testValidationProviderSeverityHigher() {
 		validationService.addValidationProvider(new ValidationProvider() {
 
+			@Override
 			public List<Diagnostic> validate(EObject eObject) {
 				if (!Computer.class.isInstance(eObject)) {
 					return Collections.emptyList();
@@ -118,6 +120,7 @@ public class ValidationProviderTest {
 	public void testValidationProviderSeverityLower() {
 		validationService.addValidationProvider(new ValidationProvider() {
 
+			@Override
 			public List<Diagnostic> validate(EObject eObject) {
 				if (!Computer.class.isInstance(eObject)) {
 					return Collections.emptyList();
@@ -138,6 +141,7 @@ public class ValidationProviderTest {
 		called.add(0);
 		validationService.addValidationProvider(new ValidationProvider() {
 
+			@Override
 			public List<Diagnostic> validate(EObject eObject) {
 				if (Computer.class.isInstance(eObject)) {
 					((Computer) eObject).eNotify(new ValidationNotification(((Computer) eObject).getPowerBlock()));
@@ -162,6 +166,7 @@ public class ValidationProviderTest {
 		called.add(0);
 		validationService.addValidationProvider(new ValidationProvider() {
 
+			@Override
 			public List<Diagnostic> validate(EObject eObject) {
 				if (Computer.class.isInstance(eObject)) {
 
@@ -172,5 +177,27 @@ public class ValidationProviderTest {
 			}
 		});
 		assertEquals((Integer) 1, called.get(0));
+	}
+
+	@Test
+	public void testRemoveValidationProvider() {
+		// setup
+		final ValidationProvider validationProvider = new ValidationProvider() {
+			@Override
+			public List<Diagnostic> validate(EObject eObject) {
+				if (!Computer.class.isInstance(eObject)) {
+					return Collections.emptyList();
+				}
+				final Diagnostic diagnostic = new BasicDiagnostic(Diagnostic.WARNING, "bla", 0, "bl", new Object[] {
+					eObject, TestPackage.eINSTANCE.getComputer_Name() });
+				return Collections.singletonList(diagnostic);
+			}
+		};
+		validationService.addValidationProvider(validationProvider);
+		assertEquals(Diagnostic.WARNING, control.getDiagnostic().getHighestSeverity());
+
+		// act
+		validationService.removeValidationProvider(validationProvider);
+		assertEquals(Diagnostic.OK, control.getDiagnostic().getHighestSeverity());
 	}
 }

@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Edgar Mueller - initial API and implementation
  ******************************************************************************/
@@ -36,9 +36,9 @@ import org.junit.Test;
 
 /**
  * Test cases for the {@link VDiagnosticHelper}.
- * 
+ *
  * @author emueller
- * 
+ *
  */
 public class VDiagnosticHelperTest {
 
@@ -48,12 +48,12 @@ public class VDiagnosticHelperTest {
 
 		@SuppressWarnings("serial")
 		final Map<Object, Object> context =
-			new LinkedHashMap<Object, Object>() {
-				{
-					put(EValidator.SubstitutionLabelProvider.class, Diagnostician.INSTANCE);
-					put(EValidator.class, validator);
-				}
-			};
+		new LinkedHashMap<Object, Object>() {
+			{
+				put(EValidator.SubstitutionLabelProvider.class, Diagnostician.INSTANCE);
+				put(EValidator.class, validator);
+			}
+		};
 
 		validator.validate(object, diagnostics, context);
 
@@ -221,6 +221,40 @@ public class VDiagnosticHelperTest {
 		}
 
 		assertFalse(VDiagnosticHelper.isEqual(vDiagnostic1, vDiagnostic2));
+	}
+
+	@Test
+	public void testCleanWithMerge() {
+		final VDiagnostic vDiagnostic = VViewFactory.eINSTANCE.createDiagnostic();
+		final EClass eClass = EcoreFactory.eINSTANCE.createEClass();
+		final BasicDiagnostic bd1 = new BasicDiagnostic(Diagnostic.OK, "", 0, "OK", new Object[] { eClass,
+			EcorePackage.eINSTANCE.getENamedElement_Name() });
+		final BasicDiagnostic bd2 = new BasicDiagnostic(Diagnostic.WARNING, "", 0, "OK", new Object[] { eClass,
+			EcorePackage.eINSTANCE.getEClassifier_InstanceClass() });
+		vDiagnostic.getDiagnostics().add(bd1);
+		vDiagnostic.getDiagnostics().add(bd2);
+
+		final VDiagnostic clean = VDiagnosticHelper.clean(vDiagnostic);
+		assertEquals(1, clean.getDiagnostics().size());
+		assertEquals(Diagnostic.WARNING, clean.getHighestSeverity());
+	}
+
+	@Test
+	public void testCleanWithoutMerge() {
+		final VDiagnostic vDiagnostic = VViewFactory.eINSTANCE.createDiagnostic();
+		final EClass eClass1 = EcoreFactory.eINSTANCE.createEClass();
+		final EClass eClass2 = EcoreFactory.eINSTANCE.createEClass();
+		final BasicDiagnostic bd1 = new BasicDiagnostic(Diagnostic.OK, "", 0, "OK", new Object[] { eClass1,
+			EcorePackage.eINSTANCE.getENamedElement_Name() });
+		final BasicDiagnostic bd2 = new BasicDiagnostic(Diagnostic.WARNING, "", 0, "OK", new Object[] { eClass2,
+			EcorePackage.eINSTANCE.getEClassifier_InstanceClass() });
+		vDiagnostic.getDiagnostics().add(bd1);
+		vDiagnostic.getDiagnostics().add(bd2);
+
+		final VDiagnostic clean = VDiagnosticHelper.clean(vDiagnostic);
+		assertEquals(2, clean.getDiagnostics().size());
+		assertEquals(Diagnostic.WARNING, clean.getHighestSeverity());
+
 	}
 
 }
