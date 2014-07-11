@@ -156,6 +156,7 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 
 				final WizardDialog wd = new WizardDialog(Display.getDefault().getActiveShell(), wizard);
 				wd.open();
+				tableComposite.layout();
 			}
 		});
 

@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- *
+ * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
@@ -18,7 +18,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 /**
  * The Class ModelChangeNotification.
  * Such a notification is issued by the ViewModelContext when a change in the domain or the view model occurs.
- *
+ * 
  * @author Eugen Neufeld
  * @since 1.3
  */
@@ -29,7 +29,7 @@ public class ModelChangeNotification {
 
 	/**
 	 * Instantiates a new model change notification.
-	 *
+	 * 
 	 * @param notification the {@link Notification}
 	 */
 	public ModelChangeNotification(Notification notification) {
@@ -38,7 +38,7 @@ public class ModelChangeNotification {
 
 	/**
 	 * Gets the structural feature.
-	 *
+	 * 
 	 * @return the {@link EStructuralFeature} which value changed
 	 */
 	public EStructuralFeature getStructuralFeature() {
@@ -47,7 +47,7 @@ public class ModelChangeNotification {
 
 	/**
 	 * Gets the notifier.
-	 *
+	 * 
 	 * @return the notifier which value changed
 	 */
 	public EObject getNotifier() {
@@ -56,7 +56,7 @@ public class ModelChangeNotification {
 
 	/**
 	 * Gets the raw notification.
-	 *
+	 * 
 	 * @return the raw {@link Notification}
 	 */
 	public Notification getRawNotification() {

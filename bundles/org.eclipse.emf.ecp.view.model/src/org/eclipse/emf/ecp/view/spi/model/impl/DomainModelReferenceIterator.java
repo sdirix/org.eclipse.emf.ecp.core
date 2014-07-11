@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- *
+ * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
@@ -23,17 +23,17 @@ import org.eclipse.emf.ecore.InternalEObject;
 
 /**
  * Class for the DomainModelReferenceIterator which iterates over all found {@link Setting Settings}.
- *
+ * 
  * @author Eugen Neufeld
  * @since 1.2
- *
+ * 
  */
 public class DomainModelReferenceIterator implements Iterator<EStructuralFeature.Setting> {
 	/**
 	 * Helper Class for tuple.
-	 *
+	 * 
 	 * @author Eugen Neufeld
-	 *
+	 * 
 	 */
 	private class ReferenceCounter {
 		private EReference eReference;
@@ -47,7 +47,7 @@ public class DomainModelReferenceIterator implements Iterator<EStructuralFeature
 
 	/**
 	 * Constructor for the {@link DomainModelReferenceIterator}.
-	 *
+	 * 
 	 * @param leftReferences the references which could not be used in the normal resolve process
 	 * @param lastResolvedEObject the last {@link EObject} that was resolved
 	 * @param domainModelFeature the {@link EStructuralFeature} which is referenced
@@ -70,7 +70,7 @@ public class DomainModelReferenceIterator implements Iterator<EStructuralFeature
 
 	/**
 	 * {@inheritDoc}
-	 *
+	 * 
 	 * @see java.util.Iterator#remove()
 	 */
 	@Override
@@ -80,7 +80,7 @@ public class DomainModelReferenceIterator implements Iterator<EStructuralFeature
 
 	/**
 	 * {@inheritDoc}
-	 *
+	 * 
 	 * @see java.util.Iterator#next()
 	 */
 	@Override
@@ -213,7 +213,7 @@ public class DomainModelReferenceIterator implements Iterator<EStructuralFeature
 
 	/**
 	 * {@inheritDoc}
-	 *
+	 * 
 	 * @see java.util.Iterator#hasNext()
 	 */
 	@Override

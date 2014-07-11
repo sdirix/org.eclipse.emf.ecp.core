@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- *
+ * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
@@ -42,7 +42,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VElementImpl#getAttachments <em>Attachments</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  * @since 1.2
  */
@@ -52,7 +52,7 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #getName()
 	 * @generated
 	 * @ordered
@@ -63,7 +63,7 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #getName()
 	 * @generated
 	 * @ordered
@@ -74,7 +74,7 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	 * The default value of the '{@link #isVisible() <em>Visible</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #isVisible()
 	 * @generated
 	 * @ordered
@@ -85,7 +85,7 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	 * The cached value of the '{@link #isVisible() <em>Visible</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #isVisible()
 	 * @generated
 	 * @ordered
@@ -96,7 +96,7 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	 * The default value of the '{@link #isEnabled() <em>Enabled</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #isEnabled()
 	 * @generated
 	 * @ordered
@@ -107,7 +107,7 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	 * The cached value of the '{@link #isEnabled() <em>Enabled</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #isEnabled()
 	 * @generated
 	 * @ordered
@@ -118,7 +118,7 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	 * The default value of the '{@link #isReadonly() <em>Readonly</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #isReadonly()
 	 * @generated
 	 * @ordered
@@ -129,7 +129,7 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	 * The cached value of the '{@link #isReadonly() <em>Readonly</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #isReadonly()
 	 * @generated
 	 * @ordered
@@ -140,7 +140,7 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	 * The cached value of the '{@link #getDiagnostic() <em>Diagnostic</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #getDiagnostic()
 	 * @generated
 	 * @ordered
@@ -151,7 +151,7 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	 * The cached value of the '{@link #getAttachments() <em>Attachments</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #getAttachments()
 	 * @generated
 	 * @ordered
@@ -161,7 +161,7 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected VElementImpl()
@@ -172,7 +172,7 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -184,7 +184,7 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -196,7 +196,7 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -212,7 +212,7 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -224,7 +224,7 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -240,7 +240,7 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -252,7 +252,7 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -268,7 +268,7 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -280,7 +280,7 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -296,7 +296,7 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -308,7 +308,7 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public NotificationChain basicSetDiagnostic(VDiagnostic newDiagnostic, NotificationChain msgs)
@@ -331,7 +331,7 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -362,7 +362,7 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -379,7 +379,7 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -398,7 +398,7 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -425,7 +425,7 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
@@ -460,7 +460,7 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -493,7 +493,7 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -520,7 +520,7 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
