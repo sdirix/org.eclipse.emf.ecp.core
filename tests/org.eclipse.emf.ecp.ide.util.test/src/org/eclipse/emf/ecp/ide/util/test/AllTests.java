@@ -5,7 +5,13 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({ EcoreHelperNoDependenciesTest.class, EcoreHelperOneDependencyTest.class, EcoreHelperTwoDependenciesTest.class, EcoreHelperCyclicDependenciesTest.class})
+@SuiteClasses({
+	EcoreHelperNoDependenciesTest.class,
+	EcoreHelperOneDependencyTest.class,
+	EcoreHelperTwoDependenciesTest.class,
+	EcoreHelperCyclicDependenciesTest.class,
+	EcoreHelperDefaultPackageRegistryContentsTest.class
+})
 public class AllTests {
 
 }

@@ -1,16 +1,17 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Alexandra Buzila - initial API and implementation
  ******************************************************************************/
 package org.eclipse.emf.ecp.ide.view.service.test;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -18,12 +19,20 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.emf.ecp.ide.view.internal.service.IDEViewModelRegistryImpl;
 import org.eclipse.emf.ecp.ide.view.service.IDEViewModelRegistry;
 import org.eclipse.emf.ecp.ide.view.service.ViewModelEditorCallback;
@@ -36,7 +45,7 @@ import org.junit.Test;
 
 /**
  * @author Alexandra Buzila
- * 
+ *
  */
 @SuppressWarnings("restriction")
 public class IDEViewModelRegistryTest {
@@ -87,6 +96,7 @@ public class IDEViewModelRegistryTest {
 	 * {@link org.eclipse.emf.ecp.ide.view.internal.service.IDEViewModelRegistryImpl#register(java.lang.String, org.eclipse.emf.ecp.view.spi.model.VView)}
 	 * .
 	 */
+	@SuppressWarnings("unchecked")
 	@Test
 	public void testRegisterAndUnregisterOneViewPerEcore() {
 		final IDEViewModelRegistry registry = new IDEViewModelRegistryImpl();
@@ -129,6 +139,7 @@ public class IDEViewModelRegistryTest {
 	 * {@link org.eclipse.emf.ecp.ide.view.internal.service.IDEViewModelRegistryImpl#register(java.lang.String, org.eclipse.emf.ecp.view.spi.model.VView)}
 	 * .
 	 */
+	@SuppressWarnings("unchecked")
 	@Test
 	public void testRegisterAndUnregisterTwoViewsPerEcore() {
 
@@ -191,6 +202,7 @@ public class IDEViewModelRegistryTest {
 	 * {@link org.eclipse.emf.ecp.ide.view.internal.service.IDEViewModelRegistryImpl#registerViewModelEditor(org.eclipse.emf.ecp.view.spi.model.VView, org.eclipse.emf.ecp.ide.view.service.ViewModelEditorCallback)}
 	 * .
 	 */
+	@SuppressWarnings("unchecked")
 	@Test
 	public void testRegisterUnregisterViewModelEditor() {
 		final IDEViewModelRegistry registry = new IDEViewModelRegistryImpl();
@@ -233,12 +245,73 @@ public class IDEViewModelRegistryTest {
 		assertFalse("", viewModelViewModelEditorMapping.containsKey(view));
 	}
 
+	@Test
+	public void testRegisterViewModelEditorWithEcoreChange() throws IOException, InterruptedException {
+		// setup
+		final CountDownLatch latch = new CountDownLatch(1);
+		final IDEViewModelRegistry registry = new IDEViewModelRegistryImpl();
+		final ViewModelEditorCallback callback = new ViewModelEditorCallback() {
+
+			@Override
+			public void signalEcoreOutOfSync() {
+				latch.countDown();
+			}
+
+			@Override
+			public void reloadViewModel() {
+				// not tested
+			}
+		};
+		registry.register(view.getEcorePath(), view);
+		registry.registerViewModelEditor(view, callback);
+
+		// act
+		final IProject[] projects = ResourcesPlugin.getWorkspace().getRoot().getProjects();
+		IProject project = null;
+		for (final IProject p : projects) {
+			if ("TestIDEViewRegistryProjectResources".equals(p.getName())) {
+				project = p;
+			}
+		}
+		final IFile file = project.getFile("task.ecore");
+		final Resource resource = loadEcore(file);
+		// calling save without a change will trigger listener
+		resource.save(null);
+
+		// assert
+		assertTrue("signalEcoreOutOfSync has not been called", latch.await(1, TimeUnit.SECONDS));
+		registry.unregisterViewModelEditor(view, callback);
+		registry.unregister(view.getEcorePath(), view);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Test
+	public void testRegisterViewModel() throws Exception {
+		final IDEViewModelRegistry registry = new IDEViewModelRegistryImpl();
+		final Map<VView, String> viewModelviewModelFileMapping = (Map<VView, String>) getFieldByName(registry,
+			"viewModelviewModelFileMapping");
+
+		assertTrue(viewModelviewModelFileMapping.isEmpty());
+		final String path = "path1234";
+		registry.registerViewModel(view, path);
+		assertTrue(viewModelviewModelFileMapping.containsKey(view));
+		assertEquals(path, viewModelviewModelFileMapping.get(view));
+	}
+
 	private Object getFieldByName(Object instance, String fieldName) throws Exception
 	{
 		final Field f = instance.getClass().getDeclaredField(fieldName);
 		f.setAccessible(true);
 
 		return f.get(instance);
+	}
+
+	private static Resource loadEcore(IFile file) {
+		final ResourceSet resourceSet = new ResourceSetImpl();
+		final Map<String, Object> extensionMap = resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap();
+		extensionMap.put("*", new XMIResourceFactoryImpl());
+		final URI uri = URI.createPlatformResourceURI(file.getFullPath().toString(), false);
+		return resourceSet.getResource(uri, true);
 	}
 
 }

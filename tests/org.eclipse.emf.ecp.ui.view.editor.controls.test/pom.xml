@@ -59,6 +59,11 @@
 							<artifactId>org.eclipse.emf.ecp.workspace.feature</artifactId>
 							<version>0.0.0</version>
 						</dependency>
+						<dependency>
+							<type>eclipse-feature</type>
+							<artifactId>org.eclipse.emf.ecp.view.group.feature</artifactId>
+							<version>0.0.0</version>
+						</dependency>
 					</dependencies>
 				</configuration>
 			</plugin>

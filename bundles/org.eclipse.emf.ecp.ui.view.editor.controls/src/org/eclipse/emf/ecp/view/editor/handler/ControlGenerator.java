@@ -1,14 +1,14 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * EclipseSource Muenchen - initial API and implementation
- * 
+ *
  *******************************************************************************/
 package org.eclipse.emf.ecp.view.editor.handler;
 
@@ -32,7 +32,7 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.view.editor.controls.Activator;
 import org.eclipse.emf.ecp.view.editor.controls.Helper;
-import org.eclipse.emf.ecp.view.spi.model.VContainedContainer;
+import org.eclipse.emf.ecp.view.spi.model.VContainer;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
@@ -48,15 +48,14 @@ public final class ControlGenerator {
 
 	/**
 	 * Create controls and set them to the view.
-	 * 
+	 *
 	 * @param project the {@link ECPProject} from which the rootClass is retrieved. It is assumed that the project
 	 *            contains only one {@link VView}.
-	 * @param compositeToFill the {@link VElement} to fill , must be of type {@link VView} or
-	 *            {@link VContainedContainer}
+	 * @param compositeToFill the {@link VElement} to fill , must be of type {@link VView} or {@link VContainer}
 	 * @param datasegment the class to parse
 	 * @param features the list of features to create
 	 */
-	public static void addControls(ECPProject project, VContainedContainer compositeToFill,
+	public static void addControls(ECPProject project, VContainer compositeToFill,
 		EClass datasegment, Set<EStructuralFeature> features) {
 
 		final EClass rootClass = Helper.getRootEClass(project);
@@ -65,14 +64,13 @@ public final class ControlGenerator {
 
 	/**
 	 * Create controls and set them to the view.
-	 * 
+	 *
 	 * @param rootClass the rootClass for identifying the path
-	 * @param compositeToFill the {@link VElement} to fill , must be of type {@link VView} or
-	 *            {@link VContainedContainer}
+	 * @param compositeToFill the {@link VElement} to fill , must be of type {@link VView} or {@link VContainer}
 	 * @param features the list of features to create
 	 */
 	public static void addControls(EClass rootClass, VElement compositeToFill, Set<EStructuralFeature> features) {
-		if (!VContainedContainer.class.isInstance(compositeToFill) && !VView.class.isInstance(compositeToFill)) {
+		if (!VContainer.class.isInstance(compositeToFill) && !VView.class.isInstance(compositeToFill)) {
 			return;
 		}
 		final Map<EClass, EReference> childParentReferenceMap = new HashMap<EClass, EReference>();
@@ -95,8 +93,8 @@ public final class ControlGenerator {
 			control.setDomainModelReference(modelReference);
 
 			// add to the composite
-			if (VContainedContainer.class.isInstance(compositeToFill)) {
-				((VContainedContainer) compositeToFill).getChildren().add(control);
+			if (VContainer.class.isInstance(compositeToFill)) {
+				((VContainer) compositeToFill).getChildren().add(control);
 			} else if (VView.class.isInstance(compositeToFill)) {
 				((VView) compositeToFill).getChildren().add(control);
 			}
@@ -105,7 +103,7 @@ public final class ControlGenerator {
 
 	/**
 	 * Create all the controls and set them to the given view.
-	 * 
+	 *
 	 * @param view the view for which the controls are created for
 	 */
 	public static void generateAllControls(final VView view) {

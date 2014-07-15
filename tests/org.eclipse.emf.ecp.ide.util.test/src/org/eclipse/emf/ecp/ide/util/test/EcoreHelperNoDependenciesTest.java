@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.eclipse.emf.ecp.ide.util.test;
 
@@ -22,13 +22,11 @@ import org.junit.Test;
 
 /**
  * @author Alexandra Buzila
- * 
+ *
  */
-@SuppressWarnings("restriction")
 public class EcoreHelperNoDependenciesTest {
 	private final Registry packageRegistry = EPackage.Registry.INSTANCE;
 	private static String aEcorePath = "/TestEcoreHelperProjectResources/A.ecore";
-	private static String dummyEcorePath = "/TestEcoreHelperProjectResources/dummy.ecore";
 
 	/**
 	 * @throws java.lang.Exception
@@ -66,8 +64,8 @@ public class EcoreHelperNoDependenciesTest {
 	}
 
 	/**
-	 * Test method for {@link org.eclipse.emf.ecp.internal.ecore.util.EcoreHelper#registerEcore(java.lang.String)} .
-	 * 
+	 * Test method for {@link EcoreHelper#registerEcore(String)}
+	 *
 	 * @throws IOException
 	 */
 	@Test
@@ -90,8 +88,8 @@ public class EcoreHelperNoDependenciesTest {
 	}
 
 	/**
-	 * Test method for {@link org.eclipse.emf.ecp.internal.ecore.util.EcoreHelper#registerEcore(java.lang.String)} .
-	 * 
+	 * Test method for {@link EcoreHelper#registerEcore(String)}
+	 *
 	 * @throws IOException
 	 */
 	@Test

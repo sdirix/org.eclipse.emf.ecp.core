@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.eclipse.emf.ecp.ide.util.test;
 
@@ -21,9 +21,8 @@ import org.junit.Test;
 
 /**
  * @author Alexandra Buzila
- * 
+ *
  */
-@SuppressWarnings("restriction")
 public class EcoreHelperTwoDependenciesTest {
 
 	private final Registry packageRegistry = EPackage.Registry.INSTANCE;

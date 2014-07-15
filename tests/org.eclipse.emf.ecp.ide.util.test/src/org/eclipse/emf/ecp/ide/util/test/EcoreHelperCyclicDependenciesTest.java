@@ -16,7 +16,6 @@ import org.junit.After;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-@SuppressWarnings("restriction")
 public class EcoreHelperCyclicDependenciesTest {
 	private final Registry packageRegistry = EPackage.Registry.INSTANCE;
 	private static String dEcorePath = "/TestEcoreHelperProjectResources/D.ecore";
