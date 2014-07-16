@@ -12,9 +12,12 @@
 package org.eclipse.emf.ecp.view.editor.handler;
 
 import java.util.Iterator;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -24,7 +27,11 @@ import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.table.model.VTablePackage;
 import org.eclipse.emf.ecp.view.treemasterdetail.ui.swt.internal.MasterDetailAction;
+import org.eclipse.emf.edit.command.AddCommand;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
 
@@ -84,11 +91,27 @@ public class GenerateTableColumnsHandler extends MasterDetailAction {
 			return;
 		}
 		final EReference eReference = (EReference) eStructuralFeature;
-		for (final EAttribute attribute : eReference.getEReferenceType().getEAllAttributes()) {
-			final VFeaturePathDomainModelReference dmr = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
-			dmr.setDomainModelEFeature(attribute);
-			tableDMR.getColumnDomainModelReferences().add(dmr);
-		}
-	}
 
+		final Set<EStructuralFeature> generatedFeatures = new LinkedHashSet<EStructuralFeature>();
+		for (final VDomainModelReference ref : tableDMR.getColumnDomainModelReferences()) {
+			final VFeaturePathDomainModelReference featureDMR = (VFeaturePathDomainModelReference) ref;
+			generatedFeatures.add(featureDMR.getDomainModelEFeature());
+		}
+		final Set<VDomainModelReference> references = new LinkedHashSet<VDomainModelReference>();
+		for (final EAttribute attribute : eReference.getEReferenceType().getEAllAttributes()) {
+			if (generatedFeatures.contains(attribute)) {
+				continue;
+			}
+			final VFeaturePathDomainModelReference dmr = VViewFactory.eINSTANCE
+				.createFeaturePathDomainModelReference();
+			dmr.setDomainModelEFeature(attribute);
+			references.add(dmr);
+
+		}
+		final EditingDomain editingDomainFor = AdapterFactoryEditingDomain.getEditingDomainFor(object);
+		final Command command = AddCommand.create(editingDomainFor, tableDMR,
+			VTablePackage.eINSTANCE.getTableDomainModelReference_ColumnDomainModelReferences(), references);
+		editingDomainFor.getCommandStack().execute(command);
+
+	}
 }
