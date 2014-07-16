@@ -53,5 +53,13 @@
          </menu>
       </menuContribution>
    </extension>
+   <extension
+         id="product"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="org.eclipse.emf.ecp.makeithappen.application.sample.e3.application"
+            name="org.eclipse.emf.ecp.makeithappen.application.sample.e3">
+      </product>
+   </extension>
 
 </plugin>

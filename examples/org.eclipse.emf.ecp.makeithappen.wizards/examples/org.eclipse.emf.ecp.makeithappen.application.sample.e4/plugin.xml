@@ -5,8 +5,8 @@
          id="product"
          point="org.eclipse.core.runtime.products">
       <product
-            name="org.eclipse.emf.ecp.makeithappen.application.sample.e4"
-            application="org.eclipse.e4.ui.workbench.swt.E4Application">
+            application="org.eclipse.e4.ui.workbench.swt.E4Application"
+            name="org.eclipse.emf.ecp.makeithappen.application.sample.e4">
          <property
                name="applicationCSS"
                value="platform:/plugin/org.eclipse.emf.ecp.makeithappen.application.sample.e4/css/default.css">
