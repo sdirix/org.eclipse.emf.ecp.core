@@ -30,6 +30,7 @@ import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.impl.EReferenceImpl;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
+import org.eclipse.emf.ecp.edit.internal.swt.SWTImageHelper;
 import org.eclipse.emf.ecp.edit.internal.swt.controls.ControlMessages;
 import org.eclipse.emf.ecp.edit.internal.swt.reference.DeleteReferenceAction;
 import org.eclipse.emf.ecp.edit.internal.swt.reference.NewReferenceAction;
@@ -78,6 +79,8 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 	private AdapterFactoryItemDelegator adapterFactoryItemDelegator;
 	private Composite parentComposite;
 	private Label setLabel;
+	private Label imageLabel;
+	private Composite contentSetComposite;
 
 	/**
 	 * {@inheritDoc}
@@ -88,7 +91,7 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 	@Override
 	protected Binding[] createBindings(Control control, final Setting setting) {
 
-		final Binding[] bindings = new Binding[1];
+		final Binding[] bindings = new Binding[2];
 		final IObservableValue value = SWTObservables.observeText(setLabel);
 
 		bindings[0] = getDataBindingContext().bindValue(value, getModelValue(setting), new UpdateValueStrategy() {
@@ -104,7 +107,23 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 					return getText(value);
 				}
 			});
+
+		final IObservableValue imageValue = SWTObservables.observeImage(imageLabel);
+		bindings[1] = getDataBindingContext().bindValue(imageValue, getModelValue(setting),
+			new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER)
+			, new UpdateValueStrategy() {
+				@Override
+				public Object convert(Object value) {
+					return getImage(value);
+				}
+			});
+
 		return bindings;
+	}
+
+	private Object getImage(Object value) {
+		final Object image = adapterFactoryItemDelegator.getImage(value);
+		return SWTImageHelper.getImage(image);
 	}
 
 	private Object getText(Object object) {
@@ -153,8 +172,8 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 			}
 
 		} else {
-			if (stackLayout.topControl != setLabel) {
-				stackLayout.topControl = setLabel;
+			if (stackLayout.topControl != contentSetComposite) {
+				stackLayout.topControl = contentSetComposite;
 				mainComposite.layout();
 			}
 
@@ -210,12 +229,17 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 		unsetLabel.setForeground(parentComposite.getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY));
 		unsetLabel.setAlignment(SWT.CENTER);
 
-		setLabel = new Label(mainComposite, SWT.NONE);
-		setLabel.setBackground(mainComposite.getBackground());
+		contentSetComposite = new Composite(mainComposite, SWT.NONE);
+		GridLayoutFactory.fillDefaults().numColumns(2).equalWidth(false).applyTo(contentSetComposite);
+		contentSetComposite.setBackground(mainComposite.getBackground());
+		imageLabel = new Label(contentSetComposite, SWT.NONE);
+		imageLabel.setBackground(contentSetComposite.getBackground());
+		setLabel = new Label(contentSetComposite, SWT.NONE);
+		setLabel.setBackground(contentSetComposite.getBackground());
 		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(setLabel);
 
 		if (setting.isSet()) {
-			stackLayout.topControl = setLabel;
+			stackLayout.topControl = contentSetComposite;
 		} else {
 			stackLayout.topControl = unsetLabel;
 		}

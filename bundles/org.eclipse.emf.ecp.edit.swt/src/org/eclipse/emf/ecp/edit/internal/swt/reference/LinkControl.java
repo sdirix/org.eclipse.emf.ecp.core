@@ -12,8 +12,6 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.reference;
 
-import java.net.URL;
-
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
@@ -21,7 +19,7 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
-import org.eclipse.emf.ecp.edit.internal.swt.Activator;
+import org.eclipse.emf.ecp.edit.internal.swt.SWTImageHelper;
 import org.eclipse.emf.ecp.edit.internal.swt.controls.ControlMessages;
 import org.eclipse.emf.ecp.edit.internal.swt.controls.SingleControl;
 import org.eclipse.emf.ecp.edit.spi.ReferenceService;
@@ -235,24 +233,21 @@ public class LinkControl extends SingleControl {
 		});
 
 		final IObservableValue imageValue = SWTObservables.observeImage(imageHyperlink);
-		getDataBindingContext().bindValue(imageValue, getModelValue(), new UpdateValueStrategy() {
-
-			@Override
-			public Object convert(Object value) {
-				return getModelValue().getValue();
-			}
-		}, new UpdateValueStrategy() {
-			@Override
-			public Object convert(Object value) {
-				return getImage(value);
-			}
-		});
+		getDataBindingContext().bindValue(imageValue, getModelValue(),
+			new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER)
+			, new UpdateValueStrategy() {
+				@Override
+				public Object convert(Object value) {
+					return getImage(value);
+				}
+			});
 
 		return null;
 	}
 
 	protected Object getImage(Object value) {
-		return Activator.getImage((URL) getAdapterFactoryItemDelegator().getImage(value));
+		final Object image = getAdapterFactoryItemDelegator().getImage(value);
+		return SWTImageHelper.getImage(image);
 	}
 
 	protected Object getLinkText(Object value) {
