@@ -18,6 +18,9 @@
       <file
             filePath="viewmodel/MappingDomainModelReference.view">
       </file>
+      <file
+            filePath="viewmodel/TableDomainModelReference.view">
+      </file>
    </extension>
 
 </plugin>
