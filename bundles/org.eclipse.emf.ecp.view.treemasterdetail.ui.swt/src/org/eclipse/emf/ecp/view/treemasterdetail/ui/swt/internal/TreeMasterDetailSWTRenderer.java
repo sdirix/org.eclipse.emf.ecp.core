@@ -109,6 +109,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 	private Color titleColor;
 	private Font titleFont;
 	private Color headerBgColor;
+	private TreeViewer treeViewer;
 	/**
 	 * Static string.
 	 * 
@@ -253,7 +254,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 
 		final VView detailView = getVElement().getDetailView();
 
-		final TreeViewer treeViewer = new TreeViewer(leftPanel);
+		treeViewer = new TreeViewer(leftPanel);
 
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).hint(100, SWT.DEFAULT)
 			.applyTo(treeViewer.getTree());
@@ -622,7 +623,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 					editingDomain.getCommandStack().execute(
 						RemoveCommand.create(editingDomain, obj));
 				}
-
+				treeViewer.setSelection(new StructuredSelection(getViewModelContext().getDomainModel()));
 			}
 		};
 		final String deleteImagePath = "icons/delete.png";//$NON-NLS-1$
