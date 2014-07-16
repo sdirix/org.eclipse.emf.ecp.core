@@ -13,10 +13,13 @@ package org.eclipse.emf.ecp.view.editor.controls;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Iterator;
 
+import org.eclipse.core.databinding.observable.Observables;
 import org.eclipse.core.databinding.observable.list.IObservableList;
-import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.notify.AdapterFactory;
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
@@ -31,7 +34,9 @@ import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemP
 import org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
+import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.table.model.VTablePackage;
 import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -65,6 +70,9 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 
 	private ComposedAdapterFactory composedAdapterFactory;
 	private AdapterFactoryLabelProvider labelProvider;
+	private AdapterImpl adapter;
+	private VTableControl tableControl;
+	private Setting setting;
 
 	/**
 	 * {@inheritDoc}
@@ -72,9 +80,8 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTRenderer#createControl(org.eclipse.swt.widgets.Composite)
 	 */
 	@Override
-	protected Control createControl(Composite parent) {
-		final Setting setting = getVElement().getDomainModelReference().getIterator().next();
-
+	protected Control createControl(final Composite parent) {
+		setting = getVElement().getDomainModelReference().getIterator().next();
 		final Composite composite = new Composite(parent, SWT.NONE);
 		composite.setBackgroundMode(SWT.INHERIT_FORCE);
 		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(composite);
@@ -92,11 +99,11 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 		GridDataFactory.fillDefaults().align(SWT.END, SWT.BEGINNING).grab(false, false).applyTo(buttonComposite);
 
 		final Button buttonAdd = new Button(buttonComposite, SWT.PUSH);
-		buttonAdd.setText("Add");
+		buttonAdd.setText("Add"); //$NON-NLS-1$
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(false, false).applyTo(buttonAdd);
 
 		final Button buttonRemove = new Button(buttonComposite, SWT.PUSH);
-		buttonRemove.setText("Remove");
+		buttonRemove.setText("Remove"); //$NON-NLS-1$
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(false, false).applyTo(buttonRemove);
 
 		final Composite tableComposite = new Composite(composite, SWT.NONE);
@@ -122,6 +129,52 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 		final IObservableList list = EMFEditObservables.observeList(getEditingDomain(setting),
 			setting.getEObject(), setting.getEStructuralFeature());
 		viewer.setInput(list);
+		tableControl = (VTableControl) getViewModelContext().getDomainModel();
+		adapter = new AdapterImpl() {
+
+			/**
+			 * {@inheritDoc}
+			 * 
+			 * @see org.eclipse.emf.ecore.util.EContentAdapter#notifyChanged(org.eclipse.emf.common.notify.Notification)
+			 */
+			@Override
+			public void notifyChanged(Notification notification) {
+				super.notifyChanged(notification);
+				if (notification.getFeature() == VTablePackage.eINSTANCE
+					.getTableDomainModelReference_ColumnDomainModelReferences()) {
+					viewer.refresh();
+					parent.layout();
+				}
+				if (VTableDomainModelReference.class.isInstance(notification.getNotifier())) {
+					updateSetting();
+					viewer.refresh();
+					parent.layout();
+				}
+
+				if (VTableControl.class.isInstance(notification.getNotifier())
+					&& (VTableDomainModelReference.class.isInstance(notification.getNewValue()) || VTableDomainModelReference.class
+						.isInstance(notification.getOldValue()))) {
+					updateSetting();
+					viewer.refresh();
+					parent.layout();
+				}
+			}
+
+			private void updateSetting() {
+				final Iterator<Setting> iterator = getVElement().getDomainModelReference().getIterator();
+				if (iterator.hasNext()) {
+					setting = iterator.next();
+					final IObservableList list = EMFEditObservables.observeList(getEditingDomain(setting),
+						setting.getEObject(), setting.getEStructuralFeature());
+					viewer.setInput(list);
+				}
+				else {
+					viewer.setInput(Observables.emptyObservableList());
+				}
+
+			}
+		};
+		tableControl.eAdapters().add(adapter);
 
 		buttonAdd.addSelectionListener(new SelectionAdapter() {
 
@@ -170,15 +223,11 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				super.widgetSelected(e);
-				final Object object = IStructuredSelection.class.cast(viewer.getSelection()).getFirstElement();
-				if (object == null) {
-					return;
-				}
+				final IStructuredSelection selection = IStructuredSelection.class.cast(viewer.getSelection());
 
 				final EditingDomain editingDomain = getEditingDomain(setting);
-				final Command command = RemoveCommand.create(editingDomain, setting.getEObject(),
-					setting.getEStructuralFeature(), object);
-				editingDomain.getCommandStack().execute(command);
+				editingDomain.getCommandStack().execute(RemoveCommand.create(editingDomain, setting.getEObject(),
+					setting.getEStructuralFeature(), selection.toList()));
 			}
 		});
 
@@ -208,6 +257,7 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 	protected void dispose() {
 		labelProvider.dispose();
 		composedAdapterFactory.dispose();
+		tableControl.eAdapters().remove(adapter);
 		super.dispose();
 	}
 
@@ -218,7 +268,7 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 	 */
 	@Override
 	protected String getUnsetText() {
-		return "No columns set";
+		return "No columns set"; //$NON-NLS-1$
 	}
 
 }
