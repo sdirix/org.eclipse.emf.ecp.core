@@ -79,9 +79,6 @@
       <plugin id="org.eclipse.emf.ecp.makeithappen.model.viewmodel"/>
       <plugin id="org.eclipse.emf.ecp.ui.view"/>
       <plugin id="org.eclipse.emf.ecp.ui.view.swt"/>
-      <plugin id="org.eclipse.emf.ecp.view.categorization.model"/>
-      <plugin id="org.eclipse.emf.ecp.view.categorization.model.edit"/>
-      <plugin id="org.eclipse.emf.ecp.view.categorization.swt"/>
       <plugin id="org.eclipse.emf.ecp.view.context"/>
       <plugin id="org.eclipse.emf.ecp.view.context.locale"/>
       <plugin id="org.eclipse.emf.ecp.view.core.swt"/>

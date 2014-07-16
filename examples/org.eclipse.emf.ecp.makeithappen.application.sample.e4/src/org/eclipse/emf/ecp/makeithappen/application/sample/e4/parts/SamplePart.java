@@ -22,7 +22,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecp.makeithappen.model.task.TaskPackage;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
-import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -33,7 +32,6 @@ public class SamplePart {
 
 	@Inject
 	private MDirtyable dirty;
-	private ECPSWTView render;
 	private Composite content;
 
 	@PostConstruct
@@ -47,7 +45,7 @@ public class SamplePart {
 			content.setLayout(GridLayoutFactory.fillDefaults().create());
 			content.setLayoutData(GridDataFactory.fillDefaults().create());
 
-			render = ECPSWTViewRenderer.INSTANCE.render(content, dummyObject);
+			ECPSWTViewRenderer.INSTANCE.render(content, dummyObject);
 
 			content.layout();
 
