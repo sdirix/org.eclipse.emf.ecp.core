@@ -9,7 +9,7 @@
  * Contributors:
  * Alexandra Buzila - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.model.common;
+package org.eclipse.emf.ecp.internal.ide.util;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -24,7 +24,6 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EPackage.Descriptor;
 import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecp.internal.ide.util.EcoreHelper;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
@@ -36,7 +35,6 @@ import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
  * 
  */
 /** Helper class for view model objects. */
-@SuppressWarnings("restriction")
 public final class ViewModelHelper {
 
 	private ViewModelHelper() {
