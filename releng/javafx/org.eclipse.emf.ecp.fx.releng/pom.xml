@@ -54,11 +54,11 @@
 		<repository>
 			<id>emfstore</id>
 			<layout>p2</layout>
-			<url>http://download.eclipse.org/emf-store/releases_11</url>
+			<url>http://download.eclipse.org/emf-store/releases_13</url>
 		</repository>
 		<repository>
-			<id>kepler</id>
-			<url>http://download.eclipse.org/releases/kepler</url>
+			<id>luna</id>
+			<url>http://download.eclipse.org/releases/luna</url>
 			<layout>p2</layout>
 		</repository>
 	</repositories>
@@ -106,12 +106,13 @@
 					<resolver>p2</resolver>
 					<pomDependencies>consider</pomDependencies>
 					<environments>
+						<!-- 
 						<environment>
 							<os>noenv</os>
 							<ws>noenv</ws>
 							<arch>noenv</arch>
 						</environment>
-						<!-- 
+						
 						<environment>
 							<os>win32</os>
 							<ws>win32</ws>
