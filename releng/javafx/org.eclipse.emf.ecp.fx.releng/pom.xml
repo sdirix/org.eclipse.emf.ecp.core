@@ -91,6 +91,13 @@
 							<version>1.3.0-SNAPSHOT</version>
 						</artifact>
 					</target>
+					<environments>
+						<environment>
+							<os>noenv</os>
+							<ws>noenv</ws>
+							<arch>noenv</arch>
+						</environment>
+					</environments>
 				</configuration>
 			</plugin>
 			<!-- <plugin> <groupId>org.eclipse.tycho</groupId> <artifactId>target-platform-configuration</artifactId> 
