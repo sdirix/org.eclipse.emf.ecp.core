@@ -25,6 +25,7 @@
 	</properties>
 
 	<modules>
+		<module>../org.eclipse.emf.ecp.target.fx</module>
 		<module>../org.eclipse.emf.ecp.fx.releng.bundles</module>
 		<module>../../../bundles/javafx/org.eclipse.emf.ecp.application.e4.fx</module>
 		<module>../../../features/javafx/org.eclipse.emf.ecp.application.e4.fx.feature</module>
@@ -35,33 +36,13 @@
 		<module>../org.eclipse.emf.ecp.repository.fx</module>
 	</modules>
 
-	<repositories>
-		<repository>
-			<id>efxclipse-repo</id>
-			<layout>p2</layout>
-			<url>http://download.eclipse.org/efxclipse/runtime-nightly/site</url>
-		</repository>
-		<repository>
-			<id>efxclipse-addons</id>
-			<layout>p2</layout>
-			<url>http://downloads.efxclipse.bestsolution.at/p2-repos/addons/nightly/site/</url>
-		</repository>
-		<repository>
-			<id>ecp</id>
-			<layout>p2</layout>
-			<url>https://hudson.eclipse.org/ecp/job/emf-emfclient-integration/lastSuccessfulBuild/artifact/releng/org.eclipse.emf.ecp.repository/target/repository/</url>
-		</repository>
-		<repository>
-			<id>emfstore</id>
-			<layout>p2</layout>
-			<url>http://download.eclipse.org/emf-store/releases_13</url>
-		</repository>
-		<repository>
-			<id>luna</id>
-			<url>http://download.eclipse.org/releases/luna</url>
-			<layout>p2</layout>
-		</repository>
-	</repositories>
+	<!-- <repositories> <repository> <id>efxclipse-repo</id> <layout>p2</layout> 
+		<url>http://download.eclipse.org/efxclipse/runtime-nightly/site</url> </repository> 
+		<repository> <id>efxclipse-addons</id> <layout>p2</layout> <url>http://downloads.efxclipse.bestsolution.at/p2-repos/addons/nightly/site/</url> 
+		</repository> <repository> <id>ecp</id> <layout>p2</layout> <url>https://hudson.eclipse.org/ecp/job/emf-emfclient-integration/lastSuccessfulBuild/artifact/releng/org.eclipse.emf.ecp.repository/target/repository/</url> 
+		</repository> <repository> <id>emfstore</id> <layout>p2</layout> <url>http://download.eclipse.org/emf-store/releases_13</url> 
+		</repository> <repository> <id>luna</id> <url>http://download.eclipse.org/releases/luna</url> 
+		<layout>p2</layout> </repository> </repositories> -->
 
 	<pluginRepositories>
 		<pluginRepository>
@@ -103,51 +84,31 @@
 				<artifactId>target-platform-configuration</artifactId>
 				<version>${tycho-version}</version>
 				<configuration>
-					<resolver>p2</resolver>
-					<pomDependencies>consider</pomDependencies>
-					<environments>
-						<!-- 
-						<environment>
-							<os>noenv</os>
-							<ws>noenv</ws>
-							<arch>noenv</arch>
-						</environment>
-						
-						<environment>
-							<os>win32</os>
-							<ws>win32</ws>
-							<arch>x86</arch>
-						</environment>
-						<environment>
-							<os>win32</os>
-							<ws>win32</ws>
-							<arch>x86_64</arch>
-						</environment>
-						<environment>
-							<os>linux</os>
-							<ws>gtk</ws>
-							<arch>x86</arch>
-						</environment>
-						<environment>
-							<os>linux</os>
-							<ws>gtk</ws>
-							<arch>x86_64</arch>
-						</environment>
-						<environment>
-							<os>macosx</os>
-							<ws>cocoa</ws>
-							<arch>x86_64</arch>
-						</environment>
-						 -->
-					</environments>
+					<target>
+						<artifact>
+							<groupId>org.eclipse.emf.ecp.fx</groupId>
+							<artifactId>ecpfx</artifactId>
+							<version>1.3.0-SNAPSHOT</version>
+						</artifact>
+					</target>
 				</configuration>
 			</plugin>
+			<!-- <plugin> <groupId>org.eclipse.tycho</groupId> <artifactId>target-platform-configuration</artifactId> 
+				<version>${tycho-version}</version> <configuration> <resolver>p2</resolver> 
+				<pomDependencies>consider</pomDependencies> <environments> <environment> 
+				<os>noenv</os> <ws>noenv</ws> <arch>noenv</arch> </environment> <environment> 
+				<os>win32</os> <ws>win32</ws> <arch>x86</arch> </environment> <environment> 
+				<os>win32</os> <ws>win32</ws> <arch>x86_64</arch> </environment> <environment> 
+				<os>linux</os> <ws>gtk</ws> <arch>x86</arch> </environment> <environment> 
+				<os>linux</os> <ws>gtk</ws> <arch>x86_64</arch> </environment> <environment> 
+				<os>macosx</os> <ws>cocoa</ws> <arch>x86_64</arch> </environment> </environments> 
+				</configuration> </plugin> -->
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-compiler-plugin</artifactId>
 				<version>${tycho-version}</version>
 				<configuration>
-				<!-- <useJDK>BREE</useJDK>-->
+					<!-- <useJDK>BREE</useJDK> -->
 					<encoding>UTF-8</encoding>
 					<source>1.8</source>
 					<target>1.8</target>
@@ -157,17 +118,17 @@
 							<artifactId>javafx.mvn</artifactId>
 							<version>2.2.0-SNAPSHOT</version>
 							<systemPath>${java.home}/lib/jfxrt.jar</systemPath>
-			                <scope>system</scope>
+							<scope>system</scope>
 						</extraClasspathElement>
 					</extraClasspathElements>
 				</configuration>
 				<dependencies>
-				<dependency>
-					<groupId>org.eclipse.jdt</groupId>
-					<artifactId>org.eclipse.jdt.core</artifactId>
-					<version>${cbi-jdt-version}</version>
-				</dependency>
-			</dependencies>
+					<dependency>
+						<groupId>org.eclipse.jdt</groupId>
+						<artifactId>org.eclipse.jdt.core</artifactId>
+						<version>${cbi-jdt-version}</version>
+					</dependency>
+				</dependencies>
 			</plugin>
 		</plugins>
 
@@ -189,13 +150,13 @@
 					</executions>
 				</plugin>
 				<plugin>
-				<groupId>org.eclipse.tycho</groupId>
-				<artifactId>tycho-packaging-plugin</artifactId>
-				<version>${tycho-version}</version>
-				<configuration>
-					<archiveSite>true</archiveSite>
-				</configuration>
-			</plugin>
+					<groupId>org.eclipse.tycho</groupId>
+					<artifactId>tycho-packaging-plugin</artifactId>
+					<version>${tycho-version}</version>
+					<configuration>
+						<archiveSite>true</archiveSite>
+					</configuration>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 	</build>
@@ -208,14 +169,14 @@
 				<version>${junit-version}</version>
 				<scope>test</scope>
 			</dependency>
-		
-		<dependency>
-			<groupId>org.mockito</groupId>
-			<artifactId>mockito-core</artifactId>
-			<version>${mockito-version}</version>
-		</dependency>
 
-	</dependencies>
+			<dependency>
+				<groupId>org.mockito</groupId>
+				<artifactId>mockito-core</artifactId>
+				<version>${mockito-version}</version>
+			</dependency>
+
+		</dependencies>
 	</dependencyManagement>
 
 
