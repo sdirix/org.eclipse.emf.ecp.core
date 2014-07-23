@@ -31,7 +31,7 @@ import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.util.ECPContainer;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.internal.ui.model.ModelContentProvider;
-import org.eclipse.emf.ecp.internal.ui.util.ECPHandlerHelper;
+import org.eclipse.emf.ecp.spi.ui.util.ECPHandlerHelper;
 import org.eclipse.emf.ecp.ui.common.TreeViewerFactory;
 import org.eclipse.emf.ecp.ui.e4.editor.ECPE4Editor;
 import org.eclipse.jface.viewers.DoubleClickEvent;

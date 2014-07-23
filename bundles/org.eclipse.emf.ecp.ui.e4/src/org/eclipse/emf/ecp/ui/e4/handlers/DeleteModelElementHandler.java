@@ -24,7 +24,7 @@ import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
-import org.eclipse.emf.ecp.internal.ui.util.ECPHandlerHelper;
+import org.eclipse.emf.ecp.spi.ui.util.ECPHandlerHelper;
 
 /**
  * Handler to delete selected {@link EObject}.
