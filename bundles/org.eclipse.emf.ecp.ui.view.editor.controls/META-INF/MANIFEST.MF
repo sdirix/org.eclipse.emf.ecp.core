@@ -18,11 +18,12 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="3.7.0",
  org.eclipse.emf.ecp.view.core.swt;bundle-version="[1.4.0,2.0.0)",
  org.eclipse.emf.ecp.ui.view.swt;bundle-version="[1.4.0,2.0.0)",
  org.eclipse.emf.ecp.view.template.model;bundle-version="[1.4.0,2.0.0)",
- org.eclipse.emf.ecp.view.stack.model;bundle-version="[1.4.0,2.0.0)"
+ org.eclipse.emf.ecp.view.stack.model;bundle-version="[1.4.0,2.0.0)",
+ org.eclipse.emf.ecore.edit;bundle-version="[2.9.0,3.0.0)"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: org.eclipse.jface.databinding.swt;version="0.0.0",
- org.eclipse.jface.databinding.viewers,
+ org.eclipse.jface.databinding.viewers;version="0.0.0",
  org.eclipse.jface.resource;version="0.0.0",
  org.eclipse.swt;version="0.0.0",
  org.eclipse.swt.graphics;version="0.0.0",
