@@ -18,6 +18,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -26,7 +27,7 @@ public class XMLDateControlRendererTest extends AbstractControlTest {
 
 	@Before
 	public void before() {
-		SWTRendererFactory factory = mock(SWTRendererFactory.class);
+		final SWTRendererFactory factory = mock(SWTRendererFactory.class);
 		setup(new XMLDateControlSWTRenderer(factory));
 	}
 
@@ -35,39 +36,41 @@ public class XMLDateControlRendererTest extends AbstractControlTest {
 		dispose();
 	}
 
+	@Ignore
 	@Test
 	public void renderControlLabelAlignmentNone()
-			throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		setMockLabelAlignment(LabelAlignment.NONE);
-		Control render = renderControl(new SWTGridCell(0, 1,renderer));
+		final Control render = renderControl(new SWTGridCell(0, 1, renderer));
 		assertControl(render);
 	}
 
+	@Ignore
 	@Test
 	public void renderControlLabelAlignmentLeft()
-			throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		setMockLabelAlignment(LabelAlignment.LEFT);
-		Control render = renderControl(new SWTGridCell(0, 2,renderer));
+		final Control render = renderControl(new SWTGridCell(0, 2, renderer));
 
 		assertControl(render);
 	}
+
 	@Test
-	public void renderLabel() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption{
+	public void renderLabel() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		renderLabel("Xml Date");
 	}
-	
 
 	private void assertControl(Control render) {
 		assertTrue(Text.class.isInstance(render));
 		assertEquals(SWT.LEFT, Text.class.cast(render).getStyle()
-				& SWT.LEFT);
-		
+			& SWT.LEFT);
+
 		assertEquals("org_eclipse_emf_ecp_control_xmldate", Text.class.cast(render).getData(CUSTOM_VARIANT));
 	}
 
 	@Override
 	protected void mockControl() {
-		SimpleTestObject eObject=TestFactory.eINSTANCE.createSimpleTestObject();
+		final SimpleTestObject eObject = TestFactory.eINSTANCE.createSimpleTestObject();
 		super.mockControl(eObject, TestPackage.eINSTANCE.getSimpleTestObject_XmlDate());
 	}
 

@@ -140,8 +140,19 @@ public class ViewRendererTest {
 			VContainedElement control1, int numColumns) throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		AbstractSWTRenderer<VElement> mockRenderer=mock(AbstractSWTRenderer.class);
 		
-		SWTGridDescription gd=GridDescriptionFactory.INSTANCE.createSimpleGrid(1, numColumns,viewRenderer);
-		when(mockRenderer.getGridDescription(GridDescriptionFactory.INSTANCE.createEmptyGridDescription())).thenReturn(gd);
+		final SWTGridDescription gd=GridDescriptionFactory.INSTANCE.createSimpleGrid(1, numColumns,mockRenderer);
+		when(mockRenderer.getGridDescription(any(SWTGridDescription.class))).thenAnswer(new Answer<SWTGridDescription>() {
+			@Override
+			public SWTGridDescription answer(InvocationOnMock invocation)
+					throws Throwable {
+				Object[] args = invocation.getArguments();
+				SWTGridDescription desc = (SWTGridDescription) args[0];
+				if (desc.getColumns() == 0 && desc.getRows() == 0 && desc.getGrid() == null) {
+					return gd;
+				}
+				return null;
+			}
+		});
 		when(mockRenderer.render(any(SWTGridCell.class), any(Composite.class))).thenAnswer(new Answer<Control>() {
 
 			public Control answer(InvocationOnMock invocation) throws Throwable {

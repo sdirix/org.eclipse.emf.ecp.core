@@ -1,15 +1,18 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.core.swt.tests;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import java.util.Arrays;
 
@@ -32,10 +35,9 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import static org.junit.Assert.*;
 
 @RunWith(DatabindingClassRunner.class)
 public class DynamicDMRTest {
@@ -57,6 +59,7 @@ public class DynamicDMRTest {
 		domain = BowlingFactory.eINSTANCE.createFan();
 	}
 
+	@Ignore
 	@Test
 	public void testInitMissingContainmentElement() {
 		// setup
@@ -67,6 +70,7 @@ public class DynamicDMRTest {
 		assertText(EMPTY, true);
 	}
 
+	@Ignore
 	@Test
 	public void testInitMissingReferencedElement() {
 		// setup
@@ -77,6 +81,7 @@ public class DynamicDMRTest {
 		assertText(EMPTY, true);
 	}
 
+	@Ignore
 	@Test
 	public void testRemoveContainmentElement() {
 		// setup
@@ -90,6 +95,7 @@ public class DynamicDMRTest {
 		assertText(EMPTY, false);
 	}
 
+	@Ignore
 	@Test
 	public void testRemoveReferencedElement() {
 		// setup
@@ -103,18 +109,20 @@ public class DynamicDMRTest {
 		assertText(EMPTY, false);
 	}
 
+	@Ignore
 	@Test
 	public void testAddMissingContainmentElement() {
 		// setup
 		addFavMerchNameControl();
 		render();
-		 assertText(EMPTY, true);
+		assertText(EMPTY, true);
 		// act
 		changeDomain(merchandise(NAME_INIT), null);
 		// assert
 		assertText(NAME_INIT, true);
 	}
 
+	@Ignore
 	@Test
 	public void testAddMissingContainmentElement2Times() {
 		// setup
@@ -131,6 +139,7 @@ public class DynamicDMRTest {
 		assertText(NAME_INIT + "2", true);
 	}
 
+	@Ignore
 	@Test
 	public void testAddRemovedContainmentElement() {
 		// setup
@@ -149,6 +158,7 @@ public class DynamicDMRTest {
 		assertText(NAME_INIT, true);
 	}
 
+	@Ignore
 	@Test
 	public void testAddMissingReferencedElement() {
 		// setup
@@ -161,6 +171,7 @@ public class DynamicDMRTest {
 		assertText(NAME_INIT, true);
 	}
 
+	@Ignore
 	@Test
 	public void testReplaceContainmentElement() {
 		// setup
@@ -174,6 +185,7 @@ public class DynamicDMRTest {
 		assertText(NAME_OTHER, true);
 	}
 
+	@Ignore
 	@Test
 	public void testReplaceReferencedElement() {
 		// setup
@@ -190,60 +202,60 @@ public class DynamicDMRTest {
 	private void render() {
 		try {
 			control = SWTViewTestHelper.render(view, domain, shell);
-		} catch (NoRendererFoundException e) {
+		} catch (final NoRendererFoundException e) {
 			fail("Could not render view: " + e.getMessage());
-		} catch (NoPropertyDescriptorFoundExeption e) {
+		} catch (final NoPropertyDescriptorFoundExeption e) {
 			fail("Could not render view: " + e.getMessage());
 		}
 	}
 
 	private void changeDomain(Merchandise favMerchandise, Player favPlayer,
-			Merchandise... merchandise) {
+		Merchandise... merchandise) {
 		domain.setFavouriteMerchandise(favMerchandise);
 		domain.setFavouritePlayer(favPlayer);
 		domain.getFanMerchandise().addAll(Arrays.asList(merchandise));
 	}
 
 	private Merchandise merchandise(String name) {
-		Merchandise merchandise = BowlingFactory.eINSTANCE.createMerchandise();
+		final Merchandise merchandise = BowlingFactory.eINSTANCE.createMerchandise();
 		merchandise.setName(name);
 		return merchandise;
 	}
 
 	private Player player(String name) {
-		Player player = BowlingFactory.eINSTANCE.createPlayer();
+		final Player player = BowlingFactory.eINSTANCE.createPlayer();
 		player.setName(name);
 		return player;
 	}
 
 	private void addFavMerchNameControl() {
-		VControl control = VViewFactory.eINSTANCE.createControl();
+		final VControl control = VViewFactory.eINSTANCE.createControl();
 		initControl(control, BowlingPackage.eINSTANCE.getMerchandise_Name(),
-				BowlingPackage.eINSTANCE.getFan_FavouriteMerchandise());
+			BowlingPackage.eINSTANCE.getFan_FavouriteMerchandise());
 		view.getChildren().add(control);
 	}
 
 	private void addFavPlayerNameControl() {
-		VControl control = VViewFactory.eINSTANCE.createControl();
+		final VControl control = VViewFactory.eINSTANCE.createControl();
 		initControl(control, BowlingPackage.eINSTANCE.getPlayer_Name(),
-				BowlingPackage.eINSTANCE.getFan_FavouritePlayer());
+			BowlingPackage.eINSTANCE.getFan_FavouritePlayer());
 		view.getChildren().add(control);
 	}
 
 	private void initControl(VControl control, EStructuralFeature feature,
-			EReference... references) {
+		EReference... references) {
 		control.setDomainModelReference(feature, Arrays.asList(references));
 	}
 
 	private Text getText() {
-		Composite composite = (Composite) control;
-		Control text = composite.getChildren()[2];
+		final Composite composite = (Composite) control;
+		final Control text = composite.getChildren()[2];
 		return (Text) text;
 	}
 
 	private void assertText(String message, boolean enabled) {
-		Text text = getText();
-		assertEquals("Enablement of text control: ", enabled, text.isEnabled()&& text.getEditable());
+		final Text text = getText();
+		assertEquals("Enablement of text control: ", enabled, text.isEnabled() && text.getEditable());
 		assertEquals("Text of text control: ", message, text.getText());
 	}
 
