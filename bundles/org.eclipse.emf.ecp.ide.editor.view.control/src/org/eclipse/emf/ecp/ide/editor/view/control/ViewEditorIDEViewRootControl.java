@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
@@ -35,9 +35,9 @@ import org.eclipse.ui.model.WorkbenchLabelProvider;
 
 /**
  * The IDE specific View Model Control.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  */
 public class ViewEditorIDEViewRootControl extends ControlRootEClassControl {
 
@@ -45,7 +45,7 @@ public class ViewEditorIDEViewRootControl extends ControlRootEClassControl {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.editor.controls.ControlRootEClassControl#getInput()
 	 */
 	@Override
@@ -74,7 +74,7 @@ public class ViewEditorIDEViewRootControl extends ControlRootEClassControl {
 					null);
 			}
 		});
-		dialog.setTitle("Select XMI"); //$NON-NLS-1$
+		dialog.setTitle("Select Ecore"); //$NON-NLS-1$
 
 		if (dialog.open() == Window.OK) {
 			final VView view = (VView) getFirstSetting().getEObject();

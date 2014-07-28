@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
@@ -75,9 +75,9 @@ import org.eclipse.ui.part.FileEditorInput;
 
 /**
  * The IDE ViewModel EditorPart.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  */
 @SuppressWarnings("restriction")
 public class ViewEditorPart extends EditorPart implements
@@ -150,8 +150,7 @@ public class ViewEditorPart extends EditorPart implements
 			@Override
 			public void resourceChanged(IResourceChangeEvent event) {
 				final IResourceDelta delta = event.getDelta();
-				final IResourceDeltaVisitor visitor = new IResourceDeltaVisitor()
-				{
+				final IResourceDeltaVisitor visitor = new IResourceDeltaVisitor() {
 					@Override
 					public boolean visit(IResourceDelta delta)
 					{
@@ -315,7 +314,7 @@ public class ViewEditorPart extends EditorPart implements
 					null);
 			}
 		});
-		dialog.setTitle("Select XMI"); //$NON-NLS-1$
+		dialog.setTitle("Select Ecore"); //$NON-NLS-1$
 
 		if (dialog.open() == Window.OK) {
 
@@ -342,7 +341,7 @@ public class ViewEditorPart extends EditorPart implements
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.ide.view.service.ViewModelEditorCallback#reloadViewModel()
 	 */
 	@Override
@@ -441,7 +440,7 @@ public class ViewEditorPart extends EditorPart implements
 	}
 
 	/**
-	 * 
+	 *
 	 * */
 	private class ViewPartListener implements IPartListener2 {
 		@Override
@@ -484,7 +483,7 @@ public class ViewEditorPart extends EditorPart implements
 								null,
 								"The ECore of your ViewModel just changed. This change is not reflected in this View Model Editor. Do you want to reload now?", //$NON-NLS-1$
 								MessageDialog.WARNING,
-								new String[] { "Yes", "No" }, //$NON-NLS-1$ //$NON-NLS-2$ 
+								new String[] { "Yes", "No" }, //$NON-NLS-1$ //$NON-NLS-2$
 								0);
 							final int result = dialog.open();
 							if (result == 0) {
@@ -535,7 +534,7 @@ public class ViewEditorPart extends EditorPart implements
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.ide.view.service.ViewModelEditorCallback#signalEcoreOutOfSync()
 	 */
 	@Override
