@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen - initial API and implementation
  ******************************************************************************/
@@ -38,9 +38,9 @@ import org.eclipse.swt.widgets.Text;
 
 /**
  * Renders numbers.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  */
 public class NumberControlSWTRenderer extends TextControlSWTRenderer {
 	/**
@@ -52,7 +52,7 @@ public class NumberControlSWTRenderer extends TextControlSWTRenderer {
 
 	/**
 	 * Test constructor.
-	 * 
+	 *
 	 * @param factory the {@link SWTRendererFactory} to use.
 	 */
 	NumberControlSWTRenderer(SWTRendererFactory factory) {
@@ -194,6 +194,12 @@ public class NumberControlSWTRenderer extends TextControlSWTRenderer {
 									maxValue = true;
 									formatedValue = format.format(Long.MAX_VALUE);
 								}
+							} else if (Short.class.isAssignableFrom(instanceClass)
+								|| Short.class.getField("TYPE").get(null).equals(instanceClass)) { //$NON-NLS-1$
+								if (number.doubleValue() >= Short.MAX_VALUE) {
+									maxValue = true;
+									formatedValue = format.format(Short.MAX_VALUE);
+								}
 							}
 						} catch (final IllegalArgumentException ex) {
 							Activator.logException(ex);
@@ -270,7 +276,7 @@ public class NumberControlSWTRenderer extends TextControlSWTRenderer {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.internal.core.swt.renderer.TextControlSWTRenderer#getUnsetText()
 	 */
 	@Override

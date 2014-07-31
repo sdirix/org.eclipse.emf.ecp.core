@@ -1,13 +1,14 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
+ * Johannes Faltermeier - added Short
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.controls;
 
@@ -21,7 +22,7 @@ import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 
 /**
  * @author Eugen Neufeld
- * 
+ *
  */
 public final class NumericalHelper {
 
@@ -65,7 +66,8 @@ public final class NumericalHelper {
 				if (Double.class.getField("TYPE").get(null).equals(instanceClass) //$NON-NLS-1$
 					|| Float.class.getField("TYPE").get(null).equals(instanceClass) //$NON-NLS-1$
 					|| Integer.class.getField("TYPE").get(null).equals(instanceClass) //$NON-NLS-1$
-					|| Long.class.getField("TYPE").get(null).equals(instanceClass)) { //$NON-NLS-1$
+					|| Long.class.getField("TYPE").get(null).equals(instanceClass) //$NON-NLS-1$
+					|| Short.class.getField("TYPE").get(null).equals(instanceClass)) { //$NON-NLS-1$
 					return 0;
 				}
 			} catch (final IllegalArgumentException ex) {
@@ -88,6 +90,8 @@ public final class NumericalHelper {
 		} else if (Integer.class.isAssignableFrom(instanceClass)) {
 			return null;
 		} else if (Long.class.isAssignableFrom(instanceClass)) {
+			return null;
+		} else if (Short.class.isAssignableFrom(instanceClass)) {
 			return null;
 		}
 		return null;
@@ -122,7 +126,8 @@ public final class NumericalHelper {
 		if (instanceClass.isPrimitive()) {
 			try {
 				return Integer.class.getField("TYPE").get(null).equals(instanceClass) //$NON-NLS-1$
-					|| Long.class.getField("TYPE").get(null).equals(instanceClass); //$NON-NLS-1$
+					|| Long.class.getField("TYPE").get(null).equals(instanceClass) //$NON-NLS-1$
+					|| Short.class.getField("TYPE").get(null).equals(instanceClass); //$NON-NLS-1$
 			} catch (final IllegalArgumentException ex) {
 				Activator.logException(ex);
 			} catch (final SecurityException ex) {
@@ -138,8 +143,9 @@ public final class NumericalHelper {
 			return true;
 		} else if (Long.class.isAssignableFrom(instanceClass)) {
 			return true;
+		} else if (Short.class.isAssignableFrom(instanceClass)) {
+			return true;
 		}
-
 		return false;
 	}
 
@@ -158,6 +164,11 @@ public final class NumericalHelper {
 					return number.longValue();
 				} else if (Float.class.getField("TYPE").get(null).equals(instanceClass)) { //$NON-NLS-1$
 					return number.floatValue();
+				} else if (Short.class.getField("TYPE").get(null).equals(instanceClass)) { //$NON-NLS-1$
+					if (number.doubleValue() >= Short.MAX_VALUE) {
+						return Short.MAX_VALUE;
+					}
+					return number.shortValue();
 				}
 			} catch (final IllegalArgumentException ex) {
 				Activator.logException(ex);
@@ -180,6 +191,8 @@ public final class NumericalHelper {
 			return Long.valueOf(number.longValue());
 		} else if (Float.class.isAssignableFrom(instanceClass)) {
 			return Float.valueOf(number.floatValue());
+		} else if (Short.class.isAssignableFrom(instanceClass)) {
+			return Short.valueOf(number.shortValue());
 		}
 		return number;
 	}
