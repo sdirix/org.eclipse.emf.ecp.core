@@ -159,14 +159,26 @@ public final class NumericalHelper {
 				if (Double.class.getField("TYPE").get(null).equals(instanceClass)) { //$NON-NLS-1$
 					return number.doubleValue();
 				} else if (Integer.class.getField("TYPE").get(null).equals(instanceClass)) { //$NON-NLS-1$
+					if (number.doubleValue() >= Integer.MAX_VALUE) {
+						return Integer.MAX_VALUE;
+					} else if (number.doubleValue() <= Integer.MIN_VALUE) {
+						return Integer.MIN_VALUE;
+					}
 					return number.intValue();
 				} else if (Long.class.getField("TYPE").get(null).equals(instanceClass)) { //$NON-NLS-1$
+					if (number.doubleValue() >= Long.MAX_VALUE) {
+						return Long.MAX_VALUE;
+					} else if (number.doubleValue() <= Long.MIN_VALUE) {
+						return Long.MIN_VALUE;
+					}
 					return number.longValue();
 				} else if (Float.class.getField("TYPE").get(null).equals(instanceClass)) { //$NON-NLS-1$
 					return number.floatValue();
 				} else if (Short.class.getField("TYPE").get(null).equals(instanceClass)) { //$NON-NLS-1$
 					if (number.doubleValue() >= Short.MAX_VALUE) {
 						return Short.MAX_VALUE;
+					} else if (number.doubleValue() <= Short.MIN_VALUE) {
+						return Short.MIN_VALUE;
 					}
 					return number.shortValue();
 				}
