@@ -118,7 +118,7 @@
       <category name="org.eclipse.emf.ecp.emfforms"/>
    </feature>
    <feature url="features/org.eclipse.emf.ecp.makeithappen.feature_1.4.0.qualifier.jar" id="org.eclipse.emf.ecp.makeithappen.feature" version="1.4.0.qualifier">
-      <category name="org.eclipse.emf.emfforms.examples"/>
+      <category name="org.eclipse.emf.ecp.emfforms"/>
    </feature>
    <feature url="features/org.eclipse.emf.ecp.view.mappingdmr.feature_1.4.0.qualifier.jar" id="org.eclipse.emf.ecp.view.mappingdmr.feature" version="1.4.0.qualifier">
       <category name="org.eclipse.emf.ecp.emfforms"/>
@@ -135,34 +135,29 @@
    <bundle id="org.eclipse.emf.ecp.view.group.swt.collapsible.pgroup" version="1.4.0.qualifier">
       <category name="org.eclipse.emf.ecp.view"/>
    </bundle>
-   <category-def name="org.eclipse.emf.ecp.category" label="EMF Client Platform">
+   <category-def name="org.eclipse.emf.ecp.category" label="EMF Client Platform Features">
       <description>
          If you are unsure, which features to select, please use the ECP SDK including all important features.
       </description>
    </category-def>
-   <category-def name="org.eclipse.emf.ecp.view" label="EMF Forms View Models">
+   <category-def name="org.eclipse.emf.ecp.view" label="EMF Forms View Model Features">
       <description>
          View Models of EMF Forms. If you are unsure, which View models to use, please install the EMF Forms SDK, which includes all available View models.
       </description>
    </category-def>
-   <category-def name="org.eclipse.emf.ecp.emfforms" label="EMF Forms">
+   <category-def name="org.eclipse.emf.ecp.emfforms" label="EMF Forms Features">
       <description>
          If you are unsure, which features to select, please use the EMF Forms SDK including all important features.
       </description>
    </category-def>
-   <category-def name="org.eclipse.emf.ecp.rap" label="RAP Support (Do not install into IDE)">
+   <category-def name="org.eclipse.emf.ecp.rap" label="RAP Support Target Features (Do not install into IDE)">
       <description>
          Provides support for creating RAP applications with ECP. Should be added to a target platform, but not installed into the IDE.
       </description>
    </category-def>
-   <category-def name="org.eclipse.emf.ecp.sdk" label="ECP SDKs  (install one of these)">
+   <category-def name="org.eclipse.emf.ecp.sdk" label="SDKs  (install one of these)">
       <description>
          Contains the ECP SDKs. Please install only one of these.
-      </description>
-   </category-def>
-   <category-def name="org.eclipse.emf.emfforms.examples" label="EMF Forms Examples  (Do not install into IDE)">
-      <description>
-         Contains example data, which can be used in a target platform.
       </description>
    </category-def>
 </site>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.eclipse.emf.ecp.makeithappen.feature"
-      label="EMF Forms MakeItHappen Feature"
+      label="EMF Forms MakeItHappen Example (Target Feature)"
       version="1.4.0.qualifier"
       provider-name="%providerName"
       plugin="org.eclipse.emf.ecp.makeithappen.model"

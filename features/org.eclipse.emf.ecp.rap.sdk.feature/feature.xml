@@ -52,10 +52,6 @@
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.emf.ecp.view.model.editor.feature.source"
-         version="0.0.0"/>
-
-   <includes
          id="org.eclipse.emf.ecp.view.template.helper.feature.source"
          version="0.0.0"/>
 
@@ -92,15 +88,7 @@
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.emf.ecp.view.model.editor.feature"
-         version="0.0.0"/>
-
-   <includes
          id="org.eclipse.emf.ecp.view.template.helper.feature"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.ecp.emfforms.idetooling.feature"
          version="0.0.0"/>
 
 </feature>
