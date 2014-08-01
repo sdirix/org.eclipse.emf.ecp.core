@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- *
+ * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
  * Eugen - initial API and implementation
  ******************************************************************************/
@@ -38,9 +38,9 @@ import org.eclipse.swt.widgets.Text;
 
 /**
  * Renders numbers.
- *
+ * 
  * @author Eugen Neufeld
- *
+ * 
  */
 public class NumberControlSWTRenderer extends TextControlSWTRenderer {
 	/**
@@ -52,7 +52,7 @@ public class NumberControlSWTRenderer extends TextControlSWTRenderer {
 
 	/**
 	 * Test constructor.
-	 *
+	 * 
 	 * @param factory the {@link SWTRendererFactory} to use.
 	 */
 	NumberControlSWTRenderer(SWTRendererFactory factory) {
@@ -185,19 +185,19 @@ public class NumberControlSWTRenderer extends TextControlSWTRenderer {
 						try {
 							if (Integer.class.isAssignableFrom(instanceClass)
 								|| Integer.class.getField("TYPE").get(null).equals(instanceClass)) { //$NON-NLS-1$
-								if (Integer.MAX_VALUE == number.intValue()) {
+								if (number.doubleValue() >= Integer.MAX_VALUE) {
 									maxValue = true;
 									formatedValue = format.format(Integer.MAX_VALUE);
-								} else if (Integer.MIN_VALUE == number.intValue()) {
+								} else if (number.doubleValue() <= Integer.MIN_VALUE) {
 									minValue = true;
 									formatedValue = format.format(Integer.MIN_VALUE);
 								}
 							} else if (Long.class.isAssignableFrom(instanceClass)
 								|| Long.class.getField("TYPE").get(null).equals(instanceClass)) { //$NON-NLS-1$
-								if (Long.MAX_VALUE == number.longValue()) {
+								if (number.doubleValue() >= Long.MAX_VALUE) {
 									maxValue = true;
 									formatedValue = format.format(Long.MAX_VALUE);
-								} else if (Long.MIN_VALUE == number.longValue()) {
+								} else if (number.doubleValue() <= Long.MIN_VALUE) {
 									minValue = true;
 									formatedValue = format.format(Long.MIN_VALUE);
 								}
@@ -286,7 +286,7 @@ public class NumberControlSWTRenderer extends TextControlSWTRenderer {
 
 	/**
 	 * {@inheritDoc}
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.view.internal.core.swt.renderer.TextControlSWTRenderer#getUnsetText()
 	 */
 	@Override
