@@ -1384,7 +1384,8 @@ public class UnsetServiceTest {
 	 * @param domainModelReference
 	 * @return the created control
 	 */
-	private VControl addControlToContainer(VContainedContainer container, VFeaturePathDomainModelReference domainModelReference) {
+	private VControl addControlToContainer(VContainedContainer container,
+		VFeaturePathDomainModelReference domainModelReference) {
 		final VControl control = VViewFactory.eINSTANCE.createControl();
 		control.setDomainModelReference(domainModelReference);
 		container.getChildren().add(control);
@@ -1514,6 +1515,29 @@ public class UnsetServiceTest {
 		public Set<VControl> getControlsFor(UniqueSetting setting) {
 			// TODO Auto-generated method stub
 			return null;
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getContextValue(java.lang.String)
+		 */
+		@Override
+		public Object getContextValue(String key) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#putContextValue(java.lang.String,
+		 *      java.lang.Object)
+		 */
+		@Override
+		public void putContextValue(String key, Object value) {
+			// TODO Auto-generated method stub
+
 		}
 
 	}
