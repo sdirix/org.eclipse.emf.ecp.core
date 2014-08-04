@@ -121,4 +121,22 @@ public interface ViewModelContext {
 	 * @since 1.3
 	 */
 	Set<VControl> getControlsFor(UniqueSetting setting);
+
+	/**
+	 * Returns the value of the context for the passed key.
+	 * 
+	 * @param key the key of the value to get
+	 * @return the Object for the provided key
+	 * @since 1.4
+	 */
+	Object getContextValue(String key);
+
+	/**
+	 * Puts the value for the provided key into the context.
+	 * 
+	 * @param key the key to set
+	 * @param value the Object to set into the context
+	 * @since 1.4
+	 */
+	void putContextValue(String key, Object value);
 }

@@ -99,6 +99,11 @@ public class ViewModelContextImpl implements ViewModelContext {
 	private boolean isDisposed;
 
 	/**
+	 * The context map.
+	 */
+	private final Map<String, Object> keyObjectMap = new LinkedHashMap<String, Object>();
+
+	/**
 	 * Whether the context is being disposed.
 	 */
 	private boolean isDisposing;
@@ -657,5 +662,25 @@ public class ViewModelContextImpl implements ViewModelContext {
 		if (users.isEmpty()) {
 			dispose();
 		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getContextValue(java.lang.String)
+	 */
+	@Override
+	public Object getContextValue(String key) {
+		return keyObjectMap.get(key);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#putContextValue(java.lang.String, java.lang.Object)
+	 */
+	@Override
+	public void putContextValue(String key, Object value) {
+		keyObjectMap.put(key, value);
 	}
 }
