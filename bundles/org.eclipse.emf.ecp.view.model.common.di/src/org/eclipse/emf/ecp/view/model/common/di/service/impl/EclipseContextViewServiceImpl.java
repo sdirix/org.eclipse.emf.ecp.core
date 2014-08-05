@@ -46,6 +46,9 @@ public class EclipseContextViewServiceImpl implements EclipseContextViewService 
 	 */
 	@Override
 	public void dispose() {
+		for (final IEclipseContext context : map.values()) {
+			context.dispose();
+		}
 		map.clear();
 	}
 
@@ -72,9 +75,9 @@ public class EclipseContextViewServiceImpl implements EclipseContextViewService 
 	}
 
 	/**
-	 * 
+	 *
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.model.common.di.service.EclipseContextViewService#getContext(org.eclipse.emf.ecp.view.spi.model.VElement)
 	 */
 	@Override

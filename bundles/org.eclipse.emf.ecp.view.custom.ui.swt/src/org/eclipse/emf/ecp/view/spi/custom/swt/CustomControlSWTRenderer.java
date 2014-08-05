@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen - initial API and implementation
  ******************************************************************************/
@@ -30,7 +30,7 @@ import org.osgi.framework.Bundle;
 
 /**
  * The renderer for custom control view models.
- * 
+ *
  * @author Eugen Neufeld
  * @since 1.3
  */
@@ -41,13 +41,30 @@ public class CustomControlSWTRenderer extends AbstractSWTRenderer<VCustomControl
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#preInit()
 	 */
 	@Override
 	protected void preInit() {
 		super.preInit();
 		final VCustomControl customControl = getVElement();
+		swtCustomControl = loadCustomControl(customControl);
+		if (swtCustomControl == null) {
+			// TODO
+			throw new IllegalStateException(String.format("The  %1$s/%2$s cannot be loaded!", //$NON-NLS-1$
+				customControl.getBundleName(), customControl.getClassName()));
+		}
+		swtCustomControl.init(getVElement(), getViewModelContext());
+	}
+
+	/**
+	 * Loads and returns the {@link ECPAbstractCustomControlSWT} that is referenced by the {@link VCustomControl}.
+	 *
+	 * @param customControl the custom control view model
+	 * @return the swt renderer
+	 * @since 1.4
+	 */
+	protected ECPAbstractCustomControlSWT loadCustomControl(VCustomControl customControl) {
 		String bundleName = customControl.getBundleName();
 		String className = customControl.getClassName();
 		if (customControl.getBundleName() != null) {
@@ -59,12 +76,7 @@ public class CustomControlSWTRenderer extends AbstractSWTRenderer<VCustomControl
 			className = ""; //$NON-NLS-1$
 		}
 		swtCustomControl = loadObject(bundleName, className);
-		if (swtCustomControl == null) {
-			// TODO
-			throw new IllegalStateException(String.format("The  %1$s/%2$s cannot be loaded!", //$NON-NLS-1$
-				customControl.getBundleName(), customControl.getClassName()));
-		}
-		swtCustomControl.init(getVElement(), getViewModelContext());
+		return swtCustomControl;
 	}
 
 	private static ECPAbstractCustomControlSWT loadObject(String bundleName, String clazz) {
@@ -93,7 +105,7 @@ public class CustomControlSWTRenderer extends AbstractSWTRenderer<VCustomControl
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#dispose()
 	 */
 	@Override
@@ -104,7 +116,7 @@ public class CustomControlSWTRenderer extends AbstractSWTRenderer<VCustomControl
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#getGridDescription(SWTGridDescription)
 	 */
 	@Override
@@ -117,15 +129,15 @@ public class CustomControlSWTRenderer extends AbstractSWTRenderer<VCustomControl
 	}
 
 	/**
-	 * 
+	 *
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#renderControl(org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell,
 	 *      org.eclipse.swt.widgets.Composite)
 	 */
 	@Override
 	protected Control renderControl(SWTGridCell cell, Composite parent) throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+	NoPropertyDescriptorFoundExeption {
 		return swtCustomControl.renderControl(cell, parent);
 	}
 

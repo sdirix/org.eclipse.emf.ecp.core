@@ -204,9 +204,12 @@
 		
 		<module>../../bundles/org.eclipse.emf.ecp.view.template.tooling</module>
 		
+		<!-- DI -->
 		<module>../../bundles/org.eclipse.emf.ecp.view.model.common.di</module>
 		<module>../../bundles/org.eclipse.emf.ecp.ui.view.swt.di</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.custom.ui.swt.di</module>
 		
+		<!-- Compound Control -->
 		<module>../../bundles/org.eclipse.emf.ecp.view.compoundcontrol.model</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.compoundcontrol.model.edit</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.compoundcontrol.swt</module>
