@@ -144,24 +144,31 @@ public class StackItemViewService implements ViewModelService {
 		final Object currentValue = object.eGet(domainModelEFeature);
 		final Set<VStackLayout> stacks = registry.get(object).get(domainModelEFeature);
 		for (final VStackLayout stack : stacks) {
+			boolean topElementSet = false;
 			for (final VStackItem item : stack.getStackItems()) {
 				if (currentValue == null) {
 					if (currentValue == item.getValue()) {
 						stack.setTopElement(item);
+						topElementSet = true;
 						break;
 					}
 				} else {
 					if (EcorePackage.eINSTANCE.getEEnum().isInstance(domainModelEFeature.getEType())) {
 						if (item.getValue().equals(Enumerator.class.cast(currentValue).getLiteral())) {
 							stack.setTopElement(item);
+							topElementSet = true;
 							break;
 						}
 					}
 					if (currentValue.equals(item.getValue())) {
 						stack.setTopElement(item);
+						topElementSet = true;
 						break;
 					}
 				}
+			}
+			if (!topElementSet) {
+				stack.setTopElement(null);
 			}
 		}
 	}

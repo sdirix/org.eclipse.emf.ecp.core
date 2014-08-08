@@ -74,7 +74,7 @@ public class SWTStackLayoutRenderer extends AbstractSWTRenderer<VStackLayout> {
 	 */
 	@Override
 	protected Control renderControl(SWTGridCell cell, Composite parent) throws NoRendererFoundException,
-	NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption {
 
 		if (cell.getColumn() != 0) {
 			return null;
@@ -93,12 +93,12 @@ public class SWTStackLayoutRenderer extends AbstractSWTRenderer<VStackLayout> {
 				getViewModelContext());
 			if (renderer == null) {
 				Activator
-				.getDefault()
-				.getLog()
-				.log(
-					new Status(IStatus.INFO, Activator.PLUGIN_ID, String.format(
-						Messages.SWTStackLayoutRenderer_NoRendererForItemCompositeFound, item.eClass()
-						.getName())));
+					.getDefault()
+					.getLog()
+					.log(
+						new Status(IStatus.INFO, Activator.PLUGIN_ID, String.format(
+							Messages.SWTStackLayoutRenderer_NoRendererForItemCompositeFound, item.eClass()
+								.getName())));
 				continue;
 			}
 			elementRendererMap.put(item, renderer);
@@ -130,15 +130,17 @@ public class SWTStackLayoutRenderer extends AbstractSWTRenderer<VStackLayout> {
 
 			itemToCompositeMap.put(stackItem, itemComposite);
 		}
+
+		/* Add empty composite if value with no matching item is set */
+		final Composite nullComposite = new Composite(stackComposite, SWT.NONE);
+		itemToCompositeMap.put(null, nullComposite);
+
 		setTopElement();
 		return stackComposite;
 	}
 
 	private void setTopElement() {
 		final VStackItem topElement = getVElement().getTopElement();
-		if (topElement == null) {
-			return;
-		}
 		final Composite composite = itemToCompositeMap.get(topElement);
 		if (composite == null) {
 			return;

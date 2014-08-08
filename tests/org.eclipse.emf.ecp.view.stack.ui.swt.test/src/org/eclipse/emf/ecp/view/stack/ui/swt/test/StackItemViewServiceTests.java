@@ -70,10 +70,10 @@ public class StackItemViewServiceTests {
 	}
 
 	private StackItemViewService viewService() {
-		final StackItemViewService unsetService = new StackItemViewService();
+		final StackItemViewService stackService = new StackItemViewService();
 		context = ViewModelContextFactory.INSTANCE.createViewModelContext(view, domain);
-		unsetService.instantiate(context);
-		return unsetService;
+		stackService.instantiate(context);
+		return stackService;
 	}
 
 	@Test
@@ -166,6 +166,16 @@ public class StackItemViewServiceTests {
 		viewService();
 		domain.setName(NAME);
 		assertEquals(femaleItem, stackLayout.getTopElement());
+	}
+
+	@Test
+	public void enumSetToValueWithoutItem() {
+		stackLayout.getStackItems().remove(maleItem);
+		domainToFemale();
+		viewService();
+		assertEquals(femaleItem, stackLayout.getTopElement());
+		domainToMale();
+		assertNull(stackLayout.getTopElement());
 	}
 
 }

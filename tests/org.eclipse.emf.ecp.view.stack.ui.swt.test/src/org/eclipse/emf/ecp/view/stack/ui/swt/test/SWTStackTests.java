@@ -11,6 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.stack.ui.swt.test;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
@@ -131,5 +132,16 @@ public class SWTStackTests {
 		assertContainsCombo(getTop(render));
 		stackLayout.setTopElement(femaleItem);
 		assertContainsText(getTop(render));
+	}
+
+	@Test
+	public void testSetTopToNull() throws ECPRendererException {
+		stackLayout.getStackItems().remove(maleItem);
+		stackLayout.setTopElement(femaleItem);
+		final Composite render = render();
+		assertContainsText(getTop(render));
+		stackLayout.setTopElement(null);
+		final Composite top = getTop(render);
+		assertEquals(0, top.getChildren().length);
 	}
 }
