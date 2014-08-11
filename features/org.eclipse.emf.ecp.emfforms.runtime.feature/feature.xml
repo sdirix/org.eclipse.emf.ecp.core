@@ -75,4 +75,8 @@
          id="org.eclipse.emf.ecp.view.stack.feature"
          version="0.0.0"/>
 
+   <includes
+         id="org.eclipse.emf.ecp.view.compoundcontrol.feature"
+         version="0.0.0"/>
+
 </feature>
