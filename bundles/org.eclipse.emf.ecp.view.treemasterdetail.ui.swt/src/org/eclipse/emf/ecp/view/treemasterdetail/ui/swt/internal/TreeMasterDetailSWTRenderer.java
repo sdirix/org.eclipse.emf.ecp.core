@@ -761,7 +761,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 	}
 
 	protected void relayoutDetail() {
-		container.layout();
+		rightPanelContainerComposite.layout();
 		final Point point = container.computeSize(SWT.DEFAULT, SWT.DEFAULT);
 		rightPanel.setMinSize(point);
 	}
