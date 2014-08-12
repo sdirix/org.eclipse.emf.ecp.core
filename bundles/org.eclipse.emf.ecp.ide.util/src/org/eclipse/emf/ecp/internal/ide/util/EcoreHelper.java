@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Alexandra Buzila - initial API and implementation
  ******************************************************************************/
@@ -30,11 +30,14 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 
 /**
  * Helper methods for dealing with ecores.
- * 
+ *
  * @author Alexandra Buzila
- * 
+ *
  */
 public final class EcoreHelper {
+
+	private static final String ECORE_PLUGIN_URI = "platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore"; //$NON-NLS-1$
+	private static final String ECORE_RESOURCE_URI = "platform:/resource/org.eclipse.emf.ecore/model/Ecore.ecore"; //$NON-NLS-1$
 
 	/** Contains mapping between an ecore path and the ns-uris of all the EPackages that ecore registered. */
 	private static final Map<String, Set<String>> registeredEPackages = new HashMap<String, Set<String>>();
@@ -47,10 +50,10 @@ public final class EcoreHelper {
 	/**
 	 * Put an ecore's {@link EPackage} into the {@link org.eclipse.emf.ecore.EPackage.Registry}. Subsequently, register
 	 * all referenced ecores.
-	 * 
+	 *
 	 * @param ecorePath - path to the ecore
 	 * @throws IOException if resource cannot be loaded
-	 * 
+	 *
 	 * */
 
 	public static void registerEcore(String ecorePath) throws IOException {
@@ -65,6 +68,7 @@ public final class EcoreHelper {
 		registeredEcores.put(ecorePath, ++previousValue);
 
 		final ResourceSet physicalResourceSet = new ResourceSetImpl();
+		initResourceSet(physicalResourceSet);
 		// put the package in the registry
 		final URI uri = URI.createPlatformResourceURI(ecorePath, false);
 		final Resource r = physicalResourceSet.createResource(uri);
@@ -114,9 +118,9 @@ public final class EcoreHelper {
 	/**
 	 * Remove the ecore's {@link EPackage} from the {@link org.eclipse.emf.ecore.EPackage.Registry}.
 	 * It also removes the packages of referenced ecores.
-	 * 
+	 *
 	 * @param ecorePath - the path of the ecore to be removed.
-	 * 
+	 *
 	 * */
 	public static void unregisterEcore(String ecorePath) {
 		if (ecorePath == null || registeredEPackages.get(ecorePath) == null) {
@@ -134,9 +138,9 @@ public final class EcoreHelper {
 	/**
 	 * Remove the ecore's {@link EPackage} from the {@link org.eclipse.emf.ecore.EPackage.Registry}.
 	 * It also removes the packages of referenced ecores.
-	 * 
+	 *
 	 * @param ePackage - the ePackage to be removed.
-	 * 
+	 *
 	 * */
 	private static void unregisterEcore(String ecorePath, List<String> nsURIs) {
 		if (nsURIs == null || ecorePath == null) {
@@ -178,5 +182,20 @@ public final class EcoreHelper {
 		packages.addAll(EPackage.Registry.INSTANCE.keySet());
 		packages.removeAll(runtimeRegisteredPackages);
 		return packages.toArray();
+	}
+
+	/*
+	 * If the Ecore.ecore is referenced with a resource uri in an ecore-file, the ecore editor is able to load this file
+	 * even if the Ecore.ecore is not available in the workspace. Therefore those ecores should be regarded as valid.
+	 * Hence we need to remap the resource uri to a plugin uri if the Ecore.ecore is not available in the workspace
+	 * in order to resolve the proxy.
+	 */
+	private static void initResourceSet(ResourceSet resourceSet) {
+		if (!resourceSet.getURIConverter().exists(
+			URI.createURI(ECORE_RESOURCE_URI), null)) {
+
+			resourceSet.getURIConverter().getURIMap()
+				.put(URI.createURI(ECORE_RESOURCE_URI), URI.createURI(ECORE_PLUGIN_URI));
+		}
 	}
 }
