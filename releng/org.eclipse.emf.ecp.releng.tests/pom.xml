@@ -43,6 +43,7 @@
 		<module>../../tests/org.eclipse.emf.ecp.view.unset.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.table.ui.swt.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.validation.test</module>
+		<module>../../tests/org.eclipse.emf.ecp.view.validation.bean.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.vertical.ui.swt.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.ui.editor.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.dynamictree.model.test</module>
