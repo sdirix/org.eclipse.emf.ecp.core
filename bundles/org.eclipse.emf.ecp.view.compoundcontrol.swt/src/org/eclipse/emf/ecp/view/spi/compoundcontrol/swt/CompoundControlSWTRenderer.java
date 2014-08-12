@@ -60,10 +60,13 @@ public class CompoundControlSWTRenderer extends AbstractSWTRenderer<VCompoundCon
 	 *
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#getGridDescription(SWTGridDescription)
 	 */
+	@SuppressWarnings("restriction")
 	@Override
 	public SWTGridDescription getGridDescription(SWTGridDescription gridDescription) {
 		if (rendererGridDescription == null) {
 			rendererGridDescription = GridDescriptionFactory.INSTANCE.createSimpleGrid(1, 1, this);
+			final SWTGridCell swtGridCell = rendererGridDescription.getGrid().get(0);
+			swtGridCell.setVerticalGrab(false);
 		}
 		return rendererGridDescription;
 	}
