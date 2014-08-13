@@ -16,20 +16,20 @@ import org.eclipse.emf.ecp.ui.view.swt.di.util.SWTContextUtil;
 import org.eclipse.emf.ecp.view.model.common.di.renderer.DIRendererUtil;
 import org.eclipse.emf.ecp.view.model.common.di.renderer.POJORendererFactory;
 import org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer;
-import org.eclipse.emf.ecp.view.spi.model.VContainer;
+import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.swt.widgets.Composite;
 
 /**
- * DI Renderer for {@link VContainer}.
+ * DI Renderer for Container.
  *
  * @author jfaltermeier
  *
  */
 @SuppressWarnings("restriction")
-public class DIContainerSWTRenderer extends ContainerSWTRenderer<VContainer> {
+public class DIContainerSWTRenderer extends ContainerSWTRenderer<VElement> {
 
 	/**
-	 * Named string for the children of {@link VContainer}.
+	 * Named string for the children of a container.
 	 */
 	public static final String CHILDREN = "containerChildren"; //$NON-NLS-1$
 	private Object pojo;
@@ -45,13 +45,19 @@ public class DIContainerSWTRenderer extends ContainerSWTRenderer<VContainer> {
 		SWTContextUtil.setAbstractSWTRendererObjects(childContext, getVElement(), getViewModelContext(),
 			getSWTRendererFactory(), parent);
 		childContext.set(CHILDREN, getChildren());
-		childContext.set(VContainer.class, getVElement());
+		putInContext(childContext, getVElement());
 		return doGetComposite();
+	}
+
+	private void putInContext(IEclipseContext context, VElement element) {
+		for (final Class<?> clazz : element.getClass().getInterfaces()) {
+			context.set(clazz.getName(), element);
+		}
 	}
 
 	/**
 	 * Invokes the get composite call on the pojo.
-	 * 
+	 *
 	 * @return the composite
 	 */
 	protected Composite doGetComposite() {
