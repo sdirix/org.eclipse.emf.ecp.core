@@ -57,7 +57,8 @@ public class SelectModelElementWizard extends ECPWizard<SelectionComposite<? ext
 					final IStructuredSelection sel = (IStructuredSelection) getCompositeProvider().getViewer()
 						.getSelection();
 
-					if (sel != null && classtoSelect.isAssignableFrom(sel.getFirstElement().getClass())) {
+					if (sel != null && !sel.isEmpty()
+						&& classtoSelect.isAssignableFrom(sel.getFirstElement().getClass())) {
 						setPageComplete(true);
 					} else {
 						setPageComplete(false);

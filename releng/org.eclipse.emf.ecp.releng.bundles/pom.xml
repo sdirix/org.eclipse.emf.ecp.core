@@ -65,6 +65,8 @@
 		<module>../../bundles/org.eclipse.emf.ecp.view.swt.layout</module>
 		
 		<module>../../bundles/org.eclipse.emf.ecp.view.util.swt</module>
+		
+		<module>../../bundles/org.eclipse.emf.ecp.view.control.multireference</module>
 
 		<!-- Diagnostician/Validation View -->
 		<module>../../bundles/org.eclipse.emf.ecp.diagnostician</module>
