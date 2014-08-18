@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- *
+ * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
  * Alexandra Buzila - initial API and implementation
  ******************************************************************************/
@@ -46,7 +46,7 @@ import org.eclipse.swt.widgets.Control;
 
 /**
  * @author Alexandra Buzila
- *
+ * 
  */
 @SuppressWarnings("restriction")
 public class CreateDomainModelReferenceWizard extends SelectModelElementWizard {
@@ -60,7 +60,7 @@ public class CreateDomainModelReferenceWizard extends SelectModelElementWizard {
 
 	/**
 	 * A wizard used for creating a new DomainModelReference.
-	 *
+	 * 
 	 * @param setting - the setting to use
 	 * @param editingDomain - the setting's editing domain
 	 * @param eclass - the root EClass of the VView the setting belongs to
@@ -130,7 +130,7 @@ public class CreateDomainModelReferenceWizard extends SelectModelElementWizard {
 
 	/**
 	 * {@inheritDoc}
-	 *
+	 * 
 	 * @see org.eclipse.jface.wizard.Wizard#getNextPage(org.eclipse.jface.wizard.IWizardPage)
 	 */
 	@Override
@@ -149,12 +149,14 @@ public class CreateDomainModelReferenceWizard extends SelectModelElementWizard {
 
 	/**
 	 * {@inheritDoc}
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.internal.wizards.SelectModelElementWizard#performFinish()
 	 */
 	@Override
 	public boolean performFinish() {
-
+		if (!canFinish()) {
+			return false;
+		}
 		Command command = null;
 		if (setting.getEStructuralFeature().isMany()) {
 			command = AddCommand.create(editingDomain, setting.getEObject(),
@@ -170,7 +172,7 @@ public class CreateDomainModelReferenceWizard extends SelectModelElementWizard {
 
 	/**
 	 * {@inheritDoc}
-	 *
+	 * 
 	 * @see org.eclipse.jface.wizard.Wizard#canFinish()
 	 */
 	@Override
@@ -185,6 +187,9 @@ public class CreateDomainModelReferenceWizard extends SelectModelElementWizard {
 			return false;
 		}
 		if (customizeDMRPage.getvControl().getDomainModelReference().getEStructuralFeatureIterator() == null) {
+			return false;
+		}
+		if (!customizeDMRPage.getvControl().getDomainModelReference().getEStructuralFeatureIterator().hasNext()) {
 			return false;
 		}
 		return super.canFinish();
@@ -249,7 +254,7 @@ public class CreateDomainModelReferenceWizard extends SelectModelElementWizard {
 
 		/**
 		 * {@inheritDoc}
-		 *
+		 * 
 		 * @see org.eclipse.jface.dialogs.IDialogPage#createControl(org.eclipse.swt.widgets.Composite)
 		 */
 		@Override
