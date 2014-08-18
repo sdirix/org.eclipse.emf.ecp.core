@@ -13,6 +13,7 @@ package org.eclipse.emf.ecp.view.internal.control.multireference;
 
 import java.util.Iterator;
 
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.model.common.ECPRendererTester;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
@@ -51,6 +52,9 @@ public class MultiReferenceRendererTester implements ECPRendererTester {
 			return NOT_APPLICABLE;
 		}
 		if (!feature.isMany()) {
+			return NOT_APPLICABLE;
+		}
+		if (EAttribute.class.isInstance(feature)) {
 			return NOT_APPLICABLE;
 		}
 		return 5;
