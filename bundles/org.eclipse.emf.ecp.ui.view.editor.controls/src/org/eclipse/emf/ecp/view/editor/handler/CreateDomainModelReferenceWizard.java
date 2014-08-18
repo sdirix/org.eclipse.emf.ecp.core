@@ -13,6 +13,9 @@ package org.eclipse.emf.ecp.view.editor.handler;
 
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
@@ -201,6 +204,7 @@ public class CreateDomainModelReferenceWizard extends SelectModelElementWizard {
 		private EClass dmrEClass;
 		private Composite composite;
 		private final VControl vControl;
+		private final Adapter adapter;
 
 		/**
 		 * @param pageName
@@ -212,6 +216,31 @@ public class CreateDomainModelReferenceWizard extends SelectModelElementWizard {
 			setTitle(pageTitle);
 			setDescription(pageDescription);
 			this.vControl = vControl;
+			adapter = new AdapterImpl() {
+
+				/**
+				 * {@inheritDoc}
+				 * 
+				 * @see org.eclipse.emf.common.notify.impl.AdapterImpl#notifyChanged(org.eclipse.emf.common.notify.Notification)
+				 */
+				@Override
+				public void notifyChanged(Notification msg) {
+					super.notifyChanged(msg);
+					setPageComplete(isValueSet());
+				}
+
+			};
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @see org.eclipse.jface.dialogs.DialogPage#dispose()
+		 */
+		@Override
+		public void dispose() {
+			vControl.eAdapters().remove(adapter);
+			super.dispose();
 		}
 
 		public void setEClass(EClass dmrEClass) {
@@ -229,6 +258,7 @@ public class CreateDomainModelReferenceWizard extends SelectModelElementWizard {
 
 			final VDomainModelReference dmr = (VDomainModelReference) EcoreUtil.create(dmrEClass);
 			getvControl().setDomainModelReference(dmr);
+			getvControl().getDomainModelReference().eAdapters().add(adapter);
 			final VView view = ViewProviderHelper.getView(dmr);
 			final ViewModelContext viewContext = ViewModelContextFactory.INSTANCE
 				.createViewModelContext(view, dmr, new DummyReferenceService());
@@ -275,6 +305,19 @@ public class CreateDomainModelReferenceWizard extends SelectModelElementWizard {
 		 */
 		public VControl getvControl() {
 			return vControl;
+		}
+
+		private boolean isValueSet() {
+			if (getvControl() == null) {
+				return false;
+			}
+			if (getvControl().getDomainModelReference() == null) {
+				return false;
+			}
+			if (getvControl().getDomainModelReference().getEStructuralFeatureIterator() == null) {
+				return false;
+			}
+			return getvControl().getDomainModelReference().getEStructuralFeatureIterator().hasNext();
 		}
 
 	}
