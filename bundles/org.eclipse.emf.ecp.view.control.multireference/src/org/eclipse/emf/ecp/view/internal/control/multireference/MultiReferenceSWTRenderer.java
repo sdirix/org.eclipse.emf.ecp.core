@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- *
+ * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
@@ -63,6 +63,12 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.TableColumn;
 
+/**
+ * Renderer for MultiReferenceControl.
+ * 
+ * @author Eugen Neufeld
+ * 
+ */
 @SuppressWarnings("restriction")
 public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VControl> {
 
@@ -73,7 +79,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 
 	/**
 	 * {@inheritDoc}
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#getGridDescription(org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription)
 	 */
 	@Override
@@ -83,13 +89,13 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 
 	/**
 	 * {@inheritDoc}
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#renderControl(org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell,
 	 *      org.eclipse.emf.ecp.view.spi.swt.Composite)
 	 */
 	@Override
 	protected Control renderControl(SWTGridCell cell, Composite parent) throws NoRendererFoundException,
-	NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption {
 		if (cell.getRow() != 0 || cell.getColumn() != 0 || cell.getRenderer() != this) {
 			throw new IllegalArgumentException("Wrong parameter passed!"); //$NON-NLS-1$
 		}
@@ -111,8 +117,8 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 
 		final Composite controlComposite = new Composite(composite, SWT.NONE);
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL)
-		.hint(1, 300)
-		.applyTo(controlComposite);
+			.hint(1, 300)
+			.applyTo(controlComposite);
 		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(controlComposite);
 		createContent(controlComposite, mainSetting);
 
@@ -128,7 +134,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 
 	/**
 	 * {@inheritDoc}
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.core.swt.AbstractControlSWTRenderer#dispose()
 	 */
 	@Override
@@ -143,7 +149,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 		final Composite titleComposite = new Composite(composite, SWT.NONE);
 		titleComposite.setBackgroundMode(SWT.INHERIT_FORCE);
 		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING)
-		.applyTo(titleComposite);
+			.applyTo(titleComposite);
 		GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(false).applyTo(titleComposite);
 
 		final Label filler = new Label(titleComposite, SWT.NONE);
@@ -162,11 +168,12 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 		final Button btnAddExisting = new Button(buttonComposite, SWT.PUSH);
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(btnAddExisting);
 		btnAddExisting.setImage(Activator.getImage("icons/link.png")); //$NON-NLS-1$
+		btnAddExisting.setToolTipText(Messages.MultiReferenceSWTRenderer_addExistingTooltip);
 		btnAddExisting.addSelectionListener(new SelectionAdapter() {
 
 			/**
 			 * {@inheritDoc}
-			 *
+			 * 
 			 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
 			 */
 			@Override
@@ -180,11 +187,12 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 		final Button btnAddNew = new Button(buttonComposite, SWT.PUSH);
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(btnAddNew);
 		btnAddNew.setImage(Activator.getImage("icons/link_add.png")); //$NON-NLS-1$
+		btnAddNew.setToolTipText(Messages.MultiReferenceSWTRenderer_addNewTooltip);
 		btnAddNew.addSelectionListener(new SelectionAdapter() {
 
 			/**
 			 * {@inheritDoc}
-			 *
+			 * 
 			 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
 			 */
 			@Override
@@ -202,7 +210,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 
 			/**
 			 * {@inheritDoc}
-			 *
+			 * 
 			 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
 			 */
 			@Override
@@ -300,23 +308,54 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 		return selectionAdapter;
 	}
 
+	/**
+	 * Method for handling a double click.
+	 * 
+	 * @param selectedObject the selected {@link EObject}
+	 */
 	protected void handleDoubleClick(EObject selectedObject) {
 		final ReferenceService referenceService = getViewModelContext().getService(ReferenceService.class);
 		referenceService.openInNewContext(selectedObject);
 	}
 
+	/**
+	 * Method for adding an existing element.
+	 * 
+	 * @param tableViewer the {@link TableViewer}
+	 * @param setting the {@link Setting} to add to
+	 */
 	protected void handleAddExisting(TableViewer tableViewer, Setting setting) {
 		final ReferenceService referenceService = getViewModelContext().getService(ReferenceService.class);
 		final EObject eObject = referenceService.getExistingElementFor((EReference) setting.getEStructuralFeature());
+		if (eObject == null) {
+			return;
+		}
 		referenceService.addModelElement(eObject, (EReference) setting.getEStructuralFeature());
+		referenceService.openInNewContext(eObject);
 	}
 
+	/**
+	 * Method for adding a new element.
+	 * 
+	 * @param tableViewer the {@link TableViewer}
+	 * @param setting the {@link Setting} to add to
+	 */
 	protected void handleAddNew(TableViewer tableViewer, Setting setting) {
 		final ReferenceService referenceService = getViewModelContext().getService(ReferenceService.class);
 		final EObject eObject = referenceService.getNewElementFor((EReference) setting.getEStructuralFeature());
+		if (eObject == null) {
+			return;
+		}
 		referenceService.addModelElement(eObject, (EReference) setting.getEStructuralFeature());
+		referenceService.openInNewContext(eObject);
 	}
 
+	/**
+	 * Method for deleting elements.
+	 * 
+	 * @param tableViewer the {@link TableViewer}
+	 * @param mainSetting the {@link Setting} to delete from
+	 */
 	protected void handleDelete(TableViewer tableViewer, Setting mainSetting) {
 		final List<?> deletionList = IStructuredSelection.class.cast(tableViewer.getSelection()).toList();
 
@@ -329,9 +368,9 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	/**
 	 * The {@link ViewerComparator} for this table which allows 3 states for sort order:
 	 * none, up and down.
-	 *
+	 * 
 	 * @author Eugen Neufeld
-	 *
+	 * 
 	 */
 	private class ECPTableViewerComparator extends ViewerComparator {
 		private int propertyIndex;
