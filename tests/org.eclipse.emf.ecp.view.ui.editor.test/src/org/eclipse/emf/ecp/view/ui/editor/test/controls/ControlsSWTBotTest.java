@@ -84,24 +84,24 @@ public class ControlsSWTBotTest extends ECPCommonSWTBotTest {
 	public static Collection<Object[]> data() {
 		final List<Object[]> data = new ArrayList<Object[]>();
 
-		// data.addAll(createConfig(25, new Boolean[] { true, false, false, false, false, false, false, false, false,
-		// false, false }));
-		// data.addAll(createConfig(25, new Boolean[] { false, true, false, false, false, false, false, false, false,
-		// false, false }));
-		// data.addAll(createConfig(25, new Boolean[] { false, false, true, false, false, false, false, false, false,
-		// false, false }));
-		// data.addAll(createConfig(25, new Boolean[] { false, false, false, true, false, false, false, false, false,
-		// false, false }));
-		// data.addAll(createConfig(25, new Boolean[] { false, false, false, false, true, false, false, false, false,
-		// false, false }));
-		// data.addAll(createConfig(25, new Boolean[] { false, false, false, false, false, true, false, false, false,
-		// false, false }));
-		// data.addAll(createConfig(25, new Boolean[] { false, false, false, false, false, false, true, false, false,
-		// false, false }));
-		// data.addAll(createConfig(25, new Boolean[] { false, false, false, false, false, false, false, true, false,
-		// false, false }));
-		// data.addAll(createConfig(25, new Boolean[] { false, false, false, false, false, false, false, false, true,
-		// false, false }));
+		data.addAll(createConfig(25, new Boolean[] { true, false, false, false, false, false, false, false, false,
+			false, false }));
+		data.addAll(createConfig(25, new Boolean[] { false, true, false, false, false, false, false, false, false,
+			false, false }));
+		data.addAll(createConfig(25, new Boolean[] { false, false, true, false, false, false, false, false, false,
+			false, false }));
+		data.addAll(createConfig(25, new Boolean[] { false, false, false, true, false, false, false, false, false,
+			false, false }));
+		data.addAll(createConfig(25, new Boolean[] { false, false, false, false, true, false, false, false, false,
+			false, false }));
+		data.addAll(createConfig(25, new Boolean[] { false, false, false, false, false, true, false, false, false,
+			false, false }));
+		data.addAll(createConfig(25, new Boolean[] { false, false, false, false, false, false, true, false, false,
+			false, false }));
+		data.addAll(createConfig(25, new Boolean[] { false, false, false, false, false, false, false, true, false,
+			false, false }));
+		data.addAll(createConfig(25, new Boolean[] { false, false, false, false, false, false, false, false, true,
+			false, false }));
 		data.addAll(createConfig(25, new Boolean[] { false, false, false, false, false, false, false, false, false,
 			true, false }));
 		data.addAll(createConfig(25, new Boolean[] { false, false, false, false, false, false, false, false, false,
