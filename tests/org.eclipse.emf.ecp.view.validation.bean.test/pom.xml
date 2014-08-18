@@ -17,6 +17,7 @@
 	<build>
 		<sourceDirectory>src</sourceDirectory>
 		<plugins>
+		<!-- 
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-surefire-plugin</artifactId>
@@ -46,6 +47,16 @@
 					</dependencies>
 				</configuration>
 			</plugin>
+			-->
+			<plugin>
+		        <groupId>org.apache.maven.plugins</groupId>
+		        <artifactId>maven-surefire-plugin</artifactId>
+		        <configuration>
+		         	<includes>
+            			<include>**/AllTests.java</include>
+          			</includes>
+		        </configuration>
+		      </plugin>
 		</plugins>
 	</build>
 </project>

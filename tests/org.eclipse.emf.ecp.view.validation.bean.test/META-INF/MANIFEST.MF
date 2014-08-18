@@ -3,7 +3,10 @@ Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.emf.ecp.view.validation.bean.test;singleton:=true
 Bundle-Version: 1.4.0.qualifier
-Bundle-ClassPath: .
+Bundle-ClassPath: .,
+ lib/commons-beanutils-1.9.2.jar,
+ lib/commons-lang3-3.3.2.jar,
+ lib/org.apache.bval.bundle-0.5.jar
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Fragment-Host: org.eclipse.emf.ecp.view.validation.bean;bundle-version="[1.4.0,2.0.0)"
