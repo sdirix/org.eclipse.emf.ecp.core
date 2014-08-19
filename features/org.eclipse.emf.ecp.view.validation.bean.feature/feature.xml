@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="org.eclipse.emf.ecp.view.validation.feature"
-      label="EMF Forms Validation Service"
+      id="org.eclipse.emf.ecp.view.validation.bean.feature"
+      label="Bean Validation Feature"
       version="1.4.0.qualifier"
       provider-name="Eclipse Modeling Project"
-      plugin="org.eclipse.emf.ecp.view.validation"
+      plugin="org.eclipse.emf.ecp.view.validation.bean"
       image="eclipse_update_120.jpg"
       license-feature="org.eclipse.emf.ecp.license.feature"
       license-feature-version="1.4.0.qualifier">
@@ -22,7 +22,7 @@
    </license>
 
    <plugin
-         id="org.eclipse.emf.ecp.view.validation"
+         id="org.eclipse.emf.ecp.view.validation.bean"
          download-size="0"
          install-size="0"
          version="0.0.0"

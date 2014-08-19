@@ -36,6 +36,7 @@
 		<module>../../features/org.eclipse.emf.ecp.view.group.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.view.rule.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.view.validation.feature</module>
+		<module>../../features/org.eclipse.emf.ecp.view.validation.bean.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.view.unset.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.view.vertical.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.view.horizontal.feature</module>
