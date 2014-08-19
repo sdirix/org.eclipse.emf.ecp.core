@@ -1,13 +1,14 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
+ * Johannes Faltermeier - refactorings
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.table.swt;
 
@@ -66,7 +67,6 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.databinding.viewers.ObservableMapCellLabelProvider;
-import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IDialogLabelKeys;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -107,7 +107,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.osgi.framework.InvalidSyntaxException;
@@ -115,11 +114,10 @@ import org.osgi.framework.ServiceReference;
 
 /**
  * SWT Renderer for Table Control.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  */
-@SuppressWarnings("restriction")
 public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableControl> {
 	private SWTGridDescription rendererGridDescription;
 	private static final String FIXED_COLUMNS = "org.eclipse.rap.rwt.fixedColumns"; //$NON-NLS-1$
@@ -132,11 +130,10 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	private Label validationIcon;
 	private Button addButton;
 	private Button removeButton;
-	private Button detailEditButton;
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#getGridDescription(SWTGridDescription)
 	 */
 	@Override
@@ -149,13 +146,13 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#renderControl(int, org.eclipse.swt.widgets.Composite,
 	 *      org.eclipse.emf.ecp.view.spi.model.VElement, org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
 	@Override
 	protected Control renderControl(SWTGridCell gridCell, final Composite parent) throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+	NoPropertyDescriptorFoundExeption {
 		final Iterator<Setting> settings = getVElement().getDomainModelReference().getIterator();
 		if (!settings.hasNext()) {
 			return null;
@@ -172,7 +169,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		final Composite titleComposite = new Composite(composite, SWT.NONE);
 		titleComposite.setBackground(parent.getBackground());
 		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING)
-			.applyTo(titleComposite);
+		.applyTo(titleComposite);
 		GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(false).applyTo(titleComposite);
 
 		// TODO discuss
@@ -200,27 +197,18 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		final Composite buttonComposite = new Composite(titleComposite, SWT.NONE);
 		buttonComposite.setBackground(titleComposite.getBackground());
 		GridDataFactory.fillDefaults().align(SWT.END, SWT.BEGINNING).grab(true, false).applyTo(buttonComposite);
-		int numButtons = 2;
-		if (getVElement().isEnableDetailEditingDialog()) {
-			numButtons++;
-			createDetailEditButton(buttonComposite);
-		}
+		int numButtons = addButtonsToButtonBar(buttonComposite);
 		if (!getVElement().isAddRemoveDisabled()) {
 			// addButtons
 			addButton = createAddRowButton(clazz, buttonComposite, mainSetting);
 			removeButton = createRemoveRowButton(clazz, buttonComposite, mainSetting);
+			numButtons = numButtons + 2;
 		}
-		else {
-			numButtons -= 2;
-		}
+
 		GridLayoutFactory.fillDefaults().numColumns(numButtons).equalWidth(false).applyTo(buttonComposite);
-		final Composite controlComposite = new Composite(composite, SWT.NONE);
-		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL)
-			.hint(1, 200)
-			.applyTo(controlComposite);
-		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(controlComposite);
-		tableViewer = createTableViewer(controlComposite, clazz,
-			mainSetting);
+		final Composite controlComposite = createControlComposite(composite);
+		setTableViewer(createTableViewer(controlComposite, clazz,
+			mainSetting));
 
 		if (addButton != null && removeButton != null) {
 			final Button finalAddButton = addButton;
@@ -274,54 +262,58 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		return composite;
 	}
 
-	private void createDetailEditButton(final Composite buttonComposite) {
-		detailEditButton = new Button(buttonComposite, SWT.PUSH);
-		// detailEditButton.setText("Edit in Detail");
-		detailEditButton.setImage(Activator.getImage("icons/detailEdit.png")); //$NON-NLS-1$
-		detailEditButton.setEnabled(false);
-		detailEditButton.addSelectionListener(new SelectionAdapter() {
-
-			/**
-			 * {@inheritDoc}
-			 * 
-			 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
-			 */
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				super.widgetSelected(e);
-				if (tableViewer.getSelection().isEmpty()) {
-					final MessageDialog dialog = new MessageDialog(buttonComposite.getShell(),
-						"No Table Selection", null, //$NON-NLS-1$
-						"You must select one element in order to edit it.", MessageDialog.WARNING, new String[] { //$NON-NLS-1$
-						JFaceResources.getString(IDialogLabelKeys.OK_LABEL_KEY) }, 0);
-
-					new ECPDialogExecutor(dialog) {
-
-						@Override
-						public void handleResult(int codeResult) {
-
-						}
-					}.execute();
-				} else {
-					openDetailEditDialog(buttonComposite.getShell());
-				}
-			}
-
-		});
+	/**
+	 * Allows to add additional buttons to the button bar of the table control.
+	 * <p>
+	 * The default implementation does not add additional buttons.
+	 * </p>
+	 *
+	 * @param buttonComposite the composite where the buttons are added
+	 * @return the total number of buttons added
+	 */
+	protected int addButtonsToButtonBar(Composite buttonComposite) {
+		return 0;
 	}
 
-	private void openDetailEditDialog(Shell shell) {
-		final Dialog dialog = new DetailDialog(shell, (EObject) IStructuredSelection.class.cast(
-			tableViewer.getSelection()).getFirstElement(), getVElement());
+	/**
+	 * Creates and returns the composite which will be the parent for the table viewer.
+	 *
+	 * @param composite the parent composite including the title/button bar
+	 * @return the parent for the table viewer
+	 */
+	protected Composite createControlComposite(Composite composite) {
+		final Composite controlComposite = new Composite(composite, SWT.NONE);
+		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).hint(1, getTableHeightHint())
+			.applyTo(controlComposite);
+		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(controlComposite);
+		return controlComposite;
+	}
 
-		new ECPDialogExecutor(dialog) {
+	/**
+	 * Returns the prefereed height for the table. This will be passed to the layoutdata.
+	 *
+	 * @return the height in px
+	 */
+	protected int getTableHeightHint() {
+		return 200;
+	}
 
-			@Override
-			public void handleResult(int codeResult) {
+	/**
+	 * Returns the table viewer.
+	 *
+	 * @return the viewer
+	 */
+	protected TableViewer getTableViewer() {
+		return tableViewer;
+	}
 
-			}
-		}.execute();
-
+	/**
+	 * Sets the table viewer.
+	 *
+	 * @param tableViewer the viewer
+	 */
+	protected void setTableViewer(TableViewer tableViewer) {
+		this.tableViewer = tableViewer;
 	}
 
 	private TableViewer createTableViewer(Composite composite, EClass clazz,
@@ -435,28 +427,34 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		}
 
 		tableViewer.addSelectionChangedListener(new ISelectionChangedListener() {
-
 			@Override
 			public void selectionChanged(SelectionChangedEvent event) {
-				if (event.getSelection().isEmpty()) {
-					if (detailEditButton != null) {
-						detailEditButton.setEnabled(false);
-					}
-					if (removeButton != null) {
-						removeButton.setEnabled(false);
-					}
-				}
-				else {
-					if (detailEditButton != null && IStructuredSelection.class.cast(event.getSelection()).size() == 1) {
-						detailEditButton.setEnabled(true);
-					}
-					if (removeButton != null) {
-						removeButton.setEnabled(true);
-					}
-				}
+				viewerSelectionChanged(event);
 			}
 		});
 		return tableViewer;
+	}
+
+	/**
+	 * This method gets called when the selection on the {@link TableViewer} (see {@link #getTableViewer()}) has
+	 * changed.
+	 * <p>
+	 * If you override this method make sure to call super.
+	 * </p>
+	 *
+	 * @param event the {@link SelectionChangedEvent}
+	 */
+	protected void viewerSelectionChanged(SelectionChangedEvent event) {
+		if (event.getSelection().isEmpty()) {
+			if (removeButton != null) {
+				removeButton.setEnabled(false);
+			}
+		}
+		else {
+			if (removeButton != null) {
+				removeButton.setEnabled(true);
+			}
+		}
 	}
 
 	private IObservableMap getObservableMap(VDomainModelReference dmr, EStructuralFeature eStructuralFeature,
@@ -609,7 +607,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 	/**
 	 * This method shows a user confirmation dialog when the user attempts to delete a row in the table.
-	 * 
+	 *
 	 * @param deletionList the list of selected EObjects to delete
 	 * @param mainSetting the containment reference setting
 	 * @param addButton the add button
@@ -647,7 +645,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	/**
 	 * This is called by {@link #deleteRowUserConfirmDialog(List)} after the user confirmed to delete the selected
 	 * elements.
-	 * 
+	 *
 	 * @param deletionList the list of {@link EObject EObjects} to delete
 	 * @param mainSetting the containment reference setting
 	 */
@@ -662,7 +660,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 * This method is called to add a new entry in the domain model and thus to create a new row in the table. The
 	 * element to create is defined by the provided class.
 	 * You can override this method but you have to call super nonetheless.
-	 * 
+	 *
 	 * @param clazz the {@link EClass} defining the EObject to create
 	 * @param mainSetting the containment reference setting
 	 */
@@ -712,7 +710,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#applyEnable()
 	 */
 	@Override
@@ -727,7 +725,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#applyReadOnly()
 	 */
 	@Override
@@ -742,7 +740,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#dispose()
 	 */
 	@Override
@@ -754,9 +752,9 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	/**
 	 * The {@link ViewerComparator} for this table which allows 3 states for sort order:
 	 * none, up and down.
-	 * 
+	 *
 	 * @author Eugen Neufeld
-	 * 
+	 *
 	 */
 	private class ECPTableViewerComparator extends ViewerComparator {
 		private int propertyIndex;
@@ -825,9 +823,9 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	/**
 	 * ECP specficic cell label provider that does also implement {@link IColorProvider} in
 	 * order to correctly.
-	 * 
+	 *
 	 * @author emueller
-	 * 
+	 *
 	 */
 	public class ECPCellLabelProvider extends ObservableMapCellLabelProvider implements IColorProvider {
 
@@ -838,7 +836,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 		/**
 		 * Constructor.
-		 * 
+		 *
 		 * @param feature
 		 *            the {@link EStructuralFeature} the cell is bound to
 		 * @param cellEditor
@@ -859,7 +857,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 		/**
 		 * {@inheritDoc}
-		 * 
+		 *
 		 * @see org.eclipse.jface.viewers.CellLabelProvider#getToolTipText(java.lang.Object)
 		 */
 		@Override
@@ -914,7 +912,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 		/**
 		 * {@inheritDoc}
-		 * 
+		 *
 		 * @see org.eclipse.jface.viewers.IColorProvider#getForeground(java.lang.Object)
 		 */
 		@Override
@@ -924,7 +922,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 		/**
 		 * {@inheritDoc}
-		 * 
+		 *
 		 * @see org.eclipse.jface.viewers.IColorProvider#getBackground(java.lang.Object)
 		 */
 		@Override
@@ -941,9 +939,9 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 	/**
 	 * Implementation of the {@link EditingSupport} for the generic ECP Table.
-	 * 
+	 *
 	 * @author Eugen Neufeld
-	 * 
+	 *
 	 */
 	private class ECPTableEditingSupport extends EditingSupport {
 
@@ -973,7 +971,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 		/**
 		 * Default implementation always returns <code>true</code>.
-		 * 
+		 *
 		 * @see org.eclipse.jface.viewers.EditingSupport#canEdit(java.lang.Object)
 		 */
 		@Override
@@ -1000,7 +998,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		/**
 		 * Default implementation always returns <code>null</code> as this will be
 		 * handled by the Binding.
-		 * 
+		 *
 		 * @see org.eclipse.jface.viewers.EditingSupport#getValue(java.lang.Object)
 		 */
 		@Override
@@ -1012,7 +1010,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		/**
 		 * Default implementation does nothing as this will be handled by the
 		 * Binding.
-		 * 
+		 *
 		 * @see org.eclipse.jface.viewers.EditingSupport#setValue(java.lang.Object, java.lang.Object)
 		 */
 		@Override
@@ -1080,9 +1078,9 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 		/**
 		 * A ColumnViewerEditorActivationListener to reset the cells after focus lost.
-		 * 
+		 *
 		 * @author Eugen Neufeld
-		 * 
+		 *
 		 */
 		private class ColumnViewerEditorActivationListenerHelper extends ColumnViewerEditorActivationListener {
 
@@ -1141,9 +1139,9 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 	/**
 	 * The {@link CellLabelProvider} to update the validation status on the cells.
-	 * 
+	 *
 	 * @author Eugen Neufeld
-	 * 
+	 *
 	 */
 	private class ValidationStatusCellLabelProvider extends CellLabelProvider {
 		private final VTableControl vTableControl;

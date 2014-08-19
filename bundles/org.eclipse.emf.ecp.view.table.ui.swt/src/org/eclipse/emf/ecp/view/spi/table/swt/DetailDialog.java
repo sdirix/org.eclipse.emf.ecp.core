@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen - initial API and implementation
  ******************************************************************************/
@@ -19,13 +19,9 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
-import org.eclipse.emf.ecp.view.internal.table.swt.TableConfigurationHelper;
-import org.eclipse.emf.ecp.view.spi.model.VControl;
-import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.internal.table.swt.DetailViewGenerator;
 import org.eclipse.emf.ecp.view.spi.model.VView;
-import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
-import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
@@ -43,9 +39,9 @@ import org.eclipse.swt.widgets.Shell;
 
 /**
  * A dialog allowing to edit an {@link EObject}.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  */
 public class DetailDialog extends Dialog {
 
@@ -54,10 +50,11 @@ public class DetailDialog extends Dialog {
 	private ComposedAdapterFactory composedAdapterFactory;
 	private AdapterFactoryItemDelegator adapterFactoryItemDelegator;
 	private final VTableControl tableControl;
+	private VView view;
 
 	/**
 	 * Creates a dialog allowing to edit an {@link EObject}.
-	 * 
+	 *
 	 * @param parentShell the {@link Shell} to use in the dialog
 	 * @param selection the {@link EObject} to edit
 	 * @param tableControl the {@link VTableControl}
@@ -84,7 +81,7 @@ public class DetailDialog extends Dialog {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.jface.dialogs.Dialog#getInitialSize()
 	 */
 	@Override
@@ -134,7 +131,7 @@ public class DetailDialog extends Dialog {
 
 			/**
 			 * {@inheritDoc}
-			 * 
+			 *
 			 * @see org.eclipse.emf.common.notify.impl.AdapterImpl#notifyChanged(org.eclipse.emf.common.notify.Notification)
 			 */
 			@Override
@@ -150,20 +147,15 @@ public class DetailDialog extends Dialog {
 	}
 
 	private VView getView() {
-		// return ViewProviderHelper.getView(selection);
-		final VView vView = VViewFactory.eINSTANCE.createView();
-		for (final VDomainModelReference column : VTableDomainModelReference.class.cast(
-			tableControl.getDomainModelReference()).getColumnDomainModelReferences()) {
-			final VControl vControl = VViewFactory.eINSTANCE.createControl();
-			vControl.setDomainModelReference(EcoreUtil.copy(column));
-			boolean controlReadOnly = tableControl.isReadonly() || !tableControl.isEnabled();
-			controlReadOnly = TableConfigurationHelper.isReadOnly(tableControl, column);
-
-			vControl.setReadonly(controlReadOnly);
-
-			vView.getChildren().add(vControl);
+		if (view == null) {
+			VView detailView = tableControl.getDetailView();
+			if (detailView == null) {
+				detailView = DetailViewGenerator.generateView(tableControl);
+			}
+			view = detailView;
 		}
-		return vView;
+		return EcoreUtil.copy(view);
+
 	}
 
 	private void updateTitle() {
@@ -183,7 +175,7 @@ public class DetailDialog extends Dialog {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.jface.dialogs.Dialog#close()
 	 */
 	@Override

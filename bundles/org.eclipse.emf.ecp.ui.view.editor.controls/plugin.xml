@@ -275,6 +275,12 @@
                testClass="org.eclipse.emf.ecp.view.editor.controls.TableColumnsDMRTableControlTester">
          </dynamicTest>
       </renderer>
+      <renderer
+            renderer="org.eclipse.emf.ecp.view.editor.controls.TableDetailViewControlSWTRenderer">
+         <dynamicTest
+               testClass="org.eclipse.emf.ecp.view.editor.controls.TableDetailViewControlSWTRendererTester">
+         </dynamicTest>
+      </renderer>
    </extension>
 
 </plugin>

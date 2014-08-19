@@ -12,10 +12,17 @@
       utilityPackageSuffix="model.util" providerPackageSuffix="model.provider" presentationPackageSuffix="model.presentation"
       testsPackageSuffix="model.tests" extensibleProviderFactory="true" childCreationExtenders="true"
       ecorePackage="table.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="table.ecore#//DetailEditing">
+      <genEnumLiterals ecoreEnumLiteral="table.ecore#//DetailEditing/None"/>
+      <genEnumLiterals ecoreEnumLiteral="table.ecore#//DetailEditing/WithDialog"/>
+      <genEnumLiterals ecoreEnumLiteral="table.ecore#//DetailEditing/WithPanel"/>
+    </genEnums>
     <genClasses ecoreClass="table.ecore#//TableControl">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute table.ecore#//TableControl/addRemoveDisabled"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute table.ecore#//TableControl/enableDetailEditingDialog"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference table.ecore#//TableControl/columnConfigurations"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute table.ecore#//TableControl/detailEditing"/>
+      <genFeatures children="true" createChild="true" ecoreFeature="ecore:EReference table.ecore#//TableControl/detailView"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute table.ecore#//TableControl/enableDetailEditingDialog"/>
     </genClasses>
     <genClasses image="false" ecoreClass="table.ecore#//TableColumnConfiguration"/>
     <genClasses ecoreClass="table.ecore#//TableDomainModelReference">

@@ -6,10 +6,21 @@
          point="org.eclipse.emf.ecp.ui.view.swt.renderers">
       <renderer
             renderer="org.eclipse.emf.ecp.view.spi.table.swt.TableControlSWTRenderer">
-         <staticTest
-               element="org.eclipse.emf.ecp.view.spi.table.model.VTableControl"
-               priority="2">
-         </staticTest>
+         <dynamicTest
+               testClass="org.eclipse.emf.ecp.view.internal.table.swt.TableControlRendererTester">
+         </dynamicTest>
+      </renderer>
+      <renderer
+            renderer="org.eclipse.emf.ecp.view.spi.table.swt.TableControlDetailDialogSWTRenderer">
+         <dynamicTest
+               testClass="org.eclipse.emf.ecp.view.internal.table.swt.TableControlDetailDialogRendererTester">
+         </dynamicTest>
+      </renderer>
+      <renderer
+            renderer="org.eclipse.emf.ecp.view.spi.table.swt.TableControlDetailPanelRenderer">
+         <dynamicTest
+               testClass="org.eclipse.emf.ecp.view.internal.table.swt.TableControlDetailPanelRendererTester">
+         </dynamicTest>
       </renderer>
    </extension>
 

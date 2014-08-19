@@ -1,14 +1,14 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Johannes Faltermeier
- * 
+ *
  *******************************************************************************/
 package org.eclipse.emf.ecp.view.table.ui.swt.test;
 
@@ -19,6 +19,8 @@ import static org.junit.Assert.fail;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EClass;
@@ -44,12 +46,16 @@ import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
+import org.eclipse.emf.ecp.view.spi.table.model.DetailEditing;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableFactory;
 import org.eclipse.emf.ecp.view.spi.table.swt.TableControlSWTRenderer;
 import org.eclipse.emf.ecp.view.test.common.swt.DatabindingClassRunner;
 import org.eclipse.emf.ecp.view.test.common.swt.SWTViewTestHelper;
+import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
@@ -62,6 +68,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+@SuppressWarnings("restriction")
 @RunWith(DatabindingClassRunner.class)
 public class SWTTableTest {
 	private static String log;
@@ -297,6 +304,49 @@ public class SWTTableTest {
 		assertEquals(0, table.getItemCount());
 	}
 
+	@Test
+	public void testPanelTableWithTwoColumns() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		final EClass eClass = EcoreFactory.eINSTANCE.createEClass();
+		((EClass) domainElement).getESuperTypes().add(eClass);
+		final TableControlHandle handle = createTableWithTwoTableColumns();
+		handle.getTableControl().setDetailEditing(DetailEditing.WITH_PANEL);
+		final AbstractSWTRenderer<VElement> tableRenderer = rendererFactory.getRenderer(handle.getTableControl(),
+			new ViewModelContextWithoutServices(handle.getTableControl()));
+		final Control control = tableRenderer.render(new SWTGridCell(0, 0, tableRenderer), shell);
+		if (control == null) {
+			fail("No control was rendered");
+		}
+		final Composite controlComposite = (Composite) ((Composite) control).getChildren()[1];
+		final Composite tableComposite = (Composite) controlComposite.getChildren()[0];
+		final Table table = (Table) tableComposite.getChildren()[0];
+		final ScrolledComposite scrolledComposite = (ScrolledComposite) controlComposite.getChildren()[1];
+		final Composite parentForECPView = (Composite) scrolledComposite.getChildren()[0];
+		assertEquals(2, table.getItemCount());
+		final TableViewer tableViewer = getTableViewerFromRenderer(tableRenderer);
+
+		// no initial selection
+		assertEquals(0, parentForECPView.getChildren().length);
+
+		// single selection
+		tableViewer.setSelection(new StructuredSelection(table.getItem(0).getData()));
+		assertEquals(1, parentForECPView.getChildren().length);
+		final Composite viewComposite = (Composite) parentForECPView.getChildren()[0];
+		assertEquals(6, viewComposite.getChildren().length);
+
+		// multi selection
+		tableViewer.setSelection(new StructuredSelection(new Object[] { table.getItem(0).getData(),
+			table.getItem(1).getData() }));
+		assertEquals(0, parentForECPView.getChildren().length);
+
+		// select again
+		tableViewer.setSelection(new StructuredSelection(table.getItem(0).getData()));
+		assertEquals(1, parentForECPView.getChildren().length);
+
+		// no selection
+		tableViewer.setSelection(new StructuredSelection());
+		assertEquals(0, parentForECPView.getChildren().length);
+	}
+
 	private Control getTable(Control render) {
 		Composite composite = (Composite) render;
 		composite = (Composite) composite.getChildren()[1];
@@ -347,11 +397,30 @@ public class SWTTableTest {
 		return tc;
 	}
 
+	private TableViewer getTableViewerFromRenderer(AbstractSWTRenderer<VElement> renderer) {
+		try {
+			final Method method = TableControlSWTRenderer.class.getDeclaredMethod("getTableViewer");
+			method.setAccessible(true);
+			return (TableViewer) method.invoke(renderer);
+		} catch (final NoSuchMethodException ex) {
+			fail(ex.getMessage());
+		} catch (final SecurityException ex) {
+			fail(ex.getMessage());
+		} catch (final IllegalAccessException ex) {
+			fail(ex.getMessage());
+		} catch (final IllegalArgumentException ex) {
+			fail(ex.getMessage());
+		} catch (final InvocationTargetException ex) {
+			fail(ex.getMessage());
+		}
+		return null;
+	}
+
 	/**
 	 * Stub implementation without getting services from ex. point.
-	 * 
+	 *
 	 * @author jfaltermeier
-	 * 
+	 *
 	 */
 	private class ViewModelContextWithoutServices implements ViewModelContext {
 
@@ -364,7 +433,7 @@ public class SWTTableTest {
 
 		/**
 		 * {@inheritDoc}
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getViewModel()
 		 */
 		@Override
@@ -374,7 +443,7 @@ public class SWTTableTest {
 
 		/**
 		 * {@inheritDoc}
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getDomainModel()
 		 */
 		@Override
@@ -383,9 +452,10 @@ public class SWTTableTest {
 		}
 
 		/**
+		 *
 		 * {@inheritDoc}
-		 * 
-		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#registerViewChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeAddRemoveListener)
+		 *
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#registerViewChangeListener(org.eclipse.emf.ecp.view.spi.model.ModelChangeListener)
 		 */
 		@Override
 		public void registerViewChangeListener(ModelChangeListener modelChangeListener) {
@@ -393,9 +463,10 @@ public class SWTTableTest {
 		}
 
 		/**
+		 *
 		 * {@inheritDoc}
-		 * 
-		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#unregisterViewChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeAddRemoveListener)
+		 *
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#unregisterViewChangeListener(org.eclipse.emf.ecp.view.spi.model.ModelChangeListener)
 		 */
 		@Override
 		public void unregisterViewChangeListener(ModelChangeListener modelChangeListener) {
@@ -403,9 +474,10 @@ public class SWTTableTest {
 		}
 
 		/**
+		 *
 		 * {@inheritDoc}
-		 * 
-		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#registerDomainChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeAddRemoveListener)
+		 *
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#registerDomainChangeListener(org.eclipse.emf.ecp.view.spi.model.ModelChangeListener)
 		 */
 		@Override
 		public void registerDomainChangeListener(ModelChangeListener modelChangeListener) {
@@ -413,9 +485,10 @@ public class SWTTableTest {
 		}
 
 		/**
+		 *
 		 * {@inheritDoc}
-		 * 
-		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#unregisterDomainChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeAddRemoveListener)
+		 *
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#unregisterDomainChangeListener(org.eclipse.emf.ecp.view.spi.model.ModelChangeListener)
 		 */
 		@Override
 		public void unregisterDomainChangeListener(ModelChangeListener modelChangeListener) {
@@ -424,7 +497,7 @@ public class SWTTableTest {
 
 		/**
 		 * {@inheritDoc}
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#dispose()
 		 */
 		@Override
@@ -434,7 +507,7 @@ public class SWTTableTest {
 
 		/**
 		 * {@inheritDoc}
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#hasService(java.lang.Class)
 		 */
 		@Override
@@ -444,7 +517,7 @@ public class SWTTableTest {
 
 		/**
 		 * {@inheritDoc}
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getService(java.lang.Class)
 		 */
 		@Override
@@ -454,46 +527,42 @@ public class SWTTableTest {
 
 		/**
 		 * {@inheritDoc}
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getControlsFor(org.eclipse.emf.ecore.EStructuralFeature.Setting)
 		 */
 		@Override
 		public Set<VControl> getControlsFor(Setting setting) {
-			// TODO Auto-generated method stub
 			return null;
 		}
 
 		/**
 		 * {@inheritDoc}
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getControlsFor(org.eclipse.emf.ecp.common.UniqueSetting)
 		 */
 		@Override
 		public Set<VControl> getControlsFor(UniqueSetting setting) {
-			// TODO Auto-generated method stub
 			return null;
 		}
 
 		/**
 		 * {@inheritDoc}
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getContextValue(java.lang.String)
 		 */
 		@Override
 		public Object getContextValue(String key) {
-			// TODO Auto-generated method stub
 			return null;
 		}
 
 		/**
 		 * {@inheritDoc}
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#putContextValue(java.lang.String,
 		 *      java.lang.Object)
 		 */
 		@Override
 		public void putContextValue(String key, Object value) {
-			// TODO Auto-generated method stub
 
 		}
 	}
@@ -509,7 +578,7 @@ public class SWTTableTest {
 
 		/**
 		 * {@inheritDoc}
-		 * 
+		 *
 		 * @see java.io.PrintStream#print(java.lang.String)
 		 */
 		@Override
