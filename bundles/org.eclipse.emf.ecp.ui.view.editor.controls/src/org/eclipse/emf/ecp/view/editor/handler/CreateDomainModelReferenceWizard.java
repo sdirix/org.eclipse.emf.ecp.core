@@ -259,7 +259,7 @@ public class CreateDomainModelReferenceWizard extends SelectModelElementWizard {
 			final VDomainModelReference dmr = (VDomainModelReference) EcoreUtil.create(dmrEClass);
 			getvControl().setDomainModelReference(dmr);
 			getvControl().getDomainModelReference().eAdapters().add(adapter);
-			final VView view = ViewProviderHelper.getView(dmr);
+			final VView view = ViewProviderHelper.getView(dmr, null);
 			final ViewModelContext viewContext = ViewModelContextFactory.INSTANCE
 				.createViewModelContext(view, dmr, new DummyReferenceService());
 			try {

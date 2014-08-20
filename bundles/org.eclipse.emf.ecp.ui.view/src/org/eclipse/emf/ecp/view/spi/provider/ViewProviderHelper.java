@@ -15,6 +15,8 @@ package org.eclipse.emf.ecp.view.spi.provider;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -98,23 +100,26 @@ public final class ViewProviderHelper {
 	/**
 	 * This allows to retrieve a {@link VView} based on an {@link EObject}. This method reads all {@link IViewProvider
 	 * IViewProviders} and searches for the best fitting. If none can be found, then null is returned.
-	 * .
 	 * 
 	 * @param eObject the {@link EObject} to find a {@link VView} for
+	 * @param context a key-value-map from String to Object
 	 * @return a view model for the given {@link EObject} or null if no suited provider could be found
 	 */
-	public static VView getView(EObject eObject) {
+	public static VView getView(EObject eObject, Map<String, Object> context) {
 		int highestPrio = IViewProvider.NOT_APPLICABLE;
 		IViewProvider selectedProvider = null;
+		if (context == null) {
+			context = new LinkedHashMap<String, Object>();
+		}
 		for (final IViewProvider viewProvider : ViewProviderHelper.getViewProviders()) {
-			final int prio = viewProvider.canRender(eObject);
+			final int prio = viewProvider.canRender(eObject, context);
 			if (prio > highestPrio) {
 				highestPrio = prio;
 				selectedProvider = viewProvider;
 			}
 		}
 		if (selectedProvider != null) {
-			return selectedProvider.generate(eObject);
+			return selectedProvider.generate(eObject, context);
 		}
 		return null;
 

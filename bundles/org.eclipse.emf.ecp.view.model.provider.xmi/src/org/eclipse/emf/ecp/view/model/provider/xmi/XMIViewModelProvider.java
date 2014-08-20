@@ -11,6 +11,8 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.model.provider.xmi;
 
+import java.util.Map;
+
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -30,10 +32,10 @@ public abstract class XMIViewModelProvider implements IViewProvider {
 	 * 
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.provider.IViewProvider#generate(org.eclipse.emf.ecore.EObject)
+	 * @see org.eclipse.emf.ecp.view.spi.provider.IViewProvider#generate(EObject, Map)
 	 */
 	@Override
-	public VView generate(EObject eObject) {
+	public VView generate(EObject eObject, Map<String, Object> context) {
 		final Resource resource = ViewModelFileExtensionsManager.loadResource(getXMIPath());
 		final VView result = EcoreUtil.copy((VView) resource.getContents().get(0));
 		return result;

@@ -1,21 +1,23 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- *
+ * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
  * Anas Chakfeh - initial API and implementation
  * Eugen Neufeld - Refactoring
- * Alexandra Buzila
+ * Alexandra Buzila - Refactoring
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.treemasterdetail.ui.swt.internal;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -95,12 +97,16 @@ import org.osgi.framework.FrameworkUtil;
 
 /**
  * SWT Renderer for a {@link VTreeMasterDetail} element.
- *
+ * 
  * @author Anas Chakfeh
- *
+ * @author Eugen Neufeld
+ * 
  */
-@SuppressWarnings("restriction")
 public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMasterDetail> {
+
+	public static final String DETAIL_KEY = "detail"; //$NON-NLS-1$
+	public static final String ROOT_KEY = "root"; //$NON-NLS-1$
+
 	private SWTGridDescription rendererGridDescription;
 
 	private Font detailsFont;
@@ -110,7 +116,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 	private TreeViewer treeViewer;
 	/**
 	 * Static string.
-	 *
+	 * 
 	 */
 	public static final String GLOBAL_ADDITIONS = "global_additions"; //$NON-NLS-1$
 
@@ -122,7 +128,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 
 	/**
 	 * @author Anas Chakfeh
-	 *
+	 * 
 	 */
 	private class RootObject {
 
@@ -146,7 +152,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 
 	/**
 	 * {@inheritDoc}
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#dispose()
 	 */
 	@Override
@@ -157,7 +163,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 
 	/**
 	 * {@inheritDoc}
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#getGridDescription(SWTGridDescription)
 	 */
 	@Override
@@ -170,7 +176,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 
 	/**
 	 * {@inheritDoc}
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#renderControl(org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell,
 	 *      org.eclipse.swt.widgets.Composite)
 	 */
@@ -257,8 +263,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 		addDragAndDropSupport(modelElement, treeViewer, editingDomain);
 
 		// Selection Listener
-		treeViewer.addSelectionChangedListener(new TreeMasterViewSelectionListener(getVElement()
-			.getDetailView()));
+		treeViewer.addSelectionChangedListener(new TreeMasterViewSelectionListener());
 		treeViewer.setSelection(new StructuredSelection(modelElement));
 		fillContextMenu(treeViewer, editingDomain);
 
@@ -665,23 +670,14 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 	}
 
 	/**
-	 *
+	 * 
 	 * @author Anas Chakfeh
 	 *         This class is responsible for handling selection changed events which happen on the tree
-	 *
+	 * 
 	 */
 	private class TreeMasterViewSelectionListener implements ISelectionChangedListener {
 
 		private Composite childComposite;
-		private final VView vView;
-
-		/**
-		 * @param rightPanel
-		 * @param vView
-		 */
-		public TreeMasterViewSelectionListener(VView vView) {
-			this.vView = vView;
-		}
 
 		@Override
 		public void selectionChanged(SelectionChangedEvent event) {
@@ -696,30 +692,34 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 					childComposite = createComposite();
 
 					final Object root = ((RootObject) ((TreeViewer) event.getSource()).getInput()).getRoot();
-
+					final Map<String, Object> context = new LinkedHashMap<String, Object>();
+					context.put(DETAIL_KEY, true);
 					if (selected.equals(root)) {
+						context.put(ROOT_KEY, true);
+						VView vView = getVElement().getDetailView();
+						if (vView.getChildren().isEmpty()) {
+							vView = ViewProviderHelper.getView((EObject) selected, context);
+						}
 						if (DynamicEObjectImpl.class.isInstance(selected)) {
 							final ViewModelContext viewContext = ViewModelContextFactory.INSTANCE
 								.createViewModelContext(vView,
-									(EObject) selected, new DummyReferenceService());// TODO do we need the reference
-							// service?
+									(EObject) selected, getViewModelContext().getService(ReferenceService.class));
 							manipulateViewContext(viewContext);
 							ECPSWTViewRenderer.INSTANCE.render(childComposite, viewContext);
 
 						} else {
 							final ViewModelContext viewContext = ViewModelContextFactory.INSTANCE
-								.createViewModelContext(vView, (EObject) selected);
+								.createViewModelContext(vView, (EObject) selected,
+									getViewModelContext().getService(ReferenceService.class));
 							manipulateViewContext(viewContext);
 							ECPSWTViewRenderer.INSTANCE.render(childComposite, viewContext);
 						}
 
 					} else {
-						ReferenceService refServ;
-						refServ = new DummyReferenceService();// TODO do we need the reference service?
-						final VView view = ViewProviderHelper.getView((EObject) selected);
+						final VView view = ViewProviderHelper.getView((EObject) selected, context);
 						final ViewModelContext viewContext = ViewModelContextFactory.INSTANCE
 							.createViewModelContext(view,
-								(EObject) selected, refServ);
+								(EObject) selected, getViewModelContext().getService(ReferenceService.class));
 						manipulateViewContext(viewContext);
 						ECPSWTViewRenderer.INSTANCE.render(childComposite, viewContext);
 					}

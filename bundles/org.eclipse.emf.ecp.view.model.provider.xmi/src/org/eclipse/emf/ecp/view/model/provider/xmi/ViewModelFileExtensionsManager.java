@@ -16,6 +16,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -53,7 +54,7 @@ public final class ViewModelFileExtensionsManager {
 	private static final String FILE_EXTENSION = "org.eclipse.emf.ecp.view.model.provider.xmi.file"; //$NON-NLS-1$
 	private static final String FILEPATH_ATTRIBUTE = "filePath"; //$NON-NLS-1$
 
-	private final Map<EClass, VView> map = new HashMap<EClass, VView>();
+	private final Map<EClass, Map<VView, Map<String, String>>> map = new LinkedHashMap<EClass, Map<VView, Map<String, String>>>();
 
 	private ViewModelFileExtensionsManager() {
 	}
@@ -75,8 +76,8 @@ public final class ViewModelFileExtensionsManager {
 	 * 
 	 */
 	private void init() {
-		final List<URI> extensionURIS = getExtensionURIS();
-		for (final URI uri : extensionURIS) {
+		final Map<URI, Map<String, String>> extensionURIS = getExtensionURIS();
+		for (final URI uri : extensionURIS.keySet()) {
 			final Resource resource = loadResource(uri);
 			final EObject eObject = resource.getContents().get(0);
 			if (!(eObject instanceof VView)) {
@@ -88,7 +89,10 @@ public final class ViewModelFileExtensionsManager {
 				// TODO:log
 				continue;
 			}
-			map.put(view.getRootEClass(), view);
+			if (!map.containsKey(view.getRootEClass())) {
+				map.put(view.getRootEClass(), new LinkedHashMap<VView, Map<String, String>>());
+			}
+			map.get(view.getRootEClass()).put(view, extensionURIS.get(uri));
 		}
 
 	}
@@ -166,24 +170,32 @@ public final class ViewModelFileExtensionsManager {
 	 * 
 	 * @return a list of uris of all xmi files registered
 	 */
-	public static List<URI> getExtensionURIS() {
-		final List<URI> ret = new ArrayList<URI>();
+	public static Map<URI, Map<String, String>> getExtensionURIS() {
+		final Map<URI, Map<String, String>> ret = new LinkedHashMap<URI, Map<String, String>>();
 		final IConfigurationElement[] files = Platform.getExtensionRegistry().getConfigurationElementsFor(
 			FILE_EXTENSION);
 		final URIConverter converter = new ResourceSetImpl().getURIConverter();
 		for (final IConfigurationElement file : files) {
 			final String filePath = file.getAttribute(FILEPATH_ATTRIBUTE);
 
+			final IConfigurationElement[] children = file.getChildren("filter"); //$NON-NLS-1$
+			final Map<String, String> keyValuePairs = new LinkedHashMap<String, String>();
+			for (final IConfigurationElement child : children) {
+				final String key = child.getAttribute("key");
+				final String value = child.getAttribute("value");
+				keyValuePairs.put(key, value);
+			}
+
 			URI uri;
 			final String bundleName = file.getContributor().getName();
 			final String path = bundleName + '/' + filePath;
 			uri = URI.createPlatformPluginURI(path, false);
 			if (converter.exists(uri, null)) {
-				ret.add(uri);
+				ret.put(uri, keyValuePairs);
 			} else {
 				uri = URI.createPlatformResourceURI(filePath, false);
 				if (converter.exists(uri, null)) {
-					ret.add(uri);
+					ret.put(uri, keyValuePairs);
 				}
 			}
 
@@ -193,18 +205,44 @@ public final class ViewModelFileExtensionsManager {
 
 	/**
 	 * @param eObject the object to be rendered
+	 * @param context a key-value-map from String to Object
 	 * @return if there is a xmi file registered containing a view model for the given type
 	 */
-	public boolean hasViewModelFor(EObject eObject) {
+	public boolean hasViewModelFor(EObject eObject, Map<String, Object> context) {
 		return map.containsKey(eObject.eClass());
 	}
 
 	/**
 	 * @param eObject The {@link EObject} to create a view for
+	 * @param context a key-value-map from String to Object
 	 * @return a view model for the given eObject
 	 */
-	public VView createView(EObject eObject) {
-		return EcoreUtil.copy(map.get(eObject.eClass()));
+	public VView createView(EObject eObject, Map<String, Object> context) {
+		final Map<VView, Map<String, String>> viewMap = map.get(eObject.eClass());
+		if (context == null) {
+			return viewMap.keySet().iterator().next();
+		}
+		VView bestFitting = null;
+		int maxNumberFittingKeyValues = -1;
+		for (final VView view : viewMap.keySet()) {
+			final Map<String, String> viewFilter = viewMap.get(view);
+			int currentFittingKeyValues = 0;
+			for (final String contextKey : context.keySet()) {
+				if (viewFilter.containsKey(contextKey)) {
+					final Object contextValue = context.get(contextKey);
+					final String viewFilterValue = viewFilter.get(contextKey);
+					if (contextValue.equals(viewFilterValue)) {
+						currentFittingKeyValues++;
+					}
+				}
+			}
+			if (currentFittingKeyValues > maxNumberFittingKeyValues) {
+				maxNumberFittingKeyValues = currentFittingKeyValues;
+				bestFitting = view;
+			}
+		}
+
+		return EcoreUtil.copy(bestFitting);
 	}
 
 }

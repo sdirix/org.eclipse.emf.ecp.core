@@ -13,6 +13,7 @@ package org.eclipse.emf.ecp.view.model.generator;
 
 import java.util.Collection;
 import java.util.LinkedHashSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
@@ -38,10 +39,10 @@ public class ViewProvider implements IViewProvider {
 	 * 
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.provider.IViewProvider#generate(org.eclipse.emf.ecore.EObject)
+	 * @see org.eclipse.emf.ecp.view.spi.provider.IViewProvider#generate(EObject, Map)
 	 */
 	@Override
-	public VView generate(EObject eObject) {
+	public VView generate(EObject eObject, Map<String, Object> context) {
 		final VView view = VViewFactory.eINSTANCE.createView();
 		for (final EStructuralFeature feature : getValidFeatures(eObject)) {
 
@@ -108,10 +109,10 @@ public class ViewProvider implements IViewProvider {
 	 * 
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.provider.IViewProvider#canRender(org.eclipse.emf.ecore.EObject)
+	 * @see org.eclipse.emf.ecp.view.spi.provider.IViewProvider#canRender(EObject, Map)
 	 */
 	@Override
-	public int canRender(EObject eObject) {
+	public int canRender(EObject eObject, Map<String, Object> context) {
 		return 1;
 	}
 }
