@@ -11,14 +11,18 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.table.swt;
 
+import java.util.Collections;
+
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
 import org.eclipse.emf.ecp.view.internal.table.swt.Activator;
-import org.eclipse.emf.ecp.view.internal.table.swt.DetailViewGenerator;
 import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -114,7 +118,10 @@ public class TableControlDetailPanelRenderer extends TableControlSWTRenderer {
 		if (view == null) {
 			VView detailView = getVElement().getDetailView();
 			if (detailView == null) {
-				detailView = DetailViewGenerator.generateView(getVElement());
+				final Setting setting = getVElement().getDomainModelReference().getIterator().next();
+				final EReference reference = (EReference) setting.getEStructuralFeature();
+				detailView = ViewProviderHelper.getView(EcoreUtil.create(reference.getEReferenceType()),
+					Collections.<String, Object> emptyMap());
 			}
 			view = detailView;
 		}
