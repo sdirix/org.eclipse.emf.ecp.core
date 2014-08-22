@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Jonas - initial API and implementation
  ******************************************************************************/
@@ -43,14 +43,17 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 
 /**
  * Manages the view models provided by the file extension point.
- * 
+ *
  * @author Jonas Helming
- * 
- * 
+ *
+ *
  */
 @SuppressWarnings("restriction")
 public final class ViewModelFileExtensionsManager {
 
+	private static final String FILTER_VALUE_ATTRIBUTE = "value"; //$NON-NLS-1$
+	private static final String FILTER_KEY_ATTRIBUTE = "key"; //$NON-NLS-1$
+	private static final String FILTER_ELEMENT = "filter"; //$NON-NLS-1$
 	private static final String FILE_EXTENSION = "org.eclipse.emf.ecp.view.model.provider.xmi.file"; //$NON-NLS-1$
 	private static final String FILEPATH_ATTRIBUTE = "filePath"; //$NON-NLS-1$
 
@@ -73,7 +76,7 @@ public final class ViewModelFileExtensionsManager {
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	private void init() {
 		final Map<URI, Map<String, String>> extensionURIS = getExtensionURIS();
@@ -99,7 +102,7 @@ public final class ViewModelFileExtensionsManager {
 
 	/**
 	 * Loads a resource containing a view model.
-	 * 
+	 *
 	 * @param uri a URI containing the path to the file
 	 * @return the loaded resource
 	 */
@@ -167,7 +170,7 @@ public final class ViewModelFileExtensionsManager {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return a list of uris of all xmi files registered
 	 */
 	public static Map<URI, Map<String, String>> getExtensionURIS() {
@@ -178,11 +181,11 @@ public final class ViewModelFileExtensionsManager {
 		for (final IConfigurationElement file : files) {
 			final String filePath = file.getAttribute(FILEPATH_ATTRIBUTE);
 
-			final IConfigurationElement[] children = file.getChildren("filter"); //$NON-NLS-1$
+			final IConfigurationElement[] children = file.getChildren(FILTER_ELEMENT);
 			final Map<String, String> keyValuePairs = new LinkedHashMap<String, String>();
 			for (final IConfigurationElement child : children) {
-				final String key = child.getAttribute("key");
-				final String value = child.getAttribute("value");
+				final String key = child.getAttribute(FILTER_KEY_ATTRIBUTE);
+				final String value = child.getAttribute(FILTER_VALUE_ATTRIBUTE);
 				keyValuePairs.put(key, value);
 			}
 
@@ -227,13 +230,21 @@ public final class ViewModelFileExtensionsManager {
 		for (final VView view : viewMap.keySet()) {
 			final Map<String, String> viewFilter = viewMap.get(view);
 			int currentFittingKeyValues = 0;
-			for (final String contextKey : context.keySet()) {
-				if (viewFilter.containsKey(contextKey)) {
-					final Object contextValue = context.get(contextKey);
-					final String viewFilterValue = viewFilter.get(contextKey);
-					if (contextValue.equals(viewFilterValue)) {
+			for (final String viewFilterKey : viewFilter.keySet()) {
+				if (context.containsKey(viewFilterKey)) {
+					final Object contextValue = context.get(viewFilterKey);
+					final String viewFilterValue = viewFilter.get(viewFilterKey);
+					if (contextValue.toString().equalsIgnoreCase(viewFilterValue)) {
 						currentFittingKeyValues++;
 					}
+					else {
+						currentFittingKeyValues = -1;
+						break;
+					}
+				}
+				else {
+					currentFittingKeyValues = -1;
+					break;
 				}
 			}
 			if (currentFittingKeyValues > maxNumberFittingKeyValues) {
