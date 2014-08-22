@@ -29,6 +29,7 @@ public final class Messages extends NLS {
 	 * Add New Tooltip.
 	 */
 	public static String MultiReferenceSWTRenderer_addNewTooltip;
+	public static String MultiReferenceSWTRenderer_deleteTooltip;
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

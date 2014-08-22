@@ -207,6 +207,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 		final Button btnDelete = new Button(buttonComposite, SWT.PUSH);
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(btnDelete);
 		btnDelete.setImage(Activator.getImage("icons/delete.png")); //$NON-NLS-1$
+		btnDelete.setToolTipText(Messages.MultiReferenceSWTRenderer_deleteTooltip);
 		btnDelete.addSelectionListener(new SelectionAdapter() {
 
 			/**
