@@ -1,20 +1,27 @@
 /**
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
 package org.eclipse.emf.ecp.view.spi.label.swt;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.core.databinding.Binding;
+import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.emf.databinding.EMFDataBindingContext;
+import org.eclipse.emf.databinding.EMFObservables;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.view.spi.label.model.VLabel;
 import org.eclipse.emf.ecp.view.spi.label.model.VLabelStyle;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
@@ -26,7 +33,11 @@ import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
 import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
 import org.eclipse.emf.ecp.view.template.style.fontProperties.model.VTFontPropertiesFactory;
 import org.eclipse.emf.ecp.view.template.style.fontProperties.model.VTFontPropertiesStyleProperty;
+import org.eclipse.jface.databinding.swt.ISWTObservableValue;
+import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
@@ -37,11 +48,10 @@ import org.eclipse.swt.widgets.Label;
 
 /**
  * Renders an {@link VLabel} to a SWT {@link Label}.
- * 
+ *
  * @since 1.3
- * 
+ *
  */
-@SuppressWarnings("restriction")
 public class LabelSWTRenderer extends AbstractSWTRenderer<VLabel> {
 	private SWTGridDescription rendererGridDescription;
 	private Font font;
@@ -49,10 +59,11 @@ public class LabelSWTRenderer extends AbstractSWTRenderer<VLabel> {
 
 	private Map<VLabelStyle, VTFontPropertiesStyleProperty> defaultStyles;
 	private Composite parent;
+	private EMFDataBindingContext dataBindingContext;
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#dispose()
 	 */
 	@Override
@@ -64,12 +75,16 @@ public class LabelSWTRenderer extends AbstractSWTRenderer<VLabel> {
 		if (labelColor != null) {
 			labelColor.dispose();
 		}
+		if (dataBindingContext != null) {
+			dataBindingContext.dispose();
+			dataBindingContext = null;
+		}
 		super.dispose();
 	}
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#getGridDescription(SWTGridDescription)
 	 */
 	@Override
@@ -94,17 +109,49 @@ public class LabelSWTRenderer extends AbstractSWTRenderer<VLabel> {
 			label = new Label(parent, SWT.SEPARATOR | SWT.HORIZONTAL);
 		} else {
 			label = new Label(parent, SWT.NONE);
-			if (getVElement().getName() != null) {
-				label.setText(getVElement().getName());
-			}
+			setText(label);
 			applyStyle(label);
 		}
 		return label;
 	}
 
+	private void setText(Label label) {
+		if (getVElement().getDomainModelReference() != null) {
+			final Iterator<Setting> iterator = getVElement().getDomainModelReference().getIterator();
+			if (iterator.hasNext()) {
+				final Setting setting = iterator.next();
+
+				final ISWTObservableValue observeText = SWTObservables.observeText(label);
+				final IObservableValue observeValue = EMFObservables.observeValue(setting.getEObject(),
+					setting.getEStructuralFeature());
+				final Binding binding = getDataBindingContext().bindValue(observeText, observeValue);
+
+				label.addDisposeListener(new DisposeListener() {
+					@Override
+					public void widgetDisposed(DisposeEvent e) {
+						binding.dispose();
+					}
+				});
+			}
+		} else {
+			if (getVElement().getName() != null) {
+				label.setText(getVElement().getName());
+			} else {
+				label.setText(""); //$NON-NLS-1$
+			}
+		}
+	}
+
+	private DataBindingContext getDataBindingContext() {
+		if (dataBindingContext == null) {
+			dataBindingContext = new EMFDataBindingContext();
+		}
+		return dataBindingContext;
+	}
+
 	/**
 	 * Applies the style defined in the StyleProperty.
-	 * 
+	 *
 	 * @param label the {@link Label} to apply the styles onto
 	 */
 	protected void applyStyle(Label label) {

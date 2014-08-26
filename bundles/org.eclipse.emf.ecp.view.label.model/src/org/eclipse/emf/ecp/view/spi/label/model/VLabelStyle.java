@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
@@ -22,11 +22,10 @@ import org.eclipse.emf.common.util.Enumerator;
  * A representation of the literals of the enumeration '<em><b>Style</b></em>',
  * and utility methods for working with them.
  * <!-- end-user-doc -->
- * 
+ *
  * @see org.eclipse.emf.ecp.view.spi.label.model.VLabelPackage#getVLabelStyle()
  * @model
  * @generated
- * @since 1.2
  */
 public enum VLabelStyle implements Enumerator
 {
@@ -34,7 +33,7 @@ public enum VLabelStyle implements Enumerator
 	 * The '<em><b>H0</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #H0_VALUE
 	 * @generated
 	 * @ordered
@@ -45,7 +44,7 @@ public enum VLabelStyle implements Enumerator
 	 * The '<em><b>H1</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #H1_VALUE
 	 * @generated
 	 * @ordered
@@ -56,7 +55,7 @@ public enum VLabelStyle implements Enumerator
 	 * The '<em><b>H2</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #H2_VALUE
 	 * @generated
 	 * @ordered
@@ -67,7 +66,7 @@ public enum VLabelStyle implements Enumerator
 	 * The '<em><b>H3</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #H3_VALUE
 	 * @generated
 	 * @ordered
@@ -78,7 +77,7 @@ public enum VLabelStyle implements Enumerator
 	 * The '<em><b>H4</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #H4_VALUE
 	 * @generated
 	 * @ordered
@@ -89,7 +88,7 @@ public enum VLabelStyle implements Enumerator
 	 * The '<em><b>H5</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #H5_VALUE
 	 * @generated
 	 * @ordered
@@ -100,7 +99,7 @@ public enum VLabelStyle implements Enumerator
 	 * The '<em><b>H6</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #H6_VALUE
 	 * @generated
 	 * @ordered
@@ -111,7 +110,7 @@ public enum VLabelStyle implements Enumerator
 	 * The '<em><b>H7</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #H7_VALUE
 	 * @generated
 	 * @ordered
@@ -122,7 +121,7 @@ public enum VLabelStyle implements Enumerator
 	 * The '<em><b>H8</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #H8_VALUE
 	 * @generated
 	 * @ordered
@@ -133,7 +132,7 @@ public enum VLabelStyle implements Enumerator
 	 * The '<em><b>H9</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #H9_VALUE
 	 * @generated
 	 * @ordered
@@ -144,7 +143,7 @@ public enum VLabelStyle implements Enumerator
 	 * The '<em><b>Separator</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #SEPARATOR_VALUE
 	 * @generated
 	 * @ordered
@@ -159,7 +158,7 @@ public enum VLabelStyle implements Enumerator
 	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #H0
 	 * @model
 	 * @generated
@@ -175,7 +174,7 @@ public enum VLabelStyle implements Enumerator
 	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #H1
 	 * @model
 	 * @generated
@@ -191,7 +190,7 @@ public enum VLabelStyle implements Enumerator
 	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #H2
 	 * @model
 	 * @generated
@@ -207,7 +206,7 @@ public enum VLabelStyle implements Enumerator
 	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #H3
 	 * @model
 	 * @generated
@@ -223,7 +222,7 @@ public enum VLabelStyle implements Enumerator
 	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #H4
 	 * @model
 	 * @generated
@@ -239,7 +238,7 @@ public enum VLabelStyle implements Enumerator
 	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #H5
 	 * @model
 	 * @generated
@@ -255,7 +254,7 @@ public enum VLabelStyle implements Enumerator
 	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #H6
 	 * @model
 	 * @generated
@@ -271,7 +270,7 @@ public enum VLabelStyle implements Enumerator
 	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #H7
 	 * @model
 	 * @generated
@@ -287,7 +286,7 @@ public enum VLabelStyle implements Enumerator
 	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #H8
 	 * @model
 	 * @generated
@@ -303,7 +302,7 @@ public enum VLabelStyle implements Enumerator
 	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #H9
 	 * @model
 	 * @generated
@@ -319,7 +318,7 @@ public enum VLabelStyle implements Enumerator
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #SEPARATOR
 	 * @model name="Separator"
 	 * @generated
@@ -331,7 +330,7 @@ public enum VLabelStyle implements Enumerator
 	 * An array of all the '<em><b>VLabel Style</b></em>' enumerators.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private static final VLabelStyle[] VALUES_ARRAY =
@@ -354,7 +353,7 @@ public enum VLabelStyle implements Enumerator
 	 * A public read-only list of all the '<em><b>VLabel Style</b></em>' enumerators.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public static final List<VLabelStyle> VALUES = Collections.unmodifiableList(Arrays.asList(VALUES_ARRAY));
@@ -363,7 +362,7 @@ public enum VLabelStyle implements Enumerator
 	 * Returns the '<em><b>VLabel Style</b></em>' literal with the specified literal value.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public static VLabelStyle get(String literal)
@@ -383,7 +382,7 @@ public enum VLabelStyle implements Enumerator
 	 * Returns the '<em><b>VLabel Style</b></em>' literal with the specified name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public static VLabelStyle getByName(String name)
@@ -403,7 +402,7 @@ public enum VLabelStyle implements Enumerator
 	 * Returns the '<em><b>VLabel Style</b></em>' literal with the specified integer value.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public static VLabelStyle get(int value)
@@ -439,7 +438,7 @@ public enum VLabelStyle implements Enumerator
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private final int value;
@@ -447,7 +446,7 @@ public enum VLabelStyle implements Enumerator
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private final String name;
@@ -455,7 +454,7 @@ public enum VLabelStyle implements Enumerator
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private final String literal;
@@ -464,7 +463,7 @@ public enum VLabelStyle implements Enumerator
 	 * Only this class can construct instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private VLabelStyle(int value, String name, String literal)
@@ -477,7 +476,7 @@ public enum VLabelStyle implements Enumerator
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -489,7 +488,7 @@ public enum VLabelStyle implements Enumerator
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -501,7 +500,7 @@ public enum VLabelStyle implements Enumerator
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -514,7 +513,7 @@ public enum VLabelStyle implements Enumerator
 	 * Returns the literal value of the enumerator, which is its string representation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
