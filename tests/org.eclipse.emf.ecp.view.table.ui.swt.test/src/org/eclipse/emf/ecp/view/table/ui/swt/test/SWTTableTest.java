@@ -108,7 +108,7 @@ public class SWTTableTest {
 
 	@Test
 	public void testUninitializedTableWithoutColumns() throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+	NoPropertyDescriptorFoundExeption {
 		// setup model
 		final TableControlHandle handle = createUninitializedTableWithoutColumns();
 		//
@@ -119,7 +119,7 @@ public class SWTTableTest {
 
 	@Test
 	public void testInitializedTableWithoutColumnsAndEmptyReference() throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+	NoPropertyDescriptorFoundExeption {
 		// setup model
 		final EClass createEClass = EcoreFactory.eINSTANCE.createEClass();
 		createEClass.eUnset(EcorePackage.eINSTANCE.getEClass_ESuperTypes());
@@ -137,7 +137,7 @@ public class SWTTableTest {
 	@Ignore
 	@Test
 	public void testInitializedTableWithoutColumnsSingleReference() throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+	NoPropertyDescriptorFoundExeption {
 		// setup model
 		final VView view = VViewFactory.eINSTANCE.createView();
 		view.setRootEClass(VViewPackage.eINSTANCE.getView());
@@ -160,7 +160,7 @@ public class SWTTableTest {
 	@Ignore
 	@Test
 	public void testInitializedTableWithoutColumnsEmptySingleReference() throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+	NoPropertyDescriptorFoundExeption {
 		// setup model
 		final VView view = VViewFactory.eINSTANCE.createView();
 		domainElement = view;
@@ -188,7 +188,7 @@ public class SWTTableTest {
 
 		assertEquals(domainElement.eClass().getEAttributes().size(),
 			VTableDomainModelReference.class.cast(handle.getTableControl().getDomainModelReference())
-				.getColumnDomainModelReferences().size());
+			.getColumnDomainModelReferences().size());
 
 		final Control control = getTable(render);
 		assertTrue(control instanceof Table);
@@ -198,7 +198,7 @@ public class SWTTableTest {
 
 	@Test
 	public void testTableWithoutColumnsWithoutViewServices() throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+	NoPropertyDescriptorFoundExeption {
 		final TableControlHandle handle = createInitializedTableWithoutTableColumns();
 		final AbstractSWTRenderer<VElement> tableRenderer = rendererFactory.getRenderer(handle.getTableControl(),
 			new ViewModelContextWithoutServices(handle.getTableControl()));
@@ -234,7 +234,7 @@ public class SWTTableTest {
 
 	@Test
 	public void testTableWithTwoColumnsWithoutViewServices() throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+	NoPropertyDescriptorFoundExeption {
 		// setup model
 		final TableControlHandle handle = createTableWithTwoTableColumns();
 		final AbstractSWTRenderer<VElement> tableRenderer = rendererFactory.getRenderer(handle.getTableControl(),
@@ -331,7 +331,7 @@ public class SWTTableTest {
 		tableViewer.setSelection(new StructuredSelection(table.getItem(0).getData()));
 		assertEquals(1, parentForECPView.getChildren().length);
 		final Composite viewComposite = (Composite) parentForECPView.getChildren()[0];
-		assertEquals(6, viewComposite.getChildren().length);
+		assertEquals(12, viewComposite.getChildren().length);
 
 		// multi selection
 		tableViewer.setSelection(new StructuredSelection(new Object[] { table.getItem(0).getData(),
