@@ -53,6 +53,7 @@
 		<module>../../features/org.eclipse.emf.ecp.validation.view.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.view.di.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.view.compoundcontrol.feature</module>
+		<module>../../features/org.eclipse.emf.ecp.view.section.feature</module>
 		<!-- demo -->
 		<module>../../features/org.eclipse.emf.ecp.demo.e4.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.demo.e3.feature</module>

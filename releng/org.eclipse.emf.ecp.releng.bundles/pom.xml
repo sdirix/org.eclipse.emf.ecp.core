@@ -216,6 +216,11 @@
 		<module>../../bundles/org.eclipse.emf.ecp.view.compoundcontrol.model</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.compoundcontrol.model.edit</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.compoundcontrol.swt</module>
+		
+		<!--  Section -->
+		<module>../../bundles/org.eclipse.emf.ecp.view.section.model</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.section.model.edit</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.section.ui.swt</module>
 	</modules>
 
 	<build>
