@@ -221,6 +221,10 @@
 		<module>../../bundles/org.eclipse.emf.ecp.view.section.model</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.section.model.edit</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.section.ui.swt</module>
+
+		<!--  View Proxy -->
+		<module>../../bundles/org.eclipse.emf.ecp.view.viewproxy.model</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.viewproxy.model.edit</module>
 	</modules>
 
 	<build>
