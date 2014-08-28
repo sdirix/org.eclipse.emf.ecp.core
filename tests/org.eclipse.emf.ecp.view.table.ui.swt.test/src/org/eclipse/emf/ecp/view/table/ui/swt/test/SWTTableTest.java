@@ -310,6 +310,7 @@ public class SWTTableTest {
 		((EClass) domainElement).getESuperTypes().add(eClass);
 		final TableControlHandle handle = createTableWithTwoTableColumns();
 		handle.getTableControl().setDetailEditing(DetailEditing.WITH_PANEL);
+		handle.getTableControl().setDetailView(createDetailView());
 		final AbstractSWTRenderer<VElement> tableRenderer = rendererFactory.getRenderer(handle.getTableControl(),
 			new ViewModelContextWithoutServices(handle.getTableControl()));
 		final Control control = tableRenderer.render(new SWTGridCell(0, 0, tableRenderer), shell);
@@ -331,7 +332,7 @@ public class SWTTableTest {
 		tableViewer.setSelection(new StructuredSelection(table.getItem(0).getData()));
 		assertEquals(1, parentForECPView.getChildren().length);
 		final Composite viewComposite = (Composite) parentForECPView.getChildren()[0];
-		assertEquals(12, viewComposite.getChildren().length);
+		assertEquals(6, viewComposite.getChildren().length);
 
 		// multi selection
 		tableViewer.setSelection(new StructuredSelection(new Object[] { table.getItem(0).getData(),
@@ -345,6 +346,23 @@ public class SWTTableTest {
 		// no selection
 		tableViewer.setSelection(new StructuredSelection());
 		assertEquals(0, parentForECPView.getChildren().length);
+	}
+
+	private VView createDetailView() {
+		final VView detailView = VViewFactory.eINSTANCE.createView();
+		final VControl name = VViewFactory.eINSTANCE.createControl();
+		final VFeaturePathDomainModelReference nameRef = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
+		nameRef.setDomainModelEFeature(EcorePackage.eINSTANCE.getENamedElement_Name());
+		name.setDomainModelReference(nameRef);
+		detailView.getChildren().add(name);
+		final VControl abstr = VViewFactory.eINSTANCE.createControl();
+		final VFeaturePathDomainModelReference abstractRef = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
+		abstractRef.setDomainModelEFeature(EcorePackage.eINSTANCE.getEClass_Abstract());
+		abstr.setDomainModelReference(abstractRef);
+		detailView.getChildren().add(abstr);
+		return detailView;
+
 	}
 
 	private Control getTable(Control render) {
