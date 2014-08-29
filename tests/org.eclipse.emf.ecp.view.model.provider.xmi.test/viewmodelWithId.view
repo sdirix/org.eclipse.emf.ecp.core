@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="ASCII"?>
-<org.eclipse.emf.ecp.view.model:View xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.emf.ecp.view.model="http://org/eclipse/emf/ecp/view/model" name="the 2nd view name" id="the id">
-  <rootEClass href="http://org/eclipse/example/bowling#//League"/>
-</org.eclipse.emf.ecp.view.model:View>

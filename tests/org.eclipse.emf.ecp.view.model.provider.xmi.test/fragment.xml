@@ -6,9 +6,6 @@
       <file
             filePath="viewmodel.view">
       </file>
-      <file
-            filePath="viewmodelWithId.view">
-      </file>
    </extension>
 
 </fragment>
