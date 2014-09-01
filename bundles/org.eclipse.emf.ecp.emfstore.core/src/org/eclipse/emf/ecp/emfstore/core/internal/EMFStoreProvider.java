@@ -8,7 +8,7 @@
  * 
  * Contributors:
  * Eugen Neufeld - initial API and implementation
- * 
+ * Edgar Mueller - Bug 440798: EMFStoreProvider project cloning isn't transaction-friendly
  *******************************************************************************/
 package org.eclipse.emf.ecp.emfstore.core.internal;
 
@@ -33,7 +33,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.util.ECPContainer;
@@ -65,6 +64,7 @@ import org.eclipse.emf.emfstore.internal.common.model.IdEObjectCollection;
 import org.eclipse.emf.emfstore.internal.common.model.Project;
 import org.eclipse.emf.emfstore.internal.common.model.impl.ProjectImpl;
 import org.eclipse.emf.emfstore.internal.common.model.util.IdEObjectCollectionChangeObserver;
+import org.eclipse.emf.emfstore.internal.common.model.util.ModelUtil;
 import org.eclipse.emf.emfstore.internal.server.model.versioning.operations.AbstractOperation;
 import org.eclipse.emf.emfstore.server.exceptions.ESException;
 
@@ -157,6 +157,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 			}
 		}
 		RunESCommand.run(new Callable<Void>() {
+			@Override
 			public Void call() throws Exception {
 				EMFStoreProvider.super.fillChildren(context, parent, childrenList);
 				return null;
@@ -170,6 +171,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public EList<? extends Object> getElements(InternalProject project) {
 		return getProjectSpace(project).getModelElements();
 	}
@@ -280,10 +282,12 @@ public final class EMFStoreProvider extends DefaultProvider {
 				// TODO EMFStore how to listen to operations?
 				projectSpace.getOperationManager().addOperationObserver(new OperationObserver() {
 
+					@Override
 					public void operationUndone(AbstractOperation operation) {
 						doSave((InternalProject) context);
 					}
 
+					@Override
 					public void operationExecuted(AbstractOperation operation) {
 						doSave((InternalProject) context);
 					}
@@ -292,6 +296,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 			// TODO EMFStore how to add IdEObjectCollection Observer?
 			projectSpace.getProject().addIdEObjectCollectionChangeObserver(new IdEObjectCollectionChangeObserver() {
 				// 2
+				@Override
 				public void notify(Notification notification, IdEObjectCollection collection, EObject modelElement) {
 					if (modelElement instanceof ProjectImpl) {
 						final ProjectSpaceImpl projectSpace = (ProjectSpaceImpl) modelElement.eContainer();
@@ -307,6 +312,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 				}
 
 				// 3
+				@Override
 				public void modelElementRemoved(IdEObjectCollection collection, EObject modelElement) {
 					if (modelElement.eContainer() == null) {
 						((InternalProject) context).notifyObjectsChanged(Arrays.asList(context, modelElement), true);
@@ -314,6 +320,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 				}
 
 				// 1
+				@Override
 				public void modelElementAdded(IdEObjectCollection collection, EObject modelElement) {
 					if (Project.class.isInstance(modelElement.eContainer())) {
 						((InternalProject) context).notifyObjectsChanged(Arrays.asList(modelElement, context), true);
@@ -322,6 +329,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 						true);
 				}
 
+				@Override
 				public void collectionDeleted(IdEObjectCollection collection) {
 					// project delete
 					((InternalProject) context).notifyObjectsChanged((Collection) Collections.singleton(context), true);
@@ -365,11 +373,11 @@ public final class EMFStoreProvider extends DefaultProvider {
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void delete(InternalProject project, final Collection<Object> objects) {
 		final ProjectSpace projectSpace = ((ESLocalProjectImpl) getProjectSpace(project)).toInternalAPI();
 		// TODO EMFStore how to delete eObject?
 		new EMFStoreCommand() {
-
 			@Override
 			protected void doRun() {
 				for (final Object object : objects) {
@@ -383,11 +391,11 @@ public final class EMFStoreProvider extends DefaultProvider {
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void cloneProject(final InternalProject projectToClone, InternalProject targetProject) {
-		// TODO EMFStore how to clone local project?
 		final ProjectSpace toClone = ((ESLocalProjectImpl) getProjectSpace(projectToClone)).toInternalAPI();
 		final ProjectSpace target = ((ESLocalProjectImpl) getProjectSpace(targetProject)).toInternalAPI();
-		target.setProject(EcoreUtil.copy(toClone.getProject()));
+		target.setProject(ModelUtil.clone(toClone.getProject()));
 	}
 
 	/** {@inheritDoc} */
@@ -397,6 +405,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public Notifier getRoot(InternalProject project) {
 		// TODO EMFStore other way to get root of localproject?
 		return ((ESLocalProjectImpl) getProjectSpace(project)).toInternalAPI().getProject();
@@ -583,6 +592,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 	 * 
 	 * @see org.eclipse.emf.ecp.spi.core.InternalProvider#isThreadSafe()
 	 */
+	@Override
 	public boolean isThreadSafe() {
 		return false;
 	}
