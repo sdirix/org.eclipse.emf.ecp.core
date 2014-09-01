@@ -9,7 +9,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.internal.validation.bean;
+package org.eclipse.emf.ecp.view.validation.bean;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,9 +23,11 @@ import java.util.Set;
 
 import javax.validation.Configuration;
 import javax.validation.ConstraintViolation;
+import javax.validation.MessageInterpolator;
 import javax.validation.Path.Node;
 import javax.validation.Validation;
 import javax.validation.Validator;
+import javax.validation.ValidatorContext;
 import javax.validation.ValidatorFactory;
 
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -36,12 +38,14 @@ import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.internal.validation.ValidationProvider;
+import org.eclipse.emf.ecp.view.internal.validation.bean.Activator;
 import org.osgi.framework.Bundle;
 
 @SuppressWarnings("restriction")
-public class BeanValidationProvider implements ValidationProvider {
+public abstract class BeanValidationProvider implements ValidationProvider {
 
-	private Validator validator;
+	private ValidatorContext validatorContext;
+	
 	public BeanValidationProvider(){
 		this(new InputStream[0]);
 	}
@@ -57,6 +61,8 @@ public class BeanValidationProvider implements ValidationProvider {
 			configure = configure.addMapping(is);
 		}
 		ValidatorFactory validatorFactory = configure.buildValidatorFactory();
+		MessageInterpolator interpolator = getMessageInterpolator(validatorFactory.getMessageInterpolator());
+		validatorContext = validatorFactory.usingContext().messageInterpolator(interpolator);
 		for (InputStream is : allInputStreams) {
 			try {
 				is.close();
@@ -64,9 +70,9 @@ public class BeanValidationProvider implements ValidationProvider {
 				Activator.log(e);
 			}
 		}
-		validator = validatorFactory.getValidator();
 	}
 
+	
 	private Collection<InputStream> readExtensionPoints() {
 		final IExtensionRegistry extensionRegistry = Platform
 				.getExtensionRegistry();
@@ -79,10 +85,8 @@ public class BeanValidationProvider implements ValidationProvider {
 		for (final IConfigurationElement e : controls) {
 			try {
 				String xmlViolationPath = e.getAttribute("xml");
-				final Bundle bundle = Platform.getBundle(e.getContributor()
-						.getName());
-				inputStreams.add(bundle.getResource(xmlViolationPath)
-						.openStream());
+				final Bundle bundle = Platform.getBundle(e.getContributor().getName());
+				inputStreams.add(bundle.getResource(xmlViolationPath).openStream());
 			} catch (final IOException e1) {
 				Activator.log(e1);
 			}
@@ -92,7 +96,7 @@ public class BeanValidationProvider implements ValidationProvider {
 
 	@Override
 	public List<Diagnostic> validate(EObject eObject) {
-		
+		Validator validator = validatorContext.getValidator();
 		List<Diagnostic> diagnostics=new ArrayList<Diagnostic>();
 		Set<ConstraintViolation<EObject>> validationResult = validator.validate(eObject);
 		for(ConstraintViolation<EObject> violation:validationResult){
@@ -103,11 +107,15 @@ public class BeanValidationProvider implements ValidationProvider {
 			}
 			EObject leafBean = (EObject) violation.getLeafBean();
 			EStructuralFeature eStructuralFeature = leafBean.eClass().getEStructuralFeature(lastNode.getName());
-			
-			final BasicDiagnostic diagnostic = new BasicDiagnostic(Diagnostic.ERROR, "Bean Validation", 0, violation.getMessage(), new Object[]{violation.getLeafBean(),eStructuralFeature});
+			int severity=getSeverity(violation);
+			final BasicDiagnostic diagnostic = new BasicDiagnostic(severity, "Bean Validation", 0, violation.getMessage(), new Object[]{violation.getLeafBean(),eStructuralFeature});
 			diagnostics.add(diagnostic);
 		}
 		return diagnostics;
 	}
+	
+	protected abstract MessageInterpolator getMessageInterpolator(MessageInterpolator messageInterpolator);
+	
+	protected abstract int getSeverity(ConstraintViolation<EObject> violation);
 
 }

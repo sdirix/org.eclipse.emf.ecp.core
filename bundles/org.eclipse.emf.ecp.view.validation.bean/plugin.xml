@@ -2,11 +2,5 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension-point id="violations" name="Bean Violation XMLs" schema="schema/violations.exsd"/>
-   <extension
-         point="org.eclipse.emf.ecp.view.validation.validationProvider">
-      <validationProvider
-            class="org.eclipse.emf.ecp.view.internal.validation.bean.BeanValidationProvider">
-      </validationProvider>
-   </extension>
 
 </plugin>

@@ -17,7 +17,8 @@ import java.io.InputStream;
 import java.util.List;
 
 import org.eclipse.emf.common.util.Diagnostic;
-import org.eclipse.emf.ecp.view.internal.validation.bean.BeanValidationProvider;
+import org.eclipse.emf.ecp.view.internal.validation.bean.DefaultValidationProvider;
+import org.eclipse.emf.ecp.view.validation.bean.BeanValidationProvider;
 import org.junit.Test;
 
 import car.CarFactory;
@@ -32,7 +33,7 @@ public class BeanValidationProvider_Test {
 		driverEMF.setAge(17);
 		driverEMF.setBirthPlace("NY");
 		InputStream is=getClass().getResourceAsStream("/violations.xml");
-		BeanValidationProvider bvp=new BeanValidationProvider(is);
+		BeanValidationProvider bvp=new DefaultValidationProvider(is);
 		List<Diagnostic> validate = bvp.validate(driverEMF);
 		assertEquals(1,validate.size());
 		assertEquals(driverEMF, validate.get(0).getData().get(0));
@@ -65,7 +66,7 @@ public class BeanValidationProvider_Test {
 //		driverEMF.getChildren().add(person3EMF);
 		
 		InputStream is=getClass().getResourceAsStream("/violations.xml");
-		BeanValidationProvider bvp=new BeanValidationProvider(is);
+		BeanValidationProvider bvp=new DefaultValidationProvider(is);
 		List<Diagnostic> validate = bvp.validate(carEMF);
 		assertEquals(1,validate.size());
 		assertEquals(driverEMF, validate.get(0).getData().get(0));

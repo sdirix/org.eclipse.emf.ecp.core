@@ -129,6 +129,7 @@
 		<!-- View Validation Feature -->
 		<module>../../bundles/org.eclipse.emf.ecp.view.validation</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.validation.bean</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.validation.bean.default</module>
 
 		<!-- View Unset Feature -->
 		<module>../../bundles/org.eclipse.emf.ecp.view.unset</module>
