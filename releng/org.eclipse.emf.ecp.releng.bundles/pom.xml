@@ -226,6 +226,12 @@
 		<!--  View Proxy -->
 		<module>../../bundles/org.eclipse.emf.ecp.view.viewproxy.model</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.viewproxy.model.edit</module>
+		
+		<!-- Key Attribute DMR-->
+		<module>../../bundles/org.eclipse.emf.ecp.view.keyattributedmr.model</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.keyattributedmr.model.edit</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.keyattributedmr.tooling</module>
+		
 	</modules>
 
 	<build>
