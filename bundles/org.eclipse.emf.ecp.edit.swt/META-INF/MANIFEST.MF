@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: org.eclipse.emf.ecp.edit.swt;singleton:=true
-Bundle-Version: 1.4.0.qualifier
+Bundle-Version: 1.5.0.qualifier
 Bundle-Activator: org.eclipse.emf.ecp.edit.internal.swt.Activator
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.7.0,4.0.0)",
  org.eclipse.emf.ecp.edit;bundle-version="[1.4.0,2.0.0)";visibility:=reexport,
@@ -30,19 +30,19 @@ Import-Package: org.eclipse.core.commands;version="0.0.0",
  org.eclipse.swt.graphics;version="0.0.0",
  org.eclipse.swt.layout;version="0.0.0",
  org.eclipse.swt.widgets;version="0.0.0"
-Export-Package: org.eclipse.emf.ecp.edit.internal.swt;version="1.4.0";
+Export-Package: org.eclipse.emf.ecp.edit.internal.swt;version="1.5.0";
  x-friends:="org.eclipse.emf.ecp.ui.view.editor.controls,org.eclipse.e
  mf.ecp.view.treemasterdetail.ui.swt",org.eclipse.emf.ecp.edit.interna
- l.swt.actions;version="1.4.0";x-friends:="org.eclipse.emf.ecp.ui.view
+ l.swt.actions;version="1.5.0";x-friends:="org.eclipse.emf.ecp.ui.view
  .editor.controls,org.eclipse.emf.ecp.edit.ecore.swt",org.eclipse.emf.
- ecp.edit.internal.swt.controls;version="1.4.0";x-friends:="org.eclips
+ ecp.edit.internal.swt.controls;version="1.5.0";x-friends:="org.eclips
  e.emf.ecp.ui.view.swt,org.eclipse.emf.ecp.ui.view.editor.controls,org
  .eclipse.emf.ecp.view.table.ui.swt",org.eclipse.emf.ecp.edit.internal
- .swt.reference;version="1.4.0";x-friends:="org.eclipse.emf.ecp.edit.e
+ .swt.reference;version="1.5.0";x-friends:="org.eclipse.emf.ecp.edit.e
  core.swt,org.eclipse.emf.ecp.ui.view.editor.controls",org.eclipse.emf
- .ecp.edit.internal.swt.table;version="1.4.0";x-friends:="org.eclipse.
+ .ecp.edit.internal.swt.table;version="1.5.0";x-friends:="org.eclipse.
  emf.ecp.view.table.ui.swt",org.eclipse.emf.ecp.edit.internal.swt.util
- ;version="1.4.0"; x-friends:="org.eclipse.emf.ecp.editor,  org.eclips
+ ;version="1.5.0"; x-friends:="org.eclipse.emf.ecp.editor,  org.eclips
  e.emf.ecp.explorereditorbridge,  org.eclipse.emf.ecp.ui.view.swt,  or
  g.eclipse.emf.ecp.ui.view.editor.controls,  org.eclipse.emf.ecp.view.
  groupedgrid.ui.swt,  org.eclipse.emf.ecp.edit.ecore.swt,  org.eclipse
