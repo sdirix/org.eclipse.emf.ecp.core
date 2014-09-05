@@ -102,9 +102,9 @@
                name="org.eclipse.emf.ecp.makeithappen.model.edit">
          </projectDescriptor>
          <projectDescriptor
-               contentURI="examples/org.eclipse.emf.ecp.makeithappen.emailControlRenderer/"
+               contentURI="examples/org.eclipse.emf.ecp.makeithappen.view.email.renderer/"
                description="Make It Happen custom control renderer"
-               name="org.eclipse.emf.ecp.makeithappen.emailControlRenderer">
+               name="org.eclipse.emf.ecp.makeithappen.view.email.renderer">
          </projectDescriptor>
       </example>
       <example
