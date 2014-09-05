@@ -1,79 +1,51 @@
+/**
+ * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * EclipseSource Munich - initial API and implementation
+ */
 package org.eclipse.emf.ecp.makeithappen.application.sample.e3;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.makeithappen.model.task.TaskPackage;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
-import org.eclipse.jface.viewers.IStructuredContentProvider;
-import org.eclipse.jface.viewers.ITableLabelProvider;
-import org.eclipse.jface.viewers.LabelProvider;
-import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.ui.ISharedImages;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 
+/**
+ * Example View for displaying a Forms Editor for an EObject.
+ */
 public class View extends ViewPart {
+	/**
+	 * View ID.
+	 */
 	public static final String ID = "TestApp.view"; //$NON-NLS-1$
 
 	private ECPSWTView render;
 
-	private Composite content;
-
-	/**
-	 * The content provider class is responsible for providing objects to the
-	 * view. It can wrap existing objects in adapters or simply return objects
-	 * as-is. These objects may be sensitive to the current input of the view,
-	 * or ignore it and always show the same content (like Task List, for
-	 * example).
-	 */
-	class ViewContentProvider implements IStructuredContentProvider {
-		@Override
-		public void inputChanged(Viewer v, Object oldInput, Object newInput) {
-		}
-
-		@Override
-		public void dispose() {
-		}
-
-		@Override
-		public Object[] getElements(Object parent) {
-			if (parent instanceof Object[]) {
-				return (Object[]) parent;
-			}
-			return new Object[0];
-		}
-	}
-
-	class ViewLabelProvider extends LabelProvider implements
-		ITableLabelProvider {
-		@Override
-		public String getColumnText(Object obj, int index) {
-			return getText(obj);
-		}
-
-		@Override
-		public Image getColumnImage(Object obj, int index) {
-			return getImage(obj);
-		}
-
-		@Override
-		public Image getImage(Object obj) {
-			return PlatformUI.getWorkbench().getSharedImages()
-				.getImage(ISharedImages.IMG_OBJ_ELEMENT);
-		}
+	private EObject getDummyEObject() {
+		// Replace this with your own model EClass to test the application with a custom model
+		final EClass eClass = TaskPackage.eINSTANCE.getUser();
+		return EcoreUtil.create(eClass);
 	}
 
 	/**
 	 * This is a callback that will allow us to create the viewer and initialize
 	 * it.
+	 * 
+	 * @param parent the {@link Composite} to render to
 	 */
 	@Override
 	public void createPartControl(Composite parent) {
@@ -81,9 +53,9 @@ public class View extends ViewPart {
 		final EObject dummyObject = getDummyEObject();
 
 		try {
-
-			content = new Composite(parent, SWT.NONE);
-			content.setLayout(GridLayoutFactory.fillDefaults().create());
+			final Composite content = new Composite(parent, SWT.NONE);
+			content.setBackground(parent.getDisplay().getSystemColor(SWT.COLOR_WHITE));
+			content.setLayout(GridLayoutFactory.fillDefaults().margins(10, 10).create());
 			content.setLayoutData(GridDataFactory.fillDefaults().create());
 
 			render = ECPSWTViewRenderer.INSTANCE.render(content, dummyObject);
@@ -96,12 +68,6 @@ public class View extends ViewPart {
 		parent.layout();
 	}
 
-	private EObject getDummyEObject() {
-		final EClass eClass = TaskPackage.eINSTANCE.getUser();
-		final EPackage ePackage = eClass.getEPackage();
-		return ePackage.getEFactoryInstance().create(eClass);
-	}
-
 	@Override
 	public void setFocus() {
 	}
@@ -112,4 +78,5 @@ public class View extends ViewPart {
 			render.dispose();
 		}
 	}
+
 }
