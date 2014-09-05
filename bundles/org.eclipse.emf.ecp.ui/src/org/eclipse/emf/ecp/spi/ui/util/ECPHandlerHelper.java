@@ -45,16 +45,16 @@ import org.eclipse.emf.ecp.internal.wizards.AddRepositoryWizard;
 import org.eclipse.emf.ecp.internal.wizards.CheckoutProjectWizard;
 import org.eclipse.emf.ecp.internal.wizards.CreateProjectWizard;
 import org.eclipse.emf.ecp.internal.wizards.FilterModelElementWizard;
-import org.eclipse.emf.ecp.internal.wizards.SelectModelElementWizard;
+import org.eclipse.emf.ecp.spi.common.ui.CheckedModelClassComposite;
+import org.eclipse.emf.ecp.spi.common.ui.SelectModelElementWizard;
+import org.eclipse.emf.ecp.spi.common.ui.composites.SelectionComposite;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProvider.LifecycleEvent;
 import org.eclipse.emf.ecp.ui.common.AddRepositoryComposite;
-import org.eclipse.emf.ecp.ui.common.CheckedModelClassComposite;
 import org.eclipse.emf.ecp.ui.common.CheckoutProjectComposite;
-import org.eclipse.emf.ecp.ui.common.CompositeFactory;
+import org.eclipse.emf.ecp.ui.common.ECPCompositeFactory;
 import org.eclipse.emf.ecp.ui.common.CreateProjectComposite;
-import org.eclipse.emf.ecp.ui.common.SelectionComposite;
 import org.eclipse.emf.ecp.ui.util.ECPModelElementOpenTester;
 import org.eclipse.emf.ecp.ui.util.ECPModelElementOpener;
 import org.eclipse.emf.edit.command.ChangeCommand;
@@ -91,7 +91,7 @@ public final class ECPHandlerHelper {
 	 */
 	public static void checkout(final List<ECPCheckoutSource> checkoutObjects, final Shell shell) {
 		for (final ECPCheckoutSource checkoutSource : checkoutObjects) {
-			final CheckoutProjectComposite checkoutCompposite = CompositeFactory
+			final CheckoutProjectComposite checkoutCompposite = ECPCompositeFactory
 				.getCheckoutProjectComposite(checkoutSource);
 			final CheckoutProjectWizard wizard = new CheckoutProjectWizard();
 			wizard.setCompositeProvider(checkoutCompposite);
@@ -143,7 +143,7 @@ public final class ECPHandlerHelper {
 			showError(shell, "No Provider", "Please check if a suitable provider is installed."); //$NON-NLS-1$//$NON-NLS-2$
 			return null;
 		}
-		final CreateProjectComposite createProjectComposite = CompositeFactory.getCreateProjectComposite(providers);
+		final CreateProjectComposite createProjectComposite = ECPCompositeFactory.getCreateProjectComposite(providers);
 		final CreateProjectWizard wizard = new CreateProjectWizard();
 		wizard.setCompositeProvider(createProjectComposite);
 
@@ -257,7 +257,7 @@ public final class ECPHandlerHelper {
 	 * @return
 	 */
 	private static EClass openSelectModelElementWizard(final ECPProject ecpProject, final Shell shell, boolean open) {
-		final SelectionComposite<TreeViewer> helper = CompositeFactory.getSelectModelClassComposite(ecpProject);
+		final SelectionComposite<TreeViewer> helper = ECPCompositeFactory.getSelectModelClassComposite(ecpProject);
 		final SelectModelElementWizard wizard = new SelectModelElementWizard(
 			Messages.NewModelElementWizardHandler_Title,
 			Messages.NewModelElementWizard_WizardTitle_AddModelElement,
@@ -285,7 +285,7 @@ public final class ECPHandlerHelper {
 	public static void filterProjectPackages(final ECPProject ecpProject, final Shell shell) {
 		final Set<EPackage> ePackages = ECPUtil.getAllRegisteredEPackages();
 
-		final CheckedModelClassComposite checkedModelComposite = CompositeFactory
+		final CheckedModelClassComposite checkedModelComposite = ECPCompositeFactory
 			.getCheckedModelClassComposite(ePackages);
 		final Set<Object> initialSelectionSet = new HashSet<Object>();
 		initialSelectionSet.addAll(((InternalProject) ecpProject).getVisiblePackages());
@@ -323,7 +323,7 @@ public final class ECPHandlerHelper {
 	 * @return the created {@link ECPRepository}
 	 */
 	public static ECPRepository createRepository(final Shell shell) {
-		final AddRepositoryComposite addRepositoryComposite = CompositeFactory.getAddRepositoryComposite();
+		final AddRepositoryComposite addRepositoryComposite = ECPCompositeFactory.getAddRepositoryComposite();
 		final AddRepositoryWizard wizard = new AddRepositoryWizard();
 		wizard.setCompositeProvider(addRepositoryComposite);
 		final WizardDialog wd = new WizardDialog(shell, wizard);

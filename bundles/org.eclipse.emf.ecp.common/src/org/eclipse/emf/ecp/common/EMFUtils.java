@@ -14,7 +14,9 @@ package org.eclipse.emf.ecp.common;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
@@ -57,5 +59,20 @@ public final class EMFUtils {
 			}
 		}
 		return classes;
+	}
+
+	/**
+	 * Returns the set of all known {@link EPackage EPackages}.
+	 * 
+	 * @return the Set of all known {@link EPackage Epackages}
+	 */
+	public static Set<EPackage> getAllRegisteredEPackages() {
+		final Set<EPackage> ePackages = new HashSet<EPackage>();
+		final Set<String> namespaceURIs = new LinkedHashSet<String>(Registry.INSTANCE.keySet());
+		for (final String nsURI : namespaceURIs) {
+			final EPackage ePackage = Registry.INSTANCE.getEPackage(nsURI);
+			ePackages.add(ePackage);
+		}
+		return ePackages;
 	}
 }

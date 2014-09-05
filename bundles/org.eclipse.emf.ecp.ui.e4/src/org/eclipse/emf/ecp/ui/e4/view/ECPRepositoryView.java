@@ -17,7 +17,7 @@ import javax.annotation.PostConstruct;
 import org.eclipse.e4.ui.di.Focus;
 import org.eclipse.e4.ui.services.EMenuService;
 import org.eclipse.e4.ui.workbench.modeling.ESelectionService;
-import org.eclipse.emf.ecp.ui.common.TreeViewerFactory;
+import org.eclipse.emf.ecp.ui.common.ECPViewerFactory;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -46,13 +46,14 @@ public class ECPRepositoryView {
 	@PostConstruct
 	public void create(Composite composite, EMenuService menuService,
 		final ESelectionService selectionService) {
-		repositoryTree = TreeViewerFactory.createRepositoryExplorerViewer(
+		repositoryTree = ECPViewerFactory.createRepositoryExplorerViewer(
 			composite, null);
 		menuService.registerContextMenu(repositoryTree.getTree(),
 			POPUPMENU_REPOSITORY);
 		repositoryTree
 			.addSelectionChangedListener(new ISelectionChangedListener() {
 
+				@Override
 				public void selectionChanged(SelectionChangedEvent event) {
 					final ISelection selection = event.getSelection();
 					if (IStructuredSelection.class.isInstance(selection)) {

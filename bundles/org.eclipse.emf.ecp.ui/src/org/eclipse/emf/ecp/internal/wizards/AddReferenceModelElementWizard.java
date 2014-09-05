@@ -13,7 +13,8 @@
 
 package org.eclipse.emf.ecp.internal.wizards;
 
-import org.eclipse.emf.ecp.internal.ui.composites.SelectModelElementCompositeImpl;
+import org.eclipse.emf.ecp.spi.common.ui.ECPWizard;
+import org.eclipse.emf.ecp.spi.common.ui.composites.SelectModelElementCompositeImpl;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.widgets.Composite;
 

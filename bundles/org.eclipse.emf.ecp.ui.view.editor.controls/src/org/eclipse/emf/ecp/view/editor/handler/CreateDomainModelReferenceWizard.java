@@ -23,7 +23,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecp.internal.wizards.SelectModelElementWizard;
+import org.eclipse.emf.ecp.spi.common.ui.SelectModelElementWizard;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
@@ -153,7 +153,7 @@ public class CreateDomainModelReferenceWizard extends SelectModelElementWizard {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.internal.wizards.SelectModelElementWizard#performFinish()
+	 * @see org.eclipse.emf.ecp.spi.common.ui.SelectModelElementWizard#performFinish()
 	 */
 	@Override
 	public boolean performFinish() {

@@ -13,6 +13,7 @@ package org.eclipse.emf.ecp.ui.common;
 
 import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
+import org.eclipse.emf.ecp.spi.common.ui.CompositeProvider;
 
 /**
  * @author Eugen Neufeld

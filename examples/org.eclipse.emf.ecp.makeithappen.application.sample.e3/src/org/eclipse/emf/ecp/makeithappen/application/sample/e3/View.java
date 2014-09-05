@@ -16,8 +16,12 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.makeithappen.model.task.TaskPackage;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
+import org.eclipse.emf.ecp.ui.view.swt.DefaultReferenceService;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
+import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
@@ -58,7 +62,10 @@ public class View extends ViewPart {
 			content.setLayout(GridLayoutFactory.fillDefaults().margins(10, 10).create());
 			content.setLayoutData(GridDataFactory.fillDefaults().create());
 
-			render = ECPSWTViewRenderer.INSTANCE.render(content, dummyObject);
+			final ViewModelContext vmc = ViewModelContextFactory.INSTANCE.createViewModelContext(
+				ViewProviderHelper.getView(dummyObject, null), dummyObject, new DefaultReferenceService());
+
+			render = ECPSWTViewRenderer.INSTANCE.render(content, vmc);
 
 			content.layout();
 

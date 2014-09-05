@@ -21,7 +21,7 @@ import org.eclipse.emf.ecp.internal.wizards.page.AddRepositoryPage;
 import org.eclipse.emf.ecp.internal.wizards.page.SelectOrCreateRepositoryPage;
 import org.eclipse.emf.ecp.internal.wizards.page.SelectRepositoryPage;
 import org.eclipse.emf.ecp.ui.common.AddRepositoryComposite;
-import org.eclipse.emf.ecp.ui.common.CompositeFactory;
+import org.eclipse.emf.ecp.ui.common.ECPCompositeFactory;
 import org.eclipse.jface.wizard.Wizard;
 
 /**
@@ -77,7 +77,7 @@ public class ShareWizard extends Wizard {
 
 		final SelectOrCreateRepositoryPage userChoicePage = new SelectOrCreateRepositoryPage("UserChoice"); //$NON-NLS-1$
 		final SelectRepositoryPage selectPage = new SelectRepositoryPage("SelectRepository"); //$NON-NLS-1$
-		repositoryComposite = CompositeFactory.getAddRepositoryComposite(provider);
+		repositoryComposite = ECPCompositeFactory.getAddRepositoryComposite(provider);
 		final AddRepositoryPage addPage = new AddRepositoryPage("AddRepository", repositoryComposite); //$NON-NLS-1$
 		addPage(userChoicePage);
 		addPage(selectPage);

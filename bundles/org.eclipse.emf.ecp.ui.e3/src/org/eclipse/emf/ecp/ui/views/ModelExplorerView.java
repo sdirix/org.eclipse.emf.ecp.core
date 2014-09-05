@@ -5,7 +5,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
  * Eike Stepper - initial API and implementation
  *******************************************************************************/
@@ -22,7 +22,7 @@ import org.eclipse.emf.ecp.internal.ui.model.ModelContentProvider;
 import org.eclipse.emf.ecp.spi.ui.UIProvider;
 import org.eclipse.emf.ecp.spi.ui.UIProviderRegistry;
 import org.eclipse.emf.ecp.spi.ui.util.ECPHandlerHelper;
-import org.eclipse.emf.ecp.ui.common.TreeViewerFactory;
+import org.eclipse.emf.ecp.ui.common.ECPViewerFactory;
 import org.eclipse.emf.ecp.ui.linkedView.ILinkedWithEditorView;
 import org.eclipse.emf.ecp.ui.linkedView.LinkedWithEditorPartListener;
 import org.eclipse.emf.ecp.ui.platform.Activator;
@@ -119,7 +119,7 @@ public class ModelExplorerView extends TreeView implements ILinkedWithEditorView
 
 	/**
 	 * {@inheritDoc}
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.ui.views.TreeView#init(org.eclipse.ui.IViewSite)
 	 */
 	@Override
@@ -145,7 +145,7 @@ public class ModelExplorerView extends TreeView implements ILinkedWithEditorView
 
 	@Override
 	protected TreeViewer createViewer(final Composite parent) {
-		viewer = TreeViewerFactory.createModelExplorerViewer(parent, true, createLabelDecorator());
+		viewer = ECPViewerFactory.createModelExplorerViewer(parent, true, createLabelDecorator());
 		contentProvider = (ModelContentProvider) viewer.getContentProvider();
 		viewer.addDoubleClickListener(new DoubleClickListener());
 		viewer.addSelectionChangedListener(new ModelExplorerViewSelectionListener());
@@ -157,7 +157,7 @@ public class ModelExplorerView extends TreeView implements ILinkedWithEditorView
 			@Override
 			public void focusLost(FocusEvent event) {
 				ECPUtil.getECPObserverBus().notify(SaveButtonEnablementObserver.class)
-				.notifyChangeButtonState(null, false);
+					.notifyChangeButtonState(null, false);
 			}
 
 		});
@@ -265,9 +265,9 @@ public class ModelExplorerView extends TreeView implements ILinkedWithEditorView
 	}
 
 	/**
-	 *
+	 * 
 	 * @author jfaltermeier
-	 *
+	 * 
 	 */
 	private class ModelExplorerViewSelectionListener implements ISelectionChangedListener {
 
@@ -307,7 +307,7 @@ public class ModelExplorerView extends TreeView implements ILinkedWithEditorView
 			}
 
 			ECPUtil.getECPObserverBus().notify(SaveButtonEnablementObserver.class)
-			.notifyChangeButtonState(project, selectedProjectIsDirty);
+				.notifyChangeButtonState(project, selectedProjectIsDirty);
 		}
 	}
 }
