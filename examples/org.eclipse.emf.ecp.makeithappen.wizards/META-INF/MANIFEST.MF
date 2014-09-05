@@ -14,5 +14,5 @@ Require-Bundle: org.eclipse.ui;bundle-version="[3.5.0,4.0.0)",
 Bundle-ActivationPolicy: lazy
 Export-Package: org.eclipse.emf.ecp.makeithappen.internal.wizards;x-in
  ternal:=true;version="1.4.0"
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-Vendor: Eclipse Modeling Framework
