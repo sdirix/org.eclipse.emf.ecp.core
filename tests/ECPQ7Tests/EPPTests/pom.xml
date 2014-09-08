@@ -66,11 +66,6 @@
 									</injection>
 								</injections>
 							</aut>
-							<projects>
-								<project>
-								${project.basedir}/../project
-								</project>
-							</projects>
 							<testOptions>
 								<execTimeout>3600</execTimeout>
 								<testExecTimeout>600</testExecTimeout>
@@ -142,11 +137,6 @@
 								<execTimeout>3600</execTimeout>
 								<testExecTimeout>600</testExecTimeout>
 							</testOptions>
-							<projects>
-								<project>
-								${project.basedir}/../project
-								</project>
-							</projects>
 						</configuration>
 					</plugin>
 				</plugins>
