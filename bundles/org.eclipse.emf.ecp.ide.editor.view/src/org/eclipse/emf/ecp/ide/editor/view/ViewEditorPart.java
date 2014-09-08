@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- *
+ * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
@@ -54,6 +54,7 @@ import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
@@ -75,9 +76,9 @@ import org.eclipse.ui.part.FileEditorInput;
 
 /**
  * The IDE ViewModel EditorPart.
- *
+ * 
  * @author Eugen Neufeld
- *
+ * 
  */
 @SuppressWarnings("restriction")
 public class ViewEditorPart extends EditorPart implements
@@ -230,7 +231,7 @@ public class ViewEditorPart extends EditorPart implements
 	@Override
 	public void createPartControl(Composite parent) {
 		this.parent = parent;
-
+		parent.setBackground(parent.getDisplay().getSystemColor(SWT.COLOR_WHITE));
 		loadView();
 		VView view = getView();
 
@@ -341,7 +342,7 @@ public class ViewEditorPart extends EditorPart implements
 
 	/**
 	 * {@inheritDoc}
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.ide.view.service.ViewModelEditorCallback#reloadViewModel()
 	 */
 	@Override
@@ -534,7 +535,7 @@ public class ViewEditorPart extends EditorPart implements
 
 	/**
 	 * {@inheritDoc}
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.ide.view.service.ViewModelEditorCallback#signalEcoreOutOfSync()
 	 */
 	@Override
