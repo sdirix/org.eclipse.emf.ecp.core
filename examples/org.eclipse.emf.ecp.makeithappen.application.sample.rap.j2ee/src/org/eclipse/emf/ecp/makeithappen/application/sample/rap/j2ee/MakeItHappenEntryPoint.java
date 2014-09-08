@@ -9,7 +9,7 @@
  * Contributors:
  * EclipseSource Munich - initial API and implementation
  */
-package org.eclipse.emf.ecp.makeithappen.application.sample.rap;
+package org.eclipse.emf.ecp.makeithappen.application.sample.rap.j2ee;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -17,27 +17,20 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.makeithappen.model.task.TaskPackage;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.DefaultReferenceService;
-import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
+import org.eclipse.rap.rwt.application.AbstractEntryPoint;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.ui.part.ViewPart;
 
 /**
- * Example View for displaying a Forms Editor for an EObject.
+ * Entry Point for a standalone RAP Application.
  */
-public class View extends ViewPart {
-	/**
-	 * View ID.
-	 */
-	public static final String ID = "TestApp.view"; //$NON-NLS-1$
-
-	private ECPSWTView render;
+public class MakeItHappenEntryPoint extends AbstractEntryPoint {
 
 	private EObject getDummyEObject() {
 		// Replace this with your own model EClass to test the application with a custom model
@@ -46,13 +39,14 @@ public class View extends ViewPart {
 	}
 
 	/**
-	 * This is a callback that will allow us to create the viewer and initialize
-	 * it.
+	 * {@inheritDoc}
 	 * 
-	 * @param parent the {@link Composite} to render to
+	 * @see org.eclipse.rap.rwt.application.AbstractEntryPoint#createContents(org.eclipse.swt.widgets.Composite)
 	 */
 	@Override
-	public void createPartControl(Composite parent) {
+	protected void createContents(Composite parent) {
+		// Special call needed only on RAP J2EE
+		RealmSetter.initialize();
 
 		final EObject dummyObject = getDummyEObject();
 
@@ -65,24 +59,15 @@ public class View extends ViewPart {
 			final ViewModelContext vmc = ViewModelContextFactory.INSTANCE.createViewModelContext(
 				ViewProviderHelper.getView(dummyObject, null), dummyObject, new DefaultReferenceService());
 
-			render = ECPSWTViewRenderer.INSTANCE.render(content, vmc);
+			ECPSWTViewRenderer.INSTANCE.render(content, vmc);
 
 			content.layout();
 
 		} catch (final ECPRendererException e) {
 			e.printStackTrace();
 		}
-		parent.layout();
+
+		parent.pack();
 	}
 
-	@Override
-	public void setFocus() {
-	}
-
-	@Override
-	public void dispose() {
-		if (render != null) {
-			render.dispose();
-		}
-	}
 }
