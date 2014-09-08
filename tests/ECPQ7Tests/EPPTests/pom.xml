@@ -21,10 +21,14 @@
 			<plugins>
 				<plugin>
 					<groupId>com.xored.q7</groupId>
-					<artifactId>q7-maven-plugin</artifactId>
+					<artifactId>q7-server-maven-plugin</artifactId>
 					<version>${q7-maven-version}</version>
 					<extensions>true</extensions>
 					<configuration>
+						<metadata>
+							<public>true</public>
+							<projectName>EMF Client Platform</projectName>
+						</metadata>
 						<q7client>
 							<version>${q7-client-version}</version>
 							<clientId>jfaltermeier</clientId>
