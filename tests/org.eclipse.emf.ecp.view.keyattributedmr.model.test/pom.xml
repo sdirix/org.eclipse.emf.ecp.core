@@ -9,7 +9,7 @@
 		<version>1.5.0-SNAPSHOT</version>
 		<relativePath>../../releng/org.eclipse.emf.ecp.releng/</relativePath>
 	</parent>
-	<artifactId>org.eclipse.emf.ecp.view.keyattributedmr.model.tests</artifactId>
+	<artifactId>org.eclipse.emf.ecp.view.keyattributedmr.model.test</artifactId>
 	<packaging>eclipse-test-plugin</packaging>
 
 	<build>
