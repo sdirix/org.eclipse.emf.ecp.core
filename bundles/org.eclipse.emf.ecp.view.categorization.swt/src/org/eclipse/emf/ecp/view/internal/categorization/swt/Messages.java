@@ -20,7 +20,7 @@ import org.eclipse.osgi.util.NLS;
  * @generated
  */
 public final class Messages extends NLS {
-	private static final String BUNDLE_NAME = "org.eclipse.emf.ecp.ui.view.swt.messages"; //$NON-NLS-1$
+	private static final String BUNDLE_NAME = "org.eclipse.emf.ecp.view.internal.categorization.swt.messages"; //$NON-NLS-1$
 
 	public static String Categorization_Selection;
 	static {
