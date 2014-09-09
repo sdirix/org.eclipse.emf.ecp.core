@@ -104,11 +104,11 @@ public class IDEViewModelRegistryImpl implements IDEViewModelRegistry {
 	public void registerViewModelEditor(VView viewModel, ViewModelEditorCallback viewModelEditor) throws IOException {
 
 		viewModelViewModelEditorMapping.put(viewModel, viewModelEditor);
-		final String ecorePath = viewModel.getEcorePath();
-		if (ecorePath == null) {
-			return;
-		}
-		EcoreHelper.registerEcore(ecorePath);
+		// final String ecorePath = viewModel.getEcorePath();
+		// if (ecorePath == null) {
+		// return;
+		// }
+		// EcoreHelper.registerEcore(ecorePath);
 
 	}
 
