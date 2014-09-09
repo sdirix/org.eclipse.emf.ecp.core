@@ -69,6 +69,9 @@
 		<!-- key attribute mapping -->
 		<module>../../features/org.eclipse.emf.ecp.view.keyattributedmr.feature</module>
 		
+		<!-- index mapping -->
+		<module>../../features/org.eclipse.emf.ecp.view.indexdmr.feature</module>
+		
 	</modules>
 
 	<!-- Parent used for features. This POM contains all build steps for code signing. -->

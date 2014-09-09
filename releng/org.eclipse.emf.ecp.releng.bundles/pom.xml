@@ -232,6 +232,11 @@
 		<module>../../bundles/org.eclipse.emf.ecp.view.keyattributedmr.model.edit</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.keyattributedmr.tooling</module>
 		
+		<!-- Index Attribute DMR-->
+		<module>../../bundles/org.eclipse.emf.ecp.view.indexdmr.model</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.indexdmr.model.edit</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.indexdmr.tooling</module>
+		
 	</modules>
 
 	<build>

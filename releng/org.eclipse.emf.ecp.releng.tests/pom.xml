@@ -62,6 +62,9 @@
 		<!-- Key Attribute DMR -->
 		<module>../../tests/org.eclipse.emf.ecp.view.keyattributedmr.model.test</module>	
 		
+		<!-- Index DMR -->
+		<module>../../tests/org.eclipse.emf.ecp.view.indexdmr.model.test</module>
+		
 	</modules>
 	
 	<build>
