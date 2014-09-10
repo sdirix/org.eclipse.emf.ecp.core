@@ -36,5 +36,5 @@
 <booleanAttribute key="tracing" value="false"/>
 <booleanAttribute key="useCustomFeatures" value="false"/>
 <booleanAttribute key="useDefaultConfigArea" value="true"/>
-<stringAttribute key="workspace_bundles" value="org.eclipse.emf.ecp.makeithappen.application.sample.rap@default:default,org.eclipse.emf.ecp.makeithappen.model.edit@default:default,org.eclipse.emf.ecp.makeithappen.model.viewmodel@default:default,org.eclipse.emf.ecp.makeithappen.model@default:default"/>
+<stringAttribute key="workspace_bundles" value="org.eclipse.emf.ecp.common.ui@default:default,org.eclipse.emf.ecp.makeithappen.application.sample.rap@default:default,org.eclipse.emf.ecp.makeithappen.model.edit@default:default,org.eclipse.emf.ecp.makeithappen.model.viewmodel@default:default,org.eclipse.emf.ecp.makeithappen.model@default:default"/>
 </launchConfiguration>
