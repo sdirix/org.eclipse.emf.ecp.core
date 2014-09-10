@@ -134,8 +134,8 @@
 								</injections>
 							</aut>
 							<testOptions>
-								<execTimeout>3600</execTimeout>
-								<testExecTimeout>600</testExecTimeout>
+								<execTimeout>7200</execTimeout>
+								<testExecTimeout>3600</testExecTimeout>
 							</testOptions>
 						</configuration>
 					</plugin>
