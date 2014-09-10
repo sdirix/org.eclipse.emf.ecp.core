@@ -77,7 +77,7 @@
 					<plugin>
 						<groupId>com.xored.q7</groupId>
 						<artifactId>q7-server-maven-plugin</artifactId>
-						<version>${q7-maven-version}</version>
+						<version>${q7-server-maven-version}</version>
 						<extensions>true</extensions>
 						<configuration>
 							<testFailureIgnore>true</testFailureIgnore>
