@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- *
+ * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
  */
@@ -28,7 +28,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * <li>and each data type</li>
  * </ul>
  * <!-- end-user-doc -->
- *
+ * 
  * @see org.eclipse.emf.ecp.view.spi.stack.model.VStackFactory
  * @model kind="package"
  * @generated
@@ -39,7 +39,7 @@ public interface VStackPackage extends EPackage
 	 * The package name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	String eNAME = "stack"; //$NON-NLS-1$
@@ -48,7 +48,7 @@ public interface VStackPackage extends EPackage
 	 * The package namespace URI.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	String eNS_URI = "http://org/eclipse/emf/ecp/view/stack/model"; //$NON-NLS-1$
@@ -57,7 +57,7 @@ public interface VStackPackage extends EPackage
 	 * The package namespace name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	String eNS_PREFIX = "org.eclipse.emf.ecp.view.stack.model"; //$NON-NLS-1$
@@ -66,7 +66,7 @@ public interface VStackPackage extends EPackage
 	 * The singleton instance of the package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	VStackPackage eINSTANCE = org.eclipse.emf.ecp.view.spi.stack.model.impl.VStackPackageImpl.init();
@@ -76,7 +76,7 @@ public interface VStackPackage extends EPackage
 	 * <em>Layout</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.stack.model.impl.VStackLayoutImpl
 	 * @see org.eclipse.emf.ecp.view.spi.stack.model.impl.VStackPackageImpl#getStackLayout()
 	 * @generated
@@ -87,7 +87,7 @@ public interface VStackPackage extends EPackage
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -97,7 +97,7 @@ public interface VStackPackage extends EPackage
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -107,7 +107,7 @@ public interface VStackPackage extends EPackage
 	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -117,7 +117,7 @@ public interface VStackPackage extends EPackage
 	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -127,7 +127,7 @@ public interface VStackPackage extends EPackage
 	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -137,7 +137,7 @@ public interface VStackPackage extends EPackage
 	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -147,7 +147,7 @@ public interface VStackPackage extends EPackage
 	 * The feature id for the '<em><b>Domain Model Reference</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -157,7 +157,7 @@ public interface VStackPackage extends EPackage
 	 * The feature id for the '<em><b>Stack Items</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -167,7 +167,7 @@ public interface VStackPackage extends EPackage
 	 * The feature id for the '<em><b>Top Element</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -177,7 +177,7 @@ public interface VStackPackage extends EPackage
 	 * The number of structural features of the '<em>Layout</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -188,7 +188,7 @@ public interface VStackPackage extends EPackage
 	 * class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.stack.model.impl.VStackItemImpl
 	 * @see org.eclipse.emf.ecp.view.spi.stack.model.impl.VStackPackageImpl#getStackItem()
 	 * @generated
@@ -199,7 +199,7 @@ public interface VStackPackage extends EPackage
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -209,7 +209,7 @@ public interface VStackPackage extends EPackage
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -219,7 +219,7 @@ public interface VStackPackage extends EPackage
 	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -229,7 +229,7 @@ public interface VStackPackage extends EPackage
 	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -239,7 +239,7 @@ public interface VStackPackage extends EPackage
 	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -249,7 +249,7 @@ public interface VStackPackage extends EPackage
 	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -259,7 +259,7 @@ public interface VStackPackage extends EPackage
 	 * The feature id for the '<em><b>Children</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -269,7 +269,7 @@ public interface VStackPackage extends EPackage
 	 * The feature id for the '<em><b>Value</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -279,7 +279,7 @@ public interface VStackPackage extends EPackage
 	 * The number of structural features of the '<em>Item</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -290,7 +290,7 @@ public interface VStackPackage extends EPackage
 	 * '.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the meta object for class '<em>Layout</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.stack.model.VStackLayout
 	 * @generated
@@ -303,7 +303,7 @@ public interface VStackPackage extends EPackage
 	 * <em>Domain Model Reference</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the meta object for the containment reference '<em>Domain Model Reference</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.stack.model.VStackLayout#getDomainModelReference()
 	 * @see #getStackLayout()
@@ -316,7 +316,7 @@ public interface VStackPackage extends EPackage
 	 * {@link org.eclipse.emf.ecp.view.spi.stack.model.VStackLayout#getStackItems <em>Stack Items</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the meta object for the containment reference list '<em>Stack Items</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.stack.model.VStackLayout#getStackItems()
 	 * @see #getStackLayout()
@@ -329,7 +329,7 @@ public interface VStackPackage extends EPackage
 	 * {@link org.eclipse.emf.ecp.view.spi.stack.model.VStackLayout#getTopElement <em>Top Element</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the meta object for the reference '<em>Top Element</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.stack.model.VStackLayout#getTopElement()
 	 * @see #getStackLayout()
@@ -341,7 +341,7 @@ public interface VStackPackage extends EPackage
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.stack.model.VStackItem <em>Item</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the meta object for class '<em>Item</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.stack.model.VStackItem
 	 * @generated
@@ -353,7 +353,7 @@ public interface VStackPackage extends EPackage
 	 * <em>Value</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the meta object for the attribute '<em>Value</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.stack.model.VStackItem#getValue()
 	 * @see #getStackItem()
@@ -365,7 +365,7 @@ public interface VStackPackage extends EPackage
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the factory that creates the instances of the model.
 	 * @generated
 	 */
@@ -381,7 +381,7 @@ public interface VStackPackage extends EPackage
 	 * <li>and each data type</li>
 	 * </ul>
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	interface Literals
@@ -391,7 +391,7 @@ public interface VStackPackage extends EPackage
 		 * <em>Layout</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 *
+		 * 
 		 * @see org.eclipse.emf.ecp.view.spi.stack.model.impl.VStackLayoutImpl
 		 * @see org.eclipse.emf.ecp.view.spi.stack.model.impl.VStackPackageImpl#getStackLayout()
 		 * @generated
@@ -402,7 +402,7 @@ public interface VStackPackage extends EPackage
 		 * The meta object literal for the '<em><b>Domain Model Reference</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 *
+		 * 
 		 * @generated
 		 */
 		EReference STACK_LAYOUT__DOMAIN_MODEL_REFERENCE = eINSTANCE.getStackLayout_DomainModelReference();
@@ -411,7 +411,7 @@ public interface VStackPackage extends EPackage
 		 * The meta object literal for the '<em><b>Stack Items</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 *
+		 * 
 		 * @generated
 		 */
 		EReference STACK_LAYOUT__STACK_ITEMS = eINSTANCE.getStackLayout_StackItems();
@@ -420,7 +420,7 @@ public interface VStackPackage extends EPackage
 		 * The meta object literal for the '<em><b>Top Element</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 *
+		 * 
 		 * @generated
 		 */
 		EReference STACK_LAYOUT__TOP_ELEMENT = eINSTANCE.getStackLayout_TopElement();
@@ -430,7 +430,7 @@ public interface VStackPackage extends EPackage
 		 * <em>Item</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 *
+		 * 
 		 * @see org.eclipse.emf.ecp.view.spi.stack.model.impl.VStackItemImpl
 		 * @see org.eclipse.emf.ecp.view.spi.stack.model.impl.VStackPackageImpl#getStackItem()
 		 * @generated
@@ -441,7 +441,7 @@ public interface VStackPackage extends EPackage
 		 * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 *
+		 * 
 		 * @generated
 		 */
 		EAttribute STACK_ITEM__VALUE = eINSTANCE.getStackItem_Value();

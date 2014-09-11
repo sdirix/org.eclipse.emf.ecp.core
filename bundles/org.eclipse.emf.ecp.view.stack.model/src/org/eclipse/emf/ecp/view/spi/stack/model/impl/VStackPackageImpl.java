@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- *
+ * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
  */
@@ -27,7 +27,7 @@ import org.eclipse.emf.ecp.view.spi.stack.model.VStackPackage;
  * <!-- begin-user-doc -->
  * An implementation of the model <b>Package</b>.
  * <!-- end-user-doc -->
- *
+ * 
  * @generated
  */
 public class VStackPackageImpl extends EPackageImpl implements VStackPackage
@@ -35,7 +35,7 @@ public class VStackPackageImpl extends EPackageImpl implements VStackPackage
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	private EClass stackLayoutEClass = null;
@@ -43,7 +43,7 @@ public class VStackPackageImpl extends EPackageImpl implements VStackPackage
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	private EClass stackItemEClass = null;
@@ -56,7 +56,7 @@ public class VStackPackageImpl extends EPackageImpl implements VStackPackage
 	 * Note: the correct way to create the package is via the static factory method {@link #init init()}, which also
 	 * performs initialization of the package, or returns the registered package, if one already exists. <!--
 	 * begin-user-doc --> <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecore.EPackage.Registry
 	 * @see org.eclipse.emf.ecp.view.spi.stack.model.VStackPackage#eNS_URI
 	 * @see #init()
@@ -70,19 +70,19 @@ public class VStackPackageImpl extends EPackageImpl implements VStackPackage
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	private static boolean isInited = false;
 
 	/**
 	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-	 *
+	 * 
 	 * <p>
 	 * This method is used to initialize {@link VStackPackage#eINSTANCE} when that field is accessed. Clients should not
 	 * invoke it directly. Instead, they should simply access that field to obtain the package. <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #eNS_URI
 	 * @see #createPackageContents()
 	 * @see #initializePackageContents()
@@ -90,14 +90,12 @@ public class VStackPackageImpl extends EPackageImpl implements VStackPackage
 	 */
 	public static VStackPackage init()
 	{
-		if (isInited) {
+		if (isInited)
 			return (VStackPackage) EPackage.Registry.INSTANCE.getEPackage(VStackPackage.eNS_URI);
-		}
 
 		// Obtain or create and register package
-		final VStackPackageImpl theStackPackage = (VStackPackageImpl) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof VStackPackageImpl ? EPackage.Registry.INSTANCE
-			.get(eNS_URI)
-			: new VStackPackageImpl());
+		VStackPackageImpl theStackPackage = (VStackPackageImpl) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof VStackPackageImpl ? EPackage.Registry.INSTANCE
+			.get(eNS_URI) : new VStackPackageImpl());
 
 		isInited = true;
 
@@ -121,7 +119,7 @@ public class VStackPackageImpl extends EPackageImpl implements VStackPackage
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -133,7 +131,7 @@ public class VStackPackageImpl extends EPackageImpl implements VStackPackage
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -145,7 +143,7 @@ public class VStackPackageImpl extends EPackageImpl implements VStackPackage
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -157,7 +155,7 @@ public class VStackPackageImpl extends EPackageImpl implements VStackPackage
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -169,7 +167,7 @@ public class VStackPackageImpl extends EPackageImpl implements VStackPackage
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -181,7 +179,7 @@ public class VStackPackageImpl extends EPackageImpl implements VStackPackage
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -193,7 +191,7 @@ public class VStackPackageImpl extends EPackageImpl implements VStackPackage
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -205,7 +203,7 @@ public class VStackPackageImpl extends EPackageImpl implements VStackPackage
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	private boolean isCreated = false;
@@ -215,14 +213,13 @@ public class VStackPackageImpl extends EPackageImpl implements VStackPackage
 	 * guarded to have no affect on any invocation but its first.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public void createPackageContents()
 	{
-		if (isCreated) {
+		if (isCreated)
 			return;
-		}
 		isCreated = true;
 
 		// Create classes and their features
@@ -238,7 +235,7 @@ public class VStackPackageImpl extends EPackageImpl implements VStackPackage
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	private boolean isInitialized = false;
@@ -248,14 +245,13 @@ public class VStackPackageImpl extends EPackageImpl implements VStackPackage
 	 * method is guarded to have no affect on any invocation but its first.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public void initializePackageContents()
 	{
-		if (isInitialized) {
+		if (isInitialized)
 			return;
-		}
 		isInitialized = true;
 
 		// Initialize package
@@ -264,9 +260,8 @@ public class VStackPackageImpl extends EPackageImpl implements VStackPackage
 		setNsURI(eNS_URI);
 
 		// Obtain other dependent packages
-		final VViewPackage theViewPackage = (VViewPackage) EPackage.Registry.INSTANCE.getEPackage(VViewPackage.eNS_URI);
-		final EcorePackage theEcorePackage = (EcorePackage) EPackage.Registry.INSTANCE
-			.getEPackage(EcorePackage.eNS_URI);
+		VViewPackage theViewPackage = (VViewPackage) EPackage.Registry.INSTANCE.getEPackage(VViewPackage.eNS_URI);
+		EcorePackage theEcorePackage = (EcorePackage) EPackage.Registry.INSTANCE.getEPackage(EcorePackage.eNS_URI);
 
 		// Create type parameters
 
@@ -286,12 +281,12 @@ public class VStackPackageImpl extends EPackageImpl implements VStackPackage
 			"domainModelReference", null, 0, 1, VStackLayout.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(
 			getStackLayout_StackItems(),
-			getStackItem(),
+			this.getStackItem(),
 			null,
 			"stackItems", null, 0, -1, VStackLayout.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(
 			getStackLayout_TopElement(),
-			getStackItem(),
+			this.getStackItem(),
 			null,
 			"topElement", null, 0, 1, VStackLayout.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
