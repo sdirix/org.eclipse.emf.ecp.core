@@ -254,8 +254,8 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					binding.updateTargetToModel();
-					binding.dispose();
-					dialog.close();
+					// binding.dispose();
+					// dialog.close();
 					updateChangeListener(modelValue.getValue());
 				}
 			});
