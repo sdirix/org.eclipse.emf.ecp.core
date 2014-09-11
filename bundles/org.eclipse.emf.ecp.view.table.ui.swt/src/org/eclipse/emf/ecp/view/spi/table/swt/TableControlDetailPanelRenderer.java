@@ -13,7 +13,6 @@ package org.eclipse.emf.ecp.view.spi.table.swt;
 
 import java.util.Collections;
 
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
@@ -51,20 +50,6 @@ public class TableControlDetailPanelRenderer extends TableControlSWTRenderer {
 	private Composite detailPanel;
 	private Composite border;
 	private ScrolledComposite scrolledComposite;
-	private boolean debugMode;
-
-	/**
-	 * Constructor.
-	 */
-	public TableControlDetailPanelRenderer() {
-		final String[] commandLineArgs = Platform.getCommandLineArgs();
-		for (int i = 0; i < commandLineArgs.length; i++) {
-			final String arg = commandLineArgs[i];
-			if ("-debugEMFForms".equalsIgnoreCase(arg)) { //$NON-NLS-1$
-				debugMode = true;
-			}
-		}
-	}
 
 	/**
 	 * {@inheritDoc}
@@ -180,21 +165,16 @@ public class TableControlDetailPanelRenderer extends TableControlSWTRenderer {
 					label.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_RED));
 					label.setText("No Detail View found."); //$NON-NLS-1$
 				}
-				return;
+			} else {
+				ecpView = ECPSWTViewRenderer.INSTANCE.render(detailPanel,
+					object, detailView);
 			}
-
-			ecpView = ECPSWTViewRenderer.INSTANCE.render(detailPanel,
-				object, detailView);
 			border.layout(true, true);
 			final Point point = detailPanel.computeSize(SWT.DEFAULT, SWT.DEFAULT);
 			scrolledComposite.setMinHeight(point.y);
 		} catch (final ECPRendererException ex) {
 			Activator.log(ex);
 		}
-	}
-
-	private boolean isDebug() {
-		return debugMode;
 	}
 
 	/**

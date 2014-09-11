@@ -26,6 +26,7 @@ import org.eclipse.core.databinding.observable.map.IObservableMap;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.core.runtime.Assert;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.databinding.EObjectObservableMap;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
@@ -131,6 +132,21 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	private Button addButton;
 	private Button removeButton;
 
+	private boolean debugMode;
+
+	/**
+	 * Default constructor.
+	 */
+	public TableControlSWTRenderer() {
+		final String[] commandLineArgs = Platform.getCommandLineArgs();
+		for (int i = 0; i < commandLineArgs.length; i++) {
+			final String arg = commandLineArgs[i];
+			if ("-debugEMFForms".equalsIgnoreCase(arg)) { //$NON-NLS-1$
+				debugMode = true;
+			}
+		}
+	}
+
 	/**
 	 * {@inheritDoc}
 	 *
@@ -145,6 +161,15 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	}
 
 	/**
+	 * Returns whether debug is active or inactive.
+	 * 
+	 * @return <code>true</code> if debug mode is enabled, <code>false</code> otherwise
+	 */
+	protected boolean isDebug() {
+		return debugMode;
+	}
+
+	/**
 	 * {@inheritDoc}
 	 *
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#renderControl(int, org.eclipse.swt.widgets.Composite,
@@ -152,7 +177,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 */
 	@Override
 	protected Control renderControl(SWTGridCell gridCell, final Composite parent) throws NoRendererFoundException,
-	NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption {
 		final Iterator<Setting> settings = getVElement().getDomainModelReference().getIterator();
 		if (!settings.hasNext()) {
 			return null;
@@ -169,7 +194,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		final Composite titleComposite = new Composite(composite, SWT.NONE);
 		titleComposite.setBackground(parent.getBackground());
 		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING)
-		.applyTo(titleComposite);
+			.applyTo(titleComposite);
 		GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(false).applyTo(titleComposite);
 
 		// TODO discuss
@@ -284,7 +309,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	protected Composite createControlComposite(Composite composite) {
 		final Composite controlComposite = new Composite(composite, SWT.NONE);
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).hint(1, getTableHeightHint())
-			.applyTo(controlComposite);
+		.applyTo(controlComposite);
 		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(controlComposite);
 		return controlComposite;
 	}
@@ -391,7 +416,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 				.setData("width", //$NON-NLS-1$
 					ECPCellEditor.class.isInstance(cellEditor) ? ECPCellEditor.class.cast(cellEditor)
 						.getColumnWidthWeight() : 100)
-				.build(tableViewer);
+						.build(tableViewer);
 
 			column.setLabelProvider(new ECPCellLabelProvider(eStructuralFeature, cellEditor, getObservableMap(dmr,
 				eStructuralFeature, cp), getVElement(), dmr));
@@ -493,8 +518,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			.getBundle().getBundleContext().getService(databindingProviderServiceReference);
 		final IValueProperty result = databindingProviderService.getProperty(dmr, IValueProperty.class);
 		Activator.getInstance()
-			.getBundle()
-			.getBundleContext().ungetService(databindingProviderServiceReference);
+		.getBundle()
+		.getBundleContext().ungetService(databindingProviderServiceReference);
 
 		return result;
 	}
@@ -618,8 +643,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		final MessageDialog dialog = new MessageDialog(addButton.getShell(),
 			ControlMessages.TableControl_Delete, null,
 			ControlMessages.TableControl_DeleteAreYouSure, MessageDialog.CONFIRM, new String[] {
-				JFaceResources.getString(IDialogLabelKeys.YES_LABEL_KEY),
-				JFaceResources.getString(IDialogLabelKeys.NO_LABEL_KEY) }, 0);
+			JFaceResources.getString(IDialogLabelKeys.YES_LABEL_KEY),
+			JFaceResources.getString(IDialogLabelKeys.NO_LABEL_KEY) }, 0);
 
 		new ECPDialogExecutor(dialog) {
 

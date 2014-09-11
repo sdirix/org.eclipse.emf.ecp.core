@@ -11,9 +11,16 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.table.swt;
 
+import java.util.Collections;
+
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.edit.internal.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.ecp.view.internal.table.swt.Activator;
+import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogLabelKeys;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -37,6 +44,7 @@ import org.eclipse.swt.widgets.Shell;
 public class TableControlDetailDialogSWTRenderer extends TableControlSWTRenderer {
 
 	private Button detailEditButton;
+	private VView view;
 
 	/**
 	 * {@inheritDoc}
@@ -54,48 +62,21 @@ public class TableControlDetailDialogSWTRenderer extends TableControlSWTRenderer
 		// detailEditButton.setText("Edit in Detail");
 		detailEditButton.setImage(Activator.getImage("icons/detailEdit.png")); //$NON-NLS-1$
 		detailEditButton.setEnabled(false);
-		detailEditButton.addSelectionListener(new SelectionAdapter() {
-
-			/**
-			 * {@inheritDoc}
-			 *
-			 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
-			 */
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				super.widgetSelected(e);
-				if (getTableViewer().getSelection().isEmpty()) {
-					final MessageDialog dialog = new MessageDialog(buttonComposite.getShell(),
-						"No Table Selection", null, //$NON-NLS-1$
-						"You must select one element in order to edit it.", MessageDialog.WARNING, new String[] { //$NON-NLS-1$
-						JFaceResources.getString(IDialogLabelKeys.OK_LABEL_KEY) }, 0);
-
-					new ECPDialogExecutor(dialog) {
-
-						@Override
-						public void handleResult(int codeResult) {
-
-						}
-					}.execute();
-				} else {
-					openDetailEditDialog(buttonComposite.getShell());
-				}
-			}
-
-		});
+		detailEditButton.addSelectionListener(new DetailEditButtonSelectionAdapter(buttonComposite.getShell()));
 	}
 
-	private void openDetailEditDialog(Shell shell) {
-		final Dialog dialog = new DetailDialog(shell, (EObject) IStructuredSelection.class.cast(
-			getTableViewer().getSelection()).getFirstElement(), getVElement());
-
-		new ECPDialogExecutor(dialog) {
-
-			@Override
-			public void handleResult(int codeResult) {
-
+	private VView getView() {
+		if (view == null) {
+			VView detailView = getVElement().getDetailView();
+			if (detailView == null) {
+				final Setting setting = getVElement().getDomainModelReference().getIterator().next();
+				final EReference reference = (EReference) setting.getEStructuralFeature();
+				detailView = ViewProviderHelper.getView(EcoreUtil.create(reference.getEReferenceType()),
+					Collections.<String, Object> emptyMap());
 			}
-		}.execute();
+			view = detailView;
+		}
+		return EcoreUtil.copy(view);
 	}
 
 	/**
@@ -120,13 +101,71 @@ public class TableControlDetailDialogSWTRenderer extends TableControlSWTRenderer
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.table.swt.TableControlSWTRenderer#dispose()
 	 */
 	@Override
 	protected void dispose() {
 		detailEditButton = null;
 		super.dispose();
+	}
+
+	/**
+	 * {@link SelectionAdapter} used for the detail edit button.
+	 *
+	 * @author jfaltermeier
+	 *
+	 */
+	private class DetailEditButtonSelectionAdapter extends SelectionAdapter {
+
+		private final Shell shell;
+
+		public DetailEditButtonSelectionAdapter(Shell shell) {
+			this.shell = shell;
+		}
+
+		/**
+		 * {@inheritDoc}
+		 *
+		 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
+		 */
+		@Override
+		public void widgetSelected(SelectionEvent e) {
+			super.widgetSelected(e);
+
+			final Dialog dialog = createDialog();
+
+			new ECPDialogExecutor(dialog) {
+				@Override
+				public void handleResult(int codeResult) {
+					// no op
+				}
+			}.execute();
+		}
+
+		/**
+		 * @param buttonComposite
+		 * @return
+		 */
+		private Dialog createDialog() {
+			Dialog dialog;
+			if (getTableViewer().getSelection().isEmpty()) {
+				dialog = new MessageDialog(shell, "No Table Selection", null, //$NON-NLS-1$
+					"You must select one element in order to edit it.", MessageDialog.WARNING, new String[] { //$NON-NLS-1$
+					JFaceResources.getString(IDialogLabelKeys.OK_LABEL_KEY) }, 0);
+
+			} else if (getView() == null) {
+				dialog = new MessageDialog(
+					shell,
+					"No View Model", null, //$NON-NLS-1$
+					"Detail editing is not possible since there is no UI description for the selection.", MessageDialog.ERROR, new String[] { //$NON-NLS-1$
+					JFaceResources.getString(IDialogLabelKeys.OK_LABEL_KEY) }, 0);
+			} else {
+				dialog = new DetailDialog(shell, (EObject) IStructuredSelection.class.cast(
+					getTableViewer().getSelection()).getFirstElement(), getVElement(), getView());
+			}
+			return dialog;
+		}
 	}
 
 }
