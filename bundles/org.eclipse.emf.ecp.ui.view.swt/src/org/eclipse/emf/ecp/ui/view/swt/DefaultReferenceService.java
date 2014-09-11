@@ -32,6 +32,8 @@ import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.view.internal.swt.Activator;
 import org.eclipse.emf.ecp.view.internal.swt.Messages;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
+import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
@@ -201,9 +203,10 @@ public class DefaultReferenceService implements ReferenceService {
 			@Override
 			protected Control createDialogArea(Composite parent) {
 				final Composite composite = (Composite) super.createDialogArea(parent);
-
+				final ViewModelContext vmc = ViewModelContextFactory.INSTANCE.createViewModelContext(
+					ViewProviderHelper.getView(eObject, null), eObject, new DefaultReferenceService());
 				try {
-					ECPSWTViewRenderer.INSTANCE.render(composite, eObject);
+					ECPSWTViewRenderer.INSTANCE.render(composite, vmc);
 				} catch (final ECPRendererException ex) {
 					Activator.log(ex);
 				}
