@@ -20,7 +20,7 @@
 		<extensions>true</extensions>
 		<configuration>
 			<projects>
-				<project>${project.basedir}/../projedt</project>
+				<project>${project.basedir}/../project</project>
 			</projects>
 	  		<aut>
 	  	    		<groupId>org.eclipse</groupId>
