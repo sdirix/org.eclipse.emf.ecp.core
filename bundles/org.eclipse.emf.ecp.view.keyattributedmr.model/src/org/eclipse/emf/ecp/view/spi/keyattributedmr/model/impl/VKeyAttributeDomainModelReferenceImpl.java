@@ -422,7 +422,7 @@ public class VKeyAttributeDomainModelReferenceImpl extends
 			Object keyValue = getKeyValue();
 			if (EcorePackage.eINSTANCE.getEEnum().isInstance(keySetting.getEStructuralFeature().getEType())) {
 				final EEnum eenum = EEnum.class.cast(keySetting.getEStructuralFeature().getEType());
-				keyValue = eenum.getEEnumLiteralByLiteral((String) keyValue);
+				keyValue = eenum.getEEnumLiteralByLiteral((String) keyValue).getInstance();
 
 			}
 			keySetting.set(keyValue);
