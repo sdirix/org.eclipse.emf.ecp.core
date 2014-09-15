@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- *
+ * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
  */
@@ -28,7 +28,7 @@ import org.eclipse.emf.ecp.view.spi.stack.model.VStackPackage;
  * <li>{@link org.eclipse.emf.ecp.view.spi.stack.model.impl.VStackItemImpl#getValue <em>Value</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class VStackItemImpl extends VContainerImpl implements VStackItem
@@ -37,7 +37,7 @@ public class VStackItemImpl extends VContainerImpl implements VStackItem
 	 * The default value of the '{@link #getValue() <em>Value</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #getValue()
 	 * @generated
 	 * @ordered
@@ -48,7 +48,7 @@ public class VStackItemImpl extends VContainerImpl implements VStackItem
 	 * The cached value of the '{@link #getValue() <em>Value</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #getValue()
 	 * @generated
 	 * @ordered
@@ -58,7 +58,7 @@ public class VStackItemImpl extends VContainerImpl implements VStackItem
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected VStackItemImpl()
@@ -69,7 +69,7 @@ public class VStackItemImpl extends VContainerImpl implements VStackItem
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -81,7 +81,7 @@ public class VStackItemImpl extends VContainerImpl implements VStackItem
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -93,23 +93,22 @@ public class VStackItemImpl extends VContainerImpl implements VStackItem
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void setValue(Object newValue)
 	{
-		final Object oldValue = value;
+		Object oldValue = value;
 		value = newValue;
-		if (eNotificationRequired()) {
+		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, VStackPackage.STACK_ITEM__VALUE, oldValue, value));
-		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -126,7 +125,7 @@ public class VStackItemImpl extends VContainerImpl implements VStackItem
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -144,7 +143,7 @@ public class VStackItemImpl extends VContainerImpl implements VStackItem
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -162,7 +161,7 @@ public class VStackItemImpl extends VContainerImpl implements VStackItem
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -179,17 +178,16 @@ public class VStackItemImpl extends VContainerImpl implements VStackItem
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public String toString()
 	{
-		if (eIsProxy()) {
+		if (eIsProxy())
 			return super.toString();
-		}
 
-		final StringBuffer result = new StringBuffer(super.toString());
+		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (value: "); //$NON-NLS-1$
 		result.append(value);
 		result.append(')');

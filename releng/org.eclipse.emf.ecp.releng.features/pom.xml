@@ -90,6 +90,11 @@
 						</goals>
 					</execution>
 				</executions>
+				<configuration>
+					<excludes>
+						<feature id="org.eclipse.emf.ecp.license.feature"/>
+					</excludes>
+				</configuration>
 			</plugin>
 			
 			<plugin>

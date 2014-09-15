@@ -15,13 +15,17 @@
     <plugins>
       <plugin>
         <groupId>com.xored.q7</groupId>
-		<artifactId>q7-maven-plugin</artifactId>
+		<artifactId>q7-server-maven-plugin</artifactId>
+		<version>${q7-server-maven-version}</version>
 		<extensions>true</extensions>
 		<configuration>
+			<projects>
+				<project>${project.basedir}/../project</project>
+			</projects>
 	  		<aut>
-  	    		<groupId>org.eclipse</groupId>
-            	<artifactId>modeling</artifactId>
-            	<version>4.3.2</version>
+  	    			<groupId>org.eclipse</groupId>
+            			<artifactId>modeling</artifactId>
+            			<version>4.3.2</version>
 	  		</aut>
         </configuration>
       </plugin>

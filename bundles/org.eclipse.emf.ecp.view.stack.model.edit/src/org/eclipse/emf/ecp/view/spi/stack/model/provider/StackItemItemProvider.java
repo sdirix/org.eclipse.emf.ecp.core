@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- *
+ * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
  */
@@ -13,7 +13,6 @@ package org.eclipse.emf.ecp.view.spi.stack.model.provider;
 
 import java.util.Collection;
 import java.util.List;
-
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
@@ -30,7 +29,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.spi.stack.model.VStackItem} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
- *
+ * 
  * @generated
  */
 public class StackItemItemProvider
@@ -40,7 +39,7 @@ public class StackItemItemProvider
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public StackItemItemProvider(AdapterFactory adapterFactory)
@@ -52,7 +51,7 @@ public class StackItemItemProvider
 	 * This returns the property descriptors for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -71,7 +70,7 @@ public class StackItemItemProvider
 	 * This adds a property descriptor for the Value feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected void addValuePropertyDescriptor(Object object)
@@ -95,7 +94,7 @@ public class StackItemItemProvider
 	 * This returns StackItem.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -108,13 +107,13 @@ public class StackItemItemProvider
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public String getText(Object object)
 	{
-		final String label = ((VStackItem) object).getName();
+		String label = ((VStackItem) object).getName();
 		return label == null || label.length() == 0 ?
 			getString("_UI_StackItem_type") : //$NON-NLS-1$
 			getString("_UI_StackItem_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
@@ -125,7 +124,7 @@ public class StackItemItemProvider
 	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -147,7 +146,7 @@ public class StackItemItemProvider
 	 * that can be created under this object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override

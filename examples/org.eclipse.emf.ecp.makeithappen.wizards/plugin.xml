@@ -69,6 +69,13 @@
             id="org.eclipse.emf.ecp.makeithappen.wizards.rap.ExampleApplicationWizard"
             name="Make it happen: sample RAP application">
       </wizard>
+      <wizard
+            category="org.eclipse.ui.Examples/org.eclipse.emf.ecp.makeithappen.wizards.EMFForms"
+            class="org.eclipse.emf.ecp.makeithappen.internal.wizards.MakeItHappenWizard"
+            icon="icons/emf_forms_icon.png"
+            id="org.eclipse.emf.ecp.makeithappen.wizards.rap.j2ee.ExampleApplicationWizard"
+            name="Make it happen: sample J2EE RAP application">
+      </wizard>
    </extension>
    <extension
          point="org.eclipse.emf.common.ui.examples">
@@ -102,9 +109,9 @@
                name="org.eclipse.emf.ecp.makeithappen.model.edit">
          </projectDescriptor>
          <projectDescriptor
-               contentURI="examples/org.eclipse.emf.ecp.makeithappen.emailControlRenderer/"
+               contentURI="examples/org.eclipse.emf.ecp.makeithappen.view.email.renderer/"
                description="Make It Happen custom control renderer"
-               name="org.eclipse.emf.ecp.makeithappen.emailControlRenderer">
+               name="org.eclipse.emf.ecp.makeithappen.view.email.renderer">
          </projectDescriptor>
       </example>
       <example
@@ -159,7 +166,7 @@
          <projectDescriptor
                contentURI="examples/org.eclipse.emf.ecp.makeithappen.application.sample.e3/"
                description="Make It Happen e3 application"
-               name="org.eclipse.emf.ecp.makeithappen.application.e3">
+               name="org.eclipse.emf.ecp.makeithappen.application.sample.e3">
          </projectDescriptor>
          <projectDescriptor
                contentURI="examples/org.eclipse.emf.ecp.makeithappen.model/"
@@ -184,7 +191,7 @@
          <projectDescriptor
                contentURI="examples/org.eclipse.emf.ecp.makeithappen.application.sample.e4/"
                description="Make It Happen e4 application"
-               name="org.eclipse.emf.ecp.makeithappen.application.e4">
+               name="org.eclipse.emf.ecp.makeithappen.application.sample.e4">
          </projectDescriptor>
          <projectDescriptor
                contentURI="examples/org.eclipse.emf.ecp.makeithappen.model/"
@@ -204,7 +211,32 @@
          <projectDescriptor
                contentURI="examples/org.eclipse.emf.ecp.makeithappen.application.sample.rap/"
                description="Make It Happen RAP application"
-               name="org.eclipse.emf.ecp.makeithappen.application.rap">
+               name="org.eclipse.emf.ecp.makeithappen.application.sample.rap">
+         </projectDescriptor>
+         <projectDescriptor
+               contentURI="examples/org.eclipse.emf.ecp.makeithappen.model.viewmodel/"
+               description="Make It Happen viewmodel"
+               name="org.eclipse.emf.ecp.makeithappen.model.viewmodel">
+         </projectDescriptor>
+         <projectDescriptor
+               contentURI="examples/org.eclipse.emf.ecp.makeithappen.model/"
+               description="Make It Happen model"
+               name="org.eclipse.emf.ecp.makeithappen.model">
+         </projectDescriptor>
+         <projectDescriptor
+               contentURI="examples/org.eclipse.emf.ecp.makeithappen.model.edit/"
+               description="Make It Happen model edit"
+               name="org.eclipse.emf.ecp.makeithappen.model.edit">
+         </projectDescriptor>
+      </example>
+      <example
+            id="org.eclipse.emf.ecp.makeithappen.wizards.rap.j2ee.ExampleApplication"
+            pageImage="icons/emf_forms_logo_56x48.png"
+            wizardID="org.eclipse.emf.ecp.makeithappen.wizards.rap.j2ee.ExampleApplicationWizard">
+         <projectDescriptor
+               contentURI="examples/org.eclipse.emf.ecp.makeithappen.application.sample.rap.j2ee/"
+               description="Make It Happen J2EE RAP application"
+               name="org.eclipse.emf.ecp.makeithappen.application.sample.rap.j2ee">
          </projectDescriptor>
          <projectDescriptor
                contentURI="examples/org.eclipse.emf.ecp.makeithappen.model.viewmodel/"

@@ -12,26 +12,8 @@
 	<packaging>pom</packaging>
 
 	<modules>
-		<!--<module>4.3</module>-->
+		<module>4.3</module>
 		<module>4.4</module>
 	</modules>
-
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>com.xored.q7</groupId>
-				<artifactId>q7-maven-plugin</artifactId>
-				<version>${q7-maven-version}</version>
-				<extensions>true</extensions>
-				<configuration>
-					<projects>
-						<project>
-							${project.basedir}/../project
-						</project>
-					</projects>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
 
 </project>

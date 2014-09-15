@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-
+	<groupId>org.eclipse.emf.ecp</groupId>
 	<artifactId>q7-non-epp-tests</artifactId>
 	<packaging>q7test</packaging>
 
@@ -12,7 +12,7 @@
 	</parent>
 
 	<properties>
-		<aut-base-path>https://hudson.eclipse.org/ecp/job/emf-emfclient-integration/lastSuccessfulBuild/artifact/releng/org.eclipse.emf.ecp.products/target/products/</aut-base-path>
+		<aut-base-path>https://hudson.eclipse.org/ecp/job/releaseBranch/lastSuccessfulBuild/artifact/releng/org.eclipse.emf.ecp.products/target/products/</aut-base-path>
 	</properties>
 
 	<profiles>
@@ -77,10 +77,10 @@
 					<plugin>
 						<groupId>com.xored.q7</groupId>
 						<artifactId>q7-server-maven-plugin</artifactId>
-						<version>${q7-maven-version}</version>
+						<version>${q7-server-maven-version}</version>
 						<extensions>true</extensions>
 						<configuration>
-
+							<testFailureIgnore>true</testFailureIgnore>
 							<metadata>
 								<public>true</public>
 								<projectName>EMF Client Platform</projectName>

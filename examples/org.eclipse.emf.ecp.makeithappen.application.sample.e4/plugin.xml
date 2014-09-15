@@ -5,11 +5,15 @@
          id="product"
          point="org.eclipse.core.runtime.products">
       <product
-            name="org.eclipse.emf.ecp.makeithappen.application.sample.e4"
+            name="MakeItHappen Sample e4 Product"
             application="org.eclipse.e4.ui.workbench.swt.E4Application">
          <property
-               name="applicationCSS"
-               value="platform:/plugin/org.eclipse.emf.ecp.makeithappen.application.sample.e4/css/default.css">
+               name="appName"
+               value="MakeItHappen Sample e4 Product">
+         </property>
+         <property
+               name="windowImages"
+               value="icons/bricks.png">
          </property>
       </product>
    </extension>

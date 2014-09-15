@@ -91,6 +91,10 @@ public class DefaultFilter implements ECPFilterProvider {
 		packages.add("http://org/eclipse/emf/ecp/view/stack/model"); //$NON-NLS-1$
 
 		packages.add("http://org/eclipse/emf/ecp/view/compoundcontrol/model"); //$NON-NLS-1$
+
+		packages.add("http://www.eclipse.org/emf/ecp/view/mappingdmr/model"); //$NON-NLS-1$
+		packages.add("http://org/eclipse/emf/ecp/view/viewproxy/model"); //$NON-NLS-1$
+		packages.add("http://org/eclipse/emf/ecp/view/section/model"); //$NON-NLS-1$
 	}
 
 	private void addQ7Models1(Set<String> packages) {

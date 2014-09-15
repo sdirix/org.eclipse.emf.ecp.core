@@ -11,7 +11,7 @@
       <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts</vmArgsMac>
    </launcherArgs>
 
-   <windowImages/>
+   <windowImages i16="/org.eclipse.emf.ecp.makeithappen.application.sample.e4/icons/bricks.png"/>
 
    <plugins>
       <plugin id="com.ibm.icu"/>
@@ -59,11 +59,13 @@
       <plugin id="org.eclipse.e4.ui.services"/>
       <plugin id="org.eclipse.e4.ui.widgets"/>
       <plugin id="org.eclipse.e4.ui.workbench"/>
+      <plugin id="org.eclipse.e4.ui.workbench.addons.swt"/>
       <plugin id="org.eclipse.e4.ui.workbench.renderers.swt"/>
       <plugin id="org.eclipse.e4.ui.workbench.renderers.swt.cocoa"/>
       <plugin id="org.eclipse.e4.ui.workbench.swt"/>
       <plugin id="org.eclipse.e4.ui.workbench3"/>
       <plugin id="org.eclipse.emf.common"/>
+      <plugin id="org.eclipse.emf.common.ui"/>
       <plugin id="org.eclipse.emf.databinding"/>
       <plugin id="org.eclipse.emf.databinding.edit"/>
       <plugin id="org.eclipse.emf.ecore"/>
@@ -71,6 +73,7 @@
       <plugin id="org.eclipse.emf.ecore.edit"/>
       <plugin id="org.eclipse.emf.ecore.xmi"/>
       <plugin id="org.eclipse.emf.ecp.common"/>
+      <plugin id="org.eclipse.emf.ecp.common.ui"/>
       <plugin id="org.eclipse.emf.ecp.edit"/>
       <plugin id="org.eclipse.emf.ecp.edit.swt"/>
       <plugin id="org.eclipse.emf.ecp.makeithappen.application.sample.e4"/>
@@ -81,6 +84,7 @@
       <plugin id="org.eclipse.emf.ecp.ui.view.swt"/>
       <plugin id="org.eclipse.emf.ecp.view.context"/>
       <plugin id="org.eclipse.emf.ecp.view.context.locale"/>
+      <plugin id="org.eclipse.emf.ecp.view.control.multireference"/>
       <plugin id="org.eclipse.emf.ecp.view.core.swt"/>
       <plugin id="org.eclipse.emf.ecp.view.group.model"/>
       <plugin id="org.eclipse.emf.ecp.view.group.model.edit"/>
@@ -113,7 +117,7 @@
       <plugin id="org.eclipse.emf.ecp.view.vertical.model.edit"/>
       <plugin id="org.eclipse.emf.ecp.view.vertical.ui.swt"/>
       <plugin id="org.eclipse.emf.edit"/>
-      <plugin id="org.eclipse.emf.rap.edit.ui.minimal"/>
+      <plugin id="org.eclipse.emf.edit.ui"/>
       <plugin id="org.eclipse.equinox.app"/>
       <plugin id="org.eclipse.equinox.common"/>
       <plugin id="org.eclipse.equinox.concurrent"/>
@@ -125,6 +129,7 @@
       <plugin id="org.eclipse.equinox.transforms.hook" fragment="true"/>
       <plugin id="org.eclipse.equinox.util"/>
       <plugin id="org.eclipse.equinox.weaving.hook" fragment="true"/>
+      <plugin id="org.eclipse.help"/>
       <plugin id="org.eclipse.jface"/>
       <plugin id="org.eclipse.jface.databinding"/>
       <plugin id="org.eclipse.osgi"/>
@@ -149,6 +154,9 @@
       <plugin id="org.eclipse.swt.photon.qnx.x86" fragment="true"/>
       <plugin id="org.eclipse.swt.win32.win32.x86" fragment="true"/>
       <plugin id="org.eclipse.swt.win32.win32.x86_64" fragment="true"/>
+      <plugin id="org.eclipse.ui"/>
+      <plugin id="org.eclipse.ui.views"/>
+      <plugin id="org.eclipse.ui.workbench"/>
       <plugin id="org.hamcrest.core"/>
       <plugin id="org.junit"/>
       <plugin id="org.w3c.css.sac"/>

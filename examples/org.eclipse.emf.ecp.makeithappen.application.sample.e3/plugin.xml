@@ -5,7 +5,8 @@
    <extension
          id="application"
          point="org.eclipse.core.runtime.applications">
-      <application>
+      <application
+            icon="icons/bricks.png">
          <run
                class="org.eclipse.emf.ecp.makeithappen.application.sample.e3.Application">
          </run>
@@ -14,51 +15,36 @@
    <extension
          point="org.eclipse.ui.perspectives">
       <perspective
-            name="Perspective"
             class="org.eclipse.emf.ecp.makeithappen.application.sample.e3.Perspective"
-            id="TestApp.perspective">
+            fixed="true"
+            icon="icons/bricks.png"
+            id="TestApp.perspective"
+            name="Perspective">
       </perspective>
    </extension>
    <extension
          point="org.eclipse.ui.views">
       <view
-            name="View"
             class="org.eclipse.emf.ecp.makeithappen.application.sample.e3.View"
-            id="TestApp.view">
+            icon="icons/bricks.png"
+            id="TestApp.view"
+            name="View">
       </view>
-   </extension>
-   <extension
-         point="org.eclipse.ui.perspectiveExtensions">
-      <perspectiveExtension
-            targetID="*">
-         <view
-               standalone="true"
-               minimized="false"
-               relative="org.eclipse.ui.editorss"
-               relationship="left"
-               id="TestApp.view">
-         </view>
-      </perspectiveExtension>
-   </extension>
-   <extension
-         point="org.eclipse.ui.menus">
-      <menuContribution
-            locationURI="menu:org.eclipse.ui.main.menu">
-         <menu
-               label="File">
-            <command
-                  commandId="org.eclipse.ui.file.exit"
-                  label="Exit">
-            </command>
-         </menu>
-      </menuContribution>
    </extension>
    <extension
          id="product"
          point="org.eclipse.core.runtime.products">
       <product
             application="org.eclipse.emf.ecp.makeithappen.application.sample.e3.application"
-            name="org.eclipse.emf.ecp.makeithappen.application.sample.e3">
+            name="MakeItHappen Sample e3 Product">
+         <property
+               name="appName"
+               value="MakeItHappen Sample e3 Product">
+         </property>
+         <property
+               name="windowImages"
+               value="icons/bricks.png">
+         </property>
       </product>
    </extension>
 

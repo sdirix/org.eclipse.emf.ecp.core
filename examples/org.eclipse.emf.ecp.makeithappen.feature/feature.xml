@@ -21,13 +21,6 @@
    </license>
 
    <plugin
-         id="org.eclipse.emf.ecp.makeithappen.emailControlRenderer"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.emf.ecp.makeithappen.model"
          download-size="0"
          install-size="0"
@@ -43,6 +36,13 @@
 
    <plugin
          id="org.eclipse.emf.ecp.makeithappen.view.group.renderer"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.ecp.makeithappen.view.email.renderer"
          download-size="0"
          install-size="0"
          version="0.0.0"

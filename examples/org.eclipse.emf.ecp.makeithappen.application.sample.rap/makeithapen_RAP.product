@@ -13,7 +13,7 @@
       </vmArgsMac>
    </launcherArgs>
 
-   <windowImages/>
+   <windowImages i16="/org.eclipse.emf.ecp.makeithappen.application.sample.rap/icons/bricks.png"/>
 
    <launcher>
       <solaris/>
@@ -45,6 +45,7 @@
       <plugin id="org.eclipse.emf.ecore.edit"/>
       <plugin id="org.eclipse.emf.ecore.xmi"/>
       <plugin id="org.eclipse.emf.ecp.common"/>
+      <plugin id="org.eclipse.emf.ecp.common.ui"/>
       <plugin id="org.eclipse.emf.ecp.edit"/>
       <plugin id="org.eclipse.emf.ecp.edit.swt"/>
       <plugin id="org.eclipse.emf.ecp.makeithappen.application.sample.rap"/>

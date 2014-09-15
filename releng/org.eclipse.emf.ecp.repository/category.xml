@@ -150,6 +150,11 @@
    <bundle id="org.eclipse.emf.ecp.view.group.swt.collapsible.pgroup" version="1.5.0.qualifier">
       <category name="org.eclipse.emf.ecp.view"/>
    </bundle>
+   <category-def name="org.eclipse.emf.ecp.sdk" label="All SDKs  (install one of these)">
+      <description>
+         Contains the ECP SDKs. Please install only one of these.
+      </description>
+   </category-def>
    <category-def name="org.eclipse.emf.ecp.category" label="EMF Client Platform Features">
       <description>
          If you are unsure, which features to select, please use the ECP SDK including all important features.
@@ -168,11 +173,6 @@
    <category-def name="org.eclipse.emf.ecp.rap" label="RAP Support Target Features (Do not install into IDE)">
       <description>
          Provides support for creating RAP applications with ECP. Should be added to a target platform, but not installed into the IDE.
-      </description>
-   </category-def>
-   <category-def name="org.eclipse.emf.ecp.sdk" label="SDKs  (install one of these)">
-      <description>
-         Contains the ECP SDKs. Please install only one of these.
       </description>
    </category-def>
 </site>

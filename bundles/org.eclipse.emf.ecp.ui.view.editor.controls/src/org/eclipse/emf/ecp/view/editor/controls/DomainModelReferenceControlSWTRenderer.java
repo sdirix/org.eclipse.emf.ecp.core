@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- *
+ * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
  * Alexandra Buzila - initial API and implementation
  ******************************************************************************/
@@ -36,8 +36,8 @@ import org.eclipse.emf.ecp.edit.internal.swt.reference.DeleteReferenceAction;
 import org.eclipse.emf.ecp.edit.internal.swt.reference.NewReferenceAction;
 import org.eclipse.emf.ecp.edit.spi.util.ECPModelElementChangeListener;
 import org.eclipse.emf.ecp.internal.ui.Messages;
-import org.eclipse.emf.ecp.ui.common.CompositeFactory;
-import org.eclipse.emf.ecp.ui.common.SelectionComposite;
+import org.eclipse.emf.ecp.spi.common.ui.CompositeFactory;
+import org.eclipse.emf.ecp.spi.common.ui.composites.SelectionComposite;
 import org.eclipse.emf.ecp.view.editor.handler.CreateDomainModelReferenceWizard;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer;
@@ -68,7 +68,7 @@ import org.eclipse.swt.widgets.Label;
 
 /**
  * @author Alexandra Buzila
- *
+ * 
  */
 public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 
@@ -86,7 +86,7 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 
 	/**
 	 * {@inheritDoc}
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer#createBindings(org.eclipse.swt.widgets.Control,
 	 *      org.eclipse.emf.ecore.EStructuralFeature.Setting)
 	 */
@@ -103,22 +103,22 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 				return getModelValue(setting).getValue();
 			}
 		}, new UpdateValueStrategy() {// model to target
-			@Override
-			public Object convert(Object value) {
-				updateChangeListener((EObject) value);
-				return getText(value);
-			}
-		});
+				@Override
+				public Object convert(Object value) {
+					updateChangeListener((EObject) value);
+					return getText(value);
+				}
+			});
 
 		final IObservableValue imageValue = SWTObservables.observeImage(imageLabel);
 		bindings[1] = getDataBindingContext().bindValue(imageValue, getModelValue(setting),
 			new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER)
-		, new UpdateValueStrategy() {
-			@Override
-			public Object convert(Object value) {
-				return getImage(value);
-			}
-		});
+			, new UpdateValueStrategy() {
+				@Override
+				public Object convert(Object value) {
+					return getImage(value);
+				}
+			});
 
 		return bindings;
 	}
@@ -197,7 +197,7 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 
 	/**
 	 * {@inheritDoc}
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer#createSWTControl(org.eclipse.swt.widgets.Composite,
 	 *      org.eclipse.emf.ecore.EStructuralFeature.Setting)
 	 */
@@ -214,7 +214,7 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 		parentComposite = new Composite(containerComposite, SWT.NONE);
 		parentComposite.setBackground(parent.getBackground());
 		GridLayoutFactory.fillDefaults().numColumns(4).spacing(0, 0).equalWidth(false)
-		.applyTo(parentComposite);
+			.applyTo(parentComposite);
 		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(parentComposite);
 
 		stackLayout = new StackLayout();
@@ -287,7 +287,7 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 
 	/**
 	 * A helper method which creates a button for an action on a composite.
-	 *
+	 * 
 	 * @param action the action to create a button for
 	 * @param composite the composite to create the button onto
 	 * @return the created button
@@ -302,7 +302,7 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 
 	/**
 	 * {@inheritDoc}
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTRenderer#getUnsetText()
 	 */
 	@Override
