@@ -23,6 +23,7 @@ import org.eclipse.swt.widgets.Control;
  * @author Eugen Neufeld
  * 
  */
+@Deprecated
 public interface ECPControlSWT {
 	/**
 	 * Renders a control on the provided parent and returning a list of {@link RenderingResultRow RenderingResultRows}.

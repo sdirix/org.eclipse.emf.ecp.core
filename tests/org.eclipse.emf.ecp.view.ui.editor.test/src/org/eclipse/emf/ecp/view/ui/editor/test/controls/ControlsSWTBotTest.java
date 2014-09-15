@@ -50,6 +50,7 @@ import org.eclipse.swtbot.swt.finder.widgets.SWTBotButton;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotCheckBox;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotCombo;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotDateTime;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotTable;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotText;
 import org.junit.AfterClass;
 import org.junit.runner.RunWith;
@@ -285,10 +286,8 @@ public class ControlsSWTBotTest extends ECPCommonSWTBotTest {
 		UIThreadRunnable.syncExec(new VoidResult() {
 			@Override
 			public void run() {
-				// delete game2
-				final SWTBotButton button = bot.button(getFirstButtonIndex(myIndex) + 5);
-				button.click();
-				bot.label("Games*").setFocus();
+				final SWTBotTable table = bot.table();
+				assertTrue(table.columns().contains("Games"));
 			}
 		});
 	}

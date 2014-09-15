@@ -150,7 +150,8 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage
 		EValidator.Registry.INSTANCE.put
 			(theModelPackage, 
 			 new EValidator.Descriptor() {
-				 public EValidator getEValidator() {
+				 @Override
+				public EValidator getEValidator() {
 					 return ModelValidator.INSTANCE;
 				 }
 			 });
@@ -169,6 +170,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getDynamicContainmentTree()
 	{
 		return dynamicContainmentTreeEClass;
@@ -179,6 +181,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getDynamicContainmentTree_DomainModel()
 	{
 		return (EReference)dynamicContainmentTreeEClass.getEStructuralFeatures().get(0);
@@ -189,6 +192,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getDynamicContainmentTree_ChildReference()
 	{
 		return (EReference)dynamicContainmentTreeEClass.getEStructuralFeatures().get(1);
@@ -199,6 +203,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getDynamicContainmentTree_PathToRoot()
 	{
 		return (EReference)dynamicContainmentTreeEClass.getEStructuralFeatures().get(2);
@@ -209,6 +214,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getDynamicContainmentTree_ChildComposite()
 	{
 		return (EReference)dynamicContainmentTreeEClass.getEStructuralFeatures().get(3);
@@ -219,6 +225,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getDynamicContainmentTree_Items()
 	{
 		return (EReference)dynamicContainmentTreeEClass.getEStructuralFeatures().get(4);
@@ -229,6 +236,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getDynamicContainmentItem()
 	{
 		return dynamicContainmentItemEClass;
@@ -239,6 +247,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getDynamicContainmentItem_DomainModel()
 	{
 		return (EReference)dynamicContainmentItemEClass.getEStructuralFeatures().get(0);
@@ -249,6 +258,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getDynamicContainmentItem_Items()
 	{
 		return (EReference)dynamicContainmentItemEClass.getEStructuralFeatures().get(1);
@@ -259,6 +269,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getDynamicContainmentItem_Composite()
 	{
 		return (EReference)dynamicContainmentItemEClass.getEStructuralFeatures().get(2);
@@ -269,6 +280,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getDynamicContainmentItem_BaseItemIndex() {
 		return (EAttribute)dynamicContainmentItemEClass.getEStructuralFeatures().get(3);
 	}
@@ -278,6 +290,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getTestElement()
 	{
 		return testElementEClass;
@@ -288,6 +301,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getTestElement_Id()
 	{
 		return (EAttribute)testElementEClass.getEStructuralFeatures().get(0);
@@ -298,6 +312,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getTestElement_Elements()
 	{
 		return (EReference)testElementEClass.getEStructuralFeatures().get(1);
@@ -308,6 +323,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getTestElement_ParentId()
 	{
 		return (EAttribute)testElementEClass.getEStructuralFeatures().get(2);
@@ -318,6 +334,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getTestElement_Name() {
 		return (EAttribute)testElementEClass.getEStructuralFeatures().get(3);
 	}
@@ -327,6 +344,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getDomainRoot()
 	{
 		return domainRootEClass;
@@ -337,6 +355,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getDomainRoot_Intermediate()
 	{
 		return (EReference)domainRootEClass.getEStructuralFeatures().get(0);
@@ -347,6 +366,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getDomainIntermediate()
 	{
 		return domainIntermediateEClass;
@@ -357,6 +377,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getDomainIntermediate_TestElementContainer()
 	{
 		return (EReference)domainIntermediateEClass.getEStructuralFeatures().get(0);
@@ -367,6 +388,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getTestElementContainer()
 	{
 		return testElementContainerEClass;
@@ -377,6 +399,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getTestElementContainer_TestElements()
 	{
 		return (EReference)testElementContainerEClass.getEStructuralFeatures().get(0);
@@ -387,6 +410,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getTestElementContainer_Id()
 	{
 		return (EAttribute)testElementContainerEClass.getEStructuralFeatures().get(1);
@@ -397,6 +421,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getDynamicContainmentTreeDomainModelReference() {
 		return dynamicContainmentTreeDomainModelReferenceEClass;
 	}
@@ -406,6 +431,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getDynamicContainmentTreeDomainModelReference_PathFromRoot() {
 		return (EReference)dynamicContainmentTreeDomainModelReferenceEClass.getEStructuralFeatures().get(0);
 	}
@@ -415,6 +441,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EReference getDynamicContainmentTreeDomainModelReference_PathFromBase() {
 		return (EReference)dynamicContainmentTreeDomainModelReferenceEClass.getEStructuralFeatures().get(1);
 	}
@@ -424,6 +451,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public ModelFactory getModelFactory()
 	{
 		return (ModelFactory)getEFactoryInstance();

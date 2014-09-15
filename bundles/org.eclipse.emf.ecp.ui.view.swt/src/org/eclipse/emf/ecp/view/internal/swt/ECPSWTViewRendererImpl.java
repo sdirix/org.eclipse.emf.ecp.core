@@ -11,6 +11,8 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.swt;
 
+import java.util.Map;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
@@ -22,8 +24,8 @@ import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
-import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
+import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
@@ -42,7 +44,7 @@ public class ECPSWTViewRendererImpl implements ECPSWTViewRenderer {
 	 */
 	@Override
 	public ECPSWTView render(Composite parent, EObject domainObject) throws ECPRendererException {
-		return render(parent, domainObject, ViewProviderHelper.getView(domainObject));
+		return render(parent, domainObject, ViewProviderHelper.getView(domainObject, null));
 	}
 
 	/**
@@ -85,6 +87,19 @@ public class ECPSWTViewRendererImpl implements ECPSWTViewRenderer {
 
 		final ECPSWTView swtView = new ECPSWTViewImpl(composite, viewModelContext);
 		return swtView;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer#render(org.eclipse.swt.widgets.Composite,
+	 *      org.eclipse.emf.ecore.EObject, java.util.Map)
+	 */
+	@Override
+	public ECPSWTView render(Composite parent, EObject domainObject, Map<String, Object> context)
+		throws ECPRendererException {
+		final VView view = ViewProviderHelper.getView(domainObject, context);
+		return render(parent, domainObject, view);
 	}
 
 }

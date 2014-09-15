@@ -54,6 +54,7 @@ import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
@@ -150,8 +151,7 @@ public class ViewEditorPart extends EditorPart implements
 			@Override
 			public void resourceChanged(IResourceChangeEvent event) {
 				final IResourceDelta delta = event.getDelta();
-				final IResourceDeltaVisitor visitor = new IResourceDeltaVisitor()
-				{
+				final IResourceDeltaVisitor visitor = new IResourceDeltaVisitor() {
 					@Override
 					public boolean visit(IResourceDelta delta)
 					{
@@ -231,7 +231,7 @@ public class ViewEditorPart extends EditorPart implements
 	@Override
 	public void createPartControl(Composite parent) {
 		this.parent = parent;
-
+		parent.setBackground(parent.getDisplay().getSystemColor(SWT.COLOR_WHITE));
 		loadView();
 		VView view = getView();
 
@@ -272,7 +272,9 @@ public class ViewEditorPart extends EditorPart implements
 
 	private void registerEcore(VView view) {
 		final String ecorePath = view.getEcorePath();
-
+		if (ecorePath == null) {
+			return;
+		}
 		try {
 			EcoreHelper.registerEcore(ecorePath);
 		} catch (final IOException e) {
@@ -313,7 +315,7 @@ public class ViewEditorPart extends EditorPart implements
 					null);
 			}
 		});
-		dialog.setTitle("Select XMI"); //$NON-NLS-1$
+		dialog.setTitle("Select Ecore"); //$NON-NLS-1$
 
 		if (dialog.open() == Window.OK) {
 
@@ -355,11 +357,13 @@ public class ViewEditorPart extends EditorPart implements
 				}
 
 				final String ecorePath = getView().getEcorePath();
-				try {
-					EcoreHelper.registerEcore(ecorePath);
-				} catch (final IOException e) {
-					Activator.getDefault().getLog()
-						.log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
+				if (ecorePath != null) {
+					try {
+						EcoreHelper.registerEcore(ecorePath);
+					} catch (final IOException e) {
+						Activator.getDefault().getLog()
+							.log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
+					}
 				}
 
 				// reload view resource after EClass' package resource was loaded into the package registry
@@ -437,7 +441,7 @@ public class ViewEditorPart extends EditorPart implements
 	}
 
 	/**
-	 * 
+	 *
 	 * */
 	private class ViewPartListener implements IPartListener2 {
 		@Override
@@ -457,8 +461,9 @@ public class ViewEditorPart extends EditorPart implements
 				}
 				final VView view = getView();
 
-				if (view.getEcorePath() == null
-					|| ResourcesPlugin.getWorkspace().getRoot().findMember(view.getEcorePath()) == null) {
+				if ((view.getEcorePath() == null
+					|| ResourcesPlugin.getWorkspace().getRoot().findMember(view.getEcorePath()) == null)
+					&& view.getRootEClass().eIsProxy()) {
 
 					final String selectedECorePath = selectEcoreFromWorkspace();
 					if (selectedECorePath != null) {
@@ -479,7 +484,7 @@ public class ViewEditorPart extends EditorPart implements
 								null,
 								"The ECore of your ViewModel just changed. This change is not reflected in this View Model Editor. Do you want to reload now?", //$NON-NLS-1$
 								MessageDialog.WARNING,
-								new String[] { "Yes", "No" }, //$NON-NLS-1$ //$NON-NLS-2$ 
+								new String[] { "Yes", "No" }, //$NON-NLS-1$ //$NON-NLS-2$
 								0);
 							final int result = dialog.open();
 							if (result == 0) {

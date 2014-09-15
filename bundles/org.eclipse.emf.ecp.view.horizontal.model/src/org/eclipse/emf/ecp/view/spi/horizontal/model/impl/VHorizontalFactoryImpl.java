@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
@@ -23,10 +23,10 @@ import org.eclipse.emf.ecp.view.spi.horizontal.model.VHorizontalPackage;
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model <b>Factory</b>.
- * <!-- end-user-doc -->
- * 
- * @generated
  * @since 1.2
+ * <!-- end-user-doc -->
+ *
+ * @generated
  */
 public class VHorizontalFactoryImpl extends EFactoryImpl implements VHorizontalFactory
 {
@@ -34,7 +34,7 @@ public class VHorizontalFactoryImpl extends EFactoryImpl implements VHorizontalF
 	 * Creates the default factory implementation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public static VHorizontalFactory init()
@@ -58,7 +58,7 @@ public class VHorizontalFactoryImpl extends EFactoryImpl implements VHorizontalF
 	 * Creates an instance of the factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public VHorizontalFactoryImpl()
@@ -69,7 +69,7 @@ public class VHorizontalFactoryImpl extends EFactoryImpl implements VHorizontalF
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -87,9 +87,10 @@ public class VHorizontalFactoryImpl extends EFactoryImpl implements VHorizontalF
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public VHorizontalLayout createHorizontalLayout()
 	{
 		final VHorizontalLayoutImpl horizontalLayout = new VHorizontalLayoutImpl();
@@ -99,9 +100,10 @@ public class VHorizontalFactoryImpl extends EFactoryImpl implements VHorizontalF
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public VHorizontalPackage getHorizontalPackage()
 	{
 		return (VHorizontalPackage) getEPackage();
@@ -110,7 +112,7 @@ public class VHorizontalFactoryImpl extends EFactoryImpl implements VHorizontalF
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @deprecated
 	 * @generated
 	 */

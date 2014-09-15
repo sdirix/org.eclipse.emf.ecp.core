@@ -13,6 +13,7 @@ package org.eclipse.emf.ecp.ui.common;
 
 import org.eclipse.emf.ecp.core.util.ECPCheckoutSource;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
+import org.eclipse.emf.ecp.spi.common.ui.CompositeProvider;
 import org.eclipse.emf.ecp.spi.ui.UIProvider;
 
 /**

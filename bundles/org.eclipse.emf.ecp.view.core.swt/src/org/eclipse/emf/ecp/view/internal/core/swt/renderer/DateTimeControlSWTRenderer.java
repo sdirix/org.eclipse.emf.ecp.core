@@ -24,6 +24,8 @@ import org.eclipse.emf.ecp.edit.spi.ViewLocaleService;
 import org.eclipse.emf.ecp.view.internal.core.swt.Activator;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer;
+import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
+import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.jface.databinding.swt.SWTObservables;
@@ -63,6 +65,8 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 
 	private Setting setting;
 
+	private ModelChangeListener domainModelChangeListener;
+
 	/**
 	 * Default constructor.
 	 */
@@ -80,8 +84,9 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 	}
 
 	@Override
-	protected Binding[] createBindings(Control control, Setting setting) {
+	protected Binding[] createBindings(Control control, final Setting setting) {
 		this.setting = setting;
+
 		final DateTime date = (DateTime) ((Composite) ((Composite) ((Composite) control).getChildren()[0])
 			.getChildren()[0]).getChildren()[0];
 		final DateTime time = (DateTime) ((Composite) ((Composite) ((Composite) control).getChildren()[0])
@@ -100,7 +105,30 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 			getViewModelContext()));
 
 		unsetBtn.addSelectionListener(new UnsetBtnSelectionAdapterExtension());
+
+		domainModelChangeListener = new ModelChangeListener() {
+
+			@Override
+			public void notifyChange(ModelChangeNotification notification) {
+				if (setting.getEStructuralFeature().equals(notification.getStructuralFeature())) {
+					updateChangeListener(notification.getRawNotification().getNewValue());
+
+				}
+			}
+		};
+		getViewModelContext().registerDomainChangeListener(domainModelChangeListener);
 		return new Binding[] { binding };
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTRenderer#dispose()
+	 */
+	@Override
+	protected void dispose() {
+		getViewModelContext().unregisterDomainChangeListener(domainModelChangeListener);
+		super.dispose();
 	}
 
 	@Override
@@ -144,11 +172,13 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 		GridDataFactory.fillDefaults().grab(false, false).align(SWT.CENTER, SWT.CENTER).applyTo(bUnset);
 		bUnset.setImage(Activator.getImage("icons/delete.png")); //$NON-NLS-1$
 		bUnset.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_dateTime_buttonUnset"); //$NON-NLS-1$
+		bUnset.setToolTipText(RendererMessages.DateTimeControlSWTRenderer_CleanDate);
 
 		final Button bDate = new Button(composite, SWT.PUSH);
 		GridDataFactory.fillDefaults().grab(false, false).align(SWT.CENTER, SWT.CENTER).applyTo(bDate);
 		bDate.setImage(Activator.getImage("icons/date.png")); //$NON-NLS-1$
 		bDate.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_dateTime_buttonSet"); //$NON-NLS-1$
+		bDate.setToolTipText(RendererMessages.DateTimeControlSWTRenderer_SelectData);
 
 		if (setting.isSet()) {
 			stackLayout.topControl = dateTimeComposite;
@@ -180,6 +210,9 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 		return RendererMessages.DateTimeControl_NoDateSetClickToSetDate;
 	}
 
+	/**
+	 * Set button adapter.
+	 */
 	private class SetBtnSelectionAdapterExtension extends SelectionAdapter {
 
 		private final Button btn;
@@ -221,8 +254,8 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					binding.updateTargetToModel();
-					binding.dispose();
-					dialog.close();
+					// binding.dispose();
+					// dialog.close();
 					updateChangeListener(modelValue.getValue());
 				}
 			});
@@ -251,6 +284,9 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 
 	}
 
+	/**
+	 * Unset button adapter.
+	 */
 	private class UnsetBtnSelectionAdapterExtension extends SelectionAdapter {
 
 		@Override

@@ -26,14 +26,24 @@ import org.eclipse.emf.ecp.view.template.style.fontProperties.model.VTFontProper
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.ecp.view.template.style.fontProperties.model.impl.VTFontPropertiesStylePropertyImpl#isItalic <em>Italic</em>}</li>
- *   <li>{@link org.eclipse.emf.ecp.view.template.style.fontProperties.model.impl.VTFontPropertiesStylePropertyImpl#isBold <em>Bold</em>}</li>
- *   <li>{@link org.eclipse.emf.ecp.view.template.style.fontProperties.model.impl.VTFontPropertiesStylePropertyImpl#getColorHEX <em>Color HEX</em>}</li>
- *   <li>{@link org.eclipse.emf.ecp.view.template.style.fontProperties.model.impl.VTFontPropertiesStylePropertyImpl#getHeight <em>Height</em>}</li>
- *   <li>{@link org.eclipse.emf.ecp.view.template.style.fontProperties.model.impl.VTFontPropertiesStylePropertyImpl#getFontName <em>Font Name</em>}</li>
+ * <li>
+ * {@link org.eclipse.emf.ecp.view.template.style.fontProperties.model.impl.VTFontPropertiesStylePropertyImpl#isItalic
+ * <em>Italic</em>}</li>
+ * <li>
+ * {@link org.eclipse.emf.ecp.view.template.style.fontProperties.model.impl.VTFontPropertiesStylePropertyImpl#isBold
+ * <em>Bold</em>}</li>
+ * <li>
+ * {@link org.eclipse.emf.ecp.view.template.style.fontProperties.model.impl.VTFontPropertiesStylePropertyImpl#getColorHEX
+ * <em>Color HEX</em>}</li>
+ * <li>
+ * {@link org.eclipse.emf.ecp.view.template.style.fontProperties.model.impl.VTFontPropertiesStylePropertyImpl#getHeight
+ * <em>Height</em>}</li>
+ * <li>
+ * {@link org.eclipse.emf.ecp.view.template.style.fontProperties.model.impl.VTFontPropertiesStylePropertyImpl#getFontName
+ * <em>Font Name</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class VTFontPropertiesStylePropertyImpl extends MinimalEObjectImpl.Container implements
@@ -42,6 +52,7 @@ public class VTFontPropertiesStylePropertyImpl extends MinimalEObjectImpl.Contai
 	 * The default value of the '{@link #isItalic() <em>Italic</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #isItalic()
 	 * @generated
 	 * @ordered
@@ -52,6 +63,7 @@ public class VTFontPropertiesStylePropertyImpl extends MinimalEObjectImpl.Contai
 	 * The cached value of the '{@link #isItalic() <em>Italic</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #isItalic()
 	 * @generated
 	 * @ordered
@@ -62,6 +74,7 @@ public class VTFontPropertiesStylePropertyImpl extends MinimalEObjectImpl.Contai
 	 * The default value of the '{@link #isBold() <em>Bold</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #isBold()
 	 * @generated
 	 * @ordered
@@ -72,6 +85,7 @@ public class VTFontPropertiesStylePropertyImpl extends MinimalEObjectImpl.Contai
 	 * The cached value of the '{@link #isBold() <em>Bold</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #isBold()
 	 * @generated
 	 * @ordered
@@ -82,6 +96,7 @@ public class VTFontPropertiesStylePropertyImpl extends MinimalEObjectImpl.Contai
 	 * The default value of the '{@link #getColorHEX() <em>Color HEX</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #getColorHEX()
 	 * @generated
 	 * @ordered
@@ -92,6 +107,7 @@ public class VTFontPropertiesStylePropertyImpl extends MinimalEObjectImpl.Contai
 	 * The cached value of the '{@link #getColorHEX() <em>Color HEX</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #getColorHEX()
 	 * @generated
 	 * @ordered
@@ -102,6 +118,7 @@ public class VTFontPropertiesStylePropertyImpl extends MinimalEObjectImpl.Contai
 	 * The default value of the '{@link #getHeight() <em>Height</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #getHeight()
 	 * @generated
 	 * @ordered
@@ -112,6 +129,7 @@ public class VTFontPropertiesStylePropertyImpl extends MinimalEObjectImpl.Contai
 	 * The cached value of the '{@link #getHeight() <em>Height</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #getHeight()
 	 * @generated
 	 * @ordered
@@ -122,6 +140,7 @@ public class VTFontPropertiesStylePropertyImpl extends MinimalEObjectImpl.Contai
 	 * The default value of the '{@link #getFontName() <em>Font Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #getFontName()
 	 * @generated
 	 * @ordered
@@ -132,6 +151,7 @@ public class VTFontPropertiesStylePropertyImpl extends MinimalEObjectImpl.Contai
 	 * The cached value of the '{@link #getFontName() <em>Font Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #getFontName()
 	 * @generated
 	 * @ordered
@@ -141,6 +161,7 @@ public class VTFontPropertiesStylePropertyImpl extends MinimalEObjectImpl.Contai
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected VTFontPropertiesStylePropertyImpl() {
@@ -150,6 +171,7 @@ public class VTFontPropertiesStylePropertyImpl extends MinimalEObjectImpl.Contai
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -160,6 +182,7 @@ public class VTFontPropertiesStylePropertyImpl extends MinimalEObjectImpl.Contai
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -170,19 +193,23 @@ public class VTFontPropertiesStylePropertyImpl extends MinimalEObjectImpl.Contai
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void setItalic(boolean newItalic) {
-		boolean oldItalic = italic;
+		final boolean oldItalic = italic;
 		italic = newItalic;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, VTFontPropertiesPackage.FONT_PROPERTIES_STYLE_PROPERTY__ITALIC, oldItalic, italic));
+		if (eNotificationRequired()) {
+			eNotify(new ENotificationImpl(this, Notification.SET,
+				VTFontPropertiesPackage.FONT_PROPERTIES_STYLE_PROPERTY__ITALIC, oldItalic, italic));
+		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -193,19 +220,23 @@ public class VTFontPropertiesStylePropertyImpl extends MinimalEObjectImpl.Contai
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void setBold(boolean newBold) {
-		boolean oldBold = bold;
+		final boolean oldBold = bold;
 		bold = newBold;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, VTFontPropertiesPackage.FONT_PROPERTIES_STYLE_PROPERTY__BOLD, oldBold, bold));
+		if (eNotificationRequired()) {
+			eNotify(new ENotificationImpl(this, Notification.SET,
+				VTFontPropertiesPackage.FONT_PROPERTIES_STYLE_PROPERTY__BOLD, oldBold, bold));
+		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -216,19 +247,23 @@ public class VTFontPropertiesStylePropertyImpl extends MinimalEObjectImpl.Contai
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void setColorHEX(String newColorHEX) {
-		String oldColorHEX = colorHEX;
+		final String oldColorHEX = colorHEX;
 		colorHEX = newColorHEX;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, VTFontPropertiesPackage.FONT_PROPERTIES_STYLE_PROPERTY__COLOR_HEX, oldColorHEX, colorHEX));
+		if (eNotificationRequired()) {
+			eNotify(new ENotificationImpl(this, Notification.SET,
+				VTFontPropertiesPackage.FONT_PROPERTIES_STYLE_PROPERTY__COLOR_HEX, oldColorHEX, colorHEX));
+		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -239,19 +274,23 @@ public class VTFontPropertiesStylePropertyImpl extends MinimalEObjectImpl.Contai
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void setHeight(int newHeight) {
-		int oldHeight = height;
+		final int oldHeight = height;
 		height = newHeight;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, VTFontPropertiesPackage.FONT_PROPERTIES_STYLE_PROPERTY__HEIGHT, oldHeight, height));
+		if (eNotificationRequired()) {
+			eNotify(new ENotificationImpl(this, Notification.SET,
+				VTFontPropertiesPackage.FONT_PROPERTIES_STYLE_PROPERTY__HEIGHT, oldHeight, height));
+		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -262,34 +301,38 @@ public class VTFontPropertiesStylePropertyImpl extends MinimalEObjectImpl.Contai
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void setFontName(String newFontName) {
-		String oldFontName = fontName;
+		final String oldFontName = fontName;
 		fontName = newFontName;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, VTFontPropertiesPackage.FONT_PROPERTIES_STYLE_PROPERTY__FONT_NAME, oldFontName, fontName));
+		if (eNotificationRequired()) {
+			eNotify(new ENotificationImpl(this, Notification.SET,
+				VTFontPropertiesPackage.FONT_PROPERTIES_STYLE_PROPERTY__FONT_NAME, oldFontName, fontName));
+		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case VTFontPropertiesPackage.FONT_PROPERTIES_STYLE_PROPERTY__ITALIC:
-				return isItalic();
-			case VTFontPropertiesPackage.FONT_PROPERTIES_STYLE_PROPERTY__BOLD:
-				return isBold();
-			case VTFontPropertiesPackage.FONT_PROPERTIES_STYLE_PROPERTY__COLOR_HEX:
-				return getColorHEX();
-			case VTFontPropertiesPackage.FONT_PROPERTIES_STYLE_PROPERTY__HEIGHT:
-				return getHeight();
-			case VTFontPropertiesPackage.FONT_PROPERTIES_STYLE_PROPERTY__FONT_NAME:
-				return getFontName();
+		case VTFontPropertiesPackage.FONT_PROPERTIES_STYLE_PROPERTY__ITALIC:
+			return isItalic();
+		case VTFontPropertiesPackage.FONT_PROPERTIES_STYLE_PROPERTY__BOLD:
+			return isBold();
+		case VTFontPropertiesPackage.FONT_PROPERTIES_STYLE_PROPERTY__COLOR_HEX:
+			return getColorHEX();
+		case VTFontPropertiesPackage.FONT_PROPERTIES_STYLE_PROPERTY__HEIGHT:
+			return getHeight();
+		case VTFontPropertiesPackage.FONT_PROPERTIES_STYLE_PROPERTY__FONT_NAME:
+			return getFontName();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -297,26 +340,27 @@ public class VTFontPropertiesStylePropertyImpl extends MinimalEObjectImpl.Contai
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case VTFontPropertiesPackage.FONT_PROPERTIES_STYLE_PROPERTY__ITALIC:
-				setItalic((Boolean)newValue);
-				return;
-			case VTFontPropertiesPackage.FONT_PROPERTIES_STYLE_PROPERTY__BOLD:
-				setBold((Boolean)newValue);
-				return;
-			case VTFontPropertiesPackage.FONT_PROPERTIES_STYLE_PROPERTY__COLOR_HEX:
-				setColorHEX((String)newValue);
-				return;
-			case VTFontPropertiesPackage.FONT_PROPERTIES_STYLE_PROPERTY__HEIGHT:
-				setHeight((Integer)newValue);
-				return;
-			case VTFontPropertiesPackage.FONT_PROPERTIES_STYLE_PROPERTY__FONT_NAME:
-				setFontName((String)newValue);
-				return;
+		case VTFontPropertiesPackage.FONT_PROPERTIES_STYLE_PROPERTY__ITALIC:
+			setItalic((Boolean) newValue);
+			return;
+		case VTFontPropertiesPackage.FONT_PROPERTIES_STYLE_PROPERTY__BOLD:
+			setBold((Boolean) newValue);
+			return;
+		case VTFontPropertiesPackage.FONT_PROPERTIES_STYLE_PROPERTY__COLOR_HEX:
+			setColorHEX((String) newValue);
+			return;
+		case VTFontPropertiesPackage.FONT_PROPERTIES_STYLE_PROPERTY__HEIGHT:
+			setHeight((Integer) newValue);
+			return;
+		case VTFontPropertiesPackage.FONT_PROPERTIES_STYLE_PROPERTY__FONT_NAME:
+			setFontName((String) newValue);
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -324,26 +368,27 @@ public class VTFontPropertiesStylePropertyImpl extends MinimalEObjectImpl.Contai
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case VTFontPropertiesPackage.FONT_PROPERTIES_STYLE_PROPERTY__ITALIC:
-				setItalic(ITALIC_EDEFAULT);
-				return;
-			case VTFontPropertiesPackage.FONT_PROPERTIES_STYLE_PROPERTY__BOLD:
-				setBold(BOLD_EDEFAULT);
-				return;
-			case VTFontPropertiesPackage.FONT_PROPERTIES_STYLE_PROPERTY__COLOR_HEX:
-				setColorHEX(COLOR_HEX_EDEFAULT);
-				return;
-			case VTFontPropertiesPackage.FONT_PROPERTIES_STYLE_PROPERTY__HEIGHT:
-				setHeight(HEIGHT_EDEFAULT);
-				return;
-			case VTFontPropertiesPackage.FONT_PROPERTIES_STYLE_PROPERTY__FONT_NAME:
-				setFontName(FONT_NAME_EDEFAULT);
-				return;
+		case VTFontPropertiesPackage.FONT_PROPERTIES_STYLE_PROPERTY__ITALIC:
+			setItalic(ITALIC_EDEFAULT);
+			return;
+		case VTFontPropertiesPackage.FONT_PROPERTIES_STYLE_PROPERTY__BOLD:
+			setBold(BOLD_EDEFAULT);
+			return;
+		case VTFontPropertiesPackage.FONT_PROPERTIES_STYLE_PROPERTY__COLOR_HEX:
+			setColorHEX(COLOR_HEX_EDEFAULT);
+			return;
+		case VTFontPropertiesPackage.FONT_PROPERTIES_STYLE_PROPERTY__HEIGHT:
+			setHeight(HEIGHT_EDEFAULT);
+			return;
+		case VTFontPropertiesPackage.FONT_PROPERTIES_STYLE_PROPERTY__FONT_NAME:
+			setFontName(FONT_NAME_EDEFAULT);
+			return;
 		}
 		super.eUnset(featureID);
 	}
@@ -351,21 +396,22 @@ public class VTFontPropertiesStylePropertyImpl extends MinimalEObjectImpl.Contai
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case VTFontPropertiesPackage.FONT_PROPERTIES_STYLE_PROPERTY__ITALIC:
-				return italic != ITALIC_EDEFAULT;
-			case VTFontPropertiesPackage.FONT_PROPERTIES_STYLE_PROPERTY__BOLD:
-				return bold != BOLD_EDEFAULT;
-			case VTFontPropertiesPackage.FONT_PROPERTIES_STYLE_PROPERTY__COLOR_HEX:
-				return COLOR_HEX_EDEFAULT == null ? colorHEX != null : !COLOR_HEX_EDEFAULT.equals(colorHEX);
-			case VTFontPropertiesPackage.FONT_PROPERTIES_STYLE_PROPERTY__HEIGHT:
-				return height != HEIGHT_EDEFAULT;
-			case VTFontPropertiesPackage.FONT_PROPERTIES_STYLE_PROPERTY__FONT_NAME:
-				return FONT_NAME_EDEFAULT == null ? fontName != null : !FONT_NAME_EDEFAULT.equals(fontName);
+		case VTFontPropertiesPackage.FONT_PROPERTIES_STYLE_PROPERTY__ITALIC:
+			return italic != ITALIC_EDEFAULT;
+		case VTFontPropertiesPackage.FONT_PROPERTIES_STYLE_PROPERTY__BOLD:
+			return bold != BOLD_EDEFAULT;
+		case VTFontPropertiesPackage.FONT_PROPERTIES_STYLE_PROPERTY__COLOR_HEX:
+			return COLOR_HEX_EDEFAULT == null ? colorHEX != null : !COLOR_HEX_EDEFAULT.equals(colorHEX);
+		case VTFontPropertiesPackage.FONT_PROPERTIES_STYLE_PROPERTY__HEIGHT:
+			return height != HEIGHT_EDEFAULT;
+		case VTFontPropertiesPackage.FONT_PROPERTIES_STYLE_PROPERTY__FONT_NAME:
+			return FONT_NAME_EDEFAULT == null ? fontName != null : !FONT_NAME_EDEFAULT.equals(fontName);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -373,13 +419,16 @@ public class VTFontPropertiesStylePropertyImpl extends MinimalEObjectImpl.Contai
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy()) return super.toString();
+		if (eIsProxy()) {
+			return super.toString();
+		}
 
-		StringBuffer result = new StringBuffer(super.toString());
+		final StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (italic: "); //$NON-NLS-1$
 		result.append(italic);
 		result.append(", bold: "); //$NON-NLS-1$

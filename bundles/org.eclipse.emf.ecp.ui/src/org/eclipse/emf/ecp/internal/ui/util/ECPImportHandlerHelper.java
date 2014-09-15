@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * David Soto Setzke - initial API and implementation
  * Johannes Faltermeier - moved file dialog dependent code to helper class
@@ -34,9 +34,9 @@ import org.eclipse.swt.widgets.Shell;
 
 /**
  * A utility class which provides support for importing {@link EObject}s.
- * 
+ *
  * @author David
- * 
+ *
  */
 public final class ECPImportHandlerHelper {
 
@@ -59,7 +59,7 @@ public final class ECPImportHandlerHelper {
 
 	/**
 	 * Connects an {@link EObject} with another imported {@link EObject} which will be selected via a dialog.
-	 * 
+	 *
 	 * @param shell The {@link Shell} which should be used for the dialog
 	 * @param eObject The {@link EObject} which should be connected with the imported {@link EObject}
 	 */
@@ -69,7 +69,7 @@ public final class ECPImportHandlerHelper {
 
 	/**
 	 * Connects an {@link EObject} with another imported {@link EObject} which will be selected via a dialog.
-	 * 
+	 *
 	 * @param shell The {@link Shell} which should be used for the dialog
 	 * @param ecpProject The {@link ECPProject} where the {@link EObject} should be imported into
 	 */
@@ -165,8 +165,8 @@ public final class ECPImportHandlerHelper {
 		}
 		if (!imported) {
 			MessageDialog
-				.openWarning(shell, "No Imports", //$NON-NLS-1$
-					"No Objects were imported, the model element you selected probably can't contain the element you try to import."); //$NON-NLS-1$
+			.openWarning(shell, "No Imports", //$NON-NLS-1$
+				"No Objects were imported, the model element you selected probably can't contain the element you try to import."); //$NON-NLS-1$
 		}
 	}
 
@@ -220,7 +220,7 @@ public final class ECPImportHandlerHelper {
 
 	private static String getFileName(Shell shell) {
 		try {
-			final Class<ECPFileDialogHelper> clazz = ECPHandlerHelper.loadClass(Activator.PLUGIN_ID,
+			final Class<ECPFileDialogHelper> clazz = HandlerHelperUtil.loadClass(Activator.PLUGIN_ID,
 				FILE_DIALOG_HELPER_CLASS);
 			final ECPFileDialogHelper fileDialogHelper = clazz.getConstructor().newInstance();
 			return fileDialogHelper.getPathForImport(shell);

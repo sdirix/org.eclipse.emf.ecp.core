@@ -14,7 +14,8 @@
 package org.eclipse.emf.ecp.internal.wizards;
 
 import org.eclipse.emf.ecp.internal.ui.Messages;
-import org.eclipse.emf.ecp.ui.common.CheckedModelClassComposite;
+import org.eclipse.emf.ecp.spi.common.ui.CheckedModelClassComposite;
+import org.eclipse.emf.ecp.spi.common.ui.ECPWizard;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.widgets.Composite;
 

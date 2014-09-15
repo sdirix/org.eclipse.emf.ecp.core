@@ -17,6 +17,7 @@ import java.util.List;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.ResourceLocator;
+import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IChildCreationExtender;
@@ -32,10 +33,11 @@ import org.eclipse.emf.edit.provider.ItemProviderAdapter;
  * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference}
  * object.
  * <!-- begin-user-doc -->
- * <!-- end-user-doc -->
+ * 
+ * @since 1.2
+ *        <!-- end-user-doc -->
  * 
  * @generated
- * @since 1.2
  */
 public class FeaturePathDomainModelReferenceItemProvider
 	extends ItemProviderAdapter
@@ -118,12 +120,17 @@ public class FeaturePathDomainModelReferenceItemProvider
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public String getText(Object object)
 	{
-		return getString("_UI_FeaturePathDomainModelReference_type"); //$NON-NLS-1$
+		final VFeaturePathDomainModelReference dmr = (VFeaturePathDomainModelReference) object;
+		if (dmr == null || dmr.getDomainModelEFeature() == null)
+		{
+			return getString("_UI_FeaturePathDomainModelReference_type"); //$NON-NLS-1$
+		}
+		return dmr.getDomainModelEFeature().getName();
 	}
 
 	/**

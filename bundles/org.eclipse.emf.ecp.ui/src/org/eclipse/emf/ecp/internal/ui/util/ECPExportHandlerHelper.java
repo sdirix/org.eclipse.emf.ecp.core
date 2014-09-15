@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * David Soto Setzke - initial API and implementation
  * Johannes Faltermeier - moved file dialog dependent code to helper class
@@ -35,9 +35,9 @@ import org.eclipse.swt.widgets.Shell;
 
 /**
  * A utility class which provides support for exporting model elements.
- * 
+ *
  * @author David
- * 
+ *
  */
 public final class ECPExportHandlerHelper {
 
@@ -64,7 +64,7 @@ public final class ECPExportHandlerHelper {
 
 	/**
 	 * Export a list of model elements.
-	 * 
+	 *
 	 * @param shell The shell which should be used for the file dialog
 	 * @param eObjects The {@link EObject}s which should be exported
 	 */
@@ -81,7 +81,7 @@ public final class ECPExportHandlerHelper {
 
 	/**
 	 * Get the name of a model element.
-	 * 
+	 *
 	 * @param modelElement the model element
 	 * @return the name for the model element
 	 */
@@ -123,7 +123,7 @@ public final class ECPExportHandlerHelper {
 
 	/**
 	 * This method opens a standard error dialog displaying an exception to the user.
-	 * 
+	 *
 	 * @param cause the exception to be shown.
 	 * @param message the message to be shown.
 	 */
@@ -143,7 +143,7 @@ public final class ECPExportHandlerHelper {
 
 	private static String getFilePathByFileDialog(Shell shell, String modelElementName) {
 		try {
-			final Class<ECPFileDialogHelper> clazz = ECPHandlerHelper.loadClass(Activator.PLUGIN_ID,
+			final Class<ECPFileDialogHelper> clazz = HandlerHelperUtil.loadClass(Activator.PLUGIN_ID,
 				FILE_DIALOG_HELPER_CLASS);
 			final ECPFileDialogHelper fileDialogHelper = clazz.getConstructor().newInstance();
 			return fileDialogHelper.getPathForExport(shell, modelElementName);
@@ -167,7 +167,7 @@ public final class ECPExportHandlerHelper {
 
 	/**
 	 * Save a list of EObjects to the resource with the given URI.
-	 * 
+	 *
 	 * @param eObjects the EObjects to be saved
 	 * @param resourceURI the URI of the resource, which should be used to save the EObjects
 	 * @throws IOException if saving to the resource fails

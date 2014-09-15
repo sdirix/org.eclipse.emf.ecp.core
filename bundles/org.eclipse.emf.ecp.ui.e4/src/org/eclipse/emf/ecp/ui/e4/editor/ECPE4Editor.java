@@ -96,7 +96,7 @@ public class ECPE4Editor {
 		ECPSWTView render = null;
 		try {
 			// render = ECPSWTViewRenderer.INSTANCE.render(parent, modelElement);
-			final VView view = ViewProviderHelper.getView(modelElement);
+			final VView view = ViewProviderHelper.getView(modelElement, null);
 			final ViewModelContext vmc = ViewModelContextFactory.INSTANCE.createViewModelContext(view, modelElement,
 				new ECPReferenceServiceImpl());
 

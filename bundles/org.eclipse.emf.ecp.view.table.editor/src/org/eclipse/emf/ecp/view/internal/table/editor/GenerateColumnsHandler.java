@@ -19,8 +19,8 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.internal.wizards.SelectEStructuralFeaturesWizard;
-import org.eclipse.emf.ecp.ui.common.CheckedEStructuralFeatureComposite;
-import org.eclipse.emf.ecp.ui.common.CompositeFactory;
+import org.eclipse.emf.ecp.spi.common.ui.CompositeFactory;
+import org.eclipse.emf.ecp.spi.common.ui.composites.CheckedEStructuralFeatureComposite;
 import org.eclipse.emf.ecp.view.internal.table.generator.TableColumnGenerator;
 import org.eclipse.emf.ecp.view.spi.model.impl.VFeaturePathDomainModelReferenceImpl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
@@ -33,8 +33,8 @@ import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
  * 
- * Handler for generation the {@link org.eclipse.emf.ecp.view.spi.table.model.VTableColumn VTableColumn}s of a
- * {@link VTableControl}.
+ * Handler for generation the child {@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReference
+ * VDomainModelReferences} of a {@link VTableControl}.
  * 
  * @author jfaltermeier
  * 
@@ -46,6 +46,7 @@ public class GenerateColumnsHandler extends AbstractHandler {
 	 * 
 	 * @see org.eclipse.core.commands.IHandler#execute(org.eclipse.core.commands.ExecutionEvent)
 	 */
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final Object selection = ((IStructuredSelection) HandlerUtil.getActiveMenuSelection(event)).getFirstElement();
 		if (selection == null || !(selection instanceof VTableControl)) {

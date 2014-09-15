@@ -21,6 +21,7 @@ import org.eclipse.swt.widgets.Layout;
  * @author Eugen Neufeld
  * 
  */
+@Deprecated
 public final class SWTRenderingHelper {
 
 	/**

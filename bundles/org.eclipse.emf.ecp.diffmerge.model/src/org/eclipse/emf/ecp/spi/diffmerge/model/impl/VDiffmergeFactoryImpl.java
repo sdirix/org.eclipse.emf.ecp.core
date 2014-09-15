@@ -38,13 +38,13 @@ public class VDiffmergeFactoryImpl extends EFactoryImpl implements
 	public static VDiffmergeFactory init() {
 		try
 		{
-			VDiffmergeFactory theDiffmergeFactory = (VDiffmergeFactory) EPackage.Registry.INSTANCE
+			final VDiffmergeFactory theDiffmergeFactory = (VDiffmergeFactory) EPackage.Registry.INSTANCE
 				.getEFactory(VDiffmergePackage.eNS_URI);
 			if (theDiffmergeFactory != null)
 			{
 				return theDiffmergeFactory;
 			}
-		} catch (Exception exception)
+		} catch (final Exception exception)
 		{
 			EcorePlugin.INSTANCE.log(exception);
 		}
@@ -83,8 +83,9 @@ public class VDiffmergeFactoryImpl extends EFactoryImpl implements
 	 * 
 	 * @generated
 	 */
+	@Override
 	public VDiffAttachment createDiffAttachment() {
-		VDiffAttachmentImpl diffAttachment = new VDiffAttachmentImpl();
+		final VDiffAttachmentImpl diffAttachment = new VDiffAttachmentImpl();
 		return diffAttachment;
 	}
 
@@ -93,6 +94,7 @@ public class VDiffmergeFactoryImpl extends EFactoryImpl implements
 	 * 
 	 * @generated
 	 */
+	@Override
 	public VDiffmergePackage getDiffmergePackage() {
 		return (VDiffmergePackage) getEPackage();
 	}

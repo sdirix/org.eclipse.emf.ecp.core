@@ -77,6 +77,7 @@ public class VTreeMasterDetailImpl extends VContainedElementImpl implements VTre
 	 * 
 	 * @generated
 	 */
+	@Override
 	public VView getDetailView()
 	{
 		return detailView;
@@ -110,6 +111,7 @@ public class VTreeMasterDetailImpl extends VContainedElementImpl implements VTre
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setDetailView(VView newDetailView)
 	{
 		if (newDetailView != detailView)

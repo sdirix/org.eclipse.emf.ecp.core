@@ -15,7 +15,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.Map;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
@@ -50,9 +50,9 @@ public class ViewModelFileExtensionsManagerTest {
 
 	@Test
 	public void testGetExtensionURIs() {
-		final List<URI> extensionURIS = ViewModelFileExtensionsManager.getExtensionURIS();
+		final Map<URI, Map<String, String>> extensionURIS = ViewModelFileExtensionsManager.getExtensionURIS();
 		assertEquals(1, extensionURIS.size());
-		final URI uri = extensionURIS.get(0);
+		final URI uri = extensionURIS.keySet().iterator().next();
 		assertEquals(FILE_URI, uri);
 
 	}
@@ -60,20 +60,20 @@ public class ViewModelFileExtensionsManagerTest {
 	@Test
 	public void testHasViewModelFor() {
 		final EObject eObject = EcoreUtil.create(eClass1);
-		assertTrue(manager.hasViewModelFor(eObject));
+		assertTrue(manager.hasViewModelFor(eObject, null));
 	}
 
 	@Test
 	public void testCreateViewModel() {
 		final EObject eObject = EcoreUtil.create(eClass1);
-		final VView view = manager.createView(eObject);
+		final VView view = manager.createView(eObject, null);
 		assertEquals(VIEWNAME, view.getName());
 	}
 
 	@Test
 	public void testIntegrationWithViewProvider() {
 		final EObject eObject = EcoreUtil.create(eClass1);
-		final VView view = ViewProviderHelper.getView(eObject);
+		final VView view = ViewProviderHelper.getView(eObject, null);
 		assertEquals(VIEWNAME, view.getName());
 	}
 }

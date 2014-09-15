@@ -21,8 +21,7 @@ import org.eclipse.osgi.util.NLS;
  */
 public final class Messages extends NLS {
 	private static final String BUNDLE_NAME = "org.eclipse.emf.ecp.ui.messages"; //$NON-NLS-1$
-	public static String AbstractModelElementHelper_FilterLabel;
-	public static String AbstractModelElementHelper_FilterText;
+
 	public static String ActionHelper_ErrorMessage_ElementDeleted;
 	public static String ActionHelper_ErrorTitle_ElementDeleted;
 	public static String AddRepositoryComposite_RepositoryDescription;
@@ -33,8 +32,7 @@ public final class Messages extends NLS {
 	public static String AddRepositoryPage_PageTitle_AddRepository;
 	public static String AddRepositoryWizard_PageTitle_AddReposditory;
 	public static String AddRepositoryWizard_Title_AddRepository;
-	public static String CheckedModelElementHelper_DeselectAllLabel;
-	public static String CheckedModelElementHelper_SelectAllLabel;
+
 	public static String CheckoutProjectComposite_ProjectName;
 	public static String CheckoutProjectWizard_PageMessage_CheckoutFrom;
 	public static String CheckoutProjectWizard_PageMessage_CheckoutProject;

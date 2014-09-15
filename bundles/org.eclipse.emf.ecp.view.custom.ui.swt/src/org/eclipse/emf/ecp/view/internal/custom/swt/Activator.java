@@ -22,6 +22,7 @@ import org.osgi.framework.ServiceReference;
 /**
  * The activator class controls the plug-in life cycle.
  */
+@SuppressWarnings("deprecation")
 public class Activator extends Plugin {
 
 	/** The plug-in ID. */

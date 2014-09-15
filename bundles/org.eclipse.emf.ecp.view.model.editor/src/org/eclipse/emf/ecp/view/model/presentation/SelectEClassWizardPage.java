@@ -50,21 +50,21 @@ import org.eclipse.swt.widgets.Label;
 public class SelectEClassWizardPage extends WizardPage {
 	private Composite container;
 	private Button generateViewModelChkBox;
-	private IFile selectedEcore;
+	private EPackage selectedEPackage;
 	private List<EClass> selectedEClasses;
 
 	/**
 	 * @return the selectedEcore
 	 */
-	public IFile getSelectedEcore() {
-		return selectedEcore;
+	public EPackage getSelectedEPackage() {
+		return selectedEPackage;
 	}
 
 	/**
-	 * @param selectedEcore the selectedEcore to set
+	 * @param selectedEPackage the selectedEPackage to set
 	 */
-	public void setSelectedEcore(IFile selectedEcore) {
-		this.selectedEcore = selectedEcore;
+	public void setSelectedEPackage(EPackage selectedEPackage) {
+		this.selectedEPackage = selectedEPackage;
 	}
 
 	private TreeViewer treeViewer;
@@ -90,8 +90,8 @@ public class SelectEClassWizardPage extends WizardPage {
 	@Override
 	public void setVisible(boolean visible) {
 		super.setVisible(visible);
-		if (treeViewer != null && selectedEcore != null) {
-			treeViewer.setInput(selectedEcore);
+		if (treeViewer != null && selectedEPackage != null) {
+			treeViewer.setInput(selectedEPackage);
 			treeViewer.expandToLevel(2);
 		}
 	}
@@ -110,7 +110,7 @@ public class SelectEClassWizardPage extends WizardPage {
 		final Label label1 = new Label(container, SWT.NONE);
 		label1.setText("Select an EClass:"); //$NON-NLS-1$
 
-		if (selectedEcore != null) {
+		if (selectedEPackage != null) {
 
 			final ComposedAdapterFactory adapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
 				new CustomReflectiveItemProviderAdapterFactory(),
@@ -122,7 +122,7 @@ public class SelectEClassWizardPage extends WizardPage {
 			treeViewer = new TreeViewer(container, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
 			treeViewer.setContentProvider(getContentProvider(adapterFactory));
 			treeViewer.setLabelProvider(labelProvider);
-			treeViewer.setInput(selectedEcore);
+			treeViewer.setInput(selectedEPackage);
 			treeViewer.addSelectionChangedListener(new ISelectionChangedListener() {
 
 				@Override

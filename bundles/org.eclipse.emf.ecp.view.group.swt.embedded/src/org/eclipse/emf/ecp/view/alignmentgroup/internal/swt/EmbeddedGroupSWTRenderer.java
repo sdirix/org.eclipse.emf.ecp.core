@@ -38,15 +38,11 @@ import org.eclipse.swt.widgets.Label;
  * @author Eugen Neufeld
  * 
  */
+@SuppressWarnings("restriction")
 public class EmbeddedGroupSWTRenderer extends AbstractSWTRenderer<VGroup> {
 
 	private SWTGridDescription currentGridDescription;
 
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#getGridDescription(org.eclipse.emf.ecp.view.spi.swt.layout.GridDescription)
-	 */
 	@Override
 	public SWTGridDescription getGridDescription(SWTGridDescription gridDescription) {
 		currentGridDescription = new SWTGridDescription();

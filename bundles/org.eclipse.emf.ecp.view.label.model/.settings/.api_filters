@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.emf.ecp.view.label.model" version="2">
+    <resource path="src/org/eclipse/emf/ecp/view/spi/label/model/VLabel.java" type="org.eclipse.emf.ecp.view.spi.label.model.VLabel">
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.label.model.VLabel"/>
+                <message_argument value="getDomainModelReference()"/>
+            </message_arguments>
+        </filter>
+        <filter comment="spi" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.label.model.VLabel"/>
+                <message_argument value="setDomainModelReference(VDomainModelReference)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/label/model/VLabelPackage.java" type="org.eclipse.emf.ecp.view.spi.label.model.VLabelPackage">
+        <filter comment="spi" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.label.model.VLabelPackage"/>
+                <message_argument value="LABEL_FEATURE_COUNT"/>
+                <message_argument value="7"/>
+            </message_arguments>
+        </filter>
+        <filter comment="spi" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.label.model.VLabelPackage"/>
+                <message_argument value="LABEL__DOMAIN_MODEL_REFERENCE"/>
+            </message_arguments>
+        </filter>
+        <filter comment="spi" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.label.model.VLabelPackage"/>
+                <message_argument value="getLabel_DomainModelReference()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/label/model/VLabelPackage.java" type="org.eclipse.emf.ecp.view.spi.label.model.VLabelPackage$Literals">
+        <filter comment="spi" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.label.model.VLabelPackage.Literals"/>
+                <message_argument value="LABEL__DOMAIN_MODEL_REFERENCE"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

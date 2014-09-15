@@ -25,7 +25,7 @@
    <extension
          point="org.eclipse.emf.ecp.view.model.provider.xmi.file">
       <file
-            filePath="viewmodel/catalog.viewmodel">
+            filePath="viewmodel/catalog.view">
       </file>
    </extension>
 

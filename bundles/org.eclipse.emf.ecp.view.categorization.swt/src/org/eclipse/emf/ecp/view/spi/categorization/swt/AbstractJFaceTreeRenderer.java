@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Edagr Mueller - initial API and implementation
  * Eugen Neufeld - Refactoring
@@ -24,6 +24,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.edit.internal.swt.util.OverlayImageDescriptor;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTValidationHelper;
+import org.eclipse.emf.ecp.view.internal.categorization.swt.Activator;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VAbstractCategorization;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizableElement;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationElement;
@@ -69,11 +70,12 @@ import org.eclipse.swt.widgets.TreeItem;
 
 /**
  * Abstract class for a tree renderer.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  * @param <VELEMENT> the {@link VElement}
  */
+@SuppressWarnings("restriction")
 public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> extends AbstractSWTRenderer<VELEMENT> {
 
 	private SWTGridDescription gridDescription;
@@ -87,18 +89,13 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 
 	/**
 	 * Test constructor.
-	 * 
+	 *
 	 * @param factory the {@link SWTRendererFactory} to use.
 	 */
 	AbstractJFaceTreeRenderer(SWTRendererFactory factory) {
 		super(factory);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#getGridDescription(GridDescription)
-	 */
 	@Override
 	public SWTGridDescription getGridDescription(SWTGridDescription gridDescription) {
 		if (this.gridDescription == null) {
@@ -109,7 +106,7 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#dispose()
 	 */
 	@Override
@@ -120,14 +117,15 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#renderControl(int, org.eclipse.swt.widgets.Composite,
 	 *      org.eclipse.emf.ecp.view.spi.model.VElement, org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
+
 	@Override
 	protected Control renderControl(SWTGridCell cell, Composite parent) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
-		final TreeViewer treeViewer;
+		TreeViewer treeViewer;
 		final EList<VAbstractCategorization> categorizations = getCategorizations();
 
 		if (categorizations.size() == 1 && categorizations.get(0) instanceof VCategory) {
@@ -148,13 +146,28 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 			return render;
 
 		}
+
+		final Object detailPane = getViewModelContext().getContextValue("detailPane"); //$NON-NLS-1$
+		if (detailPane != null && Composite.class.isInstance(detailPane)) {
+			treeViewer = new TreeViewer(parent);
+
+			final ScrolledComposite editorComposite = createdEditorPane(Composite.class.cast(detailPane));
+
+			setupTreeViewer(treeViewer, editorComposite);
+
+			initTreeViewer(treeViewer);
+			Composite.class.cast(detailPane).layout();
+			return treeViewer.getControl();
+		}
+
 		final SashForm sashForm = new SashForm(parent, SWT.HORIZONTAL);
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(sashForm);
 
 		treeViewer = new TreeViewer(sashForm);
+
 		final ScrolledComposite editorComposite = createdEditorPane(sashForm);
-		setupTreeViewer(treeViewer,
-			editorComposite);
+
+		setupTreeViewer(treeViewer, editorComposite);
 
 		initTreeViewer(treeViewer);
 		sashForm.setWeights(new int[] { 1, 3 });
@@ -163,21 +176,21 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 
 	/**
 	 * The list of categorizations to display in the tree.
-	 * 
+	 *
 	 * @return the list of {@link VAbstractCategorization}
 	 */
 	protected abstract EList<VAbstractCategorization> getCategorizations();
 
 	/**
 	 * The VCategorizationElement to set the current selection onto.
-	 * 
+	 *
 	 * @return the VCategorizationElement
 	 */
 	protected abstract VCategorizationElement getCategorizationElement();
 
 	/**
 	 * Created editor pane.
-	 * 
+	 *
 	 * @param composite the composite
 	 * @return the created editor composite
 	 */
@@ -194,7 +207,7 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 
 	/**
 	 * Creates the scrolled composite.
-	 * 
+	 *
 	 * @param parent the parent
 	 * @return the scrolled composite
 	 */
@@ -206,15 +219,12 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 		scrolledComposite.setExpandHorizontal(true);
 		scrolledComposite.setBackground(parent.getBackground());
 
-		final Composite childComposite = new Composite(scrolledComposite, SWT.NONE);
-		childComposite.setBackground(parent.getBackground());
-
 		return scrolledComposite;
 	}
 
 	/**
 	 * Configures the passed tree viewer.
-	 * 
+	 *
 	 * @param treeViewer the {@link TreeViewer} to configure
 	 * @param editorComposite the composite of the editor
 	 */
@@ -239,11 +249,6 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 		final AdapterFactoryContentProvider contentProvider = new AdapterFactoryContentProvider(
 			adapterFactory) {
 
-			/**
-			 * {@inheritDoc}
-			 * 
-			 * @see org.eclipse.emf.ecp.internal.ui.view.emf.AdapterFactoryContentProvider#hasChildren(java.lang.Object)
-			 */
 			@Override
 			public boolean hasChildren(Object object) {
 
@@ -286,7 +291,7 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 
 	/**
 	 * The TreeTableLabel provider.
-	 * 
+	 *
 	 * @param adapterFactory the {@link AdapterFactory} to use
 	 * @return the created {@link TreeTableLabelProvider}
 	 */
@@ -296,7 +301,7 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 
 	/**
 	 * Inits the tree viewer.
-	 * 
+	 *
 	 * @param treeViewer the tree viewer
 	 */
 	protected void initTreeViewer(final TreeViewer treeViewer) {
@@ -310,7 +315,7 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 
 	/**
 	 * Creates the composite.
-	 * 
+	 *
 	 * @param parent the parent
 	 * @return the composite
 	 */
@@ -325,7 +330,7 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 
 	/**
 	 * Adds the tree editor.
-	 * 
+	 *
 	 * @param treeViewer the tree viewer
 	 * @param view the view
 	 * @param editors the list of tree editors
@@ -397,7 +402,7 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 
 	/**
 	 * Adds the buttons.
-	 * 
+	 *
 	 * @param treeViewer the tree viewer
 	 * @param treeSelection the tree selection
 	 * @param editors the list of tree editors
@@ -430,8 +435,10 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 	}
 
 	/**
-	 * @author Jonas
-	 * 
+	 * The change listener for selections of the tree.
+	 *
+	 * @author Jonas Helming
+	 *
 	 */
 	private final class TreeSelectionChangedListener implements ISelectionChangedListener {
 		private final ViewModelContext viewModelContext;
@@ -441,13 +448,6 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 		private final List<TreeEditor> editors;
 		private Composite childComposite;
 
-		/**
-		 * @param viewModelContext
-		 * @param editorComposite
-		 * @param vCategorizationElement
-		 * @param treeViewer
-		 * @param editors
-		 */
 		private TreeSelectionChangedListener(ViewModelContext viewModelContext,
 			ScrolledComposite editorComposite, VCategorizationElement vCategorizationElement, TreeViewer treeViewer,
 			List<TreeEditor> editors) {
@@ -497,20 +497,18 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 						.get(0), childComposite);
 				renderer.finalizeRendering(childComposite);
 				GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true)
+					.minSize(SWT.DEFAULT, 200)
 					.applyTo(render);
 				vCategorizationElement.setCurrentSelection((VCategorizableElement) child);
 			} catch (final NoRendererFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Activator.log(e);
 			} catch (final NoPropertyDescriptorFoundExeption e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Activator.log(e);
 			}
 
 			childComposite.layout();
 			final Point point = childComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT);
 			editorComposite.setMinSize(point);
-			// }
 
 		}
 	}
@@ -522,19 +520,13 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 
 		/**
 		 * Instantiates a new tree table label provider.
-		 * 
+		 *
 		 * @param adapterFactory the adapter factory
 		 */
 		public TreeTableLabelProvider(AdapterFactory adapterFactory) {
 			super(adapterFactory);
 		}
 
-		/**
-		 * {@inheritDoc}
-		 * 
-		 * @see org.eclipse.emf.ecp.internal.ui.view.emf.AdapterFactoryLabelProvider#getColumnText(java.lang.Object,
-		 *      int)
-		 */
 		@Override
 		public String getColumnText(Object object, int columnIndex) {
 
@@ -545,12 +537,6 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 			return text;
 		}
 
-		/**
-		 * {@inheritDoc}
-		 * 
-		 * @see org.eclipse.emf.ecp.internal.ui.view.emf.AdapterFactoryLabelProvider#getColumnImage(java.lang.Object,
-		 *      int)
-		 */
 		@Override
 		public Image getColumnImage(Object object, int columnIndex) {
 
@@ -567,7 +553,7 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 
 		/**
 		 * This method generated an image with a validation overlay if necessary.
-		 * 
+		 *
 		 * @param image the image to overlay
 		 * @param categorization the {@link VElement} to get the validation for
 		 * @return the Image

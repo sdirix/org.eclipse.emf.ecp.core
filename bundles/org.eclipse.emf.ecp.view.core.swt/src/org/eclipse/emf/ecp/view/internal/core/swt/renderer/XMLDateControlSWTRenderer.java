@@ -102,8 +102,8 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					binding.updateTargetToModel();
-					binding.dispose();
-					dialog.close();
+					// binding.dispose();
+					// dialog.close();
 				}
 			});
 			calendar.addFocusListener(new FocusListener() {

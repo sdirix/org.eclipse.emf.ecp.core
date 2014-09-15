@@ -30,6 +30,10 @@ public final class RendererMessages extends NLS {
 	public static String DateTimeControl_NoDateSetClickToSetDate;
 	public static String DateTimeControl_UnsetDate;
 
+	public static String DateTimeControlSWTRenderer_CleanDate;
+
+	public static String DateTimeControlSWTRenderer_SelectData;
+
 	public static String EEnumControl_NoValueSetClickToSetValue;
 	public static String EEnumControl_UnsetValue;
 

@@ -6,7 +6,7 @@
     codeFormatting="true" commentFormatting="true" importerID="org.eclipse.emf.importer.ecore"
     complianceLevel="5.0" copyrightFields="false" usedGenPackages="../../org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore template.genmodel#//template ../../org.eclipse.emf.ecp.view.model/model/view.genmodel#//model"
     interfaceNamePattern="VT{0}" classNamePattern="VT{0}Impl" operationReflection="true"
-    importOrganizing="true">
+    importOrganizing="true" cleanup="true">
   <foreignModel>domainModelReferenceSelector.ecore</foreignModel>
   <genPackages prefix="Domainmodelreference" basePackage="org.eclipse.emf.ecp.view.template.selector"
       disposableProviderFactory="true" interfacePackageSuffix="model" metaDataPackageSuffix="model"
@@ -14,7 +14,7 @@
       presentationPackageSuffix="model.presentation" testsPackageSuffix="model.tests"
       extensibleProviderFactory="true" childCreationExtenders="true" ecorePackage="domainModelReferenceSelector.ecore#/">
     <genClasses ecoreClass="domainModelReferenceSelector.ecore#//DomainModelReferenceSelector">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference domainModelReferenceSelector.ecore#//DomainModelReferenceSelector/domainModelReference"/>
+      <genFeatures createChild="true" ecoreFeature="ecore:EReference domainModelReferenceSelector.ecore#//DomainModelReferenceSelector/domainModelReference"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

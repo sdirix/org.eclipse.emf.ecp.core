@@ -13,6 +13,7 @@ package org.eclipse.emf.ecp.view.spi.core.swt;
 
 import java.util.Iterator;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
@@ -22,6 +23,7 @@ import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.databinding.edit.EMFEditProperties;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTValidationHelper;
+import org.eclipse.emf.ecp.view.internal.core.swt.Activator;
 import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
@@ -30,6 +32,10 @@ import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
+import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
+import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
+import org.eclipse.emf.ecp.view.template.style.mandatory.model.VTMandatoryFactory;
+import org.eclipse.emf.ecp.view.template.style.mandatory.model.VTMandatoryStyleProperty;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
@@ -104,7 +110,10 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 
 	@Override
 	protected void dispose() {
-		getVElement().getDomainModelReference().getChangeListener().remove(domainModelReferenceChangeListener);
+		if (getVElement().getDomainModelReference() != null) {
+			getVElement().getDomainModelReference().getChangeListener().remove(domainModelReferenceChangeListener);
+		}
+
 		domainModelReferenceChangeListener = null;
 		if (value != null) {
 			value.dispose();
@@ -227,8 +236,9 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 			label.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_label"); //$NON-NLS-1$
 			label.setBackground(parent.getBackground());
 			String extra = ""; //$NON-NLS-1$
-			if (setting.getEStructuralFeature().getLowerBound() > 0) {
-				extra = "*"; //$NON-NLS-1$
+			final VTMandatoryStyleProperty mandatoryStyle = getMandatoryStyle();
+			if (mandatoryStyle.isHighliteMandatoryFields() && setting.getEStructuralFeature().getLowerBound() > 0) {
+				extra = mandatoryStyle.getMandatoryMarker();
 			}
 			final String labelText = itemPropertyDescriptor.getDisplayName(setting.getEObject());
 			if (labelText != null && labelText.trim().length() != 0) {
@@ -238,6 +248,25 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 
 		}
 		return label;
+	}
+
+	private VTMandatoryStyleProperty getMandatoryStyle() {
+		final VTViewTemplateProvider vtViewTemplateProvider = Activator.getDefault().getVTViewTemplateProvider();
+		if (vtViewTemplateProvider == null) {
+			return getDefaultStyle();
+		}
+		final Set<VTStyleProperty> styleProperties = vtViewTemplateProvider
+			.getStyleProperties(getVElement(), getViewModelContext());
+		for (final VTStyleProperty styleProperty : styleProperties) {
+			if (VTMandatoryStyleProperty.class.isInstance(styleProperty)) {
+				return (VTMandatoryStyleProperty) styleProperty;
+			}
+		}
+		return getDefaultStyle();
+	}
+
+	private VTMandatoryStyleProperty getDefaultStyle() {
+		return VTMandatoryFactory.eINSTANCE.createMandatoryStyleProperty();
 	}
 
 	/**

@@ -45,7 +45,7 @@ public class CreateViewModelProjectCommandHandler extends AbstractHandler {
 
 		// create and open the project creation wizard
 		final NewPluginProjectWizard w = new NewPluginProjectWizard();
-		w.setSelectedEcore(selectedEcore);
+		w.setSelectedContainer(selectedEcore);
 		w.setSelection(selection);
 		w.setWorkbench(PlatformUI.getWorkbench());
 

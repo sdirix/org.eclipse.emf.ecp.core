@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen - initial API and implementation
  ******************************************************************************/
@@ -42,10 +42,10 @@ import org.eclipse.swt.widgets.Layout;
 
 /**
  * The {@link ContainerSWTRenderer} is a super class for all Renderer which renders its contents vertically.
- * 
+ *
  * @param <VELEMENT> the {@link VElement} of the renderer
  * @author Eugen Neufeld
- * 
+ *
  */
 public abstract class ContainerSWTRenderer<VELEMENT extends VElement> extends AbstractSWTRenderer<VELEMENT> {
 	private SWTGridDescription rendererGridDescription;
@@ -59,7 +59,7 @@ public abstract class ContainerSWTRenderer<VELEMENT extends VElement> extends Ab
 
 	/**
 	 * Test constructor.
-	 * 
+	 *
 	 * @param factory the {@link SWTRendererFactory} to use.
 	 */
 	protected ContainerSWTRenderer(SWTRendererFactory factory) {
@@ -68,7 +68,7 @@ public abstract class ContainerSWTRenderer<VELEMENT extends VElement> extends Ab
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#getGridDescription(SWTGridDescription)
 	 */
 	@Override
@@ -81,7 +81,7 @@ public abstract class ContainerSWTRenderer<VELEMENT extends VElement> extends Ab
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#renderControl(int, org.eclipse.swt.widgets.Composite,
 	 *      org.eclipse.emf.ecp.view.spi.model.VElement, org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
@@ -108,11 +108,11 @@ public abstract class ContainerSWTRenderer<VELEMENT extends VElement> extends Ab
 				getViewModelContext());
 			if (renderer == null) {
 				Activator
-					.getDefault()
-					.getLog()
-					.log(
-						new Status(IStatus.INFO, Activator.PLUGIN_ID, String.format(
-							"No Renderer for %s found.", child.eClass().getName()))); //$NON-NLS-1$
+				.getDefault()
+				.getLog()
+				.log(
+					new Status(IStatus.INFO, Activator.PLUGIN_ID, String.format(
+						"No Renderer for %s found.", child.eClass().getName()))); //$NON-NLS-1$
 				continue;
 			}
 			final Collection<AbstractAdditionalSWTRenderer<VElement>> additionalRenderers = getSWTRendererFactory()
@@ -170,7 +170,7 @@ public abstract class ContainerSWTRenderer<VELEMENT extends VElement> extends Ab
 				}
 			} catch (final NoPropertyDescriptorFoundExeption ex) {
 				Activator.getDefault().getLog()
-					.log(new Status(IStatus.INFO, Activator.PLUGIN_ID, ex.getMessage(), ex));
+				.log(new Status(IStatus.INFO, Activator.PLUGIN_ID, ex.getMessage(), ex));
 				continue;
 			}
 		}
@@ -180,7 +180,7 @@ public abstract class ContainerSWTRenderer<VELEMENT extends VElement> extends Ab
 
 	/**
 	 * The custom variant to set for styling.
-	 * 
+	 *
 	 * @return the string used by rap for styling
 	 */
 	protected String getCustomVariant() {
@@ -189,7 +189,7 @@ public abstract class ContainerSWTRenderer<VELEMENT extends VElement> extends Ab
 
 	/**
 	 * The collection of children to iterate over.
-	 * 
+	 *
 	 * @return the collection of children to render
 	 */
 	protected Collection<VContainedElement> getChildren() {
@@ -201,7 +201,7 @@ public abstract class ContainerSWTRenderer<VELEMENT extends VElement> extends Ab
 
 	/**
 	 * Allows to customize the composite which is used to render the children onto.
-	 * 
+	 *
 	 * @param parent the parent {@link Composite} to use as a parent
 	 * @return the {@link Composite} or a subclass to use
 	 */
@@ -211,7 +211,7 @@ public abstract class ContainerSWTRenderer<VELEMENT extends VElement> extends Ab
 
 	/**
 	 * Returns the layout to use.
-	 * 
+	 *
 	 * @param numControls number of columns to create
 	 * @param equalWidth whether the columns should be equal
 	 * @return the {@link Layout}
@@ -222,7 +222,7 @@ public abstract class ContainerSWTRenderer<VELEMENT extends VElement> extends Ab
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#dispose()
 	 */
 	@Override

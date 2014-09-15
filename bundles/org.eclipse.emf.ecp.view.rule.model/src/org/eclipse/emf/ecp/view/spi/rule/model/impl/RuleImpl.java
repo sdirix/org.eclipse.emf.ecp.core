@@ -74,6 +74,7 @@ public abstract class RuleImpl extends VAttachmentImpl implements Rule {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public Condition getCondition() {
 		return condition;
 	}
@@ -108,6 +109,7 @@ public abstract class RuleImpl extends VAttachmentImpl implements Rule {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setCondition(Condition newCondition) {
 		if (newCondition != condition)
 		{

@@ -23,6 +23,7 @@ import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
  * 
  * @author emueller
  */
+@SuppressWarnings("restriction")
 public class SWTDynamicContainmentItemRenderer extends ContainerSWTRenderer<DynamicContainmentItem> {
 
 	/**
@@ -41,6 +42,7 @@ public class SWTDynamicContainmentItemRenderer extends ContainerSWTRenderer<Dyna
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer#getChildren()
 	 */
+
 	@Override
 	protected Collection<VContainedElement> getChildren() {
 		return Collections.singleton(getVElement().getComposite());

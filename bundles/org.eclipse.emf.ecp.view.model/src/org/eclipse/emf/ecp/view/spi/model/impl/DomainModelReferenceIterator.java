@@ -73,6 +73,7 @@ public class DomainModelReferenceIterator implements Iterator<EStructuralFeature
 	 * 
 	 * @see java.util.Iterator#remove()
 	 */
+	@Override
 	public void remove() {
 		// TODO do we need it?
 	}
@@ -82,6 +83,7 @@ public class DomainModelReferenceIterator implements Iterator<EStructuralFeature
 	 * 
 	 * @see java.util.Iterator#next()
 	 */
+	@Override
 	public Setting next() {
 		if (lastResolvedEObject == null) {
 			return null;
@@ -103,8 +105,8 @@ public class DomainModelReferenceIterator implements Iterator<EStructuralFeature
 				@SuppressWarnings("unchecked")
 				final List<EObject> children = (List<EObject>) current.eGet(eReference);
 				if (children == null || children.size() == 0) {
-					throw new IllegalStateException("The EReference " + eReference.getName() + " is wrong for "
-						+ current.eClass().getName() + "!");
+					throw new IllegalStateException("The EReference " + eReference.getName() + " is wrong for " //$NON-NLS-1$ //$NON-NLS-2$
+						+ current.eClass().getName() + "!"); //$NON-NLS-1$
 				}
 				child = children.get(referenceCounter.position);
 				if (i + 1 == references.size()) {
@@ -115,8 +117,8 @@ public class DomainModelReferenceIterator implements Iterator<EStructuralFeature
 				}
 			}
 			if (child == null) {
-				throw new IllegalStateException("EObject in reference" + eReference.getName() + " of EObject "
-					+ current.eClass().getName() + " not set!");
+				throw new IllegalStateException("EObject in reference" + eReference.getName() + " of EObject " //$NON-NLS-1$ //$NON-NLS-2$
+					+ current.eClass().getName() + " not set!"); //$NON-NLS-1$
 			}
 			current = child;
 
@@ -214,6 +216,7 @@ public class DomainModelReferenceIterator implements Iterator<EStructuralFeature
 	 * 
 	 * @see java.util.Iterator#hasNext()
 	 */
+	@Override
 	public boolean hasNext() {
 		return hasNext;
 	}

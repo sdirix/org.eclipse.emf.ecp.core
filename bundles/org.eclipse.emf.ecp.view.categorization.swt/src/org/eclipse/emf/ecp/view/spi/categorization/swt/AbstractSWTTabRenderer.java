@@ -38,6 +38,7 @@ import org.eclipse.swt.widgets.Control;
  * @author Eugen Neufeld
  * @param <VELEMENT> the {@link VElement}
  */
+@SuppressWarnings("restriction")
 public abstract class AbstractSWTTabRenderer<VELEMENT extends VElement> extends AbstractSWTRenderer<VELEMENT> {
 
 	/**

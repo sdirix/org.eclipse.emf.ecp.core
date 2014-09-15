@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate;
@@ -37,6 +38,8 @@ import org.eclipse.emf.ecp.view.template.model.VTViewTemplate;
  * <li>{@link org.eclipse.emf.ecp.view.template.model.impl.VTViewTemplateImpl#getControlValidationConfiguration <em>
  * Control Validation Configuration</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.template.model.impl.VTViewTemplateImpl#getStyles <em>Styles</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.template.model.impl.VTViewTemplateImpl#getReferencedEcores <em>Referenced Ecores
+ * </em>}</li>
  * </ul>
  * </p>
  * 
@@ -66,6 +69,17 @@ public class VTViewTemplateImpl extends MinimalEObjectImpl.Container implements 
 	 * @ordered
 	 */
 	protected EList<VTStyle> styles;
+
+	/**
+	 * The cached value of the '{@link #getReferencedEcores() <em>Referenced Ecores</em>}' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see #getReferencedEcores()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<String> referencedEcores;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -182,6 +196,23 @@ public class VTViewTemplateImpl extends MinimalEObjectImpl.Container implements 
 	 * @generated
 	 */
 	@Override
+	public EList<String> getReferencedEcores()
+	{
+		if (referencedEcores == null)
+		{
+			referencedEcores = new EDataTypeUniqueEList<String>(String.class, this,
+				VTTemplatePackage.VIEW_TEMPLATE__REFERENCED_ECORES);
+		}
+		return referencedEcores;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
 	{
 		switch (featureID)
@@ -209,6 +240,8 @@ public class VTViewTemplateImpl extends MinimalEObjectImpl.Container implements 
 			return getControlValidationConfiguration();
 		case VTTemplatePackage.VIEW_TEMPLATE__STYLES:
 			return getStyles();
+		case VTTemplatePackage.VIEW_TEMPLATE__REFERENCED_ECORES:
+			return getReferencedEcores();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -232,6 +265,10 @@ public class VTViewTemplateImpl extends MinimalEObjectImpl.Container implements 
 			getStyles().clear();
 			getStyles().addAll((Collection<? extends VTStyle>) newValue);
 			return;
+		case VTTemplatePackage.VIEW_TEMPLATE__REFERENCED_ECORES:
+			getReferencedEcores().clear();
+			getReferencedEcores().addAll((Collection<? extends String>) newValue);
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -253,6 +290,9 @@ public class VTViewTemplateImpl extends MinimalEObjectImpl.Container implements 
 		case VTTemplatePackage.VIEW_TEMPLATE__STYLES:
 			getStyles().clear();
 			return;
+		case VTTemplatePackage.VIEW_TEMPLATE__REFERENCED_ECORES:
+			getReferencedEcores().clear();
+			return;
 		}
 		super.eUnset(featureID);
 	}
@@ -272,8 +312,30 @@ public class VTViewTemplateImpl extends MinimalEObjectImpl.Container implements 
 			return controlValidationConfiguration != null;
 		case VTTemplatePackage.VIEW_TEMPLATE__STYLES:
 			return styles != null && !styles.isEmpty();
+		case VTTemplatePackage.VIEW_TEMPLATE__REFERENCED_ECORES:
+			return referencedEcores != null && !referencedEcores.isEmpty();
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	@Override
+	public String toString()
+	{
+		if (eIsProxy()) {
+			return super.toString();
+		}
+
+		final StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (referencedEcores: "); //$NON-NLS-1$
+		result.append(referencedEcores);
+		result.append(')');
+		return result.toString();
 	}
 
 } // VTViewTemplateImpl

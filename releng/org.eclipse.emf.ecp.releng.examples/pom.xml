@@ -6,12 +6,12 @@
 	<parent>
 		<groupId>org.eclipse.emf.ecp</groupId>
 		<artifactId>ecp-parent</artifactId>
-		<version>1.3.0-SNAPSHOT</version>
+		<version>1.4.0-SNAPSHOT</version>
 		<relativePath>../../releng/org.eclipse.emf.ecp.releng/</relativePath>
 	</parent>
 	<groupId>org.eclipse.emf.ecp</groupId>
 	<artifactId>ecp-examples-parent</artifactId>
-	<version>1.3.0-SNAPSHOT</version>
+	<version>1.4.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<modules>
@@ -19,10 +19,15 @@
 		<!-- MakeItHappen Demo -->
 		<module>../../examples/org.eclipse.emf.ecp.makeithappen.feature</module>
 		<module>../../examples/org.eclipse.emf.ecp.makeithappen.model</module>
+		<module>../../examples/org.eclipse.emf.ecp.makeithappen.model.viewmodel</module>
 		<module>../../examples/org.eclipse.emf.ecp.makeithappen.model.edit</module>
-		<module>../../examples/org.eclipse.emf.ecp.makeithappen.emailControlRenderer</module>
+		<module>../../examples/org.eclipse.emf.ecp.makeithappen.view.email.renderer</module>
 		<module>../../examples/org.eclipse.emf.ecp.makeithappen.view.group.renderer</module>
 		<module>../../examples/org.eclipse.emf.ecp.makeithappen.wizards</module>
+		<module>../../examples/org.eclipse.emf.ecp.makeithappen.application.sample.e3</module>
+		<module>../../examples/org.eclipse.emf.ecp.makeithappen.application.sample.e4</module>
+		<module>../../examples/org.eclipse.emf.ecp.makeithappen.application.sample.rap</module>
+		<module>../../examples/org.eclipse.emf.ecp.makeithappen.application.sample.rap.j2ee</module>		
 	</modules>
 
 	<build>

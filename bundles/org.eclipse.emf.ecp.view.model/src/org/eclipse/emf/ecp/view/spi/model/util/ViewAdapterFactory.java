@@ -16,6 +16,7 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.spi.model.VAttachment;
+import org.eclipse.emf.ecp.view.spi.model.VContainedContainer;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VContainer;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
@@ -134,6 +135,12 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 		public Adapter caseContainer(VContainer object)
 		{
 			return createContainerAdapter();
+		}
+
+		@Override
+		public Adapter caseContainedContainer(VContainedContainer object)
+		{
+			return createContainedContainerAdapter();
 		}
 
 		@Override
@@ -258,6 +265,24 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createContainerAdapter()
+	{
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.spi.model.VContainedContainer
+	 * <em>Contained Container</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.spi.model.VContainedContainer
+	 * @generated
+	 * @since 1.4
+	 */
+	public Adapter createContainedContainerAdapter()
 	{
 		return null;
 	}

@@ -12,6 +12,8 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.provider;
 
+import java.util.Map;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 
@@ -34,18 +36,20 @@ public interface IViewProvider {
 	 * Called to check whether the provider can provide a {@link VView} for an {@link EObject}.
 	 * 
 	 * @param eObject the {@link EObject} to create a
+	 * @param context a key-value-map from String to Object
 	 * @return an integer indicating how well this provider is fitted to provide a {@link VView} for the provided
 	 *         {@link EObject} or {@link #NOT_APPLICABLE} if it doesn't fit
 	 */
-	int canRender(EObject eObject);
+	int canRender(EObject eObject, Map<String, Object> context);
 
 	/**
-	 * This method is only called if {@link #canRender(EObject)} returned the highest positive number of all
-	 * {@link IViewProvider IViewProviders}.
+	 * This method is only called if {@link #canRender(EObject, Map)} returned the highest positive number
+	 * of all {@link IViewProvider IViewProviders}.
 	 * It must then return a {@link VView} to the {@link EObject}.
 	 * 
 	 * @param eObject the {@link EObject} to generate the {@link VView} for
+	 * @param context a key-value-map from String to Object
 	 * @return the generated {@link VView}
 	 */
-	VView generate(EObject eObject);
+	VView generate(EObject eObject, Map<String, Object> context);
 }

@@ -67,7 +67,7 @@ public class MigrateHandler extends AbstractHandler {
 			}
 			final VControl control = (VControl) eObject;
 			final Setting setting = control.getDomainModelReference().getIterator().next();
-			final List<EReference> bottomUpPath = Helper.getReferencePath(setting.getEStructuralFeature()
+			final List<EReference> bottomUpPath = Helper.getReferencePath(rootClass, setting.getEStructuralFeature()
 				.getEContainingClass(),
 				childParentReferenceMap);
 			// control.getPathToFeature().addAll(bottomUpPath);

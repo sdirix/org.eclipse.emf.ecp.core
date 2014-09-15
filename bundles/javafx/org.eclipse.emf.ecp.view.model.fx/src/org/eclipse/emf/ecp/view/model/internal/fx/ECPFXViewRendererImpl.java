@@ -11,8 +11,6 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.model.internal.fx;
 
-import java.util.Set;
-
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 
@@ -21,9 +19,11 @@ import org.eclipse.emf.ecp.view.internal.context.ViewModelContextImpl;
 import org.eclipse.emf.ecp.view.model.fx.ECPFXView;
 import org.eclipse.emf.ecp.view.model.fx.ECPFXViewRenderer;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
-import org.eclipse.emf.ecp.view.spi.renderer.RenderingResultRow;
+import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
+import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 
 /**
  * @author Jonas
@@ -44,15 +44,26 @@ public class ECPFXViewRendererImpl implements ECPFXViewRenderer {
 
 		ViewModelContext viewModelContext = new ViewModelContextImpl(view,
 				domainObject);
-		Set<RenderingResultRow<Node>> resultSet = RendererFactory.INSTANCE
-				.render(view, viewModelContext);
 
-		if (resultSet.size() != 1)
-			return new ECPFXViewImpl(new Label("Rendering went wrong!"));
-		RenderingResultRow<Node> controlRow = resultSet.iterator().next();
-		if (controlRow.getControls().size() != 1)
-			return new ECPFXViewImpl(new Label("Rendering went wrong!"));
-		return new ECPFXViewImpl(controlRow.getControls().iterator().next());
+		RendererFX<VElement> viewRenderer = RendererFactory.INSTANCE.getRenderer(view, viewModelContext);
+		if (viewRenderer != null) {
+			Node result;
+			try {
+				// TODO: checkGrid
+				result = viewRenderer.render(viewRenderer.getGridDescription().getGrid().get(0));
+			} catch (NoRendererFoundException e) {
+				return new ECPFXViewImpl(new Label("Rendering went wrong: " + e.getMessage()));
+			} catch (NoPropertyDescriptorFoundExeption e) {
+				return new ECPFXViewImpl(new Label("Rendering went wrong: " + e.getMessage()));
+			}
+			if (result != null) {
+				return new ECPFXViewImpl(result);
+			} else {
+				return new ECPFXViewImpl(new Label("Rendering went wrong!"));
+			}
+		} else {
+			return new ECPFXViewImpl(new Label("Rendering went wrong: Couldn't find a renderer for VView."));
+		}
 	}
 
 	@Override

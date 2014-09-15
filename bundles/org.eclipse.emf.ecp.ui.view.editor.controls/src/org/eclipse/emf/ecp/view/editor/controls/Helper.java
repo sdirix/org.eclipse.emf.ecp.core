@@ -102,15 +102,22 @@ public final class Helper {
 	 * @param childParentReferenceMap the map to use
 	 * @return the reference path
 	 */
-	public static List<EReference> getReferencePath(EClass selectedClass,
+	public static List<EReference> getReferencePath(EClass rootEClass, EClass selectedClass,
 		Map<EClass, EReference> childParentReferenceMap) {
 
 		final List<EReference> bottomUpPath = new ArrayList<EReference>();
+
+		if (rootEClass == selectedClass) {
+			return bottomUpPath;
+		}
 
 		EReference parentReference = childParentReferenceMap.get(selectedClass);
 		while (parentReference != null && !bottomUpPath.contains(parentReference)) {
 			bottomUpPath.add(parentReference);
 			selectedClass = parentReference.getEContainingClass();
+			if (selectedClass == rootEClass) {
+				break;
+			}
 			parentReference = childParentReferenceMap.get(selectedClass);
 		}
 		Collections.reverse(bottomUpPath);
@@ -172,10 +179,12 @@ public final class Helper {
 
 		EClass eClassToCheck = eClass;
 		final EStructuralFeature featureToCheck = (EStructuralFeature) treePath.getLastSegment();
-		for (int i = 0; i < treePath.getSegmentCount() - 1; i++) {
-			if (EReference.class.isInstance(treePath.getSegment(i))) {
-				eClassToCheck = EReference.class.cast(treePath.getSegment(i)).getEReferenceType();
-			}
+		final int segments = treePath.getSegmentCount();
+		if (segments > 1 && EReference.class.isInstance(treePath.getSegment(segments - 1))) {
+			eClassToCheck = EReference.class.cast(treePath.getSegment(segments - 1)).getEReferenceType();
+		}
+		if (eClassToCheck.isAbstract() || eClass.isInterface()) {
+			return false;
 		}
 
 		final ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
@@ -183,6 +192,7 @@ public final class Helper {
 			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
 		final AdapterFactoryItemDelegator adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(
 			composedAdapterFactory);
+
 		final IItemPropertyDescriptor propertyDescriptor =
 			adapterFactoryItemDelegator
 				.getPropertyDescriptor(EcoreUtil.create(eClassToCheck), featureToCheck);

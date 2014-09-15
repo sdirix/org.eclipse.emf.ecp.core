@@ -376,8 +376,7 @@ public class DynamicContainmentTreeDomainModelReferenceImpl extends EObjectImpl 
 	 * 
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReference#init(EObject,
-	 *      org.eclipse.emf.ecp.view.spi.model.DomainModelChangeNotifier)
+	 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReference#init(EObject)
 	 * 
 	 * @generated NOT
 	 */

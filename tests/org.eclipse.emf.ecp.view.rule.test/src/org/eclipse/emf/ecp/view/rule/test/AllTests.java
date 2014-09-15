@@ -19,7 +19,9 @@ import org.junit.runners.Suite.SuiteClasses;
 @SuiteClasses({
 	RuleServiceGCTest.class,
 	RuleServiceTest.class,
-	ConditionEvaluatorTest.class })
+	ConditionEvaluatorTest.class,
+	DynamicRuleService_Test.class
+})
 public class AllTests {
 
 }

@@ -78,6 +78,7 @@ public class AndConditionImpl extends ConditionImpl implements AndCondition {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EList<Condition> getConditions() {
 		if (conditions == null)
 		{
@@ -177,6 +178,7 @@ public class AndConditionImpl extends ConditionImpl implements AndCondition {
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.rule.model.Condition#evaluate()
 	 */
+	@Override
 	public boolean evaluate() {
 		boolean result = true;
 		for (final Condition innerCondition : getConditions()) {
@@ -190,6 +192,7 @@ public class AndConditionImpl extends ConditionImpl implements AndCondition {
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.rule.model.Condition#evaluateChangedValues(java.util.Map)
 	 */
+	@Override
 	public boolean evaluateChangedValues(Map<Setting, Object> possibleNewValues) {
 		boolean result = true;
 		for (final Condition innerCondition : getConditions()) {

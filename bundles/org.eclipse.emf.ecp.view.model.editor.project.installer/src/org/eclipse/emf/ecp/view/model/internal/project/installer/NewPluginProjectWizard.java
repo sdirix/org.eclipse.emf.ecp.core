@@ -48,9 +48,15 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.ui.CommonUIPlugin;
 import org.eclipse.emf.common.ui.wizard.AbstractExampleInstallerWizard;
 import org.eclipse.emf.common.ui.wizard.ExampleInstallerWizard;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecp.ide.view.service.IDEViewModelRegistry;
+import org.eclipse.emf.ecp.internal.ide.util.ViewModelHelper;
 import org.eclipse.emf.ecp.view.editor.handler.ControlGenerator;
 import org.eclipse.emf.ecp.view.model.presentation.SelectEClassWizardPage;
 import org.eclipse.emf.ecp.view.model.presentation.SelectEcorePage;
@@ -77,7 +83,7 @@ public class NewPluginProjectWizard extends ExampleInstallerWizard {
 	private static final String PLUGIN_ID = "org.eclipse.emf.ecp.view.model.internal.project.installer"; //$NON-NLS-1$
 	private SelectEClassWizardPage selectEClassPage;
 	private List<EClass> selectedEClasses;
-	private IFile selectedEcore;
+	private Object selectedContainer;
 	/**
 	 * The supported extensions for created files. <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
@@ -90,11 +96,11 @@ public class NewPluginProjectWizard extends ExampleInstallerWizard {
 				"\\s*,\\s*"))); //$NON-NLS-1$
 
 	/**
-	 * @param selectedEcore
-	 *            the selectedEcore to set
+	 * @param selectedContainer
+	 *            the selectedContainer to set
 	 */
-	public void setSelectedEcore(IFile selectedEcore) {
-		this.selectedEcore = selectedEcore;
+	public void setSelectedContainer(Object selectedContainer) {
+		this.selectedContainer = selectedContainer;
 	}
 
 	private WizardNewProjectCreationPage firstPage;
@@ -204,24 +210,79 @@ public class NewPluginProjectWizard extends ExampleInstallerWizard {
 		addPage(firstPage);
 
 		selectEClassPage = new SelectEClassWizardPage();
-		selectEClassPage.setSelectedEcore(selectedEcore);
+		selectEClassPage.setSelectedEPackage(getEPackage());
 		addPage(selectEClassPage);
 		selectEClassPage.setPageComplete(true);
 
 	}
 
+	private EPackage getEPackage() {
+		EPackage ePackage = null;
+		if (selectedContainer == null) {
+			return null;
+		}
+		if (EPackage.class.isInstance(selectedContainer)) {
+			ePackage = EPackage.class.cast(selectedContainer);
+		}
+		else if (IFile.class.isInstance(selectedContainer)) {
+			final ResourceSetImpl resourceSet = new ResourceSetImpl();
+			final String path = ((IFile) selectedContainer).getFullPath().toString();
+			final URI uri = URI.createPlatformResourceURI(path, true);
+
+			final Resource resource = resourceSet.getResource(uri, true);
+			if (resource != null) {
+
+				final EList<EObject> contents = resource.getContents();
+				if (contents.size() != 1) {
+					return null;
+				}
+
+				final EObject object = contents.get(0);
+				if (!(object instanceof EPackage)) {
+					return null;
+				}
+
+				ePackage = (EPackage) object;
+			}
+		}
+		return ePackage;
+
+	}
+
+	/**
+	 * @return
+	 */
+	private IFile getSelectedEcore() {
+		if (IFile.class.isInstance(selectedContainer)) {
+			return (IFile) selectedContainer;
+		}
+		return null;
+	}
+
 	private String getInitialProjectName() {
 
 		projectName = null;
-		if (selectedEcore != null) {
+		if (selectedContainer == null) {
+			return null;
+		}
+		if (IFile.class.isInstance(selectedContainer)) {
+			final IFile selectedEcore = IFile.class.cast(selectedContainer);
 			final IProject project = ((IResource) selectedEcore).getProject();
 			projectName = project.getName() + ".viewmodel"; //$NON-NLS-1$
-			for (int i = 1; ResourcesPlugin.getWorkspace().getRoot()
-				.getProject(projectName).exists(); ++i) {
-				projectName = project.getName() + ".viewmodel" + i; //$NON-NLS-1$
+		} else {
+			// we have a package selected from the package registry
+			if (EPackage.class.isInstance(selectedContainer)) {
+				final EPackage ePackage = EPackage.class.cast(selectedContainer);
+				projectName = ePackage.getName() + ".viewmodel"; //$NON-NLS-1$
 			}
 		}
-		return projectName;
+
+		String name = projectName;
+		for (int i = 1; ResourcesPlugin.getWorkspace().getRoot()
+			.getProject(name).exists(); ++i) {
+			name = projectName + i;
+		}
+		return name;
 	}
 
 	/*
@@ -235,20 +296,20 @@ public class NewPluginProjectWizard extends ExampleInstallerWizard {
 
 		if (page == firstPage) {
 			projectName = firstPage.getProjectName();
-			if (selectedEcore == null) {
+			if (selectedContainer == null) {
 				selectEcorePage = new SelectEcorePage(PLUGIN_ID);
 				addPage(selectEcorePage);
 				return selectEcorePage;
 			}
 			selectEClassPage = new SelectEClassWizardPage();
-			selectEClassPage.setSelectedEcore(selectedEcore);
+			selectEClassPage.setSelectedEPackage(getEPackage());
 			addPage(selectEClassPage);
 			selectEClassPage.setPageComplete(true);
 			return selectEClassPage;
 		} else if (page == selectEcorePage) {
-			selectedEcore = selectEcorePage.getSelectedEcore();
+			selectedContainer = selectEcorePage.getSelectedContainer();
 			selectEClassPage = new SelectEClassWizardPage();
-			selectEClassPage.setSelectedEcore(selectedEcore);
+			selectEClassPage.setSelectedEPackage(getEPackage());
 			addPage(selectEClassPage);
 			selectEClassPage.setPageComplete(true);
 			return selectEClassPage;
@@ -432,7 +493,7 @@ public class NewPluginProjectWizard extends ExampleInstallerWizard {
 			try {
 				final IDEViewModelRegistry registry = getViewModelRegistry();
 				if (registry != null) {
-					final VView view = registry.createViewModel(viewModelFile, eclass, selectedEcore);
+					final VView view = ViewModelHelper.createViewModel(viewModelFile, eclass, getSelectedEcore());
 					if (generateViewModelControls) {
 						ControlGenerator.generateAllControls(view);
 					}

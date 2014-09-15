@@ -198,7 +198,6 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 	 * 
 	 * @since 1.3
 	 *        <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public DomainModelReferenceChangeListener createDomainModelReferenceChangeListenerFromString(EDataType eDataType,
@@ -212,7 +211,6 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 	 * 
 	 * @since 1.3
 	 *        <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public String convertDomainModelReferenceChangeListenerToString(EDataType eDataType, Object instanceValue)

@@ -31,8 +31,8 @@ import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.util.ECPContainer;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.internal.ui.model.ModelContentProvider;
-import org.eclipse.emf.ecp.internal.ui.util.ECPHandlerHelper;
-import org.eclipse.emf.ecp.ui.common.TreeViewerFactory;
+import org.eclipse.emf.ecp.spi.ui.util.ECPHandlerHelper;
+import org.eclipse.emf.ecp.ui.common.ECPViewerFactory;
 import org.eclipse.emf.ecp.ui.e4.editor.ECPE4Editor;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
@@ -86,12 +86,13 @@ public class ECPModelView {
 				}
 			}
 		}
-		modelExplorerTree = TreeViewerFactory.createModelExplorerViewer(composite, true, null);
+		modelExplorerTree = ECPViewerFactory.createModelExplorerViewer(composite, true, null);
 		menuService.registerContextMenu(modelExplorerTree.getTree(),
 			POPUPMENU_NAVIGATOR);
 		contentProvider = (ModelContentProvider) modelExplorerTree.getContentProvider();
 		modelExplorerTree.addDoubleClickListener(new IDoubleClickListener() {
 
+			@Override
 			public void doubleClick(DoubleClickEvent event) {
 				if (event.getSelection() instanceof IStructuredSelection) {
 					final IStructuredSelection structuredSelection = (IStructuredSelection) event.getSelection();
@@ -114,6 +115,7 @@ public class ECPModelView {
 		});
 		modelExplorerTree.addSelectionChangedListener(new ISelectionChangedListener() {
 
+			@Override
 			public void selectionChanged(SelectionChangedEvent event) {
 				final ISelection selection = event.getSelection();
 				if (IStructuredSelection.class.isInstance(selection)) {

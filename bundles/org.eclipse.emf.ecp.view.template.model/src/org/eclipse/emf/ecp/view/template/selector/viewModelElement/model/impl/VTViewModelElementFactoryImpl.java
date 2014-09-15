@@ -38,13 +38,13 @@ public class VTViewModelElementFactoryImpl extends EFactoryImpl implements VTVie
 	public static VTViewModelElementFactory init() {
 		try
 		{
-			VTViewModelElementFactory theViewModelElementFactory = (VTViewModelElementFactory) EPackage.Registry.INSTANCE
+			final VTViewModelElementFactory theViewModelElementFactory = (VTViewModelElementFactory) EPackage.Registry.INSTANCE
 				.getEFactory(VTViewModelElementPackage.eNS_URI);
 			if (theViewModelElementFactory != null)
 			{
 				return theViewModelElementFactory;
 			}
-		} catch (Exception exception)
+		} catch (final Exception exception)
 		{
 			EcorePlugin.INSTANCE.log(exception);
 		}
@@ -87,7 +87,7 @@ public class VTViewModelElementFactoryImpl extends EFactoryImpl implements VTVie
 	 */
 	@Override
 	public VTViewModelElementSelector createViewModelElementSelector() {
-		VTViewModelElementSelectorImpl viewModelElementSelector = new VTViewModelElementSelectorImpl();
+		final VTViewModelElementSelectorImpl viewModelElementSelector = new VTViewModelElementSelectorImpl();
 		return viewModelElementSelector;
 	}
 

@@ -183,6 +183,18 @@ public class VTTemplatePackageImpl extends EPackageImpl implements VTTemplatePac
 	 * @generated
 	 */
 	@Override
+	public EAttribute getViewTemplate_ReferencedEcores()
+	{
+		return (EAttribute) viewTemplateEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	@Override
 	public EClass getControlValidationTemplate()
 	{
 		return controlValidationTemplateEClass;
@@ -467,6 +479,7 @@ public class VTTemplatePackageImpl extends EPackageImpl implements VTTemplatePac
 		viewTemplateEClass = createEClass(VIEW_TEMPLATE);
 		createEReference(viewTemplateEClass, VIEW_TEMPLATE__CONTROL_VALIDATION_CONFIGURATION);
 		createEReference(viewTemplateEClass, VIEW_TEMPLATE__STYLES);
+		createEAttribute(viewTemplateEClass, VIEW_TEMPLATE__REFERENCED_ECORES);
 
 		controlValidationTemplateEClass = createEClass(CONTROL_VALIDATION_TEMPLATE);
 		createEAttribute(controlValidationTemplateEClass, CONTROL_VALIDATION_TEMPLATE__OK_COLOR_HEX);
@@ -541,6 +554,10 @@ public class VTTemplatePackageImpl extends EPackageImpl implements VTTemplatePac
 			getStyle(),
 			null,
 			"styles", null, 0, -1, VTViewTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(
+			getViewTemplate_ReferencedEcores(),
+			ecorePackage.getEString(),
+			"referencedEcores", null, 0, -1, VTViewTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(controlValidationTemplateEClass, VTControlValidationTemplate.class,
 			"ControlValidationTemplate", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$

@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
@@ -20,14 +20,9 @@ import org.eclipse.emf.ecp.view.spi.group.model.VGroup;
 import org.eclipse.emf.ecp.view.spi.group.model.VGroupFactory;
 import org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
-import org.eclipse.emf.ecp.view.spi.model.provider.ContainerItemProvider;
+import org.eclipse.emf.ecp.view.spi.model.provider.ContainedContainerItemProvider;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
-import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
-import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.IItemPropertySource;
-import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
-import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
@@ -39,8 +34,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * @generated
  */
 public class GroupItemProvider
-	extends ContainerItemProvider implements IEditingDomainItemProvider, IStructuredItemContentProvider,
-	ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
+	extends ContainedContainerItemProvider
 {
 	/**
 	 * This constructs an instance from a factory and a notifier.
@@ -68,35 +62,35 @@ public class GroupItemProvider
 		{
 			super.getPropertyDescriptors(object);
 
-			addContainerLayoutEmbeddingPropertyDescriptor(object);
+			addGroupTypePropertyDescriptor(object);
 			addLabelAlignmentPropertyDescriptor(object);
+			addCollapsedPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
 
 	/**
-	 * This adds a property descriptor for the Container Layout Embedding feature.
+	 * This adds a property descriptor for the Group Type feature.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.4
+	 *        <!-- end-user-doc -->
 	 * 
 	 * @generated
-	 * @since 1.3
 	 */
-	protected void addContainerLayoutEmbeddingPropertyDescriptor(Object object)
+	protected void addGroupTypePropertyDescriptor(Object object)
 	{
-		itemPropertyDescriptors
-			.add
+		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
-				getString("_UI_Group_containerLayoutEmbedding_feature"), //$NON-NLS-1$
-				getString(
-					"_UI_PropertyDescriptor_description", "_UI_Group_containerLayoutEmbedding_feature", "_UI_Group_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				VGroupPackage.Literals.GROUP__CONTAINER_LAYOUT_EMBEDDING,
+				getString("_UI_Group_groupType_feature"), //$NON-NLS-1$
+				getString("_UI_PropertyDescriptor_description", "_UI_Group_groupType_feature", "_UI_Group_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				VGroupPackage.Literals.GROUP__GROUP_TYPE,
 				true,
 				false,
 				false,
-				ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
+				ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
 				null,
 				null));
 	}
@@ -104,10 +98,11 @@ public class GroupItemProvider
 	/**
 	 * This adds a property descriptor for the Label Alignment feature.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.4
+	 *        <!-- end-user-doc -->
 	 * 
 	 * @generated
-	 * @since 1.3
 	 */
 	protected void addLabelAlignmentPropertyDescriptor(Object object)
 	{
@@ -122,6 +117,32 @@ public class GroupItemProvider
 				false,
 				false,
 				ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				null,
+				null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Collapsed feature.
+	 * <!-- begin-user-doc -->
+	 * 
+	 * @since 1.4
+	 *        <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	protected void addCollapsedPropertyDescriptor(Object object)
+	{
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(),
+				getString("_UI_Group_collapsed_feature"), //$NON-NLS-1$
+				getString("_UI_PropertyDescriptor_description", "_UI_Group_collapsed_feature", "_UI_Group_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				VGroupPackage.Literals.GROUP__COLLAPSED,
+				true,
+				false,
+				false,
+				ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
 				null,
 				null));
 	}
@@ -149,7 +170,7 @@ public class GroupItemProvider
 	@Override
 	public String getText(Object object)
 	{
-		final String label = ((VGroup) object).getName();
+		String label = ((VGroup) object).getName();
 		return label == null || label.length() == 0 ?
 			getString("_UI_Group_type") : //$NON-NLS-1$
 			getString("_UI_Group_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
@@ -170,8 +191,9 @@ public class GroupItemProvider
 
 		switch (notification.getFeatureID(VGroup.class))
 		{
-		case VGroupPackage.GROUP__CONTAINER_LAYOUT_EMBEDDING:
+		case VGroupPackage.GROUP__GROUP_TYPE:
 		case VGroupPackage.GROUP__LABEL_ALIGNMENT:
+		case VGroupPackage.GROUP__COLLAPSED:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 			return;
 		}

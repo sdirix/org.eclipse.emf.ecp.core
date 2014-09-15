@@ -19,6 +19,7 @@ import org.eclipse.swt.widgets.Control;
  * @author Eugen Neufeld
  * 
  */
+@Deprecated
 public final class DefaultRenderingResultFactory implements RenderingResultRowFactory<Control> {
 
 	/**
@@ -26,6 +27,7 @@ public final class DefaultRenderingResultFactory implements RenderingResultRowFa
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.renderer.RenderingResultRowFactory#createRenderingResultRow(org.eclipse.swt.widgets.Control[])
 	 */
+	@Override
 	public RenderingResultRow<Control> createRenderingResultRow(Control... controls) {
 		if (controls == null) {
 			throw new IllegalArgumentException("Controls must not be null."); //$NON-NLS-1$

@@ -41,52 +41,14 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
 /**
- * @author Eugen
+ * A diff merge addition renderer.
+ * 
+ * @author Eugen Neufeld
  * 
  */
+@SuppressWarnings("restriction")
 public class SWTDiffMergeAddition extends AbstractAdditionalSWTRenderer<VControl> {
 
-	// /**
-	// * {@inheritDoc}
-	// *
-	// * @see org.eclipse.emf.ecp.view.spi.swt.AbstractAdditionalSWTRenderer#getAdditionalColumns()
-	// */
-	// @Override
-	// public int getAdditionalColumns() {
-	// return 1;
-	// }
-	//
-	// /**
-	// * {@inheritDoc}
-	// *
-	// * @see
-	// org.eclipse.emf.ecp.view.spi.swt.AbstractAdditionalSWTRenderer#preCellRenderControl(org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription,
-	// * org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell, org.eclipse.swt.widgets.Composite)
-	// */
-	// @Override
-	// public GridCellDescription preCellRenderControl(SWTGridDescription gridDescription, SWTGridCell cell, Composite parent)
-	// {
-	// // TODO Auto-generated method stub
-	// return null;
-	// }
-	//
-	// /**
-	// * {@inheritDoc}
-	// *
-	// * @see
-	// org.eclipse.emf.ecp.view.spi.swt.AbstractAdditionalSWTRenderer#postCellRenderControl(org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription,
-	// * org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell, org.eclipse.swt.widgets.Composite)
-	// */
-	// @Override
-	// public GridCellDescription postCellRenderControl(SWTGridDescription gridDescription, SWTGridCell cell, Composite
-	// parent) {
-	// if (gridDescription.getColumns() == cell.getColumn() + 1) {
-	// // if (cell.getColumn() == 1) {
-	// createDiffButton(parent);
-	// return new GridCellDescription();
-	// }
-	// return null;
-	// }
 	/**
 	 * {@inheritDoc}
 	 * 
@@ -160,6 +122,7 @@ public class SWTDiffMergeAddition extends AbstractAdditionalSWTRenderer<VControl
 				attachment.eAdapters().add(adapter);
 				diffButton.addDisposeListener(new DisposeListener() {
 
+					@Override
 					public void widgetDisposed(DisposeEvent event) {
 						attachment.eAdapters().remove(adapter);
 					}

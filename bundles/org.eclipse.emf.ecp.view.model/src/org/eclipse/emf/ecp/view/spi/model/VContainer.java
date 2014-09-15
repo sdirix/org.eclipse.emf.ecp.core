@@ -15,7 +15,7 @@ import org.eclipse.emf.common.util.EList;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Composite Collection</b></em>'.
+ * A representation of the model object '<em><b>Container</b></em>'.
  * <!-- end-user-doc -->
  * 
  * <p>
@@ -30,14 +30,15 @@ import org.eclipse.emf.common.util.EList;
  * @generated
  * @since 1.2
  */
-public interface VContainer extends VContainedElement {
+public interface VContainer extends VElement
+{
 	/**
 	 * Returns the value of the '<em><b>Children</b></em>' containment reference list.
 	 * The list contents are of type {@link org.eclipse.emf.ecp.view.spi.model.VContainedElement}.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Composites</em>' containment reference list isn't clear, there really should be more
-	 * of a description here...
+	 * If the meaning of the '<em>Children</em>' containment reference list isn't clear, there really should be more of
+	 * a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * 
@@ -48,4 +49,4 @@ public interface VContainer extends VContainedElement {
 	 */
 	EList<VContainedElement> getChildren();
 
-} // CompositeCollection
+} // VContainer

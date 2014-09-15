@@ -81,6 +81,7 @@ public class ShowRuleImpl extends RuleImpl implements ShowRule {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public boolean isHide() {
 		return hide;
 	}
@@ -91,6 +92,7 @@ public class ShowRuleImpl extends RuleImpl implements ShowRule {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setHide(boolean newHide) {
 		final boolean oldHide = hide;
 		hide = newHide;

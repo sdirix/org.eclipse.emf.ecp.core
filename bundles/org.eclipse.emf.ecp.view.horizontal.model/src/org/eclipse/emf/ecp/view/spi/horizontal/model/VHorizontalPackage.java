@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
@@ -25,12 +25,12 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * <li>each enum,</li>
  * <li>and each data type</li>
  * </ul>
+ * @since 1.2
  * <!-- end-user-doc -->
- * 
+ *
  * @see org.eclipse.emf.ecp.view.spi.horizontal.model.VHorizontalFactory
  * @model kind="package"
  * @generated
- * @since 1.2
  */
 public interface VHorizontalPackage extends EPackage
 {
@@ -38,7 +38,7 @@ public interface VHorizontalPackage extends EPackage
 	 * The package name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	String eNAME = "horizontal"; //$NON-NLS-1$
@@ -47,7 +47,7 @@ public interface VHorizontalPackage extends EPackage
 	 * The package namespace URI.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	String eNS_URI = "http://org/eclipse/emf/ecp/view/horizontal/model"; //$NON-NLS-1$
@@ -56,7 +56,7 @@ public interface VHorizontalPackage extends EPackage
 	 * The package namespace name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	String eNS_PREFIX = "org.eclipse.emf.ecp.view.horizontal.model"; //$NON-NLS-1$
@@ -65,7 +65,7 @@ public interface VHorizontalPackage extends EPackage
 	 * The singleton instance of the package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	VHorizontalPackage eINSTANCE = org.eclipse.emf.ecp.view.spi.horizontal.model.impl.VHorizontalPackageImpl.init();
@@ -75,7 +75,7 @@ public interface VHorizontalPackage extends EPackage
 	 * <em>Layout</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.horizontal.model.impl.VHorizontalLayoutImpl
 	 * @see org.eclipse.emf.ecp.view.spi.horizontal.model.impl.VHorizontalPackageImpl#getHorizontalLayout()
 	 * @generated
@@ -86,88 +86,88 @@ public interface VHorizontalPackage extends EPackage
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
-	int HORIZONTAL_LAYOUT__NAME = VViewPackage.CONTAINER__NAME;
+	int HORIZONTAL_LAYOUT__NAME = VViewPackage.CONTAINED_CONTAINER__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
-	int HORIZONTAL_LAYOUT__VISIBLE = VViewPackage.CONTAINER__VISIBLE;
+	int HORIZONTAL_LAYOUT__VISIBLE = VViewPackage.CONTAINED_CONTAINER__VISIBLE;
 
 	/**
 	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
-	int HORIZONTAL_LAYOUT__ENABLED = VViewPackage.CONTAINER__ENABLED;
+	int HORIZONTAL_LAYOUT__ENABLED = VViewPackage.CONTAINED_CONTAINER__ENABLED;
 
 	/**
 	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
-	int HORIZONTAL_LAYOUT__READONLY = VViewPackage.CONTAINER__READONLY;
+	int HORIZONTAL_LAYOUT__READONLY = VViewPackage.CONTAINED_CONTAINER__READONLY;
 
 	/**
 	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
-	int HORIZONTAL_LAYOUT__DIAGNOSTIC = VViewPackage.CONTAINER__DIAGNOSTIC;
+	int HORIZONTAL_LAYOUT__DIAGNOSTIC = VViewPackage.CONTAINED_CONTAINER__DIAGNOSTIC;
 
 	/**
 	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
-	int HORIZONTAL_LAYOUT__ATTACHMENTS = VViewPackage.CONTAINER__ATTACHMENTS;
+	int HORIZONTAL_LAYOUT__ATTACHMENTS = VViewPackage.CONTAINED_CONTAINER__ATTACHMENTS;
 
 	/**
 	 * The feature id for the '<em><b>Children</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
-	int HORIZONTAL_LAYOUT__CHILDREN = VViewPackage.CONTAINER__CHILDREN;
+	int HORIZONTAL_LAYOUT__CHILDREN = VViewPackage.CONTAINED_CONTAINER__CHILDREN;
 
 	/**
 	 * The number of structural features of the '<em>Layout</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
-	int HORIZONTAL_LAYOUT_FEATURE_COUNT = VViewPackage.CONTAINER_FEATURE_COUNT + 0;
+	int HORIZONTAL_LAYOUT_FEATURE_COUNT = VViewPackage.CONTAINED_CONTAINER_FEATURE_COUNT + 0;
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.horizontal.model.VHorizontalLayout
 	 * <em>Layout</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for class '<em>Layout</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.horizontal.model.VHorizontalLayout
 	 * @generated
@@ -178,7 +178,7 @@ public interface VHorizontalPackage extends EPackage
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the factory that creates the instances of the model.
 	 * @generated
 	 */
@@ -194,7 +194,7 @@ public interface VHorizontalPackage extends EPackage
 	 * <li>and each data type</li>
 	 * </ul>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	interface Literals
@@ -204,7 +204,7 @@ public interface VHorizontalPackage extends EPackage
 		 * {@link org.eclipse.emf.ecp.view.spi.horizontal.model.impl.VHorizontalLayoutImpl <em>Layout</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.spi.horizontal.model.impl.VHorizontalLayoutImpl
 		 * @see org.eclipse.emf.ecp.view.spi.horizontal.model.impl.VHorizontalPackageImpl#getHorizontalLayout()
 		 * @generated

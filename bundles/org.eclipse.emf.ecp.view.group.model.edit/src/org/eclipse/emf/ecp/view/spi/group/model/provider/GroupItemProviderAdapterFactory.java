@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
@@ -145,6 +145,7 @@ public class GroupItemProviderAdapterFactory extends GroupAdapterFactory impleme
 	 * 
 	 * @generated
 	 */
+	@Override
 	public ComposeableAdapterFactory getRootAdapterFactory()
 	{
 		return parentAdapterFactory == null ? this : parentAdapterFactory.getRootAdapterFactory();
@@ -157,6 +158,7 @@ public class GroupItemProviderAdapterFactory extends GroupAdapterFactory impleme
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setParentAdapterFactory(ComposedAdapterFactory parentAdapterFactory)
 	{
 		this.parentAdapterFactory = parentAdapterFactory;
@@ -225,6 +227,7 @@ public class GroupItemProviderAdapterFactory extends GroupAdapterFactory impleme
 	 * 
 	 * @generated
 	 */
+	@Override
 	public Collection<?> getNewChildDescriptors(Object object, EditingDomain editingDomain)
 	{
 		return childCreationExtenderManager.getNewChildDescriptors(object, editingDomain);
@@ -236,6 +239,7 @@ public class GroupItemProviderAdapterFactory extends GroupAdapterFactory impleme
 	 * 
 	 * @generated
 	 */
+	@Override
 	public ResourceLocator getResourceLocator()
 	{
 		return childCreationExtenderManager;
@@ -248,6 +252,7 @@ public class GroupItemProviderAdapterFactory extends GroupAdapterFactory impleme
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void addListener(INotifyChangedListener notifyChangedListener)
 	{
 		changeNotifier.addListener(notifyChangedListener);
@@ -260,6 +265,7 @@ public class GroupItemProviderAdapterFactory extends GroupAdapterFactory impleme
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void removeListener(INotifyChangedListener notifyChangedListener)
 	{
 		changeNotifier.removeListener(notifyChangedListener);
@@ -272,6 +278,7 @@ public class GroupItemProviderAdapterFactory extends GroupAdapterFactory impleme
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void fireNotifyChanged(Notification notification)
 	{
 		changeNotifier.fireNotifyChanged(notification);
@@ -289,6 +296,7 @@ public class GroupItemProviderAdapterFactory extends GroupAdapterFactory impleme
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void dispose()
 	{
 		if (groupItemProvider != null)
@@ -397,6 +405,7 @@ public class GroupItemProviderAdapterFactory extends GroupAdapterFactory impleme
 		 * 
 		 * @generated
 		 */
+		@Override
 		public Collection<Object> getNewChildDescriptors(Object object, EditingDomain editingDomain)
 		{
 			ArrayList<Object> result = new ArrayList<Object>();
@@ -410,6 +419,7 @@ public class GroupItemProviderAdapterFactory extends GroupAdapterFactory impleme
 		 * 
 		 * @generated
 		 */
+		@Override
 		public ResourceLocator getResourceLocator()
 		{
 			return GroupEditPlugin.INSTANCE;

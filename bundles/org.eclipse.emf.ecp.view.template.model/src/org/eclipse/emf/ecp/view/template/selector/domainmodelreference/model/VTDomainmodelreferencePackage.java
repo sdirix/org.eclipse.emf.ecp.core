@@ -14,6 +14,7 @@ package org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecp.view.template.model.VTTemplatePackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -92,7 +93,7 @@ public interface VTDomainmodelreferencePackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int DOMAIN_MODEL_REFERENCE_SELECTOR__DOMAIN_MODEL_REFERENCE = org.eclipse.emf.ecp.view.template.model.VTTemplatePackage.STYLE_SELECTOR_FEATURE_COUNT + 0;
+	int DOMAIN_MODEL_REFERENCE_SELECTOR__DOMAIN_MODEL_REFERENCE = VTTemplatePackage.STYLE_SELECTOR_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Domain Model Reference Selector</em>' class.
@@ -102,7 +103,7 @@ public interface VTDomainmodelreferencePackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int DOMAIN_MODEL_REFERENCE_SELECTOR_FEATURE_COUNT = org.eclipse.emf.ecp.view.template.model.VTTemplatePackage.STYLE_SELECTOR_FEATURE_COUNT + 1;
+	int DOMAIN_MODEL_REFERENCE_SELECTOR_FEATURE_COUNT = VTTemplatePackage.STYLE_SELECTOR_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of operations of the '<em>Domain Model Reference Selector</em>' class.
@@ -112,7 +113,7 @@ public interface VTDomainmodelreferencePackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int DOMAIN_MODEL_REFERENCE_SELECTOR_OPERATION_COUNT = org.eclipse.emf.ecp.view.template.model.VTTemplatePackage.STYLE_SELECTOR_OPERATION_COUNT + 0;
+	int DOMAIN_MODEL_REFERENCE_SELECTOR_OPERATION_COUNT = VTTemplatePackage.STYLE_SELECTOR_OPERATION_COUNT + 0;
 
 	/**
 	 * Returns the meta object for class '

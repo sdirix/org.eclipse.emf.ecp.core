@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
@@ -18,14 +18,10 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecp.view.spi.label.model.VLabel;
 import org.eclipse.emf.ecp.view.spi.label.model.VLabelPackage;
+import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.model.provider.ContainedElementItemProvider;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
-import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
-import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.IItemPropertySource;
-import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
-import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
@@ -33,19 +29,17 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.spi.label.model.VLabel} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
- * 
+ *
  * @generated
- * @since 1.2
  */
 public class LabelItemProvider
-	extends ContainedElementItemProvider implements IEditingDomainItemProvider, IStructuredItemContentProvider,
-	ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
+	extends ContainedElementItemProvider
 {
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public LabelItemProvider(AdapterFactory adapterFactory)
@@ -57,7 +51,7 @@ public class LabelItemProvider
 	 * This returns the property descriptors for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -68,6 +62,7 @@ public class LabelItemProvider
 			super.getPropertyDescriptors(object);
 
 			addStylePropertyDescriptor(object);
+			addDomainModelReferencePropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -76,7 +71,7 @@ public class LabelItemProvider
 	 * This adds a property descriptor for the Style feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected void addStylePropertyDescriptor(Object object)
@@ -97,10 +92,37 @@ public class LabelItemProvider
 	}
 
 	/**
+	 * This adds a property descriptor for the Domain Model Reference feature.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.4
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	protected void addDomainModelReferencePropertyDescriptor(Object object)
+	{
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(),
+				getString("_UI_Label_domainModelReference_feature"), //$NON-NLS-1$
+				getString(
+					"_UI_PropertyDescriptor_description", "_UI_Label_domainModelReference_feature", "_UI_Label_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				VLabelPackage.Literals.LABEL__DOMAIN_MODEL_REFERENCE,
+				true,
+				false,
+				false,
+				null,
+				null,
+				null));
+	}
+
+	/**
 	 * This returns Label.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -113,7 +135,7 @@ public class LabelItemProvider
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -130,7 +152,7 @@ public class LabelItemProvider
 	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -141,6 +163,7 @@ public class LabelItemProvider
 		switch (notification.getFeatureID(VLabel.class))
 		{
 		case VLabelPackage.LABEL__STYLE:
+		case VLabelPackage.LABEL__DOMAIN_MODEL_REFERENCE:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 			return;
 		}
@@ -152,13 +175,18 @@ public class LabelItemProvider
 	 * that can be created under this object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
 	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
 	{
 		super.collectNewChildDescriptors(newChildDescriptors, object);
+
+		newChildDescriptors.add
+			(createChildParameter
+			(VLabelPackage.Literals.LABEL__DOMAIN_MODEL_REFERENCE,
+				VViewFactory.eINSTANCE.createFeaturePathDomainModelReference()));
 	}
 
 }

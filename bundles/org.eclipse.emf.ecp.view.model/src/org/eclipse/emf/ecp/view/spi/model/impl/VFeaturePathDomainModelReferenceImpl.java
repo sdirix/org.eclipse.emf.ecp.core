@@ -69,7 +69,6 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 	 * 
 	 * @since 1.3
 	 *        <!-- end-user-doc -->
-	 * 
 	 * @see #getChangeListener()
 	 * @generated
 	 * @ordered
@@ -125,7 +124,6 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 	 * 
 	 * @since 1.3
 	 *        <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -380,7 +378,13 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 			}
 			EObject child = (EObject) currentResolvedEObject.eGet(eReference);
 			if (createMissingChildren && child == null) {
-				child = EcoreUtil.create(eReference.getEReferenceType());
+				if (!eReference.getEReferenceType().isAbstract() && !eReference.getEReferenceType().isInterface()) {
+					child = EcoreUtil.create(eReference.getEReferenceType());
+				} else if (currentLeftReferences.size() == 1
+					&& !domainModelEFeatureValue.getEContainingClass().isAbstract()
+					&& !domainModelEFeatureValue.getEContainingClass().isInterface()) {
+					child = EcoreUtil.create(domainModelEFeatureValue.getEContainingClass());
+				}
 				currentResolvedEObject.eSet(eReference, child);
 			}
 			if (child == null) {
@@ -398,6 +402,7 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 		// workaround block end
 		lastResolvedEObject = currentResolvedEObject;
 		leftReferences = currentLeftReferences;
+		// resolvedSetting.add(InternalEObject.class.cast(lastResolvedEObject).eSetting(getDomainModelEFeature()));
 		return true;
 	}
 
@@ -433,14 +438,14 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 
 			@Override
 			public boolean hasNext() {
-				return counter == 1;
+				return counter == 1 && getDomainModelEFeature() != null;
 			}
 
 			@Override
 			public EStructuralFeature next() {
 				if (counter != 1) {
 					throw new NoSuchElementException(
-						"There is only one EStructuralFeature in this VFeaturePathDomainModelReference.");
+						"There is only one EStructuralFeature in this VFeaturePathDomainModelReference."); //$NON-NLS-1$
 				}
 				counter--;
 				return getDomainModelEFeature();
@@ -495,7 +500,7 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 						return new Iterator<EStructuralFeature.Setting>() {
 
 							private final Iterator<Setting> pathIterator = resolvedSetting.iterator();
-							private Iterator<Setting> childIterator;
+							private final Iterator<Setting> childIterator = getIterator();
 
 							@Override
 							public void remove() {
@@ -520,9 +525,9 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 									return true;
 								}
 								// get the iterator once
-								if (childIterator == null) {
-									childIterator = getIterator();
-								}
+								// if (childIterator == null) {
+								// childIterator = getIterator();
+								// }
 								return childIterator.hasNext();
 							}
 						};
@@ -569,6 +574,9 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 	 * @param notification
 	 */
 	private void cleanDiagnostic(boolean baseFeatureChanged, ModelChangeNotification notification) {
+		if (!(eContainer() instanceof VControl)) {
+			return;
+		}
 		final VControl vControl = (VControl) eContainer();
 		if (vControl.getDiagnostic() == null) {
 			return;
@@ -603,5 +611,4 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 			}
 		}
 	}
-
 } // VFeaturePathDomainModelReferenceImpl

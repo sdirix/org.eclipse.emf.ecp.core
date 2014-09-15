@@ -38,11 +38,38 @@ import org.eclipse.swt.widgets.Shell;
  * @author Eugen Neufeld
  * 
  */
+@SuppressWarnings("deprecation")
 public class ControlTargetFeatureControl extends LinkControl {
 
 	@Override
 	protected int getNumButtons() {
 		return 2;
+	}
+
+	@Override
+	protected Object getLinkText(Object value) {
+
+		final VFeaturePathDomainModelReference modelReference =
+			(VFeaturePathDomainModelReference) getFirstSetting().getEObject();
+
+		String className = ""; //$NON-NLS-1$
+		final String attributeName = " -> " + getAdapterFactoryItemDelegator().getText(value); //$NON-NLS-1$
+		String referencePath = ""; //$NON-NLS-1$
+
+		for (final EReference ref : modelReference.getDomainModelEReferencePath()) {
+			if (className.isEmpty()) {
+				className = ref.getEContainingClass().getName();
+			}
+			referencePath = referencePath + " -> " + getAdapterFactoryItemDelegator().getText(ref); //$NON-NLS-1$
+		}
+		if (className.isEmpty() && modelReference.getDomainModelEFeature() != null
+			&& modelReference.getDomainModelEFeature().getEContainingClass() != null) {
+
+			className = modelReference.getDomainModelEFeature().getEContainingClass().getName();
+		}
+
+		final String linkText = className + referencePath + attributeName;
+		return linkText;
 	}
 
 	@Override
@@ -67,10 +94,19 @@ public class ControlTargetFeatureControl extends LinkControl {
 		return buttons;
 	}
 
+	/**
+	 * Whether the selection of many features are allowed or not.
+	 * 
+	 * @return true if the selection of many attributes is allowed, false otherwise
+	 */
 	protected boolean allowMultiSelection() {
 		return false;
 	}
 
+	/**
+	 * Private class for setting a reference.
+	 * 
+	 */
 	private class FilteredReferenceAction extends AbstractFilteredReferenceAction {
 
 		public FilteredReferenceAction(EditingDomain editingDomain, Setting setting,
@@ -91,6 +127,10 @@ public class ControlTargetFeatureControl extends LinkControl {
 		}
 	}
 
+	/**
+	 * The command for changing the reference.
+	 * 
+	 */
 	private class FilteredReferenceCommand extends AbstractFilteredReferenceCommand<EStructuralFeature> {
 
 		public FilteredReferenceCommand(final Notifier notifier, ComposedAdapterFactory composedAdapterFactory,
@@ -132,5 +172,4 @@ public class ControlTargetFeatureControl extends LinkControl {
 		}
 
 	}
-
 }

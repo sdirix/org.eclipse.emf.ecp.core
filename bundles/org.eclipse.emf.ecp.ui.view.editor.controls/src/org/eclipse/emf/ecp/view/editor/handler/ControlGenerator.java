@@ -1,14 +1,14 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * EclipseSource Muenchen - initial API and implementation
- * 
+ *
  *******************************************************************************/
 package org.eclipse.emf.ecp.view.editor.handler;
 
@@ -48,7 +48,7 @@ public final class ControlGenerator {
 
 	/**
 	 * Create controls and set them to the view.
-	 * 
+	 *
 	 * @param project the {@link ECPProject} from which the rootClass is retrieved. It is assumed that the project
 	 *            contains only one {@link VView}.
 	 * @param compositeToFill the {@link VElement} to fill , must be of type {@link VView} or {@link VContainer}
@@ -64,7 +64,7 @@ public final class ControlGenerator {
 
 	/**
 	 * Create controls and set them to the view.
-	 * 
+	 *
 	 * @param rootClass the rootClass for identifying the path
 	 * @param compositeToFill the {@link VElement} to fill , must be of type {@link VView} or {@link VContainer}
 	 * @param features the list of features to create
@@ -84,8 +84,12 @@ public final class ControlGenerator {
 			final VFeaturePathDomainModelReference modelReference = VViewFactory.eINSTANCE
 				.createFeaturePathDomainModelReference();
 			modelReference.setDomainModelEFeature(feature);
-			// FIXME
-			// modelReference.getDomainModelEReferencePath().addAll(bottomUpPath);
+
+			final java.util.List<EReference> bottomUpPath = Helper.getReferencePath(rootClass,
+				feature.getEContainingClass(),
+				childParentReferenceMap);
+			modelReference.getDomainModelEReferencePath().addAll(bottomUpPath);
+
 			control.setDomainModelReference(modelReference);
 
 			// add to the composite
@@ -99,7 +103,7 @@ public final class ControlGenerator {
 
 	/**
 	 * Create all the controls and set them to the given view.
-	 * 
+	 *
 	 * @param view the view for which the controls are created for
 	 */
 	public static void generateAllControls(final VView view) {

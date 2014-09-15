@@ -36,7 +36,7 @@ import org.eclipse.swt.widgets.Label;
  * @author Eugen Neufeld
  * 
  */
-@SuppressWarnings("restriction")
+@SuppressWarnings({ "restriction", "deprecation" })
 public class TemplateColorControl extends AbstractTextControl {
 
 	private final Map<String, Color> colors = new LinkedHashMap<String, Color>();
@@ -53,6 +53,7 @@ public class TemplateColorControl extends AbstractTextControl {
 		color.setText("Select Color");
 		color.addMouseListener(new MouseListener() {
 
+			@Override
 			public void mouseUp(MouseEvent e) {
 				final ColorDialog cd = new ColorDialog(composite.getShell());
 				cd.setText("Select Color");
@@ -69,14 +70,14 @@ public class TemplateColorControl extends AbstractTextControl {
 				getDomainModelReference().getIterator().next().set(result);
 			}
 
+			@Override
 			public void mouseDown(MouseEvent e) {
-				// TODO Auto-generated method stub
-
+				// Do nothing
 			}
 
+			@Override
 			public void mouseDoubleClick(MouseEvent e) {
-				// TODO Auto-generated method stub
-
+				// Do nothing
 			}
 		});
 		final ISWTObservableValue observeBackground = SWTObservables.observeBackground(color);
@@ -90,7 +91,7 @@ public class TemplateColorControl extends AbstractTextControl {
 			@Override
 			public Object convert(Object value) {
 				if (value == null) {
-					return "";
+					return ""; //$NON-NLS-1$
 				}
 				final Color color = (Color) value;
 				final String red = Integer.toHexString(0x100 | color.getRed()).substring(1);

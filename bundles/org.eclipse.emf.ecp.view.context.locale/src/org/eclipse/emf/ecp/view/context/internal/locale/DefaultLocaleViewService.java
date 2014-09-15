@@ -29,6 +29,7 @@ public class DefaultLocaleViewService implements ViewLocaleService {
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#instantiate(org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
+	@Override
 	public void instantiate(ViewModelContext context) {
 	}
 
@@ -38,6 +39,7 @@ public class DefaultLocaleViewService implements ViewLocaleService {
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#dispose()
 	 */
+	@Override
 	public void dispose() {
 	}
 
@@ -47,6 +49,7 @@ public class DefaultLocaleViewService implements ViewLocaleService {
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#getPriority()
 	 */
+	@Override
 	public int getPriority() {
 		return 10;
 	}
@@ -57,6 +60,7 @@ public class DefaultLocaleViewService implements ViewLocaleService {
 	 * 
 	 * @see org.eclipse.emf.ecp.edit.spi.ViewLocaleService#getLocale()
 	 */
+	@Override
 	public Locale getLocale() {
 		return Locale.getDefault();
 	}

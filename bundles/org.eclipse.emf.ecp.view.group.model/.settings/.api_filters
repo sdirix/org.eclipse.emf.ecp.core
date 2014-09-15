@@ -7,12 +7,30 @@
                 <message_argument value="1.2.1"/>
             </message_arguments>
         </filter>
+        <filter id="923795461">
+            <message_arguments>
+                <message_argument value="1.4.0"/>
+                <message_argument value="1.3.0"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/emf/ecp/view/spi/group/model/VGroup.java" type="org.eclipse.emf.ecp.view.spi.group.model.VGroup">
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.group.model.VGroup"/>
+                <message_argument value="getGroupType()"/>
+            </message_arguments>
+        </filter>
         <filter comment="This is SPI" id="403804204">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.group.model.VGroup"/>
                 <message_argument value="getLabelAlignment()"/>
+            </message_arguments>
+        </filter>
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.group.model.VGroup"/>
+                <message_argument value="isCollapsed()"/>
             </message_arguments>
         </filter>
         <filter comment="This is SPI" id="403804204">
@@ -21,16 +39,40 @@
                 <message_argument value="isContainerLayoutEmbedding()"/>
             </message_arguments>
         </filter>
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.group.model.VGroup"/>
+                <message_argument value="setCollapsed(boolean)"/>
+            </message_arguments>
+        </filter>
         <filter comment="This is SPI" id="403804204">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.group.model.VGroup"/>
                 <message_argument value="setContainerLayoutEmbedding(boolean)"/>
             </message_arguments>
         </filter>
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.group.model.VGroup"/>
+                <message_argument value="setGroupType(GroupType)"/>
+            </message_arguments>
+        </filter>
         <filter comment="This is SPI" id="403804204">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.group.model.VGroup"/>
                 <message_argument value="setLabelAlignment(GroupLabelAlignment)"/>
+            </message_arguments>
+        </filter>
+        <filter id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.group.model.VGroup"/>
+                <message_argument value="isContainerLayoutEmbedding()"/>
+            </message_arguments>
+        </filter>
+        <filter id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.group.model.VGroup"/>
+                <message_argument value="setContainerLayoutEmbedding(boolean)"/>
             </message_arguments>
         </filter>
     </resource>
@@ -42,6 +84,32 @@
                 <message_argument value="7"/>
             </message_arguments>
         </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage"/>
+                <message_argument value="GROUP_FEATURE_COUNT"/>
+                <message_argument value="9"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage"/>
+                <message_argument value="GROUP_LABEL_ALIGNMENT"/>
+                <message_argument value="1"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage"/>
+                <message_argument value="GROUP__CONTAINER_LAYOUT_EMBEDDING"/>
+            </message_arguments>
+        </filter>
+        <filter id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage"/>
+                <message_argument value="getGroup_ContainerLayoutEmbedding()"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/emf/ecp/view/spi/group/model/VGroupPackage.java" type="org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage$Literals">
         <filter comment="This is SPI" id="403767336">
@@ -50,16 +118,74 @@
                 <message_argument value="GROUP_LABEL_ALIGNMENT"/>
             </message_arguments>
         </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage.Literals"/>
+                <message_argument value="GROUP_TYPE"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage.Literals"/>
+                <message_argument value="GROUP__COLLAPSED"/>
+            </message_arguments>
+        </filter>
         <filter comment="This is SPI" id="403767336">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage.Literals"/>
                 <message_argument value="GROUP__CONTAINER_LAYOUT_EMBEDDING"/>
             </message_arguments>
         </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage.Literals"/>
+                <message_argument value="GROUP__GROUP_TYPE"/>
+            </message_arguments>
+        </filter>
         <filter comment="This is SPI" id="403767336">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage.Literals"/>
                 <message_argument value="GROUP__LABEL_ALIGNMENT"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage.Literals"/>
+                <message_argument value="GROUP__CONTAINER_LAYOUT_EMBEDDING"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/group/model/impl/VGroupImpl.java" type="org.eclipse.emf.ecp.view.spi.group.model.impl.VGroupImpl">
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.group.model.impl.VGroupImpl"/>
+                <message_argument value="CONTAINER_LAYOUT_EMBEDDING_EDEFAULT"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.group.model.impl.VGroupImpl"/>
+                <message_argument value="containerLayoutEmbedding"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.group.model.impl.VGroupImpl"/>
+                <message_argument value="isContainerLayoutEmbedding()"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.group.model.impl.VGroupImpl"/>
+                <message_argument value="setContainerLayoutEmbedding(boolean)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/group/model/impl/VGroupPackageImpl.java" type="org.eclipse.emf.ecp.view.spi.group.model.impl.VGroupPackageImpl">
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.group.model.impl.VGroupPackageImpl"/>
+                <message_argument value="getGroup_ContainerLayoutEmbedding()"/>
             </message_arguments>
         </filter>
     </resource>

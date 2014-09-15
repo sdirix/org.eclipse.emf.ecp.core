@@ -174,6 +174,29 @@ public class RuleServiceTest extends CommonRuleTest {
 			// TODO Auto-generated method stub
 			return null;
 		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getContextValue(java.lang.String)
+		 */
+		@Override
+		public Object getContextValue(String key) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#putContextValue(java.lang.String,
+		 *      java.lang.Object)
+		 */
+		@Override
+		public void putContextValue(String key, Object value) {
+			// TODO Auto-generated method stub
+
+		}
 	}
 
 	/** The player. */

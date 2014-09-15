@@ -21,6 +21,7 @@ import org.eclipse.swt.widgets.Control;
  * @author Eugen Neufeld
  * 
  */
+@Deprecated
 public class SingleColumnRow implements RenderingResultRow<Control> {
 
 	private final Control control;
@@ -46,6 +47,7 @@ public class SingleColumnRow implements RenderingResultRow<Control> {
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.renderer.RenderingResultRow#getMainControl()
 	 */
+	@Override
 	@Deprecated
 	public Control getMainControl() {
 		return getControl();
@@ -56,6 +58,7 @@ public class SingleColumnRow implements RenderingResultRow<Control> {
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.renderer.RenderingResultRow#getControls()
 	 */
+	@Override
 	public Set<Control> getControls() {
 		return Collections.singleton(control);
 	}

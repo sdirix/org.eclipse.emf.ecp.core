@@ -112,6 +112,7 @@ public class VTreeMasterDetailPackageImpl extends EPackageImpl implements VTreeM
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EClass getTreeMasterDetail()
 	{
 		return treeMasterDetailEClass;
@@ -123,6 +124,7 @@ public class VTreeMasterDetailPackageImpl extends EPackageImpl implements VTreeM
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EReference getTreeMasterDetail_DetailView()
 	{
 		return (EReference) treeMasterDetailEClass.getEStructuralFeatures().get(0);
@@ -134,6 +136,7 @@ public class VTreeMasterDetailPackageImpl extends EPackageImpl implements VTreeM
 	 * 
 	 * @generated
 	 */
+	@Override
 	public VTreeMasterDetailFactory getTreeMasterDetailFactory()
 	{
 		return (VTreeMasterDetailFactory) getEFactoryInstance();

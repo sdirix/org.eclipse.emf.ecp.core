@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.VAttachment;
+import org.eclipse.emf.ecp.view.spi.model.VContainedContainer;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VContainer;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
@@ -88,6 +89,14 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * @generated
 	 */
 	private EClass containerEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	private EClass containedContainerEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -340,7 +349,6 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * 
 	 * @since 1.3
 	 *        <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -412,6 +420,19 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
+	 * @since 1.4
+	 */
+	@Override
+	public EClass getContainedContainer()
+	{
+		return containedContainerEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
 	 */
 	@Override
 	public EAttribute getControl_LabelAlignment()
@@ -437,7 +458,6 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * 
 	 * @since 1.3
 	 *        <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -463,7 +483,6 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * 
 	 * @since 1.3
 	 *        <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -585,6 +604,8 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 		containerEClass = createEClass(CONTAINER);
 		createEReference(containerEClass, CONTAINER__CHILDREN);
 
+		containedContainerEClass = createEClass(CONTAINED_CONTAINER);
+
 		controlEClass = createEClass(CONTROL);
 		createEAttribute(controlEClass, CONTROL__LABEL_ALIGNMENT);
 		createEReference(controlEClass, CONTROL__DOMAIN_MODEL_REFERENCE);
@@ -633,7 +654,9 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 		featurePathDomainModelReferenceEClass.getESuperTypes().add(getDomainModelReference());
 		viewEClass.getESuperTypes().add(getElement());
 		containedElementEClass.getESuperTypes().add(getElement());
-		containerEClass.getESuperTypes().add(getContainedElement());
+		containerEClass.getESuperTypes().add(getElement());
+		containedContainerEClass.getESuperTypes().add(getContainedElement());
+		containedContainerEClass.getESuperTypes().add(getContainer());
 		controlEClass.getESuperTypes().add(getContainedElement());
 
 		// Initialize classes and features; add operations and parameters
@@ -709,7 +732,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 		initEAttribute(
 			getView_EcorePath(),
 			theEcorePackage.getEString(),
-			"ecorePath", null, 0, 1, VView.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+			"ecorePath", null, 1, 1, VView.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(containedElementEClass, VContainedElement.class,
 			"ContainedElement", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
@@ -721,6 +744,9 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 			getContainedElement(),
 			null,
 			"children", null, 0, -1, VContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(containedContainerEClass, VContainedContainer.class,
+			"ContainedContainer", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
 		initEClass(controlEClass, VControl.class, "Control", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEAttribute(

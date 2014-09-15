@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Jonas - initial API and implementation
  ******************************************************************************/
@@ -64,7 +64,7 @@ public class ChildrenDescriptorExtensionTest {
 		+ 2;
 	// VDomainModelReference -> VFeaturePathDR, VPredefinedDR, VTableDR
 	private static final int CONTROL_CHILD_COUNT = COMPOSITE_CHILD_COUNT + 3;
-	private static final int TABLECONTROL_CHILD_COUNT = CONTROL_CHILD_COUNT + 1;
+	private static final int TABLECONTROL_CHILD_COUNT = CONTROL_CHILD_COUNT + 2;
 	private static final int SEPARATOR_CHILD_COUNT = RENDERABLE_CHILD_COUNT;
 	// private static final int COLUMNCOMPOSITE_CHILD_COUNT = COMPOSITECOLLECTION_CHILD_COUNT;
 	// private static final int COLUMN_CHILD_COUNT = COMPOSITECOLLECTION_CHILD_COUNT;
@@ -194,7 +194,6 @@ public class ChildrenDescriptorExtensionTest {
 		final int size = getChildrenSize(VTablePackage.eINSTANCE.getTableControl());
 		assertEquals(TABLECONTROL_CHILD_COUNT, size);
 	}
-
 
 	/**
 	 * Class is abstract, Exception expected

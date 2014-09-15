@@ -259,7 +259,7 @@ public class ConditionEvaluatorTest {
 	public void testEnumConditionRight() {
 		final Player player = setupPlayerRight();
 		final LeafCondition leafCondition = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_Gender(),
-			CORRECT_PLAYER_GENDER, player);
+			CORRECT_PLAYER_GENDER.getLiteral(), player);
 
 		assertTrue(leafCondition.evaluate());
 	}
@@ -268,7 +268,7 @@ public class ConditionEvaluatorTest {
 	public void testEnumConditionWrong() {
 		final Player player = setupPlayerRight();
 		final LeafCondition leafCondition = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_Gender(),
-			Gender.MALE, player);
+			Gender.MALE.getLiteral(), player);
 
 		assertFalse(leafCondition.evaluate());
 	}

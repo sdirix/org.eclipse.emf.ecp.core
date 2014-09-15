@@ -11,12 +11,16 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.model.provider.xmi;
 
+import java.util.Map;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.provider.IViewProvider;
 
 /**
- * @author Jonas
+ * An {@link IViewProvider} which loads view models from extension points.
+ * 
+ * @author Jonas Helming
  * 
  */
 public class ExtensionXMIViewModelProvider implements IViewProvider {
@@ -24,10 +28,11 @@ public class ExtensionXMIViewModelProvider implements IViewProvider {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.provider.IViewProvider#canRender(org.eclipse.emf.ecore.EObject)
+	 * @see org.eclipse.emf.ecp.view.spi.provider.IViewProvider#canRender(EObject, Map)
 	 */
-	public int canRender(EObject eObject) {
-		if (ViewModelFileExtensionsManager.getInstance().hasViewModelFor(eObject)) {
+	@Override
+	public int canRender(EObject eObject, Map<String, Object> context) {
+		if (ViewModelFileExtensionsManager.getInstance().hasViewModelFor(eObject, context)) {
 			return 2;
 		}
 		return 0;
@@ -36,10 +41,11 @@ public class ExtensionXMIViewModelProvider implements IViewProvider {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.provider.IViewProvider#generate(org.eclipse.emf.ecore.EObject)
+	 * @see org.eclipse.emf.ecp.view.spi.provider.IViewProvider#generate(EObject, Map)
 	 */
-	public VView generate(EObject eObject) {
-		return ViewModelFileExtensionsManager.getInstance().createView(eObject);
+	@Override
+	public VView generate(EObject eObject, Map<String, Object> context) {
+		return ViewModelFileExtensionsManager.getInstance().createView(eObject, context);
 	}
 
 }

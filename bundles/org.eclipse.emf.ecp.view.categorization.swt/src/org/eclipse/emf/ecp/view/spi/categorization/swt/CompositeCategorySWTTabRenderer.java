@@ -17,9 +17,12 @@ import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorization;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 
 /**
- * @author Eugen
+ * Tab renderer for composite category.
+ * 
+ * @author Eugen Neufeld
  * 
  */
+@SuppressWarnings("restriction")
 public class CompositeCategorySWTTabRenderer extends AbstractSWTTabRenderer<VCategorization> {
 
 	/**

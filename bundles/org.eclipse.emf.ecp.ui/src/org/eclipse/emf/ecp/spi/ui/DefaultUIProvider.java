@@ -42,11 +42,12 @@ import org.eclipse.emf.ecp.internal.core.util.Disposable;
 import org.eclipse.emf.ecp.internal.core.util.Element;
 import org.eclipse.emf.ecp.internal.ui.Activator;
 import org.eclipse.emf.ecp.internal.ui.composites.PropertiesComposite;
-import org.eclipse.emf.ecp.internal.ui.util.ECPHandlerHelper;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
+import org.eclipse.emf.ecp.spi.ui.util.ECPHandlerHelper;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.CommandParameter;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.ui.action.CreateChildAction;
 import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
 import org.eclipse.jface.action.Action;
@@ -225,6 +226,13 @@ public class DefaultUIProvider extends Element implements UIProvider {
 			if (descriptors != null) {
 				fillContextMenuWithDescriptors(manager, descriptors, domain, element, project);
 			}
+		} else if (element instanceof ItemProviderAdapter
+			&& ((ItemProviderAdapter) element).getTarget() instanceof EObject) {
+			final EditingDomain domain = project.getEditingDomain();
+			final ItemProviderAdapter adapter = (ItemProviderAdapter) element;
+			element = adapter.getTarget();
+			final Collection<?> descriptors = adapter.getNewChildDescriptors(element, domain, null);
+			fillContextMenuWithDescriptors(manager, descriptors, domain, element, project);
 		}
 	}
 

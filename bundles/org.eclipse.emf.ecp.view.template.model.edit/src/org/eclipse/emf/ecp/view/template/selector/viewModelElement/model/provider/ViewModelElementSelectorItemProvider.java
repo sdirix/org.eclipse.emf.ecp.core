@@ -16,12 +16,9 @@ import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.common.util.ResourceLocator;
-
 import org.eclipse.emf.ecp.view.template.selector.viewModelElement.model.VTViewModelElementPackage;
 import org.eclipse.emf.ecp.view.template.selector.viewModelElement.model.VTViewModelElementSelector;
-
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IChildCreationExtender;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
@@ -205,7 +202,7 @@ public class ViewModelElementSelectorItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		VTViewModelElementSelector viewModelElementSelector = (VTViewModelElementSelector) object;
+		final VTViewModelElementSelector viewModelElementSelector = (VTViewModelElementSelector) object;
 		return getString("_UI_ViewModelElementSelector_type") + " " + viewModelElementSelector.isSelectSubclasses(); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 

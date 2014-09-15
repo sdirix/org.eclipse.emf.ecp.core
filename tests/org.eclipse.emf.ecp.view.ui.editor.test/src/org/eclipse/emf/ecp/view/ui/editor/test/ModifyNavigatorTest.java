@@ -24,7 +24,7 @@ import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
-import org.eclipse.emf.ecp.ui.common.TreeViewerFactory;
+import org.eclipse.emf.ecp.ui.common.ECPViewerFactory;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.edit.command.ChangeCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -124,7 +124,7 @@ public class ModifyNavigatorTest extends SWTBotTestCase {
 
 				@Override
 				public void run() {
-					viewer = TreeViewerFactory.createModelExplorerViewer(shell, false,
+					viewer = ECPViewerFactory.createModelExplorerViewer(shell, false,
 						PlatformUI.getWorkbench().getDecoratorManager().getLabelDecorator());
 					shell.open();
 				}

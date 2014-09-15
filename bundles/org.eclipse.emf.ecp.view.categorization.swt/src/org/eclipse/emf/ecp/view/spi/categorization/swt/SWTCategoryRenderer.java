@@ -25,6 +25,7 @@ import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
  * @author Eugen Neufeld
  * 
  */
+@SuppressWarnings("restriction")
 public class SWTCategoryRenderer extends ContainerSWTRenderer<VCategory> {
 
 	/**

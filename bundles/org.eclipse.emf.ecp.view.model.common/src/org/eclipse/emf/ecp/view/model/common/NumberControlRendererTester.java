@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
@@ -21,9 +21,9 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
 
 /**
  * Tester for Text Renderer.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  */
 public class NumberControlRendererTester implements ECPRendererTester {
 
@@ -35,11 +35,12 @@ public class NumberControlRendererTester implements ECPRendererTester {
 		testers.add(new NumberTester(Double.class));
 		testers.add(new NumberTester(BigInteger.class));
 		testers.add(new NumberTester(BigDecimal.class));
+		testers.add(new NumberTester(Short.class));
 	}
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.model.common.ECPRendererTester#isApplicable(org.eclipse.emf.ecp.view.spi.model.VElement,
 	 *      org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
@@ -57,9 +58,9 @@ public class NumberControlRendererTester implements ECPRendererTester {
 
 	/**
 	 * Inner class to encapsulate numerical tests.
-	 * 
+	 *
 	 * @author Eugen Neufeld
-	 * 
+	 *
 	 */
 	private static class NumberTester extends SimpleControlRendererTester {
 		private final Class<?> clazz;
@@ -70,7 +71,7 @@ public class NumberControlRendererTester implements ECPRendererTester {
 
 		/**
 		 * {@inheritDoc}
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.model.common.SimpleControlRendererTester#isSingleValue()
 		 */
 		@Override
@@ -80,7 +81,7 @@ public class NumberControlRendererTester implements ECPRendererTester {
 
 		/**
 		 * {@inheritDoc}
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.model.common.SimpleControlRendererTester#getPriority()
 		 */
 		@Override
@@ -90,7 +91,7 @@ public class NumberControlRendererTester implements ECPRendererTester {
 
 		/**
 		 * {@inheritDoc}
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.model.common.SimpleControlRendererTester#getSupportedClassType()
 		 */
 		@Override

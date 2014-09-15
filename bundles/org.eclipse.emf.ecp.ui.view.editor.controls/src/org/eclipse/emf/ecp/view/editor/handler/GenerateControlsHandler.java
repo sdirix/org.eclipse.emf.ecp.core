@@ -26,9 +26,8 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.view.editor.controls.Activator;
-import org.eclipse.emf.ecp.view.editor.controls.Helper;
 import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
-import org.eclipse.emf.ecp.view.spi.model.VContainer;
+import org.eclipse.emf.ecp.view.spi.model.VContainedContainer;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.treemasterdetail.ui.swt.internal.MasterDetailAction;
@@ -44,49 +43,13 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
- * Handler for generating controls on a {@link org.eclipse.emf.ecp.view.spi.model.VContainer VContainer} or
+ * Handler for generating controls on a {@link org.eclipse.emf.ecp.view.spi.model.VContainedContainer VContainer} or
  * {@link org.eclipse.emf.ecp.view.spi.model.VView VView}.
  * 
  * @author Eugen Neufeld
  * 
  */
 public class GenerateControlsHandler extends MasterDetailAction {
-
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see org.eclipse.core.commands.AbstractHandler#execute(org.eclipse.core.commands.ExecutionEvent)
-	 */
-	@Override
-	public Object execute(ExecutionEvent event) throws ExecutionException {
-		final Object selection = ((IStructuredSelection) HandlerUtil.getActiveMenuSelection(event)).getFirstElement();
-		if (selection == null || !(selection instanceof EObject)) {
-			return null;
-		}
-		final Object obj = getView((EObject) selection);
-		if (obj == null) {
-			return null;
-		}
-		final VView view = (VView) obj;
-		final EClass rootClass = Helper.getRootEClass((EObject) selection);
-		final SelectAttributesDialog sad = new SelectAttributesDialog(view, rootClass,
-			HandlerUtil.getActiveShell(event));
-		final int result = sad.open();
-		if (result == Window.OK) {
-			final Set<EStructuralFeature> featuresToAdd = getFeaturesToCreate(sad);
-			final VElement compositeCollection = (VElement) selection;
-			AdapterFactoryEditingDomain.getEditingDomainFor(compositeCollection).getCommandStack()
-				.execute(new ChangeCommand(compositeCollection) {
-
-					@Override
-					protected void doExecute() {
-						ControlGenerator.addControls(rootClass, compositeCollection, featuresToAdd);
-					}
-				});
-		}
-
-		return null;
-	}
 
 	private Set<EStructuralFeature> getFeaturesToCreate(final SelectAttributesDialog sad) {
 		final Set<EStructuralFeature> features = sad.getSelectedFeatures();
@@ -131,7 +94,7 @@ public class GenerateControlsHandler extends MasterDetailAction {
 	 */
 	@Override
 	public void execute(final EObject object) {
-		if (!(VView.class.isInstance(object) || VContainer.class.isInstance(object))) {
+		if (!(VView.class.isInstance(object) || VContainedContainer.class.isInstance(object))) {
 			return;
 		}
 
@@ -145,7 +108,8 @@ public class GenerateControlsHandler extends MasterDetailAction {
 		final VElement container = getContainer(object);
 
 		final Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
-		final SelectAttributesDialog sad = new SelectAttributesDialog(view, rootEClass, shell);
+		final SelectAttributesDialog sad = new SelectAttributesDialog(new SelectAttributesWizard(), view, rootEClass,
+			shell);
 		final int result = sad.open();
 		if (result == Window.OK) {
 			final Set<EStructuralFeature> featuresToAdd = getFeaturesToCreate(sad);
@@ -184,7 +148,7 @@ public class GenerateControlsHandler extends MasterDetailAction {
 			return null;
 		}
 		// TODO Create test cases for this method
-		while (!(object instanceof VView || object instanceof VContainer)) {
+		while (!(object instanceof VView || object instanceof VContainedContainer)) {
 			object = object.eContainer();
 			if (object == null) {
 				return null;
@@ -204,6 +168,21 @@ public class GenerateControlsHandler extends MasterDetailAction {
 		if (object == null) {
 			return false;
 		}
-		return object instanceof VView || object instanceof VContainer;
+		return object instanceof VView || object instanceof VContainedContainer;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.core.commands.IHandler#execute(org.eclipse.core.commands.ExecutionEvent)
+	 */
+	@Override
+	public Object execute(ExecutionEvent event) throws ExecutionException {
+		final Object selection = ((IStructuredSelection) HandlerUtil.getActiveMenuSelection(event)).getFirstElement();
+		if (selection == null || !(selection instanceof EObject)) {
+			return null;
+		}
+		execute((EObject) selection);
+		return null;
 	}
 }

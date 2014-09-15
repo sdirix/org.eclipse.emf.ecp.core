@@ -47,6 +47,7 @@ public class DynamicTreeModelService implements ViewModelService {
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#instantiate(org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
+	@Override
 	public void instantiate(ViewModelContext context) {
 		final VElement viewModel = context.getViewModel();
 		if (DynamicContainmentTree.class.isInstance(viewModel)) {
@@ -115,6 +116,7 @@ public class DynamicTreeModelService implements ViewModelService {
 	/**
 	 * Creates the actions for the given node.
 	 * 
+	 * @param categorizableElement the {@link VCategorizableElement} to create the actions for
 	 * @param actions
 	 *            the {@link VAction}s to be created
 	 */
@@ -182,6 +184,7 @@ public class DynamicTreeModelService implements ViewModelService {
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#dispose()
 	 */
+	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub
 
@@ -192,6 +195,7 @@ public class DynamicTreeModelService implements ViewModelService {
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#getPriority()
 	 */
+	@Override
 	public int getPriority() {
 		return -5;
 	}

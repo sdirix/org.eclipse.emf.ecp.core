@@ -15,11 +15,19 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.provider.EcoreEditPlugin;
+import org.eclipse.emf.ecp.internal.ide.util.EcoreHelper;
+import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
+import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.layout.GridLayoutFactory;
+import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -27,6 +35,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.dialogs.ElementListSelectionDialog;
 import org.eclipse.ui.dialogs.ElementTreeSelectionDialog;
 import org.eclipse.ui.dialogs.ISelectionStatusValidator;
 import org.eclipse.ui.model.BaseWorkbenchContentProvider;
@@ -39,15 +48,16 @@ import org.eclipse.ui.model.WorkbenchLabelProvider;
 public class SelectEcorePage extends WizardPage {
 	private Text text1;
 	private Composite container;
-	private Button selectEcoreBtn;
+	private Button browseWorkspaceBtn;
 	private final String plugin_ID;
-	protected IFile selectedEcore;
+	protected Object selectedContainer;
+	private Button browsePackageRegistryBtn;
 
 	/**
-	 * @return the selectedEcore
+	 * @return the container of the EClass. It can either be an IFile or an EPackage.
 	 */
-	public IFile getSelectedEcore() {
-		return selectedEcore;
+	public Object getSelectedContainer() {
+		return selectedContainer;
 	}
 
 	public SelectEcorePage(String pluginID) {
@@ -63,7 +73,7 @@ public class SelectEcorePage extends WizardPage {
 		container = new Composite(parent, SWT.NONE);
 		final GridLayout layout = new GridLayout();
 		container.setLayout(layout);
-		layout.numColumns = 3;
+		layout.numColumns = 2;
 		final Label label1 = new Label(container, SWT.NONE);
 		label1.setText("Selected Ecore:"); //$NON-NLS-1$
 
@@ -73,9 +83,18 @@ public class SelectEcorePage extends WizardPage {
 		final GridData gd = new GridData(GridData.FILL_HORIZONTAL);
 		text1.setLayoutData(gd);
 
-		selectEcoreBtn = new Button(container, SWT.PUSH);
-		selectEcoreBtn.setText("Select"); //$NON-NLS-1$
-		selectEcoreBtn.addSelectionListener(new SelectionListener() {
+		@SuppressWarnings("unused")
+		final Composite dummy = new Composite(container, SWT.None);
+
+		final Composite btnsComposite = new Composite(container, SWT.NONE);
+		final GridLayout gridLayout = GridLayoutFactory.fillDefaults().create();
+		gridLayout.numColumns = 2;
+		btnsComposite.setLayout(gridLayout);
+		GridDataFactory.fillDefaults().grab(true, false).applyTo(btnsComposite);
+
+		browseWorkspaceBtn = new Button(btnsComposite, SWT.PUSH);
+		browseWorkspaceBtn.setText("Browse Workspace"); //$NON-NLS-1$
+		browseWorkspaceBtn.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -104,9 +123,10 @@ public class SelectEcorePage extends WizardPage {
 
 				if (dialog.open() == Window.OK) {
 					// get Ecore
-					selectedEcore = (IFile) dialog.getFirstResult();
+					final IFile selectedEcore = (IFile) dialog.getFirstResult();
 					text1.setText(selectedEcore.getFullPath().toString());
-					setPageComplete(true);
+					selectedContainer = selectedEcore;
+					setPageComplete(selectedContainer != null);
 				}
 			}
 
@@ -116,6 +136,43 @@ public class SelectEcorePage extends WizardPage {
 			}
 
 		});
+
+		browsePackageRegistryBtn = new Button(btnsComposite, SWT.PUSH);
+		browsePackageRegistryBtn.setText("Browse Package Registry"); //$NON-NLS-1$
+		browsePackageRegistryBtn.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+
+				final ElementListSelectionDialog selectRegisteredPackageDialog = new ElementListSelectionDialog(
+					getShell(), new LabelProvider()
+					{
+						@Override
+						public Image getImage(Object element)
+						{
+							return ExtendedImageRegistry.getInstance().getImage(
+								EcoreEditPlugin.INSTANCE.getImage("full/obj16/EPackage")); //$NON-NLS-1$
+						}
+					});
+				selectRegisteredPackageDialog.setMultipleSelection(false);
+				selectRegisteredPackageDialog.setTitle("Package Selection"); //$NON-NLS-1$
+				selectRegisteredPackageDialog.setMessage("Select a package:"); //$NON-NLS-1$
+				selectRegisteredPackageDialog.setElements(EcoreHelper.getDefaultPackageRegistryContents());
+				selectRegisteredPackageDialog.open();
+				final Object[] result = selectRegisteredPackageDialog.getResult();
+				final String selectedEPackageURI = (String) result[0];
+				selectedContainer = EPackage.Registry.INSTANCE.getEPackage(selectedEPackageURI);
+				text1.setText(selectedEPackageURI);
+				setPageComplete(selectedContainer != null);
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
 		setControl(container);
 		setPageComplete(false);
 	}
@@ -135,6 +192,31 @@ public class SelectEcorePage extends WizardPage {
 		// if (visible) {
 		// selectedEClass = null;
 		// }
+	}
+
+	/**
+	 * @param object
+	 */
+	public void setSelectedContainer(Object object) {
+		selectedContainer = object;
+		setPageComplete(object != null);
+		text1.setText(getContainerName());
+	}
+
+	/**
+	 * @return
+	 */
+	private String getContainerName() {
+		String containerName = ""; //$NON-NLS-1$
+		if (selectedContainer != null) {
+			if (EPackage.class.isInstance(selectedContainer)) {
+				containerName = EPackage.class.cast(selectedContainer).getName();
+			}
+			else if (IFile.class.isInstance(selectedContainer)) {
+				containerName = ((IFile) selectedContainer).getFullPath().toString();
+			}
+		}
+		return containerName;
 	}
 
 }

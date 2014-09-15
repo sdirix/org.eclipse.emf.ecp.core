@@ -17,10 +17,12 @@ import java.util.Map;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.Enumerator;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
@@ -106,6 +108,7 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public Object getExpectedValue() {
 		return expectedValue;
 	}
@@ -116,6 +119,7 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setExpectedValue(Object newExpectedValue) {
 		final Object oldExpectedValue = expectedValue;
 		expectedValue = newExpectedValue;
@@ -131,6 +135,7 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public VDomainModelReference getDomainModelReference()
 	{
 		return domainModelReference;
@@ -166,6 +171,7 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setDomainModelReference(VDomainModelReference newDomainModelReference)
 	{
 		if (newDomainModelReference != domainModelReference)
@@ -308,7 +314,11 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.rule.model.Condition#evaluate()
 	 */
+	@Override
 	public boolean evaluate() {
+		if (!getDomainModelReference().getEStructuralFeatureIterator().hasNext()) {
+			return true;
+		}
 		final Iterator<Setting> settingIterator = getDomainModelReference().getIterator();
 		boolean result = false;
 		final Object expectedValue = getExpectedValue();
@@ -341,7 +351,9 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 			if (expectedValue == null) {
 				return value == null;
 			}
-
+			if (EcorePackage.eINSTANCE.getEEnum().isInstance(feature.getEType())) {
+				return expectedValue.equals(Enumerator.class.cast(value).getLiteral());
+			}
 			return expectedValue.equals(value);
 		}
 
@@ -356,6 +368,7 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.rule.model.Condition#evaluateChangedValues(java.util.Map)
 	 */
+	@Override
 	public boolean evaluateChangedValues(Map<Setting, Object> possibleNewValues) {
 		boolean result = false;
 		final Object expectedValue = getExpectedValue();

@@ -15,6 +15,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
 import org.eclipse.emf.ecp.view.spi.model.VAttachment;
+import org.eclipse.emf.ecp.view.spi.model.VContainedContainer;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VContainer;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
@@ -155,10 +156,24 @@ public class ViewSwitch<T> extends Switch<T> {
 			final VContainer container = (VContainer) theEObject;
 			T result = caseContainer(container);
 			if (result == null) {
-				result = caseContainedElement(container);
+				result = caseElement(container);
 			}
 			if (result == null) {
-				result = caseElement(container);
+				result = defaultCase(theEObject);
+			}
+			return result;
+		}
+		case VViewPackage.CONTAINED_CONTAINER: {
+			final VContainedContainer containedContainer = (VContainedContainer) theEObject;
+			T result = caseContainedContainer(containedContainer);
+			if (result == null) {
+				result = caseContainedElement(containedContainer);
+			}
+			if (result == null) {
+				result = caseContainer(containedContainer);
+			}
+			if (result == null) {
+				result = caseElement(containedContainer);
 			}
 			if (result == null) {
 				result = defaultCase(theEObject);
@@ -252,22 +267,6 @@ public class ViewSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Control</em>'.
-	 * <!-- begin-user-doc --> This
-	 * implementation returns
-	 * null; returning a non-null result will terminate the switch. <!--
-	 * end-user-doc -->
-	 * 
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Control</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseControl(VControl object) {
-		return null;
-	}
-
-	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Container</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -281,6 +280,40 @@ public class ViewSwitch<T> extends Switch<T> {
 	 */
 	public T caseContainer(VContainer object)
 	{
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Contained Container</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * 
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Contained Container</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 * @since 1.4
+	 */
+	public T caseContainedContainer(VContainedContainer object)
+	{
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Control</em>'.
+	 * <!-- begin-user-doc --> This
+	 * implementation returns
+	 * null; returning a non-null result will terminate the switch. <!--
+	 * end-user-doc -->
+	 * 
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Control</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseControl(VControl object) {
 		return null;
 	}
 

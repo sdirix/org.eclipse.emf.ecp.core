@@ -18,14 +18,16 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.DateTime;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
 @RunWith(DatabindingClassRunner.class)
 public class DateTimeControlRendererTest extends AbstractControlTest {
 
 	@Before
 	public void before() {
-		SWTRendererFactory factory = mock(SWTRendererFactory.class);
+		final SWTRendererFactory factory = mock(SWTRendererFactory.class);
 		setup(new DateTimeControlSWTRenderer(factory));
 	}
 
@@ -34,19 +36,21 @@ public class DateTimeControlRendererTest extends AbstractControlTest {
 		dispose();
 	}
 
+	@Ignore
 	@Test
 	public void renderControlLabelAlignmentNone()
-			throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		setMockLabelAlignment(LabelAlignment.NONE);
-		Control render = renderControl(new SWTGridCell(0, 1,renderer));
+		final Control render = renderControl(new SWTGridCell(0, 1, renderer));
 		assertControl(render);
 	}
 
+	@Ignore
 	@Test
 	public void renderControlLabelAlignmentLeft()
-			throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		setMockLabelAlignment(LabelAlignment.LEFT);
-		Control render = renderControl(new SWTGridCell(0, 2,renderer));
+		final Control render = renderControl(new SWTGridCell(0, 2, renderer));
 
 		assertControl(render);
 	}
@@ -56,13 +60,12 @@ public class DateTimeControlRendererTest extends AbstractControlTest {
 		assertEquals(2, Composite.class.cast(render).getChildren().length);
 		assertTrue(DateTime.class.isInstance(Composite.class.cast(render).getChildren()[0]));
 		assertTrue(DateTime.class.isInstance(Composite.class.cast(render).getChildren()[1]));
-		
-		
+
 	}
 
 	@Override
 	protected void mockControl() {
-		SimpleTestObject eObject=TestFactory.eINSTANCE.createSimpleTestObject();
+		final SimpleTestObject eObject = TestFactory.eINSTANCE.createSimpleTestObject();
 		super.mockControl(eObject, TestPackage.eINSTANCE.getSimpleTestObject_Date());
 	}
 

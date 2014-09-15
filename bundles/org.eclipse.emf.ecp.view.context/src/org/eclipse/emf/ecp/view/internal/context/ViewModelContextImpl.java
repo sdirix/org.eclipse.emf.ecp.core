@@ -99,6 +99,11 @@ public class ViewModelContextImpl implements ViewModelContext {
 	private boolean isDisposed;
 
 	/**
+	 * The context map.
+	 */
+	private final Map<String, Object> keyObjectMap = new LinkedHashMap<String, Object>();
+
+	/**
 	 * Whether the context is being disposed.
 	 */
 	private boolean isDisposing;
@@ -176,7 +181,9 @@ public class ViewModelContextImpl implements ViewModelContext {
 			new BasicCommandStack(), rs);
 		rs.eAdapters().add(new AdapterFactoryEditingDomain.EditingDomainProvider(domain));
 		resource = rs.createResource(URI.createURI("VIRTAUAL_URI")); //$NON-NLS-1$
-		resource.getContents().add(domainObject);
+		if (resource != null) {
+			resource.getContents().add(domainObject);
+		}
 	}
 
 	private void createSettingToControlMapping() {
@@ -221,6 +228,9 @@ public class ViewModelContextImpl implements ViewModelContext {
 		final Iterator<Setting> iterator = vControl.getDomainModelReference().getIterator();
 		while (iterator.hasNext()) {
 			final Setting setting = iterator.next();
+			if (setting == null) {
+				continue;
+			}
 			final UniqueSetting uniqueSetting = UniqueSetting.createSetting(setting);
 			if (!settingToControlMap.containsKey(uniqueSetting)) {
 				settingToControlMap.put(uniqueSetting, new LinkedHashSet<VControl>());
@@ -257,6 +267,9 @@ public class ViewModelContextImpl implements ViewModelContext {
 		final Iterator<Setting> iterator = vControl.getDomainModelReference().getIterator();
 		while (iterator.hasNext()) {
 			final Setting next = iterator.next();
+			if (next == null) {
+				continue;
+			}
 			final UniqueSetting uniqueSetting = UniqueSetting.createSetting(next);
 			if (!settingToControlMap.containsKey(uniqueSetting)) {
 				settingToControlMap.put(uniqueSetting, new LinkedHashSet<VControl>());
@@ -405,11 +418,6 @@ public class ViewModelContextImpl implements ViewModelContext {
 		isDisposed = true;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#registerViewChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeAddRemoveListener)
-	 */
 	@Override
 	public void registerViewChangeListener(ModelChangeListener modelChangeListener) {
 		if (isDisposed) {
@@ -421,11 +429,6 @@ public class ViewModelContextImpl implements ViewModelContext {
 		viewModelChangeListener.add(modelChangeListener);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#unregisterViewChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeAddRemoveListener)
-	 */
 	@Override
 	public void unregisterViewChangeListener(ModelChangeListener modelChangeListener) {
 		// if (isDisposed) {
@@ -434,11 +437,6 @@ public class ViewModelContextImpl implements ViewModelContext {
 		viewModelChangeListener.remove(modelChangeListener);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#registerDomainChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeAddRemoveListener)
-	 */
 	@Override
 	public void registerDomainChangeListener(ModelChangeListener modelChangeListener) {
 		if (isDisposed) {
@@ -450,11 +448,6 @@ public class ViewModelContextImpl implements ViewModelContext {
 		domainModelChangeListener.add(modelChangeListener);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#unregisterDomainChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeAddRemoveListener)
-	 */
 	@Override
 	public void unregisterDomainChangeListener(ModelChangeListener modelChangeListener) {
 		// if (isDisposed) {
@@ -648,10 +641,20 @@ public class ViewModelContextImpl implements ViewModelContext {
 
 	private final Set<Object> users = new LinkedHashSet<Object>();
 
+	/**
+	 * Inner method for registering context users (not {@link ViewModelService}).
+	 * 
+	 * @param user the user of the context
+	 */
 	public void addContextUser(Object user) {
 		users.add(user);
 	}
 
+	/**
+	 * Inner method for unregistering the context user.
+	 * 
+	 * @param user the user of the context
+	 */
 	public void removeContextUser(Object user) {
 		users.remove(user);
 		// Every renderer is registered here, as it needs to know when the view model changes (rules, validations, etc).
@@ -659,5 +662,25 @@ public class ViewModelContextImpl implements ViewModelContext {
 		if (users.isEmpty()) {
 			dispose();
 		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getContextValue(java.lang.String)
+	 */
+	@Override
+	public Object getContextValue(String key) {
+		return keyObjectMap.get(key);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#putContextValue(java.lang.String, java.lang.Object)
+	 */
+	@Override
+	public void putContextValue(String key, Object value) {
+		keyObjectMap.put(key, value);
 	}
 }

@@ -38,6 +38,7 @@
 <setEntry value="org.eclipse.emf.ecp.view.model.controls.feature:default"/>
 <setEntry value="org.eclipse.emf.ecp.view.model.editor.feature:default"/>
 <setEntry value="org.eclipse.emf.ecp.view.rule.feature:default"/>
+<setEntry value="org.eclipse.emf.ecp.view.stack.feature:default"/>
 <setEntry value="org.eclipse.emf.ecp.view.table.feature:default"/>
 <setEntry value="org.eclipse.emf.ecp.view.template.feature:default"/>
 <setEntry value="org.eclipse.emf.ecp.view.template.helper.feature:default"/>

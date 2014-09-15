@@ -21,6 +21,7 @@ import org.eclipse.swt.widgets.Layout;
  * @author Eugen Neufeld
  * 
  */
+@Deprecated
 public final class DefaultLayoutHelper implements LayoutHelper<Layout> {
 
 	/**
@@ -28,6 +29,7 @@ public final class DefaultLayoutHelper implements LayoutHelper<Layout> {
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.renderer.LayoutHelper#getColumnLayout(int, boolean)
 	 */
+	@Override
 	public Layout getColumnLayout(int numColumns, boolean equalWidth) {
 		return GridLayoutFactory.fillDefaults().numColumns(numColumns).equalWidth(equalWidth).create();
 	}
@@ -37,6 +39,7 @@ public final class DefaultLayoutHelper implements LayoutHelper<Layout> {
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.renderer.LayoutHelper#getSpanningLayoutData(int, int)
 	 */
+	@Override
 	public Object getSpanningLayoutData(int xSpan, int ySpan) {
 		return GridDataFactory.fillDefaults()
 			.align(SWT.FILL, SWT.FILL)
@@ -50,6 +53,7 @@ public final class DefaultLayoutHelper implements LayoutHelper<Layout> {
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.renderer.LayoutHelper#getLeftColumnLayoutData()
 	 */
+	@Override
 	public Object getLeftColumnLayoutData() {
 		return GridDataFactory.fillDefaults().grab(false, false)
 			.align(SWT.FILL, SWT.CENTER)
@@ -61,6 +65,7 @@ public final class DefaultLayoutHelper implements LayoutHelper<Layout> {
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.renderer.LayoutHelper#getRightColumnLayoutData(int)
 	 */
+	@Override
 	public Object getRightColumnLayoutData(int xSpan) {
 		return GridDataFactory.fillDefaults()
 			.align(SWT.FILL, SWT.CENTER)
@@ -73,6 +78,7 @@ public final class DefaultLayoutHelper implements LayoutHelper<Layout> {
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.renderer.LayoutHelper#getValidationColumnLayoutData()
 	 */
+	@Override
 	public Object getValidationColumnLayoutData() {
 		return GridDataFactory.fillDefaults()
 			.align(SWT.CENTER, SWT.CENTER).hint(16, 17)

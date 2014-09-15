@@ -37,6 +37,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * <ul>
  * <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VViewImpl#getRootEClass <em>Root EClass</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VViewImpl#getChildren <em>Children</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VViewImpl#getEcorePath <em>Ecore Path</em>}</li>
  * </ul>
  * </p>
  * 

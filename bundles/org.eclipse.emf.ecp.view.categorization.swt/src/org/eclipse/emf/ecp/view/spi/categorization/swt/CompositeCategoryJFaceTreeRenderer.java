@@ -19,9 +19,12 @@ import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationElement;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 
 /**
- * @author Eugen
+ * Tree renderer for composite category.
+ * 
+ * @author Eugen Neufeld
  * 
  */
+@SuppressWarnings("restriction")
 public class CompositeCategoryJFaceTreeRenderer extends AbstractJFaceTreeRenderer<VCategorization> {
 
 	private VCategorizationElement categorizationElement;

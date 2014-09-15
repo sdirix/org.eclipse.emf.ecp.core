@@ -25,11 +25,11 @@ import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.edit.spi.ReferenceService;
 import org.eclipse.emf.ecp.internal.edit.ECPControlHelper;
 import org.eclipse.emf.ecp.internal.ui.Messages;
-import org.eclipse.emf.ecp.internal.ui.util.ECPHandlerHelper;
-import org.eclipse.emf.ecp.internal.wizards.SelectModelElementWizard;
+import org.eclipse.emf.ecp.spi.common.ui.SelectModelElementWizard;
+import org.eclipse.emf.ecp.spi.common.ui.composites.SelectionComposite;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
-import org.eclipse.emf.ecp.ui.common.CompositeFactory;
-import org.eclipse.emf.ecp.ui.common.SelectionComposite;
+import org.eclipse.emf.ecp.spi.ui.util.ECPHandlerHelper;
+import org.eclipse.emf.ecp.ui.common.ECPCompositeFactory;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.TableViewer;
@@ -113,7 +113,7 @@ public class ECPReferenceServiceImpl implements ReferenceService {
 			Messages.NewModelElementWizard_PageTitle_AddModelElement,
 			Messages.NewModelElementWizard_PageDescription_AddModelElement);
 
-		final SelectionComposite<TreeViewer> helper = CompositeFactory.getSelectModelClassComposite(
+		final SelectionComposite<TreeViewer> helper = ECPCompositeFactory.getSelectModelClassComposite(
 			new HashSet<EPackage>(),
 			new HashSet<EPackage>(), classes);
 		wizard.setCompositeProvider(helper);
@@ -160,7 +160,7 @@ public class ECPReferenceServiceImpl implements ReferenceService {
 			Messages.ModelelementSelectionDialog_DialogTitle,
 			Messages.ModelelementSelectionDialog_DialogMessage_SearchPattern, EObject.class);
 
-		final SelectionComposite<TableViewer> tableSelectionComposite = CompositeFactory
+		final SelectionComposite<TableViewer> tableSelectionComposite = ECPCompositeFactory
 			.getTableSelectionComposite(elements.toArray());
 		wizard.setCompositeProvider(tableSelectionComposite);
 

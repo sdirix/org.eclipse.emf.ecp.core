@@ -179,20 +179,36 @@ public class NumberControlSWTRenderer extends TextControlSWTRenderer {
 					}
 					if (NumericalHelper.isInteger(getInstanceClass(eStructuralFeature))) {
 						boolean maxValue = false;
+						boolean minValue = false;
 						final Class<?> instanceClass = getInstanceClass(eStructuralFeature);
 						String formatedValue = ""; //$NON-NLS-1$
 						try {
 							if (Integer.class.isAssignableFrom(instanceClass)
 								|| Integer.class.getField("TYPE").get(null).equals(instanceClass)) { //$NON-NLS-1$
-								if (Integer.MAX_VALUE == number.intValue()) {
+								if (number.doubleValue() >= Integer.MAX_VALUE) {
 									maxValue = true;
 									formatedValue = format.format(Integer.MAX_VALUE);
+								} else if (number.doubleValue() <= Integer.MIN_VALUE) {
+									minValue = true;
+									formatedValue = format.format(Integer.MIN_VALUE);
 								}
 							} else if (Long.class.isAssignableFrom(instanceClass)
 								|| Long.class.getField("TYPE").get(null).equals(instanceClass)) { //$NON-NLS-1$
-								if (Long.MAX_VALUE == number.longValue()) {
+								if (number.doubleValue() >= Long.MAX_VALUE) {
 									maxValue = true;
 									formatedValue = format.format(Long.MAX_VALUE);
+								} else if (number.doubleValue() <= Long.MIN_VALUE) {
+									minValue = true;
+									formatedValue = format.format(Long.MIN_VALUE);
+								}
+							} else if (Short.class.isAssignableFrom(instanceClass)
+								|| Short.class.getField("TYPE").get(null).equals(instanceClass)) { //$NON-NLS-1$
+								if (number.doubleValue() >= Short.MAX_VALUE) {
+									maxValue = true;
+									formatedValue = format.format(Short.MAX_VALUE);
+								} else if (number.doubleValue() <= Short.MIN_VALUE) {
+									minValue = true;
+									formatedValue = format.format(Short.MIN_VALUE);
 								}
 							}
 						} catch (final IllegalArgumentException ex) {
@@ -205,7 +221,7 @@ public class NumberControlSWTRenderer extends TextControlSWTRenderer {
 							Activator.logException(ex);
 						}
 
-						if (maxValue) {
+						if (maxValue || minValue) {
 							text.setText(formatedValue);
 							return NumericalHelper.numberToInstanceClass(number, getInstanceClass(eStructuralFeature));
 						}

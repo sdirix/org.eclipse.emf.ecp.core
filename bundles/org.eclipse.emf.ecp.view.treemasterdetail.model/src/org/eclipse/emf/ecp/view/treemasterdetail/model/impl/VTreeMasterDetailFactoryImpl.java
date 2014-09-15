@@ -89,6 +89,7 @@ public class VTreeMasterDetailFactoryImpl extends EFactoryImpl implements VTreeM
 	 * 
 	 * @generated
 	 */
+	@Override
 	public VTreeMasterDetail createTreeMasterDetail()
 	{
 		VTreeMasterDetailImpl treeMasterDetail = new VTreeMasterDetailImpl();
@@ -101,6 +102,7 @@ public class VTreeMasterDetailFactoryImpl extends EFactoryImpl implements VTreeM
 	 * 
 	 * @generated
 	 */
+	@Override
 	public VTreeMasterDetailPackage getTreeMasterDetailPackage()
 	{
 		return (VTreeMasterDetailPackage) getEPackage();

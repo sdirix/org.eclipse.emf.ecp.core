@@ -5,7 +5,8 @@
     modelName="Template" nonNLSMarkers="true" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     codeFormatting="true" commentFormatting="true" importerID="org.eclipse.emf.importer.ecore"
     complianceLevel="5.0" copyrightFields="false" language="" interfaceNamePattern="VT{0}"
-    classNamePattern="VT{0}Impl" operationReflection="true" importOrganizing="true">
+    classNamePattern="VT{0}Impl" operationReflection="true" importOrganizing="true"
+    cleanup="true">
   <foreignModel>template.ecore</foreignModel>
   <genPackages prefix="Template" basePackage="org.eclipse.emf.ecp.view" disposableProviderFactory="true"
       interfacePackageSuffix="model" metaDataPackageSuffix="model" classPackageSuffix="model.impl"
@@ -15,6 +16,7 @@
     <genClasses ecoreClass="template.ecore#//ViewTemplate">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference template.ecore#//ViewTemplate/controlValidationConfiguration"/>
       <genFeatures children="true" createChild="true" ecoreFeature="ecore:EReference template.ecore#//ViewTemplate/styles"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EAttribute template.ecore#//ViewTemplate/referencedEcores"/>
     </genClasses>
     <genClasses ecoreClass="template.ecore#//ControlValidationTemplate">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute template.ecore#//ControlValidationTemplate/okColorHEX"/>

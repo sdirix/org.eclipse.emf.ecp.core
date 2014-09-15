@@ -50,7 +50,6 @@ public interface VDomainModelReference extends EObject, ModelChangeListener
 	 * 
 	 * @since 1.3
 	 *        <!-- end-user-doc -->
-	 * 
 	 * @return the value of the '<em>Change Listener</em>' attribute list.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getDomainModelReference_ChangeListener()
 	 * @model dataType="org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener" transient="true"

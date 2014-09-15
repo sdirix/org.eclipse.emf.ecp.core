@@ -16,7 +16,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-import org.eclipse.emf.ecp.view.dynamictree.model.*;
 import org.eclipse.emf.ecp.view.dynamictree.model.DomainIntermediate;
 import org.eclipse.emf.ecp.view.dynamictree.model.DomainRoot;
 import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem;
@@ -92,6 +91,7 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public DynamicContainmentTree createDynamicContainmentTree()
 	{
 		DynamicContainmentTreeImpl dynamicContainmentTree = new DynamicContainmentTreeImpl();
@@ -103,6 +103,7 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public DynamicContainmentItem createDynamicContainmentItem()
 	{
 		DynamicContainmentItemImpl dynamicContainmentItem = new DynamicContainmentItemImpl();
@@ -114,6 +115,7 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public TestElement createTestElement()
 	{
 		TestElementImpl testElement = new TestElementImpl();
@@ -125,6 +127,7 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public DomainRoot createDomainRoot()
 	{
 		DomainRootImpl domainRoot = new DomainRootImpl();
@@ -136,6 +139,7 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public DomainIntermediate createDomainIntermediate()
 	{
 		DomainIntermediateImpl domainIntermediate = new DomainIntermediateImpl();
@@ -147,6 +151,7 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public TestElementContainer createTestElementContainer()
 	{
 		TestElementContainerImpl testElementContainer = new TestElementContainerImpl();
@@ -158,6 +163,7 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public DynamicContainmentTreeDomainModelReference createDynamicContainmentTreeDomainModelReference() {
 		DynamicContainmentTreeDomainModelReferenceImpl dynamicContainmentTreeDomainModelReference = new DynamicContainmentTreeDomainModelReferenceImpl();
 		return dynamicContainmentTreeDomainModelReference;
@@ -168,6 +174,7 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public ModelPackage getModelPackage()
 	{
 		return (ModelPackage)getEPackage();

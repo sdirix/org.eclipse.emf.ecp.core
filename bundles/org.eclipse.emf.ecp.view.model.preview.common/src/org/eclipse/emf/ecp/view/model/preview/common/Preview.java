@@ -17,12 +17,13 @@ import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.TreeIterator;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -30,9 +31,9 @@ import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
 import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
-import org.eclipse.emf.ecp.view.spi.categorization.model.impl.VCategorizationElementImpl;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
+import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
@@ -54,6 +55,7 @@ public class Preview {
 
 	private final Composite parent;
 	private Composite composite;
+	private EObject dummyData;
 
 	/**
 	 * The constructor.
@@ -67,13 +69,17 @@ public class Preview {
 	/**
 	 * Render the contents of the {@link VView}.
 	 * 
-	 * @param view -the {@link VView}
+	 * @param view the {@link VView}
+	 * @param sampleData the sample data to be displayed in the view
 	 * */
-	public void render(final VView view) {
+	public void render(final VView view, EObject sampleData) {
 		if (adapter != null) {
 			removeAdapter();
 		}
 		this.view = view;
+		if (sampleData != null) {
+			dummyData = sampleData;
+		}
 		internalRender(view);
 	}
 
@@ -106,10 +112,6 @@ public class Preview {
 					return;
 				}
 
-				if (VCategorizationElementImpl.class.isInstance(notification.getNotifier())) {
-					return;
-				}
-
 				if (VViewPackage.eINSTANCE.getDomainModelReference_ChangeListener() == notification.getFeature()) {
 					return;
 				}
@@ -125,18 +127,20 @@ public class Preview {
 			clear();
 			final EClass myPreviewEClass = view.getRootEClass();
 
-			final EObject dummyData = EcoreUtil.create(myPreviewEClass);
-			final ResourceSet resourceSet = new ResourceSetImpl();
-			final AdapterFactoryEditingDomain domain = new AdapterFactoryEditingDomain(
-				new ComposedAdapterFactory(new AdapterFactory[] {
-					new CustomReflectiveItemProviderAdapterFactory(),
-					new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) }),
-				new BasicCommandStack(), resourceSet);
-			resourceSet.eAdapters().add(
-				new AdapterFactoryEditingDomain.EditingDomainProvider(domain));
-			final Resource resource = new ResourceImpl();
-			resourceSet.getResources().add(resource);
-			resource.getContents().add(dummyData);
+			if (dummyData == null || dummyData.eClass() != myPreviewEClass) {
+				dummyData = EcoreUtil.create(myPreviewEClass);
+				final ResourceSet resourceSet = new ResourceSetImpl();
+				final AdapterFactoryEditingDomain domain = new AdapterFactoryEditingDomain(
+					new ComposedAdapterFactory(new AdapterFactory[] {
+						new CustomReflectiveItemProviderAdapterFactory(),
+						new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) }),
+					new BasicCommandStack(), resourceSet);
+				resourceSet.eAdapters().add(
+					new AdapterFactoryEditingDomain.EditingDomainProvider(domain));
+				final Resource resource = resourceSet.createResource(URI.createURI("VIRTUAL_URI")); //$NON-NLS-1$
+				resource.getContents().add(dummyData);
+			}
+
 			final PreviewReferenceService previewRefServ = new PreviewReferenceService();
 			final ViewModelContext viewModelContext = ViewModelContextFactory.INSTANCE.createViewModelContext(view,
 				dummyData, previewRefServ);
@@ -197,6 +201,15 @@ public class Preview {
 		for (final Control c : parent.getChildren()) {
 			c.dispose();
 		}
+		// clean previous view diagnostics
+		final TreeIterator<EObject> eAllContents = view.eAllContents();
+		while (eAllContents.hasNext()) {
+			final EObject next = eAllContents.next();
+			if (VControl.class.isInstance(next)) {
+				VControl.class.cast(next).setDiagnostic(null);
+				next.eClass();
+			}
+		}
 	}
 
 	/** Removes the cached view. */
@@ -236,5 +249,12 @@ public class Preview {
 			internalRender(view);
 			parent.layout();
 		}
+	}
+
+	/**
+	 * 
+	 */
+	public void cleanSampleData() {
+		dummyData = null;
 	}
 }

@@ -13,7 +13,7 @@
 package org.eclipse.emf.ecp.ui.e4.handlers;
 
 import org.eclipse.e4.core.di.annotations.Execute;
-import org.eclipse.emf.ecp.internal.ui.util.ECPHandlerHelper;
+import org.eclipse.emf.ecp.spi.ui.util.ECPHandlerHelper;
 import org.eclipse.swt.widgets.Shell;
 
 /**

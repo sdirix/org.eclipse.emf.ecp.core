@@ -203,9 +203,6 @@ public class VControlImpl extends VContainedElementImpl implements VControl {
 	@Override
 	public void setLabelAlignment(LabelAlignment newLabelAlignment)
 	{
-		if (labelAlignment == newLabelAlignment) {
-			return;
-		}
 		final LabelAlignment oldLabelAlignment = labelAlignment;
 		labelAlignment = newLabelAlignment == null ? LABEL_ALIGNMENT_EDEFAULT : newLabelAlignment;
 		if (eNotificationRequired()) {

@@ -79,6 +79,7 @@ public class VCategorizationImpl extends VAbstractCategorizationImpl implements 
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EList<VAbstractCategorization> getCategorizations()
 	{
 		if (categorizations == null)

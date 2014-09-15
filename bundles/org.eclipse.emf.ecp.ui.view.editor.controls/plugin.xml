@@ -14,17 +14,6 @@
                supportedFeature="domainModelEFeature">
          </staticTest>
       </control>
-      <control
-            class="org.eclipse.emf.ecp.view.editor.controls.ExpectedValueControl"
-            id="org.eclipse.emf.ecp.view.editor.controls.ruleattribute">
-         <staticTest
-               priority="1"
-               singleValue="true"
-               supportedClassType="java.lang.Object"
-               supportedEObject="org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition"
-               supportedFeature="expectedValue">
-         </staticTest>
-      </control>
       <!--
       <control
             class="org.eclipse.emf.ecp.view.editor.controls.TreeCategoryTargetFeatureControl"
@@ -241,6 +230,12 @@
             label="Generate Controls"
             location="menu">
       </MasterDetailAction>
+      <MasterDetailAction
+            command="org.eclipse.emf.ecp.view.editor.handler.GenerateTableColumnsHandler"
+            imagePath="icons/generateColumns.png"
+            label="Generate Columns"
+            location="menu">
+      </MasterDetailAction>
    </extension>
    <extension
          point="org.eclipse.emf.ecp.ui.view.swt.renderers">
@@ -254,6 +249,36 @@
             renderer="org.eclipse.emf.ecp.view.editor.controls.ControlRootEClassControlChangeableSWTRenderer">
          <dynamicTest
                testClass="org.eclipse.emf.ecp.view.editor.controls.RootEClassControlECPTester">
+         </dynamicTest>
+      </renderer>
+      <renderer
+            renderer="org.eclipse.emf.ecp.view.editor.controls.LeafConditionControlRenderer">
+         <dynamicTest
+               testClass="org.eclipse.emf.ecp.view.editor.controls.LeafConditionControlRendererTester">
+         </dynamicTest>
+      </renderer>
+      <renderer
+            renderer="org.eclipse.emf.ecp.view.editor.controls.StackItemControlRenderer">
+         <dynamicTest
+               testClass="org.eclipse.emf.ecp.view.editor.controls.StackItemControlRendererTester">
+         </dynamicTest>
+      </renderer>
+      <renderer
+            renderer="org.eclipse.emf.ecp.view.editor.controls.DomainModelReferenceControlSWTRenderer">
+         <dynamicTest
+               testClass="org.eclipse.emf.ecp.view.editor.controls.DomainModelReferenceControlSWTRendererTester">
+         </dynamicTest>
+      </renderer>
+      <renderer
+            renderer="org.eclipse.emf.ecp.view.editor.controls.TableColumnsDMRTableControl">
+         <dynamicTest
+               testClass="org.eclipse.emf.ecp.view.editor.controls.TableColumnsDMRTableControlTester">
+         </dynamicTest>
+      </renderer>
+      <renderer
+            renderer="org.eclipse.emf.ecp.view.editor.controls.TableDetailViewControlSWTRenderer">
+         <dynamicTest
+               testClass="org.eclipse.emf.ecp.view.editor.controls.TableDetailViewControlSWTRendererTester">
          </dynamicTest>
       </renderer>
    </extension>

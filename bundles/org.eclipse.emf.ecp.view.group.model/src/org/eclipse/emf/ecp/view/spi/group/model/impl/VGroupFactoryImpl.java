@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecp.view.spi.group.model.GroupLabelAlignment;
+import org.eclipse.emf.ecp.view.spi.group.model.GroupType;
 import org.eclipse.emf.ecp.view.spi.group.model.VGroup;
 import org.eclipse.emf.ecp.view.spi.group.model.VGroupFactory;
 import org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage;
@@ -42,13 +43,13 @@ public class VGroupFactoryImpl extends EFactoryImpl implements VGroupFactory
 	{
 		try
 		{
-			final VGroupFactory theGroupFactory = (VGroupFactory) EPackage.Registry.INSTANCE
+			VGroupFactory theGroupFactory = (VGroupFactory) EPackage.Registry.INSTANCE
 				.getEFactory(VGroupPackage.eNS_URI);
 			if (theGroupFactory != null)
 			{
 				return theGroupFactory;
 			}
-		} catch (final Exception exception)
+		} catch (Exception exception)
 		{
 			EcorePlugin.INSTANCE.log(exception);
 		}
@@ -96,6 +97,8 @@ public class VGroupFactoryImpl extends EFactoryImpl implements VGroupFactory
 	{
 		switch (eDataType.getClassifierID())
 		{
+		case VGroupPackage.GROUP_TYPE:
+			return createGroupTypeFromString(eDataType, initialValue);
 		case VGroupPackage.GROUP_LABEL_ALIGNMENT:
 			return createGroupLabelAlignmentFromString(eDataType, initialValue);
 		default:
@@ -114,6 +117,8 @@ public class VGroupFactoryImpl extends EFactoryImpl implements VGroupFactory
 	{
 		switch (eDataType.getClassifierID())
 		{
+		case VGroupPackage.GROUP_TYPE:
+			return convertGroupTypeToString(eDataType, instanceValue);
 		case VGroupPackage.GROUP_LABEL_ALIGNMENT:
 			return convertGroupLabelAlignmentToString(eDataType, instanceValue);
 		default:
@@ -130,26 +135,36 @@ public class VGroupFactoryImpl extends EFactoryImpl implements VGroupFactory
 	@Override
 	public VGroup createGroup()
 	{
-		final VGroupImpl group = new VGroupImpl();
+		VGroupImpl group = new VGroupImpl();
 		return group;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
+	 * @since 1.4
 	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
-	 * @since 1.3
 	 */
-	public GroupLabelAlignment createGroupLabelAlignmentFromString(EDataType eDataType, String initialValue)
+	public GroupType createGroupTypeFromString(EDataType eDataType, String initialValue)
 	{
-		final GroupLabelAlignment result = GroupLabelAlignment.get(initialValue);
+		GroupType result = GroupType.get(initialValue);
 		if (result == null)
-		{
 			throw new IllegalArgumentException(
 				"The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-		}
 		return result;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * @since 1.4
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public String convertGroupTypeToString(EDataType eDataType, Object instanceValue)
+	{
+		return instanceValue == null ? null : instanceValue.toString();
 	}
 
 	/**
@@ -157,7 +172,22 @@ public class VGroupFactoryImpl extends EFactoryImpl implements VGroupFactory
 	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
+	 */
+	public GroupLabelAlignment createGroupLabelAlignmentFromString(EDataType eDataType, String initialValue)
+	{
+		GroupLabelAlignment result = GroupLabelAlignment.get(initialValue);
+		if (result == null)
+			throw new IllegalArgumentException(
+				"The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+		return result;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
 	 * @since 1.3
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
 	 */
 	public String convertGroupLabelAlignmentToString(EDataType eDataType, Object instanceValue)
 	{

@@ -48,6 +48,7 @@ public final class ECPSubstitutionLabelProvider implements EValidator.Substituti
 	 * 
 	 * @see org.eclipse.emf.ecore.EValidator.SubstitutionLabelProvider#getObjectLabel(org.eclipse.emf.ecore.EObject)
 	 */
+	@Override
 	public String getObjectLabel(EObject eObject)
 	{
 		final IItemLabelProvider provider =
@@ -65,6 +66,7 @@ public final class ECPSubstitutionLabelProvider implements EValidator.Substituti
 	 * 
 	 * @see org.eclipse.emf.ecore.EValidator.SubstitutionLabelProvider#getFeatureLabel(org.eclipse.emf.ecore.EStructuralFeature)
 	 */
+	@Override
 	public String getFeatureLabel(EStructuralFeature eStructuralFeature)
 	{
 		final EClass eClass = eStructuralFeature.getEContainingClass();
@@ -87,6 +89,7 @@ public final class ECPSubstitutionLabelProvider implements EValidator.Substituti
 	 * @see org.eclipse.emf.ecore.EValidator.SubstitutionLabelProvider#getValueLabel(org.eclipse.emf.ecore.EDataType,
 	 *      java.lang.Object)
 	 */
+	@Override
 	public String getValueLabel(EDataType eDataType, Object value)
 	{
 		return EcoreUtil.convertToString(eDataType, value);

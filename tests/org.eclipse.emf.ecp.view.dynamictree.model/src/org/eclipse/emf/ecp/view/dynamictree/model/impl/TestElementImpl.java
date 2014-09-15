@@ -24,9 +24,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecp.view.dynamictree.model.ModelPackage;
 import org.eclipse.emf.ecp.view.dynamictree.model.TestElement;
@@ -146,6 +144,7 @@ public class TestElementImpl extends EObjectImpl implements TestElement
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String getId()
 	{
 		return id;
@@ -156,6 +155,7 @@ public class TestElementImpl extends EObjectImpl implements TestElement
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setId(String newId)
 	{
 		String oldId = id;
@@ -169,6 +169,7 @@ public class TestElementImpl extends EObjectImpl implements TestElement
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EList<TestElement> getElements()
 	{
 		if (elements == null) {
@@ -182,6 +183,7 @@ public class TestElementImpl extends EObjectImpl implements TestElement
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String getParentId()
 	{
 		return parentId;
@@ -192,6 +194,7 @@ public class TestElementImpl extends EObjectImpl implements TestElement
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setParentId(String newParentId)
 	{
 		String oldParentId = parentId;
@@ -205,6 +208,7 @@ public class TestElementImpl extends EObjectImpl implements TestElement
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public String getName() {
 		return name;
 	}
@@ -214,6 +218,7 @@ public class TestElementImpl extends EObjectImpl implements TestElement
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setName(String newName) {
 		String oldName = name;
 		name = newName;
@@ -237,6 +242,7 @@ public class TestElementImpl extends EObjectImpl implements TestElement
 	 * 
 	 * @generated NOT
 	 */
+	@Override
 	public boolean validate(DiagnosticChain diagnostic, Map<?, ?> context) {
 		if (getName() == null || getName().length() == 0) {
 			if (diagnostic != null) {

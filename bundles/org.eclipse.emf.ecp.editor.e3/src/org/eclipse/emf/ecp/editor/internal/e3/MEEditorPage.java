@@ -124,7 +124,7 @@ public class MEEditorPage extends FormPage {
 		body.setBackgroundMode(SWT.INHERIT_FORCE);
 
 		final EObject domainObject = modelElementContext.getDomainObject();
-		final VView view = ViewProviderHelper.getView(domainObject);
+		final VView view = ViewProviderHelper.getView(domainObject, null);
 		final ViewModelContext vmc = ViewModelContextFactory.INSTANCE.createViewModelContext(view, domainObject,
 			new ECPReferenceServiceImpl());
 		try {

@@ -25,7 +25,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Composite Collection</b></em>'.
+ * An implementation of the model object '<em><b>Container</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
@@ -37,7 +37,8 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * @generated
  * @since 1.2
  */
-public abstract class VContainerImpl extends VContainedElementImpl implements VContainer {
+public abstract class VContainerImpl extends VElementImpl implements VContainer
+{
 	/**
 	 * The cached value of the '{@link #getChildren() <em>Children</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
@@ -55,7 +56,8 @@ public abstract class VContainerImpl extends VContainedElementImpl implements VC
 	 * 
 	 * @generated
 	 */
-	protected VContainerImpl() {
+	protected VContainerImpl()
+	{
 		super();
 	}
 
@@ -66,7 +68,8 @@ public abstract class VContainerImpl extends VContainedElementImpl implements VC
 	 * @generated
 	 */
 	@Override
-	protected EClass eStaticClass() {
+	protected EClass eStaticClass()
+	{
 		return VViewPackage.Literals.CONTAINER;
 	}
 
@@ -76,7 +79,9 @@ public abstract class VContainerImpl extends VContainedElementImpl implements VC
 	 * 
 	 * @generated
 	 */
-	public EList<VContainedElement> getChildren() {
+	@Override
+	public EList<VContainedElement> getChildren()
+	{
 		if (children == null)
 		{
 			children = new EObjectContainmentEList<VContainedElement>(VContainedElement.class, this,
@@ -92,7 +97,8 @@ public abstract class VContainerImpl extends VContainedElementImpl implements VC
 	 * @generated
 	 */
 	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+	{
 		switch (featureID)
 		{
 		case VViewPackage.CONTAINER__CHILDREN:
@@ -108,7 +114,8 @@ public abstract class VContainerImpl extends VContainedElementImpl implements VC
 	 * @generated
 	 */
 	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+	public Object eGet(int featureID, boolean resolve, boolean coreType)
+	{
 		switch (featureID)
 		{
 		case VViewPackage.CONTAINER__CHILDREN:
@@ -125,7 +132,8 @@ public abstract class VContainerImpl extends VContainedElementImpl implements VC
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public void eSet(int featureID, Object newValue) {
+	public void eSet(int featureID, Object newValue)
+	{
 		switch (featureID)
 		{
 		case VViewPackage.CONTAINER__CHILDREN:
@@ -143,7 +151,8 @@ public abstract class VContainerImpl extends VContainedElementImpl implements VC
 	 * @generated
 	 */
 	@Override
-	public void eUnset(int featureID) {
+	public void eUnset(int featureID)
+	{
 		switch (featureID)
 		{
 		case VViewPackage.CONTAINER__CHILDREN:
@@ -160,7 +169,8 @@ public abstract class VContainerImpl extends VContainedElementImpl implements VC
 	 * @generated
 	 */
 	@Override
-	public boolean eIsSet(int featureID) {
+	public boolean eIsSet(int featureID)
+	{
 		switch (featureID)
 		{
 		case VViewPackage.CONTAINER__CHILDREN:
@@ -169,4 +179,4 @@ public abstract class VContainerImpl extends VContainedElementImpl implements VC
 		return super.eIsSet(featureID);
 	}
 
-} // CompositeCollectionImpl
+} // VContainerImpl

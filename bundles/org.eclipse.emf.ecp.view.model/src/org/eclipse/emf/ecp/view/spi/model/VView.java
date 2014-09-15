@@ -26,6 +26,7 @@ import org.eclipse.emf.ecore.EClass;
  *              <ul>
  *              <li>{@link org.eclipse.emf.ecp.view.spi.model.VView#getRootEClass <em>Root EClass</em>}</li>
  *              <li>{@link org.eclipse.emf.ecp.view.spi.model.VView#getChildren <em>Children</em>}</li>
+ *              <li>{@link org.eclipse.emf.ecp.view.spi.model.VView#getEcorePath <em>Ecore Path</em>}</li>
  *              </ul>
  *              </p>
  * 
@@ -82,7 +83,8 @@ public interface VView extends VElement {
 	EList<VContainedElement> getChildren();
 
 	/**
-	 * Returns the value of the '<em><b>Ecore Path</b></em>' attribute.
+	 * Returns the value of the '<em><b>Ecore Path</b></em>' attribute. If the value is null, then the containing
+	 * EPackage of the rootEClass must be registered by default in the EPackage registry.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Ecore Path</em>' attribute isn't clear, there really should be more of a description
@@ -93,7 +95,7 @@ public interface VView extends VElement {
 	 * @return the value of the '<em>Ecore Path</em>' attribute.
 	 * @see #setEcorePath(String)
 	 * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getView_EcorePath()
-	 * @model
+	 * @model required="true"
 	 * @generated
 	 * @since 1.3
 	 */

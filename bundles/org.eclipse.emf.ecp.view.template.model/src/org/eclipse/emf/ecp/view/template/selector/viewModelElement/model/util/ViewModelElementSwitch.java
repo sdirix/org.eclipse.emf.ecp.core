@@ -13,12 +13,10 @@ package org.eclipse.emf.ecp.view.template.selector.viewModelElement.model.util;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.util.Switch;
-
 import org.eclipse.emf.ecp.view.template.model.VTStyleSelector;
-
-import org.eclipse.emf.ecp.view.template.selector.viewModelElement.model.*;
+import org.eclipse.emf.ecp.view.template.selector.viewModelElement.model.VTViewModelElementPackage;
+import org.eclipse.emf.ecp.view.template.selector.viewModelElement.model.VTViewModelElementSelector;
 
 /**
  * <!-- begin-user-doc -->
@@ -86,12 +84,14 @@ public class ViewModelElementSwitch<T> extends Switch<T> {
 		switch (classifierID)
 		{
 		case VTViewModelElementPackage.VIEW_MODEL_ELEMENT_SELECTOR: {
-			VTViewModelElementSelector viewModelElementSelector = (VTViewModelElementSelector) theEObject;
+			final VTViewModelElementSelector viewModelElementSelector = (VTViewModelElementSelector) theEObject;
 			T result = caseViewModelElementSelector(viewModelElementSelector);
-			if (result == null)
+			if (result == null) {
 				result = caseStyleSelector(viewModelElementSelector);
-			if (result == null)
+			}
+			if (result == null) {
 				result = defaultCase(theEObject);
+			}
 			return result;
 		}
 		default:

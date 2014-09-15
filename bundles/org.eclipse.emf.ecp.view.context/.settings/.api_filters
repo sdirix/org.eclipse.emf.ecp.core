@@ -7,6 +7,12 @@
                 <message_argument value="1.2.1"/>
             </message_arguments>
         </filter>
+        <filter comment="SPI Change (1.4)" id="923795461">
+            <message_arguments>
+                <message_argument value="1.4.0"/>
+                <message_argument value="1.3.0"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.view.spi.context.ModelChangeNotification">
         <filter comment="SPI Change (1.3)" id="305324134">
@@ -17,6 +23,12 @@
         </filter>
     </resource>
     <resource path="src/org/eclipse/emf/ecp/view/spi/context/ViewModelContext.java" type="org.eclipse.emf.ecp.view.spi.context.ViewModelContext">
+        <filter comment="SPI Change (1.4)" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.context.ViewModelContext"/>
+                <message_argument value="getContextValue(String)"/>
+            </message_arguments>
+        </filter>
         <filter comment="This is SPI" id="403804204">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.context.ViewModelContext"/>
@@ -27,6 +39,12 @@
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.context.ViewModelContext"/>
                 <message_argument value="getControlsFor(UniqueSetting)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change (1.4)" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.context.ViewModelContext"/>
+                <message_argument value="putContextValue(String, Object)"/>
             </message_arguments>
         </filter>
         <filter comment="SPI Change (1.3)" id="403804204">

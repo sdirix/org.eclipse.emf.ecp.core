@@ -120,6 +120,7 @@ public class VCategorizationElementImpl extends VContainedElementImpl implements
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EList<VAbstractCategorization> getCategorizations()
 	{
 		if (categorizations == null)
@@ -136,6 +137,7 @@ public class VCategorizationElementImpl extends VContainedElementImpl implements
 	 * 
 	 * @generated
 	 */
+	@Override
 	public VCategorizableElement getCurrentSelection()
 	{
 		if (currentSelection != null && currentSelection.eIsProxy())
@@ -170,6 +172,7 @@ public class VCategorizationElementImpl extends VContainedElementImpl implements
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setCurrentSelection(VCategorizableElement newCurrentSelection)
 	{
 		VCategorizableElement oldCurrentSelection = currentSelection;
@@ -185,6 +188,7 @@ public class VCategorizationElementImpl extends VContainedElementImpl implements
 	 * 
 	 * @generated
 	 */
+	@Override
 	public int getMainCategoryDepth()
 	{
 		return mainCategoryDepth;
@@ -196,6 +200,7 @@ public class VCategorizationElementImpl extends VContainedElementImpl implements
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setMainCategoryDepth(int newMainCategoryDepth)
 	{
 		int oldMainCategoryDepth = mainCategoryDepth;

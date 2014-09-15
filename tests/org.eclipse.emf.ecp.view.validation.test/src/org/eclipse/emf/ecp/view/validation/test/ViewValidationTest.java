@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
@@ -13,8 +13,10 @@ package org.eclipse.emf.ecp.view.validation.test;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.eclipse.emf.common.util.Diagnostic;
@@ -1421,6 +1423,46 @@ public class ViewValidationTest extends CommonValidationTest {
 			.getHighestSeverity());
 		assertEquals("Severity of column must be OK", Diagnostic.OK, column.getDiagnostic().getHighestSeverity());
 		assertEquals("Severity of view must be OK", Diagnostic.OK, view.getDiagnostic().getHighestSeverity());
+	}
+
+	@Test
+	public void testValidationDynamicAddManyToDomain() {
+		// setup
+		final Library library = TestFactory.eINSTANCE.createLibrary();
+		final Writer writer = TestFactory.eINSTANCE.createWriter();
+		writer.setFirstName("Name");
+		library.getWriters().add(writer);
+
+		final VView view = VViewFactory.eINSTANCE.createView();
+		view.setRootEClass(TestPackage.eINSTANCE.getLibrary());
+
+		final VTableControl tableControl = VTableFactory.eINSTANCE.createTableControl();
+		tableControl.setDomainModelReference(getVTableDomainModelReference(TestPackage.eINSTANCE
+			.getLibrary_Writers()));
+		final VFeaturePathDomainModelReference tc = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
+		tc.setDomainModelEFeature(TestPackage.eINSTANCE.getWriter_FirstName());
+		VTableDomainModelReference.class.cast(tableControl.getDomainModelReference()).getColumnDomainModelReferences()
+			.add(tc);
+		view.getChildren().add(tableControl);
+
+		ViewModelContextFactory.INSTANCE.createViewModelContext(view, library);
+
+		assertEquals("Severity of control must be ok", Diagnostic.OK, tableControl.getDiagnostic()
+			.getHighestSeverity());
+
+		// act
+		final Writer writer2 = TestFactory.eINSTANCE.createWriter();
+		final Writer writer3 = TestFactory.eINSTANCE.createWriter();
+		writer3.setFirstName("H");
+		final List<Writer> writers = new ArrayList<Writer>();
+		writers.add(writer2);
+		writers.add(writer3);
+		library.getWriters().addAll(writers);
+
+		// assert
+		assertEquals("Severity of control must be Error", Diagnostic.ERROR, tableControl.getDiagnostic()
+			.getHighestSeverity());
+
 	}
 
 	@Test

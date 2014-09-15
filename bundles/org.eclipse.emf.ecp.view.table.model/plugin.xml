@@ -22,5 +22,4 @@
             class="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"
             genModel="model/table.genmodel"/>
    </extension>
-
 </plugin>

@@ -15,9 +15,11 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.emf.ecp.view.model.presentation.SelectEClassWizardPage;
 import org.eclipse.emf.ecp.view.model.presentation.ViewModelWizard;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.WizardDialog;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 
@@ -38,12 +40,40 @@ public class CreateViewModel extends AbstractHandler {
 
 		final ViewModelWizard w = new ViewModelWizard();
 		w.setSelection(selection);
-		w.setSelectedEcore(selectedEcore);
+		w.setSelectedContainer(selectedEcore);
 		w.setWorkbench(PlatformUI.getWorkbench());
 
-		final WizardDialog dialog = new WizardDialog(HandlerUtil.getActiveShell(event), w);
+		final WizardDialog dialog = new ViewModelWizardDialog(HandlerUtil.getActiveShell(event), w);
 		dialog.open();
 
 		return null;
+	}
+
+	private class ViewModelWizardDialog extends WizardDialog {
+
+		ViewModelWizard wizard;
+
+		/**
+		 * @param parentShell
+		 * @param newWizard
+		 */
+		public ViewModelWizardDialog(Shell parentShell, ViewModelWizard newWizard) {
+			super(parentShell, newWizard);
+			wizard = newWizard;
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @see org.eclipse.jface.wizard.WizardDialog#backPressed()
+		 */
+		@Override
+		protected void backPressed() {
+			if (SelectEClassWizardPage.class.isInstance(getCurrentPage())) {
+				wizard.clearSelectedContainer();
+			}
+			super.backPressed();
+		}
+
 	}
 }

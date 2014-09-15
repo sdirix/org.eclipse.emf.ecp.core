@@ -21,12 +21,12 @@ import org.eclipse.emf.common.util.Enumerator;
  * <!-- begin-user-doc -->
  * A representation of the literals of the enumeration '<em><b>Label Alignment</b></em>',
  * and utility methods for working with them.
+ * @since 1.3
  * <!-- end-user-doc -->
  * 
  * @see org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage#getGroupLabelAlignment()
  * @model
  * @generated
- * @since 1.3
  */
 public enum GroupLabelAlignment implements Enumerator
 {
@@ -118,7 +118,7 @@ public enum GroupLabelAlignment implements Enumerator
 	{
 		for (int i = 0; i < VALUES_ARRAY.length; ++i)
 		{
-			final GroupLabelAlignment result = VALUES_ARRAY[i];
+			GroupLabelAlignment result = VALUES_ARRAY[i];
 			if (result.toString().equals(literal))
 			{
 				return result;
@@ -138,7 +138,7 @@ public enum GroupLabelAlignment implements Enumerator
 	{
 		for (int i = 0; i < VALUES_ARRAY.length; ++i)
 		{
-			final GroupLabelAlignment result = VALUES_ARRAY[i];
+			GroupLabelAlignment result = VALUES_ARRAY[i];
 			if (result.getName().equals(name))
 			{
 				return result;
