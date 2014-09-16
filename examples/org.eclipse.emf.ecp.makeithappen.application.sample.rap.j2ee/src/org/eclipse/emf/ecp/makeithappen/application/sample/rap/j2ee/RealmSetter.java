@@ -11,6 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.makeithappen.application.sample.rap.j2ee;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import org.eclipse.core.databinding.observable.Realm;
@@ -36,11 +37,19 @@ public final class RealmSetter {
 	public static void setRealm(Realm realm) {
 		try {
 			final Class<Realm> clazz = Realm.class;
-			final Method method = clazz.getDeclaredMethod("setDefault", clazz);
+			final Method method = clazz.getDeclaredMethod("setDefault", clazz); //$NON-NLS-1$
 			method.setAccessible(true);
 			method.invoke(null, new Object[] { realm });
-		} catch (final Exception exception) {
-			exception.printStackTrace();
+		} catch (final NoSuchMethodException ex) {
+			ex.printStackTrace();
+		} catch (final SecurityException ex) {
+			ex.printStackTrace();
+		} catch (final IllegalAccessException ex) {
+			ex.printStackTrace();
+		} catch (final IllegalArgumentException ex) {
+			ex.printStackTrace();
+		} catch (final InvocationTargetException ex) {
+			ex.printStackTrace();
 		}
 	}
 
