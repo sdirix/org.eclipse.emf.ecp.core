@@ -18,6 +18,8 @@ import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EReference;
@@ -1490,15 +1492,18 @@ public class ViewValidationTest extends CommonValidationTest {
 		assertEquals("Severity of control must be Error", Diagnostic.ERROR, result.iterator().next().getSeverity());
 	}
 
-	public void testListenerUponChange() {
+	@Test
+	public void testListenerUponChange() throws InterruptedException {
 		final Writer writer = TestFactory.eINSTANCE.createWriter();
 		final VControl control = VViewFactory.eINSTANCE.createControl();
 		control
-			.setDomainModelReference(
+		.setDomainModelReference(
 			getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getWriter_FirstName()));
 
 		final ViewModelContext vmc = ViewModelContextFactory.INSTANCE.createViewModelContext(control, writer);
 
+		final List<CountDownLatch> latch = new ArrayList<CountDownLatch>();
+		latch.add(new CountDownLatch(1));
 		final Set<Diagnostic> lastResult = new LinkedHashSet<Diagnostic>();
 
 		final ViewValidationListener listener = new ViewValidationListener() {
@@ -1506,20 +1511,26 @@ public class ViewValidationTest extends CommonValidationTest {
 			public void onNewValidation(Set<Diagnostic> validationResults) {
 				lastResult.clear();
 				lastResult.addAll(validationResults);
+				latch.get(0).countDown();
 			}
 		};
 
 		final ValidationService service = vmc.getService(ValidationService.class);
 		service.registerValidationListener(listener);
 
+		latch.get(0).await(1, TimeUnit.SECONDS);
 		assertEquals("One Diagnostic expected", 1, lastResult.size());
+		latch.clear();
+		latch.add(new CountDownLatch(1));
 
 		writer.setFirstName("Hans");
-
+		latch.get(0).await(1, TimeUnit.SECONDS);
 		assertEquals("No Diagnostic expected since OK", 0, lastResult.size());
+		latch.clear();
+		latch.add(new CountDownLatch(1));
 
 		writer.setFirstName("");
-
+		latch.get(0).await(1, TimeUnit.SECONDS);
 		assertEquals("One Diagnostic expected", 1, lastResult.size());
 		assertEquals("Severity of control must be Error", Diagnostic.ERROR, lastResult.iterator().next().getSeverity());
 	}

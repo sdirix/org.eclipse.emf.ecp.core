@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
  ******************************************************************************/
@@ -23,12 +23,18 @@ import org.eclipse.emf.ecp.view.internal.rule.RuleService;
 import org.eclipse.emf.ecp.view.internal.rule.RuleServiceHelperImpl;
 import org.eclipse.emf.ecp.view.internal.unset.UnsetService;
 import org.eclipse.emf.ecp.view.rule.test.CommonRuleTest;
+import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorization;
+import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationElement;
+import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationFactory;
+import org.eclipse.emf.ecp.view.spi.categorization.model.VCategory;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
+import org.eclipse.emf.ecp.view.spi.rule.model.RuleFactory;
+import org.eclipse.emf.ecp.view.spi.rule.model.ShowRule;
 import org.eclipse.emf.emfstore.bowling.BowlingFactory;
 import org.eclipse.emf.emfstore.bowling.BowlingPackage;
 import org.eclipse.emf.emfstore.bowling.Fan;
@@ -41,14 +47,16 @@ import org.junit.Test;
 
 /**
  * @author jfaltermeier
- * 
+ *
  */
 public class UnsetRuleIntegrationTest extends CommonRuleTest {
 
+	private static final String FOO = "foo";
 	private Fan fan;
 	private Merchandise merchandise;
 
 	private final EStructuralFeature merchandiseNameFeature = BowlingPackage.eINSTANCE.getMerchandise_Name();
+	private final EStructuralFeature fanNameFeature = BowlingPackage.eINSTANCE.getFan_Name();
 	private final BigDecimal price = new BigDecimal(19.84);
 	private final String mercName = "Wimpel";
 	private final String fanName = "Max Morlock";
@@ -87,9 +95,9 @@ public class UnsetRuleIntegrationTest extends CommonRuleTest {
 	@Test
 	public void testUnset() {
 		final VControl control1 = addControlToView(merchandiseNameReferenceFromFan());
-		addShowRule(control1, true, BowlingPackage.eINSTANCE.getFan_Name(), "foo");
+		addShowRule(control1, true, BowlingPackage.eINSTANCE.getFan_Name(), FOO);
 
-		fan.setName("foo");
+		fan.setName(FOO);
 		merchandise.setName("bar");
 
 		services(fan);
@@ -127,13 +135,141 @@ public class UnsetRuleIntegrationTest extends CommonRuleTest {
 	@Test
 	public void testInitUnset() {
 		final VControl control1 = addControlToView(merchandiseNameReferenceFromFan());
-		addShowRule(control1, true, BowlingPackage.eINSTANCE.getFan_Name(), "foo");
+		addShowRule(control1, true, BowlingPackage.eINSTANCE.getFan_Name(), FOO);
 
 		merchandise.setName("bar");
 		fan.setName("quux");
 		services(fan);
 		assertFalse(control1.isVisible());
 		assertEquals(merchandiseNameFeature.getDefaultValue(), merchandise.getName());
+	}
+
+	@Test
+	public void testVCategorizationElementHideCategory() {
+		// set up view model
+		final VCategorizationElement element = VCategorizationFactory.eINSTANCE.createCategorizationElement();
+		view.getChildren().add(element);
+
+		final VCategorization categorization = VCategorizationFactory.eINSTANCE.createCategorization();
+		element.getCategorizations().add(categorization);
+
+		final VCategory categoryInCategorization = VCategorizationFactory.eINSTANCE.createCategory();
+		categorization.getCategorizations().add(categoryInCategorization);
+
+		final VControl fanNameC = VViewFactory.eINSTANCE.createControl();
+		categoryInCategorization.setComposite(fanNameC);
+		final VFeaturePathDomainModelReference fanDMR = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
+		fanDMR.setDomainModelEFeature(BowlingPackage.eINSTANCE.getFan_Name());
+		fanNameC.setDomainModelReference(fanDMR);
+
+		final VCategory category = VCategorizationFactory.eINSTANCE.createCategory();
+		element.getCategorizations().add(category);
+
+		final VControl merchName = VViewFactory.eINSTANCE.createControl();
+		category.setComposite(merchName);
+		final VFeaturePathDomainModelReference merchDMR = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
+		merchDMR.getDomainModelEReferencePath().add(BowlingPackage.eINSTANCE.getFan_FavouriteMerchandise());
+		merchDMR.setDomainModelEFeature(BowlingPackage.eINSTANCE.getMerchandise_Name());
+		merchName.setDomainModelReference(merchDMR);
+
+		// set up rules
+		addShowRule(category, false, BowlingPackage.eINSTANCE.getFan_Name(), FOO);
+
+		// init services
+		services(fan);
+		assertTrue(element.isVisible());
+		assertTrue(categorization.isVisible());
+		assertTrue(categoryInCategorization.isVisible());
+		assertTrue(fanNameC.isVisible());
+		assertTrue(category.isVisible());
+		assertTrue(merchName.isVisible());
+		assertTrue(fan.eIsSet(fanNameFeature));
+		assertTrue(merchandise.eIsSet(merchandiseNameFeature));
+		assertEquals(fanName, fan.getName());
+		assertEquals(mercName, merchandise.getName());
+
+		// act
+		fan.setName(FOO);
+
+		// assert
+		assertTrue(element.isVisible());
+		assertTrue(categorization.isVisible());
+		assertTrue(categoryInCategorization.isVisible());
+		assertTrue(fanNameC.isVisible());
+		assertFalse(category.isVisible());
+		assertFalse(merchName.isVisible());
+		assertTrue(fan.eIsSet(fanNameFeature));
+		assertEquals(FOO, fan.getName());
+		assertFalse(merchandise.eIsSet(merchandiseNameFeature));
+		assertEquals(merchandiseNameFeature.getDefaultValue(), merchandise.getName());
+	}
+
+	@Test
+	public void testVCategorizationElementHideCategoryInCategorization() {
+		// set up view model
+		final VCategorizationElement element = VCategorizationFactory.eINSTANCE.createCategorizationElement();
+		view.getChildren().add(element);
+
+		final VCategorization categorization = VCategorizationFactory.eINSTANCE.createCategorization();
+		element.getCategorizations().add(categorization);
+
+		final VCategory categoryInCategorization = VCategorizationFactory.eINSTANCE.createCategory();
+		categorization.getCategorizations().add(categoryInCategorization);
+
+		final VControl fanNameC = VViewFactory.eINSTANCE.createControl();
+		categoryInCategorization.setComposite(fanNameC);
+		final VFeaturePathDomainModelReference fanDMR = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
+		fanDMR.setDomainModelEFeature(BowlingPackage.eINSTANCE.getFan_Name());
+		fanNameC.setDomainModelReference(fanDMR);
+
+		final VCategory category = VCategorizationFactory.eINSTANCE.createCategory();
+		element.getCategorizations().add(category);
+
+		final VControl merchName = VViewFactory.eINSTANCE.createControl();
+		category.setComposite(merchName);
+		final VFeaturePathDomainModelReference merchDMR = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
+		merchDMR.getDomainModelEReferencePath().add(BowlingPackage.eINSTANCE.getFan_FavouriteMerchandise());
+		merchDMR.setDomainModelEFeature(BowlingPackage.eINSTANCE.getMerchandise_Name());
+		merchName.setDomainModelReference(merchDMR);
+
+		// set up rules
+		final ShowRule rule = RuleFactory.eINSTANCE.createShowRule();
+		rule.setHide(true);
+		rule.setCondition(createLeafCondition(BowlingPackage.eINSTANCE.getMerchandise_Name(), FOO,
+			BowlingPackage.eINSTANCE.getFan_FavouriteMerchandise()));
+		categoryInCategorization.getAttachments().add(rule);
+
+		// init services
+		services(fan);
+		assertTrue(element.isVisible());
+		assertTrue(categorization.isVisible());
+		assertTrue(categoryInCategorization.isVisible());
+		assertTrue(fanNameC.isVisible());
+		assertTrue(category.isVisible());
+		assertTrue(merchName.isVisible());
+		assertTrue(fan.eIsSet(fanNameFeature));
+		assertTrue(merchandise.eIsSet(merchandiseNameFeature));
+		assertEquals(fanName, fan.getName());
+		assertEquals(mercName, merchandise.getName());
+
+		// act
+		merchandise.setName(FOO);
+
+		// assert
+		assertTrue(element.isVisible());
+		assertTrue(categorization.isVisible());
+		assertFalse(categoryInCategorization.isVisible());
+		assertFalse(fanNameC.isVisible());
+		assertTrue(category.isVisible());
+		assertTrue(merchName.isVisible());
+		assertFalse(fan.eIsSet(fanNameFeature));
+		assertEquals(fanNameFeature.getDefaultValue(), fan.getName());
+		assertTrue(merchandise.eIsSet(merchandiseNameFeature));
+		assertEquals(FOO, merchandise.getName());
 	}
 
 	// ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -154,7 +290,7 @@ public class UnsetRuleIntegrationTest extends CommonRuleTest {
 
 	/**
 	 * Adds a control with the given feature path domain model reference as a direct child of the view.
-	 * 
+	 *
 	 * @param domainModelReference
 	 * @return the created control
 	 */
