@@ -74,7 +74,7 @@
 							</projects>
 
 							<testOptions>
-								<execTimeout>3600</execTimeout>
+								<execTimeout>7200</execTimeout>
 								<testExecTimeout>600</testExecTimeout>
 							</testOptions>
 
