@@ -111,7 +111,7 @@
 								</vmArgs>
 							</q7client>
 
-							<q7server>cloud.xored.com</q7server>
+							<q7server>https://cloud.xored.com</q7server>
 						</configuration>
 					</plugin>
 				</plugins>
