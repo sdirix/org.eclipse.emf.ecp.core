@@ -30,6 +30,7 @@ import org.eclipse.emf.ecp.view.template.internal.tooling.Activator;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplate;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
@@ -146,6 +147,7 @@ public class TemplateModelEditorPart extends EditorPart {
 	@Override
 	public void createPartControl(Composite parent) {
 		this.parent = parent;
+		parent.setBackground(parent.getDisplay().getSystemColor(SWT.COLOR_WHITE));
 		try {
 			ECPSWTViewRenderer.INSTANCE.render(parent, template);
 		} catch (final ECPRendererException ex) {
