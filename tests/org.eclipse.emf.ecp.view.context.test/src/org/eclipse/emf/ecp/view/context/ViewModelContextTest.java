@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
@@ -19,14 +19,18 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.Set;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecp.view.internal.context.ViewModelContextImpl;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeAddRemoveListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
@@ -50,7 +54,7 @@ import org.junit.Test;
 
 /**
  * The Class ViewModelContextTest.
- * 
+ *
  * @author Eugen Neufeld
  */
 public class ViewModelContextTest {
@@ -569,7 +573,7 @@ public class ViewModelContextTest {
 		final VFeaturePathDomainModelReference col = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
 		col.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Name());
 		VTableDomainModelReference.class.cast(control.getDomainModelReference()).getColumnDomainModelReferences()
-			.add(col);
+		.add(col);
 		view.getChildren().add(control);
 
 		final League league = BowlingFactory.eINSTANCE.createLeague();
@@ -601,7 +605,7 @@ public class ViewModelContextTest {
 		final VFeaturePathDomainModelReference col = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
 		col.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Name());
 		VTableDomainModelReference.class.cast(control.getDomainModelReference()).getColumnDomainModelReferences()
-			.add(col);
+		.add(col);
 		view.getChildren().add(control);
 
 		final League league = BowlingFactory.eINSTANCE.createLeague();
@@ -632,7 +636,7 @@ public class ViewModelContextTest {
 		final VFeaturePathDomainModelReference col = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
 		col.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Name());
 		VTableDomainModelReference.class.cast(control.getDomainModelReference()).getColumnDomainModelReferences()
-			.add(col);
+		.add(col);
 		view.getChildren().add(control);
 
 		final League league = BowlingFactory.eINSTANCE.createLeague();
@@ -724,5 +728,49 @@ public class ViewModelContextTest {
 		resource.getContents().add(player);
 		viewModelContext = ViewModelContextFactory.INSTANCE.createViewModelContext(view, player);
 		assertEquals(resource, player.eResource());
+	}
+
+	@Test
+	public void testTwoViewServicesSamePriority() throws InterruptedException {
+		// setup
+		final CountDownLatch vms1Init = new CountDownLatch(1);
+		final CountDownLatch vms2Init = new CountDownLatch(1);
+		final ViewModelService vms1 = new ViewModelService() {
+			@Override
+			public void instantiate(ViewModelContext context) {
+				vms1Init.countDown();
+			}
+
+			@Override
+			public int getPriority() {
+				return 5;
+			}
+
+			@Override
+			public void dispose() {
+			}
+		};
+		final ViewModelService vms2 = new ViewModelService() {
+			@Override
+			public void instantiate(ViewModelContext context) {
+				vms2Init.countDown();
+			}
+
+			@Override
+			public int getPriority() {
+				return 5;
+			}
+
+			@Override
+			public void dispose() {
+			}
+		};
+		// act
+		final ViewModelContextImpl viewModelContextImpl = new ViewModelContextImpl(view, player, vms1, vms2);
+		// assert
+		assertTrue(vms1Init.await(1, TimeUnit.SECONDS));
+		assertTrue(vms2Init.await(1, TimeUnit.SECONDS));
+		// cleanup
+		viewModelContextImpl.dispose();
 	}
 }

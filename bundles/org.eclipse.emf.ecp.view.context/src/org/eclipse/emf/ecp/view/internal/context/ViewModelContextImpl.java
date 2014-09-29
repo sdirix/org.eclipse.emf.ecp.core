@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
@@ -54,7 +54,7 @@ import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 
 /**
  * The Class ViewModelContextImpl.
- * 
+ *
  * @author Eugen Neufeld
  */
 public class ViewModelContextImpl implements ViewModelContext {
@@ -89,6 +89,10 @@ public class ViewModelContextImpl implements ViewModelContext {
 
 			@Override
 			public int compare(ViewModelService arg0, ViewModelService arg1) {
+				if (arg0.getPriority() == arg1.getPriority()) {
+					/* compare would return 0, meaning the services are identical -> 1 service would get lost */
+					return arg0.getClass().getName().compareTo(arg1.getClass().getName());
+				}
 				return arg0.getPriority() - arg1.getPriority();
 			}
 		});
@@ -119,7 +123,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 
 	/**
 	 * Instantiates a new view model context impl.
-	 * 
+	 *
 	 * @param view the view
 	 * @param domainObject the domain object
 	 */
@@ -132,7 +136,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 
 	/**
 	 * Instantiates a new view model context impl.
-	 * 
+	 *
 	 * @param view the view
 	 * @param domainObject the domain object
 	 * @param modelServices an array of services to use in the {@link ViewModelContext}
@@ -316,7 +320,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getControlsFor(org.eclipse.emf.ecore.EStructuralFeature.Setting)
 	 */
 	@Override
@@ -326,7 +330,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getControlsFor(org.eclipse.emf.ecp.common.UniqueSetting)
 	 */
 	@Override
@@ -357,7 +361,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getViewModel()
 	 */
 	@Override
@@ -370,7 +374,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getDomainModel()
 	 */
 	@Override
@@ -458,7 +462,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#hasService(java.lang.Class)
 	 */
 	@Override
@@ -473,7 +477,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getService(java.lang.Class)
 	 */
 	@Override
@@ -643,7 +647,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 
 	/**
 	 * Inner method for registering context users (not {@link ViewModelService}).
-	 * 
+	 *
 	 * @param user the user of the context
 	 */
 	public void addContextUser(Object user) {
@@ -652,7 +656,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 
 	/**
 	 * Inner method for unregistering the context user.
-	 * 
+	 *
 	 * @param user the user of the context
 	 */
 	public void removeContextUser(Object user) {
@@ -666,7 +670,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getContextValue(java.lang.String)
 	 */
 	@Override
@@ -676,7 +680,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#putContextValue(java.lang.String, java.lang.Object)
 	 */
 	@Override
