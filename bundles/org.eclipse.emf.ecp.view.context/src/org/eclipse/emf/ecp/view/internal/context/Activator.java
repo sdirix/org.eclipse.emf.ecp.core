@@ -14,7 +14,12 @@ package org.eclipse.emf.ecp.view.internal.context;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.ecp.view.context.internal.reporting.LogConsumer;
+import org.eclipse.emf.ecp.view.context.internal.reporting.ReportServiceImpl;
+import org.eclipse.emf.ecp.view.spi.context.reporting.AbstractReport;
+import org.eclipse.emf.ecp.view.spi.context.reporting.ReportService;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 
 /**
  * The Class Activator.
@@ -28,6 +33,8 @@ public class Activator extends Plugin {
 
 	/** The instance. */
 	private static Activator instance;
+
+	private ServiceReference<ReportService> reportServiceReference;
 
 	/**
 	 * Default constructor.
@@ -44,6 +51,9 @@ public class Activator extends Plugin {
 	@Override
 	public void start(BundleContext bundleContext) throws Exception {
 		super.start(bundleContext);
+		final ReportService reportService = new ReportServiceImpl();
+		bundleContext.registerService(ReportService.class, reportService, null);
+		reportService.addConsumer(new LogConsumer());
 		instance = this;
 	}
 
@@ -75,6 +85,33 @@ public class Activator extends Plugin {
 	 */
 	public static void log(Throwable t) {
 		getInstance().getLog().log(new Status(IStatus.ERROR, PLUGIN_ID, t.getMessage(), t));
+	}
+
+	/**
+	 * Logs a {@link AbstractReport}.
+	 * 
+	 * @param report
+	 *            the {@link AbstractReport} to be logged
+	 */
+	public static void log(AbstractReport report) {
+		getInstance().getLog().log(
+			new Status(report.getSeverity(),
+				PLUGIN_ID,
+				report.getMessage(),
+				report.getException()));
+	}
+
+	/**
+	 * Returns the {@link ReportService}.
+	 * 
+	 * @return the {@link ReportService}
+	 */
+	public ReportService getReportService() {
+		if (reportServiceReference == null) {
+			reportServiceReference = instance.getBundle().getBundleContext()
+				.getServiceReference(ReportService.class);
+		}
+		return instance.getBundle().getBundleContext().getService(reportServiceReference);
 	}
 
 }

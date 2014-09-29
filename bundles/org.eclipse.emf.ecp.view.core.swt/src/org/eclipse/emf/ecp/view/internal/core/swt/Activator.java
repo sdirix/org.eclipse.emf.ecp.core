@@ -13,6 +13,7 @@ package org.eclipse.emf.ecp.view.internal.core.swt;
 
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.emf.ecp.edit.spi.ECPControlFactory;
+import org.eclipse.emf.ecp.view.spi.context.reporting.ReportService;
 import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.swt.graphics.Image;
@@ -26,6 +27,8 @@ public class Activator extends Plugin {
 
 	/** The plug-in ID. */
 	public static final String PLUGIN_ID = "org.eclipse.emf.ecp.view.core.swt"; //$NON-NLS-1$
+
+	private ServiceReference<ReportService> reportServiceReference;
 
 	// The shared instance
 	private static Activator plugin;
@@ -133,5 +136,18 @@ public class Activator extends Plugin {
 			}
 		}
 		return viewTemplate;
+	}
+
+	/**
+	 * Returns the {@link ReportService}.
+	 * 
+	 * @return the {@link ReportService}
+	 */
+	public ReportService getReportService() {
+		if (reportServiceReference == null) {
+			reportServiceReference = plugin.getBundle().getBundleContext()
+				.getServiceReference(ReportService.class);
+		}
+		return plugin.getBundle().getBundleContext().getService(reportServiceReference);
 	}
 }

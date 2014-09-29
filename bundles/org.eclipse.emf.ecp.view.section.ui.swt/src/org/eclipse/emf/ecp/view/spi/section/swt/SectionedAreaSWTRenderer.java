@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- *
+ * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
  ******************************************************************************/
@@ -15,6 +15,7 @@ import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import org.eclipse.emf.ecp.view.internal.section.ui.swt.Activator;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
@@ -26,6 +27,7 @@ import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.LayoutProviderHelper;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
+import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
@@ -33,9 +35,9 @@ import org.eclipse.swt.widgets.Control;
 
 /**
  * Renderer for {@link VSectionedArea}.
- *
+ * 
  * @author jfaltermeier
- *
+ * 
  */
 public class SectionedAreaSWTRenderer extends
 	AbstractSWTRenderer<VSectionedArea> {
@@ -120,6 +122,7 @@ public class SectionedAreaSWTRenderer extends
 				childGridCell.getRenderer().finalizeRendering(columnComposite);
 			}
 		} catch (final NoPropertyDescriptorFoundExeption ex) {
+			Activator.getDefault().getReportService().report(new RenderingFailedReport(ex));
 			return columnComposite;
 		}
 

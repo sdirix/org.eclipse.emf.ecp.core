@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Edagr Mueller - initial API and implementation
  * Eugen Neufeld - Refactoring
@@ -28,18 +28,18 @@ import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.LayoutProviderHelper;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
+import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
 /**
  * The SWT Renderer for the {@link VHorizontalLayout}. It renders all elements next to each other.
- * 
+ *
  * @author Eugen Neufeld
  * @since 1.2
- * 
+ *
  */
-@SuppressWarnings("restriction")
 public class HorizontalLayoutSWTRenderer extends AbstractSWTRenderer<VHorizontalLayout> {
 
 	private static final String CONTROL_COLUMN_COMPOSITE = "org_eclipse_emf_ecp_ui_layout_horizontal"; //$NON-NLS-1$
@@ -47,7 +47,7 @@ public class HorizontalLayoutSWTRenderer extends AbstractSWTRenderer<VHorizontal
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#dispose()
 	 */
 	@Override
@@ -58,7 +58,7 @@ public class HorizontalLayoutSWTRenderer extends AbstractSWTRenderer<VHorizontal
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#getGridDescription(SWTGridDescription)
 	 */
 	@Override
@@ -71,13 +71,13 @@ public class HorizontalLayoutSWTRenderer extends AbstractSWTRenderer<VHorizontal
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#renderControl(int, org.eclipse.swt.widgets.Composite,
 	 *      org.eclipse.emf.ecp.view.spi.model.VElement, org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
 	@Override
 	protected Control renderControl(SWTGridCell gridCell, Composite parent) throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+	NoPropertyDescriptorFoundExeption {
 		if (gridCell.getColumn() != 0) {
 			return null;
 		}
@@ -92,11 +92,11 @@ public class HorizontalLayoutSWTRenderer extends AbstractSWTRenderer<VHorizontal
 				getViewModelContext());
 			if (renderer == null) {
 				Activator
-					.getDefault()
-					.getLog()
-					.log(
-						new Status(IStatus.INFO, Activator.PLUGIN_ID, String.format(
-							"No Renderer for %s found.", child.eClass().getName()))); //$NON-NLS-1$
+				.getDefault()
+				.getLog()
+				.log(
+					new Status(IStatus.INFO, Activator.PLUGIN_ID, String.format(
+						"No Renderer for %s found.", child.eClass().getName()))); //$NON-NLS-1$
 				continue;
 			}
 			elementRendererMap.put(child, renderer);
@@ -131,6 +131,7 @@ public class HorizontalLayoutSWTRenderer extends AbstractSWTRenderer<VHorizontal
 					childGridCell.getRenderer().finalizeRendering(column);
 				}
 			} catch (final NoPropertyDescriptorFoundExeption e) {
+				Activator.getDefault().getReportService().report(new RenderingFailedReport(e));
 				continue;
 			}
 		}

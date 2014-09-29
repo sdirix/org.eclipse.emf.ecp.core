@@ -23,13 +23,13 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
+import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.ContributionManager;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
 import org.eclipse.swt.layout.GridLayout;
@@ -130,8 +130,9 @@ public class MEEditorPage extends FormPage {
 		try {
 			ecpView = ECPSWTViewRenderer.INSTANCE.render(body, vmc);
 		} catch (final ECPRendererException ex) {
-			MessageDialog.openError(form.getShell(), ex.getClass().getName(), ex.getMessage());
-			Activator.logException(ex);
+			Activator.getDefault().getReportService().report(new RenderingFailedReport(ex));
+			// MessageDialog.openError(form.getShell(), ex.getClass().getName(), ex.getMessage());
+			// Activator.logException(ex);
 		}
 
 		form.setImage(shortLabelProvider.getImage(modelElementContext.getDomainObject()));

@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Edagr Mueller - initial API and implementation
  ******************************************************************************/
@@ -14,7 +14,12 @@ package org.eclipse.emf.ecp.view.internal.swt;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.ecp.ui.view.swt.DebugSWTReportConsumer;
+import org.eclipse.emf.ecp.ui.view.swt.InvalidGridDescriptionReportConsumer;
+import org.eclipse.emf.ecp.view.spi.context.reporting.ReportService;
+import org.eclipse.emf.ecp.view.spi.model.util.ViewModelUtil;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 
 /**
  * The activator class controls the plug-in life cycle.
@@ -40,6 +45,10 @@ public class Activator extends Plugin {
 	@Override
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
+		if (ViewModelUtil.isDebugMode()) {
+			getReportService().addConsumer(new DebugSWTReportConsumer());
+			getReportService().addConsumer(new InvalidGridDescriptionReportConsumer());
+		}
 		plugin = this;
 	}
 
@@ -55,7 +64,7 @@ public class Activator extends Plugin {
 
 	/**
 	 * Returns the shared instance.
-	 * 
+	 *
 	 * @return the shared instance
 	 */
 	public static Activator getDefault() {
@@ -64,7 +73,7 @@ public class Activator extends Plugin {
 
 	/**
 	 * Logs exception.
-	 * 
+	 *
 	 * @param e
 	 *            the {@link Exception} to log
 	 */
@@ -73,4 +82,17 @@ public class Activator extends Plugin {
 			new Status(IStatus.ERROR, Activator.getDefault().getBundle().getSymbolicName(), e
 				.getMessage(), e));
 	}
+
+	/**
+	 * Returns the {@link ReportService}.
+	 *
+	 * @return the {@link ReportService}
+	 */
+	public ReportService getReportService() {
+		final BundleContext bundleContext = getBundle().getBundleContext();
+		final ServiceReference<ReportService> serviceReference =
+			bundleContext.getServiceReference(ReportService.class);
+		return bundleContext.getService(serviceReference);
+	}
+
 }

@@ -12,7 +12,9 @@
 package org.eclipse.emf.ecp.view.treemasterdetail.ui.swt.internal;
 
 import org.eclipse.core.runtime.Plugin;
+import org.eclipse.emf.ecp.view.spi.context.reporting.ReportService;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 
 /**
  * Activator.
@@ -27,6 +29,8 @@ public class Activator extends Plugin {
 
 	/** The shared instance. **/
 	private static Activator plugin;
+
+	private ServiceReference<ReportService> reportServiceReference;
 
 	/**
 	 * The constructor.
@@ -44,6 +48,19 @@ public class Activator extends Plugin {
 	public void stop(BundleContext context) throws Exception {
 		super.stop(context);
 		plugin = null;
+	}
+
+	/**
+	 * Returns the {@link ReportService}.
+	 * 
+	 * @return the {@link ReportService}
+	 */
+	public ReportService getReportService() {
+		if (reportServiceReference == null) {
+			reportServiceReference = plugin.getBundle().getBundleContext()
+				.getServiceReference(ReportService.class);
+		}
+		return plugin.getBundle().getBundleContext().getService(reportServiceReference);
 	}
 
 	/**

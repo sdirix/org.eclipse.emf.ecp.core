@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Anas Chakfeh - initial API and implementation
  * Eugen Neufeld - Refactoring
@@ -37,6 +37,7 @@ import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
 import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
+import org.eclipse.emf.ecp.view.spi.context.reporting.StatusReport;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
@@ -98,10 +99,10 @@ import org.osgi.framework.FrameworkUtil;
 
 /**
  * SWT Renderer for a {@link VTreeMasterDetail} element.
- * 
+ *
  * @author Anas Chakfeh
  * @author Eugen Neufeld
- * 
+ *
  */
 public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMasterDetail> {
 
@@ -117,7 +118,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 	private TreeViewer treeViewer;
 	/**
 	 * Static string.
-	 * 
+	 *
 	 */
 	public static final String GLOBAL_ADDITIONS = "global_additions"; //$NON-NLS-1$
 
@@ -129,7 +130,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 
 	/**
 	 * @author Anas Chakfeh
-	 * 
+	 *
 	 */
 	private class RootObject {
 
@@ -153,7 +154,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#dispose()
 	 */
 	@Override
@@ -164,7 +165,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#getGridDescription(SWTGridDescription)
 	 */
 	@Override
@@ -177,13 +178,13 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#renderControl(org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell,
 	 *      org.eclipse.swt.widgets.Composite)
 	 */
 	@Override
 	protected Control renderControl(SWTGridCell cell, Composite parent) throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+	NoPropertyDescriptorFoundExeption {
 
 		/* The tree's composites */
 		final Composite form = createMasterDetailForm(parent);
@@ -253,7 +254,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 		treeViewer = new TreeViewer(masterPanel);
 
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).hint(100, SWT.DEFAULT)
-			.applyTo(treeViewer.getTree());
+		.applyTo(treeViewer.getTree());
 
 		treeViewer.setContentProvider(adapterFactoryContentProvider);
 		treeViewer.setLabelProvider(getLabelProvider(adapterFactoryLabelProvider));
@@ -418,7 +419,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 		rightPanelContainerComposite = new Composite(container, SWT.FILL);
 		rightPanelContainerComposite.setLayout(GridLayoutFactory.fillDefaults().create());
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true)
-			.applyTo(rightPanelContainerComposite);
+		.applyTo(rightPanelContainerComposite);
 		rightPanelContainerComposite.setBackground(rightPanel.getBackground());
 
 		rightPanel.setContent(container);
@@ -671,10 +672,10 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 	}
 
 	/**
-	 * 
+	 *
 	 * @author Anas Chakfeh
 	 *         This class is responsible for handling selection changed events which happen on the tree
-	 * 
+	 *
 	 */
 	private class TreeMasterViewSelectionListener implements ISelectionChangedListener {
 
@@ -740,11 +741,11 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 					relayoutDetail();
 				} catch (final ECPRendererException e) {
 					Activator
-						.getDefault()
-						.getLog()
-						.log(
-							new Status(IStatus.ERROR, Activator.getDefault().getBundle().getSymbolicName(), e
-								.getMessage(), e));
+					.getDefault()
+					.getReportService()
+					.report(new StatusReport(
+						new Status(IStatus.ERROR, Activator.getDefault().getBundle().getSymbolicName(), e
+							.getMessage(), e)));
 				}
 			}
 		}
@@ -771,7 +772,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 
 	/**
 	 * Allows to manipulate the selection by returning a specific child.
-	 * 
+	 *
 	 * @param treeSelected the selected element in the tree
 	 * @return the object that should be used as a selection
 	 */

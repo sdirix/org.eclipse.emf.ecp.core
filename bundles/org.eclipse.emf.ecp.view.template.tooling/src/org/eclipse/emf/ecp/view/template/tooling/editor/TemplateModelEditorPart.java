@@ -26,6 +26,7 @@ import org.eclipse.emf.ecp.internal.ide.util.EcoreHelper;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
 import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
+import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
 import org.eclipse.emf.ecp.view.template.internal.tooling.Activator;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplate;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
@@ -149,7 +150,7 @@ public class TemplateModelEditorPart extends EditorPart {
 		try {
 			ECPSWTViewRenderer.INSTANCE.render(parent, template);
 		} catch (final ECPRendererException ex) {
-			Activator.log(ex);
+			Activator.getDefault().getReportService().report(new RenderingFailedReport(ex));
 		}
 	}
 

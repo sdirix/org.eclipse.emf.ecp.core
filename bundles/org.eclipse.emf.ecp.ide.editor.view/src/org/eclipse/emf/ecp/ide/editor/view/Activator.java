@@ -12,6 +12,7 @@
 package org.eclipse.emf.ecp.ide.editor.view;
 
 import org.eclipse.emf.ecp.ide.view.service.IDEViewModelRegistry;
+import org.eclipse.emf.ecp.view.spi.context.reporting.ReportService;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -25,6 +26,8 @@ public class Activator extends AbstractUIPlugin {
 	public static final String PLUGIN_ID = "org.eclipse.emf.ecp.ide.editor.view"; //$NON-NLS-1$
 
 	private static Activator plugin;
+
+	private ServiceReference<ReportService> reportServiceReference;
 
 	/**
 	 * The constructor.
@@ -73,4 +76,16 @@ public class Activator extends AbstractUIPlugin {
 		return getDefault().getBundle().getBundleContext().getService(serviceReference);
 	}
 
+	/**
+	 * Returns the {@link ReportService}.
+	 * 
+	 * @return the {@link ReportService}
+	 */
+	public ReportService getReportService() {
+		if (reportServiceReference == null) {
+			reportServiceReference = plugin.getBundle().getBundleContext()
+				.getServiceReference(ReportService.class);
+		}
+		return plugin.getBundle().getBundleContext().getService(reportServiceReference);
+	}
 }

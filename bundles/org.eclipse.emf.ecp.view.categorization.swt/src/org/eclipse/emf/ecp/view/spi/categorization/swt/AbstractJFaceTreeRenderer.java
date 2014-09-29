@@ -38,6 +38,7 @@ import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
+import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ITableItemLabelProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
@@ -75,7 +76,6 @@ import org.eclipse.swt.widgets.TreeItem;
  *
  * @param <VELEMENT> the {@link VElement}
  */
-@SuppressWarnings("restriction")
 public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> extends AbstractSWTRenderer<VELEMENT> {
 
 	private SWTGridDescription gridDescription;
@@ -124,7 +124,7 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 
 	@Override
 	protected Control renderControl(SWTGridCell cell, Composite parent) throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+	NoPropertyDescriptorFoundExeption {
 		TreeViewer treeViewer;
 		final EList<VAbstractCategorization> categorizations = getCategorizations();
 
@@ -134,11 +134,11 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 				getViewModelContext());
 			if (renderer == null) {
 				Activator
-					.getDefault()
-					.getLog()
-					.log(
-						new Status(IStatus.INFO, Activator.PLUGIN_ID, String.format(
-							"No Renderer for %s found.", child.eClass().getName()))); //$NON-NLS-1$
+				.getDefault()
+				.getLog()
+				.log(
+					new Status(IStatus.INFO, Activator.PLUGIN_ID, String.format(
+						"No Renderer for %s found.", child.eClass().getName()))); //$NON-NLS-1$
 				return null;
 			}
 			final Control render = renderer.render(cell, parent);
@@ -239,7 +239,7 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 			}
 		});
 		GridDataFactory.fillDefaults().align(SWT.BEGINNING, SWT.FILL).grab(false, true).hint(400, SWT.DEFAULT)
-			.applyTo(treeViewer.getTree());
+		.applyTo(treeViewer.getTree());
 
 		final List<TreeEditor> editors = new ArrayList<TreeEditor>();
 
@@ -484,26 +484,26 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 					viewModelContext);
 				if (renderer == null) {
 					Activator
-						.getDefault()
-						.getLog()
-						.log(
-							new Status(IStatus.INFO, Activator.PLUGIN_ID, String.format(
-								"No Renderer for %s found.", child.eClass().getName()))); //$NON-NLS-1$
+					.getDefault()
+					.getLog()
+					.log(
+						new Status(IStatus.INFO, Activator.PLUGIN_ID, String.format(
+							"No Renderer for %s found.", child.eClass().getName()))); //$NON-NLS-1$
 					return;
 				}
 				// we have a VCategory-> thus only one element in the grid
 				final Control render = renderer.render(
 					renderer.getGridDescription(GridDescriptionFactory.INSTANCE.createEmptyGridDescription()).getGrid()
-						.get(0), childComposite);
+					.get(0), childComposite);
 				renderer.finalizeRendering(childComposite);
 				GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true)
-					.minSize(SWT.DEFAULT, 200)
-					.applyTo(render);
+				.minSize(SWT.DEFAULT, 200)
+				.applyTo(render);
 				vCategorizationElement.setCurrentSelection((VCategorizableElement) child);
 			} catch (final NoRendererFoundException e) {
-				Activator.log(e);
+				Activator.getDefault().getReportService().report(new RenderingFailedReport(e));
 			} catch (final NoPropertyDescriptorFoundExeption e) {
-				Activator.log(e);
+				Activator.getDefault().getReportService().report(new RenderingFailedReport(e));
 			}
 
 			childComposite.layout();

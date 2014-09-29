@@ -49,6 +49,7 @@ import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
 import org.eclipse.emf.ecp.view.internal.provider.Migrator;
 import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
+import org.eclipse.emf.ecp.view.spi.context.reporting.StatusReport;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -332,7 +333,8 @@ public class ViewEditorPart extends EditorPart implements
 		try {
 			render = ECPSWTViewRenderer.INSTANCE.render(parent, view);
 		} catch (final ECPRendererException ex) {
-			Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, ex.getMessage(), ex));
+			Activator.getDefault().getReportService().report(
+				new StatusReport(new Status(IStatus.ERROR, Activator.PLUGIN_ID, ex.getMessage(), ex)));
 		}
 	}
 

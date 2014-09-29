@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- *
+ * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
  ******************************************************************************/
@@ -17,6 +17,7 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.emf.ecp.view.internal.section.ui.swt.Activator;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
@@ -29,6 +30,7 @@ import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.LayoutProviderHelper;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
+import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
@@ -38,12 +40,12 @@ import org.eclipse.swt.widgets.Layout;
 
 /**
  * Common super class for all section renderer.
- *
+ * 
  * @author jfaltermeier
- *
+ * 
  */
 public abstract class AbstractSectionSWTRenderer extends
-AbstractSWTRenderer<VSection> {
+	AbstractSWTRenderer<VSection> {
 
 	@Override
 	protected Control renderControl(SWTGridCell cell, Composite parent)
@@ -83,7 +85,7 @@ AbstractSWTRenderer<VSection> {
 
 	/**
 	 * Renders the first column.
-	 *
+	 * 
 	 * @param parent the parent composite
 	 * @return the rendered control
 	 */
@@ -106,8 +108,8 @@ AbstractSWTRenderer<VSection> {
 
 		if (VControl.class.isInstance(child)
 			&& (VControl.class.cast(child).getDomainModelReference() == null || !VControl.class
-			.cast(child).getDomainModelReference().getIterator()
-			.hasNext())) {
+				.cast(child).getDomainModelReference().getIterator()
+				.hasNext())) {
 			return columnComposite;
 		}
 		final AbstractSWTRenderer<VElement> renderer = getSWTRendererFactory()
@@ -143,8 +145,8 @@ AbstractSWTRenderer<VSection> {
 		try {
 			if (VControl.class.isInstance(child)
 				&& (VControl.class.cast(child).getDomainModelReference() == null || !VControl.class
-				.cast(child).getDomainModelReference()
-				.getIterator().hasNext())) {
+					.cast(child).getDomainModelReference()
+					.getIterator().hasNext())) {
 				return columnComposite;
 			}
 			final SWTGridDescription gridDescription2 = rowGridDescription
@@ -165,14 +167,14 @@ AbstractSWTRenderer<VSection> {
 				setLayoutDataForControl(childGridCell,
 					controlGridDescription.get(child), gridDescription2,
 					maximalGridDescription, childGridCell.getRenderer()
-					.getVElement(), control);
+						.getVElement(), control);
 
 			}
 			for (final SWTGridCell childGridCell : gridDescription2.getGrid()) {
 				childGridCell.getRenderer().finalizeRendering(columnComposite);
 			}
 		} catch (final NoPropertyDescriptorFoundExeption ex) {
-			// TODO log
+			Activator.getDefault().getReportService().report(new RenderingFailedReport(ex));
 			return columnComposite;
 		}
 

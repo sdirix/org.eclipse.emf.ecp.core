@@ -12,6 +12,7 @@
 package org.eclipse.emf.ecp.view.spi.model.util;
 
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
@@ -29,6 +30,7 @@ import org.eclipse.emf.ecp.view.spi.model.impl.Activator;
 public final class ViewModelUtil {
 
 	private static final String ORG_ECLIPSE_EMF_ECP_VIEW_SPI_LABEL_MODEL_V_LABEL = "org.eclipse.emf.ecp.view.spi.label.model.VLabel"; //$NON-NLS-1$
+	private static Boolean debugMode;
 
 	private ViewModelUtil() {
 
@@ -84,5 +86,28 @@ public final class ViewModelUtil {
 				}
 			}
 		}
+	}
+
+	/**
+	 * Whether EMF Forms has been started with the debug flag <code>-debugEMFForms</code>.
+	 *
+	 * @return <code>true</code> if EMF Forms has been started with the debug flag, <code>false</code> otherwise
+	 *
+	 * @since 1.5
+	 */
+	public static boolean isDebugMode() {
+
+		if (debugMode == null) {
+			debugMode = Boolean.FALSE;
+			final String[] commandLineArgs = Platform.getCommandLineArgs();
+			for (int i = 0; i < commandLineArgs.length; i++) {
+				final String arg = commandLineArgs[i];
+				if ("-debugEMFForms".equalsIgnoreCase(arg)) { //$NON-NLS-1$
+					debugMode = Boolean.TRUE;
+				}
+			}
+		}
+
+		return debugMode;
 	}
 }

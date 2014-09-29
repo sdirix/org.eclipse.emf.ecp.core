@@ -21,11 +21,14 @@ import java.util.Set;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecp.view.internal.core.swt.Activator;
+import org.eclipse.emf.ecp.view.spi.context.reporting.ReportService;
+import org.eclipse.emf.ecp.view.spi.context.reporting.StatusReport;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VContainer;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
+import org.eclipse.emf.ecp.view.spi.model.util.ViewModelUtil;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractAdditionalSWTRenderer;
@@ -35,9 +38,13 @@ import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.LayoutProviderHelper;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
+import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Layout;
 
 /**
@@ -88,9 +95,12 @@ public abstract class ContainerSWTRenderer<VELEMENT extends VElement> extends Ab
 	@Override
 	protected Control renderControl(SWTGridCell gridCell, Composite parent)
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+
 		if (gridCell.getColumn() != 0) {
 			return null;
 		}
+
+		final ReportService reportService = Activator.getDefault().getReportService();
 		final Composite columnComposite = getComposite(parent);
 		columnComposite.setData(CUSTOM_VARIANT, getCustomVariant());
 		columnComposite.setBackground(parent.getBackground());
@@ -99,22 +109,24 @@ public abstract class ContainerSWTRenderer<VELEMENT extends VElement> extends Ab
 		SWTGridDescription maximalGridDescription = null;
 		final Map<VContainedElement, SWTGridDescription> rowGridDescription = new LinkedHashMap<VContainedElement, SWTGridDescription>();
 		final Map<VContainedElement, SWTGridDescription> controlGridDescription = new LinkedHashMap<VContainedElement, SWTGridDescription>();
+
 		for (final VContainedElement child : getChildren()) {
+
 			if (VControl.class.isInstance(child) && (VControl.class.cast(child).getDomainModelReference() == null
 				|| !VControl.class.cast(child).getDomainModelReference().getIterator().hasNext())) {
 				continue;
 			}
+
 			final AbstractSWTRenderer<VElement> renderer = getSWTRendererFactory().getRenderer(child,
 				getViewModelContext());
+
 			if (renderer == null) {
-				Activator
-				.getDefault()
-				.getLog()
-				.log(
+				reportService.report(new StatusReport(
 					new Status(IStatus.INFO, Activator.PLUGIN_ID, String.format(
-						"No Renderer for %s found.", child.eClass().getName()))); //$NON-NLS-1$
+						"No Renderer for %s found.", child.eClass().getName())))); //$NON-NLS-1$
 				continue;
 			}
+
 			final Collection<AbstractAdditionalSWTRenderer<VElement>> additionalRenderers = getSWTRendererFactory()
 				.getAdditionalRenderer(child,
 					getViewModelContext());
@@ -141,41 +153,62 @@ public abstract class ContainerSWTRenderer<VELEMENT extends VElement> extends Ab
 		}
 		columnComposite.setLayout(getLayout(maximalGridDescription.getColumns(), false));
 		for (final VContainedElement child : getChildren()) {
-			try {
-				if (VControl.class.isInstance(child) && (VControl.class.cast(child).getDomainModelReference() == null
-					|| !VControl.class.cast(child).getDomainModelReference().getIterator().hasNext())) {
-					continue;
-				}
-				final SWTGridDescription gridDescription = rowGridDescription.get(child);
-				if (gridDescription == null) {
-					continue;
-				}
-				for (final SWTGridCell childGridCell : gridDescription.getGrid()) {
+			if (VControl.class.isInstance(child) && (VControl.class.cast(child).getDomainModelReference() == null
+				|| !VControl.class.cast(child).getDomainModelReference().getIterator().hasNext())) {
+				continue;
+			}
+			final SWTGridDescription gridDescription = rowGridDescription.get(child);
+			if (gridDescription == null) {
+				continue;
+			}
+			for (final SWTGridCell childGridCell : gridDescription.getGrid()) {
 
-					final Control control = childGridCell.getRenderer().render(childGridCell,
+				Control control = null;
+				try {
+					control = childGridCell.getRenderer().render(childGridCell,
 						columnComposite);
-					// TODO who should apply the layout
-					if (control == null) {
-						continue;
+				} catch (final NoRendererFoundException ex) {
+					reportService.report(new RenderingFailedReport(ex));
+					if (ViewModelUtil.isDebugMode()) {
+						control = renderDiagnoseControl(columnComposite, child);
 					}
 
-					// TODO possible layout issues?
-					setLayoutDataForControl(childGridCell, controlGridDescription.get(child), gridDescription,
-						maximalGridDescription,
-						childGridCell.getRenderer().getVElement(), control);
+				} catch (final NoPropertyDescriptorFoundExeption ex) {
+					reportService.report(new RenderingFailedReport(ex));
+					if (ViewModelUtil.isDebugMode()) {
+						control = renderDiagnoseControl(columnComposite, child);
+					}
+				}
 
+				// TODO who should apply the layout
+				if (control == null) {
+					continue;
 				}
-				for (final SWTGridCell childGridCell : gridDescription.getGrid()) {
-					childGridCell.getRenderer().finalizeRendering(columnComposite);
-				}
-			} catch (final NoPropertyDescriptorFoundExeption ex) {
-				Activator.getDefault().getLog()
-				.log(new Status(IStatus.INFO, Activator.PLUGIN_ID, ex.getMessage(), ex));
-				continue;
+
+				// TODO possible layout issues?
+				setLayoutDataForControl(childGridCell, controlGridDescription.get(child), gridDescription,
+					maximalGridDescription,
+					childGridCell.getRenderer().getVElement(), control);
+
+			}
+			for (final SWTGridCell childGridCell : gridDescription.getGrid()) {
+				childGridCell.getRenderer().finalizeRendering(columnComposite);
 			}
 		}
 
 		return columnComposite;
+	}
+
+	// TODO: possible duplicate code
+	private Control renderDiagnoseControl(Composite parent, VContainedElement child) throws NoRendererFoundException,
+	NoPropertyDescriptorFoundExeption {
+		final Composite composite = new Composite(parent, SWT.BORDER);
+		composite.setLayout(new FillLayout());
+		final Label label = new Label(composite, SWT.NONE);
+		label.setForeground(Display.getDefault().getSystemColor(SWT.COLOR_RED));
+		label.setText("An error occurred while rendering " + child.getClass().getCanonicalName()); //$NON-NLS-1$
+
+		return composite;
 	}
 
 	/**
