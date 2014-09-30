@@ -46,6 +46,7 @@ public class SectionNodeSWTRenderer extends AbstractSectionSWTRenderer {
 	private Set<AbstractSectionSWTRenderer> childRenderers;
 	private SWTGridDescription rendererGridDescription;
 	private ModelChangeListener listener;
+	private ExpandableComposite expandableComposite;
 
 	@Override
 	protected void preInit() {
@@ -67,7 +68,7 @@ public class SectionNodeSWTRenderer extends AbstractSectionSWTRenderer {
 							.isCollapsed());
 					}
 					getControls().values().iterator().next().getParent()
-					.layout(false);
+						.layout(false);
 				}
 			}
 		};
@@ -128,10 +129,10 @@ public class SectionNodeSWTRenderer extends AbstractSectionSWTRenderer {
 	protected Control createFirstColumn(Composite parent) {
 		final Composite composite = new Composite(parent, SWT.NONE);
 		GridLayoutFactory.fillDefaults().numColumns(1)
-		.extendedMargins(computeLeftMargin(), 0, 0, 0)
-		.applyTo(composite);
+			.extendedMargins(computeLeftMargin(), 0, 0, 0)
+			.applyTo(composite);
 
-		final ExpandableComposite expandableComposite = new ExpandableComposite(
+		expandableComposite = new ExpandableComposite(
 			composite, SWT.NONE, ExpandableComposite.TWISTIE);
 		expandableComposite.setExpanded(!getVElement().isCollapsed());
 		final String text = getVElement().getName() == null ? "" //$NON-NLS-1$
@@ -163,7 +164,7 @@ public class SectionNodeSWTRenderer extends AbstractSectionSWTRenderer {
 			numberOfParents++;
 			current = current.eContainer();
 		}
-		return numberOfParents * 8;
+		return (numberOfParents + 1) * 8;
 	}
 
 	@Override
@@ -176,6 +177,16 @@ public class SectionNodeSWTRenderer extends AbstractSectionSWTRenderer {
 			}
 			childRenderer.adjustLayoutData(visible);
 		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#applyEnable()
+	 */
+	@Override
+	protected void applyEnable() {
+		expandableComposite.setEnabled(getVElement().isEnabled());
 	}
 
 	@Override
