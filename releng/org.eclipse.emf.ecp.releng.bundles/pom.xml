@@ -237,6 +237,7 @@
 		<module>../../bundles/org.eclipse.emf.ecp.view.indexdmr.model</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.indexdmr.model.edit</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.indexdmr.tooling</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.indexdmr.databinding</module>
 		
 	</modules>
 
