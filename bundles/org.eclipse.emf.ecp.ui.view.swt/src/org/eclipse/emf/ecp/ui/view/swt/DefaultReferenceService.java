@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen - initial API and implementation
  ******************************************************************************/
@@ -48,7 +48,7 @@ import org.eclipse.swt.widgets.Display;
  * @noreference This class is not intended to be referenced by clients.
  * @noextend This class is not intended to be subclassed by clients.
  * @since 1.4
- * 
+ *
  */
 @SuppressWarnings("restriction")
 public class DefaultReferenceService implements ReferenceService {
@@ -57,7 +57,7 @@ public class DefaultReferenceService implements ReferenceService {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#instantiate(org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
 	@Override
@@ -67,7 +67,7 @@ public class DefaultReferenceService implements ReferenceService {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#dispose()
 	 */
 	@Override
@@ -76,7 +76,7 @@ public class DefaultReferenceService implements ReferenceService {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#getPriority()
 	 */
 	@Override
@@ -86,19 +86,26 @@ public class DefaultReferenceService implements ReferenceService {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @since 1.5
 	 */
 
 	@Override
 	public void addNewModelElements(EObject eObject, EReference eReference) {
 		final Collection<EClass> classes = EMFUtils.getSubClasses(eReference.getEReferenceType());
+		EObject newMEInstance = null;
+		if (classes.size() > 1) {
+			final SelectionComposite<TreeViewer> helper = CompositeFactory.getSelectModelClassComposite(
+				new HashSet<EPackage>(),
+				new HashSet<EPackage>(), classes);
 
-		final SelectionComposite<TreeViewer> helper = CompositeFactory.getSelectModelClassComposite(
-			new HashSet<EPackage>(),
-			new HashSet<EPackage>(), classes);
+			newMEInstance = SelectModelElementWizardFactory.openCreateNewModelElementDialog(helper);
+		}
+		else {
+			newMEInstance = eReference.getEReferenceType().getEPackage().getEFactoryInstance()
+				.create(eReference.getEReferenceType());
 
-		final EObject newMEInstance = SelectModelElementWizardFactory.openCreateNewModelElementDialog(helper);
+		}
 
 		if (newMEInstance == null) {
 			return;
@@ -118,7 +125,7 @@ public class DefaultReferenceService implements ReferenceService {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.edit.spi.ReferenceService#openInNewContext(org.eclipse.emf.ecore.EObject)
 	 */
 	@Override
@@ -127,7 +134,7 @@ public class DefaultReferenceService implements ReferenceService {
 
 			/**
 			 * {@inheritDoc}
-			 * 
+			 *
 			 * @see org.eclipse.jface.dialogs.Dialog#createDialogArea(org.eclipse.swt.widgets.Composite)
 			 */
 			@Override
@@ -155,7 +162,7 @@ public class DefaultReferenceService implements ReferenceService {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.edit.spi.ReferenceService#addExistingModelElements(org.eclipse.emf.ecore.EObject,
 	 *      org.eclipse.emf.ecore.EReference)
 	 * @since 1.5
@@ -164,7 +171,7 @@ public class DefaultReferenceService implements ReferenceService {
 	public void addExistingModelElements(EObject eObject, EReference eReference) {
 		final Iterator<EObject> allElements =
 			ItemPropertyDescriptor.getReachableObjectsOfType(eObject, eReference.getEType())
-				.iterator();
+			.iterator();
 
 		final Set<EObject> elements = new LinkedHashSet<EObject>();
 		while (allElements.hasNext()) {

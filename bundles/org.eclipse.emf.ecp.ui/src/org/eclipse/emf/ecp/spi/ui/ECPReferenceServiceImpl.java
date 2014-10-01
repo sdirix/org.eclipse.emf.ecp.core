@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
@@ -38,7 +38,7 @@ import org.eclipse.swt.widgets.Display;
 /**
  * @author Eugen Neufeld
  * @since 1.2
- * 
+ *
  */
 @SuppressWarnings("restriction")
 public class ECPReferenceServiceImpl implements ReferenceService {
@@ -48,7 +48,7 @@ public class ECPReferenceServiceImpl implements ReferenceService {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#instantiate(org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
 	@Override
@@ -59,7 +59,7 @@ public class ECPReferenceServiceImpl implements ReferenceService {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#dispose()
 	 */
 	@Override
@@ -70,7 +70,7 @@ public class ECPReferenceServiceImpl implements ReferenceService {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#getPriority()
 	 */
 	@Override
@@ -81,7 +81,7 @@ public class ECPReferenceServiceImpl implements ReferenceService {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @since 1.5
 	 */
 	@Override
@@ -89,13 +89,22 @@ public class ECPReferenceServiceImpl implements ReferenceService {
 		if (eReference == null) {
 			return;
 		}
-
+		EObject newModelElement = null;
 		final Collection<EClass> classes = ECPUtil.getSubClasses(eReference.getEReferenceType());
-		final SelectionComposite<TreeViewer> helper = ECPCompositeFactory.getSelectModelClassComposite(
-			new HashSet<EPackage>(),
-			new HashSet<EPackage>(), classes);
 
-		final EObject newModelElement = SelectModelElementWizardFactory.openCreateNewModelElementDialog(helper);
+		if (classes.size() > 1) {
+			final SelectionComposite<TreeViewer> helper = ECPCompositeFactory.getSelectModelClassComposite(
+				new HashSet<EPackage>(),
+				new HashSet<EPackage>(), classes);
+
+			newModelElement = SelectModelElementWizardFactory.openCreateNewModelElementDialog(helper);
+
+		}
+		else {
+			newModelElement = eReference.getEReferenceType().getEPackage().getEFactoryInstance()
+				.create(eReference.getEReferenceType());
+
+		}
 
 		if (newModelElement == null) {
 			return;
@@ -115,7 +124,7 @@ public class ECPReferenceServiceImpl implements ReferenceService {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @since 1.5
 	 */
 	@Override
@@ -139,7 +148,7 @@ public class ECPReferenceServiceImpl implements ReferenceService {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.edit.spi.ReferenceService#openInNewContext(org.eclipse.emf.ecore.EObject)
 	 */
 	@Override
