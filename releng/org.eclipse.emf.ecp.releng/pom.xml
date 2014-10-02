@@ -13,7 +13,6 @@
 		<tycho-extras-version>0.20.0</tycho-extras-version>
 		<javadoc-version>2.9</javadoc-version>
 		<javadoc-title>EMF Client Platform 1.4.1 API</javadoc-title>
-		<ecp-version>${project-version}</ecp-version>
 		<maven.antrun.plugin.version>1.7</maven.antrun.plugin.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<tycho.scmUrl>scm:git:git://git.eclipse.org/gitroot/emfclient/org.eclipse.emf.ecp.core.git</tycho.scmUrl>
@@ -145,12 +144,12 @@
 						<artifact>
 							<groupId>org.eclipse.emf.ecp</groupId>
 							<artifactId>ecp</artifactId>
-							<version>${ecp-version}</version>
+							<version>${project-version}</version>
 						</artifact>
 						<artifact>
 							<groupId>org.eclipse.emf.ecp</groupId>
 							<artifactId>ecpRAP</artifactId>
-							<version>${ecp-version}</version>
+							<version>${project-version}</version>
 						</artifact>
 					</target>
 				</configuration>
