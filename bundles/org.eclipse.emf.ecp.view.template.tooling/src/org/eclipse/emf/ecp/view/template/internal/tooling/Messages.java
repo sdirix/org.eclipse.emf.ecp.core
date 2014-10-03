@@ -47,6 +47,7 @@ public final class Messages extends NLS {
 	public static String ViewModelSelectControlSWTRenderer_ErrorNoEClass;
 	public static String ViewModelSelectControlSWTRenderer_ErrorNoSelection;
 	public static String ViewModelSelectControlSWTRenderer_ErrorNoVElement;
+	public static String ViewModelSelectControlSWTRenderer_SelectionDialogTilte;
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);
