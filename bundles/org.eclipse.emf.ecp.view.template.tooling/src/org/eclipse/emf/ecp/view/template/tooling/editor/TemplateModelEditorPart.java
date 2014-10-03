@@ -24,8 +24,13 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecp.internal.ide.util.EcoreHelper;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
+import org.eclipse.emf.ecp.ui.view.swt.DefaultReferenceService;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
 import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
+import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
 import org.eclipse.emf.ecp.view.template.internal.tooling.Activator;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplate;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
@@ -148,8 +153,11 @@ public class TemplateModelEditorPart extends EditorPart {
 	public void createPartControl(Composite parent) {
 		this.parent = parent;
 		parent.setBackground(parent.getDisplay().getSystemColor(SWT.COLOR_WHITE));
+		final VView view = ViewProviderHelper.getView(template, null);
+		final ViewModelContext viewContext = ViewModelContextFactory.INSTANCE.createViewModelContext(view,
+			template, new DefaultReferenceService());
 		try {
-			ECPSWTViewRenderer.INSTANCE.render(parent, template);
+			ECPSWTViewRenderer.INSTANCE.render(parent, viewContext);
 		} catch (final ECPRendererException ex) {
 			Activator.log(ex);
 		}
