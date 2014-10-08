@@ -72,7 +72,7 @@
 
 							<testOptions>
 								<execTimeout>7200</execTimeout>
-								<testExecTimeout>600</testExecTimeout>
+								<testExecTimeout>8000</testExecTimeout>
 							</testOptions>
 
 						</configuration>
@@ -195,7 +195,7 @@
 							</aut>
 							<testOptions>
 								<execTimeout>7200</execTimeout>
-								<testExecTimeout>3600</testExecTimeout>
+								<testExecTimeout>8000</testExecTimeout>
 							</testOptions>
 						</configuration>
 					</plugin>

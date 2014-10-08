@@ -51,7 +51,7 @@
 
 							<testOptions>
 								<execTimeout>3600</execTimeout>
-								<testExecTimeout>600</testExecTimeout>
+								<testExecTimeout>8000</testExecTimeout>
 							</testOptions>
 
 						</configuration>
@@ -93,6 +93,7 @@
 
 							<testOptions>
 								<execTimeout>3600</execTimeout>
+								<testExecTimeout>8000</testExecTimeout>
 							</testOptions>
 
 							<q7client>
