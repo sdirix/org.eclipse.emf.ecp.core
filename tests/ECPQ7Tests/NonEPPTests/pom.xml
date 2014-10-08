@@ -32,9 +32,6 @@
 						<configuration>
 							<q7>
 								<version>${q7-runner-version}</version>
-								<clientId>jfaltermeier</clientId>
-								<clientSecret>2a216714ef4e7dac6237a2eb9c30c57a6d26f81c</clientSecret>
-								<organization>EMFClientPlatform</organization>
 								<vmArgs>
 									<vmArg>-Dhttp.proxyHost=proxy.eclipse.org</vmArg>
 									<vmArg>-Dhttp.proxyPort=9898</vmArg>
@@ -100,9 +97,6 @@
 
 							<q7client>
 								<version>${q7-client-version}</version>
-								<clientId>jfaltermeier</clientId>
-								<clientSecret>2a216714ef4e7dac6237a2eb9c30c57a6d26f81c</clientSecret>
-								<organization>EMFClientPlatform</organization>
 								<vmArgs>
 									<vmArg>-Dhttp.proxyHost=proxy.eclipse.org</vmArg>
 									<vmArg>-Dhttp.proxyPort=9898</vmArg>
