@@ -188,8 +188,26 @@
 							<aut>
 								<uri>http://maven.xored.com/nexus/content/repositories/q7-releases/org/eclipse/modeling/${eclipse-version}/modeling-${eclipse-version}-[classifier].[ext]</uri>
 								<injections>
-									<injection>
+									<!--<injection>
 										<site>file://${project.build.directory}/injections</site>
+									</injection>-->
+<injection>
+										<site>${emfstore-update-site}</site>
+										<features>
+											<feature>org.eclipse.emf.emfstore.server.feature.feature.group</feature>
+											<feature>org.eclipse.emf.emfstore.ecore.feature.feature.group</feature>
+											<feature>org.eclipse.emf.emfstore.example.feature.feature.group</feature>
+											<feature>org.eclipse.emf.emfstore.client.feature.feature.group</feature>
+											<feature>org.eclipse.emf.emfstore.common.feature.feature.group</feature>
+											<feature>org.eclipse.emf.emfstore.client.transaction.feature.feature.group</feature>
+											<feature>org.eclipse.emf.emfstore.client.ui.feature.feature.group</feature>
+										</features>
+									</injection>
+									<injection>
+										<site>https://hudson.eclipse.org/ecp/job/releaseBranch/lastSuccessfulBuild/artifact/releng/org.eclipse.emf.ecp.repository/target/repository/</site>
+										<features>
+											<feature>org.eclipse.emf.ecp.sdk.feature.feature.group</feature>
+										</features>
 									</injection>
 								</injections>
 							</aut>
