@@ -38,10 +38,16 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 
 /**
  * @author Eugen
@@ -130,28 +136,9 @@ public class DefaultReferenceService implements ReferenceService {
 	 */
 	@Override
 	public void openInNewContext(final EObject eObject) {
-		final Dialog dialog = new Dialog(Display.getDefault().getActiveShell()) {
 
-			/**
-			 * {@inheritDoc}
-			 *
-			 * @see org.eclipse.jface.dialogs.Dialog#createDialogArea(org.eclipse.swt.widgets.Composite)
-			 */
-			@Override
-			protected Control createDialogArea(Composite parent) {
-				final Composite composite = (Composite) super.createDialogArea(parent);
-				final ViewModelContext vmc = ViewModelContextFactory.INSTANCE.createViewModelContext(
-					ViewProviderHelper.getView(eObject, null), eObject, new DefaultReferenceService());
-				try {
-					ECPSWTViewRenderer.INSTANCE.render(composite, vmc);
-				} catch (final ECPRendererException ex) {
-					Activator.log(ex);
-				}
+		final Dialog dialog = new CustomDialog(Display.getDefault().getActiveShell(), eObject);
 
-				return composite;
-			}
-
-		};
 		new ECPDialogExecutor(dialog) {
 			@Override
 			public void handleResult(int codeResult) {
@@ -185,6 +172,70 @@ public class DefaultReferenceService implements ReferenceService {
 
 		ECPControlHelper.addModelElementsInReference(eObject, addedElements, eReference,
 			editingDomain);
+
+	}
+
+	/** Custom dialog used for displaying the provided EObject. */
+	private class CustomDialog extends Dialog {
+
+		private final EObject eObject;
+
+		/**
+		 * @param activeShell
+		 * @param eObject
+		 */
+		public CustomDialog(Shell activeShell, EObject eObject) {
+			super(activeShell);
+			this.eObject = eObject;
+		}
+
+		@Override
+		protected void configureShell(Shell shell) {
+			super.configureShell(shell);
+			shell.setText(eObject.eClass().getName());
+		}
+
+		@Override
+		protected boolean isResizable() {
+			return true;
+		}
+
+		/**
+		 * {@inheritDoc}
+		 *
+		 * @see org.eclipse.jface.dialogs.Dialog#createDialogArea(org.eclipse.swt.widgets.Composite)
+		 */
+		@Override
+		protected Control createDialogArea(Composite parent) {
+			final Composite composite = (Composite) super.createDialogArea(parent);
+			GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).hint(450, 250)
+			.applyTo(composite);
+
+			final ScrolledComposite scrolledComposite = new ScrolledComposite(composite, SWT.H_SCROLL
+				| SWT.V_SCROLL);
+			GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).applyTo(scrolledComposite);
+			scrolledComposite.setExpandVertical(true);
+			scrolledComposite.setExpandHorizontal(true);
+
+			final Composite content = new Composite(scrolledComposite, SWT.NONE);
+			GridLayoutFactory.fillDefaults().applyTo(content);
+			GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).applyTo(content);
+
+			final ViewModelContext vmc = ViewModelContextFactory.INSTANCE.createViewModelContext(
+				ViewProviderHelper.getView(eObject, null), eObject, new DefaultReferenceService());
+			try {
+				ECPSWTViewRenderer.INSTANCE.render(content, vmc);
+			} catch (final ECPRendererException ex) {
+				Activator.log(ex);
+			}
+
+			scrolledComposite.setContent(content);
+			final Point point = content.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+			scrolledComposite.setMinSize(point);
+			scrolledComposite.layout(true);
+
+			return composite;
+		}
 
 	}
 }
