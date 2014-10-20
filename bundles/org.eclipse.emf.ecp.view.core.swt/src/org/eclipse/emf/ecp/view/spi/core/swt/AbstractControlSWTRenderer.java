@@ -161,6 +161,9 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 	 * @return the {@link IItemPropertyDescriptor}
 	 */
 	protected final IItemPropertyDescriptor getItemPropertyDescriptor(Setting setting) {
+		if (setting == null) {
+			return null;
+		}
 		final IItemPropertyDescriptor descriptor = adapterFactoryItemDelegator.getPropertyDescriptor(
 			setting.getEObject(),
 			setting.getEStructuralFeature());
