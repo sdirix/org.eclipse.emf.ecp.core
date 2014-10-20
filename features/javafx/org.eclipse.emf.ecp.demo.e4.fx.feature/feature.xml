@@ -23,8 +23,6 @@
 
    <requires>
       <import plugin="org.eclipse.equinox.event"/>
-      <import feature="org.eclipse.emf.ecp.emfforms.runtime.feature" version="1.3.0" match="greaterOrEqual"/>
-      <import feature="org.eclipse.fx.target.feature" version="1.0.0" match="greaterOrEqual"/>
    </requires>
 
    <plugin
