@@ -274,10 +274,13 @@ public class MakeItHappenWizard extends ExampleInstallerWizard {
 			if (!projectDescriptor.getProject().exists()) {
 				try {
 					installProject(projectDescriptor, progressMonitor);
-				} catch (final Exception ex) {
+				}
+				// BEGIN SUPRESS CATCH EXCEPTION
+				catch (final Exception ex) {
 					throw new ExecutionException("The project '" + projectDescriptor.getName() //$NON-NLS-1$
 						+ "' could not be installed.", ex); //$NON-NLS-1$
 				}
+				// END SUPRESS CATCH EXCEPTION
 			}
 		}
 		progressMonitor.done();
