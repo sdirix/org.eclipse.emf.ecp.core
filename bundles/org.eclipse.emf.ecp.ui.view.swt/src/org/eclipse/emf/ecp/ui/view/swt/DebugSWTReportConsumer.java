@@ -11,8 +11,8 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.ui.view.swt;
 
-import org.eclipse.emf.ecp.view.spi.context.reporting.AbstractReport;
-import org.eclipse.emf.ecp.view.spi.context.reporting.ReportServiceConsumer;
+import org.eclipse.emf.ecp.view.spi.model.reporting.AbstractReport;
+import org.eclipse.emf.ecp.view.spi.model.reporting.ReportServiceConsumer;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Display;
 
@@ -29,8 +29,8 @@ public class DebugSWTReportConsumer implements ReportServiceConsumer {
 	/**
 	 *
 	 * {@inheritDoc}
-	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.context.reporting.ReportServiceConsumer#reported(org.eclipse.emf.ecp.view.spi.context.reporting.AbstractReport)
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.model.reporting.ReportServiceConsumer#reported(org.eclipse.emf.ecp.view.spi.model.reporting.AbstractReport)
 	 */
 	@Override
 	public void reported(AbstractReport reportEntity) {

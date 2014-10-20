@@ -16,7 +16,7 @@ import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecp.ui.view.swt.DebugSWTReportConsumer;
 import org.eclipse.emf.ecp.ui.view.swt.InvalidGridDescriptionReportConsumer;
-import org.eclipse.emf.ecp.view.spi.context.reporting.ReportService;
+import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
 import org.eclipse.emf.ecp.view.spi.model.util.ViewModelUtil;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;

@@ -13,7 +13,7 @@ package org.eclipse.emf.ecp.view.spi.provider.reporting;
 
 import java.text.MessageFormat;
 
-import org.eclipse.emf.ecp.view.spi.context.reporting.AbstractReport;
+import org.eclipse.emf.ecp.view.spi.model.reporting.AbstractReport;
 
 /**
  * Indicates that a ViewProvider could not be instantiated.
@@ -38,7 +38,7 @@ public class ViewProviderInitFailedReport extends AbstractReport {
 	 *
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.context.reporting.AbstractReport#getMessage()
+	 * @see org.eclipse.emf.ecp.view.spi.model.reporting.AbstractReport#getMessage()
 	 */
 	@Override
 	public String getMessage() {

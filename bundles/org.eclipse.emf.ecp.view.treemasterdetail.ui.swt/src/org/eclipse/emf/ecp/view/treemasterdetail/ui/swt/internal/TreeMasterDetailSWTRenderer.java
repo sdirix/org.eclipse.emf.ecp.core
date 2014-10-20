@@ -37,8 +37,8 @@ import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
 import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
-import org.eclipse.emf.ecp.view.spi.context.reporting.StatusReport;
 import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emf.ecp.view.spi.model.reporting.StatusReport;
 import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
@@ -184,7 +184,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 	 */
 	@Override
 	protected Control renderControl(SWTGridCell cell, Composite parent) throws NoRendererFoundException,
-	NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption {
 
 		/* The tree's composites */
 		final Composite form = createMasterDetailForm(parent);
@@ -254,7 +254,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 		treeViewer = new TreeViewer(masterPanel);
 
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).hint(100, SWT.DEFAULT)
-		.applyTo(treeViewer.getTree());
+			.applyTo(treeViewer.getTree());
 
 		treeViewer.setContentProvider(adapterFactoryContentProvider);
 		treeViewer.setLabelProvider(getLabelProvider(adapterFactoryLabelProvider));
@@ -419,7 +419,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 		rightPanelContainerComposite = new Composite(container, SWT.FILL);
 		rightPanelContainerComposite.setLayout(GridLayoutFactory.fillDefaults().create());
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true)
-		.applyTo(rightPanelContainerComposite);
+			.applyTo(rightPanelContainerComposite);
 		rightPanelContainerComposite.setBackground(rightPanel.getBackground());
 
 		rightPanel.setContent(container);
@@ -741,11 +741,11 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 					relayoutDetail();
 				} catch (final ECPRendererException e) {
 					Activator
-					.getDefault()
-					.getReportService()
-					.report(new StatusReport(
-						new Status(IStatus.ERROR, Activator.getDefault().getBundle().getSymbolicName(), e
-							.getMessage(), e)));
+						.getDefault()
+						.getReportService()
+						.report(new StatusReport(
+							new Status(IStatus.ERROR, Activator.getDefault().getBundle().getSymbolicName(), e
+								.getMessage(), e)));
 				}
 			}
 		}

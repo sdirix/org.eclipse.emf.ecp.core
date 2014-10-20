@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * EclipseSource - initial API and implementation
  ******************************************************************************/
@@ -13,7 +13,7 @@ package org.eclipse.emf.ecp.view.internal.core.swt;
 
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.emf.ecp.edit.spi.ECPControlFactory;
-import org.eclipse.emf.ecp.view.spi.context.reporting.ReportService;
+import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
 import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.swt.graphics.Image;
@@ -61,7 +61,7 @@ public class Activator extends Plugin {
 
 	/**
 	 * Returns the shared instance.
-	 * 
+	 *
 	 * @return the shared instance
 	 */
 	public static Activator getDefault() {
@@ -72,7 +72,7 @@ public class Activator extends Plugin {
 
 	/**
 	 * Returns the {@link ECPControlFactory}.
-	 * 
+	 *
 	 * @return the {@link ECPControlFactory}
 	 */
 	public ECPControlFactory getECPControlFactory() {
@@ -96,7 +96,7 @@ public class Activator extends Plugin {
 
 	/**
 	 * Finds and returns an image for the provided path.
-	 * 
+	 *
 	 * @param path the path to get the image from
 	 * @return the image or null if nothing could be found
 	 */
@@ -123,7 +123,7 @@ public class Activator extends Plugin {
 
 	/**
 	 * Returns the currentInstance of the {@link VTViewTemplateProvider}.
-	 * 
+	 *
 	 * @return the {@link ECPControlFactory}
 	 */
 	public VTViewTemplateProvider getVTViewTemplateProvider() {
@@ -140,7 +140,7 @@ public class Activator extends Plugin {
 
 	/**
 	 * Returns the {@link ReportService}.
-	 * 
+	 *
 	 * @return the {@link ReportService}
 	 */
 	public ReportService getReportService() {

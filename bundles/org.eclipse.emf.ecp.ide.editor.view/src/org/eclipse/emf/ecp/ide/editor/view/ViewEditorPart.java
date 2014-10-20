@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
@@ -49,8 +49,8 @@ import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
 import org.eclipse.emf.ecp.view.internal.provider.Migrator;
 import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
-import org.eclipse.emf.ecp.view.spi.context.reporting.StatusReport;
 import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emf.ecp.view.spi.model.reporting.StatusReport;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -77,13 +77,13 @@ import org.eclipse.ui.part.FileEditorInput;
 
 /**
  * The IDE ViewModel EditorPart.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  */
 @SuppressWarnings("restriction")
 public class ViewEditorPart extends EditorPart implements
-	ViewModelEditorCallback {
+ViewModelEditorCallback {
 
 	private Resource resource;
 	private BasicCommandStack basicCommandStack;
@@ -128,22 +128,22 @@ public class ViewEditorPart extends EditorPart implements
 
 		basicCommandStack = new BasicCommandStack();
 		basicCommandStack.addCommandStackListener
-			(new CommandStackListener()
+		(new CommandStackListener()
+		{
+			@Override
+			public void commandStackChanged(final EventObject event)
 			{
-				@Override
-				public void commandStackChanged(final EventObject event)
+				parent.getDisplay().asyncExec
+				(new Runnable()
 				{
-					parent.getDisplay().asyncExec
-						(new Runnable()
-						{
-							@Override
-							public void run()
-							{
-								firePropertyChange(IEditorPart.PROP_DIRTY);
-							}
-						});
-				}
-			});
+					@Override
+					public void run()
+					{
+						firePropertyChange(IEditorPart.PROP_DIRTY);
+					}
+				});
+			}
+		});
 
 		partListener = new ViewPartListener();
 		getSite().getPage().addPartListener(partListener);
@@ -188,7 +188,7 @@ public class ViewEditorPart extends EditorPart implements
 			new ComposedAdapterFactory(new AdapterFactory[] {
 				new CustomReflectiveItemProviderAdapterFactory(),
 				new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) }),
-			basicCommandStack, resourceSet);
+				basicCommandStack, resourceSet);
 		resourceSet.eAdapters().add(
 			new AdapterFactoryEditingDomain.EditingDomainProvider(domain));
 		return resourceSet;
@@ -211,7 +211,7 @@ public class ViewEditorPart extends EditorPart implements
 		try {
 			final Map<Object, Object> loadOptions = new HashMap<Object, Object>();
 			loadOptions
-				.put(XMLResource.OPTION_RECORD_UNKNOWN_FEATURE, Boolean.TRUE);
+			.put(XMLResource.OPTION_RECORD_UNKNOWN_FEATURE, Boolean.TRUE);
 
 			resource = resourceSet.createResource(URI.createURI(fei.getURI().toURL().toExternalForm()));
 			resource.load(loadOptions);
@@ -255,11 +255,11 @@ public class ViewEditorPart extends EditorPart implements
 						view);
 				} else {
 					Activator
-						.getDefault()
-						.getLog()
-						.log(
-							new Status(IStatus.WARNING, Activator.PLUGIN_ID,
-								"The Root EClass of the view cannot be resolved." + view.getRootEClass())); //$NON-NLS-1$
+					.getDefault()
+					.getLog()
+					.log(
+						new Status(IStatus.WARNING, Activator.PLUGIN_ID,
+							"The Root EClass of the view cannot be resolved." + view.getRootEClass())); //$NON-NLS-1$
 				}
 			}
 
@@ -344,7 +344,7 @@ public class ViewEditorPart extends EditorPart implements
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.ide.view.service.ViewModelEditorCallback#reloadViewModel()
 	 */
 	@Override
@@ -364,7 +364,7 @@ public class ViewEditorPart extends EditorPart implements
 						EcoreHelper.registerEcore(ecorePath);
 					} catch (final IOException e) {
 						Activator.getDefault().getLog()
-							.log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
+						.log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
 					}
 				}
 
@@ -376,7 +376,7 @@ public class ViewEditorPart extends EditorPart implements
 					Activator.getViewModelRegistry().registerViewModelEditor(view, instance);
 				} catch (final IOException e) {
 					Activator.getDefault().getLog()
-						.log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
+					.log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
 				}
 
 				if (view.getRootEClass() != null) {
@@ -386,11 +386,11 @@ public class ViewEditorPart extends EditorPart implements
 							view);
 					} else {
 						Activator
-							.getDefault()
-							.getLog()
-							.log(
-								new Status(IStatus.WARNING, Activator.PLUGIN_ID,
-									"The Root EClass of the view cannot be resolved." + view.getRootEClass())); //$NON-NLS-1$
+						.getDefault()
+						.getLog()
+						.log(
+							new Status(IStatus.WARNING, Activator.PLUGIN_ID,
+								"The Root EClass of the view cannot be resolved." + view.getRootEClass())); //$NON-NLS-1$
 					}
 				}
 				showView();
@@ -537,7 +537,7 @@ public class ViewEditorPart extends EditorPart implements
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.ide.view.service.ViewModelEditorCallback#signalEcoreOutOfSync()
 	 */
 	@Override

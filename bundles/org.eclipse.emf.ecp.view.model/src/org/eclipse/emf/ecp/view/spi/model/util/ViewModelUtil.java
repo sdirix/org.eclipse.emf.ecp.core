@@ -11,7 +11,6 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.model.util;
 
-import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
@@ -19,6 +18,7 @@ import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.impl.Activator;
+import org.eclipse.emf.ecp.view.spi.model.reporting.DomainModelReferenceResolutionFailedReport;
 
 /**
  * This Util class provides common methods used often when working with the view model.
@@ -31,6 +31,7 @@ public final class ViewModelUtil {
 
 	private static final String ORG_ECLIPSE_EMF_ECP_VIEW_SPI_LABEL_MODEL_V_LABEL = "org.eclipse.emf.ecp.view.spi.label.model.VLabel"; //$NON-NLS-1$
 	private static Boolean debugMode;
+	private static boolean isDebugInitialized;
 
 	private ViewModelUtil() {
 
@@ -53,7 +54,6 @@ public final class ViewModelUtil {
 		while (eAllContents.hasNext()) {
 			final EObject eObject = eAllContents.next();
 			checkAndResolve(eObject, domainModelRoot);
-
 		}
 	}
 
@@ -64,9 +64,14 @@ public final class ViewModelUtil {
 				return;
 			}
 			final boolean init = control.getDomainModelReference().init(domainModelRoot);
-			if (!init) {
-				Activator.logMessage(IStatus.WARNING, "Not resolved: " + control.getDomainModelReference() //$NON-NLS-1$
-					+ " on control " + control); //$NON-NLS-1$
+			if (!init && ViewModelUtil.isDebugMode()) {
+				// report only in debug mode
+				Activator.getDefault()
+				.getReportService()
+				.report(
+					new DomainModelReferenceResolutionFailedReport(
+						control.getDomainModelReference(),
+						control));
 			}
 		}
 		// XXX get rid of the following code as soon as possible!
@@ -78,10 +83,14 @@ public final class ViewModelUtil {
 			for (final EObject object : element.eContents()) {
 				if (VDomainModelReference.class.isInstance(object)) {
 					final boolean init = VDomainModelReference.class.cast(object).init(domainModelRoot);
-					if (!init) {
-						Activator.logMessage(IStatus.WARNING,
-							"Not resolved: " + VDomainModelReference.class.cast(object) //$NON-NLS-1$
-								+ " on label " + element); //$NON-NLS-1$
+					if (!init && ViewModelUtil.isDebugMode()) {
+						// report only in debug mode
+						Activator.getDefault()
+						.getReportService()
+						.report(
+							new DomainModelReferenceResolutionFailedReport(
+								VDomainModelReference.class.cast(object),
+								element));
 					}
 				}
 			}
@@ -97,7 +106,7 @@ public final class ViewModelUtil {
 	 */
 	public static boolean isDebugMode() {
 
-		if (debugMode == null) {
+		if (!isDebugInitialized) {
 			debugMode = Boolean.FALSE;
 			final String[] commandLineArgs = Platform.getCommandLineArgs();
 			for (int i = 0; i < commandLineArgs.length; i++) {
@@ -106,6 +115,7 @@ public final class ViewModelUtil {
 					debugMode = Boolean.TRUE;
 				}
 			}
+			isDebugInitialized = true;
 		}
 
 		return debugMode;

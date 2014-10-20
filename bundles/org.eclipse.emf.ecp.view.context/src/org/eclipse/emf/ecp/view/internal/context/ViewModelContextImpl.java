@@ -39,9 +39,9 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.emf.ecp.common.UniqueSetting;
-import org.eclipse.emf.ecp.view.context.internal.reporting.ViewModelServiceNotAvailableReport;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelServiceNotAvailableReport;
 import org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeAddRemoveListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
@@ -489,8 +489,8 @@ public class ViewModelContextImpl implements ViewModelContext {
 		}
 
 		Activator.getInstance()
-			.getReportService()
-			.report(new ViewModelServiceNotAvailableReport(serviceType));
+		.getReportService()
+		.report(new ViewModelServiceNotAvailableReport(serviceType));
 
 		return null;
 	}

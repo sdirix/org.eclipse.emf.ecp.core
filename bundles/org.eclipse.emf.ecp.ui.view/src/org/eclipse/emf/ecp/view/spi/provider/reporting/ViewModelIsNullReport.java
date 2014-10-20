@@ -11,7 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.provider.reporting;
 
-import org.eclipse.emf.ecp.view.spi.context.reporting.AbstractReport;
+import org.eclipse.emf.ecp.view.spi.model.reporting.AbstractReport;
 
 /**
  * Indicates that a {@link org.eclipse.emf.ecp.view.spi.provider.IViewProvider IViewProvider} has returned {@code null}

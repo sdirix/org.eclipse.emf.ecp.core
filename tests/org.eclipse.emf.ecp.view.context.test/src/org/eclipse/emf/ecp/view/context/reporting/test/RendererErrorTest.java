@@ -21,14 +21,14 @@ import java.util.Map;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.view.context.test.mockup.MockViewSWTRenderer;
-import org.eclipse.emf.ecp.view.internal.context.Activator;
 import org.eclipse.emf.ecp.view.internal.core.swt.renderer.ViewSWTRenderer;
 import org.eclipse.emf.ecp.view.internal.provider.ViewProviderImpl;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
-import org.eclipse.emf.ecp.view.spi.context.reporting.ReportService;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emf.ecp.view.spi.model.impl.Activator;
+import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
 import org.eclipse.emf.ecp.view.spi.provider.IViewProvider;
 import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
 import org.eclipse.emf.ecp.view.spi.provider.reporting.NoViewProviderFoundReport;
@@ -72,7 +72,7 @@ public class RendererErrorTest {
 		league = BowlingFactory.eINSTANCE.createLeague();
 		view = ViewProviderHelper.getView(league, null);
 		viewContext = ViewModelContextFactory.INSTANCE.createViewModelContext(view, league);
-		reportService = Activator.getInstance().getReportService();
+		reportService = Activator.getDefault().getReportService();
 	}
 
 	@After

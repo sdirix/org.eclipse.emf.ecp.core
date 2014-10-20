@@ -9,16 +9,16 @@
  * Contributors:
  * Edgar Mueller - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.context.internal.reporting;
+package org.eclipse.emf.ecp.view.model.internal.reporting;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.eclipse.emf.ecp.view.spi.context.reporting.AbstractReport;
-import org.eclipse.emf.ecp.view.spi.context.reporting.ReportService;
-import org.eclipse.emf.ecp.view.spi.context.reporting.ReportServiceConsumer;
+import org.eclipse.emf.ecp.view.spi.model.reporting.AbstractReport;
+import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
+import org.eclipse.emf.ecp.view.spi.model.reporting.ReportServiceConsumer;
 
 /**
  * Implementation of a {@link ReportService}.
@@ -73,8 +73,8 @@ public class ReportServiceImpl implements ReportService {
 	/**
 	 *
 	 * {@inheritDoc}
-	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.context.reporting.ReportService#addConsumer(org.eclipse.emf.ecp.view.spi.context.reporting.ReportServiceConsumer)
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.model.reporting.ReportService#addConsumer(org.eclipse.emf.ecp.view.spi.model.reporting.ReportServiceConsumer)
 	 */
 	@Override
 	public void addConsumer(ReportServiceConsumer consumer) {
@@ -84,8 +84,8 @@ public class ReportServiceImpl implements ReportService {
 	/**
 	 *
 	 * {@inheritDoc}
-	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.context.reporting.ReportService#removeConsumer(org.eclipse.emf.ecp.view.spi.context.reporting.ReportServiceConsumer)
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.model.reporting.ReportService#removeConsumer(org.eclipse.emf.ecp.view.spi.model.reporting.ReportServiceConsumer)
 	 */
 	@Override
 	public void removeConsumer(ReportServiceConsumer consumer) {

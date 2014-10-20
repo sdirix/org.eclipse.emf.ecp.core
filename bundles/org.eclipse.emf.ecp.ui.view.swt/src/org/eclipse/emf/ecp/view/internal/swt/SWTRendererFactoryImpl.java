@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen - initial API and implementation
  ******************************************************************************/
@@ -24,9 +24,9 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecp.view.model.common.ECPRendererTester;
 import org.eclipse.emf.ecp.view.model.common.ECPStaticRendererTester;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.spi.context.reporting.AbstractReport;
-import org.eclipse.emf.ecp.view.spi.context.reporting.ReportService;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.spi.model.reporting.AbstractReport;
+import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
 import org.eclipse.emf.ecp.view.spi.model.util.ViewModelUtil;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractAdditionalSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
@@ -41,7 +41,7 @@ import org.osgi.framework.Bundle;
 
 /**
  * @author Eugen
- * 
+ *
  */
 public class SWTRendererFactoryImpl implements SWTRendererFactory {
 
@@ -78,7 +78,7 @@ public class SWTRendererFactoryImpl implements SWTRendererFactory {
 
 	/**
 	 * Returns a set of descriptions of all additionally available renderers.
-	 * 
+	 *
 	 * @return a set of descriptions of all additionally available renderers.
 	 */
 	protected Set<ECPAdditionalRendererDescription> getAdditionalRendererDescriptors() {
@@ -87,7 +87,7 @@ public class SWTRendererFactoryImpl implements SWTRendererFactory {
 
 	/**
 	 * Returns a set of descriptions of all available renderers.
-	 * 
+	 *
 	 * @return a set of descriptions of all available renderers.
 	 */
 	protected Set<ECPRendererDescription> getRendererDescriptors() {
@@ -207,7 +207,7 @@ public class SWTRendererFactoryImpl implements SWTRendererFactory {
 	// }
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory#getRenderer(org.eclipse.emf.ecp.view.spi.model.VElement,
 	 *      org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
@@ -265,9 +265,9 @@ public class SWTRendererFactoryImpl implements SWTRendererFactory {
 	}
 
 	/**
-	 * 
+	 *
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory#getAdditionalRenderer(org.eclipse.emf.ecp.view.spi.model.VElement,
 	 *      org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */

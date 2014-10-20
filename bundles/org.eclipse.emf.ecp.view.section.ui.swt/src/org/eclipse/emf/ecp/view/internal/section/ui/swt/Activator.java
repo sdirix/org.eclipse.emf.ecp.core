@@ -12,7 +12,7 @@
 package org.eclipse.emf.ecp.view.internal.section.ui.swt;
 
 import org.eclipse.core.runtime.Plugin;
-import org.eclipse.emf.ecp.view.spi.context.reporting.ReportService;
+import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 

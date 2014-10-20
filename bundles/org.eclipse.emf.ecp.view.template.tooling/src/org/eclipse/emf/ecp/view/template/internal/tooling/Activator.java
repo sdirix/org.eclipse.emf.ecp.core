@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
@@ -13,7 +13,7 @@ package org.eclipse.emf.ecp.view.template.internal.tooling;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.emf.ecp.view.spi.context.reporting.ReportService;
+import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -56,7 +56,7 @@ public class Activator extends AbstractUIPlugin {
 
 	/**
 	 * Returns the shared instance.
-	 * 
+	 *
 	 * @return the shared instance
 	 */
 	public static Activator getDefault() {
@@ -65,7 +65,7 @@ public class Activator extends AbstractUIPlugin {
 
 	/**
 	 * Log exceptions.
-	 * 
+	 *
 	 * @param exception the {@link Exception} to log
 	 */
 	public static void log(Exception exception) {
@@ -74,7 +74,7 @@ public class Activator extends AbstractUIPlugin {
 
 	/**
 	 * Returns the {@link ReportService}.
-	 * 
+	 *
 	 * @return the {@link ReportService}
 	 */
 	public ReportService getReportService() {

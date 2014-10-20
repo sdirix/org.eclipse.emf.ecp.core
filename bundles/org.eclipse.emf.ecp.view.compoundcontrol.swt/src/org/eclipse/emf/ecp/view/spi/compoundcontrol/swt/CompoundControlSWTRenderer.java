@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
  */
@@ -18,11 +18,11 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecp.view.internal.compoundcontrol.swt.Activator;
 import org.eclipse.emf.ecp.view.spi.compoundcontrol.model.VCompoundControl;
-import org.eclipse.emf.ecp.view.spi.context.reporting.StatusReport;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.spi.model.reporting.StatusReport;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
@@ -37,9 +37,9 @@ import org.eclipse.swt.widgets.Control;
 
 /**
  * {@link AbstractSWTRenderer} for the {@link VCompoundControl} view model.
- * 
+ *
  * @author jfaltermeier
- * 
+ *
  */
 public class CompoundControlSWTRenderer extends AbstractSWTRenderer<VCompoundControl> {
 
@@ -48,7 +48,7 @@ public class CompoundControlSWTRenderer extends AbstractSWTRenderer<VCompoundCon
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#dispose()
 	 */
 	@Override
@@ -59,7 +59,7 @@ public class CompoundControlSWTRenderer extends AbstractSWTRenderer<VCompoundCon
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#getGridDescription(SWTGridDescription)
 	 */
 	@Override
@@ -74,13 +74,13 @@ public class CompoundControlSWTRenderer extends AbstractSWTRenderer<VCompoundCon
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#renderControl(int, org.eclipse.swt.widgets.Composite,
 	 *      org.eclipse.emf.ecp.view.spi.model.VElement, org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
 	@Override
 	protected Control renderControl(SWTGridCell gridCell, Composite parent) throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+	NoPropertyDescriptorFoundExeption {
 		if (gridCell.getColumn() != 0) {
 			return null;
 		}
@@ -96,12 +96,12 @@ public class CompoundControlSWTRenderer extends AbstractSWTRenderer<VCompoundCon
 				getViewModelContext());
 			if (renderer == null) {
 				Activator
-					.getDefault()
-					.getReportService()
-					.report(
-						new StatusReport(
-							new Status(IStatus.INFO, Activator.PLUGIN_ID, String.format(
-								"No Renderer for %s found.", child.eClass().getName())))); //$NON-NLS-1$
+				.getDefault()
+				.getReportService()
+				.report(
+					new StatusReport(
+						new Status(IStatus.INFO, Activator.PLUGIN_ID, String.format(
+							"No Renderer for %s found.", child.eClass().getName())))); //$NON-NLS-1$
 				continue;
 			}
 			elementRendererMap.put(child, renderer);

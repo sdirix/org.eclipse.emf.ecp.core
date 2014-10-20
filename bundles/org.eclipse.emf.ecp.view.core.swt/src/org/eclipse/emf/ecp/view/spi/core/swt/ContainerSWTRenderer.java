@@ -21,13 +21,13 @@ import java.util.Set;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecp.view.internal.core.swt.Activator;
-import org.eclipse.emf.ecp.view.spi.context.reporting.ReportService;
-import org.eclipse.emf.ecp.view.spi.context.reporting.StatusReport;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VContainer;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
+import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
+import org.eclipse.emf.ecp.view.spi.model.reporting.StatusReport;
 import org.eclipse.emf.ecp.view.spi.model.util.ViewModelUtil;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
@@ -201,7 +201,7 @@ public abstract class ContainerSWTRenderer<VELEMENT extends VElement> extends Ab
 
 	// TODO: possible duplicate code
 	private Control renderDiagnoseControl(Composite parent, VContainedElement child) throws NoRendererFoundException,
-	NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption {
 		final Composite composite = new Composite(parent, SWT.BORDER);
 		composite.setLayout(new FillLayout());
 		final Label label = new Label(composite, SWT.NONE);

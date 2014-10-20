@@ -11,7 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.swt.reporting;
 
-import org.eclipse.emf.ecp.view.spi.context.reporting.AbstractReport;
+import org.eclipse.emf.ecp.view.spi.model.reporting.AbstractReport;
 
 /**
  * Indicates that a renderer returned an invalid grid description.
