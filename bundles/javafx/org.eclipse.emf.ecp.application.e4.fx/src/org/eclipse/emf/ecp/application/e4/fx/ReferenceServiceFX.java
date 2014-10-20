@@ -9,7 +9,7 @@
  * Contributors:
  * Lucas - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.controls.fx.util;
+package org.eclipse.emf.ecp.application.e4.fx;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecp.controls.fx.util.DialogsUtil;
 import org.eclipse.emf.ecp.edit.spi.ReferenceService;
 import org.eclipse.emf.ecp.internal.edit.ECPControlHelper;
 import org.eclipse.emf.ecp.util.e4.fx.ModelElementOpenerFX;

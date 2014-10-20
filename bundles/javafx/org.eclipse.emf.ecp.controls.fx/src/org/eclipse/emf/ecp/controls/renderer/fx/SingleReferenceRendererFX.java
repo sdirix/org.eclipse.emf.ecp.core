@@ -32,7 +32,6 @@ import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
-import org.eclipse.emf.ecp.controls.fx.util.ReferenceServiceFX;
 import org.eclipse.emf.ecp.controls.internal.fx.Activator;
 import org.eclipse.emf.ecp.edit.spi.ReferenceService;
 import org.eclipse.emf.ecp.view.model.internal.fx.SimpleControlRendererFX;
@@ -60,8 +59,7 @@ public class SingleReferenceRendererFX extends SimpleControlRendererFX {
 	@Override
 	public void init(final VControl control, ViewModelContext viewModelContext) {
 		super.init(control, viewModelContext);
-		referenceService = new ReferenceServiceFX();
-		referenceService.instantiate(viewModelContext);
+		viewModelContext.getService(ReferenceService.class);
 	}
 
 	/**

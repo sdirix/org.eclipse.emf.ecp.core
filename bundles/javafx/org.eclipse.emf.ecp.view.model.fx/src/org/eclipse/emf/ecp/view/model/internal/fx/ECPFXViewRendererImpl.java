@@ -19,6 +19,7 @@ import org.eclipse.emf.ecp.view.internal.context.ViewModelContextImpl;
 import org.eclipse.emf.ecp.view.model.fx.ECPFXView;
 import org.eclipse.emf.ecp.view.model.fx.ECPFXViewRenderer;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
@@ -40,11 +41,11 @@ public class ECPFXViewRendererImpl implements ECPFXViewRenderer {
 	 *      org.eclipse.emf.ecore.EObject)
 	 */
 	@Override
-	public ECPFXView render(VView view, EObject domainObject) { // throws
+	public ECPFXView render(VView view, EObject domainObject, ViewModelService... services) { // throws
 		// ECPRendererException
 
 		final ViewModelContext viewModelContext = new ViewModelContextImpl(view,
-			domainObject);
+			domainObject, services);
 
 		final RendererFX<VElement> viewRenderer = RendererFactory.INSTANCE.getRenderer(view, viewModelContext);
 		if (viewRenderer != null) {
@@ -68,9 +69,9 @@ public class ECPFXViewRendererImpl implements ECPFXViewRenderer {
 	}
 
 	@Override
-	public ECPFXView render(EObject domainObject) {
+	public ECPFXView render(EObject domainObject, ViewModelService... services) {
 		final VView view = ViewProviderHelper.getView(domainObject, null);
-		return render(view, domainObject);
+		return render(view, domainObject, services);
 	}
 
 	// private VView generate(EClass eClass) {

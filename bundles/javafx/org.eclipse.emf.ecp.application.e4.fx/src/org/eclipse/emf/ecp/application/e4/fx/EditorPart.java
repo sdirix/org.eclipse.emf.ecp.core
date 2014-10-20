@@ -104,8 +104,10 @@ public class EditorPart {
 	 */
 	private void render() {
 		if (modelElement != null) {
+
+			final ReferenceServiceFX referenceService = new ReferenceServiceFX();
 			final ECPFXView ecpfxView = ECPFXViewRenderer.INSTANCE.render(
-				modelElement);
+				modelElement, referenceService);
 			parent.setCenter(ecpfxView.getFXNode());
 			updateImageAndText();
 		}
