@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Jonas - initial API and implementation
  ******************************************************************************/
@@ -27,7 +27,7 @@ import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 
 /**
  * @author Jonas
- * 
+ *
  */
 @SuppressWarnings("restriction")
 // TODO no api
@@ -35,25 +35,26 @@ public class ECPFXViewRendererImpl implements ECPFXViewRenderer {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.ui.view.fx.ECPFXViewRenderer#render(org.eclipse.emf.ecp.view.model.VView,
 	 *      org.eclipse.emf.ecore.EObject)
 	 */
+	@Override
 	public ECPFXView render(VView view, EObject domainObject) { // throws
-																// ECPRendererException
+		// ECPRendererException
 
-		ViewModelContext viewModelContext = new ViewModelContextImpl(view,
-				domainObject);
+		final ViewModelContext viewModelContext = new ViewModelContextImpl(view,
+			domainObject);
 
-		RendererFX<VElement> viewRenderer = RendererFactory.INSTANCE.getRenderer(view, viewModelContext);
+		final RendererFX<VElement> viewRenderer = RendererFactory.INSTANCE.getRenderer(view, viewModelContext);
 		if (viewRenderer != null) {
 			Node result;
 			try {
 				// TODO: checkGrid
 				result = viewRenderer.render(viewRenderer.getGridDescription().getGrid().get(0));
-			} catch (NoRendererFoundException e) {
+			} catch (final NoRendererFoundException e) {
 				return new ECPFXViewImpl(new Label("Rendering went wrong: " + e.getMessage()));
-			} catch (NoPropertyDescriptorFoundExeption e) {
+			} catch (final NoPropertyDescriptorFoundExeption e) {
 				return new ECPFXViewImpl(new Label("Rendering went wrong: " + e.getMessage()));
 			}
 			if (result != null) {
@@ -68,7 +69,7 @@ public class ECPFXViewRendererImpl implements ECPFXViewRenderer {
 
 	@Override
 	public ECPFXView render(EObject domainObject) {
-		VView view = ViewProviderHelper.getView(domainObject);
+		final VView view = ViewProviderHelper.getView(domainObject, null);
 		return render(view, domainObject);
 	}
 

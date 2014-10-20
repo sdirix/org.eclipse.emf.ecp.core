@@ -14,14 +14,14 @@
 <repository location="http://download.eclipse.org/emf-store/releases_13"/>
 </location>
 <location includeAllPlatforms="true" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.fx.target.feature.feature.group" version="1.0.0.201407220602"/>
-<unit id="org.eclipse.fx.target.rcp.feature.feature.group" version="1.0.0.201407220602"/>
+<unit id="org.eclipse.fx.target.feature.feature.group" version="1.0.0.201410200603"/>
+<unit id="org.eclipse.fx.target.rcp.feature.feature.group" version="1.0.0.201410200603"/>
 <repository location="http://download.eclipse.org/efxclipse/runtime-nightly/site"/>
 </location>
 <location includeAllPlatforms="true" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.emf.ecp.sdk.feature.feature.group" version="1.4.0.20140722-1432"/>
-<unit id="org.eclipse.emf.ecp.emfforms.runtime.feature.feature.group" version="1.4.0.20140722-1432"/>
-<repository location="https://hudson.eclipse.org/ecp/job/emf-emfclient-integration/lastSuccessfulBuild/artifact/releng/org.eclipse.emf.ecp.repository/target/repository/"/>
+<unit id="org.eclipse.emf.ecp.sdk.feature.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.emf.ecp.emfforms.runtime.feature.feature.group" version="0.0.0"/>
+<repository location="http://download.eclipse.org/ecp/releases/releases_14/"/>
 </location>
 </locations>
 </target>
