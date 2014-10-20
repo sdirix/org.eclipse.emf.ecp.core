@@ -17,6 +17,10 @@
       [Enter License Description here.]
    </license>
 
+   <requires>
+      <import feature="org.eclipse.emf.ecp.emfforms.runtime.feature" version="1.3.0" match="greaterOrEqual"/>
+   </requires>
+
    <plugin
          id="org.eclipse.emf.ecp.controls.fx"
          download-size="0"
