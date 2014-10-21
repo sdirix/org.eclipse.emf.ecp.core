@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  * Edgar Mueller - Bug 440798: EMFStoreProvider project cloning isn't transaction-friendly
@@ -49,6 +49,7 @@ import org.eclipse.emf.emfstore.client.ESRemoteProject;
 import org.eclipse.emf.emfstore.client.ESServer;
 import org.eclipse.emf.emfstore.client.ESWorkspace;
 import org.eclipse.emf.emfstore.client.ESWorkspaceProvider;
+import org.eclipse.emf.emfstore.client.util.ESVoidCallable;
 import org.eclipse.emf.emfstore.client.util.RunESCommand;
 import org.eclipse.emf.emfstore.internal.client.model.Configuration;
 import org.eclipse.emf.emfstore.internal.client.model.ESWorkspaceProviderImpl;
@@ -70,7 +71,7 @@ import org.eclipse.emf.emfstore.server.exceptions.ESException;
 
 /**
  * This is the EMFStore Provider for ECP.
- * 
+ *
  * @author Eugen Neufeld
  */
 public final class EMFStoreProvider extends DefaultProvider {
@@ -117,8 +118,8 @@ public final class EMFStoreProvider extends DefaultProvider {
 	}
 
 	/**
-   * 
-   */
+	 *
+	 */
 	private void configureEMFStore() {
 		Configuration.getClientBehavior().setAutoSave(false);
 	}
@@ -202,7 +203,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 
 	/**
 	 * Called to handle the remove operation on an {@link ECPContainer}.
-	 * 
+	 *
 	 * @param context the {@link ECPContainer} to remove
 	 */
 	private void handleRemove(ECPContainer context) {
@@ -395,7 +396,12 @@ public final class EMFStoreProvider extends DefaultProvider {
 	public void cloneProject(final InternalProject projectToClone, InternalProject targetProject) {
 		final ProjectSpace toClone = ((ESLocalProjectImpl) getProjectSpace(projectToClone)).toInternalAPI();
 		final ProjectSpace target = ((ESLocalProjectImpl) getProjectSpace(targetProject)).toInternalAPI();
-		target.setProject(ModelUtil.clone(toClone.getProject()));
+		RunESCommand.run(new ESVoidCallable() {
+			@Override
+			public void run() {
+				target.setProject(ModelUtil.clone(toClone.getProject()));
+			}
+		});
 	}
 
 	/** {@inheritDoc} */
@@ -473,7 +479,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 	 * First it checks whether the {@link InternalProject} has a ProjectSpaceID attached.
 	 * If an ID is attached, a ProjectSpace is searched with this ID.
 	 * If no ID is attached or now ProjectSpace was found a LocalProject is created.
-	 * 
+	 *
 	 * @param internalProject the project to get the ProjectSpace for
 	 * @return the corresponding ProjectSpace
 	 */
@@ -515,7 +521,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 	 * First it checks whether the {@link InternalRepository} has a ServerInfoID attached.
 	 * If an ID is attached, a ServerInfo is searched with this ID.
 	 * If no ID is attached or now ServerInfo was found a default ServerInfo is created.
-	 * 
+	 *
 	 * @param internalRepository the repository to get the ServerInfo for
 	 * @return the corresponding ServerInfo
 	 */
@@ -554,7 +560,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 
 	/**
 	 * This gets the ECPProject based on a ProjectSpace.
-	 * 
+	 *
 	 * @param projectSpace the {@link ProjectSpace} to get the {@link ECPProject} for
 	 * @return the {@link ECPProject} corresponding to this ProjectSpace or null if none found
 	 */
@@ -570,7 +576,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 
 	/**
 	 * This gets the ECPRepository based on a ServerInfo.
-	 * 
+	 *
 	 * @param serverInfo the {@link ESServer} to get the {@link ECPRepository} for
 	 * @return the {@link ECPRepository} corresponding to this ServerInfo or null if none found
 	 */
@@ -589,7 +595,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.spi.core.InternalProvider#isThreadSafe()
 	 */
 	@Override
