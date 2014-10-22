@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- *
+ * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
  * Anas Chakfeh - initial API and implementation
  * Eugen Neufeld - Refactoring
@@ -99,10 +99,10 @@ import org.osgi.framework.FrameworkUtil;
 
 /**
  * SWT Renderer for a {@link VTreeMasterDetail} element.
- *
+ * 
  * @author Anas Chakfeh
  * @author Eugen Neufeld
- *
+ * 
  */
 public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMasterDetail> {
 
@@ -118,7 +118,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 	private TreeViewer treeViewer;
 	/**
 	 * Static string.
-	 *
+	 * 
 	 */
 	public static final String GLOBAL_ADDITIONS = "global_additions"; //$NON-NLS-1$
 
@@ -130,7 +130,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 
 	/**
 	 * @author Anas Chakfeh
-	 *
+	 * 
 	 */
 	private class RootObject {
 
@@ -154,7 +154,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 
 	/**
 	 * {@inheritDoc}
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#dispose()
 	 */
 	@Override
@@ -165,7 +165,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 
 	/**
 	 * {@inheritDoc}
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#getGridDescription(SWTGridDescription)
 	 */
 	@Override
@@ -178,7 +178,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 
 	/**
 	 * {@inheritDoc}
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#renderControl(org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell,
 	 *      org.eclipse.swt.widgets.Composite)
 	 */
@@ -262,12 +262,16 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 		treeViewer.setInput(new RootObject(modelElement));
 
 		// Drag and Drop
-		addDragAndDropSupport(modelElement, treeViewer, editingDomain);
+		if (hasDnDSupport()) {
+			addDragAndDropSupport(modelElement, treeViewer, editingDomain);
+		}
 
 		// Selection Listener
 		treeViewer.addSelectionChangedListener(new TreeMasterViewSelectionListener());
 		treeViewer.setSelection(new StructuredSelection(modelElement));
-		fillContextMenu(treeViewer, editingDomain);
+		if (hasContextMenu()) {
+			fillContextMenu(treeViewer, editingDomain);
+		}
 
 		treeViewer.getTree().addDisposeListener(new DisposeListener() {
 
@@ -291,6 +295,14 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 			}
 		});
 		return treeViewer;
+	}
+
+	protected boolean hasContextMenu() {
+		return true;
+	}
+
+	protected boolean hasDnDSupport() {
+		return true;
 	}
 
 	protected ILabelProvider getLabelProvider(AdapterFactoryLabelProvider adapterFactoryLabelProvider) {
@@ -672,10 +684,10 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 	}
 
 	/**
-	 *
+	 * 
 	 * @author Anas Chakfeh
 	 *         This class is responsible for handling selection changed events which happen on the tree
-	 *
+	 * 
 	 */
 	private class TreeMasterViewSelectionListener implements ISelectionChangedListener {
 
@@ -772,7 +784,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 
 	/**
 	 * Allows to manipulate the selection by returning a specific child.
-	 *
+	 * 
 	 * @param treeSelected the selected element in the tree
 	 * @return the object that should be used as a selection
 	 */
