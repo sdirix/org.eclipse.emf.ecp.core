@@ -179,7 +179,11 @@ public class LabelSWTRenderer extends AbstractSWTRenderer<VLabel> {
 		if (labelColor != null) {
 			labelColor.dispose();
 		}
-		font = new Font(label.getDisplay(), fontProperties.getFontName(), fontProperties.getHeight(), style);
+		String fontName = fontProperties.getFontName();
+		if (fontName == null) {
+			fontName = label.getDisplay().getSystemFont().getFontData()[0].getName();
+		}
+		font = new Font(label.getDisplay(), fontName, fontProperties.getHeight(), style);
 		label.setFont(font);
 		labelColor = getColor(fontProperties.getColorHEX());
 		label.setForeground(labelColor);
