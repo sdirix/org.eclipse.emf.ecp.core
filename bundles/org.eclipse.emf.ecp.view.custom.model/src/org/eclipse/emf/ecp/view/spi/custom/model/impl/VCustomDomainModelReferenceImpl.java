@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
@@ -43,7 +43,7 @@ import org.osgi.framework.Bundle;
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Domain Model Reference</b></em>'.
- * 
+ *
  * @since 1.3
  *        <!-- end-user-doc -->
  *        <p>
@@ -62,7 +62,7 @@ import org.osgi.framework.Bundle;
  *        <em> Control Checked</em>}</li>
  *        </ul>
  *        </p>
- * 
+ *
  * @generated
  */
 public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCustomDomainModelReference
@@ -71,7 +71,7 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 	 * The cached value of the '{@link #getChangeListener() <em>Change Listener</em>}' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getChangeListener()
 	 * @generated
 	 * @ordered
@@ -83,7 +83,7 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 	 * reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getDomainModelReferences()
 	 * @generated
 	 * @ordered
@@ -94,7 +94,7 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 	 * The default value of the '{@link #getBundleName() <em>Bundle Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getBundleName()
 	 * @generated
 	 * @ordered
@@ -105,7 +105,7 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 	 * The cached value of the '{@link #getBundleName() <em>Bundle Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getBundleName()
 	 * @generated
 	 * @ordered
@@ -116,7 +116,7 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 	 * The default value of the '{@link #getClassName() <em>Class Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getClassName()
 	 * @generated
 	 * @ordered
@@ -127,7 +127,7 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 	 * The cached value of the '{@link #getClassName() <em>Class Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getClassName()
 	 * @generated
 	 * @ordered
@@ -138,7 +138,7 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 	 * The default value of the '{@link #isControlChecked() <em>Control Checked</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #isControlChecked()
 	 * @generated
 	 * @ordered
@@ -149,7 +149,7 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 	 * The cached value of the '{@link #isControlChecked() <em>Control Checked</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #isControlChecked()
 	 * @generated
 	 * @ordered
@@ -159,7 +159,7 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected VCustomDomainModelReferenceImpl()
@@ -170,7 +170,7 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -182,7 +182,7 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -200,7 +200,7 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -217,7 +217,7 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -229,7 +229,7 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -246,7 +246,7 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -258,7 +258,7 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -275,7 +275,7 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -287,7 +287,7 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -304,7 +304,7 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -321,7 +321,7 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -346,7 +346,7 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
@@ -379,7 +379,7 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -409,7 +409,7 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -434,7 +434,7 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -513,7 +513,7 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReference#getIterator()
 	 * @generated NOT
 	 */
@@ -529,7 +529,7 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReference#getEStructuralFeatureIterator()
 	 * @generated NOT
 	 */
@@ -545,9 +545,9 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 
 	/**
 	 * Private helper class to iterate over sub iterators.
-	 * 
+	 *
 	 * @author Eugen Neufeld
-	 * 
+	 *
 	 * @param <T> the type to iterate over
 	 */
 	private abstract class ExistingIteratorIterator<T> implements Iterator<T> {
@@ -581,7 +581,7 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReference#getFullPathIterator()
 	 */
 	@Override
@@ -596,12 +596,14 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.model.ModelChangeListener#notifyChange(org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification)
 	 */
 	@Override
 	public void notifyChange(ModelChangeNotification notification) {
-		// TODO needed here
+		for (final VDomainModelReference dmr : getDomainModelReferences()) {
+			dmr.notifyChange(notification);
+		}
 	}
 
 } // VCustomDomainModelReferenceImpl

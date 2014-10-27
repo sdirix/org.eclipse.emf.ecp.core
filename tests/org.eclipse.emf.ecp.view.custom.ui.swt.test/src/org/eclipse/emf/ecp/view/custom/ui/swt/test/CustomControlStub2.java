@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Jonas - initial API and implementation
  ******************************************************************************/
@@ -22,9 +22,9 @@ import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
+import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
-import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.emfstore.bowling.BowlingPackage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
@@ -33,7 +33,7 @@ import org.eclipse.swt.widgets.Label;
 
 /**
  * @author Jonas
- * 
+ *
  */
 public class CustomControlStub2 extends ECPAbstractCustomControlSWT implements ECPHardcodedReferences {
 
@@ -42,6 +42,7 @@ public class CustomControlStub2 extends ECPAbstractCustomControlSWT implements E
 	private static Composite parent;
 
 	private final Set<VDomainModelReference> features = new LinkedHashSet<VDomainModelReference>();
+	public static VDomainModelReference resolvedDomainModelReference;
 
 	public CustomControlStub2() {
 		super();
@@ -49,9 +50,10 @@ public class CustomControlStub2 extends ECPAbstractCustomControlSWT implements E
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.custom.model.ECPHardcodedReferences#getNeededDomainModelReferences()
 	 */
+	@Override
 	public Set<VDomainModelReference> getNeededDomainModelReferences() {
 		if (features.isEmpty()) {
 			final VFeaturePathDomainModelReference domainModelReference = VViewFactory.eINSTANCE
@@ -66,7 +68,7 @@ public class CustomControlStub2 extends ECPAbstractCustomControlSWT implements E
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT#getGridDescription()
 	 */
 	@Override
@@ -77,13 +79,14 @@ public class CustomControlStub2 extends ECPAbstractCustomControlSWT implements E
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT#renderControl(org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell,
 	 *      org.eclipse.swt.widgets.Composite)
 	 */
+	@SuppressWarnings({ "restriction", "deprecation" })
 	@Override
 	public Control renderControl(SWTGridCell cell, Composite parent) throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+	NoPropertyDescriptorFoundExeption {
 		if (cell.getColumn() == 0) {
 			setParent(parent);
 			setLabel(new Label(parent, SWT.NONE));
@@ -91,8 +94,9 @@ public class CustomControlStub2 extends ECPAbstractCustomControlSWT implements E
 
 		}
 		else if (cell.getColumn() == 1) {
-			final Composite createControl = getControl(SWTControl.class,
-				getResolvedDomainModelReference(BowlingPackage.eINSTANCE.getMerchandise_Name())).createControl(
+			resolvedDomainModelReference = getResolvedDomainModelReference(BowlingPackage.eINSTANCE
+				.getMerchandise_Name());
+			final Composite createControl = getControl(SWTControl.class, resolvedDomainModelReference).createControl(
 				parent);
 			return createControl;
 		}
@@ -101,7 +105,7 @@ public class CustomControlStub2 extends ECPAbstractCustomControlSWT implements E
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.custom.ui.ECPAbstractCustomControl#disposeCustomControl()
 	 */
 	@Override
@@ -140,7 +144,7 @@ public class CustomControlStub2 extends ECPAbstractCustomControlSWT implements E
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT#handleContentValidation()
 	 */
 	@Override
