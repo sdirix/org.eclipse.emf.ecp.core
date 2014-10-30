@@ -236,6 +236,12 @@
             label="Generate Columns"
             location="menu">
       </MasterDetailAction>
+      <MasterDetailAction
+            command="org.eclipse.emf.ecp.view.editor.handler.GenerateTableColumnsForSubclassesHandler"
+            imagePath="icons/generateColumns.png"
+            label="Generate Columns for Subclass"
+            location="menu">
+      </MasterDetailAction>
    </extension>
    <extension
          point="org.eclipse.emf.ecp.ui.view.swt.renderers">
