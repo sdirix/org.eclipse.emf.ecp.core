@@ -8,14 +8,15 @@
  *
  * Contributors:
  * Alexandra Buzila - initial API and implementation
+ * Johannes Faltermeier - refactorings
  ******************************************************************************/
 package org.eclipse.emf.ecp.internal.ide.util;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -39,10 +40,23 @@ public final class EcoreHelper {
 	private static final String ECORE_PLUGIN_URI = "platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore"; //$NON-NLS-1$
 	private static final String ECORE_RESOURCE_URI = "platform:/resource/org.eclipse.emf.ecore/model/Ecore.ecore"; //$NON-NLS-1$
 
-	/** Contains mapping between an ecore path and the ns-uris of all the EPackages that ecore registered. */
-	private static final Map<String, Set<String>> registeredEPackages = new HashMap<String, Set<String>>();
-	private static final Map<String, Integer> registeredEcores = new HashMap<String, Integer>();
-	private static final Set<String> runtimeRegisteredPackages = new HashSet<String>();
+	/**
+	 * Contains mapping between an ecore path and the platform resource URIs of all the EPackages that ecore requires.
+	 */
+	private static final Map<String, Set<String>> ECOREPATH_TO_WORKSPACEURIS = new HashMap<String, Set<String>>();
+
+	/**
+	 * The number of open view model editors for an ecore path.
+	 */
+	private static final Map<String, Integer> ECOREPATH_TO_REGISTEREDCOUNT = new HashMap<String, Integer>();
+
+	/**
+	 * A set of all namespace uris that were registerd by the tooling.
+	 */
+	private static final Set<String> ALL_NSURIS_REGISTERED_BY_TOOLING = new HashSet<String>();
+
+	/** Local EPackage Registry. */
+	private static final Map<String, EPackage> WORKSPACEURI_TO_REGISTEREDPACKAGE = new LinkedHashMap<String, EPackage>();
 
 	private EcoreHelper() {
 	}
@@ -55,25 +69,26 @@ public final class EcoreHelper {
 	 * @throws IOException if resource cannot be loaded
 	 *
 	 * */
-
 	public static void registerEcore(String ecorePath) throws IOException {
 		if (ecorePath == null) {
 			return;
 		}
 
-		Integer previousValue = registeredEcores.get(ecorePath);
+		Integer previousValue = ECOREPATH_TO_REGISTEREDCOUNT.get(ecorePath);
 		if (previousValue == null || previousValue < 0) {
 			previousValue = 0;
 		}
-		registeredEcores.put(ecorePath, ++previousValue);
+		ECOREPATH_TO_REGISTEREDCOUNT.put(ecorePath, ++previousValue);
 
+		// determine workspace dependencies of this ecore
+		determineWorkspaceDepedencies(ecorePath);
+
+		// actually load the ecore reusing already loaded packages from the workspace
 		final ResourceSet physicalResourceSet = new ResourceSetImpl();
-		initResourceSet(physicalResourceSet);
-		// put the package in the registry
+		initResourceSet(physicalResourceSet, true);
 		final URI uri = URI.createPlatformResourceURI(ecorePath, false);
 		final Resource r = physicalResourceSet.createResource(uri);
 		r.load(null);
-
 		// resolve the proxies
 		int rsSize = physicalResourceSet.getResources().size();
 		EcoreUtil.resolveAll(physicalResourceSet);
@@ -90,24 +105,53 @@ public final class EcoreHelper {
 			final EObject eObject = physicalResource.getContents().get(0);
 			final EPackage ePackage = EPackage.class.cast(eObject);
 
-			// add ePackage URI to local cache
-			if (registeredEPackages.get(ecorePath) == null) {
-				registeredEPackages.put(ecorePath, new HashSet<String>());
-			}
-			registeredEPackages.get(ecorePath).add(ePackage.getNsURI());
-
 			if (isContainedInPackageRegistry(ePackage.getNsURI())) {
 				continue;
 			}
-
+			final String platformResourceURI = physicalResource.getURI().toString();
 			physicalResource.getContents().remove(ePackage);
 			final Resource virtualResource = virtualResourceSet.createResource(URI.createURI(ePackage.getNsURI()));
 			virtualResource.getContents().add(ePackage);
 			EPackage.Registry.INSTANCE.put(ePackage.getNsURI(), ePackage);
-			runtimeRegisteredPackages.add(ePackage.getNsURI());
-
+			ALL_NSURIS_REGISTERED_BY_TOOLING.add(ePackage.getNsURI());
+			WORKSPACEURI_TO_REGISTEREDPACKAGE.put(platformResourceURI, ePackage);
 		}
 
+	}
+
+	/**
+	 * Determines the dependent EPackages present in the user's workspace for this ecore path.
+	 *
+	 * @param ecorePath
+	 * @return
+	 * @throws IOException
+	 */
+	private static URI determineWorkspaceDepedencies(String ecorePath) throws IOException {
+		final ResourceSet physicalResourceSet = new ResourceSetImpl();
+		initResourceSet(physicalResourceSet, false);
+		final URI uri = URI.createPlatformResourceURI(ecorePath, false);
+		final Resource tempResource = physicalResourceSet.createResource(uri);
+		tempResource.load(null);
+		// resolve the proxies
+		int tempSize = physicalResourceSet.getResources().size();
+		EcoreUtil.resolveAll(physicalResourceSet);
+		while (tempSize != physicalResourceSet.getResources().size()) {
+			EcoreUtil.resolveAll(physicalResourceSet);
+			tempSize = physicalResourceSet.getResources().size();
+		}
+		for (final Resource physicalResource : physicalResourceSet.getResources()) {
+			if (physicalResource.getContents().size() == 0) {
+				continue;
+			}
+			if (!physicalResource.getURI().isPlatformResource()) {
+				continue;
+			}
+			if (ECOREPATH_TO_WORKSPACEURIS.get(ecorePath) == null) {
+				ECOREPATH_TO_WORKSPACEURIS.put(ecorePath, new HashSet<String>());
+			}
+			ECOREPATH_TO_WORKSPACEURIS.get(ecorePath).add(physicalResource.getURI().toString());
+		}
+		return uri;
 	}
 
 	private static boolean isContainedInPackageRegistry(String nsURI) {
@@ -123,53 +167,49 @@ public final class EcoreHelper {
 	 *
 	 * */
 	public static void unregisterEcore(String ecorePath) {
-		if (ecorePath == null || registeredEPackages.get(ecorePath) == null) {
+		if (ecorePath == null || ECOREPATH_TO_WORKSPACEURIS.get(ecorePath) == null) {
 			return;
 		}
-		int usages = registeredEcores.get(ecorePath);
-		registeredEcores.put(ecorePath, --usages);
+		int usages = ECOREPATH_TO_REGISTEREDCOUNT.get(ecorePath);
+		ECOREPATH_TO_REGISTEREDCOUNT.put(ecorePath, --usages);
 		if (usages > 0) {
 			return;
 		}
-		final List<String> nsURIs = new ArrayList<String>(registeredEPackages.get(ecorePath));
-		unregisterEcore(ecorePath, nsURIs);
+		final Set<String> workspaceURIsNeededForEcorePath = ECOREPATH_TO_WORKSPACEURIS.remove(ecorePath);
+		unregisterEcore(ecorePath, workspaceURIsNeededForEcorePath);
 	}
 
 	/**
 	 * Remove the ecore's {@link EPackage} from the {@link org.eclipse.emf.ecore.EPackage.Registry}.
-	 * It also removes the packages of referenced ecores.
+	 * It also removes the packages of referenced ecores (if needed).
 	 *
-	 * @param ePackage - the ePackage to be removed.
-	 *
-	 * */
-	private static void unregisterEcore(String ecorePath, List<String> nsURIs) {
-		if (nsURIs == null || ecorePath == null) {
+	 */
+	private static void unregisterEcore(String ecorePath, Set<String> workspaceURIsNeededByEcorePath) {
+		if (workspaceURIsNeededByEcorePath == null || ecorePath == null) {
 			return;
 		}
-		for (final String nsURI : nsURIs) {
-			if (getUsageCount(nsURI) == 1 && runtimeRegisteredPackages.contains(nsURI)) {
-				final Registry registry = org.eclipse.emf.ecore.EPackage.Registry.INSTANCE;
-				registry.remove(nsURI);
-				registeredEPackages.get(ecorePath).remove(nsURI);
-			}
-		}
-		registeredEPackages.remove(ecorePath);
-	}
 
-	/**
-	 * @param nsURI
-	 * @return the number of ecores which use the package with the given nsURI
-	 */
-	private static int getUsageCount(String nsURI) {
-		int usage = 0;
-		for (final String ecore : registeredEPackages.keySet()) {
-			for (final String uri : registeredEPackages.get(ecore)) {
-				if (nsURI.equals(uri)) {
-					usage++;
+		// check if other ecores need a workspace URI from the set
+		final Set<String> workspaceURIsToRemove = new LinkedHashSet<String>();
+		for (final String workspaceURI : workspaceURIsNeededByEcorePath) {
+			boolean okToRemove = true;
+			for (final Set<String> otherNeededWSURIs : ECOREPATH_TO_WORKSPACEURIS.values()) {
+				if (otherNeededWSURIs.contains(workspaceURI)) {
+					okToRemove = false;
+					break;
 				}
 			}
+			if (okToRemove) {
+				workspaceURIsToRemove.add(workspaceURI);
+			}
 		}
-		return usage;
+
+		// unregister no longer needed workspace URIs
+		for (final String toRemove : workspaceURIsToRemove) {
+			final EPackage pkgToRemove = WORKSPACEURI_TO_REGISTEREDPACKAGE.remove(toRemove);
+			EPackage.Registry.INSTANCE.remove(pkgToRemove.getNsURI());
+			ALL_NSURIS_REGISTERED_BY_TOOLING.remove(pkgToRemove.getNsURI());
+		}
 	}
 
 	/**
@@ -180,7 +220,7 @@ public final class EcoreHelper {
 
 		final Set<String> packages = new HashSet<String>();
 		packages.addAll(EPackage.Registry.INSTANCE.keySet());
-		packages.removeAll(runtimeRegisteredPackages);
+		packages.removeAll(ALL_NSURIS_REGISTERED_BY_TOOLING);
 		return packages.toArray();
 	}
 
@@ -189,8 +229,13 @@ public final class EcoreHelper {
 	 * even if the Ecore.ecore is not available in the workspace. Therefore those ecores should be regarded as valid.
 	 * Hence we need to remap the resource uri to a plugin uri if the Ecore.ecore is not available in the workspace
 	 * in order to resolve the proxy.
+	 * Moreover when a new ecore is loaded we need to prevent EMF to resolve proxies to other platform-resource URIs
+	 * with the package registry
 	 */
-	private static void initResourceSet(ResourceSet resourceSet) {
+	private static void initResourceSet(ResourceSet resourceSet, boolean withLocalRegistry) {
+		if (withLocalRegistry) {
+			resourceSet.getPackageRegistry().putAll(WORKSPACEURI_TO_REGISTEREDPACKAGE);
+		}
 		if (!resourceSet.getURIConverter().exists(
 			URI.createURI(ECORE_RESOURCE_URI), null)) {
 
