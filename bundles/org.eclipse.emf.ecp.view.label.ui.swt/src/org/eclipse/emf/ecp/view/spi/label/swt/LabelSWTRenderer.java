@@ -181,7 +181,7 @@ public class LabelSWTRenderer extends AbstractSWTRenderer<VLabel> {
 		}
 		String fontName = fontProperties.getFontName();
 		if (fontName == null) {
-			fontName = label.getDisplay().getSystemFont().getFontData()[0].getName();
+			fontName = getDefaultFontName(label);
 		}
 		font = new Font(label.getDisplay(), fontName, fontProperties.getHeight(), style);
 		label.setFont(font);

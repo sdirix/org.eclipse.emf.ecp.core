@@ -268,7 +268,7 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 	 * @since 1.3
 	 */
 	protected abstract Control renderControl(final SWTGridCell cell, Composite parent) throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption;
+	NoPropertyDescriptorFoundExeption;
 
 	/**
 	 * Marks a controls as readonly.
@@ -356,6 +356,10 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 			fullGridDescription,
 			vElement, control));
 
+	}
+
+	protected String getDefaultFontName(Control control) {
+		return control.getDisplay().getSystemFont().getFontData()[0].getName();
 	}
 
 	/**
