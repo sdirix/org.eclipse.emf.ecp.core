@@ -137,7 +137,7 @@ public class CustomControlSWTRenderer extends AbstractSWTRenderer<VCustomControl
 	 */
 	@Override
 	protected Control renderControl(SWTGridCell cell, Composite parent) throws NoRendererFoundException,
-	NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption {
 		return swtCustomControl.renderControl(cell, parent);
 	}
 
@@ -197,6 +197,6 @@ public class CustomControlSWTRenderer extends AbstractSWTRenderer<VCustomControl
 	}
 
 	private Image getValidationIcon(int severity) {
-		return SWTValidationHelper.INSTANCE.getValidationIcon(severity);
+		return SWTValidationHelper.INSTANCE.getValidationIcon(severity, getVElement(), getViewModelContext());
 	}
 }

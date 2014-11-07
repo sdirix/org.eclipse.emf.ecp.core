@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen - initial API and implementation
  ******************************************************************************/
@@ -51,10 +51,10 @@ import org.eclipse.swt.widgets.Label;
 
 /**
  * Super class for all kinds of control renderer.
- * 
+ *
  * @param <VCONTROL> the {@link VControl} of this renderer.
  * @author Eugen Neufeld
- * 
+ *
  */
 public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> extends AbstractSWTRenderer<VCONTROL> {
 
@@ -74,7 +74,7 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 
 	/**
 	 * Test constructor.
-	 * 
+	 *
 	 * @param factory the {@link SWTRendererFactory} to use.
 	 */
 	AbstractControlSWTRenderer(SWTRendererFactory factory) {
@@ -136,27 +136,28 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 
 	/**
 	 * Returns the validation icon matching the given severity.
-	 * 
+	 *
 	 * @param severity the severity of the {@link org.eclipse.emf.common.util.Diagnostic}
 	 * @return the icon to be displayed, or <code>null</code> when no icon is to be displayed
 	 */
 	protected final Image getValidationIcon(int severity) {
-		return SWTValidationHelper.INSTANCE.getValidationIcon(severity);
+		return SWTValidationHelper.INSTANCE.getValidationIcon(severity, getVElement(), getViewModelContext());
 	}
 
 	/**
 	 * Returns the background color for a control with the given validation severity.
-	 * 
+	 *
 	 * @param severity severity the severity of the {@link org.eclipse.emf.common.util.Diagnostic}
 	 * @return the color to be used as a background color
 	 */
 	protected final Color getValidationBackgroundColor(int severity) {
-		return SWTValidationHelper.INSTANCE.getValidationBackgroundColor(severity);
+		return SWTValidationHelper.INSTANCE
+			.getValidationBackgroundColor(severity, getVElement(), getViewModelContext());
 	}
 
 	/**
 	 * Return the {@link IItemPropertyDescriptor} describing this {@link Setting}.
-	 * 
+	 *
 	 * @param setting the {@link Setting} to use for identifying the {@link IItemPropertyDescriptor}.
 	 * @return the {@link IItemPropertyDescriptor}
 	 */
@@ -172,7 +173,7 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 
 	/**
 	 * Creates a new {@link DataBindingContext}.
-	 * 
+	 *
 	 * @return a new {@link DataBindingContext} each time this method is called
 	 */
 	protected final DataBindingContext getDataBindingContext() {
@@ -184,7 +185,7 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 
 	/**
 	 * Returns an {@link IObservableValue} based on the provided {@link Setting}.
-	 * 
+	 *
 	 * @param setting the {@link Setting} to get the {@link IObservableValue} for
 	 * @return the {@link IObservableValue}
 	 */
@@ -202,7 +203,7 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 
 	/**
 	 * Returns the {@link EditingDomain} for the provided {@link Setting}.
-	 * 
+	 *
 	 * @param setting the provided {@link Setting}
 	 * @return the {@link EditingDomain} of this {@link Setting}
 	 */
@@ -212,7 +213,7 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 
 	/**
 	 * Create the {@link Control} displaying the label of the current {@link VControl}.
-	 * 
+	 *
 	 * @param parent the {@link Composite} to render onto
 	 * @return the created {@link Control} or null
 	 * @throws NoPropertyDescriptorFoundExeption thrown if the {@link org.eclipse.emf.ecore.EStructuralFeature
@@ -274,7 +275,7 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 
 	/**
 	 * Creates a validation icon.
-	 * 
+	 *
 	 * @param composite the {@link Composite} to create onto
 	 * @return the created Label
 	 */

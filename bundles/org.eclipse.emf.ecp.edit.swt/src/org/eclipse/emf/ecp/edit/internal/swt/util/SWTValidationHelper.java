@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
  * Eugen Neufeld - VTViewTemplate implementation
@@ -16,15 +16,18 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate;
+import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
 import org.eclipse.emf.ecp.view.template.model.VTTemplateFactory;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplate;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
+import org.eclipse.emf.ecp.view.template.style.validation.model.VTValidationStyleProperty;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
@@ -32,9 +35,9 @@ import org.eclipse.swt.widgets.Display;
 
 /**
  * Helper class for accessing icons and colours for validations.
- * 
+ *
  * @author jfaltermeier
- * 
+ *
  */
 public final class SWTValidationHelper {
 
@@ -51,41 +54,33 @@ public final class SWTValidationHelper {
 	}
 
 	/**
-	 * Returns the background color for a control with the given validation severity.
-	 * 
+	 * Returns the background color for a control with the given validation severity, VElement
+	 * and view model context, if applicable.
+	 *
 	 * @param severity severity the severity of the {@link Diagnostic}
+	 * @param vElement The {@link VElement} that is being rendered
+	 * @param viewModelContext The corresponding {@link ViewModelContext}
 	 * @return the color to be used as a background color
 	 */
-	public Color getValidationBackgroundColor(int severity) {
-		final VTViewTemplate template = getTemplate();
-
-		if (template.getControlValidationConfiguration() == null) {
-			Activator.getDefault();
-			Activator
-				.getDefault()
-				.getLog()
-				.log(
-					new Status(IStatus.WARNING, Activator.PLUGIN_ID, NO_CONTROLVALIDATIONCONFIG_WARNING));
-			return null;
-		}
+	public Color getValidationBackgroundColor(int severity, VElement vElement, ViewModelContext viewModelContext) {
+		final VTControlValidationTemplate template = getTemplate().getControlValidationConfiguration();
 		String colorHex = null;
 
 		switch (severity) {
 		case Diagnostic.OK:
-			colorHex = template.getControlValidationConfiguration().getOkColorHEX();
+			colorHex = getOkColorHEX(template, vElement, viewModelContext);
 			break;
 		case Diagnostic.INFO:
-			colorHex = template.getControlValidationConfiguration().getInfoColorHEX();
+			colorHex = getInfoColorHEX(template, vElement, viewModelContext);
 			break;
 		case Diagnostic.WARNING:
-			colorHex = template.getControlValidationConfiguration()
-				.getWarningColorHEX();
+			colorHex = getWarningColorHEX(template, vElement, viewModelContext);
 			break;
 		case Diagnostic.ERROR:
-			colorHex = template.getControlValidationConfiguration().getErrorColorHEX();
+			colorHex = getErrorColorHEX(template, vElement, viewModelContext);
 			break;
 		case Diagnostic.CANCEL:
-			colorHex = template.getControlValidationConfiguration().getCancelColorHEX();
+			colorHex = getCancelColorHEX(template, vElement, viewModelContext);
 			break;
 		default:
 			throw new IllegalArgumentException(
@@ -101,40 +96,43 @@ public final class SWTValidationHelper {
 	}
 
 	/**
-	 * Returns the validation icon matching the given severity.
-	 * 
+	 * Returns the background color for a control with the given validation severity.
+	 *
+	 * @param severity severity the severity of the {@link Diagnostic}
+	 * @return the color to be used as a background color
+	 */
+	public Color getValidationBackgroundColor(int severity) {
+		return getValidationBackgroundColor(severity, null, null);
+	}
+
+	/**
+	 * Returns the validation icon matching the given severity, VElement
+	 * and view model context, if applicable.
+	 *
 	 * @param severity the severity of the {@link Diagnostic}
+	 * @param vElement The {@link VElement} that is being rendered
+	 * @param viewModelContext The corresponding {@link ViewModelContext}
 	 * @return the icon to be displayed, or <code>null</code> when no icon is to be displayed
 	 */
-	public Image getValidationIcon(int severity) {
-		final VTViewTemplate template = getTemplate();
-		if (template.getControlValidationConfiguration() == null) {
-			Activator.getDefault();
-			Activator
-				.getDefault()
-				.getLog()
-				.log(
-					new Status(IStatus.WARNING, Activator.PLUGIN_ID, NO_CONTROLVALIDATIONCONFIG_WARNING));
-			return null;
-		}
+	public Image getValidationIcon(int severity, VElement vElement, ViewModelContext viewModelContext) {
+		final VTControlValidationTemplate template = getTemplate().getControlValidationConfiguration();
 		String imageUrl = null;
 
 		switch (severity) {
 		case Diagnostic.OK:
-			imageUrl = template.getControlValidationConfiguration().getOkImageURL();
+			imageUrl = getOkImageURL(template, vElement, viewModelContext);
 			break;
 		case Diagnostic.INFO:
-			imageUrl = template.getControlValidationConfiguration().getInfoImageURL();
+			imageUrl = getInfoImageURL(template, vElement, viewModelContext);
 			break;
 		case Diagnostic.WARNING:
-			imageUrl = template.getControlValidationConfiguration()
-				.getWarningImageURL();
+			imageUrl = getWarningImageURL(template, vElement, viewModelContext);
 			break;
 		case Diagnostic.ERROR:
-			imageUrl = template.getControlValidationConfiguration().getErrorImageURL();
+			imageUrl = getErrorImageURL(template, vElement, viewModelContext);
 			break;
 		case Diagnostic.CANCEL:
-			imageUrl = template.getControlValidationConfiguration().getCancelImageURL();
+			imageUrl = getCancelImageURL(template, vElement, viewModelContext);
 			break;
 		default:
 			throw new IllegalArgumentException(
@@ -152,39 +150,44 @@ public final class SWTValidationHelper {
 	}
 
 	/**
-	 * Returns the validation overlay icon matching the given severity.
-	 * 
+	 * Returns the validation icon matching the given severity.
+	 *
 	 * @param severity the severity of the {@link Diagnostic}
 	 * @return the icon to be displayed, or <code>null</code> when no icon is to be displayed
 	 */
-	public ImageDescriptor getValidationOverlayDescriptor(int severity) {
-		final VTViewTemplate template = getTemplate();
-		if (template.getControlValidationConfiguration() == null) {
-			Activator.getDefault();
-			Activator
-				.getDefault()
-				.getLog()
-				.log(
-					new Status(IStatus.WARNING, Activator.PLUGIN_ID, NO_CONTROLVALIDATIONCONFIG_WARNING));
-			return null;
-		}
+	public Image getValidationIcon(int severity) {
+		return getValidationIcon(severity, null, null);
+	}
+
+	/**
+	 * Returns the validation overlay icon matching the given severity, VElement
+	 * and view model context, if applicable.
+	 *
+	 * @param severity the severity of the {@link Diagnostic}
+	 * @param vElement The {@link VElement} that is being rendered
+	 * @param viewModelContext The corresponding {@link ViewModelContext}
+	 * @return the icon to be displayed, or <code>null</code> when no icon is to be displayed
+	 */
+	public ImageDescriptor getValidationOverlayDescriptor(int severity, VElement vElement,
+		ViewModelContext viewModelContext) {
+		final VTControlValidationTemplate template = getTemplate().getControlValidationConfiguration();
 		String imageUrl = null;
 
 		switch (severity) {
 		case Diagnostic.OK:
-			imageUrl = template.getControlValidationConfiguration().getOkOverlayURL();
+			imageUrl = getOkOverlayURL(template, vElement, viewModelContext);
 			break;
 		case Diagnostic.INFO:
-			imageUrl = template.getControlValidationConfiguration().getInfoOverlayURL();
+			imageUrl = getInfoOverlayURL(template, vElement, viewModelContext);
 			break;
 		case Diagnostic.WARNING:
-			imageUrl = template.getControlValidationConfiguration().getWarningOverlayURL();
+			imageUrl = getWarningOverlayURL(template, vElement, viewModelContext);
 			break;
 		case Diagnostic.ERROR:
-			imageUrl = template.getControlValidationConfiguration().getErrorOverlayURL();
+			imageUrl = getErrorOverlayURL(template, vElement, viewModelContext);
 			break;
 		case Diagnostic.CANCEL:
-			imageUrl = template.getControlValidationConfiguration().getCancelOverlayURL();
+			imageUrl = getCancelOverlayURL(template, vElement, viewModelContext);
 			break;
 		default:
 			throw new IllegalArgumentException(
@@ -199,6 +202,221 @@ public final class SWTValidationHelper {
 		} catch (final MalformedURLException ex) {
 			return null;
 		}
+	}
+
+	public ImageDescriptor getValidationOverlayDescriptor(int severity) {
+		return getValidationOverlayDescriptor(severity, null, null);
+	}
+
+	private String getOkColorHEX(VTControlValidationTemplate template, VElement vElement,
+		ViewModelContext viewModelContext) {
+		String colorHex = null;
+		final VTValidationStyleProperty validationStyleProperty = getValidationStyleProperty(vElement, viewModelContext);
+		if (template != null) {
+			colorHex = template.getOkColorHEX();
+		}
+		if (validationStyleProperty != null) {
+			colorHex = validationStyleProperty.getOkColorHEX();
+		}
+		return colorHex;
+	}
+
+	private String getInfoColorHEX(VTControlValidationTemplate template, VElement vElement,
+		ViewModelContext viewModelContext) {
+		String colorHex = null;
+		final VTValidationStyleProperty validationStyleProperty = getValidationStyleProperty(vElement, viewModelContext);
+		if (template != null) {
+			colorHex = template.getInfoColorHEX();
+		}
+		if (validationStyleProperty != null) {
+			colorHex = validationStyleProperty.getInfoColorHEX();
+		}
+		return colorHex;
+	}
+
+	private String getWarningColorHEX(VTControlValidationTemplate template, VElement vElement,
+		ViewModelContext viewModelContext) {
+		String colorHex = null;
+		final VTValidationStyleProperty validationStyleProperty = getValidationStyleProperty(vElement, viewModelContext);
+		if (template != null) {
+			colorHex = template.getWarningColorHEX();
+		}
+		if (validationStyleProperty != null) {
+			colorHex = validationStyleProperty.getWarningColorHEX();
+		}
+		return colorHex;
+	}
+
+	private String getErrorColorHEX(VTControlValidationTemplate template, VElement vElement,
+		ViewModelContext viewModelContext) {
+		String colorHex = null;
+		final VTValidationStyleProperty validationStyleProperty = getValidationStyleProperty(vElement, viewModelContext);
+		if (template != null) {
+			colorHex = template.getErrorColorHEX();
+		}
+		if (validationStyleProperty != null) {
+			colorHex = validationStyleProperty.getErrorColorHEX();
+		}
+		return colorHex;
+	}
+
+	private String getCancelColorHEX(VTControlValidationTemplate template, VElement vElement,
+		ViewModelContext viewModelContext) {
+		String colorHex = null;
+		final VTValidationStyleProperty validationStyleProperty = getValidationStyleProperty(vElement, viewModelContext);
+		if (template != null) {
+			colorHex = template.getCancelColorHEX();
+		}
+		if (validationStyleProperty != null) {
+			colorHex = validationStyleProperty.getCancelColorHEX();
+		}
+		return colorHex;
+	}
+
+	private String getOkImageURL(VTControlValidationTemplate template, VElement vElement,
+		ViewModelContext viewModelContext) {
+		String imageURL = null;
+		final VTValidationStyleProperty validationStyleProperty = getValidationStyleProperty(vElement, viewModelContext);
+		if (template != null) {
+			imageURL = template.getOkImageURL();
+		}
+		if (validationStyleProperty != null) {
+			imageURL = validationStyleProperty.getOkImageURL();
+		}
+		return imageURL;
+	}
+
+	private String getInfoImageURL(VTControlValidationTemplate template, VElement vElement,
+		ViewModelContext viewModelContext) {
+		String imageURL = null;
+		final VTValidationStyleProperty validationStyleProperty = getValidationStyleProperty(vElement, viewModelContext);
+		if (template != null) {
+			imageURL = template.getInfoImageURL();
+		}
+		if (validationStyleProperty != null) {
+			imageURL = validationStyleProperty.getInfoImageURL();
+		}
+		return imageURL;
+	}
+
+	private String getWarningImageURL(VTControlValidationTemplate template, VElement vElement,
+		ViewModelContext viewModelContext) {
+		String imageURL = null;
+		final VTValidationStyleProperty validationStyleProperty = getValidationStyleProperty(vElement, viewModelContext);
+		if (template != null) {
+			imageURL = template.getWarningImageURL();
+		}
+		if (validationStyleProperty != null) {
+			imageURL = validationStyleProperty.getWarningImageURL();
+		}
+		return imageURL;
+	}
+
+	private String getErrorImageURL(VTControlValidationTemplate template, VElement vElement,
+		ViewModelContext viewModelContext) {
+		String imageURL = null;
+		final VTValidationStyleProperty validationStyleProperty = getValidationStyleProperty(vElement, viewModelContext);
+		if (template != null) {
+			imageURL = template.getErrorImageURL();
+		}
+		if (validationStyleProperty != null) {
+			imageURL = validationStyleProperty.getErrorImageURL();
+		}
+		return imageURL;
+	}
+
+	private String getCancelImageURL(VTControlValidationTemplate template, VElement vElement,
+		ViewModelContext viewModelContext) {
+		String imageURL = null;
+		final VTValidationStyleProperty validationStyleProperty = getValidationStyleProperty(vElement, viewModelContext);
+		if (template != null) {
+			imageURL = template.getCancelImageURL();
+		}
+		if (validationStyleProperty != null) {
+			imageURL = validationStyleProperty.getCancelImageURL();
+		}
+		return imageURL;
+	}
+
+	private String getOkOverlayURL(VTControlValidationTemplate template, VElement vElement,
+		ViewModelContext viewModelContext) {
+		String overlayURL = null;
+		final VTValidationStyleProperty validationStyleProperty = getValidationStyleProperty(vElement, viewModelContext);
+		if (template != null) {
+			overlayURL = template.getOkOverlayURL();
+		}
+		if (validationStyleProperty != null) {
+			overlayURL = validationStyleProperty.getOkOverlayURL();
+		}
+		return overlayURL;
+	}
+
+	private String getInfoOverlayURL(VTControlValidationTemplate template, VElement vElement,
+		ViewModelContext viewModelContext) {
+		String overlayURL = null;
+		final VTValidationStyleProperty validationStyleProperty = getValidationStyleProperty(vElement, viewModelContext);
+		if (template != null) {
+			overlayURL = template.getInfoOverlayURL();
+		}
+		if (validationStyleProperty != null) {
+			overlayURL = validationStyleProperty.getInfoOverlayURL();
+		}
+		return overlayURL;
+	}
+
+	private String getWarningOverlayURL(VTControlValidationTemplate template, VElement vElement,
+		ViewModelContext viewModelContext) {
+		String overlayURL = null;
+		final VTValidationStyleProperty validationStyleProperty = getValidationStyleProperty(vElement, viewModelContext);
+		if (template != null) {
+			overlayURL = template.getWarningOverlayURL();
+		}
+		if (validationStyleProperty != null) {
+			overlayURL = validationStyleProperty.getWarningOverlayURL();
+		}
+		return overlayURL;
+	}
+
+	private String getErrorOverlayURL(VTControlValidationTemplate template, VElement vElement,
+		ViewModelContext viewModelContext) {
+		String overlayURL = null;
+		final VTValidationStyleProperty validationStyleProperty = getValidationStyleProperty(vElement, viewModelContext);
+		if (template != null) {
+			overlayURL = template.getErrorOverlayURL();
+		}
+		if (validationStyleProperty != null) {
+			overlayURL = validationStyleProperty.getErrorOverlayURL();
+		}
+		return overlayURL;
+	}
+
+	private String getCancelOverlayURL(VTControlValidationTemplate template, VElement vElement,
+		ViewModelContext viewModelContext) {
+		String overlayURL = null;
+		final VTValidationStyleProperty validationStyleProperty = getValidationStyleProperty(vElement, viewModelContext);
+		if (template != null) {
+			overlayURL = template.getCancelOverlayURL();
+		}
+		if (validationStyleProperty != null) {
+			overlayURL = validationStyleProperty.getCancelOverlayURL();
+		}
+		return overlayURL;
+	}
+
+	private VTValidationStyleProperty getValidationStyleProperty(VElement vElement, ViewModelContext viewModelContext) {
+		VTValidationStyleProperty validationStyleProperty = null;
+		if (vElement != null && viewModelContext != null) {
+			final Set<VTStyleProperty> styleProperties = Activator.getDefault().getVTViewTemplateProvider()
+				.getStyleProperties(vElement, viewModelContext);
+			for (final VTStyleProperty styleProperty : styleProperties) {
+				if (VTValidationStyleProperty.class.isInstance(styleProperty)) {
+					validationStyleProperty = VTValidationStyleProperty.class
+						.cast(styleProperty);
+					break;
+				}
+			}
+		}
+		return validationStyleProperty;
 	}
 
 	private VTViewTemplate getTemplate() {
