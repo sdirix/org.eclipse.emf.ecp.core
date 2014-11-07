@@ -51,12 +51,22 @@ with [get-view "EMF Forms Preview" | get-control Any -after [get-label "View Edi
     get-property "getChildren().Control[2].getChildren().Control[0].getText()" | equals "" | verify-true
     get-property "getChildren().Control[2].getChildren().Control[0].isVisible()" | equals true | verify-true
     get-property "getChildren().Control[2].getChildren().Control[0].getStyle()" 
-        | equals "[SINGLE, BORDER, LEFT_TO_RIGHT, LEFT]" | verify-true
+        | contains "SINGLE" | verify-true
+    get-property "getChildren().Control[2].getChildren().Control[0].getStyle()" 
+        | contains "BORDER" | verify-true
+    get-property "getChildren().Control[2].getChildren().Control[0].getStyle()" 
+        | contains "LEFT_TO_RIGHT" | verify-true
+    get-property "getChildren().Control[2].getChildren().Control[0].getStyle()" 
+        | contains "LEFT" | verify-true
     get-property "getChildren().Control[2].getChildren().Control[1].getClassName()" 
         | equals "org.eclipse.swt.widgets.Button" | verify-true
     get-property "getChildren().Control[2].getChildren().Control[1].getGrayed()" | equals false | verify-true
     get-property "getChildren().Control[2].getChildren().Control[1].getStyle()" 
-        | equals "[PUSH, LEFT_TO_RIGHT, CENTER]" | verify-true
+        | contains "PUSH" | verify-true
+    get-property "getChildren().Control[2].getChildren().Control[1].getStyle()" 
+        | contains "LEFT_TO_RIGHT" | verify-true
+    get-property "getChildren().Control[2].getChildren().Control[1].getStyle()" 
+        | contains "CENTER" | verify-true
 }
 
 get-view "EMF Forms Preview" | get-button -after [get-label "Date Of Birth"] | click
@@ -66,7 +76,13 @@ with [get-view "EMF Forms Preview" | get-control Any -after [get-label "View Edi
     get-property "getChildren().Control[2].getChildren().Control[0].getClassName()" 
         | equals "org.eclipse.swt.widgets.Text" | verify-true
     get-property "getChildren().Control[2].getChildren().Control[0].getStyle()" 
-        | equals "[SINGLE, BORDER, LEFT_TO_RIGHT, LEFT]" | verify-true
+        | contains "SINGLE" | verify-true
+    get-property "getChildren().Control[2].getChildren().Control[0].getStyle()" 
+        | contains "BORDER" | verify-true
+    get-property "getChildren().Control[2].getChildren().Control[0].getStyle()" 
+        | contains "LEFT_TO_RIGHT" | verify-true
+    get-property "getChildren().Control[2].getChildren().Control[0].getStyle()" 
+        | contains "LEFT" | verify-true
 }
 
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

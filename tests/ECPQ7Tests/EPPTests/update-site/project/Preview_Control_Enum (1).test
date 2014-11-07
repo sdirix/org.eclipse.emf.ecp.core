@@ -51,8 +51,6 @@ with [get-view "EMF Forms Preview" | get-control Any -after [get-label "View Edi
         | verify-true
     get-property "getChildren().Control[2].getStyle()" | contains "READ_ONLY" 
         | verify-true
-    get-property "getChildren().Control[2].getStyle()" | contains "H_SCROLL" 
-        | verify-true
     get-property "getChildren().Control[2].getStyle()" | contains "LEFT_TO_RIGHT" 
         | verify-true
 }
@@ -63,8 +61,6 @@ with [get-view "EMF Forms Preview" | get-control Any -after [get-label "View Edi
     get-property "getChildren().Control[2].getStyle()" | contains "DROP_DOWN" 
         | verify-true
     get-property "getChildren().Control[2].getStyle()" | contains "READ_ONLY" 
-        | verify-true
-    get-property "getChildren().Control[2].getStyle()" | contains "H_SCROLL" 
         | verify-true
     get-property "getChildren().Control[2].getStyle()" | contains "LEFT_TO_RIGHT" 
         | verify-true
