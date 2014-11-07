@@ -61,7 +61,9 @@ try {
 	    get-button Finish | click
 	}
 	get-editor Fan | get-control Any -after [get-label "Fan [Fan]"] -index 5 
-	    | get-property "getChildren().Control[1].getStyle()" | equals "[BORDER, LEFT_TO_RIGHT]" | verify-true
+	    | get-property "getChildren().Control[1].getStyle()" | contains "BORDER" | verify-true
+	get-editor Fan | get-control Any -after [get-label "Fan [Fan]"] -index 5 
+	    | get-property "getChildren().Control[1].getStyle()" | contains "LEFT_TO_RIGHT" | verify-true
 	with [get-editor Fan] {
 	    with [get-button "Add an instance of Merchandise"] {
 	        click

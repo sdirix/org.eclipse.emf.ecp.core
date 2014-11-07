@@ -38,13 +38,20 @@ with [get-view "EMF Forms Preview" | get-control Any -after [get-label "View Edi
     get-property "getChildren().length" | equals 3 | verify-true
     get-property "getChildren().Control[0].getClassName()" | equals "org.eclipse.swt.widgets.Label" | verify-true
     get-property "getChildren().Control[0].getText()" | equals "First Name" | verify-true
-    get-property "getChildren().Control[0].getStyle()" | equals "[NO_FOCUS, LEFT_TO_RIGHT, LEAD]" | verify-true
+    get-property "getChildren().Control[0].getStyle()" | contains "NO_FOCUS" | verify-true
+    get-property "getChildren().Control[0].getStyle()" | contains "LEFT_TO_RIGHT" | verify-true
+    get-property "getChildren().Control[0].getStyle()" | contains "LEAD" | verify-true
     get-property "getChildren().Control[1].getClassName()" | equals "org.eclipse.swt.widgets.Label" | verify-true
     get-property "getChildren().Control[1].getText()" | equals "" | verify-true
-    get-property "getChildren().Control[1].getStyle()" | equals "[NO_FOCUS, LEFT_TO_RIGHT, LEAD]" | verify-true
+    get-property "getChildren().Control[1].getStyle()" | contains "NO_FOCUS" | verify-true
+    get-property "getChildren().Control[1].getStyle()" | contains "LEFT_TO_RIGHT" | verify-true
+    get-property "getChildren().Control[1].getStyle()" | contains "LEAD" | verify-true
     get-property "getChildren().Control[2].getClassName()" | equals "org.eclipse.swt.widgets.Text" | verify-true
     get-property "getChildren().Control[2].getMessage()" | equals "First Name" | verify-true
-    get-property "getChildren().Control[2].getStyle()" | equals "[SINGLE, BORDER, LEFT_TO_RIGHT, LEFT]" | verify-true
+    get-property "getChildren().Control[2].getStyle()" | contains "SINGLE" | verify-true
+    get-property "getChildren().Control[2].getStyle()" | contains "BORDER" | verify-true
+    get-property "getChildren().Control[2].getStyle()" | contains "LEFT_TO_RIGHT" | verify-true
+    get-property "getChildren().Control[2].getStyle()" | contains "LEFT" | verify-true
     get-property "getChildren().Control[2].toString()" | equals "Text {}" | verify-true
 }
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

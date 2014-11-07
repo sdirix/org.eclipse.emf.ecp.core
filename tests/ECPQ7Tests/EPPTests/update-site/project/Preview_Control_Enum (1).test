@@ -38,19 +38,35 @@ with [get-view "EMF Forms Preview" | get-control Any -after [get-label "View Edi
     get-property "getChildren().length" | equals 3 | verify-true
     get-property "getChildren().Control[0].getClassName()" | equals "org.eclipse.swt.widgets.Label" | verify-true
     get-property "getChildren().Control[0].getText()" | equals Gender | verify-true
-    get-property "getChildren().Control[0].getStyle()" | equals "[NO_FOCUS, LEFT_TO_RIGHT, LEAD]" | verify-true
+    get-property "getChildren().Control[0].getStyle()" | contains "NO_FOCUS" | verify-true
+    get-property "getChildren().Control[0].getStyle()" | contains "LEFT_TO_RIGHT" | verify-true
+    get-property "getChildren().Control[0].getStyle()" | contains "LEAD" | verify-true
     get-property "getChildren().Control[1].getText()" | equals "" | verify-true
-    get-property "getChildren().Control[1].getStyle()" | equals "[NO_FOCUS, LEFT_TO_RIGHT, LEAD]" | verify-true
+    get-property "getChildren().Control[1].getStyle()" | contains "NO_FOCUS" | verify-true
+    get-property "getChildren().Control[1].getStyle()" | contains "LEFT_TO_RIGHT" | verify-true
+    get-property "getChildren().Control[1].getStyle()" | contains "LEAD" | verify-true
     get-property "getChildren().Control[2].getClassName()" | equals "org.eclipse.swt.widgets.Combo" | verify-true
     get-property "getChildren().Control[2].getText()" | equals Male | verify-true
-    get-property "getChildren().Control[2].getStyle()" | equals "[DROP_DOWN, READ_ONLY, H_SCROLL, LEFT_TO_RIGHT]" 
+    get-property "getChildren().Control[2].getStyle()" | contains "DROP_DOWN" 
+        | verify-true
+    get-property "getChildren().Control[2].getStyle()" | contains "READ_ONLY" 
+        | verify-true
+    get-property "getChildren().Control[2].getStyle()" | contains "H_SCROLL" 
+        | verify-true
+    get-property "getChildren().Control[2].getStyle()" | contains "LEFT_TO_RIGHT" 
         | verify-true
 }
 get-view "EMF Forms Preview" | get-combo -after [get-label Gender] | select Female
 with [get-view "EMF Forms Preview" | get-control Any -after [get-label "View Editor Preview"] -index 8] {
     get-property "getChildren().length" | equals 3 | verify-true
     get-property "getChildren().Control[2].getText()" | equals Female | verify-true
-    get-property "getChildren().Control[2].getStyle()" | equals "[DROP_DOWN, READ_ONLY, H_SCROLL, LEFT_TO_RIGHT]" 
+    get-property "getChildren().Control[2].getStyle()" | contains "DROP_DOWN" 
+        | verify-true
+    get-property "getChildren().Control[2].getStyle()" | contains "READ_ONLY" 
+        | verify-true
+    get-property "getChildren().Control[2].getStyle()" | contains "H_SCROLL" 
+        | verify-true
+    get-property "getChildren().Control[2].getStyle()" | contains "LEFT_TO_RIGHT" 
         | verify-true
 }
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

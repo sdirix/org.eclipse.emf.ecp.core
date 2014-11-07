@@ -43,7 +43,9 @@ get-eclipse-window | key-type "M1+s"
 get-editor "UserGroup.view" | get-button "Open Preview" | click
 get-view "EMF Forms Preview" | get-button "Refresh Preview View" | click
 get-view "EMF Forms Preview" | get-control Any -after [get-label Users] -index 10 
-    | get-property "getParent().getParent().getStyle()" | equals "[BORDER, LEFT_TO_RIGHT]" | verify-true
+    | get-property "getParent().getParent().getStyle()" | contains "BORDER" | verify-true
+get-view "EMF Forms Preview" | get-control Any -after [get-label Users] -index 10 
+    | get-property "getParent().getParent().getStyle()" | contains "LEFT_TO_RIGHT" | verify-true
 with [get-view "EMF Forms Preview"] {
     get-button "Add an instance of" | click
     with [get-table] {

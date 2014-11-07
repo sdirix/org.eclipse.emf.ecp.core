@@ -30,7 +30,9 @@ with [get-view "EMF Forms Preview"] {
         get-property "getChildren().Control[0].getClassName()" | equals "org.eclipse.swt.widgets.Label" | verify-true
         get-property "getChildren().Control[0].getText()" | equals "This is a label" | verify-true
         get-property "getChildren().Control[0].getAlignment()" | equals 16384 | verify-true
-        get-property "getChildren().Control[0].getStyle()" | equals "[NO_FOCUS, LEFT_TO_RIGHT, LEAD]" | verify-true
+        get-property "getChildren().Control[0].getStyle()" | contains "NO_FOCUS" | verify-true
+        get-property "getChildren().Control[0].getStyle()" | contains "LEFT_TO_RIGHT" | verify-true
+        get-property "getChildren().Control[0].getStyle()" | contains "LEAD" | verify-true
     }
     with [get-label "This is a label"] {
         get-property backgroundColor | equals "#FFFFFF" | verify-true
@@ -51,7 +53,9 @@ with [get-view "EMF Forms Preview" | get-label "This is a label"] {
     get-property foregroundColor | equals "#000000" | verify-true
     get-property "getFont().getFontData().FontData[0].getStyle()" | equals 3 | verify-true
     get-property "getFont().getFontData().FontData[0].getHeight()" | equals 10 | verify-true
-    get-property "getStyle()" | equals "[NO_FOCUS, LEFT_TO_RIGHT, LEAD]" | verify-true
+    get-property "getStyle()" | contains "NO_FOCUS" | verify-true
+    get-property "getStyle()" | contains "LEFT_TO_RIGHT" | verify-true
+    get-property "getStyle()" | contains "LEAD" | verify-true
 }
 with [get-editor "User.view" | get-combo -after [get-label Style]] {
     select H7
@@ -64,7 +68,9 @@ with [get-view "EMF Forms Preview" | get-label "This is a label"] {
     get-property foregroundColor | equals "#000000" | verify-true
     get-property "getFont().getFontData().FontData[0].getStyle()" | equals 2 | verify-true
     get-property "getFont().getFontData().FontData[0].getHeight()" | equals 14 | verify-true
-    get-property "getStyle()" | equals "[NO_FOCUS, LEFT_TO_RIGHT, LEAD]" | verify-true
+    get-property "getStyle()" | contains "NO_FOCUS" | verify-true
+    get-property "getStyle()" | contains "LEFT_TO_RIGHT" | verify-true
+    get-property "getStyle()" | contains "LEAD" | verify-true
 }
 get-editor "User.view" | get-combo -after [get-label Style] | select Separator
 with [get-view "EMF Forms Preview" | get-label -after [get-label "View Editor Preview"]] {
@@ -74,7 +80,11 @@ with [get-view "EMF Forms Preview" | get-label -after [get-label "View Editor Pr
     get-property foregroundColor | equals "#000000" | verify-true
     get-property "getFont().getFontData().FontData[0].getStyle()" | equals 0 | verify-true
     get-property "getFont().getFontData().FontData[0].getHeight()" | equals 9 | verify-true
-    get-property "getStyle()" | equals "[SEPARATOR, SHADOW_OUT, NO_FOCUS, LEFT_TO_RIGHT, HORIZONTAL]" | verify-true
-    get-property "toString()" | equals "Label {}" | verify-true
+    get-property "getStyle()" | contains "SEPARATOR" | verify-true
+    get-property "getStyle()" | contains "SHADOW_OUT" | verify-true
+    get-property "getStyle()" | contains "NO_FOCUS" | verify-true
+    get-property "getStyle()" | contains "LEFT_TO_RIGHT" | verify-true
+    get-property "getStyle()" | contains "HORIZONTAL" | verify-true
+    get-property "toString()" | contains "Label {}" | verify-true
 }
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

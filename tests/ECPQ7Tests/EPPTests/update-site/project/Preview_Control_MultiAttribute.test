@@ -40,12 +40,16 @@ with [get-view "EMF Forms Preview" | get-control Any -after [get-label "View Edi
     get-property "getChildren().Control[0].getClassName()" | equals "org.eclipse.swt.widgets.Label" | verify-true
     get-property "getChildren().Control[0].getText()" | equals "EMails*" | verify-true
     get-property "getChildren().Control[0].getToolTipText()" | equals "The EMails feature of type EString" | verify-true
-    get-property "getChildren().Control[0].getStyle()" | equals "[NO_FOCUS, LEFT_TO_RIGHT, LEAD]" | verify-true
+    get-property "getChildren().Control[0].getStyle()" | contains "NO_FOCUS" | verify-true
+    get-property "getChildren().Control[0].getStyle()" | contains "LEFT_TO_RIGHT" | verify-true
+    get-property "getChildren().Control[0].getStyle()" | contains "LEAD" | verify-true
     get-property "getChildren().Control[1].getClassName()" | equals "org.eclipse.swt.widgets.Label" | verify-true
     get-property "getChildren().Control[1].getText()" | equals "" | verify-true
     get-property "getChildren().Control[1].getToolTipText()" 
         | equals "The feature \'EMails\' of \'User\' with 0 values must have at least 1 values" | verify-true
-    get-property "getChildren().Control[1].getStyle()" | equals "[NO_FOCUS, LEFT_TO_RIGHT, LEAD]" | verify-true
+    get-property "getChildren().Control[1].getStyle()" | contains "NO_FOCUS" | verify-true
+    get-property "getChildren().Control[1].getStyle()" | contains "LEFT_TO_RIGHT" | verify-true
+    get-property "getChildren().Control[1].getStyle()" | contains "LEAD" | verify-true
     get-property "getChildren().Control[2].getChildren().length" | equals 1 | verify-true
     get-property "getChildren().Control[2].getChildren().Control[0].getChildren().length" | equals 2 | verify-true
     get-property "getChildren().Control[2].getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getClassName()" 
@@ -59,9 +63,21 @@ with [get-view "EMF Forms Preview" | get-control Any -after [get-label "View Edi
     get-property "getChildren().Control[2].getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[1].getToolTipText()" 
         | equals "Add Entry" | verify-true
     get-property "getChildren().Control[2].getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[1].getStyle()" 
-        | equals "[PUSH, LEFT_TO_RIGHT, CENTER]" | verify-true
+        | contains "PUSH" | verify-true
+    get-property "getChildren().Control[2].getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[1].getStyle()" 
+        | equals "LEFT_TO_RIGHT" | verify-true
+    get-property "getChildren().Control[2].getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[1].getStyle()" 
+        | equals "CENTER" | verify-true
     get-property "getChildren().Control[2].getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[1].getStyle()" 
-        | equals "[SEPARATOR, SHADOW_OUT, NO_FOCUS, LEFT_TO_RIGHT, HORIZONTAL]" | verify-true
+        | contains "SEPARATOR" | verify-true
+    get-property "getChildren().Control[2].getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[1].getStyle()" 
+        | contains "SHADOW_OUT" | verify-true
+    get-property "getChildren().Control[2].getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[1].getStyle()" 
+        | contains "NO_FOCUS" | verify-true
+    get-property "getChildren().Control[2].getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[1].getStyle()" 
+        | contains "LEFT_TO_RIGHT" | verify-true
+    get-property "getChildren().Control[2].getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[1].getStyle()" 
+        | contains "HORIZONTAL" | verify-true
     get-property "getChildren().Control[2].getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[2].getContent().getChildren().length" 
         | equals 0 | verify-true
 }
@@ -77,7 +93,13 @@ with [get-view "EMF Forms Preview" | get-control Any -after [get-label "EMails*"
     get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getText()" 
         | equals "" | verify-true
     get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getStyle()" 
-        | equals "[SINGLE, BORDER, LEFT_TO_RIGHT, LEFT]" | verify-true
+        | contains "SINGLE" | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getStyle()" 
+        | contains "BORDER" | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getStyle()" 
+        | contains "LEFT_TO_RIGHT" | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getStyle()" 
+        | contains "LEFT" | verify-true
     get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].isVisible()" 
         | equals true | verify-true
     get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[1].getText()" 
@@ -87,13 +109,25 @@ with [get-view "EMF Forms Preview" | get-control Any -after [get-label "EMails*"
     get-property "getChildren().Control[0].getChildren().Control[1].getClassName()" 
         | equals "org.eclipse.swt.widgets.Button" | verify-true
     get-property "getChildren().Control[0].getChildren().Control[1].getStyle()" 
-        | equals "[PUSH, LEFT_TO_RIGHT, CENTER]" | verify-true
+        | contains "PUSH" | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[1].getStyle()" 
+        | contains "LEFT_TO_RIGHT" | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[1].getStyle()" 
+        | contains "CENTER" | verify-true
     get-property "getChildren().Control[0].getChildren().Control[2].getText()" | equals "" | verify-true
     get-property "getChildren().Control[0].getChildren().Control[2].getStyle()" 
-        | equals "[PUSH, LEFT_TO_RIGHT, CENTER]" | verify-true
+        | contains "PUSH" | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[2].getStyle()" 
+        | contains "LEFT_TO_RIGHT" | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[2].getStyle()" 
+        | contains "CENTER" | verify-true
     get-property "getChildren().Control[0].getChildren().Control[3].getText()" | equals "" | verify-true
     get-property "getChildren().Control[0].getChildren().Control[3].getStyle()" 
-        | equals "[PUSH, LEFT_TO_RIGHT, CENTER]" | verify-true
+        | contains "PUSH" | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[3].getStyle()" 
+        | contains "LEFT_TO_RIGHT" | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[3].getStyle()" 
+        | contains "CENTER" | verify-true
 }
 
 with [get-view "EMF Forms Preview"] {
