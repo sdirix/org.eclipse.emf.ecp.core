@@ -50,8 +50,8 @@
 							</aut>
 
 							<testOptions>
-								<execTimeout>3600</execTimeout>
-								<testExecTimeout>8000</testExecTimeout>
+								<execTimeout>1000000</execTimeout>
+								<testExecTimeout>1000000</testExecTimeout>
 							</testOptions>
 
 						</configuration>
@@ -92,8 +92,8 @@
 							</aut>
 
 							<testOptions>
-								<execTimeout>3600</execTimeout>
-								<testExecTimeout>8000</testExecTimeout>
+								<execTimeout>1000000</execTimeout>
+								<testExecTimeout>1000000</testExecTimeout>
 							</testOptions>
 
 							<q7client>
