@@ -53,7 +53,6 @@ import org.eclipse.emf.emfstore.client.ESLocalProject;
 import org.eclipse.emf.emfstore.client.ESRemoteProject;
 import org.eclipse.emf.emfstore.client.ESServer;
 import org.eclipse.emf.emfstore.client.ESWorkspace;
-import org.eclipse.emf.emfstore.client.ESWorkspaceProvider;
 import org.eclipse.emf.emfstore.client.util.ESVoidCallable;
 import org.eclipse.emf.emfstore.client.util.RunESCommand;
 import org.eclipse.emf.emfstore.internal.client.model.Configuration;
@@ -62,7 +61,6 @@ import org.eclipse.emf.emfstore.internal.client.model.ProjectSpace;
 import org.eclipse.emf.emfstore.internal.client.model.ServerInfo;
 import org.eclipse.emf.emfstore.internal.client.model.impl.ProjectSpaceImpl;
 import org.eclipse.emf.emfstore.internal.client.model.impl.api.ESLocalProjectImpl;
-import org.eclipse.emf.emfstore.internal.client.model.impl.api.ESWorkspaceImpl;
 import org.eclipse.emf.emfstore.internal.client.model.util.EMFStoreClientUtil;
 import org.eclipse.emf.emfstore.internal.client.model.util.EMFStoreCommand;
 import org.eclipse.emf.emfstore.internal.client.observers.OperationObserver;
@@ -80,6 +78,7 @@ import org.eclipse.emf.emfstore.server.exceptions.ESException;
  * @author Eugen Neufeld
  */
 public final class EMFStoreProvider extends DefaultProvider {
+
 	/**
 	 * This is the name of the EMFStore Provider.
 	 */
@@ -135,7 +134,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 	@Override
 	public EditingDomain createEditingDomain(final InternalProject project) {
 
-		final EditingDomain domain = ((ESWorkspaceImpl) ESWorkspaceProvider.INSTANCE.getWorkspace()).toInternalAPI()
+		final EditingDomain domain = ECPEMFUtils.ESWorkspaceProviderInstance().getWorkspace().toInternalAPI()
 			.getEditingDomain();
 
 		return domain;
@@ -458,6 +457,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 			final EObject eObject = (EObject) element;
 			ProjectSpace ps = null;
 			try {
+
 				ps = ESWorkspaceProviderImpl.getProjectSpace(eObject);
 			} catch (final IllegalArgumentException iae) {
 				return null;
@@ -511,7 +511,8 @@ public final class EMFStoreProvider extends DefaultProvider {
 
 		if (projectSpace == null) {
 			boolean found = false;
-			final List<ESLocalProject> localProjects = ESWorkspaceProvider.INSTANCE.getWorkspace().getLocalProjects();
+			final List<ESLocalProject> localProjects = ECPEMFUtils.ESWorkspaceProviderInstance().getWorkspace()
+				.getLocalProjects();
 			for (final ESLocalProject localProject : localProjects) {
 				final String projectSpaceID = internalProject.getProperties().getValue(
 					EMFStoreProvider.PROP_PROJECTSPACEID);
@@ -523,7 +524,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 			}
 
 			if (!found && createNewIfNeeded) {
-				projectSpace = ESWorkspaceProvider.INSTANCE.getWorkspace()
+				projectSpace = ECPEMFUtils.ESWorkspaceProviderInstance().getWorkspace()
 					.createLocalProject(internalProject.getName());
 				internalProject.getProperties().addProperty(EMFStoreProvider.PROP_PROJECTSPACEID,
 					projectSpace.getLocalProjectId().getId());
@@ -548,7 +549,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 
 		if (serverInfo == null) {
 
-			final ESWorkspace workspace = ESWorkspaceProvider.INSTANCE.getWorkspace();
+			final ESWorkspace workspace = ECPEMFUtils.ESWorkspaceProviderInstance().getWorkspace();
 			boolean foundExisting = false;
 
 			for (final ESServer info : workspace.getServers()) {

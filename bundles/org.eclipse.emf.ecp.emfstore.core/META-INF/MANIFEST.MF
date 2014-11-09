@@ -10,9 +10,14 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.net4j.util;bundle-version="[3.0.0,4.0.0)"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Export-Package: org.eclipse.emf.ecp.emfstore.core.internal;version="1.
- 6.0"; x-friends:="org.eclipse.emf.ecp.emfstore.ui,  org.eclipse.emf.e
- cp.emfstore.ui.search,  org.eclipse.emf.ecp.view.ui.editor.test,  org
- .eclipse.emf.ecp.emfstore.ui.e3,  org.eclipse.emf.ecp.emfstore.ui.e4,
-   org.eclipse.emf.ecp.changebroker.emfstore"
+Export-Package: org.eclipse.emf.ecp.emfstore.core.internal;version="1.6.0";
+  x-friends:="org.eclipse.emf.ecp.emfstore.ui,
+   org.eclipse.emf.ecp.emfstore.ui.search,
+   org.eclipse.emf.ecp.view.ui.editor.test,
+   org.eclipse.emf.ecp.emfstore.ui.e3,
+   org.eclipse.emf.ecp.emfstore.ui.e4,
+   org.eclipse.emf.ecp.changebroker.emfstore,
+   org.eclipse.emf.ecp.emfstore.core.rap",
+ org.eclipse.emf.ecp.emfstore.core.rap"
+Service-Component:  OSGI-INF/esWorkspaceProviderProvider.xml
 Bundle-Vendor: Eclipse Modeling Project

@@ -295,7 +295,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 			// if (getProvider().isDirty(this)) {
 			// getProvider().doSave(this);
 			// }
-			ECPProjectManagerImpl.INSTANCE.notifyObjectsChanged(this, objects, structural);
+			((ECPProjectManagerImpl) ECPUtil.getECPProjectManager()).notifyObjectsChanged(this, objects, structural);
 		}
 	}
 
@@ -351,7 +351,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 		// FIXME https://bugs.eclipse.org/bugs/show_bug.cgi?id=462399
 		cleanup();
 		getProvider().handleLifecycle(this, LifecycleEvent.REMOVE);
-		ECPProjectManagerImpl.INSTANCE.changeElements(Collections.singleton(getName()), null);
+		((ECPProjectManagerImpl) ECPUtil.getECPProjectManager()).changeElements(Collections.singleton(getName()), null);
 	}
 
 	/** {@inheritDoc} */
@@ -397,7 +397,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 		}
 
 		if (modified) {
-			ECPProjectManagerImpl.INSTANCE.changeProject(this, open, true);
+			((ECPProjectManagerImpl) ECPUtil.getECPProjectManager()).changeProject(this, open, true);
 		}
 	}
 
@@ -427,7 +427,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 		notifyProvider(LifecycleEvent.INIT);
 
 		if (open) {
-			ECPProjectManagerImpl.INSTANCE.changeProject(this, true, true);
+			((ECPProjectManagerImpl) ECPUtil.getECPProjectManager()).changeProject(this, true, true);
 		}
 	}
 
@@ -440,7 +440,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 		providerSpecificData = null;
 		editingDomain = null;
 
-		ECPProjectManagerImpl.INSTANCE.changeProject(this, false, false);
+		((ECPProjectManagerImpl) ECPUtil.getECPProjectManager()).changeProject(this, false, false);
 	}
 
 	/**
@@ -576,7 +576,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 	@Override
 	public void setVisiblePackages(Set<EPackage> filteredPackages) {
 		filteredEPackages = filteredPackages;
-		ECPProjectManagerImpl.INSTANCE.storeElement(this);
+		((ECPProjectManagerImpl) ECPUtil.getECPProjectManager()).storeElement(this);
 	}
 
 	/** {@inheritDoc} */
@@ -595,7 +595,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 	@Override
 	public void setVisibleEClasses(Set<EClass> filteredEClasses) {
 		this.filteredEClasses = filteredEClasses;
-		ECPProjectManagerImpl.INSTANCE.storeElement(this);
+		((ECPProjectManagerImpl) ECPUtil.getECPProjectManager()).storeElement(this);
 	}
 
 	/** {@inheritDoc} */
@@ -641,7 +641,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 	@Override
 	protected void propertiesChanged(Collection<Entry<String, String>> oldProperties,
 		Collection<Entry<String, String>> newProperties) {
-		ECPProjectManagerImpl.INSTANCE.storeElement(this);
+		((ECPProjectManagerImpl) ECPUtil.getECPProjectManager()).storeElement(this);
 	}
 
 	/**
@@ -650,7 +650,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 	@Override
 	@Deprecated
 	public void saveProperties() {
-		ECPProjectManagerImpl.INSTANCE.storeElement(this);
+		((ECPProjectManagerImpl) ECPUtil.getECPProjectManager()).storeElement(this);
 	}
 
 	/** {@inheritDoc} */

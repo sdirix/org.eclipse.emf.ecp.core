@@ -30,6 +30,10 @@
 		<module>../../bundles/org.eclipse.emf.ecp.explorereditorbridge</module>
 		<module>../../bundles/org.eclipse.emf.ecp.ui</module>
 		<module>../../bundles/org.eclipse.emf.ecp.ui.rcp</module>
+		
+		<module>../../bundles/org.eclipse.emf.ecp.core.rap</module>
+		<module>../../bundles/org.eclipse.emf.ecp.core.rap.sessionprovider.rwt</module>
+		<module>../../bundles/org.eclipse.emf.ecp.emfstore.core.rap</module>
 
 		<module>../../bundles/org.eclipse.emf.ecp.cdo.core</module>
 		<module>../../bundles/org.eclipse.emf.ecp.cdo.ui</module>

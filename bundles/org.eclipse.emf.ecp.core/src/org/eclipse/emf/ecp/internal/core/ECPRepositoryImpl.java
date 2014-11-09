@@ -248,14 +248,15 @@ public final class ECPRepositoryImpl extends PropertiesElement implements Intern
 			Activator.log(ex);
 		}
 
-		ECPRepositoryManagerImpl.INSTANCE.changeElements(Collections.singleton(getName()), null);
+		((ECPRepositoryManagerImpl) ECPUtil.getECPRepositoryManager()).changeElements(Collections.singleton(getName()),
+			null);
 	}
 
 	/** {@inheritDoc} **/
 	@Override
 	public void notifyObjectsChanged(Collection<Object> objects) {
 		if (objects != null && objects.size() != 0) {
-			ECPRepositoryManagerImpl.INSTANCE.notifyObjectsChanged(this, objects);
+			((ECPRepositoryManagerImpl) ECPUtil.getECPRepositoryManager()).notifyObjectsChanged(this, objects);
 		}
 	}
 
@@ -279,6 +280,6 @@ public final class ECPRepositoryImpl extends PropertiesElement implements Intern
 	@Override
 	protected void propertiesChanged(Collection<Entry<String, String>> oldProperties,
 		Collection<Entry<String, String>> newProperties) {
-		ECPRepositoryManagerImpl.INSTANCE.storeElement(this);
+		((ECPRepositoryManagerImpl) ECPUtil.getECPRepositoryManager()).storeElement(this);
 	}
 }
