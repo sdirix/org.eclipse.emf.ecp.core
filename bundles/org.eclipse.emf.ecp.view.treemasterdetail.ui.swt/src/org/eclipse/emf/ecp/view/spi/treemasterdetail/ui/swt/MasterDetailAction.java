@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EObject;
 
 /**
  * @author Alexandra Buzila
+ * @since 1.5
  * 
  */
 public abstract class MasterDetailAction extends AbstractHandler {

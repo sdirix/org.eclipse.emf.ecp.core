@@ -103,6 +103,7 @@ import org.osgi.framework.FrameworkUtil;
  *
  * @author Anas Chakfeh
  * @author Eugen Neufeld
+ * @since 1.5
  *
  */
 public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMasterDetail> {
@@ -185,7 +186,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 	 */
 	@Override
 	protected Control renderControl(SWTGridCell cell, Composite parent) throws NoRendererFoundException,
-	NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption {
 
 		/* The tree's composites */
 		final Composite form = createMasterDetailForm(parent);
@@ -255,7 +256,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 		treeViewer = new TreeViewer(masterPanel);
 
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).hint(100, SWT.DEFAULT)
-		.applyTo(treeViewer.getTree());
+			.applyTo(treeViewer.getTree());
 
 		treeViewer.setContentProvider(adapterFactoryContentProvider);
 		treeViewer.setLabelProvider(getLabelProvider(adapterFactoryLabelProvider));
@@ -432,7 +433,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 		rightPanelContainerComposite = new Composite(container, SWT.FILL);
 		rightPanelContainerComposite.setLayout(GridLayoutFactory.fillDefaults().create());
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true)
-		.applyTo(rightPanelContainerComposite);
+			.applyTo(rightPanelContainerComposite);
 		rightPanelContainerComposite.setBackground(rightPanel.getBackground());
 
 		rightPanel.setContent(container);
@@ -523,14 +524,13 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 				if (treeViewer.getSelection() instanceof IStructuredSelection) {
 					final IStructuredSelection selection = (IStructuredSelection) treeViewer.getSelection();
 
-					if (selection.size() == 1) {
-						final EObject eObject = (EObject) selection.getFirstElement();
-						final EditingDomain domain = AdapterFactoryEditingDomain.getEditingDomainFor(eObject);
-						if (domain == null) {
+					if (selection.size() == 1 && selection.getFirstElement() != null) {
+						final boolean successfull = fillContextMenuForSingleSelection(editingDomain,
+							childrenDescriptorCollector, manager,
+							selection);
+						if (!successfull) {
 							return;
 						}
-						final Collection<?> descriptors = childrenDescriptorCollector.getDescriptors(eObject);
-						fillContextMenu(manager, descriptors, editingDomain, eObject);
 					}
 					if (!selection.toList().contains(root)) {
 						manager.add(new Separator(GLOBAL_ADDITIONS));
@@ -538,8 +538,10 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 					}
 					manager.add(new Separator());
 
-					if (selection.getFirstElement() != null && EObject.class.isInstance(selection.getFirstElement())) {
-						final EObject selectedObject = (EObject) selection.getFirstElement();
+					if (selection.getFirstElement() != null
+						&& EObject.class.isInstance(AdapterFactoryEditingDomain.unwrap(selection.getFirstElement()))) {
+						final EObject selectedObject = (EObject) AdapterFactoryEditingDomain.unwrap(selection
+							.getFirstElement());
 
 						for (final MasterDetailAction menuAction : menuActions) {
 							if (menuAction.shouldShow(selectedObject)) {
@@ -561,6 +563,24 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 						}
 					}
 				}
+			}
+
+			private boolean fillContextMenuForSingleSelection(final EditingDomain editingDomain,
+				final ChildrenDescriptorCollector childrenDescriptorCollector, IMenuManager manager,
+				final IStructuredSelection selection) {
+				final Object firstElement = selection.getFirstElement();
+				final Object unwrappedElement = AdapterFactoryEditingDomain.unwrap(firstElement);
+				if (!EObject.class.isInstance(unwrappedElement)) {
+					return false;
+				}
+				final EObject eObject = EObject.class.cast(unwrappedElement);
+				final EditingDomain domain = AdapterFactoryEditingDomain.getEditingDomainFor(eObject);
+				if (domain == null) {
+					return false;
+				}
+				final Collection<?> descriptors = childrenDescriptorCollector.getDescriptors(eObject);
+				fillContextMenu(manager, descriptors, editingDomain, eObject);
+				return true;
 			}
 		});
 		final Menu menu = menuMgr.createContextMenu(treeViewer.getControl());
@@ -701,6 +721,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 		public void selectionChanged(SelectionChangedEvent event) {
 
 			final Object treeSelected = ((IStructuredSelection) event.getSelection()).getFirstElement();
+			// TODO selection
 			final Object selected = manipulateSelection(treeSelected);
 			if (selected instanceof EObject) {
 				try {
@@ -746,11 +767,11 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 					relayoutDetail();
 				} catch (final ECPRendererException e) {
 					Activator
-					.getDefault()
-					.getReportService()
-					.report(new StatusReport(
-						new Status(IStatus.ERROR, Activator.getDefault().getBundle().getSymbolicName(), e
-							.getMessage(), e)));
+						.getDefault()
+						.getReportService()
+						.report(new StatusReport(
+							new Status(IStatus.ERROR, Activator.getDefault().getBundle().getSymbolicName(), e
+								.getMessage(), e)));
 				}
 			}
 		}
