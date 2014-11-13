@@ -9,7 +9,7 @@
  * Contributors:
  * Anas Chakfeh - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.treemasterdetail.ui.swt.internal;
+package org.eclipse.emf.ecp.view.internal.treemasterdetail.ui.swt;
 
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;

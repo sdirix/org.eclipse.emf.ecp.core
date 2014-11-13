@@ -18,7 +18,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.model.internal.preview.Activator;
 import org.eclipse.emf.ecp.view.model.internal.preview.e3.views.PreviewView;
-import org.eclipse.emf.ecp.view.treemasterdetail.ui.swt.internal.MasterDetailAction;
+import org.eclipse.emf.ecp.view.spi.treemasterdetail.ui.swt.MasterDetailAction;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
@@ -45,7 +45,7 @@ public class OpenPreviewHandler extends MasterDetailAction {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.treemasterdetail.ui.swt.internal.MasterDetailAction#execute(EObject)
+	 * @see org.eclipse.emf.ecp.view.spi.treemasterdetail.ui.swt.MasterDetailAction#execute(EObject)
 	 */
 	@Override
 	public void execute(EObject object) {
@@ -66,7 +66,7 @@ public class OpenPreviewHandler extends MasterDetailAction {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.treemasterdetail.ui.swt.internal.MasterDetailAction#shouldShow(org.eclipse.emf.ecore.EObject)
+	 * @see org.eclipse.emf.ecp.view.spi.treemasterdetail.ui.swt.MasterDetailAction#shouldShow(org.eclipse.emf.ecore.EObject)
 	 */
 	@Override
 	public boolean shouldShow(EObject eObject) {
