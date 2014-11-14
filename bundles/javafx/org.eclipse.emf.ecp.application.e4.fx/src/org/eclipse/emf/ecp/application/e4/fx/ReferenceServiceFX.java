@@ -76,14 +76,7 @@ public class ReferenceServiceFX implements ReferenceService {
 		return 0;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.edit.spi.ReferenceService#addModelElement(org.eclipse.emf.ecore.EObject,
-	 *      org.eclipse.emf.ecore.EReference)
-	 */
-	@Override
-	public void addModelElement(EObject eObject, EReference eReference) {
+	private void addModelElement(EObject eObject, EReference eReference) {
 		if (eReference == null) {
 			return;
 		}
@@ -105,10 +98,24 @@ public class ReferenceServiceFX implements ReferenceService {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.edit.spi.ReferenceService#getNewElementFor(org.eclipse.emf.ecore.EReference)
+	 * @see org.eclipse.emf.ecp.edit.spi.ReferenceService#openInNewContext(org.eclipse.emf.ecore.EObject)
 	 */
 	@Override
-	public EObject getNewElementFor(EReference eReference) {
+	public void openInNewContext(EObject eObject) {
+		if (eObject != null) {
+			ModelElementOpenerFX.openModelElement(eObject);
+		}
+
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.edit.spi.ReferenceService#addNewModelElements(org.eclipse.emf.ecore.EObject,
+	 *      org.eclipse.emf.ecore.EReference)
+	 */
+	@Override
+	public void addNewModelElements(EObject eObject, EReference eReference) {
 		// TODO: The code to get the sub classes of the reference type already exists in ECPUtil but can't be used yet
 		// because a required bundle of ECPUtil's bundle isn't part of FX's target platform.
 		final EClass superClass = eReference.getEReferenceType();
@@ -128,37 +135,27 @@ public class ReferenceServiceFX implements ReferenceService {
 		final EClass eClass = DialogsUtil.selectExistingModelElement(classes);
 
 		if (eClass != null) {
-			return EcoreUtil.create(eClass);
+			addModelElement(EcoreUtil.create(eClass), eReference);
 		}
-		return null;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.edit.spi.ReferenceService#getExistingElementFor(org.eclipse.emf.ecore.EReference)
+	 * @see org.eclipse.emf.ecp.edit.spi.ReferenceService#addExistingModelElements(org.eclipse.emf.ecore.EObject,
+	 *      org.eclipse.emf.ecore.EReference)
 	 */
 	@Override
-	public EObject getExistingElementFor(EReference eReference) {
+	public void addExistingModelElements(EObject eObject, EReference eReference) {
 		@SuppressWarnings("unchecked")
 		final Class<? extends EObject> referenceClass = (Class<? extends EObject>) eReference.getEReferenceType()
 			.getInstanceClass();
 		final Set<? extends EObject> modelElements = emfStoreProject.getAllModelElementsByClass(referenceClass, true);
 
-		return DialogsUtil.selectExistingModelElement(modelElements);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.edit.spi.ReferenceService#openInNewContext(org.eclipse.emf.ecore.EObject)
-	 */
-	@Override
-	public void openInNewContext(EObject eObject) {
-		if (eObject != null) {
-			ModelElementOpenerFX.openModelElement(eObject);
+		final EObject selectedEObject = DialogsUtil.selectExistingModelElement(modelElements);
+		if (selectedEObject != null) {
+			addModelElement(selectedEObject, eReference);
 		}
-
 	}
 
 }

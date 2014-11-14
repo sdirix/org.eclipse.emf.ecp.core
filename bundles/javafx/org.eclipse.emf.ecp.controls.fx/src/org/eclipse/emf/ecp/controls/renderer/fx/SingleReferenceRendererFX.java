@@ -47,7 +47,6 @@ import org.eclipse.emf.edit.domain.EditingDomain;
  * @author Lucas Koehler
  *
  */
-@SuppressWarnings("restriction")
 public class SingleReferenceRendererFX extends SimpleControlRendererFX {
 
 	private ReferenceService referenceService;
@@ -59,7 +58,7 @@ public class SingleReferenceRendererFX extends SimpleControlRendererFX {
 	@Override
 	public void init(final VControl control, ViewModelContext viewModelContext) {
 		super.init(control, viewModelContext);
-		viewModelContext.getService(ReferenceService.class);
+		referenceService = viewModelContext.getService(ReferenceService.class);
 	}
 
 	/**
@@ -180,13 +179,11 @@ public class SingleReferenceRendererFX extends SimpleControlRendererFX {
 			public void handle(ActionEvent event) {
 				removeAdapterFromReferencedEObject();
 				final Setting setting = getVElement().getDomainModelReference().getIterator().next();
-				final EditingDomain ed = getEditingDomain(setting);
 				final EReference reference = (EReference) setting.getEStructuralFeature();
-				final EObject newReference = referenceService.getExistingElementFor(reference);
-				if (newReference != null) {
-					final Command setCommand = SetCommand.create(ed, setting.getEObject(), reference, newReference);
-					ed.getCommandStack().execute(setCommand);
-					newReference.eAdapters().add(adapter);
+				referenceService.addExistingModelElements(setting.getEObject(), reference);
+				final EObject newElement = (EObject) setting.get(true);
+				if (newElement != null) {
+					newElement.eAdapters().add(adapter);
 				}
 			}
 		});
@@ -199,9 +196,9 @@ public class SingleReferenceRendererFX extends SimpleControlRendererFX {
 				removeAdapterFromReferencedEObject();
 				final Setting setting = getVElement().getDomainModelReference().getIterator().next();
 				final EReference reference = (EReference) setting.getEStructuralFeature();
-				final EObject newElement = referenceService.getNewElementFor(reference);
+				referenceService.addNewModelElements(setting.getEObject(), reference);
+				final EObject newElement = (EObject) setting.get(true);
 				if (newElement != null) {
-					referenceService.addModelElement(newElement, reference);
 					newElement.eAdapters().add(adapter);
 				}
 			}
