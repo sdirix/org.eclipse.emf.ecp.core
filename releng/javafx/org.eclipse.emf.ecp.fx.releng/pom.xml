@@ -11,14 +11,13 @@
 
 	<groupId>org.eclipse.emf.ecp.fx</groupId>
 	<artifactId>ecp-fx-parent</artifactId>
-	<version>1.4.0-SNAPSHOT</version>
+	<version>1.5.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<properties>
 		<tycho-version>0.21.0</tycho-version>
 		<junit-version>4.8.1</junit-version>
 		<mockito-version>1.8.4</mockito-version>
 		<platform-version>4.4</platform-version>
-		<efx-version>1.0.0</efx-version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<cbi-jdt-repo.url>https://repo.eclipse.org/content/repositories/eclipse-staging/</cbi-jdt-repo.url>
 		<cbi-jdt-version>3.11.0.v20140917-1904</cbi-jdt-version>
