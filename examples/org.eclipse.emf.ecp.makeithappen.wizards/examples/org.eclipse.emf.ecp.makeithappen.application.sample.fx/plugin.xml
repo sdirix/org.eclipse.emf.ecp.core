@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+<extension id="application" point="org.eclipse.core.runtime.applications">
+	<application thread="any" cardinality="*" visible="true" >
+		<run class="org.eclipse.emf.ecp.makeithappen.application.sample.fx.MainApplication" />
+		
+	</application>
+	
+</extension>
+</plugin>
