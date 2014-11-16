@@ -5,8 +5,8 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 
-import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VContainedContainer;
+import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
@@ -30,6 +30,17 @@ public abstract class ContainerRendererFX<T extends VContainedContainer> extends
 		final GridPane grid = getGridPane();
 		final T element = getVElement();
 
+		int maxColumns = 1;
+		for (final VContainedElement composite : element.getChildren()) {
+			final RendererFX<VElement> compositeRenderer = RendererFactory.INSTANCE
+				.getRenderer(composite, getViewModelContext());
+			final GridDescriptionFX rendererGrid = compositeRenderer.getGridDescription();
+			final int columns = rendererGrid.getColumns();
+			if (columns > maxColumns) {
+				maxColumns = columns;
+			}
+		}
+
 		int gridRow = -1;
 		for (final VContainedElement composite : element.getChildren()) {
 			final RendererFX<VElement> compositeRenderer = RendererFactory.INSTANCE
@@ -50,6 +61,10 @@ public abstract class ContainerRendererFX<T extends VContainedContainer> extends
 					}
 					if (VContainedContainer.class.isInstance(composite)) {
 						GridPane.setVgrow(node, Priority.ALWAYS);
+					}
+
+					if (j == columns - 1) {
+						GridPane.setColumnSpan(node, maxColumns - columns + 1);
 					}
 				}
 			}
