@@ -28,6 +28,7 @@ public class ECPProjectAdapterFactory implements IAdapterFactory {
 	 * 
 	 * @see org.eclipse.core.runtime.IAdapterFactory#getAdapterList()
 	 */
+	@Override
 	public Class[] getAdapterList() {
 		return CLASSES;
 	}
@@ -37,6 +38,7 @@ public class ECPProjectAdapterFactory implements IAdapterFactory {
 	 * 
 	 * @see org.eclipse.core.runtime.IAdapterFactory#getAdapter(java.lang.Object, java.lang.Class)
 	 */
+	@Override
 	public Object getAdapter(Object adaptable, Class adapterType) {
 		return adapt(adaptable, adapterType);
 	}

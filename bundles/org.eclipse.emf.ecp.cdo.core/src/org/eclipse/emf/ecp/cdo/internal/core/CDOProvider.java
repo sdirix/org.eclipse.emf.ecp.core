@@ -176,6 +176,7 @@ public class CDOProvider extends DefaultProvider {
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	@SuppressWarnings("unchecked")
 	public EList<Object> getElements(InternalProject project) {
 		final CDOProjectData data = (CDOProjectData) project.getProviderSpecificData();
@@ -393,6 +394,7 @@ public class CDOProvider extends DefaultProvider {
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void delete(InternalProject project, Collection<Object> objects) {
 		// CDOResource cdoResource = getProjectData(project).getRootResource();
 
@@ -401,11 +403,13 @@ public class CDOProvider extends DefaultProvider {
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void cloneProject(final InternalProject projectToClone, InternalProject targetProject) {
 		throw new UnsupportedOperationException();
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public Notifier getRoot(InternalProject project) {
 		final CDOProjectData data = (CDOProjectData) project.getProviderSpecificData();
 		if (data != null) {
@@ -419,6 +423,7 @@ public class CDOProvider extends DefaultProvider {
 	 * 
 	 * @see org.eclipse.emf.ecp.spi.core.InternalProvider#isThreadSafe()
 	 */
+	@Override
 	public boolean isThreadSafe() {
 		return true;
 	}
