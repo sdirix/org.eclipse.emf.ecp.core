@@ -1,14 +1,14 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
- * 
+ *
  *******************************************************************************/
 package org.eclipse.emf.ecp.application.e4.editor;
 
@@ -22,9 +22,9 @@ import org.eclipse.emf.ecp.ui.util.ECPModelElementOpener;
 
 /**
  * Opens a model element in {@link ECPE4Editor}.
- * 
+ *
  * @author Jonas
- * 
+ *
  */
 public class E4ModelElementOpener implements ECPModelElementOpener {
 
@@ -32,10 +32,11 @@ public class E4ModelElementOpener implements ECPModelElementOpener {
 
 	/**
 	 * Opens a model element in {@link ECPE4Editor}. {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.ui.util.ECPModelElementOpener#openModelElement(java.lang.Object,
 	 *      org.eclipse.emf.ecp.core.ECPProject)
 	 */
+	@Override
 	public void openModelElement(Object modelElement, ECPProject ecpProject) {
 		final EPartService partService = EPartServiceHelper.getEPartService();
 		for (final MPart existingPart : partService.getParts()) {
