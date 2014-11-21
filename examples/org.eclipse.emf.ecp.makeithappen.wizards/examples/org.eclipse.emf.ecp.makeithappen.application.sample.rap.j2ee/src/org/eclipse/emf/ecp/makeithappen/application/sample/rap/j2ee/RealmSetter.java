@@ -1,16 +1,17 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * EclipseSource Munich - initial API and implementation
  ******************************************************************************/
 package org.eclipse.emf.ecp.makeithappen.application.sample.rap.j2ee;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import org.eclipse.core.databinding.observable.Realm;
@@ -29,18 +30,26 @@ public final class RealmSetter {
 
 	/**
 	 * Set the default Realm.
-	 * 
+	 *
 	 * @param realm the Realm to set
 	 */
 
 	public static void setRealm(Realm realm) {
 		try {
 			final Class<Realm> clazz = Realm.class;
-			final Method method = clazz.getDeclaredMethod("setDefault", clazz);
+			final Method method = clazz.getDeclaredMethod("setDefault", clazz); //$NON-NLS-1$
 			method.setAccessible(true);
 			method.invoke(null, new Object[] { realm });
-		} catch (final Exception exception) {
-			exception.printStackTrace();
+		} catch (final NoSuchMethodException ex) {
+			ex.printStackTrace();
+		} catch (final SecurityException ex) {
+			ex.printStackTrace();
+		} catch (final IllegalAccessException ex) {
+			ex.printStackTrace();
+		} catch (final IllegalArgumentException ex) {
+			ex.printStackTrace();
+		} catch (final InvocationTargetException ex) {
+			ex.printStackTrace();
 		}
 	}
 
