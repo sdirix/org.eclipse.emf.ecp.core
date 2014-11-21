@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen - initial API and implementation
  ******************************************************************************/
@@ -42,16 +42,15 @@ import org.eclipse.swt.widgets.Control;
 
 /**
  * A diff merge addition renderer.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  */
-@SuppressWarnings("restriction")
 public class SWTDiffMergeAddition extends AbstractAdditionalSWTRenderer<VControl> {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#getGridDescription(org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription)
 	 */
 	@Override
@@ -64,13 +63,13 @@ public class SWTDiffMergeAddition extends AbstractAdditionalSWTRenderer<VControl
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#renderControl(org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell,
 	 *      org.eclipse.swt.widgets.Composite)
 	 */
 	@Override
 	protected Control renderControl(SWTGridCell cell, Composite parent) throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+	NoPropertyDescriptorFoundExeption {
 		// if (gridDescription.getColumns() == cell.getColumn() + 1) {
 		if (cell.getRenderer() == this) {
 			return createDiffButton(parent);
@@ -91,7 +90,7 @@ public class SWTDiffMergeAddition extends AbstractAdditionalSWTRenderer<VControl
 
 			/**
 			 * {@inheritDoc}
-			 * 
+			 *
 			 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
 			 */
 			@Override
@@ -107,7 +106,7 @@ public class SWTDiffMergeAddition extends AbstractAdditionalSWTRenderer<VControl
 
 					/**
 					 * {@inheritDoc}
-					 * 
+					 *
 					 * @see org.eclipse.emf.common.notify.impl.AdapterImpl#notifyChanged(org.eclipse.emf.common.notify.Notification)
 					 */
 					@Override

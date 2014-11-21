@@ -62,6 +62,7 @@ public abstract class AbstractWorkspaceHandler extends AbstractHandler {
 	 * 
 	 * @see org.eclipse.core.commands.AbstractHandler#execute(org.eclipse.core.commands.ExecutionEvent)
 	 */
+	@Override
 	public final Object execute(final ExecutionEvent event) throws ExecutionException {
 		ISelection selection = HandlerUtil.getCurrentSelectionChecked(event);
 		if (selection instanceof IStructuredSelection) {
@@ -72,6 +73,7 @@ public abstract class AbstractWorkspaceHandler extends AbstractHandler {
 				try {
 					if (jobName == null) {
 						PlatformUI.getWorkbench().getProgressService().busyCursorWhile(new IRunnableWithProgress() {
+							@Override
 							public void run(IProgressMonitor monitor) throws InvocationTargetException,
 								InterruptedException {
 								try {

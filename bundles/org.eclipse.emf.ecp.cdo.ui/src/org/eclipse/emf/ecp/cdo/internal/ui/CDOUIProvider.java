@@ -86,6 +86,7 @@ public class CDOUIProvider extends DefaultUIProvider {
 			final CDOWorkspace workspace = CDOProvider.getInstance().getAdapter(adaptable, CDOWorkspace.class);
 			if (workspace != null) {
 				return (T) new IPropertySourceProvider() {
+					@Override
 					public IPropertySource getPropertySource(Object object) {
 						return new DefaultPropertySource<CDOWorkspace>(workspace, CDOWorkspaceUtil.getProperties());
 					}
@@ -118,6 +119,7 @@ public class CDOUIProvider extends DefaultUIProvider {
 			"org.eclipse.net4j.connectors", "Type:"); //$NON-NLS-1$ //$NON-NLS-2$
 		connectorWizard.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		connectorWizard.getNotifier().addListener(new IListener() {
+			@Override
 			public void notifyEvent(IEvent event) {
 				repositoryProperties.addProperty(CDOProvider.PROP_CONNECTOR_TYPE, connectorWizard.getFactoryType());
 				repositoryProperties.addProperty(CDOProvider.PROP_CONNECTOR_DESCRIPTION,
@@ -134,6 +136,7 @@ public class CDOUIProvider extends DefaultUIProvider {
 		remoteRepositoryNameText.addModifyListener(new ModifyListener() {
 			private String oldText = ""; //$NON-NLS-1$
 
+			@Override
 			public void modifyText(ModifyEvent e) {
 				if (oldText.equals(repositoryNameText.getText())) {
 					oldText = remoteRepositoryNameText.getText();
