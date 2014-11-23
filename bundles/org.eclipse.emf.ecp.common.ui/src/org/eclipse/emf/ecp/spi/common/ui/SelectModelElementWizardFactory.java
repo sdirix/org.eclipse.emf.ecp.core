@@ -41,7 +41,7 @@ public abstract class SelectModelElementWizardFactory {
 		final SelectionComposite<TableViewer> tableSelectionComposite = CompositeFactory
 			.getTableSelectionComposite(elements.toArray(), isMany);
 
-		final SelectModelElementWizard wizard = new SelectModelElementWizard("Select Elements",
+		final SelectModelElementWizard wizard = new SelectModelElementWizard(Messages.SelectModelElementWizardFactory_ModelelementSelectionDialog_WindowTitle,
 			Messages.NewModelElementWizard_WizardTitle_AddModelElement,
 			Messages.ModelelementSelectionDialog_DialogTitle,
 			Messages.ModelelementSelectionDialog_DialogMessage_SearchPattern, EObject.class);

@@ -119,6 +119,7 @@ SelectionComposite<TableViewer> {
 	 */
 	private final class ModelElementViewerFilter extends ECPViewerFilter {
 
+		private static final String WILDCARD = "*"; //$NON-NLS-1$
 		private final ILabelProvider labelProvider;
 
 		public ModelElementViewerFilter(ILabelProvider labelProvider) {
@@ -139,8 +140,8 @@ SelectionComposite<TableViewer> {
 			final String eObjectName = labelProvider.getText(eObjectToFilter);
 
 			String searchString = getSearchTerm();
-			if (!searchString.startsWith("*")) {
-				searchString = "*" + searchString + "*";
+			if (!searchString.startsWith(WILDCARD)) {
+				searchString = WILDCARD + searchString + WILDCARD;
 			}
 			final Pattern pattern = Pattern.compile(wildcardToRegex(searchString), Pattern.CASE_INSENSITIVE);
 			final Matcher matcher = pattern.matcher(eObjectName);
@@ -154,13 +155,13 @@ SelectionComposite<TableViewer> {
 				final char c = wildcard.charAt(i);
 				switch (c) {
 				case '*':
-					s.append(".*");
+					s.append(".*"); //$NON-NLS-1$
 					break;
 				case '?':
-					s.append(".");
+					s.append("."); //$NON-NLS-1$
 					break;
 				case ' ':
-					s.append("\\s");
+					s.append("\\s"); //$NON-NLS-1$
 					break;
 					// escape special regexp-characters
 				case '(':
@@ -174,7 +175,7 @@ SelectionComposite<TableViewer> {
 				case '}':
 				case '|':
 				case '\\':
-					s.append("\\");
+					s.append("\\"); //$NON-NLS-1$
 					s.append(c);
 					break;
 				default:

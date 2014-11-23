@@ -32,6 +32,8 @@ public class Messages extends NLS {
 	public static String ModelelementSelectionDialog_DialogMessage_SearchPattern;
 	public static String ModelelementSelectionDialog_DialogTitle;
 
+	public static String SelectModelElementWizardFactory_ModelelementSelectionDialog_WindowTitle;
+
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);
