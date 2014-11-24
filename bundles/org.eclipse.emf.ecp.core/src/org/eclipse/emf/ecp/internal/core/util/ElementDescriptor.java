@@ -60,31 +60,37 @@ public abstract class ElementDescriptor<ELEMENT extends ECPElement> extends Elem
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public final String getLabel() {
 		return label;
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public final void setLabel(String label) {
 		this.label = label;
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public final String getDescription() {
 		return description;
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public final void setDescription(String description) {
 		this.description = description;
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public final boolean isResolved() {
 		return resolvedElement != null;
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public final ELEMENT getResolvedElement() {
 		boolean resolved = false;
 		synchronized (this) {
@@ -119,26 +125,31 @@ public abstract class ElementDescriptor<ELEMENT extends ECPElement> extends Elem
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public final boolean isDisposed() {
 		return disposable.isDisposed();
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public final void dispose() {
 		disposable.dispose();
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public final void addDisposeListener(DisposeListener listener) {
 		disposable.addDisposeListener(listener);
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public final void removeDisposeListener(DisposeListener listener) {
 		disposable.removeDisposeListener(listener);
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public final void disposed(ECPDisposable disposable) {
 		if (resolvedElement == disposable) {
 			resolvedElement = null;

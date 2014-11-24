@@ -120,6 +120,7 @@ public class ECPObserverBusImpl implements ECPObserverBus {
 	 * @param clazz class of observer
 	 * @return call object
 	 */
+	@Override
 	public <T extends ECPObserver> T notify(Class<T> clazz) {
 		return notify(clazz, false);
 	}
@@ -145,6 +146,7 @@ public class ECPObserverBusImpl implements ECPObserverBus {
 	 * 
 	 * @param observer observer object
 	 */
+	@Override
 	public void register(ECPObserver observer) {
 		register(observer, getObserverInterfaces(observer));
 	}
@@ -168,6 +170,7 @@ public class ECPObserverBusImpl implements ECPObserverBus {
 	 * 
 	 * @param observer observer object
 	 */
+	@Override
 	public void unregister(ECPObserver observer) {
 		unregister(observer, getObserverInterfaces(observer));
 	}
@@ -253,6 +256,7 @@ public class ECPObserverBusImpl implements ECPObserverBus {
 		}
 
 		// BEGIN SUPRESS CATCH EXCEPTION
+		@Override
 		public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
 			// END SUPRESS CATCH EXCEPTION
 			// fork for calls to ObserverCall.class
@@ -309,6 +313,7 @@ public class ECPObserverBusImpl implements ECPObserverBus {
 			return results;
 		}
 
+		@Override
 		public List<Result> getObserverCallResults() {
 			return lastResults;
 		}
@@ -323,6 +328,7 @@ public class ECPObserverBusImpl implements ECPObserverBus {
 	 */
 	private void sortObservers(List<ECPObserver> observers) {
 		Collections.sort(observers, new Comparator<ECPObserver>() {
+			@Override
 			public int compare(ECPObserver o1, ECPObserver o2) {
 				int prio1 = ((ECPPrioritizedIObserver) o1).getPriority();
 				int prio2 = ((ECPPrioritizedIObserver) o2).getPriority();

@@ -33,11 +33,13 @@ public abstract class Element implements ECPElement {
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public final String getName() {
 		return name;
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public int compareTo(ECPElement o) {
 		return name.compareTo(o.getName());
 	}

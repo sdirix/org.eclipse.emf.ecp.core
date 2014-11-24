@@ -112,6 +112,7 @@ public final class ECPRepositoryImpl extends PropertiesElement implements Intern
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public void disposed(ECPDisposable disposable) throws DisposeException {
 		if (disposable == provider) {
 			dispose();
@@ -119,6 +120,7 @@ public final class ECPRepositoryImpl extends PropertiesElement implements Intern
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public boolean isStorable() {
 		return true;
 	}
@@ -132,26 +134,31 @@ public final class ECPRepositoryImpl extends PropertiesElement implements Intern
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public String getLabel() {
 		return label;
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public void setLabel(String label) {
 		this.label = label;
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public String getDescription() {
 		return description;
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public void setDescription(String description) {
 		this.description = description;
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public boolean isDisposed() {
 		return disposable.isDisposed();
 	}
@@ -186,41 +193,49 @@ public final class ECPRepositoryImpl extends PropertiesElement implements Intern
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public void dispose() {
 		disposable.dispose();
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public void addDisposeListener(DisposeListener listener) {
 		disposable.addDisposeListener(listener);
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public void removeDisposeListener(DisposeListener listener) {
 		disposable.removeDisposeListener(listener);
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public InternalProvider getProvider() {
 		return provider;
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public Object getProviderSpecificData() {
 		return providerSpecificData;
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public void setProviderSpecificData(Object providerSpecificData) {
 		this.providerSpecificData = providerSpecificData;
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public boolean canDelete() {
 		return isStorable();
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public void delete() {
 		if (!canDelete()) {
 			throw new UnsupportedOperationException();
@@ -236,6 +251,7 @@ public final class ECPRepositoryImpl extends PropertiesElement implements Intern
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public void notifyObjectsChanged(Collection<Object> objects) {
 		if (objects != null && objects.size() != 0) {
 			ECPRepositoryManagerImpl.INSTANCE.notifyObjectsChanged(this, objects);

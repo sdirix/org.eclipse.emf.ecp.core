@@ -131,6 +131,7 @@ public abstract class Registry<ELEMENT, OBSERVER extends ECPObserver> extends Li
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	@SuppressWarnings("unchecked")
 	public final void disposed(ECPDisposable disposable) {
 		if (isRemoveDisposedElements()) {

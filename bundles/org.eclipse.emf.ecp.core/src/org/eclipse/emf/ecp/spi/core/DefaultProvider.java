@@ -93,41 +93,49 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public final InternalProvider getProvider() {
 		return this;
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public final String getLabel() {
 		return label;
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public final void setLabel(String label) {
 		this.label = label;
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public final String getDescription() {
 		return description;
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public final void setDescription(String description) {
 		this.description = description;
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public final AdapterProvider getUIProvider() {
 		return uiProvider;
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public final void setUIProvider(AdapterProvider uiProvider) {
 		this.uiProvider = uiProvider;
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public final Set<InternalProject> getOpenProjects() {
 		final Set<InternalProject> result = new LinkedHashSet<InternalProject>();
 		for (final ECPProject project : ECPUtil.getECPProjectManager().getProjects()) {
@@ -144,21 +152,25 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public final boolean isDisposed() {
 		return disposable.isDisposed();
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public final void dispose() {
 		disposable.dispose();
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public final void addDisposeListener(DisposeListener listener) {
 		disposable.addDisposeListener(listener);
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public final void removeDisposeListener(DisposeListener listener) {
 		disposable.removeDisposeListener(listener);
 	}
@@ -170,6 +182,7 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public <T> T getAdapter(Object adaptable, Class<T> adapterType) {
 		if (uiProvider != null) {
 			return uiProvider.getAdapter(adaptable, adapterType);
@@ -194,11 +207,13 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 	 * @return the adapted object or <code>null</code>
 	 * @see org.eclipse.core.runtime.IAdaptable#getAdapter(Class)
 	 */
+	@Override
 	public Object getAdapter(@SuppressWarnings("rawtypes") Class adapterType) {
 		return Platform.getAdapterManager().getAdapter(this, adapterType);
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public EditingDomain createEditingDomain(InternalProject project) {
 		final CommandStack commandStack = createCommandStack(project);
 		final EditingDomain editingDomain = new AdapterFactoryEditingDomain(InternalProvider.EMF_ADAPTER_FACTORY,
@@ -219,16 +234,19 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public boolean hasCreateRepositorySupport() {
 		return true;
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public boolean isSlow(Object parent) {
 		return false;
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public ECPContainer getModelContext(Object element) {
 		if (element instanceof ECPContainer) {
 			return (ECPContainer) element;
@@ -287,6 +305,7 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void fillChildren(ECPContainer context, Object parent, InternalChildrenList childrenList) {
 		if (parent == ECPUtil.getECPProjectManager()) {
 			childrenList.addChildren(ECPUtil.getECPProjectManager().getProjects());
@@ -307,6 +326,7 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void handleLifecycle(ECPContainer context, LifecycleEvent event) {
 		final String providerClass = getClass().getSimpleName();
 		final String contextClass = context.getClass().getSimpleName();
@@ -324,6 +344,7 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 	 * @return the {@link Collection} of {@link EPackage EPackages} unsupported by this provider for the specified
 	 *         repository
 	 */
+	@Override
 	public Set<EPackage> getUnsupportedEPackages(Collection<EPackage> packages, InternalRepository repository) {
 		return Collections.emptySet();
 	}
@@ -340,6 +361,7 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 	 *            the {@link EReference} to add
 	 * @return {@link Iterator} of {@link EObject} that can be linked
 	 */
+	@Override
 	public Iterator<EObject> getLinkElements(InternalProject project, EObject modelElement, EReference eReference) {
 		return ItemPropertyDescriptor.getReachableObjectsOfType(modelElement, eReference.getEType()).iterator();
 	}
@@ -350,6 +372,7 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 	 * @param project
 	 *            the project to save
 	 */
+	@Override
 	public void doSave(InternalProject project) {
 		// do nothing
 	}
@@ -362,6 +385,7 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 	 *            the project to check
 	 * @return false
 	 */
+	@Override
 	public boolean isDirty(InternalProject project) {
 		return false;
 	}
@@ -372,6 +396,7 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 	 * @param project the project to check
 	 * @return true
 	 */
+	@Override
 	public boolean modelExists(InternalProject project) {
 		return true;
 	}
@@ -381,12 +406,14 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 	 * 
 	 * @return false
 	 */
+	@Override
 	public boolean hasCreateProjectWithoutRepositorySupport() {
 		return false;
 	}
 
 	/** {@inheritDoc} */
 	// FIXME implement only in provider
+	@Override
 	public boolean contains(InternalProject project, Object object) {
 		return false;
 	}

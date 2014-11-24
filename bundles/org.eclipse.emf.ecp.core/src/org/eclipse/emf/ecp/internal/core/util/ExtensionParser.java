@@ -58,6 +58,7 @@ public abstract class ExtensionParser<ELEMENT extends InternalRegistryElement> e
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void registryChanged(IRegistryChangeEvent event) {
 		final Set<String> remove = new HashSet<String>();
 		final Set<ELEMENT> add = new HashSet<ELEMENT>();

@@ -55,12 +55,14 @@ public abstract class PropertiesElement extends Element implements StorableEleme
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void write(ObjectOutput out) throws IOException {
 		out.writeUTF(getName());
 		((Properties) properties).write(out);
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public final ECPProperties getProperties() {
 		return properties;
 	}
@@ -78,6 +80,7 @@ public abstract class PropertiesElement extends Element implements StorableEleme
 
 	private void observeProperties() {
 		properties.addObserver(new ECPPropertiesObserver() {
+			@Override
 			public void propertiesChanged(ECPProperties properties, Collection<Entry<String, String>> oldProperties,
 				Collection<Entry<String, String>> newProperties) {
 				PropertiesElement.this.propertiesChanged(oldProperties, newProperties);

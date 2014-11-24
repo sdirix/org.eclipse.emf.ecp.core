@@ -29,6 +29,7 @@ public interface InternalRepository extends ECPRepository, StorableElement, Inte
 	 * 
 	 * @return the provider of the repository
 	 */
+	@Override
 	InternalProvider getProvider();
 
 	/**

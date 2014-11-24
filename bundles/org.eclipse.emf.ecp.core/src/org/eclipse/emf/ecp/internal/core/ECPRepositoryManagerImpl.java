@@ -88,6 +88,7 @@ public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepo
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public InternalRepository getRepository(Object adaptable) {
 		if (adaptable instanceof ECPRepositoryAware) {
 			final ECPRepositoryAware repositoryAware = (ECPRepositoryAware) adaptable;
@@ -98,11 +99,13 @@ public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepo
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public InternalRepository getRepository(String name) {
 		return getElement(name);
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public Collection<ECPRepository> getRepositories() {
 		return (Collection) getElements();
 	}
@@ -117,6 +120,7 @@ public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepo
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public ECPRepository addRepository(ECPProvider provider, String name, String label, String description,
 		ECPProperties properties) {
 		if (!provider.hasCreateRepositorySupport()) {
@@ -149,6 +153,7 @@ public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepo
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public void providersChanged(Collection<ECPProvider> oldProviders, Collection<ECPProvider> newProviders) {
 		final Set<ECPProvider> addedProviders = InternalUtil.getAddedElements(oldProviders, newProviders);
 		if (!addedProviders.isEmpty()) {
@@ -286,6 +291,7 @@ public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepo
 			}
 
 			properties.addObserver(new ECPPropertiesObserver() {
+				@Override
 				public void propertiesChanged(ECPProperties properties,
 					Collection<Entry<String, String>> oldProperties, Collection<Entry<String, String>> newProperties) {
 					ECPRepositoryManagerImpl.INSTANCE.storeElement(RepositoryDescriptor.this);
@@ -294,47 +300,56 @@ public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepo
 		}
 
 		/** {@inheritDoc} */
+		@Override
 		public boolean isStorable() {
 			return true;
 		}
 
 		/** {@inheritDoc} */
+		@Override
 		public void write(ObjectOutput out) throws IOException {
 			((Properties) properties).write(out);
 		}
 
 		/** {@inheritDoc} */
+		@Override
 		public InternalProvider getProvider() {
 			final String providerName = getConfigurationElement().getAttribute("provider");
 			return (InternalProvider) ECPUtil.getECPProviderRegistry().getProvider(providerName);
 		}
 
 		/** {@inheritDoc} */
+		@Override
 		public ECPProperties getProperties() {
 			return properties;
 		}
 
 		/** {@inheritDoc} */
+		@Override
 		public Object getProviderSpecificData() {
 			return getResolvedElement().getProviderSpecificData();
 		}
 
 		/** {@inheritDoc} */
+		@Override
 		public void setProviderSpecificData(Object data) {
 			getResolvedElement().setProviderSpecificData(data);
 		}
 
 		/** {@inheritDoc} */
+		@Override
 		public boolean canDelete() {
 			return false;
 		}
 
 		/** {@inheritDoc} */
+		@Override
 		public void delete() {
 			throw new UnsupportedOperationException();
 		}
 
 		/** {@inheritDoc} */
+		@Override
 		public void notifyObjectsChanged(Collection<Object> objects) {
 			getResolvedElement().notifyObjectsChanged(objects);
 		}

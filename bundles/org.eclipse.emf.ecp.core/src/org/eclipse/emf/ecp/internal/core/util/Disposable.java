@@ -38,11 +38,13 @@ public class Disposable implements ECPDisposable {
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public final synchronized boolean isDisposed() {
 		return disposed;
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public final void dispose() {
 		DisposeListener[] array = null;
 
@@ -68,11 +70,13 @@ public class Disposable implements ECPDisposable {
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public final synchronized void addDisposeListener(DisposeListener listener) {
 		listeners.add(listener);
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public final synchronized void removeDisposeListener(DisposeListener listener) {
 		listeners.remove(listener);
 	}

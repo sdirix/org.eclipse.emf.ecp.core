@@ -38,6 +38,7 @@ public interface InternalProject extends ECPProject, ECPProjectAware, StorableEl
 	 * 
 	 * @return the repository of this project or null if not shared
 	 */
+	@Override
 	InternalRepository getRepository();
 
 	/**
@@ -45,6 +46,7 @@ public interface InternalProject extends ECPProject, ECPProjectAware, StorableEl
 	 * 
 	 * @return the provider of this project
 	 */
+	@Override
 	InternalProvider getProvider();
 
 	/**

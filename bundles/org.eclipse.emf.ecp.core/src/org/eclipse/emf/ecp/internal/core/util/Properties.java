@@ -56,38 +56,45 @@ public class Properties extends Registry<Map.Entry<String, String>, ECPPropertie
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void addProperty(String key, String value) {
 		final Map.Entry<String, String> property = new Property(key, value);
 		doChangeElements(null, Collections.singleton(property));
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void removeProperty(String key) {
 		doChangeElements(Collections.singleton(key), null);
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public String getValue(String name) {
 		final Entry<String, String> element = getElement(name);
 		return element == null ? null : element.getValue();
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public Set<String> getKeys() {
 		return getElementNames();
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public Collection<Map.Entry<String, String>> getProperties() {
 		return getElements();
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public boolean hasProperties() {
 		return hasElements();
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public ECPProperties copy() {
 		final ECPProperties copy = ECPUtil.createProperties();
 		for (final Entry<String, String> property : getElements()) {
@@ -145,16 +152,19 @@ public class Properties extends Registry<Map.Entry<String, String>, ECPPropertie
 		}
 
 		/** {@inheritDoc} */
+		@Override
 		public String getKey() {
 			return key;
 		}
 
 		/** {@inheritDoc} */
+		@Override
 		public String getValue() {
 			return value;
 		}
 
 		/** {@inheritDoc} */
+		@Override
 		public String setValue(String value) {
 			throw new UnsupportedOperationException();
 		}
