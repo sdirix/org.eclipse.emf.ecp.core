@@ -55,6 +55,7 @@ public class MEEditorInput implements IEditorInput {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public boolean exists() {
 		// TODO Auto-generated method stub
 		return false;
@@ -63,6 +64,7 @@ public class MEEditorInput implements IEditorInput {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public IPersistableElement getPersistable() {
 		// TODO Auto-generated method stub
 		return null;
@@ -110,6 +112,7 @@ public class MEEditorInput implements IEditorInput {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public Object getAdapter(@SuppressWarnings("rawtypes") Class clazz) {
 
 		if (clazz.equals(EObject.class)) {
@@ -138,6 +141,7 @@ public class MEEditorInput implements IEditorInput {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public ImageDescriptor getImageDescriptor() {
 		// TODO Auto-generated method stub
 		return null;
@@ -146,6 +150,7 @@ public class MEEditorInput implements IEditorInput {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public String getName() {
 		return modelElementContext.getDomainObject().eClass().getName();
 	}
@@ -153,6 +158,7 @@ public class MEEditorInput implements IEditorInput {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public String getToolTipText() {
 		return getName();
 	}
