@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen - initial API and implementation
  ******************************************************************************/
@@ -27,8 +27,9 @@ import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Eugen
- * 
+ *
  */
+@SuppressWarnings("restriction")
 public class ECPInitializationTest {
 
 	// This test runs in 8000 ms locally. On hudson this test needs probably 400000 ms -> 50 times slower !
@@ -70,7 +71,7 @@ public class ECPInitializationTest {
 					fail("Taking too long");
 				}
 				System.out
-					.println("Added " + i + "Items, Time passed " + (System.currentTimeMillis() - startTimeMillis));
+				.println("Added " + i + "Items, Time passed " + (System.currentTimeMillis() - startTimeMillis));
 			}
 		}
 		assertTrue(System.currentTimeMillis() - startTimeMillis < MAXIMAL_ALLOWED_DURATION);
