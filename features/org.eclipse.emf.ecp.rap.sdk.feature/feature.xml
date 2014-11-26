@@ -40,10 +40,6 @@
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.emf.ecp.license.feature.source"
-         version="0.0.0"/>
-
-   <includes
          id="org.eclipse.emf.ecp.rap.feature.source"
          version="0.0.0"/>
 

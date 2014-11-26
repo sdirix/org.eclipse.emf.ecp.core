@@ -23,9 +23,31 @@
 		<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
 		<sonar.jacoco.reportPath>../../tests/coverage/jacoco.exec</sonar.jacoco.reportPath>
 		<sonar.exclusions>**/model/**,**/test/**</sonar.exclusions>
+		
+		<target-rcp>ecp</target-rcp>
+		<target-rap>ecpRAP</target-rap>
 	</properties>
 
 	<profiles>
+		<!-- Profile for changing the used targets to mars p2 repositories -->
+		<profile>
+			<id>mars</id>
+			<activation>
+				<property>
+					<name>mars</name>
+				</property>
+			</activation>
+			<properties>
+				<target-rcp>ecpMars</target-rcp>
+				<target-rap>ecpRAPMars</target-rap>
+			</properties>
+			<modules>
+				<module>../../releng/org.eclipse.emf.ecp.target.rcp.mars</module>
+				<module>../../releng/org.eclipse.emf.ecp.target.rap.mars</module>
+			</modules>
+		</profile>
+		
+		<!-- Profile for adding aggregate sites to the built p2 repositry -->
 		<profile>
 			<id>aggregateSites</id>
 			<activation>
@@ -34,6 +56,8 @@
 				</property>
 			</activation>
 		</profile>
+		
+		<!-- Profile for use on the eclipse build server. Enables code signing, etc. -->
 		<profile>
 			<id>build-server</id>
 			<activation>
@@ -108,7 +132,6 @@
 					<allowConflictingDependencies>true</allowConflictingDependencies>
 					<includePackedArtifacts>true</includePackedArtifacts>
 					<environments>
-
 						<environment>
 							<os>win32</os>
 							<ws>win32</ws>
@@ -129,11 +152,12 @@
 							<ws>gtk</ws>
 							<arch>x86_64</arch>
 						</environment>
-						<environment>
+						<!--  Beginning with mars this environment is removed -->
+						<!--environment>
 							<os>macosx</os>
 							<ws>cocoa</ws>
 							<arch>x86</arch>
-						</environment>
+						</environment-->
 						<environment>
 							<os>macosx</os>
 							<ws>cocoa</ws>
@@ -143,12 +167,12 @@
 					<target>
 						<artifact>
 							<groupId>org.eclipse.emf.ecp</groupId>
-							<artifactId>ecp</artifactId>
+							<artifactId>${target-rcp}</artifactId>
 							<version>${project.version}</version>
 						</artifact>
 						<artifact>
 							<groupId>org.eclipse.emf.ecp</groupId>
-							<artifactId>ecpRAP</artifactId>
+							<artifactId>${target-rap}</artifactId>
 							<version>${project.version}</version>
 						</artifact>
 					</target>
