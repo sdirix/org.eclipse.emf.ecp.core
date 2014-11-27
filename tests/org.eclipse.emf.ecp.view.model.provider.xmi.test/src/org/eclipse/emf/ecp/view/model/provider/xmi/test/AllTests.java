@@ -17,7 +17,7 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({ ViewModelFileExtensionsManagerTest.class })
+@SuiteClasses({ ViewModelFileExtensionsManager_PTest.class })
 public class AllTests {
 
 }

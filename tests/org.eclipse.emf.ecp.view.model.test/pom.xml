@@ -4,47 +4,13 @@
 	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-    <groupId>org.eclipse.emf.ecp</groupId>
-    <artifactId>ecp-parent</artifactId>
-    <version>1.5.0-SNAPSHOT</version>
-    <relativePath>../../releng/org.eclipse.emf.ecp.releng/</relativePath>
-  </parent>
+		<groupId>org.eclipse.emf.ecp</groupId>
+		<artifactId>ecp-tests-parent</artifactId>
+		<version>1.5.0-SNAPSHOT</version>
+		<relativePath>../../releng/org.eclipse.emf.ecp.releng.tests/</relativePath>
+	</parent>
 	<groupId>org.eclipse.emf.ecp</groupId>
 	<artifactId>org.eclipse.emf.ecp.view.model.test</artifactId>
-	<packaging>eclipse-test-plugin</packaging>
+	<packaging>eclipse-plugin</packaging>
 
-	<build>
-		<sourceDirectory>src</sourceDirectory>
-		<plugins>
-			<plugin>
-				<groupId>org.eclipse.tycho</groupId>
-				<artifactId>tycho-surefire-plugin</artifactId>
-				<version>${tycho-version}</version>
-				<configuration>
-				<testSuite>org.eclipse.emf.ecp.view.model.test</testSuite>
-		          	<testClass>org.eclipse.emf.ecp.view.model.test.AllTests</testClass>
-		          	<useUIHarness>true</useUIHarness>
-		          	<useUIThread>true</useUIThread>
-		          	<testFailureIgnore>true</testFailureIgnore>
-					<dependencies>
-						<dependency>
-							<type>eclipse-feature</type>
-							<artifactId>org.eclipse.emf.ecp.target.feature</artifactId>
-							<version>0.0.0</version>
-						</dependency>
-						<dependency>
-							<type>eclipse-feature</type>
-							<artifactId>org.eclipse.emf.ecp.viewmodel.feature</artifactId>
-							<version>0.0.0</version>
-						</dependency>
-						<dependency>
-							<type>eclipse-feature</type>
-							<artifactId>org.eclipse.emf.emfstore.example.feature</artifactId>
-							<version>0.0.0</version>
-						</dependency>
-					</dependencies>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
 </project>

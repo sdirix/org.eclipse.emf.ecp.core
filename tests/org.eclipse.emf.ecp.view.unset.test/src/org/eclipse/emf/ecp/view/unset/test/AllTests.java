@@ -21,8 +21,8 @@ import org.junit.runners.Suite.SuiteClasses;
  */
 @RunWith(Suite.class)
 @SuiteClasses({
-	UnsetRuleIntegrationTest.class,
-	UnsetServiceTest.class })
+	UnsetRuleIntegration_Test.class,
+	UnsetService_Test.class })
 public class AllTests {
 
 }

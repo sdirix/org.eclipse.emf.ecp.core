@@ -23,11 +23,11 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-	ECPProjectManagerTests.class,
-	ECPProjectTests.class,
-	ECPProviderTests.class,
-	ECPProviderRegistryTest.class,
-	ECPRepositoryTest.class })
+	ECPProjectManager_PTest.class,
+	ECPProject_PTest.class,
+	ECPProvider_PTest.class,
+	ECPProviderRegistry_PTest.class,
+	ECPRepository_PTest.class })
 /*
  * deactivated, because hudson is 50 times slower than local machine.
  * ECPInitializationTest.class

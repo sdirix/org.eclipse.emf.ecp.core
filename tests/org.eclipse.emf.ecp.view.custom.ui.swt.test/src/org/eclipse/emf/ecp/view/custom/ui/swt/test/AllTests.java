@@ -17,12 +17,12 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({
-	SWTCustomControlTest.class,
-	ECPAbstractCustomControlSWTTest.class,
-	CustomControlValidationTest.class,
-	CustomControlTwoRowWithViewerTest.class,
-	CustomControlMultiUserTest.class,
-	CustomControlDMRTest.class
+	SWTCustomControl_PTest.class,
+	ECPAbstractCustomControlSWT_PTest.class,
+	CustomControlValidation_PTest.class,
+	CustomControlTwoRowWithViewer_PTest.class,
+	CustomControlMultiUser_PTest.class,
+	CustomControlDMR_PTest.class
 })
 public class AllTests {
 

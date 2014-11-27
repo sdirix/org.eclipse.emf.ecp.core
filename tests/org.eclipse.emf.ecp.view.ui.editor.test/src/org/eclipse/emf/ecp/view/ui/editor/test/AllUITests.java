@@ -11,9 +11,9 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.ui.editor.test;
 
-import org.eclipse.emf.ecp.view.ui.editor.test.controls.ControlsSWTBotTest;
-import org.eclipse.emf.ecp.view.ui.editor.test.controls.TableControlSWTBotTest;
-import org.eclipse.emf.ecp.view.ui.editor.test.controls.XmlDateControlSWTBotTest;
+import org.eclipse.emf.ecp.view.ui.editor.test.controls.ControlsSWTBot_PTest;
+import org.eclipse.emf.ecp.view.ui.editor.test.controls.TableControlSWTBot_PTest;
+import org.eclipse.emf.ecp.view.ui.editor.test.controls.XmlDateControlSWTBot_PTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
@@ -23,13 +23,13 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-	OpenEditorTest.class,
+	OpenEditor_PTest.class,
 	// ModifyNavigatorTest.class,
-	DynamicContainmentTreeSWTBotTest.class,
-	ControlsSWTBotTest.class,
-	TableControlSWTBotTest.class,
-	XmlDateControlSWTBotTest.class,
-	CellReadOnlyTest.class
+	DynamicContainmentTreeSWTBot_PTest.class,
+	ControlsSWTBot_PTest.class,
+	TableControlSWTBot_PTest.class,
+	XmlDateControlSWTBot_PTest.class,
+	CellReadOnly_PTest.class
 })
 public class AllUITests {
 

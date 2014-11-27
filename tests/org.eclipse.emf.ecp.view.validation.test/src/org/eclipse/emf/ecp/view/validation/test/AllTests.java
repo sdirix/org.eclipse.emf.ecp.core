@@ -17,14 +17,14 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({
-	ValidationServiceGCTest.class,
-	ViewValidationTest.class,
-	VDiagnosticHelperTest.class,
-	ValidationProviderTest.class,
-	SubstitutionLabelTest.class,
-	TableValidationTest.class,
-	ValidationPerformanceTest.class,
-	DynamicDMRTest.class
+	ValidationServiceGC_PTest.class,
+	ViewValidation_PTest.class,
+	VDiagnosticHelper_Test.class,
+	ValidationProvider_PTest.class,
+	SubstitutionLabel_PTest.class,
+	TableValidation_PTest.class,
+	ValidationPerformance_Test.class,
+	DynamicDMR_PTest.class
 })
 public class AllTests {
 

@@ -119,7 +119,7 @@ public class ECPAbstractCustomControlSWTStub extends ECPAbstractCustomControlSWT
 		NoPropertyDescriptorFoundExeption {
 		if (cell.getColumn() == 0) {
 			label = new Label(parent, SWT.NONE);
-			label.setText(ECPAbstractCustomControlSWTTest.LABELTEXT);
+			label.setText(ECPAbstractCustomControlSWT_PTest.LABELTEXT);
 			setRendered(true);
 			return label;
 		}

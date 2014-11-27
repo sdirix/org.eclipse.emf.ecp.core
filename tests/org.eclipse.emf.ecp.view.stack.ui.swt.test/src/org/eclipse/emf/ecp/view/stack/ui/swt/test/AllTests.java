@@ -17,9 +17,9 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({
-	StackItemViewServiceTests.class,
-	DynamicDMRStackItemViewServiceTests.class,
-	SWTStackTests.class
+	StackItemViewService_Test.class,
+	DynamicDMRStackItemViewService_Test.class,
+	SWTStack_PTest.class
 })
 public class AllTests {
 

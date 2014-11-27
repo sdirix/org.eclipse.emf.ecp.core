@@ -21,8 +21,8 @@ import org.junit.runners.Suite.SuiteClasses;
  */
 @RunWith(Suite.class)
 @SuiteClasses({
-	SelectAttributesTest.class,
-	ControlGeneratorTest.class
+	SelectAttributes_Test.class,
+	ControlGenerator_PTest.class
 })
 public class AllTests {
 

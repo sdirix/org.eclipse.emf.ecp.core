@@ -16,7 +16,7 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({ DynamicContainmentTreeTest.class })
+@SuiteClasses({ DynamicContainmentTree_PTest.class })
 public class AllTests {
 
 }

@@ -17,9 +17,9 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({
-	RuleServiceGCTest.class,
-	RuleServiceTest.class,
-	ConditionEvaluatorTest.class,
+	RuleServiceGC_Test.class,
+	RuleService_PTest.class,
+	ConditionEvaluator_Test.class,
 	DynamicRuleService_Test.class
 })
 public class AllTests {

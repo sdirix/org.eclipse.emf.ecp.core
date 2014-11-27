@@ -11,7 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.viewproxy.tests;
 
-import org.eclipse.emf.ecp.view.internal.viewproxy.resolver.ResolverViewServiceTest;
+import org.eclipse.emf.ecp.view.internal.viewproxy.resolver.ResolverViewService_PTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
@@ -21,7 +21,7 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-	ResolverViewServiceTest.class })
+	ResolverViewService_PTest.class })
 public class AllTests {
 
 }

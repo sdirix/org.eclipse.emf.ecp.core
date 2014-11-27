@@ -19,7 +19,7 @@ import org.junit.runners.Suite;
  * 
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({ ValidationTreeViewerTest.class, ValidationResultServiceTest.class })
+@Suite.SuiteClasses({ ValidationTreeViewer_PTest.class, ValidationResultService_Test.class })
 public class AllValidationViewTests {
 
 }

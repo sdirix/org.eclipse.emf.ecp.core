@@ -23,8 +23,8 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-	EcoreGenModelLinkerTest.class,
-	ProjectNameTest.class
+	EcoreGenModelLinker_PTest.class,
+	ProjectName_Test.class
 })
 public class AllEcoreGenModelTests {
 

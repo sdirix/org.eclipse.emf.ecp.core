@@ -20,7 +20,7 @@ import org.junit.runners.Suite.SuiteClasses;
  *
  */
 @RunWith(Suite.class)
-@SuiteClasses({ TestDomainModelReference.class })
+@SuiteClasses({ DomainModelReference_Test.class })
 public class AllTests {
 
 }
