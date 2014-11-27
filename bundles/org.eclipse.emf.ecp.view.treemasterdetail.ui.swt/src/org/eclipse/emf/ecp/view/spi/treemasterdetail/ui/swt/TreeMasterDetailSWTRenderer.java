@@ -34,6 +34,7 @@ import org.eclipse.emf.ecp.edit.spi.ReferenceService;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.DefaultReferenceService;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
+import org.eclipse.emf.ecp.view.internal.swt.ContextMenuViewModelService;
 import org.eclipse.emf.ecp.view.internal.treemasterdetail.ui.swt.Activator;
 import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
@@ -106,11 +107,11 @@ import org.osgi.framework.FrameworkUtil;
  * @since 1.5
  *
  */
+@SuppressWarnings("restriction")
 public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMasterDetail> {
 
 	public static final String DETAIL_KEY = "detail"; //$NON-NLS-1$
 	public static final String ROOT_KEY = "root"; //$NON-NLS-1$
-
 	private SWTGridDescription rendererGridDescription;
 
 	private Font detailsFont;
@@ -186,7 +187,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 	 */
 	@Override
 	protected Control renderControl(SWTGridCell cell, Composite parent) throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+	NoPropertyDescriptorFoundExeption {
 
 		/* The tree's composites */
 		final Composite form = createMasterDetailForm(parent);
@@ -203,8 +204,24 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 
 		createMasterTree(masterPanel);
 
+		if (hasContextMenu()) {
+			registerControlAsContextMenuReceiver();
+		}
 		form.layout(true);
 		return form;
+	}
+
+	private void registerControlAsContextMenuReceiver() {
+		if (!getViewModelContext().hasService(ContextMenuViewModelService.class)) {
+			return;
+		}
+		final ContextMenuViewModelService service = getViewModelContext().getService(
+			ContextMenuViewModelService.class);
+
+		if (service != null) {
+			service.setParentControl(treeViewer.getTree());
+			service.registerContextMenu();
+		}
 	}
 
 	protected SashForm createSash(Composite parent) {
@@ -256,7 +273,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 		treeViewer = new TreeViewer(masterPanel);
 
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).hint(100, SWT.DEFAULT)
-			.applyTo(treeViewer.getTree());
+		.applyTo(treeViewer.getTree());
 
 		treeViewer.setContentProvider(adapterFactoryContentProvider);
 		treeViewer.setLabelProvider(getLabelProvider(adapterFactoryLabelProvider));
@@ -433,7 +450,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 		rightPanelContainerComposite = new Composite(container, SWT.FILL);
 		rightPanelContainerComposite.setLayout(GridLayoutFactory.fillDefaults().create());
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true)
-			.applyTo(rightPanelContainerComposite);
+		.applyTo(rightPanelContainerComposite);
 		rightPanelContainerComposite.setBackground(rightPanel.getBackground());
 
 		rightPanel.setContent(container);
@@ -767,11 +784,11 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 					relayoutDetail();
 				} catch (final ECPRendererException e) {
 					Activator
-						.getDefault()
-						.getReportService()
-						.report(new StatusReport(
-							new Status(IStatus.ERROR, Activator.getDefault().getBundle().getSymbolicName(), e
-								.getMessage(), e)));
+					.getDefault()
+					.getReportService()
+					.report(new StatusReport(
+						new Status(IStatus.ERROR, Activator.getDefault().getBundle().getSymbolicName(), e
+							.getMessage(), e)));
 				}
 			}
 		}
