@@ -551,7 +551,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 					internalRepository.getProperties().getValue(EMFStoreProvider.PROP_CERTIFICATE)).toAPI();
 				workspace.addServer(serverInfo);
 			} else if (!foundExisting && !internalRepository.getProperties().hasProperties()) {
-				serverInfo = EMFStoreClientUtil.giveServerInfo("localhost", 8080).toAPI();
+				serverInfo = EMFStoreClientUtil.giveServerInfo("localhost", 8080).toAPI(); //$NON-NLS-1$
 			}
 			internalRepository.setProviderSpecificData(serverInfo);
 		}

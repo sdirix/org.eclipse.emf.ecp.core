@@ -1,15 +1,15 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  * Edgar Mueller - refactored control to respect locale settings
- * 
+ *
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.controls;
 
@@ -33,7 +33,7 @@ import org.eclipse.swt.widgets.Text;
 
 /**
  * This class is used as a common class for all number controls.
- * 
+ *
  * @author Eugen Neufeld
  * @author emueller
  */
@@ -96,6 +96,7 @@ public class NumericalControl extends AbstractTextControl {
 			// focus out is not fired if control is embedded;
 			// use value change listener to get same behavior for control
 			value.addValueChangeListener(new IValueChangeListener() {
+				@Override
 				public void handleValueChange(ValueChangeEvent event) {
 					final Object newValue = event.diff.getNewValue();
 					final DecimalFormat format = NumericalHelper.setupFormat(getLocale(),
@@ -138,7 +139,7 @@ public class NumericalControl extends AbstractTextControl {
 		@Override
 		public Object convertValue(Object value) {
 			if (value == null) {
-				return "";
+				return ""; //$NON-NLS-1$
 			}
 			final DecimalFormat format = NumericalHelper.setupFormat(getLocale(),
 				getInstanceClass());

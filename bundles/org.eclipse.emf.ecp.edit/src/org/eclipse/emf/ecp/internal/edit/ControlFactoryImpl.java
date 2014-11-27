@@ -136,6 +136,7 @@ public final class ControlFactoryImpl implements ECPControlFactory {
 	 * @see org.eclipse.emf.ecp.edit.spi.ECPControlFactory#createControl(java.lang.Class,
 	 *      org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)
 	 */
+	@Override
 	public <T> T createControl(Class<T> controlType, VDomainModelReference domainModelReference) {
 
 		final ECPControlDescription controlDescription = getControlCandidate(controlType, domainModelReference);
@@ -152,6 +153,7 @@ public final class ControlFactoryImpl implements ECPControlFactory {
 	 * 
 	 * @see org.eclipse.emf.ecp.edit.spi.ECPControlFactory#createControl(java.lang.String)
 	 */
+	@Override
 	public <T> T createControl(String controlId) {
 
 		ECPControlDescription controlDescription = null;
@@ -172,6 +174,7 @@ public final class ControlFactoryImpl implements ECPControlFactory {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public Set<ECPControlDescription> getControlDescriptors() {
 		return new HashSet<ECPControlDescription>(controlDescriptors);
 	}

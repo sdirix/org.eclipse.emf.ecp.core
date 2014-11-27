@@ -1,14 +1,14 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
- * 
+ *
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit.spi.util;
 
@@ -24,9 +24,9 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
 /**
  * The implementation of the {@link ECPApplicableTester} for a static test, like defined in the staticTest element.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  */
 public final class ECPStaticApplicableTester implements ECPApplicableTester {
 
@@ -38,7 +38,7 @@ public final class ECPStaticApplicableTester implements ECPApplicableTester {
 
 	/**
 	 * The constructor of the static tester.
-	 * 
+	 *
 	 * @param singleValue whether the corresponding control supports only single valued features
 	 * @param priority the static priority
 	 * @param supportedClassType the class of the supported type
@@ -57,6 +57,7 @@ public final class ECPStaticApplicableTester implements ECPApplicableTester {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	@Deprecated
 	public int isApplicable(IItemPropertyDescriptor itemPropertyDescriptor, EObject eObject) {
 		return isApplicable(eObject, (EStructuralFeature) itemPropertyDescriptor.getFeature(eObject));
@@ -64,10 +65,13 @@ public final class ECPStaticApplicableTester implements ECPApplicableTester {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.edit.spi.util.ECPApplicableTester#isApplicable(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)
 	 * @since 1.2
+	 * @deprecated
 	 */
+	@Deprecated
+	@Override
 	public int isApplicable(VDomainModelReference domainModelReference) {
 		final Iterator<Setting> iterator = domainModelReference.getIterator();
 		int count = 0;
@@ -84,11 +88,14 @@ public final class ECPStaticApplicableTester implements ECPApplicableTester {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.edit.spi.util.ECPApplicableTester#isApplicable(org.eclipse.emf.ecore.EObject,
 	 *      org.eclipse.emf.ecore.EStructuralFeature)
 	 * @since 1.2
+	 * @deprecated
 	 */
+	@Deprecated
+	@Override
 	public int isApplicable(EObject eObject, EStructuralFeature feature) {
 		// if the feature is a multiValue and the description is a singlevalue continue
 		if (isSingleValue() == feature.isMany()) {
@@ -122,7 +129,7 @@ public final class ECPStaticApplicableTester implements ECPApplicableTester {
 
 	/**
 	 * @return
-	 * 
+	 *
 	 */
 	private boolean checkAttributeInvalid(EAttribute attribute) {
 		final Class<?> instanceClass = attribute.getEAttributeType().getInstanceClass();
@@ -160,7 +167,7 @@ public final class ECPStaticApplicableTester implements ECPApplicableTester {
 
 	/**
 	 * Whether the corresponding control is allowed only for single values.
-	 * 
+	 *
 	 * @return true if only a single value is allows
 	 */
 	public boolean isSingleValue() {
@@ -169,7 +176,7 @@ public final class ECPStaticApplicableTester implements ECPApplicableTester {
 
 	/**
 	 * The static priority of the corresponding control.
-	 * 
+	 *
 	 * @return the priority
 	 */
 	public int getPriority() {
@@ -178,7 +185,7 @@ public final class ECPStaticApplicableTester implements ECPApplicableTester {
 
 	/**
 	 * The eobejct which is supported by the corresponding control.
-	 * 
+	 *
 	 * @return the class of the supported eobejct
 	 */
 	public Class<? extends EObject> getSupportedEObject() {
@@ -187,7 +194,7 @@ public final class ECPStaticApplicableTester implements ECPApplicableTester {
 
 	/**
 	 * The name of the feature the corresponding control supports.
-	 * 
+	 *
 	 * @return the name of the supported feature
 	 */
 	public String getSupportedFeature() {
@@ -196,7 +203,7 @@ public final class ECPStaticApplicableTester implements ECPApplicableTester {
 
 	/**
 	 * The class of the type the corresponding control supports.
-	 * 
+	 *
 	 * @return the class of the supported type
 	 */
 	public Class<?> getSupportedClassType() {
