@@ -114,13 +114,14 @@
 				<version>${mav-surefire-version}</version>
 				<executions>
 					<execution>
-						<id>test</id>
-						<phase>test</phase>
+						<id>integration-test</id>
+						<phase>integration-test</phase>
 						<configuration>
 							<testClassesDirectory>${project.build.outputDirectory}</testClassesDirectory>
 							<includes>
 				            	<include>**/*_Test.java</include>
 							</includes>
+							<testFailureIgnore>true</testFailureIgnore>
 				        </configuration>
 						<goals>
 							<goal>test</goal>
@@ -151,6 +152,7 @@
 						<executions>
 							<execution>
 								<id>sign</id>
+								<phase>package</phase>
 								<goals>
 									<goal>sign</goal>
 								</goals>
