@@ -537,6 +537,22 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 			return text;
 		}
 
+		/**
+		 * {@inheritDoc}
+		 *
+		 * @see org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider#getText(java.lang.Object)
+		 */
+		@Override
+		public String getText(Object object) {
+			String text;
+			if (VCategorizableElement.class.isInstance(object)) {
+				text = super.getText(((VCategorizableElement) object).getLabelObject());
+			} else {
+				text = super.getText(object);
+			}
+			return text;
+		}
+
 		@Override
 		public Image getColumnImage(Object object, int columnIndex) {
 
@@ -546,6 +562,23 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 			Image image = super.getColumnImage(object, columnIndex);
 			if (VCategorizableElement.class.isInstance(object)) {
 				image = super.getColumnImage(((VCategorizableElement) object).getLabelObject(), columnIndex);
+			}
+
+			return getValidationOverlay(image, (VElement) object);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 *
+		 * @see org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider#getImage(java.lang.Object)
+		 */
+		@Override
+		public Image getImage(Object object) {
+			Image image;
+			if (VCategorizableElement.class.isInstance(object)) {
+				image = super.getImage(((VCategorizableElement) object).getLabelObject());
+			} else {
+				image = super.getImage(object);
 			}
 
 			return getValidationOverlay(image, (VElement) object);

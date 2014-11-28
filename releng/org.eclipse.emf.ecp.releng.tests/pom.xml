@@ -114,8 +114,8 @@
 				<version>${mav-surefire-version}</version>
 				<executions>
 					<execution>
-						<id>integration-test</id>
-						<phase>integration-test</phase>
+						<id>test</id>
+						<phase>test</phase>
 						<configuration>
 							<testClassesDirectory>${project.build.outputDirectory}</testClassesDirectory>
 							<includes>

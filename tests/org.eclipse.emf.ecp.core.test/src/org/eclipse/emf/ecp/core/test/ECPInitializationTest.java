@@ -30,7 +30,7 @@ import org.osgi.framework.FrameworkUtil;
  *
  */
 @SuppressWarnings("restriction")
-public class ECPInitialization_PTest {
+public class ECPInitializationTest {
 
 	// This test runs in 8000 ms locally. On hudson this test needs probably 400000 ms -> 50 times slower !
 	private static final int MAXIMAL_ALLOWED_DURATION = 150000;

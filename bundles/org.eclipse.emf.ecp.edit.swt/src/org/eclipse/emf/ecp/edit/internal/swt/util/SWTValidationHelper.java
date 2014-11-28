@@ -406,8 +406,12 @@ public final class SWTValidationHelper {
 	private VTValidationStyleProperty getValidationStyleProperty(VElement vElement, ViewModelContext viewModelContext) {
 		VTValidationStyleProperty validationStyleProperty = null;
 		if (vElement != null && viewModelContext != null) {
-			final Set<VTStyleProperty> styleProperties = Activator.getDefault().getVTViewTemplateProvider()
-				.getStyleProperties(vElement, viewModelContext);
+			final VTViewTemplateProvider vtViewTemplateProvider = Activator.getDefault().getVTViewTemplateProvider();
+			if (vtViewTemplateProvider == null) {
+				return validationStyleProperty;
+			}
+			final Set<VTStyleProperty> styleProperties = vtViewTemplateProvider.getStyleProperties(vElement,
+				viewModelContext);
 			for (final VTStyleProperty styleProperty : styleProperties) {
 				if (VTValidationStyleProperty.class.isInstance(styleProperty)) {
 					validationStyleProperty = VTValidationStyleProperty.class
