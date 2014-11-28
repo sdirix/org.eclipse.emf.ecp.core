@@ -32,13 +32,14 @@ import org.eclipse.emf.emfstore.bowling.Merchandise;
 import org.eclipse.emf.emfstore.bowling.Player;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+@SuppressWarnings("restriction")
 @RunWith(DatabindingClassRunner.class)
 public class DynamicDMR_PTest {
 
@@ -59,7 +60,6 @@ public class DynamicDMR_PTest {
 		domain = BowlingFactory.eINSTANCE.createFan();
 	}
 
-	@Ignore
 	@Test
 	public void testInitMissingContainmentElement() {
 		// setup
@@ -67,10 +67,10 @@ public class DynamicDMR_PTest {
 		// act
 		render();
 		// assert
+		waitForUIThread();
 		assertText(EMPTY, true);
 	}
 
-	@Ignore
 	@Test
 	public void testInitMissingReferencedElement() {
 		// setup
@@ -78,10 +78,10 @@ public class DynamicDMR_PTest {
 		// act
 		render();
 		// assert
+		waitForUIThread();
 		assertText(EMPTY, true);
 	}
 
-	@Ignore
 	@Test
 	public void testRemoveContainmentElement() {
 		// setup
@@ -92,10 +92,10 @@ public class DynamicDMR_PTest {
 		// act
 		changeDomain(null, null);
 		// assert
+		waitForUIThread();
 		assertText(EMPTY, false);
 	}
 
-	@Ignore
 	@Test
 	public void testRemoveReferencedElement() {
 		// setup
@@ -106,10 +106,10 @@ public class DynamicDMR_PTest {
 		// act
 		changeDomain(null, null);
 		// assert
+		waitForUIThread();
 		assertText(EMPTY, false);
 	}
 
-	@Ignore
 	@Test
 	public void testAddMissingContainmentElement() {
 		// setup
@@ -119,10 +119,10 @@ public class DynamicDMR_PTest {
 		// act
 		changeDomain(merchandise(NAME_INIT), null);
 		// assert
+		waitForUIThread();
 		assertText(NAME_INIT, true);
 	}
 
-	@Ignore
 	@Test
 	public void testAddMissingContainmentElement2Times() {
 		// setup
@@ -132,14 +132,15 @@ public class DynamicDMR_PTest {
 		// act
 		changeDomain(merchandise(NAME_INIT), null);
 		// assert
+		waitForUIThread();
 		assertText(NAME_INIT, true);
 
 		changeDomain(merchandise(NAME_INIT + "2"), null);
 		// assert
+		waitForUIThread();
 		assertText(NAME_INIT + "2", true);
 	}
 
-	@Ignore
 	@Test
 	public void testAddRemovedContainmentElement() {
 		// setup
@@ -150,15 +151,16 @@ public class DynamicDMR_PTest {
 		// act
 		changeDomain(null, null);
 		// assert
+		waitForUIThread();
 		assertText(EMPTY, false);
 
 		// act
 		changeDomain(merchandise(NAME_INIT), null);
 		// assert
+		waitForUIThread();
 		assertText(NAME_INIT, true);
 	}
 
-	@Ignore
 	@Test
 	public void testAddMissingReferencedElement() {
 		// setup
@@ -168,10 +170,10 @@ public class DynamicDMR_PTest {
 		// act
 		changeDomain(null, player(NAME_INIT));
 		// assert
+		waitForUIThread();
 		assertText(NAME_INIT, true);
 	}
 
-	@Ignore
 	@Test
 	public void testReplaceContainmentElement() {
 		// setup
@@ -182,10 +184,10 @@ public class DynamicDMR_PTest {
 		// act
 		changeDomain(merchandise(NAME_OTHER), null);
 		// assert
+		waitForUIThread();
 		assertText(NAME_OTHER, true);
 	}
 
-	@Ignore
 	@Test
 	public void testReplaceReferencedElement() {
 		// setup
@@ -196,6 +198,7 @@ public class DynamicDMR_PTest {
 		// act
 		changeDomain(null, player(NAME_OTHER));
 		// assert
+		waitForUIThread();
 		assertText(NAME_OTHER, true);
 	}
 
@@ -216,13 +219,22 @@ public class DynamicDMR_PTest {
 		domain.getFanMerchandise().addAll(Arrays.asList(merchandise));
 	}
 
-	private Merchandise merchandise(String name) {
+	private static void waitForUIThread() {
+		final long maxTime = System.currentTimeMillis() + 5000;
+		while (Display.getDefault().readAndDispatch()) {
+			if (System.currentTimeMillis() > maxTime) {
+				fail("Timeout");
+			}
+		}
+	}
+
+	private static Merchandise merchandise(String name) {
 		final Merchandise merchandise = BowlingFactory.eINSTANCE.createMerchandise();
 		merchandise.setName(name);
 		return merchandise;
 	}
 
-	private Player player(String name) {
+	private static Player player(String name) {
 		final Player player = BowlingFactory.eINSTANCE.createPlayer();
 		player.setName(name);
 		return player;
@@ -242,7 +254,7 @@ public class DynamicDMR_PTest {
 		view.getChildren().add(control);
 	}
 
-	private void initControl(VControl control, EStructuralFeature feature,
+	private static void initControl(VControl control, EStructuralFeature feature,
 		EReference... references) {
 		control.setDomainModelReference(feature, Arrays.asList(references));
 	}

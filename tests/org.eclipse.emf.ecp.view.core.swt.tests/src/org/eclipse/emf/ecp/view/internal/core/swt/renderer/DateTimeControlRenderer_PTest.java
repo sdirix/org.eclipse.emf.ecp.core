@@ -13,12 +13,14 @@ import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.test.common.swt.DatabindingClassRunner;
+import org.eclipse.swt.custom.StackLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.DateTime;
+import org.eclipse.swt.widgets.Label;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -36,7 +38,6 @@ public class DateTimeControlRenderer_PTest extends AbstractControl_PTest {
 		dispose();
 	}
 
-	@Ignore
 	@Test
 	public void renderControlLabelAlignmentNone()
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
@@ -45,7 +46,6 @@ public class DateTimeControlRenderer_PTest extends AbstractControl_PTest {
 		assertControl(render);
 	}
 
-	@Ignore
 	@Test
 	public void renderControlLabelAlignmentLeft()
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
@@ -57,10 +57,20 @@ public class DateTimeControlRenderer_PTest extends AbstractControl_PTest {
 
 	private void assertControl(Control render) {
 		assertTrue(Composite.class.isInstance(render));
-		assertEquals(2, Composite.class.cast(render).getChildren().length);
-		assertTrue(DateTime.class.isInstance(Composite.class.cast(render).getChildren()[0]));
-		assertTrue(DateTime.class.isInstance(Composite.class.cast(render).getChildren()[1]));
-
+		final Composite top = Composite.class.cast(render);
+		assertEquals(2, top.getChildren().length);
+		assertTrue(Composite.class.isInstance(top.getChildren()[0]));
+		assertTrue(Button.class.isInstance(top.getChildren()[1]));
+		final Composite stack = Composite.class.cast(top.getChildren()[0]);
+		assertTrue(StackLayout.class.isInstance(stack.getLayout()));
+		assertEquals(2, stack.getChildren().length);
+		assertTrue(Composite.class.isInstance(stack.getChildren()[0]));
+		assertTrue(Label.class.isInstance(stack.getChildren()[1]));
+		final Composite dateTime = Composite.class.cast(stack.getChildren()[0]);
+		assertEquals(3, dateTime.getChildren().length);
+		assertTrue(DateTime.class.isInstance(dateTime.getChildren()[0]));
+		assertTrue(DateTime.class.isInstance(dateTime.getChildren()[1]));
+		assertTrue(Button.class.isInstance(dateTime.getChildren()[2]));
 	}
 
 	@Override
