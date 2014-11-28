@@ -1,14 +1,14 @@
 /*******************************************************************************
  * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
- * 
+ *
  *******************************************************************************/
 package org.eclipse.emf.ecp.core.emffilter.internal;
 
@@ -20,9 +20,9 @@ import org.eclipse.emf.ecp.core.util.ECPFilterProvider;
 /**
  * This class provides all EPackages that are per default in an Eclipse Modeling
  * Edition.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  */
 public class DefaultFilter implements ECPFilterProvider {
 
@@ -34,7 +34,7 @@ public class DefaultFilter implements ECPFilterProvider {
 
 	/**
 	 * This returns all package uris known in an default modeling edition including emfstore.
-	 * 
+	 *
 	 * @return a {@link Set} of {@link String Strings} of the default packages in the modeling edition of eclipse
 	 */
 	@Override
@@ -51,6 +51,7 @@ public class DefaultFilter implements ECPFilterProvider {
 		addGraphitiModels(packages);
 		addQ7Models1(packages);
 		addQ7Models2(packages);
+		addRCPTTModels(packages);
 		addNet4jModels(packages);
 		addViewModels(packages);
 		addOomphModels(packages);
@@ -95,6 +96,7 @@ public class DefaultFilter implements ECPFilterProvider {
 		packages.add("http://www.eclipse.org/emf/ecp/view/mappingdmr/model"); //$NON-NLS-1$
 		packages.add("http://org/eclipse/emf/ecp/view/viewproxy/model"); //$NON-NLS-1$
 		packages.add("http://org/eclipse/emf/ecp/view/section/model"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/emf/ecp/view/template/style/textcontrol/enablement/model"); //$NON-NLS-1$
 	}
 
 	private void addQ7Models1(Set<String> packages) {
@@ -158,6 +160,36 @@ public class DefaultFilter implements ECPFilterProvider {
 		packages.add("http://www.eclipse.org/debug/runtime/model.ecore");//$NON-NLS-1$
 		packages.add("http://com/xored/q7/verifications/status.ecore");//$NON-NLS-1$
 		packages.add("http://xored.com/x5/data/eclipse/workspace.ecore");//$NON-NLS-1$
+	}
+
+	private void addRCPTTModels(Set<String> packages) {
+		packages.add("http://eclipse.org/rcptt/ctx/parameters"); //$NON-NLS-1$
+		packages.add("http://eclipse.org/rcptt/tesla/ecl"); //$NON-NLS-1$
+		packages.add("http://eclipse.org/rcptt/core/launching.ecore"); //$NON-NLS-1$
+		packages.add("http://eclipse.org/rcptt/widgets/expandbar/model"); //$NON-NLS-1$
+		packages.add("http://eclipse.org/rcptt/tesla/info"); //$NON-NLS-1$
+		packages.add("http://eclipse.org/rcptt/tesla/protocol"); //$NON-NLS-1$
+		packages.add("http://eclipse.org/rcptt/model/scenario.ecore"); //$NON-NLS-1$
+		packages.add("http://eclipse.org/rcptt/verifications/log"); //$NON-NLS-1$
+		packages.add("http://eclipse.org/rcptt/widgets/expandbar/ecl"); //$NON-NLS-1$
+		packages.add("http://eclipse.org/rcptt/ctx/debug"); //$NON-NLS-1$
+		packages.add("http://eclipse.org/rcptt/sherlock/report"); //$NON-NLS-1$
+		packages.add("http://eclipse.org/rcptt/ctx/workspace"); //$NON-NLS-1$
+		packages.add("http://eclipse.org/rcptt/core/ecl"); //$NON-NLS-1$
+		packages.add("http://eclipse.org/rcptt/tesla/widgets"); //$NON-NLS-1$
+		packages.add("http://eclipse.org/rcptt/tesla/diagram"); //$NON-NLS-1$
+		packages.add("http://eclipse.org/rcptt/tesla/rawprotocol"); //$NON-NLS-1$
+		packages.add("http://eclipse.org/rcptt/sherlock/jobs"); //$NON-NLS-1$
+		packages.add("http://eclipse.org/rcptt/verifications/status"); //$NON-NLS-1$
+		packages.add("http://eclipse.org/rcptt/ctx/preferences"); //$NON-NLS-1$
+		packages.add("http://eclipse.org/rcptt/ctx/ecl"); //$NON-NLS-1$
+		packages.add("http://eclipse.org/rcptt/tesla/ecl/diagram"); //$NON-NLS-1$
+		packages.add("http://eclipse.org/rcptt/sherlock/core"); //$NON-NLS-1$
+		packages.add("http://eclipse.org/rcptt/ctx/filesystem"); //$NON-NLS-1$
+		packages.add("http://eclipse.org/rcptt/verifications/text"); //$NON-NLS-1$
+		packages.add("http://eclipse.org/rcptt/reporting/core"); //$NON-NLS-1$
+		packages.add("http://eclipse.org/rcptt/verifications/time"); //$NON-NLS-1$
+		packages.add("http://eclipse.org/rcptt/verifications/tree"); //$NON-NLS-1$
 	}
 
 	private void addGraphitiModels(Set<String> packages) {
