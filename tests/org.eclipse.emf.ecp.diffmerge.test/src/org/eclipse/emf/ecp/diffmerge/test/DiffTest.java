@@ -37,7 +37,7 @@ import org.junit.Test;
  * @author Eugen Neufeld
  * 
  */
-public class Diff_Test {
+public class DiffTest {
 
 	@Test
 	public void testSingleControlViewWithDiff() {

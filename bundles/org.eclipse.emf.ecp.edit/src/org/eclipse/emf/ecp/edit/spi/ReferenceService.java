@@ -28,7 +28,6 @@ public interface ReferenceService extends ViewModelService {
 	 *
 	 * @param eObject the {@link EObject} to add
 	 * @param eReference the {@link EReference} to add the {@link EObject} to
-	 * @return
 	 * @since 1.5
 	 */
 	void addNewModelElements(EObject eObject, EReference eReference);

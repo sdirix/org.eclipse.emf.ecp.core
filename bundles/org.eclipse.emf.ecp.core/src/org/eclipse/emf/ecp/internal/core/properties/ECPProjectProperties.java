@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eike Stepper - initial API and implementation
  * Eugen Neufeld - JavaDoc
@@ -28,31 +28,31 @@ public final class ECPProjectProperties extends Properties<ECPProject> {
 	private ECPProjectProperties() {
 		super(ECPProject.class);
 
-		add(new Property<ECPProject>("name", "Name", "The name of this project.") {
+		add(new Property<ECPProject>("name", "Name", "The name of this project.") { //$NON-NLS-1$
 			@Override
 			protected Object eval(ECPProject project) {
 				return project.getName();
 			}
 		});
 
-		add(new Property<ECPProject>("repositoryName") {
+		add(new Property<ECPProject>("repositoryName") { //$NON-NLS-1$
 			@Override
 			protected Object eval(ECPProject project) {
 				return project.getRepository().getName();
 			}
 		});
 
-		add(new Property<ECPProject>("repositoryLabel", "Repository", "The repository of this project.") {
+		add(new Property<ECPProject>("repositoryLabel", "Repository", "The repository of this project.") { //$NON-NLS-1$
 			@Override
 			protected Object eval(ECPProject project) {
 				return project.getRepository().getLabel();
 			}
 		});
 
-		add(new Property<ECPProject>("providerName") {
+		add(new Property<ECPProject>("providerName") { //$NON-NLS-1$
 			@Override
 			protected Object eval(ECPProject project) {
-				ECPProvider provider = project.getProvider();
+				final ECPProvider provider = project.getProvider();
 				if (provider != null) {
 					return provider.getName();
 				}
@@ -61,10 +61,10 @@ public final class ECPProjectProperties extends Properties<ECPProject> {
 			}
 		});
 
-		add(new Property<ECPProject>("providerLabel", "Provider", "The provider of this project.") {
+		add(new Property<ECPProject>("providerLabel", "Provider", "The provider of this project.") { //$NON-NLS-1$
 			@Override
 			protected Object eval(ECPProject project) {
-				ECPProvider provider = project.getProvider();
+				final ECPProvider provider = project.getProvider();
 				if (provider != null) {
 					return provider.getLabel();
 				}
@@ -72,20 +72,20 @@ public final class ECPProjectProperties extends Properties<ECPProject> {
 				return "<unknown provider>";
 			}
 		});
-		add(new Property<ECPProject>("isDirty", "Is project dirty", "Has this project unsaved changes?") {
+		add(new Property<ECPProject>("isDirty", "Is project dirty", "Has this project unsaved changes?") { //$NON-NLS-1$
 			@Override
 			protected Object eval(ECPProject project) {
 				return project.hasDirtyContents();
 			}
 		});
-		add(new Property<ECPProject>("open") {
+		add(new Property<ECPProject>("open") { //$NON-NLS-1$
 			@Override
 			protected Object eval(ECPProject closeable) {
 				return closeable.isOpen();
 			}
 		});
 
-		add(new Property<ECPProject>("closed") {
+		add(new Property<ECPProject>("closed") { //$NON-NLS-1$
 			@Override
 			protected Object eval(ECPProject closeable) {
 				return !closeable.isOpen();
