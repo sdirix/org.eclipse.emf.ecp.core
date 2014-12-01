@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Jonas - initial API and implementation
  ******************************************************************************/
@@ -27,12 +27,13 @@ import org.eclipse.swt.widgets.Display;
 
 /**
  * @author Jonas
- * 
+ *
  */
 public abstract class SelectModelElementWizardFactory {
 
 	/**
-	 * @param elements The composite to select elements on
+	 * @param elements The elements to be selected
+	 * @param isMany whether multi selection is allowed
 	 * @return The selected elements
 	 */
 	public static Set<EObject> openModelElementSelectionDialog(
@@ -41,7 +42,8 @@ public abstract class SelectModelElementWizardFactory {
 		final SelectionComposite<TableViewer> tableSelectionComposite = CompositeFactory
 			.getTableSelectionComposite(elements.toArray(), isMany);
 
-		final SelectModelElementWizard wizard = new SelectModelElementWizard(Messages.SelectModelElementWizardFactory_ModelelementSelectionDialog_WindowTitle,
+		final SelectModelElementWizard wizard = new SelectModelElementWizard(
+			Messages.SelectModelElementWizardFactory_ModelelementSelectionDialog_WindowTitle,
 			Messages.NewModelElementWizard_WizardTitle_AddModelElement,
 			Messages.ModelelementSelectionDialog_DialogTitle,
 			Messages.ModelelementSelectionDialog_DialogMessage_SearchPattern, EObject.class);

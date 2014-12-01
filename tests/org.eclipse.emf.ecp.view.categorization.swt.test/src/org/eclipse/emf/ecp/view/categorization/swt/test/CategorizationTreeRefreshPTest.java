@@ -52,7 +52,7 @@ import org.junit.Test;
  * @author Eugen Neufeld
  *
  */
-public class CategorizationTreeRefresh_PTest {
+public class CategorizationTreeRefreshPTest {
 
 	private static Image idCategorization;
 	private static Image idCategory;

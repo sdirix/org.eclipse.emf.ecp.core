@@ -41,7 +41,7 @@ import org.junit.Test;
  * @author Eugen
  * 
  */
-public class CategorizationRenderer_PTest {
+public class CategorizationRendererPTest {
 
 	/**
 	 * @throws java.lang.Exception

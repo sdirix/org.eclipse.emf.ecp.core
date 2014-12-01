@@ -1,14 +1,14 @@
 /*******************************************************************************
  * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
- * 
+ *
  *******************************************************************************/
 
 package org.eclipse.emf.ecp.spi.common.ui;
@@ -30,18 +30,18 @@ import org.eclipse.swt.widgets.Composite;
  * "Add new model element..." command in context menu of Navigator (only on right click on LeafSection). The
  * wizard shows a tree of model packages and their classes. The user can select a Model Element type in this
  * tree and on finish the model element is created, added to Leaf- or CompositeSection and opend for editing.
- * 
+ *
  * @author Eugen Neufeld
  */
 public class SelectModelElementWizard extends ECPWizard<SelectionComposite<? extends ColumnViewer>> {
 
 	/**
 	 * @author Jonas
-	 * 
+	 *
 	 */
 	public final class WizardPageExtension extends WizardPage {
 		/**
-		 * @param pageName
+		 * @param pageName the name of the page
 		 */
 		public WizardPageExtension(String pageName) {
 			super(pageName);
@@ -81,14 +81,14 @@ public class SelectModelElementWizard extends ECPWizard<SelectionComposite<? ext
 		}
 	}
 
-	protected final String pageName;
-	protected final String description;
-	protected final String pageTitle;
-	protected final Class<?> classtoSelect;
+	private final String pageName;
+	private final String description;
+	private final String pageTitle;
+	private final Class<?> classtoSelect;
 
 	/**
 	 * Constructor to select an EClass.
-	 * 
+	 *
 	 * @param windowTitle The window title
 	 * @param pageName the name of the page
 	 * @param pageTitle the title of the page
@@ -100,7 +100,7 @@ public class SelectModelElementWizard extends ECPWizard<SelectionComposite<? ext
 
 	/**
 	 * Constructor to select an class to be specified.
-	 * 
+	 *
 	 * @param windowTitle The window title
 	 * @param pageName the name of the page
 	 * @param pageTitle the title of the page
