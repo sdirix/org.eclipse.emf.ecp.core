@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
@@ -13,6 +13,8 @@ package org.eclipse.emf.ecp.view.model.common;
 
 import java.util.Iterator;
 
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -24,15 +26,15 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
 
 /**
  * Tester for Control Renderer.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  */
 public abstract class SimpleControlRendererTester implements ECPRendererTester {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.model.common.ECPRendererTester#isApplicable(org.eclipse.emf.ecp.view.spi.model.VElement,
 	 *      org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
@@ -69,6 +71,9 @@ public abstract class SimpleControlRendererTester implements ECPRendererTester {
 				return NOT_APPLICABLE;
 			}
 		}
+		if (!checkFeatureETypeAnnotations(feature.getEType().getEAnnotations())) {
+			return NOT_APPLICABLE;
+		}
 		// if the supported eobject is assignable from the current eobject and the supported feature is eitehr null or
 		// equals the current one
 		if (getSupportedEObject().isInstance(eObject)
@@ -76,6 +81,16 @@ public abstract class SimpleControlRendererTester implements ECPRendererTester {
 			return getPriority();
 		}
 		return NOT_APPLICABLE;
+	}
+
+	/**
+	 * Allows to check the {@link EAnnotation EAnnotations} of the {@link EStructuralFeature#getEType() feature's type}.
+	 *
+	 * @param eAnnotations the annotations
+	 * @return <code>true</code> if applicable, <code>false</code> otherwise
+	 */
+	protected boolean checkFeatureETypeAnnotations(EList<EAnnotation> eAnnotations) {
+		return true;
 	}
 
 	private Setting getSetting(VControl control) {
@@ -128,21 +143,21 @@ public abstract class SimpleControlRendererTester implements ECPRendererTester {
 
 	/**
 	 * Whether the corresponding control is allowed only for single values.
-	 * 
+	 *
 	 * @return true if only a single value is allows
 	 */
 	protected abstract boolean isSingleValue();
 
 	/**
 	 * The static priority of the corresponding control.
-	 * 
+	 *
 	 * @return the priority
 	 */
 	protected abstract int getPriority();
 
 	/**
 	 * The eobejct which is supported by the corresponding control. Default is the {@link EObject}.
-	 * 
+	 *
 	 * @return the class of the supported eobejct
 	 */
 	protected Class<? extends EObject> getSupportedEObject() {
@@ -151,7 +166,7 @@ public abstract class SimpleControlRendererTester implements ECPRendererTester {
 
 	/**
 	 * The feature the corresponding control supports. Default is null to support all features.
-	 * 
+	 *
 	 * @return the supported feature
 	 */
 	protected EStructuralFeature getSupportedFeature() {
@@ -160,7 +175,7 @@ public abstract class SimpleControlRendererTester implements ECPRendererTester {
 
 	/**
 	 * The class of the type the corresponding control supports.
-	 * 
+	 *
 	 * @return the class of the supported type
 	 */
 	protected abstract Class<?> getSupportedClassType();
