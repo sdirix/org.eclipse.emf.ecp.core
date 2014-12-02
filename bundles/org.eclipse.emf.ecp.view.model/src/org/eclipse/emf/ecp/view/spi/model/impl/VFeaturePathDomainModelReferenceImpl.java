@@ -196,7 +196,7 @@ VFeaturePathDomainModelReference
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public EList<EReference> getDomainModelEReferencePath()
@@ -204,7 +204,15 @@ VFeaturePathDomainModelReference
 		if (domainModelEReferencePath == null)
 		{
 			domainModelEReferencePath = new EObjectResolvingEList<EReference>(EReference.class, this,
-				VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EREFERENCE_PATH);
+				VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EREFERENCE_PATH) {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				protected boolean isUnique()
+				{
+					return false;
+				}
+			};
 		}
 		return domainModelEReferencePath;
 	}

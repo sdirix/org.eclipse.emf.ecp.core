@@ -3,9 +3,13 @@ package org.eclipse.emf.ecp.view.model.test;
 import static org.junit.Assert.assertEquals;
 
 import java.util.Iterator;
+import java.util.LinkedList;
 
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecp.view.spi.model.SettingPath;
+import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.emfstore.bowling.BowlingFactory;
@@ -81,7 +85,22 @@ public class DomainModelReference_Test {
 			}
 			assertEquals(1, pathSegments);
 	}
-	
-	
+
+	@Test
+	public void testFeaturePathDomainModelReferencePathWithNonUniqueReferences() {
+		final VControl control = VViewFactory.eINSTANCE.createControl();
+		final LinkedList<EReference> referencePath = new LinkedList<EReference>();
+		final EReference ref1 = EcoreFactory.eINSTANCE.createEReference();
+		final EReference ref2 = EcoreFactory.eINSTANCE.createEReference();
+		referencePath.add(ref1);
+		referencePath.add(ref2);
+		referencePath.add(ref1);
+		final EReference feature = EcoreFactory.eINSTANCE.createEReference();
+		control.setDomainModelReference(feature, referencePath);
+		assertEquals(3, referencePath.size());
+		assertEquals(3, ((VFeaturePathDomainModelReference) control.getDomainModelReference())
+			.getDomainModelEReferencePath().size());
+
+	}
 
 }
