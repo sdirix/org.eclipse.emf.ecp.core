@@ -143,4 +143,25 @@ public class SelectModelElementWizard extends ECPWizard<SelectionComposite<? ext
 		getCompositeProvider().dispose();
 		super.dispose();
 	}
+
+	/**
+	 * @return the pageName
+	 */
+	public String getPageName() {
+		return pageName;
+	}
+
+	/**
+	 * @return the description
+	 */
+	public String getDescription() {
+		return description;
+	}
+
+	/**
+	 * @return the pageTitle
+	 */
+	public String getPageTitle() {
+		return pageTitle;
+	}
 }
