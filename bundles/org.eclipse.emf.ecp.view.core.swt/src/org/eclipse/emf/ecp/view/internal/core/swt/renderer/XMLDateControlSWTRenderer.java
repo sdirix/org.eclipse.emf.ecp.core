@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen - initial API and implementation
  ******************************************************************************/
@@ -42,8 +42,6 @@ import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.FocusEvent;
-import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
@@ -57,9 +55,14 @@ import org.eclipse.swt.widgets.Text;
 
 /**
  * @author Eugen
- * 
+ *
  */
+@SuppressWarnings("restriction")
 public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
+
+	/**
+	 * Selection adapter for the set date button.
+	 */
 	private final class SelectionAdapterExtension extends SelectionAdapter {
 		private final Control button;
 		private final IObservableValue modelValue;
@@ -82,7 +85,11 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 
 		@Override
 		public void widgetSelected(SelectionEvent e) {
-			final Shell dialog = new Shell(button.getShell(), SWT.NONE);
+			if (dialog != null && !dialog.isDisposed()) {
+				dialog.dispose();
+				return;
+			}
+			dialog = new Shell(button.getShell(), SWT.NONE);
 			dialog.setLayout(new GridLayout(1, false));
 
 			final DateTime calendar = new DateTime(dialog, SWT.CALENDAR | SWT.BORDER);
@@ -98,27 +105,24 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 				new DateTargetToModelUpdateStrategy(eStructuralFeature, modelValue,
 					dataBindingContext, text), new DateModelToTargetUpdateStrategy(false));
 			binding.updateModelToTarget();
-			calendar.addSelectionListener(new SelectionAdapter() {
+
+			final Button okButton = new Button(dialog, SWT.PUSH);
+			okButton.setText(JFaceResources.getString(IDialogLabelKeys.OK_LABEL_KEY));
+			GridDataFactory.fillDefaults().align(SWT.END, SWT.CENTER).grab(false, false).applyTo(okButton);
+			okButton.addSelectionListener(new SelectionAdapter() {
+				/**
+				 * {@inheritDoc}
+				 *
+				 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
+				 */
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					binding.updateTargetToModel();
-					// binding.dispose();
-					// dialog.close();
-				}
-			});
-			calendar.addFocusListener(new FocusListener() {
-
-				@Override
-				public void focusLost(FocusEvent event) {
 					binding.updateTargetToModel();
 					binding.dispose();
 					dialog.close();
 				}
-
-				@Override
-				public void focusGained(FocusEvent event) {
-				}
 			});
+
 			dialog.pack();
 			dialog.layout();
 			dialog.setLocation(button.getParent().toDisplay(
@@ -128,6 +132,9 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 		}
 	}
 
+	/**
+	 * Model to target strategy.
+	 */
 	private class DateModelToTargetUpdateStrategy extends ModelToTargetUpdateStrategy {
 
 		public DateModelToTargetUpdateStrategy(boolean tooltip) {
@@ -146,6 +153,9 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 		}
 	}
 
+	/**
+	 * Target to model strategy.
+	 */
 	private class DateTargetToModelUpdateStrategy extends TargetToModelUpdateStrategy {
 
 		private final EStructuralFeature eStructuralFeature;
@@ -214,12 +224,21 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 		}
 	}
 
+	private Shell dialog;
+
+	/**
+	 * Default constructor.
+	 */
 	public XMLDateControlSWTRenderer() {
 		super();
 	}
 
-	// test constructor
-	XMLDateControlSWTRenderer(SWTRendererFactory factory) {
+	/**
+	 * Test constructor.
+	 *
+	 * @param factory the renderer factory
+	 */
+	/* package */XMLDateControlSWTRenderer(SWTRendererFactory factory) {
 		super(factory);
 	}
 
@@ -275,7 +294,7 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 
 	/**
 	 * Setups the {@link DateFormat}.
-	 * 
+	 *
 	 * @return the {@link DateFormat}
 	 */
 	protected DateFormat setupFormat() {
@@ -292,7 +311,7 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer#setValidationColor(org.eclipse.swt.widgets.Control,
 	 *      org.eclipse.swt.graphics.Color)
 	 */
@@ -314,12 +333,25 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.internal.core.swt.renderer.TextControlSWTRenderer#getUnsetText()
 	 */
 	@Override
 	protected String getUnsetText() {
 		return RendererMessages.XmlDateControlText_NoDateSetClickToSetDate;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTRenderer#dispose()
+	 */
+	@Override
+	protected void dispose() {
+		if (dialog != null && !dialog.isDisposed()) {
+			dialog.dispose();
+		}
+		super.dispose();
 	}
 
 }

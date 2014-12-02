@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen - initial API and implementation
  ******************************************************************************/
@@ -29,12 +29,12 @@ import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.jface.dialogs.IDialogLabelKeys;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
+import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
-import org.eclipse.swt.events.FocusEvent;
-import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
@@ -49,9 +49,9 @@ import org.eclipse.swt.widgets.Shell;
 
 /**
  * A control which can handle {@link java.util.Date Date}.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  */
 public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 
@@ -62,6 +62,8 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 	private Composite stackComposite, dateTimeComposite;
 
 	private Composite composite;
+
+	private Shell dialog;
 
 	private Setting setting;
 
@@ -76,7 +78,7 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 
 	/**
 	 * Test constructor.
-	 * 
+	 *
 	 * @param factory the {@link SWTRendererFactory} to use.
 	 */
 	DateTimeControlSWTRenderer(SWTRendererFactory factory) {
@@ -122,11 +124,14 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTRenderer#dispose()
 	 */
 	@Override
 	protected void dispose() {
+		if (dialog != null && !dialog.isDisposed()) {
+			dialog.dispose();
+		}
 		getViewModelContext().unregisterDomainChangeListener(domainModelChangeListener);
 		super.dispose();
 	}
@@ -190,7 +195,7 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer#setValidationColor(org.eclipse.swt.widgets.Control,
 	 *      org.eclipse.swt.graphics.Color)
 	 */
@@ -202,7 +207,7 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTRenderer#getUnsetText()
 	 */
 	@Override
@@ -233,7 +238,11 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 
 		@Override
 		public void widgetSelected(SelectionEvent e) {
-			final Shell dialog = new Shell(btn.getShell(), SWT.NONE);
+			if (dialog != null && !dialog.isDisposed()) {
+				dialog.dispose();
+				return;
+			}
+			dialog = new Shell(btn.getShell(), SWT.NONE);
 			dialog.setLayout(new GridLayout(1, false));
 
 			final DateTime calendar = new DateTime(dialog, SWT.CALENDAR | SWT.BORDER);
@@ -250,29 +259,25 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 				targetToModel);
 
 			binding.updateModelToTarget();
-			calendar.addSelectionListener(new SelectionAdapter() {
+
+			final Button okButton = new Button(dialog, SWT.PUSH);
+			okButton.setText(JFaceResources.getString(IDialogLabelKeys.OK_LABEL_KEY));
+			GridDataFactory.fillDefaults().align(SWT.END, SWT.CENTER).grab(false, false).applyTo(okButton);
+			okButton.addSelectionListener(new SelectionAdapter() {
+				/**
+				 * {@inheritDoc}
+				 *
+				 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
+				 */
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					binding.updateTargetToModel();
-					// binding.dispose();
-					// dialog.close();
-					updateChangeListener(modelValue.getValue());
-				}
-			});
-			calendar.addFocusListener(new FocusListener() {
-
-				@Override
-				public void focusLost(FocusEvent event) {
 					binding.updateTargetToModel();
 					binding.dispose();
 					dialog.close();
 					updateChangeListener(modelValue.getValue());
 				}
-
-				@Override
-				public void focusGained(FocusEvent event) {
-				}
 			});
+
 			dialog.pack();
 			dialog.layout();
 			dialog.setLocation(btn.getParent().toDisplay(
