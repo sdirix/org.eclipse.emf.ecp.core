@@ -53,7 +53,9 @@ import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.rule.RuleServiceHelper;
+import org.eclipse.emf.ecp.view.spi.rule.model.AndCondition;
 import org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition;
+import org.eclipse.emf.ecp.view.spi.rule.model.OrCondition;
 import org.eclipse.emf.ecp.view.spi.rule.model.Rule;
 import org.eclipse.emf.ecp.view.spi.rule.model.RuleFactory;
 import org.eclipse.emf.ecp.view.spi.rule.model.ShowRule;
@@ -65,6 +67,7 @@ import org.eclipse.emf.emfstore.bowling.Fan;
 import org.eclipse.emf.emfstore.bowling.League;
 import org.eclipse.emf.emfstore.bowling.Merchandise;
 import org.eclipse.emf.emfstore.bowling.Player;
+import org.eclipse.emf.emfstore.bowling.impl.FanImpl;
 import org.eclipse.emf.emfstore.bowling.impl.LeagueImpl;
 import org.junit.After;
 import org.junit.Before;
@@ -106,7 +109,6 @@ import org.junit.Test;
  * @author Eugen Neufeld
  * @author emueller
  */
-@SuppressWarnings("restriction")
 public class RuleService_PTest extends CommonRuleTest {
 
 	/**
@@ -2662,5 +2664,58 @@ public class RuleService_PTest extends CommonRuleTest {
 		professor.setName("Hans");
 		assertTrue(wholeStaff.isVisible());
 
+	}
+
+	@Test
+	public void testGetInvolvedWithAndOrConditions() {
+		// setup
+		final Fan fan = BowlingFactory.eINSTANCE.createFan();
+		fan.setHasSeasonTicket(true);
+		fan.setNumberOfTournamentsVisited(2);
+
+		final ShowRule rule = RuleFactory.eINSTANCE.createShowRule();
+		final AndCondition andCondition = RuleFactory.eINSTANCE.createAndCondition();
+		final LeafCondition seasonTicketCondition = RuleFactory.eINSTANCE.createLeafCondition();
+		final VFeaturePathDomainModelReference seasonTicketDMR = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
+		seasonTicketDMR.setDomainModelEFeature(BowlingPackage.eINSTANCE.getFan_HasSeasonTicket());
+		seasonTicketCondition.setDomainModelReference(seasonTicketDMR);
+		seasonTicketCondition.setExpectedValue(true);
+		andCondition.getConditions().add(seasonTicketCondition);
+		final OrCondition orCondition = RuleFactory.eINSTANCE.createOrCondition();
+		final LeafCondition visitedTwoLeafCondition = RuleFactory.eINSTANCE.createLeafCondition();
+		final VFeaturePathDomainModelReference visitedTwoDMR = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
+		visitedTwoDMR.setDomainModelEFeature(BowlingPackage.eINSTANCE.getFan_NumberOfTournamentsVisited());
+		visitedTwoLeafCondition.setDomainModelReference(visitedTwoDMR);
+		visitedTwoLeafCondition.setExpectedValue(2);
+		orCondition.getConditions().add(visitedTwoLeafCondition);
+		final LeafCondition visitedThreeLeafCondition = RuleFactory.eINSTANCE.createLeafCondition();
+		final VFeaturePathDomainModelReference visitedThreeDMR = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
+		visitedThreeDMR.setDomainModelEFeature(BowlingPackage.eINSTANCE.getFan_NumberOfTournamentsVisited());
+		visitedThreeLeafCondition.setDomainModelReference(visitedThreeDMR);
+		visitedThreeLeafCondition.setExpectedValue(3);
+		orCondition.getConditions().add(visitedThreeLeafCondition);
+		andCondition.getConditions().add(orCondition);
+		rule.setCondition(andCondition);
+
+		view = VViewFactory.eINSTANCE.createView();
+		final VControl control = VViewFactory.eINSTANCE.createControl();
+		control.setDomainModelReference(BowlingPackage.eINSTANCE.getFan_Gender());
+		control.getAttachments().add(rule);
+		view.getChildren().add(control);
+
+		// init
+		instantiateRuleService(fan);
+		assertTrue(control.isVisible());
+
+		// act
+		final RuleServiceHelper helper = context.getService(RuleServiceHelper.class);
+		final Setting setting = ((FanImpl) fan).eSetting(BowlingPackage.eINSTANCE.getFan_NumberOfTournamentsVisited());
+		final Set<VControl> involvedControls = helper.getInvolvedEObjects(setting, 3, VControl.class);
+
+		// assert
+		assertTrue(involvedControls.isEmpty());
 	}
 }

@@ -23,7 +23,9 @@ import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecp.view.spi.rule.model.AndCondition;
 import org.eclipse.emf.ecp.view.spi.rule.model.Condition;
+import org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition;
 import org.eclipse.emf.ecp.view.spi.rule.model.RulePackage;
+import org.eclipse.emf.ecp.view.spi.rule.model.util.ConditionEvaluationUtil;
 
 /**
  * <!-- begin-user-doc -->
@@ -197,7 +199,16 @@ public class AndConditionImpl extends ConditionImpl implements AndCondition {
 	public boolean evaluateChangedValues(Map<Setting, Object> possibleNewValues) {
 		boolean result = true;
 		for (final Condition innerCondition : getConditions()) {
-			result &= innerCondition.evaluateChangedValues(possibleNewValues);
+			if (LeafCondition.class.isInstance(innerCondition)) {
+				if (ConditionEvaluationUtil.isLeafConditionForSetting(LeafCondition.class.cast(innerCondition),
+					possibleNewValues)) {
+					result &= innerCondition.evaluateChangedValues(possibleNewValues);
+				} else {
+					result &= innerCondition.evaluate();
+				}
+			} else {
+				result &= innerCondition.evaluateChangedValues(possibleNewValues);
+			}
 		}
 		return result;
 	}

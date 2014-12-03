@@ -50,7 +50,6 @@ import org.junit.Test;
  * @author jfaltermeier
  *
  */
-@SuppressWarnings("restriction")
 public class RuleRegistry_Test {
 	// assertions are pretty complex
 	// BEGIN COMPLEX CODE
