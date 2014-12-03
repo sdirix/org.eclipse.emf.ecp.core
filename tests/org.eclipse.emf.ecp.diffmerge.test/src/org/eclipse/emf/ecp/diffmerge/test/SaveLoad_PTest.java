@@ -43,7 +43,7 @@ import org.junit.Test;
  * @author Eugen
  * 
  */
-public class SaveLoadPTest {
+public class SaveLoad_PTest {
 
 	/**
 	 * Round trip test.

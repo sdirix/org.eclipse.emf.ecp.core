@@ -25,7 +25,7 @@ import org.junit.Test;
  * @author Eugen
  * 
  */
-public class DateSerializeTest {
+public class DateSerialize_Test {
 
 	private static final String EXPECTED_DATE = "1986-10-02"; //$NON-NLS-1$
 	private Calendar calendar;

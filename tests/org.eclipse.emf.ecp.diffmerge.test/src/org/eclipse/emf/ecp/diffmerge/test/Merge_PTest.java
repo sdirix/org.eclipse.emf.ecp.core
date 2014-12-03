@@ -42,7 +42,7 @@ import org.junit.Test;
  * @author Eugen Neufeld
  * 
  */
-public class MergePTest {
+public class Merge_PTest {
 
 	private void addEobjectToResource(EObject eObject) {
 		final ResourceSet resourceSet = new ResourceSetImpl();

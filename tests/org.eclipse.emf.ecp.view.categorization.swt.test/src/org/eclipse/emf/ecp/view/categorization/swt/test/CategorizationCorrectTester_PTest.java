@@ -31,7 +31,7 @@ import org.junit.Test;
  * @author Eugen
  *
  */
-public class CategorizationCorrectTesterPTest {
+public class CategorizationCorrectTester_PTest {
 
 	/**
 	 * @throws java.lang.Exception

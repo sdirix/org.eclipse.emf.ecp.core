@@ -45,7 +45,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(DatabindingClassRunner.class)
-public class CategorizationPTest {
+public class Categorization_PTest {
 
 	private static final String TESTNAME = "test"; //$NON-NLS-1$
 	private static final String NAME = "Name"; //$NON-NLS-1$

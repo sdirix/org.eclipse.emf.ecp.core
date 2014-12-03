@@ -49,7 +49,7 @@ import org.junit.Test;
  * @author Eugen Neufeld
  * 
  */
-public class CategorizationTreeContentRefreshPTest {
+public class CategorizationTreeContentRefresh_PTest {
 
 	private static final String EXPECTED_NAME = "test"; //$NON-NLS-1$
 	private static final Double EXPECTED_HEIGHT = 1.0;

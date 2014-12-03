@@ -23,7 +23,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
-public class EcoreGenModelLinkerTest {
+public class EcoreGenModelLinker_Test {
 
 	// JUnit rule needs to be public.
 	// REUSED CLASS

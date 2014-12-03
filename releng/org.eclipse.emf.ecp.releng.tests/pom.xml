@@ -102,6 +102,7 @@
 				<configuration>
 					<includes>
 						<include>**/*_PTest.java</include>
+						<include>**/*_ITest.java</include>
 					</includes>
 					<testFailureIgnore>true</testFailureIgnore>
 				</configuration>

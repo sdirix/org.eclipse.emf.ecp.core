@@ -17,7 +17,7 @@ import org.eclipse.emf.ecp.ecore.editor.util.ProjectHelper;
 import org.junit.Before;
 import org.junit.Test;
 
-public class ProjectNameTest {
+public class ProjectName_Test {
 
 	private ProjectHelper projectHelper;
 
