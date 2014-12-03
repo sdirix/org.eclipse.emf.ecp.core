@@ -98,8 +98,10 @@ public class RuleRegistry<T extends Rule> {
 			final boolean initSuccessful = domainModelReference.init(domainModel);
 			mapDomainToDMRs(rule, Collections.singleton(domainModelReference));
 			if (!initSuccessful) {
-				org.eclipse.emf.ecp.view.spi.model.impl.Activator.getDefault().getReportService()
-				.report(new LeafConditionDMRResolutionFailedReport(leafCondition, false));
+				if (org.eclipse.emf.ecp.view.spi.model.impl.Activator.getDefault() != null) {
+					org.eclipse.emf.ecp.view.spi.model.impl.Activator.getDefault().getReportService()
+						.report(new LeafConditionDMRResolutionFailedReport(leafCondition, false));
+				}
 
 				return registerLegacySupport(renderable, rule, registeredSettings, leafCondition, domainModelReference);
 			}
