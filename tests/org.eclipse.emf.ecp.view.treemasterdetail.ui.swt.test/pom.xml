@@ -35,44 +35,14 @@
 							<artifactId>org.eclipse.emf.ecp.viewmodel.feature</artifactId>
 							<version>0.0.0</version>
 						</dependency>
-						<dependency>
-							<type>eclipse-feature</type>
-							<artifactId>org.eclipse.emf.ecp.view.categorization.feature</artifactId>
-							<version>0.0.0</version>
-						</dependency>
-						<dependency>
-							<type>eclipse-feature</type>
-							<artifactId>org.eclipse.emf.ecp.feature</artifactId>
-							<version>0.0.0</version>
-						</dependency>
-						<dependency>
-							<type>eclipse-feature</type>
-							<artifactId>org.eclipse.emf.ecp.view.rule.feature</artifactId>
-							<version>0.0.0</version>
-						</dependency>
-						<dependency>
-							<type>eclipse-feature</type>
-							<artifactId>org.eclipse.emf.ecp.view.validation.feature</artifactId>
-							<version>0.0.0</version>
-						</dependency>
-						<dependency>
-							<type>eclipse-feature</type>
-							<artifactId>org.eclipse.emf.ecp.view.table.feature</artifactId>
-							<version>0.0.0</version>
-						</dependency>
-						<dependency>
-							<type>eclipse-feature</type>
-							<artifactId>org.eclipse.emf.emfstore.example.feature</artifactId>
-							<version>0.0.0</version>
-						</dependency>
-						  <dependency>
-                            <type>eclipse-feature</type>
-                            <artifactId>org.eclipse.emf.ecp.view.dynamictree.feature</artifactId>
-                            <version>0.0.0</version>
-                        </dependency>
                         <dependency>
 							<type>eclipse-feature</type>
 							<artifactId>org.eclipse.emf.ecp.view.template.feature</artifactId>
+							<version>0.0.0</version>
+						</dependency>
+                        <dependency>
+							<type>eclipse-feature</type>
+							<artifactId>org.eclipse.emf.ecp.view.treemasterdetail.feature</artifactId>
 							<version>0.0.0</version>
 						</dependency>
 					</dependencies>

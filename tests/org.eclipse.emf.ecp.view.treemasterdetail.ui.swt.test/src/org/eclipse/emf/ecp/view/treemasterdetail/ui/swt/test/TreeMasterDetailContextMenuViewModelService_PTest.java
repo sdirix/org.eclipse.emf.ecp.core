@@ -70,7 +70,7 @@ public class TreeMasterDetailContextMenuViewModelService_PTest {
 			final TestContextMenuViewModelService service = new TestContextMenuViewModelService();
 			final ViewModelContextImpl viewContext = new ViewModelContextImpl(view, player, service);
 			ECPSWTViewRenderer.INSTANCE.render(shell, viewContext);
-			assertTrue("Context menu was not registered", latch.await(1, TimeUnit.SECONDS)); //$NON-NLS-1$
+			assertTrue("Context menu was not registered", latch.await(5, TimeUnit.SECONDS)); //$NON-NLS-1$
 		} catch (final ECPRendererException e) {
 			e.printStackTrace();
 		} catch (final InterruptedException e) {
