@@ -33,7 +33,7 @@ import org.eclipse.emf.emfstore.bowling.Gender;
 import org.eclipse.emf.emfstore.bowling.Player;
 import org.junit.Test;
 
-public class DiagnosticianPTest {
+public class Diagnostician_PTest {
 
 	@Test
 	public void testClassifierWrapperEClass() {

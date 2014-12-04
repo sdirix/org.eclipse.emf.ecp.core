@@ -22,7 +22,7 @@ import org.junit.Test;
  * 
  */
 @SuppressWarnings("restriction")
-public class ECPStringLineWrapperTest {
+public class ECPStringLineWrapper_Test {
 
 	private ECPStringLineWrapper wrapper;
 

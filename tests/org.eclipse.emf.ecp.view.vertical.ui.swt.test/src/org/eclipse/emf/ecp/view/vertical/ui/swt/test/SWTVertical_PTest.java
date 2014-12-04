@@ -39,7 +39,7 @@ import org.junit.runner.RunWith;
 
 @SuppressWarnings("restriction")
 @RunWith(DatabindingClassRunner.class)
-public class SWTVerticalPTest {
+public class SWTVertical_PTest {
 
 	private Shell shell;
 	private EObject domainElement;

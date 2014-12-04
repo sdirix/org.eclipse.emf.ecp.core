@@ -44,7 +44,7 @@ import org.junit.runner.RunWith;
  */
 @SuppressWarnings("restriction")
 @RunWith(DatabindingClassRunner.class)
-public class ECPSWTViewRendererPTest {
+public class ECPSWTViewRenderer_PTest {
 
 	private static EObject domainObject;
 	private static Shell shell;
