@@ -121,6 +121,7 @@ public class BookImpl extends EObjectImpl implements Book {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public String getTitle() {
 		return title;
 	}
@@ -131,6 +132,7 @@ public class BookImpl extends EObjectImpl implements Book {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setTitle(String newTitle) {
 		final String oldTitle = title;
 		title = newTitle;
@@ -145,6 +147,7 @@ public class BookImpl extends EObjectImpl implements Book {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public int getPages() {
 		return pages;
 	}
@@ -155,6 +158,7 @@ public class BookImpl extends EObjectImpl implements Book {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setPages(int newPages) {
 		final int oldPages = pages;
 		pages = newPages;
@@ -169,6 +173,7 @@ public class BookImpl extends EObjectImpl implements Book {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public Writer getWriters() {
 		if (writers != null && writers.eIsProxy()) {
 			final InternalEObject oldWriters = (InternalEObject) writers;
@@ -220,6 +225,7 @@ public class BookImpl extends EObjectImpl implements Book {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setWriters(Writer newWriters) {
 		if (newWriters != writers) {
 			NotificationChain msgs = null;

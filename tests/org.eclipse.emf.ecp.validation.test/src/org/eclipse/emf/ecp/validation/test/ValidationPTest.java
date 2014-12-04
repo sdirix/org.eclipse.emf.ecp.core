@@ -41,14 +41,14 @@ import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
 
 @SuppressWarnings("restriction")
-public class Validation_PTest {
+public class ValidationPTest {
 
 	private static IValidationServiceProvider validationServiceProvider;
 
 	@BeforeClass
 	public static void setUpBeforeClass() {
 
-		final BundleContext bundleContext = FrameworkUtil.getBundle(Validation_PTest.class).getBundleContext();
+		final BundleContext bundleContext = FrameworkUtil.getBundle(ValidationPTest.class).getBundleContext();
 		final ServiceReference<?> eventServiceReference = bundleContext
 			.getServiceReference(IValidationServiceProvider.class
 				.getName());

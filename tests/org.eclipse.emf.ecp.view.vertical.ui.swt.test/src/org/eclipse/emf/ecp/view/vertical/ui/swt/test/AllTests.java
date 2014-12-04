@@ -17,7 +17,7 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({ SWTVertical_PTest.class })
+@SuiteClasses({ SWTVerticalPTest.class })
 public class AllTests {
 
 }

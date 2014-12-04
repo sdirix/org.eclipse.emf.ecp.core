@@ -45,10 +45,12 @@ public class ValidationServiceProvider implements IValidationServiceProvider {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public IValidationService getValidationService(final Object validationServiceObject) {
 		if (!mapping.containsKey(validationServiceObject)) {
 			IValidationService validationService = new ValidationService(new IExcludedObjectsCallback() {
 				
+				@Override
 				public boolean isExcluded(Object object) {
 					if(InternalProject.class.isInstance(validationServiceObject)){
 						return ((InternalProject)validationServiceObject).isModelRoot(object);
@@ -87,6 +89,7 @@ public class ValidationServiceProvider implements IValidationServiceProvider {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void deleteValidationService(Object key) {
 		mapping.remove(key);
 	}

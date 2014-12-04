@@ -118,6 +118,7 @@ public class Activator extends Plugin {
 
 		// BEGIN SUPRESS CATCH EXCEPTION
 		/** {@inheritDoc} **/
+		@Override
 		public void projectsChanged(Collection<ECPProject> oldProjects, Collection<ECPProject> newProjects) {
 			// List<ECPProject> newProjectList = Arrays.asList(newProjects);
 			for (final ECPProject project : oldProjects) {
@@ -128,6 +129,7 @@ public class Activator extends Plugin {
 		}
 
 		/** {@inheritDoc} **/
+		@Override
 		public Collection<Object> objectsChanged(ECPProject project, Collection<Object> objects) {
 			final Set<Object> allAffectedElements = new HashSet<Object>();
 

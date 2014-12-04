@@ -92,6 +92,7 @@ public final class ValidationService extends AbstractCachedTree<Diagnostic> impl
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public Set<EObject> validate(Collection<EObject> eObjects) {
 		final Set<EObject> allAffected = new HashSet<EObject>();
 		for (final EObject eObject : eObjects) {
@@ -104,6 +105,7 @@ public final class ValidationService extends AbstractCachedTree<Diagnostic> impl
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public Set<EObject> validate(EObject eObject) {
 		return update(eObject, getSeverity(eObject));
 	}
@@ -111,6 +113,7 @@ public final class ValidationService extends AbstractCachedTree<Diagnostic> impl
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public Diagnostic getDiagnostic(Object eObject) {
 		return getCachedValue(eObject);
 	}
@@ -118,6 +121,7 @@ public final class ValidationService extends AbstractCachedTree<Diagnostic> impl
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public Diagnostic getRootDiagnostic() {
 		return getRootValue();
 	}

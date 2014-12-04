@@ -117,6 +117,7 @@ public class LibraryImpl extends EObjectImpl implements Library {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public String getName() {
 		return name;
 	}
@@ -127,6 +128,7 @@ public class LibraryImpl extends EObjectImpl implements Library {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setName(String newName) {
 		final String oldName = name;
 		name = newName;
@@ -141,6 +143,7 @@ public class LibraryImpl extends EObjectImpl implements Library {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EList<Writer> getWriters() {
 		if (writers == null) {
 			writers = new EObjectContainmentWithInverseEList<Writer>(Writer.class, this, TestPackage.LIBRARY__WRITERS,
@@ -155,6 +158,7 @@ public class LibraryImpl extends EObjectImpl implements Library {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EList<Book> getBooks() {
 		if (books == null) {
 			books = new EObjectContainmentEList<Book>(Book.class, this, TestPackage.LIBRARY__BOOKS);

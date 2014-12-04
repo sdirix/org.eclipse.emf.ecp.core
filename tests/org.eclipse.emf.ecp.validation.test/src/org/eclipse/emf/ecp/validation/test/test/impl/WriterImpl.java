@@ -206,6 +206,7 @@ public class WriterImpl extends EObjectImpl implements Writer {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public String getFirstName() {
 		return firstName;
 	}
@@ -216,6 +217,7 @@ public class WriterImpl extends EObjectImpl implements Writer {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setFirstName(String newFirstName) {
 		final String oldFirstName = firstName;
 		firstName = newFirstName;
@@ -231,6 +233,7 @@ public class WriterImpl extends EObjectImpl implements Writer {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public String getLastName() {
 		return lastName;
 	}
@@ -241,6 +244,7 @@ public class WriterImpl extends EObjectImpl implements Writer {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setLastName(String newLastName) {
 		final String oldLastName = lastName;
 		lastName = newLastName;
@@ -255,6 +259,7 @@ public class WriterImpl extends EObjectImpl implements Writer {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public String getEMail() {
 		return eMail;
 	}
@@ -265,6 +270,7 @@ public class WriterImpl extends EObjectImpl implements Writer {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setEMail(String newEMail) {
 		final String oldEMail = eMail;
 		eMail = newEMail;
@@ -279,6 +285,7 @@ public class WriterImpl extends EObjectImpl implements Writer {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public Date getBirthDate() {
 		return birthDate;
 	}
@@ -289,6 +296,7 @@ public class WriterImpl extends EObjectImpl implements Writer {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setBirthDate(Date newBirthDate) {
 		final Date oldBirthDate = birthDate;
 		birthDate = newBirthDate;
@@ -304,6 +312,7 @@ public class WriterImpl extends EObjectImpl implements Writer {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EList<Book> getBooks() {
 		if (books == null) {
 			books = new EObjectWithInverseResolvingEList<Book>(Book.class, this, TestPackage.WRITER__BOOKS,
@@ -318,6 +327,7 @@ public class WriterImpl extends EObjectImpl implements Writer {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public boolean isPseudonym() {
 		return pseudonym;
 	}
@@ -328,6 +338,7 @@ public class WriterImpl extends EObjectImpl implements Writer {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setPseudonym(boolean newPseudonym) {
 		final boolean oldPseudonym = pseudonym;
 		pseudonym = newPseudonym;
@@ -343,6 +354,7 @@ public class WriterImpl extends EObjectImpl implements Writer {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public Library getLibrary() {
 		if (eContainerFeatureID() != TestPackage.WRITER__LIBRARY) {
 			return null;
@@ -367,6 +379,7 @@ public class WriterImpl extends EObjectImpl implements Writer {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setLibrary(Library newLibrary) {
 		if (newLibrary != eInternalContainer() || eContainerFeatureID() != TestPackage.WRITER__LIBRARY
 			&& newLibrary != null) {
@@ -396,6 +409,7 @@ public class WriterImpl extends EObjectImpl implements Writer {
 	 * 
 	 * @generated NOT
 	 */
+	@Override
 	public boolean validate(DiagnosticChain diagnostic, Map<Object, Object> context) {
 		// TODO: implement this method
 		// -> specify the condition that violates the invariant

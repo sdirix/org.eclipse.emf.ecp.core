@@ -19,7 +19,7 @@ import org.junit.runners.Suite;
  * 
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({ Diagnostician_PTest.class })
+@Suite.SuiteClasses({ DiagnosticianPTest.class })
 public class AllTests {
 
 }
