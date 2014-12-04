@@ -179,7 +179,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 */
 	@Override
 	protected Control renderControl(SWTGridCell gridCell, final Composite parent) throws NoRendererFoundException,
-	NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption {
 		final Iterator<Setting> settings = getVElement().getDomainModelReference().getIterator();
 		if (!settings.hasNext()) {
 			return null;
@@ -196,7 +196,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		final Composite titleComposite = new Composite(composite, SWT.NONE);
 		titleComposite.setBackground(parent.getBackground());
 		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING)
-		.applyTo(titleComposite);
+			.applyTo(titleComposite);
 		GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(false).applyTo(titleComposite);
 
 		// TODO discuss
@@ -311,7 +311,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	protected Composite createControlComposite(Composite composite) {
 		final Composite controlComposite = new Composite(composite, SWT.NONE);
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).hint(1, getTableHeightHint())
-			.applyTo(controlComposite);
+		.applyTo(controlComposite);
 		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(controlComposite);
 		return controlComposite;
 	}
@@ -418,7 +418,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 				.setData("width", //$NON-NLS-1$
 					ECPCellEditor.class.isInstance(cellEditor) ? ECPCellEditor.class.cast(cellEditor)
 						.getColumnWidthWeight() : 100)
-				.build(tableViewer);
+						.build(tableViewer);
 
 			column.setLabelProvider(new ECPCellLabelProvider(eStructuralFeature, cellEditor, getObservableMap(dmr,
 				eStructuralFeature, cp), getVElement(), dmr));
@@ -520,8 +520,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			.getBundle().getBundleContext().getService(databindingProviderServiceReference);
 		final IValueProperty result = databindingProviderService.getProperty(dmr, IValueProperty.class);
 		Activator.getInstance()
-			.getBundle()
-			.getBundleContext().ungetService(databindingProviderServiceReference);
+		.getBundle()
+		.getBundleContext().ungetService(databindingProviderServiceReference);
 
 		return result;
 	}
@@ -645,8 +645,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		final MessageDialog dialog = new MessageDialog(addButton.getShell(),
 			ControlMessages.TableControl_Delete, null,
 			ControlMessages.TableControl_DeleteAreYouSure, MessageDialog.CONFIRM, new String[] {
-				JFaceResources.getString(IDialogLabelKeys.YES_LABEL_KEY),
-				JFaceResources.getString(IDialogLabelKeys.NO_LABEL_KEY) }, 0);
+			JFaceResources.getString(IDialogLabelKeys.YES_LABEL_KEY),
+			JFaceResources.getString(IDialogLabelKeys.NO_LABEL_KEY) }, 0);
 
 		new ECPDialogExecutor(dialog) {
 
@@ -694,12 +694,12 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	protected void addRow(EClass clazz, Setting mainSetting) {
 		if (clazz.isAbstract() || clazz.isInterface()) {
 			Activator
-			.getInstance()
-			.getLog()
-			.log(
-				new Status(
-					IStatus.WARNING,
-					"org.eclipse.emf.ecp.view.table.ui.swt", "The class " + clazz.getName() + " is abstract or an interface.")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				.getInstance()
+				.getLog()
+				.log(
+					new Status(
+						IStatus.WARNING,
+						"org.eclipse.emf.ecp.view.table.ui.swt", "The class " + clazz.getName() + " is abstract or an interface.")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 			return;
 		}
 		final EObject modelElement = mainSetting.getEObject();
@@ -836,11 +836,20 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			int rc = 0;
 			final EObject object1 = (EObject) e1;
 			final EObject object2 = (EObject) e2;
-			final EStructuralFeature feat1 = object1.eClass().getEAllStructuralFeatures().get(propertyIndex);
-			final EStructuralFeature feat2 = object2.eClass().getEAllStructuralFeatures().get(propertyIndex);
 
-			final Object value1 = object1.eGet(feat1);
-			final Object value2 = object2.eGet(feat2);
+			Object value1 = null;
+			Object value2 = null;
+
+			final VDomainModelReference dmr = ((VTableDomainModelReference) getVElement().getDomainModelReference())
+				.getColumnDomainModelReferences().get(propertyIndex);
+			boolean init = dmr.init(object1);
+			if (init && dmr.getIterator().hasNext()) {
+				value1 = dmr.getIterator().next().get(true);
+			}
+			init = dmr.init(object2);
+			if (init && dmr.getIterator().hasNext()) {
+				value2 = dmr.getIterator().next().get(true);
+			}
 
 			if (value1 == null) {
 				rc = 1;
