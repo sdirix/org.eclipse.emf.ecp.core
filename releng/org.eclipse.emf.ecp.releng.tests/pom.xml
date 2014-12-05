@@ -28,6 +28,7 @@
 		<module>../../tests/org.eclipse.emf.ecp.test.model.feature</module>
 
 		<!-- Tests -->
+		<module>../../tests/org.eclipse.emf.ecp.view.treemasterdetail.ui.swt.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.edit.swt.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.test.common</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.test.common.swt</module>
@@ -102,6 +103,7 @@
 				<configuration>
 					<includes>
 						<include>**/*_PTest.java</include>
+						<include>**/*_ITest.java</include>
 					</includes>
 					<testFailureIgnore>true</testFailureIgnore>
 				</configuration>

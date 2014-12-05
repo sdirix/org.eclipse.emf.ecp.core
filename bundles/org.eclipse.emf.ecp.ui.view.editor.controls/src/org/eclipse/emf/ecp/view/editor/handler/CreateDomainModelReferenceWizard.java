@@ -94,9 +94,9 @@ public class CreateDomainModelReferenceWizard extends SelectModelElementWizard {
 			"New Domain Model Reference", "Select an EStructuralFeature", "Select a domain model EStructuralFeature for the domain model reference.", getDummyControl()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
 		if (domainModelReference == null) {
-			firstPage = new WizardPageExtension(pageName);
-			firstPage.setTitle(pageTitle);
-			firstPage.setDescription(description);
+			firstPage = new WizardPageExtension(getPageName());
+			firstPage.setTitle(getPageTitle());
+			firstPage.setDescription(getDescription());
 			addPage(firstPage);
 		} else {
 			customizeDMRPage.setEClass(domainModelReference.eClass());

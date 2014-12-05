@@ -31,6 +31,7 @@ public class ValidationFailedDecorator implements ILightweightLabelDecorator {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void decorate(final Object element, IDecoration decoration) {
 		if (!(element instanceof EObject) && !(element instanceof ECPProject)) {
 			return;
@@ -74,21 +75,25 @@ public class ValidationFailedDecorator implements ILightweightLabelDecorator {
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void addListener(ILabelProviderListener listener) {
 
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void dispose() {
 
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public boolean isLabelProperty(Object element, String property) {
 		return false;
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void removeListener(ILabelProviderListener listener) {
 	}
 

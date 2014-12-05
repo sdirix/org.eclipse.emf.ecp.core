@@ -89,6 +89,7 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public Library createLibrary() {
 		final LibraryImpl library = new LibraryImpl();
 		return library;
@@ -100,6 +101,7 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public Writer createWriter() {
 		final WriterImpl writer = new WriterImpl();
 		return writer;
@@ -111,6 +113,7 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public Book createBook() {
 		final BookImpl book = new BookImpl();
 		return book;
@@ -122,6 +125,7 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public TestPackage getTestPackage() {
 		return (TestPackage) getEPackage();
 	}

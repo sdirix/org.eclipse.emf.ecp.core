@@ -54,7 +54,7 @@ import org.junit.runners.Parameterized.Parameters;
  * 
  */
 @RunWith(Parameterized.class)
-public class XmlDateControlSWTBot_PTest extends ECPCommonSWTBotTest {
+public class XmlDateControlSWTBotPTest extends ECPCommonSWTBotTest {
 
 	private static double memBefore;
 	private static double memAfter;
@@ -65,7 +65,7 @@ public class XmlDateControlSWTBot_PTest extends ECPCommonSWTBotTest {
 	private GCCollectable domainCollectable;
 	private final Calendar calendar;
 
-	public XmlDateControlSWTBot_PTest(boolean isDomainCollectable) {
+	public XmlDateControlSWTBotPTest(boolean isDomainCollectable) {
 		this.isDomainCollectable = isDomainCollectable;
 
 		// Creating date
@@ -114,8 +114,8 @@ public class XmlDateControlSWTBot_PTest extends ECPCommonSWTBotTest {
 
 	@Override
 	public void assertions(double before, double after) {
-		XmlDateControlSWTBot_PTest.memBefore += before;
-		XmlDateControlSWTBot_PTest.memAfter += after;
+		XmlDateControlSWTBotPTest.memBefore += before;
+		XmlDateControlSWTBotPTest.memAfter += after;
 
 		if (getDomainObject() != null) {
 			final XMLGregorianCalendar cal = (XMLGregorianCalendar) getDomainObject().eGet(

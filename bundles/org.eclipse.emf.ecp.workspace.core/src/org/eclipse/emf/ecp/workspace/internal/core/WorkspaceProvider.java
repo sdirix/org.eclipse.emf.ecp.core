@@ -162,6 +162,7 @@ public class WorkspaceProvider extends DefaultProvider {
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public EList<? extends Object> getElements(InternalProject project) {
 		final ResourceSet resourceSet = project.getEditingDomain().getResourceSet();
 		return ECollections.unmodifiableEList(resourceSet.getResource(
@@ -206,17 +207,20 @@ public class WorkspaceProvider extends DefaultProvider {
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void delete(InternalProject project, Collection<Object> objects) {
 		project.getEditingDomain().getCommandStack().execute(DeleteCommand.create(project.getEditingDomain(), objects));
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void cloneProject(final InternalProject projectToClone, InternalProject targetProject) {
 		throw new UnsupportedOperationException();
 	}
 
 	/** {@inheritDoc} */
 	// FIXME
+	@Override
 	public Notifier getRoot(InternalProject project) {
 		return project.getEditingDomain().getResourceSet()
 			.getResource(URI.createURI(project.getProperties().getValue(PROP_ROOT_URI)), true);
@@ -310,6 +314,7 @@ public class WorkspaceProvider extends DefaultProvider {
 	 * 
 	 * @see org.eclipse.emf.ecp.spi.core.InternalProvider#isThreadSafe()
 	 */
+	@Override
 	public boolean isThreadSafe() {
 		return false;
 	}

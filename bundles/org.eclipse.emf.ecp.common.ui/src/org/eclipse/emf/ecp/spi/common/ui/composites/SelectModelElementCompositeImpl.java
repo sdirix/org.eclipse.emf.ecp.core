@@ -35,7 +35,7 @@ import org.eclipse.swt.widgets.Composite;
  *
  */
 public class SelectModelElementCompositeImpl extends AbstractFilteredSelectionComposite<TableViewer> implements
-SelectionComposite<TableViewer> {
+	SelectionComposite<TableViewer> {
 
 	private final ECPViewerFilter filter;
 
@@ -51,7 +51,7 @@ SelectionComposite<TableViewer> {
 	 * Default Constructor for the SelectModelElementCompositeImpl.
 	 *
 	 * @param input the input for the selection
-	 * @param multiSelection
+	 * @param multiSelection whether multi selection is allowed
 	 */
 	public SelectModelElementCompositeImpl(Object input, boolean multiSelection) {
 		super();
@@ -163,7 +163,7 @@ SelectionComposite<TableViewer> {
 				case ' ':
 					s.append("\\s"); //$NON-NLS-1$
 					break;
-					// escape special regexp-characters
+				// escape special regexp-characters
 				case '(':
 				case ')':
 				case '[':

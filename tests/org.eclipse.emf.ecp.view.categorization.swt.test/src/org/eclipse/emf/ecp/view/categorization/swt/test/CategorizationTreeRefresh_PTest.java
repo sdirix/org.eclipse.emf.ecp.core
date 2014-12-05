@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
@@ -13,6 +13,7 @@ package org.eclipse.emf.ecp.view.categorization.swt.test;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -39,6 +40,7 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
@@ -48,7 +50,7 @@ import org.junit.Test;
 
 /**
  * @author Eugen Neufeld
- * 
+ *
  */
 public class CategorizationTreeRefresh_PTest {
 
@@ -173,6 +175,7 @@ public class CategorizationTreeRefresh_PTest {
 		final Tree tree = getTree(ecpSwtView.getSWTControl());
 
 		// assert
+		waitForUIThread();
 		assertNoError(tree);
 	}
 
@@ -183,6 +186,7 @@ public class CategorizationTreeRefresh_PTest {
 		final Tree tree = getTree(ecpSwtView.getSWTControl());
 
 		// assert
+		waitForUIThread();
 		assertError(tree);
 	}
 
@@ -200,6 +204,7 @@ public class CategorizationTreeRefresh_PTest {
 		player.getEMails().clear();
 
 		// assert
+		waitForUIThread();
 		assertError(tree);
 	}
 
@@ -216,6 +221,16 @@ public class CategorizationTreeRefresh_PTest {
 		player.getEMails().add("bla");
 
 		// assert
+		waitForUIThread();
 		assertNoError(tree);
+	}
+
+	private static void waitForUIThread() {
+		final long maxTime = System.currentTimeMillis() + 5000;
+		while (Display.getDefault().readAndDispatch()) {
+			if (System.currentTimeMillis() > maxTime) {
+				fail("Timeout");
+			}
+		}
 	}
 }

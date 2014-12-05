@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
@@ -57,16 +57,16 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * <em>Domain Model EReference Path</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
-	VFeaturePathDomainModelReference
+VFeaturePathDomainModelReference
 {
 	/**
 	 * The cached value of the '{@link #getChangeListener() <em>Change Listener</em>}' attribute list.
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.3
 	 *        <!-- end-user-doc -->
 	 * @see #getChangeListener()
@@ -78,7 +78,7 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 	 * The cached value of the '{@link #getDomainModelEFeature() <em>Domain Model EFeature</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getDomainModelEFeature()
 	 * @generated
 	 * @ordered
@@ -89,7 +89,7 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 	 * list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getDomainModelEReferencePath()
 	 * @generated
 	 * @ordered
@@ -99,7 +99,7 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected VFeaturePathDomainModelReferenceImpl()
@@ -110,7 +110,7 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -121,7 +121,7 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.3
 	 *        <!-- end-user-doc -->
 	 * @generated
@@ -141,7 +141,7 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -166,7 +166,7 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public EStructuralFeature basicGetDomainModelEFeature()
@@ -177,7 +177,7 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -195,8 +195,8 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
+	 *
+	 * @generated NOT
 	 */
 	@Override
 	public EList<EReference> getDomainModelEReferencePath()
@@ -204,7 +204,15 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 		if (domainModelEReferencePath == null)
 		{
 			domainModelEReferencePath = new EObjectResolvingEList<EReference>(EReference.class, this,
-				VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EREFERENCE_PATH);
+				VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EREFERENCE_PATH) {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				protected boolean isUnique()
+				{
+					return false;
+				}
+			};
 		}
 		return domainModelEReferencePath;
 	}
@@ -212,7 +220,7 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -236,7 +244,7 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
@@ -263,7 +271,7 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -287,7 +295,7 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -308,7 +316,7 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -369,6 +377,9 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 		EObject currentResolvedEObject = domainModel;
 		final ArrayList<EReference> currentLeftReferences = new ArrayList<EReference>(getDomainModelEReferencePath());
 		for (final EReference eReference : getDomainModelEReferencePath()) {
+			if (!currentResolvedEObject.eClass().getEAllReferences().contains(eReference)) {
+				return false;
+			}
 			resolvedSetting.add(InternalEObject.class.cast(currentResolvedEObject).eSetting(eReference));
 			if (eReference.isMany()) {
 				break;
@@ -403,6 +414,9 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 		lastResolvedEObject = currentResolvedEObject;
 		leftReferences = currentLeftReferences;
 		// resolvedSetting.add(InternalEObject.class.cast(lastResolvedEObject).eSetting(getDomainModelEFeature()));
+		if (!leftReferences.isEmpty()) {
+			return false;
+		}
 		return true;
 	}
 
@@ -415,7 +429,7 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReference#getIterator()
 	 */
 	@Override
@@ -430,7 +444,7 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReference#getEStructuralFeatureIterator()
 	 */
 	@Override
@@ -463,9 +477,9 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 	}
 
 	/**
-	 * 
+	 *
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReference#init(org.eclipse.emf.ecore.EObject)
 	 * @since 1.3
 	 */
@@ -478,7 +492,7 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReference#getFullPathIterator()
 	 * @since 1.3
 	 */
@@ -548,7 +562,7 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.model.ModelChangeListener#notifyChange(org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification)
 	 * @since 1.3
 	 */
@@ -567,7 +581,9 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 			cleanDiagnostic(getDomainModelEFeature().equals(notification.getStructuralFeature()), notification);
 
 			resolve(rootEObject, false);
-			for (final DomainModelReferenceChangeListener listener : getChangeListener()) {
+			final List<DomainModelReferenceChangeListener> copyOfChangeListeners = new ArrayList<DomainModelReferenceChangeListener>(
+				getChangeListener());
+			for (final DomainModelReferenceChangeListener listener : copyOfChangeListeners) {
 				listener.notifyChange();
 			}
 		}

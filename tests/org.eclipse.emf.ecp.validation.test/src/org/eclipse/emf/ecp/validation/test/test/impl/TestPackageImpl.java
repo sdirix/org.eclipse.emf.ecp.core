@@ -120,6 +120,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 		EValidator.Registry.INSTANCE.put
 			(theTestPackage,
 				new EValidator.Descriptor() {
+					@Override
 					public EValidator getEValidator() {
 						return TestValidator.INSTANCE;
 					}
@@ -139,6 +140,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EClass getLibrary() {
 		return libraryEClass;
 	}
@@ -149,6 +151,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EAttribute getLibrary_Name() {
 		return (EAttribute) libraryEClass.getEStructuralFeatures().get(0);
 	}
@@ -159,6 +162,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EReference getLibrary_Writers() {
 		return (EReference) libraryEClass.getEStructuralFeatures().get(1);
 	}
@@ -169,6 +173,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EReference getLibrary_Books() {
 		return (EReference) libraryEClass.getEStructuralFeatures().get(2);
 	}
@@ -179,6 +184,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EClass getWriter() {
 		return writerEClass;
 	}
@@ -189,6 +195,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EAttribute getWriter_FirstName() {
 		return (EAttribute) writerEClass.getEStructuralFeatures().get(0);
 	}
@@ -199,6 +206,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EAttribute getWriter_LastName() {
 		return (EAttribute) writerEClass.getEStructuralFeatures().get(1);
 	}
@@ -209,6 +217,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EAttribute getWriter_EMail() {
 		return (EAttribute) writerEClass.getEStructuralFeatures().get(2);
 	}
@@ -219,6 +228,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EAttribute getWriter_BirthDate() {
 		return (EAttribute) writerEClass.getEStructuralFeatures().get(3);
 	}
@@ -229,6 +239,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EReference getWriter_Books() {
 		return (EReference) writerEClass.getEStructuralFeatures().get(4);
 	}
@@ -239,6 +250,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EAttribute getWriter_Pseudonym() {
 		return (EAttribute) writerEClass.getEStructuralFeatures().get(5);
 	}
@@ -249,6 +261,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EReference getWriter_Library() {
 		return (EReference) writerEClass.getEStructuralFeatures().get(6);
 	}
@@ -259,6 +272,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EClass getBook() {
 		return bookEClass;
 	}
@@ -269,6 +283,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EAttribute getBook_Title() {
 		return (EAttribute) bookEClass.getEStructuralFeatures().get(0);
 	}
@@ -279,6 +294,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EAttribute getBook_Pages() {
 		return (EAttribute) bookEClass.getEStructuralFeatures().get(1);
 	}
@@ -289,6 +305,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EReference getBook_Writers() {
 		return (EReference) bookEClass.getEStructuralFeatures().get(2);
 	}
@@ -299,6 +316,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public TestFactory getTestFactory() {
 		return (TestFactory) getEFactoryInstance();
 	}

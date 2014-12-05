@@ -70,7 +70,7 @@ public abstract class ECPControlHelper {
 	}
 
 	/**
-	 * Removes elements, which are already referenced
+	 * Removes elements, which are already referenced.
 	 *
 	 * @param eObject The object holding the reference
 	 * @param eReference the reference

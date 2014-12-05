@@ -14,11 +14,12 @@ import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.test.common.swt.DatabindingClassRunner;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -36,7 +37,6 @@ public class XMLDateControlRenderer_PTest extends AbstractControl_PTest {
 		dispose();
 	}
 
-	@Ignore
 	@Test
 	public void renderControlLabelAlignmentNone()
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
@@ -45,7 +45,6 @@ public class XMLDateControlRenderer_PTest extends AbstractControl_PTest {
 		assertControl(render);
 	}
 
-	@Ignore
 	@Test
 	public void renderControlLabelAlignmentLeft()
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
@@ -61,11 +60,14 @@ public class XMLDateControlRenderer_PTest extends AbstractControl_PTest {
 	}
 
 	private void assertControl(Control render) {
-		assertTrue(Text.class.isInstance(render));
-		assertEquals(SWT.LEFT, Text.class.cast(render).getStyle()
-			& SWT.LEFT);
-
-		assertEquals("org_eclipse_emf_ecp_control_xmldate", Text.class.cast(render).getData(CUSTOM_VARIANT));
+		assertTrue(Composite.class.isInstance(render));
+		final Composite top = Composite.class.cast(render);
+		assertEquals(2, top.getChildren().length);
+		assertTrue(Text.class.isInstance(top.getChildren()[0]));
+		assertTrue(Button.class.isInstance(top.getChildren()[1]));
+		final Text text = Text.class.cast(top.getChildren()[0]);
+		assertEquals(SWT.LEFT, text.getStyle() & SWT.LEFT);
+		assertEquals("org_eclipse_emf_ecp_control_xmldate", text.getData(CUSTOM_VARIANT));
 	}
 
 	@Override

@@ -1,14 +1,14 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Jonas
- * 
+ *
  *******************************************************************************/
 package org.eclipse.emf.ecp.view.vertical.ui.swt.test;
 
@@ -37,6 +37,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+@SuppressWarnings("restriction")
 @RunWith(DatabindingClassRunner.class)
 public class SWTVertical_PTest {
 
@@ -54,7 +55,7 @@ public class SWTVertical_PTest {
 
 	@Test
 	public void testVerticalWithoutChildren() throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+	NoPropertyDescriptorFoundExeption {
 		// setup model
 		final HierarchyViewModelHandle handle = createVerticalWithoutChildren();
 		final Control render = SWTViewTestHelper.render(handle.getRoot(), domainElement, shell);
@@ -65,7 +66,7 @@ public class SWTVertical_PTest {
 
 	@Test
 	public void testVerticalWithTwoControlsAsChildren() throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+	NoPropertyDescriptorFoundExeption {
 		// setup model
 		final HierarchyViewModelHandle handle = createVerticalWithTwoControlsAsChildren();
 		final Control render = SWTViewTestHelper.render(handle.getRoot(), domainElement, shell);
@@ -79,7 +80,7 @@ public class SWTVertical_PTest {
 
 	@Test
 	public void testVerticalWithTwoVerticalAsChildrenAndControlAsSubChildren() throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+	NoPropertyDescriptorFoundExeption {
 		// setup model
 		final HierarchyViewModelHandle handle =
 			createVerticalWithTwoVerticalAsChildrenAndControlAsSubChildren();
