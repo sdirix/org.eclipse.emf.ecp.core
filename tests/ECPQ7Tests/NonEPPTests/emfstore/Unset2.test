@@ -7,7 +7,7 @@ Element-Version: 3.0
 External-Reference: 
 Id: _rtAI4HkvEeO9Ja8zvRhhOQ
 Runtime-Version: 1.5.4.201410231434
-Save-Time: 12/5/14 11:56 AM
+Save-Time: 12/5/14 5:28 PM
 Testcase-Type: ecl
 
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
@@ -122,7 +122,6 @@ with [get-editor Fan] {
     get-label "No link set! Click to set link." | click
     get-button "Create and link" | click
 }
-get-window "New Reference Element" | get-tree | select Tournament | click -default
 with [get-editor Fan] {
     get-button Set | click
     get-button Set | click
