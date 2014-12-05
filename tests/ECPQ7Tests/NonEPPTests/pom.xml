@@ -12,7 +12,7 @@
 	</parent>
 
 	<properties>
-		<aut-base-path>https://hudson.eclipse.org/ecp/job/releaseBranch/lastSuccessfulBuild/artifact/releng/org.eclipse.emf.ecp.products/target/products/</aut-base-path>
+		<aut-base-path>https://hudson.eclipse.org/ecp/job/emf-emfclient-integration/lastSuccessfulBuild/artifact/releng/org.eclipse.emf.ecp.products/target/products/</aut-base-path>
 	</properties>
 
 	<profiles>
