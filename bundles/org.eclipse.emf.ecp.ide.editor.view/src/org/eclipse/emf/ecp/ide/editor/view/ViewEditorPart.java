@@ -270,13 +270,23 @@ public class ViewEditorPart extends EditorPart implements
 						Display.getDefault().getActiveShell(), Messages.ViewEditorPart_MigrationErrorTitle,
 						Messages.ViewEditorPart_MigrationErrorText1 +
 							Messages.ViewEditorPart_MigrationErrorText2);
-					e.printStackTrace();
+					Activator
+					.getDefault()
+					.getLog()
+					.log(
+						new Status(IStatus.ERROR, Activator.PLUGIN_ID, Messages.ViewEditorPart_MigrationErrorTitle,
+							e));
 				} catch (final InterruptedException e) {
 					MessageDialog.openError(
 						Display.getDefault().getActiveShell(), Messages.ViewEditorPart_MigrationErrorTitle,
 						Messages.ViewEditorPart_MigrationErrorText1 +
 							Messages.ViewEditorPart_MigrationErrorText2);
-					e.printStackTrace();
+					Activator
+						.getDefault()
+						.getLog()
+						.log(
+							new Status(IStatus.ERROR, Activator.PLUGIN_ID, Messages.ViewEditorPart_MigrationErrorTitle,
+								e));
 				}
 
 			}

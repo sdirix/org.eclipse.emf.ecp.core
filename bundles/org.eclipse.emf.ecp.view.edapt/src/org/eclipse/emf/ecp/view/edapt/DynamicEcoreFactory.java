@@ -355,6 +355,223 @@ public class DynamicEcoreFactory extends EFactoryImpl {
 		}
 		}
 	}
+
 	// END COMPLEX CODE
+
+	// BEGIN COMPLEX CODE
+	@Override
+	public String convertToString(EDataType eDataType, Object instanceValue) {
+
+		final String id = eDataType.getName();
+
+		if (E_BIG_DECIMAL.equals(id)) {
+			return convertEBigDecimalToString(eDataType, instanceValue);
+		} else if (E_BIG_INTEGER.equals(id)) {
+			return convertEBigIntegerToString(eDataType, instanceValue);
+		} else if (E_BOOLEAN.equals(id)) {
+			return convertEBooleanToString(eDataType, instanceValue);
+		} else if (E_BOOLEAN_OBJECT.equals(id)) {
+			return convertEBooleanObjectToString(eDataType, instanceValue);
+		} else if (E_BYTE.equals(id)) {
+			return convertEByteToString(eDataType, instanceValue);
+		} else if (E_BYTE_ARRAY.equals(id)) {
+			return convertEByteArrayToString(eDataType, instanceValue);
+		} else if (E_BYTE_OBJECT.equals(id)) {
+			return convertEByteObjectToString(eDataType, instanceValue);
+		} else if (E_CHAR.equals(id)) {
+			return convertECharToString(eDataType, instanceValue);
+		} else if (E_CHARACTER_OBJECT.equals(id)) {
+			return convertECharacterObjectToString(eDataType, instanceValue);
+		} else if (E_DATE.equals(id)) {
+			return convertEDateToString(eDataType, instanceValue);
+		} else if (E_DOUBLE.equals(id)) {
+			return convertEDoubleToString(eDataType, instanceValue);
+		} else if (E_DOUBLE_OBJECT.equals(id)) {
+			return convertEDoubleObjectToString(eDataType, instanceValue);
+		} else if (E_FLOAT.equals(id)) {
+			return convertEFloatToString(eDataType, instanceValue);
+		} else if (E_FLOAT_OBJECT.equals(id)) {
+			return convertEFloatObjectToString(eDataType, instanceValue);
+		} else if (E_INT.equals(id)) {
+			return convertEIntToString(eDataType, instanceValue);
+		} else if (E_INTEGER_OBJECT.equals(id)) {
+			return convertEIntegerObjectToString(eDataType, instanceValue);
+		} else if (E_JAVA_CLASS.equals(id)) {
+			return convertEJavaClassToString(eDataType, instanceValue);
+		} else if (E_JAVA_OBJECT.equals(id)) {
+			return convertEJavaObjectToString(eDataType, instanceValue);
+		} else if (E_LONG.equals(id)) {
+			return convertELongToString(eDataType, instanceValue);
+		} else if (E_LONG_OBJECT.equals(id)) {
+			return convertELongObjectToString(eDataType, instanceValue);
+		} else if (E_SHORT.equals(id)) {
+			return convertEShortToString(eDataType, instanceValue);
+		} else if (E_SHORT_OBJECT.equals(id)) {
+			return convertEShortObjectToString(eDataType, instanceValue);
+		} else if (E_STRING.equals(id)) {
+			return convertEStringToString(eDataType, instanceValue);
+		}
+		return super.convertToString(eDataType, instanceValue);
+	}
+
+	// END COMPLEX CODE
+
+	private String convertEBooleanObjectToString(EDataType metaObject, Object instanceValue)
+	{
+		return instanceValue == null ? null : instanceValue.toString();
+	}
+
+	private String convertECharacterObjectToString(EDataType metaObject, Object instanceValue)
+	{
+		if (instanceValue instanceof Character)
+		{
+			return Integer.toString((Character) instanceValue);
+		}
+
+		return instanceValue == null ? null : instanceValue.toString();
+	}
+
+	private String convertEDateToString(EDataType eDataType, Object instanceValue)
+	{
+		if (instanceValue == null)
+		{
+			return null;
+		}
+
+		return EDATE_FORMATS[0].format((Date) instanceValue);
+
+	}
+
+	private String convertEDoubleObjectToString(EDataType metaObject, Object instanceValue)
+	{
+		return instanceValue == null ? null : instanceValue.toString();
+	}
+
+	private String convertEFloatObjectToString(EDataType metaObject, Object instanceValue)
+	{
+		return instanceValue == null ? null : instanceValue.toString();
+	}
+
+	private String convertEIntegerObjectToString(EDataType metaObject, Object instanceValue)
+	{
+		return instanceValue == null ? null : instanceValue.toString();
+	}
+
+	private String convertEBigDecimalToString(EDataType eDataType, Object instanceValue)
+	{
+		return instanceValue == null ? null : instanceValue.toString();
+	}
+
+	private String convertEBigIntegerToString(EDataType eDataType, Object instanceValue)
+	{
+		return instanceValue == null ? null : instanceValue.toString();
+	}
+
+	private String convertEStringToString(EDataType metaObject, Object instanceValue)
+	{
+		return (String) instanceValue;
+	}
+
+	private String convertEIntToString(EDataType metaObject, Object instanceValue)
+	{
+		return instanceValue == null ? null : instanceValue.toString();
+	}
+
+	private String convertEBooleanToString(EDataType metaObject, Object instanceValue)
+	{
+		return instanceValue == null ? null : instanceValue.toString();
+	}
+
+	private String convertEByteObjectToString(EDataType metaObject, Object instanceValue)
+	{
+		return instanceValue == null ? null : instanceValue.toString();
+	}
+
+	private String convertEFloatToString(EDataType metaObject, Object instanceValue)
+	{
+		return instanceValue == null ? null : instanceValue.toString();
+	}
+
+	private String convertECharToString(EDataType metaObject, Object instanceValue)
+	{
+		if (instanceValue instanceof Character)
+		{
+			return Integer.toString((Character) instanceValue);
+		}
+
+		return instanceValue == null ? null : instanceValue.toString();
+	}
+
+	private String convertELongToString(EDataType metaObject, Object instanceValue)
+	{
+		return instanceValue == null ? null : instanceValue.toString();
+	}
+
+	private String convertEDoubleToString(EDataType metaObject, Object instanceValue)
+	{
+		return instanceValue == null ? null : instanceValue.toString();
+	}
+
+	private String convertEByteToString(EDataType metaObject, Object instanceValue)
+	{
+		return instanceValue == null ? null : instanceValue.toString();
+	}
+
+	private String convertEByteArrayToString(EDataType eDataType, Object instanceValue)
+	{
+		if (instanceValue == null)
+		{
+			return null;
+		}
+		final byte[] bytes = (byte[]) instanceValue;
+		return convertBytesToHexString(bytes, bytes.length);
+
+	}
+
+	private String convertEShortToString(EDataType metaObject, Object instanceValue)
+	{
+		return instanceValue == null ? null : instanceValue.toString();
+	}
+
+	private String convertEJavaClassToString(EDataType metaObject, Object instanceValue)
+	{
+		return instanceValue == null ? "" : ((Class<?>) instanceValue).getName(); //$NON-NLS-1$
+	}
+
+	private String convertEJavaObjectToString(EDataType eDataType, Object instanceValue)
+	{
+		return convertToString(instanceValue);
+	}
+
+	private String convertELongObjectToString(EDataType metaObject, Object instanceValue)
+	{
+		return instanceValue == null ? null : instanceValue.toString();
+	}
+
+	private String convertEShortObjectToString(EDataType metaObject, Object instanceValue)
+	{
+		return instanceValue == null ? null : instanceValue.toString();
+	}
+
+	private static final char[] HEX_DIGITS =
+	{ '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
+
+	private String convertBytesToHexString(byte[] bytes, int count)
+	{
+		if (bytes == null)
+		{
+			return null;
+		}
+		final char[] result = new char[2 * count];
+		for (int i = 0, j = 0; i < count; ++i)
+		{
+			final int high = bytes[i] >> 4 & 0xF;
+			final int low = bytes[i] & 0xF;
+			result[j++] = HEX_DIGITS[high];
+			result[j++] = HEX_DIGITS[low];
+		}
+		return new String(result);
+
+	}
 
 }

@@ -11,11 +11,14 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.edapt.test;
 
+import org.eclipse.emf.ecp.view.edapt.test._140to150.All140to150Tests;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses({})
+@Suite.SuiteClasses({
+	All140to150Tests.class
+})
 public class AllTests {
 
 }

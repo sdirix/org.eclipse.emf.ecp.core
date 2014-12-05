@@ -76,6 +76,9 @@
 		<module>../../tests/org.eclipse.emf.ecp.changebroker.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.changebroker.emfstore.test</module>
 		
+		<!-- Migration -->
+		<module>../../tests/org.eclipse.emf.ecp.view.edapt.test</module>
+		
 	</modules>
 	
 	<build>
