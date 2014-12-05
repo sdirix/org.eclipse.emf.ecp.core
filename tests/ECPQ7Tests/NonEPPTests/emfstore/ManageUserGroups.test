@@ -1,14 +1,14 @@
---- Q7 testcase ---
+--- RCPTT testcase ---
 Format-Version: 1.0
-Q7-vendor: www.xored.com/q7
 Contexts: _mcduMZbkEeKcXZzAzrCw-Q,_rr2EEFpSEeKcnaHGSt8OwA,_f3qEUVpSEeKcnaHGSt8OwA,_IuFcgFpZEeKcnaHGSt8OwA,_KY8s8YQIEeKCBM8mH5lmmw
 Element-Name: ManageUserGroups
 Element-Type: testcase
 Element-Version: 3.0
 External-Reference: 
 Id: _L6tvoG-ZEeKndsdNMEr_UQ
-Q7-Runtime-Version: 1.3.11.201403141124
-Save-Time: 4/24/14 3:06 PM
+Runtime-Version: 1.5.4.201410231434
+Save-Time: 12/5/14 5:12 PM
+Tags: skipExecution
 Testcase-Type: ecl
 
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
@@ -46,13 +46,15 @@ with [get-window "Progress Information" | get-window -from "Window.createShell()
 }
 with [get-window "Progress Information" | get-window -from "Window.createShell()"] {
     get-button "Create new user" | click
-    get-table | select "New User" | double-click
-    with [get-group Properties] {
-        get-editbox -after [get-label Name] | set-text testUserA
+    with [get-window "Please enter a user name"] {
+        get-editbox -after [get-label "User name:"] | set-text testUserA
+        get-button OK | click
     }
     get-button "Create new user" | click
-    get-table | select "New User" | double-click
-    get-group Properties | get-editbox -after [get-label Name] | set-text testUserB
+    with [get-window "Please enter a user name"] {
+        get-editbox -after [get-label "User name:"] | set-text testUserB
+        get-button OK | click
+    }
 }
 with [get-window "Progress Information" | get-window -from "Window.createShell()" | get-table] {
     get-property itemCount | equals 3 | verify-true
