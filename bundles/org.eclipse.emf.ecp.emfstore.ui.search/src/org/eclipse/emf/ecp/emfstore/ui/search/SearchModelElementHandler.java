@@ -1,14 +1,14 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
- * 
+ *
  *******************************************************************************/
 
 package org.eclipse.emf.ecp.emfstore.ui.search;
@@ -35,7 +35,7 @@ import org.eclipse.ui.dialogs.ElementListSelectionDialog;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
- * 
+ *
  * @author Eugen Neufeld
  *         This class shows the search model element dialog for emfstore projects
  */
@@ -44,6 +44,7 @@ public class SearchModelElementHandler extends AbstractHandler {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final IStructuredSelection selection = (IStructuredSelection) HandlerUtil.getCurrentSelection(event);
 		final InternalProject project = (InternalProject) ECPUtil.getECPProjectManager().getProject(
@@ -58,8 +59,8 @@ public class SearchModelElementHandler extends AbstractHandler {
 		final Set<EObject> eObjects = projectSpace.getAllModelElements();
 
 		if (project == null) {
-			MessageDialog.openInformation(HandlerUtil.getActiveShell(event), "Information",
-				"You must first select the Project.");
+			MessageDialog.openInformation(HandlerUtil.getActiveShell(event), Messages.SearchModelElementHandler_Information,
+				Messages.SearchModelElementHandler_YouMustSelectProject);
 		} else {
 			final ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
 				new ReflectiveItemProviderAdapterFactory(),
@@ -70,8 +71,8 @@ public class SearchModelElementHandler extends AbstractHandler {
 				adapterFactoryLabelProvider);
 			dialog.setElements(eObjects.toArray());
 			dialog.setMultipleSelection(false);
-			dialog.setMessage("Enter model element name prefix or pattern (e.g. *Trun?)");
-			dialog.setTitle("Search Model Element");
+			dialog.setMessage(Messages.SearchModelElementHandler_EnterModelName);
+			dialog.setTitle(Messages.SearchModelElementHandler_SearchModelElement);
 			if (dialog.open() == Window.OK) {
 				final Object[] selections = dialog.getResult();
 

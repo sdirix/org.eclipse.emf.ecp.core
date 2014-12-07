@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Alexandra Buzila - initial API and implementation
  ******************************************************************************/
@@ -28,7 +28,7 @@ import org.eclipse.swt.widgets.Shell;
 
 /**
  * @author Alexandra Buzila
- * 
+ *
  */
 public class UnknownFeaturesMigrationDialog extends UnknownFeaturesDialog {
 	/* the registered migrators */
@@ -55,7 +55,7 @@ public class UnknownFeaturesMigrationDialog extends UnknownFeaturesDialog {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.jface.dialogs.Dialog#createButton(org.eclipse.swt.widgets.Composite, int, java.lang.String,
 	 *      boolean)
 	 */
@@ -70,7 +70,7 @@ public class UnknownFeaturesMigrationDialog extends UnknownFeaturesDialog {
 
 	private void migrateModels() {
 
-		for (final Iterator<Entry<EObject, AnyType>> itr = objects.entrySet().iterator(); itr
+		for (final Iterator<Entry<EObject, AnyType>> itr = getObjects().entrySet().iterator(); itr
 			.hasNext();) {
 			final Entry<EObject, AnyType> entry = itr.next();
 			final EObject key = entry.getKey();
@@ -103,7 +103,7 @@ public class UnknownFeaturesMigrationDialog extends UnknownFeaturesDialog {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.jface.dialogs.Dialog#okPressed()
 	 */
 	@Override
@@ -117,14 +117,6 @@ public class UnknownFeaturesMigrationDialog extends UnknownFeaturesDialog {
 			}
 		}
 		super.okPressed();
-	}
-
-	/**
-	 * @return the description
-	 */
-	@Override
-	public String getDescription() {
-		return description;
 	}
 
 }

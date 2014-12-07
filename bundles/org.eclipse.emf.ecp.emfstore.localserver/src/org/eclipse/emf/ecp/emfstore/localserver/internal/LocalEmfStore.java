@@ -31,6 +31,8 @@ import org.eclipse.emf.emfstore.internal.server.exceptions.FatalESException;
 @SuppressWarnings("restriction")
 public final class LocalEmfStore {
 
+	private static final String STARTUPPREFERENCE = "STARTUP"; //$NON-NLS-1$
+
 	/**
 	 * Instantiates a new local emf store.
 	 */
@@ -91,6 +93,6 @@ public final class LocalEmfStore {
 	 */
 	public static boolean shouldStart() {
 		final IPreferencesService service = Platform.getPreferencesService();
-		return service.getBoolean("org.eclipse.emf.ecp.emfstore.localserver", "STARTUP", true, null);
+		return service.getBoolean(Activator.PLUGIN_ID, STARTUPPREFERENCE, true, null);
 	}
 }

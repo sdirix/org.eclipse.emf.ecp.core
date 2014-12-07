@@ -29,6 +29,7 @@ public class Activator extends Plugin {
 	private static Activator plugin;
 
 	/**{@inheritDoc} */
+	@Override
 	public void start(BundleContext bundleContext) throws Exception {
 		super.start(bundleContext);
 		plugin = this;
@@ -36,6 +37,7 @@ public class Activator extends Plugin {
 	}
 
 	/**{@inheritDoc} */
+	@Override
 	public void stop(BundleContext bundleContext) throws Exception {
 		plugin = null;
 		EMFStoreController.getInstance().stop();

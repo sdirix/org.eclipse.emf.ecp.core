@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Alexandra Buzila - initial API and implementation
  ******************************************************************************/
@@ -43,13 +43,13 @@ import org.eclipse.swt.widgets.Text;
 
 /**
  * @author Alexandra Buzila
- * 
+ *
  */
 public class UnknownFeaturesDialog extends Dialog {
 	/** The unresolved features. */
-	protected final Map<EObject, AnyType> objects;
+	private final Map<EObject, AnyType> objects;
 	/** The dialog description. */
-	protected String description;
+	private String description;
 
 	private final String title;
 
@@ -134,61 +134,7 @@ public class UnknownFeaturesDialog extends Dialog {
 	}
 
 	private Listener getTableListener(final Composite composite, final Table table) {
-		return new Listener() {
-			Shell tip = null;
-			Text text = null;
-
-			@Override
-			public void handleEvent(Event event) {
-				switch (event.type) {
-				case SWT.Dispose: {
-					break;
-				}
-				case SWT.KeyDown: {
-					break;
-				}
-				case SWT.MouseMove: {
-					if (tip == null) {
-						break;
-					}
-					tip.dispose();
-					tip = null;
-					text = null;
-					break;
-				}
-				case SWT.MouseHover: {
-					final TableItem item = table.getItem(new Point(event.x, event.y));
-					if (item != null) {
-						if (tip != null && !tip.isDisposed()) {
-							tip.dispose();
-						}
-						tip = new Shell(composite.getShell(), SWT.ON_TOP | SWT.TOOL | SWT.NO_FOCUS);
-						tip.setBackground(composite.getDisplay().getSystemColor(SWT.COLOR_INFO_BACKGROUND));
-						final FillLayout layout = new FillLayout();
-						layout.marginWidth = 2;
-						tip.setLayout(layout);
-
-						text = new Text(tip, SWT.MULTI);
-						text.setForeground(composite.getDisplay().getSystemColor(SWT.COLOR_INFO_FOREGROUND));
-						text.setBackground(composite.getDisplay().getSystemColor(SWT.COLOR_INFO_BACKGROUND));
-						text.setData("_TABLEITEM", item); //$NON-NLS-1$
-						text.setText(item.getText());
-						text.setEditable(false);
-
-						text.addListener(SWT.MouseExit, getLabelListener(table));
-						final Point size = tip.computeSize(SWT.DEFAULT, SWT.DEFAULT);
-						final Rectangle rect = item.getBounds(0);
-						final Point pt = table.toDisplay(rect.x, rect.y);
-						tip.setBounds(pt.x, pt.y, size.x, size.y);
-						tip.setVisible(true);
-					}
-					break;
-				}
-				default:
-					break;
-				}
-			}
-		};
+		return new TableListener(table, composite);
 	}
 
 	/**
@@ -196,7 +142,7 @@ public class UnknownFeaturesDialog extends Dialog {
 	 */
 	private List<InputElement> getInput() {
 		final List<InputElement> input = new ArrayList<InputElement>();
-		for (final Iterator<Entry<EObject, AnyType>> itr = objects.entrySet().iterator(); itr
+		for (final Iterator<Entry<EObject, AnyType>> itr = getObjects().entrySet().iterator(); itr
 			.hasNext();) {
 			final Entry<EObject, AnyType> entry = itr.next();
 			final AnyType value = entry.getValue();
@@ -283,6 +229,84 @@ public class UnknownFeaturesDialog extends Dialog {
 	 */
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	/**
+	 * @return the objects
+	 */
+	public Map<EObject, AnyType> getObjects() {
+		return objects;
+	}
+
+	/**
+	 * @author Jonas
+	 *
+	 */
+	private final class TableListener implements Listener {
+		private final Table table;
+		private final Composite composite;
+		private Shell tip;
+		private Text text;
+
+		/**
+		 * @param table
+		 * @param composite
+		 */
+		private TableListener(Table table, Composite composite) {
+			this.table = table;
+			this.composite = composite;
+		}
+
+		@Override
+		public void handleEvent(Event event) {
+			switch (event.type) {
+			case SWT.Dispose: {
+				break;
+			}
+			case SWT.KeyDown: {
+				break;
+			}
+			case SWT.MouseMove: {
+				if (tip == null) {
+					break;
+				}
+				tip.dispose();
+				tip = null;
+				text = null;
+				break;
+			}
+			case SWT.MouseHover: {
+				final TableItem item = table.getItem(new Point(event.x, event.y));
+				if (item != null) {
+					if (tip != null && !tip.isDisposed()) {
+						tip.dispose();
+					}
+					tip = new Shell(composite.getShell(), SWT.ON_TOP | SWT.TOOL | SWT.NO_FOCUS);
+					tip.setBackground(composite.getDisplay().getSystemColor(SWT.COLOR_INFO_BACKGROUND));
+					final FillLayout layout = new FillLayout();
+					layout.marginWidth = 2;
+					tip.setLayout(layout);
+
+					text = new Text(tip, SWT.MULTI);
+					text.setForeground(composite.getDisplay().getSystemColor(SWT.COLOR_INFO_FOREGROUND));
+					text.setBackground(composite.getDisplay().getSystemColor(SWT.COLOR_INFO_BACKGROUND));
+					text.setData("_TABLEITEM", item); //$NON-NLS-1$
+					text.setText(item.getText());
+					text.setEditable(false);
+
+					text.addListener(SWT.MouseExit, getLabelListener(table));
+					final Point size = tip.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+					final Rectangle rect = item.getBounds(0);
+					final Point pt = table.toDisplay(rect.x, rect.y);
+					tip.setBounds(pt.x, pt.y, size.x, size.y);
+					tip.setVisible(true);
+				}
+				break;
+			}
+			default:
+				break;
+			}
+		}
 	}
 
 	/** The dialog's TableViewer's input elements. */
