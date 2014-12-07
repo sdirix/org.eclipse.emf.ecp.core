@@ -49,7 +49,7 @@ import org.eclipse.net4j.util.AdapterUtil;
  * @author Eugen Neufeld
  */
 public final class ECPProviderRegistryImpl extends ElementRegistry<InternalProvider, ECPObserver> implements
-ECPProviderRegistry {
+	ECPProviderRegistry {
 	/**
 	 * The Singleton to access the implementation of the Default ECPProviderRegistry.
 	 *
@@ -113,7 +113,7 @@ ECPProviderRegistry {
 	protected void notifyObservers(Collection<InternalProvider> oldProviders, Collection<InternalProvider> newProviders)
 		throws Exception {
 		ECPUtil.getECPObserverBus().notify(ECPProvidersChangedObserver.class)
-		.providersChanged((Collection) oldProviders, (Collection) newProviders);
+			.providersChanged((Collection) oldProviders, (Collection) newProviders);
 	}
 
 	@Override
@@ -147,7 +147,7 @@ ECPProviderRegistry {
 		protected InternalProvider createElement(String name, IConfigurationElement configurationElement) {
 			final ProviderDescriptor descriptor = new ProviderDescriptor(name, configurationElement);
 			descriptor.setLabel(configurationElement.getDeclaringExtension().getLabel());
-			descriptor.setDescription(configurationElement.getAttribute("description"));
+			descriptor.setDescription(configurationElement.getAttribute("description")); //$NON-NLS-1$
 			return descriptor;
 		}
 	}

@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Edgar Mueller - initial API and implementation
  * Eugen Neufeld - Refactoring
@@ -29,12 +29,11 @@ import org.eclipse.swt.widgets.Label;
 
 /**
  * SWT categorization renderer.
- * 
+ *
  * @author emueller
  * @author Eugen Neufeld
- * 
+ *
  */
-@SuppressWarnings("restriction")
 public class SWTCategorizationRenderer extends AbstractSWTRenderer<VCategorization> {
 	private SWTGridDescription rendererGridDescription;
 
@@ -47,7 +46,7 @@ public class SWTCategorizationRenderer extends AbstractSWTRenderer<VCategorizati
 
 	/**
 	 * Test constructor.
-	 * 
+	 *
 	 * @param factory the {@link SWTRendererFactory} to use.
 	 */
 	SWTCategorizationRenderer(SWTRendererFactory factory) {
@@ -56,7 +55,7 @@ public class SWTCategorizationRenderer extends AbstractSWTRenderer<VCategorizati
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#dispose()
 	 */
 	@Override
@@ -67,7 +66,7 @@ public class SWTCategorizationRenderer extends AbstractSWTRenderer<VCategorizati
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#getGridDescription(SWTGridDescription)
 	 */
 	@Override
@@ -80,13 +79,13 @@ public class SWTCategorizationRenderer extends AbstractSWTRenderer<VCategorizati
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#renderControl(int, org.eclipse.swt.widgets.Composite,
 	 *      org.eclipse.emf.ecp.view.spi.model.VElement, org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
 	@Override
 	protected Control renderControl(SWTGridCell cell, Composite parent) throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+	NoPropertyDescriptorFoundExeption {
 		final Composite categoryComposite = new Composite(parent, SWT.NONE);
 		categoryComposite.setBackground(parent.getBackground());
 		categoryComposite.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_categorization"); //$NON-NLS-1$

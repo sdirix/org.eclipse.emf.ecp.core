@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen - initial API and implementation
  ******************************************************************************/
@@ -20,11 +20,10 @@ import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 
 /**
  * Tree renderer for composite category.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  */
-@SuppressWarnings("restriction")
 public class CompositeCategoryJFaceTreeRenderer extends AbstractJFaceTreeRenderer<VCategorization> {
 
 	private VCategorizationElement categorizationElement;
@@ -38,7 +37,7 @@ public class CompositeCategoryJFaceTreeRenderer extends AbstractJFaceTreeRendere
 
 	/**
 	 * Test constructor.
-	 * 
+	 *
 	 * @param factory the {@link SWTRendererFactory} to use.
 	 */
 	CompositeCategoryJFaceTreeRenderer(SWTRendererFactory factory) {
@@ -47,7 +46,7 @@ public class CompositeCategoryJFaceTreeRenderer extends AbstractJFaceTreeRendere
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.categorization.swt.AbstractJFaceTreeRenderer#getCategorizations()
 	 */
 	@Override
@@ -57,7 +56,7 @@ public class CompositeCategoryJFaceTreeRenderer extends AbstractJFaceTreeRendere
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.categorization.swt.AbstractJFaceTreeRenderer#getCategorizationElement()
 	 */
 	@Override

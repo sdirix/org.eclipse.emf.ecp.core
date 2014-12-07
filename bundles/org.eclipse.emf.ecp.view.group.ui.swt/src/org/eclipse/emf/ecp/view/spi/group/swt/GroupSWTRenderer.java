@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
@@ -23,11 +23,10 @@ import org.eclipse.swt.widgets.Group;
 
 /**
  * Renders a SWT group.
- * 
+ *
  * @since 1.3
- * 
+ *
  */
-@SuppressWarnings("restriction")
 public class GroupSWTRenderer extends ContainerSWTRenderer<VGroup> {
 	private static final String CONTROL_GROUP = "org_eclipse_emf_ecp_ui_control_group"; //$NON-NLS-1$
 
@@ -40,7 +39,7 @@ public class GroupSWTRenderer extends ContainerSWTRenderer<VGroup> {
 
 	/**
 	 * Test constructor.
-	 * 
+	 *
 	 * @param factory the {@link SWTRendererFactory} to use.
 	 */
 	protected GroupSWTRenderer(SWTRendererFactory factory) {
@@ -49,7 +48,7 @@ public class GroupSWTRenderer extends ContainerSWTRenderer<VGroup> {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer#getCustomVariant()
 	 */
 	@Override
@@ -59,7 +58,7 @@ public class GroupSWTRenderer extends ContainerSWTRenderer<VGroup> {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer#getChildren()
 	 */
 
@@ -70,7 +69,7 @@ public class GroupSWTRenderer extends ContainerSWTRenderer<VGroup> {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer#getComposite(org.eclipse.swt.widgets.Composite)
 	 */
 	@Override

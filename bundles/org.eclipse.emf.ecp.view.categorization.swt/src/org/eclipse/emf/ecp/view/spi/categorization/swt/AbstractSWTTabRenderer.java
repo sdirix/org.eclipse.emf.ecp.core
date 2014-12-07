@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
@@ -34,11 +34,10 @@ import org.eclipse.swt.widgets.Control;
 
 /**
  * Abstract class for a tab renderer.
- * 
+ *
  * @author Eugen Neufeld
  * @param <VELEMENT> the {@link VElement}
  */
-@SuppressWarnings("restriction")
 public abstract class AbstractSWTTabRenderer<VELEMENT extends VElement> extends AbstractSWTRenderer<VELEMENT> {
 
 	/**
@@ -50,7 +49,7 @@ public abstract class AbstractSWTTabRenderer<VELEMENT extends VElement> extends 
 
 	/**
 	 * Test constructor.
-	 * 
+	 *
 	 * @param factory the {@link SWTRendererFactory} to use.
 	 */
 	AbstractSWTTabRenderer(SWTRendererFactory factory) {
@@ -92,7 +91,7 @@ public abstract class AbstractSWTTabRenderer<VELEMENT extends VElement> extends 
 			for (final SWTGridCell gridCell : gridDescription.getGrid()) {
 				final Control render = renderer.render(gridCell, folder);
 				GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true)
-					.applyTo(render);
+				.applyTo(render);
 				item.setControl(render);
 			}
 
@@ -106,7 +105,7 @@ public abstract class AbstractSWTTabRenderer<VELEMENT extends VElement> extends 
 
 	/**
 	 * The list of categorizations to display in the tree.
-	 * 
+	 *
 	 * @return the list of {@link VAbstractCategorization}
 	 */
 	protected abstract EList<VAbstractCategorization> getCategorizations();

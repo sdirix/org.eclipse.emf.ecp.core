@@ -34,7 +34,6 @@ import org.osgi.framework.Bundle;
  * @author jfaltermeier
  *
  */
-@SuppressWarnings("restriction")
 public final class POJORendererFactory {
 
 	private static final String TEST_CLASS = "testClass"; //$NON-NLS-1$

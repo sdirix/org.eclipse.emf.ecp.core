@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
@@ -24,9 +24,9 @@ import org.osgi.framework.ServiceReference;
 
 /**
  * Activator for this plugin.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  */
 public class Activator extends Plugin {
 
@@ -50,7 +50,7 @@ public class Activator extends Plugin {
 
 	/**
 	 * Finds and returns an image for the provided path.
-	 * 
+	 *
 	 * @param path the path to get the image from
 	 * @return the image or null if nothing could be found
 	 */
@@ -65,7 +65,7 @@ public class Activator extends Plugin {
 
 	/**
 	 * Finds and returns an image for the provided {@link URL}.
-	 * 
+	 *
 	 * @param url the {@link URL} to get the image from
 	 * @return the image or null if nothing could be found
 	 */
@@ -89,7 +89,7 @@ public class Activator extends Plugin {
 
 	/**
 	 * Logs a {@link Throwable}.
-	 * 
+	 *
 	 * @param t the {@link Throwable} to log
 	 */
 	public static void log(Throwable t) {
@@ -100,8 +100,8 @@ public class Activator extends Plugin {
 
 	/**
 	 * Returns the current Instance of the {@link VTViewTemplateProvider}.
-	 * 
-	 * @return the {@link ECPControlFactory}
+	 *
+	 * @return the {@link VTViewTemplateProvider}
 	 */
 	public VTViewTemplateProvider getVTViewTemplateProvider() {
 		if (viewTemplate == null) {
@@ -117,7 +117,7 @@ public class Activator extends Plugin {
 
 	/**
 	 * The current instance.
-	 * 
+	 *
 	 * @return the current {@link Activator} instance
 	 */
 	public static Activator getInstance() {
