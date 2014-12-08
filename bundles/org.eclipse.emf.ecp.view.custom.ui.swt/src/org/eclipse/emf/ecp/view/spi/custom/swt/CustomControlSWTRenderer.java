@@ -12,7 +12,7 @@
 package org.eclipse.emf.ecp.view.spi.custom.swt;
 
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.emf.ecp.edit.internal.swt.util.SWTValidationHelper;
+import org.eclipse.emf.ecp.edit.spi.swt.util.SWTValidationHelper;
 import org.eclipse.emf.ecp.internal.edit.EditMessages;
 import org.eclipse.emf.ecp.view.spi.custom.model.VCustomControl;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;

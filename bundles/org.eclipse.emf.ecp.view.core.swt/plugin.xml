@@ -19,7 +19,7 @@
          </staticTest>
       </renderer>
       <renderer
-            renderer="org.eclipse.emf.ecp.view.internal.core.swt.renderer.TextControlSWTRenderer">
+            renderer="org.eclipse.emf.ecp.view.spi.core.swt.renderer.TextControlSWTRenderer">
          <dynamicTest
                testClass="org.eclipse.emf.ecp.view.model.common.TextControlRendererTester">
          </dynamicTest>

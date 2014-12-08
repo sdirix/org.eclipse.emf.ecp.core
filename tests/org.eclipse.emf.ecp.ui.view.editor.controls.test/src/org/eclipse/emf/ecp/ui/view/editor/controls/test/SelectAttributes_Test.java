@@ -17,7 +17,7 @@ import java.util.Set;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecp.ui.view.editor.test.model.test.TestPackage;
-import org.eclipse.emf.ecp.view.editor.controls.Helper;
+import org.eclipse.emf.ecp.view.spi.editor.controls.Helper;
 import org.junit.Test;
 
 /**

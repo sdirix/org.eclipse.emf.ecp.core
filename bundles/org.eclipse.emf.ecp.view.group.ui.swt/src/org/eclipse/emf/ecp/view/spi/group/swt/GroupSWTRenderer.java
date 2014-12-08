@@ -24,7 +24,7 @@ import org.eclipse.swt.widgets.Group;
 /**
  * Renders a SWT group.
  *
- * @since 1.3
+ * @since 1.5
  *
  */
 public class GroupSWTRenderer extends ContainerSWTRenderer<VGroup> {

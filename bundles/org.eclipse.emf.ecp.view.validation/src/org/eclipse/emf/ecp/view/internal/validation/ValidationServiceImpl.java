@@ -42,7 +42,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecp.common.UniqueSetting;
+import org.eclipse.emf.ecp.common.spi.UniqueSetting;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeAddRemoveListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
@@ -52,6 +52,9 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
+import org.eclipse.emf.ecp.view.spi.validation.ValidationProvider;
+import org.eclipse.emf.ecp.view.spi.validation.ValidationService;
+import org.eclipse.emf.ecp.view.spi.validation.ViewValidationListener;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 
@@ -333,7 +336,7 @@ public class ValidationServiceImpl implements ValidationService {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.internal.validation.ValidationService#validate(java.util.Collection)
+	 * @see org.eclipse.emf.ecp.view.spi.validation.ValidationService#validate(java.util.Collection)
 	 */
 	@Override
 	public void validate(Collection<EObject> eObjects) {
@@ -552,7 +555,7 @@ public class ValidationServiceImpl implements ValidationService {
 	 *
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.internal.validation.ValidationService#addValidationProvider(org.eclipse.emf.ecp.view.internal.validation.ValidationProvider)
+	 * @see org.eclipse.emf.ecp.view.spi.validation.ValidationService#addValidationProvider(org.eclipse.emf.ecp.view.spi.validation.ValidationProvider)
 	 */
 	@Override
 	public void addValidationProvider(ValidationProvider validationProvider) {
@@ -564,7 +567,7 @@ public class ValidationServiceImpl implements ValidationService {
 	 *
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.internal.validation.ValidationService#removeValidationProvider(org.eclipse.emf.ecp.view.internal.validation.ValidationProvider)
+	 * @see org.eclipse.emf.ecp.view.spi.validation.ValidationService#removeValidationProvider(org.eclipse.emf.ecp.view.spi.validation.ValidationProvider)
 	 */
 	@Override
 	public void removeValidationProvider(ValidationProvider validationProvider) {
@@ -577,7 +580,7 @@ public class ValidationServiceImpl implements ValidationService {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.internal.validation.ValidationService#registerValidationListener(org.eclipse.emf.ecp.view.internal.validation.ViewValidationListener)
+	 * @see org.eclipse.emf.ecp.view.spi.validation.ValidationService#registerValidationListener(org.eclipse.emf.ecp.view.spi.validation.ViewValidationListener)
 	 */
 	@Override
 	public void registerValidationListener(ViewValidationListener listener) {
@@ -600,7 +603,7 @@ public class ValidationServiceImpl implements ValidationService {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.internal.validation.ValidationService#deregisterValidationListener(org.eclipse.emf.ecp.view.internal.validation.ViewValidationListener)
+	 * @see org.eclipse.emf.ecp.view.spi.validation.ValidationService#deregisterValidationListener(org.eclipse.emf.ecp.view.spi.validation.ViewValidationListener)
 	 */
 	@Override
 	public void deregisterValidationListener(ViewValidationListener listener) {

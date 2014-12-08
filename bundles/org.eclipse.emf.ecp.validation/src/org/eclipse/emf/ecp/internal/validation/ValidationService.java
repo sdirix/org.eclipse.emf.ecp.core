@@ -22,9 +22,9 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecore.util.EObjectValidator;
-import org.eclipse.emf.ecp.common.cachetree.AbstractCachedTree;
-import org.eclipse.emf.ecp.common.cachetree.CachedTreeNode;
-import org.eclipse.emf.ecp.common.cachetree.IExcludedObjectsCallback;
+import org.eclipse.emf.ecp.common.spi.cachetree.AbstractCachedTree;
+import org.eclipse.emf.ecp.common.spi.cachetree.CachedTreeNode;
+import org.eclipse.emf.ecp.common.spi.cachetree.IExcludedObjectsCallback;
 import org.eclipse.emf.ecp.validation.api.IValidationService;
 
 /**

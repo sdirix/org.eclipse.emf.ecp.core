@@ -1,14 +1,14 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
- * 
+ *
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.controls;
 
@@ -39,10 +39,10 @@ import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.ecp.edit.internal.swt.table.TableColumnConfiguration;
 import org.eclipse.emf.ecp.edit.internal.swt.table.TableControlConfiguration;
 import org.eclipse.emf.ecp.edit.internal.swt.util.CellEditorFactory;
-import org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor;
-import org.eclipse.emf.ecp.edit.internal.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTRenderingHelper;
+import org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor;
+import org.eclipse.emf.ecp.edit.spi.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.renderer.RenderingResultRow;
 import org.eclipse.emf.edit.command.AddCommand;
@@ -98,12 +98,11 @@ import org.eclipse.swt.widgets.TableColumn;
 
 /**
  * The class describing a table control.
- * 
+ *
  * @author Eugen Neufeld
  * @author emueller
  */
 // this class is not serialized
-@SuppressWarnings("serial")
 public class TableControl extends SWTControl {
 
 	private static final String FIXED_COLUMNS = "org.eclipse.rap.rwt.fixedColumns"; //$NON-NLS-1$
@@ -123,7 +122,7 @@ public class TableControl extends SWTControl {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param tableControlConfiguration the {@link TableControlConfiguration} to use when creating the table
 	 */
 	public final void setTableControlConfiguration(TableControlConfiguration tableControlConfiguration) {
@@ -136,9 +135,9 @@ public class TableControl extends SWTControl {
 	}
 
 	/**
-	 * 
+	 *
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPControlSWT#createControls(org.eclipse.swt.widgets.Composite)
 	 */
 	@Override
@@ -438,7 +437,7 @@ public class TableControl extends SWTControl {
 
 	/**
 	 * This method shows a user confirmation dialog when the user attempts to delete a row in the table.
-	 * 
+	 *
 	 * @param deletionList the list of selected EObjects to delete
 	 */
 	protected void deleteRowUserConfirmDialog(final List<EObject> deletionList) {
@@ -472,7 +471,7 @@ public class TableControl extends SWTControl {
 	/**
 	 * This is called by {@link #deleteRowUserConfirmDialog(List)} after the user confirmed to delete the selected
 	 * elements.
-	 * 
+	 *
 	 * @param deletionList the list of {@link EObject EObjects} to delete
 	 */
 	protected void deleteRows(List<EObject> deletionList) {
@@ -486,7 +485,7 @@ public class TableControl extends SWTControl {
 	 * This method is called to add a new entry in the domain model and thus to create a new row in the table. The
 	 * element to create is defined by the provided class.
 	 * You can override this method but you have to call super nonetheless.
-	 * 
+	 *
 	 * @param clazz the {@link EClass} defining the EObject to create
 	 */
 	protected void addRow(EClass clazz) {
@@ -553,7 +552,7 @@ public class TableControl extends SWTControl {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.edit.spi.ECPAbstractControl#applyValidation(org.eclipse.emf.ecp.view.spi.model.VDiagnostic)
 	 */
 	@Override
@@ -607,7 +606,7 @@ public class TableControl extends SWTControl {
 
 	/**
 	 * Returns the message of the validation tool tip shown in the table header.
-	 * 
+	 *
 	 * @param diagnostic the {@link Diagnostic} to extract the message from
 	 * @return the message
 	 */
@@ -617,7 +616,7 @@ public class TableControl extends SWTControl {
 
 	/**
 	 * Returns the message of the validation tool tip shown in the row.
-	 * 
+	 *
 	 * @param vDiagnostic the {@link VDiagnostic} to get the message from
 	 * @return the message
 	 */
@@ -627,7 +626,7 @@ public class TableControl extends SWTControl {
 
 	/**
 	 * Returns the message of the validation tool tip shown in the cell.
-	 * 
+	 *
 	 * @param vDiagnostic the {@link VDiagnostic} to get the message from
 	 * @return the message
 	 */
@@ -648,7 +647,7 @@ public class TableControl extends SWTControl {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @deprecated
 	 */
 	@Deprecated
@@ -665,7 +664,7 @@ public class TableControl extends SWTControl {
 
 	/**
 	 * @author Jonas
-	 * 
+	 *
 	 */
 	private final class ValidationStatusCellLabelProvider extends CellLabelProvider {
 		private final List<EStructuralFeature> structuralFeatures;
@@ -736,9 +735,9 @@ public class TableControl extends SWTControl {
 	/**
 	 * The {@link ViewerComparator} for this table which allows 3 states for sort order:
 	 * none, up and down.
-	 * 
+	 *
 	 * @author Eugen Neufeld
-	 * 
+	 *
 	 */
 	private class ECPTableViewerComparator extends ViewerComparator {
 		private int propertyIndex;
@@ -807,9 +806,9 @@ public class TableControl extends SWTControl {
 	/**
 	 * ECP specficic cell label provider that does also implement {@link IColorProvider} in
 	 * order to correctly.
-	 * 
+	 *
 	 * @author emueller
-	 * 
+	 *
 	 */
 	public class ECPCellLabelProvider extends ObservableMapCellLabelProvider implements IColorProvider {
 
@@ -818,7 +817,7 @@ public class TableControl extends SWTControl {
 
 		/**
 		 * Constructor.
-		 * 
+		 *
 		 * @param feature
 		 *            the {@link EStructuralFeature} the cell is bound to
 		 * @param cellEditor
@@ -834,7 +833,7 @@ public class TableControl extends SWTControl {
 
 		/**
 		 * {@inheritDoc}
-		 * 
+		 *
 		 * @see org.eclipse.jface.viewers.CellLabelProvider#getToolTipText(java.lang.Object)
 		 */
 		@Override
@@ -914,7 +913,7 @@ public class TableControl extends SWTControl {
 
 		/**
 		 * {@inheritDoc}
-		 * 
+		 *
 		 * @see org.eclipse.jface.viewers.IColorProvider#getForeground(java.lang.Object)
 		 */
 		@Override
@@ -924,7 +923,7 @@ public class TableControl extends SWTControl {
 
 		/**
 		 * {@inheritDoc}
-		 * 
+		 *
 		 * @see org.eclipse.jface.viewers.IColorProvider#getBackground(java.lang.Object)
 		 */
 		@Override
@@ -983,7 +982,7 @@ public class TableControl extends SWTControl {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @deprecated
 	 */
 	@Override
@@ -994,9 +993,9 @@ public class TableControl extends SWTControl {
 
 	/**
 	 * Implementation of the {@link EditingSupport} for the generic ECP Table.
-	 * 
+	 *
 	 * @author Eugen Neufeld
-	 * 
+	 *
 	 */
 	private class ECPTableEditingSupport extends EditingSupport {
 
@@ -1019,7 +1018,7 @@ public class TableControl extends SWTControl {
 
 		/**
 		 * Default implementation always returns <code>true</code>.
-		 * 
+		 *
 		 * @see org.eclipse.jface.viewers.EditingSupport#canEdit(java.lang.Object)
 		 */
 		@Override
@@ -1034,7 +1033,7 @@ public class TableControl extends SWTControl {
 		/**
 		 * Default implementation always returns <code>null</code> as this will be
 		 * handled by the Binding.
-		 * 
+		 *
 		 * @see org.eclipse.jface.viewers.EditingSupport#getValue(java.lang.Object)
 		 */
 		@Override
@@ -1046,7 +1045,7 @@ public class TableControl extends SWTControl {
 		/**
 		 * Default implementation does nothing as this will be handled by the
 		 * Binding.
-		 * 
+		 *
 		 * @see org.eclipse.jface.viewers.EditingSupport#setValue(java.lang.Object, java.lang.Object)
 		 */
 		@Override
@@ -1162,6 +1161,6 @@ public class TableControl extends SWTControl {
 				model.dispose();
 			}
 		}
-	};
+	}
 
 }

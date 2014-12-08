@@ -186,11 +186,10 @@ public class ResolverViewService_PTest {
 		/**
 		 * {@inheritDoc}
 		 *
-		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getControlsFor(org.eclipse.emf.ecp.common.UniqueSetting)
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getControlsFor(org.eclipse.emf.ecp.common.spi.UniqueSetting)
 		 */
-		@SuppressWarnings("restriction")
 		@Override
-		public Set<VControl> getControlsFor(org.eclipse.emf.ecp.common.UniqueSetting setting) {
+		public Set<VControl> getControlsFor(org.eclipse.emf.ecp.common.spi.UniqueSetting setting) {
 			return null;
 		}
 

@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * EclipseSource Munich - initial API and implementation
  */
@@ -34,11 +34,10 @@ import org.eclipse.swt.widgets.Label;
 
 /**
  * A Group renderer, which doesn't enforce its own layout.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  */
-@SuppressWarnings("restriction")
 public class EmbeddedGroupSWTRenderer extends AbstractSWTRenderer<VGroup> {
 
 	private SWTGridDescription currentGridDescription;
@@ -96,13 +95,13 @@ public class EmbeddedGroupSWTRenderer extends AbstractSWTRenderer<VGroup> {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#renderControl(org.eclipse.emf.ecp.view.spi.swt.layout.GridCell,
 	 *      org.eclipse.swt.widgets.Composite)
 	 */
 	@Override
 	protected Control renderControl(SWTGridCell cell, Composite parent) throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+	NoPropertyDescriptorFoundExeption {
 		if (cell.getRenderer().equals(this)) {
 			final Label l = new Label(parent, SWT.NONE);
 			l.setBackground(parent.getBackground());

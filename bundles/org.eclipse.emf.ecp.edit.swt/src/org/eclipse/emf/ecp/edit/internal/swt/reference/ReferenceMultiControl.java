@@ -13,10 +13,12 @@
 package org.eclipse.emf.ecp.edit.internal.swt.reference;
 
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
-import org.eclipse.emf.ecp.edit.internal.swt.actions.ECPSWTAction;
 import org.eclipse.emf.ecp.edit.internal.swt.controls.ControlMessages;
 import org.eclipse.emf.ecp.edit.internal.swt.controls.MultiControl;
 import org.eclipse.emf.ecp.edit.spi.ReferenceService;
+import org.eclipse.emf.ecp.edit.spi.swt.actions.ECPSWTAction;
+import org.eclipse.emf.ecp.edit.spi.swt.reference.AddReferenceAction;
+import org.eclipse.emf.ecp.edit.spi.swt.reference.NewReferenceAction;
 import org.eclipse.emf.ecp.edit.spi.util.ECPStaticApplicableTester;
 
 /**

@@ -17,9 +17,9 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.common.cachetree.AbstractCachedTree;
-import org.eclipse.emf.ecp.common.cachetree.CachedTreeNode;
-import org.eclipse.emf.ecp.common.cachetree.IExcludedObjectsCallback;
+import org.eclipse.emf.ecp.common.spi.cachetree.AbstractCachedTree;
+import org.eclipse.emf.ecp.common.spi.cachetree.CachedTreeNode;
+import org.eclipse.emf.ecp.common.spi.cachetree.IExcludedObjectsCallback;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 

@@ -12,7 +12,7 @@
 package org.eclipse.emf.ecp.rap.spi.util;
 
 import org.eclipse.emf.ecp.edit.internal.swt.util.DialogWrapper;
-import org.eclipse.emf.ecp.edit.internal.swt.util.ECPDialogExecutor;
+import org.eclipse.emf.ecp.edit.spi.swt.util.ECPDialogExecutor;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
@@ -30,7 +30,7 @@ public class RAPWrapper implements DialogWrapper {
 	 * {@inheritDoc}
 	 *
 	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.DialogWrapper#openDialog(org.eclipse.jface.dialogs.Dialog,
-	 *      org.eclipse.emf.ecp.edit.internal.swt.util.ECPDialogExecutor)
+	 *      org.eclipse.emf.ecp.edit.spi.swt.util.ECPDialogExecutor)
 	 */
 	@Override
 	public void openDialog(final Dialog dialog, final ECPDialogExecutor callBack) {

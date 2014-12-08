@@ -33,7 +33,6 @@ import org.eclipse.swt.widgets.ExpandItem;
  * @author jfaltermeier
  *
  */
-@SuppressWarnings("restriction")
 public class CollapsableGroupSWTRenderer extends ContainerSWTRenderer<VGroup> {
 
 	private static final int MARGIN = 5;
@@ -46,7 +45,7 @@ public class CollapsableGroupSWTRenderer extends ContainerSWTRenderer<VGroup> {
 	 */
 	@Override
 	protected Control renderControl(SWTGridCell gridCell, final Composite parent) throws NoRendererFoundException,
-	NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption {
 		final ExpandBar bar = new ExpandBar(parent, SWT.V_SCROLL);
 		bar.setBackground(parent.getBackground());
 

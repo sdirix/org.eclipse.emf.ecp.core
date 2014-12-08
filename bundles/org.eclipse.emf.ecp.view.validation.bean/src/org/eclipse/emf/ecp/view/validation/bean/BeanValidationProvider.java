@@ -37,11 +37,10 @@ import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.view.internal.validation.ValidationProvider;
 import org.eclipse.emf.ecp.view.internal.validation.bean.Activator;
+import org.eclipse.emf.ecp.view.spi.validation.ValidationProvider;
 import org.osgi.framework.Bundle;
 
-@SuppressWarnings("restriction")
 public abstract class BeanValidationProvider implements ValidationProvider {
 
 	private ValidatorContext validatorContext;

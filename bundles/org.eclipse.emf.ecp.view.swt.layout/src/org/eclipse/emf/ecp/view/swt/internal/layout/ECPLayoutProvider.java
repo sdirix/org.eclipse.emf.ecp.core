@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
@@ -27,11 +27,10 @@ import org.eclipse.swt.widgets.Text;
 
 /**
  * A default layout provider.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  */
-@SuppressWarnings("restriction")
 public class ECPLayoutProvider extends AbstractLayoutProvider {
 
 	@Override
@@ -64,9 +63,9 @@ public class ECPLayoutProvider extends AbstractLayoutProvider {
 			.fillDefaults()
 			.align(gridCell.isHorizontalFill() ? SWT.FILL : SWT.BEGINNING,
 				gridCell.isVerticalFill() ? SWT.FILL : SWT.CENTER)
-			.grab(gridCell.isHorizontalGrab(), gridCell.isVerticalGrab())
-			.span(gridCell.getHorizontalSpan() + fullGridDescription.getColumns()
-				- currentRowGridDescription.getColumns(), 1).create();
+				.grab(gridCell.isHorizontalGrab(), gridCell.isVerticalGrab())
+				.span(gridCell.getHorizontalSpan() + fullGridDescription.getColumns()
+					- currentRowGridDescription.getColumns(), 1).create();
 
 	}
 
@@ -83,7 +82,7 @@ public class ECPLayoutProvider extends AbstractLayoutProvider {
 	private GridData getControlGridData(int xSpan, VControl vControl, Control control) {
 		GridDataFactory gdf =
 			GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER)
-				.grab(true, false).span(xSpan, 1);
+			.grab(true, false).span(xSpan, 1);
 
 		if (Text.class.isInstance(control) && vControl.getDomainModelReference() != null) {
 			final Setting setting = vControl.getDomainModelReference().getIterator().next();

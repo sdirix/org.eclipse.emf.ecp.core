@@ -22,7 +22,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import org.eclipse.emf.ecp.common.BidirectionalMap;
-import org.eclipse.emf.ecp.common.UniqueSetting;
+import org.eclipse.emf.ecp.common.spi.UniqueSetting;
 import org.eclipse.emf.ecp.view.internal.rule.RuleRegistry;
 import org.eclipse.emf.ecp.view.internal.rule.RuleService;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;

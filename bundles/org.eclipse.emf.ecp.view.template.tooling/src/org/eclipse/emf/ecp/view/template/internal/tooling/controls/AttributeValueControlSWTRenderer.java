@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen - initial API and implementation
  ******************************************************************************/
@@ -36,16 +36,15 @@ import org.eclipse.swt.widgets.Label;
  * Renderer for the
  * {@link org.eclipse.emf.ecp.view.template.selector.viewModelElement.model.VTViewModelElementSelector#setAttributeValue(Object)
  * VTViewModelElementSelector#setAttributeValue(Object)}.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  */
-@SuppressWarnings("restriction")
 public class AttributeValueControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer#createBindings(org.eclipse.swt.widgets.Control,
 	 *      org.eclipse.emf.ecore.EStructuralFeature.Setting)
 	 */
@@ -55,23 +54,23 @@ public class AttributeValueControlSWTRenderer extends SimpleControlSWTControlSWT
 		final Binding binding = getDataBindingContext().bindValue(SWTObservables.observeText(label),
 			getModelValue(setting), new UpdateValueStrategy(), new UpdateValueStrategy() {
 
-				/**
-				 * {@inheritDoc}
-				 * 
-				 * @see org.eclipse.core.databinding.UpdateValueStrategy#convert(java.lang.Object)
-				 */
-				@Override
-				public Object convert(Object value) {
-					return super.convert(value).toString();
-				}
+			/**
+			 * {@inheritDoc}
+			 *
+			 * @see org.eclipse.core.databinding.UpdateValueStrategy#convert(java.lang.Object)
+			 */
+			@Override
+			public Object convert(Object value) {
+				return super.convert(value).toString();
+			}
 
-			});
+		});
 		return new Binding[] { binding };
 	}
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer#createSWTControl(org.eclipse.swt.widgets.Composite,
 	 *      org.eclipse.emf.ecore.EStructuralFeature.Setting)
 	 */
@@ -91,7 +90,7 @@ public class AttributeValueControlSWTRenderer extends SimpleControlSWTControlSWT
 
 			/**
 			 * {@inheritDoc}
-			 * 
+			 *
 			 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
 			 */
 
@@ -115,7 +114,7 @@ public class AttributeValueControlSWTRenderer extends SimpleControlSWTControlSWT
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTRenderer#getUnsetText()
 	 */
 	@Override

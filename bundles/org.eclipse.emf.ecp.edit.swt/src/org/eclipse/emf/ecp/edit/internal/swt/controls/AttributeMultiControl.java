@@ -14,7 +14,7 @@ package org.eclipse.emf.ecp.edit.internal.swt.controls;
 
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.edit.internal.swt.actions.AddAttributeAction;
-import org.eclipse.emf.ecp.edit.internal.swt.actions.ECPSWTAction;
+import org.eclipse.emf.ecp.edit.spi.swt.actions.ECPSWTAction;
 import org.eclipse.emf.ecp.edit.spi.util.ECPStaticApplicableTester;
 
 /**

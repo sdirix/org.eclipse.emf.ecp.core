@@ -23,7 +23,6 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
  * @author Eugen
  *
  */
-@SuppressWarnings("restriction")
 public class EmbeddedGroupTester implements ECPRendererTester {
 
 	@Override

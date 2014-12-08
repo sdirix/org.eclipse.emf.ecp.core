@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
@@ -22,13 +22,12 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 
 /**
  * A Tester for the FeaturePathControl which is added as a child of a {@link VMappingDomainModelReference}.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  */
-@SuppressWarnings("restriction")
 public class FeaturePathDMRSubMappedEClassReferenceTester implements
-	ECPRendererTester {
+ECPRendererTester {
 
 	@Override
 	public int isApplicable(VElement vElement, ViewModelContext viewModelContext) {
@@ -43,13 +42,13 @@ public class FeaturePathDMRSubMappedEClassReferenceTester implements
 		if (VMappingDomainModelReference.class.isInstance(setting.getEObject()
 			.eContainer())
 			&& VViewPackage.eINSTANCE
-				.getFeaturePathDomainModelReference_DomainModelEFeature() == setting
-				.getEStructuralFeature()) {
+			.getFeaturePathDomainModelReference_DomainModelEFeature() == setting
+			.getEStructuralFeature()) {
 			return 6;
 		}
 		if (VMappingDomainModelReference.class.isInstance(setting.getEObject())
 			&& VMappingdmrPackage.eINSTANCE.getMappingDomainModelReference_DomainModelReference() == setting
-				.getEStructuralFeature()) {
+			.getEStructuralFeature()) {
 			return 6;
 		}
 

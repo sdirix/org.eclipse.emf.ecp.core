@@ -23,7 +23,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.emf.ecp.view.editor.controls.ControlRootEClassControl;
+import org.eclipse.emf.ecp.view.internal.editor.controls.ControlRootEClassControl;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
@@ -46,7 +46,7 @@ public class ViewEditorIDEViewRootControl extends ControlRootEClassControl {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.editor.controls.ControlRootEClassControl#getInput()
+	 * @see org.eclipse.emf.ecp.view.internal.editor.controls.ControlRootEClassControl#getInput()
 	 */
 	@Override
 	protected Object getInput() {

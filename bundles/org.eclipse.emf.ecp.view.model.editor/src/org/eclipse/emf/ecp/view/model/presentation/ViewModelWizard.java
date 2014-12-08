@@ -40,7 +40,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecp.ide.view.service.IDEViewModelRegistry;
 import org.eclipse.emf.ecp.internal.ide.util.ViewModelHelper;
-import org.eclipse.emf.ecp.view.editor.handler.ControlGenerator;
+import org.eclipse.emf.ecp.view.internal.editor.handler.ControlGenerator;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;

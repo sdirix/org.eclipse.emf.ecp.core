@@ -29,22 +29,22 @@ import org.eclipse.ui.PlatformUI;
 
 /*******************************************************************************
  * <copyright>
- * 
+ *
  * Copyright (c) 2005, 2011 SAP AG.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * SAP AG - initial API, implementation and documentation
  * mwenz - Bug 329523 - Add notification of DiagramTypeProvider after saving a diagram
  * mwenz - Bug 347152 - Do not log diagnostics errors as errors in the Eclipse error log
  * mwenz - Bug 359928 - DiagramEditorBehavior does not initialize adapterActive field
  * Bug 336488 - DiagramEditor API - Rename from DiagramEditorBehavior to DefaultUpdateBehavior
- * 
+ *
  * </copyright>
- * 
+ *
  *******************************************************************************/
 
 /**
@@ -54,7 +54,7 @@ import org.eclipse.ui.PlatformUI;
  * behavior; use {@link org.eclipse.graphiti.ui.editor.DiagramEditor#createUpdateBehavior()} to return the
  * instance that shall be used.<br>
  * Note that there is always a 1:1 relation with a {@link org.eclipse.graphiti.ui.editor.DiagramEditor}.
- * 
+ *
  * @since 0.9
  */
 public class UpdateBehavior extends DefaultUpdateBehavior {
@@ -127,7 +127,7 @@ public class UpdateBehavior extends DefaultUpdateBehavior {
 						if (!diagramContainer.isDirty()) {
 							final IDiagramEditorInput editorInput = diagramContainer.getDiagramEditorInput();
 							if (editorInput != null) {
-								final IDiagramEditorInput input = (IDiagramEditorInput) editorInput;
+								final IDiagramEditorInput input = editorInput;
 								final URI inputUri = input.getUri();
 								final URI diagUri = GraphitiUiInternal.getEmfService().mapDiagramFileUriToDiagramUri(
 									uri);
@@ -167,7 +167,7 @@ public class UpdateBehavior extends DefaultUpdateBehavior {
 	/**
 	 * Creates a new {@link DefaultUpdateBehavior} instance associated with the
 	 * given {@link DiagramBehavior}.
-	 * 
+	 *
 	 * @param diagramBehavior
 	 *            the diagram behavior
 	 * @since 0.10
@@ -183,7 +183,7 @@ public class UpdateBehavior extends DefaultUpdateBehavior {
 	 * updated in case the {@link #updateAdapter} is enabled, see {@link #adapterActive}, {@link #isAdapterActive()} and
 	 * {@link #setAdapterActive(boolean)}. If this flag is set the editor will
 	 * close on receiving the next event.
-	 * 
+	 *
 	 * @return <code>true</code> in case the resource has been deleted, <code>false</code> otherwise
 	 */
 	@Override
@@ -198,7 +198,7 @@ public class UpdateBehavior extends DefaultUpdateBehavior {
 	 * {@link #setAdapterActive(boolean)}.
 	 * <p>
 	 * Should not be called by external clients.
-	 * 
+	 *
 	 * @param resourceDeleted
 	 *            the value to set the flag to, <code>true</code> indicates that
 	 *            the resource has been deleted.
@@ -214,7 +214,7 @@ public class UpdateBehavior extends DefaultUpdateBehavior {
 	 * this flag will only be
 	 * updated in case the {@link #updateAdapter} is enabled, see {@link #adapterActive}, {@link #isAdapterActive()} and
 	 * {@link #setAdapterActive(boolean)}.
-	 * 
+	 *
 	 * @return <code>true</code> in case the resource has been changed, <code>false</code> otherwise
 	 */
 	@Override
@@ -229,7 +229,7 @@ public class UpdateBehavior extends DefaultUpdateBehavior {
 	 * {@link #setAdapterActive(boolean)}.
 	 * <p>
 	 * Should not be called by external clients.
-	 * 
+	 *
 	 * @param resourceChanged
 	 *            the value to set the flag to, <code>true</code> indicates that
 	 *            the resource has been changed.
@@ -267,7 +267,7 @@ public class UpdateBehavior extends DefaultUpdateBehavior {
 	 * active of not ({@link #adapterActive}). In case this method returns <code>false</code>, the
 	 * {@link #updateAdapter} will do nothing on being
 	 * called.
-	 * 
+	 *
 	 * @return <code>true</code> in case the adapter shall run, <code>false</code> otherwise.
 	 */
 	@Override
@@ -278,7 +278,7 @@ public class UpdateBehavior extends DefaultUpdateBehavior {
 	/**
 	 * Sets the flag that indicates if the {@link #updateAdapter} shall be
 	 * active of not ({@link #adapterActive}).
-	 * 
+	 *
 	 * @param active
 	 *            the new value for the flag
 	 */
@@ -315,7 +315,7 @@ public class UpdateBehavior extends DefaultUpdateBehavior {
 	/**
 	 * Shows a dialog that asks if conflicting changes should be discarded or
 	 * not. See {@link #handleActivate()}.
-	 * 
+	 *
 	 * @return <code>true</code> in case the editor shall be closed, <code>false</code> otherwise
 	 */
 	@Override
@@ -327,7 +327,7 @@ public class UpdateBehavior extends DefaultUpdateBehavior {
 	/**
 	 * This returns the editing domain as required by the {@link org.eclipse.emf.edit.domain.IEditingDomainProvider}
 	 * interface.
-	 * 
+	 *
 	 * @return The {@link TransactionalEditingDomain} that is used within this
 	 *         editor
 	 */
@@ -369,7 +369,7 @@ public class UpdateBehavior extends DefaultUpdateBehavior {
 
 	/**
 	 * This sets up the editing domain for this model editor.
-	 * 
+	 *
 	 * @param domain
 	 *            The {@link TransactionalEditingDomain} that is used within
 	 *            this model editor
@@ -418,7 +418,7 @@ public class UpdateBehavior extends DefaultUpdateBehavior {
 	 * Is called by the operation history of the {@link TransactionalEditingDomain} in case the history changes. Reacts
 	 * on
 	 * undo and redo events and updates the dirty state of the editor.
-	 * 
+	 *
 	 * @param event
 	 *            the {@link OperationHistoryEvent} to react upon
 	 */

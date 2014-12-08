@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen - initial API and implementation
  ******************************************************************************/
@@ -29,10 +29,10 @@ import org.osgi.framework.FrameworkUtil;
 
 /**
  * This is a renderer, which is used to displays something usefull instead of an error if a {@link VElement} is missing.
- * 
+ *
  * @author Eugen Neufeld
  * @since 1.3
- * 
+ *
  */
 public final class UnknownVElementSWTRenderer extends AbstractSWTRenderer<VElement> {
 
@@ -41,7 +41,6 @@ public final class UnknownVElementSWTRenderer extends AbstractSWTRenderer<VEleme
 	/**
 	 * Default constructor.
 	 */
-	@SuppressWarnings("restriction")
 	public UnknownVElementSWTRenderer() {
 		super();
 		gridDescription = GridDescriptionFactory.INSTANCE.createEmptyGridDescription();
@@ -57,7 +56,7 @@ public final class UnknownVElementSWTRenderer extends AbstractSWTRenderer<VEleme
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#getGridDescription(org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription)
 	 */
 	@Override
@@ -67,11 +66,10 @@ public final class UnknownVElementSWTRenderer extends AbstractSWTRenderer<VEleme
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#renderControl(org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell,
 	 *      org.eclipse.swt.widgets.Composite)
 	 */
-	@SuppressWarnings("restriction")
 	@Override
 	protected Control renderControl(SWTGridCell cell, Composite parent) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {

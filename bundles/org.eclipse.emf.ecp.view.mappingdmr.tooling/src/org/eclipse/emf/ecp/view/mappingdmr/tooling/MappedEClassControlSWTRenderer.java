@@ -25,7 +25,7 @@ import org.eclipse.emf.ecore.EPackage.Descriptor;
 import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecp.common.EMFUtils;
-import org.eclipse.emf.ecp.view.editor.controls.EditableEReferenceLabelControlSWTRenderer;
+import org.eclipse.emf.ecp.view.internal.editor.controls.EditableEReferenceLabelControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.mappingdmr.model.VMappingDomainModelReference;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
@@ -136,7 +136,7 @@ public class MappedEClassControlSWTRenderer extends
 
 					return Status.OK_STATUS;
 				}
-				return new Status(IStatus.ERROR, org.eclipse.emf.ecp.view.editor.controls.Activator.PLUGIN_ID,
+				return new Status(IStatus.ERROR, org.eclipse.emf.ecp.view.internal.editor.controls.Activator.PLUGIN_ID,
 					"This is not an EClass."); //$NON-NLS-1$
 			}
 		});
