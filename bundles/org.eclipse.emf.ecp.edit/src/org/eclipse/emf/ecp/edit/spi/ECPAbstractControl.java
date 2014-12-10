@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
@@ -39,12 +39,56 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 /**
  * The {@link ECPAbstractControl} is the abstract class describing a control.
  * This class provides the necessary common access methods.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  */
 @Deprecated
 public abstract class ECPAbstractControl {
+
+	/**
+	 * @author Jonas
+	 *
+	 */
+	private final class ViewModelChangeListener implements ModelChangeAddRemoveListener {
+		private final VControl control;
+
+		/**
+		 * @param control
+		 */
+		private ViewModelChangeListener(VControl control) {
+			this.control = control;
+		}
+
+		@Override
+		public void notifyRemove(Notifier notifier) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void notifyChange(ModelChangeNotification notification) {
+			if (notification.getNotifier() != ECPAbstractControl.this.control) {
+				return;
+			}
+			if (notification.getStructuralFeature() == VViewPackage.eINSTANCE
+				.getElement_Diagnostic()) {
+				applyValidation(control.getDiagnostic());
+
+				// TODO remove asap
+				backwardCompatibleHandleValidation();
+			}
+			if (notification.getStructuralFeature() == VViewPackage.eINSTANCE.getElement_Enabled()) {
+				enabledmentChanged(control.isEnabled());
+			}
+		}
+
+		@Override
+		public void notifyAdd(Notifier notifier) {
+			// TODO Auto-generated method stub
+
+		}
+	}
 
 	private boolean embedded;
 	private EMFDataBindingContext dataBindingContext;
@@ -58,7 +102,7 @@ public abstract class ECPAbstractControl {
 
 	/**
 	 * This method is called by the framework to instantiate the {@link ECPAbstractControl}.
-	 * 
+	 *
 	 * @param viewModelContext the {@link ViewModelContext} to use by this {@link ECPAbstractControl}.
 	 * @param control the {@link VControl} of this control
 	 * @since 1.2
@@ -71,37 +115,7 @@ public abstract class ECPAbstractControl {
 			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
 		adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(composedAdapterFactory);
 
-		viewChangeListener = new ModelChangeAddRemoveListener() {
-
-			@Override
-			public void notifyRemove(Notifier notifier) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void notifyChange(ModelChangeNotification notification) {
-				if (notification.getNotifier() != ECPAbstractControl.this.control) {
-					return;
-				}
-				if (notification.getStructuralFeature() == VViewPackage.eINSTANCE
-					.getElement_Diagnostic()) {
-					applyValidation(control.getDiagnostic());
-
-					// TODO remove asap
-					backwardCompatibleHandleValidation();
-				}
-				if (notification.getStructuralFeature() == VViewPackage.eINSTANCE.getElement_Enabled()) {
-					enabledmentChanged(control.isEnabled());
-				}
-			}
-
-			@Override
-			public void notifyAdd(Notifier notifier) {
-				// TODO Auto-generated method stub
-
-			}
-		};
+		viewChangeListener = new ViewModelChangeListener(control);
 
 		viewModelContext.registerViewChangeListener(viewChangeListener);
 
@@ -111,7 +125,7 @@ public abstract class ECPAbstractControl {
 	/**
 	 * Overwrite this method to implement control specific operations which must be executed after the init but before
 	 * the rendering.
-	 * 
+	 *
 	 * @since 1.2
 	 */
 	protected void postInit() {
@@ -120,7 +134,7 @@ public abstract class ECPAbstractControl {
 
 	/**
 	 * Notifies a control, that its enablement state has changed.
-	 * 
+	 *
 	 * @param enabled the new enablement value
 	 * @since 1.2
 	 */
@@ -130,7 +144,7 @@ public abstract class ECPAbstractControl {
 
 	/**
 	 * Override this method in order to handle validation.
-	 * 
+	 *
 	 * @param diagnostic the current {@link VDiagnostic}
 	 * @since 1.2
 	 */
@@ -140,7 +154,7 @@ public abstract class ECPAbstractControl {
 
 	/**
 	 * Return the {@link IItemPropertyDescriptor} describing this {@link Setting}.
-	 * 
+	 *
 	 * @param setting the {@link Setting} to use for identifying the {@link IItemPropertyDescriptor}.
 	 * @return the {@link IItemPropertyDescriptor}
 	 * @since 1.2
@@ -152,7 +166,7 @@ public abstract class ECPAbstractControl {
 
 	/**
 	 * Return the {@link VControl}.
-	 * 
+	 *
 	 * @return the {@link VControl} of this control
 	 * @since 1.2
 	 */
@@ -162,7 +176,7 @@ public abstract class ECPAbstractControl {
 
 	/**
 	 * Return the {@link ViewModelContext}.
-	 * 
+	 *
 	 * @return the {@link ViewModelContext} of this control
 	 * @since 1.2
 	 */
@@ -172,7 +186,7 @@ public abstract class ECPAbstractControl {
 
 	/**
 	 * Returns the first setting for this control.
-	 * 
+	 *
 	 * @return the first Setting or throws an {@link IllegalArgumentException} if no settings can be found
 	 * @since 1.2
 	 */
@@ -198,7 +212,7 @@ public abstract class ECPAbstractControl {
 
 	/**
 	 * Return the {@link EStructuralFeature} of this control.
-	 * 
+	 *
 	 * @return the {@link EStructuralFeature}
 	 * @since 1.2
 	 */
@@ -226,7 +240,7 @@ public abstract class ECPAbstractControl {
 
 	/**
 	 * Returns a {@link DataBindingContext} for this control.
-	 * 
+	 *
 	 * @return the {@link DataBindingContext}
 	 * @since 1.1
 	 */
@@ -240,7 +254,7 @@ public abstract class ECPAbstractControl {
 	/**
 	 * Disposes the control.
 	 * A control which needs specific dispose handling must still call super.dispose.
-	 * 
+	 *
 	 * @since 1.1
 	 */
 	public void dispose() {
@@ -268,7 +282,7 @@ public abstract class ECPAbstractControl {
 	/**
 	 * Whether a control is embedded. An embedded control can be rendered in an other fashion then an not embedded
 	 * version.
-	 * 
+	 *
 	 * @return true if the control is embedded in another control
 	 */
 	protected final boolean isEmbedded() {
@@ -277,7 +291,7 @@ public abstract class ECPAbstractControl {
 
 	/**
 	 * Sets whether this control is used as an embedded control.
-	 * 
+	 *
 	 * @param embedded whether the control is used as an embedded control
 	 */
 	public final void setEmbedded(boolean embedded) {
@@ -286,7 +300,7 @@ public abstract class ECPAbstractControl {
 
 	/**
 	 * Returns the {@link EditingDomain} for the provided {@link Setting}.
-	 * 
+	 *
 	 * @param setting the provided {@link Setting}
 	 * @return the {@link EditingDomain} of this {@link Setting}
 	 * @since 1.2
@@ -297,7 +311,7 @@ public abstract class ECPAbstractControl {
 
 	/**
 	 * This method allows to get a service from the view model context.
-	 * 
+	 *
 	 * @param serviceClass the type of the service to get
 	 * @return the service instance
 	 * @param <T> the type of the service
@@ -310,7 +324,7 @@ public abstract class ECPAbstractControl {
 	// TODO need view model service
 	/**
 	 * Returns the current Locale.
-	 * 
+	 *
 	 * @return the current {@link Locale}
 	 * @since 1.2
 	 */
@@ -324,7 +338,7 @@ public abstract class ECPAbstractControl {
 
 	/**
 	 * Returns the {@link VDomainModelReference} set for this control.
-	 * 
+	 *
 	 * @return the domainModelReference the {@link VDomainModelReference} of this control
 	 * @since 1.2
 	 */
@@ -334,7 +348,7 @@ public abstract class ECPAbstractControl {
 
 	/**
 	 * Returns the {@link EditingDomain} for the set {@link VDomainModelReference}.
-	 * 
+	 *
 	 * @return the {@link EditingDomain} for this control
 	 * @since 1.2
 	 * @deprecated
@@ -346,7 +360,7 @@ public abstract class ECPAbstractControl {
 
 	/**
 	 * Helper method to keep the old validation. Does nothing.
-	 * 
+	 *
 	 * @since 1.2
 	 */
 	protected void backwardCompatibleHandleValidation() {
@@ -354,7 +368,7 @@ public abstract class ECPAbstractControl {
 
 	/**
 	 * Handle live validation.
-	 * 
+	 *
 	 * @param diagnostic of type Diagnostic
 	 * @deprecated
 	 * @since 1.2
@@ -366,7 +380,7 @@ public abstract class ECPAbstractControl {
 
 	/**
 	 * Reset the validation status 'ok'.
-	 * 
+	 *
 	 * @deprecated
 	 * @since 1.2
 	 */
@@ -377,7 +391,7 @@ public abstract class ECPAbstractControl {
 
 	/**
 	 * Whether a label should be shown for this control.
-	 * 
+	 *
 	 * @return true if a label should be created, false otherwise
 	 * @deprecated use the labelAlignment of the control model element
 	 * @since 1.2
@@ -389,7 +403,7 @@ public abstract class ECPAbstractControl {
 
 	/**
 	 * Sets the state of the widget to be either editable or not.
-	 * 
+	 *
 	 * @param isEditable whether to set the widget editable
 	 * @since 1.2
 	 * @deprecated

@@ -30,16 +30,19 @@ public class ModelContentProvider extends ECPContentProvider<ECPProjectManager> 
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void projectsChanged(Collection<ECPProject> oldProjects, Collection<ECPProject> newProjects) {
 		refreshViewer();
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void projectChanged(ECPProject project, boolean opened) {
 		refreshViewer(true, project);
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void contentTouched(ECPProject project, Collection<Object> objects, boolean structural) {
 		refreshViewer(structural, objects.toArray());
 		if (!objects.contains(project)) {

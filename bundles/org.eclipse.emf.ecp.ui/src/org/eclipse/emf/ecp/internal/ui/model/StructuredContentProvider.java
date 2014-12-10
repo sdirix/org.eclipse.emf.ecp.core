@@ -37,6 +37,7 @@ public abstract class StructuredContentProvider<INPUT> implements IStructuredCon
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public final void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
 		this.viewer = viewer;
 
@@ -59,6 +60,7 @@ public abstract class StructuredContentProvider<INPUT> implements IStructuredCon
 			final Display display = control.getDisplay();
 			if (display.getSyncThread() != Thread.currentThread()) {
 				display.asyncExec(new Runnable() {
+					@Override
 					public void run() {
 						if (!control.isDisposed()) {
 							viewer.refresh();
@@ -72,6 +74,7 @@ public abstract class StructuredContentProvider<INPUT> implements IStructuredCon
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void dispose() {
 		if (input != null) {
 			disconnectInput(input);

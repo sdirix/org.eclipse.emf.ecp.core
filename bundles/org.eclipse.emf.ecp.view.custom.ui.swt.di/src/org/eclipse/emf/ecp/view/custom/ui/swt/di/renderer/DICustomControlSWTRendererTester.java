@@ -21,7 +21,6 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
  * @author jfaltermeier
  *
  */
-@SuppressWarnings("restriction")
 public class DICustomControlSWTRendererTester implements ECPRendererTester {
 
 	@Override

@@ -46,11 +46,13 @@ public abstract class TreeContentProvider<INPUT> extends StructuredContentProvid
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public final Object[] getElements(Object parent) {
 		return getChildren(parent);
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public final boolean hasChildren(Object parent) {
 		if (parent instanceof SyntheticElement || ECPUtil.isDisposed(parent) || ECPUtil.isClosed(parent)) {
 			return false;
@@ -67,6 +69,7 @@ public abstract class TreeContentProvider<INPUT> extends StructuredContentProvid
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public final Object[] getChildren(Object parent) {
 		if (parent instanceof SyntheticElement || ECPUtil.isDisposed(parent) || ECPUtil.isClosed(parent)) {
 			return NO_CHILDREN;
@@ -97,6 +100,7 @@ public abstract class TreeContentProvider<INPUT> extends StructuredContentProvid
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public final Object getParent(Object child) {
 		if (child instanceof SyntheticElement) {
 			return ((SyntheticElement) child).getParent();
@@ -150,6 +154,7 @@ public abstract class TreeContentProvider<INPUT> extends StructuredContentProvid
 	private Runnable createRefreshRunnable(final boolean isStructuralChange, final TreeViewer viewer,
 		final Object... objects) {
 		return new Runnable() {
+			@Override
 			public void run() {
 				if (isStructuralChange) {
 					refresh(viewer, objects);
@@ -286,6 +291,7 @@ public abstract class TreeContentProvider<INPUT> extends StructuredContentProvid
 			thread.start();
 		}
 
+		@Override
 		public void run() {
 			fillChildrenDetectError(getParent(), this);
 			setComplete();
@@ -324,6 +330,7 @@ public abstract class TreeContentProvider<INPUT> extends StructuredContentProvid
 
 				// asyncExec() would lead to infinite recursion in setComplete()
 				display.syncExec(new Runnable() {
+					@Override
 					public void run() {
 						if (!control.isDisposed()) {
 							refresh(viewer, getParent());

@@ -40,6 +40,7 @@ public class AddRepositoryPage extends WizardPage {
 	private AddRepositoryComposite addRepositoryComposite;
 
 	/** {@inheritDoc} */
+	@Override
 	public void createControl(Composite parent) {
 		setPageComplete(false);
 		setTitle(Messages.AddRepositoryPage_PageTitle_AddRepository);
@@ -48,9 +49,11 @@ public class AddRepositoryPage extends WizardPage {
 
 		addRepositoryComposite.setListener(new AddRepositoryChangeListener() {
 
+			@Override
 			public void repositoryProviderChanged(ECPProvider provider) {
 			}
 
+			@Override
 			public void repositoryNameChanged(String repositoryName) {
 				if (repositoryName != null && repositoryName.length() != 0) {
 					setPageComplete(true);
@@ -59,9 +62,11 @@ public class AddRepositoryPage extends WizardPage {
 				}
 			}
 
+			@Override
 			public void repositoryLabelChanged(String repositoryLabel) {
 			}
 
+			@Override
 			public void repositoryDescriptionChanged(String repositoryDescription) {
 			}
 		});

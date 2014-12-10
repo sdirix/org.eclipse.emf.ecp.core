@@ -28,6 +28,7 @@ public class PropertiesLabelProvider extends LabelProvider implements ITableLabe
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public String getColumnText(Object element, int columnIndex) {
 		if (element instanceof Map.Entry) {
 			@SuppressWarnings("unchecked")
@@ -45,6 +46,7 @@ public class PropertiesLabelProvider extends LabelProvider implements ITableLabe
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public Image getColumnImage(Object element, int columnIndex) {
 		if (element instanceof Map.Entry) {
 			switch (columnIndex) {

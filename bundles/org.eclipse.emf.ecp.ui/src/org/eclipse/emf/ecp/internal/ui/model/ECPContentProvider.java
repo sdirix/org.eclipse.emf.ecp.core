@@ -52,6 +52,7 @@ public abstract class ECPContentProvider<INPUT> extends TreeContentProvider<INPU
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public ECPContainer getModelContext(Object element) {
 		while (element != null) {
 			if (element instanceof ECPContainer) {
@@ -65,6 +66,7 @@ public abstract class ECPContentProvider<INPUT> extends TreeContentProvider<INPU
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void notifyChanged(Notification notification) {
 		final TreeViewer viewer = getViewer();
 		if (viewer != null && viewer.getControl() != null && !viewer.getControl().isDisposed()) {

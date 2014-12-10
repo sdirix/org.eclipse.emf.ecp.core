@@ -61,7 +61,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * @generated
  */
 public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
-VFeaturePathDomainModelReference
+	VFeaturePathDomainModelReference
 {
 	/**
 	 * The cached value of the '{@link #getChangeListener() <em>Change Listener</em>}' attribute list.
@@ -219,6 +219,7 @@ VFeaturePathDomainModelReference
 
 	/**
 	 * <!-- begin-user-doc -->
+	 * .
 	 * <!-- end-user-doc -->
 	 *
 	 * @generated

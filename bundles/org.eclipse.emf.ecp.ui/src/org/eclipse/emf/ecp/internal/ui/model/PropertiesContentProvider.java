@@ -31,6 +31,7 @@ public class PropertiesContentProvider extends StructuredContentProvider<Propert
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public Object[] getElements(Object inputElement) {
 		return getInput().getElements().toArray();
 	}
@@ -38,6 +39,7 @@ public class PropertiesContentProvider extends StructuredContentProvider<Propert
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void propertiesChanged(ECPProperties properties, Collection<Entry<String, String>> oldProperties,
 		Collection<Entry<String, String>> newProperties) {
 		if (properties.equals(getInput())) {

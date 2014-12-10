@@ -24,6 +24,12 @@ public final class Messages extends NLS {
 
 	public static String ActionHelper_ErrorMessage_ElementDeleted;
 	public static String ActionHelper_ErrorTitle_ElementDeleted;
+	public static String AddReferenceModelElementWizard_AddReference;
+
+	public static String AddReferenceModelElementWizard_ReferenceToSet;
+
+	public static String AddReferenceModelElementWizard_SelectEObjectToReference;
+
 	public static String AddRepositoryComposite_RepositoryDescription;
 	public static String AddRepositoryComposite_RepositoryLabel;
 	public static String AddRepositoryComposite_RepositoryName;

@@ -80,6 +80,7 @@ public class ECPLabelProvider extends LabelProvider implements ECPModelContextPr
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public ECPContainer getModelContext(Object element) {
 		if (modelContextProvider != null) {
 			return modelContextProvider.getModelContext(element);
@@ -92,6 +93,7 @@ public class ECPLabelProvider extends LabelProvider implements ECPModelContextPr
 		final Display display = Display.getCurrent();
 		if (display == null) {
 			Display.getDefault().asyncExec(new Runnable() {
+				@Override
 				public void run() {
 					fireLabelProviderChanged(event);
 				}
@@ -106,6 +108,7 @@ public class ECPLabelProvider extends LabelProvider implements ECPModelContextPr
 	 * 
 	 * @see org.eclipse.emf.ecp.internal.ui.model.IECPLabelProvider#getModelContextProvider()
 	 */
+	@Override
 	public ECPModelContextProvider getModelContextProvider() {
 		return modelContextProvider;
 	}
@@ -115,6 +118,7 @@ public class ECPLabelProvider extends LabelProvider implements ECPModelContextPr
 	 * 
 	 * @see org.eclipse.emf.ecp.internal.ui.model.IECPLabelProvider#setModelContextProvider(org.eclipse.emf.ecp.core.util.ECPModelContextProvider)
 	 */
+	@Override
 	public void setModelContextProvider(ECPModelContextProvider modelContextProvider) {
 		this.modelContextProvider = modelContextProvider;
 	}

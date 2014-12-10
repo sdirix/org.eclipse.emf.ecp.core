@@ -48,6 +48,7 @@ public class ProvidersLabelProvider extends ECPLabelProvider implements IColorPr
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void descriptorChanged(InternalDescriptor<InternalProvider> descriptor, boolean resolved) throws Exception {
 		fireEvent(new LabelProviderChangedEvent(this, descriptor));
 	}
@@ -79,6 +80,7 @@ public class ProvidersLabelProvider extends ECPLabelProvider implements IColorPr
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public Color getForeground(Object element) {
 		if (element instanceof ElementDescriptor) {
 			ElementDescriptor<?> descriptor = (ElementDescriptor<?>) element;
@@ -91,6 +93,7 @@ public class ProvidersLabelProvider extends ECPLabelProvider implements IColorPr
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public Color getBackground(Object element) {
 		return null;
 	}
