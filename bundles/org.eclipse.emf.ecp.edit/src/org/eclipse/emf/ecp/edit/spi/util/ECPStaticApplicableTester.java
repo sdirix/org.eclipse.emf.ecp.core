@@ -28,6 +28,7 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
  * @author Eugen Neufeld
  *
  */
+@Deprecated
 public final class ECPStaticApplicableTester implements ECPApplicableTester {
 
 	private final boolean singleValue;

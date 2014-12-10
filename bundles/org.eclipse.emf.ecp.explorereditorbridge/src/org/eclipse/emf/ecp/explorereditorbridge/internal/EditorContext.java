@@ -41,6 +41,7 @@ public class EditorContext implements ECPEditorContext {
 	private final class IECPProjectsChangedUIObserverImplementation implements ECPProjectsChangedObserver,
 		ECPProjectOpenClosedObserver, ECPProjectContentTouchedObserver {
 		/** {@inheritDoc} */
+		@Override
 		public void projectsChanged(Collection<ECPProject> oldProjects, Collection<ECPProject> newProjects) {
 			// TODO Auto-generated method stub
 			if (!newProjects.contains(ecpProject)) {
@@ -52,6 +53,7 @@ public class EditorContext implements ECPEditorContext {
 		}
 
 		/** {@inheritDoc} */
+		@Override
 		public void projectChanged(ECPProject project, boolean opened) {
 			if (!opened) {
 				for (final ECPContextDisposedListener contextListener : contextListeners) {
@@ -62,6 +64,7 @@ public class EditorContext implements ECPEditorContext {
 		}
 
 		/** {@inheritDoc} */
+		@Override
 		public void contentTouched(ECPProject project, Collection<Object> objects, boolean structural) {
 			// if we have a structural change (otherwise nothing should be closed), and the change is in our project
 			// and our model element is no longer contained
@@ -97,6 +100,7 @@ public class EditorContext implements ECPEditorContext {
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void addECPContextDisposeListener(ECPContextDisposedListener modelElementContextListener) {
 		contextListeners.add(modelElementContextListener);
 	}
@@ -104,6 +108,7 @@ public class EditorContext implements ECPEditorContext {
 	/**
 	 * Dispose the context.
 	 */
+	@Override
 	public void dispose() {
 		ECPUtil.getECPObserverBus().unregister(projectObserver);
 		contextListeners.clear();
@@ -114,6 +119,7 @@ public class EditorContext implements ECPEditorContext {
 	 * 
 	 * @see org.eclipse.emf.ecp.editor.e3.ECPEditorContext#getDomainObject()
 	 */
+	@Override
 	public EObject getDomainObject() {
 		return modelElement;
 	}

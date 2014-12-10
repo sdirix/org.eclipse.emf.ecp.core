@@ -46,21 +46,25 @@ public class EMFStoreProjectWrapper implements ECPCheckoutSource {
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public ECPRepository getRepository() {
 		return repository;
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public ECPProvider getProvider() {
 		return repository.getProvider();
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public String getDefaultCheckoutName() {
 		return remoteProject.getProjectName();
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public void checkout(String projectName, ECPProperties projectProperties) throws ECPProjectWithNameExistsException {
 		try {
 			remoteProject.checkout(projectName, new NullProgressMonitor());
