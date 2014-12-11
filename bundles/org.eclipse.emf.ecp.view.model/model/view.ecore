@@ -13,6 +13,9 @@
         eType="#//DomainModelReferenceChangeListener" transient="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="FeaturePathDomainModelReference" eSuperTypes="#//DomainModelReference">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="resolveable"/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="domainModelEFeature" lowerBound="1"
         eType="ecore:EClass ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EStructuralFeature"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="domainModelEReferencePath"

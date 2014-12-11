@@ -134,6 +134,38 @@
             featureName="eType" referenceValue="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
       </changes>
     </changes>
+    <changes xsi:type="history:OperationChange">
+      <changes xsi:type="history:Create" target="rule.ecore#//LeafCondition" referenceName="eStructuralFeatures"
+          element="rule.ecore#//LeafCondition/valueDomainModelReference">
+        <changes xsi:type="history:Set" element="rule.ecore#//LeafCondition/valueDomainModelReference"
+            featureName="name" dataValue="valueDomainModelReference"/>
+        <changes xsi:type="history:Set" element="rule.ecore#//LeafCondition/valueDomainModelReference"
+            featureName="containment" dataValue="true" oldDataValue="false"/>
+        <changes xsi:type="history:Set" element="rule.ecore#//LeafCondition/valueDomainModelReference"
+            featureName="eType" referenceValue="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//DomainModelReference"/>
+      </changes>
+      <operation name="newReference">
+        <parameters name="eClass">
+          <referenceValue element="rule.ecore#//LeafCondition"/>
+        </parameters>
+        <parameters name="name">
+          <dataValue>valueDomainModelReference</dataValue>
+        </parameters>
+        <parameters name="type">
+          <referenceValue element="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//DomainModelReference"/>
+        </parameters>
+        <parameters name="lowerBound">
+          <dataValue>0</dataValue>
+        </parameters>
+        <parameters name="upperBound">
+          <dataValue>1</dataValue>
+        </parameters>
+        <parameters name="containment">
+          <dataValue>true</dataValue>
+        </parameters>
+        <parameters name="opposite"/>
+      </operation>
+    </changes>
   </releases>
   <releases/>
 </history:History>

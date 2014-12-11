@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
@@ -15,17 +15,19 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexdmrFactory;
 import org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexdmrPackage;
+import org.eclipse.emf.ecp.view.spi.indexdmr.model.util.IndexdmrValidator;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model <b>Package</b>.
  * <!-- end-user-doc -->
- * 
+ *
  * @generated
  */
 public class VIndexdmrPackageImpl extends EPackageImpl implements VIndexdmrPackage
@@ -33,7 +35,7 @@ public class VIndexdmrPackageImpl extends EPackageImpl implements VIndexdmrPacka
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private EClass indexDomainModelReferenceEClass = null;
@@ -46,7 +48,7 @@ public class VIndexdmrPackageImpl extends EPackageImpl implements VIndexdmrPacka
 	 * Note: the correct way to create the package is via the static factory method {@link #init init()}, which also
 	 * performs initialization of the package, or returns the registered package, if one already exists. <!--
 	 * begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecore.EPackage.Registry
 	 * @see org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexdmrPackage#eNS_URI
 	 * @see #init()
@@ -60,19 +62,19 @@ public class VIndexdmrPackageImpl extends EPackageImpl implements VIndexdmrPacka
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private static boolean isInited = false;
 
 	/**
 	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-	 * 
+	 *
 	 * <p>
 	 * This method is used to initialize {@link VIndexdmrPackage#eINSTANCE} when that field is accessed. Clients should
 	 * not invoke it directly. Instead, they should simply access that field to obtain the package. <!-- begin-user-doc
 	 * --> <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #eNS_URI
 	 * @see #createPackageContents()
 	 * @see #initializePackageContents()
@@ -100,6 +102,18 @@ public class VIndexdmrPackageImpl extends EPackageImpl implements VIndexdmrPacka
 		// Initialize created meta-data
 		theIndexdmrPackage.initializePackageContents();
 
+		// Register package validator
+		EValidator.Registry.INSTANCE.put
+		(theIndexdmrPackage,
+			new EValidator.Descriptor()
+		{
+			@Override
+			public EValidator getEValidator()
+			{
+				return IndexdmrValidator.INSTANCE;
+			}
+		});
+
 		// Mark meta-data to indicate it can't be changed
 		theIndexdmrPackage.freeze();
 
@@ -111,7 +125,7 @@ public class VIndexdmrPackageImpl extends EPackageImpl implements VIndexdmrPacka
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -123,7 +137,7 @@ public class VIndexdmrPackageImpl extends EPackageImpl implements VIndexdmrPacka
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -135,7 +149,7 @@ public class VIndexdmrPackageImpl extends EPackageImpl implements VIndexdmrPacka
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -147,7 +161,7 @@ public class VIndexdmrPackageImpl extends EPackageImpl implements VIndexdmrPacka
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -159,7 +173,7 @@ public class VIndexdmrPackageImpl extends EPackageImpl implements VIndexdmrPacka
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private boolean isCreated = false;
@@ -169,7 +183,7 @@ public class VIndexdmrPackageImpl extends EPackageImpl implements VIndexdmrPacka
 	 * guarded to have no affect on any invocation but its first.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public void createPackageContents()
@@ -188,7 +202,7 @@ public class VIndexdmrPackageImpl extends EPackageImpl implements VIndexdmrPacka
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private boolean isInitialized = false;
@@ -198,7 +212,7 @@ public class VIndexdmrPackageImpl extends EPackageImpl implements VIndexdmrPacka
 	 * method is guarded to have no affect on any invocation but its first.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public void initializePackageContents()
@@ -238,6 +252,27 @@ public class VIndexdmrPackageImpl extends EPackageImpl implements VIndexdmrPacka
 
 		// Create resource
 		createResource(eNS_URI);
+
+		// Create annotations
+		// http://www.eclipse.org/emf/2002/Ecore
+		createEcoreAnnotations();
+	}
+
+	/**
+	 * Initializes the annotations for <b>http://www.eclipse.org/emf/2002/Ecore</b>.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	protected void createEcoreAnnotations()
+	{
+		final String source = "http://www.eclipse.org/emf/2002/Ecore"; //$NON-NLS-1$
+		addAnnotation(indexDomainModelReferenceEClass,
+			source,
+			new String[]
+				{ "constraints", "resolveable" //$NON-NLS-1$ //$NON-NLS-2$
+				});
 	}
 
 } // VIndexdmrPackageImpl

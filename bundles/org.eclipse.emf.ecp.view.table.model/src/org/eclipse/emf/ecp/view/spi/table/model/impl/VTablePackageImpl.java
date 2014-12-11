@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.table.model.DetailEditing;
@@ -25,6 +26,7 @@ import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableFactory;
 import org.eclipse.emf.ecp.view.spi.table.model.VTablePackage;
+import org.eclipse.emf.ecp.view.spi.table.model.util.TableValidator;
 
 /**
  * <!-- begin-user-doc -->
@@ -134,6 +136,17 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage
 
 		// Initialize created meta-data
 		theTablePackage.initializePackageContents();
+
+		// Register package validator
+		EValidator.Registry.INSTANCE.put
+			(theTablePackage,
+				new EValidator.Descriptor()
+				{
+					public EValidator getEValidator()
+					{
+						return TableValidator.INSTANCE;
+					}
+				});
 
 		// Mark meta-data to indicate it can't be changed
 		theTablePackage.freeze();
@@ -451,6 +464,27 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage
 
 		// Create resource
 		createResource(eNS_URI);
+
+		// Create annotations
+		// http://www.eclipse.org/emf/2002/Ecore
+		createEcoreAnnotations();
+	}
+
+	/**
+	 * Initializes the annotations for <b>http://www.eclipse.org/emf/2002/Ecore</b>.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	protected void createEcoreAnnotations()
+	{
+		String source = "http://www.eclipse.org/emf/2002/Ecore"; //$NON-NLS-1$	
+		addAnnotation(tableDomainModelReferenceEClass,
+			source,
+			new String[]
+			{	 "constraints", "resolveable" //$NON-NLS-1$ //$NON-NLS-2$
+			});
 	}
 
 } // VTablePackageImpl
