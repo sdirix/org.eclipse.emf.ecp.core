@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Alexandra Buzila - initial API and implementation
  ******************************************************************************/
@@ -46,6 +46,7 @@ import org.eclipse.emf.ecp.view.spi.label.model.VLabel;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -69,7 +70,7 @@ import org.eclipse.swt.widgets.Label;
 
 /**
  * @author Alexandra Buzila
- * 
+ *
  */
 public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 
@@ -87,7 +88,7 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer#createBindings(org.eclipse.swt.widgets.Control,
 	 *      org.eclipse.emf.ecore.EStructuralFeature.Setting)
 	 */
@@ -130,8 +131,14 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 	}
 
 	private Object getText(Object object) {
-		final VFeaturePathDomainModelReference modelReference =
+		VFeaturePathDomainModelReference modelReference =
 			(VFeaturePathDomainModelReference) object;
+		if (VTableDomainModelReference.class.isInstance(modelReference)) {
+			final VTableDomainModelReference tableRef = VTableDomainModelReference.class.cast(modelReference);
+			if (tableRef.getDomainModelReference() != null) {
+				modelReference = (VFeaturePathDomainModelReference) tableRef.getDomainModelReference();
+			}
+		}
 		if (modelReference == null) {
 			return null;
 		}
@@ -198,7 +205,7 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer#createSWTControl(org.eclipse.swt.widgets.Composite,
 	 *      org.eclipse.emf.ecore.EStructuralFeature.Setting)
 	 */
@@ -288,7 +295,7 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 
 	/**
 	 * A helper method which creates a button for an action on a composite.
-	 * 
+	 *
 	 * @param action the action to create a button for
 	 * @param composite the composite to create the button onto
 	 * @return the created button
@@ -303,7 +310,7 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTRenderer#getUnsetText()
 	 */
 	@Override

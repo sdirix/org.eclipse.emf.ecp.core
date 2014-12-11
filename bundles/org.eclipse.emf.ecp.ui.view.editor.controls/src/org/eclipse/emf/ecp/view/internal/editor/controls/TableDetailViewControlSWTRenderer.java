@@ -12,6 +12,7 @@
 package org.eclipse.emf.ecp.view.internal.editor.controls;
 
 import java.net.URL;
+import java.util.Iterator;
 
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.UpdateValueStrategy;
@@ -19,6 +20,7 @@ import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.ecp.edit.spi.swt.reference.DeleteReferenceAction;
@@ -151,7 +153,7 @@ public class TableDetailViewControlSWTRenderer extends SimpleControlSWTControlSW
 		imageLabel = new Label(labelComposite, SWT.NONE);
 		imageLabel.setBackground(labelComposite.getBackground());
 		GridDataFactory.fillDefaults().grab(false, false).align(SWT.FILL, SWT.BEGINNING).hint(20, 20)
-			.applyTo(imageLabel);
+		.applyTo(imageLabel);
 
 		/* text */
 		label = new Label(labelComposite, SWT.NONE);
@@ -195,7 +197,20 @@ public class TableDetailViewControlSWTRenderer extends SimpleControlSWTControlSW
 				}
 				final VTableDomainModelReference domainModelReference = (VTableDomainModelReference) tableControl
 					.getDomainModelReference();
-				final EReference ref = (EReference) domainModelReference.getDomainModelEFeature();
+				EReference ref = null;
+				if (domainModelReference.getDomainModelReference() == null) {
+					ref = (EReference) domainModelReference.getDomainModelEFeature();
+				} else {
+					final Iterator<EStructuralFeature> iterator = domainModelReference.getDomainModelReference()
+						.getEStructuralFeatureIterator();
+					if (iterator.hasNext()) {
+						final EStructuralFeature feature = iterator.next();
+						if (EReference.class.isInstance(feature)) {
+							ref = EReference.class.cast(feature);
+						}
+					}
+				}
+
 				if (ref == null) {
 					MessageDialog.openInformation(Display.getDefault().getActiveShell(),
 						"Set Domain Model Reference", "Please set a Domain Model Reference first."); //$NON-NLS-1$ //$NON-NLS-2$
