@@ -76,6 +76,7 @@ public class TableWithUniqueImpl extends EObjectImpl implements TableWithUnique 
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EList<TableContent> getContent() {
 		if (content == null) {
 			content = new EObjectContainmentEList<TableContent>(TableContent.class, this,

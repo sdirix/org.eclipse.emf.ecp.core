@@ -102,6 +102,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EClass getSimpleTestObject() {
 		return simpleTestObjectEClass;
 	}
@@ -111,6 +112,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getSimpleTestObject_Date() {
 		return (EAttribute)simpleTestObjectEClass.getEStructuralFeatures().get(0);
 	}
@@ -120,6 +122,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EAttribute getSimpleTestObject_XmlDate() {
 		return (EAttribute)simpleTestObjectEClass.getEStructuralFeatures().get(1);
 	}
@@ -129,6 +132,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public EDataType getXMLDate() {
 		return xmlDateEDataType;
 	}
@@ -138,6 +142,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public TestFactory getTestFactory() {
 		return (TestFactory)getEFactoryInstance();
 	}

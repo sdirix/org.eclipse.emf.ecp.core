@@ -140,12 +140,14 @@ public class XmlDateControlText extends AbstractTextControl {
 			});
 			calendar.addFocusListener(new FocusListener() {
 
+				@Override
 				public void focusLost(FocusEvent event) {
 					binding.updateTargetToModel();
 					binding.dispose();
 					dialog.close();
 				}
 
+				@Override
 				public void focusGained(FocusEvent event) {
 				}
 			});

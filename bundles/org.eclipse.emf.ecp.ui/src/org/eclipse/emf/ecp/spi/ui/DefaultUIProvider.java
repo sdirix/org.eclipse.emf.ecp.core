@@ -104,31 +104,37 @@ public class DefaultUIProvider extends Element implements UIProvider {
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public InternalProvider getProvider() {
 		return (InternalProvider) ECPUtil.getECPProviderRegistry().getProvider(getName());
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public final String getLabel() {
 		return label;
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public final void setLabel(String label) {
 		this.label = label;
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public final String getDescription() {
 		return description;
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public final void setDescription(String description) {
 		this.description = description;
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public <T> T getAdapter(Object adaptable, Class<T> adapterType) {
 		return null;
 	}
@@ -149,26 +155,31 @@ public class DefaultUIProvider extends Element implements UIProvider {
 	 * @return the adapted object or <code>null</code>
 	 * @see org.eclipse.core.runtime.IAdaptable#getAdapter(Class)
 	 */
+	@Override
 	public Object getAdapter(@SuppressWarnings("rawtypes") Class adapterType) {
 		return Platform.getAdapterManager().getAdapter(this, adapterType);
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public final boolean isDisposed() {
 		return disposable.isDisposed();
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public final void dispose() {
 		disposable.dispose();
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public final void addDisposeListener(DisposeListener listener) {
 		disposable.addDisposeListener(listener);
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public final void removeDisposeListener(DisposeListener listener) {
 		disposable.removeDisposeListener(listener);
 	}
@@ -178,6 +189,7 @@ public class DefaultUIProvider extends Element implements UIProvider {
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public String getText(Object element) {
 		if (element instanceof Resource) {
 			final Resource resource = (Resource) element;
@@ -188,6 +200,7 @@ public class DefaultUIProvider extends Element implements UIProvider {
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public Image getImage(Object element) {
 		if (element instanceof ECPProject) {
 			final ECPProject project = (ECPProject) element;
@@ -203,6 +216,7 @@ public class DefaultUIProvider extends Element implements UIProvider {
 
 	/** {@inheritDoc} **/
 	// TODO is this the right place for this implementation?
+	@Override
 	public void fillContextMenu(IMenuManager manager, ECPContainer context, Object[] elements) {
 		if (elements.length == 1) {
 			final Object element = elements[0];
@@ -299,17 +313,20 @@ public class DefaultUIProvider extends Element implements UIProvider {
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public Control createAddRepositoryUI(Composite parent, ECPProperties repositoryProperties, Text repositoryNameText,
 		Text repositoryLabelText, Text repositoryDescriptionText) {
 		return new PropertiesComposite(parent, true, repositoryProperties);
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public Control createCheckoutUI(Composite parent, ECPCheckoutSource checkoutSource, ECPProperties projectProperties) {
 		return new PropertiesComposite(parent, true, projectProperties);
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public Control createNewProjectUI(Composite parent, CompositeStateObserver observer, ECPProperties projectProperties) {
 		return null;
 	}
@@ -346,6 +363,7 @@ public class DefaultUIProvider extends Element implements UIProvider {
 		});
 
 		submenuManager.addMenuListener(new IMenuListener() {
+			@Override
 			public void menuAboutToShow(IMenuManager manager) {
 				final String nsURI = submenuManager.getMenuText();
 				final EPackage ePackage = packageRegistry.getEPackage(nsURI);
@@ -374,6 +392,7 @@ public class DefaultUIProvider extends Element implements UIProvider {
 
 		if (!objects.isEmpty()) {
 			Collections.sort(objects, new Comparator<EObject>() {
+				@Override
 				public int compare(EObject o1, EObject o2) {
 					return o1.eClass().getName().compareTo(o2.eClass().getName());
 				}
@@ -407,6 +426,7 @@ public class DefaultUIProvider extends Element implements UIProvider {
 		@SuppressWarnings("unchecked")
 		final Map.Entry<String, Object>[] array = entries.toArray(new Entry[entries.size()]);
 		Arrays.sort(array, new Comparator<Map.Entry<String, Object>>() {
+			@Override
 			public int compare(Map.Entry<String, Object> o1, Map.Entry<String, Object> o2) {
 				return o1.getKey().compareTo(o2.getKey());
 			}

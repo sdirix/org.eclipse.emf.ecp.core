@@ -31,6 +31,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
 public class DeleteModelElementHandler extends AbstractHandler {
 
 	/** {@inheritDoc} */
+	@Override
 	@SuppressWarnings("unchecked")
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final IStructuredSelection selection = (IStructuredSelection) HandlerUtil.getActiveMenuSelection(event);

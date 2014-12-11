@@ -28,6 +28,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
 public class CreateProjectHandler extends AbstractHandler {
 
 	/** {@inheritDoc} */
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		ECPHandlerHelper.createProject(HandlerUtil.getActiveShell(event));
 		return null;

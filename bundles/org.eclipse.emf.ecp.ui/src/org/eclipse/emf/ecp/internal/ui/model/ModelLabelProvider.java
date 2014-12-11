@@ -43,6 +43,7 @@ public class ModelLabelProvider extends ECPLabelProvider implements ECPProjectOp
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void projectChanged(final ECPProject project, boolean opened) {
 		fireEvent(new LabelProviderChangedEvent(this, project));
 	}

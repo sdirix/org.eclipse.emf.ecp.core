@@ -34,10 +34,22 @@ public final class CompositeFactory {
 	private CompositeFactory() {
 	}
 
+	/**
+	 * Creates a {@link CheckedModelClassComposite}.
+	 *
+	 * @param ePackages the packages from which classes are shown in the {@link CheckedModelClassComposite}
+	 * @return {@link CheckedModelClassComposite}
+	 */
 	public static CheckedModelClassComposite getCheckedModelClassComposite(Collection<EPackage> ePackages) {
 		return new CheckedSelectModelClassCompositeImpl(new HashSet<EPackage>(), ePackages, new HashSet<EClass>());
 	}
 
+	/**
+	 * Creates a {@link SelectionComposite} to select an {@link EClass}.
+	 *
+	 * 
+	 * @return {@link SelectionComposite}
+	 */
 	public static SelectionComposite<TreeViewer> getSelectModelClassComposite(
 		Collection<EPackage> unsupportedEPackages, Collection<EPackage> filteredEPackages,
 		Collection<EClass> filteredEClasses) {

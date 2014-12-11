@@ -36,6 +36,7 @@ public class SelectEStructuralFeaturesWizard extends ECPWizard<CheckedEStructura
 		super.addPages();
 		final WizardPage page = new WizardPage(Messages.SelectEStructuralFeaturesWizard_Title) {
 
+			@Override
 			public void createControl(Composite parent) {
 				final Composite composite = getCompositeProvider().createUI(parent);
 				setPageComplete(true);

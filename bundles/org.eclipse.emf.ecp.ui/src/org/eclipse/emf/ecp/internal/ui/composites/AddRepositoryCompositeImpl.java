@@ -77,6 +77,7 @@ public class AddRepositoryCompositeImpl implements AddRepositoryComposite {
 	private String repositoryDescription;
 
 	/** {@inheritDoc} **/
+	@Override
 	public Composite createUI(Composite parent) {
 		Composite composite = new Composite(parent, SWT.NONE);
 		composite.setLayoutData(new GridData(GridData.FILL_BOTH));
@@ -100,6 +101,7 @@ public class AddRepositoryCompositeImpl implements AddRepositoryComposite {
 			// repositoryNameText.setText(repositoryName);
 			repositoryNameText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 			repositoryNameText.addModifyListener(new ModifyListener() {
+				@Override
 				public void modifyText(ModifyEvent e) {
 					repositoryName = repositoryNameText.getText();
 					if (listener != null) {
@@ -119,6 +121,7 @@ public class AddRepositoryCompositeImpl implements AddRepositoryComposite {
 			gdRepositoryDescriptionText.heightHint = 36;
 			repositoryDescriptionText.setLayoutData(gdRepositoryDescriptionText);
 			repositoryDescriptionText.addModifyListener(new ModifyListener() {
+				@Override
 				public void modifyText(ModifyEvent e) {
 					repositoryDescription = repositoryDescriptionText.getText();
 					if (listener != null) {
@@ -153,6 +156,7 @@ public class AddRepositoryCompositeImpl implements AddRepositoryComposite {
 		providersViewer.setSorter(new ViewerSorter());
 		providersViewer.setInput(ECPUtil.getECPProviderRegistry());
 		providersViewer.addSelectionChangedListener(new ISelectionChangedListener() {
+			@Override
 			public void selectionChanged(SelectionChangedEvent event) {
 				IStructuredSelection selection = (IStructuredSelection) event.getSelection();
 				provider = (ECPProvider) selection.getFirstElement();
@@ -199,21 +203,25 @@ public class AddRepositoryCompositeImpl implements AddRepositoryComposite {
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public ECPProvider getProvider() {
 		return provider;
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public String getRepositoryName() {
 		return repositoryName;
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public String getRepositoryDescription() {
 		return repositoryDescription;
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public ECPProperties getProperties() {
 		if (provider == null) {
 			return null;
@@ -223,17 +231,20 @@ public class AddRepositoryCompositeImpl implements AddRepositoryComposite {
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public String getRepositoryLabel() {
 		// since we don't have a dedicated label-textfield we use the repository name
 		return repositoryName;
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public void setListener(AddRepositoryChangeListener listener) {
 		this.listener = listener;
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public void dispose() {
 
 	}

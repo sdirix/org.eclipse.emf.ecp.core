@@ -39,6 +39,7 @@ public class ECPSWTViewImpl implements ECPSWTView {
 	 * 
 	 * @see org.eclipse.emf.ecp.ui.view.swt.ECPSWTView#getSWTControl()
 	 */
+	@Override
 	public Control getSWTControl() {
 		return composite;
 	}
@@ -48,6 +49,7 @@ public class ECPSWTViewImpl implements ECPSWTView {
 	 * 
 	 * @see org.eclipse.emf.ecp.ui.view.swt.ECPSWTView#dispose()
 	 */
+	@Override
 	public void dispose() {
 		viewContext.dispose();
 		composite.dispose();
@@ -58,6 +60,7 @@ public class ECPSWTViewImpl implements ECPSWTView {
 	 * 
 	 * @see org.eclipse.emf.ecp.ui.view.swt.ECPSWTView#getViewModelContext()
 	 */
+	@Override
 	public ViewModelContext getViewModelContext() {
 		return viewContext;
 	}

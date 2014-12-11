@@ -75,6 +75,7 @@ public class CompositeImpl extends ComponentImpl implements Composite {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EList<Component> getComposites() {
 		if (composites == null) {
 			composites = new EObjectContainmentEList<Component>(Component.class, this,

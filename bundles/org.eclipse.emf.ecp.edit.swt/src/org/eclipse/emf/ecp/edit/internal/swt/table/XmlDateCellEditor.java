@@ -82,9 +82,11 @@ public class XmlDateCellEditor extends CellEditor implements ECPCellEditor {
 	 * 
 	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor#getValueProperty()
 	 */
+	@Override
 	public IValueProperty getValueProperty() {
 		return new WidgetValueProperty() {
 
+			@Override
 			public Object getValueType() {
 				return XMLGregorianCalendar.class;
 			}
@@ -115,6 +117,7 @@ public class XmlDateCellEditor extends CellEditor implements ECPCellEditor {
 	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor#instantiate(org.eclipse.emf.ecore.EStructuralFeature,
 	 *      org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
+	@Override
 	public void instantiate(EStructuralFeature feature, ViewModelContext viewModelContext) {
 
 	}
@@ -145,6 +148,7 @@ public class XmlDateCellEditor extends CellEditor implements ECPCellEditor {
 		dateWidget.addTraverseListener(new TraverseListener() {
 			private static final long serialVersionUID = 1L;
 
+			@Override
 			public void keyTraversed(TraverseEvent e) {
 				if (e.detail == SWT.TRAVERSE_ESCAPE || e.detail == SWT.TRAVERSE_RETURN) {
 					e.doit = false;
@@ -236,6 +240,7 @@ public class XmlDateCellEditor extends CellEditor implements ECPCellEditor {
 	 * 
 	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor#getFormatedString(java.lang.Object)
 	 */
+	@Override
 	public String getFormatedString(Object value) {
 		final XMLGregorianCalendar cal = (XMLGregorianCalendar) value;
 		if (value == null) {
@@ -250,6 +255,7 @@ public class XmlDateCellEditor extends CellEditor implements ECPCellEditor {
 	 * 
 	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor#getColumnWidthWeight()
 	 */
+	@Override
 	public int getColumnWidthWeight() {
 		return 75;
 	}
@@ -260,6 +266,7 @@ public class XmlDateCellEditor extends CellEditor implements ECPCellEditor {
 	 * 
 	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor#getTargetToModelStrategy()
 	 */
+	@Override
 	public UpdateValueStrategy getTargetToModelStrategy() {
 		return null;
 	}
@@ -270,6 +277,7 @@ public class XmlDateCellEditor extends CellEditor implements ECPCellEditor {
 	 * 
 	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor#getModelToTargetStrategy()
 	 */
+	@Override
 	public UpdateValueStrategy getModelToTargetStrategy() {
 		return null;
 	}
@@ -279,6 +287,7 @@ public class XmlDateCellEditor extends CellEditor implements ECPCellEditor {
 	 * 
 	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor#setEditable(boolean)
 	 */
+	@Override
 	public void setEditable(boolean editable) {
 		if (dateWidget != null) {
 			dateWidget.setEnabled(editable);

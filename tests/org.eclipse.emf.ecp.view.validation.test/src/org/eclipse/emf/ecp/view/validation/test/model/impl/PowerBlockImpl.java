@@ -81,6 +81,7 @@ public class PowerBlockImpl extends EObjectImpl implements PowerBlock {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public String getName() {
 		return name;
 	}
@@ -91,6 +92,7 @@ public class PowerBlockImpl extends EObjectImpl implements PowerBlock {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setName(String newName) {
 		String oldName = name;
 		name = newName;

@@ -51,6 +51,7 @@ public class EMFStoreDirtyDecorator implements ILightweightLabelDecorator, ESCom
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void decorate(Object element, IDecoration decoration) {
 		if (element instanceof ECPProject) {
 			final InternalProject project = (InternalProject) element;
@@ -89,28 +90,34 @@ public class EMFStoreDirtyDecorator implements ILightweightLabelDecorator, ESCom
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void addListener(ILabelProviderListener listener) {
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void dispose() {
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public boolean isLabelProperty(Object element, String property) {
 		return false;
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void removeListener(ILabelProviderListener listener) {
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public boolean inspectChanges(ESLocalProject localProject, ESChangePackage changePackage, IProgressMonitor monitor) {
 		return true;
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void commitCompleted(ESLocalProject localProject, ESPrimaryVersionSpec newRevision, IProgressMonitor monitor) {
 		// TODO: cast, move to EMFStoreDirtyObserver?
 		final ECPProject project = EMFStoreProvider.INSTANCE.getProject(localProject);
@@ -119,6 +126,7 @@ public class EMFStoreDirtyDecorator implements ILightweightLabelDecorator, ESCom
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void projectDelete(ECPProject project) {
 		EMFStoreDirtyDecoratorCachedTree.removeProject(project);
 		observers.remove(project);

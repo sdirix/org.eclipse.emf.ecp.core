@@ -105,6 +105,7 @@ public class TableContentWithoutValidationImpl extends TableContentImpl implemen
 	 * 
 	 * @generated
 	 */
+	@Override
 	public String getName() {
 		return name;
 	}
@@ -115,6 +116,7 @@ public class TableContentWithoutValidationImpl extends TableContentImpl implemen
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setName(String newName) {
 		final String oldName = name;
 		name = newName;
@@ -130,6 +132,7 @@ public class TableContentWithoutValidationImpl extends TableContentImpl implemen
 	 * 
 	 * @generated
 	 */
+	@Override
 	public int getWeight() {
 		return weight;
 	}
@@ -140,6 +143,7 @@ public class TableContentWithoutValidationImpl extends TableContentImpl implemen
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setWeight(int newWeight) {
 		final int oldWeight = weight;
 		weight = newWeight;

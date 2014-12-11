@@ -37,10 +37,12 @@ public class LoadProjectFeature extends AbstractAddFeature {
 		this.project = project;
 	}
 
+	@Override
 	public boolean canAdd(IAddContext context) {
 		return true;
 	}
 
+	@Override
 	public PictogramElement add(IAddContext context) {
 		final Diagram createDiagram = (Diagram) context.getTargetContainer();
 		// Object object=getBusinessObjectForPictogramElement(createDiagram);

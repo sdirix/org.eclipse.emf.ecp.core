@@ -142,6 +142,7 @@ public class VGroupedGridPackageImpl extends EPackageImpl implements VGroupedGri
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EClass getGroupedGrid()
 	{
 		return groupedGridEClass;
@@ -153,6 +154,7 @@ public class VGroupedGridPackageImpl extends EPackageImpl implements VGroupedGri
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EReference getGroupedGrid_Groups()
 	{
 		return (EReference) groupedGridEClass.getEStructuralFeatures().get(0);
@@ -164,6 +166,7 @@ public class VGroupedGridPackageImpl extends EPackageImpl implements VGroupedGri
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EClass getGroup()
 	{
 		return groupEClass;
@@ -175,6 +178,7 @@ public class VGroupedGridPackageImpl extends EPackageImpl implements VGroupedGri
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EReference getGroup_Rows()
 	{
 		return (EReference) groupEClass.getEStructuralFeatures().get(0);
@@ -186,6 +190,7 @@ public class VGroupedGridPackageImpl extends EPackageImpl implements VGroupedGri
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EAttribute getGroup_Name()
 	{
 		return (EAttribute) groupEClass.getEStructuralFeatures().get(1);
@@ -197,6 +202,7 @@ public class VGroupedGridPackageImpl extends EPackageImpl implements VGroupedGri
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EClass getRow()
 	{
 		return rowEClass;
@@ -208,6 +214,7 @@ public class VGroupedGridPackageImpl extends EPackageImpl implements VGroupedGri
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EReference getRow_Children()
 	{
 		return (EReference) rowEClass.getEStructuralFeatures().get(0);
@@ -219,6 +226,7 @@ public class VGroupedGridPackageImpl extends EPackageImpl implements VGroupedGri
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EClass getSpan()
 	{
 		return spanEClass;
@@ -230,6 +238,7 @@ public class VGroupedGridPackageImpl extends EPackageImpl implements VGroupedGri
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EAttribute getSpan_HorizontalSpan()
 	{
 		return (EAttribute) spanEClass.getEStructuralFeatures().get(0);
@@ -241,6 +250,7 @@ public class VGroupedGridPackageImpl extends EPackageImpl implements VGroupedGri
 	 * 
 	 * @generated
 	 */
+	@Override
 	public VGroupedGridFactory getGroupedGridFactory()
 	{
 		return (VGroupedGridFactory) getEFactoryInstance();

@@ -44,6 +44,7 @@ public class RuleFeaturePathTester implements ECPApplicableTester {
 	 *      org.eclipse.emf.ecore.EObject)
 	 * @deprecated
 	 */
+	@Override
 	@Deprecated
 	public int isApplicable(IItemPropertyDescriptor itemPropertyDescriptor, EObject eObject) {
 		return isApplicable(eObject, (EStructuralFeature) itemPropertyDescriptor.getFeature(eObject));
@@ -55,6 +56,7 @@ public class RuleFeaturePathTester implements ECPApplicableTester {
 	 * @see org.eclipse.emf.ecp.edit.spi.util.ECPApplicableTester#isApplicable(org.eclipse.emf.ecore.EObject,
 	 *      org.eclipse.emf.ecore.EStructuralFeature)
 	 */
+	@Override
 	public int isApplicable(EObject eObject, EStructuralFeature feature) {
 		if (!VFeaturePathDomainModelReference.class.isInstance(eObject)) {
 			return NOT_APPLICABLE;
@@ -73,6 +75,7 @@ public class RuleFeaturePathTester implements ECPApplicableTester {
 	 * 
 	 * @see org.eclipse.emf.ecp.edit.spi.util.ECPApplicableTester#isApplicable(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)
 	 */
+	@Override
 	public int isApplicable(VDomainModelReference domainModelReference) {
 		final Iterator<Setting> iterator = domainModelReference.getIterator();
 		int count = 0;

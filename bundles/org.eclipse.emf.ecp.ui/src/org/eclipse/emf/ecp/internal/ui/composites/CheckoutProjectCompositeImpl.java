@@ -61,6 +61,7 @@ public class CheckoutProjectCompositeImpl implements CheckoutProjectComposite {
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public Composite createUI(Composite parent) {
 		Composite composite = new Composite(parent, SWT.NONE);
 		composite.setLayoutData(new GridData(GridData.FILL_BOTH));
@@ -73,6 +74,7 @@ public class CheckoutProjectCompositeImpl implements CheckoutProjectComposite {
 		projectNameText.setText(projectName);
 		projectNameText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		projectNameText.addModifyListener(new ModifyListener() {
+			@Override
 			public void modifyText(ModifyEvent e) {
 				projectName = projectNameText.getText();
 				if (listener != null) {
@@ -94,31 +96,37 @@ public class CheckoutProjectCompositeImpl implements CheckoutProjectComposite {
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public String getProjectName() {
 		return projectName;
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public ECPProperties getProjectProperties() {
 		return projectProperties;
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public ECPCheckoutSource getCheckoutSource() {
 		return checkoutSource;
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public UIProvider getUiProvider() {
 		return uiProvider;
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public void setListener(CheckoutProjectChangeListener listener) {
 		this.listener = listener;
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public void dispose() {
 	}
 }

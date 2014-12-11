@@ -48,7 +48,8 @@ public class NotifyChangedToViewerRefresh
       d.asyncExec
         (new Runnable() 
          {
-           public void run()
+           @Override
+		public void run()
            {
              if (viewer.getControl() != null && !viewer.getControl().isDisposed())
              {

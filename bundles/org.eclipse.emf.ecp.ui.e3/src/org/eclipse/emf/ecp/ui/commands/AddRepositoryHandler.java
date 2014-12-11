@@ -20,6 +20,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
 
 public class AddRepositoryHandler extends AbstractHandler {
 
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		ECPHandlerHelper.createRepository(HandlerUtil.getActiveShell(event));
 		return null;

@@ -81,6 +81,7 @@ public class MainboardImpl extends EObjectImpl implements Mainboard {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public String getName() {
 		return name;
 	}
@@ -91,6 +92,7 @@ public class MainboardImpl extends EObjectImpl implements Mainboard {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setName(String newName) {
 		String oldName = name;
 		name = newName;

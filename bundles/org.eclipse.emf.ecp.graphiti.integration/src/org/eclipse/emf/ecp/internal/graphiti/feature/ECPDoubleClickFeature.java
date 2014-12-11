@@ -31,6 +31,7 @@ public class ECPDoubleClickFeature extends AbstractCustomFeature {
 		return true;
 	}
 
+	@Override
 	public void execute(ICustomContext context) {
 		final EObject target = (EObject) getBusinessObjectForPictogramElement(context.getInnerPictogramElement());
 		final Object o = getBusinessObjectForPictogramElement(getDiagram());

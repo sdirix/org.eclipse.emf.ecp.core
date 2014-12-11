@@ -27,6 +27,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
 public class ShowHistoryHandler extends AbstractHandler {
 
 	/** {@inheritDoc} **/
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final Object object = ((IStructuredSelection) HandlerUtil.getActiveMenuSelection(event)).getFirstElement();
 

@@ -33,6 +33,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
 public class DeleteHandler extends AbstractHandler {
 
 	/** {@inheritDoc} */
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		ISelection selection = HandlerUtil.getActiveMenuSelection(event);
 		IStructuredSelection ssel = (IStructuredSelection) selection;

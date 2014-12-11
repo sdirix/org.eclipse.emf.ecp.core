@@ -87,6 +87,7 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public Component createComponent() {
 		final ComponentImpl component = new ComponentImpl();
 		return component;
@@ -98,6 +99,7 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public Composite createComposite() {
 		final CompositeImpl composite = new CompositeImpl();
 		return composite;
@@ -109,6 +111,7 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public Component2 createComponent2() {
 		final Component2Impl component2 = new Component2Impl();
 		return component2;
@@ -120,6 +123,7 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public TestPackage getTestPackage() {
 		return (TestPackage) getEPackage();
 	}

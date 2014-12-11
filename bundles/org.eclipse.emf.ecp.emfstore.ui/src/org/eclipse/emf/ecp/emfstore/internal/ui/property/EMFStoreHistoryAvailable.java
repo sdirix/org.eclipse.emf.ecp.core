@@ -26,6 +26,7 @@ import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 public class EMFStoreHistoryAvailable extends PropertyTester {
 
 	/** {@inheritDoc} */
+	@Override
 	public boolean test(Object receiver, String property, Object[] args, Object expectedValue) {
 		ECPProject project = ECPUtil.getECPProjectManager().getProject(receiver);
 		if (project == null) {

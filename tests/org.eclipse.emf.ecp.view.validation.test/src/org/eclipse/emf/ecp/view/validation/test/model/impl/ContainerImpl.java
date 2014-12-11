@@ -76,6 +76,7 @@ public class ContainerImpl extends EObjectImpl implements Container {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EList<Content> getContents() {
 		if (contents == null) {
 			contents = new EObjectContainmentEList<Content>(Content.class, this, TestPackage.CONTAINER__CONTENTS);

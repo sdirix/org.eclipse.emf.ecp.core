@@ -80,6 +80,7 @@ public class VGroupedGridImpl extends VContainedElementImpl implements VGroupedG
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EList<VGroup> getGroups()
 	{
 		if (groups == null)

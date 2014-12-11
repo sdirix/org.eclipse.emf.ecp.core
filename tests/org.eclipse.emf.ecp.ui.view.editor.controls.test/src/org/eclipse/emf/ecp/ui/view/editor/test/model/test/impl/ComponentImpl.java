@@ -73,6 +73,7 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
 	 * 
 	 * @generated
 	 */
+	@Override
 	public Component2 getComponent() {
 		return component;
 	}
@@ -104,6 +105,7 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setComponent(Component2 newComponent) {
 		if (newComponent != component) {
 			NotificationChain msgs = null;

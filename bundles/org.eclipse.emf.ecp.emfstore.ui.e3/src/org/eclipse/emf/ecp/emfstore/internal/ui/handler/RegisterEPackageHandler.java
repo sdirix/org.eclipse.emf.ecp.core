@@ -28,6 +28,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
 public class RegisterEPackageHandler extends AbstractHandler {
 
 	/** {@inheritDoc} **/
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final InternalRepository ecpRepository = (InternalRepository) ((IStructuredSelection) HandlerUtil
 			.getActiveMenuSelection(event)).getFirstElement();

@@ -36,6 +36,7 @@ public class LinkCellEditorTester implements ECPApplicableTester {
 	 *      org.eclipse.emf.ecore.EObject)
 	 * @deprecated
 	 */
+	@Override
 	@Deprecated
 	public int isApplicable(IItemPropertyDescriptor itemPropertyDescriptor, EObject eObject) {
 		final EStructuralFeature feature = (EStructuralFeature) itemPropertyDescriptor.getFeature(null);
@@ -48,6 +49,7 @@ public class LinkCellEditorTester implements ECPApplicableTester {
 	 * @see org.eclipse.emf.ecp.edit.spi.util.ECPApplicableTester#isApplicable(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)
 	 * 
 	 */
+	@Override
 	public int isApplicable(VDomainModelReference domainModelReference) {
 		final Iterator<Setting> iterator = domainModelReference.getIterator();
 		int count = 0;
@@ -68,6 +70,7 @@ public class LinkCellEditorTester implements ECPApplicableTester {
 	 * @see org.eclipse.emf.ecp.edit.spi.util.ECPApplicableTester#isApplicable(org.eclipse.emf.ecore.EObject,
 	 *      org.eclipse.emf.ecore.EStructuralFeature)
 	 */
+	@Override
 	public int isApplicable(EObject eObject, EStructuralFeature feature) {
 		if (EReference.class.isInstance(feature)) {
 			return 1;

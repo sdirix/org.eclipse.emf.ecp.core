@@ -28,6 +28,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
 public class ProjectPropertiesHandler extends AbstractHandler {
 
 	/**{@inheritDoc} **/
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 	    ISelection selection = HandlerUtil.getActiveMenuSelection(event);
 		if(IStructuredSelection.class.isInstance(selection)){

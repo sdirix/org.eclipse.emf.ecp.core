@@ -59,6 +59,7 @@ public class CustomControlStub3 extends ECPAbstractCustomControlSWT implements E
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.custom.model.ECPHardcodedReferences#getNeededDomainModelReferences()
 	 */
+	@Override
 	public Set<VDomainModelReference> getNeededDomainModelReferences() {
 		if (features.isEmpty()) {
 			final VFeaturePathDomainModelReference playersReference = VViewFactory.eINSTANCE
@@ -147,6 +148,7 @@ public class CustomControlStub3 extends ECPAbstractCustomControlSWT implements E
 		 * 
 		 * @see org.eclipse.emf.ecp.view.spi.custom.model.ECPCustomControlChangeListener#notifyChanged()
 		 */
+		@Override
 		public void notifyChanged() {
 			label.setText(CHANGE_NOTICED);
 		}

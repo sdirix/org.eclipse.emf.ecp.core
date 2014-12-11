@@ -82,6 +82,7 @@ public class PropertiesComposite extends Composite {
 			Button addButton = new Button(buttonBar, SWT.NONE);
 			addButton.setText(Messages.PropertiesComposite_AddProperty);
 			addButton.addSelectionListener(new SelectionListener() {
+				@Override
 				public void widgetSelected(SelectionEvent e) {
 					PropertyDialog dialog = new PropertyDialog(table.getShell());
 					if (dialog.open() == PropertyDialog.OK) {
@@ -91,6 +92,7 @@ public class PropertiesComposite extends Composite {
 					}
 				}
 
+				@Override
 				public void widgetDefaultSelected(SelectionEvent e) {
 					widgetSelected(e);
 				}
@@ -99,6 +101,7 @@ public class PropertiesComposite extends Composite {
 			Button editButton = new Button(buttonBar, SWT.NONE);
 			editButton.setText(Messages.PropertiesComposite_EditProperty);
 			editButton.addSelectionListener(new SelectionListener() {
+				@Override
 				public void widgetSelected(SelectionEvent e) {
 					IStructuredSelection selection = (IStructuredSelection) tableViewer.getSelection();
 
@@ -112,6 +115,7 @@ public class PropertiesComposite extends Composite {
 					}
 				}
 
+				@Override
 				public void widgetDefaultSelected(SelectionEvent e) {
 					// Do nothing
 				}
@@ -120,6 +124,7 @@ public class PropertiesComposite extends Composite {
 			Button removeButton = new Button(buttonBar, SWT.NONE);
 			removeButton.setText(Messages.PropertiesComposite_RemoveProperty);
 			removeButton.addSelectionListener(new SelectionListener() {
+				@Override
 				public void widgetSelected(SelectionEvent e) {
 					IStructuredSelection selection = (IStructuredSelection) tableViewer.getSelection();
 
@@ -129,6 +134,7 @@ public class PropertiesComposite extends Composite {
 					properties.removeProperty(property.getKey());
 				}
 
+				@Override
 				public void widgetDefaultSelected(SelectionEvent e) {
 					// Do nothing
 				}

@@ -118,6 +118,7 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public Library createLibrary() {
 		LibraryImpl library = new LibraryImpl();
 		return library;
@@ -129,6 +130,7 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public Writer createWriter() {
 		WriterImpl writer = new WriterImpl();
 		return writer;
@@ -140,6 +142,7 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public Book createBook() {
 		BookImpl book = new BookImpl();
 		return book;
@@ -151,6 +154,7 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public Librarian createLibrarian() {
 		LibrarianImpl librarian = new LibrarianImpl();
 		return librarian;
@@ -162,6 +166,7 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public Computer createComputer() {
 		ComputerImpl computer = new ComputerImpl();
 		return computer;
@@ -173,6 +178,7 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public Mainboard createMainboard() {
 		MainboardImpl mainboard = new MainboardImpl();
 		return mainboard;
@@ -184,6 +190,7 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public PowerBlock createPowerBlock() {
 		PowerBlockImpl powerBlock = new PowerBlockImpl();
 		return powerBlock;
@@ -195,6 +202,7 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public org.eclipse.emf.ecp.view.validation.test.model.Container createContainer() {
 		ContainerImpl container = new ContainerImpl();
 		return container;
@@ -206,6 +214,7 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public Content createContent() {
 		ContentImpl content = new ContentImpl();
 		return content;
@@ -217,6 +226,7 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public TableWithMultiplicity createTableWithMultiplicity() {
 		TableWithMultiplicityImpl tableWithMultiplicity = new TableWithMultiplicityImpl();
 		return tableWithMultiplicity;
@@ -228,6 +238,7 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public TableContentWithoutValidation createTableContentWithoutValidation() {
 		TableContentWithoutValidationImpl tableContentWithoutValidation = new TableContentWithoutValidationImpl();
 		return tableContentWithoutValidation;
@@ -239,6 +250,7 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public TableContentWithValidation createTableContentWithValidation() {
 		TableContentWithValidationImpl tableContentWithValidation = new TableContentWithValidationImpl();
 		return tableContentWithValidation;
@@ -250,6 +262,7 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public TableWithoutMultiplicity createTableWithoutMultiplicity() {
 		TableWithoutMultiplicityImpl tableWithoutMultiplicity = new TableWithoutMultiplicityImpl();
 		return tableWithoutMultiplicity;
@@ -261,6 +274,7 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public TableWithUnique createTableWithUnique() {
 		TableWithUniqueImpl tableWithUnique = new TableWithUniqueImpl();
 		return tableWithUnique;
@@ -272,6 +286,7 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public TestPackage getTestPackage() {
 		return (TestPackage) getEPackage();
 	}

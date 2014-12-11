@@ -30,6 +30,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
 public class RepositoryPropertiesHandler extends AbstractHandler {
 
 	/** {@inheritDoc} **/
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final ISelection selection = HandlerUtil.getActiveMenuSelection(event);
 		if (IStructuredSelection.class.isInstance(selection)) {

@@ -29,6 +29,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
 public class DeleteOnServerHandler extends AbstractHandler {
 
 	/** {@inheritDoc} */
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final ISelection sel = HandlerUtil.getActiveMenuSelection(event);
 		if (sel instanceof IStructuredSelection) {

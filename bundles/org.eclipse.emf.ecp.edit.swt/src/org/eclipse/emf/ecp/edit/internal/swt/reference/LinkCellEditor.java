@@ -72,9 +72,11 @@ public class LinkCellEditor extends CellEditor implements ECPCellEditor {
 	 * 
 	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor#getValueProperty()
 	 */
+	@Override
 	public IValueProperty getValueProperty() {
 		return new WidgetValueProperty() {
 
+			@Override
 			public Object getValueType() {
 				return String.class;
 			}
@@ -105,6 +107,7 @@ public class LinkCellEditor extends CellEditor implements ECPCellEditor {
 	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor#instantiate(org.eclipse.emf.ecore.EStructuralFeature,
 	 *      org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
+	@Override
 	public void instantiate(EStructuralFeature eStructuralFeature, ViewModelContext viewModelContext) {
 
 	}
@@ -212,6 +215,7 @@ public class LinkCellEditor extends CellEditor implements ECPCellEditor {
 	 * 
 	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor#getFormatedString(java.lang.Object)
 	 */
+	@Override
 	public String getFormatedString(Object value) {
 		return adapterFactoryItemDelegator.getText(value);
 	}
@@ -222,6 +226,7 @@ public class LinkCellEditor extends CellEditor implements ECPCellEditor {
 	 * 
 	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor#getColumnWidthWeight()
 	 */
+	@Override
 	public int getColumnWidthWeight() {
 		return 100;
 	}
@@ -232,6 +237,7 @@ public class LinkCellEditor extends CellEditor implements ECPCellEditor {
 	 * 
 	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor#getTargetToModelStrategy()
 	 */
+	@Override
 	public UpdateValueStrategy getTargetToModelStrategy() {
 		// TODO Auto-generated method stub
 		return null;
@@ -243,6 +249,7 @@ public class LinkCellEditor extends CellEditor implements ECPCellEditor {
 	 * 
 	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor#getModelToTargetStrategy()
 	 */
+	@Override
 	public UpdateValueStrategy getModelToTargetStrategy() {
 		// TODO Auto-generated method stub
 		return null;
@@ -253,6 +260,7 @@ public class LinkCellEditor extends CellEditor implements ECPCellEditor {
 	 * 
 	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor#setEditable(boolean)
 	 */
+	@Override
 	public void setEditable(boolean editable) {
 		if (link != null) {
 			link.setEnabled(editable);

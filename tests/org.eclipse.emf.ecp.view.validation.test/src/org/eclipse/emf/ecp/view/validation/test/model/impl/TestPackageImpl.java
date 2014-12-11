@@ -226,6 +226,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 		EValidator.Registry.INSTANCE.put
 			(theTestPackage,
 				new EValidator.Descriptor() {
+					@Override
 					public EValidator getEValidator() {
 						return TestValidator.INSTANCE;
 					}
@@ -245,6 +246,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EClass getLibrary() {
 		return libraryEClass;
 	}
@@ -255,6 +257,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EAttribute getLibrary_Name() {
 		return (EAttribute) libraryEClass.getEStructuralFeatures().get(0);
 	}
@@ -265,6 +268,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EReference getLibrary_Writers() {
 		return (EReference) libraryEClass.getEStructuralFeatures().get(1);
 	}
@@ -275,6 +279,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EReference getLibrary_Books() {
 		return (EReference) libraryEClass.getEStructuralFeatures().get(2);
 	}
@@ -285,6 +290,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EReference getLibrary_Librarian() {
 		return (EReference) libraryEClass.getEStructuralFeatures().get(3);
 	}
@@ -295,6 +301,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EClass getWriter() {
 		return writerEClass;
 	}
@@ -305,6 +312,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EAttribute getWriter_FirstName() {
 		return (EAttribute) writerEClass.getEStructuralFeatures().get(0);
 	}
@@ -315,6 +323,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EAttribute getWriter_LastName() {
 		return (EAttribute) writerEClass.getEStructuralFeatures().get(1);
 	}
@@ -325,6 +334,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EAttribute getWriter_EMail() {
 		return (EAttribute) writerEClass.getEStructuralFeatures().get(2);
 	}
@@ -335,6 +345,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EAttribute getWriter_BirthDate() {
 		return (EAttribute) writerEClass.getEStructuralFeatures().get(3);
 	}
@@ -345,6 +356,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EReference getWriter_Books() {
 		return (EReference) writerEClass.getEStructuralFeatures().get(4);
 	}
@@ -355,6 +367,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EAttribute getWriter_Pseudonym() {
 		return (EAttribute) writerEClass.getEStructuralFeatures().get(5);
 	}
@@ -365,6 +378,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EReference getWriter_Library() {
 		return (EReference) writerEClass.getEStructuralFeatures().get(6);
 	}
@@ -375,6 +389,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EClass getBook() {
 		return bookEClass;
 	}
@@ -385,6 +400,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EAttribute getBook_Title() {
 		return (EAttribute) bookEClass.getEStructuralFeatures().get(0);
 	}
@@ -395,6 +411,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EAttribute getBook_Pages() {
 		return (EAttribute) bookEClass.getEStructuralFeatures().get(1);
 	}
@@ -405,6 +422,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EReference getBook_Writers() {
 		return (EReference) bookEClass.getEStructuralFeatures().get(2);
 	}
@@ -415,6 +433,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EClass getLibrarian() {
 		return librarianEClass;
 	}
@@ -425,6 +444,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EAttribute getLibrarian_Name() {
 		return (EAttribute) librarianEClass.getEStructuralFeatures().get(0);
 	}
@@ -435,6 +455,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EClass getComputer() {
 		return computerEClass;
 	}
@@ -445,6 +466,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EReference getComputer_Mainboard() {
 		return (EReference) computerEClass.getEStructuralFeatures().get(0);
 	}
@@ -455,6 +477,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EAttribute getComputer_Name() {
 		return (EAttribute) computerEClass.getEStructuralFeatures().get(1);
 	}
@@ -465,6 +488,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EReference getComputer_PowerBlock() {
 		return (EReference) computerEClass.getEStructuralFeatures().get(2);
 	}
@@ -475,6 +499,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EClass getMainboard() {
 		return mainboardEClass;
 	}
@@ -485,6 +510,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EAttribute getMainboard_Name() {
 		return (EAttribute) mainboardEClass.getEStructuralFeatures().get(0);
 	}
@@ -495,6 +521,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EClass getPowerBlock() {
 		return powerBlockEClass;
 	}
@@ -505,6 +532,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EAttribute getPowerBlock_Name() {
 		return (EAttribute) powerBlockEClass.getEStructuralFeatures().get(0);
 	}
@@ -515,6 +543,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EClass getContainer() {
 		return containerEClass;
 	}
@@ -525,6 +554,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EReference getContainer_Contents() {
 		return (EReference) containerEClass.getEStructuralFeatures().get(0);
 	}
@@ -535,6 +565,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EClass getContent() {
 		return contentEClass;
 	}
@@ -545,6 +576,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EAttribute getContent_UniqueAttribute() {
 		return (EAttribute) contentEClass.getEStructuralFeatures().get(0);
 	}
@@ -555,6 +587,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EAttribute getContent_SecondAttribute() {
 		return (EAttribute) contentEClass.getEStructuralFeatures().get(1);
 	}
@@ -565,6 +598,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EClass getTableWithMultiplicity() {
 		return tableWithMultiplicityEClass;
 	}
@@ -575,6 +609,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EReference getTableWithMultiplicity_Content() {
 		return (EReference) tableWithMultiplicityEClass.getEStructuralFeatures().get(0);
 	}
@@ -585,6 +620,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EClass getTableContent() {
 		return tableContentEClass;
 	}
@@ -595,6 +631,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EClass getTableContentWithoutValidation() {
 		return tableContentWithoutValidationEClass;
 	}
@@ -605,6 +642,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EAttribute getTableContentWithoutValidation_Name() {
 		return (EAttribute) tableContentWithoutValidationEClass.getEStructuralFeatures().get(0);
 	}
@@ -615,6 +653,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EAttribute getTableContentWithoutValidation_Weight() {
 		return (EAttribute) tableContentWithoutValidationEClass.getEStructuralFeatures().get(1);
 	}
@@ -625,6 +664,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EClass getTableContentWithValidation() {
 		return tableContentWithValidationEClass;
 	}
@@ -635,6 +675,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EAttribute getTableContentWithValidation_Name() {
 		return (EAttribute) tableContentWithValidationEClass.getEStructuralFeatures().get(0);
 	}
@@ -645,6 +686,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EAttribute getTableContentWithValidation_Weight() {
 		return (EAttribute) tableContentWithValidationEClass.getEStructuralFeatures().get(1);
 	}
@@ -655,6 +697,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EClass getTableWithoutMultiplicity() {
 		return tableWithoutMultiplicityEClass;
 	}
@@ -665,6 +708,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EReference getTableWithoutMultiplicity_Content() {
 		return (EReference) tableWithoutMultiplicityEClass.getEStructuralFeatures().get(0);
 	}
@@ -675,6 +719,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EClass getTableWithUnique() {
 		return tableWithUniqueEClass;
 	}
@@ -685,6 +730,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EReference getTableWithUnique_Content() {
 		return (EReference) tableWithUniqueEClass.getEStructuralFeatures().get(0);
 	}
@@ -695,6 +741,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public TestFactory getTestFactory() {
 		return (TestFactory) getEFactoryInstance();
 	}

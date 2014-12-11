@@ -79,6 +79,7 @@ public class CreateProjectCompositeImpl implements CreateProjectComposite {
 	private ECPProperties properties;
 
 	/** {@inheritDoc} **/
+	@Override
 	public Composite createUI(Composite parent) {
 
 		final Composite composite = new Composite(parent, SWT.NONE);
@@ -105,6 +106,7 @@ public class CreateProjectCompositeImpl implements CreateProjectComposite {
 			providersViewer.setSelection(new StructuredSelection(providers.get(0)));
 
 			providersViewer.addSelectionChangedListener(new ISelectionChangedListener() {
+				@Override
 				public void selectionChanged(SelectionChangedEvent event) {
 					IStructuredSelection selection = (IStructuredSelection) event.getSelection();
 					provider = (ECPProvider) selection.getFirstElement();
@@ -126,6 +128,7 @@ public class CreateProjectCompositeImpl implements CreateProjectComposite {
 		textProjectName.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false, 1, 1));
 		textProjectName.addModifyListener(new ModifyListener() {
 
+			@Override
 			public void modifyText(ModifyEvent e) {
 				projectName = textProjectName.getText();
 				if (projectName.equals("")) //$NON-NLS-1$ 
@@ -164,6 +167,7 @@ public class CreateProjectCompositeImpl implements CreateProjectComposite {
 		UIProvider uiProvider = UIProviderRegistry.INSTANCE.getUIProvider(provider);
 		Control newProjectUI = uiProvider.createNewProjectUI(providerStack, new CompositeStateObserver() {
 
+			@Override
 			public void compositeChangedState(Composite caller, boolean complete, ECPProperties projectProperties) {
 				compositeStatus = complete;
 				properties = projectProperties;
@@ -193,16 +197,19 @@ public class CreateProjectCompositeImpl implements CreateProjectComposite {
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public ECPProvider getProvider() {
 		return provider;
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public String getProjectName() {
 		return projectName;
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public void setListener(CreateProjectChangeListener listener) {
 		this.listener = listener;
 		if (listener != null) {
@@ -213,11 +220,13 @@ public class CreateProjectCompositeImpl implements CreateProjectComposite {
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public ECPProperties getProperties() {
 		return properties == null ? ECPUtil.createProperties() : properties;
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public void dispose() {
 	}
 

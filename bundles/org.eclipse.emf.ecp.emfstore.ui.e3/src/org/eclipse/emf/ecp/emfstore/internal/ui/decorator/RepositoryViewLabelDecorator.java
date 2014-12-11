@@ -43,6 +43,7 @@ public class RepositoryViewLabelDecorator extends LabelProvider implements ILigh
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void decorate(Object element, IDecoration decoration) {
 		if (element instanceof ECPRepository) {
 			final InternalRepository repository = (InternalRepository) element;
@@ -99,6 +100,7 @@ public class RepositoryViewLabelDecorator extends LabelProvider implements ILigh
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void loginCompleted(ESUsersession session) {
 		update(session);
 	}
@@ -106,6 +108,7 @@ public class RepositoryViewLabelDecorator extends LabelProvider implements ILigh
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void logoutCompleted(ESUsersession session) {
 		update(session);
 	}
@@ -113,6 +116,7 @@ public class RepositoryViewLabelDecorator extends LabelProvider implements ILigh
 	private void update(final ESUsersession usersession) {
 
 		Display.getDefault().asyncExec(new Runnable() {
+			@Override
 			public void run() {
 				// TODO cast
 				fireLabelProviderChanged(new LabelProviderChangedEvent(RepositoryViewLabelDecorator.this,

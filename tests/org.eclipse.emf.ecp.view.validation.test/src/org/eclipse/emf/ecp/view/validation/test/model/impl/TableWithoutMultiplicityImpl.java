@@ -77,6 +77,7 @@ public class TableWithoutMultiplicityImpl extends EObjectImpl implements TableWi
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EList<TableContent> getContent() {
 		if (content == null) {
 			content = new EObjectContainmentEList<TableContent>(TableContent.class, this,

@@ -108,6 +108,7 @@ public class PropertyDialog extends TitleAreaDialog {
 		keyText.setEditable(keyEditable);
 		keyText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		keyText.addModifyListener(new ModifyListener() {
+			@Override
 			public void modifyText(ModifyEvent e) {
 				key = keyText.getText();
 			}
@@ -121,6 +122,7 @@ public class PropertyDialog extends TitleAreaDialog {
 		valueText.setText(value == null ? "" : value); //$NON-NLS-1$
 		valueText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		valueText.addModifyListener(new ModifyListener() {
+			@Override
 			public void modifyText(ModifyEvent e) {
 				value = valueText.getText();
 			}

@@ -108,6 +108,7 @@ public class EMFStoreUIProvider extends DefaultUIProvider {
 		urlText.addModifyListener(new ModifyListener() {
 			private String oldText = "";
 
+			@Override
 			public void modifyText(ModifyEvent e) {
 				if (oldText.equals(repositoryNameText.getText())) {
 					oldText = urlText.getText();
@@ -123,6 +124,7 @@ public class EMFStoreUIProvider extends DefaultUIProvider {
 		portText.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false, 2, 1));
 		portText.addModifyListener(new ModifyListener() {
 
+			@Override
 			public void modifyText(ModifyEvent e) {
 				repositoryProperties.addProperty(EMFStoreProvider.PROP_PORT, portText.getText());
 			}
@@ -140,6 +142,7 @@ public class EMFStoreUIProvider extends DefaultUIProvider {
 		bSelectCertificate.setText("Select Certificate");
 		bSelectCertificate.addSelectionListener(new SelectionListener() {
 
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				// open dialog
 				final String certificate = selectCertificate();
@@ -148,6 +151,7 @@ public class EMFStoreUIProvider extends DefaultUIProvider {
 
 			}
 
+			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
 				widgetSelected(e);
 			}

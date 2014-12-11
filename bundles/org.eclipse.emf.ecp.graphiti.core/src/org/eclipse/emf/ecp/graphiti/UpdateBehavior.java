@@ -116,6 +116,7 @@ public class UpdateBehavior extends DefaultUpdateBehavior {
 							.getActivePart();
 						if (activePart == diagramContainer) {
 							getShell().getDisplay().asyncExec(new Runnable() {
+								@Override
 								public void run() {
 									handleActivate();
 								}
@@ -140,6 +141,7 @@ public class UpdateBehavior extends DefaultUpdateBehavior {
 								.getActivePart();
 							if (activePart == diagramContainer) {
 								getShell().getDisplay().asyncExec(new Runnable() {
+									@Override
 									public void run() {
 										handleActivate();
 									}
@@ -154,6 +156,7 @@ public class UpdateBehavior extends DefaultUpdateBehavior {
 
 		private void startCloseEditorJob() {
 			Display.getDefault().asyncExec(new Runnable() {
+				@Override
 				public void run() {
 					closeContainer();
 				}

@@ -73,6 +73,7 @@ public class NumberCellEditor extends TextCellEditor implements ECPCellEditor {
 	 * 
 	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor#getValueProperty()
 	 */
+	@Override
 	public IValueProperty getValueProperty() {
 		return CellEditorProperties.control().value(WidgetProperties.text(SWT.FocusOut));
 	}
@@ -84,6 +85,7 @@ public class NumberCellEditor extends TextCellEditor implements ECPCellEditor {
 	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor#instantiate(org.eclipse.emf.ecore.EStructuralFeature,
 	 *      org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
+	@Override
 	public void instantiate(EStructuralFeature eStructuralFeature, ViewModelContext viewModelContext) {
 		this.eStructuralFeature = eStructuralFeature;
 		this.viewModelContext = viewModelContext;
@@ -97,6 +99,7 @@ public class NumberCellEditor extends TextCellEditor implements ECPCellEditor {
 	 * 
 	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor#getFormatedString(java.lang.Object)
 	 */
+	@Override
 	public String getFormatedString(Object value) {
 		if (value == null) {
 			setErrorMessage(TableMessages.NumberCellEditor_ValueIsNull);
@@ -126,6 +129,7 @@ public class NumberCellEditor extends TextCellEditor implements ECPCellEditor {
 	 * 
 	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor#getColumnWidthWeight()
 	 */
+	@Override
 	public int getColumnWidthWeight() {
 		return 50;
 	}
@@ -136,6 +140,7 @@ public class NumberCellEditor extends TextCellEditor implements ECPCellEditor {
 	 * 
 	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor#getTargetToModelStrategy()
 	 */
+	@Override
 	public UpdateValueStrategy getTargetToModelStrategy() {
 		return new EMFUpdateValueStrategy() {
 
@@ -251,6 +256,7 @@ public class NumberCellEditor extends TextCellEditor implements ECPCellEditor {
 	 * 
 	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor#getModelToTargetStrategy()
 	 */
+	@Override
 	public UpdateValueStrategy getModelToTargetStrategy() {
 		return new EMFUpdateValueStrategy() {
 			@Override
@@ -278,6 +284,7 @@ public class NumberCellEditor extends TextCellEditor implements ECPCellEditor {
 	 * 
 	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor#setEditable(boolean)
 	 */
+	@Override
 	public void setEditable(boolean editable) {
 		if (getText() != null) {
 			getText().setEditable(editable);

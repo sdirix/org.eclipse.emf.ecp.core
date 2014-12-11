@@ -52,6 +52,7 @@ public final class UIProviderRegistryImpl extends ElementRegistry<UIProvider, EC
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public UIProvider getUIProvider(Object adaptable) {
 		if (adaptable instanceof ECPProviderAware) {
 			ECPProvider provider = ((ECPProviderAware) adaptable).getProvider();
@@ -85,16 +86,19 @@ public final class UIProviderRegistryImpl extends ElementRegistry<UIProvider, EC
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public UIProvider getUIProvider(String name) {
 		return getElement(name);
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public Collection<UIProvider> getUIProviders() {
 		return getElements();
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public boolean hasUIProviders() {
 		return hasElements();
 	}
@@ -148,41 +152,50 @@ public final class UIProviderRegistryImpl extends ElementRegistry<UIProvider, EC
 			super(UIProviderRegistryImpl.this, name, TYPE, configurationElement);
 		}
 
+		@Override
 		public InternalProvider getProvider() {
 			return getResolvedElement().getProvider();
 		}
 
+		@Override
 		public <T> T getAdapter(Object adaptable, Class<T> adapterType) {
 			return getResolvedElement().getAdapter(adaptable, adapterType);
 		}
 
+		@Override
 		public Object getAdapter(@SuppressWarnings("rawtypes") Class adapterType) {
 			return getResolvedElement().getAdapter(adapterType);
 		}
 
+		@Override
 		public String getText(Object element) {
 			return getResolvedElement().getText(element);
 		}
 
+		@Override
 		public Image getImage(Object element) {
 			return getResolvedElement().getImage(element);
 		}
 
+		@Override
 		public void fillContextMenu(IMenuManager manager, ECPContainer context, Object[] elements) {
 			getResolvedElement().fillContextMenu(manager, context, elements);
 		}
 
+		@Override
 		public Control createAddRepositoryUI(Composite parent, ECPProperties repositoryProperties,
 			Text repositoryNameText, Text repositoryLabelText, Text repositoryDescriptionText) {
 			return getResolvedElement().createAddRepositoryUI(parent, repositoryProperties, repositoryNameText,
 				repositoryLabelText, repositoryDescriptionText);
 		}
 
+		@Override
 		public Control createCheckoutUI(Composite parent, ECPCheckoutSource checkoutSource,
 			ECPProperties projectProperties) {
 			return getResolvedElement().createCheckoutUI(parent, checkoutSource, projectProperties);
 		}
 
+		@Override
 		public Control createNewProjectUI(Composite parent, CompositeStateObserver observer,
 			ECPProperties projectProperties) {
 			return getResolvedElement().createNewProjectUI(parent, observer, projectProperties);

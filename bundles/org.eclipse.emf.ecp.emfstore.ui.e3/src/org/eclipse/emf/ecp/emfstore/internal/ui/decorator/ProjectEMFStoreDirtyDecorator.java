@@ -40,6 +40,7 @@ public class ProjectEMFStoreDirtyDecorator implements ILightweightLabelDecorator
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void decorate(Object element, IDecoration decoration) {
 
 		if (!(element instanceof ECPProject)) {
@@ -64,20 +65,24 @@ public class ProjectEMFStoreDirtyDecorator implements ILightweightLabelDecorator
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void addListener(ILabelProviderListener listener) {
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void dispose() {
 
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public boolean isLabelProperty(Object element, String property) {
 		return false;
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void removeListener(ILabelProviderListener listener) {
 	}
 }

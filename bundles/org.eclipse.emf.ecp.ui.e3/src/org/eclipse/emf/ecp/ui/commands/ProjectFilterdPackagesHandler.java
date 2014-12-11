@@ -33,7 +33,8 @@ public class ProjectFilterdPackagesHandler extends AbstractHandler
 	/**
 	 * {@inheritDoc}
 	 */
-  public Object execute(ExecutionEvent event) throws ExecutionException
+  @Override
+public Object execute(ExecutionEvent event) throws ExecutionException
   {
 	ISelection selection = HandlerUtil.getActiveMenuSelection(event);
     IStructuredSelection ssel = (IStructuredSelection)selection;

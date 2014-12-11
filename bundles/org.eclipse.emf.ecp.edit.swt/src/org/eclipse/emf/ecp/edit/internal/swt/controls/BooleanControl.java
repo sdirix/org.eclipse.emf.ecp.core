@@ -42,6 +42,7 @@ public class BooleanControl extends SingleControl {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void setEditable(boolean isEditable) {
 		check.setEnabled(isEditable);
 	}

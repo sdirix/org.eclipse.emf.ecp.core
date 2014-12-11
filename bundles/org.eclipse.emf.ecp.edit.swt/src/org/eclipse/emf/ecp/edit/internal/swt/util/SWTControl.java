@@ -84,6 +84,7 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 	 * 
 	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPControlSWT#createControls(org.eclipse.swt.widgets.Composite)
 	 */
+	@Override
 	public List<RenderingResultRow<Control>> createControls(final Composite parent) {
 		final IItemPropertyDescriptor itemPropertyDescriptor = getItemPropertyDescriptor(getFirstSetting());
 		if (itemPropertyDescriptor == null) {
@@ -91,6 +92,7 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 		}
 		parent.addDisposeListener(new DisposeListener() {
 
+			@Override
 			public void widgetDisposed(DisposeEvent e) {
 				dispose();
 			}
@@ -196,6 +198,7 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 		unsetLabel.setText(getUnsetLabelText());
 		unsetLabel.addMouseListener(new MouseListener() {
 
+			@Override
 			public void mouseUp(MouseEvent e) {
 				sl.topControl = controlComposite;
 				parentComposite.layout(true);
@@ -209,10 +212,12 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 				}
 			}
 
+			@Override
 			public void mouseDown(MouseEvent e) {
 				// nothing to do
 			}
 
+			@Override
 			public void mouseDoubleClick(MouseEvent e) {
 				// nothing to do
 			}
@@ -447,6 +452,7 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 			return;
 		}
 		Display.getDefault().asyncExec(new Runnable() {
+			@Override
 			public void run() {
 				if (getControl() == null) {
 					return;

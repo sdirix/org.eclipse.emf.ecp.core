@@ -76,6 +76,7 @@ public class Component2Impl extends MinimalEObjectImpl.Container implements Comp
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EList<Composite> getComposites() {
 		if (composites == null) {
 			composites = new EObjectContainmentEList<Composite>(Composite.class, this,

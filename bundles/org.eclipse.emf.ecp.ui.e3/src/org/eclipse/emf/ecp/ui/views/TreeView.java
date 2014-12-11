@@ -142,6 +142,7 @@ public abstract class TreeView extends ViewPart implements ISelectionProvider, I
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public IStructuredSelection getSelection()
 	{
 		if (viewer != null)
@@ -153,6 +154,7 @@ public abstract class TreeView extends ViewPart implements ISelectionProvider, I
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void setSelection(ISelection selection)
 	{
 		if (viewer != null)
@@ -162,6 +164,7 @@ public abstract class TreeView extends ViewPart implements ISelectionProvider, I
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void addSelectionChangedListener(ISelectionChangedListener listener)
 	{
 		if (viewer != null)
@@ -171,6 +174,7 @@ public abstract class TreeView extends ViewPart implements ISelectionProvider, I
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void removeSelectionChangedListener(ISelectionChangedListener listener)
 	{
 		if (viewer != null)
@@ -180,6 +184,7 @@ public abstract class TreeView extends ViewPart implements ISelectionProvider, I
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void selectReveal(ISelection selection)
 	{
 		if (viewer != null)
@@ -272,6 +277,7 @@ public abstract class TreeView extends ViewPart implements ISelectionProvider, I
 	{
 		viewer.addDoubleClickListener(new IDoubleClickListener()
 		{
+			@Override
 			public void doubleClick(DoubleClickEvent event)
 			{
 				TreeView.this.doubleClicked(event);
@@ -285,6 +291,7 @@ public abstract class TreeView extends ViewPart implements ISelectionProvider, I
 		manager.setRemoveAllWhenShown(true);
 		manager.addMenuListener(new IMenuListener()
 		{
+			@Override
 			public void menuAboutToShow(IMenuManager manager)
 			{
 				TreeView.this.fillContextMenu(manager);

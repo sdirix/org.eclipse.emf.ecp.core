@@ -61,7 +61,8 @@ public class ViewerDragAdapter implements DragSourceListener
   /**
    * This is called when dragging is initiated; it records the {@link #selection} of {@link #viewer}.
    */
-  public void dragStart(DragSourceEvent event)
+  @Override
+public void dragStart(DragSourceEvent event)
   {
     selection = viewer.getSelection();
   }
@@ -69,7 +70,8 @@ public class ViewerDragAdapter implements DragSourceListener
   /**
    * This is called when dragging is completed; it forgets the {@link #selection}.
    */
-  public void dragFinished(DragSourceEvent event)
+  @Override
+public void dragFinished(DragSourceEvent event)
   {
     selection = null;
     LocalTransfer.getInstance().javaToNative(null, null);
@@ -78,7 +80,8 @@ public class ViewerDragAdapter implements DragSourceListener
   /**
    * This is called to transfer the data.
    */
-  public void dragSetData(DragSourceEvent event)
+  @Override
+public void dragSetData(DragSourceEvent event)
   {
     if (LocalTransfer.getInstance().isSupportedType(event.dataType))
     {

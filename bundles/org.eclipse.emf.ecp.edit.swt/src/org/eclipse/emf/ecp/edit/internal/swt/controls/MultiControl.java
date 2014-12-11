@@ -154,6 +154,7 @@ public abstract class MultiControl extends SWTControl {
 
 		changeListener = new IListChangeListener() {
 
+			@Override
 			public void handleListChange(ListChangeEvent event) {
 				final ListDiff diff = event.diff;
 				diff.accept(new ListDiffVisitor() {
@@ -485,6 +486,7 @@ public abstract class MultiControl extends SWTControl {
 	@Override
 	protected void applyValidation(final VDiagnostic diagnostic) {
 		Display.getDefault().asyncExec(new Runnable() {
+			@Override
 			public void run() {
 				final Diagnostic displayedDiagnostic = getMostSevereDiagnostic(diagnostic);
 				if (displayedDiagnostic == null) {

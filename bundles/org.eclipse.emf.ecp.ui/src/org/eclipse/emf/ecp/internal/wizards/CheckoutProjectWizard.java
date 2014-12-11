@@ -43,10 +43,12 @@ public class CheckoutProjectWizard extends ECPWizard<CheckoutProjectComposite> {
 		WizardPage wp = new WizardPage("Checkout") //$NON-NLS-1$
 		{
 
+			@Override
 			public void createControl(Composite parent) {
 				Composite composite = getCompositeProvider().createUI(parent);
 
 				getCompositeProvider().setListener(new CheckoutProjectChangeListener() {
+					@Override
 					public void projectNameChanged(String projectName) {
 						validateName(projectName);
 					}

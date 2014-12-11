@@ -98,6 +98,7 @@ public class ValidationCustomControl extends ECPAbstractCustomControlSWT impleme
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.custom.model.ECPHardcodedReferences#getNeededDomainModelReferences()
 	 */
+	@Override
 	public Set<VDomainModelReference> getNeededDomainModelReferences() {
 		final VFeaturePathDomainModelReference feature = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
 		feature.setDomainModelEFeature(

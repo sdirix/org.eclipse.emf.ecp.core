@@ -26,6 +26,7 @@ import org.eclipse.emf.emfstore.client.ESLocalProject;
 public class EMFStoreElementIsShared extends PropertyTester {
 
 	/** {@inheritDoc} */
+	@Override
 	public boolean test(Object receiver, String property, Object[] args, Object expectedValue) {
 		InternalProject project = (InternalProject) ECPUtil.getECPProjectManager().getProject(receiver);
 		if (project != null && project.getProvider().getName().equals(EMFStoreProvider.NAME)) {

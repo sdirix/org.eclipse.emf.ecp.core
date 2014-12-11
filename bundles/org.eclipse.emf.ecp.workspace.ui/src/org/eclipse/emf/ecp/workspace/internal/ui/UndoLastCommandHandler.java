@@ -28,6 +28,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
 public class UndoLastCommandHandler extends AbstractHandler {
 
 	/** {@inheritDoc} **/
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		InternalProject project = (InternalProject) ((IStructuredSelection) HandlerUtil.getActiveMenuSelection(event))
 			.getFirstElement();

@@ -88,6 +88,7 @@ public final class ImportProjectHelper {
 			final InputDialog id = new InputDialog(shell, "Project Name", //$NON-NLS-1$
 				"Enter the name for the imported project.", localProject.getProjectName(), new IInputValidator() { //$NON-NLS-1$
 
+					@Override
 					public String isValid(String newText) {
 						return ECPUtil.getECPProjectManager().getProject(newText) == null ? null : String.format(
 							"A project with the name %s already exists.", newText); //$NON-NLS-1$

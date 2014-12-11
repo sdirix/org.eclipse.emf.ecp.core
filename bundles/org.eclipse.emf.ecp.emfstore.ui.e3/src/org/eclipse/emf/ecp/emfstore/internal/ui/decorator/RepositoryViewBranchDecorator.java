@@ -31,19 +31,24 @@ import org.eclipse.jface.viewers.ILightweightLabelDecorator;
  */
 public class RepositoryViewBranchDecorator implements ILightweightLabelDecorator {
 
+	@Override
 	public void addListener(ILabelProviderListener listener) {
 	}
 
+	@Override
 	public void dispose() {
 	}
 
+	@Override
 	public boolean isLabelProperty(Object element, String property) {
 		return false;
 	}
 
+	@Override
 	public void removeListener(ILabelProviderListener listener) {
 	}
 
+	@Override
 	public void decorate(Object element, IDecoration decoration) {
 		if (element instanceof EMFStoreProjectWrapper) {
 			EMFStoreProjectWrapper wrapper = (EMFStoreProjectWrapper) element;

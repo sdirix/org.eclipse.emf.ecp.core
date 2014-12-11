@@ -125,6 +125,7 @@ public class BookImpl extends EObjectImpl implements Book {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public String getTitle() {
 		return title;
 	}
@@ -135,6 +136,7 @@ public class BookImpl extends EObjectImpl implements Book {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setTitle(String newTitle) {
 		String oldTitle = title;
 		title = newTitle;
@@ -148,6 +150,7 @@ public class BookImpl extends EObjectImpl implements Book {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public int getPages() {
 		return pages;
 	}
@@ -158,6 +161,7 @@ public class BookImpl extends EObjectImpl implements Book {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setPages(int newPages) {
 		int oldPages = pages;
 		pages = newPages;
@@ -171,6 +175,7 @@ public class BookImpl extends EObjectImpl implements Book {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public Writer getWriters() {
 		if (writers != null && writers.eIsProxy()) {
 			InternalEObject oldWriters = (InternalEObject) writers;
@@ -220,6 +225,7 @@ public class BookImpl extends EObjectImpl implements Book {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setWriters(Writer newWriters) {
 		if (newWriters != writers) {
 			NotificationChain msgs = null;
@@ -242,6 +248,7 @@ public class BookImpl extends EObjectImpl implements Book {
 	 * @generated NOT
 	 */
 	// BEGIN COMPLEX CODE
+	@Override
 	public boolean validate(DiagnosticChain chain, Map<Object, Object> context) {
 
 		boolean wasSuccesful = true;

@@ -85,6 +85,7 @@ public class VSpanImpl extends VAttachmentImpl implements VSpan
 	 * 
 	 * @generated
 	 */
+	@Override
 	public int getHorizontalSpan()
 	{
 		return horizontalSpan;
@@ -96,6 +97,7 @@ public class VSpanImpl extends VAttachmentImpl implements VSpan
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setHorizontalSpan(int newHorizontalSpan)
 	{
 		final int oldHorizontalSpan = horizontalSpan;

@@ -104,6 +104,7 @@ public class TableContentWithValidationImpl extends TableContentImpl implements 
 	 * 
 	 * @generated
 	 */
+	@Override
 	public String getName() {
 		return name;
 	}
@@ -114,6 +115,7 @@ public class TableContentWithValidationImpl extends TableContentImpl implements 
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setName(String newName) {
 		final String oldName = name;
 		name = newName;
@@ -129,6 +131,7 @@ public class TableContentWithValidationImpl extends TableContentImpl implements 
 	 * 
 	 * @generated
 	 */
+	@Override
 	public int getWeight() {
 		return weight;
 	}
@@ -139,6 +142,7 @@ public class TableContentWithValidationImpl extends TableContentImpl implements 
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setWeight(int newWeight) {
 		final int oldWeight = weight;
 		weight = newWeight;

@@ -105,6 +105,7 @@ public class VGroupImpl extends EObjectImpl implements VGroup
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EList<VRow> getRows()
 	{
 		if (rows == null)
@@ -120,6 +121,7 @@ public class VGroupImpl extends EObjectImpl implements VGroup
 	 * 
 	 * @generated
 	 */
+	@Override
 	public String getName()
 	{
 		return name;
@@ -131,6 +133,7 @@ public class VGroupImpl extends EObjectImpl implements VGroup
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setName(String newName)
 	{
 		final String oldName = name;

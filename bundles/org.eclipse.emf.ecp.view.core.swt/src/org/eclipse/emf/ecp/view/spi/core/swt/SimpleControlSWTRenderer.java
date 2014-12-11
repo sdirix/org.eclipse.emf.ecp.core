@@ -211,6 +211,7 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 	protected final void applyValidation() {
 		Display.getDefault().asyncExec(new Runnable() {
 
+			@Override
 			public void run() {
 				applyInnerValidation();
 			}

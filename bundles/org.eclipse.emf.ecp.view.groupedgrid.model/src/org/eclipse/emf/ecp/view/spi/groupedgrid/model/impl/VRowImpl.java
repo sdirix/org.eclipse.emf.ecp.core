@@ -80,6 +80,7 @@ public class VRowImpl extends EObjectImpl implements VRow
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EList<VContainedElement> getChildren()
 	{
 		if (children == null)

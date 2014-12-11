@@ -77,6 +77,7 @@ public class TableWithMultiplicityImpl extends EObjectImpl implements TableWithM
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EList<TableContent> getContent() {
 		if (content == null) {
 			content = new EObjectContainmentEList<TableContent>(TableContent.class, this,

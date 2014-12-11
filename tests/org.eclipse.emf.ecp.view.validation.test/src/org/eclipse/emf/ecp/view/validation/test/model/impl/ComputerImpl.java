@@ -109,6 +109,7 @@ public class ComputerImpl extends EObjectImpl implements Computer {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public Mainboard getMainboard() {
 		return mainboard;
 	}
@@ -139,6 +140,7 @@ public class ComputerImpl extends EObjectImpl implements Computer {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setMainboard(Mainboard newMainboard) {
 		if (newMainboard != mainboard) {
 			NotificationChain msgs = null;
@@ -163,6 +165,7 @@ public class ComputerImpl extends EObjectImpl implements Computer {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public String getName() {
 		return name;
 	}
@@ -173,6 +176,7 @@ public class ComputerImpl extends EObjectImpl implements Computer {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setName(String newName) {
 		String oldName = name;
 		name = newName;
@@ -186,6 +190,7 @@ public class ComputerImpl extends EObjectImpl implements Computer {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public PowerBlock getPowerBlock() {
 		return powerBlock;
 	}
@@ -216,6 +221,7 @@ public class ComputerImpl extends EObjectImpl implements Computer {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setPowerBlock(PowerBlock newPowerBlock) {
 		if (newPowerBlock != powerBlock) {
 			NotificationChain msgs = null;

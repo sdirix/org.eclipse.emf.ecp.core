@@ -27,6 +27,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
  */
 public class MergeBranchHandler extends AbstractHandler {
 	/** {@inheritDoc} */
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final InternalProject project = (InternalProject) ((IStructuredSelection) HandlerUtil
 			.getActiveMenuSelection(event))

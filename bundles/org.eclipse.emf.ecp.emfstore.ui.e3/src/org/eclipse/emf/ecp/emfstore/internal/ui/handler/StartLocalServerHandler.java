@@ -24,6 +24,7 @@ import org.eclipse.core.commands.ExecutionException;
 public class StartLocalServerHandler extends AbstractHandler {
 
 	/** {@inheritDoc} **/
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		StartLocalServerHelper.startLocalServer();
 		return null;

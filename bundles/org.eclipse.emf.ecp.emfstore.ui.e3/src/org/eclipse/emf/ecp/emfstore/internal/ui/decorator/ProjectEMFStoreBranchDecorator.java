@@ -29,28 +29,35 @@ import org.eclipse.swt.graphics.Image;
  */
 public class ProjectEMFStoreBranchDecorator implements ILabelDecorator, ESShareObserver {
 
+	@Override
 	public void addListener(ILabelProviderListener listener) {
 	}
 
+	@Override
 	public void dispose() {
 	}
 
+	@Override
 	public boolean isLabelProperty(Object element, String property) {
 		return false;
 	}
 
+	@Override
 	public void removeListener(ILabelProviderListener listener) {
 
 	}
 
+	@Override
 	public void shareDone(ESLocalProject localProject) {
 		decorateText(localProject.getProjectName(), localProject);
 	}
 
+	@Override
 	public Image decorateImage(Image image, Object element) {
 		return image;
 	}
 
+	@Override
 	public String decorateText(String text, Object element) {
 		ESLocalProject localProject = null;
 		if (element instanceof ESLocalProject) {

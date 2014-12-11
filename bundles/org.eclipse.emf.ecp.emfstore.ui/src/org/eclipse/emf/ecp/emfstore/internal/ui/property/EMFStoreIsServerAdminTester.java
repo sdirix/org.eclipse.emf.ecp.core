@@ -31,6 +31,7 @@ import org.eclipse.emf.emfstore.internal.server.exceptions.AccessControlExceptio
 public final class EMFStoreIsServerAdminTester extends PropertyTester {
 
 	/** {@inheritDoc} */
+	@Override
 	public boolean test(Object receiver, String property, Object[] args, Object expectedValue) {
 		InternalRepository repository = null;
 

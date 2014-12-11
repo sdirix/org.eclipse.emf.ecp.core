@@ -100,6 +100,7 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public SimpleTestObject createSimpleTestObject() {
 		SimpleTestObjectImpl simpleTestObject = new SimpleTestObjectImpl();
 		return simpleTestObject;
@@ -128,6 +129,7 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public TestPackage getTestPackage() {
 		return (TestPackage)getEPackage();
 	}

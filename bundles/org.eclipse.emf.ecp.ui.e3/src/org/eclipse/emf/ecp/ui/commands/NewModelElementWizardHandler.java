@@ -33,7 +33,8 @@ public class NewModelElementWizardHandler extends AbstractHandler
   /**
    * {@inheritDoc}
    */
-  public Object execute(final ExecutionEvent event) throws ExecutionException
+  @Override
+public Object execute(final ExecutionEvent event) throws ExecutionException
   {
     ISelection selection = HandlerUtil.getActiveMenuSelection(event);
     IStructuredSelection ssel = (IStructuredSelection)selection;

@@ -106,6 +106,7 @@ public class ContentImpl extends EObjectImpl implements Content {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public String getUniqueAttribute() {
 		return uniqueAttribute;
 	}
@@ -116,6 +117,7 @@ public class ContentImpl extends EObjectImpl implements Content {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setUniqueAttribute(String newUniqueAttribute) {
 		String oldUniqueAttribute = uniqueAttribute;
 		uniqueAttribute = newUniqueAttribute;
@@ -130,6 +132,7 @@ public class ContentImpl extends EObjectImpl implements Content {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public String getSecondAttribute() {
 		return secondAttribute;
 	}
@@ -140,6 +143,7 @@ public class ContentImpl extends EObjectImpl implements Content {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setSecondAttribute(String newSecondAttribute) {
 		String oldSecondAttribute = secondAttribute;
 		secondAttribute = newSecondAttribute;

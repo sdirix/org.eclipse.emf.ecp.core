@@ -155,6 +155,7 @@ public class ViewRenderer_PTest {
 		});
 		when(mockRenderer.render(any(SWTGridCell.class), any(Composite.class))).thenAnswer(new Answer<Control>() {
 
+			@Override
 			public Control answer(InvocationOnMock invocation) throws Throwable {
 				Object[] args = invocation.getArguments();
 				return new Composite((Composite) args[1], SWT.NONE);

@@ -64,6 +64,7 @@ public final class ShareProjectHelper {
 					.getRepository());
 				final ServerInfo serverInfo = server.toInternalAPI();
 				RunESCommand.run(new Callable<Void>() {
+					@Override
 					public Void call() throws Exception {
 						((ESLocalProjectImpl) localProject).toInternalAPI().setUsersession(
 							serverInfo.getLastUsersession());

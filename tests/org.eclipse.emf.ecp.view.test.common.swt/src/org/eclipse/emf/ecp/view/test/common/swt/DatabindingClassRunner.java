@@ -39,6 +39,7 @@ public class DatabindingClassRunner extends BlockJUnit4ClassRunner {
 	public void run(final RunNotifier notifier) {
 		final Display display = Display.getDefault();
 		Realm.runWithDefault(SWTObservables.getRealm(display), new Runnable() {
+			@Override
 			public void run() {
 				DatabindingClassRunner.super.run(notifier);
 			}

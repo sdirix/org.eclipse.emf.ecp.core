@@ -36,6 +36,7 @@ public class EMFStoreUnsharedDecorator implements ILightweightLabelDecorator {
 	 * @param decoration
 	 *            decoration
 	 */
+	@Override
 	public void decorate(Object element, IDecoration decoration) {
 		if (element instanceof ECPProject) {
 			ECPProject project = (ECPProject) element;
@@ -52,6 +53,7 @@ public class EMFStoreUnsharedDecorator implements ILightweightLabelDecorator {
 	 * 
 	 * @see org.eclipse.jface.viewers.IBaseLabelProvider#addListener(org.eclipse. jface.viewers.ILabelProviderListener)
 	 */
+	@Override
 	public void addListener(ILabelProviderListener listener) {
 	}
 
@@ -60,6 +62,7 @@ public class EMFStoreUnsharedDecorator implements ILightweightLabelDecorator {
 	 * 
 	 * @see org.eclipse.jface.viewers.IBaseLabelProvider#dispose()
 	 */
+	@Override
 	public void dispose() {
 	}
 
@@ -68,6 +71,7 @@ public class EMFStoreUnsharedDecorator implements ILightweightLabelDecorator {
 	 * 
 	 * @see org.eclipse.jface.viewers.IBaseLabelProvider#isLabelProperty(java.lang .Object, java.lang.String)
 	 */
+	@Override
 	public boolean isLabelProperty(Object element, String property) {
 		return false;
 	}
@@ -78,6 +82,7 @@ public class EMFStoreUnsharedDecorator implements ILightweightLabelDecorator {
 	 * @see org.eclipse.jface.viewers.IBaseLabelProvider#removeListener(org.eclipse
 	 *      .jface.viewers.ILabelProviderListener)
 	 */
+	@Override
 	public void removeListener(ILabelProviderListener listener) {
 	}
 }

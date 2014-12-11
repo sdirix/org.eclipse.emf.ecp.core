@@ -48,6 +48,7 @@ public class ECPObservableValue extends AbstractObservableValue {
 	 * @see org.eclipse.core.databinding.observable.value.IObservableValue#getValueType()
 	 * @generated
 	 */
+	@Override
 	public Object getValueType() {
 		return valueType;
 	}

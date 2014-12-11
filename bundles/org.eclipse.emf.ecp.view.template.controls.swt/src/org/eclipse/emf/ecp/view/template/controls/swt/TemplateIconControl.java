@@ -161,16 +161,19 @@ public class TemplateIconControl extends AbstractTextControl {
 		 * @return the lastBundle
 		 */
 
+		@Override
 		public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
 			// TODO Auto-generated method stub
 
 		}
 
+		@Override
 		public void dispose() {
 			// TODO Auto-generated method stub
 
 		}
 
+		@Override
 		public boolean hasChildren(Object element) {
 			if (element.getClass().isArray()) {
 				final Object[] array = (Object[]) element;
@@ -189,15 +192,18 @@ public class TemplateIconControl extends AbstractTextControl {
 			return false;
 		}
 
+		@Override
 		public Object getParent(Object element) {
 			// TODO Auto-generated method stub
 			return null;
 		}
 
+		@Override
 		public Object[] getElements(Object inputElement) {
 			return getChildren(inputElement);
 		}
 
+		@Override
 		public Object[] getChildren(Object parentElement) {
 			if (parentElement.getClass().isArray()) {
 				return (Object[]) parentElement;

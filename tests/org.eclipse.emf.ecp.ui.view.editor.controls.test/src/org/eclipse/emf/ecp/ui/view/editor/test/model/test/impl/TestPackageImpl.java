@@ -123,6 +123,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EClass getComponent() {
 		return componentEClass;
 	}
@@ -133,6 +134,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EReference getComponent_Component() {
 		return (EReference) componentEClass.getEStructuralFeatures().get(0);
 	}
@@ -143,6 +145,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EClass getComposite() {
 		return compositeEClass;
 	}
@@ -153,6 +156,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EReference getComposite_Composites() {
 		return (EReference) compositeEClass.getEStructuralFeatures().get(0);
 	}
@@ -163,6 +167,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EClass getComponent2() {
 		return component2EClass;
 	}
@@ -173,6 +178,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public EReference getComponent2_Composites() {
 		return (EReference) component2EClass.getEStructuralFeatures().get(0);
 	}
@@ -183,6 +189,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public TestFactory getTestFactory() {
 		return (TestFactory) getEFactoryInstance();
 	}

@@ -41,6 +41,7 @@ public class ReferenceMultiControlTester implements ECPApplicableTester {
 	 * 
 	 * @deprecated
 	 **/
+	@Override
 	@Deprecated
 	public int isApplicable(IItemPropertyDescriptor itemPropertyDescriptor, EObject eObject) {
 		return isApplicable(eObject, (EStructuralFeature) itemPropertyDescriptor.getFeature(eObject));
@@ -53,6 +54,7 @@ public class ReferenceMultiControlTester implements ECPApplicableTester {
 	 * @see org.eclipse.emf.ecp.edit.spi.util.ECPApplicableTester#isApplicable(org.eclipse.emf.ecore.EObject,
 	 *      org.eclipse.emf.ecore.EStructuralFeature)
 	 */
+	@Override
 	public int isApplicable(EObject eObject, EStructuralFeature eStructuralFeature) {
 		int bestPriority = NOT_APPLICABLE;
 		final ECPControlFactory controlFactory = Activator.getDefault().getECPControlFactory();
@@ -119,6 +121,7 @@ public class ReferenceMultiControlTester implements ECPApplicableTester {
 	 * @see org.eclipse.emf.ecp.edit.spi.util.ECPApplicableTester#isApplicable(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)
 	 * @deprecated
 	 */
+	@Override
 	@Deprecated
 	public int isApplicable(VDomainModelReference domainModelReference) {
 		final Iterator<Setting> iterator = domainModelReference.getIterator();

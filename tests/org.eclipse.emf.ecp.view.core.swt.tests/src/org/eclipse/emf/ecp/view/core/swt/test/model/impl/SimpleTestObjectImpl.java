@@ -95,6 +95,7 @@ public class SimpleTestObjectImpl extends MinimalEObjectImpl.Container implement
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Date getDate() {
 		return date;
 	}
@@ -104,6 +105,7 @@ public class SimpleTestObjectImpl extends MinimalEObjectImpl.Container implement
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setDate(Date newDate) {
 		Date oldDate = date;
 		date = newDate;
@@ -116,6 +118,7 @@ public class SimpleTestObjectImpl extends MinimalEObjectImpl.Container implement
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public XMLGregorianCalendar getXmlDate() {
 		return xmlDate;
 	}
@@ -125,6 +128,7 @@ public class SimpleTestObjectImpl extends MinimalEObjectImpl.Container implement
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void setXmlDate(XMLGregorianCalendar newXmlDate) {
 		XMLGregorianCalendar oldXmlDate = xmlDate;
 		xmlDate = newXmlDate;

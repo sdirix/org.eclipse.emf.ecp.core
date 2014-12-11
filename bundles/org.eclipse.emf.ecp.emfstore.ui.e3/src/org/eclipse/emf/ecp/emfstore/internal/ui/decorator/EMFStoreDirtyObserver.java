@@ -72,6 +72,7 @@ public class EMFStoreDirtyObserver implements OperationObserver {
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void operationExecuted(AbstractOperation operation) {
 		operations++;
 		if (!projectSpace.isShared()) {
@@ -95,6 +96,7 @@ public class EMFStoreDirtyObserver implements OperationObserver {
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void operationUndone(AbstractOperation operation) {
 		operations--;
 		if (!projectSpace.isShared()) {
@@ -122,6 +124,7 @@ public class EMFStoreDirtyObserver implements OperationObserver {
 		if (decoratorManager != null) {
 			Display.getDefault().syncExec(new Runnable() {
 
+				@Override
 				public void run() {
 					decoratorManager.update("org.eclipse.emf.ecp.emfstore.ui.decorators.EMFStoreDirtyDecorator");
 				}

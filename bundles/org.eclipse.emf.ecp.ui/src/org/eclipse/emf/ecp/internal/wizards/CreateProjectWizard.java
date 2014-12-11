@@ -56,13 +56,16 @@ public class CreateProjectWizard extends ECPWizard<CreateProjectComposite> {
 		WizardPage wp = new WizardPage("CreateProject") //$NON-NLS-1$
 		{
 
+			@Override
 			public void createControl(Composite parent) {
 				Composite composite = getCompositeProvider().createUI(parent);
 				getCompositeProvider().setListener(new CreateProjectChangeListener() {
 
+					@Override
 					public void providerChanged(ECPProvider provider) {
 					}
 
+					@Override
 					public void projectNameChanged(String projectName) {
 						if (projectName != null && ECPUtil.getECPProjectManager().getProject(projectName) != null) {
 							setErrorMessage("A project with name " + projectName + " already exists in the workspace.");
@@ -71,6 +74,7 @@ public class CreateProjectWizard extends ECPWizard<CreateProjectComposite> {
 						}
 					}
 
+					@Override
 					public void completeStatusChanged(boolean status) {
 						setPageComplete(status);
 

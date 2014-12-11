@@ -250,7 +250,8 @@ public class ExtendedImageRegistry
     display.disposeExec
       (new Runnable() 
        {
-         public void run() 
+         @Override
+		public void run() 
          {
            handleDisplayDispose();
          }       

@@ -87,6 +87,7 @@ public class LibrarianImpl extends EObjectImpl implements Librarian {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public String getName() {
 		return name;
 	}
@@ -97,6 +98,7 @@ public class LibrarianImpl extends EObjectImpl implements Librarian {
 	 * 
 	 * @generated
 	 */
+	@Override
 	public void setName(String newName) {
 		String oldName = name;
 		name = newName;
@@ -110,6 +112,7 @@ public class LibrarianImpl extends EObjectImpl implements Librarian {
 	 * 
 	 * @generated NOT
 	 */
+	@Override
 	public boolean validate(DiagnosticChain diagnostic, Map<Object, Object> context) {
 		if (getName() == null || getName().equals("")) {
 			if (diagnostic != null) {

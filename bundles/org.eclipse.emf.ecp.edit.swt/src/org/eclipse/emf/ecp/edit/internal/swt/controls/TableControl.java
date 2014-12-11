@@ -149,6 +149,7 @@ public class TableControl extends SWTControl {
 		}
 		parent.addDisposeListener(new DisposeListener() {
 
+			@Override
 			public void widgetDisposed(DisposeEvent e) {
 				dispose();
 			}
@@ -916,6 +917,7 @@ public class TableControl extends SWTControl {
 		 * 
 		 * @see org.eclipse.jface.viewers.IColorProvider#getForeground(java.lang.Object)
 		 */
+		@Override
 		public Color getForeground(Object element) {
 			return null;
 		}
@@ -925,6 +927,7 @@ public class TableControl extends SWTControl {
 		 * 
 		 * @see org.eclipse.jface.viewers.IColorProvider#getBackground(java.lang.Object)
 		 */
+		@Override
 		public Color getBackground(Object element) {
 			if (isDisposing) {
 				return null;

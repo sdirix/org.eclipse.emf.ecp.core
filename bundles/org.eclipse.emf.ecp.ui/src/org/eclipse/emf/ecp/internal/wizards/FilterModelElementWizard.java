@@ -41,6 +41,7 @@ public class FilterModelElementWizard extends ECPWizard<CheckedModelClassComposi
 		super.addPages();
 		WizardPage page = new WizardPage(Messages.FilterModelElementWizard_Title_FilterProject) {
 
+			@Override
 			public void createControl(Composite parent) {
 				Composite composite = getCompositeProvider().createUI(parent);
 
