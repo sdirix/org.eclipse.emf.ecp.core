@@ -1,14 +1,14 @@
 /*******************************************************************************
  * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
- * 
+ *
  *******************************************************************************/
 
 package org.eclipse.emf.ecp.emfstore.internal.ui.decorator;
@@ -33,12 +33,12 @@ import org.eclipse.swt.widgets.Display;
 /**
  * Decorates the label of a {@link org.eclipse.emf.emfstore.internal.client.model.ServerInfo} object according to its
  * login state.
- * 
+ *
  * @author Eugen Neufeld
  * @see ILightweightLabelDecorator
  */
 public class RepositoryViewLabelDecorator extends LabelProvider implements ILightweightLabelDecorator, ESLoginObserver,
-	ESLogoutObserver {
+ESLogoutObserver {
 
 	/**
 	 * {@inheritDoc}
@@ -52,10 +52,10 @@ public class RepositoryViewLabelDecorator extends LabelProvider implements ILigh
 			if (provider != null && EMFStoreProvider.NAME.equalsIgnoreCase(provider.getName())) {
 				final ESServer server = EMFStoreProvider.INSTANCE.getServerInfo(repository);
 				if (server.getLastUsersession() != null && server.getLastUsersession().isLoggedIn()) {
-					decoration.addOverlay(Activator.getImageDescriptor("icons/bullet_green.png"),
+					decoration.addOverlay(Activator.getImageDescriptor("icons/bullet_green.png"), //$NON-NLS-1$
 						IDecoration.BOTTOM_RIGHT);
 				} else {
-					decoration.addOverlay(Activator.getImageDescriptor("icons/bullet_delete.png"),
+					decoration.addOverlay(Activator.getImageDescriptor("icons/bullet_delete.png"), //$NON-NLS-1$
 						IDecoration.BOTTOM_RIGHT);
 				}
 			}
@@ -64,7 +64,7 @@ public class RepositoryViewLabelDecorator extends LabelProvider implements ILigh
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.jface.viewers.BaseLabelProvider#addListener(org.eclipse.jface.viewers.ILabelProviderListener)
 	 */
 	@Override
@@ -73,7 +73,7 @@ public class RepositoryViewLabelDecorator extends LabelProvider implements ILigh
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.jface.viewers.BaseLabelProvider#dispose()
 	 */
 	@Override
@@ -90,7 +90,7 @@ public class RepositoryViewLabelDecorator extends LabelProvider implements ILigh
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.jface.viewers.BaseLabelProvider#removeListener(org.eclipse.jface.viewers.ILabelProviderListener)
 	 */
 	@Override
@@ -125,7 +125,7 @@ public class RepositoryViewLabelDecorator extends LabelProvider implements ILigh
 					// .toInternalAPI())));
 					((EMFStoreProvider) ECPUtil.getResolvedElement(ECPUtil.getECPProviderRegistry()
 						.getProvider(EMFStoreProvider.NAME))).getRepository(usersession.getServer()
-						)));
+							)));
 			}
 		});
 	}

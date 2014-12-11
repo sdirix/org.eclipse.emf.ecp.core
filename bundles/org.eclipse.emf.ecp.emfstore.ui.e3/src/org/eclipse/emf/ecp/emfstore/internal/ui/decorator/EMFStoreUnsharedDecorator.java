@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Tobias Verhoeven - initial API and implementation
  ******************************************************************************/
@@ -24,11 +24,11 @@ import org.eclipse.jface.viewers.ILightweightLabelDecorator;
  */
 public class EMFStoreUnsharedDecorator implements ILightweightLabelDecorator {
 
-	private String imagePath = "icons/unshared.png";
+	private final String imagePath = "icons/unshared.png"; //$NON-NLS-1$
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.jface.viewers.ILightweightLabelDecorator#decorate(java.lang .Object,
 	 *      org.eclipse.jface.viewers.IDecoration)
 	 * @param element
@@ -39,7 +39,7 @@ public class EMFStoreUnsharedDecorator implements ILightweightLabelDecorator {
 	@Override
 	public void decorate(Object element, IDecoration decoration) {
 		if (element instanceof ECPProject) {
-			ECPProject project = (ECPProject) element;
+			final ECPProject project = (ECPProject) element;
 			if (project.isOpen() && project.getProvider().getName() == EMFStoreProvider.NAME) {
 				if (!EMFStoreProvider.INSTANCE.getProjectSpace((InternalProject) element).isShared()) {
 					decoration.addOverlay(Activator.getImageDescriptor(imagePath), IDecoration.BOTTOM_LEFT);
@@ -50,7 +50,7 @@ public class EMFStoreUnsharedDecorator implements ILightweightLabelDecorator {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.jface.viewers.IBaseLabelProvider#addListener(org.eclipse. jface.viewers.ILabelProviderListener)
 	 */
 	@Override
@@ -59,7 +59,7 @@ public class EMFStoreUnsharedDecorator implements ILightweightLabelDecorator {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.jface.viewers.IBaseLabelProvider#dispose()
 	 */
 	@Override
@@ -68,7 +68,7 @@ public class EMFStoreUnsharedDecorator implements ILightweightLabelDecorator {
 
 	/**
 	 * . {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.jface.viewers.IBaseLabelProvider#isLabelProperty(java.lang .Object, java.lang.String)
 	 */
 	@Override
@@ -78,7 +78,7 @@ public class EMFStoreUnsharedDecorator implements ILightweightLabelDecorator {
 
 	/**
 	 * . {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.jface.viewers.IBaseLabelProvider#removeListener(org.eclipse
 	 *      .jface.viewers.ILabelProviderListener)
 	 */
