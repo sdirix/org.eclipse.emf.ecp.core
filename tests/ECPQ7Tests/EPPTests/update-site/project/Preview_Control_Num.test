@@ -6,8 +6,8 @@ Element-Type: testcase
 Element-Version: 3.0
 External-Reference: 
 Id: _5nrZIDNtEeSiS7b7ptZeHw
-Runtime-Version: 1.5.2.201408180747
-Save-Time: 9/30/14 12:22 PM
+Runtime-Version: 1.5.4.201410231434
+Save-Time: 12/5/14 4:16 PM
 Testcase-Type: ecl
 
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
@@ -36,7 +36,7 @@ with [get-window "Select a EStructuralFeature"] {
 
 with [get-view "EMF Forms Preview" | get-control Any -after [get-label "View Editor Preview"] -index 8] {
     get-property backgroundColor | equals "#FFFFFF" | verify-true
-    get-property foregroundColor | equals "#000000" | verify-true
+    get-property foregroundColor | equals "#101010" | verify-true
     get-property "getChildren().length" | equals 3 | verify-true
     get-property "getChildren().Control[0].getText()" | equals Weight | verify-true
     get-property "getChildren().Control[0].getToolTipText()" | equals "The Weight feature of type EDouble" | verify-true
