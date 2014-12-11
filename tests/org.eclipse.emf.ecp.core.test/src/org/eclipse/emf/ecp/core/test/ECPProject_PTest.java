@@ -18,9 +18,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -258,25 +256,36 @@ public class ECPProject_PTest extends AbstractTest {
 		project.getContents().add(reference);
 		assertEquals(2, project.getContents().size());
 
-		project.deleteElements((Collection) Collections.singleton(clazz));
+		final Collection<Object> collection = new ArrayList<Object>();
+		collection.add(clazz);
+		project.deleteElements(collection);
 		assertEquals(1, project.getContents().size());
 		assertTrue(project.contains(reference));
 		assertFalse(project.contains(clazz));
 
-		project.deleteElements((Collection) Collections.singleton(reference));
+		collection.clear();
+		collection.add(reference);
+		project.deleteElements(collection);
 		assertEquals(0, project.getContents().size());
 
 		project.getContents().add(clazz);
 		project.getContents().add(reference);
 		project.getContents().add(attribute);
 
+		collection.clear();
+		collection.add(clazz);
+		collection.add(reference);
+		collection.add(attribute);
+
 		assertEquals(3, project.getContents().size());
-		project.deleteElements((Collection) Arrays.asList(clazz, reference, attribute));
+		project.deleteElements(collection);
 		assertEquals(0, project.getContents().size());
 
 		boolean thrown = false;
 		try {
-			project.deleteElements((Collection) Collections.singleton(clazz));
+			collection.clear();
+			collection.add(clazz);
+			project.deleteElements(collection);
 		} catch (final IllegalArgumentException iae) {
 			thrown = true;
 		}
