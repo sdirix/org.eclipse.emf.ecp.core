@@ -20,6 +20,7 @@ import org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition;
  * {@link LeafCondition} could not be resolved.
  *
  * @author jfaltermeier
+ * @since 1.5
  *
  */
 public class LeafConditionDMRResolutionFailedReport extends AbstractReport {

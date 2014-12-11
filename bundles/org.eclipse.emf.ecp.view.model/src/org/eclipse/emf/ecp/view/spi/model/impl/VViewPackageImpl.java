@@ -40,9 +40,10 @@ import org.eclipse.emf.ecp.view.spi.model.util.ViewValidator;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Package</b>.
+ * 
  * @since 1.2
- * <!--
- * end-user-doc -->
+ *        <!--
+ *        end-user-doc -->
  *
  * @generated
  */
@@ -202,15 +203,15 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 
 		// Register package validator
 		EValidator.Registry.INSTANCE.put
-		(theViewPackage,
-			new EValidator.Descriptor()
-		{
-			@Override
-			public EValidator getEValidator()
-			{
-				return ViewValidator.INSTANCE;
-			}
-		});
+			(theViewPackage,
+				new EValidator.Descriptor()
+				{
+					@Override
+					public EValidator getEValidator()
+					{
+						return ViewValidator.INSTANCE;
+					}
+				});
 
 		// Mark meta-data to indicate it can't be changed
 		theViewPackage.freeze();
@@ -432,8 +433,9 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 
 	/**
 	 * <!-- begin-user-doc -->
+	 * 
 	 * @since 1.4
-	 * <!-- end-user-doc -->
+	 *        <!-- end-user-doc -->
 	 *
 	 * @generated
 	 */
@@ -457,8 +459,9 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 
 	/**
 	 * <!-- begin-user-doc -->
+	 * 
 	 * @since 1.3
-	 * <!-- end-user-doc -->
+	 *        <!-- end-user-doc -->
 	 *
 	 * @generated
 	 */
@@ -794,7 +797,9 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	/**
 	 * Initializes the annotations for <b>http://www.eclipse.org/emf/2002/Ecore</b>.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.5
+	 *        <!-- end-user-doc -->
 	 *
 	 * @generated
 	 */
@@ -804,8 +809,8 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 		addAnnotation(featurePathDomainModelReferenceEClass,
 			source,
 			new String[]
-				{ "constraints", "resolveable" //$NON-NLS-1$ //$NON-NLS-2$
-				});
+			{ "constraints", "resolveable" //$NON-NLS-1$ //$NON-NLS-2$
+			});
 	}
 
 } // ViewPackageImpl
