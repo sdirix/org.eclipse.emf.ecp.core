@@ -195,10 +195,10 @@ public class KeyAttributeDMRValidation_Test {
 		okKeyAttribute();
 		okKey();
 		keyAttribute.setValueDMR(null);
-		assertTrue(validate());
+		assertFalse(validate());
 		if (createChain) {
-			assertEquals(Diagnostic.OK, chain.getSeverity());
-			assertChain();
+			assertEquals(Diagnostic.ERROR, chain.getSeverity());
+			assertChain(controlDMR(), keyAttributeValue());
 		}
 	}
 
@@ -208,10 +208,10 @@ public class KeyAttributeDMRValidation_Test {
 		okKeyAttribute();
 		okKey();
 		keyAttribute.setValueDMR(null);
-		assertTrue(validate());
+		assertFalse(validate());
 		if (createChain) {
-			assertEquals(Diagnostic.OK, chain.getSeverity());
-			assertChain();
+			assertEquals(Diagnostic.ERROR, chain.getSeverity());
+			assertChain(keyAttributeValue());
 		}
 	}
 

@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
@@ -48,7 +48,7 @@ import org.eclipse.emf.ecp.view.spi.model.impl.VFeaturePathDomainModelReferenceI
  * <em>Value DMR</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class VKeyAttributeDomainModelReferenceImpl extends
@@ -58,7 +58,7 @@ public class VKeyAttributeDomainModelReferenceImpl extends
 	 * The cached value of the '{@link #getKeyDMR() <em>Key DMR</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getKeyDMR()
 	 * @generated
 	 * @ordered
@@ -68,7 +68,7 @@ public class VKeyAttributeDomainModelReferenceImpl extends
 	 * The default value of the '{@link #getKeyValue() <em>Key Value</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getKeyValue()
 	 * @generated
 	 * @ordered
@@ -78,7 +78,7 @@ public class VKeyAttributeDomainModelReferenceImpl extends
 	 * The cached value of the '{@link #getKeyValue() <em>Key Value</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getKeyValue()
 	 * @generated
 	 * @ordered
@@ -88,7 +88,7 @@ public class VKeyAttributeDomainModelReferenceImpl extends
 	 * The cached value of the '{@link #getValueDMR() <em>Value DMR</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getValueDMR()
 	 * @generated
 	 * @ordered
@@ -97,7 +97,7 @@ public class VKeyAttributeDomainModelReferenceImpl extends
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected VKeyAttributeDomainModelReferenceImpl() {
@@ -106,7 +106,7 @@ public class VKeyAttributeDomainModelReferenceImpl extends
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -117,7 +117,7 @@ public class VKeyAttributeDomainModelReferenceImpl extends
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -129,7 +129,7 @@ public class VKeyAttributeDomainModelReferenceImpl extends
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public NotificationChain basicSetKeyDMR(VDomainModelReference newKeyDMR, NotificationChain msgs)
@@ -152,7 +152,7 @@ public class VKeyAttributeDomainModelReferenceImpl extends
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -183,7 +183,7 @@ public class VKeyAttributeDomainModelReferenceImpl extends
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -195,7 +195,7 @@ public class VKeyAttributeDomainModelReferenceImpl extends
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -212,7 +212,7 @@ public class VKeyAttributeDomainModelReferenceImpl extends
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -224,7 +224,7 @@ public class VKeyAttributeDomainModelReferenceImpl extends
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public NotificationChain basicSetValueDMR(VDomainModelReference newValueDMR, NotificationChain msgs)
@@ -247,7 +247,7 @@ public class VKeyAttributeDomainModelReferenceImpl extends
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -278,7 +278,7 @@ public class VKeyAttributeDomainModelReferenceImpl extends
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -297,7 +297,7 @@ public class VKeyAttributeDomainModelReferenceImpl extends
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -318,7 +318,7 @@ public class VKeyAttributeDomainModelReferenceImpl extends
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -342,7 +342,7 @@ public class VKeyAttributeDomainModelReferenceImpl extends
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -366,7 +366,7 @@ public class VKeyAttributeDomainModelReferenceImpl extends
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -387,7 +387,7 @@ public class VKeyAttributeDomainModelReferenceImpl extends
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override

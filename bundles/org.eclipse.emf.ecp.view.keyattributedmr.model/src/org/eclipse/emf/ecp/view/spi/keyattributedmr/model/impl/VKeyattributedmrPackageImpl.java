@@ -30,7 +30,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * @generated
  */
 public class VKeyattributedmrPackageImpl extends EPackageImpl implements
-VKeyattributedmrPackage {
+	VKeyattributedmrPackage {
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 *
@@ -84,7 +84,7 @@ VKeyattributedmrPackage {
 		// Obtain or create and register package
 		final VKeyattributedmrPackageImpl theKeyattributedmrPackage = (VKeyattributedmrPackageImpl) (EPackage.Registry.INSTANCE
 			.get(eNS_URI) instanceof VKeyattributedmrPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI)
-				: new VKeyattributedmrPackageImpl());
+			: new VKeyattributedmrPackageImpl());
 
 		isInited = true;
 
@@ -99,15 +99,15 @@ VKeyattributedmrPackage {
 
 		// Register package validator
 		EValidator.Registry.INSTANCE.put
-		(theKeyattributedmrPackage,
-			new EValidator.Descriptor()
-		{
-			@Override
-			public EValidator getEValidator()
-			{
-				return KeyattributedmrValidator.INSTANCE;
-			}
-		});
+			(theKeyattributedmrPackage,
+				new EValidator.Descriptor()
+				{
+					@Override
+					public EValidator getEValidator()
+					{
+						return KeyattributedmrValidator.INSTANCE;
+					}
+				});
 
 		// Mark meta-data to indicate it can't be changed
 		theKeyattributedmrPackage.freeze();
@@ -235,7 +235,7 @@ VKeyattributedmrPackage {
 
 		// Add supertypes to classes
 		keyAttributeDomainModelReferenceEClass.getESuperTypes()
-		.add(theViewPackage.getFeaturePathDomainModelReference());
+			.add(theViewPackage.getFeaturePathDomainModelReference());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(keyAttributeDomainModelReferenceEClass, VKeyAttributeDomainModelReference.class,
@@ -253,7 +253,7 @@ VKeyattributedmrPackage {
 			getKeyAttributeDomainModelReference_ValueDMR(),
 			theViewPackage.getDomainModelReference(),
 			null,
-			"valueDMR", null, 0, 1, VKeyAttributeDomainModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+			"valueDMR", null, 1, 1, VKeyAttributeDomainModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		// Create resource
 		createResource(eNS_URI);
@@ -276,8 +276,8 @@ VKeyattributedmrPackage {
 		addAnnotation(keyAttributeDomainModelReferenceEClass,
 			source,
 			new String[]
-				{ "constraints", "resolveable" //$NON-NLS-1$ //$NON-NLS-2$
-				});
+			{ "constraints", "resolveable" //$NON-NLS-1$ //$NON-NLS-2$
+			});
 	}
 
 } // VKeyattributedmrPackageImpl

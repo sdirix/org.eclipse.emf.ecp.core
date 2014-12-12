@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
@@ -23,7 +23,7 @@ import org.eclipse.emf.ecp.view.spi.keyattributedmr.model.VKeyattributedmrPackag
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!--
  * end-user-doc -->
- * 
+ *
  * @generated
  */
 public class VKeyattributedmrFactoryImpl extends EFactoryImpl implements
@@ -32,7 +32,7 @@ public class VKeyattributedmrFactoryImpl extends EFactoryImpl implements
 	 * Creates the default factory implementation.
 	 * <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public static VKeyattributedmrFactory init() {
@@ -55,7 +55,7 @@ public class VKeyattributedmrFactoryImpl extends EFactoryImpl implements
 	 * Creates an instance of the factory.
 	 * <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public VKeyattributedmrFactoryImpl() {
@@ -64,7 +64,7 @@ public class VKeyattributedmrFactoryImpl extends EFactoryImpl implements
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -80,7 +80,7 @@ public class VKeyattributedmrFactoryImpl extends EFactoryImpl implements
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -91,7 +91,7 @@ public class VKeyattributedmrFactoryImpl extends EFactoryImpl implements
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -101,7 +101,7 @@ public class VKeyattributedmrFactoryImpl extends EFactoryImpl implements
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 *
 	 * @deprecated
 	 * @generated
 	 */

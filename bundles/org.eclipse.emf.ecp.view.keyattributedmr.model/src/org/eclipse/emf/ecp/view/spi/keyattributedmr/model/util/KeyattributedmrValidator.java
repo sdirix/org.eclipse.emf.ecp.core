@@ -248,7 +248,12 @@ public class KeyattributedmrValidator extends EObjectValidator
 		}
 
 		if (keyAttributeDomainModelReference.getValueDMR() == null) {
-			return true;
+			if (keyAttributeDomainModelReference.eContainer() != null && diagnostics != null) {
+				diagnostics.add(createDiagnostic(Diagnostic.ERROR, 0, "Missing value DMR", //$NON-NLS-1$
+					keyAttributeDomainModelReference.eContainer(),
+					keyAttributeDomainModelReference.eContainingFeature()));
+			}
+			return false;
 		}
 		final VDomainModelReference valueDMR = keyAttributeDomainModelReference.getValueDMR();
 		validator = EValidator.Registry.INSTANCE.getEValidator(valueDMR.eClass().getEPackage());

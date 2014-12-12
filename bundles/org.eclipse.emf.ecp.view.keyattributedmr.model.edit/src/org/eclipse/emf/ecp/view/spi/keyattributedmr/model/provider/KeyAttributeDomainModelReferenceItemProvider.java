@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
@@ -31,15 +31,15 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * This is the item provider adapter for a
  * {@link org.eclipse.emf.ecp.view.spi.keyattributedmr.model.VKeyAttributeDomainModelReference} object.
  * <!-- begin-user-doc --> <!-- end-user-doc -->
- * 
+ *
  * @generated
  */
 public class KeyAttributeDomainModelReferenceItemProvider extends
-	FeaturePathDomainModelReferenceItemProvider {
+FeaturePathDomainModelReferenceItemProvider {
 	/**
 	 * This constructs an instance from a factory and a notifier. <!--
 	 * begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public KeyAttributeDomainModelReferenceItemProvider(
@@ -50,7 +50,7 @@ public class KeyAttributeDomainModelReferenceItemProvider extends
 	/**
 	 * This returns the property descriptors for the adapted class. <!--
 	 * begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -70,78 +70,78 @@ public class KeyAttributeDomainModelReferenceItemProvider extends
 	 * This adds a property descriptor for the Key DMR feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected void addKeyDMRPropertyDescriptor(Object object)
 	{
 		itemPropertyDescriptors
-			.add
-			(createItemPropertyDescriptor
+		.add
+		(createItemPropertyDescriptor
 			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_KeyAttributeDomainModelReference_keyDMR_feature"), //$NON-NLS-1$
 				getString(
 					"_UI_PropertyDescriptor_description", "_UI_KeyAttributeDomainModelReference_keyDMR_feature", "_UI_KeyAttributeDomainModelReference_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				VKeyattributedmrPackage.Literals.KEY_ATTRIBUTE_DOMAIN_MODEL_REFERENCE__KEY_DMR,
-				true,
-				false,
-				false,
-				null,
-				null,
-				null));
+					VKeyattributedmrPackage.Literals.KEY_ATTRIBUTE_DOMAIN_MODEL_REFERENCE__KEY_DMR,
+					true,
+					false,
+					false,
+					null,
+					null,
+					null));
 	}
 
 	/**
 	 * This adds a property descriptor for the Key Value feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected void addKeyValuePropertyDescriptor(Object object)
 	{
 		itemPropertyDescriptors
-			.add
-			(createItemPropertyDescriptor
+		.add
+		(createItemPropertyDescriptor
 			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_KeyAttributeDomainModelReference_keyValue_feature"), //$NON-NLS-1$
 				getString(
 					"_UI_PropertyDescriptor_description", "_UI_KeyAttributeDomainModelReference_keyValue_feature", "_UI_KeyAttributeDomainModelReference_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				VKeyattributedmrPackage.Literals.KEY_ATTRIBUTE_DOMAIN_MODEL_REFERENCE__KEY_VALUE,
-				true,
-				false,
-				false,
-				ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				null,
-				null));
+					VKeyattributedmrPackage.Literals.KEY_ATTRIBUTE_DOMAIN_MODEL_REFERENCE__KEY_VALUE,
+					true,
+					false,
+					false,
+					ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+					null,
+					null));
 	}
 
 	/**
 	 * This adds a property descriptor for the Value DMR feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected void addValueDMRPropertyDescriptor(Object object)
 	{
 		itemPropertyDescriptors
-			.add
-			(createItemPropertyDescriptor
+		.add
+		(createItemPropertyDescriptor
 			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_KeyAttributeDomainModelReference_valueDMR_feature"), //$NON-NLS-1$
 				getString(
 					"_UI_PropertyDescriptor_description", "_UI_KeyAttributeDomainModelReference_valueDMR_feature", "_UI_KeyAttributeDomainModelReference_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				VKeyattributedmrPackage.Literals.KEY_ATTRIBUTE_DOMAIN_MODEL_REFERENCE__VALUE_DMR,
-				true,
-				false,
-				false,
-				null,
-				null,
-				null));
+					VKeyattributedmrPackage.Literals.KEY_ATTRIBUTE_DOMAIN_MODEL_REFERENCE__VALUE_DMR,
+					true,
+					false,
+					false,
+					null,
+					null,
+					null));
 	}
 
 	/**
@@ -150,7 +150,7 @@ public class KeyAttributeDomainModelReferenceItemProvider extends
 	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -168,7 +168,7 @@ public class KeyAttributeDomainModelReferenceItemProvider extends
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -184,7 +184,7 @@ public class KeyAttributeDomainModelReferenceItemProvider extends
 	 * This returns KeyAttributeDomainModelReference.gif.
 	 * <!-- begin-user-doc
 	 * --> <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -196,7 +196,7 @@ public class KeyAttributeDomainModelReferenceItemProvider extends
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc
 	 * --> <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -205,7 +205,7 @@ public class KeyAttributeDomainModelReferenceItemProvider extends
 		final String label = labelValue == null ? null : labelValue.toString();
 		return label == null || label.length() == 0 ?
 			getString("_UI_KeyAttributeDomainModelReference_type") : //$NON-NLS-1$
-			getString("_UI_KeyAttributeDomainModelReference_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
+				getString("_UI_KeyAttributeDomainModelReference_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**
@@ -213,7 +213,7 @@ public class KeyAttributeDomainModelReferenceItemProvider extends
 	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
 	 * <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -237,7 +237,7 @@ public class KeyAttributeDomainModelReferenceItemProvider extends
 	 * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s
 	 * describing the children that can be created under this object. <!--
 	 * begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -246,22 +246,22 @@ public class KeyAttributeDomainModelReferenceItemProvider extends
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
 		newChildDescriptors.add
-			(createChildParameter
+		(createChildParameter
 			(VKeyattributedmrPackage.Literals.KEY_ATTRIBUTE_DOMAIN_MODEL_REFERENCE__KEY_DMR,
 				VKeyattributedmrFactory.eINSTANCE.createKeyAttributeDomainModelReference()));
 
 		newChildDescriptors.add
-			(createChildParameter
+		(createChildParameter
 			(VKeyattributedmrPackage.Literals.KEY_ATTRIBUTE_DOMAIN_MODEL_REFERENCE__KEY_DMR,
 				VViewFactory.eINSTANCE.createFeaturePathDomainModelReference()));
 
 		newChildDescriptors.add
-			(createChildParameter
+		(createChildParameter
 			(VKeyattributedmrPackage.Literals.KEY_ATTRIBUTE_DOMAIN_MODEL_REFERENCE__VALUE_DMR,
 				VKeyattributedmrFactory.eINSTANCE.createKeyAttributeDomainModelReference()));
 
 		newChildDescriptors.add
-			(createChildParameter
+		(createChildParameter
 			(VKeyattributedmrPackage.Literals.KEY_ATTRIBUTE_DOMAIN_MODEL_REFERENCE__VALUE_DMR,
 				VViewFactory.eINSTANCE.createFeaturePathDomainModelReference()));
 	}
@@ -270,7 +270,7 @@ public class KeyAttributeDomainModelReferenceItemProvider extends
 	 * This returns the label text for {@link org.eclipse.emf.edit.command.CreateChildCommand}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -281,7 +281,7 @@ public class KeyAttributeDomainModelReferenceItemProvider extends
 
 		final boolean qualify =
 			childFeature == VKeyattributedmrPackage.Literals.KEY_ATTRIBUTE_DOMAIN_MODEL_REFERENCE__KEY_DMR ||
-				childFeature == VKeyattributedmrPackage.Literals.KEY_ATTRIBUTE_DOMAIN_MODEL_REFERENCE__VALUE_DMR;
+			childFeature == VKeyattributedmrPackage.Literals.KEY_ATTRIBUTE_DOMAIN_MODEL_REFERENCE__VALUE_DMR;
 
 		if (qualify)
 		{
