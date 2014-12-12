@@ -78,7 +78,7 @@ public class ValidationServiceImpl implements ValidationService {
 			if (VViewPackage.eINSTANCE.getElement_Enabled() == notification.getRawNotification()
 				.getFeature()
 				|| VViewPackage.eINSTANCE.getElement_Visible() == notification.getRawNotification()
-				.getFeature()) {
+					.getFeature()) {
 				if (VViewPackage.eINSTANCE.getControl().isInstance(notification.getNotifier())) {
 					final VControl control = (VControl) notification.getNotifier();
 					// final EObject controlDomainModel = validationRegistry.resolveDomainModel(domainModel,
@@ -157,8 +157,8 @@ public class ValidationServiceImpl implements ValidationService {
 				validate(notification.getNotifier());
 				// in case of not containment references
 				if (EReference.class.isInstance(notification.getStructuralFeature())
-					// && !EReference.class.cast(notification.getStructuralFeature()).isContainment()
-					) {
+				// && !EReference.class.cast(notification.getStructuralFeature()).isContainment()
+				) {
 					validate((EObject) notification.getRawNotification().getNewValue());
 				}
 				break;
@@ -166,8 +166,8 @@ public class ValidationServiceImpl implements ValidationService {
 				validate(notification.getNotifier());
 				// in case of not containment references
 				if (EReference.class.isInstance(notification.getStructuralFeature())
-					// && !EReference.class.cast(notification.getStructuralFeature()).isContainment()
-					) {
+				// && !EReference.class.cast(notification.getStructuralFeature()).isContainment()
+				) {
 					validate((Collection<EObject>) notification.getRawNotification().getNewValue());
 				}
 				break;
@@ -407,7 +407,7 @@ public class ValidationServiceImpl implements ValidationService {
 					continue;
 				}
 				controlDiagnosticMap.get(control).getDiagnostics()
-				.addAll(currentUpdates.get(uniqueSetting).getDiagnostics());
+					.addAll(currentUpdates.get(uniqueSetting).getDiagnostics());
 
 				// add all diagnostics of control which are not in the currentUpdates
 				if (control.getDiagnostic() == null) {
@@ -532,7 +532,7 @@ public class ValidationServiceImpl implements ValidationService {
 
 		final Map<EStructuralFeature, DiagnosticChain> diagnosticMap = new LinkedHashMap<EStructuralFeature, DiagnosticChain>();
 		for (final Diagnostic child : diagnostics.getChildren()) {
-			if (DiagnosticChain.class.isInstance(child)) {
+			if (DiagnosticChain.class.isInstance(child) && checkDiagnosticData(child)) {
 				diagnosticMap.put((EStructuralFeature) child.getData().get(1), (DiagnosticChain) child);
 			}
 		}
@@ -549,6 +549,20 @@ public class ValidationServiceImpl implements ValidationService {
 			}
 		}
 		return diagnostics;
+	}
+
+	private boolean checkDiagnosticData(Diagnostic diagnostic) {
+		final List<?> data = diagnostic.getData();
+		if (data.size() < 2) {
+			return false;
+		}
+		if (!EObject.class.isInstance(data.get(0))) {
+			return false;
+		}
+		if (!EStructuralFeature.class.isInstance(data.get(1))) {
+			return false;
+		}
+		return true;
 	}
 
 	/**
