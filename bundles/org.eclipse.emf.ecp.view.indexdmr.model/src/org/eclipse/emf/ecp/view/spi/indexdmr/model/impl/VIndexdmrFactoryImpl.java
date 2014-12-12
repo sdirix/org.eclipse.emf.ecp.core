@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
@@ -24,7 +24,7 @@ import org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexdmrPackage;
  * <!-- begin-user-doc -->
  * An implementation of the model <b>Factory</b>.
  * <!-- end-user-doc -->
- * 
+ *
  * @generated
  */
 public class VIndexdmrFactoryImpl extends EFactoryImpl implements VIndexdmrFactory
@@ -33,7 +33,7 @@ public class VIndexdmrFactoryImpl extends EFactoryImpl implements VIndexdmrFacto
 	 * Creates the default factory implementation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public static VIndexdmrFactory init()
@@ -57,7 +57,7 @@ public class VIndexdmrFactoryImpl extends EFactoryImpl implements VIndexdmrFacto
 	 * Creates an instance of the factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public VIndexdmrFactoryImpl()
@@ -68,7 +68,7 @@ public class VIndexdmrFactoryImpl extends EFactoryImpl implements VIndexdmrFacto
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -86,7 +86,7 @@ public class VIndexdmrFactoryImpl extends EFactoryImpl implements VIndexdmrFacto
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -99,7 +99,7 @@ public class VIndexdmrFactoryImpl extends EFactoryImpl implements VIndexdmrFacto
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -111,7 +111,7 @@ public class VIndexdmrFactoryImpl extends EFactoryImpl implements VIndexdmrFacto
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @deprecated
 	 * @generated
 	 */

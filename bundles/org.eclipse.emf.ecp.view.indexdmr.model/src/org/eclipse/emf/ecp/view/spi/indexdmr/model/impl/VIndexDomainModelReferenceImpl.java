@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
@@ -43,7 +43,7 @@ import org.eclipse.emf.ecp.view.spi.model.impl.VFeaturePathDomainModelReferenceI
  * <li>{@link org.eclipse.emf.ecp.view.spi.indexdmr.model.impl.VIndexDomainModelReferenceImpl#getIndex <em>Index</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class VIndexDomainModelReferenceImpl extends VFeaturePathDomainModelReferenceImpl implements
@@ -53,7 +53,7 @@ public class VIndexDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	 * The cached value of the '{@link #getTargetDMR() <em>Target DMR</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getTargetDMR()
 	 * @generated
 	 * @ordered
@@ -64,7 +64,7 @@ public class VIndexDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	 * The default value of the '{@link #getIndex() <em>Index</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getIndex()
 	 * @generated
 	 * @ordered
@@ -75,7 +75,7 @@ public class VIndexDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	 * The cached value of the '{@link #getIndex() <em>Index</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getIndex()
 	 * @generated
 	 * @ordered
@@ -85,7 +85,7 @@ public class VIndexDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected VIndexDomainModelReferenceImpl()
@@ -96,7 +96,7 @@ public class VIndexDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -108,7 +108,7 @@ public class VIndexDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -120,7 +120,7 @@ public class VIndexDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public NotificationChain basicSetTargetDMR(VDomainModelReference newTargetDMR, NotificationChain msgs)
@@ -143,7 +143,7 @@ public class VIndexDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -174,7 +174,7 @@ public class VIndexDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -186,7 +186,7 @@ public class VIndexDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -203,7 +203,7 @@ public class VIndexDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -220,7 +220,7 @@ public class VIndexDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -239,7 +239,7 @@ public class VIndexDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -260,7 +260,7 @@ public class VIndexDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -281,7 +281,7 @@ public class VIndexDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -300,7 +300,7 @@ public class VIndexDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -319,7 +319,7 @@ public class VIndexDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VFeaturePathDomainModelReferenceImpl#init(org.eclipse.emf.ecore.EObject)
 	 */
 	@Override

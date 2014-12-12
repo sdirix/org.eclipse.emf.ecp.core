@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
@@ -32,15 +32,15 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * {@link org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference} object.
  * <!-- begin-user-doc --> <!--
  * end-user-doc -->
- * 
+ *
  * @generated
  */
 public class IndexDomainModelReferenceItemProvider extends
-	FeaturePathDomainModelReferenceItemProvider {
+FeaturePathDomainModelReferenceItemProvider {
 	/**
 	 * This constructs an instance from a factory and a notifier. <!--
 	 * begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public IndexDomainModelReferenceItemProvider(AdapterFactory adapterFactory) {
@@ -50,7 +50,7 @@ public class IndexDomainModelReferenceItemProvider extends
 	/**
 	 * This returns the property descriptors for the adapted class. <!--
 	 * begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -69,50 +69,50 @@ public class IndexDomainModelReferenceItemProvider extends
 	 * This adds a property descriptor for the Target DMR feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected void addTargetDMRPropertyDescriptor(Object object)
 	{
 		itemPropertyDescriptors
-			.add
-			(createItemPropertyDescriptor
+		.add
+		(createItemPropertyDescriptor
 			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_IndexDomainModelReference_targetDMR_feature"), //$NON-NLS-1$
 				getString(
 					"_UI_PropertyDescriptor_description", "_UI_IndexDomainModelReference_targetDMR_feature", "_UI_IndexDomainModelReference_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				VIndexdmrPackage.Literals.INDEX_DOMAIN_MODEL_REFERENCE__TARGET_DMR,
-				true,
-				false,
-				false,
-				null,
-				null,
-				null));
+					VIndexdmrPackage.Literals.INDEX_DOMAIN_MODEL_REFERENCE__TARGET_DMR,
+					true,
+					false,
+					false,
+					null,
+					null,
+					null));
 	}
 
 	/**
 	 * This adds a property descriptor for the Index feature. <!--
 	 * begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected void addIndexPropertyDescriptor(Object object) {
 		itemPropertyDescriptors
-			.add
-			(createItemPropertyDescriptor
+		.add
+		(createItemPropertyDescriptor
 			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_IndexDomainModelReference_index_feature"), //$NON-NLS-1$
 				getString(
 					"_UI_PropertyDescriptor_description", "_UI_IndexDomainModelReference_index_feature", "_UI_IndexDomainModelReference_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				VIndexdmrPackage.Literals.INDEX_DOMAIN_MODEL_REFERENCE__INDEX,
-				true,
-				false,
-				false,
-				ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE,
-				null,
-				null));
+					VIndexdmrPackage.Literals.INDEX_DOMAIN_MODEL_REFERENCE__INDEX,
+					true,
+					false,
+					false,
+					ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE,
+					null,
+					null));
 	}
 
 	/**
@@ -120,7 +120,7 @@ public class IndexDomainModelReferenceItemProvider extends
 	 * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
 	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -136,7 +136,7 @@ public class IndexDomainModelReferenceItemProvider extends
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -151,7 +151,7 @@ public class IndexDomainModelReferenceItemProvider extends
 	 * This returns IndexDomainModelReference.gif.
 	 * <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -163,7 +163,7 @@ public class IndexDomainModelReferenceItemProvider extends
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc
 	 * --> <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -177,7 +177,7 @@ public class IndexDomainModelReferenceItemProvider extends
 	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
 	 * <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -200,7 +200,7 @@ public class IndexDomainModelReferenceItemProvider extends
 	 * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s
 	 * describing the children that can be created under this object. <!--
 	 * begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -209,12 +209,12 @@ public class IndexDomainModelReferenceItemProvider extends
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
 		newChildDescriptors.add
-			(createChildParameter
+		(createChildParameter
 			(VIndexdmrPackage.Literals.INDEX_DOMAIN_MODEL_REFERENCE__TARGET_DMR,
 				VIndexdmrFactory.eINSTANCE.createIndexDomainModelReference()));
 
 		newChildDescriptors.add
-			(createChildParameter
+		(createChildParameter
 			(VIndexdmrPackage.Literals.INDEX_DOMAIN_MODEL_REFERENCE__TARGET_DMR,
 				VViewFactory.eINSTANCE.createFeaturePathDomainModelReference()));
 	}

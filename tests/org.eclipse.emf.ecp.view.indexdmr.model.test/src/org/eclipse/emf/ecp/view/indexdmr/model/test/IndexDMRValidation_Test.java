@@ -154,10 +154,10 @@ public class IndexDMRValidation_Test {
 	public void testNoTargetDMR() {
 		okIndex();
 		index.setTargetDMR(null);
-		assertTrue(validate());
+		assertFalse(validate());
 		if (createChain) {
-			assertEquals(Diagnostic.OK, chain.getSeverity());
-			assertChain();
+			assertEquals(Diagnostic.ERROR, chain.getSeverity());
+			assertChain(controlDMR(), indexTarget());
 		}
 	}
 
@@ -166,10 +166,10 @@ public class IndexDMRValidation_Test {
 		noContainer();
 		okIndex();
 		index.setTargetDMR(null);
-		assertTrue(validate());
+		assertFalse(validate());
 		if (createChain) {
-			assertEquals(Diagnostic.OK, chain.getSeverity());
-			assertChain();
+			assertEquals(Diagnostic.ERROR, chain.getSeverity());
+			assertChain(indexTarget());
 		}
 	}
 

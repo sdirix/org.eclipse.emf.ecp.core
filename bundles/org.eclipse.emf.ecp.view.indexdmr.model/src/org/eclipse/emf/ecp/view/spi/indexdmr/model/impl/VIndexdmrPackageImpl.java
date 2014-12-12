@@ -104,15 +104,15 @@ public class VIndexdmrPackageImpl extends EPackageImpl implements VIndexdmrPacka
 
 		// Register package validator
 		EValidator.Registry.INSTANCE.put
-		(theIndexdmrPackage,
-			new EValidator.Descriptor()
-		{
-			@Override
-			public EValidator getEValidator()
-			{
-				return IndexdmrValidator.INSTANCE;
-			}
-		});
+			(theIndexdmrPackage,
+				new EValidator.Descriptor()
+				{
+					@Override
+					public EValidator getEValidator()
+					{
+						return IndexdmrValidator.INSTANCE;
+					}
+				});
 
 		// Mark meta-data to indicate it can't be changed
 		theIndexdmrPackage.freeze();
@@ -244,7 +244,7 @@ public class VIndexdmrPackageImpl extends EPackageImpl implements VIndexdmrPacka
 			getIndexDomainModelReference_TargetDMR(),
 			theViewPackage.getDomainModelReference(),
 			null,
-			"targetDMR", null, 0, 1, VIndexDomainModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+			"targetDMR", null, 1, 1, VIndexDomainModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEAttribute(
 			getIndexDomainModelReference_Index(),
 			ecorePackage.getEInt(),
@@ -271,8 +271,8 @@ public class VIndexdmrPackageImpl extends EPackageImpl implements VIndexdmrPacka
 		addAnnotation(indexDomainModelReferenceEClass,
 			source,
 			new String[]
-				{ "constraints", "resolveable" //$NON-NLS-1$ //$NON-NLS-2$
-				});
+			{ "constraints", "resolveable" //$NON-NLS-1$ //$NON-NLS-2$
+			});
 	}
 
 } // VIndexdmrPackageImpl

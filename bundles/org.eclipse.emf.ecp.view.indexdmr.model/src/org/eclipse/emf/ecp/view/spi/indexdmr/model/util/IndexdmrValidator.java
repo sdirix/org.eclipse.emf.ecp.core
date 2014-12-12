@@ -223,7 +223,12 @@ public class IndexdmrValidator extends EObjectValidator
 		}
 
 		if (indexDomainModelReference.getTargetDMR() == null) {
-			return true;
+			if (indexDomainModelReference.eContainer() != null && diagnostics != null) {
+				diagnostics.add(createDiagnostic(Diagnostic.ERROR, 0,
+					"No target DMR set.", indexDomainModelReference.eContainer(), //$NON-NLS-1$
+					indexDomainModelReference.eContainingFeature()));
+			}
+			return false;
 		}
 		final EClass rootEClass = EReference.class.cast(feature).getEReferenceType();
 		final VDomainModelReference targetDMR = indexDomainModelReference.getTargetDMR();
