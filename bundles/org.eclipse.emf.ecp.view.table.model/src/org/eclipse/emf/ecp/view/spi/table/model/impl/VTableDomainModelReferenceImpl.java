@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
@@ -53,7 +53,7 @@ import org.eclipse.emf.ecp.view.spi.table.model.VTablePackage;
  * Domain Model Reference</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelReferenceImpl implements
@@ -64,7 +64,7 @@ public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	 * containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getColumnDomainModelReferences()
 	 * @generated
 	 * @ordered
@@ -76,7 +76,7 @@ public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	 * reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getDomainModelReference()
 	 * @generated
 	 * @ordered
@@ -88,7 +88,7 @@ public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected VTableDomainModelReferenceImpl()
@@ -99,7 +99,7 @@ public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -111,7 +111,7 @@ public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -129,7 +129,7 @@ public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -141,7 +141,7 @@ public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public NotificationChain basicSetDomainModelReference(VDomainModelReference newDomainModelReference,
@@ -166,7 +166,7 @@ public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -198,7 +198,7 @@ public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -217,7 +217,7 @@ public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -236,7 +236,7 @@ public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
@@ -259,7 +259,7 @@ public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -280,7 +280,7 @@ public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -298,7 +298,7 @@ public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VFeaturePathDomainModelReferenceImpl#init(org.eclipse.emf.ecore.EObject)
 	 */
 	@Override
@@ -308,7 +308,7 @@ public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 
 			/**
 			 * {@inheritDoc}
-			 * 
+			 *
 			 * @see org.eclipse.emf.common.notify.impl.AdapterImpl#notifyChanged(org.eclipse.emf.common.notify.Notification)
 			 */
 			@Override
@@ -389,7 +389,7 @@ public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VFeaturePathDomainModelReferenceImpl#getEStructuralFeatureIterator()
 	 */
 	@Override
@@ -443,16 +443,18 @@ public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	@Override
 	protected boolean resolve(EObject domainModel, boolean createMissingChildren) {
 		boolean result = false;
-		EStructuralFeature feature;
+		EStructuralFeature feature = null;
 		if (getDomainModelReference() == null) {
 			result = super.resolve(domainModel, createMissingChildren);
 			feature = getDomainModelEFeature();
 		} else {
 			result = getDomainModelReference().init(domainModel);
 			final Setting dmrSetting = getDomainModelReference().getIterator().next();
-			lastResolvedEObject = dmrSetting.getEObject();
-			feature = dmrSetting.getEStructuralFeature();
-			leftReferences = new ArrayList<EReference>();
+			if (dmrSetting != null) {
+				lastResolvedEObject = dmrSetting.getEObject();
+				feature = dmrSetting.getEStructuralFeature();
+				leftReferences = new ArrayList<EReference>();
+			}
 		}
 		resolvedColumns.clear();
 		if (result == false) {

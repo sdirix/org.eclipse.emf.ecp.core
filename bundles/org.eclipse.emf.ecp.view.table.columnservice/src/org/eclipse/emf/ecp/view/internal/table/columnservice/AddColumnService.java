@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
  ******************************************************************************/
@@ -30,15 +30,15 @@ import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
  * This service will iterate over all contents of the {@link org.eclipse.emf.ecp.view.spi.model.VView VView} and will
  * add {@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReference VDomainModelReferences} for every
  * {@link VTableControl} without columns.
- * 
+ *
  * @author jfaltermeier
- * 
+ *
  */
 public class AddColumnService implements ViewModelService {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#instantiate(org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
 	@Override
@@ -62,6 +62,9 @@ public class AddColumnService implements ViewModelService {
 		if (tableControl.getDomainModelReference() == null) {
 			return;
 		}
+		if (!VTableDomainModelReference.class.isInstance(tableControl.getDomainModelReference())) {
+			return;
+		}
 		if (VTableDomainModelReference.class.cast(tableControl.getDomainModelReference())
 			.getColumnDomainModelReferences().size() < 1) {
 			final Iterator<Setting> settings = tableControl.getDomainModelReference().getIterator();
@@ -80,7 +83,7 @@ public class AddColumnService implements ViewModelService {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#dispose()
 	 */
 	@Override
@@ -90,7 +93,7 @@ public class AddColumnService implements ViewModelService {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#getPriority()
 	 */
 	@Override
