@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Alexandra Buzila- initial API and implementation
  ******************************************************************************/
@@ -61,7 +61,7 @@ public class Preview {
 
 	/**
 	 * The constructor.
-	 * 
+	 *
 	 * @param parent - the {@link Composite} in which to render
 	 * */
 	public Preview(Composite parent) {
@@ -70,7 +70,7 @@ public class Preview {
 
 	/**
 	 * Render the contents of the {@link VView}.
-	 * 
+	 *
 	 * @param view the {@link VView}
 	 * @param sampleData the sample data to be displayed in the view
 	 * */
@@ -97,7 +97,7 @@ public class Preview {
 
 			/**
 			 * {@inheritDoc}
-			 * 
+			 *
 			 * @see org.eclipse.emf.ecore.util.EContentAdapter#notifyChanged(org.eclipse.emf.common.notify.Notification)
 			 */
 			@Override
@@ -136,7 +136,7 @@ public class Preview {
 					new ComposedAdapterFactory(new AdapterFactory[] {
 						new CustomReflectiveItemProviderAdapterFactory(),
 						new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) }),
-					new BasicCommandStack(), resourceSet);
+						new BasicCommandStack(), resourceSet);
 				resourceSet.eAdapters().add(
 					new AdapterFactoryEditingDomain.EditingDomainProvider(domain));
 				final Resource resource = resourceSet.createResource(URI.createURI("VIRTUAL_URI")); //$NON-NLS-1$
@@ -144,8 +144,10 @@ public class Preview {
 			}
 
 			final ReferenceService previewRefServ = new DefaultReferenceService();
-			final ViewModelContext viewModelContext = ViewModelContextFactory.INSTANCE.createViewModelContext(view,
-				dummyData, previewRefServ);
+			final VView copy = EcoreUtil.copy(view);
+			clearViewDiagnostics(copy);
+			final ViewModelContext viewModelContext = ViewModelContextFactory.INSTANCE.createViewModelContext(
+				copy, dummyData, previewRefServ);
 			composite = createComposite(parent);
 			render = ECPSWTViewRenderer.INSTANCE.render(composite, viewModelContext);
 			composite.layout();
@@ -171,7 +173,7 @@ public class Preview {
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	public void removeAdapter() {
 		if (view == null || adapter == null) {
@@ -204,6 +206,13 @@ public class Preview {
 			c.dispose();
 		}
 		// clean previous view diagnostics
+		clearViewDiagnostics(view);
+	}
+
+	/**
+	 *
+	 */
+	private void clearViewDiagnostics(VView view) {
 		final TreeIterator<EObject> eAllContents = view.eAllContents();
 		while (eAllContents.hasNext()) {
 			final EObject next = eAllContents.next();
@@ -222,7 +231,7 @@ public class Preview {
 
 	/**
 	 * Creates the composite.
-	 * 
+	 *
 	 * @param parent the parent
 	 * @return the composite
 	 */
@@ -254,7 +263,7 @@ public class Preview {
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	public void cleanSampleData() {
 		dummyData = null;
