@@ -11,6 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.template.tooling.wizards;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
@@ -124,6 +125,11 @@ public class EMFFormsTemplateWizard extends Wizard implements INewWizard {
 		final IFile pluginFile = project.getFile("plugin.xml"); //$NON-NLS-1$
 
 		try {
+			if (!pluginFile.exists()) {
+				final String pluginXmlContents = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<?eclipse version=\"3.4\"?>\n<plugin>\n</plugin>"; //$NON-NLS-1$
+				pluginFile.create(new ByteArrayInputStream(pluginXmlContents.getBytes()), true, null);
+				project.refreshLocal(IResource.DEPTH_INFINITE, null);
+			}
 			final DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 			final DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 			final Document doc = dBuilder.parse(pluginFile.getLocationURI().toString());
@@ -146,6 +152,8 @@ public class EMFFormsTemplateWizard extends Wizard implements INewWizard {
 		} catch (final ParserConfigurationException ex) {
 			Activator.log(ex);
 		} catch (final TransformerException ex) {
+			Activator.log(ex);
+		} catch (final CoreException ex) {
 			Activator.log(ex);
 		}
 	}
