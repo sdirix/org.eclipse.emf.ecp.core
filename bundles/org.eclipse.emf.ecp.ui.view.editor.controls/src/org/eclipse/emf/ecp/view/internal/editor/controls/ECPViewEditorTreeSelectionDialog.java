@@ -41,7 +41,7 @@ public class ECPViewEditorTreeSelectionDialog extends ElementTreeSelectionDialog
 
 	/**
 	 * Returns the {@link TreePath} from the tree viewer.
-	 * 
+	 *
 	 * @return the path
 	 */
 	public TreePath getTreePath() {

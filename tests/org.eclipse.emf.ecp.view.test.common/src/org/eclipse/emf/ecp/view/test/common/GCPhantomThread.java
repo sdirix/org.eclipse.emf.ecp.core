@@ -16,7 +16,7 @@ import java.lang.ref.Reference;
 import java.lang.ref.ReferenceQueue;
 
 class GCPhantomThread extends Thread {
-		
+
 	private static final int DEFAULT_TIMEOUT = 1000;
 
 	private boolean hasReference;
@@ -24,11 +24,12 @@ class GCPhantomThread extends Thread {
 	private PhantomReference<?> expectedReference;
 	private int retry;
 
-	public GCPhantomThread(ReferenceQueue<?> queue, PhantomReference<?> expectedReference) {
+	public GCPhantomThread(ReferenceQueue<?> queue,
+			PhantomReference<?> expectedReference) {
 		this.queue = queue;
 		this.expectedReference = expectedReference;
 	}
-	
+
 	public boolean didCollectReference() {
 		return hasReference;
 	}

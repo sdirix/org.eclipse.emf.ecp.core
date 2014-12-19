@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Jonas - initial API and implementation
  ******************************************************************************/
@@ -27,10 +27,6 @@ import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.rule.model.Rule;
 import org.eclipse.emf.ecp.view.test.common.swt.DatabindingClassRunner;
 import org.eclipse.emf.ecp.view.test.common.swt.SWTViewTestHelper;
-import org.eclipse.emf.emfstore.bowling.BowlingFactory;
-import org.eclipse.emf.emfstore.bowling.BowlingPackage;
-import org.eclipse.emf.emfstore.bowling.Fan;
-import org.eclipse.emf.emfstore.bowling.Merchandise;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 import org.junit.Before;
@@ -39,7 +35,7 @@ import org.junit.runner.RunWith;
 
 /**
  * @author Jonas
- * 
+ *
  */
 @RunWith(DatabindingClassRunner.class)
 public class RuleSWT_PTest {
@@ -176,7 +172,7 @@ public class RuleSWT_PTest {
 
 	/**
 	 * @return
-	 * 
+	 *
 	 */
 	private RuleHandle addInVisibleRule() {
 		final RuleHandle invisibleShowRule = RuleTestHelper.createInvisibleShowRule();
@@ -194,7 +190,7 @@ public class RuleSWT_PTest {
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	private RuleHandle addVisibleRule() {
 		final RuleHandle visibleShowRule = RuleTestHelper.createVisibleShowRule();
@@ -212,7 +208,7 @@ public class RuleSWT_PTest {
 	/**
 	 * @throws NoPropertyDescriptorFoundExeption
 	 * @throws NoRendererFoundException
-	 * 
+	 *
 	 */
 	private void render() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		renderedControl = SWTViewTestHelper.render(view, input, shell);

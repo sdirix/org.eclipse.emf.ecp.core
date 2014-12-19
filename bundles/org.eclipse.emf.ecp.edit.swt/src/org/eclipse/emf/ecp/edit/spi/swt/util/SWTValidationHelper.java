@@ -206,7 +206,7 @@ public final class SWTValidationHelper {
 
 	/**
 	 * Returns an image descriptor which can be used as an overlay for validation icons.
-	 * 
+	 *
 	 * @param severity the severity of the validation
 	 * @return the descriptor
 	 */

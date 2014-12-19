@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * EclipseSource Munich - initial API and implementation
  */
@@ -19,7 +19,7 @@ import org.eclipse.emf.ecp.view.template.model.VTStyleSelector;
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Selector</b></em>'.
  * <!-- end-user-doc -->
- * 
+ *
  * <p>
  * The following features are supported:
  * <ul>
@@ -35,7 +35,7 @@ import org.eclipse.emf.ecp.view.template.model.VTStyleSelector;
  * <em>Attribute Value</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.eclipse.emf.ecp.view.template.selector.viewModelElement.model.VTViewModelElementPackage#getViewModelElementSelector()
  * @model
  * @generated
@@ -49,7 +49,7 @@ public interface VTViewModelElementSelector extends VTStyleSelector {
 	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Class Type</em>' reference.
 	 * @see #setClassType(EClass)
 	 * @see org.eclipse.emf.ecp.view.template.selector.viewModelElement.model.VTViewModelElementPackage#getViewModelElementSelector_ClassType()
@@ -64,7 +64,7 @@ public interface VTViewModelElementSelector extends VTStyleSelector {
 	 * <em>Class Type</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Class Type</em>' reference.
 	 * @see #getClassType()
 	 * @generated
@@ -79,7 +79,7 @@ public interface VTViewModelElementSelector extends VTStyleSelector {
 	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Attribute</em>' reference.
 	 * @see #setAttribute(EAttribute)
 	 * @see org.eclipse.emf.ecp.view.template.selector.viewModelElement.model.VTViewModelElementPackage#getViewModelElementSelector_Attribute()
@@ -94,7 +94,7 @@ public interface VTViewModelElementSelector extends VTStyleSelector {
 	 * <em>Attribute</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Attribute</em>' reference.
 	 * @see #getAttribute()
 	 * @generated
@@ -109,7 +109,7 @@ public interface VTViewModelElementSelector extends VTStyleSelector {
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Attribute Value</em>' attribute.
 	 * @see #setAttributeValue(Object)
 	 * @see org.eclipse.emf.ecp.view.template.selector.viewModelElement.model.VTViewModelElementPackage#getViewModelElementSelector_AttributeValue()
@@ -124,7 +124,7 @@ public interface VTViewModelElementSelector extends VTStyleSelector {
 	 * <em>Attribute Value</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Attribute Value</em>' attribute.
 	 * @see #getAttributeValue()
 	 * @generated
@@ -139,7 +139,7 @@ public interface VTViewModelElementSelector extends VTStyleSelector {
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Select Subclasses</em>' attribute.
 	 * @see #setSelectSubclasses(boolean)
 	 * @see org.eclipse.emf.ecp.view.template.selector.viewModelElement.model.VTViewModelElementPackage#getViewModelElementSelector_SelectSubclasses()
@@ -154,7 +154,7 @@ public interface VTViewModelElementSelector extends VTStyleSelector {
 	 * <em>Select Subclasses</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Select Subclasses</em>' attribute.
 	 * @see #isSelectSubclasses()
 	 * @generated

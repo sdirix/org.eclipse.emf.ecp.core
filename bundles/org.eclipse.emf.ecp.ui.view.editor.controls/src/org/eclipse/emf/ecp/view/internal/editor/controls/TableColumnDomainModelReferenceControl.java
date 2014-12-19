@@ -67,7 +67,7 @@ public class TableColumnDomainModelReferenceControl extends LinkControl {
 	}
 
 	private class FilteredReferenceAction extends
-	AbstractFilteredReferenceAction {
+		AbstractFilteredReferenceAction {
 
 		public FilteredReferenceAction(EditingDomain editingDomain, Setting setting,
 			IItemPropertyDescriptor descriptor, Shell shell) {
@@ -80,11 +80,11 @@ public class TableColumnDomainModelReferenceControl extends LinkControl {
 		@Override
 		public void run() {
 			getEditingDomain()
-			.getCommandStack()
-			.execute(
-				new FilteredReferenceCommand(
-					getSetting().getEObject(),
-					getShell()));
+				.getCommandStack()
+				.execute(
+					new FilteredReferenceCommand(
+						getSetting().getEObject(),
+						getShell()));
 		}
 	}
 
@@ -128,7 +128,7 @@ public class TableColumnDomainModelReferenceControl extends LinkControl {
 							return new Status(IStatus.WARNING,
 								org.eclipse.emf.ecp.view.internal.editor.controls.Activator.PLUGIN_ID,
 								"The selected " + EStructuralFeature.class.getSimpleName() //$NON-NLS-1$
-								+ " has no PropertyDescriptor."); //$NON-NLS-1$
+									+ " has no PropertyDescriptor."); //$NON-NLS-1$
 						}
 
 						return Status.OK_STATUS;

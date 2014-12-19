@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
@@ -55,9 +55,9 @@ import org.osgi.framework.ServiceReference;
 
 /**
  * This control is used to select the root {@link EClass} of a {@link VView}.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  */
 public class ControlRootEClassControl extends LinkControl {
 
@@ -119,8 +119,8 @@ public class ControlRootEClassControl extends LinkControl {
 
 						return Status.OK_STATUS;
 					}
-					return new Status(IStatus.ERROR, org.eclipse.emf.ecp.view.internal.editor.controls.Activator.PLUGIN_ID,
-						"This is not an EClass."); //$NON-NLS-1$
+					return new Status(IStatus.ERROR,
+						org.eclipse.emf.ecp.view.internal.editor.controls.Activator.PLUGIN_ID, "This is not an EClass."); //$NON-NLS-1$
 				}
 			});
 			dialog.setInput(getInput());
@@ -186,7 +186,7 @@ public class ControlRootEClassControl extends LinkControl {
 
 		/**
 		 * Return the {@link IDEViewModelRegistry}.
-		 * 
+		 *
 		 * @return the {@link IDEViewModelRegistry}
 		 */
 		public IDEViewModelRegistry getViewModelRegistry() {

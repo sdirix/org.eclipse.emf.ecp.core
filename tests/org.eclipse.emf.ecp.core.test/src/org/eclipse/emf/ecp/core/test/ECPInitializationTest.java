@@ -71,7 +71,7 @@ public class ECPInitializationTest {
 					fail("Taking too long");
 				}
 				System.out
-				.println("Added " + i + "Items, Time passed " + (System.currentTimeMillis() - startTimeMillis));
+					.println("Added " + i + "Items, Time passed " + (System.currentTimeMillis() - startTimeMillis));
 			}
 		}
 		assertTrue(System.currentTimeMillis() - startTimeMillis < MAXIMAL_ALLOWED_DURATION);

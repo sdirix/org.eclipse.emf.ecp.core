@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * EclipseSource - Generated code
  */
@@ -38,7 +38,7 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
  * Note that most of the adapters are shared among multiple instances.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
- * 
+ *
  * @generated
  */
 public class UniversityItemProviderAdapterFactory extends
@@ -48,7 +48,7 @@ public class UniversityItemProviderAdapterFactory extends
 	 * This keeps track of the root adapter factory that delegates to this adapter factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected ComposedAdapterFactory parentAdapterFactory;
@@ -57,7 +57,7 @@ public class UniversityItemProviderAdapterFactory extends
 	 * This is used to implement {@link org.eclipse.emf.edit.provider.IChangeNotifier}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected IChangeNotifier changeNotifier = new ChangeNotifier();
@@ -66,7 +66,7 @@ public class UniversityItemProviderAdapterFactory extends
 	 * This keeps track of all the supported types checked by {@link #isFactoryForType isFactoryForType}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected Collection<Object> supportedTypes = new ArrayList<Object>();
@@ -75,7 +75,7 @@ public class UniversityItemProviderAdapterFactory extends
 	 * This constructs an instance.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public UniversityItemProviderAdapterFactory() {
@@ -91,7 +91,7 @@ public class UniversityItemProviderAdapterFactory extends
 	 * instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected CourseCatalogItemProvider courseCatalogItemProvider;
@@ -100,7 +100,7 @@ public class UniversityItemProviderAdapterFactory extends
 	 * This creates an adapter for a {@link org.eclipse.emf.ecp.test.university.CourseCatalog}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -117,7 +117,7 @@ public class UniversityItemProviderAdapterFactory extends
 	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.test.university.Course} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected CourseItemProvider courseItemProvider;
@@ -126,7 +126,7 @@ public class UniversityItemProviderAdapterFactory extends
 	 * This creates an adapter for a {@link org.eclipse.emf.ecp.test.university.Course}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -143,7 +143,7 @@ public class UniversityItemProviderAdapterFactory extends
 	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.test.university.Staff} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected StaffItemProvider staffItemProvider;
@@ -152,7 +152,7 @@ public class UniversityItemProviderAdapterFactory extends
 	 * This creates an adapter for a {@link org.eclipse.emf.ecp.test.university.Staff}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -170,7 +170,7 @@ public class UniversityItemProviderAdapterFactory extends
 	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.test.university.Professor} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected ProfessorItemProvider professorItemProvider;
@@ -179,7 +179,7 @@ public class UniversityItemProviderAdapterFactory extends
 	 * This creates an adapter for a {@link org.eclipse.emf.ecp.test.university.Professor}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -197,7 +197,7 @@ public class UniversityItemProviderAdapterFactory extends
 	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.test.university.Assistant} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected AssistantItemProvider assistantItemProvider;
@@ -206,7 +206,7 @@ public class UniversityItemProviderAdapterFactory extends
 	 * This creates an adapter for a {@link org.eclipse.emf.ecp.test.university.Assistant}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -224,7 +224,7 @@ public class UniversityItemProviderAdapterFactory extends
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public ComposeableAdapterFactory getRootAdapterFactory() {
@@ -235,7 +235,7 @@ public class UniversityItemProviderAdapterFactory extends
 	 * This sets the composed adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public void setParentAdapterFactory(
@@ -246,7 +246,7 @@ public class UniversityItemProviderAdapterFactory extends
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -258,7 +258,7 @@ public class UniversityItemProviderAdapterFactory extends
 	 * This implementation substitutes the factory itself as the key for the adapter.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -269,15 +269,15 @@ public class UniversityItemProviderAdapterFactory extends
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
 	public Object adapt(Object object, Object type) {
 		if (isFactoryForType(type))
 		{
-			Object adapter = super.adapt(object, type);
-			if (!(type instanceof Class<?>) || (((Class<?>) type).isInstance(adapter)))
+			final Object adapter = super.adapt(object, type);
+			if (!(type instanceof Class<?>) || ((Class<?>) type).isInstance(adapter))
 			{
 				return adapter;
 			}
@@ -290,7 +290,7 @@ public class UniversityItemProviderAdapterFactory extends
 	 * This adds a listener.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public void addListener(INotifyChangedListener notifyChangedListener) {
@@ -301,7 +301,7 @@ public class UniversityItemProviderAdapterFactory extends
 	 * This removes a listener.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public void removeListener(INotifyChangedListener notifyChangedListener) {
@@ -312,7 +312,7 @@ public class UniversityItemProviderAdapterFactory extends
 	 * This delegates to {@link #changeNotifier} and to {@link #parentAdapterFactory}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public void fireNotifyChanged(Notification notification) {
@@ -328,20 +328,25 @@ public class UniversityItemProviderAdapterFactory extends
 	 * This disposes all of the item providers created by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public void dispose() {
-		if (courseCatalogItemProvider != null)
+		if (courseCatalogItemProvider != null) {
 			courseCatalogItemProvider.dispose();
-		if (courseItemProvider != null)
+		}
+		if (courseItemProvider != null) {
 			courseItemProvider.dispose();
-		if (staffItemProvider != null)
+		}
+		if (staffItemProvider != null) {
 			staffItemProvider.dispose();
-		if (professorItemProvider != null)
+		}
+		if (professorItemProvider != null) {
 			professorItemProvider.dispose();
-		if (assistantItemProvider != null)
+		}
+		if (assistantItemProvider != null) {
 			assistantItemProvider.dispose();
+		}
 	}
 
 }

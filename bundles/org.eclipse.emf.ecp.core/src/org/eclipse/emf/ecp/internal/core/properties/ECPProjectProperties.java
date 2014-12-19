@@ -30,7 +30,8 @@ public final class ECPProjectProperties extends Properties<ECPProject> {
 	private ECPProjectProperties() {
 		super(ECPProject.class);
 
-		add(new Property<ECPProject>("name", Messages.ECPProjectProperties_Name, Messages.ECPProjectProperties_NameOfProject) { //$NON-NLS-1$
+		add(new Property<ECPProject>(
+			"name", Messages.ECPProjectProperties_Name, Messages.ECPProjectProperties_NameOfProject) { //$NON-NLS-1$
 			@Override
 			protected Object eval(ECPProject project) {
 				return project.getName();
@@ -44,7 +45,8 @@ public final class ECPProjectProperties extends Properties<ECPProject> {
 			}
 		});
 
-		add(new Property<ECPProject>("repositoryLabel", Messages.ECPProjectProperties_Repository, Messages.ECPProjectProperties_RepositoryOfProject) { //$NON-NLS-1$
+		add(new Property<ECPProject>(
+			"repositoryLabel", Messages.ECPProjectProperties_Repository, Messages.ECPProjectProperties_RepositoryOfProject) { //$NON-NLS-1$
 			@Override
 			protected Object eval(ECPProject project) {
 				return project.getRepository().getLabel();
@@ -63,7 +65,8 @@ public final class ECPProjectProperties extends Properties<ECPProject> {
 			}
 		});
 
-		add(new Property<ECPProject>("providerLabel", Messages.ECPProjectProperties_Provider, Messages.ECPProjectProperties_ProviderOfProject) { //$NON-NLS-1$
+		add(new Property<ECPProject>(
+			"providerLabel", Messages.ECPProjectProperties_Provider, Messages.ECPProjectProperties_ProviderOfProject) { //$NON-NLS-1$
 			@Override
 			protected Object eval(ECPProject project) {
 				final ECPProvider provider = project.getProvider();
@@ -74,7 +77,8 @@ public final class ECPProjectProperties extends Properties<ECPProject> {
 				return UNKNOWN_PROVIDER;
 			}
 		});
-		add(new Property<ECPProject>("isDirty", Messages.ECPProjectProperties_IsProjectDirty, Messages.ECPProjectProperties_HasProjectUnsavedChanges) { //$NON-NLS-1$
+		add(new Property<ECPProject>(
+			"isDirty", Messages.ECPProjectProperties_IsProjectDirty, Messages.ECPProjectProperties_HasProjectUnsavedChanges) { //$NON-NLS-1$
 			@Override
 			protected Object eval(ECPProject project) {
 				return project.hasDirtyContents();

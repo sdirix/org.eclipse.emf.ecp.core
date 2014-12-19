@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Edagr Mueller - initial API and implementation
  * Eugen Neufeld - Refactoring
@@ -23,9 +23,9 @@ import org.eclipse.swt.widgets.Control;
 
 /**
  * Renderer for {@link org.eclipse.swt.widgets.Control Controls} which uses a {@link Viewer}.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  */
 public abstract class SimpleControlJFaceViewerSWTRenderer extends SimpleControlSWTRenderer {
 
@@ -38,7 +38,7 @@ public abstract class SimpleControlJFaceViewerSWTRenderer extends SimpleControlS
 
 	/**
 	 * Test constructor.
-	 * 
+	 *
 	 * @param factory the {@link SWTRendererFactory} to use.
 	 */
 	protected SimpleControlJFaceViewerSWTRenderer(SWTRendererFactory factory) {
@@ -47,7 +47,7 @@ public abstract class SimpleControlJFaceViewerSWTRenderer extends SimpleControlS
 
 	/**
 	 * Creates the control itself.
-	 * 
+	 *
 	 * @param parent the {@link Composite} to render onto
 	 * @return the rendered control
 	 */
@@ -75,7 +75,7 @@ public abstract class SimpleControlJFaceViewerSWTRenderer extends SimpleControlS
 
 	/**
 	 * Create the {@link Binding Bindings} for this controls.
-	 * 
+	 *
 	 * @param viewer the {@link Viewer} to create the binding for
 	 * @param setting the current {@link Setting}
 	 * @return all the bindings created by this renderer
@@ -85,7 +85,7 @@ public abstract class SimpleControlJFaceViewerSWTRenderer extends SimpleControlS
 
 	/**
 	 * Creates the {@link Viewer}.
-	 * 
+	 *
 	 * @param parent the {@link Composite} to use as a parent
 	 * @param setting the {@link Setting}
 	 * @return the created {@link Viewer}

@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  ******************************************************************************/
 package org.eclipse.emf.ecp.internal.validation;
@@ -29,16 +29,16 @@ import org.eclipse.emf.ecp.validation.api.IValidationService;
 
 /**
  * Implementation of a validation service.
- * 
+ *
  * @author emueller
  * @author Tobias Verhoeven
- * 
+ *
  */
 public final class ValidationService extends AbstractCachedTree<Diagnostic> implements IValidationService {
 
 	/**
 	 * Constructor for the ECP ValidationService.
-	 * 
+	 *
 	 * @param callback to use
 	 */
 	public ValidationService(IExcludedObjectsCallback callback) {
@@ -52,7 +52,7 @@ public final class ValidationService extends AbstractCachedTree<Diagnostic> impl
 
 		/**
 		 * Constructor.
-		 * 
+		 *
 		 * @param diagnostic
 		 *            the initial diagnostic containing the severity and validation message
 		 */

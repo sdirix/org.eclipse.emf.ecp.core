@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * EclipseSource Munich - initial API and implementation
  */
@@ -37,7 +37,7 @@ import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage;
  * </em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public abstract class VAbstractCategorizationImpl extends VCategorizableElementImpl implements VAbstractCategorization
@@ -46,7 +46,7 @@ public abstract class VAbstractCategorizationImpl extends VCategorizableElementI
 	 * The cached value of the '{@link #getActions() <em>Actions</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getActions()
 	 * @generated
 	 * @ordered
@@ -56,7 +56,7 @@ public abstract class VAbstractCategorizationImpl extends VCategorizableElementI
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected VAbstractCategorizationImpl()
@@ -67,7 +67,7 @@ public abstract class VAbstractCategorizationImpl extends VCategorizableElementI
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -79,7 +79,7 @@ public abstract class VAbstractCategorizationImpl extends VCategorizableElementI
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -96,7 +96,7 @@ public abstract class VAbstractCategorizationImpl extends VCategorizableElementI
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -113,7 +113,7 @@ public abstract class VAbstractCategorizationImpl extends VCategorizableElementI
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -130,7 +130,7 @@ public abstract class VAbstractCategorizationImpl extends VCategorizableElementI
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
@@ -150,7 +150,7 @@ public abstract class VAbstractCategorizationImpl extends VCategorizableElementI
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -168,7 +168,7 @@ public abstract class VAbstractCategorizationImpl extends VCategorizableElementI
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -184,7 +184,7 @@ public abstract class VAbstractCategorizationImpl extends VCategorizableElementI
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizableElement#getLabelObject()
 	 */
 	@Override
@@ -196,7 +196,7 @@ public abstract class VAbstractCategorizationImpl extends VCategorizableElementI
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizableElement#getECPActions()
 	 */
 	@Override
@@ -206,7 +206,7 @@ public abstract class VAbstractCategorizationImpl extends VCategorizableElementI
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizableElement#setECPActions(java.util.List)
 	 */
 	@Override

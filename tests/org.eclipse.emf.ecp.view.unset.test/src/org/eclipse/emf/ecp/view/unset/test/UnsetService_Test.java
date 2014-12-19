@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
  ******************************************************************************/
@@ -42,17 +42,13 @@ import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableFactory;
 import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalFactory;
 import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalLayout;
-import org.eclipse.emf.emfstore.bowling.BowlingFactory;
-import org.eclipse.emf.emfstore.bowling.BowlingPackage;
-import org.eclipse.emf.emfstore.bowling.Fan;
-import org.eclipse.emf.emfstore.bowling.Merchandise;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 /**
  * @author jfaltermeier
- * 
+ *
  */
 public class UnsetService_Test {
 
@@ -1355,7 +1351,7 @@ public class UnsetService_Test {
 
 	/**
 	 * Creates the unset service.
-	 * 
+	 *
 	 * @return
 	 */
 	private UnsetService unsetService() {
@@ -1367,7 +1363,7 @@ public class UnsetService_Test {
 
 	/**
 	 * Adds a control with the given feature path domain model reference as a direct child of the view.
-	 * 
+	 *
 	 * @param domainModelReference
 	 * @return the created control
 	 */
@@ -1380,7 +1376,7 @@ public class UnsetService_Test {
 
 	/**
 	 * Adds a control with the given feature path domain model reference as a direct child of the container.
-	 * 
+	 *
 	 * @param domainModelReference
 	 * @return the created control
 	 */
@@ -1401,7 +1397,7 @@ public class UnsetService_Test {
 
 	/**
 	 * Adds a vertical layout as a direct child of the view.
-	 * 
+	 *
 	 * @return the created layout
 	 */
 	private VVerticalLayout addVerticalLayoutToView() {
@@ -1412,7 +1408,7 @@ public class UnsetService_Test {
 
 	/**
 	 * References the player name from a league object.
-	 * 
+	 *
 	 * @return
 	 */
 	private VFeaturePathDomainModelReference merchandisePriceReferenceFromFan() {
@@ -1444,7 +1440,7 @@ public class UnsetService_Test {
 
 	/**
 	 * @author Jonas
-	 * 
+	 *
 	 */
 	private class ViewModelContextStub implements ViewModelContext {
 
@@ -1497,7 +1493,7 @@ public class UnsetService_Test {
 
 		/**
 		 * {@inheritDoc}
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getControlsFor(org.eclipse.emf.ecore.EStructuralFeature.Setting)
 		 */
 		@Override
@@ -1508,7 +1504,7 @@ public class UnsetService_Test {
 
 		/**
 		 * {@inheritDoc}
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getControlsFor(org.eclipse.org.eclipse.emf.ecp.common.spi.UniqueSetting)
 		 */
 		@Override
@@ -1519,7 +1515,7 @@ public class UnsetService_Test {
 
 		/**
 		 * {@inheritDoc}
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getContextValue(java.lang.String)
 		 */
 		@Override
@@ -1530,7 +1526,7 @@ public class UnsetService_Test {
 
 		/**
 		 * {@inheritDoc}
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#putContextValue(java.lang.String,
 		 *      java.lang.Object)
 		 */

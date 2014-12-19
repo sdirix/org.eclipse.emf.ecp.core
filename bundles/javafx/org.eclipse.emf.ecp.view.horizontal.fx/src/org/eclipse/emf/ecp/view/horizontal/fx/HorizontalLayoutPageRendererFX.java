@@ -17,7 +17,7 @@ import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 
 public class HorizontalLayoutPageRendererFX extends
-		RendererFX<VHorizontalLayout> {
+	RendererFX<VHorizontalLayout> {
 
 	private GridDescriptionFX gridDescription;
 
@@ -31,7 +31,7 @@ public class HorizontalLayoutPageRendererFX extends
 
 	@Override
 	protected Node renderNode(GridCellFX cell) throws NoRendererFoundException,
-			NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption {
 		// TODO Auto-generated method stub
 		if (cell.getColumn() != 0) {
 			return null;
@@ -39,26 +39,27 @@ public class HorizontalLayoutPageRendererFX extends
 
 		final VHorizontalLayout vHorizontal = getVElement();
 		final Pagination pagination = new Pagination(vHorizontal.getChildren()
-				.size(), 0);
+			.size(), 0);
 		pagination.setPageFactory(new Callback<Integer, Node>() {
 
+			@Override
 			public Node call(Integer param) {
-				VBox box = new VBox();
-				RendererFX<VElement> compositeRenderer = RendererFactory.INSTANCE
-						.getRenderer(vHorizontal.getChildren().get(param), getViewModelContext());
-				GridDescriptionFX rendererGrid = compositeRenderer.getGridDescription();
+				final VBox box = new VBox();
+				final RendererFX<VElement> compositeRenderer = RendererFactory.INSTANCE
+					.getRenderer(vHorizontal.getChildren().get(param), getViewModelContext());
+				final GridDescriptionFX rendererGrid = compositeRenderer.getGridDescription();
 				final int rows = rendererGrid.getRows();
 				final int columns = rendererGrid.getColumns();
 
 				for (int i = 0; i < rows; i++) {
-					HBox hBox = new HBox();
+					final HBox hBox = new HBox();
 					for (int j = 0; j < columns; j++) {
 						Node node = null;
 						try {
 							node = compositeRenderer.render(rendererGrid.getGrid().get(i * columns + j));
-						} catch (NoRendererFoundException e) {
+						} catch (final NoRendererFoundException e) {
 							e.printStackTrace();
-						} catch (NoPropertyDescriptorFoundExeption e) {
+						} catch (final NoPropertyDescriptorFoundExeption e) {
 							e.printStackTrace();
 						}
 						hBox.getChildren().add(node);

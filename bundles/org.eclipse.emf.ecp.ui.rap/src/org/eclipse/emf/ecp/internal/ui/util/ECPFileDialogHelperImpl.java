@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
  ******************************************************************************/
@@ -20,18 +20,18 @@ import org.eclipse.swt.widgets.Shell;
 
 /**
  * {@link ECPFileDialogHelper} using the RWT implementation of the {@link FileDialog}.
- * 
+ *
  * @author jfaltermeier
- * 
+ *
  */
 public class ECPFileDialogHelperImpl implements ECPFileDialogHelper {
 
 	private static final String IMPORT_MODEL_PATH = "org.eclipse.emf.emfstore.client.ui.importModelPath"; //$NON-NLS-1$
 
 	/**
-	 * 
+	 *
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.internal.ui.util.ECPFileDialogHelper#getPathForImport(org.eclipse.swt.widgets.Shell)
 	 */
 	public String getPathForImport(Shell shell) {
@@ -46,9 +46,9 @@ public class ECPFileDialogHelperImpl implements ECPFileDialogHelper {
 	}
 
 	/**
-	 * 
+	 *
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.internal.ui.util.ECPFileDialogHelper#getPathForExport(org.eclipse.swt.widgets.Shell,
 	 *      java.lang.String)
 	 */

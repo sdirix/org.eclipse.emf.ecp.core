@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * EclipseSource - Generated code
  */
@@ -37,7 +37,7 @@ import org.eclipse.emf.ecp.view.internal.validation.ValidationNotification;
  * <!-- begin-user-doc -->
  * The <b>Validator</b> for the model.
  * <!-- end-user-doc -->
- * 
+ *
  * @see org.eclipse.emf.ecp.test.university.UniversityPackage
  * @generated
  */
@@ -47,7 +47,7 @@ public class UniversityValidator extends EObjectValidator
 	 * The cached model package
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public static final UniversityValidator INSTANCE = new UniversityValidator();
@@ -57,7 +57,7 @@ public class UniversityValidator extends EObjectValidator
 	 * {@link org.eclipse.emf.common.util.Diagnostic#getCode() codes} from this package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see org.eclipse.emf.common.util.Diagnostic#getSource()
 	 * @see org.eclipse.emf.common.util.Diagnostic#getCode()
 	 * @generated
@@ -68,7 +68,7 @@ public class UniversityValidator extends EObjectValidator
 	 * A constant with a fixed name that can be used as the base value for additional hand written constants.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private static final int GENERATED_DIAGNOSTIC_CODE_COUNT = 0;
@@ -78,7 +78,7 @@ public class UniversityValidator extends EObjectValidator
 	 * derived class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected static final int DIAGNOSTIC_CODE_COUNT = GENERATED_DIAGNOSTIC_CODE_COUNT;
@@ -87,7 +87,7 @@ public class UniversityValidator extends EObjectValidator
 	 * Creates an instance of the switch.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public UniversityValidator()
@@ -99,7 +99,7 @@ public class UniversityValidator extends EObjectValidator
 	 * Returns the package of this validator switch.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -112,7 +112,7 @@ public class UniversityValidator extends EObjectValidator
 	 * Calls <code>validateXXX</code> for the corresponding classifier of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -140,7 +140,7 @@ public class UniversityValidator extends EObjectValidator
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public boolean validateCourseCatalog(CourseCatalog courseCatalog, DiagnosticChain diagnostics,
@@ -152,32 +152,42 @@ public class UniversityValidator extends EObjectValidator
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public boolean validateCourse(Course course, DiagnosticChain diagnostics, Map<Object, Object> context)
 	{
-		if (!validate_NoCircularContainment(course, diagnostics, context))
+		if (!validate_NoCircularContainment(course, diagnostics, context)) {
 			return false;
+		}
 		boolean result = validate_EveryMultiplicityConforms(course, diagnostics, context);
-		if (result || diagnostics != null)
+		if (result || diagnostics != null) {
 			result &= validate_EveryDataValueConforms(course, diagnostics, context);
-		if (result || diagnostics != null)
+		}
+		if (result || diagnostics != null) {
 			result &= validate_EveryReferenceIsContained(course, diagnostics, context);
-		if (result || diagnostics != null)
+		}
+		if (result || diagnostics != null) {
 			result &= validate_EveryBidirectionalReferenceIsPaired(course, diagnostics, context);
-		if (result || diagnostics != null)
+		}
+		if (result || diagnostics != null) {
 			result &= validate_EveryProxyResolves(course, diagnostics, context);
-		if (result || diagnostics != null)
+		}
+		if (result || diagnostics != null) {
 			result &= validate_UniqueID(course, diagnostics, context);
-		if (result || diagnostics != null)
+		}
+		if (result || diagnostics != null) {
 			result &= validate_EveryKeyUnique(course, diagnostics, context);
-		if (result || diagnostics != null)
+		}
+		if (result || diagnostics != null) {
 			result &= validate_EveryMapEntryUnique(course, diagnostics, context);
-		if (result || diagnostics != null)
+		}
+		if (result || diagnostics != null) {
 			result &= validateCourse_UniqueItemById(course, diagnostics, context);
-		if (result || diagnostics != null)
+		}
+		if (result || diagnostics != null) {
 			result &= validateCourse_NameNotEmpty(course, diagnostics, context);
+		}
 		return result;
 	}
 
@@ -185,7 +195,7 @@ public class UniversityValidator extends EObjectValidator
 	 * Validates the UniqueItemById constraint of '<em>Course</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated NOT
 	 */
 	public boolean validateCourse_UniqueItemById(Course course, DiagnosticChain diagnostics, Map<Object, Object> context)
@@ -260,7 +270,7 @@ public class UniversityValidator extends EObjectValidator
 	 * Validates the NameNotEmpty constraint of '<em>Course</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated NOT
 	 */
 	public boolean validateCourse_NameNotEmpty(Course course, DiagnosticChain diagnostics, Map<Object, Object> context)
@@ -288,7 +298,7 @@ public class UniversityValidator extends EObjectValidator
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public boolean validateStaff(Staff staff, DiagnosticChain diagnostics, Map<Object, Object> context)
@@ -299,7 +309,7 @@ public class UniversityValidator extends EObjectValidator
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public boolean validateProfessor(Professor professor, DiagnosticChain diagnostics, Map<Object, Object> context)
@@ -310,7 +320,7 @@ public class UniversityValidator extends EObjectValidator
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public boolean validateAssistant(Assistant assistant, DiagnosticChain diagnostics, Map<Object, Object> context)
@@ -321,7 +331,7 @@ public class UniversityValidator extends EObjectValidator
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public boolean validatePerson(Person person, DiagnosticChain diagnostics, Map<Object, Object> context)
@@ -333,7 +343,7 @@ public class UniversityValidator extends EObjectValidator
 	 * Returns the resource locator that will be used to fetch messages for this validator's diagnostics.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override

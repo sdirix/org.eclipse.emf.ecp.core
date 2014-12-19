@@ -40,7 +40,6 @@ import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableFactory;
 import org.eclipse.emf.ecp.view.spi.table.model.VTablePackage;
 import org.eclipse.emf.ecp.view.spi.table.model.util.TableValidator;
-import org.eclipse.emf.emfstore.bowling.BowlingPackage;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

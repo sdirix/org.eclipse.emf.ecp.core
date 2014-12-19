@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
@@ -58,7 +58,7 @@ import org.osgi.framework.ServiceReference;
 /**
  * This is a simple wizard for creating a new model file. <!-- begin-user-doc
  * --> <!-- end-user-doc -->
- * 
+ *
  * @generated
  */
 public class ViewModelWizard extends Wizard implements INewWizard {
@@ -86,7 +86,7 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 	/**
 	 * The supported extensions for created files. <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public static final List<String> FILE_EXTENSIONS = Collections
@@ -97,7 +97,7 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 	/**
 	 * A formatted list of supported file extensions, suitable for display. <!--
 	 * begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public static final String FORMATTED_FILE_EXTENSIONS = ViewEditorPlugin.INSTANCE
@@ -107,7 +107,7 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 	/**
 	 * This caches an instance of the model package. <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected VViewPackage viewPackage = VViewPackage.eINSTANCE;
@@ -115,7 +115,7 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 	/**
 	 * This caches an instance of the model factory. <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected VViewFactory viewFactory = viewPackage.getViewFactory();
@@ -123,7 +123,7 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 	/**
 	 * This is the file creation page. <!-- begin-user-doc --> <!-- end-user-doc
 	 * -->
-	 * 
+	 *
 	 * @generated
 	 */
 
@@ -132,7 +132,7 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 	/**
 	 * Remember the selection during initialization for populating the default
 	 * container. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected IStructuredSelection selection;
@@ -147,7 +147,7 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 	/**
 	 * Remember the workbench during initialization. <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected IWorkbench workbench;
@@ -155,7 +155,7 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 	/**
 	 * Caches the names of the types that can be created as the root object.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected List<String> initialObjectNames;
@@ -166,7 +166,7 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 	/**
 	 * This just records the information. <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -182,7 +182,7 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 	/**
 	 * Returns the names of the types that can be created as the root object.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected Collection<String> getInitialObjectNames() {
@@ -205,7 +205,7 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 	/**
 	 * The framework calls this to create the contents of the wizard. <!--
 	 * begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -221,7 +221,7 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.jface.wizard.Wizard#getStartingPage()
 	 */
 	@Override
@@ -240,7 +240,7 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.jface.wizard.Wizard#getNextPage(org.eclipse.jface.wizard.IWizardPage)
 	 */
 	@Override
@@ -339,7 +339,7 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.jface.wizard.Wizard#getPreviousPage(org.eclipse.jface.wizard.IWizardPage)
 	 */
 	@Override
@@ -358,7 +358,7 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.jface.wizard.Wizard#canFinish()
 	 */
 	@Override
@@ -375,7 +375,7 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 	/**
 	 * Do the work after everything is specified. <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -583,7 +583,7 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 
 	/**
 	 * Return the {@link IDEViewModelRegistry}.
-	 * 
+	 *
 	 * @return the {@link IDEViewModelRegistry}
 	 */
 	public static IDEViewModelRegistry getViewModelRegistry() {

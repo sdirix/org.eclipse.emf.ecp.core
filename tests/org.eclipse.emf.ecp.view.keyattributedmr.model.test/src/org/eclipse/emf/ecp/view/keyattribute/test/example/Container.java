@@ -3,7 +3,6 @@
 package org.eclipse.emf.ecp.view.keyattribute.test.example;
 
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -14,7 +13,7 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.emf.ecp.view.keyattribute.test.example.Container#getChildren <em>Children</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.keyattribute.test.example.Container#getChildren <em>Children</em>}</li>
  * </ul>
  * </p>
  *
@@ -28,10 +27,11 @@ public interface Container extends EObject {
 	 * The list contents are of type {@link org.eclipse.emf.ecp.view.keyattribute.test.example.Child}.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Children</em>' containment reference list isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Children</em>' containment reference list isn't clear, there really should be more of
+	 * a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
+	 *
 	 * @return the value of the '<em>Children</em>' containment reference list.
 	 * @see org.eclipse.emf.ecp.view.keyattribute.test.example.ExamplePackage#getContainer_Children()
 	 * @model containment="true"

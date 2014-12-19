@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eike Stepper - initial API and implementation
  * Eugen Neufeld - JavaDoc
@@ -41,7 +41,7 @@ import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 
 /**
  * This Class describes a repository.
- * 
+ *
  * @author Eike Stepper
  * @author Eugen Neufeld
  */
@@ -65,7 +65,7 @@ public final class ECPRepositoryImpl extends PropertiesElement implements Intern
 
 	/**
 	 * Constructor used to create an instance through user input.
-	 * 
+	 *
 	 * @param provider the {@link ECPProvider} for this repository
 	 * @param name the name of this repository
 	 * @param properties the {@link ECPProperties} of this repository
@@ -86,7 +86,7 @@ public final class ECPRepositoryImpl extends PropertiesElement implements Intern
 	/**
 	 * Constructor used by the {@link org.eclipse.emf.ecp.core.ECPRepositoryManager ECPRepositoryManager} when loading
 	 * existing repositories during startup.
-	 * 
+	 *
 	 * @param in the {@link ObjectInput} to parse
 	 * @throws IOException when an error occurs
 	 */
@@ -173,7 +173,7 @@ public final class ECPRepositoryImpl extends PropertiesElement implements Intern
 	 * override this method (however, if they do so, they should invoke the method on their superclass to ensure that
 	 * the Platform's adapter manager is consulted).
 	 * </p>
-	 * 
+	 *
 	 * @param adapterType
 	 *            the class to adapt to
 	 * @return the adapted object or <code>null</code>
@@ -260,7 +260,7 @@ public final class ECPRepositoryImpl extends PropertiesElement implements Intern
 
 	/**
 	 * Return all open projects of that are shared on this repository.
-	 * 
+	 *
 	 * @return array of currently open {@link ECPProject ECPProjects} that are shared on this repository
 	 */
 	public InternalProject[] getOpenProjects() {

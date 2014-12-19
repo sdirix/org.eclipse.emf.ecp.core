@@ -1,14 +1,14 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Johannes Faltermeier
- * 
+ *
  *******************************************************************************/
 package org.eclipse.emf.ecp.view.custom.ui.swt.test;
 
@@ -29,8 +29,6 @@ import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.test.common.swt.DatabindingClassRunner;
 import org.eclipse.emf.ecp.view.test.common.swt.SWTViewTestHelper;
-import org.eclipse.emf.emfstore.bowling.BowlingFactory;
-import org.eclipse.emf.emfstore.bowling.Fan;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 import org.junit.Ignore;
@@ -42,7 +40,7 @@ public class SWTCustomControl_PTest {
 
 	/**
 	 * @author Jonas
-	 * 
+	 *
 	 */
 	public class TestHandel {
 
@@ -80,7 +78,7 @@ public class SWTCustomControl_PTest {
 	private static final String BUNDLE_ID = "org.eclipse.emf.ecp.view.custom.ui.swt.test";
 
 	/**
-	 * 
+	 *
 	 */
 	// FIXME what to expect
 	@Test

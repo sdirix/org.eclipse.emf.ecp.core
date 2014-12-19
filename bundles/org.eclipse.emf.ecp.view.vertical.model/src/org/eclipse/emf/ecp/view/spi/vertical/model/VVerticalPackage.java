@@ -25,8 +25,9 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * <li>each enum,</li>
  * <li>and each data type</li>
  * </ul>
+ *
  * @since 1.2
- * <!-- end-user-doc -->
+ *        <!-- end-user-doc -->
  *
  * @see org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalFactory
  * @model kind="package"

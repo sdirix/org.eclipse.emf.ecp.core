@@ -8,10 +8,10 @@ import java.util.Locale;
 import org.eclipse.core.databinding.conversion.IConverter;
 
 public class ECPDateFieldToModelUpdateValueStrategy extends
-		ECPTextFieldToModelUpdateValueStrategy {
+	ECPTextFieldToModelUpdateValueStrategy {
 
 	public ECPDateFieldToModelUpdateValueStrategy() {
-		IConverter converter = getConverter();
+		final IConverter converter = getConverter();
 		setConverter(converter);
 	}
 
@@ -30,8 +30,8 @@ public class ECPDateFieldToModelUpdateValueStrategy extends
 
 			@Override
 			public Object convert(Object value) {
-				DateFormat dateInstance = DateFormat.getDateInstance(
-						DateFormat.MEDIUM, Locale.getDefault());
+				final DateFormat dateInstance = DateFormat.getDateInstance(
+					DateFormat.MEDIUM, Locale.getDefault());
 				try {
 					return dateInstance.parse((String) value);
 				} catch (final ParseException ex) {

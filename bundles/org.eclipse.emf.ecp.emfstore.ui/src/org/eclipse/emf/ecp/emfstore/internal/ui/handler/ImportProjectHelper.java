@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
@@ -38,9 +38,9 @@ import org.osgi.framework.Bundle;
 
 /**
  * A helper class that can be used to import projects.
- * 
+ *
  * @author Eugen Neufeld, David Soto Setzke
- * 
+ *
  */
 public final class ImportProjectHelper {
 
@@ -67,7 +67,7 @@ public final class ImportProjectHelper {
 
 	/**
 	 * Imports a project.
-	 * 
+	 *
 	 * @param shell The active shell
 	 */
 	public static void importProject(Shell shell) {

@@ -5,7 +5,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  ******************************************************************************/
 package org.eclipse.emf.ecp.internal.ui.tester;
@@ -17,16 +17,16 @@ import org.eclipse.core.runtime.Platform;
 /**
  * Tests the enablement of ECP Menu contributions. The contributions are enabled by default and can be disabled by an
  * extension point.
- * 
+ *
  * @author koegel
  * @since 1.3
- * 
+ *
  */
 public class ECPMenuContributionsEnablementTester extends PropertyTester {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.core.expressions.IPropertyTester#test(java.lang.Object, java.lang.String, java.lang.Object[],
 	 *      java.lang.Object)
 	 */

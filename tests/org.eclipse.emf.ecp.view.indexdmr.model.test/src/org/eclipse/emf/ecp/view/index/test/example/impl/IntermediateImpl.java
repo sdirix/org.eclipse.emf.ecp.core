@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
@@ -30,7 +30,7 @@ import org.eclipse.emf.ecp.view.index.test.example.Intermediate;
  * <li>{@link org.eclipse.emf.ecp.view.index.test.example.impl.IntermediateImpl#getContainer <em>Container</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class IntermediateImpl extends MinimalEObjectImpl.Container implements Intermediate {
@@ -38,7 +38,7 @@ public class IntermediateImpl extends MinimalEObjectImpl.Container implements In
 	 * The cached value of the '{@link #getContainer() <em>Container</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getContainer()
 	 * @generated
 	 * @ordered
@@ -48,7 +48,7 @@ public class IntermediateImpl extends MinimalEObjectImpl.Container implements In
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected IntermediateImpl() {
@@ -58,7 +58,7 @@ public class IntermediateImpl extends MinimalEObjectImpl.Container implements In
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -69,7 +69,7 @@ public class IntermediateImpl extends MinimalEObjectImpl.Container implements In
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -80,7 +80,7 @@ public class IntermediateImpl extends MinimalEObjectImpl.Container implements In
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public NotificationChain basicSetContainer(org.eclipse.emf.ecp.view.index.test.example.Container newContainer,
@@ -102,7 +102,7 @@ public class IntermediateImpl extends MinimalEObjectImpl.Container implements In
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -131,7 +131,7 @@ public class IntermediateImpl extends MinimalEObjectImpl.Container implements In
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -146,7 +146,7 @@ public class IntermediateImpl extends MinimalEObjectImpl.Container implements In
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -161,7 +161,7 @@ public class IntermediateImpl extends MinimalEObjectImpl.Container implements In
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -177,7 +177,7 @@ public class IntermediateImpl extends MinimalEObjectImpl.Container implements In
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -193,7 +193,7 @@ public class IntermediateImpl extends MinimalEObjectImpl.Container implements In
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override

@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Edgar Mueller - initial API and implementation
  ******************************************************************************/
@@ -36,7 +36,7 @@ import org.junit.Test;
  * Tests for checking whether the {@link org.eclipse.emf.ecp.view.spi.validation.ValidationService
  * ValidationService} correctly behave if domain
  * objects and/or {@link org.eclipse.emf.ecp.view.spi.model.VElement Renderable}s are removed.
- * 
+ *
  * @author emueller
  */
 public class ValidationServiceGC_PTest extends CommonValidationTest {
@@ -45,7 +45,7 @@ public class ValidationServiceGC_PTest extends CommonValidationTest {
 	 * Creates a basic view with an column that contains a control
 	 * that is bound to the mainboard name feature of a computer.
 	 * Both the computer and the mainboard are also created.
-	 * 
+	 *
 	 * @return a tuple containing the root of the view model
 	 *         as well as the root of the domain model
 	 */
@@ -79,7 +79,7 @@ public class ValidationServiceGC_PTest extends CommonValidationTest {
 	 * The most inner column contains a control
 	 * that is bound to the {@link TestPackage#getWriter_FirstName()} feature of a {@link Writer}.
 	 * The writer will also be created by this method.
-	 * 
+	 *
 	 * @return a tuple containing the root of the view model
 	 *         as well as the root of the domain model
 	 */

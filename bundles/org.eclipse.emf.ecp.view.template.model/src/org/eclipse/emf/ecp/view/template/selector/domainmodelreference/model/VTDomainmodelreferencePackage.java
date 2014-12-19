@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * EclipseSource Munich - initial API and implementation
  */
@@ -28,7 +28,7 @@ import org.eclipse.emf.ecp.view.template.model.VTTemplatePackage;
  * <li>and each data type</li>
  * </ul>
  * <!-- end-user-doc -->
- * 
+ *
  * @see org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.VTDomainmodelreferenceFactory
  * @model kind="package"
  * @generated
@@ -39,7 +39,7 @@ public interface VTDomainmodelreferencePackage extends EPackage
 	 * The package name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	String eNAME = "domainmodelreference"; //$NON-NLS-1$
@@ -48,7 +48,7 @@ public interface VTDomainmodelreferencePackage extends EPackage
 	 * The package namespace URI.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	String eNS_URI = "http://www.eclipse.org/emf/ecp/view/template/selector/domainmodelreference/model"; //$NON-NLS-1$
@@ -57,7 +57,7 @@ public interface VTDomainmodelreferencePackage extends EPackage
 	 * The package namespace name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	String eNS_PREFIX = "org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model"; //$NON-NLS-1$
@@ -66,7 +66,7 @@ public interface VTDomainmodelreferencePackage extends EPackage
 	 * The singleton instance of the package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	VTDomainmodelreferencePackage eINSTANCE = org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.impl.VTDomainmodelreferencePackageImpl
@@ -78,7 +78,7 @@ public interface VTDomainmodelreferencePackage extends EPackage
 	 * <em>Domain Model Reference Selector</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.impl.VTDomainModelReferenceSelectorImpl
 	 * @see org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.impl.VTDomainmodelreferencePackageImpl#getDomainModelReferenceSelector()
 	 * @generated
@@ -89,7 +89,7 @@ public interface VTDomainmodelreferencePackage extends EPackage
 	 * The feature id for the '<em><b>Domain Model Reference</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -99,7 +99,7 @@ public interface VTDomainmodelreferencePackage extends EPackage
 	 * The number of structural features of the '<em>Domain Model Reference Selector</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -109,7 +109,7 @@ public interface VTDomainmodelreferencePackage extends EPackage
 	 * The number of operations of the '<em>Domain Model Reference Selector</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -121,7 +121,7 @@ public interface VTDomainmodelreferencePackage extends EPackage
 	 * <em>Domain Model Reference Selector</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for class '<em>Domain Model Reference Selector</em>'.
 	 * @see org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.VTDomainModelReferenceSelector
 	 * @generated
@@ -134,7 +134,7 @@ public interface VTDomainmodelreferencePackage extends EPackage
 	 * <em>Domain Model Reference</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for the containment reference '<em>Domain Model Reference</em>'.
 	 * @see org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.VTDomainModelReferenceSelector#getDomainModelReference()
 	 * @see #getDomainModelReferenceSelector()
@@ -146,7 +146,7 @@ public interface VTDomainmodelreferencePackage extends EPackage
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the factory that creates the instances of the model.
 	 * @generated
 	 */
@@ -163,7 +163,7 @@ public interface VTDomainmodelreferencePackage extends EPackage
 	 * <li>and each data type</li>
 	 * </ul>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	interface Literals
@@ -174,7 +174,7 @@ public interface VTDomainmodelreferencePackage extends EPackage
 		 * <em>Domain Model Reference Selector</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.impl.VTDomainModelReferenceSelectorImpl
 		 * @see org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.impl.VTDomainmodelreferencePackageImpl#getDomainModelReferenceSelector()
 		 * @generated
@@ -185,7 +185,7 @@ public interface VTDomainmodelreferencePackage extends EPackage
 		 * The meta object literal for the '<em><b>Domain Model Reference</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		EReference DOMAIN_MODEL_REFERENCE_SELECTOR__DOMAIN_MODEL_REFERENCE = eINSTANCE

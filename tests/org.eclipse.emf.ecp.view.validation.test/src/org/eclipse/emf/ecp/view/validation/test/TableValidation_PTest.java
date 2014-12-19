@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen - initial API and implementation
  ******************************************************************************/
@@ -38,13 +38,13 @@ import org.junit.Test;
 /**
  * This class contains only tests for validation errors on Tables. This test also doesn't check whether the table
  * updates correctly on diagnostic change. It is only checked, that the Diagnostic is correctly set.
- * 
+ *
  * Tests:
  * - test table with only reference multiplicity (init empty/not empty, dynamic add/ remove)
  * - test table without reference multiplicity, but with independent validation on children
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  */
 public class TableValidation_PTest {
 

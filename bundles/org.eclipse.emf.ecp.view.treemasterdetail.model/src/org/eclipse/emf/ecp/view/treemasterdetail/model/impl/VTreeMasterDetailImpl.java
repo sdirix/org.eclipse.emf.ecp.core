@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
@@ -32,7 +32,7 @@ import org.eclipse.emf.ecp.view.treemasterdetail.model.VTreeMasterDetailPackage;
  * </em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class VTreeMasterDetailImpl extends VContainedElementImpl implements VTreeMasterDetail
@@ -41,7 +41,7 @@ public class VTreeMasterDetailImpl extends VContainedElementImpl implements VTre
 	 * The cached value of the '{@link #getDetailView() <em>Detail View</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getDetailView()
 	 * @generated
 	 * @ordered
@@ -51,7 +51,7 @@ public class VTreeMasterDetailImpl extends VContainedElementImpl implements VTre
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected VTreeMasterDetailImpl()
@@ -62,7 +62,7 @@ public class VTreeMasterDetailImpl extends VContainedElementImpl implements VTre
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -74,7 +74,7 @@ public class VTreeMasterDetailImpl extends VContainedElementImpl implements VTre
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -86,21 +86,22 @@ public class VTreeMasterDetailImpl extends VContainedElementImpl implements VTre
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public NotificationChain basicSetDetailView(VView newDetailView, NotificationChain msgs)
 	{
-		VView oldDetailView = detailView;
+		final VView oldDetailView = detailView;
 		detailView = newDetailView;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
+			final ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
 				VTreeMasterDetailPackage.TREE_MASTER_DETAIL__DETAIL_VIEW, oldDetailView, newDetailView);
-			if (msgs == null)
+			if (msgs == null) {
 				msgs = notification;
-			else
+			} else {
 				msgs.add(notification);
+			}
 		}
 		return msgs;
 	}
@@ -108,7 +109,7 @@ public class VTreeMasterDetailImpl extends VContainedElementImpl implements VTre
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -117,25 +118,29 @@ public class VTreeMasterDetailImpl extends VContainedElementImpl implements VTre
 		if (newDetailView != detailView)
 		{
 			NotificationChain msgs = null;
-			if (detailView != null)
+			if (detailView != null) {
 				msgs = ((InternalEObject) detailView).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
 					- VTreeMasterDetailPackage.TREE_MASTER_DETAIL__DETAIL_VIEW, null, msgs);
-			if (newDetailView != null)
+			}
+			if (newDetailView != null) {
 				msgs = ((InternalEObject) newDetailView).eInverseAdd(this, EOPPOSITE_FEATURE_BASE
 					- VTreeMasterDetailPackage.TREE_MASTER_DETAIL__DETAIL_VIEW, null, msgs);
+			}
 			msgs = basicSetDetailView(newDetailView, msgs);
-			if (msgs != null)
+			if (msgs != null) {
 				msgs.dispatch();
+			}
 		}
-		else if (eNotificationRequired())
+		else if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				VTreeMasterDetailPackage.TREE_MASTER_DETAIL__DETAIL_VIEW, newDetailView, newDetailView));
+		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -152,7 +157,7 @@ public class VTreeMasterDetailImpl extends VContainedElementImpl implements VTre
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -169,7 +174,7 @@ public class VTreeMasterDetailImpl extends VContainedElementImpl implements VTre
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -187,7 +192,7 @@ public class VTreeMasterDetailImpl extends VContainedElementImpl implements VTre
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -205,7 +210,7 @@ public class VTreeMasterDetailImpl extends VContainedElementImpl implements VTre
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override

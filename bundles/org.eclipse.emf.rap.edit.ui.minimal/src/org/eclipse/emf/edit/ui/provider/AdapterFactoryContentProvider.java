@@ -5,7 +5,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * IBM - Initial API and implementation
  */
@@ -65,7 +65,7 @@ public class AdapterFactoryContentProvider
 
 	/**
 	 * This is used to queue viewer notifications and refresh viewers based on them.
-	 * 
+	 *
 	 * @since 2.2.0
 	 */
 	protected ViewerRefresh viewerRefresh;
@@ -291,7 +291,7 @@ public class AdapterFactoryContentProvider
 		/**
 		 * Adds a viewer notification to the queue that will be processed by this <code>ViewerRefresh</code>.
 		 * Duplicative notifications will not be queued.
-		 * 
+		 *
 		 * @param notification the notification to add to the queue
 		 * @return whether the queue has been made non-empty, which would indicate that the <code>ViewerRefresh</code>
 		 *         needs to be {@link Display#asyncExec scheduled} on the event queue
@@ -340,7 +340,7 @@ public class AdapterFactoryContentProvider
 		 * both. Note: this gives priority to a content refresh on the whole viewer over a content refresh or
 		 * label update on a specific element; however, it doesn't use parent-child relationships to determine
 		 * if refreshes on non-equal elements are duplicative.
-		 * 
+		 *
 		 * @return a single notification that is equivalent to the two parameters, or null if they are non-duplicative
 		 * @since 2.2.0
 		 */

@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
  */
@@ -24,7 +24,7 @@ import org.eclipse.emf.ecp.view.spi.compoundcontrol.model.VCompoundcontrolPackag
  * <!-- begin-user-doc -->
  * An implementation of the model <b>Factory</b>.
  * <!-- end-user-doc -->
- * 
+ *
  * @generated
  */
 public class VCompoundcontrolFactoryImpl extends EFactoryImpl implements VCompoundcontrolFactory
@@ -33,20 +33,20 @@ public class VCompoundcontrolFactoryImpl extends EFactoryImpl implements VCompou
 	 * Creates the default factory implementation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public static VCompoundcontrolFactory init()
 	{
 		try
 		{
-			VCompoundcontrolFactory theCompoundcontrolFactory = (VCompoundcontrolFactory) EPackage.Registry.INSTANCE
+			final VCompoundcontrolFactory theCompoundcontrolFactory = (VCompoundcontrolFactory) EPackage.Registry.INSTANCE
 				.getEFactory(VCompoundcontrolPackage.eNS_URI);
 			if (theCompoundcontrolFactory != null)
 			{
 				return theCompoundcontrolFactory;
 			}
-		} catch (Exception exception)
+		} catch (final Exception exception)
 		{
 			EcorePlugin.INSTANCE.log(exception);
 		}
@@ -57,7 +57,7 @@ public class VCompoundcontrolFactoryImpl extends EFactoryImpl implements VCompou
 	 * Creates an instance of the factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public VCompoundcontrolFactoryImpl()
@@ -68,7 +68,7 @@ public class VCompoundcontrolFactoryImpl extends EFactoryImpl implements VCompou
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -86,20 +86,20 @@ public class VCompoundcontrolFactoryImpl extends EFactoryImpl implements VCompou
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
 	public VCompoundControl createCompoundControl()
 	{
-		VCompoundControlImpl compoundControl = new VCompoundControlImpl();
+		final VCompoundControlImpl compoundControl = new VCompoundControlImpl();
 		return compoundControl;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -111,7 +111,7 @@ public class VCompoundcontrolFactoryImpl extends EFactoryImpl implements VCompou
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @deprecated
 	 * @generated
 	 */

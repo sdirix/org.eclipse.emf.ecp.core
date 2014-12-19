@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  *******************************************************************************/
@@ -14,13 +14,14 @@ package org.eclipse.emf.ecp.controls.fx.util;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.Locale;
 
 import org.eclipse.emf.ecp.controls.internal.fx.Activator;
 
 /**
  * @author Eugen Neufeld
- * 
+ *
  */
 public class NumericalHelper {
 
@@ -28,29 +29,29 @@ public class NumericalHelper {
 	private static final String regexFloat = "^[-+]?[0-9]*\\.?[0-9]*([eE][-+]?[0-9]+)?$";
 
 	public static String getValidRegularExpression(Locale locale,
-			Class<?> instanceClass) {
+		Class<?> instanceClass) {
 		if (instanceClass.isPrimitive()) {
 			try {
 				if (Double.class
-						.getField("TYPE").get(null).equals(instanceClass)) { //$NON-NLS-1$
+					.getField("TYPE").get(null).equals(instanceClass)) { //$NON-NLS-1$
 					return regexFloat;
 				} else if (Integer.class
-						.getField("TYPE").get(null).equals(instanceClass)) { //$NON-NLS-1$
+					.getField("TYPE").get(null).equals(instanceClass)) { //$NON-NLS-1$
 					return regexInt;
 				} else if (Long.class
-						.getField("TYPE").get(null).equals(instanceClass)) { //$NON-NLS-1$
+					.getField("TYPE").get(null).equals(instanceClass)) { //$NON-NLS-1$
 					return regexInt;
 				} else if (Float.class
-						.getField("TYPE").get(null).equals(instanceClass)) { //$NON-NLS-1$
+					.getField("TYPE").get(null).equals(instanceClass)) { //$NON-NLS-1$
 					return regexFloat;
 				}
-			} catch (IllegalArgumentException ex) {
+			} catch (final IllegalArgumentException ex) {
 				Activator.logException(ex);
-			} catch (SecurityException ex) {
+			} catch (final SecurityException ex) {
 				Activator.logException(ex);
-			} catch (IllegalAccessException ex) {
+			} catch (final IllegalAccessException ex) {
 				Activator.logException(ex);
-			} catch (NoSuchFieldException ex) {
+			} catch (final NoSuchFieldException ex) {
 				Activator.logException(ex);
 			}
 		} else if (BigDecimal.class.isAssignableFrom(instanceClass)) {
@@ -71,13 +72,13 @@ public class NumericalHelper {
 	}
 
 	public static DecimalFormat setupFormat(Locale locale,
-			Class<?> instanceClass) {
+		Class<?> instanceClass) {
 
-		DecimalFormat format = (DecimalFormat) DecimalFormat
-				.getNumberInstance(locale);
+		final DecimalFormat format = (DecimalFormat) NumberFormat
+			.getNumberInstance(locale);
 		format.setParseIntegerOnly(isInteger(instanceClass));
 		format.setParseBigDecimal(instanceClass.equals(BigDecimal.class)
-				|| instanceClass.equals(BigInteger.class));
+			|| instanceClass.equals(BigInteger.class));
 		format.setGroupingUsed(false);
 
 		// EAnnotation annotation =
@@ -108,22 +109,22 @@ public class NumericalHelper {
 		if (instanceClass.isPrimitive()) {
 			try {
 				if (Double.class
+					.getField("TYPE").get(null).equals(instanceClass) //$NON-NLS-1$
+					|| Float.class
 						.getField("TYPE").get(null).equals(instanceClass) //$NON-NLS-1$
-						|| Float.class
-								.getField("TYPE").get(null).equals(instanceClass) //$NON-NLS-1$
-						|| Integer.class
-								.getField("TYPE").get(null).equals(instanceClass) //$NON-NLS-1$
-						|| Long.class
-								.getField("TYPE").get(null).equals(instanceClass)) { //$NON-NLS-1$
+					|| Integer.class
+						.getField("TYPE").get(null).equals(instanceClass) //$NON-NLS-1$
+					|| Long.class
+						.getField("TYPE").get(null).equals(instanceClass)) { //$NON-NLS-1$
 					return 0;
 				}
-			} catch (IllegalArgumentException ex) {
+			} catch (final IllegalArgumentException ex) {
 				Activator.logException(ex);
-			} catch (SecurityException ex) {
+			} catch (final SecurityException ex) {
 				Activator.logException(ex);
-			} catch (IllegalAccessException ex) {
+			} catch (final IllegalAccessException ex) {
 				Activator.logException(ex);
-			} catch (NoSuchFieldException ex) {
+			} catch (final NoSuchFieldException ex) {
 				Activator.logException(ex);
 			}
 		} else if (BigDecimal.class.isAssignableFrom(instanceClass)) {
@@ -146,16 +147,16 @@ public class NumericalHelper {
 		if (instanceClass.isPrimitive()) {
 			try {
 				return Double.class
-						.getField("TYPE").get(null).equals(instanceClass) //$NON-NLS-1$
-						|| Float.class
-								.getField("TYPE").get(null).equals(instanceClass); //$NON-NLS-1$
-			} catch (IllegalArgumentException ex) {
+					.getField("TYPE").get(null).equals(instanceClass) //$NON-NLS-1$
+					|| Float.class
+						.getField("TYPE").get(null).equals(instanceClass); //$NON-NLS-1$
+			} catch (final IllegalArgumentException ex) {
 				Activator.logException(ex);
-			} catch (SecurityException ex) {
+			} catch (final SecurityException ex) {
 				Activator.logException(ex);
-			} catch (IllegalAccessException ex) {
+			} catch (final IllegalAccessException ex) {
 				Activator.logException(ex);
-			} catch (NoSuchFieldException ex) {
+			} catch (final NoSuchFieldException ex) {
 				Activator.logException(ex);
 			}
 		} else if (BigDecimal.class.isAssignableFrom(instanceClass)) {
@@ -173,16 +174,16 @@ public class NumericalHelper {
 		if (instanceClass.isPrimitive()) {
 			try {
 				return Integer.class
-						.getField("TYPE").get(null).equals(instanceClass) //$NON-NLS-1$
-						|| Long.class
-								.getField("TYPE").get(null).equals(instanceClass); //$NON-NLS-1$
-			} catch (IllegalArgumentException ex) {
+					.getField("TYPE").get(null).equals(instanceClass) //$NON-NLS-1$
+					|| Long.class
+						.getField("TYPE").get(null).equals(instanceClass); //$NON-NLS-1$
+			} catch (final IllegalArgumentException ex) {
 				Activator.logException(ex);
-			} catch (SecurityException ex) {
+			} catch (final SecurityException ex) {
 				Activator.logException(ex);
-			} catch (IllegalAccessException ex) {
+			} catch (final IllegalAccessException ex) {
 				Activator.logException(ex);
-			} catch (NoSuchFieldException ex) {
+			} catch (final NoSuchFieldException ex) {
 				Activator.logException(ex);
 			}
 		} else if (BigInteger.class.isAssignableFrom(instanceClass)) {
@@ -201,29 +202,29 @@ public class NumericalHelper {
 	 * @return
 	 */
 	public static Object numberToInstanceClass(Number number,
-			Class<?> instanceClass) {
+		Class<?> instanceClass) {
 		if (instanceClass.isPrimitive()) {
 			try {
 				if (Double.class
-						.getField("TYPE").get(null).equals(instanceClass)) { //$NON-NLS-1$
+					.getField("TYPE").get(null).equals(instanceClass)) { //$NON-NLS-1$
 					return number.doubleValue();
 				} else if (Integer.class
-						.getField("TYPE").get(null).equals(instanceClass)) { //$NON-NLS-1$
+					.getField("TYPE").get(null).equals(instanceClass)) { //$NON-NLS-1$
 					return number.intValue();
 				} else if (Long.class
-						.getField("TYPE").get(null).equals(instanceClass)) { //$NON-NLS-1$
+					.getField("TYPE").get(null).equals(instanceClass)) { //$NON-NLS-1$
 					return number.longValue();
 				} else if (Float.class
-						.getField("TYPE").get(null).equals(instanceClass)) { //$NON-NLS-1$
+					.getField("TYPE").get(null).equals(instanceClass)) { //$NON-NLS-1$
 					return number.floatValue();
 				}
-			} catch (IllegalArgumentException ex) {
+			} catch (final IllegalArgumentException ex) {
 				Activator.logException(ex);
-			} catch (SecurityException ex) {
+			} catch (final SecurityException ex) {
 				Activator.logException(ex);
-			} catch (IllegalAccessException ex) {
+			} catch (final IllegalAccessException ex) {
 				Activator.logException(ex);
-			} catch (NoSuchFieldException ex) {
+			} catch (final NoSuchFieldException ex) {
 				Activator.logException(ex);
 			}
 		} else if (BigDecimal.class.isAssignableFrom(instanceClass)) {

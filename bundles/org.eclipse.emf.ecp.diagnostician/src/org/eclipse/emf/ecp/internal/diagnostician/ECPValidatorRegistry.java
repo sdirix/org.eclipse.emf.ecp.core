@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
  ******************************************************************************/
@@ -29,9 +29,9 @@ import org.eclipse.emf.ecp.diagnostician.ECPValidator;
  * {@link org.eclipse.emf.ecore.EValidator.Registry Registry} for {@link org.eclipse.emf.ecp.diagnostician.ECPValidator
  * ECPValidators}. The validators are retrieved
  * from the extension point.
- * 
+ *
  * @author jfaltermeier
- * 
+ *
  */
 public final class ECPValidatorRegistry extends EValidatorRegistryImpl {
 
@@ -100,7 +100,7 @@ public final class ECPValidatorRegistry extends EValidatorRegistryImpl {
 
 	/**
 	 * Check if the registry contains a validator for the given classifier.
-	 * 
+	 *
 	 * @param classifier the classifier to check
 	 * @return <code>true</code> if validator is registerd, <code>false</code> otherwise
 	 */

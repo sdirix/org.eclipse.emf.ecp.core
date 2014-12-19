@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * EclipseSource Munich - initial API and implementation
  */
@@ -16,7 +16,7 @@ import org.eclipse.emf.ecp.view.spi.model.VAttachment;
 /**
  * <!-- begin-user-doc --> A representation of the model object ' <em><b>Diff Attachment</b></em>'. <!-- end-user-doc
  * -->
- * 
+ *
  * <p>
  * The following features are supported:
  * <ul>
@@ -25,7 +25,7 @@ import org.eclipse.emf.ecp.view.spi.model.VAttachment;
  * <li>{@link org.eclipse.emf.ecp.spi.diffmerge.model.VDiffAttachment#getMergedDiffs <em>Merged Diffs</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.eclipse.emf.ecp.spi.diffmerge.model.VDiffmergePackage#getDiffAttachment()
  * @model
  * @generated
@@ -41,7 +41,7 @@ public interface VDiffAttachment extends VAttachment {
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Total Number Of Diffs</em>' attribute.
 	 * @see #setTotalNumberOfDiffs(int)
 	 * @see org.eclipse.emf.ecp.spi.diffmerge.model.VDiffmergePackage#getDiffAttachment_TotalNumberOfDiffs()
@@ -55,7 +55,7 @@ public interface VDiffAttachment extends VAttachment {
 	 * <em>Total Number Of Diffs</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Total Number Of Diffs</em>' attribute.
 	 * @see #getTotalNumberOfDiffs()
 	 * @generated
@@ -71,7 +71,7 @@ public interface VDiffAttachment extends VAttachment {
 	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Merged Diffs</em>' attribute.
 	 * @see #setMergedDiffs(int)
 	 * @see org.eclipse.emf.ecp.spi.diffmerge.model.VDiffmergePackage#getDiffAttachment_MergedDiffs()
@@ -85,7 +85,7 @@ public interface VDiffAttachment extends VAttachment {
 	 * <em>Merged Diffs</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Merged Diffs</em>' attribute.
 	 * @see #getMergedDiffs()
 	 * @generated

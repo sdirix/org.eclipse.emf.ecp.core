@@ -71,7 +71,7 @@ public class XmlDateRendererTest extends AbstractControlRendererTest {
 
 	@Test
 	public void testTextFieldChangeAffectsModel() throws ECPRendererException, ParseException,
-	DatatypeConfigurationException {
+		DatatypeConfigurationException {
 		final HBox hBox = (HBox) renderer.render(new GridCellFX(0, 2, renderer));
 		final TextField textField = (TextField) hBox.getChildren().get(0);
 
@@ -85,7 +85,7 @@ public class XmlDateRendererTest extends AbstractControlRendererTest {
 
 	@Test
 	public void testModelChangeAffectsTextField() throws ECPRendererException, ParseException,
-	DatatypeConfigurationException {
+		DatatypeConfigurationException {
 		final HBox hBox = (HBox) renderer.render(new GridCellFX(0, 2, renderer));
 		final TextField textField = (TextField) hBox.getChildren().get(0);
 

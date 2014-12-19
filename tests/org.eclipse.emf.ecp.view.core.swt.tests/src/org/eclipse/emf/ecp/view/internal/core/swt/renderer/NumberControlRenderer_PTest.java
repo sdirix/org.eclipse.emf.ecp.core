@@ -26,7 +26,7 @@ public class NumberControlRenderer_PTest extends AbstractControl_PTest {
 
 	@Before
 	public void before() {
-		SWTRendererFactory factory = mock(SWTRendererFactory.class);
+		final SWTRendererFactory factory = mock(SWTRendererFactory.class);
 		setup(new NumberControlSWTRenderer(factory));
 	}
 
@@ -37,40 +37,40 @@ public class NumberControlRenderer_PTest extends AbstractControl_PTest {
 
 	@Test
 	public void renderControlLabelAlignmentNone()
-			throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		setMockLabelAlignment(LabelAlignment.NONE);
-		Control render = renderControl(new SWTGridCell(0, 1,renderer));
+		final Control render = renderControl(new SWTGridCell(0, 1, renderer));
 		assertControl(render);
 	}
 
 	@Test
 	public void renderControlLabelAlignmentLeft()
-			throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		setMockLabelAlignment(LabelAlignment.LEFT);
-		Control render = renderControl(new SWTGridCell(0, 2,renderer));
+		final Control render = renderControl(new SWTGridCell(0, 2, renderer));
 
 		assertControl(render);
 	}
+
 	@Test
-	public void renderLabel() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption{
+	public void renderLabel() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		renderLabel("Lower Bound");
 	}
-	
 
 	private void assertControl(Control render) {
 		assertTrue(Text.class.isInstance(render));
 		assertEquals(SWT.RIGHT, Text.class.cast(render).getStyle()
-				& SWT.RIGHT);
+			& SWT.RIGHT);
 		assertEquals(SWT.RIGHT, Text.class.cast(render).getStyle()
-				& SWT.RIGHT);
-		
+			& SWT.RIGHT);
+
 		assertEquals("org_eclipse_emf_ecp_control_numerical", Text.class.cast(render).getData(CUSTOM_VARIANT));
 	}
 
 	@Override
 	protected void mockControl() {
-		EStructuralFeature eObject = EcoreFactory.eINSTANCE.createEAttribute();
-		EStructuralFeature eStructuralFeature = EcorePackage.eINSTANCE.getETypedElement_LowerBound();
+		final EStructuralFeature eObject = EcoreFactory.eINSTANCE.createEAttribute();
+		final EStructuralFeature eStructuralFeature = EcorePackage.eINSTANCE.getETypedElement_LowerBound();
 		super.mockControl(eObject, eStructuralFeature);
 	}
 

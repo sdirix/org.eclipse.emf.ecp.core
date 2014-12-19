@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eike Stepper - initial API and implementation
  * Eugen Neufeld - JavaDoc
@@ -54,7 +54,7 @@ import org.eclipse.net4j.util.io.IOUtil;
 
 /**
  * This class manages the repositories.
- * 
+ *
  * @author Eike Stepper
  * @author Eugen Neufeld
  */
@@ -62,7 +62,7 @@ public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepo
 	ECPRepositoryManager, ECPProvidersChangedObserver {
 	/**
 	 * The Singleton to access the implementation of the Default ECPRepositoryManagerImpl.
-	 * 
+	 *
 	 * @deprecated use {@link ECPUtil} instead
 	 */
 	@Deprecated
@@ -112,7 +112,7 @@ public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepo
 
 	/**
 	 * Checks whether any repositories are available.
-	 * 
+	 *
 	 * @return true if any repository is available, false otherwise
 	 */
 	public boolean hasRepositories() {
@@ -138,7 +138,7 @@ public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepo
 
 	/**
 	 * This is called by the {@link ECPRepository} to notificate observers about chnages it its objects.
-	 * 
+	 *
 	 * @param repository the repository where the changes occured
 	 * @param objects the changed objects
 	 */

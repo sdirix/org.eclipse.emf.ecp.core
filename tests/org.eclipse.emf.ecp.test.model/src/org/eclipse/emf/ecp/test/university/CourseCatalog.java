@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * EclipseSource - Generated code
  */
@@ -41,7 +41,7 @@ public interface CourseCatalog extends EObject
 	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Courses</em>' containment reference list.
 	 * @see org.eclipse.emf.ecp.test.university.UniversityPackage#getCourseCatalog_Courses()
 	 * @model containment="true"

@@ -11,16 +11,16 @@ import org.eclipse.emf.ecp.controls.internal.fx.Activator;
 import com.ibm.icu.text.NumberFormat;
 
 public class ECPNumericalFieldToModelUpdateValueStrategy extends
-		ECPTextFieldToModelUpdateValueStrategy {
+	ECPTextFieldToModelUpdateValueStrategy {
 
 	public ECPNumericalFieldToModelUpdateValueStrategy(Class<?> clazz) {
-		IConverter converter = getConverter(clazz);
+		final IConverter converter = getConverter(clazz);
 		setConverter(converter);
 	}
 
 	private IConverter getConverter(Class<?> clazz) {
-		Locale locale = Locale.getDefault();
-		NumberFormat numberInstance = NumberFormat.getNumberInstance(locale);
+		final Locale locale = Locale.getDefault();
+		final NumberFormat numberInstance = NumberFormat.getNumberInstance(locale);
 		numberInstance.setParseIntegerOnly(NumericalHelper.isInteger(clazz));
 		numberInstance.setGroupingUsed(false);
 		numberInstance.setMaximumFractionDigits(100);
@@ -29,24 +29,24 @@ public class ECPNumericalFieldToModelUpdateValueStrategy extends
 			try {
 				if (Double.class.getField("TYPE").get(null).equals(clazz)) { //$NON-NLS-1$
 					return StringToNumberConverter.toDouble(numberInstance,
-							true);
+						true);
 				} else if (Float.class.getField("TYPE").get(null).equals(clazz)) { //$NON-NLS-1$
 					return StringToNumberConverter
-							.toFloat(numberInstance, true);
+						.toFloat(numberInstance, true);
 				} else if (Integer.class
-						.getField("TYPE").get(null).equals(clazz)) { //$NON-NLS-1$
+					.getField("TYPE").get(null).equals(clazz)) { //$NON-NLS-1$
 					return StringToNumberConverter.toInteger(numberInstance,
-							true);
+						true);
 				} else if (Long.class.getField("TYPE").get(null).equals(clazz)) { //$NON-NLS-1$
 					return StringToNumberConverter.toLong(numberInstance, true);
 				}
-			} catch (IllegalArgumentException ex) {
+			} catch (final IllegalArgumentException ex) {
 				Activator.logException(ex);
-			} catch (SecurityException ex) {
+			} catch (final SecurityException ex) {
 				Activator.logException(ex);
-			} catch (IllegalAccessException ex) {
+			} catch (final IllegalAccessException ex) {
 				Activator.logException(ex);
-			} catch (NoSuchFieldException ex) {
+			} catch (final NoSuchFieldException ex) {
 				Activator.logException(ex);
 			}
 		} else if (BigDecimal.class.isAssignableFrom(clazz)) {

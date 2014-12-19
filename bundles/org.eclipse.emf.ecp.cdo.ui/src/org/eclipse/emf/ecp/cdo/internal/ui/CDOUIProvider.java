@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011 Eike Stepper (Berlin, Germany) and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eike Stepper - initial API and implementation
  *******************************************************************************/
@@ -40,7 +40,7 @@ import org.eclipse.ui.views.properties.IPropertySourceProvider;
 
 /**
  * Provides UI for the CDO Provider for ECP.
- * 
+ *
  * @author Eike Stepper
  */
 public class CDOUIProvider extends DefaultUIProvider {
@@ -55,7 +55,7 @@ public class CDOUIProvider extends DefaultUIProvider {
 	@Override
 	public String getText(Object element) {
 		if (element instanceof CDOResourceNode) {
-			CDOResourceNode node = (CDOResourceNode) element;
+			final CDOResourceNode node = (CDOResourceNode) element;
 			return node.getName();
 		}
 
@@ -100,18 +100,18 @@ public class CDOUIProvider extends DefaultUIProvider {
 	@Override
 	public Control createAddRepositoryUI(Composite parent, final ECPProperties repositoryProperties,
 		final Text repositoryNameText, Text repositoryLabelText, Text repositoryDescriptionText) {
-		GridLayout mainLayout = new GridLayout(1, false);
+		final GridLayout mainLayout = new GridLayout(1, false);
 		mainLayout.marginWidth = 0;
 		mainLayout.marginHeight = 0;
 
-		Composite composite = new Composite(parent, SWT.NONE);
+		final Composite composite = new Composite(parent, SWT.NONE);
 		composite.setLayout(mainLayout);
 
-		GridLayout group1Layout = new GridLayout(1, false);
+		final GridLayout group1Layout = new GridLayout(1, false);
 		group1Layout.marginWidth = 0;
 		group1Layout.marginHeight = 0;
 
-		Group group1 = new Group(composite, SWT.NONE);
+		final Group group1 = new Group(composite, SWT.NONE);
 		group1.setLayout(group1Layout);
 		group1.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
 		group1.setText("Connection"); //$NON-NLS-1$
@@ -127,7 +127,7 @@ public class CDOUIProvider extends DefaultUIProvider {
 			}
 		});
 
-		Group group2 = new Group(composite, SWT.NONE);
+		final Group group2 = new Group(composite, SWT.NONE);
 		group2.setLayout(new GridLayout(1, false));
 		group2.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
 		group2.setText("Repository"); //$NON-NLS-1$

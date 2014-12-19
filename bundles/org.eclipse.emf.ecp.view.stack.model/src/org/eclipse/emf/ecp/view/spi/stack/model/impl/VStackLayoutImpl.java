@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
  */
@@ -40,7 +40,7 @@ import org.eclipse.emf.ecp.view.spi.stack.model.VStackPackage;
  * <li>{@link org.eclipse.emf.ecp.view.spi.stack.model.impl.VStackLayoutImpl#getTopElement <em>Top Element</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class VStackLayoutImpl extends VContainedElementImpl implements VStackLayout
@@ -50,7 +50,7 @@ public class VStackLayoutImpl extends VContainedElementImpl implements VStackLay
 	 * reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getDomainModelReference()
 	 * @generated
 	 * @ordered
@@ -61,7 +61,7 @@ public class VStackLayoutImpl extends VContainedElementImpl implements VStackLay
 	 * The cached value of the '{@link #getStackItems() <em>Stack Items</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getStackItems()
 	 * @generated
 	 * @ordered
@@ -72,7 +72,7 @@ public class VStackLayoutImpl extends VContainedElementImpl implements VStackLay
 	 * The cached value of the '{@link #getTopElement() <em>Top Element</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getTopElement()
 	 * @generated
 	 * @ordered
@@ -82,7 +82,7 @@ public class VStackLayoutImpl extends VContainedElementImpl implements VStackLay
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected VStackLayoutImpl()
@@ -93,7 +93,7 @@ public class VStackLayoutImpl extends VContainedElementImpl implements VStackLay
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -105,7 +105,7 @@ public class VStackLayoutImpl extends VContainedElementImpl implements VStackLay
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -117,22 +117,23 @@ public class VStackLayoutImpl extends VContainedElementImpl implements VStackLay
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public NotificationChain basicSetDomainModelReference(VDomainModelReference newDomainModelReference,
 		NotificationChain msgs)
 	{
-		VDomainModelReference oldDomainModelReference = domainModelReference;
+		final VDomainModelReference oldDomainModelReference = domainModelReference;
 		domainModelReference = newDomainModelReference;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
+			final ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
 				VStackPackage.STACK_LAYOUT__DOMAIN_MODEL_REFERENCE, oldDomainModelReference, newDomainModelReference);
-			if (msgs == null)
+			if (msgs == null) {
 				msgs = notification;
-			else
+			} else {
 				msgs.add(notification);
+			}
 		}
 		return msgs;
 	}
@@ -140,7 +141,7 @@ public class VStackLayoutImpl extends VContainedElementImpl implements VStackLay
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -149,25 +150,29 @@ public class VStackLayoutImpl extends VContainedElementImpl implements VStackLay
 		if (newDomainModelReference != domainModelReference)
 		{
 			NotificationChain msgs = null;
-			if (domainModelReference != null)
+			if (domainModelReference != null) {
 				msgs = ((InternalEObject) domainModelReference).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
 					- VStackPackage.STACK_LAYOUT__DOMAIN_MODEL_REFERENCE, null, msgs);
-			if (newDomainModelReference != null)
+			}
+			if (newDomainModelReference != null) {
 				msgs = ((InternalEObject) newDomainModelReference).eInverseAdd(this, EOPPOSITE_FEATURE_BASE
 					- VStackPackage.STACK_LAYOUT__DOMAIN_MODEL_REFERENCE, null, msgs);
+			}
 			msgs = basicSetDomainModelReference(newDomainModelReference, msgs);
-			if (msgs != null)
+			if (msgs != null) {
 				msgs.dispatch();
+			}
 		}
-		else if (eNotificationRequired())
+		else if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, VStackPackage.STACK_LAYOUT__DOMAIN_MODEL_REFERENCE,
 				newDomainModelReference, newDomainModelReference));
+		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -184,7 +189,7 @@ public class VStackLayoutImpl extends VContainedElementImpl implements VStackLay
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -192,13 +197,14 @@ public class VStackLayoutImpl extends VContainedElementImpl implements VStackLay
 	{
 		if (topElement != null && topElement.eIsProxy())
 		{
-			InternalEObject oldTopElement = (InternalEObject) topElement;
+			final InternalEObject oldTopElement = (InternalEObject) topElement;
 			topElement = (VStackItem) eResolveProxy(oldTopElement);
 			if (topElement != oldTopElement)
 			{
-				if (eNotificationRequired())
+				if (eNotificationRequired()) {
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, VStackPackage.STACK_LAYOUT__TOP_ELEMENT,
 						oldTopElement, topElement));
+				}
 			}
 		}
 		return topElement;
@@ -207,7 +213,7 @@ public class VStackLayoutImpl extends VContainedElementImpl implements VStackLay
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public VStackItem basicGetTopElement()
@@ -218,23 +224,24 @@ public class VStackLayoutImpl extends VContainedElementImpl implements VStackLay
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
 	public void setTopElement(VStackItem newTopElement)
 	{
-		VStackItem oldTopElement = topElement;
+		final VStackItem oldTopElement = topElement;
 		topElement = newTopElement;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, VStackPackage.STACK_LAYOUT__TOP_ELEMENT,
 				oldTopElement, topElement));
+		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -253,7 +260,7 @@ public class VStackLayoutImpl extends VContainedElementImpl implements VStackLay
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -266,8 +273,9 @@ public class VStackLayoutImpl extends VContainedElementImpl implements VStackLay
 		case VStackPackage.STACK_LAYOUT__STACK_ITEMS:
 			return getStackItems();
 		case VStackPackage.STACK_LAYOUT__TOP_ELEMENT:
-			if (resolve)
+			if (resolve) {
 				return getTopElement();
+			}
 			return basicGetTopElement();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -276,7 +284,7 @@ public class VStackLayoutImpl extends VContainedElementImpl implements VStackLay
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
@@ -302,7 +310,7 @@ public class VStackLayoutImpl extends VContainedElementImpl implements VStackLay
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -326,7 +334,7 @@ public class VStackLayoutImpl extends VContainedElementImpl implements VStackLay
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override

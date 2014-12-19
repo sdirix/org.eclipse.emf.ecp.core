@@ -165,8 +165,8 @@ public final class ECPImportHandlerHelper {
 		}
 		if (!imported) {
 			MessageDialog
-			.openWarning(shell, "No Imports", //$NON-NLS-1$
-				"No Objects were imported, the model element you selected probably can't contain the element you try to import."); //$NON-NLS-1$
+				.openWarning(shell, "No Imports", //$NON-NLS-1$
+					"No Objects were imported, the model element you selected probably can't contain the element you try to import."); //$NON-NLS-1$
 		}
 	}
 

@@ -5,7 +5,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  ******************************************************************************/
 package org.eclipse.emf.ecp.editor.internal.e3;
@@ -20,7 +20,7 @@ import org.eclipse.core.runtime.IConfigurationElement;
 
 /**
  * Represents a page candidate to be showsn in meeditor.
- * 
+ *
  * @author helming
  */
 public final class PageCandidate {
@@ -45,7 +45,7 @@ public final class PageCandidate {
 	 * means, pages replaced by others will be omitted and pages with the after attribute set to a valid page name will
 	 * be sorted so they appear after that page. If a page that has elements "after" it is replaced, the elements will
 	 * instead be after the replacing page.
-	 * 
+	 *
 	 * @param input A list of MEEditor page candidates (directly from reading the extensions for the pages extension
 	 *            point)
 	 * @return A properly ordered list of all pages to be added to the MEEditor.
@@ -77,7 +77,7 @@ public final class PageCandidate {
 
 	/**
 	 * Constructor of a page candidate.
-	 * 
+	 *
 	 * @param page the wrapped page
 	 */
 	private PageCandidate(IConfigurationElement page) {
@@ -131,7 +131,7 @@ public final class PageCandidate {
 	/**
 	 * This function enqueues this page candidate into the List l, unless it is replaced by another page or is already
 	 * in the list.
-	 * 
+	 *
 	 * @param l The list to enqueue this page
 	 */
 	private void enqueue(List<PageCandidate> l) {
@@ -164,7 +164,7 @@ public final class PageCandidate {
 	/**
 	 * This method determines the ordered resulting page list. Replaced pages will be omitted and all other pages will
 	 * be in the desired order
-	 * 
+	 *
 	 * @return A properly ordered list of all non-replaced page candidates.
 	 */
 	private static List<PageCandidate> determineOrder() {

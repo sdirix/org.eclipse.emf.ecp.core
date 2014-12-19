@@ -30,7 +30,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * @generated
  */
 public class VMappingdmrPackageImpl extends EPackageImpl implements
-VMappingdmrPackage {
+	VMappingdmrPackage {
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 *
@@ -100,15 +100,15 @@ VMappingdmrPackage {
 
 		// Register package validator
 		EValidator.Registry.INSTANCE.put
-		(theMappingdmrPackage,
-			new EValidator.Descriptor()
-		{
-			@Override
-			public EValidator getEValidator()
-			{
-				return MappingdmrValidator.INSTANCE;
-			}
-		});
+			(theMappingdmrPackage,
+				new EValidator.Descriptor()
+				{
+					@Override
+					public EValidator getEValidator()
+					{
+						return MappingdmrValidator.INSTANCE;
+					}
+				});
 
 		// Mark meta-data to indicate it can't be changed
 		theMappingdmrPackage.freeze();
@@ -257,8 +257,8 @@ VMappingdmrPackage {
 		addAnnotation(mappingDomainModelReferenceEClass,
 			source,
 			new String[]
-				{ "constraints", "resolveable" //$NON-NLS-1$ //$NON-NLS-2$
-				});
+			{ "constraints", "resolveable" //$NON-NLS-1$ //$NON-NLS-2$
+			});
 	}
 
 } // VMappingdmrPackageImpl

@@ -1,14 +1,14 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
- * 
+ *
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt;
 
@@ -67,7 +67,7 @@ public class Activator extends Plugin {
 	// END SUPRESS CATCH EXCEPTION
 	/**
 	 * Returns the shared instance.
-	 * 
+	 *
 	 * @return the shared instance
 	 */
 	public static Activator getDefault() {
@@ -76,7 +76,7 @@ public class Activator extends Plugin {
 
 	/**
 	 * Logs exception.
-	 * 
+	 *
 	 * @param e the {@link Exception} to log
 	 */
 	public static void logException(Exception e) {
@@ -108,7 +108,7 @@ public class Activator extends Plugin {
 
 	/**
 	 * Loads an image based on the provided path form this bundle.
-	 * 
+	 *
 	 * @param path the bundle specific path to the image
 	 * @return the {@link Image}
 	 */
@@ -123,7 +123,7 @@ public class Activator extends Plugin {
 
 	/**
 	 * Loads an image for the given Action.
-	 * 
+	 *
 	 * @param action the action
 	 * @return the {@link Image}
 	 */
@@ -140,7 +140,7 @@ public class Activator extends Plugin {
 	/**
 	 * Loads an image based on the provided {@link URL} form this bundle. The url may be null, then an empty image is
 	 * returned.
-	 * 
+	 *
 	 * @param url the {@link URL} to load the {@link Image} from
 	 * @return the {@link Image}
 	 */
@@ -158,7 +158,7 @@ public class Activator extends Plugin {
 
 	/**
 	 * Loads an {@link ImageDescriptor} based on the provided path form this bundle.
-	 * 
+	 *
 	 * @param path the bundle specific path to the {@link ImageDescriptor}
 	 * @return the {@link ImageDescriptor}
 	 */
@@ -173,7 +173,7 @@ public class Activator extends Plugin {
 
 	/**
 	 * Loads an {@link ImageData} based on the provided {@link URL}.
-	 * 
+	 *
 	 * @param url the {@link URL} to the {@link ImageData}
 	 * @return the {@link ImageData}
 	 */
@@ -185,7 +185,7 @@ public class Activator extends Plugin {
 
 	/**
 	 * Returns the currentInstance of the control factory.
-	 * 
+	 *
 	 * @return the {@link ECPControlFactory}
 	 */
 	public ECPControlFactory getECPControlFactory() {
@@ -211,7 +211,7 @@ public class Activator extends Plugin {
 
 	/**
 	 * Returns the currentInstance of the {@link VTViewTemplateProvider}.
-	 * 
+	 *
 	 * @return the {@link ECPControlFactory}
 	 */
 	public VTViewTemplateProvider getVTViewTemplateProvider() {

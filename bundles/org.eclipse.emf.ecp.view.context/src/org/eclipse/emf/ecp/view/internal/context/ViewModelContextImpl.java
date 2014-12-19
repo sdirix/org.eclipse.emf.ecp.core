@@ -488,8 +488,8 @@ public class ViewModelContextImpl implements ViewModelContext {
 		}
 
 		Activator.getInstance()
-		.getReportService()
-		.report(new ViewModelServiceNotAvailableReport(serviceType));
+			.getReportService()
+			.report(new ViewModelServiceNotAvailableReport(serviceType));
 
 		return null;
 	}

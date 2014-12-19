@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * EclipseSource Munich - initial API and implementation
  */
@@ -50,7 +50,7 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
  * Note that most of the adapters are shared among multiple instances.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
- * 
+ *
  * @generated
  */
 public class ViewModelElementItemProviderAdapterFactory extends ViewModelElementAdapterFactory implements
@@ -59,7 +59,7 @@ public class ViewModelElementItemProviderAdapterFactory extends ViewModelElement
 	 * This keeps track of the root adapter factory that delegates to this adapter factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected ComposedAdapterFactory parentAdapterFactory;
@@ -68,7 +68,7 @@ public class ViewModelElementItemProviderAdapterFactory extends ViewModelElement
 	 * This is used to implement {@link org.eclipse.emf.edit.provider.IChangeNotifier}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected IChangeNotifier changeNotifier = new ChangeNotifier();
@@ -77,7 +77,7 @@ public class ViewModelElementItemProviderAdapterFactory extends ViewModelElement
 	 * This helps manage the child creation extenders.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected ChildCreationExtenderManager childCreationExtenderManager = new ChildCreationExtenderManager(
@@ -87,7 +87,7 @@ public class ViewModelElementItemProviderAdapterFactory extends ViewModelElement
 	 * This keeps track of all the supported types checked by {@link #isFactoryForType isFactoryForType}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected Collection<Object> supportedTypes = new ArrayList<Object>();
@@ -96,7 +96,7 @@ public class ViewModelElementItemProviderAdapterFactory extends ViewModelElement
 	 * This constructs an instance.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public ViewModelElementItemProviderAdapterFactory() {
@@ -112,7 +112,7 @@ public class ViewModelElementItemProviderAdapterFactory extends ViewModelElement
 	 * {@link org.eclipse.emf.ecp.view.template.selector.viewModelElement.model.VTViewModelElementSelector} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected ViewModelElementSelectorItemProvider viewModelElementSelectorItemProvider;
@@ -122,7 +122,7 @@ public class ViewModelElementItemProviderAdapterFactory extends ViewModelElement
 	 * {@link org.eclipse.emf.ecp.view.template.selector.viewModelElement.model.VTViewModelElementSelector}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -139,7 +139,7 @@ public class ViewModelElementItemProviderAdapterFactory extends ViewModelElement
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -151,7 +151,7 @@ public class ViewModelElementItemProviderAdapterFactory extends ViewModelElement
 	 * This sets the composed adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -162,7 +162,7 @@ public class ViewModelElementItemProviderAdapterFactory extends ViewModelElement
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -174,7 +174,7 @@ public class ViewModelElementItemProviderAdapterFactory extends ViewModelElement
 	 * This implementation substitutes the factory itself as the key for the adapter.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -185,7 +185,7 @@ public class ViewModelElementItemProviderAdapterFactory extends ViewModelElement
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -205,7 +205,7 @@ public class ViewModelElementItemProviderAdapterFactory extends ViewModelElement
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public List<IChildCreationExtender> getChildCreationExtenders() {
@@ -215,7 +215,7 @@ public class ViewModelElementItemProviderAdapterFactory extends ViewModelElement
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -226,7 +226,7 @@ public class ViewModelElementItemProviderAdapterFactory extends ViewModelElement
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -238,7 +238,7 @@ public class ViewModelElementItemProviderAdapterFactory extends ViewModelElement
 	 * This adds a listener.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -250,7 +250,7 @@ public class ViewModelElementItemProviderAdapterFactory extends ViewModelElement
 	 * This removes a listener.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -262,7 +262,7 @@ public class ViewModelElementItemProviderAdapterFactory extends ViewModelElement
 	 * This delegates to {@link #changeNotifier} and to {@link #parentAdapterFactory}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -279,7 +279,7 @@ public class ViewModelElementItemProviderAdapterFactory extends ViewModelElement
 	 * This disposes all of the item providers created by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -293,7 +293,7 @@ public class ViewModelElementItemProviderAdapterFactory extends ViewModelElement
 	 * A child creation extender for the {@link VTTemplatePackage}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public static class TemplateChildCreationExtender implements IChildCreationExtender {
@@ -301,7 +301,7 @@ public class ViewModelElementItemProviderAdapterFactory extends ViewModelElement
 		 * The switch for creating child descriptors specific to each extended class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		protected static class CreationSwitch extends TemplateSwitch<Object> {
@@ -309,7 +309,7 @@ public class ViewModelElementItemProviderAdapterFactory extends ViewModelElement
 			 * The child descriptors being populated.
 			 * <!-- begin-user-doc -->
 			 * <!-- end-user-doc -->
-			 * 
+			 *
 			 * @generated
 			 */
 			protected List<Object> newChildDescriptors;
@@ -318,7 +318,7 @@ public class ViewModelElementItemProviderAdapterFactory extends ViewModelElement
 			 * The domain in which to create the children.
 			 * <!-- begin-user-doc -->
 			 * <!-- end-user-doc -->
-			 * 
+			 *
 			 * @generated
 			 */
 			protected EditingDomain editingDomain;
@@ -327,7 +327,7 @@ public class ViewModelElementItemProviderAdapterFactory extends ViewModelElement
 			 * Creates the a switch for populating child descriptors in the given domain.
 			 * <!-- begin-user-doc -->
 			 * <!-- end-user-doc -->
-			 * 
+			 *
 			 * @generated
 			 */
 			CreationSwitch(List<Object> newChildDescriptors, EditingDomain editingDomain) {
@@ -338,7 +338,7 @@ public class ViewModelElementItemProviderAdapterFactory extends ViewModelElement
 			/**
 			 * <!-- begin-user-doc -->
 			 * <!-- end-user-doc -->
-			 * 
+			 *
 			 * @generated
 			 */
 			@Override
@@ -354,7 +354,7 @@ public class ViewModelElementItemProviderAdapterFactory extends ViewModelElement
 			/**
 			 * <!-- begin-user-doc -->
 			 * <!-- end-user-doc -->
-			 * 
+			 *
 			 * @generated
 			 */
 			protected CommandParameter createChildParameter(Object feature, Object child) {
@@ -366,7 +366,7 @@ public class ViewModelElementItemProviderAdapterFactory extends ViewModelElement
 		/**
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		@Override
@@ -379,7 +379,7 @@ public class ViewModelElementItemProviderAdapterFactory extends ViewModelElement
 		/**
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		@Override

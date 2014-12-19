@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011 Eike Stepper (Berlin, Germany) and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eike Stepper - initial API and implementation
  *******************************************************************************/
@@ -60,7 +60,7 @@ public abstract class TreeView extends ViewPart implements ISelectionProvider, I
 
 	/**
 	 * Default constructor.
-	 * 
+	 *
 	 * @param id the ID of the Tree View, used to identify the {@link TreeView}
 	 */
 	public TreeView(String id)
@@ -70,7 +70,7 @@ public abstract class TreeView extends ViewPart implements ISelectionProvider, I
 
 	/**
 	 * Retrieves the ID of this {@link TreeView}.
-	 * 
+	 *
 	 * @return the id as a {@link String}
 	 */
 	public final String getID()
@@ -80,7 +80,7 @@ public abstract class TreeView extends ViewPart implements ISelectionProvider, I
 
 	/**
 	 * Returns JFace {@link TreeViewer} used in this {@link TreeViewer}.
-	 * 
+	 *
 	 * @return a {@link TreeViewer}
 	 */
 	public final TreeViewer getViewer()
@@ -90,7 +90,7 @@ public abstract class TreeView extends ViewPart implements ISelectionProvider, I
 
 	/**
 	 * Return the refresh action, which triggers a reload on the TreeViewer.
-	 * 
+	 *
 	 * @return an {@link Action}
 	 */
 	public final Action getRefreshAction()
@@ -195,7 +195,7 @@ public abstract class TreeView extends ViewPart implements ISelectionProvider, I
 
 	/**
 	 * Shows a message to the user.
-	 * 
+	 *
 	 * @param message the message as a String
 	 */
 	protected void showMessage(String message)
@@ -205,7 +205,7 @@ public abstract class TreeView extends ViewPart implements ISelectionProvider, I
 
 	/**
 	 * Creates a label decorator.
-	 * 
+	 *
 	 * @return the label decorator to be used by the TreeView
 	 */
 	protected ILabelDecorator createLabelDecorator()
@@ -215,7 +215,7 @@ public abstract class TreeView extends ViewPart implements ISelectionProvider, I
 
 	/**
 	 * Creates the {@link TreeViewer}. To be implemented by sub classes.
-	 * 
+	 *
 	 * @param parent the parent composite to place the TreeViewer on.
 	 * @return the {@link TreeViewer}
 	 */
@@ -223,7 +223,7 @@ public abstract class TreeView extends ViewPart implements ISelectionProvider, I
 
 	/**
 	 * Fills the menue of the view. Can be overridden by sub classes.
-	 * 
+	 *
 	 * @param manager the {@link IMenuManager} to be filled.
 	 */
 	protected void fillLocalPullDown(IMenuManager manager)
@@ -234,7 +234,7 @@ public abstract class TreeView extends ViewPart implements ISelectionProvider, I
 
 	/**
 	 * Fills the toolbar of the view. Can be overridden by sub classes.
-	 * 
+	 *
 	 * @param manager the {@link IToolBarManager} to be filled.
 	 */
 	protected void fillLocalToolBar(IToolBarManager manager)
@@ -246,7 +246,7 @@ public abstract class TreeView extends ViewPart implements ISelectionProvider, I
 
 	/**
 	 * Fills the contect menu of the view. Can be overriden by sub classes.
-	 * 
+	 *
 	 * @param manager the {@link IMenuManager} to be filled.
 	 */
 	protected void fillContextMenu(IMenuManager manager)
@@ -259,7 +259,7 @@ public abstract class TreeView extends ViewPart implements ISelectionProvider, I
 	/**
 	 * Called if a double click is triggered in the TreeViewer. Can be overridden by sub classes to add some behavior on
 	 * double click.
-	 * 
+	 *
 	 * @param event the {@link DoubleClickEvent}
 	 */
 	protected void doubleClicked(DoubleClickEvent event)

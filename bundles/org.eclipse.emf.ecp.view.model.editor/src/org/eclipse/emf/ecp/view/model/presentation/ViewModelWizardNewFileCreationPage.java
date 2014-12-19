@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Alexandra Buzila - initial API and implementation
  ******************************************************************************/
@@ -29,12 +29,12 @@ import org.eclipse.ui.dialogs.WizardNewFileCreationPage;
 
 /**
  * @author Alexandra Buzila
- * 
+ *
  */
 /**
  * This is the first page of the wizard. <!-- begin-user-doc --> <!--
  * end-user-doc -->
- * 
+ *
  * @generated
  */
 public class ViewModelWizardNewFileCreationPage extends
@@ -43,7 +43,7 @@ public class ViewModelWizardNewFileCreationPage extends
 	/**
 	 * The supported extensions for created files. <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public static final List<String> FILE_EXTENSIONS = Collections
@@ -54,7 +54,7 @@ public class ViewModelWizardNewFileCreationPage extends
 	/**
 	 * A formatted list of supported file extensions, suitable for display. <!--
 	 * begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public static final String FORMATTED_FILE_EXTENSIONS = ViewEditorPlugin.INSTANCE
@@ -80,7 +80,7 @@ public class ViewModelWizardNewFileCreationPage extends
 
 	/**
 	 * Pass in the selection. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public ViewModelWizardNewFileCreationPage(String pageId,
@@ -91,7 +91,7 @@ public class ViewModelWizardNewFileCreationPage extends
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.ui.dialogs.WizardNewFileCreationPage#setVisible(boolean)
 	 */
 	@Override
@@ -141,7 +141,7 @@ public class ViewModelWizardNewFileCreationPage extends
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.ui.dialogs.WizardNewFileCreationPage#createControl(org.eclipse.swt.widgets.Composite)
 	 */
 	@Override
@@ -152,7 +152,7 @@ public class ViewModelWizardNewFileCreationPage extends
 	/**
 	 * The framework calls this to see if the file is correct. <!--
 	 * begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -173,7 +173,7 @@ public class ViewModelWizardNewFileCreationPage extends
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public IFile getModelFile() {

@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen - initial API and implementation
  ******************************************************************************/
@@ -26,10 +26,10 @@ import org.osgi.framework.Bundle;
 
 /**
  * The helper class allowing an easy access to {@link LayoutProvider LayoutProviders}.
- * 
+ *
  * @author Eugen Neufeld
  * @since 1.3
- * 
+ *
  */
 public final class LayoutProviderHelper {
 	private static final String CLASS_CANNOT_BE_RESOLVED = "%1$s cannot be loaded because bundle %2$s cannot be resolved."; //$NON-NLS-1$
@@ -96,9 +96,9 @@ public final class LayoutProviderHelper {
 
 	/**
 	 * Eases the access to the layout provider extension point. For the method description.
-	 * 
+	 *
 	 * @see LayoutProvider#getColumnLayout(int, boolean)
-	 * 
+	 *
 	 * @param numColumns the number of columns to create
 	 * @param equalWidth whether the columns should be equal width
 	 * @return the layout to use
@@ -110,9 +110,9 @@ public final class LayoutProviderHelper {
 
 	/**
 	 * Eases the access to the layout provider extension point. For the method description.
-	 * 
+	 *
 	 * @see LayoutProvider#getLayoutData(GridCell, GridDescription, GridDescription, GridDescription, VElement, Control)
-	 * 
+	 *
 	 * @param gridCell the current {@link GridCell}
 	 * @param controlGridDescription the {@link GridDescription} of the rendered {@link VElement}
 	 * @param currentRowGridDescription the {@link GridDescription} of the current row
@@ -145,7 +145,7 @@ public final class LayoutProviderHelper {
 
 	/**
 	 * The layout data for a spanning layout.
-	 * 
+	 *
 	 * @param spanX the horizontal span
 	 * @param spanY the vertical span
 	 * @return a simple spanning layout

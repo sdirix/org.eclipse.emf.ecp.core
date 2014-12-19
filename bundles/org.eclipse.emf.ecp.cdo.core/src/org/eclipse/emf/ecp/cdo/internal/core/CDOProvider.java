@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011 Eike Stepper (Berlin, Germany) and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eike Stepper - initial API and implementation
  *******************************************************************************/
@@ -103,7 +103,7 @@ public class CDOProvider extends DefaultProvider {
 
 	/**
 	 * Get the CDO Provider singleton.
-	 * 
+	 *
 	 * @return the singleton instance or null
 	 */
 	public static CDOProvider getInstance() {
@@ -216,7 +216,7 @@ public class CDOProvider extends DefaultProvider {
 
 	/**
 	 * Creates a provider specific project for the given internal project.
-	 * 
+	 *
 	 * @param project the internal project
 	 */
 	protected void createProject(InternalProject project) {
@@ -242,7 +242,7 @@ public class CDOProvider extends DefaultProvider {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 */
 	@Override
 	public ECPContainer getModelContext(Object element) {
@@ -260,7 +260,7 @@ public class CDOProvider extends DefaultProvider {
 
 	/**
 	 * Create and store a {@link CDOWorkspaceConfiguration} for the given internal project.
-	 * 
+	 *
 	 * @param project the internal project.
 	 * @return the {@link CDOWorkspaceConfiguration}
 	 */
@@ -289,7 +289,7 @@ public class CDOProvider extends DefaultProvider {
 
 	/**
 	 * Create and store a {@link CDOWorkspaceBase}.
-	 * 
+	 *
 	 * @param project the internal project.
 	 * @param folder the folder to put the {@link CDOWorkspaceBase} into
 	 * @return the {@link CDOWorkspaceBase}
@@ -303,7 +303,7 @@ public class CDOProvider extends DefaultProvider {
 
 	/**
 	 * Create a local {@link IDBStore}.
-	 * 
+	 *
 	 * @param project the internal project
 	 * @param folder the folder to store the data in
 	 * @return the {@link IDBStore}
@@ -324,7 +324,7 @@ public class CDOProvider extends DefaultProvider {
 
 	/**
 	 * Dispose the given project and its data.
-	 * 
+	 *
 	 * @param project the internal project
 	 */
 	protected void disposeProject(InternalProject project) {
@@ -334,7 +334,7 @@ public class CDOProvider extends DefaultProvider {
 
 	/**
 	 * Remove the internal project and its configuration data.
-	 * 
+	 *
 	 * @param project the internal project
 	 */
 	protected void removeProject(InternalProject project) {
@@ -348,7 +348,7 @@ public class CDOProvider extends DefaultProvider {
 
 	/**
 	 * Retrieve {@link CDORepositoryData} for a given {@link InternalRepository}.
-	 * 
+	 *
 	 * @param repository the internal repositorz
 	 * @return the {@link CDORepositoryData}
 	 */
@@ -366,7 +366,7 @@ public class CDOProvider extends DefaultProvider {
 
 	/**
 	 * Get {@link CDOProjectData} for the given internal project.
-	 * 
+	 *
 	 * @param project the internal project
 	 * @return the {@link CDOProjectData}
 	 */
@@ -384,7 +384,7 @@ public class CDOProvider extends DefaultProvider {
 
 	/**
 	 * Get the folder for the configuration data of the internal project.
-	 * 
+	 *
 	 * @param project the internal project.
 	 * @return the {@link File}
 	 */
@@ -420,7 +420,7 @@ public class CDOProvider extends DefaultProvider {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.spi.core.InternalProvider#isThreadSafe()
 	 */
 	@Override

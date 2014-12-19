@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
  ******************************************************************************/
@@ -25,15 +25,15 @@ import org.eclipse.swt.widgets.Composite;
 
 /**
  * This is a control for {@link org.eclipse.emf.ecore.EClassifier EClassifier}s.
- * 
+ *
  * @author jfaltermeier
- * 
+ *
  */
 public class EClassifierControl extends LinkControl {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.edit.internal.swt.reference.LinkControl#createButtons(org.eclipse.swt.widgets.Composite)
 	 */
 	@Override
@@ -50,7 +50,7 @@ public class EClassifierControl extends LinkControl {
 
 	/**
 	 * Returns the {@link EPackage}s to extract the classifiers from.
-	 * 
+	 *
 	 * @return the packages
 	 */
 	protected Set<EPackage> getVisiblePackages() {

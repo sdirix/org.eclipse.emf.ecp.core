@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Edgar Mueller - initial API and implementation
  */
@@ -37,11 +37,15 @@ import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.impl.DynamicContainmentTreeImpl#getDomainModel <em>Domain Model</em>}</li>
- *   <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.impl.DynamicContainmentTreeImpl#getChildReference <em>Child Reference</em>}</li>
- *   <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.impl.DynamicContainmentTreeImpl#getPathToRoot <em>Path To Root</em>}</li>
- *   <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.impl.DynamicContainmentTreeImpl#getChildComposite <em>Child Composite</em>}</li>
- *   <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.impl.DynamicContainmentTreeImpl#getItems <em>Items</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.impl.DynamicContainmentTreeImpl#getDomainModel <em>Domain Model
+ * </em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.impl.DynamicContainmentTreeImpl#getChildReference <em>Child
+ * Reference</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.impl.DynamicContainmentTreeImpl#getPathToRoot <em>Path To Root
+ * </em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.impl.DynamicContainmentTreeImpl#getChildComposite <em>Child
+ * Composite</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.impl.DynamicContainmentTreeImpl#getItems <em>Items</em>}</li>
  * </ul>
  * </p>
  *
@@ -53,6 +57,7 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	 * The cached value of the '{@link #getDomainModel() <em>Domain Model</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @see #getDomainModel()
 	 * @generated
 	 * @ordered
@@ -63,6 +68,7 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	 * The cached value of the '{@link #getChildReference() <em>Child Reference</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @see #getChildReference()
 	 * @generated
 	 * @ordered
@@ -73,6 +79,7 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	 * The cached value of the '{@link #getPathToRoot() <em>Path To Root</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @see #getPathToRoot()
 	 * @generated
 	 * @ordered
@@ -83,6 +90,7 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	 * The cached value of the '{@link #getChildComposite() <em>Child Composite</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @see #getChildComposite()
 	 * @generated
 	 * @ordered
@@ -93,6 +101,7 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	 * The cached value of the '{@link #getItems() <em>Items</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @see #getItems()
 	 * @generated
 	 * @ordered
@@ -102,7 +111,7 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated NOT
 	 */
 	protected DynamicContainmentTreeImpl()
@@ -114,6 +123,7 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	@Override
@@ -125,17 +135,20 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	@Override
 	public EObject getDomainModel()
 	{
 		if (domainModel != null && domainModel.eIsProxy()) {
-			InternalEObject oldDomainModel = (InternalEObject)domainModel;
+			final InternalEObject oldDomainModel = (InternalEObject) domainModel;
 			domainModel = eResolveProxy(oldDomainModel);
 			if (domainModel != oldDomainModel) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ModelPackage.DYNAMIC_CONTAINMENT_TREE__DOMAIN_MODEL, oldDomainModel, domainModel));
+				if (eNotificationRequired()) {
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE,
+						ModelPackage.DYNAMIC_CONTAINMENT_TREE__DOMAIN_MODEL, oldDomainModel, domainModel));
+				}
 			}
 		}
 		return domainModel;
@@ -144,6 +157,7 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	public EObject basicGetDomainModel()
@@ -154,31 +168,37 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	@Override
 	public void setDomainModel(EObject newDomainModel)
 	{
-		EObject oldDomainModel = domainModel;
+		final EObject oldDomainModel = domainModel;
 		domainModel = newDomainModel;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.DYNAMIC_CONTAINMENT_TREE__DOMAIN_MODEL, oldDomainModel, domainModel));
+		if (eNotificationRequired()) {
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.DYNAMIC_CONTAINMENT_TREE__DOMAIN_MODEL,
+				oldDomainModel, domainModel));
+		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	@Override
 	public EReference getChildReference()
 	{
 		if (childReference != null && childReference.eIsProxy()) {
-			InternalEObject oldChildReference = (InternalEObject)childReference;
-			childReference = (EReference)eResolveProxy(oldChildReference);
+			final InternalEObject oldChildReference = (InternalEObject) childReference;
+			childReference = (EReference) eResolveProxy(oldChildReference);
 			if (childReference != oldChildReference) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ModelPackage.DYNAMIC_CONTAINMENT_TREE__CHILD_REFERENCE, oldChildReference, childReference));
+				if (eNotificationRequired()) {
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE,
+						ModelPackage.DYNAMIC_CONTAINMENT_TREE__CHILD_REFERENCE, oldChildReference, childReference));
+				}
 			}
 		}
 		return childReference;
@@ -187,6 +207,7 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	public EReference basicGetChildReference()
@@ -197,27 +218,32 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	@Override
 	public void setChildReference(EReference newChildReference)
 	{
-		EReference oldChildReference = childReference;
+		final EReference oldChildReference = childReference;
 		childReference = newChildReference;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.DYNAMIC_CONTAINMENT_TREE__CHILD_REFERENCE, oldChildReference, childReference));
+		if (eNotificationRequired()) {
+			eNotify(new ENotificationImpl(this, Notification.SET,
+				ModelPackage.DYNAMIC_CONTAINMENT_TREE__CHILD_REFERENCE, oldChildReference, childReference));
+		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	@Override
 	public EList<EReference> getPathToRoot()
 	{
 		if (pathToRoot == null) {
-			pathToRoot = new EObjectResolvingEList<EReference>(EReference.class, this, ModelPackage.DYNAMIC_CONTAINMENT_TREE__PATH_TO_ROOT);
+			pathToRoot = new EObjectResolvingEList<EReference>(EReference.class, this,
+				ModelPackage.DYNAMIC_CONTAINMENT_TREE__PATH_TO_ROOT);
 		}
 		return pathToRoot;
 	}
@@ -225,6 +251,7 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	@Override
@@ -236,15 +263,21 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	public NotificationChain basicSetChildComposite(VContainedElement newChildComposite, NotificationChain msgs)
 	{
-		VContainedElement oldChildComposite = childComposite;
+		final VContainedElement oldChildComposite = childComposite;
 		childComposite = newChildComposite;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ModelPackage.DYNAMIC_CONTAINMENT_TREE__CHILD_COMPOSITE, oldChildComposite, newChildComposite);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
+			final ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
+				ModelPackage.DYNAMIC_CONTAINMENT_TREE__CHILD_COMPOSITE, oldChildComposite, newChildComposite);
+			if (msgs == null) {
+				msgs = notification;
+			} else {
+				msgs.add(notification);
+			}
 		}
 		return msgs;
 	}
@@ -252,6 +285,7 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	@Override
@@ -259,27 +293,37 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	{
 		if (newChildComposite != childComposite) {
 			NotificationChain msgs = null;
-			if (childComposite != null)
-				msgs = ((InternalEObject)childComposite).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ModelPackage.DYNAMIC_CONTAINMENT_TREE__CHILD_COMPOSITE, null, msgs);
-			if (newChildComposite != null)
-				msgs = ((InternalEObject)newChildComposite).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ModelPackage.DYNAMIC_CONTAINMENT_TREE__CHILD_COMPOSITE, null, msgs);
+			if (childComposite != null) {
+				msgs = ((InternalEObject) childComposite).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
+					- ModelPackage.DYNAMIC_CONTAINMENT_TREE__CHILD_COMPOSITE, null, msgs);
+			}
+			if (newChildComposite != null) {
+				msgs = ((InternalEObject) newChildComposite).eInverseAdd(this, EOPPOSITE_FEATURE_BASE
+					- ModelPackage.DYNAMIC_CONTAINMENT_TREE__CHILD_COMPOSITE, null, msgs);
+			}
 			msgs = basicSetChildComposite(newChildComposite, msgs);
-			if (msgs != null) msgs.dispatch();
+			if (msgs != null) {
+				msgs.dispatch();
+			}
 		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.DYNAMIC_CONTAINMENT_TREE__CHILD_COMPOSITE, newChildComposite, newChildComposite));
+		else if (eNotificationRequired()) {
+			eNotify(new ENotificationImpl(this, Notification.SET,
+				ModelPackage.DYNAMIC_CONTAINMENT_TREE__CHILD_COMPOSITE, newChildComposite, newChildComposite));
+		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	@Override
 	public EList<DynamicContainmentItem> getItems()
 	{
 		if (items == null) {
-			items = new EObjectContainmentEList<DynamicContainmentItem>(DynamicContainmentItem.class, this, ModelPackage.DYNAMIC_CONTAINMENT_TREE__ITEMS);
+			items = new EObjectContainmentEList<DynamicContainmentItem>(DynamicContainmentItem.class, this,
+				ModelPackage.DYNAMIC_CONTAINMENT_TREE__ITEMS);
 		}
 		return items;
 	}
@@ -287,16 +331,17 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
 	{
 		switch (featureID) {
-			case ModelPackage.DYNAMIC_CONTAINMENT_TREE__CHILD_COMPOSITE:
-				return basicSetChildComposite(null, msgs);
-			case ModelPackage.DYNAMIC_CONTAINMENT_TREE__ITEMS:
-				return ((InternalEList<?>)getItems()).basicRemove(otherEnd, msgs);
+		case ModelPackage.DYNAMIC_CONTAINMENT_TREE__CHILD_COMPOSITE:
+			return basicSetChildComposite(null, msgs);
+		case ModelPackage.DYNAMIC_CONTAINMENT_TREE__ITEMS:
+			return ((InternalEList<?>) getItems()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -304,24 +349,29 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType)
 	{
 		switch (featureID) {
-			case ModelPackage.DYNAMIC_CONTAINMENT_TREE__DOMAIN_MODEL:
-				if (resolve) return getDomainModel();
-				return basicGetDomainModel();
-			case ModelPackage.DYNAMIC_CONTAINMENT_TREE__CHILD_REFERENCE:
-				if (resolve) return getChildReference();
-				return basicGetChildReference();
-			case ModelPackage.DYNAMIC_CONTAINMENT_TREE__PATH_TO_ROOT:
-				return getPathToRoot();
-			case ModelPackage.DYNAMIC_CONTAINMENT_TREE__CHILD_COMPOSITE:
-				return getChildComposite();
-			case ModelPackage.DYNAMIC_CONTAINMENT_TREE__ITEMS:
-				return getItems();
+		case ModelPackage.DYNAMIC_CONTAINMENT_TREE__DOMAIN_MODEL:
+			if (resolve) {
+				return getDomainModel();
+			}
+			return basicGetDomainModel();
+		case ModelPackage.DYNAMIC_CONTAINMENT_TREE__CHILD_REFERENCE:
+			if (resolve) {
+				return getChildReference();
+			}
+			return basicGetChildReference();
+		case ModelPackage.DYNAMIC_CONTAINMENT_TREE__PATH_TO_ROOT:
+			return getPathToRoot();
+		case ModelPackage.DYNAMIC_CONTAINMENT_TREE__CHILD_COMPOSITE:
+			return getChildComposite();
+		case ModelPackage.DYNAMIC_CONTAINMENT_TREE__ITEMS:
+			return getItems();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -329,6 +379,7 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
@@ -336,23 +387,23 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	public void eSet(int featureID, Object newValue)
 	{
 		switch (featureID) {
-			case ModelPackage.DYNAMIC_CONTAINMENT_TREE__DOMAIN_MODEL:
-				setDomainModel((EObject)newValue);
-				return;
-			case ModelPackage.DYNAMIC_CONTAINMENT_TREE__CHILD_REFERENCE:
-				setChildReference((EReference)newValue);
-				return;
-			case ModelPackage.DYNAMIC_CONTAINMENT_TREE__PATH_TO_ROOT:
-				getPathToRoot().clear();
-				getPathToRoot().addAll((Collection<? extends EReference>)newValue);
-				return;
-			case ModelPackage.DYNAMIC_CONTAINMENT_TREE__CHILD_COMPOSITE:
-				setChildComposite((VContainedElement)newValue);
-				return;
-			case ModelPackage.DYNAMIC_CONTAINMENT_TREE__ITEMS:
-				getItems().clear();
-				getItems().addAll((Collection<? extends DynamicContainmentItem>)newValue);
-				return;
+		case ModelPackage.DYNAMIC_CONTAINMENT_TREE__DOMAIN_MODEL:
+			setDomainModel((EObject) newValue);
+			return;
+		case ModelPackage.DYNAMIC_CONTAINMENT_TREE__CHILD_REFERENCE:
+			setChildReference((EReference) newValue);
+			return;
+		case ModelPackage.DYNAMIC_CONTAINMENT_TREE__PATH_TO_ROOT:
+			getPathToRoot().clear();
+			getPathToRoot().addAll((Collection<? extends EReference>) newValue);
+			return;
+		case ModelPackage.DYNAMIC_CONTAINMENT_TREE__CHILD_COMPOSITE:
+			setChildComposite((VContainedElement) newValue);
+			return;
+		case ModelPackage.DYNAMIC_CONTAINMENT_TREE__ITEMS:
+			getItems().clear();
+			getItems().addAll((Collection<? extends DynamicContainmentItem>) newValue);
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -360,27 +411,28 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	@Override
 	public void eUnset(int featureID)
 	{
 		switch (featureID) {
-			case ModelPackage.DYNAMIC_CONTAINMENT_TREE__DOMAIN_MODEL:
-				setDomainModel((EObject)null);
-				return;
-			case ModelPackage.DYNAMIC_CONTAINMENT_TREE__CHILD_REFERENCE:
-				setChildReference((EReference)null);
-				return;
-			case ModelPackage.DYNAMIC_CONTAINMENT_TREE__PATH_TO_ROOT:
-				getPathToRoot().clear();
-				return;
-			case ModelPackage.DYNAMIC_CONTAINMENT_TREE__CHILD_COMPOSITE:
-				setChildComposite((VContainedElement)null);
-				return;
-			case ModelPackage.DYNAMIC_CONTAINMENT_TREE__ITEMS:
-				getItems().clear();
-				return;
+		case ModelPackage.DYNAMIC_CONTAINMENT_TREE__DOMAIN_MODEL:
+			setDomainModel((EObject) null);
+			return;
+		case ModelPackage.DYNAMIC_CONTAINMENT_TREE__CHILD_REFERENCE:
+			setChildReference((EReference) null);
+			return;
+		case ModelPackage.DYNAMIC_CONTAINMENT_TREE__PATH_TO_ROOT:
+			getPathToRoot().clear();
+			return;
+		case ModelPackage.DYNAMIC_CONTAINMENT_TREE__CHILD_COMPOSITE:
+			setChildComposite((VContainedElement) null);
+			return;
+		case ModelPackage.DYNAMIC_CONTAINMENT_TREE__ITEMS:
+			getItems().clear();
+			return;
 		}
 		super.eUnset(featureID);
 	}
@@ -388,29 +440,30 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	@Override
 	public boolean eIsSet(int featureID)
 	{
 		switch (featureID) {
-			case ModelPackage.DYNAMIC_CONTAINMENT_TREE__DOMAIN_MODEL:
-				return domainModel != null;
-			case ModelPackage.DYNAMIC_CONTAINMENT_TREE__CHILD_REFERENCE:
-				return childReference != null;
-			case ModelPackage.DYNAMIC_CONTAINMENT_TREE__PATH_TO_ROOT:
-				return pathToRoot != null && !pathToRoot.isEmpty();
-			case ModelPackage.DYNAMIC_CONTAINMENT_TREE__CHILD_COMPOSITE:
-				return childComposite != null;
-			case ModelPackage.DYNAMIC_CONTAINMENT_TREE__ITEMS:
-				return items != null && !items.isEmpty();
+		case ModelPackage.DYNAMIC_CONTAINMENT_TREE__DOMAIN_MODEL:
+			return domainModel != null;
+		case ModelPackage.DYNAMIC_CONTAINMENT_TREE__CHILD_REFERENCE:
+			return childReference != null;
+		case ModelPackage.DYNAMIC_CONTAINMENT_TREE__PATH_TO_ROOT:
+			return pathToRoot != null && !pathToRoot.isEmpty();
+		case ModelPackage.DYNAMIC_CONTAINMENT_TREE__CHILD_COMPOSITE:
+			return childComposite != null;
+		case ModelPackage.DYNAMIC_CONTAINMENT_TREE__ITEMS:
+			return items != null && !items.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizableElement#getLabelObject()
 	 */
 	@Override

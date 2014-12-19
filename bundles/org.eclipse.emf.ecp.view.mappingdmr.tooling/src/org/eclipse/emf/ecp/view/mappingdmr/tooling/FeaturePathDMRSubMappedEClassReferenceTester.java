@@ -27,7 +27,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  *
  */
 public class FeaturePathDMRSubMappedEClassReferenceTester implements
-ECPRendererTester {
+	ECPRendererTester {
 
 	@Override
 	public int isApplicable(VElement vElement, ViewModelContext viewModelContext) {
@@ -42,13 +42,13 @@ ECPRendererTester {
 		if (VMappingDomainModelReference.class.isInstance(setting.getEObject()
 			.eContainer())
 			&& VViewPackage.eINSTANCE
-			.getFeaturePathDomainModelReference_DomainModelEFeature() == setting
-			.getEStructuralFeature()) {
+				.getFeaturePathDomainModelReference_DomainModelEFeature() == setting
+				.getEStructuralFeature()) {
 			return 6;
 		}
 		if (VMappingDomainModelReference.class.isInstance(setting.getEObject())
 			&& VMappingdmrPackage.eINSTANCE.getMappingDomainModelReference_DomainModelReference() == setting
-			.getEStructuralFeature()) {
+				.getEStructuralFeature()) {
 			return 6;
 		}
 

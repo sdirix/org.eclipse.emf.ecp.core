@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen - initial API and implementation
  ******************************************************************************/
@@ -25,9 +25,9 @@ import org.eclipse.emf.ecore.EPackage.Registry;
 
 /**
  * Util class for basic EMF.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  */
 public final class EMFUtils {
 
@@ -36,7 +36,7 @@ public final class EMFUtils {
 
 	/**
 	 * This method looks through all known {@link EPackage}s to find all subclasses for the provided super class.
-	 * 
+	 *
 	 * @param superClass
 	 *            - the class for which to get the subclasses
 	 * @return a {@link Collection} of {@link EClass EClasses}
@@ -63,7 +63,7 @@ public final class EMFUtils {
 
 	/**
 	 * Returns the set of all known {@link EPackage EPackages}.
-	 * 
+	 *
 	 * @return the Set of all known {@link EPackage Epackages}
 	 */
 	public static Set<EPackage> getAllRegisteredEPackages() {

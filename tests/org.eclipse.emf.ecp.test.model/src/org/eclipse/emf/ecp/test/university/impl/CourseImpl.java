@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * EclipseSource - Generated code
  */
@@ -39,7 +39,7 @@ public class CourseImpl extends MinimalEObjectImpl.Container implements Course
 	 * The default value of the '{@link #getId() <em>Id</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getId()
 	 * @generated
 	 * @ordered
@@ -50,7 +50,7 @@ public class CourseImpl extends MinimalEObjectImpl.Container implements Course
 	 * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getId()
 	 * @generated
 	 * @ordered
@@ -61,7 +61,7 @@ public class CourseImpl extends MinimalEObjectImpl.Container implements Course
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getName()
 	 * @generated
 	 * @ordered
@@ -72,7 +72,7 @@ public class CourseImpl extends MinimalEObjectImpl.Container implements Course
 	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getName()
 	 * @generated
 	 * @ordered
@@ -83,7 +83,7 @@ public class CourseImpl extends MinimalEObjectImpl.Container implements Course
 	 * The default value of the '{@link #getEtcs() <em>Etcs</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getEtcs()
 	 * @generated
 	 * @ordered
@@ -94,7 +94,7 @@ public class CourseImpl extends MinimalEObjectImpl.Container implements Course
 	 * The cached value of the '{@link #getEtcs() <em>Etcs</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getEtcs()
 	 * @generated
 	 * @ordered
@@ -104,7 +104,7 @@ public class CourseImpl extends MinimalEObjectImpl.Container implements Course
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected CourseImpl()
@@ -115,7 +115,7 @@ public class CourseImpl extends MinimalEObjectImpl.Container implements Course
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -127,7 +127,7 @@ public class CourseImpl extends MinimalEObjectImpl.Container implements Course
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public String getId()
@@ -138,21 +138,22 @@ public class CourseImpl extends MinimalEObjectImpl.Container implements Course
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public void setId(String newId)
 	{
-		String oldId = id;
+		final String oldId = id;
 		id = newId;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, UniversityPackage.COURSE__ID, oldId, id));
+		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public String getName()
@@ -163,21 +164,22 @@ public class CourseImpl extends MinimalEObjectImpl.Container implements Course
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public void setName(String newName)
 	{
-		String oldName = name;
+		final String oldName = name;
 		name = newName;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, UniversityPackage.COURSE__NAME, oldName, name));
+		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public int getEtcs()
@@ -188,21 +190,22 @@ public class CourseImpl extends MinimalEObjectImpl.Container implements Course
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public void setEtcs(int newEtcs)
 	{
-		int oldEtcs = etcs;
+		final int oldEtcs = etcs;
 		etcs = newEtcs;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, UniversityPackage.COURSE__ETCS, oldEtcs, etcs));
+		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -223,7 +226,7 @@ public class CourseImpl extends MinimalEObjectImpl.Container implements Course
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -247,7 +250,7 @@ public class CourseImpl extends MinimalEObjectImpl.Container implements Course
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -271,7 +274,7 @@ public class CourseImpl extends MinimalEObjectImpl.Container implements Course
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -292,16 +295,17 @@ public class CourseImpl extends MinimalEObjectImpl.Container implements Course
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
 	public String toString()
 	{
-		if (eIsProxy())
+		if (eIsProxy()) {
 			return super.toString();
+		}
 
-		StringBuffer result = new StringBuffer(super.toString());
+		final StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (id: "); //$NON-NLS-1$
 		result.append(id);
 		result.append(", name: "); //$NON-NLS-1$

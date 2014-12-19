@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * EclipseSource - Generated code
  */
@@ -28,7 +28,7 @@ import org.eclipse.emf.ecp.test.university.UniversityPackage;
  * <!-- begin-user-doc -->
  * An implementation of the model <b>Factory</b>.
  * <!-- end-user-doc -->
- * 
+ *
  * @generated
  */
 public class UniversityFactoryImpl extends EFactoryImpl implements UniversityFactory
@@ -37,20 +37,20 @@ public class UniversityFactoryImpl extends EFactoryImpl implements UniversityFac
 	 * Creates the default factory implementation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public static UniversityFactory init()
 	{
 		try
 		{
-			UniversityFactory theUniversityFactory = (UniversityFactory) EPackage.Registry.INSTANCE
+			final UniversityFactory theUniversityFactory = (UniversityFactory) EPackage.Registry.INSTANCE
 				.getEFactory(UniversityPackage.eNS_URI);
 			if (theUniversityFactory != null)
 			{
 				return theUniversityFactory;
 			}
-		} catch (Exception exception)
+		} catch (final Exception exception)
 		{
 			EcorePlugin.INSTANCE.log(exception);
 		}
@@ -61,7 +61,7 @@ public class UniversityFactoryImpl extends EFactoryImpl implements UniversityFac
 	 * Creates an instance of the factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public UniversityFactoryImpl()
@@ -72,7 +72,7 @@ public class UniversityFactoryImpl extends EFactoryImpl implements UniversityFac
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -98,67 +98,67 @@ public class UniversityFactoryImpl extends EFactoryImpl implements UniversityFac
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public CourseCatalog createCourseCatalog()
 	{
-		CourseCatalogImpl courseCatalog = new CourseCatalogImpl();
+		final CourseCatalogImpl courseCatalog = new CourseCatalogImpl();
 		return courseCatalog;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public Course createCourse()
 	{
-		CourseImpl course = new CourseImpl();
+		final CourseImpl course = new CourseImpl();
 		return course;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public Staff createStaff()
 	{
-		StaffImpl staff = new StaffImpl();
+		final StaffImpl staff = new StaffImpl();
 		return staff;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public Professor createProfessor()
 	{
-		ProfessorImpl professor = new ProfessorImpl();
+		final ProfessorImpl professor = new ProfessorImpl();
 		return professor;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public Assistant createAssistant()
 	{
-		AssistantImpl assistant = new AssistantImpl();
+		final AssistantImpl assistant = new AssistantImpl();
 		return assistant;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public UniversityPackage getUniversityPackage()
@@ -169,7 +169,7 @@ public class UniversityFactoryImpl extends EFactoryImpl implements UniversityFac
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @deprecated
 	 * @generated
 	 */

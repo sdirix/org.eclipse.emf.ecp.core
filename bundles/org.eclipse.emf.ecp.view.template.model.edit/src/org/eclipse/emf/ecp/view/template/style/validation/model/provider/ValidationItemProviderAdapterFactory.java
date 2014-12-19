@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * EclipseSource Munich - initial API and implementation
  */
@@ -50,7 +50,7 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
  * Note that most of the adapters are shared among multiple instances.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
- * 
+ *
  * @generated
  */
 public class ValidationItemProviderAdapterFactory extends ValidationAdapterFactory implements
@@ -60,7 +60,7 @@ public class ValidationItemProviderAdapterFactory extends ValidationAdapterFacto
 	 * This keeps track of the root adapter factory that delegates to this adapter factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected ComposedAdapterFactory parentAdapterFactory;
@@ -69,7 +69,7 @@ public class ValidationItemProviderAdapterFactory extends ValidationAdapterFacto
 	 * This is used to implement {@link org.eclipse.emf.edit.provider.IChangeNotifier}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected IChangeNotifier changeNotifier = new ChangeNotifier();
@@ -78,7 +78,7 @@ public class ValidationItemProviderAdapterFactory extends ValidationAdapterFacto
 	 * This helps manage the child creation extenders.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected ChildCreationExtenderManager childCreationExtenderManager = new ChildCreationExtenderManager(
@@ -88,7 +88,7 @@ public class ValidationItemProviderAdapterFactory extends ValidationAdapterFacto
 	 * This keeps track of all the supported types checked by {@link #isFactoryForType isFactoryForType}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected Collection<Object> supportedTypes = new ArrayList<Object>();
@@ -97,7 +97,7 @@ public class ValidationItemProviderAdapterFactory extends ValidationAdapterFacto
 	 * This constructs an instance.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public ValidationItemProviderAdapterFactory()
@@ -114,7 +114,7 @@ public class ValidationItemProviderAdapterFactory extends ValidationAdapterFacto
 	 * {@link org.eclipse.emf.ecp.view.template.style.validation.model.VTValidationStyleProperty} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected ValidationStylePropertyItemProvider validationStylePropertyItemProvider;
@@ -124,7 +124,7 @@ public class ValidationItemProviderAdapterFactory extends ValidationAdapterFacto
 	 * {@link org.eclipse.emf.ecp.view.template.style.validation.model.VTValidationStyleProperty}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -142,7 +142,7 @@ public class ValidationItemProviderAdapterFactory extends ValidationAdapterFacto
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -155,7 +155,7 @@ public class ValidationItemProviderAdapterFactory extends ValidationAdapterFacto
 	 * This sets the composed adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -167,7 +167,7 @@ public class ValidationItemProviderAdapterFactory extends ValidationAdapterFacto
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -180,7 +180,7 @@ public class ValidationItemProviderAdapterFactory extends ValidationAdapterFacto
 	 * This implementation substitutes the factory itself as the key for the adapter.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -192,7 +192,7 @@ public class ValidationItemProviderAdapterFactory extends ValidationAdapterFacto
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -213,7 +213,7 @@ public class ValidationItemProviderAdapterFactory extends ValidationAdapterFacto
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public List<IChildCreationExtender> getChildCreationExtenders()
@@ -224,7 +224,7 @@ public class ValidationItemProviderAdapterFactory extends ValidationAdapterFacto
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -236,7 +236,7 @@ public class ValidationItemProviderAdapterFactory extends ValidationAdapterFacto
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -249,7 +249,7 @@ public class ValidationItemProviderAdapterFactory extends ValidationAdapterFacto
 	 * This adds a listener.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -262,7 +262,7 @@ public class ValidationItemProviderAdapterFactory extends ValidationAdapterFacto
 	 * This removes a listener.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -275,7 +275,7 @@ public class ValidationItemProviderAdapterFactory extends ValidationAdapterFacto
 	 * This delegates to {@link #changeNotifier} and to {@link #parentAdapterFactory}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -293,7 +293,7 @@ public class ValidationItemProviderAdapterFactory extends ValidationAdapterFacto
 	 * This disposes all of the item providers created by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -308,7 +308,7 @@ public class ValidationItemProviderAdapterFactory extends ValidationAdapterFacto
 	 * A child creation extender for the {@link VTTemplatePackage}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public static class TemplateChildCreationExtender implements IChildCreationExtender
@@ -317,7 +317,7 @@ public class ValidationItemProviderAdapterFactory extends ValidationAdapterFacto
 		 * The switch for creating child descriptors specific to each extended class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		protected static class CreationSwitch extends TemplateSwitch<Object>
@@ -326,7 +326,7 @@ public class ValidationItemProviderAdapterFactory extends ValidationAdapterFacto
 			 * The child descriptors being populated.
 			 * <!-- begin-user-doc -->
 			 * <!-- end-user-doc -->
-			 * 
+			 *
 			 * @generated
 			 */
 			protected List<Object> newChildDescriptors;
@@ -335,7 +335,7 @@ public class ValidationItemProviderAdapterFactory extends ValidationAdapterFacto
 			 * The domain in which to create the children.
 			 * <!-- begin-user-doc -->
 			 * <!-- end-user-doc -->
-			 * 
+			 *
 			 * @generated
 			 */
 			protected EditingDomain editingDomain;
@@ -344,7 +344,7 @@ public class ValidationItemProviderAdapterFactory extends ValidationAdapterFacto
 			 * Creates the a switch for populating child descriptors in the given domain.
 			 * <!-- begin-user-doc -->
 			 * <!-- end-user-doc -->
-			 * 
+			 *
 			 * @generated
 			 */
 			CreationSwitch(List<Object> newChildDescriptors, EditingDomain editingDomain)
@@ -356,7 +356,7 @@ public class ValidationItemProviderAdapterFactory extends ValidationAdapterFacto
 			/**
 			 * <!-- begin-user-doc -->
 			 * <!-- end-user-doc -->
-			 * 
+			 *
 			 * @generated
 			 */
 			@Override
@@ -373,7 +373,7 @@ public class ValidationItemProviderAdapterFactory extends ValidationAdapterFacto
 			/**
 			 * <!-- begin-user-doc -->
 			 * <!-- end-user-doc -->
-			 * 
+			 *
 			 * @generated
 			 */
 			protected CommandParameter createChildParameter(Object feature, Object child)
@@ -386,7 +386,7 @@ public class ValidationItemProviderAdapterFactory extends ValidationAdapterFacto
 		/**
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		@Override
@@ -400,7 +400,7 @@ public class ValidationItemProviderAdapterFactory extends ValidationAdapterFacto
 		/**
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		@Override

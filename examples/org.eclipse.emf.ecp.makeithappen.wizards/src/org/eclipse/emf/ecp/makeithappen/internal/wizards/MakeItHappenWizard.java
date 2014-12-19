@@ -215,7 +215,7 @@ public class MakeItHappenWizard extends ExampleInstallerWizard {
 					existsMessage
 						:
 						MakeItHappenWizardsPlugin.INSTANCE.getString(
-								"_UI_ProjectDescriptionAndExists_message", new String[] { //$NON-NLS-1$
+							"_UI_ProjectDescriptionAndExists_message", new String[] { //$NON-NLS-1$
 							description, existsMessage });
 				}
 				descriptionText.setText(description);

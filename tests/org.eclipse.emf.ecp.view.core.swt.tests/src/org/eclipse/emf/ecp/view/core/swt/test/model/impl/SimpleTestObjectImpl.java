@@ -7,12 +7,9 @@ import java.util.Date;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
-
 import org.eclipse.emf.ecp.view.core.swt.test.model.SimpleTestObject;
 import org.eclipse.emf.ecp.view.core.swt.test.model.TestPackage;
 
@@ -23,8 +20,8 @@ import org.eclipse.emf.ecp.view.core.swt.test.model.TestPackage;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.ecp.view.core.swt.test.model.impl.SimpleTestObjectImpl#getDate <em>Date</em>}</li>
- *   <li>{@link org.eclipse.emf.ecp.view.core.swt.test.model.impl.SimpleTestObjectImpl#getXmlDate <em>Xml Date</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.core.swt.test.model.impl.SimpleTestObjectImpl#getDate <em>Date</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.core.swt.test.model.impl.SimpleTestObjectImpl#getXmlDate <em>Xml Date</em>}</li>
  * </ul>
  * </p>
  *
@@ -35,6 +32,7 @@ public class SimpleTestObjectImpl extends MinimalEObjectImpl.Container implement
 	 * The default value of the '{@link #getDate() <em>Date</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @see #getDate()
 	 * @generated
 	 * @ordered
@@ -45,6 +43,7 @@ public class SimpleTestObjectImpl extends MinimalEObjectImpl.Container implement
 	 * The cached value of the '{@link #getDate() <em>Date</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @see #getDate()
 	 * @generated
 	 * @ordered
@@ -55,6 +54,7 @@ public class SimpleTestObjectImpl extends MinimalEObjectImpl.Container implement
 	 * The default value of the '{@link #getXmlDate() <em>Xml Date</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @see #getXmlDate()
 	 * @generated
 	 * @ordered
@@ -65,6 +65,7 @@ public class SimpleTestObjectImpl extends MinimalEObjectImpl.Container implement
 	 * The cached value of the '{@link #getXmlDate() <em>Xml Date</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @see #getXmlDate()
 	 * @generated
 	 * @ordered
@@ -74,6 +75,7 @@ public class SimpleTestObjectImpl extends MinimalEObjectImpl.Container implement
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	protected SimpleTestObjectImpl() {
@@ -83,6 +85,7 @@ public class SimpleTestObjectImpl extends MinimalEObjectImpl.Container implement
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	@Override
@@ -93,6 +96,7 @@ public class SimpleTestObjectImpl extends MinimalEObjectImpl.Container implement
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	@Override
@@ -103,19 +107,22 @@ public class SimpleTestObjectImpl extends MinimalEObjectImpl.Container implement
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	@Override
 	public void setDate(Date newDate) {
-		Date oldDate = date;
+		final Date oldDate = date;
 		date = newDate;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.SIMPLE_TEST_OBJECT__DATE, oldDate, date));
+		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	@Override
@@ -126,28 +133,32 @@ public class SimpleTestObjectImpl extends MinimalEObjectImpl.Container implement
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	@Override
 	public void setXmlDate(XMLGregorianCalendar newXmlDate) {
-		XMLGregorianCalendar oldXmlDate = xmlDate;
+		final XMLGregorianCalendar oldXmlDate = xmlDate;
 		xmlDate = newXmlDate;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.SIMPLE_TEST_OBJECT__XML_DATE, oldXmlDate, xmlDate));
+		if (eNotificationRequired()) {
+			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.SIMPLE_TEST_OBJECT__XML_DATE, oldXmlDate,
+				xmlDate));
+		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case TestPackage.SIMPLE_TEST_OBJECT__DATE:
-				return getDate();
-			case TestPackage.SIMPLE_TEST_OBJECT__XML_DATE:
-				return getXmlDate();
+		case TestPackage.SIMPLE_TEST_OBJECT__DATE:
+			return getDate();
+		case TestPackage.SIMPLE_TEST_OBJECT__XML_DATE:
+			return getXmlDate();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -155,17 +166,18 @@ public class SimpleTestObjectImpl extends MinimalEObjectImpl.Container implement
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case TestPackage.SIMPLE_TEST_OBJECT__DATE:
-				setDate((Date)newValue);
-				return;
-			case TestPackage.SIMPLE_TEST_OBJECT__XML_DATE:
-				setXmlDate((XMLGregorianCalendar)newValue);
-				return;
+		case TestPackage.SIMPLE_TEST_OBJECT__DATE:
+			setDate((Date) newValue);
+			return;
+		case TestPackage.SIMPLE_TEST_OBJECT__XML_DATE:
+			setXmlDate((XMLGregorianCalendar) newValue);
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -173,17 +185,18 @@ public class SimpleTestObjectImpl extends MinimalEObjectImpl.Container implement
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case TestPackage.SIMPLE_TEST_OBJECT__DATE:
-				setDate(DATE_EDEFAULT);
-				return;
-			case TestPackage.SIMPLE_TEST_OBJECT__XML_DATE:
-				setXmlDate(XML_DATE_EDEFAULT);
-				return;
+		case TestPackage.SIMPLE_TEST_OBJECT__DATE:
+			setDate(DATE_EDEFAULT);
+			return;
+		case TestPackage.SIMPLE_TEST_OBJECT__XML_DATE:
+			setXmlDate(XML_DATE_EDEFAULT);
+			return;
 		}
 		super.eUnset(featureID);
 	}
@@ -191,15 +204,16 @@ public class SimpleTestObjectImpl extends MinimalEObjectImpl.Container implement
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case TestPackage.SIMPLE_TEST_OBJECT__DATE:
-				return DATE_EDEFAULT == null ? date != null : !DATE_EDEFAULT.equals(date);
-			case TestPackage.SIMPLE_TEST_OBJECT__XML_DATE:
-				return XML_DATE_EDEFAULT == null ? xmlDate != null : !XML_DATE_EDEFAULT.equals(xmlDate);
+		case TestPackage.SIMPLE_TEST_OBJECT__DATE:
+			return DATE_EDEFAULT == null ? date != null : !DATE_EDEFAULT.equals(date);
+		case TestPackage.SIMPLE_TEST_OBJECT__XML_DATE:
+			return XML_DATE_EDEFAULT == null ? xmlDate != null : !XML_DATE_EDEFAULT.equals(xmlDate);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -207,13 +221,16 @@ public class SimpleTestObjectImpl extends MinimalEObjectImpl.Container implement
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy()) return super.toString();
+		if (eIsProxy()) {
+			return super.toString();
+		}
 
-		StringBuffer result = new StringBuffer(super.toString());
+		final StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (date: ");
 		result.append(date);
 		result.append(", xmlDate: ");
@@ -222,4 +239,4 @@ public class SimpleTestObjectImpl extends MinimalEObjectImpl.Container implement
 		return result.toString();
 	}
 
-} //SimpleTestObjectImpl
+} // SimpleTestObjectImpl

@@ -54,17 +54,17 @@ public class AttributeValueControlSWTRenderer extends SimpleControlSWTControlSWT
 		final Binding binding = getDataBindingContext().bindValue(SWTObservables.observeText(label),
 			getModelValue(setting), new UpdateValueStrategy(), new UpdateValueStrategy() {
 
-			/**
-			 * {@inheritDoc}
-			 *
-			 * @see org.eclipse.core.databinding.UpdateValueStrategy#convert(java.lang.Object)
-			 */
-			@Override
-			public Object convert(Object value) {
-				return super.convert(value).toString();
-			}
+				/**
+				 * {@inheritDoc}
+				 *
+				 * @see org.eclipse.core.databinding.UpdateValueStrategy#convert(java.lang.Object)
+				 */
+				@Override
+				public Object convert(Object value) {
+					return super.convert(value).toString();
+				}
 
-		});
+			});
 		return new Binding[] { binding };
 	}
 

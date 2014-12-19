@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * EclipseSource Munich - initial API and implementation
  */
@@ -32,9 +32,9 @@ import org.eclipse.swt.widgets.Label;
 
 /**
  * Control for selecting a color.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  */
 @SuppressWarnings({ "restriction", "deprecation" })
 public class TemplateColorControl extends AbstractTextControl {
@@ -85,7 +85,7 @@ public class TemplateColorControl extends AbstractTextControl {
 			// targetToModel
 			/**
 			 * {@inheritDoc}
-			 * 
+			 *
 			 * @see org.eclipse.core.databinding.UpdateValueStrategy#convert(java.lang.Object)
 			 */
 			@Override
@@ -104,7 +104,7 @@ public class TemplateColorControl extends AbstractTextControl {
 			// ModelToTarget
 			/**
 			 * {@inheritDoc}
-			 * 
+			 *
 			 * @see org.eclipse.core.databinding.UpdateValueStrategy#convert(java.lang.Object)
 			 */
 			@Override
@@ -145,7 +145,7 @@ public class TemplateColorControl extends AbstractTextControl {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.edit.internal.swt.controls.AbstractTextControl#dispose()
 	 */
 	@Override

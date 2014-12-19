@@ -1,11 +1,11 @@
 /********************************************************************************
  * Copyright (c) 2011 Eike Stepper (Berlin, Germany) and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eike Stepper - initial API and implementation
  ********************************************************************************/
@@ -56,7 +56,7 @@ public class ProvidersLabelProvider extends ECPLabelProvider implements IColorPr
 	@Override
 	public String getText(Object element) {
 		if (element instanceof ECPProvider) {
-			ECPProvider provider = (ECPProvider) element;
+			final ECPProvider provider = (ECPProvider) element;
 			return provider.getLabel();
 		}
 
@@ -67,7 +67,7 @@ public class ProvidersLabelProvider extends ECPLabelProvider implements IColorPr
 	public Image getImage(Object element) {
 		if (element instanceof ECPProvider) {
 			if (element instanceof ElementDescriptor) {
-				ElementDescriptor<?> descriptor = (ElementDescriptor<?>) element;
+				final ElementDescriptor<?> descriptor = (ElementDescriptor<?>) element;
 				if (!descriptor.isResolved()) {
 					return PROVIDER_DISABLED;
 				}
@@ -83,7 +83,7 @@ public class ProvidersLabelProvider extends ECPLabelProvider implements IColorPr
 	@Override
 	public Color getForeground(Object element) {
 		if (element instanceof ElementDescriptor) {
-			ElementDescriptor<?> descriptor = (ElementDescriptor<?>) element;
+			final ElementDescriptor<?> descriptor = (ElementDescriptor<?>) element;
 			if (!descriptor.isResolved()) {
 				return GRAY;
 			}

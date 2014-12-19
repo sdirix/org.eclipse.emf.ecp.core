@@ -1,14 +1,14 @@
 /*******************************************************************************
  * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
- * 
+ *
  *******************************************************************************/
 
 package org.eclipse.emf.ecp.internal.ui.validation;
@@ -25,9 +25,9 @@ import org.eclipse.swt.widgets.TreeColumn;
 
 /**
  * Helper class for creating the tree viewer used for the validation view.
- * 
+ *
  * @author jfaltermeier
- * 
+ *
  */
 public final class ValidationTreeViewerFactory {
 
@@ -38,7 +38,7 @@ public final class ValidationTreeViewerFactory {
 	/**
 	 * Creates a {@link TreeViewer} which is able to display validation results from
 	 * {@link org.eclipse.core.runtime.IStatus IStatus} objects.
-	 * 
+	 *
 	 * @param parent the parent of the viewer
 	 * @return the tree viewer
 	 */

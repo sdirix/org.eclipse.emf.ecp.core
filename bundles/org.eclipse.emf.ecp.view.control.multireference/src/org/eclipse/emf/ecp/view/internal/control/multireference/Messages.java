@@ -15,7 +15,7 @@ import org.eclipse.osgi.util.NLS;
 
 /**
  * Messages file.
- * 
+ *
  * @generated
  *
  * @author Eugen Neufeld

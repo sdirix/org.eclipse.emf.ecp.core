@@ -40,7 +40,7 @@ import org.eclipse.emf.ecp.view.spi.model.util.ViewValidator;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Package</b>.
- * 
+ *
  * @since 1.2
  *        <!--
  *        end-user-doc -->
@@ -433,7 +433,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.4
 	 *        <!-- end-user-doc -->
 	 *
@@ -459,7 +459,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.3
 	 *        <!-- end-user-doc -->
 	 *
@@ -797,7 +797,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	/**
 	 * Initializes the annotations for <b>http://www.eclipse.org/emf/2002/Ecore</b>.
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.5
 	 *        <!-- end-user-doc -->
 	 *

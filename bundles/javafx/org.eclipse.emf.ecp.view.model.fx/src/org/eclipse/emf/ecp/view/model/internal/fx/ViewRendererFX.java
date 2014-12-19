@@ -26,7 +26,7 @@ public class ViewRendererFX extends RendererFX<VView> {
 
 	@Override
 	protected Node renderNode(GridCellFX cell) throws NoRendererFoundException,
-	NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption {
 		if (cell.getColumn() != 0) {
 			return null;
 		}

@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Alexandra - initial API and implementation
  ******************************************************************************/
@@ -45,7 +45,7 @@ import org.eclipse.swt.widgets.Label;
 
 /**
  * @author Alexandra
- * 
+ *
  */
 public class SelectEClassWizardPage extends WizardPage {
 	private Composite container;
@@ -84,7 +84,7 @@ public class SelectEClassWizardPage extends WizardPage {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.jface.dialogs.DialogPage#setVisible(boolean)
 	 */
 	@Override
@@ -236,7 +236,7 @@ public class SelectEClassWizardPage extends WizardPage {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.jface.wizard.WizardPage#isPageComplete()
 	 */
 	@Override

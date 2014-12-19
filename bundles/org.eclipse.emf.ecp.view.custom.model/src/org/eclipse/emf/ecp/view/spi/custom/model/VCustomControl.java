@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
@@ -17,7 +17,7 @@ import org.eclipse.emf.ecp.view.spi.model.VControl;
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Control</b></em>'.
  * <!-- end-user-doc -->
- * 
+ *
  * <p>
  * The following features are supported:
  * <ul>
@@ -25,7 +25,7 @@ import org.eclipse.emf.ecp.view.spi.model.VControl;
  * <li>{@link org.eclipse.emf.ecp.view.spi.custom.model.VCustomControl#getClassName <em>Class Name</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage#getCustomControl()
  * @model
  * @generated
@@ -41,7 +41,7 @@ public interface VCustomControl extends VControl
 	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Bundle Name</em>' attribute.
 	 * @see #setBundleName(String)
 	 * @see org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage#getCustomControl_BundleName()
@@ -55,7 +55,7 @@ public interface VCustomControl extends VControl
 	 * <em>Bundle Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Bundle Name</em>' attribute.
 	 * @see #getBundleName()
 	 * @generated
@@ -70,7 +70,7 @@ public interface VCustomControl extends VControl
 	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Class Name</em>' attribute.
 	 * @see #setClassName(String)
 	 * @see org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage#getCustomControl_ClassName()
@@ -84,7 +84,7 @@ public interface VCustomControl extends VControl
 	 * <em>Class Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Class Name</em>' attribute.
 	 * @see #getClassName()
 	 * @generated

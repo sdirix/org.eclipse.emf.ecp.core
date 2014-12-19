@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * EclipseSource - Generated code
  */
@@ -44,7 +44,7 @@ public interface Staff extends EObject
 	 * of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Professors</em>' containment reference list.
 	 * @see org.eclipse.emf.ecp.test.university.UniversityPackage#getStaff_Professors()
 	 * @model containment="true" transient="true" volatile="true" derived="true"
@@ -62,7 +62,7 @@ public interface Staff extends EObject
 	 * of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Assistants</em>' containment reference list.
 	 * @see org.eclipse.emf.ecp.test.university.UniversityPackage#getStaff_Assistants()
 	 * @model containment="true" transient="true" volatile="true" derived="true"
@@ -80,7 +80,7 @@ public interface Staff extends EObject
 	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Staff</em>' attribute list.
 	 * @see org.eclipse.emf.ecp.test.university.UniversityPackage#getStaff_Staff()
 	 * @model dataType="org.eclipse.emf.ecore.EFeatureMapEntry" many="true"

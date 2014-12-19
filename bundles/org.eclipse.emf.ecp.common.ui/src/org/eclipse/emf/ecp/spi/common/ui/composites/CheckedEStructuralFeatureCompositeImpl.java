@@ -41,7 +41,7 @@ import org.eclipse.swt.widgets.Composite;
  *
  */
 public class CheckedEStructuralFeatureCompositeImpl extends SelectModelElementCompositeImpl implements
-CheckedEStructuralFeatureComposite {
+	CheckedEStructuralFeatureComposite {
 
 	private final Object[] input;
 	private FilteredViewerContentProvider provider;

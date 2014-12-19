@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * EclipseSource Munich - initial API and implementation
  */
@@ -17,7 +17,7 @@ import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Style Property</b></em>'.
  * <!-- end-user-doc -->
- * 
+ *
  * <p>
  * The following features are supported:
  * <ul>
@@ -33,7 +33,7 @@ import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
  * <em>Font Name</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.eclipse.emf.ecp.view.template.style.fontProperties.model.VTFontPropertiesPackage#getFontPropertiesStyleProperty()
  * @model
  * @generated
@@ -47,7 +47,7 @@ public interface VTFontPropertiesStyleProperty extends VTStyleProperty {
 	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Italic</em>' attribute.
 	 * @see #setItalic(boolean)
 	 * @see org.eclipse.emf.ecp.view.template.style.fontProperties.model.VTFontPropertiesPackage#getFontPropertiesStyleProperty_Italic()
@@ -62,7 +62,7 @@ public interface VTFontPropertiesStyleProperty extends VTStyleProperty {
 	 * <em>Italic</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Italic</em>' attribute.
 	 * @see #isItalic()
 	 * @generated
@@ -76,7 +76,7 @@ public interface VTFontPropertiesStyleProperty extends VTStyleProperty {
 	 * If the meaning of the '<em>Bold</em>' attribute isn't clear, there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Bold</em>' attribute.
 	 * @see #setBold(boolean)
 	 * @see org.eclipse.emf.ecp.view.template.style.fontProperties.model.VTFontPropertiesPackage#getFontPropertiesStyleProperty_Bold()
@@ -91,7 +91,7 @@ public interface VTFontPropertiesStyleProperty extends VTStyleProperty {
 	 * <em>Bold</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Bold</em>' attribute.
 	 * @see #isBold()
 	 * @generated
@@ -106,7 +106,7 @@ public interface VTFontPropertiesStyleProperty extends VTStyleProperty {
 	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Color HEX</em>' attribute.
 	 * @see #setColorHEX(String)
 	 * @see org.eclipse.emf.ecp.view.template.style.fontProperties.model.VTFontPropertiesPackage#getFontPropertiesStyleProperty_ColorHEX()
@@ -121,7 +121,7 @@ public interface VTFontPropertiesStyleProperty extends VTStyleProperty {
 	 * <em>Color HEX</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Color HEX</em>' attribute.
 	 * @see #getColorHEX()
 	 * @generated
@@ -136,7 +136,7 @@ public interface VTFontPropertiesStyleProperty extends VTStyleProperty {
 	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Height</em>' attribute.
 	 * @see #setHeight(int)
 	 * @see org.eclipse.emf.ecp.view.template.style.fontProperties.model.VTFontPropertiesPackage#getFontPropertiesStyleProperty_Height()
@@ -151,7 +151,7 @@ public interface VTFontPropertiesStyleProperty extends VTStyleProperty {
 	 * <em>Height</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Height</em>' attribute.
 	 * @see #getHeight()
 	 * @generated
@@ -166,7 +166,7 @@ public interface VTFontPropertiesStyleProperty extends VTStyleProperty {
 	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Font Name</em>' attribute.
 	 * @see #setFontName(String)
 	 * @see org.eclipse.emf.ecp.view.template.style.fontProperties.model.VTFontPropertiesPackage#getFontPropertiesStyleProperty_FontName()
@@ -181,7 +181,7 @@ public interface VTFontPropertiesStyleProperty extends VTStyleProperty {
 	 * <em>Font Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Font Name</em>' attribute.
 	 * @see #getFontName()
 	 * @generated

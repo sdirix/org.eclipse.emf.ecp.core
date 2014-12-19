@@ -41,12 +41,6 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableFactory;
-import org.eclipse.emf.emfstore.bowling.BowlingFactory;
-import org.eclipse.emf.emfstore.bowling.BowlingPackage;
-import org.eclipse.emf.emfstore.bowling.League;
-import org.eclipse.emf.emfstore.bowling.Player;
-import org.eclipse.emf.emfstore.bowling.impl.LeagueImpl;
-import org.eclipse.emf.emfstore.bowling.impl.PlayerImpl;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -573,7 +567,7 @@ public class ViewModelContext_PTest {
 		final VFeaturePathDomainModelReference col = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
 		col.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Name());
 		VTableDomainModelReference.class.cast(control.getDomainModelReference()).getColumnDomainModelReferences()
-		.add(col);
+			.add(col);
 		view.getChildren().add(control);
 
 		final League league = BowlingFactory.eINSTANCE.createLeague();
@@ -605,7 +599,7 @@ public class ViewModelContext_PTest {
 		final VFeaturePathDomainModelReference col = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
 		col.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Name());
 		VTableDomainModelReference.class.cast(control.getDomainModelReference()).getColumnDomainModelReferences()
-		.add(col);
+			.add(col);
 		view.getChildren().add(control);
 
 		final League league = BowlingFactory.eINSTANCE.createLeague();
@@ -636,7 +630,7 @@ public class ViewModelContext_PTest {
 		final VFeaturePathDomainModelReference col = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
 		col.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Name());
 		VTableDomainModelReference.class.cast(control.getDomainModelReference()).getColumnDomainModelReferences()
-		.add(col);
+			.add(col);
 		view.getChildren().add(control);
 
 		final League league = BowlingFactory.eINSTANCE.createLeague();

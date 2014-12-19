@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
@@ -39,9 +39,9 @@ import org.eclipse.emf.ecp.view.spi.model.util.ViewModelUtil;
 /**
  * Implementation of the DiffMergeModelContext based on the {@link ViewModelContextImpl}.
  * As the {@link ViewModelContextImpl} is internal we suppress the restriction.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  */
 @SuppressWarnings("restriction")
 public class DiffMergeModelContextImpl extends ViewModelContextImpl implements
@@ -55,7 +55,7 @@ public class DiffMergeModelContextImpl extends ViewModelContextImpl implements
 
 	/**
 	 * Constructor for the {@link DiffMergeModelContextImpl}.
-	 * 
+	 *
 	 * @param view the {@link VElement}
 	 * @param domainObject the {@link EObject} which is editable
 	 * @param left the first object
@@ -73,7 +73,7 @@ public class DiffMergeModelContextImpl extends ViewModelContextImpl implements
 
 	/**
 	 * Constructor for the {@link DiffMergeModelContextImpl}.
-	 * 
+	 *
 	 * @param view the {@link VElement}
 	 * @param domainObject the {@link EObject} which is editable
 	 * @param left the first object
@@ -89,7 +89,7 @@ public class DiffMergeModelContextImpl extends ViewModelContextImpl implements
 
 	/**
 	 * Constructor for the {@link DiffMergeModelContextImpl}.
-	 * 
+	 *
 	 * @param view the {@link VElement}
 	 * @param domainObject the {@link EObject} which is editable
 	 * @param origin1 the first object
@@ -108,7 +108,7 @@ public class DiffMergeModelContextImpl extends ViewModelContextImpl implements
 
 	/**
 	 * Constructor for the {@link DiffMergeModelContextImpl}.
-	 * 
+	 *
 	 * @param view the {@link VElement}
 	 * @param domainObject the {@link EObject} which is editable
 	 * @param origin1 the first object
@@ -148,7 +148,7 @@ public class DiffMergeModelContextImpl extends ViewModelContextImpl implements
 
 	/**
 	 * Filter for valid controls. E.g. filter out controls which should not be mergable.
-	 * 
+	 *
 	 * @param controls the controls to validate
 	 * @return the controls which should get a merge marker
 	 */
@@ -243,7 +243,7 @@ public class DiffMergeModelContextImpl extends ViewModelContextImpl implements
 
 	/**
 	 * Checks whether the controls have a diff.
-	 * 
+	 *
 	 * @param leftControl the left control to check
 	 * @param rightControl the right control to check
 	 * @param targetControl the target control to check
@@ -267,7 +267,7 @@ public class DiffMergeModelContextImpl extends ViewModelContextImpl implements
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.diffmerge.spi.context.DiffMergeModelContext#hasDiff(org.eclipse.emf.ecp.view.spi.model.VControl)
 	 */
 	@Override
@@ -277,7 +277,7 @@ public class DiffMergeModelContextImpl extends ViewModelContextImpl implements
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.diffmerge.spi.context.DiffMergeModelContext#getPairWithDiff(org.eclipse.emf.ecp.view.spi.model.VControl)
 	 */
 	@Override
@@ -287,7 +287,7 @@ public class DiffMergeModelContextImpl extends ViewModelContextImpl implements
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.diffmerge.spi.context.DiffMergeModelContext#getTotalNumberOfDiffs()
 	 */
 	@Override
@@ -297,7 +297,7 @@ public class DiffMergeModelContextImpl extends ViewModelContextImpl implements
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.diffmerge.spi.context.DiffMergeModelContext#getIndexOf(org.eclipse.emf.ecp.view.spi.model.VControl)
 	 */
 	@Override
@@ -307,7 +307,7 @@ public class DiffMergeModelContextImpl extends ViewModelContextImpl implements
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.diffmerge.spi.context.DiffMergeModelContext#getControl(int)
 	 */
 	@Override
@@ -324,7 +324,7 @@ public class DiffMergeModelContextImpl extends ViewModelContextImpl implements
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.diffmerge.spi.context.DiffMergeModelContext#isControlMerged(org.eclipse.emf.ecp.view.spi.model.VControl)
 	 */
 	@Override
@@ -339,9 +339,9 @@ public class DiffMergeModelContextImpl extends ViewModelContextImpl implements
 	}
 
 	/**
-	 * 
+	 *
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.diffmerge.spi.context.DiffMergeModelContext#markControl(org.eclipse.emf.ecp.view.spi.model.VControl,
 	 *      boolean)
 	 */
@@ -362,7 +362,7 @@ public class DiffMergeModelContextImpl extends ViewModelContextImpl implements
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.diffmerge.spi.context.DiffMergeModelContext#getMergedDomainObjects()
 	 */
 	@Override

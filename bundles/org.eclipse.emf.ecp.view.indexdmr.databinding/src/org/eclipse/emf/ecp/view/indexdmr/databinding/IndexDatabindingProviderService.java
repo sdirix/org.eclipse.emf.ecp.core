@@ -29,21 +29,23 @@ import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
 
 /**
- * The {@link DatabindingProviderService} for a {@link VIndexDomainModelReference}.
+ * The {@link DatabindingProviderService} for a
+ * {@link VIndexDomainModelReference}.
  * 
  * @author Eugen Neufeld
  * 
  */
 @SuppressWarnings("restriction")
-public class IndexDatabindingProviderService extends FeaturePathDatabindingProviderService
-{
+public class IndexDatabindingProviderService extends
+		FeaturePathDatabindingProviderService {
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public <O extends IObservable> O getObservable(
-		VFeaturePathDomainModelReference domainModelReference,
-		Class<O> observableClass) {
-		final IObservableValue value = (IObservableValue) super.getObservable(domainModelReference, observableClass);
+			VFeaturePathDomainModelReference domainModelReference,
+			Class<O> observableClass) {
+		final IObservableValue value = (IObservableValue) super.getObservable(
+				domainModelReference, observableClass);
 
 		return (O) value;
 	}
@@ -51,14 +53,18 @@ public class IndexDatabindingProviderService extends FeaturePathDatabindingProvi
 	@SuppressWarnings("unchecked")
 	@Override
 	public <P extends IProperty> P getProperty(
-		VFeaturePathDomainModelReference domainModelReference,
-		Class<P> propertyClass) {
-		// IEMFValueProperty property = (IEMFValueProperty) super.getProperty(domainModelReference, propertyClass);
+			VFeaturePathDomainModelReference domainModelReference,
+			Class<P> propertyClass) {
+		// IEMFValueProperty property = (IEMFValueProperty)
+		// super.getProperty(domainModelReference, propertyClass);
 		final VIndexDomainModelReference indexDomainModelReference = (VIndexDomainModelReference) domainModelReference;
 
 		final EMFIndexedValueProperty valueProperty = new EMFIndexedValueProperty(
-			indexDomainModelReference.getIndex(), domainModelReference.getDomainModelEFeature());
-		final IValueProperty value = valueProperty.value(getPropertyOfChild(indexDomainModelReference.getTargetDMR()));
+				indexDomainModelReference.getIndex(),
+				domainModelReference.getDomainModelEFeature());
+		final IValueProperty value = valueProperty
+				.value(getPropertyOfChild(indexDomainModelReference
+						.getTargetDMR()));
 
 		// property.value(valueProperty);
 		return (P) value;
@@ -66,27 +72,33 @@ public class IndexDatabindingProviderService extends FeaturePathDatabindingProvi
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private IValueProperty getPropertyOfChild(
-		VDomainModelReference domainModelReference) {
-		final BundleContext bundleContext = FrameworkUtil.getBundle(getClass()).getBundleContext();
+			VDomainModelReference domainModelReference) {
+		final BundleContext bundleContext = FrameworkUtil.getBundle(getClass())
+				.getBundleContext();
 		ServiceReference<DatabindingProviderService> databindingProviderServiceReference = null;
 		try {
 			final Collection<ServiceReference<DatabindingProviderService>> serviceReferences = bundleContext
-				.getServiceReferences(DatabindingProviderService.class,
-					String.format("(domainModelReference=%s)", domainModelReference.getClass().getName())); //$NON-NLS-1$
-			final Iterator<ServiceReference<DatabindingProviderService>> iterator = serviceReferences.iterator();
+					.getServiceReferences(
+							DatabindingProviderService.class,
+							String.format(
+									"(domainModelReference=%s)", domainModelReference.getClass().getName())); //$NON-NLS-1$
+			final Iterator<ServiceReference<DatabindingProviderService>> iterator = serviceReferences
+					.iterator();
 			if (iterator.hasNext()) {
 				databindingProviderServiceReference = iterator.next();
 			}
 			if (databindingProviderServiceReference == null) {
-				throw new IllegalStateException("No DatabindingProviderService available."); //$NON-NLS-1$
+				throw new IllegalStateException(
+						"No DatabindingProviderService available."); //$NON-NLS-1$
 			}
 		} catch (final InvalidSyntaxException e) {
 			throw new IllegalStateException(e);
 		}
 		final DatabindingProviderService<VDomainModelReference> service = bundleContext
-			.getService(databindingProviderServiceReference);
+				.getService(databindingProviderServiceReference);
 
-		final IValueProperty property = service.getProperty(domainModelReference, IValueProperty.class);
+		final IValueProperty property = service.getProperty(
+				domainModelReference, IValueProperty.class);
 
 		bundleContext.ungetService(databindingProviderServiceReference);
 

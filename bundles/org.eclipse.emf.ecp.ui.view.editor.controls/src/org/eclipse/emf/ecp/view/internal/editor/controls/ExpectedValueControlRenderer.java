@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
@@ -52,9 +52,9 @@ import org.eclipse.ui.dialogs.ListDialog;
 
 /**
  * A control for defining an value in a leaf condition.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  */
 // APITODO no api yet
 public abstract class ExpectedValueControlRenderer extends SimpleControlSWTControlSWTRenderer {
@@ -67,7 +67,7 @@ public abstract class ExpectedValueControlRenderer extends SimpleControlSWTContr
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer#createSWTControl(org.eclipse.swt.widgets.Composite,
 	 *      org.eclipse.emf.ecore.EStructuralFeature.Setting)
 	 */
@@ -96,7 +96,7 @@ public abstract class ExpectedValueControlRenderer extends SimpleControlSWTContr
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer#createBindings(org.eclipse.swt.widgets.Control,
 	 *      org.eclipse.emf.ecore.EStructuralFeature.Setting)
 	 */
@@ -115,7 +115,7 @@ public abstract class ExpectedValueControlRenderer extends SimpleControlSWTContr
 
 	/**
 	 * Creates a tooltip binding for this control.
-	 * 
+	 *
 	 * @param text the {@link Text} to bind
 	 * @param modelValue the {@link IObservableValue} to bind
 	 * @param dataBindingContext the {@link DataBindingContext} to use
@@ -216,7 +216,7 @@ public abstract class ExpectedValueControlRenderer extends SimpleControlSWTContr
 
 	/**
 	 * @param shell
-	 * 
+	 *
 	 */
 	protected abstract void onSelectButton(Label text);
 
@@ -236,7 +236,7 @@ public abstract class ExpectedValueControlRenderer extends SimpleControlSWTContr
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTRenderer#getUnsetText()
 	 */
 	@Override
@@ -247,9 +247,9 @@ public abstract class ExpectedValueControlRenderer extends SimpleControlSWTContr
 
 	/**
 	 * The strategy to convert from model to target.
-	 * 
+	 *
 	 * @author Eugen Neufeld
-	 * 
+	 *
 	 */
 	protected class ModelToTargetUpdateStrategy extends EMFUpdateValueStrategy {
 
@@ -270,15 +270,15 @@ public abstract class ExpectedValueControlRenderer extends SimpleControlSWTContr
 
 	/**
 	 * The strategy to convert from target to model.
-	 * 
+	 *
 	 * @author Eugen
-	 * 
+	 *
 	 */
 	protected class TargetToModelUpdateStrategy extends EMFUpdateValueStrategy {
 
 		/**
 		 * Constructor for indicating whether a value is unsettable.
-		 * 
+		 *
 		 * @param unsettable true if value is unsettable, false otherwise
 		 */
 		public TargetToModelUpdateStrategy() {

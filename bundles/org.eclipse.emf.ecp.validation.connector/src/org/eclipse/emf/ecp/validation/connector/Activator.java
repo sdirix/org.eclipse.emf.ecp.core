@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2008-2012 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  ******************************************************************************/
 package org.eclipse.emf.ecp.validation.connector;
@@ -28,7 +28,7 @@ import org.osgi.framework.ServiceReference;
 
 /**
  * The activator class controls the plug-in life cycle.
- * 
+ *
  * @author emueller
  */
 public class Activator extends Plugin {
@@ -82,7 +82,7 @@ public class Activator extends Plugin {
 
 	/**
 	 * Returns the shared instance.
-	 * 
+	 *
 	 * @return the shared instance
 	 */
 	public static Activator getDefault() {
@@ -91,10 +91,10 @@ public class Activator extends Plugin {
 
 	/**
 	 * Returns the validation service.
-	 * 
+	 *
 	 * @param project
 	 *            the project for which to return the validation service
-	 * 
+	 *
 	 * @return the validation service
 	 */
 	public IValidationService getValidationService(ECPProject project) {
@@ -156,7 +156,7 @@ public class Activator extends Plugin {
 	/**
 	 * Returns an {@link ImageDescriptor} for the image file at the given plug-in
 	 * relative path.
-	 * 
+	 *
 	 * @param path
 	 *            the path
 	 * @return the image descriptor

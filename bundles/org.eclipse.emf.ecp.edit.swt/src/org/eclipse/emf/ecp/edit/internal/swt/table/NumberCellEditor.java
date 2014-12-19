@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  *******************************************************************************/
@@ -38,9 +38,9 @@ import org.eclipse.swt.widgets.Text;
 
 /**
  * A number cell Editor which displays numbers.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  */
 public class NumberCellEditor extends TextCellEditor implements ECPCellEditor {
 
@@ -50,7 +50,7 @@ public class NumberCellEditor extends TextCellEditor implements ECPCellEditor {
 
 	/**
 	 * The constructor which only takes a parent composite.
-	 * 
+	 *
 	 * @param parent the {@link Composite} to use as a parent.
 	 */
 	public NumberCellEditor(Composite parent) {
@@ -59,7 +59,7 @@ public class NumberCellEditor extends TextCellEditor implements ECPCellEditor {
 
 	/**
 	 * A constructor which takes a parent and the style to use, the style is ignored by this cell editor.
-	 * 
+	 *
 	 * @param parent the {@link Composite} to use as a parent
 	 * @param style the SWT style to set
 	 */
@@ -68,9 +68,9 @@ public class NumberCellEditor extends TextCellEditor implements ECPCellEditor {
 	}
 
 	/**
-	 * 
+	 *
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getValueProperty()
 	 */
 	@Override
@@ -79,9 +79,9 @@ public class NumberCellEditor extends TextCellEditor implements ECPCellEditor {
 	}
 
 	/**
-	 * 
+	 *
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#instantiate(org.eclipse.emf.ecore.EStructuralFeature,
 	 *      org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
@@ -94,9 +94,9 @@ public class NumberCellEditor extends TextCellEditor implements ECPCellEditor {
 	}
 
 	/**
-	 * 
+	 *
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getFormatedString(java.lang.Object)
 	 */
 	@Override
@@ -124,9 +124,9 @@ public class NumberCellEditor extends TextCellEditor implements ECPCellEditor {
 	}
 
 	/**
-	 * 
+	 *
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getColumnWidthWeight()
 	 */
 	@Override
@@ -135,9 +135,9 @@ public class NumberCellEditor extends TextCellEditor implements ECPCellEditor {
 	}
 
 	/**
-	 * 
+	 *
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getTargetToModelStrategy()
 	 */
 	@Override
@@ -251,9 +251,9 @@ public class NumberCellEditor extends TextCellEditor implements ECPCellEditor {
 	}
 
 	/**
-	 * 
+	 *
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getModelToTargetStrategy()
 	 */
 	@Override
@@ -281,7 +281,7 @@ public class NumberCellEditor extends TextCellEditor implements ECPCellEditor {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#setEditable(boolean)
 	 */
 	@Override

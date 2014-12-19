@@ -44,24 +44,28 @@ import org.osgi.framework.Bundle;
 public abstract class BeanValidationProvider implements ValidationProvider {
 
 	private ValidatorContext validatorContext;
-	
-	public BeanValidationProvider(){
+
+	public BeanValidationProvider() {
 		this(new InputStream[0]);
 	}
-	public BeanValidationProvider(InputStream...inputStreams) {
+
+	public BeanValidationProvider(InputStream... inputStreams) {
 		instantiateValidator(inputStreams);
 	}
 
 	private void instantiateValidator(InputStream[] inputStreams) {
 		Configuration<?> configure = Validation.byDefaultProvider().configure();
-		List<InputStream> allInputStreams = new ArrayList<InputStream>(Arrays.asList(inputStreams));
+		List<InputStream> allInputStreams = new ArrayList<InputStream>(
+				Arrays.asList(inputStreams));
 		allInputStreams.addAll(readExtensionPoints());
 		for (InputStream is : allInputStreams) {
 			configure = configure.addMapping(is);
 		}
 		ValidatorFactory validatorFactory = configure.buildValidatorFactory();
-		MessageInterpolator interpolator = getMessageInterpolator(validatorFactory.getMessageInterpolator());
-		validatorContext = validatorFactory.usingContext().messageInterpolator(interpolator);
+		MessageInterpolator interpolator = getMessageInterpolator(validatorFactory
+				.getMessageInterpolator());
+		validatorContext = validatorFactory.usingContext().messageInterpolator(
+				interpolator);
 		for (InputStream is : allInputStreams) {
 			try {
 				is.close();
@@ -71,7 +75,6 @@ public abstract class BeanValidationProvider implements ValidationProvider {
 		}
 	}
 
-	
 	private Collection<InputStream> readExtensionPoints() {
 		final IExtensionRegistry extensionRegistry = Platform
 				.getExtensionRegistry();
@@ -84,8 +87,10 @@ public abstract class BeanValidationProvider implements ValidationProvider {
 		for (final IConfigurationElement e : controls) {
 			try {
 				String xmlViolationPath = e.getAttribute("xml");
-				final Bundle bundle = Platform.getBundle(e.getContributor().getName());
-				inputStreams.add(bundle.getResource(xmlViolationPath).openStream());
+				final Bundle bundle = Platform.getBundle(e.getContributor()
+						.getName());
+				inputStreams.add(bundle.getResource(xmlViolationPath)
+						.openStream());
 			} catch (final IOException e1) {
 				Activator.log(e1);
 			}
@@ -96,25 +101,31 @@ public abstract class BeanValidationProvider implements ValidationProvider {
 	@Override
 	public List<Diagnostic> validate(EObject eObject) {
 		Validator validator = validatorContext.getValidator();
-		List<Diagnostic> diagnostics=new ArrayList<Diagnostic>();
-		Set<ConstraintViolation<EObject>> validationResult = validator.validate(eObject);
-		for(ConstraintViolation<EObject> violation:validationResult){
-			Node lastNode=null;
-			Iterator<Node> pathIterator = violation.getPropertyPath().iterator();
-			while(pathIterator.hasNext()){
-				lastNode=pathIterator.next();
+		List<Diagnostic> diagnostics = new ArrayList<Diagnostic>();
+		Set<ConstraintViolation<EObject>> validationResult = validator
+				.validate(eObject);
+		for (ConstraintViolation<EObject> violation : validationResult) {
+			Node lastNode = null;
+			Iterator<Node> pathIterator = violation.getPropertyPath()
+					.iterator();
+			while (pathIterator.hasNext()) {
+				lastNode = pathIterator.next();
 			}
 			EObject leafBean = (EObject) violation.getLeafBean();
-			EStructuralFeature eStructuralFeature = leafBean.eClass().getEStructuralFeature(lastNode.getName());
-			int severity=getSeverity(violation);
-			final BasicDiagnostic diagnostic = new BasicDiagnostic(severity, "Bean Validation", 0, violation.getMessage(), new Object[]{violation.getLeafBean(),eStructuralFeature});
+			EStructuralFeature eStructuralFeature = leafBean.eClass()
+					.getEStructuralFeature(lastNode.getName());
+			int severity = getSeverity(violation);
+			final BasicDiagnostic diagnostic = new BasicDiagnostic(severity,
+					"Bean Validation", 0, violation.getMessage(), new Object[] {
+							violation.getLeafBean(), eStructuralFeature });
 			diagnostics.add(diagnostic);
 		}
 		return diagnostics;
 	}
-	
-	protected abstract MessageInterpolator getMessageInterpolator(MessageInterpolator messageInterpolator);
-	
+
+	protected abstract MessageInterpolator getMessageInterpolator(
+			MessageInterpolator messageInterpolator);
+
 	protected abstract int getSeverity(ConstraintViolation<EObject> violation);
 
 }

@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Alexandra - initial API and implementation
  ******************************************************************************/
@@ -37,16 +37,16 @@ import org.eclipse.swt.widgets.Label;
 
 /**
  * A wizard page for selecting a structural feature.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  */
 public class SelectEStructuralFeatureWizardPage extends WizardPage {
 	/**
 	 * Content Provider for {@link EStructuralFeature}.
-	 * 
+	 *
 	 * @author Eugen Neufeld
-	 * 
+	 *
 	 */
 	private static final class EStructuralFeatureContentProvider implements ITreeContentProvider {
 		@Override
@@ -129,7 +129,7 @@ public class SelectEStructuralFeatureWizardPage extends WizardPage {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.jface.dialogs.DialogPage#setVisible(boolean)
 	 */
 	@Override
@@ -199,7 +199,7 @@ public class SelectEStructuralFeatureWizardPage extends WizardPage {
 
 	/**
 	 * Returns the selected {@link EStructuralFeature}.
-	 * 
+	 *
 	 * @return the selected {@link EStructuralFeature}
 	 */
 	public EStructuralFeature getEStructuralFeature() {
@@ -208,7 +208,7 @@ public class SelectEStructuralFeatureWizardPage extends WizardPage {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.jface.wizard.WizardPage#isPageComplete()
 	 */
 	@Override

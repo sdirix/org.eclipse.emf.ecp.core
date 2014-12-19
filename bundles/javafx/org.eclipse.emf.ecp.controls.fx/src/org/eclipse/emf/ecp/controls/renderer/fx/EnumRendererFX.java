@@ -19,15 +19,15 @@ public class EnumRendererFX extends SimpleControlRendererFX {
 		final VControl control = getVElement();
 		final ChoiceBox choiceBox = new ChoiceBox();
 		choiceBox.setItems(FXCollections.observableArrayList(control
-				.getDomainModelReference().getEStructuralFeatureIterator()
-				.next().getEType().getInstanceClass().getEnumConstants()));
+			.getDomainModelReference().getEStructuralFeatureIterator()
+			.next().getEType().getInstanceClass().getEnumConstants()));
 		choiceBox.setMaxWidth(Double.MAX_VALUE);
 
-		IObservableValue targetValue = getTargetObservable(choiceBox, "value");
-		IObservableValue modelValue = getModelObservable(control
-				.getDomainModelReference().getIterator().next());
+		final IObservableValue targetValue = getTargetObservable(choiceBox, "value");
+		final IObservableValue modelValue = getModelObservable(control
+			.getDomainModelReference().getIterator().next());
 		bindModelToTarget(targetValue, modelValue, null,
-				null);
+			null);
 
 		control.eAdapters().add(new AdapterImpl() {
 
@@ -35,7 +35,7 @@ public class EnumRendererFX extends SimpleControlRendererFX {
 			public void notifyChanged(Notification msg) {
 				super.notifyChanged(msg);
 				if (msg.getFeature() == VViewPackage.eINSTANCE
-						.getElement_Diagnostic()) {
+					.getElement_Diagnostic()) {
 					applyValidation(control, choiceBox);
 				}
 			}

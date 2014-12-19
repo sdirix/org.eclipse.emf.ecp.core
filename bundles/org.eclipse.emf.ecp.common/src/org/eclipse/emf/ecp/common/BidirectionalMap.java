@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Edgar - initial API and implementation
  ******************************************************************************/
@@ -19,9 +19,9 @@ import java.util.Set;
 /**
  * Convenience class for mapping keys to values and vice versa.
  * Both, keys and values, have to be unique.
- * 
+ *
  * @author emuller
- * 
+ *
  * @param <K>
  *            the type of the key
  * @param <V>
@@ -43,7 +43,7 @@ public class BidirectionalMap<K, V> {
 	/**
 	 * Associates the specified value with the specified key in this map
 	 * and vice versa.
-	 * 
+	 *
 	 * @param key
 	 *            the key
 	 * @param value
@@ -56,7 +56,7 @@ public class BidirectionalMap<K, V> {
 
 	/**
 	 * Removes the bidirectional mapping for the given key.
-	 * 
+	 *
 	 * @param key
 	 *            the key to be removed
 	 * @return the value that was associated with the key
@@ -70,7 +70,7 @@ public class BidirectionalMap<K, V> {
 
 	/**
 	 * Removes the bidirectional mapping for the given value.
-	 * 
+	 *
 	 * @param value
 	 *            the value to be removed
 	 * @return the key that was associated with the value
@@ -84,7 +84,7 @@ public class BidirectionalMap<K, V> {
 
 	/**
 	 * Returns the value belonging to the given key.
-	 * 
+	 *
 	 * @param key
 	 *            the key whose value should be looked up
 	 * @return the value belonging to the given key
@@ -95,7 +95,7 @@ public class BidirectionalMap<K, V> {
 
 	/**
 	 * Returns the key belonging to the given value.
-	 * 
+	 *
 	 * @param value
 	 *            the key whose value should be looked up
 	 * @return the key belonging to the given value
@@ -106,7 +106,7 @@ public class BidirectionalMap<K, V> {
 
 	/**
 	 * Returns all keys.
-	 * 
+	 *
 	 * @return a set of all keys
 	 */
 	public Set<K> keys() {
@@ -117,7 +117,7 @@ public class BidirectionalMap<K, V> {
 
 	/**
 	 * Returns all values.
-	 * 
+	 *
 	 * @return a set of all values
 	 */
 	public Set<V> values() {

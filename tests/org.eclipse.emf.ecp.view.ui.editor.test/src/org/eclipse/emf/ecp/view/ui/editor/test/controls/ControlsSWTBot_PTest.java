@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
  ******************************************************************************/
@@ -37,13 +37,6 @@ import org.eclipse.emf.ecp.view.ui.editor.test.ECPCommonSWTBotTest;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
-import org.eclipse.emf.emfstore.bowling.BowlingFactory;
-import org.eclipse.emf.emfstore.bowling.BowlingPackage;
-import org.eclipse.emf.emfstore.bowling.Game;
-import org.eclipse.emf.emfstore.bowling.Gender;
-import org.eclipse.emf.emfstore.bowling.Matchup;
-import org.eclipse.emf.emfstore.bowling.Player;
-import org.eclipse.emf.emfstore.bowling.TournamentType;
 import org.eclipse.swtbot.swt.finder.finders.UIThreadRunnable;
 import org.eclipse.swtbot.swt.finder.results.VoidResult;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotButton;
@@ -59,9 +52,9 @@ import org.junit.runners.Parameterized.Parameters;
 
 /**
  * Configurable SWTBotTest displaying and entering data in ECP Controls.
- * 
+ *
  * @author jfaltermeier
- * 
+ *
  */
 @RunWith(Parameterized.class)
 public class ControlsSWTBot_PTest extends ECPCommonSWTBotTest {
@@ -120,7 +113,7 @@ public class ControlsSWTBot_PTest extends ECPCommonSWTBotTest {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.ui.editor.test.ECPCommonSWTBotTest#logic()
 	 */
 	// BEGIN COMPLEX CODE
@@ -351,7 +344,7 @@ public class ControlsSWTBot_PTest extends ECPCommonSWTBotTest {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.ui.editor.test.ECPCommonSWTBotTest#createDomainObject()
 	 */
 	@Override
@@ -431,7 +424,7 @@ public class ControlsSWTBot_PTest extends ECPCommonSWTBotTest {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.ui.editor.test.ECPCommonSWTBotTest#createView()
 	 */
 	@Override

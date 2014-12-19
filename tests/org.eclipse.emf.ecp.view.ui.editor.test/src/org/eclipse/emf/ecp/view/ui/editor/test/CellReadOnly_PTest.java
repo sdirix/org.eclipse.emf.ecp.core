@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen - initial API and implementation
  ******************************************************************************/
@@ -30,13 +30,13 @@ import org.eclipse.swtbot.swt.finder.widgets.SWTBotText;
 
 /**
  * @author Eugen
- * 
+ *
  */
 public class CellReadOnly_PTest extends ECPCommonSWTBotTest {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.ui.editor.test.ECPCommonSWTBotTest#createDomainObject()
 	 */
 	@Override
@@ -54,7 +54,7 @@ public class CellReadOnly_PTest extends ECPCommonSWTBotTest {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.ui.editor.test.ECPCommonSWTBotTest#createView()
 	 */
 	@Override
@@ -99,7 +99,7 @@ public class CellReadOnly_PTest extends ECPCommonSWTBotTest {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.ui.editor.test.ECPCommonSWTBotTest#logic()
 	 */
 	@Override

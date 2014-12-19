@@ -1,14 +1,14 @@
 /*******************************************************************************
  * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
- * 
+ *
  *******************************************************************************/
 package org.eclipse.emf.ecp.spi.common.ui.composites;
 
@@ -36,9 +36,9 @@ import org.eclipse.swt.widgets.Composite;
 /**
  * This class provides a CheckedTree that allows the user to select {@link EPackage EPackages} and {@link EClass
  * EClasses}.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  */
 public class CheckedSelectModelClassCompositeImpl extends AbstractEClassTreeSelectionComposite implements
 	CheckedModelClassComposite {
@@ -48,7 +48,7 @@ public class CheckedSelectModelClassCompositeImpl extends AbstractEClassTreeSele
 
 	/**
 	 * Constructor setting the necessary data for selecting the {@link EClass EClasses}.
-	 * 
+	 *
 	 * @param unsupportedEPackages {@link EPackage EPackages} that are not supported
 	 * @param filteredEPackages {@link EPackage EPackages} selected by the user
 	 * @param filteredEClasses {@link EClass EClasses} selected by the user
@@ -120,7 +120,7 @@ public class CheckedSelectModelClassCompositeImpl extends AbstractEClassTreeSele
 
 	/**
 	 * Returns the checked Elements.
-	 * 
+	 *
 	 * @return an array containing the checked elements
 	 */
 	@Override
@@ -131,7 +131,7 @@ public class CheckedSelectModelClassCompositeImpl extends AbstractEClassTreeSele
 
 	/**
 	 * Initialize the selection by setting the checked elements.
-	 * 
+	 *
 	 * @param selection the objects to check
 	 */
 	@Override

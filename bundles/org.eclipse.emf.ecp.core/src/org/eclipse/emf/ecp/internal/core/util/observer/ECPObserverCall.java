@@ -1,14 +1,14 @@
 /*******************************************************************************
  * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * wesendon - initial API and implementation
- * 
+ *
  *******************************************************************************/
 
 package org.eclipse.emf.ecp.internal.core.util.observer;
@@ -27,16 +27,16 @@ import org.eclipse.emf.ecp.core.util.observer.ECPObserver;
  * the type of the class extending IObserver in order to call the observer interface with type safety.
  * However, the same proxies can be casted into {@link ECPObserverCall} in order to access the results by all registered
  * observers.
- * 
+ *
  * @author wesendon
- * 
+ *
  */
 public interface ECPObserverCall {
 
 	/**
 	 * Returns the results of each notified observer. This method will always return the returns from the last call
 	 * executed on the proxy.
-	 * 
+	 *
 	 * @return list of results
 	 */
 	List<Result> getObserverCallResults();
@@ -44,10 +44,10 @@ public interface ECPObserverCall {
 	/**
 	 * This class represents an result from an observer call. It contains the observer, the called method and the result
 	 * or an exception, if occured.
-	 * 
-	 * 
+	 *
+	 *
 	 * @author wesendon
-	 * 
+	 *
 	 */
 	public class Result {
 
@@ -58,7 +58,7 @@ public interface ECPObserverCall {
 
 		/**
 		 * This constructor is used if <b>NO</b> exception occurred.
-		 * 
+		 *
 		 * @param observer observer
 		 * @param method method
 		 * @param result result
@@ -72,7 +72,7 @@ public interface ECPObserverCall {
 
 		/**
 		 * This constructor is used if an exception <b>HAS</b> occurred.
-		 * 
+		 *
 		 * @param observer observer
 		 * @param e exception
 		 * @param method method
@@ -86,7 +86,7 @@ public interface ECPObserverCall {
 
 		/**
 		 * Specifies whether this Result contains an exception.
-		 * 
+		 *
 		 * @return boolean
 		 */
 		public boolean exceptionOccurred() {
@@ -95,7 +95,7 @@ public interface ECPObserverCall {
 
 		/**
 		 * .
-		 * 
+		 *
 		 * @return exception or null
 		 */
 		public Throwable getException() {
@@ -104,7 +104,7 @@ public interface ECPObserverCall {
 
 		/**
 		 * The observer.
-		 * 
+		 *
 		 * @return this can't be null
 		 */
 		public ECPObserver getObserver() {
@@ -113,7 +113,7 @@ public interface ECPObserverCall {
 
 		/**
 		 * The result.
-		 * 
+		 *
 		 * @return the result or null
 		 */
 		public Object getResult() {
@@ -122,7 +122,7 @@ public interface ECPObserverCall {
 
 		/**
 		 * Returns the result or the default value for primitive types.
-		 * 
+		 *
 		 * @return result, null or in case of primitive type, the default value.
 		 */
 		public Object getResultOrDefaultValue() {
@@ -135,7 +135,7 @@ public interface ECPObserverCall {
 
 		/**
 		 * Returns the default value for a given method. Which is null or the default primitive value.
-		 * 
+		 *
 		 * @param m method
 		 * @return null or default primitive value
 		 */

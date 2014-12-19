@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
@@ -18,9 +18,9 @@ import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 
 /**
  * Helper class for retrieving configuration information.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  */
 public final class TableConfigurationHelper {
 
@@ -30,7 +30,7 @@ public final class TableConfigurationHelper {
 
 	/**
 	 * Retrieve the readonly state for the table control of a {@link VDomainModelReference}.
-	 * 
+	 *
 	 * @param tableControl the {@link VTableControl} to get the readonly state of a column for
 	 * @param domainModelReference the {@link VDomainModelReference} to get the state for
 	 * @return true if the domainModelReference is readonly, false otherwise

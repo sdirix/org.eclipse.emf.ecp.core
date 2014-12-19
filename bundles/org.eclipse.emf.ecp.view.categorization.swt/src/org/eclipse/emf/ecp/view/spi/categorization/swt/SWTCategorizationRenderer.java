@@ -85,7 +85,7 @@ public class SWTCategorizationRenderer extends AbstractSWTRenderer<VCategorizati
 	 */
 	@Override
 	protected Control renderControl(SWTGridCell cell, Composite parent) throws NoRendererFoundException,
-	NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption {
 		final Composite categoryComposite = new Composite(parent, SWT.NONE);
 		categoryComposite.setBackground(parent.getBackground());
 		categoryComposite.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_categorization"); //$NON-NLS-1$

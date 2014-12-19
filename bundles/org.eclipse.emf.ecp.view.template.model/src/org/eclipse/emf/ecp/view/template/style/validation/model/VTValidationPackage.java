@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * EclipseSource Munich - initial API and implementation
  */
@@ -28,7 +28,7 @@ import org.eclipse.emf.ecp.view.template.model.VTTemplatePackage;
  * <li>and each data type</li>
  * </ul>
  * <!-- end-user-doc -->
- * 
+ *
  * @see org.eclipse.emf.ecp.view.template.style.validation.model.VTValidationFactory
  * @model kind="package"
  * @generated
@@ -38,7 +38,7 @@ public interface VTValidationPackage extends EPackage {
 	 * The package name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	String eNAME = "validation"; //$NON-NLS-1$
@@ -47,7 +47,7 @@ public interface VTValidationPackage extends EPackage {
 	 * The package namespace URI.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	String eNS_URI = "http://www.eclipse.org/emf/ecp/view/template/style/validation/model"; //$NON-NLS-1$
@@ -56,7 +56,7 @@ public interface VTValidationPackage extends EPackage {
 	 * The package namespace name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	String eNS_PREFIX = "org.eclipse.emf.ecp.view.template.style.validation.model"; //$NON-NLS-1$
@@ -65,7 +65,7 @@ public interface VTValidationPackage extends EPackage {
 	 * The singleton instance of the package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	VTValidationPackage eINSTANCE = org.eclipse.emf.ecp.view.template.style.validation.model.impl.VTValidationPackageImpl
@@ -77,7 +77,7 @@ public interface VTValidationPackage extends EPackage {
 	 * <em>Style Property</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.template.style.validation.model.impl.VTValidationStylePropertyImpl
 	 * @see org.eclipse.emf.ecp.view.template.style.validation.model.impl.VTValidationPackageImpl#getValidationStyleProperty()
 	 * @generated
@@ -88,7 +88,7 @@ public interface VTValidationPackage extends EPackage {
 	 * The feature id for the '<em><b>Ok Color HEX</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -98,7 +98,7 @@ public interface VTValidationPackage extends EPackage {
 	 * The feature id for the '<em><b>Ok Image URL</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -108,7 +108,7 @@ public interface VTValidationPackage extends EPackage {
 	 * The feature id for the '<em><b>Ok Overlay URL</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -118,7 +118,7 @@ public interface VTValidationPackage extends EPackage {
 	 * The feature id for the '<em><b>Info Color HEX</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -128,7 +128,7 @@ public interface VTValidationPackage extends EPackage {
 	 * The feature id for the '<em><b>Info Image URL</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -138,7 +138,7 @@ public interface VTValidationPackage extends EPackage {
 	 * The feature id for the '<em><b>Info Overlay URL</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -148,7 +148,7 @@ public interface VTValidationPackage extends EPackage {
 	 * The feature id for the '<em><b>Warning Color HEX</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -158,7 +158,7 @@ public interface VTValidationPackage extends EPackage {
 	 * The feature id for the '<em><b>Warning Image URL</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -168,7 +168,7 @@ public interface VTValidationPackage extends EPackage {
 	 * The feature id for the '<em><b>Warning Overlay URL</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -178,7 +178,7 @@ public interface VTValidationPackage extends EPackage {
 	 * The feature id for the '<em><b>Error Color HEX</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -188,7 +188,7 @@ public interface VTValidationPackage extends EPackage {
 	 * The feature id for the '<em><b>Error Image URL</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -198,7 +198,7 @@ public interface VTValidationPackage extends EPackage {
 	 * The feature id for the '<em><b>Error Overlay URL</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -208,7 +208,7 @@ public interface VTValidationPackage extends EPackage {
 	 * The feature id for the '<em><b>Cancel Color HEX</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -218,7 +218,7 @@ public interface VTValidationPackage extends EPackage {
 	 * The feature id for the '<em><b>Cancel Image URL</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -228,7 +228,7 @@ public interface VTValidationPackage extends EPackage {
 	 * The feature id for the '<em><b>Cancel Overlay URL</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -238,7 +238,7 @@ public interface VTValidationPackage extends EPackage {
 	 * The number of structural features of the '<em>Style Property</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -248,7 +248,7 @@ public interface VTValidationPackage extends EPackage {
 	 * The number of operations of the '<em>Style Property</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -260,7 +260,7 @@ public interface VTValidationPackage extends EPackage {
 	 * <em>Style Property</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for class '<em>Style Property</em>'.
 	 * @see org.eclipse.emf.ecp.view.template.style.validation.model.VTValidationStyleProperty
 	 * @generated
@@ -273,7 +273,7 @@ public interface VTValidationPackage extends EPackage {
 	 * <em>Ok Color HEX</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for the attribute '<em>Ok Color HEX</em>'.
 	 * @see org.eclipse.emf.ecp.view.template.style.validation.model.VTValidationStyleProperty#getOkColorHEX()
 	 * @see #getValidationStyleProperty()
@@ -287,7 +287,7 @@ public interface VTValidationPackage extends EPackage {
 	 * <em>Ok Image URL</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for the attribute '<em>Ok Image URL</em>'.
 	 * @see org.eclipse.emf.ecp.view.template.style.validation.model.VTValidationStyleProperty#getOkImageURL()
 	 * @see #getValidationStyleProperty()
@@ -301,7 +301,7 @@ public interface VTValidationPackage extends EPackage {
 	 * <em>Ok Overlay URL</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for the attribute '<em>Ok Overlay URL</em>'.
 	 * @see org.eclipse.emf.ecp.view.template.style.validation.model.VTValidationStyleProperty#getOkOverlayURL()
 	 * @see #getValidationStyleProperty()
@@ -315,7 +315,7 @@ public interface VTValidationPackage extends EPackage {
 	 * <em>Info Color HEX</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for the attribute '<em>Info Color HEX</em>'.
 	 * @see org.eclipse.emf.ecp.view.template.style.validation.model.VTValidationStyleProperty#getInfoColorHEX()
 	 * @see #getValidationStyleProperty()
@@ -329,7 +329,7 @@ public interface VTValidationPackage extends EPackage {
 	 * <em>Info Image URL</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for the attribute '<em>Info Image URL</em>'.
 	 * @see org.eclipse.emf.ecp.view.template.style.validation.model.VTValidationStyleProperty#getInfoImageURL()
 	 * @see #getValidationStyleProperty()
@@ -343,7 +343,7 @@ public interface VTValidationPackage extends EPackage {
 	 * <em>Info Overlay URL</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for the attribute '<em>Info Overlay URL</em>'.
 	 * @see org.eclipse.emf.ecp.view.template.style.validation.model.VTValidationStyleProperty#getInfoOverlayURL()
 	 * @see #getValidationStyleProperty()
@@ -357,7 +357,7 @@ public interface VTValidationPackage extends EPackage {
 	 * <em>Warning Color HEX</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for the attribute '<em>Warning Color HEX</em>'.
 	 * @see org.eclipse.emf.ecp.view.template.style.validation.model.VTValidationStyleProperty#getWarningColorHEX()
 	 * @see #getValidationStyleProperty()
@@ -371,7 +371,7 @@ public interface VTValidationPackage extends EPackage {
 	 * <em>Warning Image URL</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for the attribute '<em>Warning Image URL</em>'.
 	 * @see org.eclipse.emf.ecp.view.template.style.validation.model.VTValidationStyleProperty#getWarningImageURL()
 	 * @see #getValidationStyleProperty()
@@ -385,7 +385,7 @@ public interface VTValidationPackage extends EPackage {
 	 * <em>Warning Overlay URL</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for the attribute '<em>Warning Overlay URL</em>'.
 	 * @see org.eclipse.emf.ecp.view.template.style.validation.model.VTValidationStyleProperty#getWarningOverlayURL()
 	 * @see #getValidationStyleProperty()
@@ -399,7 +399,7 @@ public interface VTValidationPackage extends EPackage {
 	 * <em>Error Color HEX</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for the attribute '<em>Error Color HEX</em>'.
 	 * @see org.eclipse.emf.ecp.view.template.style.validation.model.VTValidationStyleProperty#getErrorColorHEX()
 	 * @see #getValidationStyleProperty()
@@ -413,7 +413,7 @@ public interface VTValidationPackage extends EPackage {
 	 * <em>Error Image URL</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for the attribute '<em>Error Image URL</em>'.
 	 * @see org.eclipse.emf.ecp.view.template.style.validation.model.VTValidationStyleProperty#getErrorImageURL()
 	 * @see #getValidationStyleProperty()
@@ -427,7 +427,7 @@ public interface VTValidationPackage extends EPackage {
 	 * <em>Error Overlay URL</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for the attribute '<em>Error Overlay URL</em>'.
 	 * @see org.eclipse.emf.ecp.view.template.style.validation.model.VTValidationStyleProperty#getErrorOverlayURL()
 	 * @see #getValidationStyleProperty()
@@ -441,7 +441,7 @@ public interface VTValidationPackage extends EPackage {
 	 * <em>Cancel Color HEX</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for the attribute '<em>Cancel Color HEX</em>'.
 	 * @see org.eclipse.emf.ecp.view.template.style.validation.model.VTValidationStyleProperty#getCancelColorHEX()
 	 * @see #getValidationStyleProperty()
@@ -455,7 +455,7 @@ public interface VTValidationPackage extends EPackage {
 	 * <em>Cancel Image URL</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for the attribute '<em>Cancel Image URL</em>'.
 	 * @see org.eclipse.emf.ecp.view.template.style.validation.model.VTValidationStyleProperty#getCancelImageURL()
 	 * @see #getValidationStyleProperty()
@@ -469,7 +469,7 @@ public interface VTValidationPackage extends EPackage {
 	 * <em>Cancel Overlay URL</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for the attribute '<em>Cancel Overlay URL</em>'.
 	 * @see org.eclipse.emf.ecp.view.template.style.validation.model.VTValidationStyleProperty#getCancelOverlayURL()
 	 * @see #getValidationStyleProperty()
@@ -481,7 +481,7 @@ public interface VTValidationPackage extends EPackage {
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the factory that creates the instances of the model.
 	 * @generated
 	 */
@@ -498,7 +498,7 @@ public interface VTValidationPackage extends EPackage {
 	 * <li>and each data type</li>
 	 * </ul>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	interface Literals {
@@ -508,7 +508,7 @@ public interface VTValidationPackage extends EPackage {
 		 * <em>Style Property</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.template.style.validation.model.impl.VTValidationStylePropertyImpl
 		 * @see org.eclipse.emf.ecp.view.template.style.validation.model.impl.VTValidationPackageImpl#getValidationStyleProperty()
 		 * @generated
@@ -519,7 +519,7 @@ public interface VTValidationPackage extends EPackage {
 		 * The meta object literal for the '<em><b>Ok Color HEX</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		EAttribute VALIDATION_STYLE_PROPERTY__OK_COLOR_HEX = eINSTANCE.getValidationStyleProperty_OkColorHEX();
@@ -528,7 +528,7 @@ public interface VTValidationPackage extends EPackage {
 		 * The meta object literal for the '<em><b>Ok Image URL</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		EAttribute VALIDATION_STYLE_PROPERTY__OK_IMAGE_URL = eINSTANCE.getValidationStyleProperty_OkImageURL();
@@ -537,7 +537,7 @@ public interface VTValidationPackage extends EPackage {
 		 * The meta object literal for the '<em><b>Ok Overlay URL</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		EAttribute VALIDATION_STYLE_PROPERTY__OK_OVERLAY_URL = eINSTANCE.getValidationStyleProperty_OkOverlayURL();
@@ -546,7 +546,7 @@ public interface VTValidationPackage extends EPackage {
 		 * The meta object literal for the '<em><b>Info Color HEX</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		EAttribute VALIDATION_STYLE_PROPERTY__INFO_COLOR_HEX = eINSTANCE.getValidationStyleProperty_InfoColorHEX();
@@ -555,7 +555,7 @@ public interface VTValidationPackage extends EPackage {
 		 * The meta object literal for the '<em><b>Info Image URL</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		EAttribute VALIDATION_STYLE_PROPERTY__INFO_IMAGE_URL = eINSTANCE.getValidationStyleProperty_InfoImageURL();
@@ -564,7 +564,7 @@ public interface VTValidationPackage extends EPackage {
 		 * The meta object literal for the '<em><b>Info Overlay URL</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		EAttribute VALIDATION_STYLE_PROPERTY__INFO_OVERLAY_URL = eINSTANCE.getValidationStyleProperty_InfoOverlayURL();
@@ -573,7 +573,7 @@ public interface VTValidationPackage extends EPackage {
 		 * The meta object literal for the '<em><b>Warning Color HEX</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		EAttribute VALIDATION_STYLE_PROPERTY__WARNING_COLOR_HEX = eINSTANCE
@@ -583,7 +583,7 @@ public interface VTValidationPackage extends EPackage {
 		 * The meta object literal for the '<em><b>Warning Image URL</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		EAttribute VALIDATION_STYLE_PROPERTY__WARNING_IMAGE_URL = eINSTANCE
@@ -593,7 +593,7 @@ public interface VTValidationPackage extends EPackage {
 		 * The meta object literal for the '<em><b>Warning Overlay URL</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		EAttribute VALIDATION_STYLE_PROPERTY__WARNING_OVERLAY_URL = eINSTANCE
@@ -603,7 +603,7 @@ public interface VTValidationPackage extends EPackage {
 		 * The meta object literal for the '<em><b>Error Color HEX</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		EAttribute VALIDATION_STYLE_PROPERTY__ERROR_COLOR_HEX = eINSTANCE.getValidationStyleProperty_ErrorColorHEX();
@@ -612,7 +612,7 @@ public interface VTValidationPackage extends EPackage {
 		 * The meta object literal for the '<em><b>Error Image URL</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		EAttribute VALIDATION_STYLE_PROPERTY__ERROR_IMAGE_URL = eINSTANCE.getValidationStyleProperty_ErrorImageURL();
@@ -621,7 +621,7 @@ public interface VTValidationPackage extends EPackage {
 		 * The meta object literal for the '<em><b>Error Overlay URL</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		EAttribute VALIDATION_STYLE_PROPERTY__ERROR_OVERLAY_URL = eINSTANCE
@@ -631,7 +631,7 @@ public interface VTValidationPackage extends EPackage {
 		 * The meta object literal for the '<em><b>Cancel Color HEX</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		EAttribute VALIDATION_STYLE_PROPERTY__CANCEL_COLOR_HEX = eINSTANCE.getValidationStyleProperty_CancelColorHEX();
@@ -640,7 +640,7 @@ public interface VTValidationPackage extends EPackage {
 		 * The meta object literal for the '<em><b>Cancel Image URL</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		EAttribute VALIDATION_STYLE_PROPERTY__CANCEL_IMAGE_URL = eINSTANCE.getValidationStyleProperty_CancelImageURL();
@@ -649,7 +649,7 @@ public interface VTValidationPackage extends EPackage {
 		 * The meta object literal for the '<em><b>Cancel Overlay URL</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		EAttribute VALIDATION_STYLE_PROPERTY__CANCEL_OVERLAY_URL = eINSTANCE

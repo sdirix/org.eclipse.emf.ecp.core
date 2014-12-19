@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
@@ -18,7 +18,7 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Domain Model Reference</b></em>'.
  * <!-- end-user-doc -->
- * 
+ *
  * <p>
  * The following features are supported:
  * <ul>
@@ -30,7 +30,7 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
  * </em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage#getCustomDomainModelReference()
  * @model
  * @generated
@@ -47,7 +47,7 @@ public interface VCustomDomainModelReference extends VDomainModelReference
 	 * should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Domain Model References</em>' containment reference list.
 	 * @see org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage#getCustomDomainModelReference_DomainModelReferences()
 	 * @model containment="true"
@@ -63,7 +63,7 @@ public interface VCustomDomainModelReference extends VDomainModelReference
 	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Bundle Name</em>' attribute.
 	 * @see #setBundleName(String)
 	 * @see org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage#getCustomDomainModelReference_BundleName()
@@ -78,7 +78,7 @@ public interface VCustomDomainModelReference extends VDomainModelReference
 	 * attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Bundle Name</em>' attribute.
 	 * @see #getBundleName()
 	 * @generated
@@ -93,7 +93,7 @@ public interface VCustomDomainModelReference extends VDomainModelReference
 	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Class Name</em>' attribute.
 	 * @see #setClassName(String)
 	 * @see org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage#getCustomDomainModelReference_ClassName()
@@ -107,7 +107,7 @@ public interface VCustomDomainModelReference extends VDomainModelReference
 	 * <em>Class Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Class Name</em>' attribute.
 	 * @see #getClassName()
 	 * @generated
@@ -123,7 +123,7 @@ public interface VCustomDomainModelReference extends VDomainModelReference
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Control Checked</em>' attribute.
 	 * @see #setControlChecked(boolean)
 	 * @see org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage#getCustomDomainModelReference_ControlChecked()
@@ -138,7 +138,7 @@ public interface VCustomDomainModelReference extends VDomainModelReference
 	 * <em>Control Checked</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Control Checked</em>' attribute.
 	 * @see #isControlChecked()
 	 * @generated

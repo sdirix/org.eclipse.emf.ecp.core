@@ -5,7 +5,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  ******************************************************************************/
 package org.eclipse.emf.ecp.editor.internal.e3;
@@ -39,7 +39,7 @@ import org.eclipse.ui.forms.editor.SharedHeaderFormEditor;
 
 /**
  * GUI view for editing MEs.
- * 
+ *
  * @author helming
  * @author naughton
  */
@@ -182,7 +182,7 @@ public class MEEditor extends SharedHeaderFormEditor {
 
 	/**
 	 * Save is not allowed as the editor can only modify model elements.
-	 * 
+	 *
 	 * @return false
 	 */
 	@Override

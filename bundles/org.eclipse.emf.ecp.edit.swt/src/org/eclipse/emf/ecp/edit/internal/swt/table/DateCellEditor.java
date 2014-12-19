@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  *******************************************************************************/
@@ -40,9 +40,9 @@ import org.eclipse.swt.widgets.DateTime;
 
 /**
  * A cell editor for editing a date time value.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  */
 public class DateCellEditor extends CellEditor implements ECPCellEditor {
 
@@ -57,7 +57,7 @@ public class DateCellEditor extends CellEditor implements ECPCellEditor {
 
 	/**
 	 * A constructor which takes only a parent.
-	 * 
+	 *
 	 * @param parent the {@link Composite} to use as a parent.
 	 */
 	public DateCellEditor(Composite parent) {
@@ -66,7 +66,7 @@ public class DateCellEditor extends CellEditor implements ECPCellEditor {
 
 	/**
 	 * A constructor which takes the parent and the style.
-	 * 
+	 *
 	 * @param parent the {@link Composite} to use as a parent
 	 * @param style the Style to set
 	 */
@@ -75,9 +75,9 @@ public class DateCellEditor extends CellEditor implements ECPCellEditor {
 	}
 
 	/**
-	 * 
+	 *
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getValueProperty()
 	 */
 	@Override
@@ -111,7 +111,7 @@ public class DateCellEditor extends CellEditor implements ECPCellEditor {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#instantiate(org.eclipse.emf.ecore.EStructuralFeature,
 	 *      org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
@@ -239,9 +239,9 @@ public class DateCellEditor extends CellEditor implements ECPCellEditor {
 	}
 
 	/**
-	 * 
+	 *
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getFormatedString(java.lang.Object)
 	 */
 	@Override
@@ -254,9 +254,9 @@ public class DateCellEditor extends CellEditor implements ECPCellEditor {
 	}
 
 	/**
-	 * 
+	 *
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getColumnWidthWeight()
 	 */
 	@Override
@@ -265,9 +265,9 @@ public class DateCellEditor extends CellEditor implements ECPCellEditor {
 	}
 
 	/**
-	 * 
+	 *
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getTargetToModelStrategy()
 	 */
 	@Override
@@ -277,9 +277,9 @@ public class DateCellEditor extends CellEditor implements ECPCellEditor {
 	}
 
 	/**
-	 * 
+	 *
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getModelToTargetStrategy()
 	 */
 	@Override
@@ -290,7 +290,7 @@ public class DateCellEditor extends CellEditor implements ECPCellEditor {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#setEditable(boolean)
 	 */
 	@Override

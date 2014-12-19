@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
@@ -32,7 +32,7 @@ import org.eclipse.emf.ecp.view.index.test.example.IntermediateTarget;
  * </em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class ChildImpl extends MinimalEObjectImpl.Container implements Child {
@@ -40,7 +40,7 @@ public class ChildImpl extends MinimalEObjectImpl.Container implements Child {
 	 * The cached value of the '{@link #getIntermediateTarget() <em>Intermediate Target</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getIntermediateTarget()
 	 * @generated
 	 * @ordered
@@ -50,7 +50,7 @@ public class ChildImpl extends MinimalEObjectImpl.Container implements Child {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected ChildImpl() {
@@ -60,7 +60,7 @@ public class ChildImpl extends MinimalEObjectImpl.Container implements Child {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -71,7 +71,7 @@ public class ChildImpl extends MinimalEObjectImpl.Container implements Child {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -82,7 +82,7 @@ public class ChildImpl extends MinimalEObjectImpl.Container implements Child {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public NotificationChain basicSetIntermediateTarget(IntermediateTarget newIntermediateTarget, NotificationChain msgs) {
@@ -103,7 +103,7 @@ public class ChildImpl extends MinimalEObjectImpl.Container implements Child {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -132,7 +132,7 @@ public class ChildImpl extends MinimalEObjectImpl.Container implements Child {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -147,7 +147,7 @@ public class ChildImpl extends MinimalEObjectImpl.Container implements Child {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -162,7 +162,7 @@ public class ChildImpl extends MinimalEObjectImpl.Container implements Child {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -178,7 +178,7 @@ public class ChildImpl extends MinimalEObjectImpl.Container implements Child {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -194,7 +194,7 @@ public class ChildImpl extends MinimalEObjectImpl.Container implements Child {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override

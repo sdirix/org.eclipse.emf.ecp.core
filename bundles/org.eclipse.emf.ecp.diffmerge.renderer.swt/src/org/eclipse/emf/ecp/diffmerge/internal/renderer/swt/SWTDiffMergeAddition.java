@@ -69,7 +69,7 @@ public class SWTDiffMergeAddition extends AbstractAdditionalSWTRenderer<VControl
 	 */
 	@Override
 	protected Control renderControl(SWTGridCell cell, Composite parent) throws NoRendererFoundException,
-	NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption {
 		// if (gridDescription.getColumns() == cell.getColumn() + 1) {
 		if (cell.getRenderer() == this) {
 			return createDiffButton(parent);

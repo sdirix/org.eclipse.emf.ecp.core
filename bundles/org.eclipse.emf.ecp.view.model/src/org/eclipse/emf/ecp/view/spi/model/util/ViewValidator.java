@@ -316,9 +316,9 @@ public class ViewValidator extends EObjectValidator
 					+ featurePathDomainModelReference.getDomainModelEFeature().getName();
 				if (featurePathDomainModelReference.eContainer() != null) {
 					diagnostics
-					.add(createDiagnostic(Diagnostic.ERROR, 0, message,
-						featurePathDomainModelReference.eContainer(),
-						featurePathDomainModelReference.eContainingFeature()));
+						.add(createDiagnostic(Diagnostic.ERROR, 0, message,
+							featurePathDomainModelReference.eContainer(),
+							featurePathDomainModelReference.eContainingFeature()));
 				}
 				diagnostics.add(createDiagnostic(Diagnostic.ERROR, 0, message, featurePathDomainModelReference,
 					VViewPackage.eINSTANCE.getFeaturePathDomainModelReference_DomainModelEFeature()));

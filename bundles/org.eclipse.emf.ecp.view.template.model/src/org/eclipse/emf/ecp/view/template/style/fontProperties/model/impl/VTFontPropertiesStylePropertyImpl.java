@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * EclipseSource Munich - initial API and implementation
  */
@@ -43,7 +43,7 @@ import org.eclipse.emf.ecp.view.template.style.fontProperties.model.VTFontProper
  * <em>Font Name</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class VTFontPropertiesStylePropertyImpl extends MinimalEObjectImpl.Container implements
@@ -52,7 +52,7 @@ public class VTFontPropertiesStylePropertyImpl extends MinimalEObjectImpl.Contai
 	 * The default value of the '{@link #isItalic() <em>Italic</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #isItalic()
 	 * @generated
 	 * @ordered
@@ -63,7 +63,7 @@ public class VTFontPropertiesStylePropertyImpl extends MinimalEObjectImpl.Contai
 	 * The cached value of the '{@link #isItalic() <em>Italic</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #isItalic()
 	 * @generated
 	 * @ordered
@@ -74,7 +74,7 @@ public class VTFontPropertiesStylePropertyImpl extends MinimalEObjectImpl.Contai
 	 * The default value of the '{@link #isBold() <em>Bold</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #isBold()
 	 * @generated
 	 * @ordered
@@ -85,7 +85,7 @@ public class VTFontPropertiesStylePropertyImpl extends MinimalEObjectImpl.Contai
 	 * The cached value of the '{@link #isBold() <em>Bold</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #isBold()
 	 * @generated
 	 * @ordered
@@ -96,7 +96,7 @@ public class VTFontPropertiesStylePropertyImpl extends MinimalEObjectImpl.Contai
 	 * The default value of the '{@link #getColorHEX() <em>Color HEX</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getColorHEX()
 	 * @generated
 	 * @ordered
@@ -107,7 +107,7 @@ public class VTFontPropertiesStylePropertyImpl extends MinimalEObjectImpl.Contai
 	 * The cached value of the '{@link #getColorHEX() <em>Color HEX</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getColorHEX()
 	 * @generated
 	 * @ordered
@@ -118,7 +118,7 @@ public class VTFontPropertiesStylePropertyImpl extends MinimalEObjectImpl.Contai
 	 * The default value of the '{@link #getHeight() <em>Height</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getHeight()
 	 * @generated
 	 * @ordered
@@ -129,7 +129,7 @@ public class VTFontPropertiesStylePropertyImpl extends MinimalEObjectImpl.Contai
 	 * The cached value of the '{@link #getHeight() <em>Height</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getHeight()
 	 * @generated
 	 * @ordered
@@ -140,7 +140,7 @@ public class VTFontPropertiesStylePropertyImpl extends MinimalEObjectImpl.Contai
 	 * The default value of the '{@link #getFontName() <em>Font Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getFontName()
 	 * @generated
 	 * @ordered
@@ -151,7 +151,7 @@ public class VTFontPropertiesStylePropertyImpl extends MinimalEObjectImpl.Contai
 	 * The cached value of the '{@link #getFontName() <em>Font Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getFontName()
 	 * @generated
 	 * @ordered
@@ -161,7 +161,7 @@ public class VTFontPropertiesStylePropertyImpl extends MinimalEObjectImpl.Contai
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected VTFontPropertiesStylePropertyImpl() {
@@ -171,7 +171,7 @@ public class VTFontPropertiesStylePropertyImpl extends MinimalEObjectImpl.Contai
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -182,7 +182,7 @@ public class VTFontPropertiesStylePropertyImpl extends MinimalEObjectImpl.Contai
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -193,7 +193,7 @@ public class VTFontPropertiesStylePropertyImpl extends MinimalEObjectImpl.Contai
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -209,7 +209,7 @@ public class VTFontPropertiesStylePropertyImpl extends MinimalEObjectImpl.Contai
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -220,7 +220,7 @@ public class VTFontPropertiesStylePropertyImpl extends MinimalEObjectImpl.Contai
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -236,7 +236,7 @@ public class VTFontPropertiesStylePropertyImpl extends MinimalEObjectImpl.Contai
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -247,7 +247,7 @@ public class VTFontPropertiesStylePropertyImpl extends MinimalEObjectImpl.Contai
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -263,7 +263,7 @@ public class VTFontPropertiesStylePropertyImpl extends MinimalEObjectImpl.Contai
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -274,7 +274,7 @@ public class VTFontPropertiesStylePropertyImpl extends MinimalEObjectImpl.Contai
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -290,7 +290,7 @@ public class VTFontPropertiesStylePropertyImpl extends MinimalEObjectImpl.Contai
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -301,7 +301,7 @@ public class VTFontPropertiesStylePropertyImpl extends MinimalEObjectImpl.Contai
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -317,7 +317,7 @@ public class VTFontPropertiesStylePropertyImpl extends MinimalEObjectImpl.Contai
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -340,7 +340,7 @@ public class VTFontPropertiesStylePropertyImpl extends MinimalEObjectImpl.Contai
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -368,7 +368,7 @@ public class VTFontPropertiesStylePropertyImpl extends MinimalEObjectImpl.Contai
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -396,7 +396,7 @@ public class VTFontPropertiesStylePropertyImpl extends MinimalEObjectImpl.Contai
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -419,7 +419,7 @@ public class VTFontPropertiesStylePropertyImpl extends MinimalEObjectImpl.Contai
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -445,7 +445,7 @@ public class VTFontPropertiesStylePropertyImpl extends MinimalEObjectImpl.Contai
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.template.model.VTStyleProperty#equalStyles(org.eclipse.emf.ecp.view.template.model.VTStyleProperty)
 	 */
 	@Override

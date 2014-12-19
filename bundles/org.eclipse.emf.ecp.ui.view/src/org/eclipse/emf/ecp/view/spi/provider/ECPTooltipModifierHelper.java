@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen - initial API and implementation
  ******************************************************************************/
@@ -24,7 +24,7 @@ import org.osgi.framework.Bundle;
 
 /**
  * A helper to ease the access to the string modifiers.
- * 
+ *
  * @author Eugen Neufeld
  * @since 1.3
  */
@@ -93,7 +93,7 @@ public final class ECPTooltipModifierHelper {
 
 	/**
 	 * Modifies a string by iterating over all known {@link ECPStringModifier}.
-	 * 
+	 *
 	 * @param text the text to modify
 	 * @param setting the {@link Setting} used to create the text
 	 * @return the modified text

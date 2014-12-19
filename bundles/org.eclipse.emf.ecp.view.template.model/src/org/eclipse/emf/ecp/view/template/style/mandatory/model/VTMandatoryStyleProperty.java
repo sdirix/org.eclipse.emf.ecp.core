@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * EclipseSource Munich - initial API and implementation
  */
@@ -17,7 +17,7 @@ import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Style Property</b></em>'.
  * <!-- end-user-doc -->
- * 
+ *
  * <p>
  * The following features are supported:
  * <ul>
@@ -28,7 +28,7 @@ import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
  * Mandatory Marker</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.eclipse.emf.ecp.view.template.style.mandatory.model.VTMandatoryPackage#getMandatoryStyleProperty()
  * @model
  * @generated
@@ -44,7 +44,7 @@ public interface VTMandatoryStyleProperty extends VTStyleProperty
 	 * a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Highlite Mandatory Fields</em>' attribute.
 	 * @see #setHighliteMandatoryFields(boolean)
 	 * @see org.eclipse.emf.ecp.view.template.style.mandatory.model.VTMandatoryPackage#getMandatoryStyleProperty_HighliteMandatoryFields()
@@ -59,7 +59,7 @@ public interface VTMandatoryStyleProperty extends VTStyleProperty
 	 * <em>Highlite Mandatory Fields</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Highlite Mandatory Fields</em>' attribute.
 	 * @see #isHighliteMandatoryFields()
 	 * @generated
@@ -75,7 +75,7 @@ public interface VTMandatoryStyleProperty extends VTStyleProperty
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Mandatory Marker</em>' attribute.
 	 * @see #setMandatoryMarker(String)
 	 * @see org.eclipse.emf.ecp.view.template.style.mandatory.model.VTMandatoryPackage#getMandatoryStyleProperty_MandatoryMarker()
@@ -90,7 +90,7 @@ public interface VTMandatoryStyleProperty extends VTStyleProperty
 	 * <em>Mandatory Marker</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Mandatory Marker</em>' attribute.
 	 * @see #getMandatoryMarker()
 	 * @generated

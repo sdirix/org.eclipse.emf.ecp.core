@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * EclipseSource Munich - initial API and implementation
  */
@@ -37,9 +37,9 @@ import org.osgi.framework.BundleContext;
 
 /**
  * Implementation of the VTViewTemplateProvider.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  */
 public class ViewTemplateProviderImpl implements VTViewTemplateProvider {
 
@@ -47,7 +47,7 @@ public class ViewTemplateProviderImpl implements VTViewTemplateProvider {
 
 	/**
 	 * Startup method for osgi service.
-	 * 
+	 *
 	 * @param bundleContext the {@link BundleContext}
 	 */
 	protected void startup(BundleContext bundleContext) {
@@ -100,7 +100,7 @@ public class ViewTemplateProviderImpl implements VTViewTemplateProvider {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider#getViewTemplate()
 	 */
 	@Override
@@ -113,7 +113,7 @@ public class ViewTemplateProviderImpl implements VTViewTemplateProvider {
 
 	/**
 	 * Currently only a testing method. Must be revisited if made public.
-	 * 
+	 *
 	 * @param viewTemplate the {@link VTViewTemplate} to set
 	 */
 	protected void setViewTemplate(VTViewTemplate viewTemplate) {
@@ -122,7 +122,7 @@ public class ViewTemplateProviderImpl implements VTViewTemplateProvider {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider#getStyleProperties(org.eclipse.emf.ecp.view.spi.model.VElement,
 	 *      org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */

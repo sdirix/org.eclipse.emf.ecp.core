@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Alexandra Buzila - initial API and implementation
  ******************************************************************************/
@@ -21,13 +21,13 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 
 /**
  * @author Alexandra Buzila
- * 
+ *
  */
 public class ControlRootEClassControl2SWTRendererTester implements ECPRendererTester {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.internal.core.swt.renderer.SimpleControlRendererTester#getSupportedClassType()
 	 */
 	@Override
@@ -44,7 +44,7 @@ public class ControlRootEClassControl2SWTRendererTester implements ECPRendererTe
 
 	/**
 	 * Test if setting contains the correct data.
-	 * 
+	 *
 	 * @param setting the {@link Setting} to check
 	 * @return the priority of the control
 	 */

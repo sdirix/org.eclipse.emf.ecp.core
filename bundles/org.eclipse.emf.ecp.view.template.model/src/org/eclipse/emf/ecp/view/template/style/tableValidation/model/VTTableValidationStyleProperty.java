@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * EclipseSource Munich - initial API and implementation
  */
@@ -17,7 +17,7 @@ import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Style Property</b></em>'.
  * <!-- end-user-doc -->
- * 
+ *
  * <p>
  * The following features are supported:
  * <ul>
@@ -31,7 +31,7 @@ import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
  * <em>Image Path</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.eclipse.emf.ecp.view.template.style.tableValidation.model.VTTableValidationPackage#getTableValidationStyleProperty()
  * @model
  * @generated
@@ -45,7 +45,7 @@ public interface VTTableValidationStyleProperty extends VTStyleProperty {
 	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Column Width</em>' attribute.
 	 * @see #setColumnWidth(int)
 	 * @see org.eclipse.emf.ecp.view.template.style.tableValidation.model.VTTableValidationPackage#getTableValidationStyleProperty_ColumnWidth()
@@ -60,7 +60,7 @@ public interface VTTableValidationStyleProperty extends VTStyleProperty {
 	 * <em>Column Width</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Column Width</em>' attribute.
 	 * @see #getColumnWidth()
 	 * @generated
@@ -75,7 +75,7 @@ public interface VTTableValidationStyleProperty extends VTStyleProperty {
 	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Column Name</em>' attribute.
 	 * @see #setColumnName(String)
 	 * @see org.eclipse.emf.ecp.view.template.style.tableValidation.model.VTTableValidationPackage#getTableValidationStyleProperty_ColumnName()
@@ -90,7 +90,7 @@ public interface VTTableValidationStyleProperty extends VTStyleProperty {
 	 * <em>Column Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Column Name</em>' attribute.
 	 * @see #getColumnName()
 	 * @generated
@@ -105,7 +105,7 @@ public interface VTTableValidationStyleProperty extends VTStyleProperty {
 	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Image Path</em>' attribute.
 	 * @see #setImagePath(String)
 	 * @see org.eclipse.emf.ecp.view.template.style.tableValidation.model.VTTableValidationPackage#getTableValidationStyleProperty_ImagePath()
@@ -120,7 +120,7 @@ public interface VTTableValidationStyleProperty extends VTStyleProperty {
 	 * <em>Image Path</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Image Path</em>' attribute.
 	 * @see #getImagePath()
 	 * @generated

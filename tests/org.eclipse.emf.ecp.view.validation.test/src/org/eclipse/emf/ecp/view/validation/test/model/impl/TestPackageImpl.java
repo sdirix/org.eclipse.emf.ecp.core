@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  *******************************************************************************/
@@ -43,14 +43,14 @@ import org.eclipse.emf.ecp.view.validation.test.model.util.TestValidator;
  * <!-- begin-user-doc -->
  * An implementation of the model <b>Package</b>.
  * <!-- end-user-doc -->
- * 
+ *
  * @generated
  */
 public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private EClass libraryEClass = null;
@@ -58,7 +58,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private EClass writerEClass = null;
@@ -66,7 +66,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private EClass bookEClass = null;
@@ -74,7 +74,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private EClass librarianEClass = null;
@@ -82,7 +82,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private EClass computerEClass = null;
@@ -90,7 +90,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private EClass mainboardEClass = null;
@@ -98,7 +98,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private EClass powerBlockEClass = null;
@@ -106,7 +106,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private EClass containerEClass = null;
@@ -114,7 +114,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private EClass contentEClass = null;
@@ -122,7 +122,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private EClass tableWithMultiplicityEClass = null;
@@ -130,7 +130,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private EClass tableContentEClass = null;
@@ -138,7 +138,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private EClass tableContentWithoutValidationEClass = null;
@@ -146,7 +146,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private EClass tableContentWithValidationEClass = null;
@@ -154,7 +154,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private EClass tableWithoutMultiplicityEClass = null;
@@ -162,7 +162,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private EClass tableWithUniqueEClass = null;
@@ -175,7 +175,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * Note: the correct way to create the package is via the static factory method {@link #init init()}, which also
 	 * performs initialization of the package, or returns the registered package, if one already exists. <!--
 	 * begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecore.EPackage.Registry
 	 * @see org.eclipse.emf.ecp.view.validation.test.model.TestPackage#eNS_URI
 	 * @see #init()
@@ -188,31 +188,33 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private static boolean isInited = false;
 
 	/**
 	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-	 * 
+	 *
 	 * <p>
 	 * This method is used to initialize {@link TestPackage#eINSTANCE} when that field is accessed. Clients should not
 	 * invoke it directly. Instead, they should simply access that field to obtain the package. <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #eNS_URI
 	 * @see #createPackageContents()
 	 * @see #initializePackageContents()
 	 * @generated
 	 */
 	public static TestPackage init() {
-		if (isInited)
+		if (isInited) {
 			return (TestPackage) EPackage.Registry.INSTANCE.getEPackage(TestPackage.eNS_URI);
+		}
 
 		// Obtain or create and register package
-		TestPackageImpl theTestPackage = (TestPackageImpl) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof TestPackageImpl ? EPackage.Registry.INSTANCE
-			.get(eNS_URI) : new TestPackageImpl());
+		final TestPackageImpl theTestPackage = (TestPackageImpl) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof TestPackageImpl ? EPackage.Registry.INSTANCE
+			.get(eNS_URI)
+			: new TestPackageImpl());
 
 		isInited = true;
 
@@ -243,7 +245,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -254,7 +256,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -265,7 +267,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -276,7 +278,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -287,7 +289,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -298,7 +300,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -309,7 +311,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -320,7 +322,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -331,7 +333,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -342,7 +344,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -353,7 +355,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -364,7 +366,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -375,7 +377,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -386,7 +388,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -397,7 +399,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -408,7 +410,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -419,7 +421,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -430,7 +432,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -441,7 +443,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -452,7 +454,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -463,7 +465,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -474,7 +476,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -485,7 +487,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -496,7 +498,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -507,7 +509,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -518,7 +520,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -529,7 +531,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -540,7 +542,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -551,7 +553,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -562,7 +564,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -573,7 +575,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -584,7 +586,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -595,7 +597,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -606,7 +608,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -617,7 +619,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -628,7 +630,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -639,7 +641,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -650,7 +652,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -661,7 +663,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -672,7 +674,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -683,7 +685,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -694,7 +696,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -705,7 +707,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -716,7 +718,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -727,7 +729,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -738,7 +740,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -749,7 +751,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private boolean isCreated = false;
@@ -759,12 +761,13 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * guarded to have no affect on any invocation but its first.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public void createPackageContents() {
-		if (isCreated)
+		if (isCreated) {
 			return;
+		}
 		isCreated = true;
 
 		// Create classes and their features
@@ -832,7 +835,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private boolean isInitialized = false;
@@ -842,12 +845,13 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * method is guarded to have no affect on any invocation but its first.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public void initializePackageContents() {
-		if (isInitialized)
+		if (isInitialized) {
 			return;
+		}
 		isInitialized = true;
 
 		// Initialize package
@@ -860,20 +864,20 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
-		tableContentWithoutValidationEClass.getESuperTypes().add(this.getTableContent());
-		tableContentWithValidationEClass.getESuperTypes().add(this.getTableContent());
+		tableContentWithoutValidationEClass.getESuperTypes().add(getTableContent());
+		tableContentWithValidationEClass.getESuperTypes().add(getTableContent());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(libraryEClass, Library.class, "Library", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getLibrary_Name(), ecorePackage.getEString(), "name", null, 0, 1, Library.class, !IS_TRANSIENT,
 			!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getLibrary_Writers(), this.getWriter(), this.getWriter_Library(), "writers", null, 1, -1,
+		initEReference(getLibrary_Writers(), getWriter(), getWriter_Library(), "writers", null, 1, -1,
 			Library.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
 			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getLibrary_Books(), this.getBook(), null, "books", null, 0, -1, Library.class, !IS_TRANSIENT,
+		initEReference(getLibrary_Books(), getBook(), null, "books", null, 0, -1, Library.class, !IS_TRANSIENT,
 			!IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
 			IS_ORDERED);
-		initEReference(getLibrary_Librarian(), this.getLibrarian(), null, "librarian", null, 0, 1, Library.class,
+		initEReference(getLibrary_Librarian(), getLibrarian(), null, "librarian", null, 0, 1, Library.class,
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
 			!IS_DERIVED, IS_ORDERED);
 
@@ -896,12 +900,12 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 			!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getWriter_BirthDate(), ecorePackage.getEDate(), "BirthDate", null, 0, 1, Writer.class,
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getWriter_Books(), this.getBook(), this.getBook_Writers(), "books", null, 0, -1, Writer.class,
+		initEReference(getWriter_Books(), getBook(), getBook_Writers(), "books", null, 0, -1, Writer.class,
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
 			!IS_DERIVED, IS_ORDERED);
 		initEAttribute(getWriter_Pseudonym(), ecorePackage.getEBoolean(), "Pseudonym", "false", 0, 1, Writer.class,
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getWriter_Library(), this.getLibrary(), this.getLibrary_Writers(), "library", null, 0, 1,
+		initEReference(getWriter_Library(), getLibrary(), getLibrary_Writers(), "library", null, 0, 1,
 			Writer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES,
 			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -919,7 +923,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 			!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getBook_Pages(), ecorePackage.getEInt(), "pages", "100", 0, 1, Book.class, !IS_TRANSIENT,
 			!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getBook_Writers(), this.getWriter(), this.getWriter_Books(), "writers", null, 0, 1, Book.class,
+		initEReference(getBook_Writers(), getWriter(), getWriter_Books(), "writers", null, 0, 1, Book.class,
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
 			!IS_DERIVED, IS_ORDERED);
 
@@ -947,12 +951,12 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 		addEParameter(op, g1, "context", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(computerEClass, Computer.class, "Computer", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getComputer_Mainboard(), this.getMainboard(), null, "mainboard", null, 0, 1, Computer.class,
+		initEReference(getComputer_Mainboard(), getMainboard(), null, "mainboard", null, 0, 1, Computer.class,
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
 			!IS_DERIVED, IS_ORDERED);
 		initEAttribute(getComputer_Name(), ecorePackage.getEString(), "name", null, 1, 1, Computer.class,
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getComputer_PowerBlock(), this.getPowerBlock(), null, "powerBlock", null, 0, 1, Computer.class,
+		initEReference(getComputer_PowerBlock(), getPowerBlock(), null, "powerBlock", null, 0, 1, Computer.class,
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
 			!IS_DERIVED, IS_ORDERED);
 
@@ -968,7 +972,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 
 		initEClass(containerEClass, org.eclipse.emf.ecp.view.validation.test.model.Container.class, "Container",
 			!IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getContainer_Contents(), this.getContent(), null, "contents", null, 0, -1,
+		initEReference(getContainer_Contents(), getContent(), null, "contents", null, 0, -1,
 			org.eclipse.emf.ecp.view.validation.test.model.Container.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
 			IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -982,7 +986,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 
 		initEClass(tableWithMultiplicityEClass, TableWithMultiplicity.class, "TableWithMultiplicity", !IS_ABSTRACT,
 			!IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getTableWithMultiplicity_Content(), this.getTableContent(), null, "content", null, 1, -1,
+		initEReference(getTableWithMultiplicity_Content(), getTableContent(), null, "content", null, 1, -1,
 			TableWithMultiplicity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
 			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -1009,13 +1013,13 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 
 		initEClass(tableWithoutMultiplicityEClass, TableWithoutMultiplicity.class, "TableWithoutMultiplicity",
 			!IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getTableWithoutMultiplicity_Content(), this.getTableContent(), null, "content", null, 0, -1,
+		initEReference(getTableWithoutMultiplicity_Content(), getTableContent(), null, "content", null, 0, -1,
 			TableWithoutMultiplicity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
 			!IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(tableWithUniqueEClass, TableWithUnique.class, "TableWithUnique", !IS_ABSTRACT, !IS_INTERFACE,
 			IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getTableWithUnique_Content(), this.getTableContent(), null, "content", null, 0, -1,
+		initEReference(getTableWithUnique_Content(), getTableContent(), null, "content", null, 0, -1,
 			TableWithUnique.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
 			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 

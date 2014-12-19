@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Alexandra Buzila- initial API and implementation
  ******************************************************************************/
@@ -77,7 +77,7 @@ import org.xml.sax.SAXException;
 
 /**
  * @author Alexandra Buzila
- * 
+ *
  */
 public class NewPluginProjectWizard extends ExampleInstallerWizard {
 	private static final String PLUGIN_ID = "org.eclipse.emf.ecp.view.model.internal.project.installer"; //$NON-NLS-1$
@@ -87,7 +87,7 @@ public class NewPluginProjectWizard extends ExampleInstallerWizard {
 	/**
 	 * The supported extensions for created files. <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public static final List<String> FILE_EXTENSIONS = Collections
@@ -110,7 +110,7 @@ public class NewPluginProjectWizard extends ExampleInstallerWizard {
 	/**
 	 * Remember the selection during initialization for populating the default
 	 * container. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected IStructuredSelection selection;
@@ -319,7 +319,7 @@ public class NewPluginProjectWizard extends ExampleInstallerWizard {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.jface.wizard.Wizard#getPreviousPage(org.eclipse.jface.wizard.IWizardPage)
 	 */
 	@Override
@@ -573,7 +573,7 @@ public class NewPluginProjectWizard extends ExampleInstallerWizard {
 
 	/**
 	 * Return the {@link IDEViewModelRegistry}.
-	 * 
+	 *
 	 * @return the {@link IDEViewModelRegistry}
 	 */
 	public static IDEViewModelRegistry getViewModelRegistry() {

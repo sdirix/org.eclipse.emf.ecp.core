@@ -31,7 +31,6 @@ import javafx.stage.WindowEvent;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
-import org.eclipse.fx.emf.edit.ui.AdapterFactoryListCellFactory;
 
 /**
  * @author Lucas Koehler

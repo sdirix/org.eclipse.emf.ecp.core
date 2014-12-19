@@ -16,15 +16,15 @@ public class RemoteProjectsView {
 		final TreeView<Object> remoteProjectsView = new TreeView<>();
 		remoteProjectsView.setShowRoot(false);
 		final EmfStoreRemoteProjectTreeItem remoteProjectTreeItem = new EmfStoreRemoteProjectTreeItem(
-				ESWorkspaceProvider.INSTANCE.getWorkspace());
+			ESWorkspaceProvider.INSTANCE.getWorkspace());
 		remoteProjectsView.setRoot(remoteProjectTreeItem);
 		remoteProjectsView
-				.setCellFactory(new Callback<TreeView<Object>, TreeCell<Object>>() {
-					@Override
-					public TreeCell<Object> call(TreeView<Object> param) {
-						return new ESRemoteProjectTreeCell();
-					}
-				});
+			.setCellFactory(new Callback<TreeView<Object>, TreeCell<Object>>() {
+				@Override
+				public TreeCell<Object> call(TreeView<Object> param) {
+					return new ESRemoteProjectTreeCell();
+				}
+			});
 
 		parent.setCenter(remoteProjectsView);
 	}

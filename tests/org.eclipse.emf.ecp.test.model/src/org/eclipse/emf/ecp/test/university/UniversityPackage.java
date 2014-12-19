@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * EclipseSource - Generated code
  */
@@ -28,7 +28,7 @@ import org.eclipse.emf.ecore.EReference;
  * <li>and each data type</li>
  * </ul>
  * <!-- end-user-doc -->
- * 
+ *
  * @see org.eclipse.emf.ecp.test.university.UniversityFactory
  * @model kind="package"
  * @generated
@@ -39,7 +39,7 @@ public interface UniversityPackage extends EPackage
 	 * The package name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	String eNAME = "university"; //$NON-NLS-1$
@@ -48,7 +48,7 @@ public interface UniversityPackage extends EPackage
 	 * The package namespace URI.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	String eNS_URI = "http://org/eclipse/emf/ecp/test/university"; //$NON-NLS-1$
@@ -57,7 +57,7 @@ public interface UniversityPackage extends EPackage
 	 * The package namespace name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	String eNS_PREFIX = "org.eclipse.emf.ecp.test.university"; //$NON-NLS-1$
@@ -66,7 +66,7 @@ public interface UniversityPackage extends EPackage
 	 * The singleton instance of the package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	UniversityPackage eINSTANCE = org.eclipse.emf.ecp.test.university.impl.UniversityPackageImpl.init();
@@ -76,7 +76,7 @@ public interface UniversityPackage extends EPackage
 	 * <em>Course Catalog</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.test.university.impl.CourseCatalogImpl
 	 * @see org.eclipse.emf.ecp.test.university.impl.UniversityPackageImpl#getCourseCatalog()
 	 * @generated
@@ -87,7 +87,7 @@ public interface UniversityPackage extends EPackage
 	 * The feature id for the '<em><b>Courses</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -97,7 +97,7 @@ public interface UniversityPackage extends EPackage
 	 * The number of structural features of the '<em>Course Catalog</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -107,7 +107,7 @@ public interface UniversityPackage extends EPackage
 	 * The number of operations of the '<em>Course Catalog</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -117,7 +117,7 @@ public interface UniversityPackage extends EPackage
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.test.university.impl.CourseImpl <em>Course</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.test.university.impl.CourseImpl
 	 * @see org.eclipse.emf.ecp.test.university.impl.UniversityPackageImpl#getCourse()
 	 * @generated
@@ -128,7 +128,7 @@ public interface UniversityPackage extends EPackage
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -138,7 +138,7 @@ public interface UniversityPackage extends EPackage
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -148,7 +148,7 @@ public interface UniversityPackage extends EPackage
 	 * The feature id for the '<em><b>Etcs</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -158,7 +158,7 @@ public interface UniversityPackage extends EPackage
 	 * The number of structural features of the '<em>Course</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -168,7 +168,7 @@ public interface UniversityPackage extends EPackage
 	 * The number of operations of the '<em>Course</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -178,7 +178,7 @@ public interface UniversityPackage extends EPackage
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.test.university.impl.StaffImpl <em>Staff</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.test.university.impl.StaffImpl
 	 * @see org.eclipse.emf.ecp.test.university.impl.UniversityPackageImpl#getStaff()
 	 * @generated
@@ -189,7 +189,7 @@ public interface UniversityPackage extends EPackage
 	 * The feature id for the '<em><b>Professors</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -199,7 +199,7 @@ public interface UniversityPackage extends EPackage
 	 * The feature id for the '<em><b>Assistants</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -209,7 +209,7 @@ public interface UniversityPackage extends EPackage
 	 * The feature id for the '<em><b>Staff</b></em>' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -219,7 +219,7 @@ public interface UniversityPackage extends EPackage
 	 * The number of structural features of the '<em>Staff</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -229,7 +229,7 @@ public interface UniversityPackage extends EPackage
 	 * The number of operations of the '<em>Staff</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -239,7 +239,7 @@ public interface UniversityPackage extends EPackage
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.test.university.Person <em>Person</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.test.university.Person
 	 * @see org.eclipse.emf.ecp.test.university.impl.UniversityPackageImpl#getPerson()
 	 * @generated
@@ -250,7 +250,7 @@ public interface UniversityPackage extends EPackage
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -260,7 +260,7 @@ public interface UniversityPackage extends EPackage
 	 * The number of structural features of the '<em>Person</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -270,7 +270,7 @@ public interface UniversityPackage extends EPackage
 	 * The number of operations of the '<em>Person</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -281,7 +281,7 @@ public interface UniversityPackage extends EPackage
 	 * class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.test.university.impl.ProfessorImpl
 	 * @see org.eclipse.emf.ecp.test.university.impl.UniversityPackageImpl#getProfessor()
 	 * @generated
@@ -292,7 +292,7 @@ public interface UniversityPackage extends EPackage
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -302,7 +302,7 @@ public interface UniversityPackage extends EPackage
 	 * The number of structural features of the '<em>Professor</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -312,7 +312,7 @@ public interface UniversityPackage extends EPackage
 	 * The number of operations of the '<em>Professor</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -323,7 +323,7 @@ public interface UniversityPackage extends EPackage
 	 * class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.test.university.impl.AssistantImpl
 	 * @see org.eclipse.emf.ecp.test.university.impl.UniversityPackageImpl#getAssistant()
 	 * @generated
@@ -334,7 +334,7 @@ public interface UniversityPackage extends EPackage
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -344,7 +344,7 @@ public interface UniversityPackage extends EPackage
 	 * The number of structural features of the '<em>Assistant</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -354,7 +354,7 @@ public interface UniversityPackage extends EPackage
 	 * The number of operations of the '<em>Assistant</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -365,7 +365,7 @@ public interface UniversityPackage extends EPackage
 	 * <em>Course Catalog</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for class '<em>Course Catalog</em>'.
 	 * @see org.eclipse.emf.ecp.test.university.CourseCatalog
 	 * @generated
@@ -377,7 +377,7 @@ public interface UniversityPackage extends EPackage
 	 * {@link org.eclipse.emf.ecp.test.university.CourseCatalog#getCourses <em>Courses</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for the containment reference list '<em>Courses</em>'.
 	 * @see org.eclipse.emf.ecp.test.university.CourseCatalog#getCourses()
 	 * @see #getCourseCatalog()
@@ -389,7 +389,7 @@ public interface UniversityPackage extends EPackage
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.test.university.Course <em>Course</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for class '<em>Course</em>'.
 	 * @see org.eclipse.emf.ecp.test.university.Course
 	 * @generated
@@ -400,7 +400,7 @@ public interface UniversityPackage extends EPackage
 	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecp.test.university.Course#getId <em>Id</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for the attribute '<em>Id</em>'.
 	 * @see org.eclipse.emf.ecp.test.university.Course#getId()
 	 * @see #getCourse()
@@ -413,7 +413,7 @@ public interface UniversityPackage extends EPackage
 	 * <em>Name</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for the attribute '<em>Name</em>'.
 	 * @see org.eclipse.emf.ecp.test.university.Course#getName()
 	 * @see #getCourse()
@@ -426,7 +426,7 @@ public interface UniversityPackage extends EPackage
 	 * <em>Etcs</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for the attribute '<em>Etcs</em>'.
 	 * @see org.eclipse.emf.ecp.test.university.Course#getEtcs()
 	 * @see #getCourse()
@@ -438,7 +438,7 @@ public interface UniversityPackage extends EPackage
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.test.university.Staff <em>Staff</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for class '<em>Staff</em>'.
 	 * @see org.eclipse.emf.ecp.test.university.Staff
 	 * @generated
@@ -450,7 +450,7 @@ public interface UniversityPackage extends EPackage
 	 * {@link org.eclipse.emf.ecp.test.university.Staff#getProfessors <em>Professors</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for the containment reference list '<em>Professors</em>'.
 	 * @see org.eclipse.emf.ecp.test.university.Staff#getProfessors()
 	 * @see #getStaff()
@@ -463,7 +463,7 @@ public interface UniversityPackage extends EPackage
 	 * {@link org.eclipse.emf.ecp.test.university.Staff#getAssistants <em>Assistants</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for the containment reference list '<em>Assistants</em>'.
 	 * @see org.eclipse.emf.ecp.test.university.Staff#getAssistants()
 	 * @see #getStaff()
@@ -476,7 +476,7 @@ public interface UniversityPackage extends EPackage
 	 * <em>Staff</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for the attribute list '<em>Staff</em>'.
 	 * @see org.eclipse.emf.ecp.test.university.Staff#getStaff()
 	 * @see #getStaff()
@@ -488,7 +488,7 @@ public interface UniversityPackage extends EPackage
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.test.university.Professor <em>Professor</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for class '<em>Professor</em>'.
 	 * @see org.eclipse.emf.ecp.test.university.Professor
 	 * @generated
@@ -499,7 +499,7 @@ public interface UniversityPackage extends EPackage
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.test.university.Assistant <em>Assistant</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for class '<em>Assistant</em>'.
 	 * @see org.eclipse.emf.ecp.test.university.Assistant
 	 * @generated
@@ -510,7 +510,7 @@ public interface UniversityPackage extends EPackage
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.test.university.Person <em>Person</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for class '<em>Person</em>'.
 	 * @see org.eclipse.emf.ecp.test.university.Person
 	 * @generated
@@ -522,7 +522,7 @@ public interface UniversityPackage extends EPackage
 	 * <em>Name</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for the attribute '<em>Name</em>'.
 	 * @see org.eclipse.emf.ecp.test.university.Person#getName()
 	 * @see #getPerson()
@@ -534,7 +534,7 @@ public interface UniversityPackage extends EPackage
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the factory that creates the instances of the model.
 	 * @generated
 	 */
@@ -551,7 +551,7 @@ public interface UniversityPackage extends EPackage
 	 * <li>and each data type</li>
 	 * </ul>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	interface Literals
@@ -561,7 +561,7 @@ public interface UniversityPackage extends EPackage
 		 * <em>Course Catalog</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.test.university.impl.CourseCatalogImpl
 		 * @see org.eclipse.emf.ecp.test.university.impl.UniversityPackageImpl#getCourseCatalog()
 		 * @generated
@@ -572,7 +572,7 @@ public interface UniversityPackage extends EPackage
 		 * The meta object literal for the '<em><b>Courses</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		EReference COURSE_CATALOG__COURSES = eINSTANCE.getCourseCatalog_Courses();
@@ -582,7 +582,7 @@ public interface UniversityPackage extends EPackage
 		 * class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.test.university.impl.CourseImpl
 		 * @see org.eclipse.emf.ecp.test.university.impl.UniversityPackageImpl#getCourse()
 		 * @generated
@@ -593,7 +593,7 @@ public interface UniversityPackage extends EPackage
 		 * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		EAttribute COURSE__ID = eINSTANCE.getCourse_Id();
@@ -602,7 +602,7 @@ public interface UniversityPackage extends EPackage
 		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		EAttribute COURSE__NAME = eINSTANCE.getCourse_Name();
@@ -611,7 +611,7 @@ public interface UniversityPackage extends EPackage
 		 * The meta object literal for the '<em><b>Etcs</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		EAttribute COURSE__ETCS = eINSTANCE.getCourse_Etcs();
@@ -621,7 +621,7 @@ public interface UniversityPackage extends EPackage
 		 * class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.test.university.impl.StaffImpl
 		 * @see org.eclipse.emf.ecp.test.university.impl.UniversityPackageImpl#getStaff()
 		 * @generated
@@ -632,7 +632,7 @@ public interface UniversityPackage extends EPackage
 		 * The meta object literal for the '<em><b>Professors</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		EReference STAFF__PROFESSORS = eINSTANCE.getStaff_Professors();
@@ -641,7 +641,7 @@ public interface UniversityPackage extends EPackage
 		 * The meta object literal for the '<em><b>Assistants</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		EReference STAFF__ASSISTANTS = eINSTANCE.getStaff_Assistants();
@@ -650,7 +650,7 @@ public interface UniversityPackage extends EPackage
 		 * The meta object literal for the '<em><b>Staff</b></em>' attribute list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		EAttribute STAFF__STAFF = eINSTANCE.getStaff_Staff();
@@ -660,7 +660,7 @@ public interface UniversityPackage extends EPackage
 		 * <em>Professor</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.test.university.impl.ProfessorImpl
 		 * @see org.eclipse.emf.ecp.test.university.impl.UniversityPackageImpl#getProfessor()
 		 * @generated
@@ -672,7 +672,7 @@ public interface UniversityPackage extends EPackage
 		 * <em>Assistant</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.test.university.impl.AssistantImpl
 		 * @see org.eclipse.emf.ecp.test.university.impl.UniversityPackageImpl#getAssistant()
 		 * @generated
@@ -683,7 +683,7 @@ public interface UniversityPackage extends EPackage
 		 * The meta object literal for the '{@link org.eclipse.emf.ecp.test.university.Person <em>Person</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.test.university.Person
 		 * @see org.eclipse.emf.ecp.test.university.impl.UniversityPackageImpl#getPerson()
 		 * @generated
@@ -694,7 +694,7 @@ public interface UniversityPackage extends EPackage
 		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		EAttribute PERSON__NAME = eINSTANCE.getPerson_Name();

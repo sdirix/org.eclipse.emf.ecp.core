@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
  ******************************************************************************/
@@ -34,9 +34,9 @@ import org.eclipse.swt.widgets.Display;
 
 /**
  * An action to select an EClassifier from the registry.
- * 
+ *
  * @author jfaltermeier
- * 
+ *
  */
 public class AddEClassifierReferenceAction extends AddReferenceAction {
 
@@ -45,7 +45,7 @@ public class AddEClassifierReferenceAction extends AddReferenceAction {
 
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 * @param editingDomain the {@link EditingDomain} to use
 	 * @param setting the {@link Setting} to use
 	 * @param itemPropertyDescriptor the {@link IItemPropertyDescriptor} to use
@@ -61,7 +61,7 @@ public class AddEClassifierReferenceAction extends AddReferenceAction {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.jface.action.Action#run()
 	 */
 	@Override
@@ -101,9 +101,9 @@ public class AddEClassifierReferenceAction extends AddReferenceAction {
 
 	/**
 	 * Extracts the {@link EClassifier}s from the registry.
-	 * 
+	 *
 	 * @param ePackages the {@link EPackage}s to extract the classifiers from
-	 * 
+	 *
 	 * @return the classifiers
 	 */
 	protected Set<EClassifier> getEClassifiersFromRegistry(Set<EPackage> ePackages) {

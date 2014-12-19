@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
@@ -28,7 +28,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * <li>and each data type</li>
  * </ul>
  * <!-- end-user-doc -->
- * 
+ *
  * @see org.eclipse.emf.ecp.view.spi.groupedgrid.model.VGroupedGridFactory
  * @model kind="package"
  * @generated
@@ -40,7 +40,7 @@ public interface VGroupedGridPackage extends EPackage
 	 * The package name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	String eNAME = "groupedgrid"; //$NON-NLS-1$
@@ -49,7 +49,7 @@ public interface VGroupedGridPackage extends EPackage
 	 * The package namespace URI.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	String eNS_URI = "http://org/eclipse/emf/ecp/view/groupedgrid/model"; //$NON-NLS-1$
@@ -58,7 +58,7 @@ public interface VGroupedGridPackage extends EPackage
 	 * The package namespace name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	String eNS_PREFIX = "org.eclipse.emf.ecp.view.groupedgrid.model"; //$NON-NLS-1$
@@ -67,7 +67,7 @@ public interface VGroupedGridPackage extends EPackage
 	 * The singleton instance of the package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	VGroupedGridPackage eINSTANCE = org.eclipse.emf.ecp.view.spi.groupedgrid.model.impl.VGroupedGridPackageImpl.init();
@@ -77,7 +77,7 @@ public interface VGroupedGridPackage extends EPackage
 	 * <em>Grouped Grid</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.groupedgrid.model.impl.VGroupedGridImpl
 	 * @see org.eclipse.emf.ecp.view.spi.groupedgrid.model.impl.VGroupedGridPackageImpl#getGroupedGrid()
 	 * @generated
@@ -88,7 +88,7 @@ public interface VGroupedGridPackage extends EPackage
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -98,7 +98,7 @@ public interface VGroupedGridPackage extends EPackage
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -108,7 +108,7 @@ public interface VGroupedGridPackage extends EPackage
 	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -118,7 +118,7 @@ public interface VGroupedGridPackage extends EPackage
 	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -128,7 +128,7 @@ public interface VGroupedGridPackage extends EPackage
 	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -138,7 +138,7 @@ public interface VGroupedGridPackage extends EPackage
 	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -148,7 +148,7 @@ public interface VGroupedGridPackage extends EPackage
 	 * The feature id for the '<em><b>Groups</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -158,7 +158,7 @@ public interface VGroupedGridPackage extends EPackage
 	 * The number of structural features of the '<em>Grouped Grid</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -169,7 +169,7 @@ public interface VGroupedGridPackage extends EPackage
 	 * ' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.groupedgrid.model.impl.VGroupImpl
 	 * @see org.eclipse.emf.ecp.view.spi.groupedgrid.model.impl.VGroupedGridPackageImpl#getGroup()
 	 * @generated
@@ -180,7 +180,7 @@ public interface VGroupedGridPackage extends EPackage
 	 * The feature id for the '<em><b>Rows</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -190,7 +190,7 @@ public interface VGroupedGridPackage extends EPackage
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -200,7 +200,7 @@ public interface VGroupedGridPackage extends EPackage
 	 * The number of structural features of the '<em>Group</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -211,7 +211,7 @@ public interface VGroupedGridPackage extends EPackage
 	 * class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.groupedgrid.model.impl.VRowImpl
 	 * @see org.eclipse.emf.ecp.view.spi.groupedgrid.model.impl.VGroupedGridPackageImpl#getRow()
 	 * @generated
@@ -222,7 +222,7 @@ public interface VGroupedGridPackage extends EPackage
 	 * The feature id for the '<em><b>Children</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -232,7 +232,7 @@ public interface VGroupedGridPackage extends EPackage
 	 * The number of structural features of the '<em>Row</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -243,7 +243,7 @@ public interface VGroupedGridPackage extends EPackage
 	 * class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.groupedgrid.model.impl.VSpanImpl
 	 * @see org.eclipse.emf.ecp.view.spi.groupedgrid.model.impl.VGroupedGridPackageImpl#getSpan()
 	 * @generated
@@ -254,7 +254,7 @@ public interface VGroupedGridPackage extends EPackage
 	 * The feature id for the '<em><b>Horizontal Span</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -264,7 +264,7 @@ public interface VGroupedGridPackage extends EPackage
 	 * The number of structural features of the '<em>Span</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -275,7 +275,7 @@ public interface VGroupedGridPackage extends EPackage
 	 * <em>Grouped Grid</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for class '<em>Grouped Grid</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.groupedgrid.model.VGroupedGrid
 	 * @generated
@@ -287,7 +287,7 @@ public interface VGroupedGridPackage extends EPackage
 	 * {@link org.eclipse.emf.ecp.view.spi.groupedgrid.model.VGroupedGrid#getGroups <em>Groups</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for the containment reference list '<em>Groups</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.groupedgrid.model.VGroupedGrid#getGroups()
 	 * @see #getGroupedGrid()
@@ -299,7 +299,7 @@ public interface VGroupedGridPackage extends EPackage
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.groupedgrid.model.VGroup <em>Group</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for class '<em>Group</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.groupedgrid.model.VGroup
 	 * @generated
@@ -311,7 +311,7 @@ public interface VGroupedGridPackage extends EPackage
 	 * {@link org.eclipse.emf.ecp.view.spi.groupedgrid.model.VGroup#getRows <em>Rows</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for the containment reference list '<em>Rows</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.groupedgrid.model.VGroup#getRows()
 	 * @see #getGroup()
@@ -324,7 +324,7 @@ public interface VGroupedGridPackage extends EPackage
 	 * <em>Name</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for the attribute '<em>Name</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.groupedgrid.model.VGroup#getName()
 	 * @see #getGroup()
@@ -336,7 +336,7 @@ public interface VGroupedGridPackage extends EPackage
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.groupedgrid.model.VRow <em>Row</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for class '<em>Row</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.groupedgrid.model.VRow
 	 * @generated
@@ -348,7 +348,7 @@ public interface VGroupedGridPackage extends EPackage
 	 * {@link org.eclipse.emf.ecp.view.spi.groupedgrid.model.VRow#getChildren <em>Children</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for the containment reference list '<em>Children</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.groupedgrid.model.VRow#getChildren()
 	 * @see #getRow()
@@ -360,7 +360,7 @@ public interface VGroupedGridPackage extends EPackage
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.groupedgrid.model.VSpan <em>Span</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for class '<em>Span</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.groupedgrid.model.VSpan
 	 * @generated
@@ -372,7 +372,7 @@ public interface VGroupedGridPackage extends EPackage
 	 * {@link org.eclipse.emf.ecp.view.spi.groupedgrid.model.VSpan#getHorizontalSpan <em>Horizontal Span</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for the attribute '<em>Horizontal Span</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.groupedgrid.model.VSpan#getHorizontalSpan()
 	 * @see #getSpan()
@@ -384,7 +384,7 @@ public interface VGroupedGridPackage extends EPackage
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the factory that creates the instances of the model.
 	 * @generated
 	 */
@@ -400,7 +400,7 @@ public interface VGroupedGridPackage extends EPackage
 	 * <li>and each data type</li>
 	 * </ul>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	interface Literals
@@ -410,7 +410,7 @@ public interface VGroupedGridPackage extends EPackage
 		 * <em>Grouped Grid</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.spi.groupedgrid.model.impl.VGroupedGridImpl
 		 * @see org.eclipse.emf.ecp.view.spi.groupedgrid.model.impl.VGroupedGridPackageImpl#getGroupedGrid()
 		 * @generated
@@ -421,7 +421,7 @@ public interface VGroupedGridPackage extends EPackage
 		 * The meta object literal for the '<em><b>Groups</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		EReference GROUPED_GRID__GROUPS = eINSTANCE.getGroupedGrid_Groups();
@@ -431,7 +431,7 @@ public interface VGroupedGridPackage extends EPackage
 		 * <em>Group</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.spi.groupedgrid.model.impl.VGroupImpl
 		 * @see org.eclipse.emf.ecp.view.spi.groupedgrid.model.impl.VGroupedGridPackageImpl#getGroup()
 		 * @generated
@@ -442,7 +442,7 @@ public interface VGroupedGridPackage extends EPackage
 		 * The meta object literal for the '<em><b>Rows</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		EReference GROUP__ROWS = eINSTANCE.getGroup_Rows();
@@ -451,7 +451,7 @@ public interface VGroupedGridPackage extends EPackage
 		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		EAttribute GROUP__NAME = eINSTANCE.getGroup_Name();
@@ -461,7 +461,7 @@ public interface VGroupedGridPackage extends EPackage
 		 * <em>Row</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.spi.groupedgrid.model.impl.VRowImpl
 		 * @see org.eclipse.emf.ecp.view.spi.groupedgrid.model.impl.VGroupedGridPackageImpl#getRow()
 		 * @generated
@@ -472,7 +472,7 @@ public interface VGroupedGridPackage extends EPackage
 		 * The meta object literal for the '<em><b>Children</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		EReference ROW__CHILDREN = eINSTANCE.getRow_Children();
@@ -482,7 +482,7 @@ public interface VGroupedGridPackage extends EPackage
 		 * <em>Span</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.spi.groupedgrid.model.impl.VSpanImpl
 		 * @see org.eclipse.emf.ecp.view.spi.groupedgrid.model.impl.VGroupedGridPackageImpl#getSpan()
 		 * @generated
@@ -493,7 +493,7 @@ public interface VGroupedGridPackage extends EPackage
 		 * The meta object literal for the '<em><b>Horizontal Span</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		EAttribute SPAN__HORIZONTAL_SPAN = eINSTANCE.getSpan_HorizontalSpan();

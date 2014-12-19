@@ -111,7 +111,7 @@ public class ContainerItemProvider extends ElementItemProvider
 		final String label = ((VContainer) object).getName();
 		return label == null || label.length() == 0 ?
 			getString("_UI_Container_type") : //$NON-NLS-1$
-				getString("_UI_Container_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
+			getString("_UI_Container_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**
@@ -150,7 +150,7 @@ public class ContainerItemProvider extends ElementItemProvider
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
 		newChildDescriptors.add
-		(createChildParameter
+			(createChildParameter
 			(VViewPackage.Literals.CONTAINER__CHILDREN,
 				VViewFactory.eINSTANCE.createControl()));
 	}

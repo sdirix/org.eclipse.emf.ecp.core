@@ -63,9 +63,9 @@ public class ECPLayoutProvider extends AbstractLayoutProvider {
 			.fillDefaults()
 			.align(gridCell.isHorizontalFill() ? SWT.FILL : SWT.BEGINNING,
 				gridCell.isVerticalFill() ? SWT.FILL : SWT.CENTER)
-				.grab(gridCell.isHorizontalGrab(), gridCell.isVerticalGrab())
-				.span(gridCell.getHorizontalSpan() + fullGridDescription.getColumns()
-					- currentRowGridDescription.getColumns(), 1).create();
+			.grab(gridCell.isHorizontalGrab(), gridCell.isVerticalGrab())
+			.span(gridCell.getHorizontalSpan() + fullGridDescription.getColumns()
+				- currentRowGridDescription.getColumns(), 1).create();
 
 	}
 
@@ -82,7 +82,7 @@ public class ECPLayoutProvider extends AbstractLayoutProvider {
 	private GridData getControlGridData(int xSpan, VControl vControl, Control control) {
 		GridDataFactory gdf =
 			GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER)
-			.grab(true, false).span(xSpan, 1);
+				.grab(true, false).span(xSpan, 1);
 
 		if (Text.class.isInstance(control) && vControl.getDomainModelReference() != null) {
 			final Setting setting = vControl.getDomainModelReference().getIterator().next();

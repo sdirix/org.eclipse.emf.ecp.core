@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  * Lucas Köhler - Refactoring
@@ -14,7 +14,7 @@ package org.eclipse.emf.ecp.view.model.common;
 
 /**
  * A {@link AbstractGridCell} has a row, a column and a renderer it is rendered by a renderer.
- * 
+ *
  * @author Eugen Neufeld
  * @author Lucas Köhler
  * @param <RENDERER> the renderer type (e.g. SWT or JavaFX renderer)
@@ -33,7 +33,7 @@ public abstract class AbstractGridCell<RENDERER extends AbstractRenderer<?>> {
 
 	/**
 	 * Default constructor to create a grid cell.
-	 * 
+	 *
 	 * @param row the row of the cell
 	 * @param column the column of the cell
 	 * @param renderer the {@link AbstractRenderer} that renderes the cell
@@ -47,7 +47,7 @@ public abstract class AbstractGridCell<RENDERER extends AbstractRenderer<?>> {
 
 	/**
 	 * The id of the row.
-	 * 
+	 *
 	 * @return the row
 	 */
 	public int getRow() {
@@ -56,7 +56,7 @@ public abstract class AbstractGridCell<RENDERER extends AbstractRenderer<?>> {
 
 	/**
 	 * The id of the column.
-	 * 
+	 *
 	 * @return the column
 	 */
 	public int getColumn() {
@@ -79,7 +79,7 @@ public abstract class AbstractGridCell<RENDERER extends AbstractRenderer<?>> {
 
 	/**
 	 * Return the horizontalSpan of this control. Default is 1.
-	 * 
+	 *
 	 * @return the horizontalSpan
 	 */
 	public int getHorizontalSpan() {
@@ -88,7 +88,7 @@ public abstract class AbstractGridCell<RENDERER extends AbstractRenderer<?>> {
 
 	/**
 	 * Set the horizontal span of this cell.
-	 * 
+	 *
 	 * @param horizontalSpan the horizontalSpan to set
 	 */
 	public void setHorizontalSpan(int horizontalSpan) {
@@ -97,7 +97,7 @@ public abstract class AbstractGridCell<RENDERER extends AbstractRenderer<?>> {
 
 	/**
 	 * Returns whether this cell will take all available vertical space.
-	 * 
+	 *
 	 * @return the verticalGrab
 	 */
 	public boolean isVerticalGrab() {
@@ -106,7 +106,7 @@ public abstract class AbstractGridCell<RENDERER extends AbstractRenderer<?>> {
 
 	/**
 	 * True if all available vertical space should be taken.
-	 * 
+	 *
 	 * @param verticalGrab the verticalGrab to set
 	 */
 	public void setVerticalGrab(boolean verticalGrab) {
@@ -115,7 +115,7 @@ public abstract class AbstractGridCell<RENDERER extends AbstractRenderer<?>> {
 
 	/**
 	 * Returns whether the control should fill the available vertical space.
-	 * 
+	 *
 	 * @return the verticalFill
 	 */
 	public boolean isVerticalFill() {
@@ -124,7 +124,7 @@ public abstract class AbstractGridCell<RENDERER extends AbstractRenderer<?>> {
 
 	/**
 	 * True if the available vertical space should be filled.
-	 * 
+	 *
 	 * @param verticalFill the verticalFill to set
 	 */
 	public void setVerticalFill(boolean verticalFill) {
@@ -133,7 +133,7 @@ public abstract class AbstractGridCell<RENDERER extends AbstractRenderer<?>> {
 
 	/**
 	 * Returns whether this cell will take all available horizontal space.
-	 * 
+	 *
 	 * @return the horizontalGrab
 	 */
 	public boolean isHorizontalGrab() {
@@ -142,7 +142,7 @@ public abstract class AbstractGridCell<RENDERER extends AbstractRenderer<?>> {
 
 	/**
 	 * True if all available horizontal space should be taken.
-	 * 
+	 *
 	 * @param horizontalGrab the horizontalGrab to set
 	 */
 	public void setHorizontalGrab(boolean horizontalGrab) {
@@ -151,7 +151,7 @@ public abstract class AbstractGridCell<RENDERER extends AbstractRenderer<?>> {
 
 	/**
 	 * Returns whether the control should fill the available horizontal space.
-	 * 
+	 *
 	 * @return the horizontalFill
 	 */
 	public boolean isHorizontalFill() {
@@ -160,7 +160,7 @@ public abstract class AbstractGridCell<RENDERER extends AbstractRenderer<?>> {
 
 	/**
 	 * True if the available horizontal space should be filled.
-	 * 
+	 *
 	 * @param horizontalFill the horizontalFill to set
 	 */
 	public void setHorizontalFill(boolean horizontalFill) {
@@ -169,7 +169,7 @@ public abstract class AbstractGridCell<RENDERER extends AbstractRenderer<?>> {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -183,7 +183,7 @@ public abstract class AbstractGridCell<RENDERER extends AbstractRenderer<?>> {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override

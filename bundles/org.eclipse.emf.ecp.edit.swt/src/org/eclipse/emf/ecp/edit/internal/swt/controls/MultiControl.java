@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
@@ -57,9 +57,9 @@ import org.eclipse.swt.widgets.Label;
 /**
  * This control provides the necessary common functionality to create a multicontrol that are needed for
  * {@link org.eclipse.emf.ecore.EStructuralFeature EStructuralFeature}s that have multiple values.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  */
 public abstract class MultiControl extends SWTControl {
 
@@ -82,7 +82,7 @@ public abstract class MultiControl extends SWTControl {
 
 	/**
 	 * This returns the array of actions to display in the multi control.
-	 * 
+	 *
 	 * @return the array of action to add
 	 */
 	protected abstract ECPSWTAction[] instantiateActions();
@@ -114,7 +114,7 @@ public abstract class MultiControl extends SWTControl {
 
 	/**
 	 * Checks the priority of a tester.
-	 * 
+	 *
 	 * @param tester the {@link ECPStaticApplicableTester} to test
 	 * @param setting the {@link Setting} to use
 	 * @return the priority
@@ -246,7 +246,7 @@ public abstract class MultiControl extends SWTControl {
 
 	/**
 	 * Returns the {@link SWTControl}.
-	 * 
+	 *
 	 * @return the created {@link SWTControl}
 	 */
 	private SWTControl getSingleInstance() {
@@ -322,9 +322,9 @@ public abstract class MultiControl extends SWTControl {
 
 	/**
 	 * This class is the common wrapper for multi controls. It adds a remove, move up and move down button.
-	 * 
+	 *
 	 * @author Eugen Neufeld
-	 * 
+	 *
 	 */
 	private final class WidgetWrapper {
 
@@ -480,7 +480,7 @@ public abstract class MultiControl extends SWTControl {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.edit.spi.ECPAbstractControl#applyValidation(org.eclipse.emf.ecp.view.spi.model.VDiagnostic)
 	 */
 	@Override
@@ -536,7 +536,7 @@ public abstract class MultiControl extends SWTControl {
 	/**
 	 * Allows controls to supply a second visual effect for controls on validation. The color to set is provided as the
 	 * parameter.
-	 * 
+	 *
 	 * @param color the color to set, null if the default background color should be set
 	 */
 	protected void updateValidationColor(Color color) {
@@ -565,7 +565,7 @@ public abstract class MultiControl extends SWTControl {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @deprecated
 	 */
 	@Deprecated
@@ -583,7 +583,7 @@ public abstract class MultiControl extends SWTControl {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @deprecated
 	 */
 	@Override

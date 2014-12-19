@@ -28,7 +28,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * <!-- begin-user-doc -->
  * An implementation of the model <b>Package</b>.
  * <!-- end-user-doc -->
- * 
+ *
  * @generated
  */
 public class VGroupPackageImpl extends EPackageImpl implements VGroupPackage
@@ -36,7 +36,7 @@ public class VGroupPackageImpl extends EPackageImpl implements VGroupPackage
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private EClass groupEClass = null;
@@ -44,7 +44,7 @@ public class VGroupPackageImpl extends EPackageImpl implements VGroupPackage
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private EEnum groupTypeEEnum = null;
@@ -52,7 +52,7 @@ public class VGroupPackageImpl extends EPackageImpl implements VGroupPackage
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private EEnum groupLabelAlignmentEEnum = null;
@@ -79,19 +79,19 @@ public class VGroupPackageImpl extends EPackageImpl implements VGroupPackage
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private static boolean isInited = false;
 
 	/**
 	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-	 * 
+	 *
 	 * <p>
 	 * This method is used to initialize {@link VGroupPackage#eINSTANCE} when that field is accessed. Clients should not
 	 * invoke it directly. Instead, they should simply access that field to obtain the package. <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #eNS_URI
 	 * @see #createPackageContents()
 	 * @see #initializePackageContents()
@@ -99,11 +99,12 @@ public class VGroupPackageImpl extends EPackageImpl implements VGroupPackage
 	 */
 	public static VGroupPackage init()
 	{
-		if (isInited)
+		if (isInited) {
 			return (VGroupPackage) EPackage.Registry.INSTANCE.getEPackage(VGroupPackage.eNS_URI);
+		}
 
 		// Obtain or create and register package
-		VGroupPackageImpl theGroupPackage = (VGroupPackageImpl) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof VGroupPackageImpl ? EPackage.Registry.INSTANCE
+		final VGroupPackageImpl theGroupPackage = (VGroupPackageImpl) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof VGroupPackageImpl ? EPackage.Registry.INSTANCE
 			.get(eNS_URI)
 			: new VGroupPackageImpl());
 
@@ -129,7 +130,7 @@ public class VGroupPackageImpl extends EPackageImpl implements VGroupPackage
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -140,9 +141,10 @@ public class VGroupPackageImpl extends EPackageImpl implements VGroupPackage
 
 	/**
 	 * <!-- begin-user-doc -->
+	 *
 	 * @since 1.4
-	 * <!-- end-user-doc -->
-	 * 
+	 *        <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	@Override
@@ -153,9 +155,10 @@ public class VGroupPackageImpl extends EPackageImpl implements VGroupPackage
 
 	/**
 	 * <!-- begin-user-doc -->
+	 *
 	 * @since 1.3
-	 * <!-- end-user-doc -->
-	 * 
+	 *        <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	@Override
@@ -166,9 +169,10 @@ public class VGroupPackageImpl extends EPackageImpl implements VGroupPackage
 
 	/**
 	 * <!-- begin-user-doc -->
+	 *
 	 * @since 1.4
-	 * <!-- end-user-doc -->
-	 * 
+	 *        <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	@Override
@@ -179,9 +183,10 @@ public class VGroupPackageImpl extends EPackageImpl implements VGroupPackage
 
 	/**
 	 * <!-- begin-user-doc -->
+	 *
 	 * @since 1.4
-	 * <!-- end-user-doc -->
-	 * 
+	 *        <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	@Override
@@ -193,7 +198,7 @@ public class VGroupPackageImpl extends EPackageImpl implements VGroupPackage
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -205,7 +210,7 @@ public class VGroupPackageImpl extends EPackageImpl implements VGroupPackage
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -217,7 +222,7 @@ public class VGroupPackageImpl extends EPackageImpl implements VGroupPackage
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private boolean isCreated = false;
@@ -227,13 +232,14 @@ public class VGroupPackageImpl extends EPackageImpl implements VGroupPackage
 	 * guarded to have no affect on any invocation but its first.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public void createPackageContents()
 	{
-		if (isCreated)
+		if (isCreated) {
 			return;
+		}
 		isCreated = true;
 
 		// Create classes and their features
@@ -250,7 +256,7 @@ public class VGroupPackageImpl extends EPackageImpl implements VGroupPackage
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private boolean isInitialized = false;
@@ -260,13 +266,14 @@ public class VGroupPackageImpl extends EPackageImpl implements VGroupPackage
 	 * method is guarded to have no affect on any invocation but its first.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public void initializePackageContents()
 	{
-		if (isInitialized)
+		if (isInitialized) {
 			return;
+		}
 		isInitialized = true;
 
 		// Initialize package
@@ -275,8 +282,9 @@ public class VGroupPackageImpl extends EPackageImpl implements VGroupPackage
 		setNsURI(eNS_URI);
 
 		// Obtain other dependent packages
-		VViewPackage theViewPackage = (VViewPackage) EPackage.Registry.INSTANCE.getEPackage(VViewPackage.eNS_URI);
-		EcorePackage theEcorePackage = (EcorePackage) EPackage.Registry.INSTANCE.getEPackage(EcorePackage.eNS_URI);
+		final VViewPackage theViewPackage = (VViewPackage) EPackage.Registry.INSTANCE.getEPackage(VViewPackage.eNS_URI);
+		final EcorePackage theEcorePackage = (EcorePackage) EPackage.Registry.INSTANCE
+			.getEPackage(EcorePackage.eNS_URI);
 
 		// Create type parameters
 
@@ -289,11 +297,11 @@ public class VGroupPackageImpl extends EPackageImpl implements VGroupPackage
 		initEClass(groupEClass, VGroup.class, "Group", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEAttribute(
 			getGroup_GroupType(),
-			this.getGroupType(),
+			getGroupType(),
 			"groupType", null, 1, 1, VGroup.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEAttribute(
 			getGroup_LabelAlignment(),
-			this.getGroupLabelAlignment(),
+			getGroupLabelAlignment(),
 			"labelAlignment", "LabelAligned", 0, 1, VGroup.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEAttribute(
 			getGroup_Collapsed(),

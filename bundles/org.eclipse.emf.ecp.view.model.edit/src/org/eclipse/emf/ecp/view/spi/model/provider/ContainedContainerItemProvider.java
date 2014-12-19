@@ -32,7 +32,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * @since 1.4
  */
 public class ContainedContainerItemProvider
-extends ContainedElementItemProvider {
+	extends ContainedElementItemProvider {
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
@@ -111,7 +111,7 @@ extends ContainedElementItemProvider {
 		final String label = ((VContainedContainer) object).getName();
 		return label == null || label.length() == 0 ?
 			getString("_UI_ContainedContainer_type") : //$NON-NLS-1$
-				getString("_UI_ContainedContainer_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
+			getString("_UI_ContainedContainer_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**
@@ -150,7 +150,7 @@ extends ContainedElementItemProvider {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
 		newChildDescriptors.add
-		(createChildParameter
+			(createChildParameter
 			(VViewPackage.Literals.CONTAINER__CHILDREN,
 				VViewFactory.eINSTANCE.createControl()));
 	}

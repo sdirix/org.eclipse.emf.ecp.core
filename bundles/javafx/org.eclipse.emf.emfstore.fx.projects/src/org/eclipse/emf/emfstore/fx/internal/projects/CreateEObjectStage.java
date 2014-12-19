@@ -22,30 +22,28 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
-import org.eclipse.fx.emf.edit.ui.AdapterFactoryTreeCellFactory;
-import org.eclipse.fx.emf.edit.ui.AdapterFactoryTreeItem;
 
 public class CreateEObjectStage extends Stage {
 
 	private final class TreeItemExtension extends TreeItem<Object> {
 		private final TreeView<Object> treeView;
-		private ObservableList<TreeItem<Object>> children;
+		private final ObservableList<TreeItem<Object>> children;
 
 		private TreeItemExtension(TreeView<Object> treeView) {
 			super();
 			this.treeView = treeView;
 			children = FXCollections.unmodifiableObservableList(super
-					.getChildren());
+				.getChildren());
 			updateChildren();
 		}
 
 		private void updateChildren() {
-			ObservableList<TreeItem<Object>> children = super.getChildren();
+			final ObservableList<TreeItem<Object>> children = super.getChildren();
 			children.clear();
-			for (String nsURI : Registry.INSTANCE.keySet()) {
-				EPackage ePackage = Registry.INSTANCE.getEPackage(nsURI);
+			for (final String nsURI : Registry.INSTANCE.keySet()) {
+				final EPackage ePackage = Registry.INSTANCE.getEPackage(nsURI);
 				final AdapterFactoryTreeItem rootItem = new AdapterFactoryTreeItem(
-						ePackage, treeView, adapterFactory);
+					ePackage, treeView, adapterFactory);
 				children.add(rootItem);
 			}
 		}
@@ -65,21 +63,21 @@ public class CreateEObjectStage extends Stage {
 		setTitle("Select EClass");
 
 		adapterFactory = new ComposedAdapterFactory(
-				ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+			ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 
 		final TreeView<Object> treeView = new TreeView<>();
 		treeView.setMaxHeight(Double.MAX_VALUE);
 		treeView.setMaxWidth(Double.MAX_VALUE);
 
-		TreeItem<Object> root = getRegistryTreeItem(treeView);
+		final TreeItem<Object> root = getRegistryTreeItem(treeView);
 		// root.setExpanded(true);
 
 		treeView.setRoot(root);
 		treeView.setShowRoot(false);
 
-		AdapterFactoryTreeCellFactory cellFactory = new AdapterFactoryTreeCellFactory(
-				adapterFactory);
-		
+		final AdapterFactoryTreeCellFactory cellFactory = new AdapterFactoryTreeCellFactory(
+			adapterFactory);
+
 		treeView.setCellFactory(cellFactory);
 
 		final Button button = new Button("Create");
@@ -88,8 +86,8 @@ public class CreateEObjectStage extends Stage {
 
 			@Override
 			public void handle(ActionEvent event) {
-				Object value = treeView.getSelectionModel().getSelectedItem()
-						.getValue();
+				final Object value = treeView.getSelectionModel().getSelectedItem()
+					.getValue();
 				if (EClass.class.isInstance(value)) {
 					selectedEClass = (EClass) value;
 					close();
@@ -99,32 +97,33 @@ public class CreateEObjectStage extends Stage {
 		button.setDisable(true);
 
 		treeView.getSelectionModel().selectedItemProperty()
-				.addListener(new ChangeListener<TreeItem<Object>>() {
+			.addListener(new ChangeListener<TreeItem<Object>>() {
 
-					@Override
-					public void changed(
-							ObservableValue<? extends TreeItem<Object>> observable,
-							TreeItem<Object> oldValue, TreeItem<Object> newValue) {
-						if (newValue == null)
-							return;
-						Object value = newValue.getValue();
-						if(!EClass.class.isInstance(value)){
-							button.setDisable(true);
-							return;
-						}
-						EClass eClass=(EClass) value;
-						button.setDisable(eClass.isAbstract() || eClass.isInterface());
-						
+				@Override
+				public void changed(
+					ObservableValue<? extends TreeItem<Object>> observable,
+					TreeItem<Object> oldValue, TreeItem<Object> newValue) {
+					if (newValue == null) {
+						return;
 					}
-				});
+					final Object value = newValue.getValue();
+					if (!EClass.class.isInstance(value)) {
+						button.setDisable(true);
+						return;
+					}
+					final EClass eClass = (EClass) value;
+					button.setDisable(eClass.isAbstract() || eClass.isInterface());
+
+				}
+			});
 		setScene(new Scene(VBoxBuilder.create().children(treeView, button)
-				.build()));
+			.build()));
 		VBox.setVgrow(treeView, Priority.ALWAYS);
 		// dialogStage.show();
 	}
 
 	private TreeItem<Object> getRegistryTreeItem(final TreeView<Object> treeView) {
-		TreeItem<Object> result = new TreeItemExtension(treeView);
+		final TreeItem<Object> result = new TreeItemExtension(treeView);
 		return result;
 	}
 
@@ -135,8 +134,9 @@ public class CreateEObjectStage extends Stage {
 	}
 
 	public EObject getResult() {
-		if (selectedEClass == null)
+		if (selectedEClass == null) {
 			return null;
+		}
 		return EcoreUtil.create(selectedEClass);
 	}
 }

@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
  ******************************************************************************/
@@ -25,9 +25,9 @@ import org.eclipse.emf.ecp.diagnostician.ECPValidator;
 
 /**
  * Wraps {@link ECPValidator}s registered for the same {@link EClassifier}.
- * 
+ *
  * @author jfaltermeier
- * 
+ *
  */
 public class ClassifierValidatorWrapper extends ECPValidator {
 
@@ -36,7 +36,7 @@ public class ClassifierValidatorWrapper extends ECPValidator {
 
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 * @param classifier the classifier
 	 * @param validators the wrapped validators.
 	 */
@@ -48,7 +48,7 @@ public class ClassifierValidatorWrapper extends ECPValidator {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.diagnostician.ECPValidator#getValidatedEClassifier()
 	 */
 	@Override
@@ -58,7 +58,7 @@ public class ClassifierValidatorWrapper extends ECPValidator {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.diagnostician.ECPValidator#validate(org.eclipse.emf.ecore.EClass,
 	 *      org.eclipse.emf.ecore.EObject, org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
 	 */
@@ -77,7 +77,7 @@ public class ClassifierValidatorWrapper extends ECPValidator {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.diagnostician.ECPValidator#validate(org.eclipse.emf.ecore.EDataType, java.lang.Object,
 	 *      org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
 	 */

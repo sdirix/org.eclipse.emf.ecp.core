@@ -56,7 +56,7 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
  * @generated
  */
 public class CustomItemProviderAdapterFactory extends CustomAdapterFactory implements ComposeableAdapterFactory,
-IChangeNotifier, IDisposable, IChildCreationExtender {
+	IChangeNotifier, IDisposable, IChildCreationExtender {
 	/**
 	 * This keeps track of the root adapter factory that delegates to this adapter factory.
 	 * <!-- begin-user-doc -->
@@ -382,7 +382,7 @@ IChangeNotifier, IDisposable, IChildCreationExtender {
 			public Object caseView(VView object)
 			{
 				newChildDescriptors.add
-				(createChildParameter
+					(createChildParameter
 					(VViewPackage.Literals.VIEW__CHILDREN,
 						VCustomFactory.eINSTANCE.createCustomControl()));
 
@@ -399,7 +399,7 @@ IChangeNotifier, IDisposable, IChildCreationExtender {
 			public Object caseContainer(VContainer object)
 			{
 				newChildDescriptors.add
-				(createChildParameter
+					(createChildParameter
 					(VViewPackage.Literals.CONTAINER__CHILDREN,
 						VCustomFactory.eINSTANCE.createCustomControl()));
 
@@ -415,7 +415,7 @@ IChangeNotifier, IDisposable, IChildCreationExtender {
 			@Override
 			public Object caseControl(VControl object) {
 				newChildDescriptors.add
-				(createChildParameter
+					(createChildParameter
 					(VViewPackage.Literals.CONTROL__DOMAIN_MODEL_REFERENCE,
 						VCustomFactory.eINSTANCE.createCustomDomainModelReference()));
 

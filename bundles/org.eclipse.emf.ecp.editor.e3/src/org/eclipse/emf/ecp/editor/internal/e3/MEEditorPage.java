@@ -5,7 +5,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  ******************************************************************************/
 package org.eclipse.emf.ecp.editor.internal.e3;
@@ -44,7 +44,7 @@ import org.eclipse.ui.menus.IMenuService;
 
 /**
  * The editor page for the {@link MEEditor}.
- * 
+ *
  * @author helming
  * @author shterev
  * @author naughton
@@ -64,7 +64,7 @@ public class MEEditorPage extends FormPage {
 
 	/**
 	 * Default constructor.
-	 * 
+	 *
 	 * @param editor
 	 *            the {@link MEEditor}
 	 * @param id
@@ -85,7 +85,7 @@ public class MEEditorPage extends FormPage {
 
 	/**
 	 * Default constructor.
-	 * 
+	 *
 	 * @param editor
 	 *            the {@link MEEditor}
 	 * @param id

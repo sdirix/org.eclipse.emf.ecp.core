@@ -11,13 +11,14 @@ import org.eclipse.emf.ecp.view.validation.bean.BeanValidationProvider;
 
 public class DefaultValidationProvider extends BeanValidationProvider {
 
-	public DefaultValidationProvider(){
+	public DefaultValidationProvider() {
 		super();
 	}
-	public DefaultValidationProvider(InputStream...inputStreams) {
+
+	public DefaultValidationProvider(InputStream... inputStreams) {
 		super(inputStreams);
 	}
-	
+
 	@Override
 	protected MessageInterpolator getMessageInterpolator(
 			MessageInterpolator messageInterpolator) {

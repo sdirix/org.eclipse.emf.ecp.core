@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * EclipseSource Munich - initial API and implementation
  */
@@ -29,7 +29,7 @@ import org.eclipse.emf.ecp.view.template.model.VTTemplatePackage;
  * <li>and each data type</li>
  * </ul>
  * <!-- end-user-doc -->
- * 
+ *
  * @see org.eclipse.emf.ecp.view.template.style.alignment.model.VTAlignmentFactory
  * @model kind="package"
  * @generated
@@ -39,7 +39,7 @@ public interface VTAlignmentPackage extends EPackage {
 	 * The package name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	String eNAME = "alignment"; //$NON-NLS-1$
@@ -48,7 +48,7 @@ public interface VTAlignmentPackage extends EPackage {
 	 * The package namespace URI.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	String eNS_URI = "http://www.eclipse.org/emf/ecp/view/template/style/alignment/model"; //$NON-NLS-1$
@@ -57,7 +57,7 @@ public interface VTAlignmentPackage extends EPackage {
 	 * The package namespace name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	String eNS_PREFIX = "org.eclipse.emf.ecp.view.template.style.alignment.model"; //$NON-NLS-1$
@@ -66,7 +66,7 @@ public interface VTAlignmentPackage extends EPackage {
 	 * The singleton instance of the package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	VTAlignmentPackage eINSTANCE = org.eclipse.emf.ecp.view.template.style.alignment.model.impl.VTAlignmentPackageImpl
@@ -78,7 +78,7 @@ public interface VTAlignmentPackage extends EPackage {
 	 * <em>Style Property</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.template.style.alignment.model.impl.VTAlignmentStylePropertyImpl
 	 * @see org.eclipse.emf.ecp.view.template.style.alignment.model.impl.VTAlignmentPackageImpl#getAlignmentStyleProperty()
 	 * @generated
@@ -89,7 +89,7 @@ public interface VTAlignmentPackage extends EPackage {
 	 * The feature id for the '<em><b>Type</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -99,7 +99,7 @@ public interface VTAlignmentPackage extends EPackage {
 	 * The number of structural features of the '<em>Style Property</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -109,7 +109,7 @@ public interface VTAlignmentPackage extends EPackage {
 	 * The number of operations of the '<em>Style Property</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -120,7 +120,7 @@ public interface VTAlignmentPackage extends EPackage {
 	 * <em>Type</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.template.style.alignment.model.AlignmentType
 	 * @see org.eclipse.emf.ecp.view.template.style.alignment.model.impl.VTAlignmentPackageImpl#getAlignmentType()
 	 * @generated
@@ -133,7 +133,7 @@ public interface VTAlignmentPackage extends EPackage {
 	 * '.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for class '<em>Style Property</em>'.
 	 * @see org.eclipse.emf.ecp.view.template.style.alignment.model.VTAlignmentStyleProperty
 	 * @generated
@@ -145,7 +145,7 @@ public interface VTAlignmentPackage extends EPackage {
 	 * {@link org.eclipse.emf.ecp.view.template.style.alignment.model.VTAlignmentStyleProperty#getType <em>Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for the attribute '<em>Type</em>'.
 	 * @see org.eclipse.emf.ecp.view.template.style.alignment.model.VTAlignmentStyleProperty#getType()
 	 * @see #getAlignmentStyleProperty()
@@ -158,7 +158,7 @@ public interface VTAlignmentPackage extends EPackage {
 	 * <em>Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for enum '<em>Type</em>'.
 	 * @see org.eclipse.emf.ecp.view.template.style.alignment.model.AlignmentType
 	 * @generated
@@ -169,7 +169,7 @@ public interface VTAlignmentPackage extends EPackage {
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the factory that creates the instances of the model.
 	 * @generated
 	 */
@@ -186,7 +186,7 @@ public interface VTAlignmentPackage extends EPackage {
 	 * <li>and each data type</li>
 	 * </ul>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	interface Literals {
@@ -196,7 +196,7 @@ public interface VTAlignmentPackage extends EPackage {
 		 * <em>Style Property</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.template.style.alignment.model.impl.VTAlignmentStylePropertyImpl
 		 * @see org.eclipse.emf.ecp.view.template.style.alignment.model.impl.VTAlignmentPackageImpl#getAlignmentStyleProperty()
 		 * @generated
@@ -207,7 +207,7 @@ public interface VTAlignmentPackage extends EPackage {
 		 * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		EAttribute ALIGNMENT_STYLE_PROPERTY__TYPE = eINSTANCE.getAlignmentStyleProperty_Type();
@@ -217,7 +217,7 @@ public interface VTAlignmentPackage extends EPackage {
 		 * {@link org.eclipse.emf.ecp.view.template.style.alignment.model.AlignmentType <em>Type</em>}' enum.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.template.style.alignment.model.AlignmentType
 		 * @see org.eclipse.emf.ecp.view.template.style.alignment.model.impl.VTAlignmentPackageImpl#getAlignmentType()
 		 * @generated

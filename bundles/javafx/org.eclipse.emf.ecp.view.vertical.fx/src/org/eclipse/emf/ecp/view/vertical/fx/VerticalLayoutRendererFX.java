@@ -12,17 +12,18 @@ import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalLayout;
 public class VerticalLayoutRendererFX extends ContainerRendererFX<VVerticalLayout> {
 	@Override
 	protected Node renderNode(GridCellFX cell) throws NoRendererFoundException,
-			NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption {
 		if (cell.getColumn() != 0) {
 			return null;
-		};
+		}
+		;
 
 		return renderGrid();
 	}
 
 	@Override
 	protected GridPane getGridPane() {
-		GridPane grid = new GridPane();
+		final GridPane grid = new GridPane();
 		grid.getStyleClass().add("vertical");
 		return grid;
 	}

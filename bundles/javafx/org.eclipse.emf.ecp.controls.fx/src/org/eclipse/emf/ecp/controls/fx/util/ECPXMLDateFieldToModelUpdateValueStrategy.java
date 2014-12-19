@@ -14,10 +14,10 @@ import javax.xml.datatype.XMLGregorianCalendar;
 import org.eclipse.core.databinding.conversion.IConverter;
 
 public class ECPXMLDateFieldToModelUpdateValueStrategy extends
-		ECPTextFieldToModelUpdateValueStrategy {
+	ECPTextFieldToModelUpdateValueStrategy {
 
 	public ECPXMLDateFieldToModelUpdateValueStrategy() {
-		IConverter converter = getConverter();
+		final IConverter converter = getConverter();
 		setConverter(converter);
 	}
 
@@ -36,15 +36,15 @@ public class ECPXMLDateFieldToModelUpdateValueStrategy extends
 
 			@Override
 			public Object convert(Object value) {
-				DateFormat dateInstance = DateFormat.getDateInstance(
-						DateFormat.MEDIUM, Locale.getDefault());
+				final DateFormat dateInstance = DateFormat.getDateInstance(
+					DateFormat.MEDIUM, Locale.getDefault());
 				try {
-					Date date = dateInstance.parse((String) value);
+					final Date date = dateInstance.parse((String) value);
 
 					final Calendar targetCal = Calendar.getInstance();
 					targetCal.setTime(date);
 					final XMLGregorianCalendar cal = DatatypeFactory
-							.newInstance().newXMLGregorianCalendar();
+						.newInstance().newXMLGregorianCalendar();
 					cal.setYear(targetCal.get(Calendar.YEAR));
 					cal.setMonth(targetCal.get(Calendar.MONTH) + 1);
 					cal.setDay(targetCal.get(Calendar.DAY_OF_MONTH));
@@ -54,7 +54,7 @@ public class ECPXMLDateFieldToModelUpdateValueStrategy extends
 					return cal;
 				} catch (final ParseException ex) {
 					ex.printStackTrace();
-				} catch (DatatypeConfigurationException e) {
+				} catch (final DatatypeConfigurationException e) {
 					e.printStackTrace();
 				}
 				return value;

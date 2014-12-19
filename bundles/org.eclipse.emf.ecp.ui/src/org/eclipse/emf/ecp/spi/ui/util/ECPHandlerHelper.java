@@ -53,8 +53,8 @@ import org.eclipse.emf.ecp.spi.core.InternalProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProvider.LifecycleEvent;
 import org.eclipse.emf.ecp.ui.common.AddRepositoryComposite;
 import org.eclipse.emf.ecp.ui.common.CheckoutProjectComposite;
-import org.eclipse.emf.ecp.ui.common.ECPCompositeFactory;
 import org.eclipse.emf.ecp.ui.common.CreateProjectComposite;
+import org.eclipse.emf.ecp.ui.common.ECPCompositeFactory;
 import org.eclipse.emf.ecp.ui.util.ECPModelElementOpenTester;
 import org.eclipse.emf.ecp.ui.util.ECPModelElementOpener;
 import org.eclipse.emf.edit.command.ChangeCommand;
@@ -333,8 +333,8 @@ public final class ECPHandlerHelper {
 			final ECPRepository ecpRepository = ECPUtil.getECPRepositoryManager().addRepository(
 				addRepositoryComposite.getProvider(), addRepositoryComposite.getRepositoryName(),
 				addRepositoryComposite.getRepositoryLabel() == null ? "" : addRepositoryComposite.getRepositoryLabel(), //$NON-NLS-1$
-					addRepositoryComposite.getRepositoryDescription() == null ? "" : addRepositoryComposite //$NON-NLS-1$
-						.getRepositoryDescription(), addRepositoryComposite.getProperties());
+				addRepositoryComposite.getRepositoryDescription() == null ? "" : addRepositoryComposite //$NON-NLS-1$
+					.getRepositoryDescription(), addRepositoryComposite.getProperties());
 			return ecpRepository;
 		}
 		return null;
@@ -499,23 +499,23 @@ public final class ECPHandlerHelper {
 			ArrayContentProvider.getInstance(),
 			new LabelProvider() {
 
-			@Override
-			public Image getImage(Object element) {
-				if (ECPProject.class.isInstance(element)) {
-					return Activator.getImage("icons/project_open.gif"); //$NON-NLS-1$
+				@Override
+				public Image getImage(Object element) {
+					if (ECPProject.class.isInstance(element)) {
+						return Activator.getImage("icons/project_open.gif"); //$NON-NLS-1$
+					}
+					return super.getImage(element);
 				}
-				return super.getImage(element);
-			}
 
-			@Override
-			public String getText(Object element) {
-				if (ECPProject.class.isInstance(element)) {
-					return ((ECPProject) element).getName();
+				@Override
+				public String getText(Object element) {
+					if (ECPProject.class.isInstance(element)) {
+						return ((ECPProject) element).getName();
+					}
+					return super.getText(element);
 				}
-				return super.getText(element);
-			}
 
-		}, "Select the projects, which should be saved."); //$NON-NLS-1$
+			}, "Select the projects, which should be saved."); //$NON-NLS-1$
 		lsd.setInitialSelections(manager.getProjects().toArray());
 		lsd.setTitle("Unsaved Projects"); //$NON-NLS-1$
 		final int result = lsd.open();

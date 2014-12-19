@@ -194,9 +194,9 @@ public class KeyattributedmrValidator extends EObjectValidator
 		if (keyAttributeDomainModelReference.getKeyDMR() == null) {
 			if (keyAttributeDomainModelReference.eContainer() != null && diagnostics != null) {
 				diagnostics
-				.add(createDiagnostic(Diagnostic.ERROR, 0, "Missing key DMR.", //$NON-NLS-1$
-					keyAttributeDomainModelReference.eContainer(),
-					keyAttributeDomainModelReference.eContainingFeature()));
+					.add(createDiagnostic(Diagnostic.ERROR, 0, "Missing key DMR.", //$NON-NLS-1$
+						keyAttributeDomainModelReference.eContainer(),
+						keyAttributeDomainModelReference.eContainingFeature()));
 			}
 			return false;
 		}
@@ -204,9 +204,9 @@ public class KeyattributedmrValidator extends EObjectValidator
 		if (keyAttributeDomainModelReference.getKeyValue() == null) {
 			if (keyAttributeDomainModelReference.eContainer() != null && diagnostics != null) {
 				diagnostics
-				.add(createDiagnostic(Diagnostic.ERROR, 0, "No key Value.", //$NON-NLS-1$
-					keyAttributeDomainModelReference.eContainer(),
-					keyAttributeDomainModelReference.eContainingFeature()));
+					.add(createDiagnostic(Diagnostic.ERROR, 0, "No key Value.", //$NON-NLS-1$
+						keyAttributeDomainModelReference.eContainer(),
+						keyAttributeDomainModelReference.eContainingFeature()));
 			}
 			return false;
 		}

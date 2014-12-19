@@ -355,7 +355,7 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 
 	/**
 	 * Reacts on sort button clicks.
-	 * 
+	 *
 	 * @author jfaltermeier
 	 *
 	 */

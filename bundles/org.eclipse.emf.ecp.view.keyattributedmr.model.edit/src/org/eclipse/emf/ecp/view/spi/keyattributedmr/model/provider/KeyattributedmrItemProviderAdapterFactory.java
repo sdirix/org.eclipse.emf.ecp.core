@@ -54,8 +54,8 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
  * @generated
  */
 public class KeyattributedmrItemProviderAdapterFactory extends
-KeyattributedmrAdapterFactory implements ComposeableAdapterFactory,
-IChangeNotifier, IDisposable, IChildCreationExtender {
+	KeyattributedmrAdapterFactory implements ComposeableAdapterFactory,
+	IChangeNotifier, IDisposable, IChildCreationExtender {
 	/**
 	 * This keeps track of the root adapter factory that delegates to this adapter factory.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -283,7 +283,7 @@ IChangeNotifier, IDisposable, IChildCreationExtender {
 	 * @generated
 	 */
 	public static class ViewChildCreationExtender implements
-	IChildCreationExtender {
+		IChildCreationExtender {
 		/**
 		 * The switch for creating child descriptors specific to each extended class.
 		 * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -329,7 +329,7 @@ IChangeNotifier, IDisposable, IChildCreationExtender {
 			@Override
 			public Object caseControl(VControl object) {
 				newChildDescriptors.add
-				(createChildParameter
+					(createChildParameter
 					(VViewPackage.Literals.CONTROL__DOMAIN_MODEL_REFERENCE,
 						VKeyattributedmrFactory.eINSTANCE.createKeyAttributeDomainModelReference()));
 

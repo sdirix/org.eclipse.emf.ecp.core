@@ -90,16 +90,16 @@ public class TableDetailViewControlSWTRenderer extends SimpleControlSWTControlSW
 		bindings[1] = getDataBindingContext().bindValue(tooltipValue, getModelValue(setting),
 			new UpdateValueStrategy() {
 
-			@Override
-			public Object convert(Object value) {
-				return getModelValue(setting).getValue();
-			}
-		}, new UpdateValueStrategy() {
-			@Override
-			public Object convert(Object value) {
-				return getText(value);
-			}
-		});
+				@Override
+				public Object convert(Object value) {
+					return getModelValue(setting).getValue();
+				}
+			}, new UpdateValueStrategy() {
+				@Override
+				public Object convert(Object value) {
+					return getText(value);
+				}
+			});
 
 		final IObservableValue imageValue = SWTObservables.observeImage(imageLabel);
 		bindings[2] = getDataBindingContext().bindValue(imageValue, getModelValue(setting), new UpdateValueStrategy() {
@@ -153,7 +153,7 @@ public class TableDetailViewControlSWTRenderer extends SimpleControlSWTControlSW
 		imageLabel = new Label(labelComposite, SWT.NONE);
 		imageLabel.setBackground(labelComposite.getBackground());
 		GridDataFactory.fillDefaults().grab(false, false).align(SWT.FILL, SWT.BEGINNING).hint(20, 20)
-		.applyTo(imageLabel);
+			.applyTo(imageLabel);
 
 		/* text */
 		label = new Label(labelComposite, SWT.NONE);

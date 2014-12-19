@@ -14,22 +14,23 @@ import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 public class GroupRendererFX extends ContainerRendererFX<VGroup> {
 	@Override
 	protected Node renderNode(GridCellFX cell) throws NoRendererFoundException,
-			NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption {
 		if (cell.getColumn() != 0) {
 			return null;
 		}
 
-		TitledPane groupPane = new TitledPane();
+		final TitledPane groupPane = new TitledPane();
 		groupPane.setCollapsible(false);
-		GridPane grid = renderGrid();
+		final GridPane grid = renderGrid();
 
 		if (grid.getChildren().size() == 1) {
 			GridPane.setVgrow(grid.getChildren().get(0), Priority.ALWAYS);
 		}
 
 		String text = getVElement().getName();
-		if (text == null)
+		if (text == null) {
 			text = "";
+		}
 		groupPane.setText(text);
 		groupPane.setContent(grid);
 		groupPane.setMaxHeight(Double.MAX_VALUE);
@@ -39,7 +40,7 @@ public class GroupRendererFX extends ContainerRendererFX<VGroup> {
 
 	@Override
 	protected GridPane getGridPane() {
-		GridPane grid = new GridPane();
+		final GridPane grid = new GridPane();
 		grid.getStyleClass().add("vertical");
 		return grid;
 	}

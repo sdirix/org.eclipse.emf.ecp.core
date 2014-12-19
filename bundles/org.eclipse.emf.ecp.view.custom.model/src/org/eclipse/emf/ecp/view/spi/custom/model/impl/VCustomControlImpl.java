@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
@@ -21,7 +21,7 @@ import org.eclipse.emf.ecp.view.spi.model.impl.VControlImpl;
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Control</b></em>'.
- * 
+ *
  * @since 1.3
  *        <!-- end-user-doc -->
  *        <p>
@@ -33,7 +33,7 @@ import org.eclipse.emf.ecp.view.spi.model.impl.VControlImpl;
  *        </li>
  *        </ul>
  *        </p>
- * 
+ *
  * @generated
  */
 public class VCustomControlImpl extends VControlImpl implements VCustomControl
@@ -42,7 +42,7 @@ public class VCustomControlImpl extends VControlImpl implements VCustomControl
 	 * The default value of the '{@link #getBundleName() <em>Bundle Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getBundleName()
 	 * @generated
 	 * @ordered
@@ -53,7 +53,7 @@ public class VCustomControlImpl extends VControlImpl implements VCustomControl
 	 * The cached value of the '{@link #getBundleName() <em>Bundle Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getBundleName()
 	 * @generated
 	 * @ordered
@@ -64,7 +64,7 @@ public class VCustomControlImpl extends VControlImpl implements VCustomControl
 	 * The default value of the '{@link #getClassName() <em>Class Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getClassName()
 	 * @generated
 	 * @ordered
@@ -75,7 +75,7 @@ public class VCustomControlImpl extends VControlImpl implements VCustomControl
 	 * The cached value of the '{@link #getClassName() <em>Class Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getClassName()
 	 * @generated
 	 * @ordered
@@ -85,7 +85,7 @@ public class VCustomControlImpl extends VControlImpl implements VCustomControl
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected VCustomControlImpl()
@@ -96,7 +96,7 @@ public class VCustomControlImpl extends VControlImpl implements VCustomControl
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -108,7 +108,7 @@ public class VCustomControlImpl extends VControlImpl implements VCustomControl
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -120,7 +120,7 @@ public class VCustomControlImpl extends VControlImpl implements VCustomControl
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -137,7 +137,7 @@ public class VCustomControlImpl extends VControlImpl implements VCustomControl
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -149,7 +149,7 @@ public class VCustomControlImpl extends VControlImpl implements VCustomControl
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -166,7 +166,7 @@ public class VCustomControlImpl extends VControlImpl implements VCustomControl
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -185,7 +185,7 @@ public class VCustomControlImpl extends VControlImpl implements VCustomControl
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -206,7 +206,7 @@ public class VCustomControlImpl extends VControlImpl implements VCustomControl
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -227,7 +227,7 @@ public class VCustomControlImpl extends VControlImpl implements VCustomControl
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -246,7 +246,7 @@ public class VCustomControlImpl extends VControlImpl implements VCustomControl
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override

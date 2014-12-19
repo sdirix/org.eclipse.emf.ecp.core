@@ -1,11 +1,11 @@
 /********************************************************************************
  * Copyright (c) 2011 Eike Stepper (Berlin, Germany) and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eike Stepper - initial API and implementation
  ********************************************************************************/
@@ -27,9 +27,9 @@ import org.eclipse.swt.widgets.Text;
 
 /**
  * Dialog to edit one property.
- * 
+ *
  * @author Eike Stepper
- * 
+ *
  */
 public class PropertyDialog extends TitleAreaDialog {
 	private final boolean keyEditable;
@@ -44,7 +44,7 @@ public class PropertyDialog extends TitleAreaDialog {
 
 	/**
 	 * Constructor to edit an existing property.
-	 * 
+	 *
 	 * @param parentShell the paren {@link Shell}
 	 * @param keyEditable if the property is editable
 	 * @param key the key of the property
@@ -59,7 +59,7 @@ public class PropertyDialog extends TitleAreaDialog {
 
 	/**
 	 * Constructor for a new property.
-	 * 
+	 *
 	 * @param parentShell the parent {@link Shell}
 	 */
 	public PropertyDialog(Shell parentShell) {
@@ -67,7 +67,7 @@ public class PropertyDialog extends TitleAreaDialog {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return the key of the currently edited property
 	 */
 	public final String getKey() {
@@ -75,7 +75,7 @@ public class PropertyDialog extends TitleAreaDialog {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return the value of the currently edited property
 	 */
 	public final String getValue() {
@@ -83,7 +83,7 @@ public class PropertyDialog extends TitleAreaDialog {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return whether the property is editable
 	 */
 	public final boolean isKeyEditable() {

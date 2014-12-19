@@ -61,7 +61,7 @@ public final class DIRendererUtil {
 
 	/**
 	 * Renders the given pojo.
-	 * 
+	 *
 	 * @param pojo the renderer pojo
 	 * @param element the {@link VElement} to render
 	 * @param context the {@link ViewModelContext}

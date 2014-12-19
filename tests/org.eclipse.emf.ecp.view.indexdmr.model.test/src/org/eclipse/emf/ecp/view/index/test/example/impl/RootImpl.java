@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
@@ -31,7 +31,7 @@ import org.eclipse.emf.ecp.view.index.test.example.Root;
  * <li>{@link org.eclipse.emf.ecp.view.index.test.example.impl.RootImpl#getIntermediate <em>Intermediate</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class RootImpl extends MinimalEObjectImpl.Container implements Root {
@@ -39,7 +39,7 @@ public class RootImpl extends MinimalEObjectImpl.Container implements Root {
 	 * The cached value of the '{@link #getIntermediate() <em>Intermediate</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getIntermediate()
 	 * @generated
 	 * @ordered
@@ -49,7 +49,7 @@ public class RootImpl extends MinimalEObjectImpl.Container implements Root {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected RootImpl() {
@@ -59,7 +59,7 @@ public class RootImpl extends MinimalEObjectImpl.Container implements Root {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -70,7 +70,7 @@ public class RootImpl extends MinimalEObjectImpl.Container implements Root {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -81,7 +81,7 @@ public class RootImpl extends MinimalEObjectImpl.Container implements Root {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public NotificationChain basicSetIntermediate(Intermediate newIntermediate, NotificationChain msgs) {
@@ -102,7 +102,7 @@ public class RootImpl extends MinimalEObjectImpl.Container implements Root {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -131,7 +131,7 @@ public class RootImpl extends MinimalEObjectImpl.Container implements Root {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -146,7 +146,7 @@ public class RootImpl extends MinimalEObjectImpl.Container implements Root {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -161,7 +161,7 @@ public class RootImpl extends MinimalEObjectImpl.Container implements Root {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -177,7 +177,7 @@ public class RootImpl extends MinimalEObjectImpl.Container implements Root {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -193,7 +193,7 @@ public class RootImpl extends MinimalEObjectImpl.Container implements Root {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override

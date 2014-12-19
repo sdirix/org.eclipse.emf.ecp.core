@@ -27,9 +27,10 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * <li>each enum,</li>
  * <li>and each data type</li>
  * </ul>
+ *
  * @noimplement This interface is not intended to be implemented by clients.
- * <!-- end-user-doc -->
- * 
+ *              <!-- end-user-doc -->
+ *
  * @see org.eclipse.emf.ecp.view.spi.group.model.VGroupFactory
  * @model kind="package"
  * @generated
@@ -40,7 +41,7 @@ public interface VGroupPackage extends EPackage
 	 * The package name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	String eNAME = "group"; //$NON-NLS-1$
@@ -49,7 +50,7 @@ public interface VGroupPackage extends EPackage
 	 * The package namespace URI.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	String eNS_URI = "http://org/eclipse/emf/ecp/view/group/model"; //$NON-NLS-1$
@@ -58,7 +59,7 @@ public interface VGroupPackage extends EPackage
 	 * The package namespace name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	String eNS_PREFIX = "org.eclipse.emf.ecp.view.group.model"; //$NON-NLS-1$
@@ -67,7 +68,7 @@ public interface VGroupPackage extends EPackage
 	 * The singleton instance of the package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	VGroupPackage eINSTANCE = org.eclipse.emf.ecp.view.spi.group.model.impl.VGroupPackageImpl.init();
@@ -77,7 +78,7 @@ public interface VGroupPackage extends EPackage
 	 * class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.group.model.impl.VGroupImpl
 	 * @see org.eclipse.emf.ecp.view.spi.group.model.impl.VGroupPackageImpl#getGroup()
 	 * @generated
@@ -88,7 +89,7 @@ public interface VGroupPackage extends EPackage
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -98,7 +99,7 @@ public interface VGroupPackage extends EPackage
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -108,7 +109,7 @@ public interface VGroupPackage extends EPackage
 	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -118,7 +119,7 @@ public interface VGroupPackage extends EPackage
 	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -128,7 +129,7 @@ public interface VGroupPackage extends EPackage
 	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -138,7 +139,7 @@ public interface VGroupPackage extends EPackage
 	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -148,7 +149,7 @@ public interface VGroupPackage extends EPackage
 	 * The feature id for the '<em><b>Children</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -157,9 +158,10 @@ public interface VGroupPackage extends EPackage
 	/**
 	 * The feature id for the '<em><b>Group Type</b></em>' attribute.
 	 * <!-- begin-user-doc -->
+	 *
 	 * @since 1.4
-	 * <!-- end-user-doc -->
-	 * 
+	 *        <!-- end-user-doc -->
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -168,9 +170,10 @@ public interface VGroupPackage extends EPackage
 	/**
 	 * The feature id for the '<em><b>Label Alignment</b></em>' attribute.
 	 * <!-- begin-user-doc -->
+	 *
 	 * @since 1.3
-	 * <!-- end-user-doc -->
-	 * 
+	 *        <!-- end-user-doc -->
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -179,9 +182,10 @@ public interface VGroupPackage extends EPackage
 	/**
 	 * The feature id for the '<em><b>Collapsed</b></em>' attribute.
 	 * <!-- begin-user-doc -->
+	 *
 	 * @since 1.4
-	 * <!-- end-user-doc -->
-	 * 
+	 *        <!-- end-user-doc -->
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -191,7 +195,7 @@ public interface VGroupPackage extends EPackage
 	 * The number of structural features of the '<em>Group</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -200,9 +204,10 @@ public interface VGroupPackage extends EPackage
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.group.model.GroupType <em>Type</em>}' enum.
 	 * <!-- begin-user-doc -->
+	 *
 	 * @since 1.4
-	 * <!-- end-user-doc -->
-	 * 
+	 *        <!-- end-user-doc -->
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.group.model.GroupType
 	 * @see org.eclipse.emf.ecp.view.spi.group.model.impl.VGroupPackageImpl#getGroupType()
 	 * @generated
@@ -213,9 +218,10 @@ public interface VGroupPackage extends EPackage
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.group.model.GroupLabelAlignment
 	 * <em>Label Alignment</em>}' enum.
 	 * <!-- begin-user-doc -->
+	 *
 	 * @since 1.3
-	 * <!-- end-user-doc -->
-	 * 
+	 *        <!-- end-user-doc -->
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.group.model.GroupLabelAlignment
 	 * @see org.eclipse.emf.ecp.view.spi.group.model.impl.VGroupPackageImpl#getGroupLabelAlignment()
 	 * @generated
@@ -226,7 +232,7 @@ public interface VGroupPackage extends EPackage
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.group.model.VGroup <em>Group</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for class '<em>Group</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.group.model.VGroup
 	 * @generated
@@ -237,9 +243,10 @@ public interface VGroupPackage extends EPackage
 	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecp.view.spi.group.model.VGroup#getGroupType
 	 * <em>Group Type</em>}'.
 	 * <!-- begin-user-doc -->
+	 *
 	 * @since 1.4
-	 * <!-- end-user-doc -->
-	 * 
+	 *        <!-- end-user-doc -->
+	 *
 	 * @return the meta object for the attribute '<em>Group Type</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.group.model.VGroup#getGroupType()
 	 * @see #getGroup()
@@ -251,9 +258,10 @@ public interface VGroupPackage extends EPackage
 	 * Returns the meta object for the attribute '
 	 * {@link org.eclipse.emf.ecp.view.spi.group.model.VGroup#getLabelAlignment <em>Label Alignment</em>}'.
 	 * <!-- begin-user-doc -->
+	 *
 	 * @since 1.3
-	 * <!-- end-user-doc -->
-	 * 
+	 *        <!-- end-user-doc -->
+	 *
 	 * @return the meta object for the attribute '<em>Label Alignment</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.group.model.VGroup#getLabelAlignment()
 	 * @see #getGroup()
@@ -265,9 +273,10 @@ public interface VGroupPackage extends EPackage
 	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecp.view.spi.group.model.VGroup#isCollapsed
 	 * <em>Collapsed</em>}'.
 	 * <!-- begin-user-doc -->
+	 *
 	 * @since 1.4
-	 * <!-- end-user-doc -->
-	 * 
+	 *        <!-- end-user-doc -->
+	 *
 	 * @return the meta object for the attribute '<em>Collapsed</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.group.model.VGroup#isCollapsed()
 	 * @see #getGroup()
@@ -278,9 +287,10 @@ public interface VGroupPackage extends EPackage
 	/**
 	 * Returns the meta object for enum '{@link org.eclipse.emf.ecp.view.spi.group.model.GroupType <em>Type</em>}'.
 	 * <!-- begin-user-doc -->
+	 *
 	 * @since 1.4
-	 * <!-- end-user-doc -->
-	 * 
+	 *        <!-- end-user-doc -->
+	 *
 	 * @return the meta object for enum '<em>Type</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.group.model.GroupType
 	 * @generated
@@ -291,9 +301,10 @@ public interface VGroupPackage extends EPackage
 	 * Returns the meta object for enum '{@link org.eclipse.emf.ecp.view.spi.group.model.GroupLabelAlignment
 	 * <em>Label Alignment</em>}'.
 	 * <!-- begin-user-doc -->
+	 *
 	 * @since 1.3
-	 * <!-- end-user-doc -->
-	 * 
+	 *        <!-- end-user-doc -->
+	 *
 	 * @return the meta object for enum '<em>Label Alignment</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.group.model.GroupLabelAlignment
 	 * @generated
@@ -304,7 +315,7 @@ public interface VGroupPackage extends EPackage
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the factory that creates the instances of the model.
 	 * @generated
 	 */
@@ -319,10 +330,11 @@ public interface VGroupPackage extends EPackage
 	 * <li>each enum,</li>
 	 * <li>and each data type</li>
 	 * </ul>
+	 *
 	 * @noimplement This interface is not intended to be implemented by clients.
 	 * @noextend This interface is not intended to be extended by clients.
-	 * <!-- end-user-doc -->
-	 * 
+	 *           <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	interface Literals
@@ -332,7 +344,7 @@ public interface VGroupPackage extends EPackage
 		 * <em>Group</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.spi.group.model.impl.VGroupImpl
 		 * @see org.eclipse.emf.ecp.view.spi.group.model.impl.VGroupPackageImpl#getGroup()
 		 * @generated
@@ -341,27 +353,30 @@ public interface VGroupPackage extends EPackage
 		/**
 		 * The meta object literal for the '<em><b>Group Type</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
+		 *
 		 * @since 1.4
-		 * <!-- end-user-doc -->
-		 * 
+		 *        <!-- end-user-doc -->
+		 *
 		 * @generated
 		 */
 		EAttribute GROUP__GROUP_TYPE = eINSTANCE.getGroup_GroupType();
 		/**
 		 * The meta object literal for the '<em><b>Label Alignment</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
+		 *
 		 * @since 1.3
-		 * <!-- end-user-doc -->
-		 * 
+		 *        <!-- end-user-doc -->
+		 *
 		 * @generated
 		 */
 		EAttribute GROUP__LABEL_ALIGNMENT = eINSTANCE.getGroup_LabelAlignment();
 		/**
 		 * The meta object literal for the '<em><b>Collapsed</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
+		 *
 		 * @since 1.4
-		 * <!-- end-user-doc -->
-		 * 
+		 *        <!-- end-user-doc -->
+		 *
 		 * @generated
 		 */
 		EAttribute GROUP__COLLAPSED = eINSTANCE.getGroup_Collapsed();
@@ -369,9 +384,10 @@ public interface VGroupPackage extends EPackage
 		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.group.model.GroupType <em>Type</em>}'
 		 * enum.
 		 * <!-- begin-user-doc -->
+		 *
 		 * @since 1.4
-		 * <!-- end-user-doc -->
-		 * 
+		 *        <!-- end-user-doc -->
+		 *
 		 * @see org.eclipse.emf.ecp.view.spi.group.model.GroupType
 		 * @see org.eclipse.emf.ecp.view.spi.group.model.impl.VGroupPackageImpl#getGroupType()
 		 * @generated
@@ -381,9 +397,10 @@ public interface VGroupPackage extends EPackage
 		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.group.model.GroupLabelAlignment
 		 * <em>Label Alignment</em>}' enum.
 		 * <!-- begin-user-doc -->
+		 *
 		 * @since 1.3
-		 * <!-- end-user-doc -->
-		 * 
+		 *        <!-- end-user-doc -->
+		 *
 		 * @see org.eclipse.emf.ecp.view.spi.group.model.GroupLabelAlignment
 		 * @see org.eclipse.emf.ecp.view.spi.group.model.impl.VGroupPackageImpl#getGroupLabelAlignment()
 		 * @generated

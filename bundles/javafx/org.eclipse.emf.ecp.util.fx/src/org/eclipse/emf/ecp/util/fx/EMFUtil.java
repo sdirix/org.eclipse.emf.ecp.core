@@ -29,13 +29,13 @@ public class EMFUtil {
 	}
 
 	public static MenuItem getCreateChildrenMenu(final EObject parenEObject,
-			final Callback<Void, Void> callback) {
-		Menu result = new Menu("Possible Containments");
+		final Callback<Void, Void> callback) {
+		final Menu result = new Menu("Possible Containments");
 
 		final EditingDomain domain = AdapterFactoryEditingDomain
-				.getEditingDomainFor(parenEObject);
+			.getEditingDomainFor(parenEObject);
 		final Collection<?> descriptors = domain.getNewChildDescriptors(
-				parenEObject, null);
+			parenEObject, null);
 		for (final Object descriptor : descriptors) {
 			if (!CommandParameter.class.isInstance(descriptor)) {
 				continue;
@@ -45,35 +45,35 @@ public class EMFUtil {
 				continue;
 			}
 			if (!cp.getEReference().isMany()
-					&& parenEObject.eIsSet(cp.getEStructuralFeature())) {
+				&& parenEObject.eIsSet(cp.getEStructuralFeature())) {
 				continue;
 			} else if (cp.getEReference().isMany()
-					&& cp.getEReference().getUpperBound() != -1
-					&& cp.getEReference().getUpperBound() <= ((List<?>) parenEObject
-							.eGet(cp.getEReference())).size()) {
+				&& cp.getEReference().getUpperBound() != -1
+				&& cp.getEReference().getUpperBound() <= ((List<?>) parenEObject
+					.eGet(cp.getEReference())).size()) {
 				continue;
 			}
 
-			MenuItem item = new MenuItem();
+			final MenuItem item = new MenuItem();
 			final Command command = (Command) CreateChildCommand.create(domain,
-					parenEObject, descriptor,
-					Collections.singletonList(parenEObject));
+				parenEObject, descriptor,
+				Collections.singletonList(parenEObject));
 			if (CommandActionDelegate.class.isInstance(command)) {
-				CommandActionDelegate cad = (CommandActionDelegate) command;
-				Object image = cad.getImage();
+				final CommandActionDelegate cad = (CommandActionDelegate) command;
+				final Object image = cad.getImage();
 				ImageView imageView = null;
 				if (URL.class.isInstance(image)) {
 					imageView = new ImageView(((URL) image).toExternalForm());
 				}
-				HBox hbox = new HBox();
+				final HBox hbox = new HBox();
 				if (imageView != null) {
 					hbox.getChildren().add(imageView);
 				}
-				Label label = new Label(cad.getText());
+				final Label label = new Label(cad.getText());
 				hbox.getChildren().add(label);
 				item.setGraphic(hbox);
 			} else {
-				Label label = new Label(command.getLabel());
+				final Label label = new Label(command.getLabel());
 				item.setGraphic(label);
 
 			}
@@ -82,17 +82,19 @@ public class EMFUtil {
 				@Override
 				public void handle(ActionEvent event) {
 					domain.getCommandStack().execute(command);
-					if (callback != null)
+					if (callback != null) {
 						callback.call(null);
+					}
 				}
 			});
 
 			result.getItems().add(item);
 		}
-		if (result.getItems().size() == 0)
+		if (result.getItems().size() == 0) {
 			return null;
-		else if (result.getItems().size() == 1)
+		} else if (result.getItems().size() == 1) {
 			return result.getItems().get(0);
+		}
 		return result;
 	}
 

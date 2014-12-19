@@ -68,7 +68,7 @@ public class TableControlDetailPanelRenderer extends TableControlSWTRenderer {
 		/* table composite */
 		final Composite tableComposite = new Composite(border, SWT.NONE);
 		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.FILL).hint(1, getTableHeightHint())
-		.applyTo(tableComposite);
+			.applyTo(tableComposite);
 		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(border);
 
 		/* scrolled composite */

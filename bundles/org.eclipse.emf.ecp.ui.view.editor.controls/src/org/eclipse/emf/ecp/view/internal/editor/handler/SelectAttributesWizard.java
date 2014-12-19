@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Alexandra Buzila - initial API and implementation
  ******************************************************************************/
@@ -21,7 +21,7 @@ import org.eclipse.jface.wizard.Wizard;
 
 /**
  * @author Alexandra Buzila
- * 
+ *
  */
 public class SelectAttributesWizard extends Wizard {
 
@@ -49,7 +49,7 @@ public class SelectAttributesWizard extends Wizard {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.jface.wizard.Wizard#getNextPage(org.eclipse.jface.wizard.IWizardPage)
 	 */
 	@Override
@@ -75,7 +75,7 @@ public class SelectAttributesWizard extends Wizard {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.jface.wizard.Wizard#canFinish()
 	 */
 	@Override
@@ -85,7 +85,7 @@ public class SelectAttributesWizard extends Wizard {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.jface.wizard.Wizard#performFinish()
 	 */
 	@Override
@@ -123,7 +123,7 @@ public class SelectAttributesWizard extends Wizard {
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	public void backPressed() {
 		if (selectAttributesWizardPage != null && selectAttributesWizardPage.isCurrentPage()) {

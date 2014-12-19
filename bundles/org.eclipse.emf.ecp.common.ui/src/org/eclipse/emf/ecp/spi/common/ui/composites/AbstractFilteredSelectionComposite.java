@@ -1,14 +1,14 @@
 /*******************************************************************************
  * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
- * 
+ *
  *******************************************************************************/
 package org.eclipse.emf.ecp.spi.common.ui.composites;
 
@@ -31,9 +31,9 @@ import org.eclipse.swt.widgets.Text;
 /**
  * This {@link CompositeProvider} provides Composite containing a {@link Text} widget and a viewer.
  * The contents of the viewer can be filtered by typing a text into the Text widget.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  * @param <T> the type of the Viewer. This must extend a {@link StructuredViewer}
  */
 public abstract class AbstractFilteredSelectionComposite<T extends StructuredViewer> implements CompositeProvider {
@@ -109,7 +109,7 @@ public abstract class AbstractFilteredSelectionComposite<T extends StructuredVie
 
 	/**
 	 * Returns the used {@link StructuredViewer}.
-	 * 
+	 *
 	 * @return the viewer
 	 */
 	public T getViewer() {
@@ -118,7 +118,7 @@ public abstract class AbstractFilteredSelectionComposite<T extends StructuredVie
 
 	/**
 	 * Returns the selected objects.
-	 * 
+	 *
 	 * @return the selection
 	 */
 	public Object[] getSelection() {
@@ -128,7 +128,7 @@ public abstract class AbstractFilteredSelectionComposite<T extends StructuredVie
 	/**
 	 * Creates a {@link StructuredViewer} on top of the provided {@link Composite}. The result is the created
 	 * {@link StructuredViewer}.
-	 * 
+	 *
 	 * @param composite the {@link Composite} to create the viewer on
 	 * @return the created {@link StructuredViewer}
 	 */
@@ -136,7 +136,7 @@ public abstract class AbstractFilteredSelectionComposite<T extends StructuredVie
 
 	/**
 	 * Returns a Filter to use.
-	 * 
+	 *
 	 * @return the {@link ECPViewerFilter} to use
 	 */
 	protected abstract ECPViewerFilter getFilter();

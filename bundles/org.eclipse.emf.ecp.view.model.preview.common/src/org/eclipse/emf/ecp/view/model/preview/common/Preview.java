@@ -136,7 +136,7 @@ public class Preview {
 					new ComposedAdapterFactory(new AdapterFactory[] {
 						new CustomReflectiveItemProviderAdapterFactory(),
 						new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) }),
-						new BasicCommandStack(), resourceSet);
+					new BasicCommandStack(), resourceSet);
 				resourceSet.eAdapters().add(
 					new AdapterFactoryEditingDomain.EditingDomainProvider(domain));
 				final Resource resource = resourceSet.createResource(URI.createURI("VIRTUAL_URI")); //$NON-NLS-1$

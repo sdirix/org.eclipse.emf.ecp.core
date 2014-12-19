@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
  ******************************************************************************/
@@ -25,9 +25,9 @@ import org.eclipse.emf.ecp.ui.validation.ECPValidationResultService;
 
 /**
  * Default implementation of the {@link ECPValidationResultService}.
- * 
+ *
  * @author jfaltermeier
- * 
+ *
  */
 public class ECPValidationResultServiceImpl implements ECPValidationResultService {
 
@@ -46,7 +46,7 @@ public class ECPValidationResultServiceImpl implements ECPValidationResultServic
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.ui.validation.ECPValidationResultService#setResult(org.eclipse.emf.common.util.Diagnostic[])
 	 */
 	@Override
@@ -60,7 +60,7 @@ public class ECPValidationResultServiceImpl implements ECPValidationResultServic
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.ui.validation.ECPValidationResultService#setResult(org.eclipse.emf.common.util.Diagnostic)
 	 */
 	@Override
@@ -72,7 +72,7 @@ public class ECPValidationResultServiceImpl implements ECPValidationResultServic
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.ui.validation.ECPValidationResultService#setResult(java.util.List)
 	 */
 	@Override
@@ -117,7 +117,7 @@ public class ECPValidationResultServiceImpl implements ECPValidationResultServic
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.ui.validation.ECPValidationResultService#register(org.eclipse.emf.ecp.ui.validation.ECPValidationResultService.ECPValidationResultServiceListener)
 	 */
 	@Override
@@ -129,7 +129,7 @@ public class ECPValidationResultServiceImpl implements ECPValidationResultServic
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.ui.validation.ECPValidationResultService#register(org.eclipse.emf.ecp.ui.validation.ECPValidationResultService.ECPValidationResultServiceListener,
 	 *      java.util.Set)
 	 */
@@ -182,7 +182,7 @@ public class ECPValidationResultServiceImpl implements ECPValidationResultServic
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.ui.validation.ECPValidationResultService#deregister(org.eclipse.emf.ecp.ui.validation.ECPValidationResultService.ECPValidationResultServiceListener)
 	 */
 	@Override

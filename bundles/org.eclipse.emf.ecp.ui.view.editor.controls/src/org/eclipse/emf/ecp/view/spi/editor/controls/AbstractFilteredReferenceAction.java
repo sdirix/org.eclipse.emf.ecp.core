@@ -28,7 +28,7 @@ import org.eclipse.swt.widgets.Shell;
 
 /**
  * A {@link ECPSWTAction} allowing to set a reference.
- * 
+ *
  * @since 1.5
  *
  */

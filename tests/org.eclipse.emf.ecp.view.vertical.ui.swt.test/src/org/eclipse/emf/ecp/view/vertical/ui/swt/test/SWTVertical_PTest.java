@@ -55,7 +55,7 @@ public class SWTVertical_PTest {
 
 	@Test
 	public void testVerticalWithoutChildren() throws NoRendererFoundException,
-	NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption {
 		// setup model
 		final HierarchyViewModelHandle handle = createVerticalWithoutChildren();
 		final Control render = SWTViewTestHelper.render(handle.getRoot(), domainElement, shell);
@@ -66,7 +66,7 @@ public class SWTVertical_PTest {
 
 	@Test
 	public void testVerticalWithTwoControlsAsChildren() throws NoRendererFoundException,
-	NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption {
 		// setup model
 		final HierarchyViewModelHandle handle = createVerticalWithTwoControlsAsChildren();
 		final Control render = SWTViewTestHelper.render(handle.getRoot(), domainElement, shell);
@@ -80,7 +80,7 @@ public class SWTVertical_PTest {
 
 	@Test
 	public void testVerticalWithTwoVerticalAsChildrenAndControlAsSubChildren() throws NoRendererFoundException,
-	NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption {
 		// setup model
 		final HierarchyViewModelHandle handle =
 			createVerticalWithTwoVerticalAsChildrenAndControlAsSubChildren();

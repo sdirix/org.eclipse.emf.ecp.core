@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * EclipseSource - Generated code
  */
@@ -47,7 +47,7 @@ public class StaffImpl extends MinimalEObjectImpl.Container implements Staff
 	 * The cached value of the '{@link #getStaff() <em>Staff</em>}' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getStaff()
 	 * @generated
 	 * @ordered
@@ -57,7 +57,7 @@ public class StaffImpl extends MinimalEObjectImpl.Container implements Staff
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected StaffImpl()
@@ -68,7 +68,7 @@ public class StaffImpl extends MinimalEObjectImpl.Container implements Staff
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -80,7 +80,7 @@ public class StaffImpl extends MinimalEObjectImpl.Container implements Staff
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public EList<Professor> getProfessors()
@@ -91,7 +91,7 @@ public class StaffImpl extends MinimalEObjectImpl.Container implements Staff
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public EList<Assistant> getAssistants()
@@ -102,7 +102,7 @@ public class StaffImpl extends MinimalEObjectImpl.Container implements Staff
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public FeatureMap getStaff()
@@ -117,7 +117,7 @@ public class StaffImpl extends MinimalEObjectImpl.Container implements Staff
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -138,7 +138,7 @@ public class StaffImpl extends MinimalEObjectImpl.Container implements Staff
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -151,8 +151,9 @@ public class StaffImpl extends MinimalEObjectImpl.Container implements Staff
 		case UniversityPackage.STAFF__ASSISTANTS:
 			return getAssistants();
 		case UniversityPackage.STAFF__STAFF:
-			if (coreType)
+			if (coreType) {
 				return getStaff();
+			}
 			return ((FeatureMap.Internal) getStaff()).getWrapper();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -161,7 +162,7 @@ public class StaffImpl extends MinimalEObjectImpl.Container implements Staff
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
@@ -188,7 +189,7 @@ public class StaffImpl extends MinimalEObjectImpl.Container implements Staff
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -212,7 +213,7 @@ public class StaffImpl extends MinimalEObjectImpl.Container implements Staff
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -233,16 +234,17 @@ public class StaffImpl extends MinimalEObjectImpl.Container implements Staff
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
 	public String toString()
 	{
-		if (eIsProxy())
+		if (eIsProxy()) {
 			return super.toString();
+		}
 
-		StringBuffer result = new StringBuffer(super.toString());
+		final StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (staff: "); //$NON-NLS-1$
 		result.append(staff);
 		result.append(')');

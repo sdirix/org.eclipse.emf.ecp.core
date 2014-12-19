@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
@@ -18,9 +18,9 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 
 /**
  * This class provides a ValueProperty for EClass Mappings.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  */
 @SuppressWarnings("restriction")
 public class EMFMappingValueProperty extends EMFValueProperty {
@@ -29,7 +29,7 @@ public class EMFMappingValueProperty extends EMFValueProperty {
 
 	/**
 	 * Constructor for a EClassMapping ValueProperty.
-	 * 
+	 *
 	 * @param mappedEClass the EClass being mapped
 	 * @param eStructuralFeature the {@link EStructuralFeature} of the map
 	 */

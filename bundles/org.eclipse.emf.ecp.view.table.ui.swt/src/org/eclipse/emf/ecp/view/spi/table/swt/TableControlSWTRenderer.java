@@ -311,7 +311,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	protected Composite createControlComposite(Composite composite) {
 		final Composite controlComposite = new Composite(composite, SWT.NONE);
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).hint(1, getTableHeightHint())
-		.applyTo(controlComposite);
+			.applyTo(controlComposite);
 		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(controlComposite);
 		return controlComposite;
 	}
@@ -418,7 +418,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 				.setData("width", //$NON-NLS-1$
 					ECPCellEditor.class.isInstance(cellEditor) ? ECPCellEditor.class.cast(cellEditor)
 						.getColumnWidthWeight() : 100)
-						.build(tableViewer);
+				.build(tableViewer);
 
 			column.setLabelProvider(new ECPCellLabelProvider(eStructuralFeature, cellEditor, getObservableMap(dmr,
 				eStructuralFeature, cp), getVElement(), dmr));
@@ -520,8 +520,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			.getBundle().getBundleContext().getService(databindingProviderServiceReference);
 		final IValueProperty result = databindingProviderService.getProperty(dmr, IValueProperty.class);
 		Activator.getInstance()
-		.getBundle()
-		.getBundleContext().ungetService(databindingProviderServiceReference);
+			.getBundle()
+			.getBundleContext().ungetService(databindingProviderServiceReference);
 
 		return result;
 	}
@@ -645,8 +645,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		final MessageDialog dialog = new MessageDialog(addButton.getShell(),
 			ControlMessages.TableControl_Delete, null,
 			ControlMessages.TableControl_DeleteAreYouSure, MessageDialog.CONFIRM, new String[] {
-			JFaceResources.getString(IDialogLabelKeys.YES_LABEL_KEY),
-			JFaceResources.getString(IDialogLabelKeys.NO_LABEL_KEY) }, 0);
+				JFaceResources.getString(IDialogLabelKeys.YES_LABEL_KEY),
+				JFaceResources.getString(IDialogLabelKeys.NO_LABEL_KEY) }, 0);
 
 		new ECPDialogExecutor(dialog) {
 

@@ -67,11 +67,11 @@ public final class ViewModelUtil {
 			if (!init && ViewModelUtil.isDebugMode()) {
 				// report only in debug mode
 				Activator.getDefault()
-				.getReportService()
-				.report(
-					new DomainModelReferenceResolutionFailedReport(
-						control.getDomainModelReference(),
-						control));
+					.getReportService()
+					.report(
+						new DomainModelReferenceResolutionFailedReport(
+							control.getDomainModelReference(),
+							control));
 			}
 		}
 		// XXX get rid of the following code as soon as possible!
@@ -86,11 +86,11 @@ public final class ViewModelUtil {
 					if (!init && ViewModelUtil.isDebugMode()) {
 						// report only in debug mode
 						Activator.getDefault()
-						.getReportService()
-						.report(
-							new DomainModelReferenceResolutionFailedReport(
-								VDomainModelReference.class.cast(object),
-								element));
+							.getReportService()
+							.report(
+								new DomainModelReferenceResolutionFailedReport(
+									VDomainModelReference.class.cast(object),
+									element));
 					}
 				}
 			}

@@ -30,7 +30,7 @@ public class HorizontalLayoutRendererFX extends RendererFX<VHorizontalLayout> {
 
 	@Override
 	protected Node renderNode(GridCellFX cell) throws NoRendererFoundException,
-	NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption {
 		if (cell.getColumn() != 0) {
 			return null;
 		}

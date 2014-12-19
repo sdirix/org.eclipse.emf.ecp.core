@@ -26,7 +26,7 @@ import org.eclipse.swt.widgets.Control;
 
 /**
  * {@link ECPAbstractCustomControlSWT} that will delegate its calls to a POJO.
- * 
+ *
  * @author jfaltermeier
  *
  */
@@ -99,7 +99,7 @@ public class DICustomControlSWT extends ECPAbstractCustomControlSWT {
 	@SuppressWarnings("restriction")
 	@Override
 	public Control renderControl(SWTGridCell cell, Composite parent) throws NoRendererFoundException,
-	NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption {
 		return (Control) org.eclipse.emf.ecp.view.model.common.di.renderer.DIRendererUtil.render(pojo,
 			getCustomControl(), getViewModelContext());
 	}

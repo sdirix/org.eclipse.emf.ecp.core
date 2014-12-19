@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * EclipseSource Muenchen GmbH - initial API and implementation
  ******************************************************************************/
@@ -31,7 +31,7 @@ import org.eclipse.emf.ecp.ui.view.editor.test.model.test.TestPackage;
  * <li>{@link org.eclipse.emf.ecp.ui.view.editor.test.model.test.impl.ComponentImpl#getComponent <em>Component</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class ComponentImpl extends MinimalEObjectImpl.Container implements Component {
@@ -39,7 +39,7 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
 	 * The cached value of the '{@link #getComponent() <em>Component</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getComponent()
 	 * @generated
 	 * @ordered
@@ -49,7 +49,7 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected ComponentImpl() {
@@ -59,7 +59,7 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -70,7 +70,7 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -81,7 +81,7 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public NotificationChain basicSetComponent(Component2 newComponent, NotificationChain msgs) {
@@ -102,7 +102,7 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -131,7 +131,7 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -146,7 +146,7 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -161,7 +161,7 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -177,7 +177,7 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -193,7 +193,7 @@ public class ComponentImpl extends MinimalEObjectImpl.Container implements Compo
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override

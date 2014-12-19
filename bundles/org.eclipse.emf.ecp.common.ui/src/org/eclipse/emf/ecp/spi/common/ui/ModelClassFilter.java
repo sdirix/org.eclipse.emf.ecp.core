@@ -5,7 +5,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  ******************************************************************************/
 package org.eclipse.emf.ecp.spi.common.ui;
@@ -19,14 +19,14 @@ import org.eclipse.jface.viewers.Viewer;
 
 /**
  * Filter for selective input in the NewModelElementWizard.
- * 
+ *
  * @author Shterev
  */
 public class ModelClassFilter extends ECPViewerFilter {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.jface.viewers.ViewerFilter#select(org.eclipse.jface.viewers.Viewer, java.lang.Object,
 	 *      java.lang.Object)
 	 */
@@ -40,11 +40,11 @@ public class ModelClassFilter extends ECPViewerFilter {
 				|| EPackage.class.isInstance(parentElement)
 				&& ((EPackage) parentElement).getName().toLowerCase().contains(getSearchTerm().toLowerCase());
 		} else if (element instanceof EPackage) {
-			EPackage ePackage = (EPackage) element;
-			Object[] children = ((ITreeContentProvider) ((TreeViewer) viewer).getContentProvider())
+			final EPackage ePackage = (EPackage) element;
+			final Object[] children = ((ITreeContentProvider) ((TreeViewer) viewer).getContentProvider())
 				.getChildren(element);
 			boolean show = ePackage.getName().toLowerCase().contains(getSearchTerm().toLowerCase());
-			for (Object child : children) {
+			for (final Object child : children) {
 				show = show || select(viewer, element, child);
 			}
 			return show;

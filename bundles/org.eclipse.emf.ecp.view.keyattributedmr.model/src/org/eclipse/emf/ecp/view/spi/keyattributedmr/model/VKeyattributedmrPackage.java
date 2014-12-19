@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
@@ -27,7 +27,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * <li>and each data type</li>
  * </ul>
  * <!-- end-user-doc -->
- * 
+ *
  * @see org.eclipse.emf.ecp.view.spi.keyattributedmr.model.VKeyattributedmrFactory
  * @model kind="package"
  * @generated
@@ -36,7 +36,7 @@ public interface VKeyattributedmrPackage extends EPackage {
 	/**
 	 * The package name.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	String eNAME = "keyattributedmr"; //$NON-NLS-1$
@@ -44,7 +44,7 @@ public interface VKeyattributedmrPackage extends EPackage {
 	/**
 	 * The package namespace URI.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	String eNS_URI = "http://www.eclipse.org/emf/ecp/view/keyattributedmr/model"; //$NON-NLS-1$
@@ -52,7 +52,7 @@ public interface VKeyattributedmrPackage extends EPackage {
 	/**
 	 * The package namespace name.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	String eNS_PREFIX = "org.eclipse.emf.ecp.view.keyattributedmr.model"; //$NON-NLS-1$
@@ -61,7 +61,7 @@ public interface VKeyattributedmrPackage extends EPackage {
 	 * The singleton instance of the package.
 	 * <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	VKeyattributedmrPackage eINSTANCE = org.eclipse.emf.ecp.view.spi.keyattributedmr.model.impl.VKeyattributedmrPackageImpl
@@ -72,7 +72,7 @@ public interface VKeyattributedmrPackage extends EPackage {
 	 * {@link org.eclipse.emf.ecp.view.spi.keyattributedmr.model.impl.VKeyAttributeDomainModelReferenceImpl
 	 * <em>Key Attribute Domain Model Reference</em>}' class. <!--
 	 * begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.keyattributedmr.model.impl.VKeyAttributeDomainModelReferenceImpl
 	 * @see org.eclipse.emf.ecp.view.spi.keyattributedmr.model.impl.VKeyattributedmrPackageImpl#getKeyAttributeDomainModelReference()
 	 * @generated
@@ -82,7 +82,7 @@ public interface VKeyattributedmrPackage extends EPackage {
 	/**
 	 * The feature id for the '<em><b>Change Listener</b></em>' attribute list.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -91,7 +91,7 @@ public interface VKeyattributedmrPackage extends EPackage {
 	/**
 	 * The feature id for the '<em><b>Domain Model EFeature</b></em>' reference.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -100,7 +100,7 @@ public interface VKeyattributedmrPackage extends EPackage {
 	/**
 	 * The feature id for the '<em><b>Domain Model EReference Path</b></em>' reference list.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -110,7 +110,7 @@ public interface VKeyattributedmrPackage extends EPackage {
 	 * The feature id for the '<em><b>Key DMR</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -120,7 +120,7 @@ public interface VKeyattributedmrPackage extends EPackage {
 	 * The feature id for the '<em><b>Key Value</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -130,7 +130,7 @@ public interface VKeyattributedmrPackage extends EPackage {
 	 * The feature id for the '<em><b>Value DMR</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -140,7 +140,7 @@ public interface VKeyattributedmrPackage extends EPackage {
 	 * The number of structural features of the ' <em>Key Attribute Domain Model Reference</em>' class. <!--
 	 * begin-user-doc
 	 * --> <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -152,7 +152,7 @@ public interface VKeyattributedmrPackage extends EPackage {
 	 * <em>Key Attribute Domain Model Reference</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for class '<em>Key Attribute Domain Model Reference</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.keyattributedmr.model.VKeyAttributeDomainModelReference
 	 * @generated
@@ -165,7 +165,7 @@ public interface VKeyattributedmrPackage extends EPackage {
 	 * <em>Key DMR</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for the containment reference '<em>Key DMR</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.keyattributedmr.model.VKeyAttributeDomainModelReference#getKeyDMR()
 	 * @see #getKeyAttributeDomainModelReference()
@@ -179,7 +179,7 @@ public interface VKeyattributedmrPackage extends EPackage {
 	 * <em>Key Value</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for the attribute '<em>Key Value</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.keyattributedmr.model.VKeyAttributeDomainModelReference#getKeyValue()
 	 * @see #getKeyAttributeDomainModelReference()
@@ -193,7 +193,7 @@ public interface VKeyattributedmrPackage extends EPackage {
 	 * <em>Value DMR</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for the containment reference '<em>Value DMR</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.keyattributedmr.model.VKeyAttributeDomainModelReference#getValueDMR()
 	 * @see #getKeyAttributeDomainModelReference()
@@ -204,7 +204,7 @@ public interface VKeyattributedmrPackage extends EPackage {
 	/**
 	 * Returns the factory that creates the instances of the model. <!--
 	 * begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the factory that creates the instances of the model.
 	 * @generated
 	 */
@@ -220,7 +220,7 @@ public interface VKeyattributedmrPackage extends EPackage {
 	 * <li>and each data type</li>
 	 * </ul>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	interface Literals {
@@ -229,7 +229,7 @@ public interface VKeyattributedmrPackage extends EPackage {
 		 * {@link org.eclipse.emf.ecp.view.spi.keyattributedmr.model.impl.VKeyAttributeDomainModelReferenceImpl
 		 * <em>Key Attribute Domain Model Reference</em>}' class. <!--
 		 * begin-user-doc --> <!-- end-user-doc -->
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.spi.keyattributedmr.model.impl.VKeyAttributeDomainModelReferenceImpl
 		 * @see org.eclipse.emf.ecp.view.spi.keyattributedmr.model.impl.VKeyattributedmrPackageImpl#getKeyAttributeDomainModelReference()
 		 * @generated
@@ -239,7 +239,7 @@ public interface VKeyattributedmrPackage extends EPackage {
 		 * The meta object literal for the '<em><b>Key DMR</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		EReference KEY_ATTRIBUTE_DOMAIN_MODEL_REFERENCE__KEY_DMR = eINSTANCE
@@ -248,7 +248,7 @@ public interface VKeyattributedmrPackage extends EPackage {
 		 * The meta object literal for the '<em><b>Key Value</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		EAttribute KEY_ATTRIBUTE_DOMAIN_MODEL_REFERENCE__KEY_VALUE = eINSTANCE
@@ -257,7 +257,7 @@ public interface VKeyattributedmrPackage extends EPackage {
 		 * The meta object literal for the '<em><b>Value DMR</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		EReference KEY_ATTRIBUTE_DOMAIN_MODEL_REFERENCE__VALUE_DMR = eINSTANCE

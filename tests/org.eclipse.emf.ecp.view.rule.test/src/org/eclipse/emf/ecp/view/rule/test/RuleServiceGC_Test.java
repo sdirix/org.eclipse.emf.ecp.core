@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Edgar - initial API and implementation
  ******************************************************************************/
@@ -29,10 +29,6 @@ import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalFactory;
 import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalLayout;
 import org.eclipse.emf.ecp.view.test.common.GCCollectable;
 import org.eclipse.emf.ecp.view.test.common.Tuple;
-import org.eclipse.emf.emfstore.bowling.BowlingFactory;
-import org.eclipse.emf.emfstore.bowling.BowlingPackage;
-import org.eclipse.emf.emfstore.bowling.League;
-import org.eclipse.emf.emfstore.bowling.Player;
 import org.junit.After;
 import org.junit.Test;
 
@@ -68,7 +64,7 @@ public class RuleServiceGC_Test extends CommonRuleTest {
 
 	/**
 	 * Tear down.
-	 * 
+	 *
 	 * @throws Exception the exception
 	 */
 	@After
@@ -80,7 +76,7 @@ public class RuleServiceGC_Test extends CommonRuleTest {
 
 	/**
 	 * Instantiate rule service.
-	 * 
+	 *
 	 * @return the rule service
 	 */
 	private RuleService instantiateRuleService(VView view, final EObject domainModel) {

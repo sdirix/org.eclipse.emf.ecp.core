@@ -57,7 +57,7 @@ public class LeafConditionControlRenderer extends ExpectedValueControlRenderer {
 		if (condition.getDomainModelReference() == null) {
 			MessageDialog.openError(control.getShell(), "No Feature Path Domain Model Reference found", //$NON-NLS-1$
 				"A Feature Path Domain Model Reference needs to be added to the condition first. " //$NON-NLS-1$
-				);
+			);
 			return;
 		}
 
@@ -67,7 +67,7 @@ public class LeafConditionControlRenderer extends ExpectedValueControlRenderer {
 		if (structuralFeature == null) {
 			MessageDialog.openError(control.getShell(), "No value selected", //$NON-NLS-1$
 				"Please set a value to the Domain Model Reference first. " //$NON-NLS-1$
-				);
+			);
 			return;
 		}
 

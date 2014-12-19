@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
@@ -25,9 +25,9 @@ import org.eclipse.emf.ecp.view.spi.table.swt.ECPCellReadOnlyTester;
 /**
  * Helper class which collects the cell testers and allows to iterate over all to check whether a cell should be read
  * only.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  */
 public final class CellReadOnlyTesterHelper {
 
@@ -35,7 +35,7 @@ public final class CellReadOnlyTesterHelper {
 
 	/**
 	 * The CellReadOnlyTesterHelper instance.
-	 * 
+	 *
 	 * @return the CellReadOnlyTesterHelper instance
 	 */
 	public static CellReadOnlyTesterHelper getInstance() {
@@ -71,7 +71,7 @@ public final class CellReadOnlyTesterHelper {
 
 	/**
 	 * Register an {@link ECPCellReadOnlyTester} programmatically.
-	 * 
+	 *
 	 * @param tester the {@link ECPCellReadOnlyTester} to register
 	 */
 	public void registerCellReadOnlyTester(ECPCellReadOnlyTester tester) {
@@ -80,7 +80,7 @@ public final class CellReadOnlyTesterHelper {
 
 	/**
 	 * Check all {@link ECPCellReadOnlyTester} for the cell.
-	 * 
+	 *
 	 * @param vTableControl the {@link VTableControl}
 	 * @param setting the {@link Setting} of the cell
 	 * @return true if any {@link ECPCellReadOnlyTester} wants the cell to be readonly false otherwise.

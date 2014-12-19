@@ -25,7 +25,7 @@ public abstract class ECPSelectionStatusValidator implements ISelectionStatusVal
 
 	/**
 	 * Sets the dialog.
-	 * 
+	 *
 	 * @param dialog the dialog
 	 */
 	public void setECPViewEditorTreeSelectionDialog(ECPViewEditorTreeSelectionDialog dialog) {

@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * EclipseSource Munich - initial API and implementation
  */
@@ -31,7 +31,7 @@ import org.eclipse.emf.ecp.view.template.style.textControlEnablement.model.VTTex
  * <em>Render Disable As Editable</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class VTTextControlEnablementStylePropertyImpl extends MinimalEObjectImpl.Container implements
@@ -40,7 +40,7 @@ public class VTTextControlEnablementStylePropertyImpl extends MinimalEObjectImpl
 	 * The default value of the '{@link #isRenderDisableAsEditable() <em>Render Disable As Editable</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #isRenderDisableAsEditable()
 	 * @generated
 	 * @ordered
@@ -51,7 +51,7 @@ public class VTTextControlEnablementStylePropertyImpl extends MinimalEObjectImpl
 	 * The cached value of the '{@link #isRenderDisableAsEditable() <em>Render Disable As Editable</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #isRenderDisableAsEditable()
 	 * @generated
 	 * @ordered
@@ -61,7 +61,7 @@ public class VTTextControlEnablementStylePropertyImpl extends MinimalEObjectImpl
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected VTTextControlEnablementStylePropertyImpl() {
@@ -71,7 +71,7 @@ public class VTTextControlEnablementStylePropertyImpl extends MinimalEObjectImpl
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -82,7 +82,7 @@ public class VTTextControlEnablementStylePropertyImpl extends MinimalEObjectImpl
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -93,7 +93,7 @@ public class VTTextControlEnablementStylePropertyImpl extends MinimalEObjectImpl
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -110,7 +110,7 @@ public class VTTextControlEnablementStylePropertyImpl extends MinimalEObjectImpl
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -125,7 +125,7 @@ public class VTTextControlEnablementStylePropertyImpl extends MinimalEObjectImpl
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -141,7 +141,7 @@ public class VTTextControlEnablementStylePropertyImpl extends MinimalEObjectImpl
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -157,7 +157,7 @@ public class VTTextControlEnablementStylePropertyImpl extends MinimalEObjectImpl
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -172,7 +172,7 @@ public class VTTextControlEnablementStylePropertyImpl extends MinimalEObjectImpl
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -190,7 +190,7 @@ public class VTTextControlEnablementStylePropertyImpl extends MinimalEObjectImpl
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.template.model.VTStyleProperty#equalStyles(org.eclipse.emf.ecp.view.template.model.VTStyleProperty)
 	 */
 	@Override

@@ -33,185 +33,185 @@ public class DomainModelReferenceSelector_Test {
 	@Before
 	public void setup() {
 		domainModelReferenceSelector = VTDomainmodelreferenceFactory.eINSTANCE
-				.createDomainModelReferenceSelector();
+			.createDomainModelReferenceSelector();
 
 	}
 
 	@Test
 	public void testNotAControl() {
-		double specificity = domainModelReferenceSelector.isApplicable(
-				mock(VElement.class), mock(ViewModelContext.class));
+		final double specificity = domainModelReferenceSelector.isApplicable(
+			mock(VElement.class), mock(ViewModelContext.class));
 		assertEquals(VTStyleSelector.NOT_APPLICABLE.doubleValue(), specificity,
-				0d);
+			0d);
 	}
 
 	@Test
 	public void testControlWithoutDomainModelReference() {
-		VControl vControl = mock(VControl.class);
+		final VControl vControl = mock(VControl.class);
 
-		double specificity = domainModelReferenceSelector.isApplicable(
-				vControl, mock(ViewModelContext.class));
+		final double specificity = domainModelReferenceSelector.isApplicable(
+			vControl, mock(ViewModelContext.class));
 		assertEquals(VTStyleSelector.NOT_APPLICABLE.doubleValue(), specificity,
-				0d);
+			0d);
 	}
 
 	@Test
 	public void testSelectorDomainModelReferenceNotResolvable() {
-		VFeaturePathDomainModelReference selectorDomainModelReference = VViewFactory.eINSTANCE
-				.createFeaturePathDomainModelReference();
+		final VFeaturePathDomainModelReference selectorDomainModelReference = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
 		selectorDomainModelReference
-				.setDomainModelEFeature(EcorePackage.eINSTANCE
-						.getENamedElement_Name());
+			.setDomainModelEFeature(EcorePackage.eINSTANCE
+				.getENamedElement_Name());
 		domainModelReferenceSelector
-				.setDomainModelReference(selectorDomainModelReference);
+			.setDomainModelReference(selectorDomainModelReference);
 
-		VControl vControl = mock(VControl.class);
-		ViewModelContext viewModelContext = mock(ViewModelContext.class);
+		final VControl vControl = mock(VControl.class);
+		final ViewModelContext viewModelContext = mock(ViewModelContext.class);
 		when(viewModelContext.getDomainModel()).thenReturn(mock(EObject.class));
-		double specificity = domainModelReferenceSelector.isApplicable(
-				vControl, viewModelContext);
+		final double specificity = domainModelReferenceSelector.isApplicable(
+			vControl, viewModelContext);
 		assertEquals(VTStyleSelector.NOT_APPLICABLE.doubleValue(), specificity,
-				0d);
+			0d);
 	}
-	
+
 	@Test
 	public void testControlDomainModelReferenceShort() {
-		VFeaturePathDomainModelReference selectorDomainModelReference = VViewFactory.eINSTANCE
-				.createFeaturePathDomainModelReference();
+		final VFeaturePathDomainModelReference selectorDomainModelReference = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
 		selectorDomainModelReference
-				.setDomainModelEFeature(EcorePackage.eINSTANCE
-						.getENamedElement_Name());
+			.setDomainModelEFeature(EcorePackage.eINSTANCE
+				.getENamedElement_Name());
 		domainModelReferenceSelector
-				.setDomainModelReference(selectorDomainModelReference);
+			.setDomainModelReference(selectorDomainModelReference);
 
-		VControl vControl = mock(VControl.class);
-		VDomainModelReference controlDomainModelReference=mock(VDomainModelReference.class);
+		final VControl vControl = mock(VControl.class);
+		final VDomainModelReference controlDomainModelReference = mock(VDomainModelReference.class);
 		when(vControl.getDomainModelReference()).thenReturn(controlDomainModelReference);
 		when(controlDomainModelReference.getIterator()).thenReturn(new HashSet<Setting>().iterator());
-		
-		ViewModelContext viewModelContext = mock(ViewModelContext.class);
+
+		final ViewModelContext viewModelContext = mock(ViewModelContext.class);
 		when(viewModelContext.getDomainModel()).thenReturn(EcoreFactory.eINSTANCE.createEClass());
-		
-		double specificity = domainModelReferenceSelector.isApplicable(
-				vControl, viewModelContext);
+
+		final double specificity = domainModelReferenceSelector.isApplicable(
+			vControl, viewModelContext);
 		assertEquals(VTStyleSelector.NOT_APPLICABLE.doubleValue(), specificity,
-				0d);
+			0d);
 	}
-	
+
 	@Test
 	public void testControlDomainModelReferenceLong() {
-		VFeaturePathDomainModelReference selectorDomainModelReference = VViewFactory.eINSTANCE
-				.createFeaturePathDomainModelReference();
+		final VFeaturePathDomainModelReference selectorDomainModelReference = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
 		selectorDomainModelReference
-				.setDomainModelEFeature(EcorePackage.eINSTANCE
-						.getENamedElement_Name());
+			.setDomainModelEFeature(EcorePackage.eINSTANCE
+				.getENamedElement_Name());
 		domainModelReferenceSelector
-				.setDomainModelReference(selectorDomainModelReference);
+			.setDomainModelReference(selectorDomainModelReference);
 
-		VControl vControl = mock(VControl.class);
-		VDomainModelReference controlDomainModelReference=mock(VDomainModelReference.class);
+		final VControl vControl = mock(VControl.class);
+		final VDomainModelReference controlDomainModelReference = mock(VDomainModelReference.class);
 		when(vControl.getDomainModelReference()).thenReturn(controlDomainModelReference);
-		Set<Setting> settings=new LinkedHashSet<Setting>();
-		EClass eClass=EcoreFactory.eINSTANCE.createEClass();
+		final Set<Setting> settings = new LinkedHashSet<Setting>();
+		final EClass eClass = EcoreFactory.eINSTANCE.createEClass();
 		settings.add(InternalEObject.class.cast(eClass).eSetting(EcorePackage.eINSTANCE
-						.getENamedElement_Name()));
+			.getENamedElement_Name()));
 		settings.add(InternalEObject.class.cast(eClass).eSetting(EcorePackage.eINSTANCE
-				.getEClass_Abstract()));
+			.getEClass_Abstract()));
 		when(controlDomainModelReference.getIterator()).thenReturn(settings.iterator());
-		
-		ViewModelContext viewModelContext = mock(ViewModelContext.class);
+
+		final ViewModelContext viewModelContext = mock(ViewModelContext.class);
 		when(viewModelContext.getDomainModel()).thenReturn(eClass);
-		
-		double specificity = domainModelReferenceSelector.isApplicable(
-				vControl, viewModelContext);
+
+		final double specificity = domainModelReferenceSelector.isApplicable(
+			vControl, viewModelContext);
 		assertEquals(VTStyleSelector.NOT_APPLICABLE.doubleValue(), specificity,
-				0d);
+			0d);
 	}
-	
+
 	@Test
 	public void testControlDomainModelReferenceCorrect() {
-		VFeaturePathDomainModelReference selectorDomainModelReference = VViewFactory.eINSTANCE
-				.createFeaturePathDomainModelReference();
+		final VFeaturePathDomainModelReference selectorDomainModelReference = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
 		selectorDomainModelReference
-				.setDomainModelEFeature(EcorePackage.eINSTANCE
-						.getENamedElement_Name());
+			.setDomainModelEFeature(EcorePackage.eINSTANCE
+				.getENamedElement_Name());
 		domainModelReferenceSelector
-				.setDomainModelReference(selectorDomainModelReference);
+			.setDomainModelReference(selectorDomainModelReference);
 
-		VControl vControl = mock(VControl.class);
-		VDomainModelReference controlDomainModelReference=mock(VDomainModelReference.class);
+		final VControl vControl = mock(VControl.class);
+		final VDomainModelReference controlDomainModelReference = mock(VDomainModelReference.class);
 		when(vControl.getDomainModelReference()).thenReturn(controlDomainModelReference);
-		Set<Setting> settings=new LinkedHashSet<Setting>();
-		EClass eClass=EcoreFactory.eINSTANCE.createEClass();
+		final Set<Setting> settings = new LinkedHashSet<Setting>();
+		final EClass eClass = EcoreFactory.eINSTANCE.createEClass();
 		settings.add(InternalEObject.class.cast(eClass).eSetting(EcorePackage.eINSTANCE
-						.getENamedElement_Name()));
-		
+			.getENamedElement_Name()));
+
 		when(controlDomainModelReference.getIterator()).thenReturn(settings.iterator());
-		
-		ViewModelContext viewModelContext = mock(ViewModelContext.class);
+
+		final ViewModelContext viewModelContext = mock(ViewModelContext.class);
 		when(viewModelContext.getDomainModel()).thenReturn(eClass);
-		
-		double specificity = domainModelReferenceSelector.isApplicable(
-				vControl, viewModelContext);
+
+		final double specificity = domainModelReferenceSelector.isApplicable(
+			vControl, viewModelContext);
 		assertEquals(10d, specificity,
-				0d);
+			0d);
 	}
-	
+
 	@Test
 	public void testControlDomainModelReferenceDifferentEObjects() {
-		VFeaturePathDomainModelReference selectorDomainModelReference = VViewFactory.eINSTANCE
-				.createFeaturePathDomainModelReference();
+		final VFeaturePathDomainModelReference selectorDomainModelReference = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
 		selectorDomainModelReference
-				.setDomainModelEFeature(EcorePackage.eINSTANCE
-						.getENamedElement_Name());
+			.setDomainModelEFeature(EcorePackage.eINSTANCE
+				.getENamedElement_Name());
 		domainModelReferenceSelector
-				.setDomainModelReference(selectorDomainModelReference);
+			.setDomainModelReference(selectorDomainModelReference);
 
-		VControl vControl = mock(VControl.class);
-		VDomainModelReference controlDomainModelReference=mock(VDomainModelReference.class);
+		final VControl vControl = mock(VControl.class);
+		final VDomainModelReference controlDomainModelReference = mock(VDomainModelReference.class);
 		when(vControl.getDomainModelReference()).thenReturn(controlDomainModelReference);
-		Set<Setting> settings=new LinkedHashSet<Setting>();
-		
+		final Set<Setting> settings = new LinkedHashSet<Setting>();
+
 		settings.add(InternalEObject.class.cast(EcoreFactory.eINSTANCE.createEClass()).eSetting(EcorePackage.eINSTANCE
-						.getENamedElement_Name()));
-		
+			.getENamedElement_Name()));
+
 		when(controlDomainModelReference.getIterator()).thenReturn(settings.iterator());
-		
-		ViewModelContext viewModelContext = mock(ViewModelContext.class);
+
+		final ViewModelContext viewModelContext = mock(ViewModelContext.class);
 		when(viewModelContext.getDomainModel()).thenReturn(EcoreFactory.eINSTANCE.createEClass());
-		
-		double specificity = domainModelReferenceSelector.isApplicable(
-				vControl, viewModelContext);
+
+		final double specificity = domainModelReferenceSelector.isApplicable(
+			vControl, viewModelContext);
 		assertEquals(VTStyleSelector.NOT_APPLICABLE.doubleValue(), specificity,
-				0d);
+			0d);
 	}
-	
+
 	@Test
 	public void testControlDomainModelReferenceDifferentEFeatures() {
-		VFeaturePathDomainModelReference selectorDomainModelReference = VViewFactory.eINSTANCE
-				.createFeaturePathDomainModelReference();
+		final VFeaturePathDomainModelReference selectorDomainModelReference = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
 		selectorDomainModelReference
-				.setDomainModelEFeature(EcorePackage.eINSTANCE
-						.getENamedElement_Name());
+			.setDomainModelEFeature(EcorePackage.eINSTANCE
+				.getENamedElement_Name());
 		domainModelReferenceSelector
-				.setDomainModelReference(selectorDomainModelReference);
+			.setDomainModelReference(selectorDomainModelReference);
 
-		VControl vControl = mock(VControl.class);
-		VDomainModelReference controlDomainModelReference=mock(VDomainModelReference.class);
+		final VControl vControl = mock(VControl.class);
+		final VDomainModelReference controlDomainModelReference = mock(VDomainModelReference.class);
 		when(vControl.getDomainModelReference()).thenReturn(controlDomainModelReference);
-		Set<Setting> settings=new LinkedHashSet<Setting>();
-		
+		final Set<Setting> settings = new LinkedHashSet<Setting>();
+
 		settings.add(InternalEObject.class.cast(EcoreFactory.eINSTANCE.createEClass()).eSetting(EcorePackage.eINSTANCE
-						.getEClass_Abstract()));
-		
+			.getEClass_Abstract()));
+
 		when(controlDomainModelReference.getIterator()).thenReturn(settings.iterator());
-		
-		ViewModelContext viewModelContext = mock(ViewModelContext.class);
+
+		final ViewModelContext viewModelContext = mock(ViewModelContext.class);
 		when(viewModelContext.getDomainModel()).thenReturn(EcoreFactory.eINSTANCE.createEClass());
-		
-		double specificity = domainModelReferenceSelector.isApplicable(
-				vControl, viewModelContext);
+
+		final double specificity = domainModelReferenceSelector.isApplicable(
+			vControl, viewModelContext);
 		assertEquals(VTStyleSelector.NOT_APPLICABLE.doubleValue(), specificity,
-				0d);
+			0d);
 	}
 }

@@ -17,8 +17,9 @@ import org.eclipse.emf.ecore.EFactory;
  * <!-- begin-user-doc -->
  * The <b>Factory</b> for the model.
  * It provides a create method for each non-abstract class of the model.
+ *
  * @since 1.2
- * <!-- end-user-doc -->
+ *        <!-- end-user-doc -->
  *
  * @see org.eclipse.emf.ecp.view.spi.horizontal.model.VHorizontalPackage
  * @generated

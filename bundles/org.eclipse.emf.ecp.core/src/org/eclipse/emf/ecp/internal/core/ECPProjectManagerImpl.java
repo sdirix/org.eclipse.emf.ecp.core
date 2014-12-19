@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eike Stepper - initial API and implementation
  * Eugen Neufeld - JavaDoc and changes
@@ -46,7 +46,7 @@ import org.eclipse.net4j.util.AdapterUtil;
 
 /**
  * This class manages the available {@link ECPProject ECPProjects}.
- * 
+ *
  * @author Eike Stepper
  * @author Eugen Neufeld
  */
@@ -56,7 +56,7 @@ public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject
 	private static final String PROJECT_FOLDERNAME = "projects"; //$NON-NLS-1$
 	/**
 	 * The Singleton to access the implementation of the Default ECPProjectManager.
-	 * 
+	 *
 	 * @deprecated use {@link ECPUtil} instead
 	 */
 	@Deprecated
@@ -190,7 +190,7 @@ public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject
 
 	/**
 	 * This is called by projects to notify observers if a project gets openes or closed.
-	 * 
+	 *
 	 * @param project the project that called this method
 	 * @param opened whether the project is open
 	 * @param store whether to store the change
@@ -211,7 +211,7 @@ public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject
 	 * This is called by projects to notify observers about object changes.
 	 * First the {@link ECPProjectContentChangedObserver IECPProjectObjectsChangedObservers} are notified then the
 	 * {@link ECPProjectsChangedObserver IECPProjectsChangedUIObservers}.
-	 * 
+	 *
 	 * @param project the project that called this method
 	 * @param objects the objects that changed
 	 * @param structural whether the changes where structural

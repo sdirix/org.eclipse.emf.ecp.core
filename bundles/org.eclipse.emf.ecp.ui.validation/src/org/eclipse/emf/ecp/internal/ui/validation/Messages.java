@@ -15,7 +15,7 @@ import org.eclipse.osgi.util.NLS;
 
 /**
  * Messages for this bundle.
- * 
+ *
  * @generated
  *
  * @author jfaltermeier

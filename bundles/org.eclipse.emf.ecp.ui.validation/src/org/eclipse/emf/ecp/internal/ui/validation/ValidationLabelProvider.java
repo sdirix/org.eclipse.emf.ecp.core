@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
  ******************************************************************************/
@@ -26,9 +26,9 @@ import org.eclipse.swt.graphics.Image;
 /**
  * {@link ITableLabelProvider} for displaying {@link org.eclipse.emf.common.util.Diagnostic Diagnostics} in a Tree with
  * columns.
- * 
+ *
  * @author jfaltermeier
- * 
+ *
  */
 public class ValidationLabelProvider implements ITableLabelProvider {
 
@@ -51,7 +51,7 @@ public class ValidationLabelProvider implements ITableLabelProvider {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.jface.viewers.IBaseLabelProvider#addListener(org.eclipse.jface.viewers.ILabelProviderListener)
 	 */
 	@Override
@@ -60,7 +60,7 @@ public class ValidationLabelProvider implements ITableLabelProvider {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.jface.viewers.IBaseLabelProvider#dispose()
 	 */
 	@Override
@@ -73,7 +73,7 @@ public class ValidationLabelProvider implements ITableLabelProvider {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.jface.viewers.IBaseLabelProvider#isLabelProperty(java.lang.Object, java.lang.String)
 	 */
 	@Override
@@ -83,7 +83,7 @@ public class ValidationLabelProvider implements ITableLabelProvider {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.jface.viewers.IBaseLabelProvider#removeListener(org.eclipse.jface.viewers.ILabelProviderListener)
 	 */
 	@Override
@@ -92,7 +92,7 @@ public class ValidationLabelProvider implements ITableLabelProvider {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.jface.viewers.ITableLabelProvider#getColumnImage(java.lang.Object, int)
 	 */
 	@Override
@@ -125,7 +125,7 @@ public class ValidationLabelProvider implements ITableLabelProvider {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.jface.viewers.ITableLabelProvider#getColumnText(java.lang.Object, int)
 	 */
 	@Override

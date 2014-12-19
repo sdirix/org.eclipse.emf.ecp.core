@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * EclipseSource Munich - initial API and implementation
  */
@@ -38,7 +38,7 @@ import org.eclipse.emf.ecp.view.template.model.VTTemplatePackage;
  * <li>{@link org.eclipse.emf.ecp.view.template.model.impl.VTStyleImpl#getProperties <em>Properties</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class VTStyleImpl extends MinimalEObjectImpl.Container implements VTStyle
@@ -47,7 +47,7 @@ public class VTStyleImpl extends MinimalEObjectImpl.Container implements VTStyle
 	 * The cached value of the '{@link #getSelector() <em>Selector</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getSelector()
 	 * @generated
 	 * @ordered
@@ -58,7 +58,7 @@ public class VTStyleImpl extends MinimalEObjectImpl.Container implements VTStyle
 	 * The cached value of the '{@link #getProperties() <em>Properties</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getProperties()
 	 * @generated
 	 * @ordered
@@ -68,7 +68,7 @@ public class VTStyleImpl extends MinimalEObjectImpl.Container implements VTStyle
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected VTStyleImpl()
@@ -79,7 +79,7 @@ public class VTStyleImpl extends MinimalEObjectImpl.Container implements VTStyle
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -91,7 +91,7 @@ public class VTStyleImpl extends MinimalEObjectImpl.Container implements VTStyle
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -103,7 +103,7 @@ public class VTStyleImpl extends MinimalEObjectImpl.Container implements VTStyle
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public NotificationChain basicSetSelector(VTStyleSelector newSelector, NotificationChain msgs)
@@ -126,7 +126,7 @@ public class VTStyleImpl extends MinimalEObjectImpl.Container implements VTStyle
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -157,7 +157,7 @@ public class VTStyleImpl extends MinimalEObjectImpl.Container implements VTStyle
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -174,7 +174,7 @@ public class VTStyleImpl extends MinimalEObjectImpl.Container implements VTStyle
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -193,7 +193,7 @@ public class VTStyleImpl extends MinimalEObjectImpl.Container implements VTStyle
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -212,7 +212,7 @@ public class VTStyleImpl extends MinimalEObjectImpl.Container implements VTStyle
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
@@ -235,7 +235,7 @@ public class VTStyleImpl extends MinimalEObjectImpl.Container implements VTStyle
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -256,7 +256,7 @@ public class VTStyleImpl extends MinimalEObjectImpl.Container implements VTStyle
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override

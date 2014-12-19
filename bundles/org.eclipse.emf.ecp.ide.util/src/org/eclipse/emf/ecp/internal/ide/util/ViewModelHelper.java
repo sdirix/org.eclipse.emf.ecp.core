@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Alexandra Buzila - initial API and implementation
  ******************************************************************************/
@@ -32,7 +32,7 @@ import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 
 /**
  * @author Alexandra Buzila
- * 
+ *
  */
 /** Helper class for view model objects. */
 public final class ViewModelHelper {
@@ -42,18 +42,18 @@ public final class ViewModelHelper {
 
 	/**
 	 * Creates a new view model file.
-	 * 
+	 *
 	 * @param modelFile the file in which the view should be saved
 	 * @param selectedEClass the <em>Root EClass</em> for the new {@link VView}
 	 * @param selectedEcore the ecore containing the <em>selectedEClass</em>. If the <em>selectedEcore</em> is null,
 	 *            then the <em>selectedEClass</em> must come from an EPackage which is registered by default in
 	 *            the
 	 *            package registry.
-	 * 
+	 *
 	 * @return the newly created {@link VView}
-	 * 
+	 *
 	 * @throws IOException when something goes wrong while loading or saving the resource
-	 * 
+	 *
 	 */
 	public static VView createViewModel(IFile modelFile, EClass selectedEClass, IFile selectedEcore)
 		throws IOException {

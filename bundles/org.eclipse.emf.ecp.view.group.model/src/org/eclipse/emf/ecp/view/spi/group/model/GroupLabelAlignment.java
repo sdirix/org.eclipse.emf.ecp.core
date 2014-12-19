@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
@@ -21,9 +21,10 @@ import org.eclipse.emf.common.util.Enumerator;
  * <!-- begin-user-doc -->
  * A representation of the literals of the enumeration '<em><b>Label Alignment</b></em>',
  * and utility methods for working with them.
+ *
  * @since 1.3
- * <!-- end-user-doc -->
- * 
+ *        <!-- end-user-doc -->
+ *
  * @see org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage#getGroupLabelAlignment()
  * @model
  * @generated
@@ -34,7 +35,7 @@ public enum GroupLabelAlignment implements Enumerator
 	 * The '<em><b>Label Aligned</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #LABEL_ALIGNED_VALUE
 	 * @generated
 	 * @ordered
@@ -45,7 +46,7 @@ public enum GroupLabelAlignment implements Enumerator
 	 * The '<em><b>Input Aligned</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #INPUT_ALIGNED_VALUE
 	 * @generated
 	 * @ordered
@@ -60,7 +61,7 @@ public enum GroupLabelAlignment implements Enumerator
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #LABEL_ALIGNED
 	 * @model name="LabelAligned"
 	 * @generated
@@ -76,7 +77,7 @@ public enum GroupLabelAlignment implements Enumerator
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #INPUT_ALIGNED
 	 * @model name="InputAligned"
 	 * @generated
@@ -88,7 +89,7 @@ public enum GroupLabelAlignment implements Enumerator
 	 * An array of all the '<em><b>Label Alignment</b></em>' enumerators.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private static final GroupLabelAlignment[] VALUES_ARRAY =
@@ -102,7 +103,7 @@ public enum GroupLabelAlignment implements Enumerator
 	 * A public read-only list of all the '<em><b>Label Alignment</b></em>' enumerators.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public static final List<GroupLabelAlignment> VALUES = Collections.unmodifiableList(Arrays.asList(VALUES_ARRAY));
@@ -111,14 +112,14 @@ public enum GroupLabelAlignment implements Enumerator
 	 * Returns the '<em><b>Label Alignment</b></em>' literal with the specified literal value.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public static GroupLabelAlignment get(String literal)
 	{
 		for (int i = 0; i < VALUES_ARRAY.length; ++i)
 		{
-			GroupLabelAlignment result = VALUES_ARRAY[i];
+			final GroupLabelAlignment result = VALUES_ARRAY[i];
 			if (result.toString().equals(literal))
 			{
 				return result;
@@ -131,14 +132,14 @@ public enum GroupLabelAlignment implements Enumerator
 	 * Returns the '<em><b>Label Alignment</b></em>' literal with the specified name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public static GroupLabelAlignment getByName(String name)
 	{
 		for (int i = 0; i < VALUES_ARRAY.length; ++i)
 		{
-			GroupLabelAlignment result = VALUES_ARRAY[i];
+			final GroupLabelAlignment result = VALUES_ARRAY[i];
 			if (result.getName().equals(name))
 			{
 				return result;
@@ -151,7 +152,7 @@ public enum GroupLabelAlignment implements Enumerator
 	 * Returns the '<em><b>Label Alignment</b></em>' literal with the specified integer value.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public static GroupLabelAlignment get(int value)
@@ -169,7 +170,7 @@ public enum GroupLabelAlignment implements Enumerator
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private final int value;
@@ -177,7 +178,7 @@ public enum GroupLabelAlignment implements Enumerator
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private final String name;
@@ -185,7 +186,7 @@ public enum GroupLabelAlignment implements Enumerator
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private final String literal;
@@ -194,7 +195,7 @@ public enum GroupLabelAlignment implements Enumerator
 	 * Only this class can construct instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private GroupLabelAlignment(int value, String name, String literal)
@@ -207,7 +208,7 @@ public enum GroupLabelAlignment implements Enumerator
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -219,7 +220,7 @@ public enum GroupLabelAlignment implements Enumerator
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -231,7 +232,7 @@ public enum GroupLabelAlignment implements Enumerator
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -244,7 +245,7 @@ public enum GroupLabelAlignment implements Enumerator
 	 * Returns the literal value of the enumerator, which is its string representation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override

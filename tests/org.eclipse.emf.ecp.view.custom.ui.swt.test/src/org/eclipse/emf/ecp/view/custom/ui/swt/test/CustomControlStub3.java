@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
  ******************************************************************************/
@@ -24,10 +24,9 @@ import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
+import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
-import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
-import org.eclipse.emf.emfstore.bowling.BowlingPackage;
 import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
@@ -38,7 +37,7 @@ import org.eclipse.swt.widgets.Label;
 
 /**
  * @author jfaltermeier
- * 
+ *
  */
 public class CustomControlStub3 extends ECPAbstractCustomControlSWT implements ECPHardcodedReferences {
 	// private VFeaturePathDomainModelReference playersReference;
@@ -56,7 +55,7 @@ public class CustomControlStub3 extends ECPAbstractCustomControlSWT implements E
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.custom.model.ECPHardcodedReferences#getNeededDomainModelReferences()
 	 */
 	@Override
@@ -85,7 +84,7 @@ public class CustomControlStub3 extends ECPAbstractCustomControlSWT implements E
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT#getGridDescription()
 	 */
 	@Override
@@ -96,7 +95,7 @@ public class CustomControlStub3 extends ECPAbstractCustomControlSWT implements E
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT#renderControl(org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell,
 	 *      org.eclipse.swt.widgets.Composite)
 	 */
@@ -134,7 +133,7 @@ public class CustomControlStub3 extends ECPAbstractCustomControlSWT implements E
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.custom.ui.ECPAbstractCustomControl#disposeCustomControl()
 	 */
 	@Override
@@ -145,7 +144,7 @@ public class CustomControlStub3 extends ECPAbstractCustomControlSWT implements E
 	public class LeagueChangeListener implements ECPCustomControlChangeListener {
 		/**
 		 * {@inheritDoc}
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.spi.custom.model.ECPCustomControlChangeListener#notifyChanged()
 		 */
 		@Override
@@ -157,7 +156,7 @@ public class CustomControlStub3 extends ECPAbstractCustomControlSWT implements E
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT#handleContentValidation()
 	 */
 	@Override
@@ -168,7 +167,7 @@ public class CustomControlStub3 extends ECPAbstractCustomControlSWT implements E
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT#setEditable(boolean)
 	 */
 	@Override

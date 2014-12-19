@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen - initial API and implementation
  ******************************************************************************/
@@ -19,10 +19,10 @@ import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
 
 /**
  * A Factory to create {@link SWTGridDescription GridDescriptions}.
- * 
+ *
  * @author Eugen Neufeld
  * @since 1.3
- * 
+ *
  */
 public final class GridDescriptionFactory {
 
@@ -37,7 +37,7 @@ public final class GridDescriptionFactory {
 
 	/**
 	 * Creates an empty grid description.
-	 * 
+	 *
 	 * @return the {@link SWTGridDescription}
 	 */
 	public SWTGridDescription createEmptyGridDescription() {
@@ -46,7 +46,7 @@ public final class GridDescriptionFactory {
 
 	/**
 	 * Creates a simple grid based on the number of rows and columns provided.
-	 * 
+	 *
 	 * @param rows the number of rows in this grid
 	 * @param columns the number of columns in this grid
 	 * @param renderer the {@link AbstractSWTRenderer}

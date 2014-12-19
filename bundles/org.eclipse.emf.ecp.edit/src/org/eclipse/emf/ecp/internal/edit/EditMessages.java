@@ -16,7 +16,7 @@ import org.eclipse.osgi.util.NLS;
 
 /**
  * The Class EditMessages.
- * 
+ *
  * @generated
  */
 public final class EditMessages extends NLS {

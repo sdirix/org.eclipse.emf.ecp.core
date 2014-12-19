@@ -57,7 +57,7 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
  * @since 1.2
  */
 public class GroupedGridItemProviderAdapterFactory extends GroupedGridAdapterFactory implements
-ComposeableAdapterFactory, IChangeNotifier, IDisposable, IChildCreationExtender
+	ComposeableAdapterFactory, IChangeNotifier, IDisposable, IChildCreationExtender
 {
 	/**
 	 * This keeps track of the root adapter factory that delegates to this adapter factory.
@@ -458,7 +458,7 @@ ComposeableAdapterFactory, IChangeNotifier, IDisposable, IChildCreationExtender
 			public Object caseElement(VElement object)
 			{
 				newChildDescriptors.add
-				(createChildParameter
+					(createChildParameter
 					(VViewPackage.Literals.ELEMENT__ATTACHMENTS,
 						VGroupedGridFactory.eINSTANCE.createSpan()));
 
@@ -475,7 +475,7 @@ ComposeableAdapterFactory, IChangeNotifier, IDisposable, IChildCreationExtender
 			public Object caseView(VView object)
 			{
 				newChildDescriptors.add
-				(createChildParameter
+					(createChildParameter
 					(VViewPackage.Literals.VIEW__CHILDREN,
 						VGroupedGridFactory.eINSTANCE.createGroupedGrid()));
 
@@ -492,7 +492,7 @@ ComposeableAdapterFactory, IChangeNotifier, IDisposable, IChildCreationExtender
 			public Object caseContainer(VContainer object)
 			{
 				newChildDescriptors.add
-				(createChildParameter
+					(createChildParameter
 					(VViewPackage.Literals.CONTAINER__CHILDREN,
 						VGroupedGridFactory.eINSTANCE.createGroupedGrid()));
 

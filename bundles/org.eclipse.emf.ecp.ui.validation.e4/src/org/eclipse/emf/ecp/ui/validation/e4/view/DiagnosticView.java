@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
  ******************************************************************************/
@@ -30,9 +30,9 @@ import org.eclipse.swt.widgets.Composite;
 
 /**
  * View to display validation results.
- * 
+ *
  * @author jfaltermeier
- * 
+ *
  */
 public class DiagnosticView {
 
@@ -45,7 +45,7 @@ public class DiagnosticView {
 
 	/**
 	 * Creates the diagnostic view.
-	 * 
+	 *
 	 * @param composite the parent {@link Composite}
 	 * @param menuService the menu service to register the context menu
 	 * @param selectionService the selection service to publish the selection of the tree viewer.

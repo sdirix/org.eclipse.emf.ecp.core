@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
@@ -40,7 +40,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VDiagnosticImpl#getDiagnostics <em>Diagnostics</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  * @since 1.2
  */
@@ -50,7 +50,7 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic
 	 * The cached value of the '{@link #getDiagnostics() <em>Diagnostics</em>}' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getDiagnostics()
 	 * @generated
 	 * @ordered
@@ -60,7 +60,7 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected VDiagnosticImpl()
@@ -71,7 +71,7 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -83,7 +83,7 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -99,7 +99,7 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -116,7 +116,7 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
@@ -136,7 +136,7 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -154,7 +154,7 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -171,7 +171,7 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -190,7 +190,7 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.model.VDiagnostic#getHighestSeverity()
 	 */
 	@Override
@@ -208,7 +208,7 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.model.VDiagnostic#getMessage()
 	 */
 	@Override
@@ -289,7 +289,7 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.model.VDiagnostic#getDiagnostics(org.eclipse.emf.ecore.EObject)
 	 * @since 1.3
 	 */
@@ -324,7 +324,7 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.model.VDiagnostic#getDiagnostic(org.eclipse.emf.ecore.EObject,
 	 *      org.eclipse.emf.ecore.EStructuralFeature)
 	 * @since 1.3

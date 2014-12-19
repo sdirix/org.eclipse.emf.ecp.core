@@ -21,7 +21,7 @@ public class TableControlDetailPanelRendererTester extends AbstractTableControlR
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.internal.table.swt.AbstractTableControlRendererTester#getDetailEditing()
 	 */
 	@Override

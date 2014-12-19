@@ -1,11 +1,11 @@
 /********************************************************************************
  * Copyright (c) 2011 Eike Stepper (Berlin, Germany) and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eike Stepper - initial API and implementation
  ********************************************************************************/
@@ -26,7 +26,7 @@ public class ChildrenListImpl extends BasicEList<Object> implements InternalChil
 
 	/**
 	 * The ChildrenListImpl constructor.
-	 * 
+	 *
 	 * @param parent the parent object of this {@link ChildrenListImpl}
 	 */
 	public ChildrenListImpl(Object parent) {
@@ -77,7 +77,7 @@ public class ChildrenListImpl extends BasicEList<Object> implements InternalChil
 	public final <T> void addChildren(T... children) {
 		synchronized (this) {
 			for (int i = 0; i < children.length; i++) {
-				Object child = children[i];
+				final Object child = children[i];
 				add(child);
 			}
 		}

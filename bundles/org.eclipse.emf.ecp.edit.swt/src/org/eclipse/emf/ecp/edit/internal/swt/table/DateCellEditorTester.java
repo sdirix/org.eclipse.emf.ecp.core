@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  *******************************************************************************/
@@ -24,16 +24,16 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
 /**
  * Tester for a date cell editor.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  */
 public class DateCellEditorTester implements ECPApplicableTester {
 
 	/**
-	 * 
+	 *
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.edit.spi.util.ECPApplicableTester#isApplicable(org.eclipse.emf.edit.provider.IItemPropertyDescriptor,
 	 *      org.eclipse.emf.ecore.EObject)
 	 * @deprecated
@@ -47,9 +47,9 @@ public class DateCellEditorTester implements ECPApplicableTester {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.edit.spi.util.ECPApplicableTester#isApplicable(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)
-	 * 
+	 *
 	 */
 	@Override
 	public int isApplicable(VDomainModelReference domainModelReference) {
@@ -67,9 +67,9 @@ public class DateCellEditorTester implements ECPApplicableTester {
 	}
 
 	/**
-	 * 
+	 *
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.edit.spi.util.ECPApplicableTester#isApplicable(org.eclipse.emf.ecore.EObject,
 	 *      org.eclipse.emf.ecore.EStructuralFeature)
 	 */

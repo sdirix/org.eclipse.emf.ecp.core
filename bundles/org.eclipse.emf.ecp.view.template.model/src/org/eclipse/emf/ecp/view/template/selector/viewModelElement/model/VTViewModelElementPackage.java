@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * EclipseSource Munich - initial API and implementation
  */
@@ -29,7 +29,7 @@ import org.eclipse.emf.ecp.view.template.model.VTTemplatePackage;
  * <li>and each data type</li>
  * </ul>
  * <!-- end-user-doc -->
- * 
+ *
  * @see org.eclipse.emf.ecp.view.template.selector.viewModelElement.model.VTViewModelElementFactory
  * @model kind="package"
  * @generated
@@ -39,7 +39,7 @@ public interface VTViewModelElementPackage extends EPackage {
 	 * The package name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	String eNAME = "viewModelElement"; //$NON-NLS-1$
@@ -48,7 +48,7 @@ public interface VTViewModelElementPackage extends EPackage {
 	 * The package namespace URI.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	String eNS_URI = "http://www.eclipse.org/emf/ecp/view/template/selector/viewmodelelement/model"; //$NON-NLS-1$
@@ -57,7 +57,7 @@ public interface VTViewModelElementPackage extends EPackage {
 	 * The package namespace name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	String eNS_PREFIX = "org.eclipse.emf.ecp.view.template.selector.viewmodelelement.model"; //$NON-NLS-1$
@@ -66,7 +66,7 @@ public interface VTViewModelElementPackage extends EPackage {
 	 * The singleton instance of the package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	VTViewModelElementPackage eINSTANCE = org.eclipse.emf.ecp.view.template.selector.viewModelElement.model.impl.VTViewModelElementPackageImpl
@@ -78,7 +78,7 @@ public interface VTViewModelElementPackage extends EPackage {
 	 * <em>Selector</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.template.selector.viewModelElement.model.impl.VTViewModelElementSelectorImpl
 	 * @see org.eclipse.emf.ecp.view.template.selector.viewModelElement.model.impl.VTViewModelElementPackageImpl#getViewModelElementSelector()
 	 * @generated
@@ -89,7 +89,7 @@ public interface VTViewModelElementPackage extends EPackage {
 	 * The feature id for the '<em><b>Select Subclasses</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -99,7 +99,7 @@ public interface VTViewModelElementPackage extends EPackage {
 	 * The feature id for the '<em><b>Class Type</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -109,7 +109,7 @@ public interface VTViewModelElementPackage extends EPackage {
 	 * The feature id for the '<em><b>Attribute</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -119,7 +119,7 @@ public interface VTViewModelElementPackage extends EPackage {
 	 * The feature id for the '<em><b>Attribute Value</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -129,7 +129,7 @@ public interface VTViewModelElementPackage extends EPackage {
 	 * The number of structural features of the '<em>Selector</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -139,7 +139,7 @@ public interface VTViewModelElementPackage extends EPackage {
 	 * The number of operations of the '<em>Selector</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -151,7 +151,7 @@ public interface VTViewModelElementPackage extends EPackage {
 	 * <em>Selector</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for class '<em>Selector</em>'.
 	 * @see org.eclipse.emf.ecp.view.template.selector.viewModelElement.model.VTViewModelElementSelector
 	 * @generated
@@ -164,7 +164,7 @@ public interface VTViewModelElementPackage extends EPackage {
 	 * <em>Class Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for the reference '<em>Class Type</em>'.
 	 * @see org.eclipse.emf.ecp.view.template.selector.viewModelElement.model.VTViewModelElementSelector#getClassType()
 	 * @see #getViewModelElementSelector()
@@ -178,7 +178,7 @@ public interface VTViewModelElementPackage extends EPackage {
 	 * <em>Attribute</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for the reference '<em>Attribute</em>'.
 	 * @see org.eclipse.emf.ecp.view.template.selector.viewModelElement.model.VTViewModelElementSelector#getAttribute()
 	 * @see #getViewModelElementSelector()
@@ -192,7 +192,7 @@ public interface VTViewModelElementPackage extends EPackage {
 	 * <em>Attribute Value</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for the attribute '<em>Attribute Value</em>'.
 	 * @see org.eclipse.emf.ecp.view.template.selector.viewModelElement.model.VTViewModelElementSelector#getAttributeValue()
 	 * @see #getViewModelElementSelector()
@@ -206,7 +206,7 @@ public interface VTViewModelElementPackage extends EPackage {
 	 * <em>Select Subclasses</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for the attribute '<em>Select Subclasses</em>'.
 	 * @see org.eclipse.emf.ecp.view.template.selector.viewModelElement.model.VTViewModelElementSelector#isSelectSubclasses()
 	 * @see #getViewModelElementSelector()
@@ -218,7 +218,7 @@ public interface VTViewModelElementPackage extends EPackage {
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the factory that creates the instances of the model.
 	 * @generated
 	 */
@@ -235,7 +235,7 @@ public interface VTViewModelElementPackage extends EPackage {
 	 * <li>and each data type</li>
 	 * </ul>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	interface Literals {
@@ -245,7 +245,7 @@ public interface VTViewModelElementPackage extends EPackage {
 		 * <em>Selector</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.template.selector.viewModelElement.model.impl.VTViewModelElementSelectorImpl
 		 * @see org.eclipse.emf.ecp.view.template.selector.viewModelElement.model.impl.VTViewModelElementPackageImpl#getViewModelElementSelector()
 		 * @generated
@@ -256,7 +256,7 @@ public interface VTViewModelElementPackage extends EPackage {
 		 * The meta object literal for the '<em><b>Class Type</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		EReference VIEW_MODEL_ELEMENT_SELECTOR__CLASS_TYPE = eINSTANCE.getViewModelElementSelector_ClassType();
@@ -265,7 +265,7 @@ public interface VTViewModelElementPackage extends EPackage {
 		 * The meta object literal for the '<em><b>Attribute</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		EReference VIEW_MODEL_ELEMENT_SELECTOR__ATTRIBUTE = eINSTANCE.getViewModelElementSelector_Attribute();
@@ -274,7 +274,7 @@ public interface VTViewModelElementPackage extends EPackage {
 		 * The meta object literal for the '<em><b>Attribute Value</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		EAttribute VIEW_MODEL_ELEMENT_SELECTOR__ATTRIBUTE_VALUE = eINSTANCE
@@ -284,7 +284,7 @@ public interface VTViewModelElementPackage extends EPackage {
 		 * The meta object literal for the '<em><b>Select Subclasses</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		EAttribute VIEW_MODEL_ELEMENT_SELECTOR__SELECT_SUBCLASSES = eINSTANCE

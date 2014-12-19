@@ -44,7 +44,7 @@ import org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.VTD
  * @generated
  */
 public class VTDomainModelReferenceSelectorImpl extends MinimalEObjectImpl.Container implements
-VTDomainModelReferenceSelector
+	VTDomainModelReferenceSelector
 {
 	/**
 	 * The cached value of the '{@link #getDomainModelReference() <em>Domain Model Reference</em>}' containment

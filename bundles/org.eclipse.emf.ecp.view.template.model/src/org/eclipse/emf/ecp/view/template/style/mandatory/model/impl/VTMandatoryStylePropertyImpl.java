@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * EclipseSource Munich - initial API and implementation
  */
@@ -34,7 +34,7 @@ import org.eclipse.emf.ecp.view.template.style.mandatory.model.VTMandatoryStyleP
  * <em>Mandatory Marker</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class VTMandatoryStylePropertyImpl extends MinimalEObjectImpl.Container implements VTMandatoryStyleProperty
@@ -43,7 +43,7 @@ public class VTMandatoryStylePropertyImpl extends MinimalEObjectImpl.Container i
 	 * The default value of the '{@link #isHighliteMandatoryFields() <em>Highlite Mandatory Fields</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #isHighliteMandatoryFields()
 	 * @generated
 	 * @ordered
@@ -54,7 +54,7 @@ public class VTMandatoryStylePropertyImpl extends MinimalEObjectImpl.Container i
 	 * The cached value of the '{@link #isHighliteMandatoryFields() <em>Highlite Mandatory Fields</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #isHighliteMandatoryFields()
 	 * @generated
 	 * @ordered
@@ -65,7 +65,7 @@ public class VTMandatoryStylePropertyImpl extends MinimalEObjectImpl.Container i
 	 * The default value of the '{@link #getMandatoryMarker() <em>Mandatory Marker</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getMandatoryMarker()
 	 * @generated
 	 * @ordered
@@ -76,7 +76,7 @@ public class VTMandatoryStylePropertyImpl extends MinimalEObjectImpl.Container i
 	 * The cached value of the '{@link #getMandatoryMarker() <em>Mandatory Marker</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getMandatoryMarker()
 	 * @generated
 	 * @ordered
@@ -86,7 +86,7 @@ public class VTMandatoryStylePropertyImpl extends MinimalEObjectImpl.Container i
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected VTMandatoryStylePropertyImpl()
@@ -97,7 +97,7 @@ public class VTMandatoryStylePropertyImpl extends MinimalEObjectImpl.Container i
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -109,7 +109,7 @@ public class VTMandatoryStylePropertyImpl extends MinimalEObjectImpl.Container i
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -121,7 +121,7 @@ public class VTMandatoryStylePropertyImpl extends MinimalEObjectImpl.Container i
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -139,7 +139,7 @@ public class VTMandatoryStylePropertyImpl extends MinimalEObjectImpl.Container i
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -151,7 +151,7 @@ public class VTMandatoryStylePropertyImpl extends MinimalEObjectImpl.Container i
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -168,7 +168,7 @@ public class VTMandatoryStylePropertyImpl extends MinimalEObjectImpl.Container i
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -187,7 +187,7 @@ public class VTMandatoryStylePropertyImpl extends MinimalEObjectImpl.Container i
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -208,7 +208,7 @@ public class VTMandatoryStylePropertyImpl extends MinimalEObjectImpl.Container i
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -229,7 +229,7 @@ public class VTMandatoryStylePropertyImpl extends MinimalEObjectImpl.Container i
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -249,7 +249,7 @@ public class VTMandatoryStylePropertyImpl extends MinimalEObjectImpl.Container i
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -270,7 +270,7 @@ public class VTMandatoryStylePropertyImpl extends MinimalEObjectImpl.Container i
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.template.model.VTStyleProperty#equalStyles(org.eclipse.emf.ecp.view.template.model.VTStyleProperty)
 	 */
 	@Override

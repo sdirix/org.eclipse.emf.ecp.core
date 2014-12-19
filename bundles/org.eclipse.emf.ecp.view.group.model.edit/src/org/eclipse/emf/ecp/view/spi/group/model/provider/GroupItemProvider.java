@@ -30,7 +30,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.spi.group.model.VGroup} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
- * 
+ *
  * @generated
  */
 public class GroupItemProvider
@@ -40,7 +40,7 @@ public class GroupItemProvider
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public GroupItemProvider(AdapterFactory adapterFactory)
@@ -52,7 +52,7 @@ public class GroupItemProvider
 	 * This returns the property descriptors for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -72,10 +72,10 @@ public class GroupItemProvider
 	/**
 	 * This adds a property descriptor for the Group Type feature.
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.4
 	 *        <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected void addGroupTypePropertyDescriptor(Object object)
@@ -98,10 +98,10 @@ public class GroupItemProvider
 	/**
 	 * This adds a property descriptor for the Label Alignment feature.
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.4
 	 *        <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected void addLabelAlignmentPropertyDescriptor(Object object)
@@ -124,10 +124,10 @@ public class GroupItemProvider
 	/**
 	 * This adds a property descriptor for the Collapsed feature.
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.4
 	 *        <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected void addCollapsedPropertyDescriptor(Object object)
@@ -151,7 +151,7 @@ public class GroupItemProvider
 	 * This returns Group.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -164,13 +164,13 @@ public class GroupItemProvider
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
 	public String getText(Object object)
 	{
-		String label = ((VGroup) object).getName();
+		final String label = ((VGroup) object).getName();
 		return label == null || label.length() == 0 ?
 			getString("_UI_Group_type") : //$NON-NLS-1$
 			getString("_UI_Group_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
@@ -181,7 +181,7 @@ public class GroupItemProvider
 	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -205,7 +205,7 @@ public class GroupItemProvider
 	 * that can be created under this object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override

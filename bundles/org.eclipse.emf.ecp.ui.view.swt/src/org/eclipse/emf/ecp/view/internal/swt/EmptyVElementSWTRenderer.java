@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Edgar Mueller - initial API and implementation
  ******************************************************************************/
@@ -26,10 +26,10 @@ import org.eclipse.swt.widgets.Control;
 
 /**
  * An no-op renderer.
- * 
+ *
  * @author emueller
  * @since 1.3
- * 
+ *
  */
 public final class EmptyVElementSWTRenderer extends AbstractSWTRenderer<VElement> {
 
@@ -53,7 +53,7 @@ public final class EmptyVElementSWTRenderer extends AbstractSWTRenderer<VElement
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#getGridDescription(org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription)
 	 */
 	@Override
@@ -63,7 +63,7 @@ public final class EmptyVElementSWTRenderer extends AbstractSWTRenderer<VElement
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#renderControl(org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell,
 	 *      org.eclipse.swt.widgets.Composite)
 	 */
@@ -76,7 +76,7 @@ public final class EmptyVElementSWTRenderer extends AbstractSWTRenderer<VElement
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#applyEnable()
 	 */
 	@Override
@@ -86,7 +86,7 @@ public final class EmptyVElementSWTRenderer extends AbstractSWTRenderer<VElement
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#applyReadOnly()
 	 */
 	@Override
@@ -96,7 +96,7 @@ public final class EmptyVElementSWTRenderer extends AbstractSWTRenderer<VElement
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#applyValidation()
 	 */
 	@Override
@@ -106,7 +106,7 @@ public final class EmptyVElementSWTRenderer extends AbstractSWTRenderer<VElement
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#applyVisible()
 	 */
 	@Override

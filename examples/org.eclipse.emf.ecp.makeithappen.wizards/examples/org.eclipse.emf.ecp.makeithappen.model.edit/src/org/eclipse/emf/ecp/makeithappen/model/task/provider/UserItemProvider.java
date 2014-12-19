@@ -37,12 +37,12 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * @generated
  */
 public class UserItemProvider
-	extends ItemProviderAdapter
-	implements
-	IEditingDomainItemProvider,
-	ITreeItemContentProvider,
-	IItemLabelProvider,
-	IItemPropertySource {
+extends ItemProviderAdapter
+implements
+IEditingDomainItemProvider,
+ITreeItemContentProvider,
+IItemLabelProvider,
+IItemPropertySource {
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
@@ -91,7 +91,7 @@ public class UserItemProvider
 	 */
 	protected void addFirstNamePropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
+		(createItemPropertyDescriptor
 			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_User_firstName_feature"), //$NON-NLS-1$
@@ -114,7 +114,7 @@ public class UserItemProvider
 	 */
 	protected void addLastNamePropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
+		(createItemPropertyDescriptor
 			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_User_lastName_feature"), //$NON-NLS-1$
@@ -137,7 +137,7 @@ public class UserItemProvider
 	 */
 	protected void addGenderPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
+		(createItemPropertyDescriptor
 			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_User_gender_feature"), //$NON-NLS-1$
@@ -160,7 +160,7 @@ public class UserItemProvider
 	 */
 	protected void addActivePropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
+		(createItemPropertyDescriptor
 			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_User_active_feature"), //$NON-NLS-1$
@@ -183,8 +183,8 @@ public class UserItemProvider
 	 */
 	protected void addTimeOfRegistrationPropertyDescriptor(Object object) {
 		itemPropertyDescriptors
-			.add
-			(createItemPropertyDescriptor
+		.add
+		(createItemPropertyDescriptor
 			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_User_timeOfRegistration_feature"), //$NON-NLS-1$
@@ -207,7 +207,7 @@ public class UserItemProvider
 	 */
 	protected void addDateOfBirthPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
+		(createItemPropertyDescriptor
 			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_User_dateOfBirth_feature"), //$NON-NLS-1$
@@ -230,7 +230,7 @@ public class UserItemProvider
 	 */
 	protected void addEmailPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
+		(createItemPropertyDescriptor
 			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_User_email_feature"), //$NON-NLS-1$
@@ -253,7 +253,7 @@ public class UserItemProvider
 	 */
 	protected void addWeightPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
+		(createItemPropertyDescriptor
 			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_User_weight_feature"), //$NON-NLS-1$
@@ -276,7 +276,7 @@ public class UserItemProvider
 	 */
 	protected void addHeigthPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
+		(createItemPropertyDescriptor
 			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_User_heigth_feature"), //$NON-NLS-1$
@@ -299,7 +299,7 @@ public class UserItemProvider
 	 */
 	protected void addNationalityPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
+		(createItemPropertyDescriptor
 			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_User_nationality_feature"), //$NON-NLS-1$
@@ -322,7 +322,7 @@ public class UserItemProvider
 	 */
 	protected void addTasksPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
+		(createItemPropertyDescriptor
 			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_User_tasks_feature"), //$NON-NLS-1$

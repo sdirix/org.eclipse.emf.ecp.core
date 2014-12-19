@@ -1,27 +1,27 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * David Soto Setzke - initial API and implementation, implementation based
  * org.eclipse.emf.ecore.presentation.EcoreModelWizard and
  * org.eclipse.emf.importer.ui.EMFProjectWizard
  ******************************************************************************/
 /**
- * 
+ *
  * Copyright (c) 2005-2007 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * IBM - Initial API and implementation
- * 
+ *
  */
 package org.eclipse.emf.ecp.ecore.editor.ui.operations;
 
@@ -66,7 +66,7 @@ public class CreateModelsWorkspaceModifyOperation extends
 
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 * @param modelFile
 	 *            the model file
 	 * @param initialObjectName
@@ -138,9 +138,9 @@ public class CreateModelsWorkspaceModifyOperation extends
 				.getFile(modelFile.getLocation()).getFullPath()
 				.removeLastSegments(1).toOSString()
 				+ "/model.genmodel";
-			final String ecorePath =modelFile.getLocation().toFile().getAbsolutePath(); //ResourcesPlugin.getWorkspace().getRoot()
-//				.getFile(modelFile.getLocation()).getFullPath()
-//				.toOSString();
+			final String ecorePath = modelFile.getLocation().toFile().getAbsolutePath(); // ResourcesPlugin.getWorkspace().getRoot()
+			// .getFile(modelFile.getLocation()).getFullPath()
+			// .toOSString();
 			final String projectPath = "/"
 				+ modelFile.getLocation().segment(
 					modelFile.getLocation().segmentCount() - 3);

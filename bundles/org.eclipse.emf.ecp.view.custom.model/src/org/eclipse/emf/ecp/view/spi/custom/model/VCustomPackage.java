@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
@@ -27,21 +27,21 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * <li>each enum,</li>
  * <li>and each data type</li>
  * </ul>
- * 
+ *
  * @noimplement This interface is not intended to be implemented by clients.
  *              <!-- end-user-doc -->
- * 
+ *
  * @see org.eclipse.emf.ecp.view.spi.custom.model.VCustomFactory
  * @model kind="package"
  * @generated
- * 
+ *
  */
 public interface VCustomPackage extends EPackage {
 	/**
 	 * The package name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	String eNAME = "custom"; //$NON-NLS-1$
@@ -50,7 +50,7 @@ public interface VCustomPackage extends EPackage {
 	 * The package namespace URI.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	String eNS_URI = "http://org/eclipse/emf/ecp/view/custom/model"; //$NON-NLS-1$
@@ -59,7 +59,7 @@ public interface VCustomPackage extends EPackage {
 	 * The package namespace name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	String eNS_PREFIX = "org.eclipse.emf.ecp.view.custom.model"; //$NON-NLS-1$
@@ -68,7 +68,7 @@ public interface VCustomPackage extends EPackage {
 	 * The singleton instance of the package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	VCustomPackage eINSTANCE = org.eclipse.emf.ecp.view.spi.custom.model.impl.VCustomPackageImpl.init();
@@ -77,10 +77,10 @@ public interface VCustomPackage extends EPackage {
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.custom.model.impl.VCustomControlImpl
 	 * <em>Control</em>}' class.
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.3
 	 *        <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.custom.model.impl.VCustomControlImpl
 	 * @see org.eclipse.emf.ecp.view.spi.custom.model.impl.VCustomPackageImpl#getCustomControl()
 	 * @generated
@@ -90,10 +90,10 @@ public interface VCustomPackage extends EPackage {
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.3
 	 *        <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -102,10 +102,10 @@ public interface VCustomPackage extends EPackage {
 	/**
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.3
 	 *        <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -114,10 +114,10 @@ public interface VCustomPackage extends EPackage {
 	/**
 	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.3
 	 *        <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -126,10 +126,10 @@ public interface VCustomPackage extends EPackage {
 	/**
 	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.3
 	 *        <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -138,10 +138,10 @@ public interface VCustomPackage extends EPackage {
 	/**
 	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.3
 	 *        <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -150,10 +150,10 @@ public interface VCustomPackage extends EPackage {
 	/**
 	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.3
 	 *        <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -162,10 +162,10 @@ public interface VCustomPackage extends EPackage {
 	/**
 	 * The feature id for the '<em><b>Label Alignment</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.3
 	 *        <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -174,10 +174,10 @@ public interface VCustomPackage extends EPackage {
 	/**
 	 * The feature id for the '<em><b>Domain Model Reference</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.3
 	 *        <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -186,10 +186,10 @@ public interface VCustomPackage extends EPackage {
 	/**
 	 * The feature id for the '<em><b>Bundle Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.3
 	 *        <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -198,10 +198,10 @@ public interface VCustomPackage extends EPackage {
 	/**
 	 * The feature id for the '<em><b>Class Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.3
 	 *        <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -210,10 +210,10 @@ public interface VCustomPackage extends EPackage {
 	/**
 	 * The number of structural features of the '<em>Control</em>' class.
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.3
 	 *        <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -224,10 +224,10 @@ public interface VCustomPackage extends EPackage {
 	 * {@link org.eclipse.emf.ecp.view.spi.custom.model.impl.VCustomDomainModelReferenceImpl
 	 * <em>Domain Model Reference</em>}' class.
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.3
 	 *        <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.custom.model.impl.VCustomDomainModelReferenceImpl
 	 * @see org.eclipse.emf.ecp.view.spi.custom.model.impl.VCustomPackageImpl#getCustomDomainModelReference()
 	 * @generated
@@ -237,10 +237,10 @@ public interface VCustomPackage extends EPackage {
 	/**
 	 * The feature id for the '<em><b>Change Listener</b></em>' attribute list.
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.3
 	 *        <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -249,10 +249,10 @@ public interface VCustomPackage extends EPackage {
 	/**
 	 * The feature id for the '<em><b>Domain Model References</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.3
 	 *        <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -261,10 +261,10 @@ public interface VCustomPackage extends EPackage {
 	/**
 	 * The feature id for the '<em><b>Bundle Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.3
 	 *        <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -273,10 +273,10 @@ public interface VCustomPackage extends EPackage {
 	/**
 	 * The feature id for the '<em><b>Class Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.3
 	 *        <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -285,10 +285,10 @@ public interface VCustomPackage extends EPackage {
 	/**
 	 * The feature id for the '<em><b>Control Checked</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.3
 	 *        <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -297,10 +297,10 @@ public interface VCustomPackage extends EPackage {
 	/**
 	 * The number of structural features of the '<em>Domain Model Reference</em>' class.
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.3
 	 *        <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -310,10 +310,10 @@ public interface VCustomPackage extends EPackage {
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.custom.model.VCustomControl
 	 * <em>Control</em>}'.
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.3
 	 *        <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for class '<em>Control</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.custom.model.VCustomControl
 	 * @generated
@@ -324,10 +324,10 @@ public interface VCustomPackage extends EPackage {
 	 * Returns the meta object for the attribute '
 	 * {@link org.eclipse.emf.ecp.view.spi.custom.model.VCustomControl#getBundleName <em>Bundle Name</em>}'.
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.3
 	 *        <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for the attribute '<em>Bundle Name</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.custom.model.VCustomControl#getBundleName()
 	 * @see #getCustomControl()
@@ -339,10 +339,10 @@ public interface VCustomPackage extends EPackage {
 	 * Returns the meta object for the attribute '
 	 * {@link org.eclipse.emf.ecp.view.spi.custom.model.VCustomControl#getClassName <em>Class Name</em>}'.
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.3
 	 *        <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for the attribute '<em>Class Name</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.custom.model.VCustomControl#getClassName()
 	 * @see #getCustomControl()
@@ -354,10 +354,10 @@ public interface VCustomPackage extends EPackage {
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.custom.model.VCustomDomainModelReference
 	 * <em>Domain Model Reference</em>}'.
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.3
 	 *        <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for class '<em>Domain Model Reference</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.custom.model.VCustomDomainModelReference
 	 * @generated
@@ -369,10 +369,10 @@ public interface VCustomPackage extends EPackage {
 	 * {@link org.eclipse.emf.ecp.view.spi.custom.model.VCustomDomainModelReference#getDomainModelReferences
 	 * <em>Domain Model References</em>}'.
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.3
 	 *        <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for the containment reference list '<em>Domain Model References</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.custom.model.VCustomDomainModelReference#getDomainModelReferences()
 	 * @see #getCustomDomainModelReference()
@@ -385,10 +385,10 @@ public interface VCustomPackage extends EPackage {
 	 * {@link org.eclipse.emf.ecp.view.spi.custom.model.VCustomDomainModelReference#getBundleName <em>Bundle Name</em>}
 	 * '.
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.3
 	 *        <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for the attribute '<em>Bundle Name</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.custom.model.VCustomDomainModelReference#getBundleName()
 	 * @see #getCustomDomainModelReference()
@@ -400,10 +400,10 @@ public interface VCustomPackage extends EPackage {
 	 * Returns the meta object for the attribute '
 	 * {@link org.eclipse.emf.ecp.view.spi.custom.model.VCustomDomainModelReference#getClassName <em>Class Name</em>}'.
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.3
 	 *        <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for the attribute '<em>Class Name</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.custom.model.VCustomDomainModelReference#getClassName()
 	 * @see #getCustomDomainModelReference()
@@ -416,10 +416,10 @@ public interface VCustomPackage extends EPackage {
 	 * {@link org.eclipse.emf.ecp.view.spi.custom.model.VCustomDomainModelReference#isControlChecked
 	 * <em>Control Checked</em>}'.
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.3
 	 *        <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for the attribute '<em>Control Checked</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.custom.model.VCustomDomainModelReference#isControlChecked()
 	 * @see #getCustomDomainModelReference()
@@ -431,7 +431,7 @@ public interface VCustomPackage extends EPackage {
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the factory that creates the instances of the model.
 	 * @generated
 	 */
@@ -447,7 +447,7 @@ public interface VCustomPackage extends EPackage {
 	 * <li>and each data type</li>
 	 * </ul>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	interface Literals {
@@ -455,10 +455,10 @@ public interface VCustomPackage extends EPackage {
 		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.custom.model.impl.VCustomControlImpl
 		 * <em>Control</em>}' class.
 		 * <!-- begin-user-doc -->
-		 * 
+		 *
 		 * @since 1.3
 		 *        <!-- end-user-doc -->
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.spi.custom.model.impl.VCustomControlImpl
 		 * @see org.eclipse.emf.ecp.view.spi.custom.model.impl.VCustomPackageImpl#getCustomControl()
 		 * @generated
@@ -468,10 +468,10 @@ public interface VCustomPackage extends EPackage {
 		/**
 		 * The meta object literal for the '<em><b>Bundle Name</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
-		 * 
+		 *
 		 * @since 1.3
 		 *        <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		EAttribute CUSTOM_CONTROL__BUNDLE_NAME = eINSTANCE.getCustomControl_BundleName();
@@ -479,10 +479,10 @@ public interface VCustomPackage extends EPackage {
 		/**
 		 * The meta object literal for the '<em><b>Class Name</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
-		 * 
+		 *
 		 * @since 1.3
 		 *        <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		EAttribute CUSTOM_CONTROL__CLASS_NAME = eINSTANCE.getCustomControl_ClassName();
@@ -492,10 +492,10 @@ public interface VCustomPackage extends EPackage {
 		 * {@link org.eclipse.emf.ecp.view.spi.custom.model.impl.VCustomDomainModelReferenceImpl
 		 * <em>Domain Model Reference</em>}' class.
 		 * <!-- begin-user-doc -->
-		 * 
+		 *
 		 * @since 1.3
 		 *        <!-- end-user-doc -->
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.spi.custom.model.impl.VCustomDomainModelReferenceImpl
 		 * @see org.eclipse.emf.ecp.view.spi.custom.model.impl.VCustomPackageImpl#getCustomDomainModelReference()
 		 * @generated
@@ -505,10 +505,10 @@ public interface VCustomPackage extends EPackage {
 		/**
 		 * The meta object literal for the '<em><b>Domain Model References</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
-		 * 
+		 *
 		 * @since 1.3
 		 *        <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		EReference CUSTOM_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCES = eINSTANCE
@@ -517,10 +517,10 @@ public interface VCustomPackage extends EPackage {
 		/**
 		 * The meta object literal for the '<em><b>Bundle Name</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
-		 * 
+		 *
 		 * @since 1.3
 		 *        <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		EAttribute CUSTOM_DOMAIN_MODEL_REFERENCE__BUNDLE_NAME = eINSTANCE.getCustomDomainModelReference_BundleName();
@@ -528,10 +528,10 @@ public interface VCustomPackage extends EPackage {
 		/**
 		 * The meta object literal for the '<em><b>Class Name</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
-		 * 
+		 *
 		 * @since 1.3
 		 *        <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		EAttribute CUSTOM_DOMAIN_MODEL_REFERENCE__CLASS_NAME = eINSTANCE.getCustomDomainModelReference_ClassName();
@@ -539,10 +539,10 @@ public interface VCustomPackage extends EPackage {
 		/**
 		 * The meta object literal for the '<em><b>Control Checked</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
-		 * 
+		 *
 		 * @since 1.3
 		 *        <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		EAttribute CUSTOM_DOMAIN_MODEL_REFERENCE__CONTROL_CHECKED = eINSTANCE

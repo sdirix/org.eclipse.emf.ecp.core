@@ -41,8 +41,6 @@ import org.eclipse.emf.ecp.view.spi.swt.reporting.RendererInitFailedReport;
 import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
 import org.eclipse.emf.ecp.view.test.common.swt.DatabindingClassRunner;
 import org.eclipse.emf.ecp.view.test.common.swt.SWTViewTestHelper;
-import org.eclipse.emf.emfstore.bowling.BowlingFactory;
-import org.eclipse.emf.emfstore.bowling.League;
 import org.eclipse.swt.widgets.Shell;
 import org.junit.After;
 import org.junit.Before;

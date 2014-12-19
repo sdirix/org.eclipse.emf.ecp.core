@@ -1,15 +1,15 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eike Stepper - initial API and implementation
  * Eugen Neufeld - JavaDoc
- * 
+ *
  *******************************************************************************/
 
 package org.eclipse.emf.ecp.core.util;
@@ -38,7 +38,7 @@ import org.eclipse.emf.ecp.spi.core.util.ECPDisposable;
 
 /**
  * This class provides common functionality.
- * 
+ *
  * @author Eike Stepper
  * @author Eugen Neufeld
  */
@@ -49,7 +49,7 @@ public final class ECPUtil {
 
 	/**
 	 * Return the common {@link ECPContainer} for the provided elements.
-	 * 
+	 *
 	 * @param contextProvider the {@link ECPModelContextProvider} to use
 	 * @param elements the elements to check
 	 * @return the common {@link ECPContainer} for the elements or null
@@ -76,7 +76,7 @@ public final class ECPUtil {
 
 	/**
 	 * This creates an empty {@link ECPProperties}.
-	 * 
+	 *
 	 * @return an empty {@link ECPProperties}
 	 */
 	public static ECPProperties createProperties() {
@@ -85,7 +85,7 @@ public final class ECPUtil {
 
 	/**
 	 * Checks whether an object is an {@link ECPDisposable} and disposed.
-	 * 
+	 *
 	 * @param object the object to check
 	 * @return true if the object is an instance of {@link ECPDisposable} and {@link ECPDisposable#isDisposed()} returns
 	 *         true, false otherwise
@@ -101,7 +101,7 @@ public final class ECPUtil {
 
 	/**
 	 * Checks whether an object is an {@link ECPProject} and closed.
-	 * 
+	 *
 	 * @param object the object to check
 	 * @return true if the object is an instance of {@link ECPProject} and not open, false otherwise
 	 */
@@ -116,7 +116,7 @@ public final class ECPUtil {
 
 	/**
 	 * Checks whether the {@link ECPElement} is an {@link ElementDescriptor} and resolves it when necessary.
-	 * 
+	 *
 	 * @param elementOrDescriptor the {@link ECPElement} to check
 	 * @return the resolved Object or the original object if it is not an descriptor
 	 */
@@ -131,7 +131,7 @@ public final class ECPUtil {
 
 	/**
 	 * This method looks through all known {@link EPackage}s to find all subclasses for the provided super class.
-	 * 
+	 *
 	 * @param superClass
 	 *            - the class for which to get the subclasses
 	 * @return a {@link Collection} of {@link EClass EClasses}
@@ -158,7 +158,7 @@ public final class ECPUtil {
 
 	/**
 	 * Returns the set of all known {@link EPackage EPackages}.
-	 * 
+	 *
 	 * @return the Set of all known {@link EPackage Epackages}
 	 */
 	public static Set<EPackage> getAllRegisteredEPackages() {
@@ -172,7 +172,7 @@ public final class ECPUtil {
 
 	/**
 	 * Helper method to get the instance of the {@link ECPProjectManager}.
-	 * 
+	 *
 	 * @return the {@link ECPProjectManager}
 	 */
 	public static ECPProjectManager getECPProjectManager() {
@@ -189,7 +189,7 @@ public final class ECPUtil {
 
 	/**
 	 * Helper method to get the instance of the {@link ECPRepositoryManager}.
-	 * 
+	 *
 	 * @return the {@link ECPRepositoryManager}
 	 */
 	public static ECPRepositoryManager getECPRepositoryManager() {
@@ -206,7 +206,7 @@ public final class ECPUtil {
 
 	/**
 	 * Helper method to get the instance of the {@link ECPProviderRegistry}.
-	 * 
+	 *
 	 * @return the {@link ECPProviderRegistry}
 	 */
 	public static ECPProviderRegistry getECPProviderRegistry() {
@@ -218,7 +218,7 @@ public final class ECPUtil {
 
 	/**
 	 * Helper method to get the instance of the {@link ECPObserverBus}.
-	 * 
+	 *
 	 * @return the {@link ECPObserverBus}
 	 */
 	public static ECPObserverBus getECPObserverBus() {

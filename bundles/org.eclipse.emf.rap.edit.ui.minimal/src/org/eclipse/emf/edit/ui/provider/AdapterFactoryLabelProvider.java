@@ -5,7 +5,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * IBM - Initial API and implementation
  */
@@ -64,13 +64,13 @@ public class AdapterFactoryLabelProvider implements ILabelProvider, ITableLabelP
 	public static class FontProvider extends AdapterFactoryLabelProvider implements IFontProvider, ITableFontProvider
 	{
 		/**
-     * 
+     *
      */
 		private static final long serialVersionUID = 1L;
 
 		/**
 		 * Construct an instance that wraps the given factory and specifies the given default font.
-		 * 
+		 *
 		 * @param adapterFactory an adapter factory that yield adapters that implement the various item label provider
 		 *            interfaces.
 		 * @param defaultFont the font that will be used when no font is specified.
@@ -83,7 +83,7 @@ public class AdapterFactoryLabelProvider implements ILabelProvider, ITableLabelP
 
 		/**
 		 * Construct an instance that wraps the given factory and uses the font of the viewer's control.
-		 * 
+		 *
 		 * @param adapterFactory an adapter factory that yield adapters that implement the various item label provider
 		 *            interfaces.
 		 * @param viewer the viewer for which the control's font should be used.
@@ -101,13 +101,13 @@ public class AdapterFactoryLabelProvider implements ILabelProvider, ITableLabelP
 		ITableColorProvider
 	{
 		/**
-     * 
+     *
      */
 		private static final long serialVersionUID = 1L;
 
 		/**
 		 * Construct an instance that wraps the given factory and specifies the given default colors.
-		 * 
+		 *
 		 * @param adapterFactory an adapter factory that yield adapters that implement the various item label provider
 		 *            interfaces.
 		 * @param defaultForeground the foreground color that will be used when no foreground color is specified.
@@ -122,7 +122,7 @@ public class AdapterFactoryLabelProvider implements ILabelProvider, ITableLabelP
 
 		/**
 		 * Construct an instance that wraps the given factory and uses the colors of the viewer's control.
-		 * 
+		 *
 		 * @param adapterFactory an adapter factory that yield adapters that implement the various item label provider
 		 *            interfaces.
 		 * @param viewer the viewer for which the control's color should be used.
@@ -140,13 +140,13 @@ public class AdapterFactoryLabelProvider implements ILabelProvider, ITableLabelP
 		IFontProvider, ITableColorProvider, ITableFontProvider
 	{
 		/**
-     * 
+     *
      */
 		private static final long serialVersionUID = 1L;
 
 		/**
 		 * Construct an instance that wraps the given factory and specifies the given default font and colors.
-		 * 
+		 *
 		 * @param adapterFactory an adapter factory that yield adapters that implement the various item label provider
 		 *            interfaces.
 		 * @param defaultFont the font that will be used when no font is specified.
@@ -164,7 +164,7 @@ public class AdapterFactoryLabelProvider implements ILabelProvider, ITableLabelP
 
 		/**
 		 * Construct an instance that wraps the given factory and uses the font and colors of the viewer's control.
-		 * 
+		 *
 		 * @param adapterFactory an adapter factory that yield adapters that implement the various item label provider
 		 *            interfaces.
 		 * @param viewer the viewer for which the control's font and color should be used.
@@ -220,7 +220,7 @@ public class AdapterFactoryLabelProvider implements ILabelProvider, ITableLabelP
 	 * If the adapter factory is an {@link IChangeNotifier},
 	 * a listener is added to it,
 	 * so it's important to call {@link #dispose()}.
-	 * 
+	 *
 	 * @param adapterFactory an adapter factory that yield adapters that implement the various item label provider
 	 *            interfaces.
 	 */

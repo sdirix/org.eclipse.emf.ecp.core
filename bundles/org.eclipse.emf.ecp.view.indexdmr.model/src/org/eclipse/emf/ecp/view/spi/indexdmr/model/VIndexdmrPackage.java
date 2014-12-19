@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
@@ -28,7 +28,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * <li>and each data type</li>
  * </ul>
  * <!-- end-user-doc -->
- * 
+ *
  * @see org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexdmrFactory
  * @model kind="package"
  * @generated
@@ -39,7 +39,7 @@ public interface VIndexdmrPackage extends EPackage
 	 * The package name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	String eNAME = "indexdmr"; //$NON-NLS-1$
@@ -48,7 +48,7 @@ public interface VIndexdmrPackage extends EPackage
 	 * The package namespace URI.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	String eNS_URI = "http://www.eclipse.org/emf/ecp/view/indexdmr/model"; //$NON-NLS-1$
@@ -57,7 +57,7 @@ public interface VIndexdmrPackage extends EPackage
 	 * The package namespace name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	String eNS_PREFIX = "org.eclipse.emf.ecp.view.indexdmr.model"; //$NON-NLS-1$
@@ -66,7 +66,7 @@ public interface VIndexdmrPackage extends EPackage
 	 * The singleton instance of the package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	VIndexdmrPackage eINSTANCE = org.eclipse.emf.ecp.view.spi.indexdmr.model.impl.VIndexdmrPackageImpl.init();
@@ -77,7 +77,7 @@ public interface VIndexdmrPackage extends EPackage
 	 * <em>Index Domain Model Reference</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.indexdmr.model.impl.VIndexDomainModelReferenceImpl
 	 * @see org.eclipse.emf.ecp.view.spi.indexdmr.model.impl.VIndexdmrPackageImpl#getIndexDomainModelReference()
 	 * @generated
@@ -88,7 +88,7 @@ public interface VIndexdmrPackage extends EPackage
 	 * The feature id for the '<em><b>Change Listener</b></em>' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -98,7 +98,7 @@ public interface VIndexdmrPackage extends EPackage
 	 * The feature id for the '<em><b>Domain Model EFeature</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -108,7 +108,7 @@ public interface VIndexdmrPackage extends EPackage
 	 * The feature id for the '<em><b>Domain Model EReference Path</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -118,7 +118,7 @@ public interface VIndexdmrPackage extends EPackage
 	 * The feature id for the '<em><b>Target DMR</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -128,7 +128,7 @@ public interface VIndexdmrPackage extends EPackage
 	 * The feature id for the '<em><b>Index</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -138,7 +138,7 @@ public interface VIndexdmrPackage extends EPackage
 	 * The number of structural features of the '<em>Index Domain Model Reference</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -149,7 +149,7 @@ public interface VIndexdmrPackage extends EPackage
 	 * <em>Index Domain Model Reference</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for class '<em>Index Domain Model Reference</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference
 	 * @generated
@@ -161,7 +161,7 @@ public interface VIndexdmrPackage extends EPackage
 	 * {@link org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference#getTargetDMR <em>Target DMR</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for the containment reference '<em>Target DMR</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference#getTargetDMR()
 	 * @see #getIndexDomainModelReference()
@@ -174,7 +174,7 @@ public interface VIndexdmrPackage extends EPackage
 	 * {@link org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference#getIndex <em>Index</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for the attribute '<em>Index</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference#getIndex()
 	 * @see #getIndexDomainModelReference()
@@ -186,7 +186,7 @@ public interface VIndexdmrPackage extends EPackage
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the factory that creates the instances of the model.
 	 * @generated
 	 */
@@ -202,7 +202,7 @@ public interface VIndexdmrPackage extends EPackage
 	 * <li>and each data type</li>
 	 * </ul>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	interface Literals
@@ -213,7 +213,7 @@ public interface VIndexdmrPackage extends EPackage
 		 * <em>Index Domain Model Reference</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.spi.indexdmr.model.impl.VIndexDomainModelReferenceImpl
 		 * @see org.eclipse.emf.ecp.view.spi.indexdmr.model.impl.VIndexdmrPackageImpl#getIndexDomainModelReference()
 		 * @generated
@@ -224,7 +224,7 @@ public interface VIndexdmrPackage extends EPackage
 		 * The meta object literal for the '<em><b>Target DMR</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		EReference INDEX_DOMAIN_MODEL_REFERENCE__TARGET_DMR = eINSTANCE.getIndexDomainModelReference_TargetDMR();
@@ -233,7 +233,7 @@ public interface VIndexdmrPackage extends EPackage
 		 * The meta object literal for the '<em><b>Index</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		EAttribute INDEX_DOMAIN_MODEL_REFERENCE__INDEX = eINSTANCE.getIndexDomainModelReference_Index();

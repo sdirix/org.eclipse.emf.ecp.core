@@ -91,7 +91,7 @@ public abstract class AbstractSWTTabRenderer<VELEMENT extends VElement> extends 
 			for (final SWTGridCell gridCell : gridDescription.getGrid()) {
 				final Control render = renderer.render(gridCell, folder);
 				GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true)
-				.applyTo(render);
+					.applyTo(render);
 				item.setControl(render);
 			}
 

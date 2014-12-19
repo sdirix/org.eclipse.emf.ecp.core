@@ -27,7 +27,7 @@ public class BooleanControlRenderer_PTest extends AbstractControl_PTest {
 
 	@Before
 	public void before() {
-		SWTRendererFactory factory = mock(SWTRendererFactory.class);
+		final SWTRendererFactory factory = mock(SWTRendererFactory.class);
 		setup(new BooleanControlSWTRenderer(factory));
 	}
 
@@ -38,37 +38,38 @@ public class BooleanControlRenderer_PTest extends AbstractControl_PTest {
 
 	@Test
 	public void renderControlLabelAlignmentNone()
-			throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		setMockLabelAlignment(LabelAlignment.NONE);
-		Control render = renderControl(new SWTGridCell(0, 1,renderer));
+		final Control render = renderControl(new SWTGridCell(0, 1, renderer));
 		assertControl(render);
 	}
 
 	@Test
 	public void renderControlLabelAlignmentLeft()
-			throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		setMockLabelAlignment(LabelAlignment.LEFT);
-		Control render = renderControl(new SWTGridCell(0, 2,renderer));
+		final Control render = renderControl(new SWTGridCell(0, 2, renderer));
 
 		assertControl(render);
 	}
+
 	@Test
-	public void renderLabel() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption{
+	public void renderLabel() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		renderLabel("Interface");
 	}
 
 	private void assertControl(Control render) {
 		assertTrue(Button.class.isInstance(render));
 		assertEquals(SWT.CHECK, Button.class.cast(render).getStyle()
-				& SWT.CHECK);
+			& SWT.CHECK);
 		assertEquals("org_eclipse_emf_ecp_control_boolean", Button.class.cast(render).getData(CUSTOM_VARIANT));
 	}
 
 	@Override
 	protected void mockControl() {
-		EClass eObject = EcoreFactory.eINSTANCE.createEClass();
-		EStructuralFeature eStructuralFeature = EcorePackage.eINSTANCE
-				.getEClass_Interface();
+		final EClass eObject = EcoreFactory.eINSTANCE.createEClass();
+		final EStructuralFeature eStructuralFeature = EcorePackage.eINSTANCE
+			.getEClass_Interface();
 		super.mockControl(eObject, eStructuralFeature);
 	}
 

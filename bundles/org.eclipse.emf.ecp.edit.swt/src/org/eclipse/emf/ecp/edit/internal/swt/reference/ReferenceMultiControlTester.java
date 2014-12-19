@@ -1,14 +1,14 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
- * 
+ *
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.reference;
 
@@ -30,15 +30,15 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 /**
  * This is a dynamic tester for an reference multi control. It tests whether there is a control with a static tester
  * which would fit.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  */
 public class ReferenceMultiControlTester implements ECPApplicableTester {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @deprecated
 	 **/
 	@Override
@@ -48,9 +48,9 @@ public class ReferenceMultiControlTester implements ECPApplicableTester {
 	}
 
 	/**
-	 * 
+	 *
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.edit.spi.util.ECPApplicableTester#isApplicable(org.eclipse.emf.ecore.EObject,
 	 *      org.eclipse.emf.ecore.EStructuralFeature)
 	 */
@@ -81,7 +81,7 @@ public class ReferenceMultiControlTester implements ECPApplicableTester {
 
 	/**
 	 * Calculates the priority of the attribute tester.
-	 * 
+	 *
 	 * @param tester the tester to get the priority for
 	 * @param feature the {@link EStructuralFeature}
 	 * @param eObject the {@link EObject}
@@ -117,7 +117,7 @@ public class ReferenceMultiControlTester implements ECPApplicableTester {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.edit.spi.util.ECPApplicableTester#isApplicable(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)
 	 * @deprecated
 	 */

@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Edgar Mueller - initial API and implementation
  ******************************************************************************/
@@ -29,18 +29,18 @@ import org.eclipse.swt.widgets.Table;
  * A concrete implementation of {@link FocusCellHighlighter} using by setting
  * the control into owner draw mode and highlighting the currently selected
  * cell. To make the use this class you should create the control with the {@link SWT#FULL_SELECTION} bit set
- * 
+ *
  * <p>
  * <strong>RAP specific:</strong> despite its name that was taken as-is from JFace/RCP to ease single-sourcing, this
  * class does not use custom drawing to highlight the focused cell. <br />
  * The focused cell is displayed using the selection colors of the system.
  * </p>
- * 
+ *
  * This class can be subclassed to configure how the coloring of the selected
  * cell.
- * 
+ *
  * @since 1.2
- * 
+ *
  */
 public class ECPFocusCellDrawHighlighter extends FocusCellHighlighter {
 
@@ -48,7 +48,7 @@ public class ECPFocusCellDrawHighlighter extends FocusCellHighlighter {
 
 	/**
 	 * Create a new instance which can be passed to a.
-	 * 
+	 *
 	 * @param viewer
 	 *            the viewer
 	 */
@@ -152,7 +152,7 @@ public class ECPFocusCellDrawHighlighter extends FocusCellHighlighter {
 	/**
 	 * The color to use when rendering the background of the selected cell when
 	 * the control has the input focus.
-	 * 
+	 *
 	 * @param cell
 	 *            the cell which is colored
 	 * @return the color or <code>null</code> to use the default
@@ -164,7 +164,7 @@ public class ECPFocusCellDrawHighlighter extends FocusCellHighlighter {
 	/**
 	 * The color to use when rendering the foreground (=text) of the selected
 	 * cell when the control has the input focus.
-	 * 
+	 *
 	 * @param cell
 	 *            the cell which is colored
 	 * @return the color or <code>null</code> to use the default
@@ -176,7 +176,7 @@ public class ECPFocusCellDrawHighlighter extends FocusCellHighlighter {
 	/**
 	 * The color to use when rendering the foreground (=text) of the selected
 	 * cell when the control has <b>no</b> input focus.
-	 * 
+	 *
 	 * @param cell
 	 *            the cell which is colored
 	 * @return the color or <code>null</code> to use the same used when
@@ -189,7 +189,7 @@ public class ECPFocusCellDrawHighlighter extends FocusCellHighlighter {
 	/**
 	 * The color to use when rendering the background of the selected cell when
 	 * the control has <b>no</b> input focus.
-	 * 
+	 *
 	 * @param cell
 	 *            the cell which is colored
 	 * @return the color or <code>null</code> to use the same used when
@@ -201,7 +201,7 @@ public class ECPFocusCellDrawHighlighter extends FocusCellHighlighter {
 
 	/**
 	 * Controls whether the whole cell or only the text-area is highlighted.
-	 * 
+	 *
 	 * @param cell
 	 *            the cell which is highlighted
 	 * @return <code>true</code> if only the text area should be highlighted

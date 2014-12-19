@@ -28,9 +28,9 @@ import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
+import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
-import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.swt.widgets.Control;
@@ -46,33 +46,33 @@ public abstract class AbstractControl_PTest {
 	protected AbstractControlSWTRenderer<VControl> renderer;
 
 	private Resource createResource() {
-		Resource.Factory.Registry registry = Resource.Factory.Registry.INSTANCE;
-		Map<String, Object> extToFactoryMap = registry
-				.getExtensionToFactoryMap();
+		final Resource.Factory.Registry registry = Resource.Factory.Registry.INSTANCE;
+		final Map<String, Object> extToFactoryMap = registry
+			.getExtensionToFactoryMap();
 		extToFactoryMap.put(Resource.Factory.Registry.DEFAULT_EXTENSION,
-				new ResourceFactoryImpl());
-		ResourceSet resourceSet = new ResourceSetImpl();
+			new ResourceFactoryImpl());
+		final ResourceSet resourceSet = new ResourceSetImpl();
 		resourceSet.getPackageRegistry().put(EcorePackage.eNS_URI,
-				EcorePackage.eINSTANCE);
+			EcorePackage.eINSTANCE);
 
-		AdapterFactoryEditingDomain domain = new AdapterFactoryEditingDomain(
-				new ComposedAdapterFactory(
-						ComposedAdapterFactory.Descriptor.Registry.INSTANCE),
-				new BasicCommandStack(), resourceSet);
+		final AdapterFactoryEditingDomain domain = new AdapterFactoryEditingDomain(
+			new ComposedAdapterFactory(
+				ComposedAdapterFactory.Descriptor.Registry.INSTANCE),
+			new BasicCommandStack(), resourceSet);
 		resourceSet.eAdapters().add(
-				new AdapterFactoryEditingDomain.EditingDomainProvider(domain));
-		Resource resource = resourceSet
-				.createResource(URI.createURI("VIRTUAL"));
+			new AdapterFactoryEditingDomain.EditingDomainProvider(domain));
+		final Resource resource = resourceSet
+			.createResource(URI.createURI("VIRTUAL"));
 		return resource;
 
 	}
 
 	protected void mockControl(EObject eObject,
-			final EStructuralFeature eStructuralFeature) {
-		VDomainModelReference domainModelReference = Mockito
-				.mock(VDomainModelReference.class);
+		final EStructuralFeature eStructuralFeature) {
+		final VDomainModelReference domainModelReference = Mockito
+			.mock(VDomainModelReference.class);
 		final Setting setting = mock(Setting.class);
-		Resource resource = createResource();
+		final Resource resource = createResource();
 		resource.getContents().add(eObject);
 
 		when(setting.getEObject()).thenReturn(eObject);
@@ -86,14 +86,14 @@ public abstract class AbstractControl_PTest {
 		when(domainModelReference.getEStructuralFeatureIterator()).then(new Answer<Iterator<EStructuralFeature>>() {
 			@Override
 			public Iterator<EStructuralFeature> answer(
-					InvocationOnMock invocation) throws Throwable {
+				InvocationOnMock invocation) throws Throwable {
 				return Collections.singleton(eStructuralFeature).iterator();
 			}
 		});
-		BasicEList<DomainModelReferenceChangeListener> changeListener = new BasicEList<DomainModelReferenceChangeListener>();
+		final BasicEList<DomainModelReferenceChangeListener> changeListener = new BasicEList<DomainModelReferenceChangeListener>();
 		when(domainModelReference.getChangeListener()).thenReturn(changeListener);
 		Mockito.when(control.getDomainModelReference()).thenReturn(
-				domainModelReference);
+			domainModelReference);
 	}
 
 	protected void setMockLabelAlignment(LabelAlignment labelAlignment) {
@@ -112,7 +112,6 @@ public abstract class AbstractControl_PTest {
 		shell = new Shell();
 	}
 
-	
 	protected void dispose() {
 		shell.dispose();
 	}
@@ -122,7 +121,8 @@ public abstract class AbstractControl_PTest {
 		setMockLabelAlignment(LabelAlignment.NONE);
 		mockControl();
 		renderer.init(control, context);
-		SWTGridDescription gridDescription = renderer.getGridDescription(GridDescriptionFactory.INSTANCE.createEmptyGridDescription());
+		final SWTGridDescription gridDescription = renderer.getGridDescription(GridDescriptionFactory.INSTANCE
+			.createEmptyGridDescription());
 		assertEquals(2, gridDescription.getColumns());
 		assertEquals(1, gridDescription.getRows());
 	}
@@ -132,50 +132,50 @@ public abstract class AbstractControl_PTest {
 		setMockLabelAlignment(LabelAlignment.LEFT);
 		mockControl();
 		renderer.init(control, context);
-		SWTGridDescription gridDescription = renderer.getGridDescription(GridDescriptionFactory.INSTANCE.createEmptyGridDescription());
+		final SWTGridDescription gridDescription = renderer.getGridDescription(GridDescriptionFactory.INSTANCE
+			.createEmptyGridDescription());
 		assertEquals(3, gridDescription.getColumns());
 		assertEquals(1, gridDescription.getRows());
 	}
 
 	@Test
 	public void renderValidationIconLabelAlignmentNone()
-			throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		setMockLabelAlignment(LabelAlignment.NONE);
-		renderValidationIcon(new SWTGridCell(0, 0,renderer));
+		renderValidationIcon(new SWTGridCell(0, 0, renderer));
 	}
 
 	@Test
 	public void renderValidationIconLabelAlignmentLeft()
-			throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		setMockLabelAlignment(LabelAlignment.LEFT);
-		renderValidationIcon(new SWTGridCell(0, 1,renderer));
+		renderValidationIcon(new SWTGridCell(0, 1, renderer));
 	}
 
 	private void renderValidationIcon(SWTGridCell gridCell)
-			throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		mockControl();
 		renderer.init(control, context);
-		Control render = renderer.render(gridCell, shell);
+		final Control render = renderer.render(gridCell, shell);
 		assertTrue(Label.class.isInstance(render));
 		assertEquals("", Label.class.cast(render).getText());
 	}
 
-	
 	protected void renderLabel(String text) throws NoRendererFoundException,
-			NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption {
 		setMockLabelAlignment(LabelAlignment.LEFT);
 		mockControl();
 		renderer.init(control, context);
-		Control render = renderer.render(new SWTGridCell(0, 0,renderer), shell);
+		final Control render = renderer.render(new SWTGridCell(0, 0, renderer), shell);
 		assertTrue(Label.class.isInstance(render));
 		assertEquals(text, Label.class.cast(render).getText());
 	}
 
 	protected Control renderControl(SWTGridCell gridCell)
-			throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		mockControl();
 		renderer.init(control, context);
-		Control render = renderer.render(gridCell, shell);
+		final Control render = renderer.render(gridCell, shell);
 		return render;
 	}
 

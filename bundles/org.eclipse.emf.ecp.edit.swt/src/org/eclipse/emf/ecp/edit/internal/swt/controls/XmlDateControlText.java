@@ -1,14 +1,14 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
- * 
+ *
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.controls;
 
@@ -47,9 +47,9 @@ import org.eclipse.swt.widgets.Text;
 /**
  * This is a XMLDateControl. It is used to display values of type {@link XMLGregorianCalendar}. This control only
  * displays a date widget.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  *         private Button bDate;
  */
 public class XmlDateControlText extends AbstractTextControl {
@@ -110,7 +110,7 @@ public class XmlDateControlText extends AbstractTextControl {
 
 	/**
 	 * @author Jonas
-	 * 
+	 *
 	 */
 	private final class SelectionAdapterExtension extends SelectionAdapter {
 		@Override
@@ -249,7 +249,7 @@ public class XmlDateControlText extends AbstractTextControl {
 
 	/**
 	 * Sets up a {@link DateFormat} for the current {@link java.util.Locale}.
-	 * 
+	 *
 	 * @return the date format
 	 */
 	protected DateFormat setupFormat() {

@@ -58,7 +58,7 @@ public class DIControlSWTRenderer extends AbstractControlSWTRenderer<VControl> {
 	 */
 	@Override
 	protected Control renderControl(SWTGridCell cell, Composite parent) throws NoRendererFoundException,
-	NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption {
 		pojo = POJORendererFactory.getInstance().getRenderer(getVElement(), getViewModelContext());
 		final IEclipseContext childContext = DIRendererUtil.getContextForElement(getVElement(), getViewModelContext());
 		SWTContextUtil.setAbstractSWTRendererObjects(childContext, getVElement(), getViewModelContext(),

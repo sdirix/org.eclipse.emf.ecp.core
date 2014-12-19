@@ -1,14 +1,14 @@
 /*******************************************************************************
  * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
- * 
+ *
  *******************************************************************************/
 
 package org.eclipse.emf.ecp.ui.commands;
@@ -25,7 +25,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
 /**
  * This Handler uses the {@link ECPHandlerHelper#changeCloseState(ECPProject[], String)} method
  * to close selected projects.
- * 
+ *
  * @author Eugen Neufeld
  */
 public class CloseableHandler extends AbstractHandler {
@@ -33,16 +33,16 @@ public class CloseableHandler extends AbstractHandler {
 	/** {@inheritDoc} */
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		ISelection selection = HandlerUtil.getActiveMenuSelection(event);
-		IStructuredSelection ssel = (IStructuredSelection) selection;
-		String currentType = event.getParameter("org.eclipse.emf.ecp.project.type");
-		Object[] selectionArray =  ssel.toArray();
-		ECPProject[] closeable = new ECPProject[selectionArray.length];
-		
+		final ISelection selection = HandlerUtil.getActiveMenuSelection(event);
+		final IStructuredSelection ssel = (IStructuredSelection) selection;
+		final String currentType = event.getParameter("org.eclipse.emf.ecp.project.type");
+		final Object[] selectionArray = ssel.toArray();
+		final ECPProject[] closeable = new ECPProject[selectionArray.length];
+
 		for (int i = 0; i < selectionArray.length; i++) {
 			closeable[i] = (ECPProject) selectionArray[i];
 		}
-		
+
 		ECPHandlerHelper.changeCloseState(closeable, currentType);
 
 		return null;

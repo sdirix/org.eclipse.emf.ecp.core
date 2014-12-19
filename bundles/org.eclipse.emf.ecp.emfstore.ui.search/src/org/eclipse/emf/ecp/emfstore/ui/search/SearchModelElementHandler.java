@@ -59,7 +59,8 @@ public class SearchModelElementHandler extends AbstractHandler {
 		final Set<EObject> eObjects = projectSpace.getAllModelElements();
 
 		if (project == null) {
-			MessageDialog.openInformation(HandlerUtil.getActiveShell(event), Messages.SearchModelElementHandler_Information,
+			MessageDialog.openInformation(HandlerUtil.getActiveShell(event),
+				Messages.SearchModelElementHandler_Information,
 				Messages.SearchModelElementHandler_YouMustSelectProject);
 		} else {
 			final ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {

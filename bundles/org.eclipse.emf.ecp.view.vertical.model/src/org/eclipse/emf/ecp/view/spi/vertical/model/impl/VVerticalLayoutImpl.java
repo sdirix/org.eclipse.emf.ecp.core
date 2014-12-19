@@ -19,10 +19,11 @@ import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalPackage;
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Layout</b></em>'.
+ *
  * @since 1.2
- * <!-- end-user-doc -->
- * <p>
- * </p>
+ *        <!-- end-user-doc -->
+ *        <p>
+ *        </p>
  *
  * @generated
  */

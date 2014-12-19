@@ -103,7 +103,7 @@ public class CreateDomainModelReferenceWizard extends SelectModelElementWizard {
 			if (VCustomDomainModelReference.class.isInstance(domainModelReference)) {
 				customizeDMRPage.setTitle("Select a Custom Domain Model Reference"); //$NON-NLS-1$
 				customizeDMRPage
-				.setDescription("Please specify the bundle and class name for the Custom Domain Model Reference."); //$NON-NLS-1$
+					.setDescription("Please specify the bundle and class name for the Custom Domain Model Reference."); //$NON-NLS-1$
 			}
 		}
 

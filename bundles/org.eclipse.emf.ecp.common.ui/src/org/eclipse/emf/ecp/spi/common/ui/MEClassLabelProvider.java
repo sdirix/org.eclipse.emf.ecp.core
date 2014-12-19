@@ -5,7 +5,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  ******************************************************************************/
 package org.eclipse.emf.ecp.spi.common.ui;
@@ -26,7 +26,7 @@ public class MEClassLabelProvider extends AdapterFactoryLabelProvider {
 
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 * @param adapterFactory the {@link AdapterFactory} to use
 	 */
 	public MEClassLabelProvider(AdapterFactory adapterFactory) {
@@ -54,16 +54,16 @@ public class MEClassLabelProvider extends AdapterFactoryLabelProvider {
 	@Override
 	public Image getImage(Object object) {
 		if (object instanceof EClass) {
-			EClass eClass = (EClass) object;
-			EPackage ePackage = eClass.getEPackage();
+			final EClass eClass = (EClass) object;
+			final EPackage ePackage = eClass.getEPackage();
 			if (!eClass.isAbstract() && !eClass.isInterface()) {
 				// TODO: find a better way to retrieve images without instanciate classes
-				EObject newMEInstance = ePackage.getEFactoryInstance().create(eClass);
+				final EObject newMEInstance = ePackage.getEFactoryInstance().create(eClass);
 				try {
 					return super.getImage(newMEInstance);
-				} catch (NullPointerException e) {
+				} catch (final NullPointerException e) {
 					return super.getImage(object);
-				} catch (MissingResourceException mre) {
+				} catch (final MissingResourceException mre) {
 					return super.getImage(object);
 				}
 

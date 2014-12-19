@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Jonas - initial API and implementation
  ******************************************************************************/
@@ -22,7 +22,7 @@ import org.eclipse.swt.widgets.Composite;
 
 /**
  * Renders a view which displays the attributes of an domain objects.
- * 
+ *
  * @author Jonas
  * @noimplement This interface is not intended to be implemented by clients.
  * @noextend This interface is not intended to be extended by clients.
@@ -35,7 +35,7 @@ public interface ECPSWTViewRenderer {
 	/**
 	 * Creates a view with the attributes of the domain object. The layout of the view can either be describes by a
 	 * registered view model, or, if none view model is registered for the domainObject, will be the default layout.
-	 * 
+	 *
 	 * @param parent the parent SWT composite to render the view on
 	 * @param domainObject The domainObject to show in the view
 	 * @return an ECPSWTView providing an interface to the rendered view
@@ -46,7 +46,7 @@ public interface ECPSWTViewRenderer {
 	/**
 	 * Creates a view with the attributes of the domain object. The layout of the view is specified by the given view
 	 * model.
-	 * 
+	 *
 	 * @param parent the parent SWT composite to render the view on
 	 * @param domainObject The domainObject to show in the view
 	 * @param viewModel the view model describing the layout of the view
@@ -59,7 +59,7 @@ public interface ECPSWTViewRenderer {
 	/**
 	 * Creates a view with the attributes of the domain object. The layout of the view is specified by the view
 	 * model set in the view model context.
-	 * 
+	 *
 	 * @param parent the parent SWT composite to render the view on
 	 * @param viewModelContext the {@link ViewModelContext} to use
 	 * @return an ECPSWTView providing an interface to the rendered view
@@ -71,7 +71,7 @@ public interface ECPSWTViewRenderer {
 	/**
 	 * Creates a view with the attributes of the domain object. The layout of the view can either be describes by a
 	 * registered view model, or, if none view model is registered for the domainObject, will be the default layout.
-	 * 
+	 *
 	 * @param parent the parent SWT composite to render the view on
 	 * @param domainObject The domainObject to show in the view
 	 * @param context a key-value-map from String to Object

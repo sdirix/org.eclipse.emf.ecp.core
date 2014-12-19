@@ -9,12 +9,10 @@ import org.eclipse.emf.emfstore.client.ESRemoteProject;
 import org.eclipse.emf.emfstore.client.ESServer;
 import org.eclipse.emf.emfstore.client.ESUsersession;
 import org.eclipse.emf.emfstore.client.ESWorkspace;
-import org.eclipse.emf.emfstore.client.ESWorkspaceProvider;
 import org.eclipse.emf.emfstore.client.observer.ESLoginObserver;
 import org.eclipse.emf.emfstore.client.observer.ESLogoutObserver;
 import org.eclipse.emf.emfstore.client.observer.ESShareObserver;
 import org.eclipse.emf.emfstore.internal.client.model.ESWorkspaceProviderImpl;
-import org.eclipse.emf.emfstore.internal.common.observer.ObserverBus;
 import org.eclipse.emf.emfstore.server.exceptions.ESException;
 
 public class EmfStoreRemoteProjectTreeItem extends TreeItem<Object> {
@@ -24,67 +22,71 @@ public class EmfStoreRemoteProjectTreeItem extends TreeItem<Object> {
 	public EmfStoreRemoteProjectTreeItem(Object root) {
 		super(root);
 		children = FXCollections
-				.unmodifiableObservableList(super.getChildren());
+			.unmodifiableObservableList(super.getChildren());
 		updateChildren();
 		ESWorkspaceProviderImpl.getObserverBus().register(
-				new ESLoginObserver() {
+			new ESLoginObserver() {
 
-					@Override
-					public void loginCompleted(ESUsersession session) {
-						try {
-							if (!getValue().equals(session.getServer()))
-								return;
-							updateServer(session.getServer(), session);
-						} catch (ESException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-				});
-		ESWorkspaceProviderImpl.getObserverBus().register(
-				new ESShareObserver() {
-
-					@Override
-					public void shareDone(ESLocalProject localProject) {
-						try {
-							ESRemoteProject remoteProject = localProject
-									.getRemoteProject();
-							if (!getValue().equals(remoteProject.getServer()))
-								return;
-							updateServer(remoteProject.getServer(),
-									remoteProject.getServer()
-											.getLastUsersession());
-						} catch (ESException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-
-					}
-				});
-		ESWorkspaceProviderImpl.getObserverBus().register(
-				new ESLoginObserver() {
-
-					@Override
-					public void loginCompleted(ESUsersession session) {
-						if (!getValue().equals(session.getServer()))
+				@Override
+				public void loginCompleted(ESUsersession session) {
+					try {
+						if (!getValue().equals(session.getServer())) {
 							return;
-						try {
-							updateServer(session.getServer(), session);
-						} catch (ESException e) {
-							e.printStackTrace();
 						}
+						updateServer(session.getServer(), session);
+					} catch (final ESException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			});
+		ESWorkspaceProviderImpl.getObserverBus().register(
+			new ESShareObserver() {
+
+				@Override
+				public void shareDone(ESLocalProject localProject) {
+					try {
+						final ESRemoteProject remoteProject = localProject
+							.getRemoteProject();
+						if (!getValue().equals(remoteProject.getServer())) {
+							return;
+						}
+						updateServer(remoteProject.getServer(),
+							remoteProject.getServer()
+								.getLastUsersession());
+					} catch (final ESException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
 
-				});
+				}
+			});
+		ESWorkspaceProviderImpl.getObserverBus().register(
+			new ESLoginObserver() {
+
+				@Override
+				public void loginCompleted(ESUsersession session) {
+					if (!getValue().equals(session.getServer())) {
+						return;
+					}
+					try {
+						updateServer(session.getServer(), session);
+					} catch (final ESException e) {
+						e.printStackTrace();
+					}
+				}
+
+			});
 		ESWorkspaceProviderImpl.getObserverBus().register(new ESLogoutObserver() {
-			
+
 			@Override
 			public void logoutCompleted(ESUsersession session) {
-				if (!getValue().equals(session.getServer()))
+				if (!getValue().equals(session.getServer())) {
 					return;
+				}
 				try {
 					updateServer(session.getServer(), session);
-				} catch (ESException e) {
+				} catch (final ESException e) {
 					e.printStackTrace();
 				}
 			}
@@ -93,14 +95,14 @@ public class EmfStoreRemoteProjectTreeItem extends TreeItem<Object> {
 
 	private void updateChildren() {
 
-		Object selectedValue = getValue();
+		final Object selectedValue = getValue();
 		if (ESWorkspace.class.isInstance(selectedValue)) {
 			updateWorkspace((ESWorkspace) selectedValue);
 		} else if (ESServer.class.isInstance(selectedValue)) {
-			ESServer server = (ESServer) selectedValue;
+			final ESServer server = (ESServer) selectedValue;
 			try {
 				updateServer(server, server.getLastUsersession());
-			} catch (ESException e) {
+			} catch (final ESException e) {
 				// TODO log
 				// e.printStackTrace();
 
@@ -109,21 +111,23 @@ public class EmfStoreRemoteProjectTreeItem extends TreeItem<Object> {
 	}
 
 	private void updateServer(ESServer selectedValue, ESUsersession session)
-			throws ESException {
-		if (session == null)
+		throws ESException {
+		if (session == null) {
 			return;
-		ObservableList<TreeItem<Object>> children = super.getChildren();
+		}
+		final ObservableList<TreeItem<Object>> children = super.getChildren();
 		children.clear();
-		if(session.isLoggedIn())
-		for (ESRemoteProject project : selectedValue.getRemoteProjects(session)) {
-			children.add(new EmfStoreRemoteProjectTreeItem(project));
+		if (session.isLoggedIn()) {
+			for (final ESRemoteProject project : selectedValue.getRemoteProjects(session)) {
+				children.add(new EmfStoreRemoteProjectTreeItem(project));
+			}
 		}
 	}
 
 	private void updateWorkspace(ESWorkspace workspace) {
-		ObservableList<TreeItem<Object>> children = super.getChildren();
+		final ObservableList<TreeItem<Object>> children = super.getChildren();
 		children.clear();
-		for (ESServer server : workspace.getServers()) {
+		for (final ESServer server : workspace.getServers()) {
 			children.add(new EmfStoreRemoteProjectTreeItem(server));
 		}
 	}

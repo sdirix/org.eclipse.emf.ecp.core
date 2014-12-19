@@ -56,7 +56,7 @@ public class EditorModelElementOpener implements ECPModelElementOpener {
 		final MEEditorInput input = new MEEditorInput(new EditorContext((EObject) modelElement, ecpProject));
 		try {
 			PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
-			.openEditor(input, ECP_EDITOR_ID, true);
+				.openEditor(input, ECP_EDITOR_ID, true);
 		} catch (final PartInitException e) {
 			Activator.logException(e);
 		}

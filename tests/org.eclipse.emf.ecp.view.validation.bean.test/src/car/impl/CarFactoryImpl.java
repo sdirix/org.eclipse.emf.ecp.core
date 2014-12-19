@@ -13,35 +13,35 @@ import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model <b>Factory</b>.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!--
+ * end-user-doc -->
+ * 
  * @generated
  */
 public class CarFactoryImpl extends EFactoryImpl implements CarFactory {
 	/**
-	 * Creates the default factory implementation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Creates the default factory implementation. <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public static CarFactory init() {
 		try {
-			CarFactory theCarFactory = (CarFactory)EPackage.Registry.INSTANCE.getEFactory(CarPackage.eNS_URI);
+			CarFactory theCarFactory = (CarFactory) EPackage.Registry.INSTANCE
+					.getEFactory(CarPackage.eNS_URI);
 			if (theCarFactory != null) {
 				return theCarFactory;
 			}
-		}
-		catch (Exception exception) {
+		} catch (Exception exception) {
 			EcorePlugin.INSTANCE.log(exception);
 		}
 		return new CarFactoryImpl();
 	}
 
 	/**
-	 * Creates an instance of the factory.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * Creates an instance of the factory. <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public CarFactoryImpl() {
@@ -49,63 +49,71 @@ public class CarFactoryImpl extends EFactoryImpl implements CarFactory {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
-			case CarPackage.PERSON: return createPerson();
-			case CarPackage.DRIVER: return createDriver();
-			case CarPackage.CAR: return createCar();
-			default:
-				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+		case CarPackage.PERSON:
+			return createPerson();
+		case CarPackage.DRIVER:
+			return createDriver();
+		case CarPackage.CAR:
+			return createCar();
+		default:
+			throw new IllegalArgumentException("The class '" + eClass.getName()
+					+ "' is not a valid classifier");
 		}
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
+	@Override
 	public Person createPerson() {
 		PersonImpl person = new PersonImpl();
 		return person;
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
+	@Override
 	public Driver createDriver() {
 		DriverImpl driver = new DriverImpl();
 		return driver;
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
+	@Override
 	public Car createCar() {
 		CarImpl car = new CarImpl();
 		return car;
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
+	@Override
 	public CarPackage getCarPackage() {
-		return (CarPackage)getEPackage();
+		return (CarPackage) getEPackage();
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @deprecated
 	 * @generated
 	 */
@@ -114,4 +122,4 @@ public class CarFactoryImpl extends EFactoryImpl implements CarFactory {
 		return CarPackage.eINSTANCE;
 	}
 
-} //CarFactoryImpl
+} // CarFactoryImpl

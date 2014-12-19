@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * EclipseSource - Generated code
  */
@@ -32,7 +32,7 @@ import org.eclipse.emf.ecp.test.university.UniversityPackage;
  * until a non-null result is returned,
  * which is the result of the switch.
  * <!-- end-user-doc -->
- * 
+ *
  * @see org.eclipse.emf.ecp.test.university.UniversityPackage
  * @generated
  */
@@ -42,7 +42,7 @@ public class UniversitySwitch<T> extends Switch<T>
 	 * The cached model package
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected static UniversityPackage modelPackage;
@@ -51,7 +51,7 @@ public class UniversitySwitch<T> extends Switch<T>
 	 * Creates an instance of the switch.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public UniversitySwitch()
@@ -66,7 +66,7 @@ public class UniversitySwitch<T> extends Switch<T>
 	 * Checks whether this is a switch for the given package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @parameter ePackage the package in question.
 	 * @return whether this is a switch for the given package.
 	 * @generated
@@ -82,7 +82,7 @@ public class UniversitySwitch<T> extends Switch<T>
 	 * result.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the first non-null result returned by a <code>caseXXX</code> call.
 	 * @generated
 	 */
@@ -92,49 +92,57 @@ public class UniversitySwitch<T> extends Switch<T>
 		switch (classifierID)
 		{
 		case UniversityPackage.COURSE_CATALOG: {
-			CourseCatalog courseCatalog = (CourseCatalog) theEObject;
+			final CourseCatalog courseCatalog = (CourseCatalog) theEObject;
 			T result = caseCourseCatalog(courseCatalog);
-			if (result == null)
+			if (result == null) {
 				result = defaultCase(theEObject);
+			}
 			return result;
 		}
 		case UniversityPackage.COURSE: {
-			Course course = (Course) theEObject;
+			final Course course = (Course) theEObject;
 			T result = caseCourse(course);
-			if (result == null)
+			if (result == null) {
 				result = defaultCase(theEObject);
+			}
 			return result;
 		}
 		case UniversityPackage.STAFF: {
-			Staff staff = (Staff) theEObject;
+			final Staff staff = (Staff) theEObject;
 			T result = caseStaff(staff);
-			if (result == null)
+			if (result == null) {
 				result = defaultCase(theEObject);
+			}
 			return result;
 		}
 		case UniversityPackage.PROFESSOR: {
-			Professor professor = (Professor) theEObject;
+			final Professor professor = (Professor) theEObject;
 			T result = caseProfessor(professor);
-			if (result == null)
+			if (result == null) {
 				result = casePerson(professor);
-			if (result == null)
+			}
+			if (result == null) {
 				result = defaultCase(theEObject);
+			}
 			return result;
 		}
 		case UniversityPackage.ASSISTANT: {
-			Assistant assistant = (Assistant) theEObject;
+			final Assistant assistant = (Assistant) theEObject;
 			T result = caseAssistant(assistant);
-			if (result == null)
+			if (result == null) {
 				result = casePerson(assistant);
-			if (result == null)
+			}
+			if (result == null) {
 				result = defaultCase(theEObject);
+			}
 			return result;
 		}
 		case UniversityPackage.PERSON: {
-			Person person = (Person) theEObject;
+			final Person person = (Person) theEObject;
 			T result = casePerson(person);
-			if (result == null)
+			if (result == null) {
 				result = defaultCase(theEObject);
+			}
 			return result;
 		}
 		default:
@@ -148,7 +156,7 @@ public class UniversitySwitch<T> extends Switch<T>
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Course Catalog</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -165,7 +173,7 @@ public class UniversitySwitch<T> extends Switch<T>
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Course</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -182,7 +190,7 @@ public class UniversitySwitch<T> extends Switch<T>
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Staff</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -199,7 +207,7 @@ public class UniversitySwitch<T> extends Switch<T>
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Professor</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -216,7 +224,7 @@ public class UniversitySwitch<T> extends Switch<T>
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Assistant</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -233,7 +241,7 @@ public class UniversitySwitch<T> extends Switch<T>
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Person</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -250,7 +258,7 @@ public class UniversitySwitch<T> extends Switch<T>
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch, but this is the last case anyway.
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>EObject</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject)

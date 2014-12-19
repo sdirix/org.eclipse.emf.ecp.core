@@ -101,7 +101,7 @@ public class EmbeddedGroupSWTRenderer extends AbstractSWTRenderer<VGroup> {
 	 */
 	@Override
 	protected Control renderControl(SWTGridCell cell, Composite parent) throws NoRendererFoundException,
-	NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption {
 		if (cell.getRenderer().equals(this)) {
 			final Label l = new Label(parent, SWT.NONE);
 			l.setBackground(parent.getBackground());

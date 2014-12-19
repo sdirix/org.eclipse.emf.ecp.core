@@ -35,7 +35,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * @generated
  */
 public class KeyAttributeDomainModelReferenceItemProvider extends
-FeaturePathDomainModelReferenceItemProvider {
+	FeaturePathDomainModelReferenceItemProvider {
 	/**
 	 * This constructs an instance from a factory and a notifier. <!--
 	 * begin-user-doc --> <!-- end-user-doc -->
@@ -76,20 +76,20 @@ FeaturePathDomainModelReferenceItemProvider {
 	protected void addKeyDMRPropertyDescriptor(Object object)
 	{
 		itemPropertyDescriptors
-		.add
-		(createItemPropertyDescriptor
+			.add
+			(createItemPropertyDescriptor
 			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_KeyAttributeDomainModelReference_keyDMR_feature"), //$NON-NLS-1$
 				getString(
 					"_UI_PropertyDescriptor_description", "_UI_KeyAttributeDomainModelReference_keyDMR_feature", "_UI_KeyAttributeDomainModelReference_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-					VKeyattributedmrPackage.Literals.KEY_ATTRIBUTE_DOMAIN_MODEL_REFERENCE__KEY_DMR,
-					true,
-					false,
-					false,
-					null,
-					null,
-					null));
+				VKeyattributedmrPackage.Literals.KEY_ATTRIBUTE_DOMAIN_MODEL_REFERENCE__KEY_DMR,
+				true,
+				false,
+				false,
+				null,
+				null,
+				null));
 	}
 
 	/**
@@ -102,20 +102,20 @@ FeaturePathDomainModelReferenceItemProvider {
 	protected void addKeyValuePropertyDescriptor(Object object)
 	{
 		itemPropertyDescriptors
-		.add
-		(createItemPropertyDescriptor
+			.add
+			(createItemPropertyDescriptor
 			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_KeyAttributeDomainModelReference_keyValue_feature"), //$NON-NLS-1$
 				getString(
 					"_UI_PropertyDescriptor_description", "_UI_KeyAttributeDomainModelReference_keyValue_feature", "_UI_KeyAttributeDomainModelReference_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-					VKeyattributedmrPackage.Literals.KEY_ATTRIBUTE_DOMAIN_MODEL_REFERENCE__KEY_VALUE,
-					true,
-					false,
-					false,
-					ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-					null,
-					null));
+				VKeyattributedmrPackage.Literals.KEY_ATTRIBUTE_DOMAIN_MODEL_REFERENCE__KEY_VALUE,
+				true,
+				false,
+				false,
+				ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				null,
+				null));
 	}
 
 	/**
@@ -128,20 +128,20 @@ FeaturePathDomainModelReferenceItemProvider {
 	protected void addValueDMRPropertyDescriptor(Object object)
 	{
 		itemPropertyDescriptors
-		.add
-		(createItemPropertyDescriptor
+			.add
+			(createItemPropertyDescriptor
 			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_KeyAttributeDomainModelReference_valueDMR_feature"), //$NON-NLS-1$
 				getString(
 					"_UI_PropertyDescriptor_description", "_UI_KeyAttributeDomainModelReference_valueDMR_feature", "_UI_KeyAttributeDomainModelReference_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-					VKeyattributedmrPackage.Literals.KEY_ATTRIBUTE_DOMAIN_MODEL_REFERENCE__VALUE_DMR,
-					true,
-					false,
-					false,
-					null,
-					null,
-					null));
+				VKeyattributedmrPackage.Literals.KEY_ATTRIBUTE_DOMAIN_MODEL_REFERENCE__VALUE_DMR,
+				true,
+				false,
+				false,
+				null,
+				null,
+				null));
 	}
 
 	/**
@@ -205,7 +205,7 @@ FeaturePathDomainModelReferenceItemProvider {
 		final String label = labelValue == null ? null : labelValue.toString();
 		return label == null || label.length() == 0 ?
 			getString("_UI_KeyAttributeDomainModelReference_type") : //$NON-NLS-1$
-				getString("_UI_KeyAttributeDomainModelReference_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
+			getString("_UI_KeyAttributeDomainModelReference_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**
@@ -246,22 +246,22 @@ FeaturePathDomainModelReferenceItemProvider {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
 		newChildDescriptors.add
-		(createChildParameter
+			(createChildParameter
 			(VKeyattributedmrPackage.Literals.KEY_ATTRIBUTE_DOMAIN_MODEL_REFERENCE__KEY_DMR,
 				VKeyattributedmrFactory.eINSTANCE.createKeyAttributeDomainModelReference()));
 
 		newChildDescriptors.add
-		(createChildParameter
+			(createChildParameter
 			(VKeyattributedmrPackage.Literals.KEY_ATTRIBUTE_DOMAIN_MODEL_REFERENCE__KEY_DMR,
 				VViewFactory.eINSTANCE.createFeaturePathDomainModelReference()));
 
 		newChildDescriptors.add
-		(createChildParameter
+			(createChildParameter
 			(VKeyattributedmrPackage.Literals.KEY_ATTRIBUTE_DOMAIN_MODEL_REFERENCE__VALUE_DMR,
 				VKeyattributedmrFactory.eINSTANCE.createKeyAttributeDomainModelReference()));
 
 		newChildDescriptors.add
-		(createChildParameter
+			(createChildParameter
 			(VKeyattributedmrPackage.Literals.KEY_ATTRIBUTE_DOMAIN_MODEL_REFERENCE__VALUE_DMR,
 				VViewFactory.eINSTANCE.createFeaturePathDomainModelReference()));
 	}
@@ -281,7 +281,7 @@ FeaturePathDomainModelReferenceItemProvider {
 
 		final boolean qualify =
 			childFeature == VKeyattributedmrPackage.Literals.KEY_ATTRIBUTE_DOMAIN_MODEL_REFERENCE__KEY_DMR ||
-			childFeature == VKeyattributedmrPackage.Literals.KEY_ATTRIBUTE_DOMAIN_MODEL_REFERENCE__VALUE_DMR;
+				childFeature == VKeyattributedmrPackage.Literals.KEY_ATTRIBUTE_DOMAIN_MODEL_REFERENCE__VALUE_DMR;
 
 		if (qualify)
 		{

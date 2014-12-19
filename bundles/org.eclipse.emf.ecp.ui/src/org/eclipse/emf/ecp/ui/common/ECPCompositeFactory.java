@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
@@ -34,7 +34,7 @@ import org.eclipse.jface.viewers.TreeViewer;
 
 /**
  * @author Eugen Neufeld
- * 
+ *
  */
 public final class ECPCompositeFactory {
 
@@ -42,7 +42,7 @@ public final class ECPCompositeFactory {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return a {@link AddRepositoryComposite}
 	 */
 	public static AddRepositoryComposite getAddRepositoryComposite() {
@@ -50,7 +50,7 @@ public final class ECPCompositeFactory {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param provider the provider to add a repository to.
 	 * @return a {@link AddRepositoryComposite}
 	 */
@@ -59,7 +59,7 @@ public final class ECPCompositeFactory {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param checkoutSource the source to check a project out from
 	 * @return an {@link CheckoutProjectComposite} allowing to check out a project
 	 */
@@ -68,7 +68,7 @@ public final class ECPCompositeFactory {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param providers the providers to be considered to create a new project
 	 * @return A {@link CreateProjectComposite} allowing to create a new project
 	 */
@@ -93,7 +93,7 @@ public final class ECPCompositeFactory {
 	/**
 	 * Creates a {@link org.eclipse.emf.ecp.spi.common.ui.CompositeProvider CompositeProvider} for a composite
 	 * displaying a table with checkboxes.
-	 * 
+	 *
 	 * @param rootObject the viewer input
 	 * @return the composite provider
 	 */

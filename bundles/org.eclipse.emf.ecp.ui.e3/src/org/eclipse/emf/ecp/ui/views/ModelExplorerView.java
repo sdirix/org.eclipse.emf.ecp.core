@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011 Eike Stepper (Berlin, Germany) and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eike Stepper - initial API and implementation
  *******************************************************************************/
@@ -119,7 +119,7 @@ public class ModelExplorerView extends TreeView implements ILinkedWithEditorView
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.ui.views.TreeView#init(org.eclipse.ui.IViewSite)
 	 */
 	@Override
@@ -132,7 +132,7 @@ public class ModelExplorerView extends TreeView implements ILinkedWithEditorView
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.ui.part.WorkbenchPart#dispose()
 	 */
 	@Override
@@ -265,9 +265,9 @@ public class ModelExplorerView extends TreeView implements ILinkedWithEditorView
 	}
 
 	/**
-	 * 
+	 *
 	 * @author jfaltermeier
-	 * 
+	 *
 	 */
 	private class ModelExplorerViewSelectionListener implements ISelectionChangedListener {
 

@@ -35,7 +35,7 @@ import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
  *
  */
 public class FeaturePathDatabindingProviderService implements
-DatabindingProviderService<VFeaturePathDomainModelReference> {
+	DatabindingProviderService<VFeaturePathDomainModelReference> {
 
 	/**
 	 * {@inheritDoc}

@@ -50,8 +50,8 @@ public abstract class SimpleControlRendererFX extends AbstractControlRendererFX 
 		default:
 			throw new IllegalArgumentException(
 				String
-				.format(
-					"The provided GridCellFX (%1$s) cannot be used by this (%2$s) renderer.", gridCell.toString(), toString())); //$NON-NLS-1$
+					.format(
+						"The provided GridCellFX (%1$s) cannot be used by this (%2$s) renderer.", gridCell.toString(), toString())); //$NON-NLS-1$
 		}
 	}
 

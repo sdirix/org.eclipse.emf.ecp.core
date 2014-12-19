@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
@@ -28,7 +28,7 @@ import org.eclipse.emf.ecore.EReference;
  * <li>and each data type</li>
  * </ul>
  * <!-- end-user-doc -->
- * 
+ *
  * @see org.eclipse.emf.ecp.view.index.test.example.ExampleFactory
  * @model kind="package"
  * @generated
@@ -38,7 +38,7 @@ public interface ExamplePackage extends EPackage {
 	 * The package name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	String eNAME = "example"; //$NON-NLS-1$
@@ -47,7 +47,7 @@ public interface ExamplePackage extends EPackage {
 	 * The package namespace URI.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	String eNS_URI = "http://www.eclipse.org/emf/ecp/example/index/model"; //$NON-NLS-1$
@@ -56,7 +56,7 @@ public interface ExamplePackage extends EPackage {
 	 * The package namespace name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	String eNS_PREFIX = "org.eclipse.emf.ecp.example.index.model"; //$NON-NLS-1$
@@ -65,7 +65,7 @@ public interface ExamplePackage extends EPackage {
 	 * The singleton instance of the package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	ExamplePackage eINSTANCE = org.eclipse.emf.ecp.view.index.test.example.impl.ExamplePackageImpl.init();
@@ -75,7 +75,7 @@ public interface ExamplePackage extends EPackage {
 	 * class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.index.test.example.impl.RootImpl
 	 * @see org.eclipse.emf.ecp.view.index.test.example.impl.ExamplePackageImpl#getRoot()
 	 * @generated
@@ -86,7 +86,7 @@ public interface ExamplePackage extends EPackage {
 	 * The feature id for the '<em><b>Intermediate</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -96,7 +96,7 @@ public interface ExamplePackage extends EPackage {
 	 * The number of structural features of the '<em>Root</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -106,7 +106,7 @@ public interface ExamplePackage extends EPackage {
 	 * The number of operations of the '<em>Root</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -117,7 +117,7 @@ public interface ExamplePackage extends EPackage {
 	 * <em>Intermediate</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.index.test.example.impl.IntermediateImpl
 	 * @see org.eclipse.emf.ecp.view.index.test.example.impl.ExamplePackageImpl#getIntermediate()
 	 * @generated
@@ -128,7 +128,7 @@ public interface ExamplePackage extends EPackage {
 	 * The feature id for the '<em><b>Container</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -138,7 +138,7 @@ public interface ExamplePackage extends EPackage {
 	 * The number of structural features of the '<em>Intermediate</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -148,7 +148,7 @@ public interface ExamplePackage extends EPackage {
 	 * The number of operations of the '<em>Intermediate</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -159,7 +159,7 @@ public interface ExamplePackage extends EPackage {
 	 * <em>Container</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.index.test.example.impl.ContainerImpl
 	 * @see org.eclipse.emf.ecp.view.index.test.example.impl.ExamplePackageImpl#getContainer()
 	 * @generated
@@ -170,7 +170,7 @@ public interface ExamplePackage extends EPackage {
 	 * The feature id for the '<em><b>Children</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -180,7 +180,7 @@ public interface ExamplePackage extends EPackage {
 	 * The number of structural features of the '<em>Container</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -190,7 +190,7 @@ public interface ExamplePackage extends EPackage {
 	 * The number of operations of the '<em>Container</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -201,7 +201,7 @@ public interface ExamplePackage extends EPackage {
 	 * class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.index.test.example.impl.ChildImpl
 	 * @see org.eclipse.emf.ecp.view.index.test.example.impl.ExamplePackageImpl#getChild()
 	 * @generated
@@ -212,7 +212,7 @@ public interface ExamplePackage extends EPackage {
 	 * The feature id for the '<em><b>Intermediate Target</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -222,7 +222,7 @@ public interface ExamplePackage extends EPackage {
 	 * The number of structural features of the '<em>Child</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -232,7 +232,7 @@ public interface ExamplePackage extends EPackage {
 	 * The number of operations of the '<em>Child</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -243,7 +243,7 @@ public interface ExamplePackage extends EPackage {
 	 * <em>Intermediate Target</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.index.test.example.impl.IntermediateTargetImpl
 	 * @see org.eclipse.emf.ecp.view.index.test.example.impl.ExamplePackageImpl#getIntermediateTarget()
 	 * @generated
@@ -254,7 +254,7 @@ public interface ExamplePackage extends EPackage {
 	 * The feature id for the '<em><b>Target</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -264,7 +264,7 @@ public interface ExamplePackage extends EPackage {
 	 * The number of structural features of the '<em>Intermediate Target</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -274,7 +274,7 @@ public interface ExamplePackage extends EPackage {
 	 * The number of operations of the '<em>Intermediate Target</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -285,7 +285,7 @@ public interface ExamplePackage extends EPackage {
 	 * class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.index.test.example.impl.TargetImpl
 	 * @see org.eclipse.emf.ecp.view.index.test.example.impl.ExamplePackageImpl#getTarget()
 	 * @generated
@@ -296,7 +296,7 @@ public interface ExamplePackage extends EPackage {
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -306,7 +306,7 @@ public interface ExamplePackage extends EPackage {
 	 * The number of structural features of the '<em>Target</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -316,7 +316,7 @@ public interface ExamplePackage extends EPackage {
 	 * The number of operations of the '<em>Target</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -326,7 +326,7 @@ public interface ExamplePackage extends EPackage {
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.index.test.example.Root <em>Root</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for class '<em>Root</em>'.
 	 * @see org.eclipse.emf.ecp.view.index.test.example.Root
 	 * @generated
@@ -338,7 +338,7 @@ public interface ExamplePackage extends EPackage {
 	 * {@link org.eclipse.emf.ecp.view.index.test.example.Root#getIntermediate <em>Intermediate</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for the containment reference '<em>Intermediate</em>'.
 	 * @see org.eclipse.emf.ecp.view.index.test.example.Root#getIntermediate()
 	 * @see #getRoot()
@@ -351,7 +351,7 @@ public interface ExamplePackage extends EPackage {
 	 * <em>Intermediate</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for class '<em>Intermediate</em>'.
 	 * @see org.eclipse.emf.ecp.view.index.test.example.Intermediate
 	 * @generated
@@ -363,7 +363,7 @@ public interface ExamplePackage extends EPackage {
 	 * {@link org.eclipse.emf.ecp.view.index.test.example.Intermediate#getContainer <em>Container</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for the containment reference '<em>Container</em>'.
 	 * @see org.eclipse.emf.ecp.view.index.test.example.Intermediate#getContainer()
 	 * @see #getIntermediate()
@@ -376,7 +376,7 @@ public interface ExamplePackage extends EPackage {
 	 * <em>Container</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for class '<em>Container</em>'.
 	 * @see org.eclipse.emf.ecp.view.index.test.example.Container
 	 * @generated
@@ -388,7 +388,7 @@ public interface ExamplePackage extends EPackage {
 	 * {@link org.eclipse.emf.ecp.view.index.test.example.Container#getChildren <em>Children</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for the containment reference list '<em>Children</em>'.
 	 * @see org.eclipse.emf.ecp.view.index.test.example.Container#getChildren()
 	 * @see #getContainer()
@@ -400,7 +400,7 @@ public interface ExamplePackage extends EPackage {
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.index.test.example.Child <em>Child</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for class '<em>Child</em>'.
 	 * @see org.eclipse.emf.ecp.view.index.test.example.Child
 	 * @generated
@@ -412,7 +412,7 @@ public interface ExamplePackage extends EPackage {
 	 * {@link org.eclipse.emf.ecp.view.index.test.example.Child#getIntermediateTarget <em>Intermediate Target</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for the containment reference '<em>Intermediate Target</em>'.
 	 * @see org.eclipse.emf.ecp.view.index.test.example.Child#getIntermediateTarget()
 	 * @see #getChild()
@@ -425,7 +425,7 @@ public interface ExamplePackage extends EPackage {
 	 * <em>Intermediate Target</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for class '<em>Intermediate Target</em>'.
 	 * @see org.eclipse.emf.ecp.view.index.test.example.IntermediateTarget
 	 * @generated
@@ -437,7 +437,7 @@ public interface ExamplePackage extends EPackage {
 	 * {@link org.eclipse.emf.ecp.view.index.test.example.IntermediateTarget#getTarget <em>Target</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for the containment reference '<em>Target</em>'.
 	 * @see org.eclipse.emf.ecp.view.index.test.example.IntermediateTarget#getTarget()
 	 * @see #getIntermediateTarget()
@@ -449,7 +449,7 @@ public interface ExamplePackage extends EPackage {
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.index.test.example.Target <em>Target</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for class '<em>Target</em>'.
 	 * @see org.eclipse.emf.ecp.view.index.test.example.Target
 	 * @generated
@@ -461,7 +461,7 @@ public interface ExamplePackage extends EPackage {
 	 * <em>Name</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for the attribute '<em>Name</em>'.
 	 * @see org.eclipse.emf.ecp.view.index.test.example.Target#getName()
 	 * @see #getTarget()
@@ -473,7 +473,7 @@ public interface ExamplePackage extends EPackage {
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the factory that creates the instances of the model.
 	 * @generated
 	 */
@@ -490,7 +490,7 @@ public interface ExamplePackage extends EPackage {
 	 * <li>and each data type</li>
 	 * </ul>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	interface Literals {
@@ -499,7 +499,7 @@ public interface ExamplePackage extends EPackage {
 		 * <em>Root</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.index.test.example.impl.RootImpl
 		 * @see org.eclipse.emf.ecp.view.index.test.example.impl.ExamplePackageImpl#getRoot()
 		 * @generated
@@ -510,7 +510,7 @@ public interface ExamplePackage extends EPackage {
 		 * The meta object literal for the '<em><b>Intermediate</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		EReference ROOT__INTERMEDIATE = eINSTANCE.getRoot_Intermediate();
@@ -520,7 +520,7 @@ public interface ExamplePackage extends EPackage {
 		 * <em>Intermediate</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.index.test.example.impl.IntermediateImpl
 		 * @see org.eclipse.emf.ecp.view.index.test.example.impl.ExamplePackageImpl#getIntermediate()
 		 * @generated
@@ -531,7 +531,7 @@ public interface ExamplePackage extends EPackage {
 		 * The meta object literal for the '<em><b>Container</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		EReference INTERMEDIATE__CONTAINER = eINSTANCE.getIntermediate_Container();
@@ -541,7 +541,7 @@ public interface ExamplePackage extends EPackage {
 		 * <em>Container</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.index.test.example.impl.ContainerImpl
 		 * @see org.eclipse.emf.ecp.view.index.test.example.impl.ExamplePackageImpl#getContainer()
 		 * @generated
@@ -552,7 +552,7 @@ public interface ExamplePackage extends EPackage {
 		 * The meta object literal for the '<em><b>Children</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		EReference CONTAINER__CHILDREN = eINSTANCE.getContainer_Children();
@@ -562,7 +562,7 @@ public interface ExamplePackage extends EPackage {
 		 * <em>Child</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.index.test.example.impl.ChildImpl
 		 * @see org.eclipse.emf.ecp.view.index.test.example.impl.ExamplePackageImpl#getChild()
 		 * @generated
@@ -573,7 +573,7 @@ public interface ExamplePackage extends EPackage {
 		 * The meta object literal for the '<em><b>Intermediate Target</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		EReference CHILD__INTERMEDIATE_TARGET = eINSTANCE.getChild_IntermediateTarget();
@@ -584,7 +584,7 @@ public interface ExamplePackage extends EPackage {
 		 * class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.index.test.example.impl.IntermediateTargetImpl
 		 * @see org.eclipse.emf.ecp.view.index.test.example.impl.ExamplePackageImpl#getIntermediateTarget()
 		 * @generated
@@ -595,7 +595,7 @@ public interface ExamplePackage extends EPackage {
 		 * The meta object literal for the '<em><b>Target</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		EReference INTERMEDIATE_TARGET__TARGET = eINSTANCE.getIntermediateTarget_Target();
@@ -605,7 +605,7 @@ public interface ExamplePackage extends EPackage {
 		 * <em>Target</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.index.test.example.impl.TargetImpl
 		 * @see org.eclipse.emf.ecp.view.index.test.example.impl.ExamplePackageImpl#getTarget()
 		 * @generated
@@ -616,7 +616,7 @@ public interface ExamplePackage extends EPackage {
 		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		EAttribute TARGET__NAME = eINSTANCE.getTarget_Name();

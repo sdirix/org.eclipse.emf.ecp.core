@@ -15,13 +15,13 @@ import java.lang.ref.PhantomReference;
 import java.lang.ref.ReferenceQueue;
 
 /**
- * Convenience class for expecting objects to be garbage collected.
- * Because GC is non-deterministic there's no time constrained guarantee, when {@code isCollectable} returns true.
+ * Convenience class for expecting objects to be garbage collected. Because GC
+ * is non-deterministic there's no time constrained guarantee, when
+ * {@code isCollectable} returns true.
  * 
  * @author emueller
  */
 public class GCCollectable {
-
 
 	private final ReferenceQueue<Object> queue;
 	private final PhantomReference<Object> phantomRef;
@@ -29,13 +29,11 @@ public class GCCollectable {
 	private boolean result;
 	private GCPhantomThread t;
 
-
-
 	/**
 	 * Constructor.
 	 * 
 	 * @param obj
-	 * 			the object that is supposed to be finalized
+	 *            the object that is supposed to be finalized
 	 */
 	public GCCollectable(Object obj) {
 		queue = new ReferenceQueue<Object>();
@@ -46,9 +44,11 @@ public class GCCollectable {
 	}
 
 	/**
-	 * Checks whether the the object contained by the {@link GCCollectable} may be finalized.
+	 * Checks whether the the object contained by the {@link GCCollectable} may
+	 * be finalized.
 	 * 
-	 * @return {@code true}, if the contained object may be finalized, {@code false} otherwise 
+	 * @return {@code true}, if the contained object may be finalized,
+	 *         {@code false} otherwise
 	 */
 	public boolean isCollectable() {
 		try {

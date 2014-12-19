@@ -36,7 +36,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * @generated
  */
 public class IndexDomainModelReferenceItemProvider extends
-FeaturePathDomainModelReferenceItemProvider {
+	FeaturePathDomainModelReferenceItemProvider {
 	/**
 	 * This constructs an instance from a factory and a notifier. <!--
 	 * begin-user-doc --> <!-- end-user-doc -->
@@ -75,20 +75,20 @@ FeaturePathDomainModelReferenceItemProvider {
 	protected void addTargetDMRPropertyDescriptor(Object object)
 	{
 		itemPropertyDescriptors
-		.add
-		(createItemPropertyDescriptor
+			.add
+			(createItemPropertyDescriptor
 			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_IndexDomainModelReference_targetDMR_feature"), //$NON-NLS-1$
 				getString(
 					"_UI_PropertyDescriptor_description", "_UI_IndexDomainModelReference_targetDMR_feature", "_UI_IndexDomainModelReference_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-					VIndexdmrPackage.Literals.INDEX_DOMAIN_MODEL_REFERENCE__TARGET_DMR,
-					true,
-					false,
-					false,
-					null,
-					null,
-					null));
+				VIndexdmrPackage.Literals.INDEX_DOMAIN_MODEL_REFERENCE__TARGET_DMR,
+				true,
+				false,
+				false,
+				null,
+				null,
+				null));
 	}
 
 	/**
@@ -99,20 +99,20 @@ FeaturePathDomainModelReferenceItemProvider {
 	 */
 	protected void addIndexPropertyDescriptor(Object object) {
 		itemPropertyDescriptors
-		.add
-		(createItemPropertyDescriptor
+			.add
+			(createItemPropertyDescriptor
 			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_IndexDomainModelReference_index_feature"), //$NON-NLS-1$
 				getString(
 					"_UI_PropertyDescriptor_description", "_UI_IndexDomainModelReference_index_feature", "_UI_IndexDomainModelReference_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-					VIndexdmrPackage.Literals.INDEX_DOMAIN_MODEL_REFERENCE__INDEX,
-					true,
-					false,
-					false,
-					ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE,
-					null,
-					null));
+				VIndexdmrPackage.Literals.INDEX_DOMAIN_MODEL_REFERENCE__INDEX,
+				true,
+				false,
+				false,
+				ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE,
+				null,
+				null));
 	}
 
 	/**
@@ -209,12 +209,12 @@ FeaturePathDomainModelReferenceItemProvider {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
 		newChildDescriptors.add
-		(createChildParameter
+			(createChildParameter
 			(VIndexdmrPackage.Literals.INDEX_DOMAIN_MODEL_REFERENCE__TARGET_DMR,
 				VIndexdmrFactory.eINSTANCE.createIndexDomainModelReference()));
 
 		newChildDescriptors.add
-		(createChildParameter
+			(createChildParameter
 			(VIndexdmrPackage.Literals.INDEX_DOMAIN_MODEL_REFERENCE__TARGET_DMR,
 				VViewFactory.eINSTANCE.createFeaturePathDomainModelReference()));
 	}

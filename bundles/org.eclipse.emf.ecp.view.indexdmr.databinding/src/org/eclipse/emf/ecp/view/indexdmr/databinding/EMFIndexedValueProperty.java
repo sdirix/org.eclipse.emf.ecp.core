@@ -29,11 +29,13 @@ public class EMFIndexedValueProperty extends EMFValueProperty {
 	/**
 	 * Constructor for a EClassMapping ValueProperty.
 	 * 
-	 * @param mappedEClass the EClass being mapped
-	 * @param eStructuralFeature the {@link EStructuralFeature} of the map
+	 * @param mappedEClass
+	 *            the EClass being mapped
+	 * @param eStructuralFeature
+	 *            the {@link EStructuralFeature} of the map
 	 */
 	public EMFIndexedValueProperty(int index,
-		EStructuralFeature eStructuralFeature) {
+			EStructuralFeature eStructuralFeature) {
 		super(eStructuralFeature);
 		this.index = index;
 	}
@@ -51,7 +53,7 @@ public class EMFIndexedValueProperty extends EMFValueProperty {
 	protected void doSetValue(Object source, Object value) {
 		final Object result = super.doGetValue(source);
 		final EList<Object> list = (EList<Object>) result;
-		list.add(index,value);
+		list.add(index, value);
 	}
 
 	@Override

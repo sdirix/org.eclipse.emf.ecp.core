@@ -14,7 +14,7 @@ package org.eclipse.emf.ecp.controls.fx.util;
 import org.eclipse.emf.databinding.EMFUpdateValueStrategy;
 
 public class ECPTextFieldToModelUpdateValueStrategy extends
-EMFUpdateValueStrategy {
+	EMFUpdateValueStrategy {
 
 	public ECPTextFieldToModelUpdateValueStrategy() {
 		super(POLICY_ON_REQUEST);

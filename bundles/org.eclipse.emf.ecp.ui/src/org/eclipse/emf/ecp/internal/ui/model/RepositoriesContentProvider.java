@@ -1,11 +1,11 @@
 /********************************************************************************
  * Copyright (c) 2011 Eike Stepper (Berlin, Germany) and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eike Stepper - initial API and implementation
  ********************************************************************************/
@@ -28,7 +28,7 @@ import org.eclipse.emf.ecp.spi.core.util.InternalChildrenList;
  * @author Eugen Neufeld
  */
 public class RepositoriesContentProvider extends ECPContentProvider<ECPRepositoryManager> implements
-// ECPRepositoryManager.Listener
+	// ECPRepositoryManager.Listener
 	ECPRepositoriesChangedObserver, ECPRepositoryContentChangedObserver {
 	private final ECPProvider allowedProvider;
 
@@ -68,7 +68,7 @@ public class RepositoriesContentProvider extends ECPContentProvider<ECPRepositor
 	@Override
 	protected boolean isSlow(Object parent) {
 		if (parent instanceof ECPProviderAware) {
-			InternalProvider provider = (InternalProvider) ((ECPProviderAware) parent).getProvider();
+			final InternalProvider provider = (InternalProvider) ((ECPProviderAware) parent).getProvider();
 			if (provider != null) {
 				return provider.isSlow(parent);
 			}
@@ -82,7 +82,7 @@ public class RepositoriesContentProvider extends ECPContentProvider<ECPRepositor
 			if (allowedProvider == null) {
 				childrenList.addChildren(ECPUtil.getECPRepositoryManager().getRepositories());
 			} else {
-				for (ECPRepository ecpRepository : ECPUtil.getECPRepositoryManager().getRepositories()) {
+				for (final ECPRepository ecpRepository : ECPUtil.getECPRepositoryManager().getRepositories()) {
 					if (allowedProvider.equals(ecpRepository.getProvider())) {
 						childrenList.addChild(ecpRepository);
 					}

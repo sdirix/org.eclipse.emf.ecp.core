@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Johannes Faltermeier - initial API and refactorings
  * David Soto Setzke - initial implementation
@@ -21,9 +21,9 @@ import org.eclipse.swt.widgets.Shell;
 
 /**
  * {@link ECPFileDialogHelper} using the SWT implementation of the {@link FileDialog}.
- * 
+ *
  * @author jfaltermeier
- * 
+ *
  */
 public class ECPFileDialogHelperImpl implements ECPFileDialogHelper {
 
@@ -32,9 +32,9 @@ public class ECPFileDialogHelperImpl implements ECPFileDialogHelper {
 	private static final String FILE_EXTENSION = "xmi"; //$NON-NLS-1$
 
 	/**
-	 * 
+	 *
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.internal.ui.util.ECPFileDialogHelper#getPathForImport(org.eclipse.swt.widgets.Shell)
 	 */
 	public String getPathForImport(Shell shell) {
@@ -59,9 +59,9 @@ public class ECPFileDialogHelperImpl implements ECPFileDialogHelper {
 	}
 
 	/**
-	 * 
+	 *
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.internal.ui.util.ECPFileDialogHelper#getPathForExport(org.eclipse.swt.widgets.Shell,
 	 *      java.lang.String)
 	 */

@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * EclipseSource Munich - initial API and implementation
  */
@@ -42,7 +42,7 @@ import org.eclipse.emf.ecp.view.spi.model.impl.VContainedElementImpl;
  * <em>Main Category Depth</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class VCategorizationElementImpl extends VContainedElementImpl implements VCategorizationElement
@@ -51,7 +51,7 @@ public class VCategorizationElementImpl extends VContainedElementImpl implements
 	 * The cached value of the '{@link #getCategorizations() <em>Categorizations</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getCategorizations()
 	 * @generated
 	 * @ordered
@@ -62,7 +62,7 @@ public class VCategorizationElementImpl extends VContainedElementImpl implements
 	 * The cached value of the '{@link #getCurrentSelection() <em>Current Selection</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getCurrentSelection()
 	 * @generated
 	 * @ordered
@@ -73,7 +73,7 @@ public class VCategorizationElementImpl extends VContainedElementImpl implements
 	 * The default value of the '{@link #getMainCategoryDepth() <em>Main Category Depth</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getMainCategoryDepth()
 	 * @generated
 	 * @ordered
@@ -84,7 +84,7 @@ public class VCategorizationElementImpl extends VContainedElementImpl implements
 	 * The cached value of the '{@link #getMainCategoryDepth() <em>Main Category Depth</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getMainCategoryDepth()
 	 * @generated
 	 * @ordered
@@ -94,7 +94,7 @@ public class VCategorizationElementImpl extends VContainedElementImpl implements
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected VCategorizationElementImpl()
@@ -105,7 +105,7 @@ public class VCategorizationElementImpl extends VContainedElementImpl implements
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -117,7 +117,7 @@ public class VCategorizationElementImpl extends VContainedElementImpl implements
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -134,7 +134,7 @@ public class VCategorizationElementImpl extends VContainedElementImpl implements
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -142,14 +142,15 @@ public class VCategorizationElementImpl extends VContainedElementImpl implements
 	{
 		if (currentSelection != null && currentSelection.eIsProxy())
 		{
-			InternalEObject oldCurrentSelection = (InternalEObject) currentSelection;
+			final InternalEObject oldCurrentSelection = (InternalEObject) currentSelection;
 			currentSelection = (VCategorizableElement) eResolveProxy(oldCurrentSelection);
 			if (currentSelection != oldCurrentSelection)
 			{
-				if (eNotificationRequired())
+				if (eNotificationRequired()) {
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE,
 						VCategorizationPackage.CATEGORIZATION_ELEMENT__CURRENT_SELECTION, oldCurrentSelection,
 						currentSelection));
+				}
 			}
 		}
 		return currentSelection;
@@ -158,7 +159,7 @@ public class VCategorizationElementImpl extends VContainedElementImpl implements
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public VCategorizableElement basicGetCurrentSelection()
@@ -169,23 +170,24 @@ public class VCategorizationElementImpl extends VContainedElementImpl implements
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
 	public void setCurrentSelection(VCategorizableElement newCurrentSelection)
 	{
-		VCategorizableElement oldCurrentSelection = currentSelection;
+		final VCategorizableElement oldCurrentSelection = currentSelection;
 		currentSelection = newCurrentSelection;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				VCategorizationPackage.CATEGORIZATION_ELEMENT__CURRENT_SELECTION, oldCurrentSelection, currentSelection));
+		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -197,24 +199,25 @@ public class VCategorizationElementImpl extends VContainedElementImpl implements
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
 	public void setMainCategoryDepth(int newMainCategoryDepth)
 	{
-		int oldMainCategoryDepth = mainCategoryDepth;
+		final int oldMainCategoryDepth = mainCategoryDepth;
 		mainCategoryDepth = newMainCategoryDepth;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				VCategorizationPackage.CATEGORIZATION_ELEMENT__MAIN_CATEGORY_DEPTH, oldMainCategoryDepth,
 				mainCategoryDepth));
+		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -231,7 +234,7 @@ public class VCategorizationElementImpl extends VContainedElementImpl implements
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -242,8 +245,9 @@ public class VCategorizationElementImpl extends VContainedElementImpl implements
 		case VCategorizationPackage.CATEGORIZATION_ELEMENT__CATEGORIZATIONS:
 			return getCategorizations();
 		case VCategorizationPackage.CATEGORIZATION_ELEMENT__CURRENT_SELECTION:
-			if (resolve)
+			if (resolve) {
 				return getCurrentSelection();
+			}
 			return basicGetCurrentSelection();
 		case VCategorizationPackage.CATEGORIZATION_ELEMENT__MAIN_CATEGORY_DEPTH:
 			return getMainCategoryDepth();
@@ -254,7 +258,7 @@ public class VCategorizationElementImpl extends VContainedElementImpl implements
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
@@ -280,7 +284,7 @@ public class VCategorizationElementImpl extends VContainedElementImpl implements
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -304,7 +308,7 @@ public class VCategorizationElementImpl extends VContainedElementImpl implements
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -325,16 +329,17 @@ public class VCategorizationElementImpl extends VContainedElementImpl implements
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
 	public String toString()
 	{
-		if (eIsProxy())
+		if (eIsProxy()) {
 			return super.toString();
+		}
 
-		StringBuffer result = new StringBuffer(super.toString());
+		final StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (mainCategoryDepth: "); //$NON-NLS-1$
 		result.append(mainCategoryDepth);
 		result.append(')');

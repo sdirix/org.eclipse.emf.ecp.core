@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen - initial API and implementation
  ******************************************************************************/
@@ -18,9 +18,9 @@ import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
+import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
-import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -38,7 +38,7 @@ import org.eclipse.swt.widgets.Label;
 
 /**
  * @author Eugen
- * 
+ *
  */
 public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRenderer<VControl> {
 	private SWTGridDescription rendererGridDescription;
@@ -52,7 +52,7 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 
 	/**
 	 * Test constructor.
-	 * 
+	 *
 	 * @param factory the {@link SWTRendererFactory} to use.
 	 */
 	SimpleControlSWTRenderer(SWTRendererFactory factory) {
@@ -61,7 +61,7 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#getGridDescription(SWTGridDescription)
 	 */
 	@Override
@@ -75,7 +75,7 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#renderControl(int, org.eclipse.swt.widgets.Composite,
 	 *      org.eclipse.emf.ecp.view.spi.model.VElement, org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
@@ -106,7 +106,7 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 
 	/**
 	 * Returns true if the control is unsettable.
-	 * 
+	 *
 	 * @return true if unsettable, false otherwise
 	 */
 	protected boolean isUnsettable() {
@@ -130,7 +130,7 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 
 			/**
 			 * {@inheritDoc}
-			 * 
+			 *
 			 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
 			 */
 			@Override
@@ -177,14 +177,14 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 
 	/**
 	 * Provide the unset text to show on the label when value is unset.
-	 * 
+	 *
 	 * @return the text to show on the unset label
 	 */
 	protected abstract String getUnsetText();
 
 	/**
 	 * Set the provided validation color as the background for the provided control.
-	 * 
+	 *
 	 * @param control the control to set the color on
 	 * @param validationColor the validation color to set
 	 */
@@ -257,7 +257,7 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 
 	/**
 	 * Creates the control itself.
-	 * 
+	 *
 	 * @param parent the {@link Composite} to render onto
 	 * @return the rendered control
 	 */
@@ -265,7 +265,7 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#dispose()
 	 */
 	@Override

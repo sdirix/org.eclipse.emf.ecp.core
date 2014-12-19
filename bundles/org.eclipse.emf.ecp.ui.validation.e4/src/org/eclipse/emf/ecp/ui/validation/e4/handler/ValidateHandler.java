@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
  ******************************************************************************/
@@ -25,9 +25,9 @@ import org.eclipse.emf.ecp.ui.validation.ECPValidationResultService;
 
 /**
  * Handler for performing a validation using the {@link ECPDiagnostician}.
- * 
+ *
  * @author jfaltermeier
- * 
+ *
  */
 public class ValidateHandler {
 
@@ -37,7 +37,7 @@ public class ValidateHandler {
 	/**
 	 * Performs a validation for currently selected EObject and passes the result to the
 	 * {@link ECPValidationResultService}.
-	 * 
+	 *
 	 * @param object the object to validate
 	 */
 	@Execute
@@ -48,7 +48,7 @@ public class ValidateHandler {
 
 	/**
 	 * Whether the handler can be executed for the current selection.
-	 * 
+	 *
 	 * @param object the current selection
 	 * @return <code>true</code> if executable, <code>false</code> otherwise
 	 */

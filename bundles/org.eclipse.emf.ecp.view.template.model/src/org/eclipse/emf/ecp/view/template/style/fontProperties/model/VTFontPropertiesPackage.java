@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * EclipseSource Munich - initial API and implementation
  */
@@ -28,7 +28,7 @@ import org.eclipse.emf.ecp.view.template.model.VTTemplatePackage;
  * <li>and each data type</li>
  * </ul>
  * <!-- end-user-doc -->
- * 
+ *
  * @see org.eclipse.emf.ecp.view.template.style.fontProperties.model.VTFontPropertiesFactory
  * @model kind="package"
  * @generated
@@ -38,7 +38,7 @@ public interface VTFontPropertiesPackage extends EPackage {
 	 * The package name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	String eNAME = "fontProperties"; //$NON-NLS-1$
@@ -47,7 +47,7 @@ public interface VTFontPropertiesPackage extends EPackage {
 	 * The package namespace URI.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	String eNS_URI = "http://www.eclipse.org/emf/ecp/view/template/style/fontProperties/model"; //$NON-NLS-1$
@@ -56,7 +56,7 @@ public interface VTFontPropertiesPackage extends EPackage {
 	 * The package namespace name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	String eNS_PREFIX = "org.eclipse.emf.ecp.view.template.style.fontProperties.model"; //$NON-NLS-1$
@@ -65,7 +65,7 @@ public interface VTFontPropertiesPackage extends EPackage {
 	 * The singleton instance of the package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	VTFontPropertiesPackage eINSTANCE = org.eclipse.emf.ecp.view.template.style.fontProperties.model.impl.VTFontPropertiesPackageImpl
@@ -77,7 +77,7 @@ public interface VTFontPropertiesPackage extends EPackage {
 	 * <em>Style Property</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.template.style.fontProperties.model.impl.VTFontPropertiesStylePropertyImpl
 	 * @see org.eclipse.emf.ecp.view.template.style.fontProperties.model.impl.VTFontPropertiesPackageImpl#getFontPropertiesStyleProperty()
 	 * @generated
@@ -88,7 +88,7 @@ public interface VTFontPropertiesPackage extends EPackage {
 	 * The feature id for the '<em><b>Italic</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -98,7 +98,7 @@ public interface VTFontPropertiesPackage extends EPackage {
 	 * The feature id for the '<em><b>Bold</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -108,7 +108,7 @@ public interface VTFontPropertiesPackage extends EPackage {
 	 * The feature id for the '<em><b>Color HEX</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -118,7 +118,7 @@ public interface VTFontPropertiesPackage extends EPackage {
 	 * The feature id for the '<em><b>Height</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -128,7 +128,7 @@ public interface VTFontPropertiesPackage extends EPackage {
 	 * The feature id for the '<em><b>Font Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -138,7 +138,7 @@ public interface VTFontPropertiesPackage extends EPackage {
 	 * The number of structural features of the '<em>Style Property</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -148,7 +148,7 @@ public interface VTFontPropertiesPackage extends EPackage {
 	 * The number of operations of the '<em>Style Property</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -160,7 +160,7 @@ public interface VTFontPropertiesPackage extends EPackage {
 	 * <em>Style Property</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for class '<em>Style Property</em>'.
 	 * @see org.eclipse.emf.ecp.view.template.style.fontProperties.model.VTFontPropertiesStyleProperty
 	 * @generated
@@ -173,7 +173,7 @@ public interface VTFontPropertiesPackage extends EPackage {
 	 * <em>Italic</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for the attribute '<em>Italic</em>'.
 	 * @see org.eclipse.emf.ecp.view.template.style.fontProperties.model.VTFontPropertiesStyleProperty#isItalic()
 	 * @see #getFontPropertiesStyleProperty()
@@ -187,7 +187,7 @@ public interface VTFontPropertiesPackage extends EPackage {
 	 * <em>Bold</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for the attribute '<em>Bold</em>'.
 	 * @see org.eclipse.emf.ecp.view.template.style.fontProperties.model.VTFontPropertiesStyleProperty#isBold()
 	 * @see #getFontPropertiesStyleProperty()
@@ -201,7 +201,7 @@ public interface VTFontPropertiesPackage extends EPackage {
 	 * <em>Color HEX</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for the attribute '<em>Color HEX</em>'.
 	 * @see org.eclipse.emf.ecp.view.template.style.fontProperties.model.VTFontPropertiesStyleProperty#getColorHEX()
 	 * @see #getFontPropertiesStyleProperty()
@@ -215,7 +215,7 @@ public interface VTFontPropertiesPackage extends EPackage {
 	 * <em>Height</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for the attribute '<em>Height</em>'.
 	 * @see org.eclipse.emf.ecp.view.template.style.fontProperties.model.VTFontPropertiesStyleProperty#getHeight()
 	 * @see #getFontPropertiesStyleProperty()
@@ -229,7 +229,7 @@ public interface VTFontPropertiesPackage extends EPackage {
 	 * <em>Font Name</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for the attribute '<em>Font Name</em>'.
 	 * @see org.eclipse.emf.ecp.view.template.style.fontProperties.model.VTFontPropertiesStyleProperty#getFontName()
 	 * @see #getFontPropertiesStyleProperty()
@@ -241,7 +241,7 @@ public interface VTFontPropertiesPackage extends EPackage {
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the factory that creates the instances of the model.
 	 * @generated
 	 */
@@ -258,7 +258,7 @@ public interface VTFontPropertiesPackage extends EPackage {
 	 * <li>and each data type</li>
 	 * </ul>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	interface Literals {
@@ -268,7 +268,7 @@ public interface VTFontPropertiesPackage extends EPackage {
 		 * <em>Style Property</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.template.style.fontProperties.model.impl.VTFontPropertiesStylePropertyImpl
 		 * @see org.eclipse.emf.ecp.view.template.style.fontProperties.model.impl.VTFontPropertiesPackageImpl#getFontPropertiesStyleProperty()
 		 * @generated
@@ -279,7 +279,7 @@ public interface VTFontPropertiesPackage extends EPackage {
 		 * The meta object literal for the '<em><b>Italic</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		EAttribute FONT_PROPERTIES_STYLE_PROPERTY__ITALIC = eINSTANCE.getFontPropertiesStyleProperty_Italic();
@@ -288,7 +288,7 @@ public interface VTFontPropertiesPackage extends EPackage {
 		 * The meta object literal for the '<em><b>Bold</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		EAttribute FONT_PROPERTIES_STYLE_PROPERTY__BOLD = eINSTANCE.getFontPropertiesStyleProperty_Bold();
@@ -297,7 +297,7 @@ public interface VTFontPropertiesPackage extends EPackage {
 		 * The meta object literal for the '<em><b>Color HEX</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		EAttribute FONT_PROPERTIES_STYLE_PROPERTY__COLOR_HEX = eINSTANCE.getFontPropertiesStyleProperty_ColorHEX();
@@ -306,7 +306,7 @@ public interface VTFontPropertiesPackage extends EPackage {
 		 * The meta object literal for the '<em><b>Height</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		EAttribute FONT_PROPERTIES_STYLE_PROPERTY__HEIGHT = eINSTANCE.getFontPropertiesStyleProperty_Height();
@@ -315,7 +315,7 @@ public interface VTFontPropertiesPackage extends EPackage {
 		 * The meta object literal for the '<em><b>Font Name</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		EAttribute FONT_PROPERTIES_STYLE_PROPERTY__FONT_NAME = eINSTANCE.getFontPropertiesStyleProperty_FontName();

@@ -26,8 +26,9 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
  * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.spi.horizontal.model.VHorizontalLayout}
  * object.
  * <!-- begin-user-doc -->
+ *
  * @since 1.2
- * <!-- end-user-doc -->
+ *        <!-- end-user-doc -->
  *
  * @generated
  */

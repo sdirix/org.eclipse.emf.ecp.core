@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * EclipseSource Munich - initial API and implementation
  */
@@ -35,9 +35,9 @@ import org.osgi.framework.Bundle;
 
 /**
  * Control for setting the url of an icon.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  */
 @SuppressWarnings("restriction")
 public class TemplateIconControl extends AbstractTextControl {
@@ -93,7 +93,7 @@ public class TemplateIconControl extends AbstractTextControl {
 
 	/**
 	 * @author Jonas
-	 * 
+	 *
 	 */
 	private final class SelectFileFromPluginAdapter extends SelectionAdapter {
 		private final Composite composite;
@@ -113,7 +113,7 @@ public class TemplateIconControl extends AbstractTextControl {
 
 					/**
 					 * {@inheritDoc}
-					 * 
+					 *
 					 * @see org.eclipse.jface.viewers.LabelProvider#getText(java.lang.Object)
 					 */
 					@Override
@@ -149,9 +149,9 @@ public class TemplateIconControl extends AbstractTextControl {
 
 	/**
 	 * The tree content provider for selecting the icon url.
-	 * 
+	 *
 	 * @author Eugen Neufeld
-	 * 
+	 *
 	 */
 	private class IconTreeContentProvider implements ITreeContentProvider {
 

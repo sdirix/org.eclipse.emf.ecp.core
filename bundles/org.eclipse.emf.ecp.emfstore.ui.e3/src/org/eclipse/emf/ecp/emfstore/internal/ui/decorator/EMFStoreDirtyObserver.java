@@ -89,7 +89,7 @@ public class EMFStoreDirtyObserver implements OperationObserver {
 			if (element != null) {
 				lastAffected.add(element);
 				lastAffected
-				.addAll(EMFStoreDirtyDecoratorCachedTree.getInstance(internalProject).addOperation(element));
+					.addAll(EMFStoreDirtyDecoratorCachedTree.getInstance(internalProject).addOperation(element));
 			}
 			removeDeletedElementsFromCachedTree(projectSpace, operation);
 		}

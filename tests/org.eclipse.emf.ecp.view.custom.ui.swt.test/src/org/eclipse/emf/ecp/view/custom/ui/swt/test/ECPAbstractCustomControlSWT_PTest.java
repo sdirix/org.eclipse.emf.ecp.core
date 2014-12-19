@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Jonas - initial API and implementation
  ******************************************************************************/
@@ -64,7 +64,7 @@ import org.junit.runner.RunWith;
 
 /**
  * @author Jonas
- * 
+ *
  */
 @RunWith(DatabindingClassRunner.class)
 public class ECPAbstractCustomControlSWT_PTest {
@@ -175,7 +175,7 @@ public class ECPAbstractCustomControlSWT_PTest {
 	 * Test method for
 	 * {@link org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT#createControls(org.eclipse.swt.widgets.Composite)}
 	 * .
-	 * 
+	 *
 	 * @throws NoPropertyDescriptorFoundExeption
 	 * @throws NoRendererFoundException
 	 */
@@ -223,7 +223,7 @@ public class ECPAbstractCustomControlSWT_PTest {
 	 * Test method for
 	 * {@link org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT#createControls(org.eclipse.swt.widgets.Composite)}
 	 * .
-	 * 
+	 *
 	 * @throws NoPropertyDescriptorFoundExeption
 	 * @throws NoRendererFoundException
 	 */
@@ -325,7 +325,7 @@ public class ECPAbstractCustomControlSWT_PTest {
 	 * Test method for
 	 * {@link org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT#handleValidation(org.eclipse.emf.common.util.Diagnostic)}
 	 * .
-	 * 
+	 *
 	 * @throws NoPropertyDescriptorFoundExeption
 	 * @throws NoRendererFoundException
 	 */

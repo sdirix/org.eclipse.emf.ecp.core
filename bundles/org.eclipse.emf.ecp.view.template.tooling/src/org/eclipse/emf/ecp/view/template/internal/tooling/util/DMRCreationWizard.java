@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
@@ -34,9 +34,9 @@ import org.eclipse.ui.IWorkbench;
 /**
  * Wizard for creating a {@link org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference
  * VFeaturePathDomainModelReference} for a DomainModelReferenceSelector.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  */
 @SuppressWarnings("restriction")
 public class DMRCreationWizard extends Wizard implements INewWizard {
@@ -47,7 +47,7 @@ public class DMRCreationWizard extends Wizard implements INewWizard {
 	/**
 	 * This caches an instance of the model package. <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected VViewPackage viewPackage = VViewPackage.eINSTANCE;
@@ -55,7 +55,7 @@ public class DMRCreationWizard extends Wizard implements INewWizard {
 	/**
 	 * This caches an instance of the model factory. <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected VViewFactory viewFactory = viewPackage.getViewFactory();
@@ -63,7 +63,7 @@ public class DMRCreationWizard extends Wizard implements INewWizard {
 	/**
 	 * Remember the selection during initialization for populating the default
 	 * container. <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected IStructuredSelection selection;
@@ -78,7 +78,7 @@ public class DMRCreationWizard extends Wizard implements INewWizard {
 	/**
 	 * Remember the workbench during initialization. <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected IWorkbench workbench;
@@ -86,7 +86,7 @@ public class DMRCreationWizard extends Wizard implements INewWizard {
 	/**
 	 * Caches the names of the types that can be created as the root object.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected List<String> initialObjectNames;
@@ -98,7 +98,7 @@ public class DMRCreationWizard extends Wizard implements INewWizard {
 	/**
 	 * This just records the information. <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -112,7 +112,7 @@ public class DMRCreationWizard extends Wizard implements INewWizard {
 	/**
 	 * The framework calls this to create the contents of the wizard. <!--
 	 * begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -126,7 +126,7 @@ public class DMRCreationWizard extends Wizard implements INewWizard {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.jface.wizard.Wizard#getStartingPage()
 	 */
 	@Override
@@ -141,7 +141,7 @@ public class DMRCreationWizard extends Wizard implements INewWizard {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.jface.wizard.Wizard#getNextPage(org.eclipse.jface.wizard.IWizardPage)
 	 */
 	@Override
@@ -197,7 +197,7 @@ public class DMRCreationWizard extends Wizard implements INewWizard {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.jface.wizard.Wizard#getPreviousPage(org.eclipse.jface.wizard.IWizardPage)
 	 */
 	@Override
@@ -213,7 +213,7 @@ public class DMRCreationWizard extends Wizard implements INewWizard {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.jface.wizard.Wizard#canFinish()
 	 */
 	@Override

@@ -57,13 +57,6 @@ import org.eclipse.emf.ecp.view.spi.rule.model.RuleFactory;
 import org.eclipse.emf.ecp.view.spi.rule.model.ShowRule;
 import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalFactory;
 import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalLayout;
-import org.eclipse.emf.emfstore.bowling.BowlingFactory;
-import org.eclipse.emf.emfstore.bowling.BowlingPackage;
-import org.eclipse.emf.emfstore.bowling.Fan;
-import org.eclipse.emf.emfstore.bowling.League;
-import org.eclipse.emf.emfstore.bowling.Merchandise;
-import org.eclipse.emf.emfstore.bowling.Player;
-import org.eclipse.emf.emfstore.bowling.impl.LeagueImpl;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -668,9 +661,9 @@ public class RuleService_PTest extends CommonRuleTest {
 			setupLeafConditionWithValueDMR("foo",
 				BowlingPackage.eINSTANCE.getLeague_Players(), Collections.<EReference> emptyList(),
 				BowlingPackage.eINSTANCE.getPlayer_Name(), Collections.<EReference> emptyList()),
-				setupLeafConditionWithValueDMR(3,
-					BowlingPackage.eINSTANCE.getLeague_Players(), Collections.<EReference> emptyList(),
-					BowlingPackage.eINSTANCE.getPlayer_NumberOfVictories(), Collections.<EReference> emptyList()));
+			setupLeafConditionWithValueDMR(3,
+				BowlingPackage.eINSTANCE.getLeague_Players(), Collections.<EReference> emptyList(),
+				BowlingPackage.eINSTANCE.getPlayer_NumberOfVictories(), Collections.<EReference> emptyList()));
 		instantiateRuleService(league);
 		player.setName("foo");
 		player.setNumberOfVictories(3);

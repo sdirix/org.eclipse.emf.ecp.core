@@ -38,7 +38,7 @@ import org.eclipse.swt.widgets.Display;
  * @see ILightweightLabelDecorator
  */
 public class RepositoryViewLabelDecorator extends LabelProvider implements ILightweightLabelDecorator, ESLoginObserver,
-ESLogoutObserver {
+	ESLogoutObserver {
 
 	/**
 	 * {@inheritDoc}
@@ -125,7 +125,7 @@ ESLogoutObserver {
 					// .toInternalAPI())));
 					((EMFStoreProvider) ECPUtil.getResolvedElement(ECPUtil.getECPProviderRegistry()
 						.getProvider(EMFStoreProvider.NAME))).getRepository(usersession.getServer()
-							)));
+						)));
 			}
 		});
 	}

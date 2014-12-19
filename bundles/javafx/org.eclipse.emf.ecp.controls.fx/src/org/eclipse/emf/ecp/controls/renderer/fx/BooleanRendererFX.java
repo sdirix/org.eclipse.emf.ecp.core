@@ -11,13 +11,13 @@ public class BooleanRendererFX extends SimpleControlRendererFX {
 
 	@Override
 	protected Node createControl() {
-		VControl control = getVElement();
-		CheckBox checkBox = new CheckBox();
-		IObservableValue targetValue = getTargetObservable(checkBox, "selected");
-		IObservableValue modelValue = getModelObservable(control
-				.getDomainModelReference().getIterator().next());
+		final VControl control = getVElement();
+		final CheckBox checkBox = new CheckBox();
+		final IObservableValue targetValue = getTargetObservable(checkBox, "selected");
+		final IObservableValue modelValue = getModelObservable(control
+			.getDomainModelReference().getIterator().next());
 		bindModelToTarget(targetValue, modelValue, null,
-				null);
+			null);
 		return checkBox;
 	}
 

@@ -1,11 +1,11 @@
 /********************************************************************************
  * Copyright (c) 2011 Eike Stepper (Berlin, Germany) and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eike Stepper - initial API and implementation
  ********************************************************************************/
@@ -24,7 +24,7 @@ import org.eclipse.emf.ecp.internal.core.util.PropertiesStore.StorableElement;
 
 /**
  * An element holding {@link ECPProperties}.
- * 
+ *
  * @author Eike Stepper
  */
 public abstract class PropertiesElement extends Element implements StorableElement, ECPPropertiesAware {
@@ -32,7 +32,7 @@ public abstract class PropertiesElement extends Element implements StorableEleme
 
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 * @param name the name of the elements
 	 * @param properties the initial properties
 	 */
@@ -44,7 +44,7 @@ public abstract class PropertiesElement extends Element implements StorableEleme
 
 	/**
 	 * Create a {@link PropertiesElement} from an {@link ObjectInput}.
-	 * 
+	 *
 	 * @param in the {@link ObjectInput}
 	 * @throws IOException if there a problem while reading the input
 	 */
@@ -69,7 +69,7 @@ public abstract class PropertiesElement extends Element implements StorableEleme
 
 	/**
 	 * Called if the properties of the element change. Can be implemented by subclasses
-	 * 
+	 *
 	 * @param oldProperties the old properties
 	 * @param newProperties the new properties
 	 */

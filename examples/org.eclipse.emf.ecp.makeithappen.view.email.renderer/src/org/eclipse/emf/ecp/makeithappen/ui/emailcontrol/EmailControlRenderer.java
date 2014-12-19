@@ -38,7 +38,7 @@ public class EmailControlRenderer extends TextControlSWTRenderer {
 		final Composite main = new Composite(parent, SWT.NONE);
 		GridLayoutFactory.fillDefaults().numColumns(2).applyTo(main);
 		GridDataFactory.fillDefaults().grab(true, false)
-		.align(SWT.FILL, SWT.BEGINNING).applyTo(main);
+			.align(SWT.FILL, SWT.BEGINNING).applyTo(main);
 		final Control control = super.createSWTControl(main, setting);
 		final Button button = new Button(main, SWT.PUSH);
 		button.setText("Send Mail"); //$NON-NLS-1$

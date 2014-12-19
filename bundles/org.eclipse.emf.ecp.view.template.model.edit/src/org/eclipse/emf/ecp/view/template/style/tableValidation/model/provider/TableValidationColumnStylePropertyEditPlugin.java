@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * EclipseSource Munich - initial API and implementation
  */
@@ -19,7 +19,7 @@ import org.eclipse.emf.ecp.view.template.model.provider.TemplateEditPlugin;
  * This is the central singleton for the TableValidationColumnStyleProperty edit plugin.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
- * 
+ *
  * @generated
  */
 public final class TableValidationColumnStylePropertyEditPlugin extends EMFPlugin {
@@ -27,7 +27,7 @@ public final class TableValidationColumnStylePropertyEditPlugin extends EMFPlugi
 	 * Keep track of the singleton.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public static final TableValidationColumnStylePropertyEditPlugin INSTANCE = new TableValidationColumnStylePropertyEditPlugin();
@@ -36,7 +36,7 @@ public final class TableValidationColumnStylePropertyEditPlugin extends EMFPlugi
 	 * Keep track of the singleton.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private static Implementation plugin;
@@ -45,7 +45,7 @@ public final class TableValidationColumnStylePropertyEditPlugin extends EMFPlugi
 	 * Create the instance.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public TableValidationColumnStylePropertyEditPlugin() {
@@ -58,7 +58,7 @@ public final class TableValidationColumnStylePropertyEditPlugin extends EMFPlugi
 	 * Returns the singleton instance of the Eclipse plugin.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the singleton instance.
 	 * @generated
 	 */
@@ -71,7 +71,7 @@ public final class TableValidationColumnStylePropertyEditPlugin extends EMFPlugi
 	 * Returns the singleton instance of the Eclipse plugin.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the singleton instance.
 	 * @generated
 	 */
@@ -83,7 +83,7 @@ public final class TableValidationColumnStylePropertyEditPlugin extends EMFPlugi
 	 * The actual implementation of the Eclipse <b>Plugin</b>.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public static class Implementation extends EclipsePlugin {
@@ -91,7 +91,7 @@ public final class TableValidationColumnStylePropertyEditPlugin extends EMFPlugi
 		 * Creates an instance.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		public Implementation() {

@@ -21,7 +21,7 @@ public class ViewModelMigrationException extends Exception {
 
 	/**
 	 * Default constructor.
-	 * 
+	 *
 	 * @param ex the throwable to wrap
 	 */
 	public ViewModelMigrationException(Throwable ex) {

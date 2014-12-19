@@ -1,14 +1,14 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
- * 
+ *
  *******************************************************************************/
 package org.eclipse.emf.ecp.internal.diagnostician;
 
@@ -20,7 +20,7 @@ import org.osgi.framework.BundleContext;
 
 /**
  * The activator class controls the plug-in life cycle.
- * 
+ *
  * @author jfaltermeier
  */
 public class Activator extends Plugin {
@@ -46,7 +46,7 @@ public class Activator extends Plugin {
 
 	/**
 	 * Returns the shared instance.
-	 * 
+	 *
 	 * @return the shared instance
 	 */
 	public static Activator getInstance() {
@@ -55,7 +55,7 @@ public class Activator extends Plugin {
 
 	/**
 	 * Logs messages.
-	 * 
+	 *
 	 * @param message the message
 	 */
 	public static void log(String message) {
@@ -64,7 +64,7 @@ public class Activator extends Plugin {
 
 	/**
 	 * Logs messages and {@link Throwable}.
-	 * 
+	 *
 	 * @param message the message
 	 * @param t the throwable
 	 */
@@ -79,7 +79,7 @@ public class Activator extends Plugin {
 
 	/**
 	 * Logs {@link IStatus}.
-	 * 
+	 *
 	 * @param status the {@link IStatus}
 	 */
 	public static void log(IStatus status) {
@@ -88,7 +88,7 @@ public class Activator extends Plugin {
 
 	/**
 	 * Logs {@link Throwable}.
-	 * 
+	 *
 	 * @param t the {@link Throwable}
 	 * @return the message of the created status
 	 */
@@ -100,7 +100,7 @@ public class Activator extends Plugin {
 
 	/**
 	 * Gets a {@link IStatus} for a throwable.
-	 * 
+	 *
 	 * @param t the {@link Throwable}
 	 * @return the created {@link IStatus}
 	 */

@@ -16,16 +16,15 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Car</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '
+ * <em><b>Car</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link car.impl.CarImpl#getManufacturer <em>Manufacturer</em>}</li>
- *   <li>{@link car.impl.CarImpl#getLicensePlate <em>License Plate</em>}</li>
- *   <li>{@link car.impl.CarImpl#getSeatCount <em>Seat Count</em>}</li>
- *   <li>{@link car.impl.CarImpl#getDriver <em>Driver</em>}</li>
+ * <li>{@link car.impl.CarImpl#getManufacturer <em>Manufacturer</em>}</li>
+ * <li>{@link car.impl.CarImpl#getLicensePlate <em>License Plate</em>}</li>
+ * <li>{@link car.impl.CarImpl#getSeatCount <em>Seat Count</em>}</li>
+ * <li>{@link car.impl.CarImpl#getDriver <em>Driver</em>}</li>
  * </ul>
  * </p>
  *
@@ -33,9 +32,10 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  */
 public class CarImpl extends MinimalEObjectImpl.Container implements Car {
 	/**
-	 * The default value of the '{@link #getManufacturer() <em>Manufacturer</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The default value of the '{@link #getManufacturer()
+	 * <em>Manufacturer</em>}' attribute. <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
+	 * 
 	 * @see #getManufacturer()
 	 * @generated
 	 * @ordered
@@ -43,9 +43,9 @@ public class CarImpl extends MinimalEObjectImpl.Container implements Car {
 	protected static final String MANUFACTURER_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getManufacturer() <em>Manufacturer</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The cached value of the '{@link #getManufacturer() <em>Manufacturer</em>}
+	 * ' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getManufacturer()
 	 * @generated
 	 * @ordered
@@ -53,9 +53,10 @@ public class CarImpl extends MinimalEObjectImpl.Container implements Car {
 	protected String manufacturer = MANUFACTURER_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getLicensePlate() <em>License Plate</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The default value of the '{@link #getLicensePlate()
+	 * <em>License Plate</em>}' attribute. <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
+	 * 
 	 * @see #getLicensePlate()
 	 * @generated
 	 * @ordered
@@ -63,9 +64,10 @@ public class CarImpl extends MinimalEObjectImpl.Container implements Car {
 	protected static final String LICENSE_PLATE_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getLicensePlate() <em>License Plate</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The cached value of the '{@link #getLicensePlate()
+	 * <em>License Plate</em>}' attribute. <!-- begin-user-doc --> <!--
+	 * end-user-doc -->
+	 * 
 	 * @see #getLicensePlate()
 	 * @generated
 	 * @ordered
@@ -73,9 +75,9 @@ public class CarImpl extends MinimalEObjectImpl.Container implements Car {
 	protected String licensePlate = LICENSE_PLATE_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getSeatCount() <em>Seat Count</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The default value of the '{@link #getSeatCount() <em>Seat Count</em>}'
+	 * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getSeatCount()
 	 * @generated
 	 * @ordered
@@ -83,9 +85,9 @@ public class CarImpl extends MinimalEObjectImpl.Container implements Car {
 	protected static final int SEAT_COUNT_EDEFAULT = 0;
 
 	/**
-	 * The cached value of the '{@link #getSeatCount() <em>Seat Count</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The cached value of the '{@link #getSeatCount() <em>Seat Count</em>}'
+	 * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getSeatCount()
 	 * @generated
 	 * @ordered
@@ -93,9 +95,9 @@ public class CarImpl extends MinimalEObjectImpl.Container implements Car {
 	protected int seatCount = SEAT_COUNT_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getDriver() <em>Driver</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * The cached value of the '{@link #getDriver() <em>Driver</em>}'
+	 * containment reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #getDriver()
 	 * @generated
 	 * @ordered
@@ -103,8 +105,8 @@ public class CarImpl extends MinimalEObjectImpl.Container implements Car {
 	protected Driver driver;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected CarImpl() {
@@ -112,8 +114,8 @@ public class CarImpl extends MinimalEObjectImpl.Container implements Car {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -122,221 +124,248 @@ public class CarImpl extends MinimalEObjectImpl.Container implements Car {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
+	@Override
 	public String getManufacturer() {
 		return manufacturer;
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
+	@Override
 	public void setManufacturer(String newManufacturer) {
 		String oldManufacturer = manufacturer;
 		manufacturer = newManufacturer;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CarPackage.CAR__MANUFACTURER, oldManufacturer, manufacturer));
+			eNotify(new ENotificationImpl(this, Notification.SET,
+					CarPackage.CAR__MANUFACTURER, oldManufacturer, manufacturer));
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
+	@Override
 	public String getLicensePlate() {
 		return licensePlate;
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
+	@Override
 	public void setLicensePlate(String newLicensePlate) {
 		String oldLicensePlate = licensePlate;
 		licensePlate = newLicensePlate;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CarPackage.CAR__LICENSE_PLATE, oldLicensePlate, licensePlate));
+			eNotify(new ENotificationImpl(this, Notification.SET,
+					CarPackage.CAR__LICENSE_PLATE, oldLicensePlate,
+					licensePlate));
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
+	@Override
 	public int getSeatCount() {
 		return seatCount;
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
+	@Override
 	public void setSeatCount(int newSeatCount) {
 		int oldSeatCount = seatCount;
 		seatCount = newSeatCount;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CarPackage.CAR__SEAT_COUNT, oldSeatCount, seatCount));
+			eNotify(new ENotificationImpl(this, Notification.SET,
+					CarPackage.CAR__SEAT_COUNT, oldSeatCount, seatCount));
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
+	@Override
 	public Driver getDriver() {
 		return driver;
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
-	public NotificationChain basicSetDriver(Driver newDriver, NotificationChain msgs) {
+	public NotificationChain basicSetDriver(Driver newDriver,
+			NotificationChain msgs) {
 		Driver oldDriver = driver;
 		driver = newDriver;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CarPackage.CAR__DRIVER, oldDriver, newDriver);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
+			ENotificationImpl notification = new ENotificationImpl(this,
+					Notification.SET, CarPackage.CAR__DRIVER, oldDriver,
+					newDriver);
+			if (msgs == null)
+				msgs = notification;
+			else
+				msgs.add(notification);
 		}
 		return msgs;
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
+	@Override
 	public void setDriver(Driver newDriver) {
 		if (newDriver != driver) {
 			NotificationChain msgs = null;
 			if (driver != null)
-				msgs = ((InternalEObject)driver).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CarPackage.CAR__DRIVER, null, msgs);
+				msgs = ((InternalEObject) driver).eInverseRemove(this,
+						EOPPOSITE_FEATURE_BASE - CarPackage.CAR__DRIVER, null,
+						msgs);
 			if (newDriver != null)
-				msgs = ((InternalEObject)newDriver).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CarPackage.CAR__DRIVER, null, msgs);
+				msgs = ((InternalEObject) newDriver).eInverseAdd(this,
+						EOPPOSITE_FEATURE_BASE - CarPackage.CAR__DRIVER, null,
+						msgs);
 			msgs = basicSetDriver(newDriver, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CarPackage.CAR__DRIVER, newDriver, newDriver));
+			if (msgs != null)
+				msgs.dispatch();
+		} else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET,
+					CarPackage.CAR__DRIVER, newDriver, newDriver));
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+	public NotificationChain eInverseRemove(InternalEObject otherEnd,
+			int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case CarPackage.CAR__DRIVER:
-				return basicSetDriver(null, msgs);
+		case CarPackage.CAR__DRIVER:
+			return basicSetDriver(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CarPackage.CAR__MANUFACTURER:
-				return getManufacturer();
-			case CarPackage.CAR__LICENSE_PLATE:
-				return getLicensePlate();
-			case CarPackage.CAR__SEAT_COUNT:
-				return getSeatCount();
-			case CarPackage.CAR__DRIVER:
-				return getDriver();
+		case CarPackage.CAR__MANUFACTURER:
+			return getManufacturer();
+		case CarPackage.CAR__LICENSE_PLATE:
+			return getLicensePlate();
+		case CarPackage.CAR__SEAT_COUNT:
+			return getSeatCount();
+		case CarPackage.CAR__DRIVER:
+			return getDriver();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CarPackage.CAR__MANUFACTURER:
-				setManufacturer((String)newValue);
-				return;
-			case CarPackage.CAR__LICENSE_PLATE:
-				setLicensePlate((String)newValue);
-				return;
-			case CarPackage.CAR__SEAT_COUNT:
-				setSeatCount((Integer)newValue);
-				return;
-			case CarPackage.CAR__DRIVER:
-				setDriver((Driver)newValue);
-				return;
+		case CarPackage.CAR__MANUFACTURER:
+			setManufacturer((String) newValue);
+			return;
+		case CarPackage.CAR__LICENSE_PLATE:
+			setLicensePlate((String) newValue);
+			return;
+		case CarPackage.CAR__SEAT_COUNT:
+			setSeatCount((Integer) newValue);
+			return;
+		case CarPackage.CAR__DRIVER:
+			setDriver((Driver) newValue);
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CarPackage.CAR__MANUFACTURER:
-				setManufacturer(MANUFACTURER_EDEFAULT);
-				return;
-			case CarPackage.CAR__LICENSE_PLATE:
-				setLicensePlate(LICENSE_PLATE_EDEFAULT);
-				return;
-			case CarPackage.CAR__SEAT_COUNT:
-				setSeatCount(SEAT_COUNT_EDEFAULT);
-				return;
-			case CarPackage.CAR__DRIVER:
-				setDriver((Driver)null);
-				return;
+		case CarPackage.CAR__MANUFACTURER:
+			setManufacturer(MANUFACTURER_EDEFAULT);
+			return;
+		case CarPackage.CAR__LICENSE_PLATE:
+			setLicensePlate(LICENSE_PLATE_EDEFAULT);
+			return;
+		case CarPackage.CAR__SEAT_COUNT:
+			setSeatCount(SEAT_COUNT_EDEFAULT);
+			return;
+		case CarPackage.CAR__DRIVER:
+			setDriver((Driver) null);
+			return;
 		}
 		super.eUnset(featureID);
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CarPackage.CAR__MANUFACTURER:
-				return MANUFACTURER_EDEFAULT == null ? manufacturer != null : !MANUFACTURER_EDEFAULT.equals(manufacturer);
-			case CarPackage.CAR__LICENSE_PLATE:
-				return LICENSE_PLATE_EDEFAULT == null ? licensePlate != null : !LICENSE_PLATE_EDEFAULT.equals(licensePlate);
-			case CarPackage.CAR__SEAT_COUNT:
-				return seatCount != SEAT_COUNT_EDEFAULT;
-			case CarPackage.CAR__DRIVER:
-				return driver != null;
+		case CarPackage.CAR__MANUFACTURER:
+			return MANUFACTURER_EDEFAULT == null ? manufacturer != null
+					: !MANUFACTURER_EDEFAULT.equals(manufacturer);
+		case CarPackage.CAR__LICENSE_PLATE:
+			return LICENSE_PLATE_EDEFAULT == null ? licensePlate != null
+					: !LICENSE_PLATE_EDEFAULT.equals(licensePlate);
+		case CarPackage.CAR__SEAT_COUNT:
+			return seatCount != SEAT_COUNT_EDEFAULT;
+		case CarPackage.CAR__DRIVER:
+			return driver != null;
 		}
 		return super.eIsSet(featureID);
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy()) return super.toString();
+		if (eIsProxy())
+			return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (manufacturer: ");
@@ -349,4 +378,4 @@ public class CarImpl extends MinimalEObjectImpl.Container implements Car {
 		return result.toString();
 	}
 
-} //CarImpl
+} // CarImpl

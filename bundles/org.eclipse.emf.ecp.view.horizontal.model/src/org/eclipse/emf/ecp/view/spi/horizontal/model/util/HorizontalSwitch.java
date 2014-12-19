@@ -30,8 +30,9 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
  * and proceeding up the inheritance hierarchy
  * until a non-null result is returned,
  * which is the result of the switch.
+ *
  * @since 1.2
- * <!-- end-user-doc -->
+ *        <!-- end-user-doc -->
  *
  * @see org.eclipse.emf.ecp.view.spi.horizontal.model.VHorizontalPackage
  * @generated
@@ -189,7 +190,7 @@ public class HorizontalSwitch<T> extends Switch<T>
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
-	 * 
+	 *
 	 * @since 1.4
 	 *        <!-- end-user-doc -->
 	 *

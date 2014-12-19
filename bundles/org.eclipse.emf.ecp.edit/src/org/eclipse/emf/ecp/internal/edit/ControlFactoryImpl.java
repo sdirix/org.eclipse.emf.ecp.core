@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
@@ -32,9 +32,9 @@ import org.osgi.framework.Bundle;
  * The ControlFactoryImpl is a Singleton which reads the org.eclipse.emf.ecp.editor.widgets ExtensionPoint and provides
  * a method ({@link #createControl(Class, VDomainModelReference)}) for creating a suitable
  * control for with the known widgets.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  */
 @Deprecated
 public final class ControlFactoryImpl implements ECPControlFactory {
@@ -132,7 +132,7 @@ public final class ControlFactoryImpl implements ECPControlFactory {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.edit.spi.ECPControlFactory#createControl(java.lang.Class,
 	 *      org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)
 	 */
@@ -150,7 +150,7 @@ public final class ControlFactoryImpl implements ECPControlFactory {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.edit.spi.ECPControlFactory#createControl(java.lang.String)
 	 */
 	@Override

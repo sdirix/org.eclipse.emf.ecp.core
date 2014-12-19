@@ -1497,7 +1497,7 @@ public class ViewValidation_PTest extends CommonValidationTest {
 		final Writer writer = TestFactory.eINSTANCE.createWriter();
 		final VControl control = VViewFactory.eINSTANCE.createControl();
 		control
-		.setDomainModelReference(
+			.setDomainModelReference(
 			getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getWriter_FirstName()));
 
 		final ViewModelContext vmc = ViewModelContextFactory.INSTANCE.createViewModelContext(control, writer);

@@ -55,7 +55,7 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
  * @generated
  */
 public class CategorizationItemProviderAdapterFactory extends CategorizationAdapterFactory implements
-ComposeableAdapterFactory, IChangeNotifier, IDisposable, IChildCreationExtender
+	ComposeableAdapterFactory, IChangeNotifier, IDisposable, IChildCreationExtender
 {
 	/**
 	 * This keeps track of the root adapter factory that delegates to this adapter factory.
@@ -456,7 +456,7 @@ ComposeableAdapterFactory, IChangeNotifier, IDisposable, IChildCreationExtender
 			public Object caseView(VView object)
 			{
 				newChildDescriptors.add
-				(createChildParameter
+					(createChildParameter
 					(VViewPackage.Literals.VIEW__CHILDREN,
 						VCategorizationFactory.eINSTANCE.createCategorizationElement()));
 
@@ -473,7 +473,7 @@ ComposeableAdapterFactory, IChangeNotifier, IDisposable, IChildCreationExtender
 			public Object caseContainer(VContainer object)
 			{
 				newChildDescriptors.add
-				(createChildParameter
+					(createChildParameter
 					(VViewPackage.Literals.CONTAINER__CHILDREN,
 						VCategorizationFactory.eINSTANCE.createCategorizationElement()));
 

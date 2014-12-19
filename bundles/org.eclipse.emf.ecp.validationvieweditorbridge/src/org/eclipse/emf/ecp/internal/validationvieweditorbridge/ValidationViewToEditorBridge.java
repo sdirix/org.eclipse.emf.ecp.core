@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
  ******************************************************************************/
@@ -23,15 +23,15 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 /**
  * Double click listener for the validation view which opens the model editor for the {@link EObject} associated with
  * the double clicked {@link Diagnostic}.
- * 
+ *
  * @author jfaltermeier
- * 
+ *
  */
 public class ValidationViewToEditorBridge implements IDoubleClickListener {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.jface.viewers.IDoubleClickListener#doubleClick(org.eclipse.jface.viewers.DoubleClickEvent)
 	 */
 	@Override

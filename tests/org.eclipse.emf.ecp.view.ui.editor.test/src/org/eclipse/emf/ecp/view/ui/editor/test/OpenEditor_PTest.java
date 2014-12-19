@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * jfaltermeier - initial API and implementation
  ******************************************************************************/
@@ -26,9 +26,6 @@ import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.test.common.GCCollectable;
-import org.eclipse.emf.emfstore.bowling.BowlingFactory;
-import org.eclipse.emf.emfstore.bowling.BowlingPackage;
-import org.eclipse.emf.emfstore.bowling.Player;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.junit.AfterClass;
 import org.junit.runner.RunWith;
@@ -38,10 +35,10 @@ import org.junit.runners.Parameterized.Parameters;
 /**
  * Test case that renders a view, disposes it and checks whether the view
  * is garbage collectable.
- * 
+ *
  * @author emueller
  * @author jfaltermeier
- * 
+ *
  */
 @RunWith(Parameterized.class)
 public class OpenEditor_PTest extends ECPCommonSWTBotTest {
@@ -76,7 +73,7 @@ public class OpenEditor_PTest extends ECPCommonSWTBotTest {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.ui.editor.test.ECPCommonSWTBotTest#logic()
 	 */
 	@Override
@@ -110,7 +107,7 @@ public class OpenEditor_PTest extends ECPCommonSWTBotTest {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.ui.editor.test.ECPCommonSWTBotTest#createDomainObject()
 	 */
 	@Override
@@ -139,7 +136,7 @@ public class OpenEditor_PTest extends ECPCommonSWTBotTest {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.ui.editor.test.ECPCommonSWTBotTest#createView()
 	 */
 	@Override

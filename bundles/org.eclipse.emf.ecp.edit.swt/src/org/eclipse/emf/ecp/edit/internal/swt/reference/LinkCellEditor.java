@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  *******************************************************************************/
@@ -36,9 +36,9 @@ import org.eclipse.swt.widgets.Link;
 
 /**
  * A cell editor displaying a link.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  */
 public class LinkCellEditor extends CellEditor implements ECPCellEditor {
 
@@ -49,7 +49,7 @@ public class LinkCellEditor extends CellEditor implements ECPCellEditor {
 
 	/**
 	 * Default constructor.
-	 * 
+	 *
 	 * @param parent the parent
 	 */
 	public LinkCellEditor(Composite parent) {
@@ -58,7 +58,7 @@ public class LinkCellEditor extends CellEditor implements ECPCellEditor {
 
 	/**
 	 * Constructor allowing to specify a SWT style.
-	 * 
+	 *
 	 * @param parent the parent
 	 * @param style the SWT style
 	 */
@@ -67,9 +67,9 @@ public class LinkCellEditor extends CellEditor implements ECPCellEditor {
 	}
 
 	/**
-	 * 
+	 *
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getValueProperty()
 	 */
 	@Override
@@ -103,7 +103,7 @@ public class LinkCellEditor extends CellEditor implements ECPCellEditor {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#instantiate(org.eclipse.emf.ecore.EStructuralFeature,
 	 *      org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
@@ -210,9 +210,9 @@ public class LinkCellEditor extends CellEditor implements ECPCellEditor {
 	}
 
 	/**
-	 * 
+	 *
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getFormatedString(java.lang.Object)
 	 */
 	@Override
@@ -221,9 +221,9 @@ public class LinkCellEditor extends CellEditor implements ECPCellEditor {
 	}
 
 	/**
-	 * 
+	 *
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getColumnWidthWeight()
 	 */
 	@Override
@@ -232,9 +232,9 @@ public class LinkCellEditor extends CellEditor implements ECPCellEditor {
 	}
 
 	/**
-	 * 
+	 *
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getTargetToModelStrategy()
 	 */
 	@Override
@@ -244,9 +244,9 @@ public class LinkCellEditor extends CellEditor implements ECPCellEditor {
 	}
 
 	/**
-	 * 
+	 *
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getModelToTargetStrategy()
 	 */
 	@Override
@@ -257,7 +257,7 @@ public class LinkCellEditor extends CellEditor implements ECPCellEditor {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#setEditable(boolean)
 	 */
 	@Override

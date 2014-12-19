@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * David Soto Setzke - initial API and implementation
  ******************************************************************************/
@@ -29,7 +29,7 @@ public class ProjectHelper {
 	/**
 	 * Returns the simple project name.
 	 * Example: Will return "project" if the full project name is "org.eclipse.project".
-	 * 
+	 *
 	 * @return The simple project name based on the full project name
 	 */
 	public String getProjectName() {
@@ -52,8 +52,8 @@ public class ProjectHelper {
 	 * this segment will be returned.<br>
 	 * <br>
 	 * <b>Example</b>: Will return {@code "org.eclipse"} if the full project name is {@code "org.eclipse.project"}.
-	 * 
-	 * 
+	 *
+	 *
 	 * @return The namespace prefix based on the full project name
 	 */
 	public String getNSPrefix() {
@@ -67,7 +67,7 @@ public class ProjectHelper {
 	/**
 	 * Returns the namespace URL.
 	 * Example: Will return "http://eclipse.org/project" if the full project name is "org.eclipse.project".
-	 * 
+	 *
 	 * @return The namespace URL based on the full project name
 	 */
 	public String getNSURL() {
@@ -111,7 +111,7 @@ public class ProjectHelper {
 
 	/**
 	 * Sets the projects full name which is used for the computations.
-	 * 
+	 *
 	 * @param projectFullName The full name of the project
 	 */
 	public void setProjectFullName(String projectFullName) {

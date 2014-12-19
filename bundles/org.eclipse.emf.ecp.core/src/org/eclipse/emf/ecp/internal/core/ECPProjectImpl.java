@@ -1,14 +1,14 @@
 /*******************************************************************************
  * Copyright (c) 2011 Eike Stepper (Berlin, Germany) and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eike Stepper - initial API and implementation
- * 
+ *
  *******************************************************************************/
 package org.eclipse.emf.ecp.internal.core;
 
@@ -79,7 +79,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 
 	/**
 	 * Constructor used when an offline project is created.
-	 * 
+	 *
 	 * @param provider the {@link InternalProvider} of this project
 	 * @param name the name of the project
 	 * @param properties the properties of the project
@@ -94,7 +94,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 
 	/**
 	 * Constructor used when an online project is created.
-	 * 
+	 *
 	 * @param repository the {@link ECPRepository} of this project
 	 * @param name the name of the project
 	 * @param properties the properties of the project
@@ -115,7 +115,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 
 	/**
 	 * Constructor used to load persisted projects on startup.
-	 * 
+	 *
 	 * @param in the {@link ObjectInput} to parse
 	 * @throws IOException is thrown when file can't be read.
 	 */
@@ -319,7 +319,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 	 * override this method (however, if they do so, they should invoke the method on their superclass to ensure that
 	 * the Platform's adapter manager is consulted).
 	 * </p>
-	 * 
+	 *
 	 * @param adapterType
 	 *            the class to adapt to
 	 * @return the adapted object or <code>null</code>

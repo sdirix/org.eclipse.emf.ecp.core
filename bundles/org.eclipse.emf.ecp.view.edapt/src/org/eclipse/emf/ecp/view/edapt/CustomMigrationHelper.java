@@ -68,7 +68,7 @@ public final class CustomMigrationHelper {
 
 	/**
 	 * Returns the name of the bundle which contains the custom migration.
-	 * 
+	 *
 	 * @param clazz the fully qualified class name of the custom migration.
 	 * @return the bundle name
 	 */

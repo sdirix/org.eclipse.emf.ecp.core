@@ -24,7 +24,7 @@ import org.eclipse.emf.ecp.spi.core.util.InternalChildrenList;
  */
 public class ProvidersContentProvider extends TreeContentProvider<ECPProviderRegistry> implements
 	// ECPProviderRegistry.Listener
-ECPProvidersChangedObserver {
+	ECPProvidersChangedObserver {
 	private final boolean excludesProvidersThatCannotAddRepositories;
 
 	public ProvidersContentProvider() {

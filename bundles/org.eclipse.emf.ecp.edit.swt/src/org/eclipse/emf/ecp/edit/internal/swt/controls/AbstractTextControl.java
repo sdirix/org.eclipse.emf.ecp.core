@@ -1,14 +1,14 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
- * 
+ *
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.controls;
 
@@ -35,7 +35,7 @@ import org.eclipse.swt.widgets.ToolTip;
 
 /**
  * This abstract class is used as a common superclass for all widgets that use a {@link Text} widget.
- * 
+ *
  * @author Eugen Neufeld
  */
 public abstract class AbstractTextControl extends SingleControl {
@@ -72,7 +72,7 @@ public abstract class AbstractTextControl extends SingleControl {
 
 	/**
 	 * Creates a {@link ToolTip}.
-	 * 
+	 *
 	 * @param style the SWT style
 	 * @param text the text
 	 * @param message the message
@@ -88,7 +88,7 @@ public abstract class AbstractTextControl extends SingleControl {
 
 	/**
 	 * This method allows to set custom values to the text field, e.g. a tooltip or a validation.
-	 * 
+	 *
 	 * @param text the text widget to customize
 	 */
 	protected void customizeText(Text text) {
@@ -97,14 +97,14 @@ public abstract class AbstractTextControl extends SingleControl {
 
 	/**
 	 * The VariantId to use e.g. for RAP
-	 * 
+	 *
 	 * @return the String identifying this control
 	 */
 	protected abstract String getTextVariantID();
 
 	/**
 	 * The LayoutData for the created {@link Text} widget. Can be changed by the concrete classes.
-	 * 
+	 *
 	 * @return the {@link GridData} to apply
 	 */
 	protected GridData getTextWidgetLayoutData() {
@@ -113,7 +113,7 @@ public abstract class AbstractTextControl extends SingleControl {
 
 	/**
 	 * The style to apply to the text widget. This can be changed by the concrete classes.
-	 * 
+	 *
 	 * @return the style to apply
 	 */
 	protected int getTextWidgetStyle() {
@@ -168,7 +168,7 @@ public abstract class AbstractTextControl extends SingleControl {
 
 	/**
 	 * Creates a tooltip binding for this control.
-	 * 
+	 *
 	 * @param targetToModel the {@link UpdateValueStrategy} from target to Model
 	 * @param modelToTarget the {@link UpdateValueStrategy} from model to target
 	 * @return the created {@link Binding}
@@ -182,7 +182,7 @@ public abstract class AbstractTextControl extends SingleControl {
 
 	/**
 	 * Sets the content of the SWT text control to the given string without calling {@link #validateString(String)}.
-	 * 
+	 *
 	 * @param string
 	 *            the content of the SWT Text control
 	 */
@@ -211,9 +211,9 @@ public abstract class AbstractTextControl extends SingleControl {
 	 * of the actual value. Use this class to provide a specific context
 	 * for the conversion of the value, but likewise enable it clients to modify
 	 * the conversion behavior.
-	 * 
+	 *
 	 * @author emueller
-	 * 
+	 *
 	 */
 	class EMFUpdateConvertValueStrategy extends EMFUpdateValueStrategy {
 

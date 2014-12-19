@@ -1,11 +1,11 @@
 /********************************************************************************
  * Copyright (c) 2011 Eike Stepper (Berlin, Germany) and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eike Stepper - initial API and implementation
  ********************************************************************************/
@@ -55,7 +55,7 @@ public final class UIProviderRegistryImpl extends ElementRegistry<UIProvider, EC
 	@Override
 	public UIProvider getUIProvider(Object adaptable) {
 		if (adaptable instanceof ECPProviderAware) {
-			ECPProvider provider = ((ECPProviderAware) adaptable).getProvider();
+			final ECPProvider provider = ((ECPProviderAware) adaptable).getProvider();
 			if (provider != null) {
 				return getUIProvider(provider);
 			}
@@ -70,7 +70,7 @@ public final class UIProviderRegistryImpl extends ElementRegistry<UIProvider, EC
 			return uiProvider;
 		}
 
-		for (UIProvider ui : getUIProviders()) {
+		for (final UIProvider ui : getUIProviders()) {
 			if (ui.getProvider().equals(provider)) {
 				uiProvider = ui;
 				break;
@@ -137,7 +137,7 @@ public final class UIProviderRegistryImpl extends ElementRegistry<UIProvider, EC
 
 		@Override
 		protected UIProvider createElement(String name, IConfigurationElement configurationElement) {
-			UIProviderDescriptor descriptor = new UIProviderDescriptor(name, configurationElement);
+			final UIProviderDescriptor descriptor = new UIProviderDescriptor(name, configurationElement);
 			descriptor.setLabel(configurationElement.getDeclaringExtension().getLabel());
 			descriptor.setDescription(configurationElement.getAttribute("description"));
 			return descriptor;

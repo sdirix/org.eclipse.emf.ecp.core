@@ -191,7 +191,7 @@ public final class ESLocalProjectTreeCell extends TreeCell<Object> {
 			@Override
 			public void changed(
 				ObservableValue<? extends TreeItem<Object>> observable,
-					TreeItem<Object> oldValue, TreeItem<Object> newValue) {
+				TreeItem<Object> oldValue, TreeItem<Object> newValue) {
 				saveItem.setDisable(true);
 				if (newValue == null) {
 					return;
@@ -321,7 +321,7 @@ public final class ESLocalProjectTreeCell extends TreeCell<Object> {
 				if (image instanceof URL) {
 					final ImageView imageView = new ImageView(
 						((URL) image)
-						.toExternalForm());
+							.toExternalForm());
 					pane.getChildren().add(imageView);
 				}
 			}
@@ -335,7 +335,7 @@ public final class ESLocalProjectTreeCell extends TreeCell<Object> {
 		// remove the adapter if attached
 		if (currentItem instanceof Notifier) {
 			((Notifier) currentItem).eAdapters()
-			.remove(adapter);
+				.remove(adapter);
 		}
 
 		// update the current item

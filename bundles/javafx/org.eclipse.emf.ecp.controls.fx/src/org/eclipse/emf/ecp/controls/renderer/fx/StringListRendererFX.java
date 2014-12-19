@@ -1,10 +1,9 @@
 /**
- * 
+ *
  */
 package org.eclipse.emf.ecp.controls.renderer.fx;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.Collections;
 import java.util.List;
 
 import javafx.beans.value.ChangeListener;
@@ -42,10 +41,10 @@ public class StringListRendererFX extends SimpleControlRendererFX {
 
 		final VControl control = getVElement();
 		final Setting setting = control.getDomainModelReference().getIterator()
-				.next();
-		VBox vBox = new VBox();
+			.next();
+		final VBox vBox = new VBox();
 
-		Button addBtn = new Button("Add");
+		final Button addBtn = new Button("Add");
 		addBtn.setMaxWidth(Double.MAX_VALUE);
 		addBtn.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -56,12 +55,12 @@ public class StringListRendererFX extends SimpleControlRendererFX {
 		});
 		vBox.getChildren().add(addBtn);
 
-		ListView<Object> listView = new ListView<>();
+		final ListView<Object> listView = new ListView<>();
 
 		VBox.setMargin(listView, new Insets(0));
 
 		listView.setItems(new ManyAttributesObservableList<>(setting
-				.getEObject(), setting.getEStructuralFeature()));
+			.getEObject(), setting.getEStructuralFeature()));
 		listView.setEditable(true);
 
 		listView.setCellFactory(new Callback<ListView<Object>, ListCell<Object>>() {
@@ -74,7 +73,7 @@ public class StringListRendererFX extends SimpleControlRendererFX {
 						super.updateItem(item, empty);
 
 						if (item != null) {
-							Label tf = new Label();
+							final Label tf = new Label();
 							tf.setText(item.toString());
 							setGraphic(tf);
 						}
@@ -82,15 +81,15 @@ public class StringListRendererFX extends SimpleControlRendererFX {
 
 					@Override
 					public void cancelEdit() {
-						Label tf = new Label();
+						final Label tf = new Label();
 						tf.setText(getListValue().toString());
 						setGraphic(tf);
 					}
 
 					@Override
 					public void commitEdit(Object value) {
-						List<Object> objects = (List<Object>) setting
-								.get(false);
+						final List<Object> objects = (List<Object>) setting
+							.get(false);
 						objects.set(getIndex(), value);
 						cancelEdit();
 					}
@@ -99,17 +98,18 @@ public class StringListRendererFX extends SimpleControlRendererFX {
 					public void startEdit() {
 						final TextField textField = new TextField();
 						textField.focusedProperty().addListener(
-								new ChangeListener<Boolean>() {
+							new ChangeListener<Boolean>() {
 
-									@Override
-									public void changed(
-											ObservableValue<? extends Boolean> observable,
-											Boolean oldValue, Boolean newValue) {
-										if (!newValue)
-											commitEdit(textField.getText());
+								@Override
+								public void changed(
+									ObservableValue<? extends Boolean> observable,
+									Boolean oldValue, Boolean newValue) {
+									if (!newValue) {
+										commitEdit(textField.getText());
 									}
+								}
 
-								});
+							});
 
 						textField.setText((String) getListValue());
 						setGraphic(textField);
@@ -119,7 +119,7 @@ public class StringListRendererFX extends SimpleControlRendererFX {
 
 					private Object getListValue() {
 						return ((List<Object>) setting.get(false))
-								.get(getIndex());
+							.get(getIndex());
 					}
 
 					@Override
@@ -140,22 +140,22 @@ public class StringListRendererFX extends SimpleControlRendererFX {
 
 	protected void addItem(Setting setting) {
 		Object defaultValue = setting.getEStructuralFeature().getEType()
-				.getDefaultValue();
+			.getDefaultValue();
 		if (defaultValue == null) {
 			try {
 				defaultValue = setting.getEStructuralFeature().getEType()
-						.getInstanceClass().getConstructor().newInstance();
-			} catch (InstantiationException e) {
+					.getInstanceClass().getConstructor().newInstance();
+			} catch (final InstantiationException e) {
 				Activator.logException(e);
-			} catch (IllegalAccessException e) {
+			} catch (final IllegalAccessException e) {
 				Activator.logException(e);
-			} catch (IllegalArgumentException e) {
+			} catch (final IllegalArgumentException e) {
 				Activator.logException(e);
-			} catch (InvocationTargetException e) {
+			} catch (final InvocationTargetException e) {
 				Activator.logException(e);
-			} catch (NoSuchMethodException e) {
+			} catch (final NoSuchMethodException e) {
 				Activator.logException(e);
-			} catch (SecurityException e) {
+			} catch (final SecurityException e) {
 				Activator.logException(e);
 			}
 		}

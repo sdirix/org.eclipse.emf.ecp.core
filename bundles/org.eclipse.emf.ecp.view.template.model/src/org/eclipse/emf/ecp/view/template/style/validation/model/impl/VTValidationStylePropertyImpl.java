@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * EclipseSource Munich - initial API and implementation
  */
@@ -72,7 +72,7 @@ import org.eclipse.emf.ecp.view.template.style.validation.model.VTValidationStyl
  * <em>Cancel Overlay URL</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class VTValidationStylePropertyImpl extends MinimalEObjectImpl.Container implements VTValidationStyleProperty {
@@ -80,7 +80,7 @@ public class VTValidationStylePropertyImpl extends MinimalEObjectImpl.Container 
 	 * The default value of the '{@link #getOkColorHEX() <em>Ok Color HEX</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getOkColorHEX()
 	 * @generated
 	 * @ordered
@@ -91,7 +91,7 @@ public class VTValidationStylePropertyImpl extends MinimalEObjectImpl.Container 
 	 * The cached value of the '{@link #getOkColorHEX() <em>Ok Color HEX</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getOkColorHEX()
 	 * @generated
 	 * @ordered
@@ -102,7 +102,7 @@ public class VTValidationStylePropertyImpl extends MinimalEObjectImpl.Container 
 	 * The default value of the '{@link #getOkImageURL() <em>Ok Image URL</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getOkImageURL()
 	 * @generated
 	 * @ordered
@@ -113,7 +113,7 @@ public class VTValidationStylePropertyImpl extends MinimalEObjectImpl.Container 
 	 * The cached value of the '{@link #getOkImageURL() <em>Ok Image URL</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getOkImageURL()
 	 * @generated
 	 * @ordered
@@ -124,7 +124,7 @@ public class VTValidationStylePropertyImpl extends MinimalEObjectImpl.Container 
 	 * The default value of the '{@link #getOkOverlayURL() <em>Ok Overlay URL</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getOkOverlayURL()
 	 * @generated
 	 * @ordered
@@ -135,7 +135,7 @@ public class VTValidationStylePropertyImpl extends MinimalEObjectImpl.Container 
 	 * The cached value of the '{@link #getOkOverlayURL() <em>Ok Overlay URL</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getOkOverlayURL()
 	 * @generated
 	 * @ordered
@@ -146,7 +146,7 @@ public class VTValidationStylePropertyImpl extends MinimalEObjectImpl.Container 
 	 * The default value of the '{@link #getInfoColorHEX() <em>Info Color HEX</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getInfoColorHEX()
 	 * @generated
 	 * @ordered
@@ -157,7 +157,7 @@ public class VTValidationStylePropertyImpl extends MinimalEObjectImpl.Container 
 	 * The cached value of the '{@link #getInfoColorHEX() <em>Info Color HEX</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getInfoColorHEX()
 	 * @generated
 	 * @ordered
@@ -168,7 +168,7 @@ public class VTValidationStylePropertyImpl extends MinimalEObjectImpl.Container 
 	 * The default value of the '{@link #getInfoImageURL() <em>Info Image URL</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getInfoImageURL()
 	 * @generated
 	 * @ordered
@@ -179,7 +179,7 @@ public class VTValidationStylePropertyImpl extends MinimalEObjectImpl.Container 
 	 * The cached value of the '{@link #getInfoImageURL() <em>Info Image URL</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getInfoImageURL()
 	 * @generated
 	 * @ordered
@@ -190,7 +190,7 @@ public class VTValidationStylePropertyImpl extends MinimalEObjectImpl.Container 
 	 * The default value of the '{@link #getInfoOverlayURL() <em>Info Overlay URL</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getInfoOverlayURL()
 	 * @generated
 	 * @ordered
@@ -201,7 +201,7 @@ public class VTValidationStylePropertyImpl extends MinimalEObjectImpl.Container 
 	 * The cached value of the '{@link #getInfoOverlayURL() <em>Info Overlay URL</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getInfoOverlayURL()
 	 * @generated
 	 * @ordered
@@ -212,7 +212,7 @@ public class VTValidationStylePropertyImpl extends MinimalEObjectImpl.Container 
 	 * The default value of the '{@link #getWarningColorHEX() <em>Warning Color HEX</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getWarningColorHEX()
 	 * @generated
 	 * @ordered
@@ -223,7 +223,7 @@ public class VTValidationStylePropertyImpl extends MinimalEObjectImpl.Container 
 	 * The cached value of the '{@link #getWarningColorHEX() <em>Warning Color HEX</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getWarningColorHEX()
 	 * @generated
 	 * @ordered
@@ -234,7 +234,7 @@ public class VTValidationStylePropertyImpl extends MinimalEObjectImpl.Container 
 	 * The default value of the '{@link #getWarningImageURL() <em>Warning Image URL</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getWarningImageURL()
 	 * @generated
 	 * @ordered
@@ -245,7 +245,7 @@ public class VTValidationStylePropertyImpl extends MinimalEObjectImpl.Container 
 	 * The cached value of the '{@link #getWarningImageURL() <em>Warning Image URL</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getWarningImageURL()
 	 * @generated
 	 * @ordered
@@ -256,7 +256,7 @@ public class VTValidationStylePropertyImpl extends MinimalEObjectImpl.Container 
 	 * The default value of the '{@link #getWarningOverlayURL() <em>Warning Overlay URL</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getWarningOverlayURL()
 	 * @generated
 	 * @ordered
@@ -267,7 +267,7 @@ public class VTValidationStylePropertyImpl extends MinimalEObjectImpl.Container 
 	 * The cached value of the '{@link #getWarningOverlayURL() <em>Warning Overlay URL</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getWarningOverlayURL()
 	 * @generated
 	 * @ordered
@@ -278,7 +278,7 @@ public class VTValidationStylePropertyImpl extends MinimalEObjectImpl.Container 
 	 * The default value of the '{@link #getErrorColorHEX() <em>Error Color HEX</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getErrorColorHEX()
 	 * @generated
 	 * @ordered
@@ -289,7 +289,7 @@ public class VTValidationStylePropertyImpl extends MinimalEObjectImpl.Container 
 	 * The cached value of the '{@link #getErrorColorHEX() <em>Error Color HEX</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getErrorColorHEX()
 	 * @generated
 	 * @ordered
@@ -300,7 +300,7 @@ public class VTValidationStylePropertyImpl extends MinimalEObjectImpl.Container 
 	 * The default value of the '{@link #getErrorImageURL() <em>Error Image URL</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getErrorImageURL()
 	 * @generated
 	 * @ordered
@@ -311,7 +311,7 @@ public class VTValidationStylePropertyImpl extends MinimalEObjectImpl.Container 
 	 * The cached value of the '{@link #getErrorImageURL() <em>Error Image URL</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getErrorImageURL()
 	 * @generated
 	 * @ordered
@@ -322,7 +322,7 @@ public class VTValidationStylePropertyImpl extends MinimalEObjectImpl.Container 
 	 * The default value of the '{@link #getErrorOverlayURL() <em>Error Overlay URL</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getErrorOverlayURL()
 	 * @generated
 	 * @ordered
@@ -333,7 +333,7 @@ public class VTValidationStylePropertyImpl extends MinimalEObjectImpl.Container 
 	 * The cached value of the '{@link #getErrorOverlayURL() <em>Error Overlay URL</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getErrorOverlayURL()
 	 * @generated
 	 * @ordered
@@ -344,7 +344,7 @@ public class VTValidationStylePropertyImpl extends MinimalEObjectImpl.Container 
 	 * The default value of the '{@link #getCancelColorHEX() <em>Cancel Color HEX</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getCancelColorHEX()
 	 * @generated
 	 * @ordered
@@ -355,7 +355,7 @@ public class VTValidationStylePropertyImpl extends MinimalEObjectImpl.Container 
 	 * The cached value of the '{@link #getCancelColorHEX() <em>Cancel Color HEX</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getCancelColorHEX()
 	 * @generated
 	 * @ordered
@@ -366,7 +366,7 @@ public class VTValidationStylePropertyImpl extends MinimalEObjectImpl.Container 
 	 * The default value of the '{@link #getCancelImageURL() <em>Cancel Image URL</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getCancelImageURL()
 	 * @generated
 	 * @ordered
@@ -377,7 +377,7 @@ public class VTValidationStylePropertyImpl extends MinimalEObjectImpl.Container 
 	 * The cached value of the '{@link #getCancelImageURL() <em>Cancel Image URL</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getCancelImageURL()
 	 * @generated
 	 * @ordered
@@ -388,7 +388,7 @@ public class VTValidationStylePropertyImpl extends MinimalEObjectImpl.Container 
 	 * The default value of the '{@link #getCancelOverlayURL() <em>Cancel Overlay URL</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getCancelOverlayURL()
 	 * @generated
 	 * @ordered
@@ -399,7 +399,7 @@ public class VTValidationStylePropertyImpl extends MinimalEObjectImpl.Container 
 	 * The cached value of the '{@link #getCancelOverlayURL() <em>Cancel Overlay URL</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getCancelOverlayURL()
 	 * @generated
 	 * @ordered
@@ -409,7 +409,7 @@ public class VTValidationStylePropertyImpl extends MinimalEObjectImpl.Container 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected VTValidationStylePropertyImpl() {
@@ -419,7 +419,7 @@ public class VTValidationStylePropertyImpl extends MinimalEObjectImpl.Container 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -430,7 +430,7 @@ public class VTValidationStylePropertyImpl extends MinimalEObjectImpl.Container 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -441,7 +441,7 @@ public class VTValidationStylePropertyImpl extends MinimalEObjectImpl.Container 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -457,7 +457,7 @@ public class VTValidationStylePropertyImpl extends MinimalEObjectImpl.Container 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -468,7 +468,7 @@ public class VTValidationStylePropertyImpl extends MinimalEObjectImpl.Container 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -484,7 +484,7 @@ public class VTValidationStylePropertyImpl extends MinimalEObjectImpl.Container 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -495,7 +495,7 @@ public class VTValidationStylePropertyImpl extends MinimalEObjectImpl.Container 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -511,7 +511,7 @@ public class VTValidationStylePropertyImpl extends MinimalEObjectImpl.Container 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -522,7 +522,7 @@ public class VTValidationStylePropertyImpl extends MinimalEObjectImpl.Container 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -538,7 +538,7 @@ public class VTValidationStylePropertyImpl extends MinimalEObjectImpl.Container 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -549,7 +549,7 @@ public class VTValidationStylePropertyImpl extends MinimalEObjectImpl.Container 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -565,7 +565,7 @@ public class VTValidationStylePropertyImpl extends MinimalEObjectImpl.Container 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -576,7 +576,7 @@ public class VTValidationStylePropertyImpl extends MinimalEObjectImpl.Container 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -592,7 +592,7 @@ public class VTValidationStylePropertyImpl extends MinimalEObjectImpl.Container 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -603,7 +603,7 @@ public class VTValidationStylePropertyImpl extends MinimalEObjectImpl.Container 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -619,7 +619,7 @@ public class VTValidationStylePropertyImpl extends MinimalEObjectImpl.Container 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -630,7 +630,7 @@ public class VTValidationStylePropertyImpl extends MinimalEObjectImpl.Container 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -646,7 +646,7 @@ public class VTValidationStylePropertyImpl extends MinimalEObjectImpl.Container 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -657,7 +657,7 @@ public class VTValidationStylePropertyImpl extends MinimalEObjectImpl.Container 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -674,7 +674,7 @@ public class VTValidationStylePropertyImpl extends MinimalEObjectImpl.Container 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -685,7 +685,7 @@ public class VTValidationStylePropertyImpl extends MinimalEObjectImpl.Container 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -701,7 +701,7 @@ public class VTValidationStylePropertyImpl extends MinimalEObjectImpl.Container 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -712,7 +712,7 @@ public class VTValidationStylePropertyImpl extends MinimalEObjectImpl.Container 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -728,7 +728,7 @@ public class VTValidationStylePropertyImpl extends MinimalEObjectImpl.Container 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -739,7 +739,7 @@ public class VTValidationStylePropertyImpl extends MinimalEObjectImpl.Container 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -755,7 +755,7 @@ public class VTValidationStylePropertyImpl extends MinimalEObjectImpl.Container 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -766,7 +766,7 @@ public class VTValidationStylePropertyImpl extends MinimalEObjectImpl.Container 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -782,7 +782,7 @@ public class VTValidationStylePropertyImpl extends MinimalEObjectImpl.Container 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -793,7 +793,7 @@ public class VTValidationStylePropertyImpl extends MinimalEObjectImpl.Container 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -809,7 +809,7 @@ public class VTValidationStylePropertyImpl extends MinimalEObjectImpl.Container 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -820,7 +820,7 @@ public class VTValidationStylePropertyImpl extends MinimalEObjectImpl.Container 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -837,7 +837,7 @@ public class VTValidationStylePropertyImpl extends MinimalEObjectImpl.Container 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -880,7 +880,7 @@ public class VTValidationStylePropertyImpl extends MinimalEObjectImpl.Container 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -938,7 +938,7 @@ public class VTValidationStylePropertyImpl extends MinimalEObjectImpl.Container 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -996,7 +996,7 @@ public class VTValidationStylePropertyImpl extends MinimalEObjectImpl.Container 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -1052,7 +1052,7 @@ public class VTValidationStylePropertyImpl extends MinimalEObjectImpl.Container 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -1098,7 +1098,7 @@ public class VTValidationStylePropertyImpl extends MinimalEObjectImpl.Container 
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.template.model.VTStyleProperty#equalStyles(org.eclipse.emf.ecp.view.template.model.VTStyleProperty)
 	 */
 	@Override

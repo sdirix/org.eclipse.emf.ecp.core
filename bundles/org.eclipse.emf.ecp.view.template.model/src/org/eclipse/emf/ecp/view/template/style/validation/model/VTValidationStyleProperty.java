@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * EclipseSource Munich - initial API and implementation
  */
@@ -17,7 +17,7 @@ import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Style Property</b></em>'.
  * <!-- end-user-doc -->
- * 
+ *
  * <p>
  * The following features are supported:
  * <ul>
@@ -53,7 +53,7 @@ import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
  * <em>Cancel Overlay URL</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.eclipse.emf.ecp.view.template.style.validation.model.VTValidationPackage#getValidationStyleProperty()
  * @model
  * @generated
@@ -67,7 +67,7 @@ public interface VTValidationStyleProperty extends VTStyleProperty {
 	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Ok Color HEX</em>' attribute.
 	 * @see #setOkColorHEX(String)
 	 * @see org.eclipse.emf.ecp.view.template.style.validation.model.VTValidationPackage#getValidationStyleProperty_OkColorHEX()
@@ -82,7 +82,7 @@ public interface VTValidationStyleProperty extends VTStyleProperty {
 	 * <em>Ok Color HEX</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Ok Color HEX</em>' attribute.
 	 * @see #getOkColorHEX()
 	 * @generated
@@ -97,7 +97,7 @@ public interface VTValidationStyleProperty extends VTStyleProperty {
 	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Ok Image URL</em>' attribute.
 	 * @see #setOkImageURL(String)
 	 * @see org.eclipse.emf.ecp.view.template.style.validation.model.VTValidationPackage#getValidationStyleProperty_OkImageURL()
@@ -112,7 +112,7 @@ public interface VTValidationStyleProperty extends VTStyleProperty {
 	 * <em>Ok Image URL</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Ok Image URL</em>' attribute.
 	 * @see #getOkImageURL()
 	 * @generated
@@ -127,7 +127,7 @@ public interface VTValidationStyleProperty extends VTStyleProperty {
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Ok Overlay URL</em>' attribute.
 	 * @see #setOkOverlayURL(String)
 	 * @see org.eclipse.emf.ecp.view.template.style.validation.model.VTValidationPackage#getValidationStyleProperty_OkOverlayURL()
@@ -142,7 +142,7 @@ public interface VTValidationStyleProperty extends VTStyleProperty {
 	 * <em>Ok Overlay URL</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Ok Overlay URL</em>' attribute.
 	 * @see #getOkOverlayURL()
 	 * @generated
@@ -157,7 +157,7 @@ public interface VTValidationStyleProperty extends VTStyleProperty {
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Info Color HEX</em>' attribute.
 	 * @see #setInfoColorHEX(String)
 	 * @see org.eclipse.emf.ecp.view.template.style.validation.model.VTValidationPackage#getValidationStyleProperty_InfoColorHEX()
@@ -172,7 +172,7 @@ public interface VTValidationStyleProperty extends VTStyleProperty {
 	 * <em>Info Color HEX</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Info Color HEX</em>' attribute.
 	 * @see #getInfoColorHEX()
 	 * @generated
@@ -187,7 +187,7 @@ public interface VTValidationStyleProperty extends VTStyleProperty {
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Info Image URL</em>' attribute.
 	 * @see #setInfoImageURL(String)
 	 * @see org.eclipse.emf.ecp.view.template.style.validation.model.VTValidationPackage#getValidationStyleProperty_InfoImageURL()
@@ -202,7 +202,7 @@ public interface VTValidationStyleProperty extends VTStyleProperty {
 	 * <em>Info Image URL</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Info Image URL</em>' attribute.
 	 * @see #getInfoImageURL()
 	 * @generated
@@ -217,7 +217,7 @@ public interface VTValidationStyleProperty extends VTStyleProperty {
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Info Overlay URL</em>' attribute.
 	 * @see #setInfoOverlayURL(String)
 	 * @see org.eclipse.emf.ecp.view.template.style.validation.model.VTValidationPackage#getValidationStyleProperty_InfoOverlayURL()
@@ -232,7 +232,7 @@ public interface VTValidationStyleProperty extends VTStyleProperty {
 	 * <em>Info Overlay URL</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Info Overlay URL</em>' attribute.
 	 * @see #getInfoOverlayURL()
 	 * @generated
@@ -247,7 +247,7 @@ public interface VTValidationStyleProperty extends VTStyleProperty {
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Warning Color HEX</em>' attribute.
 	 * @see #setWarningColorHEX(String)
 	 * @see org.eclipse.emf.ecp.view.template.style.validation.model.VTValidationPackage#getValidationStyleProperty_WarningColorHEX()
@@ -262,7 +262,7 @@ public interface VTValidationStyleProperty extends VTStyleProperty {
 	 * <em>Warning Color HEX</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Warning Color HEX</em>' attribute.
 	 * @see #getWarningColorHEX()
 	 * @generated
@@ -277,7 +277,7 @@ public interface VTValidationStyleProperty extends VTStyleProperty {
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Warning Image URL</em>' attribute.
 	 * @see #setWarningImageURL(String)
 	 * @see org.eclipse.emf.ecp.view.template.style.validation.model.VTValidationPackage#getValidationStyleProperty_WarningImageURL()
@@ -292,7 +292,7 @@ public interface VTValidationStyleProperty extends VTStyleProperty {
 	 * <em>Warning Image URL</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Warning Image URL</em>' attribute.
 	 * @see #getWarningImageURL()
 	 * @generated
@@ -307,7 +307,7 @@ public interface VTValidationStyleProperty extends VTStyleProperty {
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Warning Overlay URL</em>' attribute.
 	 * @see #setWarningOverlayURL(String)
 	 * @see org.eclipse.emf.ecp.view.template.style.validation.model.VTValidationPackage#getValidationStyleProperty_WarningOverlayURL()
@@ -322,7 +322,7 @@ public interface VTValidationStyleProperty extends VTStyleProperty {
 	 * <em>Warning Overlay URL</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Warning Overlay URL</em>' attribute.
 	 * @see #getWarningOverlayURL()
 	 * @generated
@@ -337,7 +337,7 @@ public interface VTValidationStyleProperty extends VTStyleProperty {
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Error Color HEX</em>' attribute.
 	 * @see #setErrorColorHEX(String)
 	 * @see org.eclipse.emf.ecp.view.template.style.validation.model.VTValidationPackage#getValidationStyleProperty_ErrorColorHEX()
@@ -352,7 +352,7 @@ public interface VTValidationStyleProperty extends VTStyleProperty {
 	 * <em>Error Color HEX</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Error Color HEX</em>' attribute.
 	 * @see #getErrorColorHEX()
 	 * @generated
@@ -367,7 +367,7 @@ public interface VTValidationStyleProperty extends VTStyleProperty {
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Error Image URL</em>' attribute.
 	 * @see #setErrorImageURL(String)
 	 * @see org.eclipse.emf.ecp.view.template.style.validation.model.VTValidationPackage#getValidationStyleProperty_ErrorImageURL()
@@ -382,7 +382,7 @@ public interface VTValidationStyleProperty extends VTStyleProperty {
 	 * <em>Error Image URL</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Error Image URL</em>' attribute.
 	 * @see #getErrorImageURL()
 	 * @generated
@@ -397,7 +397,7 @@ public interface VTValidationStyleProperty extends VTStyleProperty {
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Error Overlay URL</em>' attribute.
 	 * @see #setErrorOverlayURL(String)
 	 * @see org.eclipse.emf.ecp.view.template.style.validation.model.VTValidationPackage#getValidationStyleProperty_ErrorOverlayURL()
@@ -412,7 +412,7 @@ public interface VTValidationStyleProperty extends VTStyleProperty {
 	 * <em>Error Overlay URL</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Error Overlay URL</em>' attribute.
 	 * @see #getErrorOverlayURL()
 	 * @generated
@@ -427,7 +427,7 @@ public interface VTValidationStyleProperty extends VTStyleProperty {
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Cancel Color HEX</em>' attribute.
 	 * @see #setCancelColorHEX(String)
 	 * @see org.eclipse.emf.ecp.view.template.style.validation.model.VTValidationPackage#getValidationStyleProperty_CancelColorHEX()
@@ -442,7 +442,7 @@ public interface VTValidationStyleProperty extends VTStyleProperty {
 	 * <em>Cancel Color HEX</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Cancel Color HEX</em>' attribute.
 	 * @see #getCancelColorHEX()
 	 * @generated
@@ -457,7 +457,7 @@ public interface VTValidationStyleProperty extends VTStyleProperty {
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Cancel Image URL</em>' attribute.
 	 * @see #setCancelImageURL(String)
 	 * @see org.eclipse.emf.ecp.view.template.style.validation.model.VTValidationPackage#getValidationStyleProperty_CancelImageURL()
@@ -472,7 +472,7 @@ public interface VTValidationStyleProperty extends VTStyleProperty {
 	 * <em>Cancel Image URL</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Cancel Image URL</em>' attribute.
 	 * @see #getCancelImageURL()
 	 * @generated
@@ -487,7 +487,7 @@ public interface VTValidationStyleProperty extends VTStyleProperty {
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Cancel Overlay URL</em>' attribute.
 	 * @see #setCancelOverlayURL(String)
 	 * @see org.eclipse.emf.ecp.view.template.style.validation.model.VTValidationPackage#getValidationStyleProperty_CancelOverlayURL()
@@ -502,7 +502,7 @@ public interface VTValidationStyleProperty extends VTStyleProperty {
 	 * <em>Cancel Overlay URL</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Cancel Overlay URL</em>' attribute.
 	 * @see #getCancelOverlayURL()
 	 * @generated

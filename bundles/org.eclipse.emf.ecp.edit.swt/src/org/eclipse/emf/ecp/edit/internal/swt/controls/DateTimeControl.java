@@ -1,14 +1,14 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
- * 
+ *
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.controls;
 
@@ -29,9 +29,9 @@ import org.eclipse.swt.widgets.DateTime;
  * This class defines a DateTimeControl which is used for displaying {@link org.eclipse.emf.ecore.EStructuralFeature
  * EStructuralFeature}s which have a date
  * value.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  */
 public class DateTimeControl extends SingleControl {
 
@@ -57,7 +57,7 @@ public class DateTimeControl extends SingleControl {
 
 	/**
 	 * This method creates the date widget, the time widget and the delete button.
-	 * 
+	 *
 	 * @param composite the parent {@link Composite}
 	 */
 	private void createDateAndTimeWidget(Composite composite) {
@@ -119,7 +119,7 @@ public class DateTimeControl extends SingleControl {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.edit.internal.swt.controls.SingleControl#updateValidationColor(org.eclipse.swt.graphics.Color)
 	 */
 	@Override

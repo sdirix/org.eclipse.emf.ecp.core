@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Edgar Mueller - initial API and implementation
  */
@@ -51,7 +51,7 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
  * <em>Path From Base</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class DynamicContainmentTreeDomainModelReferenceImpl extends EObjectImpl implements
@@ -60,7 +60,7 @@ public class DynamicContainmentTreeDomainModelReferenceImpl extends EObjectImpl 
 	 * The cached value of the '{@link #getChangeListener() <em>Change Listener</em>}' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getChangeListener()
 	 * @generated
 	 * @ordered
@@ -71,7 +71,7 @@ public class DynamicContainmentTreeDomainModelReferenceImpl extends EObjectImpl 
 	 * The cached value of the '{@link #getPathFromRoot() <em>Path From Root</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getPathFromRoot()
 	 * @generated
 	 * @ordered
@@ -82,7 +82,7 @@ public class DynamicContainmentTreeDomainModelReferenceImpl extends EObjectImpl 
 	 * The cached value of the '{@link #getPathFromBase() <em>Path From Base</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getPathFromBase()
 	 * @generated
 	 * @ordered
@@ -92,7 +92,7 @@ public class DynamicContainmentTreeDomainModelReferenceImpl extends EObjectImpl 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected DynamicContainmentTreeDomainModelReferenceImpl() {
@@ -102,7 +102,7 @@ public class DynamicContainmentTreeDomainModelReferenceImpl extends EObjectImpl 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -113,7 +113,7 @@ public class DynamicContainmentTreeDomainModelReferenceImpl extends EObjectImpl 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -129,7 +129,7 @@ public class DynamicContainmentTreeDomainModelReferenceImpl extends EObjectImpl 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -140,7 +140,7 @@ public class DynamicContainmentTreeDomainModelReferenceImpl extends EObjectImpl 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public NotificationChain basicSetPathFromRoot(VDomainModelReference newPathFromRoot, NotificationChain msgs) {
@@ -162,7 +162,7 @@ public class DynamicContainmentTreeDomainModelReferenceImpl extends EObjectImpl 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -192,7 +192,7 @@ public class DynamicContainmentTreeDomainModelReferenceImpl extends EObjectImpl 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -203,7 +203,7 @@ public class DynamicContainmentTreeDomainModelReferenceImpl extends EObjectImpl 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public NotificationChain basicSetPathFromBase(VDomainModelReference newPathFromBase, NotificationChain msgs) {
@@ -225,7 +225,7 @@ public class DynamicContainmentTreeDomainModelReferenceImpl extends EObjectImpl 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -255,7 +255,7 @@ public class DynamicContainmentTreeDomainModelReferenceImpl extends EObjectImpl 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -272,7 +272,7 @@ public class DynamicContainmentTreeDomainModelReferenceImpl extends EObjectImpl 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -291,7 +291,7 @@ public class DynamicContainmentTreeDomainModelReferenceImpl extends EObjectImpl 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
@@ -315,7 +315,7 @@ public class DynamicContainmentTreeDomainModelReferenceImpl extends EObjectImpl 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -337,7 +337,7 @@ public class DynamicContainmentTreeDomainModelReferenceImpl extends EObjectImpl 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -356,7 +356,7 @@ public class DynamicContainmentTreeDomainModelReferenceImpl extends EObjectImpl 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -373,11 +373,11 @@ public class DynamicContainmentTreeDomainModelReferenceImpl extends EObjectImpl 
 	}
 
 	/**
-	 * 
+	 *
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReference#init(EObject)
-	 * 
+	 *
 	 * @generated NOT
 	 */
 	@Override
@@ -398,11 +398,11 @@ public class DynamicContainmentTreeDomainModelReferenceImpl extends EObjectImpl 
 	}
 
 	/**
-	 * 
+	 *
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReference#getIterator()
-	 * 
+	 *
 	 * @generated NOT
 	 */
 	@Override
@@ -411,11 +411,11 @@ public class DynamicContainmentTreeDomainModelReferenceImpl extends EObjectImpl 
 	}
 
 	/**
-	 * 
+	 *
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReference#getEStructuralFeatureIterator()
-	 * 
+	 *
 	 * @generated NOT
 	 */
 	@Override
@@ -424,7 +424,7 @@ public class DynamicContainmentTreeDomainModelReferenceImpl extends EObjectImpl 
 	}
 
 	/**
-	 * 
+	 *
 	 * @generated NOT
 	 */
 	private DynamicContainmentItem getPackingItem() {
@@ -442,7 +442,7 @@ public class DynamicContainmentTreeDomainModelReferenceImpl extends EObjectImpl 
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReference#getFullPathIterator()
 	 */
 	@Override
@@ -453,7 +453,7 @@ public class DynamicContainmentTreeDomainModelReferenceImpl extends EObjectImpl 
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.model.ModelChangeListener#notifyChange(org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification)
 	 */
 	@Override

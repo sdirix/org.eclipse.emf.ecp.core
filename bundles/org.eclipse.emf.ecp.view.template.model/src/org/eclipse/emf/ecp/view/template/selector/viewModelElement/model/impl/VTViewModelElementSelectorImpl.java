@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * EclipseSource Munich - initial API and implementation
  */
@@ -43,7 +43,7 @@ import org.eclipse.emf.ecp.view.template.selector.viewModelElement.model.VTViewM
  * <em>Attribute Value</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class VTViewModelElementSelectorImpl extends MinimalEObjectImpl.Container implements VTViewModelElementSelector {
@@ -51,7 +51,7 @@ public class VTViewModelElementSelectorImpl extends MinimalEObjectImpl.Container
 	 * The default value of the '{@link #isSelectSubclasses() <em>Select Subclasses</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #isSelectSubclasses()
 	 * @generated
 	 * @ordered
@@ -62,7 +62,7 @@ public class VTViewModelElementSelectorImpl extends MinimalEObjectImpl.Container
 	 * The cached value of the '{@link #isSelectSubclasses() <em>Select Subclasses</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #isSelectSubclasses()
 	 * @generated
 	 * @ordered
@@ -73,7 +73,7 @@ public class VTViewModelElementSelectorImpl extends MinimalEObjectImpl.Container
 	 * The cached value of the '{@link #getClassType() <em>Class Type</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getClassType()
 	 * @generated
 	 * @ordered
@@ -84,7 +84,7 @@ public class VTViewModelElementSelectorImpl extends MinimalEObjectImpl.Container
 	 * The cached value of the '{@link #getAttribute() <em>Attribute</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getAttribute()
 	 * @generated
 	 * @ordered
@@ -95,7 +95,7 @@ public class VTViewModelElementSelectorImpl extends MinimalEObjectImpl.Container
 	 * The default value of the '{@link #getAttributeValue() <em>Attribute Value</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getAttributeValue()
 	 * @generated
 	 * @ordered
@@ -106,7 +106,7 @@ public class VTViewModelElementSelectorImpl extends MinimalEObjectImpl.Container
 	 * The cached value of the '{@link #getAttributeValue() <em>Attribute Value</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getAttributeValue()
 	 * @generated
 	 * @ordered
@@ -116,7 +116,7 @@ public class VTViewModelElementSelectorImpl extends MinimalEObjectImpl.Container
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected VTViewModelElementSelectorImpl() {
@@ -126,7 +126,7 @@ public class VTViewModelElementSelectorImpl extends MinimalEObjectImpl.Container
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -137,7 +137,7 @@ public class VTViewModelElementSelectorImpl extends MinimalEObjectImpl.Container
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -160,7 +160,7 @@ public class VTViewModelElementSelectorImpl extends MinimalEObjectImpl.Container
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public EClass basicGetClassType()
@@ -171,7 +171,7 @@ public class VTViewModelElementSelectorImpl extends MinimalEObjectImpl.Container
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -188,7 +188,7 @@ public class VTViewModelElementSelectorImpl extends MinimalEObjectImpl.Container
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -212,7 +212,7 @@ public class VTViewModelElementSelectorImpl extends MinimalEObjectImpl.Container
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public EAttribute basicGetAttribute()
@@ -223,7 +223,7 @@ public class VTViewModelElementSelectorImpl extends MinimalEObjectImpl.Container
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -240,7 +240,7 @@ public class VTViewModelElementSelectorImpl extends MinimalEObjectImpl.Container
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -252,7 +252,7 @@ public class VTViewModelElementSelectorImpl extends MinimalEObjectImpl.Container
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -270,7 +270,7 @@ public class VTViewModelElementSelectorImpl extends MinimalEObjectImpl.Container
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -281,7 +281,7 @@ public class VTViewModelElementSelectorImpl extends MinimalEObjectImpl.Container
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -298,7 +298,7 @@ public class VTViewModelElementSelectorImpl extends MinimalEObjectImpl.Container
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -326,7 +326,7 @@ public class VTViewModelElementSelectorImpl extends MinimalEObjectImpl.Container
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -352,7 +352,7 @@ public class VTViewModelElementSelectorImpl extends MinimalEObjectImpl.Container
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -378,7 +378,7 @@ public class VTViewModelElementSelectorImpl extends MinimalEObjectImpl.Container
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -401,7 +401,7 @@ public class VTViewModelElementSelectorImpl extends MinimalEObjectImpl.Container
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -421,7 +421,7 @@ public class VTViewModelElementSelectorImpl extends MinimalEObjectImpl.Container
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.template.model.VTStyleSelector#isApplicable(org.eclipse.emf.ecp.view.spi.model.VElement,
 	 *      org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */

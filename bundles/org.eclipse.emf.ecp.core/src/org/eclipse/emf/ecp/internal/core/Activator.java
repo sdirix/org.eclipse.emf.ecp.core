@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eike Stepper - initial API and implementation
  * Eugen Neufeld - JavaDoc
@@ -25,7 +25,7 @@ import org.osgi.framework.ServiceReference;
 
 /**
  * This is the Activator for the ECP Core plugin.
- * 
+ *
  * @author Eike Stepper
  * @author Eugen Neufeld
  */
@@ -73,7 +73,7 @@ public final class Activator extends Plugin {
 	// END SUPRESS CATCH EXCEPTION
 	/**
 	 * Returns the instance of this Activator.
-	 * 
+	 *
 	 * @return the saved instance
 	 */
 	public static Activator getInstance() {
@@ -82,7 +82,7 @@ public final class Activator extends Plugin {
 
 	/**
 	 * Logs and Info message.
-	 * 
+	 *
 	 * @param message the message to log
 	 */
 	public static void log(String message) {
@@ -91,7 +91,7 @@ public final class Activator extends Plugin {
 
 	/**
 	 * Logs a message with a specific status.
-	 * 
+	 *
 	 * @param status the {@link IStatus} value
 	 * @param message the message to log
 	 */
@@ -105,7 +105,7 @@ public final class Activator extends Plugin {
 
 	/**
 	 * Logs a {@link Throwable}.
-	 * 
+	 *
 	 * @param t the {@link Throwable} to log
 	 * @return the message of the {@link Throwable}
 	 */
@@ -133,7 +133,7 @@ public final class Activator extends Plugin {
 
 	/**
 	 * Helper method to get the {@link ECPProjectManager}.
-	 * 
+	 *
 	 * @return the {@link ECPProjectManager}
 	 */
 	public static ECPProjectManager getECPProjectManager() {
@@ -149,7 +149,7 @@ public final class Activator extends Plugin {
 
 	/**
 	 * Helper method to get the {@link ECPRepositoryManager}.
-	 * 
+	 *
 	 * @return the {@link ECPRepositoryManager}
 	 */
 	public static ECPRepositoryManager getECPRepositoryManager() {
@@ -165,7 +165,7 @@ public final class Activator extends Plugin {
 
 	/**
 	 * Helper method to get the {@link ECPProviderRegistry}.
-	 * 
+	 *
 	 * @return the {@link ECPProviderRegistry}
 	 */
 	public static ECPProviderRegistry getECPProviderRegistry() {

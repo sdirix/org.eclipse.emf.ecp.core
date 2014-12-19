@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen - initial API and implementation
  ******************************************************************************/
@@ -20,9 +20,9 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 
 /**
  * Class to compare Controls for equality.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  */
 public final class CompareControls {
 
@@ -32,7 +32,7 @@ public final class CompareControls {
 	/**
 	 * Compares to {@link VControl VControls}. This is just a convenience method which delegates to
 	 * {@link #areEqual(VDomainModelReference, VDomainModelReference)}.
-	 * 
+	 *
 	 * @param left the first VControl to compare
 	 * @param right the second VControl to compare
 	 * @return true if all values of the {@link VDomainModelReference VDomainModelReferences} are equal
@@ -43,7 +43,7 @@ public final class CompareControls {
 
 	/**
 	 * Compares to {@link VDomainModelReference VDomainModelReferences} by comparing all values.
-	 * 
+	 *
 	 * @param left the first {@link VDomainModelReference}
 	 * @param right the second {@link VDomainModelReference}
 	 * @return true if all values of the {@link VDomainModelReference VDomainModelReferences} are equal

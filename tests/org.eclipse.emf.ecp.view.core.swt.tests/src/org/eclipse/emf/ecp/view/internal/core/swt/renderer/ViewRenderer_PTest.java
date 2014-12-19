@@ -15,9 +15,9 @@ import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
+import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
-import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.ecp.view.test.common.swt.DatabindingClassRunner;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -44,7 +44,7 @@ public class ViewRenderer_PTest {
 	@Before
 	public void setUp() {
 		factory = mock(SWTRendererFactory.class);
-		
+
 		viewRenderer = new ViewSWTRenderer(factory);
 		view = Mockito.mock(VView.class);
 
@@ -60,108 +60,114 @@ public class ViewRenderer_PTest {
 
 	@Test
 	public void testGridDescription() throws NoRendererFoundException,
-			NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption {
 		viewRenderer.init(view, context);
-		SWTGridDescription gridDescription = viewRenderer.getGridDescription(GridDescriptionFactory.INSTANCE.createEmptyGridDescription());
+		final SWTGridDescription gridDescription = viewRenderer.getGridDescription(GridDescriptionFactory.INSTANCE
+			.createEmptyGridDescription());
 		assertEquals(1, gridDescription.getColumns());
 		assertEquals(1, gridDescription.getRows());
 	}
 
 	@Test
 	public void testEmptyView() throws NoRendererFoundException,
-			NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption {
 		when(view.getChildren())
-				.thenReturn(new BasicEList<VContainedElement>());
+			.thenReturn(new BasicEList<VContainedElement>());
 		viewRenderer.init(view, context);
-		Control render = viewRenderer.render(new SWTGridCell(0, 0,viewRenderer), shell);
+		final Control render = viewRenderer.render(new SWTGridCell(0, 0, viewRenderer), shell);
 		assertTrue(Composite.class.isInstance(render));
 		assertEquals(0, Composite.class.cast(render).getChildren().length);
 	}
 
 	@Test
 	public void testMultipleSimpleCompositeView() throws NoRendererFoundException,
-			NoPropertyDescriptorFoundExeption {
-		BasicEList<VContainedElement> basicEList = new BasicEList<VContainedElement>();
-		VContainedElement control1 = mock(VContainedElement.class);
-		VContainedElement control2 = mock(VContainedElement.class);
+		NoPropertyDescriptorFoundExeption {
+		final BasicEList<VContainedElement> basicEList = new BasicEList<VContainedElement>();
+		final VContainedElement control1 = mock(VContainedElement.class);
+		final VContainedElement control2 = mock(VContainedElement.class);
 		basicEList.add(control1);
 		basicEList.add(control2);
 		when(view.getChildren()).thenReturn(basicEList);
-		
-		AbstractSWTRenderer<VElement> mockRenderer1=createCompositeMockRenderer(control1,1);
-		AbstractSWTRenderer<VElement> mockRenderer2=createCompositeMockRenderer(control2,1);
-		
+
+		final AbstractSWTRenderer<VElement> mockRenderer1 = createCompositeMockRenderer(control1, 1);
+		final AbstractSWTRenderer<VElement> mockRenderer2 = createCompositeMockRenderer(control2, 1);
+
 		when(factory.getRenderer(control1, context)).thenReturn(mockRenderer1);
 		when(factory.getRenderer(control2, context)).thenReturn(mockRenderer2);
-		
+
 		viewRenderer.init(view, context);
-		Control render = viewRenderer.render(new SWTGridCell(0, 0,viewRenderer), shell);
+		final Control render = viewRenderer.render(new SWTGridCell(0, 0, viewRenderer), shell);
 		assertTrue(Composite.class.isInstance(render));
 		assertEquals(2, Composite.class.cast(render).getChildren().length);
 		assertTrue(GridData.class.isInstance(Composite.class.cast(render).getChildren()[0].getLayoutData()));
 		assertTrue(GridData.class.isInstance(Composite.class.cast(render).getChildren()[1].getLayoutData()));
-		
-		assertEquals(1,GridData.class.cast(Composite.class.cast(render).getChildren()[0].getLayoutData()).horizontalSpan);
-		assertEquals(1,GridData.class.cast(Composite.class.cast(render).getChildren()[1].getLayoutData()).horizontalSpan);
+
+		assertEquals(1,
+			GridData.class.cast(Composite.class.cast(render).getChildren()[0].getLayoutData()).horizontalSpan);
+		assertEquals(1,
+			GridData.class.cast(Composite.class.cast(render).getChildren()[1].getLayoutData()).horizontalSpan);
 	}
-	
+
 	@Test
 	public void testMultipleComplexGridDescriptionView() throws NoRendererFoundException,
-			NoPropertyDescriptorFoundExeption {
-		BasicEList<VContainedElement> basicEList = new BasicEList<VContainedElement>();
-		VContainedElement control1 = mock(VContainedElement.class);
-		VContainedElement control2 = mock(VContainedElement.class);
-		VContainedElement control3 = mock(VContainedElement.class);
+		NoPropertyDescriptorFoundExeption {
+		final BasicEList<VContainedElement> basicEList = new BasicEList<VContainedElement>();
+		final VContainedElement control1 = mock(VContainedElement.class);
+		final VContainedElement control2 = mock(VContainedElement.class);
+		final VContainedElement control3 = mock(VContainedElement.class);
 		basicEList.add(control1);
 		basicEList.add(control2);
 		basicEList.add(control3);
 		when(view.getChildren()).thenReturn(basicEList);
-		
-		AbstractSWTRenderer<VElement> mockRenderer1=createCompositeMockRenderer(control1,1);
-		AbstractSWTRenderer<VElement> mockRenderer2=createCompositeMockRenderer(control2,3);
-		AbstractSWTRenderer<VElement> mockRenderer3=createCompositeMockRenderer(control3,2);
-		
+
+		final AbstractSWTRenderer<VElement> mockRenderer1 = createCompositeMockRenderer(control1, 1);
+		final AbstractSWTRenderer<VElement> mockRenderer2 = createCompositeMockRenderer(control2, 3);
+		final AbstractSWTRenderer<VElement> mockRenderer3 = createCompositeMockRenderer(control3, 2);
+
 		when(factory.getRenderer(control1, context)).thenReturn(mockRenderer1);
 		when(factory.getRenderer(control2, context)).thenReturn(mockRenderer2);
 		when(factory.getRenderer(control3, context)).thenReturn(mockRenderer3);
-		
+
 		viewRenderer.init(view, context);
-		Control render = viewRenderer.render(new SWTGridCell(0, 0,viewRenderer), shell);
+		final Control render = viewRenderer.render(new SWTGridCell(0, 0, viewRenderer), shell);
 		assertTrue(Composite.class.isInstance(render));
 		assertEquals(6, Composite.class.cast(render).getChildren().length);
-		for(int i=0;i<6;i++)
-		assertTrue(GridData.class.isInstance(Composite.class.cast(render).getChildren()[i].getLayoutData()));
-		
-		assertEquals(3,GridData.class.cast(Composite.class.cast(render).getChildren()[0].getLayoutData()).horizontalSpan);
-		assertEquals(2,GridData.class.cast(Composite.class.cast(render).getChildren()[5].getLayoutData()).horizontalSpan);
+		for (int i = 0; i < 6; i++) {
+			assertTrue(GridData.class.isInstance(Composite.class.cast(render).getChildren()[i].getLayoutData()));
+		}
+
+		assertEquals(3,
+			GridData.class.cast(Composite.class.cast(render).getChildren()[0].getLayoutData()).horizontalSpan);
+		assertEquals(2,
+			GridData.class.cast(Composite.class.cast(render).getChildren()[5].getLayoutData()).horizontalSpan);
 	}
 
 	private AbstractSWTRenderer<VElement> createCompositeMockRenderer(
-			VContainedElement control1, int numColumns) throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
-		AbstractSWTRenderer<VElement> mockRenderer=mock(AbstractSWTRenderer.class);
-		
-		final SWTGridDescription gd=GridDescriptionFactory.INSTANCE.createSimpleGrid(1, numColumns,mockRenderer);
-		when(mockRenderer.getGridDescription(any(SWTGridDescription.class))).thenAnswer(new Answer<SWTGridDescription>() {
-			@Override
-			public SWTGridDescription answer(InvocationOnMock invocation)
+		VContainedElement control1, int numColumns) throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		final AbstractSWTRenderer<VElement> mockRenderer = mock(AbstractSWTRenderer.class);
+
+		final SWTGridDescription gd = GridDescriptionFactory.INSTANCE.createSimpleGrid(1, numColumns, mockRenderer);
+		when(mockRenderer.getGridDescription(any(SWTGridDescription.class))).thenAnswer(
+			new Answer<SWTGridDescription>() {
+				@Override
+				public SWTGridDescription answer(InvocationOnMock invocation)
 					throws Throwable {
-				Object[] args = invocation.getArguments();
-				SWTGridDescription desc = (SWTGridDescription) args[0];
-				if (desc.getColumns() == 0 && desc.getRows() == 0 && desc.getGrid() == null) {
-					return gd;
+					final Object[] args = invocation.getArguments();
+					final SWTGridDescription desc = (SWTGridDescription) args[0];
+					if (desc.getColumns() == 0 && desc.getRows() == 0 && desc.getGrid() == null) {
+						return gd;
+					}
+					return null;
 				}
-				return null;
-			}
-		});
+			});
 		when(mockRenderer.render(any(SWTGridCell.class), any(Composite.class))).thenAnswer(new Answer<Control>() {
 
 			@Override
 			public Control answer(InvocationOnMock invocation) throws Throwable {
-				Object[] args = invocation.getArguments();
+				final Object[] args = invocation.getArguments();
 				return new Composite((Composite) args[1], SWT.NONE);
 			}
 
-			
 		});
 		mockRenderer.init(control1, context);
 		return mockRenderer;

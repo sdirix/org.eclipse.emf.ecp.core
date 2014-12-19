@@ -80,7 +80,7 @@ public class CompoundControlSWTRenderer extends AbstractSWTRenderer<VCompoundCon
 	 */
 	@Override
 	protected Control renderControl(SWTGridCell gridCell, Composite parent) throws NoRendererFoundException,
-	NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption {
 		if (gridCell.getColumn() != 0) {
 			return null;
 		}
@@ -96,12 +96,12 @@ public class CompoundControlSWTRenderer extends AbstractSWTRenderer<VCompoundCon
 				getViewModelContext());
 			if (renderer == null) {
 				Activator
-				.getDefault()
-				.getReportService()
-				.report(
-					new StatusReport(
-						new Status(IStatus.INFO, Activator.PLUGIN_ID, String.format(
-							"No Renderer for %s found.", child.eClass().getName())))); //$NON-NLS-1$
+					.getDefault()
+					.getReportService()
+					.report(
+						new StatusReport(
+							new Status(IStatus.INFO, Activator.PLUGIN_ID, String.format(
+								"No Renderer for %s found.", child.eClass().getName())))); //$NON-NLS-1$
 				continue;
 			}
 			elementRendererMap.put(child, renderer);

@@ -48,12 +48,12 @@ public class VDiagnosticHelper_Test {
 
 		@SuppressWarnings("serial")
 		final Map<Object, Object> context =
-		new LinkedHashMap<Object, Object>() {
-			{
-				put(EValidator.SubstitutionLabelProvider.class, Diagnostician.INSTANCE);
-				put(EValidator.class, validator);
-			}
-		};
+			new LinkedHashMap<Object, Object>() {
+				{
+					put(EValidator.SubstitutionLabelProvider.class, Diagnostician.INSTANCE);
+					put(EValidator.class, validator);
+				}
+			};
 
 		validator.validate(object, diagnostics, context);
 

@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Edgar - initial API and implementation
  ******************************************************************************/
@@ -18,9 +18,9 @@ import org.osgi.framework.BundleContext;
 
 /**
  * Activator of the bundle.
- * 
+ *
  * @author Jonas
- * 
+ *
  */
 public class Activator extends Plugin {
 
@@ -32,9 +32,9 @@ public class Activator extends Plugin {
 	private static Activator activator;
 
 	/**
-	 * 
+	 *
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.core.runtime.Plugin#start(org.osgi.framework.BundleContext)
 	 */
 	@Override
@@ -56,7 +56,7 @@ public class Activator extends Plugin {
 
 	/**
 	 * Logs an exception.
-	 * 
+	 *
 	 * @param e the exception
 	 */
 	public static void log(Exception e) {

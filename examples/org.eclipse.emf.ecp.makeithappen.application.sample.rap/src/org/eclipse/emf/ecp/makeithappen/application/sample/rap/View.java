@@ -1,15 +1,17 @@
 /**
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * EclipseSource Munich - initial API and implementation
  */
 package org.eclipse.emf.ecp.makeithappen.application.sample.rap;
+
+import java.awt.Composite;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -18,11 +20,6 @@ import org.eclipse.emf.ecp.makeithappen.model.task.TaskPackage;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
-import org.eclipse.jface.layout.GridDataFactory;
-import org.eclipse.jface.layout.GridLayoutFactory;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.ui.part.ViewPart;
 
 /**
  * Example View for displaying a Forms Editor for an EObject.
@@ -44,7 +41,7 @@ public class View extends ViewPart {
 	/**
 	 * This is a callback that will allow us to create the viewer and initialize
 	 * it.
-	 * 
+	 *
 	 * @param parent the {@link Composite} to render to
 	 */
 	@Override

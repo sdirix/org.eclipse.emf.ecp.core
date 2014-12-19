@@ -19,8 +19,9 @@ import org.eclipse.emf.ecp.view.spi.model.provider.ViewEditPlugin;
 /**
  * This is the central singleton for the Vertical edit plugin.
  * <!-- begin-user-doc -->
+ *
  * @since 1.2
- * <!-- end-user-doc -->
+ *        <!-- end-user-doc -->
  *
  * @generated
  */

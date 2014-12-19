@@ -19,7 +19,7 @@ import org.eclipse.ui.IPerspectiveFactory;
 
 /**
  * The Perspective definition.
- * 
+ *
  * @author Eugen Neufeld
  *
  */

@@ -73,7 +73,7 @@ public class ProjectsView {
 
 				@Override
 				public void changed(
-				ObservableValue<? extends TreeItem<Object>> observable,
+					ObservableValue<? extends TreeItem<Object>> observable,
 					TreeItem<Object> oldValue, TreeItem<Object> newValue) {
 
 					if (newValue != null && EObject.class.isInstance(newValue.getValue())) {
@@ -82,7 +82,7 @@ public class ProjectsView {
 					}
 
 					final TreeItem<Object> selectedItem = localProjectsView
-					.getSelectionModel().getSelectedItem();
+						.getSelectionModel().getSelectedItem();
 
 					if (selectedItem == null) {
 						return;

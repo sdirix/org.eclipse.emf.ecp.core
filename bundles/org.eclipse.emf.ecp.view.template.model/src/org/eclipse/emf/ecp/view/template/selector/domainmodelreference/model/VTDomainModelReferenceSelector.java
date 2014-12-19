@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * EclipseSource Munich - initial API and implementation
  */
@@ -18,7 +18,7 @@ import org.eclipse.emf.ecp.view.template.model.VTStyleSelector;
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Domain Model Reference Selector</b></em>'.
  * <!-- end-user-doc -->
- * 
+ *
  * <p>
  * The following features are supported:
  * <ul>
@@ -27,7 +27,7 @@ import org.eclipse.emf.ecp.view.template.model.VTStyleSelector;
  * <em>Domain Model Reference</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.VTDomainmodelreferencePackage#getDomainModelReferenceSelector()
  * @model
  * @generated
@@ -42,7 +42,7 @@ public interface VTDomainModelReferenceSelector extends VTStyleSelector
 	 * more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Domain Model Reference</em>' containment reference.
 	 * @see #setDomainModelReference(VDomainModelReference)
 	 * @see org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.VTDomainmodelreferencePackage#getDomainModelReferenceSelector_DomainModelReference()
@@ -57,7 +57,7 @@ public interface VTDomainModelReferenceSelector extends VTStyleSelector
 	 * <em>Domain Model Reference</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Domain Model Reference</em>' containment reference.
 	 * @see #getDomainModelReference()
 	 * @generated

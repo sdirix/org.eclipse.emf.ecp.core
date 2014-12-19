@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen - initial API and implementation
  ******************************************************************************/
@@ -28,9 +28,9 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 
 /**
  * This util class provides a method, which allows to copy values from one {@link VControl} to another generically.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  */
 public final class DefaultMergeUtil {
 
@@ -40,7 +40,7 @@ public final class DefaultMergeUtil {
 
 	/**
 	 * Copies the values from one {@link VControl} to another.
-	 * 
+	 *
 	 * @param from the {@link VControl} holding the values
 	 * @param to the {@link VControl} which values should be updated
 	 */

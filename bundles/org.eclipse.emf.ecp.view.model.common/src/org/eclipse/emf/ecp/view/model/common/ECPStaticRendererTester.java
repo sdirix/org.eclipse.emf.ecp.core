@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen - initial API and implementation
  ******************************************************************************/
@@ -16,9 +16,9 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
 
 /**
  * The static tester for renderer.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  */
 public class ECPStaticRendererTester implements ECPRendererTester {
 
@@ -27,7 +27,7 @@ public class ECPStaticRendererTester implements ECPRendererTester {
 
 	/**
 	 * The constructor of the static tester.
-	 * 
+	 *
 	 * @param priority the static priority
 	 * @param supportedVElement the {@link VElement} this tester allows
 	 */
@@ -39,7 +39,7 @@ public class ECPStaticRendererTester implements ECPRendererTester {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.model.common.ECPRendererTester#isApplicable(VElement, ViewModelContext)
 	 */
 	@Override

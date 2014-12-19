@@ -37,11 +37,12 @@ import org.eclipse.emf.emfstore.server.exceptions.ESException;
 
 public final class ESRemoteProjectTreeCell extends TreeCell<Object> {
 
-	private static List<String> localURLs=Arrays.asList("localhost","127.0.0.1");
-	
+	private static List<String> localURLs = Arrays.asList("localhost", "127.0.0.1");
+
 	private class LoginHandler implements EventHandler<ActionEvent> {
+		@Override
 		public void handle(ActionEvent t) {
-			ESServer server = (ESServer) getTreeItem().getValue();
+			final ESServer server = (ESServer) getTreeItem().getValue();
 			String password = null;
 			String user = null;
 
@@ -50,24 +51,25 @@ public final class ESRemoteProjectTreeCell extends TreeCell<Object> {
 				user = server.getLastUsersession().getUsername();
 			}
 			if (password == null || password.isEmpty() || user == null
-					|| user.isEmpty()) {
-				LoginStage stage = new LoginStage(server.getLastUsersession());
+				|| user.isEmpty()) {
+				final LoginStage stage = new LoginStage(server.getLastUsersession());
 				stage.showAndWait();
-				if (stage.getPassword() == null)
+				if (stage.getPassword() == null) {
 					return;
+				}
 
 				user = stage.getName();
 				password = stage.getPassword();
 				try {
-					ESUsersession login = server.login(user, password);
+					final ESUsersession login = server.login(user, password);
 					login.setSavePassword(stage.isSavePassword());
-				} catch (ESException e) {
+				} catch (final ESException e) {
 					showError(e);
 				}
 			} else {
 				try {
 					server.getLastUsersession().refresh();
-				} catch (ESException e) {
+				} catch (final ESException e) {
 					showError(e);
 				}
 			}
@@ -75,12 +77,13 @@ public final class ESRemoteProjectTreeCell extends TreeCell<Object> {
 	}
 
 	private class LogoutHandler implements EventHandler<ActionEvent> {
+		@Override
 		public void handle(ActionEvent t) {
-			ESServer server = (ESServer) getTreeItem().getValue();
+			final ESServer server = (ESServer) getTreeItem().getValue();
 
 			try {
 				server.getLastUsersession().logout();
-			} catch (ESException e) {
+			} catch (final ESException e) {
 				showError(e);
 			}
 		}
@@ -106,81 +109,84 @@ public final class ESRemoteProjectTreeCell extends TreeCell<Object> {
 			});
 
 			setScene(new Scene(VBoxBuilder.create().children(tf, button)
-					.build()));
+				.build()));
 		}
 	}
 
-	private ContextMenu remoteProjectMenu = new ContextMenu();
-	private ContextMenu serverMenu = new ContextMenu();
-	private BooleanProperty loggedIn = new SimpleBooleanProperty(false);
-	
+	private final ContextMenu remoteProjectMenu = new ContextMenu();
+	private final ContextMenu serverMenu = new ContextMenu();
+	private final BooleanProperty loggedIn = new SimpleBooleanProperty(false);
 
 	// private ContextMenu serverMenu = new ContextMenu();
 
 	@SuppressWarnings("restriction")
 	public ESRemoteProjectTreeCell() {
 		{
-			MenuItem addServerMenuItem = new MenuItem();
-			ImageView image = new ImageView(Activator.getContext().getBundle()
-					.getResource("icons/server_add.png").toExternalForm());
+			final MenuItem addServerMenuItem = new MenuItem();
+			final ImageView image = new ImageView(Activator.getContext().getBundle()
+				.getResource("icons/server_add.png").toExternalForm());
 			addServerMenuItem.setGraphic(HBoxBuilder.create()
-					.alignment(Pos.CENTER_LEFT)
-					.children(image, new Label("Add Server")).build());
+				.alignment(Pos.CENTER_LEFT)
+				.children(image, new Label("Add Server")).build());
 			remoteProjectMenu.getItems().add(addServerMenuItem);
 			serverMenu.getItems().add(addServerMenuItem);
 		}
 		{
-			MenuItem addMenuItem = new MenuItem();
-			ImageView image = new ImageView(Activator.getContext().getBundle()
-					.getResource("icons/checkout.png").toExternalForm());
+			final MenuItem addMenuItem = new MenuItem();
+			final ImageView image = new ImageView(Activator.getContext().getBundle()
+				.getResource("icons/checkout.png").toExternalForm());
 			addMenuItem.setGraphic(new HBox(image, new Label("Checkout")));
 			remoteProjectMenu.getItems().add(addMenuItem);
 			addMenuItem.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
 				public void handle(ActionEvent t) {
-					ESRemoteProject remoteProject = (ESRemoteProject) getTreeItem()
-							.getValue();
-					CheckoutNameStage stage = new CheckoutNameStage();
+					final ESRemoteProject remoteProject = (ESRemoteProject) getTreeItem()
+						.getValue();
+					final CheckoutNameStage stage = new CheckoutNameStage();
 					stage.showAndWait();
-					if (stage.result == null)
+					if (stage.result == null) {
 						return;
+					}
 					try {
 						remoteProject.checkout(stage.result, remoteProject
-								.getServer().getLastUsersession(),
-								new NullProgressMonitor());
-					} catch (ESException e) {
+							.getServer().getLastUsersession(),
+							new NullProgressMonitor());
+					} catch (final ESException e) {
 						showError(e);
 					}
 				}
 			});
 		}
 		ESWorkspaceProviderImpl.getObserverBus().register(
-				new ESLoginObserver() {
+			new ESLoginObserver() {
 
-					@Override
-					public void loginCompleted(ESUsersession session) {
-						if (!getItem().equals(session.getServer()))
-							return;
-						loggedIn.set(true);
+				@Override
+				public void loginCompleted(ESUsersession session) {
+					if (!getItem().equals(session.getServer())) {
+						return;
 					}
-				});
+					loggedIn.set(true);
+				}
+			});
 		ESWorkspaceProviderImpl.getObserverBus().register(
-				new ESLogoutObserver() {
+			new ESLogoutObserver() {
 
-					@Override
-					public void logoutCompleted(ESUsersession session) {
-						if (!getItem().equals(session.getServer()))
-							return;
-						loggedIn.set(false);
+				@Override
+				public void logoutCompleted(ESUsersession session) {
+					if (!getItem().equals(session.getServer())) {
+						return;
 					}
-				});
+					loggedIn.set(false);
+				}
+			});
 	}
 
 	private void showError(Exception e) {
-		Stage errorStage=new Stage();
+		final Stage errorStage = new Stage();
 		errorStage.initModality(Modality.WINDOW_MODAL);
 		errorStage.setTitle("Error");
 		errorStage.setScene(new Scene(VBoxBuilder.create().children(new Label(e.getMessage()))
-				.build()));
+			.build()));
 		errorStage.showAndWait();
 	}
 
@@ -190,48 +196,48 @@ public final class ESRemoteProjectTreeCell extends TreeCell<Object> {
 
 		if (item != null) {
 
-			String cellText=null;
+			String cellText = null;
 			Node graphics = null;
 			if (ESWorkspace.class.isInstance(item)) {
-				cellText="Known Server";
-//				Label label = new Label("Known Server");
+				cellText = "Known Server";
+				// Label label = new Label("Known Server");
 				// ImageView image = new
 				// ImageView(Activator.getContext().getBundle().getResource("icons/remoteProject.png").toExternalForm());
-//				graphics = HBoxBuilder.create().alignment(Pos.CENTER_LEFT)
-//						.children(label).build();
+				// graphics = HBoxBuilder.create().alignment(Pos.CENTER_LEFT)
+				// .children(label).build();
 
 			} else if (ESRemoteProject.class.isInstance(item)) {
-				cellText=
-						ESRemoteProject.class.cast(item).getProjectName();
+				cellText =
+					ESRemoteProject.class.cast(item).getProjectName();
 				graphics = new ImageView(Activator.getContext()
-						.getBundle().getResource("icons/remoteProject.png")
-						.toExternalForm());
-//				graphics = HBoxBuilder.create().alignment(Pos.CENTER_LEFT)
-//						.children(image, label).build();
+					.getBundle().getResource("icons/remoteProject.png")
+					.toExternalForm());
+				// graphics = HBoxBuilder.create().alignment(Pos.CENTER_LEFT)
+				// .children(image, label).build();
 				setContextMenu(remoteProjectMenu);
 			} else if (ESServer.class.isInstance(item)) {
-				ESServer server = (ESServer) item;
+				final ESServer server = (ESServer) item;
 				{
-					cellText=server.getName() + "("
-							+ server.getURL() + ":" + server.getPort() + ")";
+					cellText = server.getName() + "("
+						+ server.getURL() + ":" + server.getPort() + ")";
 					graphics = new ImageView(Activator.getContext()
-							.getBundle().getResource("icons/server.png")
-							.toExternalForm());
-//					graphics = HBoxBuilder.create().alignment(Pos.CENTER_LEFT)
-//							.children(image, label).build();
+						.getBundle().getResource("icons/server.png")
+						.toExternalForm());
+					// graphics = HBoxBuilder.create().alignment(Pos.CENTER_LEFT)
+					// .children(image, label).build();
 				}
-				if(localURLs.contains(server.getURL()) && EMFStoreController.getInstance()==null)
+				if (localURLs.contains(server.getURL()) && EMFStoreController.getInstance() == null)
 				{
 					final MenuItem startServerItem = new MenuItem();
-					ImageView image = new ImageView(Activator.getContext()
-							.getBundle().getResource("icons/server_go.png")
-							.toExternalForm());
+					final ImageView image = new ImageView(Activator.getContext()
+						.getBundle().getResource("icons/server_go.png")
+						.toExternalForm());
 					startServerItem.setGraphic(HBoxBuilder.create()
-							.alignment(Pos.CENTER_LEFT)
-							.children(image, new Label("Start Server")).build());
-					serverMenu.getItems().add(0,startServerItem);
+						.alignment(Pos.CENTER_LEFT)
+						.children(image, new Label("Start Server")).build());
+					serverMenu.getItems().add(0, startServerItem);
 					startServerItem.setOnAction(new EventHandler<ActionEvent>() {
-						
+
 						@Override
 						public void handle(ActionEvent arg0) {
 							try {
@@ -243,40 +249,41 @@ public final class ESRemoteProjectTreeCell extends TreeCell<Object> {
 						}
 					});
 				}
-				
+
 				{
-					MenuItem logInItem = new MenuItem();
-					ImageView image = new ImageView(Activator.getContext()
-							.getBundle().getResource("icons/logIn.png")
-							.toExternalForm());
+					final MenuItem logInItem = new MenuItem();
+					final ImageView image = new ImageView(Activator.getContext()
+						.getBundle().getResource("icons/logIn.png")
+						.toExternalForm());
 					logInItem.setGraphic(HBoxBuilder.create()
-							.alignment(Pos.CENTER_LEFT)
-							.children(image, new Label("Login")).build());
+						.alignment(Pos.CENTER_LEFT)
+						.children(image, new Label("Login")).build());
 					serverMenu.getItems().add(logInItem);
 					logInItem.setOnAction(new LoginHandler());
 					logInItem.visibleProperty().bind(loggedIn.not());
 				}
 				{
-					MenuItem logOutItem = new MenuItem();
-					ImageView image = new ImageView(Activator.getContext()
-							.getBundle().getResource("icons/logOut.png")
-							.toExternalForm());
+					final MenuItem logOutItem = new MenuItem();
+					final ImageView image = new ImageView(Activator.getContext()
+						.getBundle().getResource("icons/logOut.png")
+						.toExternalForm());
 					logOutItem.setGraphic(HBoxBuilder.create()
-							.alignment(Pos.CENTER_LEFT)
-							.children(image, new Label("Logout")).build());
+						.alignment(Pos.CENTER_LEFT)
+						.children(image, new Label("Logout")).build());
 					serverMenu.getItems().add(logOutItem);
 					logOutItem.setOnAction(new LogoutHandler());
 
 					logOutItem.visibleProperty().bind(loggedIn);
 				}
-				if(server.getLastUsersession()!=null)
-				loggedIn.set(server.getLastUsersession().isLoggedIn());
+				if (server.getLastUsersession() != null) {
+					loggedIn.set(server.getLastUsersession().isLoggedIn());
+				}
 				setContextMenu(serverMenu);
 			}
 
-//			if (graphics != null)
-				setGraphic(graphics);
-				setText(cellText);
+			// if (graphics != null)
+			setGraphic(graphics);
+			setText(cellText);
 		}
 	}
 }

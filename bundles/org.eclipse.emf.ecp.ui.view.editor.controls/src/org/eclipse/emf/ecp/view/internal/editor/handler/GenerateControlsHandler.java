@@ -1,14 +1,14 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * EclipseSource Muenchen - initial API and implementation
- * 
+ *
  *******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.editor.handler;
 
@@ -45,9 +45,9 @@ import org.eclipse.ui.handlers.HandlerUtil;
 /**
  * Handler for generating controls on a {@link org.eclipse.emf.ecp.view.spi.model.VContainedContainer VContainer} or
  * {@link org.eclipse.emf.ecp.view.spi.model.VView VView}.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  */
 public class GenerateControlsHandler extends MasterDetailAction {
 
@@ -89,7 +89,7 @@ public class GenerateControlsHandler extends MasterDetailAction {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.treemasterdetail.ui.swt.MasterDetailAction#execute(EObject)
 	 */
 	@Override
@@ -160,7 +160,7 @@ public class GenerateControlsHandler extends MasterDetailAction {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.treemasterdetail.ui.swt.MasterDetailAction#shouldShow(org.eclipse.emf.ecore.EObject)
 	 */
 	@Override
@@ -173,7 +173,7 @@ public class GenerateControlsHandler extends MasterDetailAction {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.core.commands.IHandler#execute(org.eclipse.core.commands.ExecutionEvent)
 	 */
 	@Override

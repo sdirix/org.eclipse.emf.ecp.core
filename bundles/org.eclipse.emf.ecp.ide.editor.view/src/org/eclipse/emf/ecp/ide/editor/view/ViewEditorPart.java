@@ -129,22 +129,22 @@ public class ViewEditorPart extends EditorPart implements
 
 		basicCommandStack = new BasicCommandStack();
 		basicCommandStack.addCommandStackListener
-		(new CommandStackListener()
-		{
-			@Override
-			public void commandStackChanged(final EventObject event)
+			(new CommandStackListener()
 			{
-				parent.getDisplay().asyncExec
-				(new Runnable()
+				@Override
+				public void commandStackChanged(final EventObject event)
 				{
-					@Override
-					public void run()
-					{
-						firePropertyChange(IEditorPart.PROP_DIRTY);
-					}
-				});
-			}
-		});
+					parent.getDisplay().asyncExec
+						(new Runnable()
+						{
+							@Override
+							public void run()
+							{
+								firePropertyChange(IEditorPart.PROP_DIRTY);
+							}
+						});
+				}
+			});
 
 		partListener = new ViewPartListener();
 		getSite().getPage().addPartListener(partListener);
@@ -189,7 +189,7 @@ public class ViewEditorPart extends EditorPart implements
 			new ComposedAdapterFactory(new AdapterFactory[] {
 				new CustomReflectiveItemProviderAdapterFactory(),
 				new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) }),
-				basicCommandStack, resourceSet);
+			basicCommandStack, resourceSet);
 		resourceSet.eAdapters().add(
 			new AdapterFactoryEditingDomain.EditingDomainProvider(domain));
 		return resourceSet;
@@ -308,11 +308,11 @@ public class ViewEditorPart extends EditorPart implements
 						view);
 				} else {
 					Activator
-					.getDefault()
-					.getLog()
-					.log(
-						new Status(IStatus.WARNING, Activator.PLUGIN_ID,
-							"The Root EClass of the view cannot be resolved." + view.getRootEClass())); //$NON-NLS-1$
+						.getDefault()
+						.getLog()
+						.log(
+							new Status(IStatus.WARNING, Activator.PLUGIN_ID,
+								"The Root EClass of the view cannot be resolved." + view.getRootEClass())); //$NON-NLS-1$
 				}
 			}
 
@@ -365,7 +365,8 @@ public class ViewEditorPart extends EditorPart implements
 						}
 					}
 				}
-				return new Status(IStatus.ERROR, Activator.PLUGIN_ID, IStatus.ERROR, Messages.ViewEditorPart_EcoreSelectionValidation,
+				return new Status(IStatus.ERROR, Activator.PLUGIN_ID, IStatus.ERROR,
+					Messages.ViewEditorPart_EcoreSelectionValidation,
 					null);
 			}
 		});
@@ -417,7 +418,7 @@ public class ViewEditorPart extends EditorPart implements
 						EcoreHelper.registerEcore(ecorePath);
 					} catch (final IOException e) {
 						Activator.getDefault().getLog()
-						.log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
+							.log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
 					}
 				}
 
@@ -429,7 +430,7 @@ public class ViewEditorPart extends EditorPart implements
 					Activator.getViewModelRegistry().registerViewModelEditor(view, instance);
 				} catch (final IOException e) {
 					Activator.getDefault().getLog()
-					.log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
+						.log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
 				}
 
 				if (view.getRootEClass() != null) {
@@ -439,11 +440,11 @@ public class ViewEditorPart extends EditorPart implements
 							view);
 					} else {
 						Activator
-						.getDefault()
-						.getLog()
-						.log(
-							new Status(IStatus.WARNING, Activator.PLUGIN_ID,
-								"The Root EClass of the view cannot be resolved." + view.getRootEClass())); //$NON-NLS-1$
+							.getDefault()
+							.getLog()
+							.log(
+								new Status(IStatus.WARNING, Activator.PLUGIN_ID,
+									"The Root EClass of the view cannot be resolved." + view.getRootEClass())); //$NON-NLS-1$
 					}
 				}
 				showView();
@@ -488,7 +489,8 @@ public class ViewEditorPart extends EditorPart implements
 
 	private void displayError(Exception e) {
 		Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
-		final IStatus status = new Status(IStatus.ERROR, Activator.PLUGIN_ID, Messages.ViewEditorPart_ViewCannotBeDisplayed, e);
+		final IStatus status = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
+			Messages.ViewEditorPart_ViewCannotBeDisplayed, e);
 		final ErrorViewPart part = new ErrorViewPart(status);
 		part.createPartControl(parent);
 	}

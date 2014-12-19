@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
@@ -38,13 +38,13 @@ import org.osgi.framework.Bundle;
 
 /**
  * @author Eugen Neufeld
- * 
+ *
  */
 public class DynamicTreeModelService implements ViewModelService {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#instantiate(org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
 	@Override
@@ -115,7 +115,7 @@ public class DynamicTreeModelService implements ViewModelService {
 
 	/**
 	 * Creates the actions for the given node.
-	 * 
+	 *
 	 * @param categorizableElement the {@link VCategorizableElement} to create the actions for
 	 * @param actions
 	 *            the {@link VAction}s to be created
@@ -181,7 +181,7 @@ public class DynamicTreeModelService implements ViewModelService {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#dispose()
 	 */
 	@Override
@@ -192,7 +192,7 @@ public class DynamicTreeModelService implements ViewModelService {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#getPriority()
 	 */
 	@Override

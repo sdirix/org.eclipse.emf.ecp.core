@@ -1,14 +1,14 @@
 /*******************************************************************************
  * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
- * 
+ *
  *******************************************************************************/
 
 package org.eclipse.emf.ecp.internal.wizards;
@@ -47,18 +47,18 @@ public class CreateProjectWizard extends ECPWizard<CreateProjectComposite> {
 	@Override
 	public void addPages() {
 		super.addPages();
-		List<ECPProvider> providers = new ArrayList<ECPProvider>();
-		for (ECPProvider provider : ECPUtil.getECPProviderRegistry().getProviders()) {
+		final List<ECPProvider> providers = new ArrayList<ECPProvider>();
+		for (final ECPProvider provider : ECPUtil.getECPProviderRegistry().getProviders()) {
 			if (provider.hasCreateProjectWithoutRepositorySupport()) {
 				providers.add(provider);
 			}
 		}
-		WizardPage wp = new WizardPage("CreateProject") //$NON-NLS-1$
+		final WizardPage wp = new WizardPage("CreateProject") //$NON-NLS-1$
 		{
 
 			@Override
 			public void createControl(Composite parent) {
-				Composite composite = getCompositeProvider().createUI(parent);
+				final Composite composite = getCompositeProvider().createUI(parent);
 				getCompositeProvider().setListener(new CreateProjectChangeListener() {
 
 					@Override
@@ -85,7 +85,7 @@ public class CreateProjectWizard extends ECPWizard<CreateProjectComposite> {
 			}
 		};
 		addPage(wp);
-		String title = Messages.CreateProjectWizard_PageTitle_CreateProject;
+		final String title = Messages.CreateProjectWizard_PageTitle_CreateProject;
 		String message = Messages.CreateProjectWizard_PageMessage_SelectProviderAndSetName;
 		if (providers.size() == 1) {
 			message = Messages.CreateProjectWizard_PageMessage_SetProjectName;

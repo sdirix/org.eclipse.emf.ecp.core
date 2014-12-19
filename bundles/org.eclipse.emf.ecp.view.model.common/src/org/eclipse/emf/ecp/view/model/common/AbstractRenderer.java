@@ -16,10 +16,10 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
 
 /**
  * Common super class for renderer.
- * 
+ *
  * @author Eugen Neufeld
  * @param <VELEMENT> the {@link VElement} this renderer is applicable for
- * 
+ *
  */
 public abstract class AbstractRenderer<VELEMENT extends VElement> {
 
@@ -28,7 +28,7 @@ public abstract class AbstractRenderer<VELEMENT extends VElement> {
 
 	/**
 	 * Initialize the control. This can only be called once.
-	 * 
+	 *
 	 * @param vElement the {@link VElement} to be rendered
 	 * @param viewContext the {@link ViewModelContext} to use
 	 */
@@ -42,7 +42,7 @@ public abstract class AbstractRenderer<VELEMENT extends VElement> {
 
 	/**
 	 * The {@link ViewModelContext} to use.
-	 * 
+	 *
 	 * @return the {@link ViewModelContext}
 	 */
 	public final ViewModelContext getViewModelContext() {
@@ -51,7 +51,7 @@ public abstract class AbstractRenderer<VELEMENT extends VElement> {
 
 	/**
 	 * The {@link VElement} instance to use.
-	 * 
+	 *
 	 * @return the {@link VElement}
 	 */
 	public final VELEMENT getVElement() {

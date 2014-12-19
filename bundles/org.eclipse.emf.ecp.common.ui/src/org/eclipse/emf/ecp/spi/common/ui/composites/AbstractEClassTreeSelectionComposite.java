@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
@@ -30,9 +30,9 @@ import org.eclipse.swt.widgets.Composite;
 
 /**
  * This class provides an abstract implementation for displaying EClasses in a Tree.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  */
 public abstract class AbstractEClassTreeSelectionComposite extends AbstractFilteredSelectionComposite<TreeViewer> {
 
@@ -43,7 +43,7 @@ public abstract class AbstractEClassTreeSelectionComposite extends AbstractFilte
 
 	/**
 	 * Constructor setting the necessary data for selecting the {@link EClass EClasses}.
-	 * 
+	 *
 	 * @param unsupportedEPackages {@link EPackage EPackages} that are not supported
 	 * @param filteredEPackages {@link EPackage EPackages} selected by the user
 	 * @param filteredEClasses {@link EClass EClasses} selected by the user
@@ -82,7 +82,7 @@ public abstract class AbstractEClassTreeSelectionComposite extends AbstractFilte
 
 	/**
 	 * Whether the Tree is a checked tree.
-	 * 
+	 *
 	 * @return true if a checked tree, false otherwise
 	 */
 	protected abstract boolean isCheckedTree();

@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
  ******************************************************************************/
@@ -44,7 +44,7 @@ import org.junit.runners.Parameterized.Parameters;
 
 /**
  * @author jfaltermeier
- * 
+ *
  */
 @RunWith(Parameterized.class)
 public class ValidationPerformance_Test {
@@ -88,7 +88,7 @@ public class ValidationPerformance_Test {
 
 	/**
 	 * Creates the parameters that will be passed to the constructor before every execution.
-	 * 
+	 *
 	 * @param domainObjectCountFactor The factor used for scaling up the amount of domains objects.
 	 * @param viewModelCountFactor The factors used for scaling up the amount of controls in the view model.
 	 * @param timeGateStartup the timegate used for the startup of the context with the validation service
@@ -278,7 +278,7 @@ public class ValidationPerformance_Test {
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	private void countDomainObjects() {
 		final TreeIterator<EObject> allContents = domain.eAllContents();

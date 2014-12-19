@@ -47,7 +47,7 @@ public final class CompositeFactory {
 	/**
 	 * Creates a {@link SelectionComposite} to select an {@link EClass}.
 	 *
-	 * 
+	 *
 	 * @return {@link SelectionComposite}
 	 */
 	public static SelectionComposite<TreeViewer> getSelectModelClassComposite(

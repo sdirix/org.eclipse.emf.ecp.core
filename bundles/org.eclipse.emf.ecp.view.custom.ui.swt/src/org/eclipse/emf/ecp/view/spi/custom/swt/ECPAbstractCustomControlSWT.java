@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  *******************************************************************************/
@@ -66,17 +66,17 @@ import org.eclipse.swt.widgets.Label;
 
 /**
  * Extend this class in order to provide an own implementation of an {@link ECPAbstractCustomControlSWT}.
- * 
+ *
  * @author Eugen Neufeld
  * @since 1.2
- * 
+ *
  */
 @SuppressWarnings("deprecation")
 public abstract class ECPAbstractCustomControlSWT
 {
 	/**
 	 * Variant constant for indicating RAP controls.
-	 * 
+	 *
 	 * @since 1.3
 	 */
 	protected static final String CUSTOM_VARIANT = "org.eclipse.rap.rwt.customVariant"; //$NON-NLS-1$
@@ -109,7 +109,7 @@ public abstract class ECPAbstractCustomControlSWT
 
 	/**
 	 * Called by the framework to trigger an initialization.
-	 * 
+	 *
 	 * @param customControl the {@link VCustomControl} to use
 	 * @param viewModelContext the {@link ViewModelContext} to use
 	 * @since 1.3
@@ -129,7 +129,7 @@ public abstract class ECPAbstractCustomControlSWT
 	/**
 	 * This method is called after the initialization. Custom controls can overwrite this to execute specific
 	 * initialization steps.
-	 * 
+	 *
 	 * @since 1.3
 	 */
 	protected void postInit() {
@@ -171,14 +171,14 @@ public abstract class ECPAbstractCustomControlSWT
 
 	/**
 	 * This method is called during dispose and allows to dispose necessary objects.
-	 * 
+	 *
 	 * @since 1.3
 	 */
 	protected abstract void disposeCustomControl();
 
 	/**
 	 * Return the {@link ViewModelContext}.
-	 * 
+	 *
 	 * @return the {@link ViewModelContext} of this control
 	 * @since 1.3
 	 */
@@ -188,7 +188,7 @@ public abstract class ECPAbstractCustomControlSWT
 
 	/**
 	 * Return the {@link VCustomControl}.
-	 * 
+	 *
 	 * @return the {@link VCustomControl} of this control
 	 * @since 1.3
 	 */
@@ -198,7 +198,7 @@ public abstract class ECPAbstractCustomControlSWT
 
 	/**
 	 * Returns a {@link DataBindingContext} for this control.
-	 * 
+	 *
 	 * @return the {@link DataBindingContext}
 	 * @since 1.3
 	 */
@@ -229,7 +229,7 @@ public abstract class ECPAbstractCustomControlSWT
 
 	/**
 	 * This is called so that an error can be shown by the user.
-	 * 
+	 *
 	 * @since 1.3
 	 */
 	protected abstract void handleContentValidation();
@@ -237,7 +237,7 @@ public abstract class ECPAbstractCustomControlSWT
 	/**
 	 * This is a helper method which provides an {@link SWTCustomControlHelper}. It allows to get an image based on the
 	 * constants defined in {@link ECPAbstractCustomControlSWT}.
-	 * 
+	 *
 	 * @return the {@link SWTCustomControlHelper} to use to retrieve images.
 	 * @since 1.3
 	 */
@@ -262,7 +262,7 @@ public abstract class ECPAbstractCustomControlSWT
 
 	/**
 	 * Create the {@link Control} displaying the label of the current {@link VControl}.
-	 * 
+	 *
 	 * @param parent the {@link Composite} to render onto
 	 * @return the created {@link Control} or null
 	 * @throws NoPropertyDescriptorFoundExeption thrown if the {@link org.eclipse.emf.ecore.EStructuralFeature
@@ -302,7 +302,7 @@ public abstract class ECPAbstractCustomControlSWT
 
 	/**
 	 * Creates a Label which is used to display the validation icon.
-	 * 
+	 *
 	 * @param composite the {@link Composite} to render onto
 	 * @return the created Label
 	 * @since 1.3
@@ -316,7 +316,7 @@ public abstract class ECPAbstractCustomControlSWT
 	/**
 	 * Creates a binding for a {@link StructuredViewer} based on a {@link ECPCustomControlFeature} and the array of
 	 * {@link IValueProperty IValueProperties} for labels.
-	 * 
+	 *
 	 * @param customControlFeature the {@link ECPCustomControlFeature} to use
 	 * @param viewer the {@link StructuredViewer} to bind
 	 * @param labelProperties the array if {@link IValueProperty IValueProperties} to use for labels
@@ -330,7 +330,7 @@ public abstract class ECPAbstractCustomControlSWT
 
 	/**
 	 * Return an {@link IObservableList} based on a {@link VDomainModelReference}.
-	 * 
+	 *
 	 * @param domainModelReference the {@link VDomainModelReference} to use
 	 * @return the {@link IObservableList}
 	 * @since 1.3
@@ -344,7 +344,7 @@ public abstract class ECPAbstractCustomControlSWT
 
 	/**
 	 * Returns the {@link EditingDomain} for the provided {@link Setting}.
-	 * 
+	 *
 	 * @param setting the provided {@link Setting}
 	 * @return the {@link EditingDomain} of this {@link Setting}
 	 * @since 1.3
@@ -380,7 +380,7 @@ public abstract class ECPAbstractCustomControlSWT
 
 	/**
 	 * Use this method to get an {@link ECPControl} which can be used inside the {@link ECPCustomControl}.
-	 * 
+	 *
 	 * @param clazz the {@link Class} of the {@link ECPControl} to retrieve
 	 * @param domainModelReference the {@link VDomainModelReference} to retrieve a control for
 	 * @param <T> the type of the control to retrieve
@@ -408,7 +408,7 @@ public abstract class ECPAbstractCustomControlSWT
 
 	/**
 	 * Return the {@link IItemPropertyDescriptor} describing this {@link Setting}.
-	 * 
+	 *
 	 * @param setting the {@link Setting} to use for identifying the {@link IItemPropertyDescriptor}.
 	 * @return the {@link IItemPropertyDescriptor}
 	 * @since 1.3
@@ -435,7 +435,7 @@ public abstract class ECPAbstractCustomControlSWT
 	/**
 	 * Returns a list of all {@link VDomainModelReference VDomainModelReferences} which were already resolved and thus
 	 * can be used for binding etc.
-	 * 
+	 *
 	 * @return the List of {@link VDomainModelReference VDomainModelReferences}
 	 * @since 1.3
 	 */
@@ -452,7 +452,7 @@ public abstract class ECPAbstractCustomControlSWT
 
 	/**
 	 * Finds the {@link VDomainModelReference} which provides a specific {@link EStructuralFeature}.
-	 * 
+	 *
 	 * @param feature the {@link EStructuralFeature} to find the {@link VDomainModelReference} for
 	 * @return the {@link VDomainModelReference} or null
 	 * @since 1.3
@@ -474,8 +474,8 @@ public abstract class ECPAbstractCustomControlSWT
 	 * Method for enabling databinding on the reference/attribute of the referenced object.
 	 * Throws an {@link IllegalStateException} if the {@link VDomainModelReference} doesn't resolve to exactly one
 	 * {@link Setting}.
-	 * 
-	 * 
+	 *
+	 *
 	 * @param modelFeature the {@link VDomainModelReference} to bind
 	 * @param targetValue the target observerable
 	 * @param targetToModel update strategy target to model
@@ -496,7 +496,7 @@ public abstract class ECPAbstractCustomControlSWT
 
 	/**
 	 * Provides the {@link EditingDomain} for this custom control.
-	 * 
+	 *
 	 * @return the {@link EditingDomain} for this control
 	 * @since 1.3
 	 */
@@ -508,7 +508,7 @@ public abstract class ECPAbstractCustomControlSWT
 	 * Returns the current set value of the feature.
 	 * Throws an {@link IllegalStateException} if the {@link VDomainModelReference} doesn't resolve to exactly one
 	 * {@link Setting}.
-	 * 
+	 *
 	 * @param modelReference the {@link VDomainModelReference} to get the value for
 	 * @return the value
 	 * @since 1.3
@@ -522,7 +522,7 @@ public abstract class ECPAbstractCustomControlSWT
 	 * Sets the value of the feature to the new value.
 	 * Throws an {@link IllegalStateException} if the {@link VDomainModelReference} doesn't resolve to exactly one
 	 * {@link Setting}.
-	 * 
+	 *
 	 * @param modelReference the {@link VDomainModelReference} to get the value for
 	 * @param newValue the value to be set
 	 * @since 1.3
@@ -538,13 +538,13 @@ public abstract class ECPAbstractCustomControlSWT
 	}
 
 	/**
-	 * 
+	 *
 	 * Registers a change listener on the referenced object. {@link ECPCustomControlChangeListener#notifyChanged()} will
 	 * be called when a change on the referenced object is noticed.
-	 * 
+	 *
 	 * Throws an {@link IllegalStateException} if the {@link VDomainModelReference} doesn't resolve to exactly one
 	 * {@link Setting}.
-	 * 
+	 *
 	 * @param modelReference the {@link VDomainModelReference} to register a listener for
 	 * @param changeListener the change listener to register
 	 * @since 1.3
@@ -575,15 +575,15 @@ public abstract class ECPAbstractCustomControlSWT
 
 	/**
 	 * The {@link SWTCustomControlHelper} allows the retrieval of SWT specific elements.
-	 * 
+	 *
 	 * @author Eugen Neufeld
-	 * 
+	 *
 	 */
 	public final class SWTCustomControlHelper {
 
 		/**
 		 * Allows to get an {@link Image} based on the constants defined in {@link ECPAbstractCustomControlSWT}.
-		 * 
+		 *
 		 * @param imageType the image type to retrieve
 		 * @return the retrieved Image or null if an unknown imageType was provided
 		 */
@@ -593,7 +593,7 @@ public abstract class ECPAbstractCustomControlSWT
 
 		/**
 		 * This return a text providing a long helpful description of the feature. Can be used for example in a ToolTip.
-		 * 
+		 *
 		 * @param domainModelReference the {@link VDomainModelReference} to retrieve the help text for
 		 * @return the String containing the helpful description or null if no description is found
 		 * @since 1.3
@@ -605,7 +605,7 @@ public abstract class ECPAbstractCustomControlSWT
 		/**
 		 * This return a text providing a short label of the feature. Can be used for example as a label in front of the
 		 * edit field.
-		 * 
+		 *
 		 * @param domainModelReference the {@link VDomainModelReference} to retrieve the text for
 		 * @return the String containing the label null if no label is found
 		 * @since 1.3
@@ -617,7 +617,7 @@ public abstract class ECPAbstractCustomControlSWT
 
 	/**
 	 * Returns the GridDescription for this Renderer.
-	 * 
+	 *
 	 * @return the GridDescription
 	 * @since 1.3
 	 */
@@ -625,7 +625,7 @@ public abstract class ECPAbstractCustomControlSWT
 
 	/**
 	 * Renders the control.
-	 * 
+	 *
 	 * @param cell the {@link SWTGridCell} of the control to render
 	 * @param parent the {@link Composite} to render on
 	 * @return the rendered {@link Control}
@@ -638,7 +638,7 @@ public abstract class ECPAbstractCustomControlSWT
 
 	/**
 	 * Called by the framework to apply validation changes.
-	 * 
+	 *
 	 * @since 1.3
 	 */
 	public final void applyValidation() {
@@ -654,7 +654,7 @@ public abstract class ECPAbstractCustomControlSWT
 
 	/**
 	 * Applies the current readOnlyState.
-	 * 
+	 *
 	 * @param controls the controls provided
 	 * @since 1.3
 	 */
@@ -668,7 +668,7 @@ public abstract class ECPAbstractCustomControlSWT
 
 	/**
 	 * Override this to control which and how controls should be enabled/disabled.
-	 * 
+	 *
 	 * @param gridCell the {@link SWTGridCell} to enable/disable
 	 * @param control the {@link Control} to enable/disable
 	 * @param enabled true if the control should be enabled false otherwise
@@ -684,7 +684,7 @@ public abstract class ECPAbstractCustomControlSWT
 
 	/**
 	 * Applies the current enable state.
-	 * 
+	 *
 	 * @param controls the controls
 	 * @since 1.3
 	 */
@@ -699,7 +699,7 @@ public abstract class ECPAbstractCustomControlSWT
 	/**
 	 * Allows custom controls to call specific code for setting controls editable or not. The result indicates whether
 	 * to call the default editable
-	 * 
+	 *
 	 * @param editable if the current state is editable
 	 * @return true if default editable modification should be executed
 	 * @since 1.3
@@ -710,7 +710,7 @@ public abstract class ECPAbstractCustomControlSWT
 
 	/**
 	 * Creates a simple grid.
-	 * 
+	 *
 	 * @param rows the number of rows
 	 * @param columns the number of columns
 	 * @return the {@link GridDescription}

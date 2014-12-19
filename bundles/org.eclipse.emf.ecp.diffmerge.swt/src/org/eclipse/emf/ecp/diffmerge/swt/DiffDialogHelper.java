@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen - initial API and implementation
  ******************************************************************************/
@@ -27,9 +27,9 @@ import org.eclipse.swt.widgets.Shell;
 
 /**
  * The Diff Dialog helper provides methods to open a Diff Dialog.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  */
 public final class DiffDialogHelper {
 	private DiffDialogHelper() {
@@ -39,7 +39,7 @@ public final class DiffDialogHelper {
 	 * This opens a dialog displaying the differences of the elements of the {@link DiffMergeModelContext} based on the
 	 * index of the difference. If the index is not valid, less then 0 or greater equals the number of differences, then
 	 * an {@link IllegalArgumentException} is thrown.
-	 * 
+	 *
 	 * @param diffModelContext the {@link DiffMergeModelContext} containing the data
 	 * @param diffIndex the index of the difference
 	 * @throws IllegalArgumentException if the index is invalid
@@ -54,7 +54,7 @@ public final class DiffDialogHelper {
 	/**
 	 * Opens a dialog displaying the differences of the elements of the {@link DiffMergeModelContext} based on the
 	 * provided {@link VControl}.
-	 * 
+	 *
 	 * @param diffModelContext the {@link DiffMergeModelContext} containing the data
 	 * @param vControl the {@link VControl} having the differences
 	 * @param featureLabel the feature text to use in the title of the dialog

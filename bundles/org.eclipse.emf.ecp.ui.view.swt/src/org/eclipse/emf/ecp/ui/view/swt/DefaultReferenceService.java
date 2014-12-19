@@ -158,7 +158,7 @@ public class DefaultReferenceService implements ReferenceService {
 	public void addExistingModelElements(EObject eObject, EReference eReference) {
 		final Iterator<EObject> allElements =
 			ItemPropertyDescriptor.getReachableObjectsOfType(eObject, eReference.getEType())
-			.iterator();
+				.iterator();
 
 		final Set<EObject> elements = new LinkedHashSet<EObject>();
 		while (allElements.hasNext()) {
@@ -209,7 +209,7 @@ public class DefaultReferenceService implements ReferenceService {
 		protected Control createDialogArea(Composite parent) {
 			final Composite composite = (Composite) super.createDialogArea(parent);
 			GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).hint(450, 250)
-			.applyTo(composite);
+				.applyTo(composite);
 
 			final ScrolledComposite scrolledComposite = new ScrolledComposite(composite, SWT.H_SCROLL
 				| SWT.V_SCROLL);

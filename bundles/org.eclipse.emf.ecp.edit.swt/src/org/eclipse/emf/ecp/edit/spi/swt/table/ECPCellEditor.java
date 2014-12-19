@@ -82,7 +82,7 @@ public interface ECPCellEditor {
 
 	/**
 	 * Sets editable state of the cell editor.
-	 * 
+	 *
 	 * @param editable <code>true</code> if editable, <code>false</code> otherwise
 	 */
 	void setEditable(boolean editable);

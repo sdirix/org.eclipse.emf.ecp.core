@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen - initial API and implementation
  ******************************************************************************/
@@ -22,9 +22,9 @@ import org.eclipse.swt.widgets.Shell;
 
 /**
  * Logout Helper delegating to {@link UILogoutSessionController}.
- * 
+ *
  * @author Eugen
- * 
+ *
  */
 public final class EMFStoreLogOutHelper {
 
@@ -33,7 +33,7 @@ public final class EMFStoreLogOutHelper {
 
 	/**
 	 * Logouts to the selected {@link InternalRepository}. Delegates to {@link UILogoutSessionController}.
-	 * 
+	 *
 	 * @param ecpRepository the {@link InternalRepository}
 	 * @param shell the {@link Shell}
 	 */

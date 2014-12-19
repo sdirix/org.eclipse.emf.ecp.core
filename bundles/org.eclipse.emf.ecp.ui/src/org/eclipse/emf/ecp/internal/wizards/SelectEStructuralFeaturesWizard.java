@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
  ******************************************************************************/
@@ -19,16 +19,16 @@ import org.eclipse.swt.widgets.Composite;
 
 /**
  * A wizard to select EStructuralFeatures.
- * 
+ *
  * @author jfaltermeier
- * 
+ *
  */
 public class SelectEStructuralFeaturesWizard extends ECPWizard<CheckedEStructuralFeatureComposite> {
 
 	/**
-	 * 
+	 *
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.jface.wizard.Wizard#addPages()
 	 */
 	@Override
@@ -50,7 +50,7 @@ public class SelectEStructuralFeaturesWizard extends ECPWizard<CheckedEStructura
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.jface.wizard.Wizard#performFinish()
 	 */
 	@Override

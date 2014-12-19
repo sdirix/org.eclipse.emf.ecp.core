@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * EclipseSource - Generated code
  */
@@ -43,7 +43,7 @@ public class CourseCatalogImpl extends MinimalEObjectImpl.Container implements C
 	 * The cached value of the '{@link #getCourses() <em>Courses</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getCourses()
 	 * @generated
 	 * @ordered
@@ -53,7 +53,7 @@ public class CourseCatalogImpl extends MinimalEObjectImpl.Container implements C
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected CourseCatalogImpl()
@@ -64,7 +64,7 @@ public class CourseCatalogImpl extends MinimalEObjectImpl.Container implements C
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -76,7 +76,7 @@ public class CourseCatalogImpl extends MinimalEObjectImpl.Container implements C
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public EList<Course> getCourses()
@@ -91,7 +91,7 @@ public class CourseCatalogImpl extends MinimalEObjectImpl.Container implements C
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -108,7 +108,7 @@ public class CourseCatalogImpl extends MinimalEObjectImpl.Container implements C
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -125,7 +125,7 @@ public class CourseCatalogImpl extends MinimalEObjectImpl.Container implements C
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
@@ -145,7 +145,7 @@ public class CourseCatalogImpl extends MinimalEObjectImpl.Container implements C
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -163,7 +163,7 @@ public class CourseCatalogImpl extends MinimalEObjectImpl.Container implements C
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override

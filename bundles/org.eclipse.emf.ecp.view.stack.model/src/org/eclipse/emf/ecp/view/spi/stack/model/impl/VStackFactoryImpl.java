@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
  */
@@ -25,7 +25,7 @@ import org.eclipse.emf.ecp.view.spi.stack.model.VStackPackage;
  * <!-- begin-user-doc -->
  * An implementation of the model <b>Factory</b>.
  * <!-- end-user-doc -->
- * 
+ *
  * @generated
  */
 public class VStackFactoryImpl extends EFactoryImpl implements VStackFactory
@@ -34,20 +34,20 @@ public class VStackFactoryImpl extends EFactoryImpl implements VStackFactory
 	 * Creates the default factory implementation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public static VStackFactory init()
 	{
 		try
 		{
-			VStackFactory theStackFactory = (VStackFactory) EPackage.Registry.INSTANCE
+			final VStackFactory theStackFactory = (VStackFactory) EPackage.Registry.INSTANCE
 				.getEFactory(VStackPackage.eNS_URI);
 			if (theStackFactory != null)
 			{
 				return theStackFactory;
 			}
-		} catch (Exception exception)
+		} catch (final Exception exception)
 		{
 			EcorePlugin.INSTANCE.log(exception);
 		}
@@ -58,7 +58,7 @@ public class VStackFactoryImpl extends EFactoryImpl implements VStackFactory
 	 * Creates an instance of the factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public VStackFactoryImpl()
@@ -69,7 +69,7 @@ public class VStackFactoryImpl extends EFactoryImpl implements VStackFactory
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -89,33 +89,33 @@ public class VStackFactoryImpl extends EFactoryImpl implements VStackFactory
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
 	public VStackLayout createStackLayout()
 	{
-		VStackLayoutImpl stackLayout = new VStackLayoutImpl();
+		final VStackLayoutImpl stackLayout = new VStackLayoutImpl();
 		return stackLayout;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
 	public VStackItem createStackItem()
 	{
-		VStackItemImpl stackItem = new VStackItemImpl();
+		final VStackItemImpl stackItem = new VStackItemImpl();
 		return stackItem;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -127,7 +127,7 @@ public class VStackFactoryImpl extends EFactoryImpl implements VStackFactory
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @deprecated
 	 * @generated
 	 */

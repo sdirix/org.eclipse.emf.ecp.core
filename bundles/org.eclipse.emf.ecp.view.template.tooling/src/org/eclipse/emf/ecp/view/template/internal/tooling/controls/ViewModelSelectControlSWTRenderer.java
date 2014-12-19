@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen - initial API and implementation
  ******************************************************************************/
@@ -35,9 +35,9 @@ import org.eclipse.ui.dialogs.ISelectionStatusValidator;
  * Renderer for the
  * {@link org.eclipse.emf.ecp.view.template.selector.viewModelElement.model.VTViewModelElementSelector#setClassType(EClass)
  * VTViewModelElementSelector#setClassType(EClass)}.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  */
 @SuppressWarnings("restriction")
 public class ViewModelSelectControlSWTRenderer extends EditableEReferenceLabelControlSWTRenderer {
@@ -46,7 +46,7 @@ public class ViewModelSelectControlSWTRenderer extends EditableEReferenceLabelCo
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.internal.editor.controls.EditableEReferenceLabelControlSWTRenderer#linkValue(org.eclipse.swt.widgets.Shell)
 	 */
 	@Override

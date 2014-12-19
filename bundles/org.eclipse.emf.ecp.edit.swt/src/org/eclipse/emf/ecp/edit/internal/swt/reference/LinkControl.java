@@ -1,14 +1,14 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
- * 
+ *
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.reference;
 
@@ -48,9 +48,9 @@ import org.eclipse.swt.widgets.Link;
 /**
  * This class defines a Control which is used for displaying {@link org.eclipse.emf.ecore.EStructuralFeature
  * EStructuralFeature}s which have a reference.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  */
 public class LinkControl extends SingleControl {
 
@@ -122,7 +122,7 @@ public class LinkControl extends SingleControl {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return number of buttons added by the link control.
 	 */
 	protected int getNumButtons() {
@@ -131,7 +131,7 @@ public class LinkControl extends SingleControl {
 
 	/**
 	 * Creates the buttons to delete a reference, add one to an existing and add a new element to be referenced.
-	 * 
+	 *
 	 * @param composite the {@link Composite} to place the buttons on
 	 * @return An array of buttons
 	 */
@@ -183,7 +183,7 @@ public class LinkControl extends SingleControl {
 	/**
 	 * This code is called whenever the link of the link widget is clicked. You can overwrite this to change the
 	 * behavior.
-	 * 
+	 *
 	 * @param value the EObject that is linked
 	 */
 	protected void linkClicked(EObject value) {
@@ -260,7 +260,7 @@ public class LinkControl extends SingleControl {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.edit.internal.swt.controls.SingleControl#updateValidationColor(org.eclipse.swt.graphics.Color)
 	 */
 	@Override

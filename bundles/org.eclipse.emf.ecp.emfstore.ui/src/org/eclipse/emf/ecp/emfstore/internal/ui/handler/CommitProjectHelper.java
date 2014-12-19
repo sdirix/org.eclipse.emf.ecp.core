@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen - initial API and implementation
  ******************************************************************************/
@@ -22,9 +22,9 @@ import org.eclipse.swt.widgets.Shell;
 
 /**
  * This is the EMFStore Commit Helper delegating to the EMFStore {@link UICommitProjectController}.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  */
 public final class CommitProjectHelper {
 
@@ -35,7 +35,7 @@ public final class CommitProjectHelper {
 	/**
 	 * Delegates the call to {@link UICommitProjectController} and triggers an update of the provided
 	 * {@link InternalProject}.
-	 * 
+	 *
 	 * @param project the {@link InternalProject} to commit
 	 * @param shell the {@link Shell}
 	 */
