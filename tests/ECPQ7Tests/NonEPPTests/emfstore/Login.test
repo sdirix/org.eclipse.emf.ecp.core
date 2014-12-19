@@ -1,13 +1,14 @@
---- Q7 testcase ---
+--- RCPTT testcase ---
 Format-Version: 1.0
-Q7-vendor: www.xored.com/q7
 Contexts: _rr2EEFpSEeKcnaHGSt8OwA,_f3qEUVpSEeKcnaHGSt8OwA,_IuFcgFpZEeKcnaHGSt8OwA
 Element-Name: Login
 Element-Type: testcase
 Element-Version: 3.0
 External-Reference: 
 Id: _JiUycG7JEeKbTKOCBYPcow
-Save-Time: 3/27/13 6:05 PM
+Runtime-Version: 1.5.4.201410231434
+Save-Time: 12/19/14 4:43 PM
+Tags: skipExecution
 Testcase-Type: ecl
 
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
@@ -15,7 +16,7 @@ Content-Type: text/ecl
 Entry-Name: .content
 
 with [get-view "Model Repositories" | get-tree] {
-    get-item "Local EMFStore" | get-property [get-by-os -macosx "getImage().getImageData().data.byte[949]" -win "getImage().getImageData().data.byte[713]" -linux "getImage().getImageData().data.byte[713]"] | equals "-35" | verify-true
+    get-item "Local EMFStore" | get-property [get-by-os -macosx "getImage().getImageData().data.byte[949]" -win "getImage().getImageData().data.byte[713]" -linux "getImage().getImageData().data.byte[713]"] | equals "0" | verify-true
     get-item "Local EMFStore" | get-property "getData().getType()" | equals Repository | verify-true
 }
 get-view "Model Repositories" | get-tree | select "Local EMFStore" | get-menu Login | click
@@ -31,7 +32,7 @@ try {
 } -catch {}
 get-view "Model Repositories" | get-tree | select "Local EMFStore"
 get-view "Model Repositories" | get-tree | get-item "Local EMFStore" 
-    | get-property [get-by-os -macosx "getImage().getImageData().data.byte[949]" -win "getImage().getImageData().data.byte[713]" -linux "getImage().getImageData().data.byte[713]"] | equals "-101" | verify-true
+    | get-property [get-by-os -macosx "getImage().getImageData().data.byte[949]" -win "getImage().getImageData().data.byte[713]" -linux "getImage().getImageData().data.byte[713]"] | equals "0" | verify-true
     
     
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

@@ -60,6 +60,8 @@ with [get-view "EMF Forms Preview" | get-control Any -after [get-label "View Edi
     get-property "getChildren().Control[0].getChildren().Control[0].getChildren().length" | equals 3 | verify-true
     get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getText()" | equals Gender 
         | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getLocation().y" | equals 5
+        | verify-true
     get-property "getChildren().Control[0].getChildren().Control[1].getChildren().length" | equals 3 | verify-true
     get-property "getChildren().Control[0].getChildren().Control[1].getChildren().Control[0].getText()" | equals Active 
         | verify-true
@@ -70,12 +72,12 @@ with [get-view "EMF Forms Preview" | get-control Any -after [get-label "View Edi
     get-property "getChildren().Control[0].getChildren().Control[2].getChildren().Control[0].getChildren().Control[0].getLocation().x" 
         | equals 0 | verify-true
     get-property "getChildren().Control[0].getChildren().Control[2].getChildren().Control[0].getChildren().Control[0].getLocation().y" 
-        | equals 3 | verify-true
+        | equals 5 | verify-true
     get-property "getChildren().Control[0].getChildren().Control[2].getChildren().Control[0].getChildren().Control[3].getText()" 
         | equals Heigth | verify-true
     get-property "getChildren().Control[0].getChildren().Control[2].getChildren().Control[0].getChildren().Control[3].getLocation().x" 
         | equals 0 | verify-true
     get-property "getChildren().Control[0].getChildren().Control[2].getChildren().Control[0].getChildren().Control[3].getLocation().y" 
-        | equals 32 | verify-true
+        | equals 41 | verify-true
 }
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

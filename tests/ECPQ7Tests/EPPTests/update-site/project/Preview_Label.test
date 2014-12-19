@@ -37,7 +37,7 @@ with [get-view "EMF Forms Preview"] {
     with [get-label "This is a label"] {
         get-property backgroundColor | equals "#FFFFFF" | verify-true
         get-property foregroundColor | equals "#000000" | verify-true
-        get-property "getFont().getFontData().FontData[0].height" | equals "9.75" | verify-true
+        get-property "getFont().getFontData().FontData[0].height" | equals "10.0" | verify-true
     }
 }
 
@@ -79,7 +79,7 @@ with [get-view "EMF Forms Preview" | get-label -after [get-label "View Editor Pr
     get-property backgroundColor | equals "#FFFFFF" | verify-true
     get-property foregroundColor | equals "#000000" | verify-true
     get-property "getFont().getFontData().FontData[0].getStyle()" | equals 0 | verify-true
-    get-property "getFont().getFontData().FontData[0].getHeight()" | equals 9 | verify-true
+    get-property "getFont().getFontData().FontData[0].getHeight()" | equals 11 | verify-true
     get-property "getStyle()" | contains "SEPARATOR" | verify-true
     get-property "getStyle()" | contains "SHADOW_OUT" | verify-true
     get-property "getStyle()" | contains "NO_FOCUS" | verify-true
