@@ -10,7 +10,7 @@
  * Johannes Faltermeier
  *
  *******************************************************************************/
-package org.eclipse.emf.ecp.view.test.common.swt;
+package org.eclipse.emf.ecp.view.test.common.swt.spi;
 
 import org.eclipse.core.databinding.observable.Realm;
 import org.eclipse.jface.databinding.swt.SWTObservables;

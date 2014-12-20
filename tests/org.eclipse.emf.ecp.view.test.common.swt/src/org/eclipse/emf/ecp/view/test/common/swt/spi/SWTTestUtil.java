@@ -9,7 +9,7 @@
  * Contributors:
  * jfaltermeier - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.test.common.swt;
+package org.eclipse.emf.ecp.view.test.common.swt.spi;
 
 import static org.junit.Assert.fail;
 
