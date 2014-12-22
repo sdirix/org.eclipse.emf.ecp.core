@@ -75,8 +75,10 @@ public class CheckoutObserver implements ESCheckoutObserver {
 						createECPProperties(project));
 					validProjectName = true;
 				} catch (final ECPProjectWithNameExistsException ex) {
-					final InputDialog id = new InputDialog(Display.getCurrent().getActiveShell(), "Create project",
-						"Enter name for checked out project:", project.getProjectName() + "@" + createDateString(),
+					final InputDialog id = new InputDialog(Display.getCurrent().getActiveShell(),
+						Messages.CheckoutObserver_CreateProject,
+						Messages.CheckoutObserver_EnterNameForProject, project.getProjectName()
+							+ "@" + createDateString(), //$NON-NLS-1$
 						new IInputValidator() {
 
 							@Override
@@ -84,14 +86,14 @@ public class CheckoutObserver implements ESCheckoutObserver {
 								if (ECPUtil.getECPProjectManager().getProject(newText) == null) {
 									return null;
 								}
-								return "A project with this name already exists!";
+								return Messages.CheckoutObserver_ProjectWithNameExists;
 
 							}
 						});
 					final int inputResult = id.open();
 					if (Window.OK != inputResult) {
 						// cancel, provide default name
-						projectName = project.getProjectName() + "@" + createDateString();
+						projectName = project.getProjectName() + "@" + createDateString(); //$NON-NLS-1$
 					} else {
 						projectName = id.getValue();
 					}

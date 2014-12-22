@@ -11,7 +11,6 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.emfstore.internal.ui.handler;
 
-import java.util.Collection;
 import java.util.Collections;
 
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
@@ -52,7 +51,7 @@ public final class CommitProjectHelper {
 		// ESUIControllerFactory.INSTANCE.commitProject(HandlerUtil.getActiveShell(event), projectSpace);
 		new UICommitProjectController(shell, localProject).execute();
 		// is structural because of possible merge
-		project.notifyObjectsChanged((Collection) Collections.singleton(project), true);
-		project.getRepository().notifyObjectsChanged((Collection) Collections.singleton(project.getRepository()));
+		project.notifyObjectsChanged(Collections.singleton((Object) project.getRepository()), true);
+		project.getRepository().notifyObjectsChanged(Collections.singleton((Object) project.getRepository()));
 	}
 }

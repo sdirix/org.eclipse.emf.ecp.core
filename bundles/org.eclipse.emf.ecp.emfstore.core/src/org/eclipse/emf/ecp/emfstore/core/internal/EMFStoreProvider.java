@@ -304,11 +304,11 @@ public final class EMFStoreProvider extends DefaultProvider {
 						final ECPProject ecpProject = getProject(projectSpace.toAPI());
 
 						((InternalProject) context).notifyObjectsChanged(
-							(Collection) Collections.singleton(ecpProject), true);
+							Collections.singleton((Object) ecpProject), true);
 
 					} else {
 						((InternalProject) context).notifyObjectsChanged(
-							(Collection) Collections.singleton(modelElement), true);
+							Collections.singleton((Object) modelElement), true);
 					}
 				}
 
@@ -326,14 +326,14 @@ public final class EMFStoreProvider extends DefaultProvider {
 					if (Project.class.isInstance(modelElement.eContainer())) {
 						((InternalProject) context).notifyObjectsChanged(Arrays.asList(modelElement, context), true);
 					}
-					((InternalProject) context).notifyObjectsChanged((Collection) Collections.singleton(modelElement),
+					((InternalProject) context).notifyObjectsChanged(Collections.singleton((Object) modelElement),
 						true);
 				}
 
 				@Override
 				public void collectionDeleted(IdEObjectCollection collection) {
 					// project delete
-					((InternalProject) context).notifyObjectsChanged((Collection) Collections.singleton(context), true);
+					((InternalProject) context).notifyObjectsChanged(Collections.singleton((Object) context), true);
 				}
 			});
 		}

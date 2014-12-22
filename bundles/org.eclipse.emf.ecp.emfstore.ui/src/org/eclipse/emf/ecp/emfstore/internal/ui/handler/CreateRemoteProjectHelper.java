@@ -11,7 +11,6 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.emfstore.internal.ui.handler;
 
-import java.util.Collection;
 import java.util.Collections;
 
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
@@ -42,8 +41,8 @@ public final class CreateRemoteProjectHelper {
 	public static void createRemoteProject(InternalRepository ecpRepository, Shell shell) {
 		final ESServer server = EMFStoreProvider.INSTANCE.getServerInfo(ecpRepository);
 		// FIXME:
-		final InputDialog dialog = new InputDialog(shell, "Remote Project Name",
-			"Please enter a name", "", null);
+		final InputDialog dialog = new InputDialog(shell, Messages.CreateRemoteProjectHelper_RemoteProjectName,
+			Messages.CreateRemoteProjectHelper_EnterName, "", null); //$NON-NLS-1$
 
 		String projectName = null;
 		if (dialog.open() == Window.OK) {
@@ -56,6 +55,6 @@ public final class CreateRemoteProjectHelper {
 		// TODO EMFStore Contructor is missing
 		new UICreateRemoteProjectController(shell, server.getLastUsersession(), projectName)
 			.execute();
-		ecpRepository.notifyObjectsChanged((Collection) Collections.singleton(ecpRepository));
+		ecpRepository.notifyObjectsChanged(Collections.singleton((Object) ecpRepository));
 	}
 }

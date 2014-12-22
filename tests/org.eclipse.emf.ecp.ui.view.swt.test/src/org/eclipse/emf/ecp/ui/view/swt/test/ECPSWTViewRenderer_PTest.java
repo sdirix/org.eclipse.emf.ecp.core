@@ -42,7 +42,6 @@ import org.junit.runner.RunWith;
  * @author Jonas
  *
  */
-@SuppressWarnings("restriction")
 @RunWith(DatabindingClassRunner.class)
 public class ECPSWTViewRenderer_PTest {
 

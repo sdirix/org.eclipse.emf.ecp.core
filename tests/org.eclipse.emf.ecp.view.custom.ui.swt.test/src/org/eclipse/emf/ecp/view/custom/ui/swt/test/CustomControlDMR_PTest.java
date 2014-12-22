@@ -40,7 +40,6 @@ import org.junit.runner.RunWith;
  * @author jfaltermeier
  *
  */
-@SuppressWarnings("restriction")
 @RunWith(DatabindingClassRunner.class)
 public class CustomControlDMR_PTest {
 

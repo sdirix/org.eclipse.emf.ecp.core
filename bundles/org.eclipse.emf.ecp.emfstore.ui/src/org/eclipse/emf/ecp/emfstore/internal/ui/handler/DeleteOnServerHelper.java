@@ -11,7 +11,6 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.emfstore.internal.ui.handler;
 
-import java.util.Collection;
 import java.util.Collections;
 
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProjectWrapper;
@@ -42,6 +41,6 @@ public final class DeleteOnServerHelper {
 		final ESServer serverInfo = EMFStoreProvider.INSTANCE.getServerInfo(repo);
 		new UIDeleteRemoteProjectController(shell, serverInfo.getLastUsersession(),
 			projectWrapper.getCheckoutData()).execute();
-		repo.notifyObjectsChanged((Collection) Collections.singleton(repo));
+		repo.notifyObjectsChanged(Collections.singleton((Object) repo));
 	}
 }

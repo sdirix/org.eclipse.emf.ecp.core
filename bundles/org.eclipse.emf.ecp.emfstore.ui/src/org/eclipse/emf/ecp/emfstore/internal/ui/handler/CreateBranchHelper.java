@@ -11,7 +11,6 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.emfstore.internal.ui.handler;
 
-import java.util.Collection;
 import java.util.Collections;
 
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
@@ -41,6 +40,6 @@ public final class CreateBranchHelper {
 		final ESLocalProject projectSpace = EMFStoreProvider.INSTANCE.getProjectSpace(project);
 		// TODO EMFStore constructor missing
 		new UICreateBranchController(shell, projectSpace).execute();
-		project.notifyObjectsChanged((Collection) Collections.singleton(project), false);
+		project.notifyObjectsChanged(Collections.singleton((Object) project), false);
 	}
 }

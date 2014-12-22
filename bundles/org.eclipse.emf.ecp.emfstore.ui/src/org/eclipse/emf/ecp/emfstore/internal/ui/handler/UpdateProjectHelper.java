@@ -11,7 +11,6 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.emfstore.internal.ui.handler;
 
-import java.util.Collection;
 import java.util.Collections;
 
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
@@ -50,7 +49,7 @@ public final class UpdateProjectHelper {
 				((ESUsersessionImpl) serverInfo.getLastUsersession()).toInternalAPI());
 		}
 		new UIUpdateProjectController(shell, projectSpace).execute();
-		project.notifyObjectsChanged((Collection) Collections.singleton(project), true);
+		project.notifyObjectsChanged(Collections.singleton((Object) project), true);
 	}
 
 	/**
@@ -69,6 +68,6 @@ public final class UpdateProjectHelper {
 				((ESUsersessionImpl) serverInfo.getLastUsersession()).toInternalAPI());
 		}
 		new UIUpdateProjectToVersionController(shell, projectSpace).execute();
-		project.notifyObjectsChanged((Collection) Collections.singleton(project), true);
+		project.notifyObjectsChanged(Collections.singleton((Object) project), true);
 	}
 }

@@ -11,7 +11,6 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.emfstore.internal.ui.handler;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.concurrent.Callable;
 
@@ -75,8 +74,8 @@ public final class ShareProjectHelper {
 			// TODO EMFStore Constructor is missing
 			new UIShareProjectController(shell, localProject).execute();
 
-			project.notifyObjectsChanged((Collection) Collections.singleton(project), false);
-			repository.notifyObjectsChanged((Collection) Collections.singleton(repository));
+			project.notifyObjectsChanged(Collections.singleton((Object) project), false);
+			repository.notifyObjectsChanged(Collections.singleton((Object) repository));
 		}
 	}
 }

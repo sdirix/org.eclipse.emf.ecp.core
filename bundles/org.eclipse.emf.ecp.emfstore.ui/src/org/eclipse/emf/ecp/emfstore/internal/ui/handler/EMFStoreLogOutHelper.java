@@ -11,7 +11,6 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.emfstore.internal.ui.handler;
 
-import java.util.Collection;
 import java.util.Collections;
 
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
@@ -42,6 +41,6 @@ public final class EMFStoreLogOutHelper {
 		// TODO EMFStore Constructor is missing
 		new UILogoutSessionController(shell, server.getLastUsersession()).execute();
 
-		ecpRepository.notifyObjectsChanged((Collection) Collections.singleton(ecpRepository));
+		ecpRepository.notifyObjectsChanged(Collections.singleton((Object) ecpRepository));
 	}
 }

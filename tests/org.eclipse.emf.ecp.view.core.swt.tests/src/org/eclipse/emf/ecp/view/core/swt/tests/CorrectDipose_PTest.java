@@ -1,7 +1,6 @@
 package org.eclipse.emf.ecp.view.core.swt.tests;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
@@ -31,24 +30,24 @@ public class CorrectDipose_PTest {
 		view.setRootEClass(BowlingPackage.eINSTANCE.getPlayer());
 		domain = BowlingFactory.eINSTANCE.createPlayer();
 	}
-	
+
 	@Test
-	public void rendererRemovesListenerTest(){
-		VControl vControl=VViewFactory.eINSTANCE.createControl();
-		VFeaturePathDomainModelReference vdmr=VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
+	public void rendererRemovesListenerTest() {
+		final VControl vControl = VViewFactory.eINSTANCE.createControl();
+		final VFeaturePathDomainModelReference vdmr = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
 		vdmr.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Name());
 		vControl.setDomainModelReference(vdmr);
 		view.getChildren().add(vControl);
-		
+
 		try {
-			ECPSWTViewRenderer.INSTANCE.render(shell, domain,view);
-		} catch (ECPRendererException e) {
+			ECPSWTViewRenderer.INSTANCE.render(shell, domain, view);
+		} catch (final ECPRendererException e) {
 			fail(e.getMessage());
 		}
-		//1 for the control and 1 for the ViewModelContext
-		assertEquals(2,vdmr.getChangeListener().size());
+		// 1 for the control and 1 for the ViewModelContext
+		assertEquals(2, vdmr.getChangeListener().size());
 		shell.dispose();
 
-		assertEquals(0,vdmr.getChangeListener().size());
+		assertEquals(0, vdmr.getChangeListener().size());
 	}
 }
