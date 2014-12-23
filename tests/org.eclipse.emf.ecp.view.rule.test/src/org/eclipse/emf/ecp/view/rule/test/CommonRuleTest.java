@@ -25,6 +25,7 @@ import org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition;
 import org.eclipse.emf.ecp.view.spi.rule.model.OrCondition;
 import org.eclipse.emf.ecp.view.spi.rule.model.RuleFactory;
 import org.eclipse.emf.ecp.view.spi.rule.model.ShowRule;
+import org.eclipse.emf.emfstore.bowling.BowlingPackage;
 
 /**
  * @author Edgar

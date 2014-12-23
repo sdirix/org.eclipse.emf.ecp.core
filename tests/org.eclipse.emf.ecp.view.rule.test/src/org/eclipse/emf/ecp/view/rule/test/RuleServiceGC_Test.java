@@ -29,6 +29,10 @@ import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalFactory;
 import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalLayout;
 import org.eclipse.emf.ecp.view.test.common.GCCollectable;
 import org.eclipse.emf.ecp.view.test.common.Tuple;
+import org.eclipse.emf.emfstore.bowling.BowlingFactory;
+import org.eclipse.emf.emfstore.bowling.BowlingPackage;
+import org.eclipse.emf.emfstore.bowling.League;
+import org.eclipse.emf.emfstore.bowling.Player;
 import org.junit.After;
 import org.junit.Test;
 

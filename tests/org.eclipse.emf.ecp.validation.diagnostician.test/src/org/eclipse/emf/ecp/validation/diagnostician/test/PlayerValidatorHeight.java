@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.diagnostician.ECPValidator;
+import org.eclipse.emf.emfstore.bowling.BowlingPackage;
 
 /**
  * @author jfaltermeier

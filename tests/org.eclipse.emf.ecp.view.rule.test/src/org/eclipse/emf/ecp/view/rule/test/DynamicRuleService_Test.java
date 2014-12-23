@@ -31,6 +31,9 @@ import org.eclipse.emf.ecp.view.spi.rule.model.RuleFactory;
 import org.eclipse.emf.ecp.view.spi.rule.model.ShowRule;
 import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalFactory;
 import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalLayout;
+import org.eclipse.emf.emfstore.bowling.BowlingFactory;
+import org.eclipse.emf.emfstore.bowling.BowlingPackage;
+import org.eclipse.emf.emfstore.bowling.Player;
 import org.junit.Before;
 import org.junit.Test;
 

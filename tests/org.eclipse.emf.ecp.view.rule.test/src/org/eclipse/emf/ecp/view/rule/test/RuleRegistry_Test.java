@@ -36,6 +36,11 @@ import org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition;
 import org.eclipse.emf.ecp.view.spi.rule.model.OrCondition;
 import org.eclipse.emf.ecp.view.spi.rule.model.RuleFactory;
 import org.eclipse.emf.ecp.view.spi.rule.model.ShowRule;
+import org.eclipse.emf.emfstore.bowling.BowlingFactory;
+import org.eclipse.emf.emfstore.bowling.BowlingPackage;
+import org.eclipse.emf.emfstore.bowling.Fan;
+import org.eclipse.emf.emfstore.bowling.Merchandise;
+import org.eclipse.emf.emfstore.bowling.Tournament;
 import org.junit.Before;
 import org.junit.Test;
 

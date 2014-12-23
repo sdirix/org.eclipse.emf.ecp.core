@@ -28,6 +28,8 @@ import org.eclipse.emf.ecp.ui.common.ECPViewerFactory;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.edit.command.ChangeCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emf.emfstore.bowling.BowlingFactory;
+import org.eclipse.emf.emfstore.bowling.Player;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.layout.FillLayout;

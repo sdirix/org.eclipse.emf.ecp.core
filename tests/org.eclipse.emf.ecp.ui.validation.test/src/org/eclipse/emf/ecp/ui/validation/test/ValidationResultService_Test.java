@@ -28,6 +28,10 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.internal.ui.validation.ECPValidationResultServiceImpl;
 import org.eclipse.emf.ecp.ui.validation.ECPValidationResultService.ECPValidationResultServiceListener;
+import org.eclipse.emf.emfstore.bowling.BowlingFactory;
+import org.eclipse.emf.emfstore.bowling.BowlingPackage;
+import org.eclipse.emf.emfstore.bowling.League;
+import org.eclipse.emf.emfstore.bowling.Player;
 import org.junit.Before;
 import org.junit.Test;
 

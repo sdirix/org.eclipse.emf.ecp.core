@@ -42,6 +42,10 @@ import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableFactory;
 import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalFactory;
 import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalLayout;
+import org.eclipse.emf.emfstore.bowling.BowlingFactory;
+import org.eclipse.emf.emfstore.bowling.BowlingPackage;
+import org.eclipse.emf.emfstore.bowling.Fan;
+import org.eclipse.emf.emfstore.bowling.Merchandise;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -1505,7 +1509,7 @@ public class UnsetService_Test {
 		/**
 		 * {@inheritDoc}
 		 *
-		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getControlsFor(org.eclipse.org.eclipse.emf.ecp.common.spi.UniqueSetting)
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getControlsFor(UniqueSetting)
 		 */
 		@Override
 		public Set<VControl> getControlsFor(UniqueSetting setting) {

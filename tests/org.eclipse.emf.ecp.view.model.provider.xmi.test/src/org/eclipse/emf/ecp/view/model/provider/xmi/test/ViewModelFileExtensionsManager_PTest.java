@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.view.model.provider.xmi.ViewModelFileExtensionsManager;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
+import org.eclipse.emf.emfstore.bowling.BowlingPackage;
 import org.junit.Before;
 import org.junit.Test;
 

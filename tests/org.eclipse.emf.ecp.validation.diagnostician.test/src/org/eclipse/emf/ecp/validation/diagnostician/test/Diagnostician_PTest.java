@@ -27,6 +27,10 @@ import org.eclipse.emf.ecp.diagnostician.ECPDiagnostician;
 import org.eclipse.emf.ecp.diagnostician.ECPValidator;
 import org.eclipse.emf.ecp.internal.diagnostician.ClassifierValidatorWrapper;
 import org.eclipse.emf.ecp.internal.diagnostician.PackageValidatorWrapper;
+import org.eclipse.emf.emfstore.bowling.BowlingFactory;
+import org.eclipse.emf.emfstore.bowling.BowlingPackage;
+import org.eclipse.emf.emfstore.bowling.Gender;
+import org.eclipse.emf.emfstore.bowling.Player;
 import org.junit.Test;
 
 public class Diagnostician_PTest {
