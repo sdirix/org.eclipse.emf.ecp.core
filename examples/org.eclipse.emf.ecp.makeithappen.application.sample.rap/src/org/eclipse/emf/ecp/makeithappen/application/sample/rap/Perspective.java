@@ -11,6 +11,8 @@
  */
 package org.eclipse.emf.ecp.makeithappen.application.sample.rap;
 
+import org.eclipse.ui.IPageLayout;
+import org.eclipse.ui.IPerspectiveFactory;
 
 /**
  * Default Perspective.

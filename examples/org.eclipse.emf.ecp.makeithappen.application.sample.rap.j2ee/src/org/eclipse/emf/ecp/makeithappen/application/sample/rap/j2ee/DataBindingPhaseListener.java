@@ -12,6 +12,10 @@
 package org.eclipse.emf.ecp.makeithappen.application.sample.rap.j2ee;
 
 import org.eclipse.core.databinding.observable.Realm;
+import org.eclipse.rap.rwt.RWT;
+import org.eclipse.rap.rwt.lifecycle.PhaseEvent;
+import org.eclipse.rap.rwt.lifecycle.PhaseId;
+import org.eclipse.rap.rwt.lifecycle.PhaseListener;
 
 /**
  * A {@link PhaseListener} to set the default realm.

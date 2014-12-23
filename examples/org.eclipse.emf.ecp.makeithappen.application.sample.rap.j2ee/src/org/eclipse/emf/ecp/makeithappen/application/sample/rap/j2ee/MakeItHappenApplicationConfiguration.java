@@ -11,6 +11,8 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.makeithappen.application.sample.rap.j2ee;
 
+import org.eclipse.rap.rwt.application.Application;
+import org.eclipse.rap.rwt.application.ApplicationConfiguration;
 
 /**
  * The {@link ApplicationConfiguration} for the MakeItHappen RAP Demo.

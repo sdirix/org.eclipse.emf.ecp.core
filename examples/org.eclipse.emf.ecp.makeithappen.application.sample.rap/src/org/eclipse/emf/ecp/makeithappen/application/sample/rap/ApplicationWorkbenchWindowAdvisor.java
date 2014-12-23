@@ -11,7 +11,9 @@
  */
 package org.eclipse.emf.ecp.makeithappen.application.sample.rap;
 
-import java.awt.Point;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.ui.application.IWorkbenchWindowConfigurer;
+import org.eclipse.ui.application.WorkbenchWindowAdvisor;
 
 /**
  * The ApplicationWorkbenchWindowAdvisor which sets default window sizes.

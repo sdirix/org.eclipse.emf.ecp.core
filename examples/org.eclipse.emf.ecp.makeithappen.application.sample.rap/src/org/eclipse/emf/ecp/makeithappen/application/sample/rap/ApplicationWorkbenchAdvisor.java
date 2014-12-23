@@ -11,6 +11,9 @@
  */
 package org.eclipse.emf.ecp.makeithappen.application.sample.rap;
 
+import org.eclipse.ui.application.IWorkbenchWindowConfigurer;
+import org.eclipse.ui.application.WorkbenchAdvisor;
+import org.eclipse.ui.application.WorkbenchWindowAdvisor;
 
 /**
  * The ApplicationWorkbenchAdvisor which defines which Perspective to use.
