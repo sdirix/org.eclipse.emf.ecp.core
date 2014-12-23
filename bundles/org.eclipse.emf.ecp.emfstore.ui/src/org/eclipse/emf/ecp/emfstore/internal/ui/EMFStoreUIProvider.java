@@ -95,7 +95,7 @@ public class EMFStoreUIProvider extends DefaultUIProvider {
 
 		// use label width of main composite as minimum label width
 		final Label url = new Label(composite, 0);
-		url.setText("Url:");
+		url.setText(Messages.EMFStoreUIProvider_URL);
 		final int mcLabelWidth = parent.getParent().getChildren()[0].getSize().x;
 		if (mcLabelWidth > url.getSize().x) {
 			final GridData gdUrl = new GridData();
@@ -106,7 +106,7 @@ public class EMFStoreUIProvider extends DefaultUIProvider {
 		final Text urlText = new Text(composite, SWT.BORDER);
 		urlText.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false, 2, 1));
 		urlText.addModifyListener(new ModifyListener() {
-			private String oldText = "";
+			private String oldText = ""; //$NON-NLS-1$
 
 			@Override
 			public void modifyText(ModifyEvent e) {
@@ -119,7 +119,7 @@ public class EMFStoreUIProvider extends DefaultUIProvider {
 		});
 
 		final Label port = new Label(composite, 0);
-		port.setText("Port:");
+		port.setText(Messages.EMFStoreUIProvider_Port);
 		final Text portText = new Text(composite, SWT.BORDER);
 		portText.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false, 2, 1));
 		portText.addModifyListener(new ModifyListener() {
@@ -132,14 +132,14 @@ public class EMFStoreUIProvider extends DefaultUIProvider {
 		});
 
 		final Label cert = new Label(composite, 0);
-		cert.setText("Certificate:");
+		cert.setText(Messages.EMFStoreUIProvider_Certificate);
 		final Text certificateText = new Text(composite, SWT.BORDER);
 		certificateText.setEditable(false);
 		certificateText.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
 
 		final Button bSelectCertificate = new Button(composite, SWT.PUSH);
 		// TODO change text
-		bSelectCertificate.setText("Select Certificate");
+		bSelectCertificate.setText(Messages.EMFStoreUIProvider_SelectCertificate);
 		bSelectCertificate.addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -157,8 +157,8 @@ public class EMFStoreUIProvider extends DefaultUIProvider {
 			}
 		});
 
-		urlText.setText("localhost");
-		portText.setText("8080");
+		urlText.setText("localhost"); //$NON-NLS-1$
+		portText.setText("8080"); //$NON-NLS-1$
 		certificateText.setText(KeyStoreManager.getInstance().getDefaultCertificate());
 		// else the certificate is not set
 		repositoryProperties.addProperty(EMFStoreProvider.PROP_CERTIFICATE, certificateText.getText());
@@ -177,7 +177,7 @@ public class EMFStoreUIProvider extends DefaultUIProvider {
 						return element.toString();
 					}
 
-					return "";
+					return ""; //$NON-NLS-1$
 
 				}
 			});
@@ -194,7 +194,7 @@ public class EMFStoreUIProvider extends DefaultUIProvider {
 		// if (csd.getReturnCode() == Window.OK) {
 		// return csd.getCertificateAlias();
 		// }
-		return "";
+		return ""; //$NON-NLS-1$
 	}
 
 	@Override
@@ -211,7 +211,7 @@ public class EMFStoreUIProvider extends DefaultUIProvider {
 	public Image getImage(Object element) {
 		if (element instanceof EMFStoreProjectWrapper) {
 			return ImageDescriptor.createFromURL(
-				Activator.getInstance().getBundle().getResource("icons/projectinfo.png")).createImage();
+				Activator.getInstance().getBundle().getResource("icons/projectinfo.png")).createImage(); //$NON-NLS-1$
 		}
 
 		return super.getImage(element);

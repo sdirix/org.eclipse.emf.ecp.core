@@ -74,9 +74,9 @@ public class EMFStoreProjectWrapper implements ECPCheckoutSource {
 	}
 
 	/**
-	 * This return the {@link EMFStoreCheckoutData} used in this wrapper.
+	 * This return the {@link ESRemoteProject} used in this wrapper.
 	 *
-	 * @return the {@link EMFStoreCheckoutData} used
+	 * @return the {@link ESRemoteProject} used
 	 */
 	public ESRemoteProject getCheckoutData() {
 		return remoteProject;
