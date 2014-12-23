@@ -32,7 +32,7 @@ import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableFactory;
 import org.eclipse.emf.ecp.view.table.ui.swt.test.SWTTable_PTest;
-import org.eclipse.emf.ecp.view.test.common.GCCollectable;
+import org.eclipse.emf.ecp.view.test.common.spi.GCCollectable;
 import org.eclipse.emf.ecp.view.ui.editor.test.ECPCommonSWTBotTest;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;

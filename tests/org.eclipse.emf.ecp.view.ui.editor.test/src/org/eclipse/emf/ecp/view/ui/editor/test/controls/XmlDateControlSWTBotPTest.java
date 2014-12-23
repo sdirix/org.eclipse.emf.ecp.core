@@ -32,7 +32,7 @@ import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
-import org.eclipse.emf.ecp.view.test.common.GCCollectable;
+import org.eclipse.emf.ecp.view.test.common.spi.GCCollectable;
 import org.eclipse.emf.ecp.view.ui.editor.test.ECPCommonSWTBotTest;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
