@@ -19,12 +19,14 @@ import org.eclipse.emf.ecp.common.spi.UniqueSetting;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.spi.model.VView;
 
 /**
  * The Interface ViewModelContext.
  *
  * @author Eugen Neufeld
  * @since 1.2
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface ViewModelContext {
 
@@ -118,9 +120,9 @@ public interface ViewModelContext {
 	 *
 	 * @param setting the {@link UniqueSetting} to search controls for
 	 * @return the Set of all controls associated with the provided setting or null if no controls can be found
-	 * @since 1.3
+	 * @since 1.5
 	 */
-	Set<VControl> getControlsFor(UniqueSetting setting);
+	Set<VElement> getControlsFor(UniqueSetting setting);
 
 	/**
 	 * Returns the value of the context for the passed key.
@@ -139,4 +141,42 @@ public interface ViewModelContext {
 	 * @since 1.4
 	 */
 	void putContextValue(String key, Object value);
+
+	/**
+	 * This returns the childContext for the provided EObject and the provided {@link VElement}. If a child context
+	 * already exists it will be returned otherwise a new {@link ViewModelContext} will be created.
+	 *
+	 * @param eObject The {@link EObject} to get the child context for
+	 * @param parent The {@link VElement} which requests the child context
+	 * @param vView The {@link VView} of the {@link EObject}
+	 * @param viewModelServices The list of {@link ViewModelService} which should be part of a child context
+	 * @return a {@link ViewModelContext} witch is a child of the current context
+	 * @since 1.5
+	 */
+	ViewModelContext getChildContext(EObject eObject, VElement parent, VView vView,
+		ViewModelService... viewModelServices);
+
+	/**
+	 * Allows to register a dispose listener.
+	 *
+	 * @param listener The {@link ViewModelContextDisposeListener} to register
+	 * @since 1.5
+	 */
+	void registerDisposeListener(ViewModelContextDisposeListener listener);
+
+	/**
+	 * Adds a user of the context.
+	 *
+	 * @param user The context user to add
+	 * @since 1.5
+	 */
+	void addContextUser(Object user);
+
+	/**
+	 * Removes a context user.
+	 *
+	 * @param user The context user to remove
+	 * @since 1.5
+	 */
+	void removeContextUser(Object user);
 }

@@ -23,11 +23,14 @@ import org.eclipse.emf.ecp.view.validation.test.model.Library;
 import org.eclipse.emf.ecp.view.validation.test.model.Mainboard;
 import org.eclipse.emf.ecp.view.validation.test.model.PowerBlock;
 import org.eclipse.emf.ecp.view.validation.test.model.TableContent;
+import org.eclipse.emf.ecp.view.validation.test.model.TableContentWithInnerChild;
+import org.eclipse.emf.ecp.view.validation.test.model.TableContentWithInnerChild2;
 import org.eclipse.emf.ecp.view.validation.test.model.TableContentWithValidation;
 import org.eclipse.emf.ecp.view.validation.test.model.TableContentWithoutValidation;
 import org.eclipse.emf.ecp.view.validation.test.model.TableWithMultiplicity;
 import org.eclipse.emf.ecp.view.validation.test.model.TableWithUnique;
 import org.eclipse.emf.ecp.view.validation.test.model.TableWithoutMultiplicity;
+import org.eclipse.emf.ecp.view.validation.test.model.TableWithoutMultiplicityConcrete;
 import org.eclipse.emf.ecp.view.validation.test.model.TestPackage;
 import org.eclipse.emf.ecp.view.validation.test.model.Writer;
 
@@ -215,6 +218,36 @@ public class TestSwitch<T> extends Switch<T> {
 		case TestPackage.TABLE_WITH_UNIQUE: {
 			final TableWithUnique tableWithUnique = (TableWithUnique) theEObject;
 			T result = caseTableWithUnique(tableWithUnique);
+			if (result == null) {
+				result = defaultCase(theEObject);
+			}
+			return result;
+		}
+		case TestPackage.TABLE_CONTENT_WITH_INNER_CHILD2: {
+			final TableContentWithInnerChild2 tableContentWithInnerChild2 = (TableContentWithInnerChild2) theEObject;
+			T result = caseTableContentWithInnerChild2(tableContentWithInnerChild2);
+			if (result == null) {
+				result = caseTableContent(tableContentWithInnerChild2);
+			}
+			if (result == null) {
+				result = defaultCase(theEObject);
+			}
+			return result;
+		}
+		case TestPackage.TABLE_CONTENT_WITH_INNER_CHILD: {
+			final TableContentWithInnerChild tableContentWithInnerChild = (TableContentWithInnerChild) theEObject;
+			T result = caseTableContentWithInnerChild(tableContentWithInnerChild);
+			if (result == null) {
+				result = caseTableContent(tableContentWithInnerChild);
+			}
+			if (result == null) {
+				result = defaultCase(theEObject);
+			}
+			return result;
+		}
+		case TestPackage.TABLE_WITHOUT_MULTIPLICITY_CONCRETE: {
+			final TableWithoutMultiplicityConcrete tableWithoutMultiplicityConcrete = (TableWithoutMultiplicityConcrete) theEObject;
+			T result = caseTableWithoutMultiplicityConcrete(tableWithoutMultiplicityConcrete);
 			if (result == null) {
 				result = defaultCase(theEObject);
 			}
@@ -462,6 +495,54 @@ public class TestSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseTableWithUnique(TableWithUnique object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Table Content With Inner Child2</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 *
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Table Content With Inner Child2</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseTableContentWithInnerChild2(TableContentWithInnerChild2 object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Table Content With Inner Child</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 *
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Table Content With Inner Child</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseTableContentWithInnerChild(TableContentWithInnerChild object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Table Without Multiplicity Concrete</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 *
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Table Without Multiplicity Concrete</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseTableWithoutMultiplicityConcrete(TableWithoutMultiplicityConcrete object) {
 		return null;
 	}
 

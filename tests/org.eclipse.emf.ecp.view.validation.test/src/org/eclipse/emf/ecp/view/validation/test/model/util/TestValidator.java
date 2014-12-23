@@ -36,11 +36,14 @@ import org.eclipse.emf.ecp.view.validation.test.model.Library;
 import org.eclipse.emf.ecp.view.validation.test.model.Mainboard;
 import org.eclipse.emf.ecp.view.validation.test.model.PowerBlock;
 import org.eclipse.emf.ecp.view.validation.test.model.TableContent;
+import org.eclipse.emf.ecp.view.validation.test.model.TableContentWithInnerChild;
+import org.eclipse.emf.ecp.view.validation.test.model.TableContentWithInnerChild2;
 import org.eclipse.emf.ecp.view.validation.test.model.TableContentWithValidation;
 import org.eclipse.emf.ecp.view.validation.test.model.TableContentWithoutValidation;
 import org.eclipse.emf.ecp.view.validation.test.model.TableWithMultiplicity;
 import org.eclipse.emf.ecp.view.validation.test.model.TableWithUnique;
 import org.eclipse.emf.ecp.view.validation.test.model.TableWithoutMultiplicity;
+import org.eclipse.emf.ecp.view.validation.test.model.TableWithoutMultiplicityConcrete;
 import org.eclipse.emf.ecp.view.validation.test.model.TestPackage;
 import org.eclipse.emf.ecp.view.validation.test.model.Writer;
 
@@ -192,6 +195,13 @@ public class TestValidator extends EObjectValidator {
 			return validateTableWithoutMultiplicity((TableWithoutMultiplicity) value, diagnostics, context);
 		case TestPackage.TABLE_WITH_UNIQUE:
 			return validateTableWithUnique((TableWithUnique) value, diagnostics, context);
+		case TestPackage.TABLE_CONTENT_WITH_INNER_CHILD2:
+			return validateTableContentWithInnerChild2((TableContentWithInnerChild2) value, diagnostics, context);
+		case TestPackage.TABLE_CONTENT_WITH_INNER_CHILD:
+			return validateTableContentWithInnerChild((TableContentWithInnerChild) value, diagnostics, context);
+		case TestPackage.TABLE_WITHOUT_MULTIPLICITY_CONCRETE:
+			return validateTableWithoutMultiplicityConcrete((TableWithoutMultiplicityConcrete) value, diagnostics,
+				context);
 		default:
 			return true;
 		}
@@ -571,6 +581,40 @@ public class TestValidator extends EObjectValidator {
 		Map<Object, Object> context) {
 		return validate_EveryDefaultConstraint(tableWithUnique, diagnostics, context)
 			& validateUniqueness(tableWithUnique, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public boolean validateTableContentWithInnerChild2(TableContentWithInnerChild2 tableContentWithInnerChild2,
+		DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(tableContentWithInnerChild2, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public boolean validateTableContentWithInnerChild(TableContentWithInnerChild tableContentWithInnerChild,
+		DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(tableContentWithInnerChild, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public boolean validateTableWithoutMultiplicityConcrete(
+		TableWithoutMultiplicityConcrete tableWithoutMultiplicityConcrete, DiagnosticChain diagnostics,
+		Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(tableWithoutMultiplicityConcrete, diagnostics, context);
 	}
 
 	private boolean validateUniqueness(TableWithUnique tableWithUnique, DiagnosticChain diagnostics,

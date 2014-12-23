@@ -486,6 +486,9 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 					newEObjects.add((EObject) possibleNewValues.get(setting));
 				}
 				for (final EObject domain : newEObjects) {
+					if (getValueDomainModelReference() == null) {
+						continue;
+					}
 					final VDomainModelReference dmr = EcoreUtil.copy(getValueDomainModelReference());
 					final boolean init = dmr.init(domain);
 					if (!init) {

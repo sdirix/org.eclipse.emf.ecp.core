@@ -16,6 +16,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -370,8 +371,10 @@ public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 					final Iterator<Setting> iterator = resolvedColumns.get(returnedElements - 1).getIterator();
 					if (iterator.hasNext()) {
 						result = iterator.next();
-					} else {
-						result = null;
+					}
+					else {
+						throw new NoSuchElementException(String.format(
+							"The iterator has %1$s but %2$s already has been returned!", numElems, returnedElements)); //$NON-NLS-1$
 					}
 				}
 				returnedElements++;
@@ -380,8 +383,7 @@ public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 
 			@Override
 			public void remove() {
-				// TODO Auto-generated method stub
-
+				// do nothing
 			}
 
 		};

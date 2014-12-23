@@ -29,11 +29,14 @@ import org.eclipse.emf.ecp.view.validation.test.model.Library;
 import org.eclipse.emf.ecp.view.validation.test.model.Mainboard;
 import org.eclipse.emf.ecp.view.validation.test.model.PowerBlock;
 import org.eclipse.emf.ecp.view.validation.test.model.TableContent;
+import org.eclipse.emf.ecp.view.validation.test.model.TableContentWithInnerChild;
+import org.eclipse.emf.ecp.view.validation.test.model.TableContentWithInnerChild2;
 import org.eclipse.emf.ecp.view.validation.test.model.TableContentWithValidation;
 import org.eclipse.emf.ecp.view.validation.test.model.TableContentWithoutValidation;
 import org.eclipse.emf.ecp.view.validation.test.model.TableWithMultiplicity;
 import org.eclipse.emf.ecp.view.validation.test.model.TableWithUnique;
 import org.eclipse.emf.ecp.view.validation.test.model.TableWithoutMultiplicity;
+import org.eclipse.emf.ecp.view.validation.test.model.TableWithoutMultiplicityConcrete;
 import org.eclipse.emf.ecp.view.validation.test.model.TestFactory;
 import org.eclipse.emf.ecp.view.validation.test.model.TestPackage;
 import org.eclipse.emf.ecp.view.validation.test.model.Writer;
@@ -166,6 +169,30 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * @generated
 	 */
 	private EClass tableWithUniqueEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	private EClass tableContentWithInnerChild2EClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	private EClass tableContentWithInnerChildEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	private EClass tableWithoutMultiplicityConcreteEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with {@link org.eclipse.emf.ecore.EPackage.Registry
@@ -744,6 +771,83 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * @generated
 	 */
 	@Override
+	public EClass getTableContentWithInnerChild2() {
+		return tableContentWithInnerChild2EClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EReference getTableContentWithInnerChild2_InnerChild() {
+		return (EReference) tableContentWithInnerChild2EClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EClass getTableContentWithInnerChild() {
+		return tableContentWithInnerChildEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EReference getTableContentWithInnerChild_InnerChild() {
+		return (EReference) tableContentWithInnerChildEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EAttribute getTableContentWithInnerChild_Stuff() {
+		return (EAttribute) tableContentWithInnerChildEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EClass getTableWithoutMultiplicityConcrete() {
+		return tableWithoutMultiplicityConcreteEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EReference getTableWithoutMultiplicityConcrete_Content() {
+		return (EReference) tableWithoutMultiplicityConcreteEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
 	public TestFactory getTestFactory() {
 		return (TestFactory) getEFactoryInstance();
 	}
@@ -830,6 +934,16 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 
 		tableWithUniqueEClass = createEClass(TABLE_WITH_UNIQUE);
 		createEReference(tableWithUniqueEClass, TABLE_WITH_UNIQUE__CONTENT);
+
+		tableContentWithInnerChild2EClass = createEClass(TABLE_CONTENT_WITH_INNER_CHILD2);
+		createEReference(tableContentWithInnerChild2EClass, TABLE_CONTENT_WITH_INNER_CHILD2__INNER_CHILD);
+
+		tableContentWithInnerChildEClass = createEClass(TABLE_CONTENT_WITH_INNER_CHILD);
+		createEReference(tableContentWithInnerChildEClass, TABLE_CONTENT_WITH_INNER_CHILD__INNER_CHILD);
+		createEAttribute(tableContentWithInnerChildEClass, TABLE_CONTENT_WITH_INNER_CHILD__STUFF);
+
+		tableWithoutMultiplicityConcreteEClass = createEClass(TABLE_WITHOUT_MULTIPLICITY_CONCRETE);
+		createEReference(tableWithoutMultiplicityConcreteEClass, TABLE_WITHOUT_MULTIPLICITY_CONCRETE__CONTENT);
 	}
 
 	/**
@@ -866,14 +980,16 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 		// Add supertypes to classes
 		tableContentWithoutValidationEClass.getESuperTypes().add(getTableContent());
 		tableContentWithValidationEClass.getESuperTypes().add(getTableContent());
+		tableContentWithInnerChild2EClass.getESuperTypes().add(getTableContent());
+		tableContentWithInnerChildEClass.getESuperTypes().add(getTableContent());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(libraryEClass, Library.class, "Library", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getLibrary_Name(), ecorePackage.getEString(), "name", null, 0, 1, Library.class, !IS_TRANSIENT,
 			!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getLibrary_Writers(), getWriter(), getWriter_Library(), "writers", null, 1, -1,
-			Library.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
-			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getLibrary_Writers(), getWriter(), getWriter_Library(), "writers", null, 1, -1, Library.class,
+			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+			!IS_DERIVED, IS_ORDERED);
 		initEReference(getLibrary_Books(), getBook(), null, "books", null, 0, -1, Library.class, !IS_TRANSIENT,
 			!IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
 			IS_ORDERED);
@@ -905,9 +1021,9 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 			!IS_DERIVED, IS_ORDERED);
 		initEAttribute(getWriter_Pseudonym(), ecorePackage.getEBoolean(), "Pseudonym", "false", 0, 1, Writer.class,
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getWriter_Library(), getLibrary(), getLibrary_Writers(), "library", null, 0, 1,
-			Writer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES,
-			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getWriter_Library(), getLibrary(), getLibrary_Writers(), "library", null, 0, 1, Writer.class,
+			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+			!IS_DERIVED, IS_ORDERED);
 
 		op = addEOperation(writerEClass, ecorePackage.getEBoolean(), "validate", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEDiagnosticChain(), "diagnostic", 0, 1, IS_UNIQUE, IS_ORDERED);
@@ -1022,6 +1138,27 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 		initEReference(getTableWithUnique_Content(), getTableContent(), null, "content", null, 0, -1,
 			TableWithUnique.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
 			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(tableContentWithInnerChild2EClass, TableContentWithInnerChild2.class, "TableContentWithInnerChild2",
+			!IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getTableContentWithInnerChild2_InnerChild(), getTableContent(), null, "innerChild", null, 0, 1,
+			TableContentWithInnerChild2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+			!IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(tableContentWithInnerChildEClass, TableContentWithInnerChild.class, "TableContentWithInnerChild",
+			!IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getTableContentWithInnerChild_InnerChild(), getTableContent(), null, "innerChild", null, 0, 1,
+			TableContentWithInnerChild.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+			!IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTableContentWithInnerChild_Stuff(), ecorePackage.getEString(), "stuff", null, 0, 1,
+			TableContentWithInnerChild.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID,
+			IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(tableWithoutMultiplicityConcreteEClass, TableWithoutMultiplicityConcrete.class,
+			"TableWithoutMultiplicityConcrete", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getTableWithoutMultiplicityConcrete_Content(), getTableContentWithInnerChild(), null, "content",
+			null, 0, -1, TableWithoutMultiplicityConcrete.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+			IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

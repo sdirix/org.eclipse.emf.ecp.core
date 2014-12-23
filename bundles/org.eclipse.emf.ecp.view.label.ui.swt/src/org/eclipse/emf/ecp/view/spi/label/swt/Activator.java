@@ -17,7 +17,9 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 
 /**
- * @author eugen
+ * Activator of the lable.ui.swt bundle.
+ * 
+ * @author Eugen Neufeld
  * @since 1.5
  *
  */

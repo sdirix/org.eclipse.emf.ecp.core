@@ -65,6 +65,7 @@ import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
  * @author Eugen Neufeld
  *
  */
+@SuppressWarnings("restriction")
 public class ValidationServiceImpl implements ValidationService {
 
 	/**
@@ -81,9 +82,11 @@ public class ValidationServiceImpl implements ValidationService {
 					.getFeature()) {
 				if (VViewPackage.eINSTANCE.getControl().isInstance(notification.getNotifier())) {
 					final VControl control = (VControl) notification.getNotifier();
-					// final EObject controlDomainModel = validationRegistry.resolveDomainModel(domainModel,
-					// control.getDomainModelReference().());
-					// REFACTORING test
+
+					if (VViewPackage.eINSTANCE.getElement_Enabled() == notification.getRawNotification().getFeature()) {
+						control.setDiagnostic(null);
+					}
+
 					final VDomainModelReference domainModelReference = control.getDomainModelReference();
 					if (domainModelReference == null) {
 						return;
@@ -156,18 +159,14 @@ public class ValidationServiceImpl implements ValidationService {
 			case Notification.ADD:
 				validate(notification.getNotifier());
 				// in case of not containment references
-				if (EReference.class.isInstance(notification.getStructuralFeature())
-				// && !EReference.class.cast(notification.getStructuralFeature()).isContainment()
-				) {
-					validate((EObject) notification.getRawNotification().getNewValue());
+				if (EReference.class.isInstance(notification.getStructuralFeature())) {
+					validate(getAllEObjects((EObject) notification.getRawNotification().getNewValue()));
 				}
 				break;
 			case Notification.ADD_MANY:
 				validate(notification.getNotifier());
 				// in case of not containment references
-				if (EReference.class.isInstance(notification.getStructuralFeature())
-				// && !EReference.class.cast(notification.getStructuralFeature()).isContainment()
-				) {
+				if (EReference.class.isInstance(notification.getStructuralFeature())) {
 					validate((Collection<EObject>) notification.getRawNotification().getNewValue());
 				}
 				break;
@@ -180,6 +179,7 @@ public class ValidationServiceImpl implements ValidationService {
 
 				//$FALL-THROUGH$
 			case Notification.REMOVE_MANY:
+				// TODO JF since we now have an indexed dmr, this should clean diagnostics, too, doesn't it?
 				validate(getAllEObjects(notification.getNotifier()));
 				break;
 			case Notification.REMOVING_ADAPTER:
@@ -203,12 +203,10 @@ public class ValidationServiceImpl implements ValidationService {
 
 		@Override
 		public void notifyAdd(Notifier notifier) {
-			// validate((EObject) notifier);
 		}
 
 		@Override
 		public void notifyRemove(Notifier notifier) {
-			// validate((EObject) notifier);
 		}
 
 	}
@@ -254,11 +252,11 @@ public class ValidationServiceImpl implements ValidationService {
 	}
 
 	private void cleanControlDiagnostics(EObject parent, EReference parentReference, EObject removedEObject) {
-		final Set<VControl> controls = context.getControlsFor(UniqueSetting.createSetting(parent, parentReference));
+		final Set<VElement> controls = context.getControlsFor(UniqueSetting.createSetting(parent, parentReference));
 		if (controls == null) {
 			return;
 		}
-		for (final VControl vControl : controls) {
+		for (final VElement vControl : controls) {
 			if (vControl == null) {
 				continue;
 			}
@@ -376,36 +374,39 @@ public class ValidationServiceImpl implements ValidationService {
 			validateAndCollectSettings(toValidate);
 		}
 		update();
+		notifyListeners();
 		currentUpdates.clear();
 		validated.clear();
-		notifyListeners();
 		validationRunning = false;
 	}
 
-	private void notifyListeners() {
+	/**
+	 * Notifies all listeners.
+	 */
+	public void notifyListeners() {
 		if (validationListener.size() > 0) {
 			final Set<Diagnostic> result = getDiagnosticResult();
 			for (final ViewValidationListener l : validationListener) {
 				l.onNewValidation(result);
 			}
-
 		}
 	}
 
 	private void update() {
-		final Map<VControl, VDiagnostic> controlDiagnosticMap = new LinkedHashMap<VControl, VDiagnostic>();
+		final Map<VElement, VDiagnostic> controlDiagnosticMap = new LinkedHashMap<VElement, VDiagnostic>();
 		for (final UniqueSetting uniqueSetting : currentUpdates.keySet()) {
-			final Set<VControl> controls = context.getControlsFor(uniqueSetting);
+			final Set<VElement> controls = context.getControlsFor(uniqueSetting);
 			if (controls == null) {
 				continue;
 			}
-			for (final VControl control : controls) {
+
+			for (final VElement control : controls) {
 				if (!controlDiagnosticMap.containsKey(control)) {
 					controlDiagnosticMap.put(control, VViewFactory.eINSTANCE.createDiagnostic());
 				}
-				if (!control.isEnabled() || !control.isVisible() || control.isReadonly()) {
-					continue;
-				}
+				// TODO Performance
+				controlDiagnosticMap.get(control).getDiagnostics()
+					.removeAll(currentUpdates.get(uniqueSetting).getDiagnostics());
 				controlDiagnosticMap.get(control).getDiagnostics()
 					.addAll(currentUpdates.get(uniqueSetting).getDiagnostics());
 
@@ -420,8 +421,12 @@ public class ValidationServiceImpl implements ValidationService {
 						|| !EStructuralFeature.class.isInstance(diagnostic.getData().get(1))) {
 						continue;
 					}
+					final EObject diagnosticEobject = EObject.class.cast(diagnostic.getData().get(0));
+					if (!isObjectStillValid(diagnosticEobject)) {
+						continue;
+					}
 					final UniqueSetting uniqueSetting2 = UniqueSetting.createSetting(
-						EObject.class.cast(diagnostic.getData().get(0)),
+						diagnosticEobject,
 						EStructuralFeature.class.cast(diagnostic.getData().get(1)));
 					if (!currentUpdates.containsKey(uniqueSetting2)) {
 						controlDiagnosticMap.get(control).getDiagnostics().add(diagnosticObject);
@@ -435,10 +440,18 @@ public class ValidationServiceImpl implements ValidationService {
 		updateAndPropagate(controlDiagnosticMap);
 	}
 
-	private void updateAndPropagate(Map<VControl, VDiagnostic> controlDiagnosticMap) {
-		for (final VControl control : controlDiagnosticMap.keySet()) {
+	private boolean isObjectStillValid(EObject diagnosticEobject) {
+		EObject toCheck = diagnosticEobject;
+		while (toCheck != null && toCheck != context.getDomainModel()) {
+			toCheck = toCheck.eContainer();
+		}
 
-			// control.setDiagnostic(VDiagnosticHelper.clean2(controlDiagnosticMap.get(control)));
+		return toCheck == context.getDomainModel();
+	}
+
+	private void updateAndPropagate(Map<VElement, VDiagnostic> controlDiagnosticMap) {
+		for (final VElement control : controlDiagnosticMap.keySet()) {
+
 			control.setDiagnostic(controlDiagnosticMap.get(control));
 
 			reevaluateToTop(control.eContainer());
@@ -473,7 +486,6 @@ public class ValidationServiceImpl implements ValidationService {
 
 	private void validateAndCollectSettings(EObject eObject) {
 		final Diagnostic diagnostic = getDiagnosticForEObject(eObject);
-		// unset everything for the new EObject
 		for (final EStructuralFeature feature : eObject.eClass().getEAllStructuralFeatures()) {
 			final UniqueSetting uniqueSetting = UniqueSetting.createSetting(eObject, feature);
 			if (!currentUpdates.containsKey(uniqueSetting)) {
@@ -621,8 +633,19 @@ public class ValidationServiceImpl implements ValidationService {
 	 */
 	@Override
 	public void deregisterValidationListener(ViewValidationListener listener) {
+		// FIXME: doesn't look like deregistering is going on
 		validationListener.add(listener);
 		listener.onNewValidation(getDiagnosticResult());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.context.GlobalViewModelService#childViewModelContextAdded(org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
+	 */
+	@Override
+	public void childViewModelContextAdded(ViewModelContext childContext) {
+		// do nothing
 	}
 
 }

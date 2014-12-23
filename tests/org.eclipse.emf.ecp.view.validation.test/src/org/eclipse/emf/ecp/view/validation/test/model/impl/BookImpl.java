@@ -213,8 +213,7 @@ public class BookImpl extends EObjectImpl implements Book {
 		writers = newWriters;
 		if (eNotificationRequired()) {
 			final ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
-				TestPackage.BOOK__WRITERS,
-				oldWriters, newWriters);
+				TestPackage.BOOK__WRITERS, oldWriters, newWriters);
 			if (msgs == null) {
 				msgs = notification;
 			} else {

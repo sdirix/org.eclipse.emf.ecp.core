@@ -14,6 +14,9 @@ package org.eclipse.emf.ecp.view.internal.editor.controls;
 import java.util.Collection;
 import java.util.HashSet;
 
+import java.util.Collection;
+import java.util.HashSet;
+
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
@@ -57,7 +60,7 @@ public class LeafConditionControlRenderer extends ExpectedValueControlRenderer {
 		if (condition.getDomainModelReference() == null) {
 			MessageDialog.openError(control.getShell(), "No Feature Path Domain Model Reference found", //$NON-NLS-1$
 				"A Feature Path Domain Model Reference needs to be added to the condition first. " //$NON-NLS-1$
-			);
+				);
 			return;
 		}
 
@@ -67,7 +70,7 @@ public class LeafConditionControlRenderer extends ExpectedValueControlRenderer {
 		if (structuralFeature == null) {
 			MessageDialog.openError(control.getShell(), "No value selected", //$NON-NLS-1$
 				"Please set a value to the Domain Model Reference first. " //$NON-NLS-1$
-			);
+				);
 			return;
 		}
 

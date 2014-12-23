@@ -12,7 +12,12 @@
 package org.eclipse.emf.ecp.view.spi.table.swt;
 
 import java.util.Collections;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 
+import org.eclipse.emf.common.util.Diagnostic;
+import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
@@ -21,6 +26,7 @@ import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
 import org.eclipse.emf.ecp.view.internal.table.swt.Activator;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -33,7 +39,6 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 
 /**
@@ -154,27 +159,33 @@ public class TableControlDetailPanelRenderer extends TableControlSWTRenderer {
 	 * @param selection the selection
 	 */
 	protected void handleSingleSelection(IStructuredSelection selection) {
-		try {
-			disposeDetail();
-			final EObject object = (EObject) selection.getFirstElement();
-			final VView detailView = getView();
+		disposeDetail();
+		final Composite compositeToRenderOn = new Composite(detailPanel, SWT.NONE);
+		GridLayoutFactory.fillDefaults().numColumns(1).equalWidth(false).applyTo(compositeToRenderOn);
+		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(compositeToRenderOn);
 
-			if (detailView == null) {
-				if (isDebug()) {
-					final Label label = new Label(detailPanel, SWT.NONE);
-					label.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_RED));
-					label.setText("No Detail View found."); //$NON-NLS-1$
-				}
-			} else {
-				ecpView = ECPSWTViewRenderer.INSTANCE.render(detailPanel,
-					object, detailView);
+		final EObject object = (EObject) selection.getFirstElement();
+		final VView detailView = getView();
+		if (detailView == null) {
+			if (isDebug()) {
+				final Label label = new Label(compositeToRenderOn, SWT.NONE);
+				label.setBackground(compositeToRenderOn.getDisplay().getSystemColor(SWT.COLOR_RED));
+				label.setText("No Detail View found."); //$NON-NLS-1$
 			}
-			border.layout(true, true);
-			final Point point = detailPanel.computeSize(SWT.DEFAULT, SWT.DEFAULT);
-			scrolledComposite.setMinHeight(point.y);
-		} catch (final ECPRendererException ex) {
-			Activator.log(ex);
 		}
+		else {
+			final ViewModelContext childContext = getViewModelContext().getChildContext(object, getVElement(),
+				detailView);
+
+			try {
+				ecpView = ECPSWTViewRenderer.INSTANCE.render(compositeToRenderOn, childContext);
+			} catch (final ECPRendererException ex) {
+				Activator.log(ex);
+			}
+		}
+		border.layout(true, true);
+		final Point point = detailPanel.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+		scrolledComposite.setMinHeight(point.y);
 	}
 
 	/**
@@ -203,4 +214,18 @@ public class TableControlDetailPanelRenderer extends TableControlSWTRenderer {
 		}
 	}
 
+	@Override
+	protected void deleteRows(List<EObject> deletionList, Setting mainSetting) {
+		super.deleteRows(deletionList, mainSetting);
+		final Set<Diagnostic> toDelete = new LinkedHashSet<Diagnostic>();
+		for (final EObject eObject : deletionList) {
+			// getViewModelContext().removeChildContext(eObject);
+			toDelete.addAll(getVElement().getDiagnostic().getDiagnostics(eObject));
+			final TreeIterator<EObject> eAllContents = eObject.eAllContents();
+			while (eAllContents.hasNext()) {
+				toDelete.addAll(getVElement().getDiagnostic().getDiagnostics(eAllContents.next()));
+			}
+		}
+		getVElement().getDiagnostic().getDiagnostics().removeAll(toDelete);
+	}
 }

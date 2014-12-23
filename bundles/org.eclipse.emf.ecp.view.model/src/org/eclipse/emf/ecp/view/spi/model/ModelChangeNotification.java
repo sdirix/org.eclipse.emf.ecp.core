@@ -11,8 +11,12 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.model;
 
+import java.util.Collection;
+import java.util.Collections;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 /**
@@ -21,6 +25,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
  *
  * @author Eugen Neufeld
  * @since 1.3
+ * @noextend This class is not intended to be subclassed by clients.
  */
 public class ModelChangeNotification {
 
@@ -61,5 +66,26 @@ public class ModelChangeNotification {
 	 */
 	public Notification getRawNotification() {
 		return notification;
+	}
+
+	/**
+	 * Returns the collection of new EObjects.
+	 *
+	 * @return The collection of added EObjects, the collection might be empty but never null.
+	 * @since 1.5
+	 */
+	@SuppressWarnings("unchecked")
+	public Collection<EObject> getNewEObjects() {
+		if (!EReference.class.isInstance(getStructuralFeature())) {
+			return Collections.emptySet();
+		}
+		switch (getRawNotification().getEventType()) {
+		case Notification.ADD:
+			return Collections.singleton((EObject) getRawNotification().getNewValue());
+		case Notification.ADD_MANY:
+			return (Collection<EObject>) getRawNotification().getNewValue();
+		default:
+			return Collections.emptySet();
+		}
 	}
 }

@@ -377,8 +377,8 @@ public class WriterImpl extends EObjectImpl implements Writer {
 	 */
 	@Override
 	public void setLibrary(Library newLibrary) {
-		if (newLibrary != eInternalContainer()
-			|| eContainerFeatureID() != TestPackage.WRITER__LIBRARY && newLibrary != null) {
+		if (newLibrary != eInternalContainer() || eContainerFeatureID() != TestPackage.WRITER__LIBRARY
+			&& newLibrary != null) {
 			if (EcoreUtil.isAncestor(this, newLibrary)) {
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
 			}

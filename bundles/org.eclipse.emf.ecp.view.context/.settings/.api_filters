@@ -71,6 +71,12 @@
                 <message_argument value="unregisterViewChangeListener(ModelChangeListener)"/>
             </message_arguments>
         </filter>
+        <filter comment="SPI Change" id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.context.ViewModelContext"/>
+                <message_argument value="getControlsFor(UniqueSetting)"/>
+            </message_arguments>
+        </filter>
         <filter comment="SPI Change (1.3)" id="405901410">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.context.ViewModelContext"/>

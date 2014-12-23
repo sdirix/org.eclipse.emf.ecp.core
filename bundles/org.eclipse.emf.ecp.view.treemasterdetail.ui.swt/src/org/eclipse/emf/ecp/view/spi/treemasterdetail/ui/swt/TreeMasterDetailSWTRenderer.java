@@ -10,6 +10,7 @@
  * Anas Chakfeh - initial API and implementation
  * Eugen Neufeld - Refactoring
  * Alexandra Buzila - Refactoring
+ * Johannes Faltermeier - integration with validation service
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.treemasterdetail.ui.swt;
 
@@ -26,11 +27,14 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.notify.AdapterFactory;
+import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.DynamicEObjectImpl;
 import org.eclipse.emf.ecp.common.ChildrenDescriptorCollector;
+import org.eclipse.emf.ecp.edit.internal.swt.util.OverlayImageDescriptor;
 import org.eclipse.emf.ecp.edit.spi.ReferenceService;
+import org.eclipse.emf.ecp.edit.spi.swt.util.SWTValidationHelper;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.DefaultReferenceService;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
@@ -38,7 +42,7 @@ import org.eclipse.emf.ecp.view.internal.swt.ContextMenuViewModelService;
 import org.eclipse.emf.ecp.view.internal.treemasterdetail.ui.swt.Activator;
 import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
+import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.reporting.StatusReport;
 import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
@@ -49,6 +53,8 @@ import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
 import org.eclipse.emf.ecp.view.treemasterdetail.model.VTreeMasterDetail;
+import org.eclipse.emf.ecp.view.treemasterdetail.ui.swt.internal.RootObject;
+import org.eclipse.emf.ecp.view.treemasterdetail.ui.swt.internal.TreeMasterDetailSelectionManipulatorHelper;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.CommandParameter;
 import org.eclipse.emf.edit.command.RemoveCommand;
@@ -107,10 +113,16 @@ import org.osgi.framework.FrameworkUtil;
  * @since 1.5
  *
  */
-@SuppressWarnings("restriction")
 public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMasterDetail> {
 
+	/**
+	 * The detail key passed to the view model context.
+	 */
 	public static final String DETAIL_KEY = "detail"; //$NON-NLS-1$
+
+	/**
+	 * Context key for the root.
+	 */
 	public static final String ROOT_KEY = "root"; //$NON-NLS-1$
 	private SWTGridDescription rendererGridDescription;
 
@@ -132,27 +144,78 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 	private Composite rightPanelContainerComposite;
 
 	/**
-	 * @author Anas Chakfeh
+	 * @author jfaltermeier
 	 *
 	 */
-	private class RootObject {
-
-		private final EObject modelElement;
-
-		/**
-		 * @param modelElement
-		 */
-		public RootObject(EObject modelElement) {
-			this.modelElement = modelElement;
-		}
+	private final class MasterTreeContextMenuListener implements IMenuListener {
+		private final EditingDomain editingDomain;
+		private final TreeViewer treeViewer;
+		private final ChildrenDescriptorCollector childrenDescriptorCollector;
+		private final List<MasterDetailAction> menuActions;
 
 		/**
-		 * @return the root object
+		 * @param editingDomain
+		 * @param treeViewer
+		 * @param childrenDescriptorCollector
+		 * @param menuActions
 		 */
-		public EObject getRoot() {
-			return modelElement;
+		private MasterTreeContextMenuListener(EditingDomain editingDomain, TreeViewer treeViewer,
+			ChildrenDescriptorCollector childrenDescriptorCollector, List<MasterDetailAction> menuActions) {
+			this.editingDomain = editingDomain;
+			this.treeViewer = treeViewer;
+			this.childrenDescriptorCollector = childrenDescriptorCollector;
+			this.menuActions = menuActions;
 		}
 
+		@Override
+		public void menuAboutToShow(IMenuManager manager) {
+			if (treeViewer.getSelection().isEmpty()) {
+				return;
+			}
+			final EObject root = ((RootObject) treeViewer.getInput()).getRoot();
+
+			if (treeViewer.getSelection() instanceof IStructuredSelection) {
+				final IStructuredSelection selection = (IStructuredSelection) treeViewer.getSelection();
+
+				if (selection.size() == 1) {
+					final EObject eObject = (EObject) selection.getFirstElement();
+					final EditingDomain domain = AdapterFactoryEditingDomain.getEditingDomainFor(eObject);
+					if (domain == null) {
+						return;
+					}
+					final Collection<?> descriptors = childrenDescriptorCollector.getDescriptors(eObject);
+					fillContextMenu(manager, descriptors, editingDomain, eObject);
+				}
+				if (!selection.toList().contains(root)) {
+					manager.add(new Separator(GLOBAL_ADDITIONS));
+					addDeleteActionToContextMenu(editingDomain, manager, selection);
+				}
+				manager.add(new Separator());
+
+				if (selection.getFirstElement() != null && EObject.class.isInstance(selection.getFirstElement())) {
+					final EObject selectedObject = (EObject) selection.getFirstElement();
+
+					for (final MasterDetailAction menuAction : menuActions) {
+						if (menuAction.shouldShow(selectedObject)) {
+							final Action newAction = new Action() {
+								@Override
+								public void run() {
+									super.run();
+									menuAction.execute(selectedObject);
+								}
+							};
+
+							newAction.setImageDescriptor(ImageDescriptor.createFromURL(FrameworkUtil.getBundle(
+								menuAction.getClass())
+								.getResource(menuAction.getImagePath())));
+							newAction.setText(menuAction.getLabel());
+
+							manager.add(newAction);
+						}
+					}
+				}
+			}
+		}
 	}
 
 	/**
@@ -224,6 +287,12 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 		}
 	}
 
+	/**
+	 * Creates the sashform for the master detail colums.
+	 *
+	 * @param parent the parent
+	 * @return the sash
+	 */
 	protected SashForm createSash(Composite parent) {
 		/* THe contents of the composite */
 		final Composite sashComposite = new Composite(parent, SWT.FILL);
@@ -241,6 +310,12 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 		return sash;
 	}
 
+	/**
+	 * Create the parent of the master detail form.
+	 *
+	 * @param parent the parent
+	 * @return the composite
+	 */
 	protected Composite createMasterDetailForm(Composite parent) {
 		final Composite form = new Composite(parent, SWT.BORDER);
 		final GridLayout layout = GridLayoutFactory.fillDefaults().create();
@@ -251,6 +326,12 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 		return form;
 	}
 
+	/**
+	 * Creates the tree viewer for the master.
+	 *
+	 * @param masterPanel the parent
+	 * @return the tree viewer
+	 */
 	protected TreeViewer createMasterTree(final Composite masterPanel) {
 		final EObject modelElement = getViewModelContext().getDomainModel();
 		final EditingDomain editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(modelElement);
@@ -267,8 +348,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 				return new Object[] { ((RootObject) object).getRoot() };
 			}
 		};
-		final AdapterFactoryLabelProvider adapterFactoryLabelProvider = new
-			AdapterFactoryLabelProvider(adapterFactory);
+		final AdapterFactoryLabelProvider labelProvider = new TreeMasterDetailLabelProvider(adapterFactory);
 
 		treeViewer = new TreeViewer(masterPanel);
 
@@ -276,7 +356,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 			.applyTo(treeViewer.getTree());
 
 		treeViewer.setContentProvider(adapterFactoryContentProvider);
-		treeViewer.setLabelProvider(getLabelProvider(adapterFactoryLabelProvider));
+		treeViewer.setLabelProvider(getLabelProvider(labelProvider));
 		treeViewer.setAutoExpandLevel(2); // top level element is expanded, but not the children
 		treeViewer.setInput(new RootObject(modelElement));
 
@@ -297,7 +377,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 			@Override
 			public void widgetDisposed(DisposeEvent event) {
 				adapterFactoryContentProvider.dispose();
-				adapterFactoryLabelProvider.dispose();
+				labelProvider.dispose();
 				adapterFactory.dispose();
 				if (titleFont != null) {
 					titleFont.dispose();
@@ -316,18 +396,40 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 		return treeViewer;
 	}
 
+	/**
+	 * Return true if a context menu should be shown in the tree.
+	 *
+	 * @return true if a context menu should be shown, false otherwise
+	 */
 	protected boolean hasContextMenu() {
 		return true;
 	}
 
+	/**
+	 * Return true if the tree should support DnD.
+	 *
+	 * @return true if DnD should be supported , false otherwise
+	 */
 	protected boolean hasDnDSupport() {
 		return true;
 	}
 
-	protected ILabelProvider getLabelProvider(AdapterFactoryLabelProvider adapterFactoryLabelProvider) {
+	/**
+	 * Returns the label provider.
+	 *
+	 * @param adapterFactoryLabelProvider the adaper factory label provider
+	 * @return the label provider to use for the tree
+	 */
+	protected ILabelProvider getLabelProvider(final AdapterFactoryLabelProvider adapterFactoryLabelProvider) {
 		return adapterFactoryLabelProvider;
 	}
 
+	/**
+	 * Creates the composite for the master panel.
+	 *
+	 * @param sash the parent
+	 * @return the composite
+	 */
 	protected Composite createMasterPanel(final SashForm sash) {
 		final Composite leftPanel = new Composite(sash, SWT.NONE);
 		leftPanel.setLayout(GridLayoutFactory.fillDefaults().create());
@@ -337,6 +439,11 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 		return leftPanel;
 	}
 
+	/**
+	 * Adds the header to a parent composite.
+	 *
+	 * @param parent the parent
+	 */
 	protected void createHeader(Composite parent) {
 		final Composite headerComposite = new Composite(parent, SWT.NONE);
 		final GridLayout headerLayout = GridLayoutFactory.fillDefaults().create();
@@ -418,6 +525,12 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 		return titleColor;
 	}
 
+	/**
+	 * Creates the composite holding the details.
+	 *
+	 * @param parent the parent
+	 * @return the right panel/detail composite
+	 */
 	protected ScrolledComposite createRightPanelContent(Composite parent) {
 		rightPanel = new ScrolledComposite(parent, SWT.V_SCROLL | SWT.H_SCROLL);
 		rightPanel.setShowFocusedControl(true);
@@ -462,6 +575,11 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 		rightPanel.setMinSize(point);
 
 		return rightPanel;
+	}
+
+	@Override
+	protected String getDefaultFontName(Control control) {
+		return control.getDisplay().getSystemFont().getFontData()[0].getName();
 	}
 
 	/**
@@ -530,80 +648,18 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 		final List<MasterDetailAction> menuActions = readMasterDetailActions();
 		final MenuManager menuMgr = new MenuManager();
 		menuMgr.setRemoveAllWhenShown(true);
-		menuMgr.addMenuListener(new IMenuListener() {
-			@Override
-			public void menuAboutToShow(IMenuManager manager) {
-				if (treeViewer.getSelection().isEmpty()) {
-					return;
-				}
-				final EObject root = ((RootObject) treeViewer.getInput()).getRoot();
-
-				if (treeViewer.getSelection() instanceof IStructuredSelection) {
-					final IStructuredSelection selection = (IStructuredSelection) treeViewer.getSelection();
-
-					if (selection.size() == 1 && selection.getFirstElement() != null) {
-						final boolean successfull = fillContextMenuForSingleSelection(editingDomain,
-							childrenDescriptorCollector, manager,
-							selection);
-						if (!successfull) {
-							return;
-						}
-					}
-					if (!selection.toList().contains(root)) {
-						manager.add(new Separator(GLOBAL_ADDITIONS));
-						addDeleteActionToContextMenu(editingDomain, manager, selection);
-					}
-					manager.add(new Separator());
-
-					if (selection.getFirstElement() != null
-						&& EObject.class.isInstance(AdapterFactoryEditingDomain.unwrap(selection.getFirstElement()))) {
-						final EObject selectedObject = (EObject) AdapterFactoryEditingDomain.unwrap(selection
-							.getFirstElement());
-
-						for (final MasterDetailAction menuAction : menuActions) {
-							if (menuAction.shouldShow(selectedObject)) {
-								final Action newAction = new Action() {
-									@Override
-									public void run() {
-										super.run();
-										menuAction.execute(selectedObject);
-									}
-								};
-
-								newAction.setImageDescriptor(ImageDescriptor.createFromURL(FrameworkUtil.getBundle(
-									menuAction.getClass())
-									.getResource(menuAction.getImagePath())));
-								newAction.setText(menuAction.getLabel());
-
-								manager.add(newAction);
-							}
-						}
-					}
-				}
-			}
-
-			private boolean fillContextMenuForSingleSelection(final EditingDomain editingDomain,
-				final ChildrenDescriptorCollector childrenDescriptorCollector, IMenuManager manager,
-				final IStructuredSelection selection) {
-				final Object firstElement = selection.getFirstElement();
-				final Object unwrappedElement = AdapterFactoryEditingDomain.unwrap(firstElement);
-				if (!EObject.class.isInstance(unwrappedElement)) {
-					return false;
-				}
-				final EObject eObject = EObject.class.cast(unwrappedElement);
-				final EditingDomain domain = AdapterFactoryEditingDomain.getEditingDomainFor(eObject);
-				if (domain == null) {
-					return false;
-				}
-				final Collection<?> descriptors = childrenDescriptorCollector.getDescriptors(eObject);
-				fillContextMenu(manager, descriptors, editingDomain, eObject);
-				return true;
-			}
-		});
+		menuMgr.addMenuListener(new MasterTreeContextMenuListener(editingDomain, treeViewer,
+			childrenDescriptorCollector, menuActions));
 		final Menu menu = menuMgr.createContextMenu(treeViewer.getControl());
 		treeViewer.getControl().setMenu(menu);
 	}
 
+	/**
+	 * Returns a list of all {@link MasterDetailAction MasterDetailActions} which shall be displayed in the context menu
+	 * of the master treeviewer.
+	 *
+	 * @return the actions
+	 */
 	protected List<MasterDetailAction> readMasterDetailActions() {
 		final List<MasterDetailAction> commands = new ArrayList<MasterDetailAction>();
 		final IExtensionRegistry extensionRegistry = Platform.getExtensionRegistry();
@@ -709,6 +765,11 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 		manager.add(deleteAction);
 	}
 
+	/**
+	 * Allows to manipulate the view context for the selected element that is about to be rendered.
+	 *
+	 * @param viewContext the view context.
+	 */
 	protected void manipulateViewContext(ViewModelContext viewContext) {
 		// do nothing
 	}
@@ -738,8 +799,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 		public void selectionChanged(SelectionChangedEvent event) {
 
 			final Object treeSelected = ((IStructuredSelection) event.getSelection()).getFirstElement();
-			// TODO selection
-			final Object selected = manipulateSelection(treeSelected);
+			final Object selected = treeSelected == null ? treeSelected : manipulateSelection(treeSelected);
 			if (selected instanceof EObject) {
 				try {
 					if (childComposite != null) {
@@ -748,37 +808,36 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 					}
 					childComposite = createComposite();
 
-					final Object root = manipulateSelection(((RootObject) ((TreeViewer) event.getSource()).getInput())
-						.getRoot());
+					final Object root = manipulateSelection(((RootObject) ((TreeViewer)
+						event.getSource()).getInput())
+							.getRoot());
 					final Map<String, Object> context = new LinkedHashMap<String, Object>();
 					context.put(DETAIL_KEY, true);
 
+					/* root selected */
 					if (selected.equals(root)) {
 						context.put(ROOT_KEY, true);
 						VView vView = getVElement().getDetailView();
 						if (vView.getChildren().isEmpty()) {
 							vView = ViewProviderHelper.getView((EObject) selected, context);
 						}
-						if (DynamicEObjectImpl.class.isInstance(selected)) {
-							final ViewModelContext viewContext = ViewModelContextFactory.INSTANCE
-								.createViewModelContext(vView, (EObject) selected, referenceService);
-							manipulateViewContext(viewContext);
-							ECPSWTViewRenderer.INSTANCE.render(childComposite, viewContext);
 
-						} else {
-							final ViewModelContext viewContext = ViewModelContextFactory.INSTANCE
-								.createViewModelContext(vView, (EObject) selected, referenceService);
-							manipulateViewContext(viewContext);
-							ECPSWTViewRenderer.INSTANCE.render(childComposite, viewContext);
-						}
+						final ViewModelContext childContext = getViewModelContext()
+							.getChildContext((EObject) selected, getVElement(), vView);
 
-					} else {
+						manipulateViewContext(childContext);
+
+						ECPSWTViewRenderer.INSTANCE.render(childComposite, childContext);
+
+					}
+					/* child selected */
+					else {
 						final VView view = ViewProviderHelper.getView((EObject) selected, context);
-						final ViewModelContext viewContext = ViewModelContextFactory.INSTANCE
-							.createViewModelContext(view,
-								(EObject) selected, referenceService);
-						manipulateViewContext(viewContext);
-						ECPSWTViewRenderer.INSTANCE.render(childComposite, viewContext);
+						final ViewModelContext childContext = getViewModelContext().getChildContext((EObject) selected,
+							getVElement(), view);
+
+						manipulateViewContext(childContext);
+						ECPSWTViewRenderer.INSTANCE.render(childComposite, childContext);
 					}
 
 					relayoutDetail();
@@ -791,6 +850,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 								.getMessage(), e)));
 				}
 			}
+
 		}
 
 		private Composite createComposite() {
@@ -809,6 +869,11 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 		}
 	}
 
+	/**
+	 * Returns the composite for the detail.
+	 *
+	 * @return the composite
+	 */
 	protected Composite getDetailContainer() {
 		return rightPanelContainerComposite;
 	}
@@ -820,16 +885,80 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 	 * @return the object that should be used as a selection
 	 */
 	protected Object manipulateSelection(Object treeSelected) {
-		return treeSelected;
+		return TreeMasterDetailSelectionManipulatorHelper.manipulateSelection(treeSelected);
 	}
 
+	/**
+	 * Gets called after a detail composite was disposed. Allows for further cleanup.
+	 */
 	protected void cleanCustomOnSelectionChange() {
 		// do nothing
 	}
 
+	/**
+	 * Relayouts the detail composite.
+	 */
 	protected void relayoutDetail() {
 		rightPanelContainerComposite.layout();
 		final Point point = container.computeSize(SWT.DEFAULT, SWT.DEFAULT);
 		rightPanel.setMinSize(point);
 	}
+
+	/**
+	 * The label provider used for the detail tree.
+	 *
+	 * @author jfaltermeier
+	 *
+	 */
+	private class TreeMasterDetailLabelProvider extends AdapterFactoryLabelProvider {
+
+		public TreeMasterDetailLabelProvider(AdapterFactory adapterFactory) {
+			super(adapterFactory);
+		}
+
+		@Override
+		public Image getImage(Object object) {
+			final Image image = super.getImage(object);
+			return getValidationOverlay(image, (EObject) object);
+		}
+
+		protected Image getValidationOverlay(Image image, final EObject object) {
+			// final Integer severity = validationResultCacheTree.getCachedValue(object);
+			final VDiagnostic vDiagnostic = getVElement().getDiagnostic();
+			int highestSeverity = Diagnostic.OK;
+			if (vDiagnostic != null) {
+				for (final Diagnostic diagnostic : vDiagnostic.getDiagnostics(object)) {
+					if (diagnostic.getSeverity() > highestSeverity) {
+						highestSeverity = diagnostic.getSeverity();
+					}
+				}
+			}
+			final ImageDescriptor overlay = SWTValidationHelper.INSTANCE
+				.getValidationOverlayDescriptor(highestSeverity);
+			if (overlay == null) {
+				return image;
+			}
+			final OverlayImageDescriptor imageDescriptor = new OverlayImageDescriptor(image, overlay,
+				OverlayImageDescriptor.LOWER_RIGHT);
+			final Image resultImage = imageDescriptor.createImage();
+			return resultImage;
+		}
+
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#applyValidation()
+	 */
+	@Override
+	protected void applyValidation() {
+		super.applyValidation();
+
+		if (treeViewer == null) {
+			return;
+		}
+		treeViewer.refresh();
+	}
+
 }

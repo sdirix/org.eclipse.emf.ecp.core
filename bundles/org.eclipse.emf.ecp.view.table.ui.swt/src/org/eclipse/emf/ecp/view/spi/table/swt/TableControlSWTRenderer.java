@@ -700,17 +700,14 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 					new Status(
 						IStatus.WARNING,
 						"org.eclipse.emf.ecp.view.table.ui.swt", "The class " + clazz.getName() + " is abstract or an interface.")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-			return;
 		}
 		final EObject modelElement = mainSetting.getEObject();
 		final EObject instance = clazz.getEPackage().getEFactoryInstance().create(clazz);
 		final EditingDomain editingDomain = getEditingDomain(mainSetting);
 		if (editingDomain == null) {
-			return;
 		}
 		editingDomain.getCommandStack().execute(
 			AddCommand.create(editingDomain, modelElement, mainSetting.getEStructuralFeature(), instance));
-
 	}
 
 	@Override
@@ -914,22 +911,23 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			final VDomainModelReference copy = EcoreUtil.copy(dmr);
 			copy.init(domainObject);
 			final Iterator<Setting> iterator = copy.getIterator();
-			Setting setting = null;
+			Setting setting;
 			if (iterator.hasNext()) {
 				setting = iterator.next();
 			} else {
 				return null;
 			}
 
-			// final Setting setting = InternalEObject.class.cast(domainObject).eSetting(feature);
 			final StringBuffer tooltip = new StringBuffer();
 			final VDiagnostic vDiagnostic = vTableControl.getDiagnostic();
-			final List<Diagnostic> diagnostics = vDiagnostic.getDiagnostic(domainObject, feature);
-			for (final Diagnostic diagnostic : diagnostics) {
-				if (tooltip.length() > 0) {
-					tooltip.append("\n"); //$NON-NLS-1$
+			if (vDiagnostic != null) {
+				final List<Diagnostic> diagnostics = vDiagnostic.getDiagnostic(domainObject, feature);
+				for (final Diagnostic diagnostic : diagnostics) {
+					if (tooltip.length() > 0) {
+						tooltip.append("\n"); //$NON-NLS-1$
+					}
+					tooltip.append(diagnostic.getMessage());
 				}
-				tooltip.append(diagnostic.getMessage());
 			}
 			if (tooltip.length() != 0) {
 				return ECPTooltipModifierHelper.modifyString(tooltip.toString(), setting);
@@ -995,8 +993,6 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 		private final CellEditor cellEditor;
 
-		// private final IItemPropertyDescriptor itemPropertyDescriptor;
-
 		private final VTableControl tableControl;
 
 		private final VDomainModelReference domainModelReference;
@@ -1010,7 +1006,6 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			this.cellEditor = cellEditor;
 			this.tableControl = tableControl;
 			this.domainModelReference = domainModelReference;
-			// itemPropertyDescriptor = getItemPropertyDescriptor(domainModelReference.getIterator().next());
 		}
 
 		private EditingState editingState;
@@ -1106,10 +1101,6 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 		protected IObservableValue doCreateElementObservable(Object element, ViewerCell cell) {
 			return getValueProperty(domainModelReference).observe(element);
-
-			// return EMFEditObservables..observeValue(
-			// getEditingDomain(InternalEObject.class.cast(element).eSetting(cellFeature)),
-			// (EObject) element, cellFeature);
 		}
 
 		protected IObservableValue doCreateCellEditorObservable(CellEditor cellEditor) {

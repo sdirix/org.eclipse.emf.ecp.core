@@ -16,7 +16,6 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.eclipse.emf.ecp.view.internal.context.ViewModelContextImpl;
 import org.eclipse.emf.ecp.view.internal.swt.SWTRendererFactoryImpl;
 import org.eclipse.emf.ecp.view.model.common.AbstractRenderer;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
@@ -87,7 +86,7 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 	/**
 	 * Returns the GridDescription for this Renderer.
 	 *
-	 * @param gridDescription the current {@link GridDescription}
+	 * @param gridDescription the current {@link SWTGridDescription}
 	 * @return the number of controls per row
 	 * @since 1.3
 	 */
@@ -136,9 +135,8 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 			};
 			getViewModelContext().registerViewChangeListener(listener);
 		}
-		if (ViewModelContextImpl.class.isInstance(getViewModelContext())) {
-			ViewModelContextImpl.class.cast(getViewModelContext()).addContextUser(this);
-		}
+		getViewModelContext().addContextUser(this);
+
 		postInit();
 	}
 
@@ -186,9 +184,8 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 		}
 		listener = null;
 		controls = null;
-		if (ViewModelContextImpl.class.isInstance(getViewModelContext())) {
-			ViewModelContextImpl.class.cast(getViewModelContext()).removeContextUser(this);
-		}
+		getViewModelContext().removeContextUser(this);
+
 		super.dispose();
 	}
 
@@ -237,7 +234,7 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 	 * @param parent the parent used during render
 	 * @since 1.3
 	 */
-	public final void finalizeRendering(Composite parent) {
+	public void finalizeRendering(Composite parent) {
 		if (renderingFinished) {
 			return;
 		}
@@ -358,6 +355,11 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 
 	}
 
+	/**
+	 * Returns the default font name on the system.
+	 *
+	 * @since 1.5
+	 */
 	protected String getDefaultFontName(Control control) {
 		return control.getDisplay().getSystemFont().getFontData()[0].getName();
 	}

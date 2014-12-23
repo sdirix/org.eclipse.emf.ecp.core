@@ -23,11 +23,14 @@ import org.eclipse.emf.ecp.view.validation.test.model.Librarian;
 import org.eclipse.emf.ecp.view.validation.test.model.Library;
 import org.eclipse.emf.ecp.view.validation.test.model.Mainboard;
 import org.eclipse.emf.ecp.view.validation.test.model.PowerBlock;
+import org.eclipse.emf.ecp.view.validation.test.model.TableContentWithInnerChild;
+import org.eclipse.emf.ecp.view.validation.test.model.TableContentWithInnerChild2;
 import org.eclipse.emf.ecp.view.validation.test.model.TableContentWithValidation;
 import org.eclipse.emf.ecp.view.validation.test.model.TableContentWithoutValidation;
 import org.eclipse.emf.ecp.view.validation.test.model.TableWithMultiplicity;
 import org.eclipse.emf.ecp.view.validation.test.model.TableWithUnique;
 import org.eclipse.emf.ecp.view.validation.test.model.TableWithoutMultiplicity;
+import org.eclipse.emf.ecp.view.validation.test.model.TableWithoutMultiplicityConcrete;
 import org.eclipse.emf.ecp.view.validation.test.model.TestFactory;
 import org.eclipse.emf.ecp.view.validation.test.model.TestPackage;
 import org.eclipse.emf.ecp.view.validation.test.model.Writer;
@@ -108,6 +111,12 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 			return createTableWithoutMultiplicity();
 		case TestPackage.TABLE_WITH_UNIQUE:
 			return createTableWithUnique();
+		case TestPackage.TABLE_CONTENT_WITH_INNER_CHILD2:
+			return createTableContentWithInnerChild2();
+		case TestPackage.TABLE_CONTENT_WITH_INNER_CHILD:
+			return createTableContentWithInnerChild();
+		case TestPackage.TABLE_WITHOUT_MULTIPLICITY_CONCRETE:
+			return createTableWithoutMultiplicityConcrete();
 		default:
 			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -279,6 +288,42 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	public TableWithUnique createTableWithUnique() {
 		final TableWithUniqueImpl tableWithUnique = new TableWithUniqueImpl();
 		return tableWithUnique;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public TableContentWithInnerChild2 createTableContentWithInnerChild2() {
+		final TableContentWithInnerChild2Impl tableContentWithInnerChild2 = new TableContentWithInnerChild2Impl();
+		return tableContentWithInnerChild2;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public TableContentWithInnerChild createTableContentWithInnerChild() {
+		final TableContentWithInnerChildImpl tableContentWithInnerChild = new TableContentWithInnerChildImpl();
+		return tableContentWithInnerChild;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public TableWithoutMultiplicityConcrete createTableWithoutMultiplicityConcrete() {
+		final TableWithoutMultiplicityConcreteImpl tableWithoutMultiplicityConcrete = new TableWithoutMultiplicityConcreteImpl();
+		return tableWithoutMultiplicityConcrete;
 	}
 
 	/**

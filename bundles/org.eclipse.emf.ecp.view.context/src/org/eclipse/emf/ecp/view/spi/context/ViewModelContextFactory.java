@@ -54,4 +54,5 @@ public final class ViewModelContextFactory {
 		ViewModelService... modelServices) {
 		return new ViewModelContextImpl(view, domainObject, modelServices);
 	}
+
 }

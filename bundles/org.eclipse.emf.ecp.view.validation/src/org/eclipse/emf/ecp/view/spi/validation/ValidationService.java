@@ -14,14 +14,14 @@ package org.eclipse.emf.ecp.view.spi.validation;
 import java.util.Collection;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
+import org.eclipse.emf.ecp.view.spi.context.GlobalViewModelService;
 
 /**
  * @author Eugen
  * @since 1.5
  *
  */
-public interface ValidationService extends ViewModelService {
+public interface ValidationService extends GlobalViewModelService {
 	/**
 	 * Adds a validation provider to the list of known validation providers.
 	 *

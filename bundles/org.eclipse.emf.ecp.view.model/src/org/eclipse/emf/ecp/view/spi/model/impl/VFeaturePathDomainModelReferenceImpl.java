@@ -611,7 +611,11 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 			final Set<Diagnostic> toDelete = new LinkedHashSet<Diagnostic>();
 			for (final Object diagnosticObject : vControl.getDiagnostic().getDiagnostics()) {
 				final Diagnostic diagnostic = (Diagnostic) diagnosticObject;
-				if (diagnostic.getData().get(0) == oldValue) {
+				EObject diagnosticDataObject = (EObject) diagnostic.getData().get(0);
+				while (diagnosticDataObject != oldValue && diagnosticDataObject != null) {
+					diagnosticDataObject = diagnosticDataObject.eContainer();
+				}
+				if (diagnosticDataObject == oldValue) {
 					toDelete.add(diagnostic);
 				}
 			}
@@ -623,7 +627,12 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 			final Set<Diagnostic> toDelete = new LinkedHashSet<Diagnostic>();
 			for (final Object diagnosticObject : vControl.getDiagnostic().getDiagnostics()) {
 				final Diagnostic diagnostic = (Diagnostic) diagnosticObject;
-				if (oldValue.contains(diagnostic.getData().get(0))) {
+				EObject diagnosticDataObject = (EObject) diagnostic.getData().get(0);
+				while (!oldValue.contains(diagnosticDataObject) && diagnosticDataObject != null) {
+					diagnosticDataObject = diagnosticDataObject.eContainer();
+				}
+
+				if (oldValue.contains(diagnosticDataObject)) {
 					toDelete.add(diagnostic);
 				}
 			}

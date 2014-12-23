@@ -242,6 +242,10 @@
 		<!-- Migration -->
 		<module>../../bundles/org.eclipse.emf.ecp.view.migrator</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.edapt</module>
+
+		<!-- Initial Validation -->
+		<module>../../bundles/org.eclipse.emf.ecp.view.table.validation</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.treemasterdetail.validation</module>
 		
 	</modules>
 

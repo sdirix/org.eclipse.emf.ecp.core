@@ -12,6 +12,7 @@
 package org.eclipse.emf.ecp.view.validation.test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -147,8 +148,7 @@ public class ViewValidation_PTest extends CommonValidationTest {
 		control.setDomainModelReference(
 			getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getComputer_Name()));
 		ViewModelContextFactory.INSTANCE.createViewModelContext(control, computer);
-
-		assertEquals("Severity must be ok", Diagnostic.OK, control.getDiagnostic().getHighestSeverity());
+		assertNull(control.getDiagnostic());
 	}
 
 	@Test
@@ -160,8 +160,7 @@ public class ViewValidation_PTest extends CommonValidationTest {
 		control.setDomainModelReference(
 			getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getComputer_Name()));
 		ViewModelContextFactory.INSTANCE.createViewModelContext(control, computer);
-
-		assertEquals("Severity must be ok", Diagnostic.OK, control.getDiagnostic().getHighestSeverity());
+		assertNull(control.getDiagnostic());
 	}
 
 	@Test
@@ -172,9 +171,10 @@ public class ViewValidation_PTest extends CommonValidationTest {
 		control.setDomainModelReference(
 			getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getComputer_Name()));
 		ViewModelContextFactory.INSTANCE.createViewModelContext(control, computer);
+		assertEquals("Severity must be Error", Diagnostic.ERROR, control.getDiagnostic().getHighestSeverity());
 		control.setEnabled(false);
+		assertNull(control.getDiagnostic());
 
-		assertEquals("Severity must be ok", Diagnostic.OK, control.getDiagnostic().getHighestSeverity());
 	}
 
 	@Test

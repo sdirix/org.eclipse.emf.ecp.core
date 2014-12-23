@@ -24,11 +24,14 @@ import org.eclipse.emf.ecp.view.validation.test.model.Library;
 import org.eclipse.emf.ecp.view.validation.test.model.Mainboard;
 import org.eclipse.emf.ecp.view.validation.test.model.PowerBlock;
 import org.eclipse.emf.ecp.view.validation.test.model.TableContent;
+import org.eclipse.emf.ecp.view.validation.test.model.TableContentWithInnerChild;
+import org.eclipse.emf.ecp.view.validation.test.model.TableContentWithInnerChild2;
 import org.eclipse.emf.ecp.view.validation.test.model.TableContentWithValidation;
 import org.eclipse.emf.ecp.view.validation.test.model.TableContentWithoutValidation;
 import org.eclipse.emf.ecp.view.validation.test.model.TableWithMultiplicity;
 import org.eclipse.emf.ecp.view.validation.test.model.TableWithUnique;
 import org.eclipse.emf.ecp.view.validation.test.model.TableWithoutMultiplicity;
+import org.eclipse.emf.ecp.view.validation.test.model.TableWithoutMultiplicityConcrete;
 import org.eclipse.emf.ecp.view.validation.test.model.TestPackage;
 import org.eclipse.emf.ecp.view.validation.test.model.Writer;
 
@@ -167,6 +170,21 @@ public class TestAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseTableWithUnique(TableWithUnique object) {
 				return createTableWithUniqueAdapter();
+			}
+
+			@Override
+			public Adapter caseTableContentWithInnerChild2(TableContentWithInnerChild2 object) {
+				return createTableContentWithInnerChild2Adapter();
+			}
+
+			@Override
+			public Adapter caseTableContentWithInnerChild(TableContentWithInnerChild object) {
+				return createTableContentWithInnerChildAdapter();
+			}
+
+			@Override
+			public Adapter caseTableWithoutMultiplicityConcrete(TableWithoutMultiplicityConcrete object) {
+				return createTableWithoutMultiplicityConcreteAdapter();
 			}
 
 			@Override
@@ -429,6 +447,57 @@ public class TestAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createTableWithUniqueAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '
+	 * {@link org.eclipse.emf.ecp.view.validation.test.model.TableContentWithInnerChild2
+	 * <em>Table Content With Inner Child2</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.validation.test.model.TableContentWithInnerChild2
+	 * @generated
+	 */
+	public Adapter createTableContentWithInnerChild2Adapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '
+	 * {@link org.eclipse.emf.ecp.view.validation.test.model.TableContentWithInnerChild
+	 * <em>Table Content With Inner Child</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.validation.test.model.TableContentWithInnerChild
+	 * @generated
+	 */
+	public Adapter createTableContentWithInnerChildAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '
+	 * {@link org.eclipse.emf.ecp.view.validation.test.model.TableWithoutMultiplicityConcrete
+	 * <em>Table Without Multiplicity Concrete</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.validation.test.model.TableWithoutMultiplicityConcrete
+	 * @generated
+	 */
+	public Adapter createTableWithoutMultiplicityConcreteAdapter() {
 		return null;
 	}
 

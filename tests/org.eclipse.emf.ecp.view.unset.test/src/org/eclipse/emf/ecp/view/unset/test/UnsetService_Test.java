@@ -28,7 +28,9 @@ import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationElement;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationFactory;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategory;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContextDisposeListener;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.VContainedContainer;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
@@ -54,6 +56,7 @@ import org.junit.Test;
  * @author jfaltermeier
  *
  */
+@SuppressWarnings("restriction")
 public class UnsetService_Test {
 
 	private Fan fan;
@@ -1512,7 +1515,7 @@ public class UnsetService_Test {
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getControlsFor(UniqueSetting)
 		 */
 		@Override
-		public Set<VControl> getControlsFor(UniqueSetting setting) {
+		public Set<VElement> getControlsFor(UniqueSetting setting) {
 			// TODO Auto-generated method stub
 			return null;
 		}
@@ -1538,6 +1541,53 @@ public class UnsetService_Test {
 		public void putContextValue(String key, Object value) {
 			// TODO Auto-generated method stub
 
+		}
+
+		/**
+		 * {@inheritDoc}
+		 *
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#registerDisposeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContextDisposeListener)
+		 */
+		@Override
+		public void registerDisposeListener(ViewModelContextDisposeListener listener) {
+			// TODO Auto-generated method stub
+
+		}
+
+		/**
+		 * {@inheritDoc}
+		 *
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#addContextUser(java.lang.Object)
+		 */
+		@Override
+		public void addContextUser(Object user) {
+			// TODO Auto-generated method stub
+
+		}
+
+		/**
+		 * {@inheritDoc}
+		 *
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#removeContextUser(java.lang.Object)
+		 */
+		@Override
+		public void removeContextUser(Object user) {
+			// TODO Auto-generated method stub
+
+		}
+
+		/**
+		 * {@inheritDoc}
+		 *
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getChildContext(org.eclipse.emf.ecore.EObject,
+		 *      org.eclipse.emf.ecp.view.spi.model.VElement, org.eclipse.emf.ecp.view.spi.model.VView,
+		 *      org.eclipse.emf.ecp.view.spi.context.ViewModelService[])
+		 */
+		@Override
+		public ViewModelContext getChildContext(EObject eObject, VElement parent, VView vView,
+			ViewModelService... viewModelServices) {
+			// TODO Auto-generated method stub
+			return null;
 		}
 
 	}

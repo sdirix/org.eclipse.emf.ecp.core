@@ -173,6 +173,36 @@ public interface TestFactory extends EFactory {
 	TableWithUnique createTableWithUnique();
 
 	/**
+	 * Returns a new object of class '<em>Table Content With Inner Child2</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @return a new object of class '<em>Table Content With Inner Child2</em>'.
+	 * @generated
+	 */
+	TableContentWithInnerChild2 createTableContentWithInnerChild2();
+
+	/**
+	 * Returns a new object of class '<em>Table Content With Inner Child</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @return a new object of class '<em>Table Content With Inner Child</em>'.
+	 * @generated
+	 */
+	TableContentWithInnerChild createTableContentWithInnerChild();
+
+	/**
+	 * Returns a new object of class '<em>Table Without Multiplicity Concrete</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @return a new object of class '<em>Table Without Multiplicity Concrete</em>'.
+	 * @generated
+	 */
+	TableWithoutMultiplicityConcrete createTableWithoutMultiplicityConcrete();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

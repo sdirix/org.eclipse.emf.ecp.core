@@ -703,6 +703,115 @@ public interface TestPackage extends EPackage {
 	int TABLE_WITH_UNIQUE_FEATURE_COUNT = 1;
 
 	/**
+	 * The meta object id for the '
+	 * {@link org.eclipse.emf.ecp.view.validation.test.model.impl.TableContentWithInnerChild2Impl
+	 * <em>Table Content With Inner Child2</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @see org.eclipse.emf.ecp.view.validation.test.model.impl.TableContentWithInnerChild2Impl
+	 * @see org.eclipse.emf.ecp.view.validation.test.model.impl.TestPackageImpl#getTableContentWithInnerChild2()
+	 * @generated
+	 */
+	int TABLE_CONTENT_WITH_INNER_CHILD2 = 15;
+
+	/**
+	 * The feature id for the '<em><b>Inner Child</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int TABLE_CONTENT_WITH_INNER_CHILD2__INNER_CHILD = TABLE_CONTENT_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Table Content With Inner Child2</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int TABLE_CONTENT_WITH_INNER_CHILD2_FEATURE_COUNT = TABLE_CONTENT_FEATURE_COUNT + 1;
+
+	/**
+	 * The meta object id for the '
+	 * {@link org.eclipse.emf.ecp.view.validation.test.model.impl.TableContentWithInnerChildImpl
+	 * <em>Table Content With Inner Child</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @see org.eclipse.emf.ecp.view.validation.test.model.impl.TableContentWithInnerChildImpl
+	 * @see org.eclipse.emf.ecp.view.validation.test.model.impl.TestPackageImpl#getTableContentWithInnerChild()
+	 * @generated
+	 */
+	int TABLE_CONTENT_WITH_INNER_CHILD = 16;
+
+	/**
+	 * The feature id for the '<em><b>Inner Child</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int TABLE_CONTENT_WITH_INNER_CHILD__INNER_CHILD = TABLE_CONTENT_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Stuff</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int TABLE_CONTENT_WITH_INNER_CHILD__STUFF = TABLE_CONTENT_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of structural features of the '<em>Table Content With Inner Child</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int TABLE_CONTENT_WITH_INNER_CHILD_FEATURE_COUNT = TABLE_CONTENT_FEATURE_COUNT + 2;
+
+	/**
+	 * The meta object id for the '
+	 * {@link org.eclipse.emf.ecp.view.validation.test.model.impl.TableWithoutMultiplicityConcreteImpl
+	 * <em>Table Without Multiplicity Concrete</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @see org.eclipse.emf.ecp.view.validation.test.model.impl.TableWithoutMultiplicityConcreteImpl
+	 * @see org.eclipse.emf.ecp.view.validation.test.model.impl.TestPackageImpl#getTableWithoutMultiplicityConcrete()
+	 * @generated
+	 */
+	int TABLE_WITHOUT_MULTIPLICITY_CONCRETE = 17;
+
+	/**
+	 * The feature id for the '<em><b>Content</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int TABLE_WITHOUT_MULTIPLICITY_CONCRETE__CONTENT = 0;
+
+	/**
+	 * The number of structural features of the '<em>Table Without Multiplicity Concrete</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int TABLE_WITHOUT_MULTIPLICITY_CONCRETE_FEATURE_COUNT = 1;
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.validation.test.model.Library
 	 * <em>Library</em>}'.
 	 * <!-- begin-user-doc -->
@@ -1275,6 +1384,100 @@ public interface TestPackage extends EPackage {
 	EReference getTableWithUnique_Content();
 
 	/**
+	 * Returns the meta object for class '
+	 * {@link org.eclipse.emf.ecp.view.validation.test.model.TableContentWithInnerChild2
+	 * <em>Table Content With Inner Child2</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the meta object for class '<em>Table Content With Inner Child2</em>'.
+	 * @see org.eclipse.emf.ecp.view.validation.test.model.TableContentWithInnerChild2
+	 * @generated
+	 */
+	EClass getTableContentWithInnerChild2();
+
+	/**
+	 * Returns the meta object for the containment reference '
+	 * {@link org.eclipse.emf.ecp.view.validation.test.model.TableContentWithInnerChild2#getInnerChild
+	 * <em>Inner Child</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the meta object for the containment reference '<em>Inner Child</em>'.
+	 * @see org.eclipse.emf.ecp.view.validation.test.model.TableContentWithInnerChild2#getInnerChild()
+	 * @see #getTableContentWithInnerChild2()
+	 * @generated
+	 */
+	EReference getTableContentWithInnerChild2_InnerChild();
+
+	/**
+	 * Returns the meta object for class '
+	 * {@link org.eclipse.emf.ecp.view.validation.test.model.TableContentWithInnerChild
+	 * <em>Table Content With Inner Child</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the meta object for class '<em>Table Content With Inner Child</em>'.
+	 * @see org.eclipse.emf.ecp.view.validation.test.model.TableContentWithInnerChild
+	 * @generated
+	 */
+	EClass getTableContentWithInnerChild();
+
+	/**
+	 * Returns the meta object for the containment reference '
+	 * {@link org.eclipse.emf.ecp.view.validation.test.model.TableContentWithInnerChild#getInnerChild
+	 * <em>Inner Child</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the meta object for the containment reference '<em>Inner Child</em>'.
+	 * @see org.eclipse.emf.ecp.view.validation.test.model.TableContentWithInnerChild#getInnerChild()
+	 * @see #getTableContentWithInnerChild()
+	 * @generated
+	 */
+	EReference getTableContentWithInnerChild_InnerChild();
+
+	/**
+	 * Returns the meta object for the attribute '
+	 * {@link org.eclipse.emf.ecp.view.validation.test.model.TableContentWithInnerChild#getStuff <em>Stuff</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the meta object for the attribute '<em>Stuff</em>'.
+	 * @see org.eclipse.emf.ecp.view.validation.test.model.TableContentWithInnerChild#getStuff()
+	 * @see #getTableContentWithInnerChild()
+	 * @generated
+	 */
+	EAttribute getTableContentWithInnerChild_Stuff();
+
+	/**
+	 * Returns the meta object for class '
+	 * {@link org.eclipse.emf.ecp.view.validation.test.model.TableWithoutMultiplicityConcrete
+	 * <em>Table Without Multiplicity Concrete</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the meta object for class '<em>Table Without Multiplicity Concrete</em>'.
+	 * @see org.eclipse.emf.ecp.view.validation.test.model.TableWithoutMultiplicityConcrete
+	 * @generated
+	 */
+	EClass getTableWithoutMultiplicityConcrete();
+
+	/**
+	 * Returns the meta object for the containment reference list '
+	 * {@link org.eclipse.emf.ecp.view.validation.test.model.TableWithoutMultiplicityConcrete#getContent
+	 * <em>Content</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the meta object for the containment reference list '<em>Content</em>'.
+	 * @see org.eclipse.emf.ecp.view.validation.test.model.TableWithoutMultiplicityConcrete#getContent()
+	 * @see #getTableWithoutMultiplicityConcrete()
+	 * @generated
+	 */
+	EReference getTableWithoutMultiplicityConcrete_Content();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1752,6 +1955,82 @@ public interface TestPackage extends EPackage {
 		 * @generated
 		 */
 		EReference TABLE_WITH_UNIQUE__CONTENT = eINSTANCE.getTableWithUnique_Content();
+
+		/**
+		 * The meta object literal for the '
+		 * {@link org.eclipse.emf.ecp.view.validation.test.model.impl.TableContentWithInnerChild2Impl
+		 * <em>Table Content With Inner Child2</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 *
+		 * @see org.eclipse.emf.ecp.view.validation.test.model.impl.TableContentWithInnerChild2Impl
+		 * @see org.eclipse.emf.ecp.view.validation.test.model.impl.TestPackageImpl#getTableContentWithInnerChild2()
+		 * @generated
+		 */
+		EClass TABLE_CONTENT_WITH_INNER_CHILD2 = eINSTANCE.getTableContentWithInnerChild2();
+
+		/**
+		 * The meta object literal for the '<em><b>Inner Child</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 *
+		 * @generated
+		 */
+		EReference TABLE_CONTENT_WITH_INNER_CHILD2__INNER_CHILD = eINSTANCE.getTableContentWithInnerChild2_InnerChild();
+
+		/**
+		 * The meta object literal for the '
+		 * {@link org.eclipse.emf.ecp.view.validation.test.model.impl.TableContentWithInnerChildImpl
+		 * <em>Table Content With Inner Child</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 *
+		 * @see org.eclipse.emf.ecp.view.validation.test.model.impl.TableContentWithInnerChildImpl
+		 * @see org.eclipse.emf.ecp.view.validation.test.model.impl.TestPackageImpl#getTableContentWithInnerChild()
+		 * @generated
+		 */
+		EClass TABLE_CONTENT_WITH_INNER_CHILD = eINSTANCE.getTableContentWithInnerChild();
+
+		/**
+		 * The meta object literal for the '<em><b>Inner Child</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 *
+		 * @generated
+		 */
+		EReference TABLE_CONTENT_WITH_INNER_CHILD__INNER_CHILD = eINSTANCE.getTableContentWithInnerChild_InnerChild();
+
+		/**
+		 * The meta object literal for the '<em><b>Stuff</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 *
+		 * @generated
+		 */
+		EAttribute TABLE_CONTENT_WITH_INNER_CHILD__STUFF = eINSTANCE.getTableContentWithInnerChild_Stuff();
+
+		/**
+		 * The meta object literal for the '
+		 * {@link org.eclipse.emf.ecp.view.validation.test.model.impl.TableWithoutMultiplicityConcreteImpl
+		 * <em>Table Without Multiplicity Concrete</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 *
+		 * @see org.eclipse.emf.ecp.view.validation.test.model.impl.TableWithoutMultiplicityConcreteImpl
+		 * @see org.eclipse.emf.ecp.view.validation.test.model.impl.TestPackageImpl#getTableWithoutMultiplicityConcrete()
+		 * @generated
+		 */
+		EClass TABLE_WITHOUT_MULTIPLICITY_CONCRETE = eINSTANCE.getTableWithoutMultiplicityConcrete();
+
+		/**
+		 * The meta object literal for the '<em><b>Content</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 *
+		 * @generated
+		 */
+		EReference TABLE_WITHOUT_MULTIPLICITY_CONCRETE__CONTENT = eINSTANCE
+			.getTableWithoutMultiplicityConcrete_Content();
 
 	}
 
