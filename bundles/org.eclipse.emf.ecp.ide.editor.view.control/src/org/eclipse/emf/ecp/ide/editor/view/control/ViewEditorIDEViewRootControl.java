@@ -46,7 +46,6 @@ public class ViewEditorIDEViewRootControl extends ControlRootEClassControl {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.internal.editor.controls.ControlRootEClassControl#getInput()
 	 */
 	@Override
 	protected Object getInput() {

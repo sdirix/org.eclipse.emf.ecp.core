@@ -18,7 +18,7 @@ import org.osgi.framework.ServiceReference;
 
 /**
  * @author eugen
- * @since 1.3
+ * @since 1.5
  *
  */
 public class Activator extends Plugin {
