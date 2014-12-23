@@ -12,6 +12,9 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.rap;
 
+import org.eclipse.ui.application.IWorkbenchWindowConfigurer;
+import org.eclipse.ui.application.WorkbenchAdvisor;
+import org.eclipse.ui.application.WorkbenchWindowAdvisor;
 
 /**
  * This workbench advisor creates the window advisor, and specifies
@@ -19,7 +22,7 @@ package org.eclipse.emf.ecp.rap;
  */
 public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
 
-	private static final String PERSPECTIVE_ID = "org.eclipse.emf.ecp.rap.perspective";
+	private static final String PERSPECTIVE_ID = "org.eclipse.emf.ecp.rap.perspective"; //$NON-NLS-1$
 
 	@Override
 	public WorkbenchWindowAdvisor createWorkbenchWindowAdvisor(IWorkbenchWindowConfigurer configurer) {
