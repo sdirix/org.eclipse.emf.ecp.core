@@ -227,7 +227,9 @@ public class TableValidator extends EObjectValidator
 	 *      org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
 	 *
 	 * @generated NOT
+	 *
 	 */
+	// BEGIN COMPLEX CODE
 	@Override
 	public boolean validate_EveryMultiplicityConforms(EObject eObject, DiagnosticChain diagnostics,
 		Map<Object, Object> context)
@@ -252,6 +254,8 @@ public class TableValidator extends EObjectValidator
 		return result;
 	}
 
+	// END COMPLEX CODE
+
 	/**
 	 * Validates the resolveable constraint of '<em>Domain Model Reference</em>'.
 	 * <!-- begin-user-doc -->
@@ -260,7 +264,6 @@ public class TableValidator extends EObjectValidator
 	 * @generated NOT
 	 */
 	// BEGIN COMPLEX CODE
-	@SuppressWarnings("restriction")
 	public boolean validateTableDomainModelReference_resolveable(VTableDomainModelReference tableDomainModelReference,
 		DiagnosticChain diagnostics, Map<Object, Object> context) {
 

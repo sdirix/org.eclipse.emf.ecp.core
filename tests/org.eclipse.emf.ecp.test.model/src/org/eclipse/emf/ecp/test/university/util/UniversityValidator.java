@@ -198,6 +198,7 @@ public class UniversityValidator extends EObjectValidator
 	 *
 	 * @generated NOT
 	 */
+	// BEGIN COMPLEX CODE
 	public boolean validateCourse_UniqueItemById(Course course, DiagnosticChain diagnostics, Map<Object, Object> context)
 	{
 		// method name is generated
@@ -240,6 +241,8 @@ public class UniversityValidator extends EObjectValidator
 		return validationResult;
 	}
 
+	// END COMPLEX CODE
+
 	/**
 	 * @param course
 	 * @param diagnostics
@@ -273,6 +276,7 @@ public class UniversityValidator extends EObjectValidator
 	 *
 	 * @generated NOT
 	 */
+	// BEGIN COMPLEX CODE
 	public boolean validateCourse_NameNotEmpty(Course course, DiagnosticChain diagnostics, Map<Object, Object> context)
 	{
 		// method name is generated
@@ -294,6 +298,8 @@ public class UniversityValidator extends EObjectValidator
 		}
 		return true;
 	}
+
+	// END COMPLEX CODE
 
 	/**
 	 * <!-- begin-user-doc -->
