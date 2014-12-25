@@ -731,9 +731,11 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 				if (getVElement().getDiagnostic() == null) {
 					return;
 				}
-				validationIcon.setImage(getValidationIcon(getVElement().getDiagnostic().getHighestSeverity()));
-				validationIcon.setToolTipText(getVElement().getDiagnostic().getMessage());
 				final Setting mainSetting = getVElement().getDomainModelReference().getIterator().next();
+				validationIcon.setImage(getValidationIcon(getVElement().getDiagnostic().getHighestSeverity()));
+
+				validationIcon.setToolTipText(ECPTooltipModifierHelper.modifyString(getVElement().getDiagnostic()
+					.getMessage(), null));
 				final Collection<?> collection = (Collection<?>) mainSetting.get(true);
 				if (!collection.isEmpty()) {
 					for (final Object object : collection) {
@@ -1223,8 +1225,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 				}
 				tooltip.append(diagnostic.getMessage());
 			}
-
-			return tooltip.toString();
+			return ECPTooltipModifierHelper.modifyString(tooltip.toString(), null);
 		}
 	}
 

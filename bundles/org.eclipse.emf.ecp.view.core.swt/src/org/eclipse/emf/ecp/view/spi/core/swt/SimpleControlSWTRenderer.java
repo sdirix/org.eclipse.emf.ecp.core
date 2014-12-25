@@ -15,6 +15,7 @@ import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.view.internal.core.swt.renderer.RendererMessages;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.spi.provider.ECPTooltipModifierHelper;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
@@ -249,8 +250,8 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 		}
 
 		validationIcon.setImage(getValidationIcon(getVElement().getDiagnostic().getHighestSeverity()));
-		validationIcon.setToolTipText(getVElement().getDiagnostic().getMessage());
-
+		validationIcon.setToolTipText(ECPTooltipModifierHelper.modifyString(getVElement().getDiagnostic().getMessage(),
+			null));
 		setValidationColor(editControl, getValidationBackgroundColor(getVElement().getDiagnostic()
 			.getHighestSeverity()));
 	}
