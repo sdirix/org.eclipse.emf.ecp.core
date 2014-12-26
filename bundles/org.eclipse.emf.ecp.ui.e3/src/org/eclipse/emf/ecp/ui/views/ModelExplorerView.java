@@ -22,6 +22,7 @@ import org.eclipse.emf.ecp.internal.ui.model.ModelContentProvider;
 import org.eclipse.emf.ecp.spi.ui.UIProvider;
 import org.eclipse.emf.ecp.spi.ui.UIProviderRegistry;
 import org.eclipse.emf.ecp.spi.ui.util.ECPHandlerHelper;
+import org.eclipse.emf.ecp.ui.Messages;
 import org.eclipse.emf.ecp.ui.common.ECPViewerFactory;
 import org.eclipse.emf.ecp.ui.linkedView.ILinkedWithEditorView;
 import org.eclipse.emf.ecp.ui.linkedView.LinkedWithEditorPartListener;
@@ -59,6 +60,8 @@ import org.eclipse.ui.services.IEvaluationService;
  * @author Eugen Neufeld
  */
 public class ModelExplorerView extends TreeView implements ILinkedWithEditorView {
+	private static final String VIEW_SORTER = "viewSorter"; //$NON-NLS-1$
+
 	private static final String LINK_WITH_EDITOR_SET = "LinkWithEditorSet"; //$NON-NLS-1$
 
 	private static final String LINK_WITH_EDITOR = "LinkWithEditor"; //$NON-NLS-1$
@@ -165,10 +168,10 @@ public class ModelExplorerView extends TreeView implements ILinkedWithEditorView
 		final IConfigurationElement[] modelExplorerSettings = Platform.getExtensionRegistry()
 			.getConfigurationElementsFor("org.eclipse.emf.ecp.ui.modelExplorerSettings"); //$NON-NLS-1$
 		if (modelExplorerSettings.length == 1) {
-			if (modelExplorerSettings[0].getAttribute("viewSorter") != null) {//$NON-NLS-1$
+			if (modelExplorerSettings[0].getAttribute(VIEW_SORTER) != null) {
 				try {
 					final ViewerSorter sorter = (ViewerSorter) modelExplorerSettings[0]
-						.createExecutableExtension("viewSorter");
+						.createExecutableExtension(VIEW_SORTER);
 					viewer.setSorter(sorter);
 				} catch (final CoreException e) {
 					Activator.log(e);
@@ -204,7 +207,7 @@ public class ModelExplorerView extends TreeView implements ILinkedWithEditorView
 			getSite().getPage().addPartListener(linkWithEditorPartListener);
 		}
 
-		linkWithEditorAction = new Action("Link with editor", SWT.TOGGLE) {
+		linkWithEditorAction = new Action(Messages.ModelExplorerView_LinkWithEditor, SWT.TOGGLE) {
 
 			@Override
 			public void run() {
@@ -227,7 +230,7 @@ public class ModelExplorerView extends TreeView implements ILinkedWithEditorView
 		};
 
 		linkWithEditorAction.setImageDescriptor(Activator.getImageDescriptor("icons/link_with_editor.gif")); //$NON-NLS-1$
-		linkWithEditorAction.setToolTipText("Link with editor");
+		linkWithEditorAction.setToolTipText(Messages.ModelExplorerView_LinkWithEditor);
 		linkWithEditorAction.setChecked(getDialogSettings().getBoolean(LINK_WITH_EDITOR_SET) ? getDialogSettings()
 			.getBoolean(LINK_WITH_EDITOR) : true);
 		manager.add(linkWithEditorAction);

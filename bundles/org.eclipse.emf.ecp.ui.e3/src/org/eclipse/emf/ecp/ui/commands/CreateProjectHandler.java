@@ -20,7 +20,7 @@ import org.eclipse.emf.ecp.spi.ui.util.ECPHandlerHelper;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
- * This Handler uses the {@link ECPHandlerHelper#createProject(org.eclipse.emf.ecp.ui.common.AbstractUICallback)} method
+ * This Handler uses the {@link ECPHandlerHelper#createProject(org.eclipse.swt.widgets.Shell)} method
  * to create a new project.
  *
  * @author Eugen Neufeld

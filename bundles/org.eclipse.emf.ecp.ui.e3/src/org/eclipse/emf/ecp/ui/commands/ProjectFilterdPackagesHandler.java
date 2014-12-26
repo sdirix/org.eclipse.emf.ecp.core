@@ -23,8 +23,8 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
- * This Handler uses the
- * {@link ECPHandlerHelper#filterProjectPackages(ECPProject, org.eclipse.emf.ecp.ui.common.AbstractUICallback)} method
+ * This Handler uses the {@link ECPHandlerHelper#filterProjectPackages(ECPProject, org.eclipse.swt.widgets.Shell)}
+ * method
  * to filter a project.
  *
  * @author Eugen Neufeld

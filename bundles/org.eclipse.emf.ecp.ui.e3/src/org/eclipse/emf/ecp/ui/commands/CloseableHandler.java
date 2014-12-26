@@ -35,7 +35,7 @@ public class CloseableHandler extends AbstractHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final ISelection selection = HandlerUtil.getActiveMenuSelection(event);
 		final IStructuredSelection ssel = (IStructuredSelection) selection;
-		final String currentType = event.getParameter("org.eclipse.emf.ecp.project.type");
+		final String currentType = event.getParameter("org.eclipse.emf.ecp.project.type"); //$NON-NLS-1$
 		final Object[] selectionArray = ssel.toArray();
 		final ECPProject[] closeable = new ECPProject[selectionArray.length];
 

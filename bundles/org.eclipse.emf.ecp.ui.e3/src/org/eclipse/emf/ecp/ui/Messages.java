@@ -22,6 +22,8 @@ import org.eclipse.osgi.util.NLS;
 public final class Messages extends NLS {
 	private static final String BUNDLE_NAME = "org.eclipse.emf.ecp.ui.messages"; //$NON-NLS-1$
 
+	public static String ModelExplorerView_LinkWithEditor;
+
 	public static String TreeView_Exception_ViewerNotCreated;
 	static {
 		// initialize resource bundle

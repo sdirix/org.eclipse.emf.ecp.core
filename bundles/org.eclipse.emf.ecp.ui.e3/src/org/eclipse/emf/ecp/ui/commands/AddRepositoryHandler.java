@@ -18,6 +18,12 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.emf.ecp.spi.ui.util.ECPHandlerHelper;
 import org.eclipse.ui.handlers.HandlerUtil;
 
+/**
+ * Handler to add a new {@link org.eclipse.emf.ecp.core.ECPRepository}.
+ *
+ * @author Jonas
+ *
+ */
 public class AddRepositoryHandler extends AbstractHandler {
 
 	@Override

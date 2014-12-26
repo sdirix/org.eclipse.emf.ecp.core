@@ -23,8 +23,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
- * This Handler uses the
- * {@link ECPHandlerHelper#addModelElement(ECPProject, org.eclipse.emf.ecp.ui.common.AbstractUICallback, boolean)}
+ * This Handler uses the {@link ECPHandlerHelper#addModelElement(ECPProject, org.eclipse.swt.widgets.Shell, boolean)}
  * method
  * to add a model element to a project.
  *

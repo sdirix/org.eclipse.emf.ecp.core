@@ -27,8 +27,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
- * This Handler uses the {@link ECPHandlerHelper#checkout(List, org.eclipse.emf.ecp.ui.common.AbstractUICallback)}
- * method
+ * This Handler uses the {@link ECPHandlerHelper#checkout(List, org.eclipse.swt.widgets.Shell)} method
  * to checkout a project.
  *
  * @author Eugen Neufeld

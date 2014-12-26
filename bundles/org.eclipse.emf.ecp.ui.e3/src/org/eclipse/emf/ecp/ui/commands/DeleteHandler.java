@@ -26,9 +26,8 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
- * This Handler uses the
- * {@link ECPHandlerHelper#deleteHandlerHelper(IStructuredSelection, org.eclipse.swt.widgets.Shell)} method
- * to delete.
+ * This Handler uses the {@link ECPHandlerHelper#deleteHandlerHelper(List, org.eclipse.swt.widgets.Shell)} method
+ * to delete {@link ECPContainer}.
  *
  * @author Eugen Neufeld
  */
