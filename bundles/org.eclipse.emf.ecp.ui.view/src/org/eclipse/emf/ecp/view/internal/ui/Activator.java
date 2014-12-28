@@ -15,7 +15,6 @@ package org.eclipse.emf.ecp.view.internal.ui;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.emf.ecp.edit.spi.ECPControlFactory;
 import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -79,32 +78,6 @@ public class Activator extends Plugin {
 		getDefault().getLog().log(
 			new Status(IStatus.ERROR, Activator.getDefault().getBundle().getSymbolicName(), e
 				.getMessage(), e));
-	}
-
-	private ServiceReference<ECPControlFactory> controlFactoryReference;
-
-	/**
-	 * Returns the {@link ECPControlFactory}.
-	 *
-	 * @return the {@link ECPControlFactory}
-	 */
-	public ECPControlFactory getECPControlFactory() {
-		if (controlFactoryReference == null) {
-			controlFactoryReference = plugin.getBundle().getBundleContext()
-				.getServiceReference(ECPControlFactory.class);
-		}
-		return plugin.getBundle().getBundleContext().getService(controlFactoryReference);
-	}
-
-	/**
-	 * Frees the {@link ECPControlFactory} from use, allowing the OSGi Bundle to be shutdown.
-	 */
-	public void ungetECPControlFactory() {
-		if (controlFactoryReference == null) {
-			return;
-		}
-		plugin.getBundle().getBundleContext().ungetService(controlFactoryReference);
-		controlFactoryReference = null;
 	}
 
 	/**

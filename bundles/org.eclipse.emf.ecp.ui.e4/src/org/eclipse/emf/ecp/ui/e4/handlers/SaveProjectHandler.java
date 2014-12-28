@@ -21,7 +21,17 @@ import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.spi.ui.util.ECPHandlerHelper;
 
+/**
+ * @author Eugen
+ *
+ */
 public class SaveProjectHandler {
+
+	/**
+	 * Saves the current {@link ECPProject}.
+	 *
+	 * @param object an object adaptable to an {@link ECPProject}
+	 */
 	@Execute
 	public void execute(@Named(IServiceConstants.ACTIVE_SELECTION) @Optional Object object) {
 		final ECPProject ecpProject = ECPUtil.getECPProjectManager().getProject(object);
@@ -30,6 +40,12 @@ public class SaveProjectHandler {
 		}
 	}
 
+	/**
+	 * Checks whether the current selection is adaptable to an {@link ECPProject} and if so, whether this is dirty.
+	 *
+	 * @param object an object adaptable to an {@link ECPProject}
+	 * @return true if the object is adaptable to an {@link ECPProject} and dirty ot false otherwise.
+	 */
 	@CanExecute
 	public boolean canExecute(@Named(IServiceConstants.ACTIVE_SELECTION) @Optional Object object) {
 		final ECPProject ecpProject = ECPUtil.getECPProjectManager().getProject(object);

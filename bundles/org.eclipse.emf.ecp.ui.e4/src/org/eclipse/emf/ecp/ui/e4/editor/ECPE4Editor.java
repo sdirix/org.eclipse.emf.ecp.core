@@ -45,7 +45,6 @@ import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
-import org.osgi.service.log.LogService;
 
 /**
  * Editor displaying one {@link EObject}.
@@ -62,8 +61,6 @@ public class ECPE4Editor {
 	private EObject modelElement;
 	private Adapter adapter;
 	private final ScrolledComposite parent;
-	@Inject
-	private LogService logger;
 
 	/**
 	 * Default constructor.

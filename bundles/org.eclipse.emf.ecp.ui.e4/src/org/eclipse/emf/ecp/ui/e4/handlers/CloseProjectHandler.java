@@ -24,6 +24,11 @@ import org.eclipse.emf.ecp.core.ECPProject;
  */
 public class CloseProjectHandler {
 
+	/**
+	 * Closes the selected {@link ECPProject}.
+	 *
+	 * @param ecpProject the project to be closed
+	 */
 	@Execute
 	public void execute(@Named(IServiceConstants.ACTIVE_SELECTION) @Optional ECPProject ecpProject) {
 		if (ecpProject != null) {
