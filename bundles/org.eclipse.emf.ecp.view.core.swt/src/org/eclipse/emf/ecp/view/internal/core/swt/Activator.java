@@ -11,7 +11,9 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.core.swt;
 
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Plugin;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecp.edit.spi.ECPControlFactory;
 import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
 import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
@@ -47,6 +49,18 @@ public class Activator extends Plugin {
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
+	}
+
+	/**
+	 * Logs exception.
+	 *
+	 * @param e
+	 *            the {@link Exception} to log
+	 */
+	public static void logException(Exception e) {
+		getDefault().getLog().log(
+			new Status(IStatus.ERROR, Activator.getDefault().getBundle().getSymbolicName(), e
+				.getMessage(), e));
 	}
 
 	/*
