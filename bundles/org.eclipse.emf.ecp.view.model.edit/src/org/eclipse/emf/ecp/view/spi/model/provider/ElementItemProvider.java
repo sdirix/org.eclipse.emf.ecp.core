@@ -259,6 +259,8 @@ public class ElementItemProvider
 		case VViewPackage.ELEMENT__ATTACHMENTS:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 			return;
+		default:
+			break;
 		}
 		super.notifyChanged(notification);
 	}
