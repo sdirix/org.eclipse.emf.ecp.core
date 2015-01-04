@@ -51,7 +51,7 @@ public abstract class VCategorizableElementImpl extends VElementImpl implements 
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->.
 	 * <!-- end-user-doc -->
 	 *
 	 * @generated
@@ -77,7 +77,7 @@ public abstract class VCategorizableElementImpl extends VElementImpl implements 
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->.
 	 * <!-- end-user-doc -->
 	 *
 	 * @generated
