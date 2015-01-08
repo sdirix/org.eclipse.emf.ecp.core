@@ -55,7 +55,7 @@ public class SelectAttributesWizardPage extends WizardPage {
 	private EClass rootClass;
 	private AdapterFactoryLabelProvider labelProvider;
 	private ComposedAdapterFactory composedAdapterFactory;
-	protected Set<EStructuralFeature> selectedFeatures = new LinkedHashSet<EStructuralFeature>();
+	private final Set<EStructuralFeature> selectedFeatures = new LinkedHashSet<EStructuralFeature>();
 	private VView view;
 	private Composite parent;
 	private Composite composite;
@@ -63,11 +63,10 @@ public class SelectAttributesWizardPage extends WizardPage {
 	private Button bUnreferenced;
 
 	/**
-	 * @param pageName
+	 * Default constructor.
 	 */
-	protected SelectAttributesWizardPage(String pageName) {
-		super(pageName);
-		// TODO Auto-generated constructor stub
+	protected SelectAttributesWizardPage() {
+		super("Select Attributes");
 	}
 
 	/**
@@ -348,10 +347,10 @@ public class SelectAttributesWizardPage extends WizardPage {
 	}
 
 	/**
-	 * @param selectedDataSegment
+	 * @param eClass the EClass to show attributes from
 	 */
-	public void setRootClass(EClass selectedDataSegment) {
-		rootClass = selectedDataSegment;
+	public void setRootClass(EClass eClass) {
+		rootClass = eClass;
 		selectedFeatures.clear();
 		if (tvAttributes != null) {
 			List<EStructuralFeature> attributes = null;
@@ -408,7 +407,7 @@ public class SelectAttributesWizardPage extends WizardPage {
 	}
 
 	/**
-	 * @param view2
+	 * @param view The {@link VView} to select an attribute for. Is used to filter attributes already shown in the view.
 	 */
 	public void setView(VView view) {
 		this.view = view;

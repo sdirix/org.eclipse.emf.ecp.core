@@ -54,10 +54,10 @@ public class SelectDataSegmentWizardPage extends WizardPage {
 	private VView view;
 
 	/**
-	 * @param pageName
+	 * Default constructor
 	 */
-	protected SelectDataSegmentWizardPage(String pageName) {
-		super(pageName);
+	protected SelectDataSegmentWizardPage() {
+		super("Select Data Segment");
 	}
 
 	/**

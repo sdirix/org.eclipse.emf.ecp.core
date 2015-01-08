@@ -119,7 +119,7 @@ public class ECPAbstractCustomControlSWT_PTest {
 	}
 
 	/**
-	 * @return a test set of {@link ECPCustomControlFeature}
+	 * @return a test set of {@link VFeaturePathDomainModelReference}
 	 */
 	public Set<VFeaturePathDomainModelReference> createReferencedFeatures() {
 		if (referencedFeatures == null) {
@@ -144,7 +144,7 @@ public class ECPAbstractCustomControlSWT_PTest {
 	}
 
 	/**
-	 * @return a test set of {@link ECPCustomControlFeature}
+	 * @return a test set of {@link VFeaturePathDomainModelReference}
 	 */
 	public Set<VFeaturePathDomainModelReference> createEditableFeatures() {
 		if (editableFeaturess == null) {
@@ -173,7 +173,7 @@ public class ECPAbstractCustomControlSWT_PTest {
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT#createControls(org.eclipse.swt.widgets.Composite)}
+	 * {@link org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT#renderControl(SWTGridCell,org.eclipse.swt.widgets.Composite)}
 	 * .
 	 *
 	 * @throws NoPropertyDescriptorFoundExeption
@@ -199,11 +199,6 @@ public class ECPAbstractCustomControlSWT_PTest {
 		return parentCompositeFromView.getChildren()[0];
 	}
 
-	/**
-	 * Test method for
-	 * {@link org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT#createValidationLabel(org.eclipse.swt.widgets.Composite)}
-	 * .
-	 */
 	@Test
 	public void testCreateValidationLabel() {
 		customControl.createValidationLabelInStub(testComposite);
@@ -215,13 +210,7 @@ public class ECPAbstractCustomControlSWT_PTest {
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emf.ecp.ui.view.custom.swt.ECPAbstractCustomControlSWT#showInfo(java.lang.String, java.lang.String)}
-	 * .
-	 */
-
-	/**
-	 * Test method for
-	 * {@link org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT#createControls(org.eclipse.swt.widgets.Composite)}
+	 * {@link org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT#renderControl(SWTGridCell, org.eclipse.swt.widgets.Composite)}
 	 * .
 	 *
 	 * @throws NoPropertyDescriptorFoundExeption
@@ -234,13 +223,11 @@ public class ECPAbstractCustomControlSWT_PTest {
 	}
 
 	/**
-	 * Test method for
-	 * {@link org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT#handleValidation(org.eclipse.emf.common.util.Diagnostic)}
-	 * .
+	 * Test method for {@link org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT#applyValidation()} .
 	 */
 	@Test
 	public void testHandleValidationWithoutLabel() {
-		final Diagnostic validate = new Diagnostician().validate(domainObject);
+		new Diagnostician().validate(domainObject);
 		customControl.applyValidation();
 		// Check Label, Check Image
 		assertEquals(Diagnostic.ERROR, customControl.getLastValidationSeverity());
@@ -252,14 +239,12 @@ public class ECPAbstractCustomControlSWT_PTest {
 	}
 
 	/**
-	 * Test method for
-	 * {@link org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT#handleValidation(org.eclipse.emf.common.util.Diagnostic)}
-	 * .
+	 * Test method for {@link org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT#applyValidation()} .
 	 */
 	@Test
 	public void testHandleValidationWithLabel() {
 		customControl.createValidationLabelInStub(testComposite);
-		final Diagnostic validate = new Diagnostician().validate(domainObject);
+		new Diagnostician().validate(domainObject);
 		customControl.applyValidation();
 		// Check Label, Check Image
 		assertEquals(Diagnostic.ERROR, customControl.getLastValidationSeverity());
@@ -275,7 +260,7 @@ public class ECPAbstractCustomControlSWT_PTest {
 	@Test
 	public void testHandleValidationWithLabelOriginalDiagniostic() {
 		customControl.createValidationLabelInStub(testComposite);
-		final Diagnostic validate = new Diagnostician().validate(domainObject);
+		new Diagnostician().validate(domainObject);
 		customControl.applyValidation();
 		// Check Label, Check Image
 		assertEquals(Diagnostic.ERROR, customControl.getLastValidationSeverity());

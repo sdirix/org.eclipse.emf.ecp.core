@@ -33,13 +33,13 @@ public class SelectAttributesWizard extends Wizard {
 
 	@Override
 	public void addPages() {
-		selectDataSegmentWizardPage = new SelectDataSegmentWizardPage("Select Data Segment"); //$NON-NLS-1$
+		selectDataSegmentWizardPage = new SelectDataSegmentWizardPage();
 		selectDataSegmentWizardPage.setTitle("Select Data Segment"); //$NON-NLS-1$
 		selectDataSegmentWizardPage.setDescription("Select an EClass."); //$NON-NLS-1$
 		selectDataSegmentWizardPage.setView(view);
 		addPage(selectDataSegmentWizardPage);
 
-		selectAttributesWizardPage = new SelectAttributesWizardPage("Select Attributes"); //$NON-NLS-1$
+		selectAttributesWizardPage = new SelectAttributesWizardPage();
 		selectAttributesWizardPage
 			.setDescription("Select the attributes for which controls should be generated."); //$NON-NLS-1$
 		selectAttributesWizardPage.setTitle("Select Attributes"); //$NON-NLS-1$
@@ -58,7 +58,7 @@ public class SelectAttributesWizard extends Wizard {
 			final SelectDataSegmentWizardPage selectPage = (SelectDataSegmentWizardPage) page;
 			if (selectPage != null) {
 				if (selectAttributesWizardPage == null) {
-					selectAttributesWizardPage = new SelectAttributesWizardPage("Select Attributes"); //$NON-NLS-1$
+					selectAttributesWizardPage = new SelectAttributesWizardPage();
 					selectAttributesWizardPage
 						.setDescription("Select the attributes for which controls should be generated."); //$NON-NLS-1$
 					selectAttributesWizardPage.setTitle("Select Attributes"); //$NON-NLS-1$
@@ -99,7 +99,7 @@ public class SelectAttributesWizard extends Wizard {
 	}
 
 	/**
-	 * @param rootClass
+	 * @param rootClass the {@link EClass} to select attributes from
 	 */
 	protected void setRootEClass(EClass rootClass) {
 		this.rootClass = rootClass;
