@@ -8,4 +8,20 @@
 	</application>
 	
 </extension>
+<extension
+      id="product"
+      point="org.eclipse.core.runtime.products">
+   <product
+         application="org.eclipse.emf.ecp.makeithappen.application.sample.fx.application"
+         name="MakeItHappen Sample FX Product">
+      <property
+            name="appName"
+            value="MakeItHappen Sample FX Product">
+      </property>
+      <property
+            name="windowImages"
+            value="icons/bricks.png">
+      </property>
+   </product>
+</extension>
 </plugin>
