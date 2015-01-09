@@ -30,6 +30,7 @@ import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
+import org.eclipse.fx.core.databinding.JFXBeanProperties;
 
 public abstract class AbstractControlRendererFX extends RendererFX<VControl> {
 
