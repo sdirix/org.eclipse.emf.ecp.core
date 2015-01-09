@@ -339,7 +339,8 @@ public class SWTTable_PTest {
 		tableViewer.setSelection(new StructuredSelection(table.getItem(0).getData()));
 		assertEquals(1, parentForECPView.getChildren().length);
 		final Composite viewComposite = (Composite) parentForECPView.getChildren()[0];
-		assertEquals(6, viewComposite.getChildren().length);
+		final Composite detailComposite = (Composite) viewComposite.getChildren()[0];
+		assertEquals(6, detailComposite.getChildren().length);
 
 		// multi selection
 		tableViewer.setSelection(new StructuredSelection(new Object[] { table.getItem(0).getData(),
@@ -717,7 +718,9 @@ public class SWTTable_PTest {
 		public ViewModelContext getChildContext(EObject eObject, VElement parent, VView vView,
 			ViewModelService... viewModelServices) {
 			// TODO Auto-generated method stub
-			return null;
+			final ViewModelContextWithoutServices vmcws = new ViewModelContextWithoutServices(vView);
+
+			return vmcws;
 		}
 
 	}
