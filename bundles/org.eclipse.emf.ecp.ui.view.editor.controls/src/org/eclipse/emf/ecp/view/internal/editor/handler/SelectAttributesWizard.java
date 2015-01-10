@@ -94,6 +94,10 @@ public class SelectAttributesWizard extends Wizard {
 		return true;
 	}
 
+	/**
+	 *
+	 * @return a {@link Set} of selected {@link EStructuralFeature}
+	 */
 	public Set<EStructuralFeature> getSelectedFeatures() {
 		return selectedFeatures;
 	}

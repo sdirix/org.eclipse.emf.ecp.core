@@ -62,6 +62,7 @@ public class CategorizationRenderer_PTest {
 		final VCategorizationElement categorizationElement = mock(VCategorizationElement.class);
 		final EList<VAbstractCategorization> categorizations = new BasicEList<VAbstractCategorization>();
 		when(categorizationElement.getCategorizations()).thenReturn(categorizations);
+		@SuppressWarnings("unchecked")
 		final TreeIterator<EObject> iterator = mock(TreeIterator.class);
 		when(iterator.hasNext()).thenReturn(false);
 		when(categorizationElement.eAllContents()).thenReturn(iterator);
@@ -107,6 +108,7 @@ public class CategorizationRenderer_PTest {
 		categorizations.add(categorization);
 		when(categorization.getCategorizations()).thenReturn(new BasicEList<VAbstractCategorization>());
 		when(categorizationElement.getCategorizations()).thenReturn(categorizations);
+		@SuppressWarnings("unchecked")
 		final TreeIterator<EObject> iterator = mock(TreeIterator.class);
 		when(iterator.hasNext()).thenReturn(false);
 		when(categorization.eAllContents()).thenReturn(iterator);

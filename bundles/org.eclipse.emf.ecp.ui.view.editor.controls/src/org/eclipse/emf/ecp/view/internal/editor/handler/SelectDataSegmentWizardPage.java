@@ -40,9 +40,110 @@ import org.eclipse.swt.widgets.Composite;
  */
 public class SelectDataSegmentWizardPage extends WizardPage {
 
+	/**
+	 * @author Jonas
+	 *
+	 */
+	private final class DataSegmentTreeContentProvider implements ITreeContentProvider {
+		@Override
+		public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
+			// TODO Auto-generated method stub
+		}
+
+		@Override
+		public void dispose() {
+			// TODO Auto-generated method stub
+		}
+
+		@Override
+		public boolean hasChildren(Object element) {
+
+			if (VView.class.isInstance(element)) {
+				return true;
+			}
+			if (EPackage.class.isInstance(element)) {
+				return true;
+			}
+			if (EClass.class.isInstance(element)) {
+				final EClass eClass = (EClass) element;
+				final boolean hasReferences = !eClass.getEAllReferences().isEmpty();
+				return hasReferences;
+
+			}
+			if (EReference.class.isInstance(element)) {
+				final EReference eReference = (EReference) element;
+				return eReference.isContainment() && !eReference.isMany()
+					&& hasChildren(eReference.getEReferenceType());
+			}
+			return false;
+		}
+
+		@Override
+		public Object getParent(Object element) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public Object[] getElements(Object inputElement) {
+			return getChildren(inputElement);
+		}
+
+		@Override
+		public Object[] getChildren(Object parentElement) {
+
+			if (VView.class.isInstance(parentElement)) {
+				final Object[] children = new Object[] { view.getRootEClass() };
+				return children;
+			}
+			if (EPackage.class.isInstance(parentElement)) {
+				final Set<Object> children = new LinkedHashSet<Object>();
+				children.addAll(EPackage.class.cast(parentElement).getESubpackages());
+				for (final EObject obj : EPackage.class.cast(parentElement).getEClassifiers()) {
+					if (EClass.class.isInstance(obj)) {
+						children.add(obj);
+					}
+				}
+				return children.toArray();
+			}
+			if (EClass.class.isInstance(parentElement)) {
+				final EClass eClass = (EClass) parentElement;
+				final Set<Object> result = getElementsForEClass(eClass);
+				return result.toArray();
+			}
+			if (EReference.class.isInstance(parentElement)) {
+				final EReference eReference = (EReference) parentElement;
+				final Set<Object> result = getElementsForEClass(eReference.getEReferenceType());
+				return result.toArray();
+			}
+			return null;
+		}
+
+		private Set<Object> getElementsForEClass(EClass eClass) {
+			final Set<Object> result = new LinkedHashSet<Object>();
+			if (eClass.isAbstract() || eClass.isInterface()) {
+				// find eClasses which are not abstract
+				for (final EClassifier eClassifier : eClass.getEPackage().getEClassifiers()) {
+					if (eClass != eClassifier && EClass.class.isInstance(eClassifier)
+						&& eClass.isSuperTypeOf((EClass) eClassifier)) {
+						result.add(eClassifier);
+					}
+				}
+			}
+			else {
+				for (final EReference ref : eClass.getEAllReferences()) {
+					if (!ref.isMany() && ref.isContainment()) {
+						result.add(ref);
+					}
+				}
+			}
+			return result;
+		}
+	}
+
 	private TreeViewer treeViewer;
 
-	protected EClass selectedDataSegment;
+	private EClass selectedDataSegment;
 
 	/**
 	 * @return the selectedDataSegment
@@ -54,7 +155,7 @@ public class SelectDataSegmentWizardPage extends WizardPage {
 	private VView view;
 
 	/**
-	 * Default constructor
+	 * Default constructor.
 	 */
 	protected SelectDataSegmentWizardPage() {
 		super("Select Data Segment");
@@ -103,103 +204,7 @@ public class SelectDataSegmentWizardPage extends WizardPage {
 	}
 
 	private ITreeContentProvider getContentProvider(final AdapterFactory adapterFactory) {
-		return new ITreeContentProvider() {
-
-			@Override
-			public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
-				// TODO Auto-generated method stub
-			}
-
-			@Override
-			public void dispose() {
-				// TODO Auto-generated method stub
-			}
-
-			@Override
-			public boolean hasChildren(Object element) {
-
-				if (VView.class.isInstance(element)) {
-					return true;
-				}
-				if (EPackage.class.isInstance(element)) {
-					return true;
-				}
-				if (EClass.class.isInstance(element)) {
-					final EClass eClass = (EClass) element;
-					final boolean hasReferences = !eClass.getEAllReferences().isEmpty();
-					return hasReferences;
-
-				}
-				if (EReference.class.isInstance(element)) {
-					final EReference eReference = (EReference) element;
-					return eReference.isContainment() && !eReference.isMany()
-						&& hasChildren(eReference.getEReferenceType());
-				}
-				return false;
-			}
-
-			@Override
-			public Object getParent(Object element) {
-				// TODO Auto-generated method stub
-				return null;
-			}
-
-			@Override
-			public Object[] getElements(Object inputElement) {
-				return getChildren(inputElement);
-			}
-
-			@Override
-			public Object[] getChildren(Object parentElement) {
-
-				if (VView.class.isInstance(parentElement)) {
-					final Object[] children = new Object[] { view.getRootEClass() };
-					return children;
-				}
-				if (EPackage.class.isInstance(parentElement)) {
-					final Set<Object> children = new LinkedHashSet<Object>();
-					children.addAll(EPackage.class.cast(parentElement).getESubpackages());
-					for (final EObject obj : EPackage.class.cast(parentElement).getEClassifiers()) {
-						if (EClass.class.isInstance(obj)) {
-							children.add(obj);
-						}
-					}
-					return children.toArray();
-				}
-				if (EClass.class.isInstance(parentElement)) {
-					final EClass eClass = (EClass) parentElement;
-					final Set<Object> result = getElementsForEClass(eClass);
-					return result.toArray();
-				}
-				if (EReference.class.isInstance(parentElement)) {
-					final EReference eReference = (EReference) parentElement;
-					final Set<Object> result = getElementsForEClass(eReference.getEReferenceType());
-					return result.toArray();
-				}
-				return null;
-			}
-
-			private Set<Object> getElementsForEClass(EClass eClass) {
-				final Set<Object> result = new LinkedHashSet<Object>();
-				if (eClass.isAbstract() || eClass.isInterface()) {
-					// find eClasses which are not abstract
-					for (final EClassifier eClassifier : eClass.getEPackage().getEClassifiers()) {
-						if (eClass != eClassifier && EClass.class.isInstance(eClassifier)
-							&& eClass.isSuperTypeOf((EClass) eClassifier)) {
-							result.add(eClassifier);
-						}
-					}
-				}
-				else {
-					for (final EReference ref : eClass.getEAllReferences()) {
-						if (!ref.isMany() && ref.isContainment()) {
-							result.add(ref);
-						}
-					}
-				}
-				return result;
-			}
-		};
+		return new DataSegmentTreeContentProvider();
 	}
 
 	/**
