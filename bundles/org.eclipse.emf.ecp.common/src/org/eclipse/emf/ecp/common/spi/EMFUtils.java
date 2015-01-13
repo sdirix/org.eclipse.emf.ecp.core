@@ -9,7 +9,7 @@
  * Contributors:
  * Eugen - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.common;
+package org.eclipse.emf.ecp.common.spi;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -27,6 +27,7 @@ import org.eclipse.emf.ecore.EPackage.Registry;
  * Util class for basic EMF.
  *
  * @author Eugen Neufeld
+ * @since 1.5
  *
  */
 public final class EMFUtils {

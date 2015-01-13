@@ -9,7 +9,7 @@
  * Contributors:
  * Edgar - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.common;
+package org.eclipse.emf.ecp.common.spi;
 
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -26,6 +26,7 @@ import java.util.Set;
  *            the type of the key
  * @param <V>
  *            the type of the value
+ * @since 1.5
  */
 public class BidirectionalMap<K, V> {
 

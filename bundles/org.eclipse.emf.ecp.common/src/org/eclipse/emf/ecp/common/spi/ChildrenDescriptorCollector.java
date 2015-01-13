@@ -9,7 +9,7 @@
  * Contributors:
  * david - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.common;
+package org.eclipse.emf.ecp.common.spi;
 
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Field;
@@ -26,6 +26,8 @@ import org.eclipse.emf.edit.provider.IChildCreationExtender;
 
 /**
  * A helper class which collects all the available descriptors for an {@link EObject}.
+ * 
+ * @since 1.5
  */
 public class ChildrenDescriptorCollector {
 
