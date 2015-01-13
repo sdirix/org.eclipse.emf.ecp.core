@@ -247,6 +247,10 @@
 		<module>../../bundles/org.eclipse.emf.ecp.view.table.validation</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.treemasterdetail.validation</module>
 		
+		<!-- Change Broker -->
+		<module>../../bundles/org.eclipse.emf.ecp.changebroker</module>
+		<module>../../bundles/org.eclipse.emf.ecp.changebroker.emfstore</module>
+		
 	</modules>
 
 	<build>

@@ -73,6 +73,8 @@
 		<module>../../tests/org.eclipse.emf.ecp.view.indexdmr.model.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.mappingdmr.model.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.table.model.test</module>
+		<module>../../tests/org.eclipse.emf.ecp.changebroker.test</module>
+		<module>../../tests/org.eclipse.emf.ecp.changebroker.emfstore.test</module>
 		
 	</modules>
 	
