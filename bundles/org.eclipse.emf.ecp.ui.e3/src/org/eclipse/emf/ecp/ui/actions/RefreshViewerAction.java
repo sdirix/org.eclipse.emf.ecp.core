@@ -12,6 +12,7 @@
 package org.eclipse.emf.ecp.ui.actions;
 
 import org.eclipse.emf.ecp.internal.ui.model.TreeContentProvider;
+import org.eclipse.emf.ecp.ui.e3.Messages;
 import org.eclipse.emf.ecp.ui.platform.Activator;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.viewers.IContentProvider;
@@ -27,8 +28,8 @@ public class RefreshViewerAction extends Action
 
 	public RefreshViewerAction(Viewer viewer)
 	{
-		super("Refresh", Activator.getImageDescriptor("icons/refresh.gif"));
-		setToolTipText("Refresh viewer content");
+		super(Messages.RefreshViewerAction_Title, Activator.getImageDescriptor("icons/refresh.gif")); //$NON-NLS-1$
+		setToolTipText(Messages.RefreshViewerAction_Tooltip);
 		this.viewer = viewer;
 	}
 

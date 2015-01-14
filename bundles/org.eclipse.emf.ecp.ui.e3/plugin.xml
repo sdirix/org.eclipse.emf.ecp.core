@@ -25,6 +25,10 @@
             id="org.eclipse.emf.ecp.ui.ECPProvidersView"
             name="%ECPProviderView">
       </view>
+      <category
+            id="org.eclipse.emf.ecp.ui"
+            name="ECP Views">
+      </category>
    </extension>
    <extension
          point="org.eclipse.ui.menus">
