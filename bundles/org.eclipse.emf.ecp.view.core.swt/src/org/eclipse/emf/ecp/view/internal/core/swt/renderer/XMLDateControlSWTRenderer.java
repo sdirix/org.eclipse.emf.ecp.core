@@ -17,6 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.regex.Pattern;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 
@@ -60,6 +61,9 @@ import org.eclipse.swt.widgets.Text;
  */
 @SuppressWarnings("restriction")
 public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
+
+	private static final DateFormat CHECK_FORMAT = new SimpleDateFormat("yyyy-MM-DD", Locale.ENGLISH); //$NON-NLS-1$
+	private static final Pattern CHECK_PATTERN = Pattern.compile("^\\d{4}-\\d{2}-\\d{2}$"); //$NON-NLS-1$
 
 	/**
 	 * Selection adapter for the set date button.
@@ -184,6 +188,10 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 				} else if (value == null) {
 					return value;
 				}
+				final String xmlFormat = CHECK_FORMAT.format(date);
+				if (!CHECK_PATTERN.matcher(xmlFormat).matches()) {
+					return revertToOldValue(value);
+				}
 				final String formatedDate = setupFormat().format(date);
 				text.setText(formatedDate);
 
@@ -193,7 +201,6 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 			} catch (final ParseException ex) {
 				return revertToOldValue(value);
 			}
-			// return null;
 		}
 
 		private Object revertToOldValue(final Object value) {
@@ -299,7 +306,9 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 	 * @return the {@link DateFormat}
 	 */
 	protected DateFormat setupFormat() {
-		return DateFormat.getDateInstance(DateFormat.MEDIUM, getLocale(getViewModelContext()));
+		final DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM, getLocale(getViewModelContext()));
+		df.setLenient(false);
+		return df;
 	}
 
 	private Locale getLocale(ViewModelContext viewModelContext) {

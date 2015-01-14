@@ -17,6 +17,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
+import java.util.regex.Pattern;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 
@@ -33,8 +35,6 @@ import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.FocusEvent;
-import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridLayout;
@@ -52,7 +52,10 @@ import org.eclipse.swt.widgets.Text;
  *
  *         private Button bDate;
  */
+@Deprecated
 public class XmlDateControlText extends AbstractTextControl {
+	private static final DateFormat CHECK_FORMAT = new SimpleDateFormat("yyyy-MM-DD", Locale.ENGLISH); //$NON-NLS-1$
+	private static final Pattern CHECK_PATTERN = Pattern.compile("^\\d{4}-\\d{2}-\\d{2}$"); //$NON-NLS-1$
 	private Button bDate;
 
 	@Override
@@ -88,7 +91,6 @@ public class XmlDateControlText extends AbstractTextControl {
 		GridLayoutFactory.fillDefaults().numColumns(2).applyTo(main);
 		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(main);
 		super.fillControlComposite(main);
-		// ((GridLayout) composite.getLayout()).numColumns = 2;
 		bDate = new Button(main, SWT.PUSH);
 		bDate.setImage(Activator.getImage("icons/date.png")); //$NON-NLS-1$
 		bDate.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_xmldate"); //$NON-NLS-1$
@@ -97,8 +99,6 @@ public class XmlDateControlText extends AbstractTextControl {
 
 	@Override
 	public Binding bindValue() {
-		// TODO: FocusOut doesn't seem to fire in case the same invalid text is
-		// entered twice
 		final IObservableValue value = SWTObservables.observeText(getText(), SWT.FocusOut);
 		final DateTargetToModelUpdateStrategy targetToModelUpdateStrategy = new DateTargetToModelUpdateStrategy();
 		final DateModelToTargetUpdateStrategy modelToTargetUpdateStrategy = new DateModelToTargetUpdateStrategy();
@@ -130,7 +130,16 @@ public class XmlDateControlText extends AbstractTextControl {
 			final Binding binding = getDataBindingContext().bindValue(dateObserver, getModelValue(),
 				new DateTargetToModelUpdateStrategy(), new DateModelToTargetUpdateStrategy());
 			binding.updateModelToTarget();
-			calendar.addSelectionListener(new SelectionAdapter() {
+
+			final Button okButton = new Button(dialog, SWT.PUSH);
+			okButton.setText(JFaceResources.getString(IDialogLabelKeys.OK_LABEL_KEY));
+			GridDataFactory.fillDefaults().align(SWT.END, SWT.CENTER).grab(false, false).applyTo(okButton);
+			okButton.addSelectionListener(new SelectionAdapter() {
+				/**
+				 * {@inheritDoc}
+				 *
+				 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
+				 */
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					binding.updateTargetToModel();
@@ -138,19 +147,7 @@ public class XmlDateControlText extends AbstractTextControl {
 					dialog.close();
 				}
 			});
-			calendar.addFocusListener(new FocusListener() {
 
-				@Override
-				public void focusLost(FocusEvent event) {
-					binding.updateTargetToModel();
-					binding.dispose();
-					dialog.close();
-				}
-
-				@Override
-				public void focusGained(FocusEvent event) {
-				}
-			});
 			dialog.pack();
 			dialog.layout();
 			dialog.setLocation(bDate.getParent().toDisplay(
@@ -198,6 +195,10 @@ public class XmlDateControlText extends AbstractTextControl {
 					date = (Date) value;
 				} else if (value == null) {
 					return value;
+				}
+				final String xmlFormat = CHECK_FORMAT.format(date);
+				if (!CHECK_PATTERN.matcher(xmlFormat).matches()) {
+					return revertToOldValue(value);
 				}
 				final String formatedDate = format.format(date);
 				getText().setText(formatedDate);
