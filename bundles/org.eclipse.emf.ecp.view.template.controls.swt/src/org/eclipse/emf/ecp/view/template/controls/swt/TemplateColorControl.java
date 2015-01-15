@@ -50,13 +50,13 @@ public class TemplateColorControl extends AbstractTextControl {
 
 		final Label color = new Label(main, SWT.BORDER);
 		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.FILL).applyTo(color);
-		color.setText("Select Color");
+		color.setText(Messages.TemplateColorControl_SelectColor);
 		color.addMouseListener(new MouseListener() {
 
 			@Override
 			public void mouseUp(MouseEvent e) {
 				final ColorDialog cd = new ColorDialog(composite.getShell());
-				cd.setText("Select Color");
+				cd.setText(Messages.TemplateColorControl_SelectColor);
 				cd.setRGB(colors.get(getDomainModelReference().getIterator().next()).getRGB());
 				final RGB rgb = cd.open();
 				if (rgb == null) {
@@ -125,7 +125,7 @@ public class TemplateColorControl extends AbstractTextControl {
 				return colors.get(colorHex);
 			}
 		});
-		color.setToolTipText("Press to select the color");
+		color.setToolTipText(Messages.TemplateColorControl_PressToSelectColor);
 	}
 
 	@Override
@@ -135,12 +135,12 @@ public class TemplateColorControl extends AbstractTextControl {
 
 	@Override
 	protected String getUnsetLabelText() {
-		return "No Color set";
+		return Messages.TemplateColorControl_NoColorSet;
 	}
 
 	@Override
 	protected String getUnsetButtonTooltip() {
-		return "Unset Color";
+		return Messages.TemplateColorControl_UnsetColor;
 	}
 
 	/**

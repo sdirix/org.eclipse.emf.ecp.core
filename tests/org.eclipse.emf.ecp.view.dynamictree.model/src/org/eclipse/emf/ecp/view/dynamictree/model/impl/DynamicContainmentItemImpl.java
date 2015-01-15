@@ -119,6 +119,7 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 
 	/**
 	 * <!-- begin-user-doc -->
+	 * .
 	 * <!-- end-user-doc -->
 	 *
 	 * @generated

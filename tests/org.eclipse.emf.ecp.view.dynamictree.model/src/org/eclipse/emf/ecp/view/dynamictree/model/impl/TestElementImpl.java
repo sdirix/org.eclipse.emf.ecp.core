@@ -283,6 +283,7 @@ public class TestElementImpl extends EObjectImpl implements TestElement
 
 	/**
 	 * <!-- begin-user-doc -->
+	 * .
 	 * <!-- end-user-doc -->
 	 *
 	 * @generated

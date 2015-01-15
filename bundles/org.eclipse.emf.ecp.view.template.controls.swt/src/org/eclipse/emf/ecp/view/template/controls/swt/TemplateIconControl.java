@@ -50,7 +50,7 @@ public class TemplateIconControl extends AbstractTextControl {
 		super.fillControlComposite(main);
 
 		final Button selectExternalFile = new Button(main, SWT.PUSH);
-		selectExternalFile.setText("External File");
+		selectExternalFile.setText(Messages.TemplateIconControl_ExternalFile);
 
 		selectExternalFile.addSelectionListener(new SelectionAdapter() {
 
@@ -71,7 +71,7 @@ public class TemplateIconControl extends AbstractTextControl {
 
 		});
 		final Button selectFileFromPlugin = new Button(main, SWT.PUSH);
-		selectFileFromPlugin.setText("Plugin File");
+		selectFileFromPlugin.setText(Messages.TemplateIconControl_PluginFile);
 
 		selectFileFromPlugin.addSelectionListener(new SelectFileFromPluginAdapter(composite));
 	}
@@ -83,12 +83,12 @@ public class TemplateIconControl extends AbstractTextControl {
 
 	@Override
 	protected String getUnsetLabelText() {
-		return "No Icon URL set";
+		return Messages.TemplateIconControl_NoIconSet;
 	}
 
 	@Override
 	protected String getUnsetButtonTooltip() {
-		return "Unset Icon URL";
+		return Messages.TemplateIconControl_UnsetIcon;
 	}
 
 	/**
@@ -136,12 +136,12 @@ public class TemplateIconControl extends AbstractTextControl {
 				return;
 			}
 			final String file = (String) selectedResult;
-			if (file.endsWith("png") || file.endsWith("gif") || file.endsWith("jpg")) {
+			if (file.endsWith("png") || file.endsWith("gif") || file.endsWith("jpg")) { //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				getDomainModelReference()
 					.getIterator()
 					.next()
 					.set(
-						"platform:/plugin/" + iconTreeContentProvider.getLastBundle().getSymbolicName() + "/"
+						"platform:/plugin/" + iconTreeContentProvider.getLastBundle().getSymbolicName() + "/" //$NON-NLS-1$ //$NON-NLS-2$
 							+ file);
 			}
 		}
@@ -156,10 +156,6 @@ public class TemplateIconControl extends AbstractTextControl {
 	private class IconTreeContentProvider implements ITreeContentProvider {
 
 		private Bundle lastBundle;
-
-		/**
-		 * @return the lastBundle
-		 */
 
 		@Override
 		public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
@@ -181,10 +177,10 @@ public class TemplateIconControl extends AbstractTextControl {
 			}
 			if (Bundle.class.isInstance(element)) {
 				final Bundle bundle = (Bundle) element;
-				return bundle.getEntryPaths("/").hasMoreElements();
+				return bundle.getEntryPaths("/").hasMoreElements(); //$NON-NLS-1$
 			}
 			if (String.class.isInstance(element) && lastBundle != null) {
-				if (!((String) element).endsWith("/")) {
+				if (!((String) element).endsWith("/")) { //$NON-NLS-1$
 					return false;
 				}
 				return lastBundle.getEntryPaths((String) element).hasMoreElements();
@@ -211,7 +207,7 @@ public class TemplateIconControl extends AbstractTextControl {
 			if (Bundle.class.isInstance(parentElement)) {
 				lastBundle = (Bundle) parentElement;
 				final Set<String> result = new LinkedHashSet<String>();
-				final Enumeration<String> resources = lastBundle.getEntryPaths("/");
+				final Enumeration<String> resources = lastBundle.getEntryPaths("/"); //$NON-NLS-1$
 				while (resources.hasMoreElements()) {
 					result.add(resources.nextElement());
 				}

@@ -122,6 +122,7 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 
 	/**
 	 * <!-- begin-user-doc -->
+	 * .
 	 * <!-- end-user-doc -->
 	 *
 	 * @generated
