@@ -202,7 +202,9 @@ public class TreeMasterDetailValidationInitiator implements
 
 			final VView view = ViewProviderHelper.getView(manipulateSelection, context);
 
-			viewModelContext.getChildContext(manipulateSelection, treeMasterDetail, view);
+			final ViewModelContext childContext = viewModelContext.getChildContext(manipulateSelection,
+				treeMasterDetail, view);
+			childContext.addContextUser(this);
 		}
 	}
 
@@ -223,7 +225,9 @@ public class TreeMasterDetailValidationInitiator implements
 		if (view == null || view.getChildren().isEmpty()) {
 			view = ViewProviderHelper.getView((EObject) manipulateSelection, context);
 		}
-		viewModelContext.getChildContext((EObject) manipulateSelection, treeMasterDetail, view);
+		final ViewModelContext childContext = viewModelContext.getChildContext((EObject) manipulateSelection,
+			treeMasterDetail, view);
+		childContext.addContextUser(this);
 	}
 
 	private Set<Object> getAllChildren(Object parent, AdapterFactoryContentProvider adapterFactoryContentProvider) {
