@@ -56,7 +56,6 @@ import org.junit.Test;
  * @author jfaltermeier
  *
  */
-@SuppressWarnings("restriction")
 public class UnsetService_Test {
 
 	private Fan fan;

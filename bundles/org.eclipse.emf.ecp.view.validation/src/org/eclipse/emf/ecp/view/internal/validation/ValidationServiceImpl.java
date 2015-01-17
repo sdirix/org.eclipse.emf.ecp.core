@@ -65,7 +65,6 @@ import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
  * @author Eugen Neufeld
  *
  */
-@SuppressWarnings("restriction")
 public class ValidationServiceImpl implements ValidationService {
 
 	/**
