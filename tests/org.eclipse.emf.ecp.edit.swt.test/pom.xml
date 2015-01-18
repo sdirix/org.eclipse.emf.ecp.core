@@ -13,8 +13,9 @@
 	<artifactId>org.eclipse.emf.ecp.edit.swt.test</artifactId>
 	<version>1.5.0-SNAPSHOT</version>
 	<packaging>eclipse-test-plugin</packaging>
-	
-	<!-- When signing bundles we get a security exception using maven-surefire. use tycho-surefire instead -->
+
+	<!-- When signing bundles we get a security exception using maven-surefire. 
+		use tycho-surefire instead -->
 	<profiles>
 		<profile>
 			<id>build-server</id>
@@ -32,17 +33,17 @@
 									<skipTests>true</skipTests>
 									<testClassesDirectory>${project.build.outputDirectory}</testClassesDirectory>
 									<includes>
-						            	<include>**/*_Test.java</include>
+										<include>**/*_Test.java</include>
 									</includes>
 									<testFailureIgnore>true</testFailureIgnore>
-						        </configuration>
+								</configuration>
 								<goals>
 									<goal>test</goal>
 								</goals>
 							</execution>
 						</executions>
 					</plugin>
-					
+
 					<plugin>
 						<groupId>org.eclipse.tycho</groupId>
 						<artifactId>tycho-surefire-plugin</artifactId>
@@ -59,5 +60,19 @@
 			</build>
 		</profile>
 	</profiles>
+
+    <!-- skip tycho surefire which is automatically started by using eclipse-test-plugin packaging type -->
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-surefire-plugin</artifactId>
+				<version>${tycho-version}</version>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 
 </project>
