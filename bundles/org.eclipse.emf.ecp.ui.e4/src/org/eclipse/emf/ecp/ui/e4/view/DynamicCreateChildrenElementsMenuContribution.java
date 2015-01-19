@@ -43,12 +43,11 @@ import org.eclipse.jface.viewers.StructuredSelection;
  * @author krusche
  *
  */
-@SuppressWarnings("restriction")
 public class DynamicCreateChildrenElementsMenuContribution {
 	@Inject
 	private ESelectionService selectionService;
 
-	public List<?> getSelectedObjects() {
+	private List<?> getSelectedObjects() {
 		final Object sel = selectionService.getSelection();
 		if (sel != null) {
 			if (sel instanceof Collection) {
@@ -67,6 +66,11 @@ public class DynamicCreateChildrenElementsMenuContribution {
 		return null;
 	}
 
+	/**
+	 * Adds the child create items to the popup menue.
+	 *
+	 * @param items the list to add the items to
+	 */
 	@AboutToShow
 	public void aboutToShow(List<MMenuElement> items) {
 		final List<?> selectedObjects = getSelectedObjects();
@@ -120,6 +124,12 @@ public class DynamicCreateChildrenElementsMenuContribution {
 		}
 	}
 
+	/**
+	 * Action to create a new {@link EObject} as child.
+	 *
+	 * @author Jonas
+	 *
+	 */
 	private final class CustomCreateChildAction extends CreateChildAction {
 
 		private CustomCreateChildAction(EditingDomain editingDomain,

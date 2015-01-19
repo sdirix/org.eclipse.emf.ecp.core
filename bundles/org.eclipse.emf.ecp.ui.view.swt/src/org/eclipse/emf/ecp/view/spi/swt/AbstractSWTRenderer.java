@@ -356,7 +356,7 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 	}
 
 	/**
-	 * Returns the default font name on the system.
+	 * @return String the default font name on the system.
 	 *
 	 * @since 1.5
 	 */
