@@ -54,6 +54,7 @@
 								<include>**/*_Test.java</include>
 							</includes>
 							<testFailureIgnore>true</testFailureIgnore>
+							<skip>false</skip>
 						</configuration>
 					</plugin>
 				</plugins>
