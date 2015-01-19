@@ -11,22 +11,17 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.changebroker.spi;
 
-import org.eclipse.emf.common.notify.Notification;
-
 /**
- * A EMF Observer has a handle notification method which receives a {@link org.eclipse.emf.common.notify.Notification
- * Notification} from the {@link ChangeBroker}. As opposed to the {@link ReadOnlyEMFObserver} it is allowed to make
- * changes on the EMF model and therefore to trigger further notifications.
+ * A Read Only EMF Observer has a handle notification method which receives a
+ * {@link org.eclipse.emf.common.notify.Notification
+ * Notification} from the {@link ChangeBroker}. As opposed to regular {@link EMFObserver EMFObservers} it is <b>not</b>
+ * allowed to make
+ * changes on the EMF model and therefore to trigger further notifications. This is not enforced but will lead to
+ * unexpected behavior or circular updates between observers.
  *
  * @author jfaltermeier
  *
  */
-public interface EMFObserver {
+public interface ReadOnlyEMFObserver extends EMFObserver {
 
-	/**
-	 * Called whenever a new {@link Notification} is provided to the {@link ChangeBroker}.
-	 *
-	 * @param notification the notification
-	 */
-	void handleNotification(Notification notification);
 }

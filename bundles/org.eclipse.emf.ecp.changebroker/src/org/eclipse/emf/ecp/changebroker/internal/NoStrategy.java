@@ -30,7 +30,7 @@ public class NoStrategy implements Strategy {
 	 *
 	 * @param observer the observer
 	 */
-	void register(EMFObserver observer) {
+	public void register(EMFObserver observer) {
 		registry.add(observer);
 	}
 
@@ -45,9 +45,10 @@ public class NoStrategy implements Strategy {
 	}
 
 	/**
+	 *
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.changebroker.internal.Strategy#deregister(org.eclipse.emf.ecp.changebroker.spi.EMFObserver)
+	 * @see org.eclipse.emf.ecp.changebroker.internal.Strategy#deregister(EMFObserver)
 	 */
 	@Override
 	public void deregister(EMFObserver observer) {

@@ -31,11 +31,10 @@ public class ContainingEClassStrategy implements Strategy {
 
 	/**
 	 * Registers an observer.
-	 *
-	 * @param eClass the containing eclass
 	 * @param observer the observer
+	 * @param eClass the containing eclass
 	 */
-	void register(EClass eClass, EMFObserver observer) {
+	public void register(EMFObserver observer, EClass eClass) {
 		if (!registry.containsKey(eClass)) {
 			registry.put(eClass, new LinkedHashSet<EMFObserver>());
 		}
@@ -75,9 +74,10 @@ public class ContainingEClassStrategy implements Strategy {
 	}
 
 	/**
+	 *
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.changebroker.internal.Strategy#deregister(org.eclipse.emf.ecp.changebroker.spi.EMFObserver)
+	 * @see org.eclipse.emf.ecp.changebroker.internal.Strategy#deregister(EMFObserver)
 	 */
 	@Override
 	public void deregister(EMFObserver observer) {
@@ -96,7 +96,7 @@ public class ContainingEClassStrategy implements Strategy {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.changebroker.internal.Strategy#getAllObservers()
 	 */
 	@Override

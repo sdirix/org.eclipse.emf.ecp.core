@@ -23,6 +23,7 @@ import org.eclipse.emf.ecp.changebroker.spi.ChangeBroker;
 import org.eclipse.emf.ecp.changebroker.spi.EMFObserver;
 import org.eclipse.emf.ecp.changebroker.spi.NotificationProvider;
 import org.eclipse.emf.ecp.changebroker.spi.NotificationReceiver;
+import org.eclipse.emf.ecp.changebroker.spi.ReadOnlyEMFObserver;
 
 /**
  *
@@ -37,8 +38,9 @@ import org.eclipse.emf.ecp.changebroker.spi.NotificationReceiver;
 public class ChangeBrokerImpl implements ChangeBroker, NotificationReceiver {
 
 	private final Set<NotificationProvider> providers = new CopyOnWriteArraySet<NotificationProvider>();
-	private boolean stopNotification;
-	private boolean notificationRunning;
+	private boolean stopNotifyingEMFObservers;
+
+	private final Set<Notification> runningNotifications = new LinkedHashSet<Notification>();
 
 	private final NoStrategy noStrategy = new NoStrategy();
 	private final EClassStrategy eClassStrategy = new EClassStrategy();
@@ -46,11 +48,19 @@ public class ChangeBrokerImpl implements ChangeBroker, NotificationReceiver {
 	private final FeatureStrategy featureStrategy = new FeatureStrategy();
 	private final Strategy[] strategies;
 
+	private final NoStrategy readOnlyNoStrategy = new NoStrategy();
+	private final EClassStrategy readOnlyEClassStrategy = new EClassStrategy();
+	private final ContainingEClassStrategy readOnlyContainingEClassStrategy = new ContainingEClassStrategy();
+	private final FeatureStrategy readOnlyFeatureStrategy = new FeatureStrategy();
+	private final Strategy[] readOnlyStrategies;
+
 	/**
 	 * Default constructor.
 	 */
 	public ChangeBrokerImpl() {
 		strategies = new Strategy[] { noStrategy, eClassStrategy, containingEClassStrategy, featureStrategy };
+		readOnlyStrategies = new Strategy[] { readOnlyNoStrategy, readOnlyEClassStrategy,
+			readOnlyContainingEClassStrategy, readOnlyFeatureStrategy };
 	}
 
 	/**
@@ -82,21 +92,32 @@ public class ChangeBrokerImpl implements ChangeBroker, NotificationReceiver {
 	 */
 	@Override
 	public void notify(Notification notification) {
-		if (stopNotification) {
-			return;
+		final boolean includeEMFObservers = startNotify(notification);
+
+		final Set<EMFObserver> observers = new LinkedHashSet<EMFObserver>();
+		for (final Strategy strategy : readOnlyStrategies) {
+			observers.addAll(strategy.getObservers(notification));
 		}
-		if (notificationRunning) {
-			return;
+		if (includeEMFObservers) {
+			for (final Strategy strategy : strategies) {
+				observers.addAll(strategy.getObservers(notification));
+			}
 		}
-		notificationRunning = true;
-		final Set<EMFObserver> receivers = new LinkedHashSet<EMFObserver>();
-		for (final Strategy strategy : strategies) {
-			receivers.addAll(strategy.getObservers(notification));
+		for (final EMFObserver observer : observers) {
+			observer.handleNotification(notification);
 		}
-		for (final EMFObserver receiver : receivers) {
-			receiver.handleNotification(notification);
-		}
-		notificationRunning = false;
+
+		endNotify(notification);
+	}
+
+	private synchronized boolean startNotify(Notification notification) {
+		final boolean includeEMFObservers = !stopNotifyingEMFObservers && runningNotifications.isEmpty();
+		runningNotifications.add(notification);
+		return includeEMFObservers;
+	}
+
+	private synchronized void endNotify(Notification notification) {
+		runningNotifications.remove(notification);
 	}
 
 	/**
@@ -105,8 +126,12 @@ public class ChangeBrokerImpl implements ChangeBroker, NotificationReceiver {
 	 * @see org.eclipse.emf.ecp.changebroker.spi.ChangeBroker#subscribe(org.eclipse.emf.ecp.changebroker.spi.EMFObserver)
 	 */
 	@Override
-	public void subscribe(EMFObserver receiver) {
-		noStrategy.register(receiver);
+	public void subscribe(EMFObserver observer) {
+		if (ReadOnlyEMFObserver.class.isInstance(observer)) {
+			readOnlyNoStrategy.register(observer);
+		} else {
+			noStrategy.register(observer);
+		}
 	}
 
 	/**
@@ -117,7 +142,11 @@ public class ChangeBrokerImpl implements ChangeBroker, NotificationReceiver {
 	 */
 	@Override
 	public void subscribeToEClass(EMFObserver observer, EClass eClass) {
-		eClassStrategy.register(eClass, observer);
+		if (ReadOnlyEMFObserver.class.isInstance(observer)) {
+			readOnlyEClassStrategy.register(observer, eClass);
+		} else {
+			eClassStrategy.register(observer, eClass);
+		}
 	}
 
 	/**
@@ -128,7 +157,11 @@ public class ChangeBrokerImpl implements ChangeBroker, NotificationReceiver {
 	 */
 	@Override
 	public void subscribeToTree(EMFObserver observer, EClass eClass) {
-		containingEClassStrategy.register(eClass, observer);
+		if (ReadOnlyEMFObserver.class.isInstance(observer)) {
+			readOnlyContainingEClassStrategy.register(observer, eClass);
+		} else {
+			containingEClassStrategy.register(observer, eClass);
+		}
 	}
 
 	/**
@@ -139,10 +172,15 @@ public class ChangeBrokerImpl implements ChangeBroker, NotificationReceiver {
 	 */
 	@Override
 	public void subscribeToFeature(EMFObserver observer, EStructuralFeature feature) {
-		featureStrategy.register(feature, observer);
+		if (ReadOnlyEMFObserver.class.isInstance(observer)) {
+			readOnlyFeatureStrategy.register(observer, feature);
+		} else {
+			featureStrategy.register(observer, feature);
+		}
 	}
 
 	/**
+	 *
 	 * {@inheritDoc}
 	 *
 	 * @see org.eclipse.emf.ecp.changebroker.spi.ChangeBroker#unsubsribe(org.eclipse.emf.ecp.changebroker.spi.EMFObserver)
@@ -155,30 +193,13 @@ public class ChangeBrokerImpl implements ChangeBroker, NotificationReceiver {
 	}
 
 	/**
-	 * For testing purposes.
-	 *
-	 * @return all registered providers
-	 */
-	public Set<NotificationProvider> getNotificationProviders() {
-		return new LinkedHashSet<NotificationProvider>(providers);
-	}
-
-	public Set<EMFObserver> getRegisteredObservers() {
-		final LinkedHashSet<EMFObserver> hashSet = new LinkedHashSet<EMFObserver>();
-		for (final Strategy strategy : strategies) {
-			hashSet.addAll(strategy.getAllObservers());
-		}
-		return hashSet;
-	}
-
-	/**
 	 * {@inheritDoc}
 	 *
 	 * @see org.eclipse.emf.ecp.changebroker.spi.ChangeBroker#stopNotification()
 	 */
 	@Override
 	public void stopNotification() {
-		stopNotification = true;
+		stopNotifyingEMFObservers = true;
 	}
 
 	/**
@@ -188,8 +209,32 @@ public class ChangeBrokerImpl implements ChangeBroker, NotificationReceiver {
 	 */
 	@Override
 	public void continueNotification() {
-		stopNotification = false;
+		stopNotifyingEMFObservers = false;
+	}
 
+	/**
+	 * For testing purposes.
+	 *
+	 * @return all registered providers
+	 */
+	public Set<NotificationProvider> getNotificationProviders() {
+		return new LinkedHashSet<NotificationProvider>(providers);
+	}
+
+	/**
+	 * For testing purposes.
+	 *
+	 * @return all registered observers
+	 */
+	public Set<EMFObserver> getRegisteredObservers() {
+		final LinkedHashSet<EMFObserver> hashSet = new LinkedHashSet<EMFObserver>();
+		for (final Strategy strategy : strategies) {
+			hashSet.addAll(strategy.getAllObservers());
+		}
+		for (final Strategy strategy : readOnlyStrategies) {
+			hashSet.addAll(strategy.getAllObservers());
+		}
+		return hashSet;
 	}
 
 }

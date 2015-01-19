@@ -32,6 +32,11 @@ public interface Strategy {
 	 */
 	Set<EMFObserver> getObservers(Notification notification);
 
+	/**
+	 * Returns all observers managed by this strategy.
+	 *
+	 * @return all observers
+	 */
 	Set<EMFObserver> getAllObservers();
 
 	/**

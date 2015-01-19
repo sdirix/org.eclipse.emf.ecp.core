@@ -16,9 +16,23 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 /**
- * A Change Broker maintains sets of {@link EMFObserver EMFObservers}. Based on incoming notifications it forwards the
- * notification to the receivers based on strategies. All notifications that arrive while a receiver is notified will be
- * ignored.
+ * <p>
+ * A Change Broker maintains sets of {@link EMFObserver observers}. Based on incoming notifications it forwards the
+ * notification to the observers based on strategies.
+ * </p>
+ * <p>
+ * There are two kinds of observers: regular {@link EMFObserver EMFObservers} and {@link ReadOnlyEMFObserver
+ * ReadOnlyEMFObservers}.
+ * </p>
+ * <p>
+ * EMFObservers may change the EMF model and therefore trigger further notifications. To prevent circular updates
+ * between EMFObservers, notifications that arrive while the
+ * {@link EMFObserver#handleNotification(org.eclipse.emf.common.notify.Notification) handleNotification} method is
+ * called, will not be forwarded to non ReadOnlyEMFObservers.
+ * </p>
+ * <p>
+ * ReadOnlyEMFObservers are not allowed to change the EMF model. They will receive all notifications at any time.
+ * </p>
  *
  * @author Jonas
  * @author jfaltermeier
@@ -63,14 +77,21 @@ public interface ChangeBroker {
 	void subscribeToFeature(EMFObserver observer, EStructuralFeature feature);
 
 	/**
-	 * Removes a {@link EMFObserver}. Does nothing if receiver is not registered.
+	 * Removes an observer. Does nothing if receiver is not registered.
 	 *
 	 * @param observer the receiver
 	 */
 	void unsubsribe(EMFObserver observer);
 
+	/**
+	 * Stops notifying all {@link EMFObserver EMFObservers}. {@link ReadOnlyEMFObserver ReadOnlyEMFObservers} will still
+	 * be notified.
+	 */
 	void stopNotification();
 
+	/**
+	 * Notifying the {@link EMFObserver EMFObservers} is started again.
+	 */
 	void continueNotification();
 
 }

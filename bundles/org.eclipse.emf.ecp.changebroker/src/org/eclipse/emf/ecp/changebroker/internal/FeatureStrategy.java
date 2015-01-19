@@ -32,11 +32,10 @@ public class FeatureStrategy implements Strategy {
 
 	/**
 	 * Registers an observer.
-	 *
-	 * @param feature the feature
 	 * @param observer the observer
+	 * @param feature the feature
 	 */
-	void register(EStructuralFeature feature, EMFObserver observer) {
+	public void register(EMFObserver observer, EStructuralFeature feature) {
 		if (!registry.containsKey(feature)) {
 			registry.put(feature, new LinkedHashSet<EMFObserver>());
 		}
@@ -60,13 +59,13 @@ public class FeatureStrategy implements Strategy {
 			return Collections.emptySet();
 		}
 		return new LinkedHashSet<EMFObserver>(registry.get(feature));
-
 	}
 
 	/**
+	 *
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.changebroker.internal.Strategy#deregister(org.eclipse.emf.ecp.changebroker.spi.EMFObserver)
+	 * @see org.eclipse.emf.ecp.changebroker.internal.Strategy#deregister(EMFObserver)
 	 */
 	@Override
 	public void deregister(EMFObserver observer) {

@@ -11,17 +11,21 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.changebroker.test;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import java.math.BigInteger;
+import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecp.changebroker.internal.ChangeBrokerImpl;
 import org.eclipse.emf.ecp.changebroker.spi.EMFObserver;
+import org.eclipse.emf.ecp.changebroker.spi.NotificationProvider;
+import org.eclipse.emf.ecp.changebroker.spi.ReadOnlyEMFObserver;
 import org.eclipse.emf.emfstore.bowling.BowlingFactory;
 import org.eclipse.emf.emfstore.bowling.BowlingPackage;
 import org.eclipse.emf.emfstore.bowling.Matchup;
@@ -49,30 +53,7 @@ public class ChangeBroker_Test {
 	}
 
 	@Test
-	public void testNotify() throws InterruptedException {
-		// setup
-		final CountDownLatch latch = new CountDownLatch(1);
-		final Matchup matchup = BowlingFactory.eINSTANCE.createMatchup();
-		broker.subscribe(new EMFObserver() {
-
-			@Override
-			public void handleNotification(Notification notification) {
-				assertSame(Notification.ADD, notification.getEventType());
-				assertSame(BowlingPackage.eINSTANCE.getTournament_Matchups(), notification.getFeature());
-				assertSame(matchup, notification.getNewValue());
-				latch.countDown();
-			}
-		});
-
-		// act
-		tournament.getMatchups().add(matchup);
-
-		// assert
-		assertTrue("Notify was not called", latch.await(1, TimeUnit.MILLISECONDS));
-	}
-
-	@Test
-	public void testMultipleReceivers() throws InterruptedException {
+	public void testMultipleEMFObserver() throws InterruptedException {
 		// setup
 		final CountDownLatch latch1 = new CountDownLatch(1);
 		final CountDownLatch latch2 = new CountDownLatch(1);
@@ -101,7 +82,7 @@ public class ChangeBroker_Test {
 	}
 
 	@Test
-	public void testRemoveProvider() throws InterruptedException {
+	public void testRemoveObserver() throws InterruptedException {
 		// setup
 		final CountDownLatch latch = new CountDownLatch(1);
 		final Matchup matchup = BowlingFactory.eINSTANCE.createMatchup();
@@ -122,7 +103,7 @@ public class ChangeBroker_Test {
 	}
 
 	@Test
-	public void testAddSameProviderTwiceAndRemove() throws InterruptedException {
+	public void testAddSameEMFObserverTwiceAndRemove() throws InterruptedException {
 		// setup
 		final CountDownLatch latch = new CountDownLatch(1);
 		final Matchup matchup = BowlingFactory.eINSTANCE.createMatchup();
@@ -144,7 +125,7 @@ public class ChangeBroker_Test {
 	}
 
 	@Test
-	public void testRemoveUnregisteredProvider() throws InterruptedException {
+	public void testRemoveUnregisteredObserver() throws InterruptedException {
 		// setup
 		final CountDownLatch latch = new CountDownLatch(1);
 		final Matchup matchup = BowlingFactory.eINSTANCE.createMatchup();
@@ -166,7 +147,30 @@ public class ChangeBroker_Test {
 	}
 
 	@Test
-	public void testEClassStrategy() throws InterruptedException {
+	public void testEMFObserverNoStrategy() throws InterruptedException {
+		// setup
+		final CountDownLatch latch = new CountDownLatch(1);
+		final Matchup matchup = BowlingFactory.eINSTANCE.createMatchup();
+		broker.subscribe(new EMFObserver() {
+
+			@Override
+			public void handleNotification(Notification notification) {
+				assertSame(Notification.ADD, notification.getEventType());
+				assertSame(BowlingPackage.eINSTANCE.getTournament_Matchups(), notification.getFeature());
+				assertSame(matchup, notification.getNewValue());
+				latch.countDown();
+			}
+		});
+
+		// act
+		tournament.getMatchups().add(matchup);
+
+		// assert
+		assertTrue("Notify was not called", latch.await(1, TimeUnit.MILLISECONDS));
+	}
+
+	@Test
+	public void testEMFObserverEClassStrategy() throws InterruptedException {
 		// setup
 		final CountDownLatch latch1 = new CountDownLatch(1);
 		final CountDownLatch latch2 = new CountDownLatch(1);
@@ -194,7 +198,7 @@ public class ChangeBroker_Test {
 	}
 
 	@Test
-	public void testContainingEClassStrategy() throws InterruptedException {
+	public void testEMFObserverContainingEClassStrategy() throws InterruptedException {
 		// setup
 		final CountDownLatch latch1 = new CountDownLatch(1);
 		final CountDownLatch latch2 = new CountDownLatch(1);
@@ -222,7 +226,7 @@ public class ChangeBroker_Test {
 	}
 
 	@Test
-	public void testIgnoreNotifactionsByEMFObserver() throws InterruptedException {
+	public void testIgnoreNotifactionsByChangesFromEMFObserver() throws InterruptedException {
 		// setup
 		final CountDownLatch latch1 = new CountDownLatch(1);
 		final CountDownLatch latch2 = new CountDownLatch(1);
@@ -255,7 +259,52 @@ public class ChangeBroker_Test {
 	}
 
 	@Test
-	public void testFeatureStrategy() throws InterruptedException {
+	public void testIgnoreNotifactionsByCallingStopNotification() throws InterruptedException {
+		// setup
+		final CountDownLatch latch1 = new CountDownLatch(1);
+		broker.subscribeToEClass(new EMFObserver() {
+
+			@Override
+			public void handleNotification(Notification notification) {
+				latch1.countDown();
+			}
+		}, BowlingPackage.eINSTANCE.getTournament());
+		broker.stopNotification();
+
+		// act
+		tournament.setType(TournamentType.PRO);
+
+		// assert
+		assertFalse("Notify was called although it shouln't be called", latch1.await(1, TimeUnit.MILLISECONDS));
+	}
+
+	@Test
+	public void testEMFObserverContinueNotification() throws InterruptedException {
+		// setup
+		final CountDownLatch latch1 = new CountDownLatch(1);
+		broker.subscribeToEClass(new EMFObserver() {
+
+			@Override
+			public void handleNotification(Notification notification) {
+				latch1.countDown();
+			}
+		}, BowlingPackage.eINSTANCE.getTournament());
+
+		broker.stopNotification();
+
+		tournament.setType(TournamentType.PRO);
+		assertFalse("Notify was called although it shouln't be called", latch1.await(1, TimeUnit.MILLISECONDS));
+
+		// act
+		broker.continueNotification();
+		tournament.setType(TournamentType.AMATEUR);
+
+		// assert
+		assertTrue("Notify was not called", latch1.await(1, TimeUnit.MILLISECONDS));
+	}
+
+	@Test
+	public void testEMFObserverFeatureStrategy() throws InterruptedException {
 		// setup
 		final CountDownLatch latch1 = new CountDownLatch(1);
 		final CountDownLatch latch2 = new CountDownLatch(1);
@@ -368,5 +417,206 @@ public class ChangeBroker_Test {
 
 		// assert
 		assertFalse("Notify was called although it shouln't be called", latch1.await(1, TimeUnit.MILLISECONDS));
+	}
+
+	@Test
+	public void testReadOnlyEMFObserverNoStrategy() throws InterruptedException {
+		// setup
+		final CountDownLatch latch = new CountDownLatch(1);
+		final Matchup matchup = BowlingFactory.eINSTANCE.createMatchup();
+		broker.subscribe(new ReadOnlyEMFObserver() {
+
+			@Override
+			public void handleNotification(Notification notification) {
+				assertSame(Notification.ADD, notification.getEventType());
+				assertSame(BowlingPackage.eINSTANCE.getTournament_Matchups(), notification.getFeature());
+				assertSame(matchup, notification.getNewValue());
+				latch.countDown();
+			}
+		});
+
+		// act
+		tournament.getMatchups().add(matchup);
+
+		// assert
+		assertTrue("Notify was not called", latch.await(1, TimeUnit.MILLISECONDS));
+	}
+
+	@Test
+	public void testReadOnlyEMFObserverEClassStrategy() throws InterruptedException {
+		// setup
+		final CountDownLatch latch1 = new CountDownLatch(1);
+		final CountDownLatch latch2 = new CountDownLatch(1);
+		final Matchup matchup = BowlingFactory.eINSTANCE.createMatchup();
+		tournament.getMatchups().add(matchup);
+		broker.subscribeToEClass(new ReadOnlyEMFObserver() {
+
+			@Override
+			public void handleNotification(Notification notification) {
+				if (notification.getNotifier() == tournament) {
+					latch1.countDown();
+				} else if (notification.getNotifier() == matchup) {
+					latch2.countDown();
+				}
+			}
+		}, BowlingPackage.eINSTANCE.getTournament());
+
+		// act&assert
+		tournament.setType(TournamentType.PRO);
+		assertTrue(latch1.await(1, TimeUnit.MILLISECONDS));
+
+		// act&assert
+		matchup.setNrSpectators(new BigInteger("1"));
+		assertFalse("Notify was called although it shouln't be called", latch2.await(1, TimeUnit.MILLISECONDS));
+	}
+
+	@Test
+	public void testReadOnlyEMFObserverContainingEClassStrategy() throws InterruptedException {
+		// setup
+		final CountDownLatch latch1 = new CountDownLatch(1);
+		final CountDownLatch latch2 = new CountDownLatch(1);
+		final Matchup matchup = BowlingFactory.eINSTANCE.createMatchup();
+		tournament.getMatchups().add(matchup);
+		broker.subscribeToTree(new ReadOnlyEMFObserver() {
+
+			@Override
+			public void handleNotification(Notification notification) {
+				if (notification.getNotifier() == tournament) {
+					latch1.countDown();
+				} else if (notification.getNotifier() == matchup) {
+					latch2.countDown();
+				}
+			}
+		}, BowlingPackage.eINSTANCE.getTournament());
+
+		// act&assert
+		tournament.setType(TournamentType.PRO);
+		assertTrue("Notify was not called", latch1.await(1, TimeUnit.MILLISECONDS));
+
+		// act&assert
+		matchup.setNrSpectators(new BigInteger("1"));
+		assertTrue("Notify was not called", latch2.await(1, TimeUnit.MILLISECONDS));
+	}
+
+	@Test
+	public void testReadOnlyEMFObserverFeatureStrategy() throws InterruptedException {
+		// setup
+		final CountDownLatch latch1 = new CountDownLatch(1);
+		final CountDownLatch latch2 = new CountDownLatch(1);
+		final Matchup matchup = BowlingFactory.eINSTANCE.createMatchup();
+
+		broker.subscribeToFeature(new ReadOnlyEMFObserver() {
+
+			@Override
+			public void handleNotification(Notification notification) {
+				if (notification.getFeature() == BowlingPackage.eINSTANCE.getTournament_Type()) {
+					latch1.countDown();
+				} else if (notification.getFeature() == BowlingPackage.eINSTANCE.getTournament_Matchups()) {
+					latch2.countDown();
+				}
+			}
+		}, BowlingPackage.eINSTANCE.getTournament_Type());
+
+		// act&assert
+		tournament.setType(TournamentType.PRO);
+		assertTrue(latch1.await(1, TimeUnit.MILLISECONDS));
+
+		// act&assert
+		tournament.getMatchups().add(matchup);
+		assertFalse("Notify was called although it shouln't be called", latch2.await(1, TimeUnit.MILLISECONDS));
+	}
+
+	@Test
+	public void testReadOnlyObserversStillCalledDuringChangesFromEMFObserver() throws InterruptedException {
+		final CountDownLatch latch1 = new CountDownLatch(2);
+		final CountDownLatch latch2 = new CountDownLatch(2);
+
+		broker.subscribe(new EMFObserver() {
+			@Override
+			public void handleNotification(Notification notification) {
+				tournament.getReceivesTrophy().add(Boolean.TRUE);
+				latch1.countDown();
+			}
+		});
+		broker.subscribe(new ReadOnlyEMFObserver() {
+			@Override
+			public void handleNotification(Notification notification) {
+				latch2.countDown();
+			}
+		});
+
+		tournament.setType(TournamentType.PRO);
+		assertTrue(latch2.await(1, TimeUnit.MICROSECONDS));
+		assertEquals(1, latch1.getCount());
+	}
+
+	@Test
+	public void testReadOnlyObserversStillCalledWhenStopNotificationUsed() throws InterruptedException {
+		final CountDownLatch latch = new CountDownLatch(1);
+
+		broker.subscribe(new ReadOnlyEMFObserver() {
+			@Override
+			public void handleNotification(Notification notification) {
+				latch.countDown();
+			}
+		});
+		broker.stopNotification();
+		tournament.setType(TournamentType.PRO);
+		assertTrue(latch.await(1, TimeUnit.MICROSECONDS));
+	}
+
+	@Test
+	public void testReadOnlyObserversStillCalledDuringChangesFromEMFObserverComplex() throws InterruptedException {
+		final CountDownLatch latch = new CountDownLatch(5);
+		addEMFObserverAddingTrophies();
+		addEMFObserverAddingTrophies();
+		broker.subscribe(new ReadOnlyEMFObserver() {
+			@Override
+			public void handleNotification(Notification notification) {
+				latch.countDown();
+			}
+		});
+		addEMFObserverAddingTrophies();
+		addEMFObserverAddingTrophies();
+		tournament.setType(TournamentType.PRO);
+		assertTrue(latch.await(1, TimeUnit.MICROSECONDS));
+	}
+
+	private void addEMFObserverAddingTrophies() {
+		broker.subscribe(new EMFObserver() {
+			@Override
+			public void handleNotification(Notification notification) {
+				tournament.getReceivesTrophy().add(Boolean.TRUE);
+			}
+		});
+	}
+
+	@Test
+	public void testGetNotificationProviders() {
+		final Set<NotificationProvider> notificationProviders = broker.getNotificationProviders();
+		assertEquals(1, notificationProviders.size());
+		assertTrue(notificationProviders.contains(provider));
+	}
+
+	@Test
+	public void testGetRegisteredObservers() {
+		final ReadOnlyEMFObserver obs1 = new ReadOnlyEMFObserver() {
+			@Override
+			public void handleNotification(Notification notification) {
+				// no op
+			}
+		};
+		final EMFObserver obs2 = new EMFObserver() {
+			@Override
+			public void handleNotification(Notification notification) {
+				// no op
+			}
+		};
+		broker.subscribe(obs1);
+		broker.subscribeToEClass(obs2, BowlingPackage.eINSTANCE.getPlayer());
+		final Set<EMFObserver> registeredObservers = broker.getRegisteredObservers();
+		assertEquals(2, registeredObservers.size());
+		assertTrue(registeredObservers.contains(obs1));
+		assertTrue(registeredObservers.contains(obs2));
 	}
 }

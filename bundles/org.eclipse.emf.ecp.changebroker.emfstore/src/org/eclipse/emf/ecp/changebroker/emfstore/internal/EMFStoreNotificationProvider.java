@@ -33,6 +33,11 @@ public class EMFStoreNotificationProvider extends AbstractNotificationProvider {
 
 	private static final String EMFSTORE_PROVIDER = "org.eclipse.emf.ecp.emfstore.provider"; //$NON-NLS-1$
 
+	/**
+	 * Binds the project manager.
+	 *
+	 * @param manager the ecp project manager
+	 */
 	public void bindManager(ECPProjectManager manager) {
 		manager.getProjects();
 		if (EMFStoreProvider.INSTANCE == null) {
@@ -52,7 +57,6 @@ public class EMFStoreNotificationProvider extends AbstractNotificationProvider {
 		} else {
 			addObserver();
 		}
-
 	}
 
 	private void addObserver() {
