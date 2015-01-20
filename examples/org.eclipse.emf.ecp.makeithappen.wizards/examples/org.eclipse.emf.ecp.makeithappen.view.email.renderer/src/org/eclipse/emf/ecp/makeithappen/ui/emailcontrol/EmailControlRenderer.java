@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.net.URI;
 
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
-import org.eclipse.emf.ecp.view.internal.core.swt.renderer.TextControlSWTRenderer;
+import org.eclipse.emf.ecp.view.spi.core.swt.renderer.TextControlSWTRenderer;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
@@ -31,7 +31,6 @@ import org.eclipse.swt.widgets.Control;
  *
  * @author Lucas
  */
-@SuppressWarnings("restriction")
 public class EmailControlRenderer extends TextControlSWTRenderer {
 
 	@Override
