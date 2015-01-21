@@ -100,6 +100,7 @@ import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.ToolBar;
@@ -958,7 +959,14 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 		if (treeViewer == null) {
 			return;
 		}
-		treeViewer.refresh();
+		Display.getDefault().asyncExec(new Runnable() {
+
+			@Override
+			public void run() {
+				treeViewer.refresh();
+			}
+		});
+
 	}
 
 }
