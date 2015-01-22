@@ -94,6 +94,9 @@ public class MEEditorInput implements IEditorInput {
 	public boolean equals(Object obj) {
 		if (obj instanceof MEEditorInput) {
 			final MEEditorInput other = (MEEditorInput) obj;
+			if (modelElementContext == other.modelElementContext) {
+				return true;
+			}
 			final boolean ret = modelElementContext.getDomainObject().equals(
 				other.modelElementContext.getDomainObject());
 			return ret;
@@ -115,7 +118,7 @@ public class MEEditorInput implements IEditorInput {
 	@Override
 	public Object getAdapter(@SuppressWarnings("rawtypes") Class clazz) {
 
-		if (clazz.equals(EObject.class)) {
+		if (clazz.equals(EObject.class) && modelElementContext != null) {
 			return modelElementContext.getDomainObject();
 		}
 		return null;
@@ -152,6 +155,10 @@ public class MEEditorInput implements IEditorInput {
 	 */
 	@Override
 	public String getName() {
+		if (modelElementContext == null)
+		{
+			return "Error"; //$NON-NLS-1$
+		}
 		return modelElementContext.getDomainObject().eClass().getName();
 	}
 

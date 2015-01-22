@@ -30,6 +30,7 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.emf.ecp.internal.view.model.provider.xmi.Activator;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
+import org.eclipse.emf.ecp.view.spi.model.util.ViewModelUtil;
 
 /**
  * Manages the view models provided by the file extension point.
@@ -111,6 +112,10 @@ public final class ViewModelFileExtensionsManager {
 			resource.load(loadOptions);
 		} catch (final IOException exception) {
 			Activator.log(exception);
+			if (ViewModelUtil.isDebugMode()) {
+				dispose();
+				throw new IllegalStateException(exception);
+			}
 		}
 		return resource;
 	}

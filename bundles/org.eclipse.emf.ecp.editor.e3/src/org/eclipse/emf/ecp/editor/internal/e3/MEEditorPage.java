@@ -131,8 +131,6 @@ public class MEEditorPage extends FormPage {
 			ecpView = ECPSWTViewRenderer.INSTANCE.render(body, vmc);
 		} catch (final ECPRendererException ex) {
 			Activator.getDefault().getReportService().report(new RenderingFailedReport(ex));
-			// MessageDialog.openError(form.getShell(), ex.getClass().getName(), ex.getMessage());
-			// Activator.logException(ex);
 		}
 
 		form.setImage(shortLabelProvider.getImage(modelElementContext.getDomainObject()));
@@ -222,10 +220,18 @@ public class MEEditorPage extends FormPage {
 	 */
 	@Override
 	public void dispose() {
-		ecpView.dispose();
-		composedAdapterFactory.dispose();
-		shortLabelProvider.dispose();
-		form.dispose();
+		if (ecpView != null) {
+			ecpView.dispose();
+		}
+		if (composedAdapterFactory != null) {
+			composedAdapterFactory.dispose();
+		}
+		if (shortLabelProvider != null) {
+			shortLabelProvider.dispose();
+		}
+		if (form != null) {
+			form.dispose();
+		}
 		super.dispose();
 	}
 }
