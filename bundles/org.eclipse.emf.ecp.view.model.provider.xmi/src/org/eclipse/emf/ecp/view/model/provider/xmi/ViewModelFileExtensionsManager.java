@@ -12,15 +12,10 @@
 package org.eclipse.emf.ecp.view.model.provider.xmi;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.URI;
@@ -31,13 +26,8 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecore.util.FeatureMap;
-import org.eclipse.emf.ecore.xmi.XMLResource;
-import org.eclipse.emf.ecore.xmi.impl.BasicResourceHandler;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
-import org.eclipse.emf.ecore.xml.type.AnyType;
 import org.eclipse.emf.ecp.internal.view.model.provider.xmi.Activator;
-import org.eclipse.emf.ecp.view.internal.provider.Migrator;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 
@@ -48,7 +38,6 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  *
  *
  */
-@SuppressWarnings("restriction")
 public final class ViewModelFileExtensionsManager {
 
 	private static final String FILTER_VALUE_ATTRIBUTE = "value"; //$NON-NLS-1$
@@ -116,43 +105,7 @@ public final class ViewModelFileExtensionsManager {
 			VViewPackage.eINSTANCE);
 		final Resource resource = resourceSet.createResource(uri);
 
-		final List<Migrator> migrators = new ArrayList<Migrator>();
-		final IConfigurationElement[] migratorExtensions = Platform.getExtensionRegistry().getConfigurationElementsFor(
-			"org.eclipse.emf.ecp.ui.view.manualMigrator"); //$NON-NLS-1$
-		for (final IConfigurationElement migratorExtension : migratorExtensions) {
-			try {
-				final Migrator migrator = (Migrator) migratorExtension.createExecutableExtension("class"); //$NON-NLS-1$
-				migrators.add(migrator);
-			} catch (final CoreException ex) {
-				Activator.log(ex);
-			}
-		}
-
 		final Map<Object, Object> loadOptions = new HashMap<Object, Object>();
-		loadOptions
-			.put(XMLResource.OPTION_RECORD_UNKNOWN_FEATURE, Boolean.TRUE);
-
-		loadOptions.put(XMLResource.OPTION_RESOURCE_HANDLER,
-			new BasicResourceHandler() {
-
-				@Override
-				@SuppressWarnings("rawtypes")
-				public void postLoad(XMLResource resource,
-					InputStream inputStream, Map options) {
-					final Map extMap = resource.getEObjectToExtensionMap();
-					for (final Iterator itr = extMap.entrySet().iterator(); itr
-						.hasNext();) {
-						final Map.Entry entry = (Map.Entry) itr.next();
-						final EObject key = (EObject) entry.getKey();
-						final AnyType value = (AnyType) entry.getValue();
-						final FeatureMap anyAttribute = value.getAnyAttribute();
-						final FeatureMap mixed = value.getMixed();
-						for (final Migrator migrator : migrators) {
-							migrator.migrate(key, anyAttribute, mixed);
-						}
-					}
-				}
-			});
 
 		try {
 			resource.load(loadOptions);
