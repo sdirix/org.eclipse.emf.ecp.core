@@ -948,6 +948,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 				final ECPCellEditor ecpCellEditor = (ECPCellEditor) cellEditor;
 				final String text = ecpCellEditor.getFormatedString(value);
 				cell.setText(text == null ? "" : text); //$NON-NLS-1$
+				cell.setImage(ecpCellEditor.getImage(value));
 			} else {
 				cell.setText(value == null ? "" : value.toString()); //$NON-NLS-1$
 				cell.getControl().setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_edit_cellEditor_string"); //$NON-NLS-1$

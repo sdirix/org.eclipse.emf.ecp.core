@@ -159,6 +159,11 @@
             id="org.eclipse.emf.ecp.edit.swt.cellEditor.text"
             tester="org.eclipse.emf.ecp.edit.internal.swt.table.StringCellEditorTester">
       </cellEditor>
+      <cellEditor
+            class="org.eclipse.emf.ecp.edit.internal.swt.table.BooleanCellEditor"
+            id="org.eclipse.emf.ecp.edit.swt.cellEditor.boolean"
+            tester="org.eclipse.emf.ecp.edit.internal.swt.table.BooleanCellEditorTester">
+      </cellEditor>
    </extension>
 
 </plugin>

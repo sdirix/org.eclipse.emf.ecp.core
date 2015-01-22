@@ -19,6 +19,7 @@ import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.databinding.viewers.CellEditorProperties;
 import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 
 /**
@@ -137,6 +138,16 @@ public class StringCellEditor extends TextCellEditor implements ECPCellEditor {
 		if (text != null) {
 			text.setEditable(editable);
 		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getImage(java.lang.Object)
+	 */
+	@Override
+	public Image getImage(Object value) {
+		return null;
 	}
 
 }

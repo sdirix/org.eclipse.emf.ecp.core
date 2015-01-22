@@ -16,6 +16,7 @@ import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.swt.graphics.Image;
 
 /**
  * A common super interface for all CellEditors contributed to ECP.
@@ -56,6 +57,14 @@ public interface ECPCellEditor {
 	 * @return the formated String
 	 */
 	String getFormatedString(Object value);
+
+	/**
+	 * This returns the Image which will be shown in the table when no cell editor is open.
+	 * 
+	 * @param value the Object to get the Image for
+	 * @return the image
+	 */
+	Image getImage(Object value);
 
 	/**
 	 * The returned value is used for layouting the table columns. The value is a relative column weight. A column

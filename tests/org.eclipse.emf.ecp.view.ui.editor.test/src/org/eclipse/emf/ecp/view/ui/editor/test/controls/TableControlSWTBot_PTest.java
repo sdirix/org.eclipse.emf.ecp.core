@@ -115,9 +115,7 @@ public class TableControlSWTBot_PTest extends ECPCommonSWTBotTest {
 		dateTime.setDate(new Date());
 
 		table.click(0, 3);
-		text = bot.text();
-		text.setFocus();
-		text.setText("false");
+		// no actual cell editor to test (boolean)
 
 		table.click(0, 4);
 		text = bot.text();
