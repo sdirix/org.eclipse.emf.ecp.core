@@ -100,7 +100,7 @@ public final class ViewModelHelper {
 		final EClass ec = (EClass) ep.getEClassifier(selectedEClass.getName());
 
 		view.setRootEClass(ec);
-		view.setName(ec.getName());
+		view.setName(selectedEClass.getName());
 		// Update the VView-EClass mapping
 		if (selectedEcore != null) {
 			view.setEcorePath(selectedEcore.getFullPath().toString());

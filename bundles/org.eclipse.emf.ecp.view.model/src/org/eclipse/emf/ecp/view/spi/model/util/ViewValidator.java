@@ -253,6 +253,17 @@ public class ViewValidator extends EObjectValidator
 		VFeaturePathDomainModelReference featurePathDomainModelReference, DiagnosticChain diagnostics,
 		Map<Object, Object> context) {
 
+		if (VDomainModelReference.class.isInstance(featurePathDomainModelReference.eContainer())
+			&& featurePathDomainModelReference.eContainmentFeature().isMany()) {
+			final VDomainModelReference parent = VDomainModelReference.class.cast(featurePathDomainModelReference
+				.eContainer());
+			final EStructuralFeature feature = parent.getEStructuralFeatureIterator().next();
+			if (!EReference.class.isInstance(feature)) {
+				return true;
+			}
+			context.put(ECLASS_KEY, EReference.class.cast(feature).getEReferenceType());
+		}
+
 		if (featurePathDomainModelReference.getDomainModelEFeature() == null) {
 			if (featurePathDomainModelReference.eContainer() != null) {
 				diagnostics

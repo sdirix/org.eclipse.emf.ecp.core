@@ -13,6 +13,7 @@ package org.eclipse.emf.ecp.view.internal.validation;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -106,7 +107,8 @@ public class ValidationServiceImpl implements ValidationService {
 			switch (notification.getRawNotification().getEventType()) {
 			case Notification.REMOVE:
 			case Notification.REMOVE_MANY:
-				reevaluateToTop(notification.getNotifier());
+				final Map<VElement, VDiagnostic> map = Collections.emptyMap();
+				reevaluateToTop(notification.getNotifier(), map);
 				break;
 			default:
 				break;
@@ -156,11 +158,13 @@ public class ValidationServiceImpl implements ValidationService {
 			switch (rawNotification.getEventType()) {
 			// FIXME: move add, remove to add/remove instead of doing here
 			case Notification.ADD:
-				validate(notification.getNotifier());
+				final Set<EObject> toValidate = new LinkedHashSet<EObject>();
+				toValidate.add(notification.getNotifier());
 				// in case of not containment references
 				if (EReference.class.isInstance(notification.getStructuralFeature())) {
-					validate(getAllEObjects((EObject) notification.getRawNotification().getNewValue()));
+					toValidate.addAll(getAllEObjects((EObject) notification.getRawNotification().getNewValue()));
 				}
+				validate(toValidate);
 				break;
 			case Notification.ADD_MANY:
 				validate(notification.getNotifier());
@@ -453,11 +457,11 @@ public class ValidationServiceImpl implements ValidationService {
 
 			control.setDiagnostic(controlDiagnosticMap.get(control));
 
-			reevaluateToTop(control.eContainer());
+			reevaluateToTop(control.eContainer(), controlDiagnosticMap);
 		}
 	}
 
-	private void reevaluateToTop(EObject parent) {
+	private void reevaluateToTop(EObject parent, Map<VElement, VDiagnostic> controlDiagnosticMap) {
 
 		while (parent != null) {
 			final EObject newParent = parent.eContainer();
@@ -468,6 +472,9 @@ public class ValidationServiceImpl implements ValidationService {
 			final VElement vElement = (VElement) parent;
 
 			final VDiagnostic vDiagnostic = VViewFactory.eINSTANCE.createDiagnostic();
+			if (controlDiagnosticMap.containsKey(vElement)) {
+				vDiagnostic.getDiagnostics().addAll(controlDiagnosticMap.get(vElement).getDiagnostics());
+			}
 
 			for (final EObject eObject : vElement.eContents()) {
 				if (!VElement.class.isInstance(eObject)) {

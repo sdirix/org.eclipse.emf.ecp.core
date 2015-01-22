@@ -575,9 +575,21 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 		if (EAttribute.class.isInstance(notification.getStructuralFeature())) {
 			return;
 		}
-		if (getDomainModelEReferencePath().contains(notification.getStructuralFeature())
-			||
-			getDomainModelEFeature().equals(notification.getStructuralFeature())) { //
+		boolean relevantChange = false;
+
+		EObject iterateEObject = rootEObject;
+		for (final EReference eReference : getDomainModelEReferencePath()) {
+			relevantChange |= eReference.equals(notification.getStructuralFeature())
+				&& iterateEObject == notification.getNotifier();
+			if (relevantChange) {
+				break;
+			}
+			iterateEObject = (EObject) iterateEObject.eGet(eReference);
+		}
+		relevantChange |= notification.getStructuralFeature().equals(getDomainModelEFeature())
+			&& lastResolvedEObject == notification.getNotifier();
+
+		if (relevantChange) { //
 
 			cleanDiagnostic(getDomainModelEFeature().equals(notification.getStructuralFeature()), notification);
 

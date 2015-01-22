@@ -69,9 +69,13 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 
 /**
+ * Renderer for DomainModelReferences.
+ * 
  * @author Alexandra Buzila
  *
  */
+// needed because we use the Messages class from ecp.ui.
+@SuppressWarnings("restriction")
 public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 
 	private Composite mainComposite;
@@ -244,9 +248,11 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 		contentSetComposite.setBackground(mainComposite.getBackground());
 		imageLabel = new Label(contentSetComposite, SWT.NONE);
 		imageLabel.setBackground(contentSetComposite.getBackground());
+		GridDataFactory.fillDefaults().grab(false, false).align(SWT.FILL, SWT.FILL).hint(17, SWT.DEFAULT)
+			.applyTo(imageLabel);
 		setLabel = new Label(contentSetComposite, SWT.NONE);
 		setLabel.setBackground(contentSetComposite.getBackground());
-		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(setLabel);
+		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.FILL).applyTo(setLabel);
 
 		if (setting.isSet()) {
 			stackLayout.topControl = contentSetComposite;
@@ -275,7 +281,7 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				final Command setCommand = SetCommand.create(getEditingDomain(setting), setting.getEObject(),
-					setting.getEStructuralFeature(), null);
+					setting.getEStructuralFeature(), SetCommand.UNSET_VALUE);
 				getEditingDomain(setting).getCommandStack().execute(setCommand);
 			}
 
@@ -345,7 +351,8 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 			}
 
 			final CreateDomainModelReferenceWizard wizard = new CreateDomainModelReferenceWizard(
-				setting, getEditingDomain(setting), eclass, "New Reference Element", //$NON-NLS-1$
+				setting, getEditingDomain(setting), eclass,
+				reference == null ? "New Reference Element" : "Configure " + reference.getClass().getSimpleName(), //$NON-NLS-1$ //$NON-NLS-2$
 				Messages.NewModelElementWizard_WizardTitle_AddModelElement,
 				Messages.NewModelElementWizard_PageTitle_AddModelElement,
 				Messages.NewModelElementWizard_PageDescription_AddModelElement, reference);

@@ -124,7 +124,7 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 
 		final Composite tableComposite = new Composite(composite, SWT.NONE);
 		tableComposite.setBackgroundMode(SWT.INHERIT_FORCE);
-		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).hint(1, SWT.DEFAULT)
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).hint(1, 100)
 			.applyTo(tableComposite);
 		final TableColumnLayout layout = new TableColumnLayout();
 		tableComposite.setLayout(layout);

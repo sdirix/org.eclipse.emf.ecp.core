@@ -375,7 +375,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getControlsFor(org.eclipse.emf.ecp.common.spi.UniqueSetting)
 	 *
 	 */
@@ -532,7 +532,13 @@ public class ViewModelContextImpl implements ViewModelContext {
 			throw new IllegalArgumentException(MODEL_CHANGE_LISTENER_MUST_NOT_BE_NULL);
 		}
 		if (parentContext == null) {
-			domainModelChangeListener.add(modelChangeListener);
+			// TODO performance
+			// needed to make sure, all data operations are done before any validation etc provided by services happens
+			if (VDomainModelReference.class.isInstance(modelChangeListener)) {
+				domainModelChangeListener.add(0, modelChangeListener);
+			} else {
+				domainModelChangeListener.add(modelChangeListener);
+			}
 		} else {
 			parentContext.registerDomainChangeListener(modelChangeListener);
 		}

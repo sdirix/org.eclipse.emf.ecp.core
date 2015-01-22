@@ -11,6 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.core.swt;
 
+import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.view.internal.core.swt.renderer.RendererMessages;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
@@ -244,16 +245,21 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 		if (validationIcon.isDisposed()) {
 			return;
 		}
+		int highestSeverity = Diagnostic.OK;
 		// no diagnostic set
-		if (getVElement().getDiagnostic() == null) {
-			return;
+		if (getVElement().getDiagnostic() != null) {
+			highestSeverity = getVElement().getDiagnostic().getHighestSeverity();
 		}
 
-		validationIcon.setImage(getValidationIcon(getVElement().getDiagnostic().getHighestSeverity()));
-		validationIcon.setToolTipText(ECPTooltipModifierHelper.modifyString(getVElement().getDiagnostic().getMessage(),
-			null));
-		setValidationColor(editControl, getValidationBackgroundColor(getVElement().getDiagnostic()
-			.getHighestSeverity()));
+		validationIcon.setImage(getValidationIcon(highestSeverity));
+		setValidationColor(editControl, getValidationBackgroundColor(highestSeverity));
+		if (getVElement().getDiagnostic() == null) {
+			validationIcon.setToolTipText(null);
+		} else {
+			validationIcon.setToolTipText(ECPTooltipModifierHelper.modifyString(getVElement().getDiagnostic()
+				.getMessage(),
+				null));
+		}
 	}
 
 	/**
