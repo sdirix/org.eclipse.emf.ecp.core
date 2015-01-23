@@ -23,7 +23,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor;
-import org.eclipse.emf.ecp.edit.spi.util.ECPApplicableTester;
+import org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditorTester;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.TextCellEditor;
@@ -54,7 +54,7 @@ public final class CellEditorFactory {
 				final String id = e.getAttribute(ID);
 				final String clazz = e.getAttribute(CLASS_ATTRIBUTE);
 				final Class<? extends CellEditor> resolvedClass = loadClass(e.getContributor().getName(), clazz);
-				final ECPApplicableTester tester = (ECPApplicableTester) e.createExecutableExtension(TESTER);
+				final ECPCellEditorTester tester = (ECPCellEditorTester) e.createExecutableExtension(TESTER);
 				descriptors.add(new CellDescriptor(id, resolvedClass, tester));
 			} catch (final ClassNotFoundException e1) {
 				Activator.logException(e1);
@@ -81,7 +81,7 @@ public final class CellEditorFactory {
 		int bestPriority = -1;
 		CellDescriptor bestCandidate = null;
 		for (final CellDescriptor descriptor : descriptors) {
-			final int priority = descriptor.getTester().isApplicable(eObject, eStructuralFeature);
+			final int priority = descriptor.getTester().isApplicable(eObject, eStructuralFeature, viewModelContext);
 			if (priority > bestPriority) {
 				bestCandidate = descriptor;
 				bestPriority = priority;
@@ -121,9 +121,9 @@ public final class CellEditorFactory {
 	private class CellDescriptor {
 		private final String id;
 		private final Class<? extends CellEditor> cellEditorClass;
-		private final ECPApplicableTester tester;
+		private final ECPCellEditorTester tester;
 
-		CellDescriptor(String id, Class<? extends CellEditor> cellEditorClass, ECPApplicableTester tester) {
+		CellDescriptor(String id, Class<? extends CellEditor> cellEditorClass, ECPCellEditorTester tester) {
 			super();
 			this.id = id;
 			this.cellEditorClass = cellEditorClass;
@@ -138,7 +138,7 @@ public final class CellEditorFactory {
 			return cellEditorClass;
 		}
 
-		ECPApplicableTester getTester() {
+		ECPCellEditorTester getTester() {
 			return tester;
 		}
 	}
