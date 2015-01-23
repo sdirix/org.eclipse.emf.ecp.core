@@ -34,6 +34,9 @@ import org.eclipse.swtbot.swt.finder.widgets.SWTBotText;
  */
 public class CellReadOnly_PTest extends ECPCommonSWTBotTest {
 
+	private EClass superType1;
+	private EClass superType2;
+
 	/**
 	 * {@inheritDoc}
 	 *
@@ -42,8 +45,8 @@ public class CellReadOnly_PTest extends ECPCommonSWTBotTest {
 	@Override
 	public EObject createDomainObject() {
 		final EClass eClass = EcoreFactory.eINSTANCE.createEClass();
-		final EClass superType1 = EcoreFactory.eINSTANCE.createEClass();
-		final EClass superType2 = EcoreFactory.eINSTANCE.createEClass();
+		superType1 = EcoreFactory.eINSTANCE.createEClass();
+		superType2 = EcoreFactory.eINSTANCE.createEClass();
 		eClass.getESuperTypes().add(superType1);
 		eClass.getESuperTypes().add(superType2);
 
@@ -117,13 +120,11 @@ public class CellReadOnly_PTest extends ECPCommonSWTBotTest {
 		});
 
 		table.click(0, 2);
-		bot.sleep(1000);
-		final SWTBotText textCell02 = bot.text();
 		Display.getDefault().syncExec(new Runnable() {
 
 			@Override
 			public void run() {
-				assertTrue(textCell02.widget.getEditable());
+				assertTrue(superType1.isInterface());
 			}
 		});
 		table.click(1, 1);
@@ -137,13 +138,11 @@ public class CellReadOnly_PTest extends ECPCommonSWTBotTest {
 			}
 		});
 		table.click(1, 2);
-		bot.sleep(1000);
-		final SWTBotText textCell12 = bot.text();
 		Display.getDefault().syncExec(new Runnable() {
 
 			@Override
 			public void run() {
-				assertTrue(textCell12.widget.getEditable());
+				assertTrue(superType2.isInterface());
 			}
 		});
 	}
