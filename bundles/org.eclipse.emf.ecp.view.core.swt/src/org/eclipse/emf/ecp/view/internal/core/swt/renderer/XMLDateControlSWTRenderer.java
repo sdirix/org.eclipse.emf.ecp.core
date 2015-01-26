@@ -62,7 +62,7 @@ import org.eclipse.swt.widgets.Text;
 @SuppressWarnings("restriction")
 public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 
-	private static final DateFormat CHECK_FORMAT = new SimpleDateFormat("yyyy-MM-DD", Locale.ENGLISH); //$NON-NLS-1$
+	private static final DateFormat CHECK_FORMAT = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH); //$NON-NLS-1$
 	private static final Pattern CHECK_PATTERN = Pattern.compile("^\\d{4}-\\d{2}-\\d{2}$"); //$NON-NLS-1$
 
 	/**
