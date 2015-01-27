@@ -269,8 +269,9 @@ public class SWTRendererFactoryImpl implements SWTRendererFactory {
 		final Class<? extends AbstractSWTRenderer<VElement>> rendererClass) {
 		try {
 			return rendererClass
-				.getConstructor(SWTRendererFactory.class, VElement.class, ViewModelContext.class)
-				.newInstance(this, vElement, viewContext);
+				.getConstructor(vElement.getClass().getInterfaces()[0], ViewModelContext.class,
+					SWTRendererFactory.class)
+				.newInstance(vElement, viewContext, this);
 		} catch (final InstantiationException ex) {
 			reportService.report(new RendererInitFailedReport(ex));
 		} catch (final IllegalAccessException ex) {
