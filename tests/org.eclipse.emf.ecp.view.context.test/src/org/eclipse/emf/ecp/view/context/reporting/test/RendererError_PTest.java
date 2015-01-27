@@ -96,6 +96,7 @@ public class RendererError_PTest {
 	}
 
 	@Test
+	@Ignore
 	public void rendererInit() throws ECPRendererException {
 
 		swtViewTestHelper.registerRenderer(3, cast(FailingRenderer.class), VView.class);
