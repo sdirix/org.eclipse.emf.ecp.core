@@ -97,9 +97,8 @@ public class RendererError_PTest {
 
 	@Test
 	public void rendererInit() throws ECPRendererException {
-		final ViewSWTRenderer failingInitRenderer = MockViewSWTRenderer.failingInitRenderer();
 
-		swtViewTestHelper.registerRenderer(3, cast(failingInitRenderer.getClass()), VView.class);
+		swtViewTestHelper.registerRenderer(3, cast(FailingRenderer.class), VView.class);
 
 		swtViewTestHelper.render(shell, viewContext);
 		assertThat(reportService.getReports(), hasSize(1));

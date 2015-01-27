@@ -67,6 +67,7 @@ public class CategorizationRenderer_PTest {
 		final ViewModelContext vmc = mock(ViewModelContext.class);
 		final SWTCategorizationElementRenderer categorizatrionElementRenderer = new SWTCategorizationElementRenderer(
 			categorizationElement, vmc, factory);
+		categorizatrionElementRenderer.init();
 		final Control render = categorizatrionElementRenderer.render(gridCell, shell);
 		assertTrue(Composite.class.isInstance(render));
 		assertEquals(2, Composite.class.cast(render).getChildren().length);
@@ -87,6 +88,7 @@ public class CategorizationRenderer_PTest {
 		final ViewModelContext vmc = mock(ViewModelContext.class);
 		final CategorizationElementTabbedSWTRenderer categorizatrionElementRenderer = new CategorizationElementTabbedSWTRenderer(
 			categorizationElement, vmc, factory);
+		categorizatrionElementRenderer.init();
 		final Control render = categorizatrionElementRenderer.render(gridCell, shell);
 		assertTrue(CTabFolder.class.isInstance(render));
 	}
@@ -115,6 +117,7 @@ public class CategorizationRenderer_PTest {
 		final CompositeCategoryJFaceTreeRenderer categorizatrionElementRenderer = new CompositeCategoryJFaceTreeRenderer(
 			categorization, vmc,
 			factory);
+		categorizatrionElementRenderer.init();
 		final Control render = categorizatrionElementRenderer.render(gridCell, shell);
 		assertTrue(Composite.class.isInstance(render));
 		assertEquals(2, Composite.class.cast(render).getChildren().length);
@@ -138,6 +141,7 @@ public class CategorizationRenderer_PTest {
 		final ViewModelContext vmc = mock(ViewModelContext.class);
 		final CompositeCategorySWTTabRenderer categorizatrionElementRenderer = new CompositeCategorySWTTabRenderer(
 			categorization, vmc, factory);
+		categorizatrionElementRenderer.init();
 		final Control render = categorizatrionElementRenderer.render(gridCell, shell);
 		assertTrue(CTabFolder.class.isInstance(render));
 	}

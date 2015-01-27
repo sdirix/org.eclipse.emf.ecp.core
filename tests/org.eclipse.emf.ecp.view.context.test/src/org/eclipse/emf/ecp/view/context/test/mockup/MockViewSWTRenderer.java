@@ -24,7 +24,7 @@ public final class MockViewSWTRenderer {
 	private static VView vElement = mock(VView.class);
 	private static SWTRendererFactory rendererFactory = mock(SWTRendererFactory.class);
 
-	private MockViewSWTRenderer() {
+	public MockViewSWTRenderer(VView vElement, ViewModelContext viewModelContext, SWTRendererFactory rendererFactory) {
 
 	}
 
@@ -38,15 +38,6 @@ public final class MockViewSWTRenderer {
 
 	public static ViewSWTRenderer withoutRenderer() {
 		return new ViewSWTRendererWithNoRendererFoundException(vElement, viewModelContext, rendererFactory);
-	}
-
-	public static ViewSWTRenderer failingInitRenderer() {
-		return new ViewSWTRenderer(vElement, viewModelContext, rendererFactory) {
-			@Override
-			protected void postInit() {
-				throw new RuntimeException();
-			}
-		};
 	}
 
 	public static ViewSWTRenderer newRenderer() {
