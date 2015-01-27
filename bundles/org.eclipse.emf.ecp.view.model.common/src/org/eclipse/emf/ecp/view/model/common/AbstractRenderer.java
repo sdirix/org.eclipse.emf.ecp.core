@@ -23,23 +23,17 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
  */
 public abstract class AbstractRenderer<VELEMENT extends VElement> {
 
-	private VELEMENT vElement;
-	private ViewModelContext viewModelContext;
+	private final VELEMENT vElement;
+	private final ViewModelContext viewModelContext;
 	private boolean disposed;
 
 	/**
-	 * Initialize the control. This can only be called once.
+	 * Default constructor.
 	 *
 	 * @param vElement the {@link VElement} to be rendered
 	 * @param viewContext the {@link ViewModelContext} to use
 	 */
-	public void init(final VELEMENT vElement, final ViewModelContext viewContext) {
-		checkRenderer();
-		// TODO:Is it possible to call init twice?
-
-		if (this.vElement != null) {
-			throw new IllegalStateException("vElement must not be null"); //$NON-NLS-1$
-		}
+	public AbstractRenderer(final VELEMENT vElement, final ViewModelContext viewContext) {
 		if (vElement == null) {
 			throw new IllegalArgumentException("vElement must not be null"); //$NON-NLS-1$
 		}
@@ -87,4 +81,5 @@ public abstract class AbstractRenderer<VELEMENT extends VElement> {
 		}
 
 	}
+
 }

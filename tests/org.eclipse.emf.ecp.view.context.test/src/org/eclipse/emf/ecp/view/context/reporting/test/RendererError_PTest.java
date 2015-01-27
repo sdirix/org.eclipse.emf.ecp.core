@@ -97,12 +97,7 @@ public class RendererError_PTest {
 
 	@Test
 	public void rendererInit() throws ECPRendererException {
-		final ViewSWTRenderer failingInitRenderer = new ViewSWTRenderer() {
-			@Override
-			protected void postInit() {
-				throw new RuntimeException();
-			}
-		};
+		final ViewSWTRenderer failingInitRenderer = MockViewSWTRenderer.failingInitRenderer();
 
 		swtViewTestHelper.registerRenderer(3, cast(failingInitRenderer.getClass()), VView.class);
 
@@ -115,7 +110,7 @@ public class RendererError_PTest {
 	public void samePriorityRenderers() throws ECPRendererException {
 		// modifiableSWTViewTestHelper.clearRenderers();
 
-		final ViewSWTRenderer viewRenderer = new ViewSWTRenderer();
+		final ViewSWTRenderer viewRenderer = MockViewSWTRenderer.newRenderer();
 
 		swtViewTestHelper.registerRenderer(1, cast(viewRenderer.getClass()), VView.class);
 

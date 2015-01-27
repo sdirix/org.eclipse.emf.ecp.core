@@ -17,7 +17,6 @@ import static org.mockito.Mockito.mock;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -28,12 +27,6 @@ public class AbstractRenderer_Test {
 
 	private AbstractRenderer<VElement> abstractRenderer;
 
-	@Before
-	public void init() {
-		abstractRenderer = new AbstractRenderer<VElement>() {
-		};
-	}
-
 	@After
 	public void dispose() {
 		abstractRenderer = null;
@@ -43,7 +36,8 @@ public class AbstractRenderer_Test {
 	public void testInitNotNull() {
 		final VElement vElement = mock(VElement.class);
 		final ViewModelContext viewModelContext = mock(ViewModelContext.class);
-		abstractRenderer.init(vElement, viewModelContext);
+		abstractRenderer = new AbstractRenderer<VElement>(vElement, viewModelContext) {
+		};
 		assertSame(vElement, abstractRenderer.getVElement());
 		assertSame(viewModelContext, abstractRenderer.getViewModelContext());
 	}
@@ -51,43 +45,53 @@ public class AbstractRenderer_Test {
 	@Test(expected = IllegalArgumentException.class)
 	public void testInitVElementNull() {
 		final VElement vElement = mock(VElement.class);
-		abstractRenderer.init(vElement, null);
+		abstractRenderer = new AbstractRenderer<VElement>(vElement, null) {
+		};
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testInitVContextNull() {
 		final ViewModelContext viewModelContext = mock(ViewModelContext.class);
-		abstractRenderer.init(null, viewModelContext);
+		abstractRenderer = new AbstractRenderer<VElement>(null, viewModelContext) {
+		};
 	}
 
 	@Test(expected = IllegalStateException.class)
 	public void testDispose() {
+		final VElement vElement = mock(VElement.class);
+		final ViewModelContext viewModelContext = mock(ViewModelContext.class);
+		abstractRenderer = new AbstractRenderer<VElement>(vElement, viewModelContext) {
+		};
 		abstractRenderer.dispose();
 		abstractRenderer.checkRenderer();
 	}
 
 	@Test(expected = IllegalStateException.class)
-	public void testDisposeInit() {
-		abstractRenderer.dispose();
+	public void testDisposeGetVElement() {
 		final VElement vElement = mock(VElement.class);
 		final ViewModelContext viewModelContext = mock(ViewModelContext.class);
-		abstractRenderer.init(vElement, viewModelContext);
-	}
-
-	@Test(expected = IllegalStateException.class)
-	public void testDisposeGetVElement() {
+		abstractRenderer = new AbstractRenderer<VElement>(vElement, viewModelContext) {
+		};
 		abstractRenderer.dispose();
 		abstractRenderer.getVElement();
 	}
 
 	@Test(expected = IllegalStateException.class)
 	public void testDisposeGetVContext() {
+		final VElement vElement = mock(VElement.class);
+		final ViewModelContext viewModelContext = mock(ViewModelContext.class);
+		abstractRenderer = new AbstractRenderer<VElement>(vElement, viewModelContext) {
+		};
 		abstractRenderer.dispose();
 		abstractRenderer.getViewModelContext();
 	}
 
 	@Test
 	public void testNotDisposes() {
+		final VElement vElement = mock(VElement.class);
+		final ViewModelContext viewModelContext = mock(ViewModelContext.class);
+		abstractRenderer = new AbstractRenderer<VElement>(vElement, viewModelContext) {
+		};
 		abstractRenderer.checkRenderer();
 	}
 
