@@ -963,6 +963,9 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 
 			@Override
 			public void run() {
+				if (treeViewer.getTree().isDisposed()) {
+					return;
+				}
 				treeViewer.refresh();
 			}
 		});
