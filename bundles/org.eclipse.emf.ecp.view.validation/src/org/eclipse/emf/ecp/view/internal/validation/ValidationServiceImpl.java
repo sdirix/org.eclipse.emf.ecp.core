@@ -639,9 +639,7 @@ public class ValidationServiceImpl implements ValidationService {
 	 */
 	@Override
 	public void deregisterValidationListener(ViewValidationListener listener) {
-		// FIXME: doesn't look like deregistering is going on
-		validationListener.add(listener);
-		listener.onNewValidation(getDiagnosticResult());
+		validationListener.remove(listener);
 	}
 
 	/**
