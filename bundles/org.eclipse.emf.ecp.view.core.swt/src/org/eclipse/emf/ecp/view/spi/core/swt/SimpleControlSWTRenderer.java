@@ -13,9 +13,13 @@ package org.eclipse.emf.ecp.view.spi.core.swt;
 
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecp.view.internal.core.swt.Activator;
 import org.eclipse.emf.ecp.view.internal.core.swt.renderer.RendererMessages;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.spi.model.reporting.AbstractReport;
+import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
+import org.eclipse.emf.ecp.view.spi.model.util.ViewModelUtil;
 import org.eclipse.emf.ecp.view.spi.provider.ECPTooltipModifierHelper;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
@@ -215,6 +219,9 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 
 			@Override
 			public void run() {
+				if (getControls().size() == 0 || getControls().values().iterator().next().isDisposed()) {
+					return;
+				}
 				applyInnerValidation();
 			}
 		});
@@ -234,7 +241,11 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 				new SWTGridCell(0, 1, SimpleControlSWTRenderer.this)));
 			editControl = getControls().get(new SWTGridCell(0, 2, SimpleControlSWTRenderer.this));
 			break;
-		default: // TODO log error ;
+		default:
+			if (ViewModelUtil.isDebugMode()) {
+				final ReportService reportService = Activator.getDefault().getReportService();
+				reportService.report(new AbstractReport("Wrong number of controls!")); //$NON-NLS-1$
+			}
 			return;
 		}
 		// triggered due to another validation rule before this control is rendered
