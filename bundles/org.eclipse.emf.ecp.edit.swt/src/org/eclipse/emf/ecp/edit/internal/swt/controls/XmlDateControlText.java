@@ -37,6 +37,8 @@ import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
@@ -150,9 +152,24 @@ public class XmlDateControlText extends AbstractTextControl {
 
 			dialog.pack();
 			dialog.layout();
-			dialog.setLocation(bDate.getParent().toDisplay(
-				bDate.getLocation().x + bDate.getSize().x - dialog.getSize().x,
-				bDate.getLocation().y + bDate.getSize().y));
+			final Point dialogSize = dialog.getSize();
+			final Rectangle displayBounds = dialog.getDisplay().getBounds();
+			final Point buttonLocation = okButton.toDisplay(okButton.getSize().x, okButton.getSize().y);
+
+			// TODO what if dialogsize > displaybounds? + some other cases
+
+			int dialogX = buttonLocation.x - dialogSize.x;
+			int dialogY = buttonLocation.y;
+			if (dialogY + dialogSize.y > displayBounds.height) {
+				dialogY = dialogY - okButton.getSize().y - dialogSize.y;
+			}
+			if (dialogX + dialogSize.x > displayBounds.width) {
+				dialogX = dialogX - dialogSize.x;
+			}
+			else if (dialogX - dialogSize.x < displayBounds.x) {
+				dialogX = buttonLocation.x - okButton.getSize().x;
+			}
+			dialog.setLocation(dialogX, dialogY);
 			dialog.open();
 		}
 	}
