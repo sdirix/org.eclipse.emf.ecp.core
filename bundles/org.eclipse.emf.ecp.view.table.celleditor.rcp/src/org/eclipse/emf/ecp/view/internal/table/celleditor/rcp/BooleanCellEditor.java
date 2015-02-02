@@ -9,7 +9,7 @@
  * Contributors:
  * jfaltermeier - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.edit.internal.swt.table;
+package org.eclipse.emf.ecp.view.internal.table.celleditor.rcp;
 
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.Diffs;
@@ -19,9 +19,10 @@ import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.emf.databinding.EMFUpdateValueStrategy;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.edit.internal.swt.util.NativeWidgetFakeUtil;
 import org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.table.celleditor.rcp.NativeWidgetHelper;
+import org.eclipse.emf.ecp.view.spi.table.celleditor.rcp.NativeWidgetHelper.CheckBoxState;
 import org.eclipse.jface.databinding.swt.WidgetValueProperty;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.ColumnViewerEditorActivationEvent;
@@ -151,7 +152,8 @@ public class BooleanCellEditor extends CellEditor implements ECPCellEditor {
 	 */
 	@Override
 	public Image getImage(Object value) {
-		return NativeWidgetFakeUtil.createCheckBoxImage(parent, (Boolean) value);
+		final CheckBoxState state = (Boolean) value ? CheckBoxState.checked : CheckBoxState.unchecked;
+		return NativeWidgetHelper.getCheckBoxImage(parent, state);
 	}
 
 	/**

@@ -9,7 +9,7 @@
  * Contributors:
  * jfaltermeier - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.edit.internal.swt.table;
+package org.eclipse.emf.ecp.view.internal.table.celleditor.rcp;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
