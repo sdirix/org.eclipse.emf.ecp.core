@@ -224,15 +224,7 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic
 			if (diagnostic.getChildren() != null && diagnostic.getChildren().size() == 0) {
 				return diagnostic.getMessage();
 			}
-			final StringBuilder sb = new StringBuilder();
-			for (final Diagnostic childDiagnostic : diagnostic.getChildren()) {
-				if (sb.length() > 0)
-				{
-					sb.append("\n"); //$NON-NLS-1$
-				}
-				sb.append(childDiagnostic.getMessage());
-			}
-			message = sb.toString();
+			message = extractMessageFrom(diagnostic);
 		}
 		else if (getDiagnostics().size() > 0) {
 			// for (final Object o : getDiagnostics()) {
@@ -268,11 +260,23 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic
 				{
 					sb.append("\n"); //$NON-NLS-1$
 				}
-				sb.append(diagnostic.getMessage());
+				sb.append(extractMessageFrom(diagnostic));
 			}
 			message = sb.toString();
 		}
 		return message;
+	}
+
+	private String extractMessageFrom(final Diagnostic diagnostic) {
+		final StringBuilder sb = new StringBuilder();
+		for (final Diagnostic childDiagnostic : diagnostic.getChildren()) {
+			if (sb.length() > 0)
+			{
+				sb.append("\n"); //$NON-NLS-1$
+			}
+			sb.append(childDiagnostic.getMessage());
+		}
+		return sb.toString();
 	}
 
 	private void sortDiagnostics(final List<Diagnostic> diagnostics) {
