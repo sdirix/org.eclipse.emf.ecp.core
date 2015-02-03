@@ -387,9 +387,9 @@ public class ValidationServiceImpl implements ValidationService {
 	 * Notifies all listeners.
 	 */
 	public void notifyListeners() {
-		if (validationListener.size() > 0) {
+		if (validationListeners.size() > 0) {
 			final Set<Diagnostic> result = getDiagnosticResult();
-			for (final ViewValidationListener l : validationListener) {
+			for (final ViewValidationListener l : validationListeners) {
 				l.onNewValidation(result);
 			}
 		}
@@ -607,7 +607,7 @@ public class ValidationServiceImpl implements ValidationService {
 		validate(getAllEObjects(context.getDomainModel()));
 	}
 
-	private final Set<ViewValidationListener> validationListener = new LinkedHashSet<ViewValidationListener>();
+	private final Set<ViewValidationListener> validationListeners = new LinkedHashSet<ViewValidationListener>();
 
 	/**
 	 * {@inheritDoc}
@@ -616,7 +616,7 @@ public class ValidationServiceImpl implements ValidationService {
 	 */
 	@Override
 	public void registerValidationListener(ViewValidationListener listener) {
-		validationListener.add(listener);
+		validationListeners.add(listener);
 
 		listener.onNewValidation(getDiagnosticResult());
 	}
@@ -639,7 +639,7 @@ public class ValidationServiceImpl implements ValidationService {
 	 */
 	@Override
 	public void deregisterValidationListener(ViewValidationListener listener) {
-		validationListener.remove(listener);
+		validationListeners.remove(listener);
 	}
 
 	/**
