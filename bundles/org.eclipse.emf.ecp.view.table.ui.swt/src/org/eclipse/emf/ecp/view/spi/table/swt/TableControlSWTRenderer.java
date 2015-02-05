@@ -50,6 +50,7 @@ import org.eclipse.emf.ecp.view.internal.table.swt.CellReadOnlyTesterHelper;
 import org.eclipse.emf.ecp.view.internal.table.swt.TableConfigurationHelper;
 import org.eclipse.emf.ecp.view.model.common.spi.databinding.DatabindingProviderService;
 import org.eclipse.emf.ecp.view.spi.core.swt.AbstractControlSWTRenderer;
+import org.eclipse.emf.ecp.view.spi.model.DiagnosticMessageExtractor;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.provider.ECPTooltipModifierHelper;
@@ -918,19 +919,13 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 				return null;
 			}
 
-			final StringBuffer tooltip = new StringBuffer();
 			final VDiagnostic vDiagnostic = vTableControl.getDiagnostic();
 			if (vDiagnostic != null) {
-				final List<Diagnostic> diagnostics = vDiagnostic.getDiagnostic(domainObject, feature);
-				for (final Diagnostic diagnostic : diagnostics) {
-					if (tooltip.length() > 0) {
-						tooltip.append("\n"); //$NON-NLS-1$
-					}
-					tooltip.append(diagnostic.getMessage());
+				final String message = DiagnosticMessageExtractor.getMessage(vDiagnostic.getDiagnostic(domainObject,
+					feature));
+				if (message != null && !message.isEmpty()) {
+					return ECPTooltipModifierHelper.modifyString(message, setting);
 				}
-			}
-			if (tooltip.length() != 0) {
-				return ECPTooltipModifierHelper.modifyString(tooltip.toString(), setting);
 			}
 			final Object value = setting.get(true);
 			if (value == null) {
@@ -1207,17 +1202,9 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 		@Override
 		public String getToolTipText(Object element) {
-			final StringBuffer tooltip = new StringBuffer();
 			final VDiagnostic vDiagnostic = vTableControl.getDiagnostic();
-
-			final List<Diagnostic> diagnostics = vDiagnostic.getDiagnostics((EObject) element);
-			for (final Diagnostic diagnostic : diagnostics) {
-				if (tooltip.length() > 0) {
-					tooltip.append("\n"); //$NON-NLS-1$
-				}
-				tooltip.append(diagnostic.getMessage());
-			}
-			return ECPTooltipModifierHelper.modifyString(tooltip.toString(), null);
+			final String message = DiagnosticMessageExtractor.getMessage(vDiagnostic.getDiagnostics((EObject) element));
+			return ECPTooltipModifierHelper.modifyString(message, null);
 		}
 	}
 

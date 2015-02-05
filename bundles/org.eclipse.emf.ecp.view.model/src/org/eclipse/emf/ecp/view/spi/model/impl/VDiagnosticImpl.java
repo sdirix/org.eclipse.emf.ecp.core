@@ -15,9 +15,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.Diagnostic;
@@ -28,6 +26,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecp.view.spi.model.DiagnosticMessageExtractor;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 
@@ -215,68 +214,12 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic
 	 */
 	@Override
 	public String getMessage() {
-		String message = ""; //$NON-NLS-1$
-		if (getDiagnostics().size() == 1) {
-			final Diagnostic diagnostic = Diagnostic.class.cast(getDiagnostics().get(0));
-			if (Diagnostic.OK == diagnostic.getSeverity()) {
-				return message;
-			}
-			if (diagnostic.getChildren() != null && diagnostic.getChildren().size() == 0) {
-				return diagnostic.getMessage();
-			}
-			message = extractMessageFrom(diagnostic);
+		final List<Diagnostic> diagnostics = new ArrayList<Diagnostic>(getDiagnostics().size());
+		for (final Object o : getDiagnostics()) {
+			final Diagnostic diagnostic = (Diagnostic) o;
+			diagnostics.add(diagnostic);
 		}
-		else if (getDiagnostics().size() > 0) {
-			// for (final Object o : getDiagnostics()) {
-			// final Diagnostic diagnostic = (Diagnostic) o;
-			// if (Diagnostic.OK == diagnostic.getSeverity()) {
-			// continue;
-			// }
-			// final String diagnosticMessage = diagnostic.getMessage();
-			// message = message.concat(diagnosticMessage + "\n");
-			// }
-			final Map<EObject, Diagnostic> diagnosticMap = new LinkedHashMap<EObject, Diagnostic>();
-			final List<Diagnostic> diagnostics = new ArrayList<Diagnostic>(getDiagnostics().size());
-			for (final Object o : getDiagnostics()) {
-				final Diagnostic diagnostic = (Diagnostic) o;
-				diagnostics.add(diagnostic);
-			}
-			sortDiagnostics(diagnostics);
-			for (final Object o : diagnostics) {
-				final Diagnostic diagnostic = (Diagnostic) o;
-				if (Diagnostic.OK == diagnostic.getSeverity()) {
-					continue;
-				}
-				if (diagnostic.getData() != null && diagnostic.getData().size() != 0
-					&& EObject.class.isInstance(diagnostic.getData().get(0))) {
-					if (!diagnosticMap.containsKey(diagnostic.getData().get(0))) {
-						diagnosticMap.put((EObject) diagnostic.getData().get(0), diagnostic);
-					}
-				}
-			}
-			final StringBuilder sb = new StringBuilder();
-			for (final Diagnostic diagnostic : diagnosticMap.values()) {
-				if (sb.length() > 0)
-				{
-					sb.append("\n"); //$NON-NLS-1$
-				}
-				sb.append(extractMessageFrom(diagnostic));
-			}
-			message = sb.toString();
-		}
-		return message;
-	}
-
-	private String extractMessageFrom(final Diagnostic diagnostic) {
-		final StringBuilder sb = new StringBuilder();
-		for (final Diagnostic childDiagnostic : diagnostic.getChildren()) {
-			if (sb.length() > 0)
-			{
-				sb.append("\n"); //$NON-NLS-1$
-			}
-			sb.append(childDiagnostic.getMessage());
-		}
-		return sb.toString();
+		return DiagnosticMessageExtractor.getMessage(diagnostics);
 	}
 
 	private void sortDiagnostics(final List<Diagnostic> diagnostics) {
@@ -319,12 +262,6 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic
 			&& EcoreUtil.isAncestor(eObject, (EObject) diagnostic.getData().get(0))) {
 			result.add(diagnostic);
 		}
-		// for (final Diagnostic childDiagnostic : diagnostic.getChildren()) {
-		// if (childDiagnostic.getSeverity() == Diagnostic.OK) {
-		// continue;
-		// }
-		// result.addAll(getDiagnostics(childDiagnostic, eObject));
-		// }
 		return result;
 	}
 
@@ -353,7 +290,8 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic
 		EStructuralFeature eStructuralFeature) {
 		final List<Diagnostic> result = new ArrayList<Diagnostic>();
 		if (diagnostic.getData() != null && diagnostic.getData().size() > 1
-			&& eObject.equals(diagnostic.getData().get(0)) && eStructuralFeature.equals(diagnostic.getData().get(1))) {
+			&& EcoreUtil.isAncestor(eObject, (EObject) diagnostic.getData().get(0))
+			&& eStructuralFeature.equals(diagnostic.getData().get(1))) {
 			if (diagnostic.getChildren() == null || diagnostic.getChildren().size() == 0) {
 				result.add(diagnostic);
 			} else {
@@ -361,7 +299,6 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic
 					if (childDiagnostic.getSeverity() == Diagnostic.OK) {
 						continue;
 					}
-					// result.addAll(getDiagnostics(childDiagnostic, eObject, eStructuralFeature));
 					result.add(childDiagnostic);
 				}
 			}

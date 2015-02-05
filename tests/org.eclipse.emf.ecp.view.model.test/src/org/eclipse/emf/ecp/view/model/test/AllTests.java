@@ -7,20 +7,23 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- * Eugen - initial API and implementation
+ * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.model.test;
 
+import org.eclipse.emf.ecp.view.spi.model.DiagnosticMessageExtractor_Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 /**
- * @author Eugen
+ * JUnit Test suite for ecp.view.model .
+ *
+ * @author Eugen Neufeld
  *
  */
 @RunWith(Suite.class)
-@SuiteClasses({ DomainModelReference_Test.class })
+@SuiteClasses({ DomainModelReference_Test.class, DiagnosticMessageExtractor_Test.class })
 public class AllTests {
-
+	// JUnit 4 Test Suite
 }
