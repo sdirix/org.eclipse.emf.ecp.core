@@ -39,6 +39,7 @@ public class ChangeBrokerImpl implements ChangeBroker, NotificationReceiver {
 
 	private final Set<NotificationProvider> providers = new CopyOnWriteArraySet<NotificationProvider>();
 	private boolean stopNotifyingEMFObservers;
+	private final Set<Object> blocker = new CopyOnWriteArraySet<Object>();
 
 	private final Set<Notification> runningNotifications = new LinkedHashSet<Notification>();
 
@@ -111,7 +112,8 @@ public class ChangeBrokerImpl implements ChangeBroker, NotificationReceiver {
 	}
 
 	private synchronized boolean startNotify(Notification notification) {
-		final boolean includeEMFObservers = !stopNotifyingEMFObservers && runningNotifications.isEmpty();
+		final boolean includeEMFObservers = !stopNotifyingEMFObservers && runningNotifications.isEmpty()
+			&& blocker.isEmpty();
 		runningNotifications.add(notification);
 		return includeEMFObservers;
 	}
@@ -235,6 +237,29 @@ public class ChangeBrokerImpl implements ChangeBroker, NotificationReceiver {
 			hashSet.addAll(strategy.getAllObservers());
 		}
 		return hashSet;
+	}
+
+	/**
+	 *
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.changebroker.spi.ChangeBroker#stopNotification(java.lang.Object)
+	 */
+	@Override
+	public void stopNotification(Object blocker) {
+		this.blocker.add(blocker);
+	}
+
+	/**
+	 *
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.changebroker.spi.ChangeBroker#continueNotification(java.lang.Object)
+	 */
+	@Override
+	public void continueNotification(Object blocker) {
+		this.blocker.remove(blocker);
+		continueNotification();
 	}
 
 }
