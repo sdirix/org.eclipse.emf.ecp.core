@@ -90,8 +90,29 @@ public interface ChangeBroker {
 	void stopNotification();
 
 	/**
-	 * Notifying the {@link EMFObserver EMFObservers} is started again.
+	 * Notifying the {@link EMFObserver EMFObservers} is started again if {@link #stopNotification()} was called
+	 * beforehand. Has no effect if the notification process has been {@link #stopNotification(Object) blocked} or if
+	 * {@link #stopNotification()} wasn't called before.
 	 */
 	void continueNotification();
+
+	/**
+	 * Stops notifying all {@link EMFObserver EMFObservers}. {@link ReadOnlyEMFObserver ReadOnlyEMFObservers} will still
+	 * be notified. The notifications will we blocked until {@link #continueNotification(Object)} has been called with
+	 * <b>all</b> blocking elements. Using the same blocker multiple times has no effect.
+	 *
+	 * @param blocker the key object used to block all notifications
+	 *
+	 */
+	void stopNotification(Object blocker);
+
+	/**
+	 * Removes a {@link #stopNotification(Object) blocker}. When <b>all</b> blockers have been removed the
+	 * notification process will continue. This method calls {@link #continueNotification()} internally in all cases,
+	 * even if the given blocker object was not used as a blocker beforehand.
+	 *
+	 * @param blocker the blocker object to remove.
+	 */
+	void continueNotification(Object blocker);
 
 }
