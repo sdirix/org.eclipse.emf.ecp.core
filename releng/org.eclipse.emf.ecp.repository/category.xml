@@ -3,7 +3,13 @@
    <feature id="org.eclipse.emf.ecp.feature" version="1.5.0.qualifier">
       <category name="org.eclipse.emf.ecp.category"/>
    </feature>
+   <feature id="org.eclipse.emf.ecp.cdo.feature" version="1.5.0.qualifier">
+      <category name="org.eclipse.emf.ecp.category"/>
+   </feature>
    <feature id="org.eclipse.emf.ecp.emfstore.feature" version="1.5.0.qualifier">
+      <category name="org.eclipse.emf.ecp.category"/>
+   </feature>
+   <feature id="org.eclipse.emf.ecp.workspace.feature" version="1.5.0.qualifier">
       <category name="org.eclipse.emf.ecp.category"/>
    </feature>
    <feature id="org.eclipse.emf.ecp.e3.feature" version="1.5.0.qualifier">
@@ -63,6 +69,9 @@
    <feature id="org.eclipse.emf.ecp.view.template.helper.feature" version="1.5.0.qualifier">
       <category name="org.eclipse.emf.ecp.emfforms"/>
    </feature>
+   <feature id="org.eclipse.emf.ecp.view.unset.feature" version="1.5.0.qualifier">
+      <category name="org.eclipse.emf.ecp.emfforms"/>
+   </feature>
    <feature id="org.eclipse.emf.ecp.ecore.feature" version="1.5.0.qualifier">
       <category name="org.eclipse.emf.ecp.emfforms"/>
    </feature>
@@ -84,6 +93,12 @@
    <feature id="org.eclipse.emf.ecp.view.model.controls.feature" version="1.5.0.qualifier">
       <category name="org.eclipse.emf.ecp.emfforms"/>
    </feature>
+   <feature id="org.eclipse.emf.ecp.diffmerge.feature" version="1.5.0.qualifier">
+      <category name="org.eclipse.emf.ecp.category"/>
+   </feature>
+   <feature id="org.eclipse.emf.ecp.validation.view.feature" version="1.5.0.qualifier">
+      <category name="org.eclipse.emf.ecp.category"/>
+   </feature>
    <feature id="org.eclipse.emf.ecp.emfforms.idetooling.feature" version="1.5.0.qualifier">
       <category name="org.eclipse.emf.ecp.emfforms"/>
    </feature>
@@ -96,6 +111,18 @@
    <feature id="org.eclipse.emf.ecp.view.stack.feature" version="1.5.0.qualifier">
       <category name="org.eclipse.emf.ecp.view"/>
    </feature>
+   <feature id="org.eclipse.emf.ecp.view.di.feature" version="1.5.0.qualifier">
+      <category name="org.eclipse.emf.ecp.emfforms"/>
+   </feature>
+   <feature id="org.eclipse.emf.ecp.view.compoundcontrol.feature" version="1.5.0.qualifier">
+      <category name="org.eclipse.emf.ecp.view"/>
+   </feature>
+   <feature id="org.eclipse.emf.ecp.view.validation.bean.feature" version="1.5.0.qualifier">
+      <category name="org.eclipse.emf.ecp.emfforms"/>
+   </feature>
+   <feature id="org.eclipse.emf.ecp.view.section.feature" version="1.5.0.qualifier">
+      <category name="org.eclipse.emf.ecp.emfforms"/>
+   </feature>
    <feature id="org.eclipse.emf.ecp.view.viewproxy.feature" version="1.5.0.qualifier">
       <category name="org.eclipse.emf.ecp.view"/>
    </feature>
@@ -105,15 +132,18 @@
    <feature url="features/org.eclipse.emf.ecp.view.indexdmr.feature_1.5.0.qualifier.jar" id="org.eclipse.emf.ecp.view.indexdmr.feature" version="1.5.0.qualifier">
       <category name="org.eclipse.emf.ecp.emfforms"/>
    </feature>
+   <feature url="features/org.eclipse.emf.ecp.view.validation.initial.feature_1.5.0.qualifier.jar" id="org.eclipse.emf.ecp.view.validation.initial.feature" version="1.5.0.qualifier">
+      <category name="org.eclipse.emf.ecp.emfforms"/>
+   </feature>
    <feature url="features/org.eclipse.emf.ecp.view.edapt.feature_1.5.0.qualifier.jar" id="org.eclipse.emf.ecp.view.edapt.feature" version="1.5.0.qualifier">
       <category name="org.eclipse.emf.ecp.emfforms"/>
    </feature>
    <feature id="org.eclipse.emf.ecp.view.table.celleditor.rcp.feature" version="1.5.0.qualifier">
       <category name="org.eclipse.emf.ecp.emfforms"/>
    </feature>
-   <feature id="org.eclipse.emf.ecp.view.compoundcontrol.feature" version="1.5.0.qualifier">
+   <bundle id="org.eclipse.emf.ecp.view.group.swt.collapsible.pgroup" version="1.5.0.qualifier">
       <category name="org.eclipse.emf.ecp.view"/>
-   </feature>
+   </bundle>
    <category-def name="org.eclipse.emf.ecp.sdk" label="All SDKs  (install one of these)">
       <description>
          Contains the ECP SDKs. Please install only one of these.
