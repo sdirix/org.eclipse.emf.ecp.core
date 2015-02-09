@@ -103,20 +103,31 @@ public final class EcoreHelper {
 				continue;
 			}
 			final EObject eObject = physicalResource.getContents().get(0);
+			EcoreUtil.resolveAll(eObject);
 			final EPackage ePackage = EPackage.class.cast(eObject);
 
 			if (isContainedInPackageRegistry(ePackage.getNsURI())) {
-				continue;
+				if (!ALL_NSURIS_REGISTERED_BY_TOOLING.contains(ePackage.getNsURI())) {
+					continue;
+				}
+				final EPackage registeredPackage = EPackage.Registry.INSTANCE.getEPackage(ePackage.getNsURI());
+				if (EcoreUtil.equals(ePackage, registeredPackage)) {
+					continue;
+				}
 			}
-			final String platformResourceURI = physicalResource.getURI().toString();
-			physicalResource.getContents().remove(ePackage);
-			final Resource virtualResource = virtualResourceSet.createResource(URI.createURI(ePackage.getNsURI()));
-			virtualResource.getContents().add(ePackage);
-			EPackage.Registry.INSTANCE.put(ePackage.getNsURI(), ePackage);
-			ALL_NSURIS_REGISTERED_BY_TOOLING.add(ePackage.getNsURI());
-			WORKSPACEURI_TO_REGISTEREDPACKAGE.put(platformResourceURI, ePackage);
+			updateRegistryAndLocalCache(ePackage, physicalResource, virtualResourceSet);
 		}
+	}
 
+	private static void updateRegistryAndLocalCache(EPackage ePackage,
+		Resource oldResource, ResourceSet newResourceSet) {
+		final String platformResourceURI = oldResource.getURI().toString();
+		oldResource.getContents().remove(ePackage);
+		final Resource virtualResource = newResourceSet.createResource(URI.createURI(ePackage.getNsURI()));
+		virtualResource.getContents().add(ePackage);
+		EPackage.Registry.INSTANCE.put(ePackage.getNsURI(), ePackage);
+		ALL_NSURIS_REGISTERED_BY_TOOLING.add(ePackage.getNsURI());
+		WORKSPACEURI_TO_REGISTEREDPACKAGE.put(platformResourceURI, ePackage);
 	}
 
 	/**
@@ -207,6 +218,9 @@ public final class EcoreHelper {
 		// unregister no longer needed workspace URIs
 		for (final String toRemove : workspaceURIsToRemove) {
 			final EPackage pkgToRemove = WORKSPACEURI_TO_REGISTEREDPACKAGE.remove(toRemove);
+			if (pkgToRemove == null) {
+				continue;
+			}
 			EPackage.Registry.INSTANCE.remove(pkgToRemove.getNsURI());
 			ALL_NSURIS_REGISTERED_BY_TOOLING.remove(pkgToRemove.getNsURI());
 		}
