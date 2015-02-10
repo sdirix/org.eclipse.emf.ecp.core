@@ -425,6 +425,8 @@ public class ValidationServiceImpl implements ValidationService {
 						continue;
 					}
 					final EObject diagnosticEobject = EObject.class.cast(diagnostic.getData().get(0));
+
+					// TODO performance
 					if (!isObjectStillValid(diagnosticEobject)) {
 						continue;
 					}
@@ -481,7 +483,8 @@ public class ValidationServiceImpl implements ValidationService {
 					continue;
 				}
 				final VElement childElement = (VElement) eObject;
-				if (childElement.getDiagnostic() != null) {
+				// check that the child is visible and enabled
+				if (childElement.getDiagnostic() != null && childElement.isEnabled() && childElement.isVisible()) {
 					vDiagnostic.getDiagnostics().addAll(childElement.getDiagnostic().getDiagnostics());
 				}
 			}
