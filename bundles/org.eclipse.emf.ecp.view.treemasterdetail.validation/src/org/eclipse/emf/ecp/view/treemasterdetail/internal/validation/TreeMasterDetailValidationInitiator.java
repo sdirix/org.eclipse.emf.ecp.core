@@ -145,10 +145,10 @@ public class TreeMasterDetailValidationInitiator implements
 					return;
 				}
 				for (final TreeContextMapping treeContextEntry : mapping.keySet()) {
-					if (!mapping.get(treeContextEntry).contains(notification.getNotifier())) {
+					if (!mapping.get(treeContextEntry).contains(manipulateSelection(notification.getNotifier()))) {
 						return;
 					}
-					final Set<Object> children = getAllChildren(manipulateSelection(notification.getNotifier()),
+					final Set<Object> children = getAllChildren(notification.getNotifier(),
 						adapterFactoryContentProvider);
 					if (mapping.get(treeContextEntry).containsAll(children)) {
 						return;
