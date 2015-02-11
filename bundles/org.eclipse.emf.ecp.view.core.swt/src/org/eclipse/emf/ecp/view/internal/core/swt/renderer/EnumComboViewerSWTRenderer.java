@@ -51,10 +51,10 @@ public class EnumComboViewerSWTRenderer extends SimpleControlJFaceViewerSWTRende
 	@Override
 	protected Binding[] createBindings(Viewer viewer, Setting setting) {
 		final Binding binding = getDataBindingContext().bindValue(ViewersObservables.observeSingleSelection(viewer),
-			getModelValue(setting));
+			getModelValue());
 		final Binding tooltipBinding = getDataBindingContext().bindValue(
 			SWTObservables.observeTooltipText(viewer.getControl()),
-			getModelValue(setting));
+			getModelValue());
 		return new Binding[] { binding, tooltipBinding };
 	}
 

@@ -20,7 +20,7 @@ import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.observable.value.WritableValue;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
-import org.eclipse.emf.databinding.edit.EMFEditProperties;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.edit.spi.swt.util.SWTValidationHelper;
 import org.eclipse.emf.ecp.view.internal.core.swt.Activator;
@@ -29,6 +29,7 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
@@ -42,6 +43,7 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
@@ -182,19 +184,17 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 	}
 
 	/**
-	 * Returns an {@link IObservableValue} based on the provided {@link Setting}.
+	 * Returns an {@link IObservableValue} based on the control's domain model reference and domain model.
 	 *
-	 * @param setting the {@link Setting} to get the {@link IObservableValue} for
 	 * @return the {@link IObservableValue}
 	 */
-	protected final IObservableValue getModelValue(final Setting setting) {
-		if (modelValue == null) {
+	protected final IObservableValue getModelValue() {
+		final VDomainModelReference ref = getVElement().getDomainModelReference();
+		final EObject eObject = getViewModelContext().getDomainModel();
 
-			modelValue = EMFEditProperties.value(getEditingDomain(setting), setting.getEStructuralFeature())
-				.observeDetail(
-					value);
-			// modelValue = EMFEditObservables.observeValue(getEditingDomain(setting),
-			// setting.getEObject(), setting.getEStructuralFeature());
+		if (modelValue == null) {
+			final EMFFormsDatabinding databindingService = Activator.getDefault().getEMFFormsDatabinding();
+			modelValue = databindingService.getObservableValue(ref, eObject);
 		}
 		return modelValue;
 	}

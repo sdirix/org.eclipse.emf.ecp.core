@@ -74,10 +74,10 @@ public class URLSelectionControlSWTRenderer extends SimpleControlSWTControlSWTRe
 		final Composite composite = Composite.class.cast(control);
 		final Control childControl = composite.getChildren()[0];
 		final IObservableValue value = SWTObservables.observeText(childControl);
-		final Binding binding = getDataBindingContext().bindValue(value, getModelValue(setting));
+		final Binding binding = getDataBindingContext().bindValue(value, getModelValue());
 
 		final IObservableValue toolTip = SWTObservables.observeTooltipText(childControl);
-		final Binding tooltipBinding = getDataBindingContext().bindValue(toolTip, getModelValue(setting));
+		final Binding tooltipBinding = getDataBindingContext().bindValue(toolTip, getModelValue());
 		return new Binding[] { binding, tooltipBinding };
 	}
 

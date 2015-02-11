@@ -120,7 +120,7 @@ public abstract class ExpectedValueControlRenderer extends SimpleControlSWTContr
 
 		final IObservableValue value = SWTObservables.observeText(text);
 
-		final Binding binding = getDataBindingContext().bindValue(value, getModelValue(setting),
+		final Binding binding = getDataBindingContext().bindValue(value, getModelValue(),
 			targetToModelUpdateStrategy, modelToTargetUpdateStrategy);
 		return new Binding[] { binding };
 	}

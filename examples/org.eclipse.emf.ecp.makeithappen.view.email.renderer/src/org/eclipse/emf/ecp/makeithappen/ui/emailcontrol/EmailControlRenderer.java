@@ -60,7 +60,7 @@ public class EmailControlRenderer extends TextControlSWTRenderer {
 				try {
 					Desktop.getDesktop().mail(
 						URI.create("mailto:" //$NON-NLS-1$
-							+ getModelValue(setting).getValue()));
+							+ getModelValue().getValue()));
 				} catch (final IOException e1) {
 					// ignore failure to open mailto
 				}

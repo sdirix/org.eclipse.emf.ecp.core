@@ -74,11 +74,11 @@ public class ControlRootEClassControl2SWTRenderer extends SimpleControlSWTContro
 		final Binding[] bindings = new Binding[3];
 		final IObservableValue value = SWTObservables.observeText(label);
 
-		bindings[0] = getDataBindingContext().bindValue(value, getModelValue(setting), new UpdateValueStrategy() {
+		bindings[0] = getDataBindingContext().bindValue(value, getModelValue(), new UpdateValueStrategy() {
 
 			@Override
 			public Object convert(Object value) {
-				return getModelValue(setting).getValue();
+				return getModelValue().getValue();
 			}
 		}, new UpdateValueStrategy() {
 			@Override
@@ -88,12 +88,12 @@ public class ControlRootEClassControl2SWTRenderer extends SimpleControlSWTContro
 			}
 		});
 		final IObservableValue tooltipValue = SWTObservables.observeTooltipText(label);
-		bindings[1] = getDataBindingContext().bindValue(tooltipValue, getModelValue(setting),
+		bindings[1] = getDataBindingContext().bindValue(tooltipValue, getModelValue(),
 			new UpdateValueStrategy() {
 
 				@Override
 				public Object convert(Object value) {
-					return getModelValue(setting).getValue();
+					return getModelValue().getValue();
 				}
 			}, new UpdateValueStrategy() {
 				@Override
@@ -103,11 +103,11 @@ public class ControlRootEClassControl2SWTRenderer extends SimpleControlSWTContro
 			});
 
 		final IObservableValue imageValue = SWTObservables.observeImage(imageLabel);
-		bindings[2] = getDataBindingContext().bindValue(imageValue, getModelValue(setting), new UpdateValueStrategy() {
+		bindings[2] = getDataBindingContext().bindValue(imageValue, getModelValue(), new UpdateValueStrategy() {
 
 			@Override
 			public Object convert(Object value) {
-				return getModelValue(setting).getValue();
+				return getModelValue().getValue();
 			}
 		}, new UpdateValueStrategy() {
 			@Override

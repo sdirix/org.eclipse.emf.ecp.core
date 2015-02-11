@@ -64,7 +64,7 @@ public class AttributeValueControlSWTRenderer extends SimpleControlSWTControlSWT
 	protected Binding[] createBindings(Control control, Setting setting) {
 		final Label label = (Label) Composite.class.cast(control).getChildren()[0];
 		final Binding binding = getDataBindingContext().bindValue(SWTObservables.observeText(label),
-			getModelValue(setting), new UpdateValueStrategy(), new UpdateValueStrategy() {
+			getModelValue(), new UpdateValueStrategy(), new UpdateValueStrategy() {
 
 				/**
 				 * {@inheritDoc}

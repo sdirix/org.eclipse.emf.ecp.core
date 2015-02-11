@@ -65,7 +65,7 @@ public class HexColorSelectionControlSWTRenderer extends SimpleControlSWTControl
 		final Composite composite = Composite.class.cast(control);
 		final Control childControl = composite.getChildren()[0];
 		final IObservableValue value = SWTObservables.observeBackground(childControl);
-		final Binding binding = getDataBindingContext().bindValue(value, getModelValue(setting),
+		final Binding binding = getDataBindingContext().bindValue(value, getModelValue(),
 			new UpdateValueStrategy() {
 				@Override
 				public Object convert(Object value) {
@@ -90,7 +90,7 @@ public class HexColorSelectionControlSWTRenderer extends SimpleControlSWTControl
 
 			});
 		final IObservableValue textValue = SWTObservables.observeTooltipText(childControl);
-		final Binding textBinding = getDataBindingContext().bindValue(textValue, getModelValue(setting));
+		final Binding textBinding = getDataBindingContext().bindValue(textValue, getModelValue());
 		return new Binding[] { binding, textBinding };
 	}
 

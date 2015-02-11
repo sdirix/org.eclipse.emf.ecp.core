@@ -64,10 +64,10 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 		final TargetToModelUpdateStrategy targetToModelUpdateStrategy = new TargetToModelUpdateStrategy(
 			setting.getEStructuralFeature().isUnsettable());
 		final ModelToTargetUpdateStrategy modelToTargetUpdateStrategy = new ModelToTargetUpdateStrategy(false);
-		final Binding binding = bindValue(control, getModelValue(setting), getDataBindingContext(),
+		final Binding binding = bindValue(control, getModelValue(), getDataBindingContext(),
 			targetToModelUpdateStrategy,
 			modelToTargetUpdateStrategy);
-		final Binding tooltipBinding = createTooltipBinding(control, getModelValue(setting), getDataBindingContext(),
+		final Binding tooltipBinding = createTooltipBinding(control, getModelValue(), getDataBindingContext(),
 			targetToModelUpdateStrategy,
 			new ModelToTargetUpdateStrategy(true));
 		return new Binding[] { binding, tooltipBinding };

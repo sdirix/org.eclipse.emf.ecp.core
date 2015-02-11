@@ -293,22 +293,22 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 	protected Binding[] createBindings(Control control, Setting setting) {
 		final Text text = (Text) ((Composite) control).getChildren()[0];
 		final Button button = (Button) ((Composite) control).getChildren()[1];
-		button.addSelectionListener(new SelectionAdapterExtension(text, button, getModelValue(setting),
+		button.addSelectionListener(new SelectionAdapterExtension(text, button, getModelValue(),
 			getViewModelContext(),
 			getDataBindingContext(), setting.getEStructuralFeature()));
 
 		final IObservableValue value = SWTObservables.observeText(text, SWT.FocusOut);
 
 		final DateTargetToModelUpdateStrategy targetToModelUpdateStrategy = new DateTargetToModelUpdateStrategy(
-			setting.getEStructuralFeature(), getModelValue(setting), getDataBindingContext(),
+			setting.getEStructuralFeature(), getModelValue(), getDataBindingContext(),
 			text);
 
 		final DateModelToTargetUpdateStrategy modelToTargetUpdateStrategy = new DateModelToTargetUpdateStrategy(false);
 
-		final Binding binding = getDataBindingContext().bindValue(value, getModelValue(setting),
+		final Binding binding = getDataBindingContext().bindValue(value, getModelValue(),
 			targetToModelUpdateStrategy, modelToTargetUpdateStrategy);
 
-		final Binding tooltipBinding = createTooltipBinding(control, getModelValue(setting), getDataBindingContext(),
+		final Binding tooltipBinding = createTooltipBinding(control, getModelValue(), getDataBindingContext(),
 			targetToModelUpdateStrategy, new DateModelToTargetUpdateStrategy(true));
 		return new Binding[] { binding, tooltipBinding };
 	}

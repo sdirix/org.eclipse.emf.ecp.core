@@ -114,11 +114,11 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 		final Binding[] bindings = new Binding[2];
 		final IObservableValue value = SWTObservables.observeText(setLabel);
 
-		bindings[0] = getDataBindingContext().bindValue(value, getModelValue(setting), new UpdateValueStrategy() {
+		bindings[0] = getDataBindingContext().bindValue(value, getModelValue(), new UpdateValueStrategy() {
 
 			@Override
 			public Object convert(Object value) { // target to model
-				return getModelValue(setting).getValue();
+				return getModelValue().getValue();
 			}
 		}, new UpdateValueStrategy() {// model to target
 				@Override
@@ -129,7 +129,7 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 			});
 
 		final IObservableValue imageValue = SWTObservables.observeImage(imageLabel);
-		bindings[1] = getDataBindingContext().bindValue(imageValue, getModelValue(setting),
+		bindings[1] = getDataBindingContext().bindValue(imageValue, getModelValue(),
 			new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER)
 			, new UpdateValueStrategy() {
 				@Override
@@ -309,7 +309,7 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 
 		final Button setBtn = createButtonForAction(new NewReferenceAction(getEditingDomain(setting), setting,
 			getItemPropertyDescriptor(setting), null), composite); // getViewModelContext().getService(ReferenceService.class)
-		setBtn.addSelectionListener(new SelectionAdapterExtension(setLabel, getModelValue(setting),
+		setBtn.addSelectionListener(new SelectionAdapterExtension(setLabel, getModelValue(),
 			getViewModelContext(),
 			getDataBindingContext(), setting.getEStructuralFeature()));
 

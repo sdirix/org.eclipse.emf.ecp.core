@@ -96,9 +96,9 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 		final IObservableValue dateObserver = SWTObservables.observeSelection(date);
 		final IObservableValue timeObserver = SWTObservables.observeSelection(time);
 		final IObservableValue target = new DateAndTimeObservableValue(dateObserver, timeObserver);
-		final Binding binding = getDataBindingContext().bindValue(target, getModelValue(setting));
+		final Binding binding = getDataBindingContext().bindValue(target, getModelValue());
 
-		setBtn.addSelectionListener(new SetBtnSelectionAdapterExtension(setBtn, getModelValue(setting),
+		setBtn.addSelectionListener(new SetBtnSelectionAdapterExtension(setBtn, getModelValue(),
 			getViewModelContext()));
 
 		unsetBtn.addSelectionListener(new UnsetBtnSelectionAdapterExtension());
@@ -294,7 +294,7 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 			final Command removeCommand = SetCommand.create(getEditingDomain(setting), setting.getEObject(),
 				setting.getEStructuralFeature(), null);
 			getEditingDomain(setting).getCommandStack().execute(removeCommand);
-			updateChangeListener(getModelValue(setting).getValue());
+			updateChangeListener(getModelValue().getValue());
 		}
 
 	}
