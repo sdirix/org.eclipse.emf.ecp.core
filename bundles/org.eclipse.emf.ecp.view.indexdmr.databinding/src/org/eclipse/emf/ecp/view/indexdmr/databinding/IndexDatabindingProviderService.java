@@ -56,10 +56,6 @@ public class IndexDatabindingProviderService extends
 	public <P extends IProperty> P getProperty(
 			VFeaturePathDomainModelReference domainModelReference,
 			Class<P> propertyClass) {
-		
-		VFeaturePathDomainModelReference subDMR = (VFeaturePathDomainModelReference)ModelReferenceHelper.createDomainModelReference(domainModelReference.getDomainModelEReferencePath().get(domainModelReference.getDomainModelEReferencePath().size()-1), domainModelReference.getDomainModelEReferencePath().subList(0, domainModelReference.getDomainModelEReferencePath().size()-1));
-		IValueProperty property=(IValueProperty) super.getProperty(subDMR, propertyClass);
-		
 		final VIndexDomainModelReference indexDomainModelReference = (VIndexDomainModelReference) domainModelReference;
 
 		final EMFIndexedValueProperty valueProperty = new EMFIndexedValueProperty(
@@ -69,6 +65,11 @@ public class IndexDatabindingProviderService extends
 				.value(getPropertyOfChild(indexDomainModelReference
 						.getTargetDMR()));
 
+		if(domainModelReference.getDomainModelEReferencePath().isEmpty())
+			return (P) value;
+		
+		VFeaturePathDomainModelReference subDMR = (VFeaturePathDomainModelReference)ModelReferenceHelper.createDomainModelReference(domainModelReference.getDomainModelEReferencePath().get(domainModelReference.getDomainModelEReferencePath().size()-1), domainModelReference.getDomainModelEReferencePath().subList(0, domainModelReference.getDomainModelEReferencePath().size()-1));
+		IValueProperty property=(IValueProperty) super.getProperty(subDMR, propertyClass);
 		// property.value(valueProperty);
 		return (P) property.value(value);
 	}
