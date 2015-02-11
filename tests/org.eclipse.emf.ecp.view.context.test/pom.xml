@@ -25,17 +25,18 @@
 					<dependencies>
 						<dependency>
 							<type>eclipse-feature</type>
-							<artifactId>org.eclipse.emf.ecp.target.feature</artifactId>
-							<version>0.0.0</version>
-						</dependency>
-						<dependency>
-							<type>eclipse-feature</type>
 							<artifactId>org.eclipse.emf.ecp.viewmodel.feature</artifactId>
 							<version>0.0.0</version>
 						</dependency>
 						<dependency>
 							<type>eclipse-feature</type>
-							<artifactId>org.eclipse.emf.ecp.feature</artifactId>
+							<artifactId>org.eclipse.emf.ecp.target.feature</artifactId>
+							<version>0.0.0</version>
+						</dependency>
+						<!-- 
+						<dependency>
+							<type>eclipse-feature</type>
+							<artifactId>org.eclipse.emf.ecp.emfforms.runtime.feature</artifactId>
 							<version>0.0.0</version>
 						</dependency>
 						<dependency>
@@ -43,6 +44,7 @@
 							<artifactId>org.eclipse.emf.emfstore.example.feature</artifactId>
 							<version>0.0.0</version>
 						</dependency>
+						 -->
 					</dependencies>
 				</configuration>
 			</plugin>
