@@ -103,7 +103,7 @@
 					<excludes>
 						<feature id="org.eclipse.emf.ecp.license.feature"/>
 					</excludes>
-					<labelSuffix> incl. Sources</labelSuffix>
+					<labelSuffix>&#xA0;incl. Sources</labelSuffix>
 				</configuration>
 			</plugin>
 			
