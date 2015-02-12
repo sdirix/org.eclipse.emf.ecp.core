@@ -50,6 +50,7 @@ public class ViewRenderer_PTest {
 		context = Mockito.mock(ViewModelContext.class);
 		shell = new Shell();
 		viewRenderer = new ViewSWTRenderer(view, context, factory);
+		viewRenderer.init();
 
 	}
 

@@ -30,6 +30,7 @@ public class BooleanControlRenderer_PTest extends AbstractControl_PTest {
 		final SWTRendererFactory factory = mock(SWTRendererFactory.class);
 		setup();
 		renderer = new BooleanControlSWTRenderer(vControl, context, factory);
+		renderer.init();
 	}
 
 	@After

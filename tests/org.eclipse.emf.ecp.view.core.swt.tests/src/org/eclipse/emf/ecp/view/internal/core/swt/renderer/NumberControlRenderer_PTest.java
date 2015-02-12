@@ -28,7 +28,8 @@ public class NumberControlRenderer_PTest extends AbstractControl_PTest {
 	public void before() {
 		final SWTRendererFactory factory = mock(SWTRendererFactory.class);
 		setup();
-		new NumberControlSWTRenderer(vControl, context, factory);
+		renderer = new NumberControlSWTRenderer(vControl, context, factory);
+		renderer.init();
 	}
 
 	@After

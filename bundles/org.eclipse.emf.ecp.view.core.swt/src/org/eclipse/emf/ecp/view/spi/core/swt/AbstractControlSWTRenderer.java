@@ -145,6 +145,10 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 	 * @return the color to be used as a background color
 	 */
 	protected final Color getValidationBackgroundColor(int severity) {
+		// TODO add real dispose check
+		if (modelValue == null) {
+			return null;
+		}
 		return SWTValidationHelper.INSTANCE
 			.getValidationBackgroundColor(severity, getVElement(), getViewModelContext());
 	}

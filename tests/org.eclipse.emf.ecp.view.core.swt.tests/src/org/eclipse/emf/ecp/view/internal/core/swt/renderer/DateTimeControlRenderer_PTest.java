@@ -32,6 +32,7 @@ public class DateTimeControlRenderer_PTest extends AbstractControl_PTest {
 		final SWTRendererFactory factory = mock(SWTRendererFactory.class);
 		setup();
 		renderer = new DateTimeControlSWTRenderer(vControl, context, factory);
+		renderer.init();
 	}
 
 	@After
