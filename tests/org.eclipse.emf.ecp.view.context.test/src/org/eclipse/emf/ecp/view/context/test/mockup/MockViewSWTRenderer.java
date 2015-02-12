@@ -11,18 +11,25 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.context.test.mockup;
 
-import static org.mockito.Mockito.mock;
-
+import org.eclipse.emf.ecore.EcoreFactory;
+import org.eclipse.emf.ecp.view.internal.context.ViewModelContextImpl;
 import org.eclipse.emf.ecp.view.internal.core.swt.renderer.ViewSWTRenderer;
+import org.eclipse.emf.ecp.view.internal.swt.SWTRendererFactoryImpl;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 
 public final class MockViewSWTRenderer {
 
-	private static ViewModelContext viewModelContext = mock(ViewModelContext.class);
-	private static VView vElement = mock(VView.class);
-	private static SWTRendererFactory rendererFactory = mock(SWTRendererFactory.class);
+	// private static ViewModelContext viewModelContext = mock(ViewModelContext.class);
+	// private static VView vElement = mock(VView.class);
+	// private static SWTRendererFactory rendererFactory = mock(SWTRendererFactory.class);
+
+	private static VView vElement = VViewFactory.eINSTANCE.createView();
+	private static ViewModelContext viewModelContext = new ViewModelContextImpl(vElement,
+		EcoreFactory.eINSTANCE.createEObject());
+	private static SWTRendererFactory rendererFactory = new SWTRendererFactoryImpl();
 
 	public MockViewSWTRenderer(VView vElement, ViewModelContext viewModelContext, SWTRendererFactory rendererFactory) {
 
