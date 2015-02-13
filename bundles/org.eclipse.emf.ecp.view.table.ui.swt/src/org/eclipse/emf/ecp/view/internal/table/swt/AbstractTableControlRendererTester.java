@@ -38,7 +38,7 @@ public abstract class AbstractTableControlRendererTester implements ECPRendererT
 			return NOT_APPLICABLE;
 		}
 		if (getDetailEditing() == VTableControl.class.cast(vElement).getDetailEditing()) {
-			return 2;
+			return 10;
 		}
 		return NOT_APPLICABLE;
 	}
