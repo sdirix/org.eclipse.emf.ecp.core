@@ -1,19 +1,40 @@
+/*******************************************************************************
+ * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ * Eugen Neufeld - initial API and implementation
+ * Lucas Koehler - databinding tests
+ ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.core.swt.renderer;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
+import java.util.Dictionary;
+import java.util.Hashtable;
+
+import org.eclipse.core.databinding.observable.value.WritableValue;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.DatabindingClassRunner;
+import org.eclipse.emf.ecp.view.test.common.swt.spi.SWTTestUtil;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Control;
@@ -21,6 +42,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 
 @RunWith(DatabindingClassRunner.class)
 public class BooleanControlRenderer_PTest extends AbstractControl_PTest {
@@ -75,4 +97,62 @@ public class BooleanControlRenderer_PTest extends AbstractControl_PTest {
 		super.mockControl(eObject, eStructuralFeature);
 	}
 
+	@Test
+	public void testDatabindingServiceUsageInitialBinding() throws NoRendererFoundException,
+		NoPropertyDescriptorFoundExeption {
+		final boolean initialValue = true;
+		final WritableValue mockedObservable = new WritableValue(realm, initialValue, Boolean.class);
+
+		final Button button = setUpDatabindingTest(mockedObservable);
+		assertEquals(initialValue, button.getSelection());
+
+	}
+
+	@Test
+	public void testDatabindingServiceUsageChangeObservable() throws NoRendererFoundException,
+		NoPropertyDescriptorFoundExeption {
+		final boolean initialValue = true;
+		final boolean changedValue = false;
+		final WritableValue mockedObservable = new WritableValue(realm, initialValue, Boolean.class);
+
+		final Button button = setUpDatabindingTest(mockedObservable);
+		mockedObservable.setValue(changedValue);
+		assertEquals(changedValue, button.getSelection());
+
+	}
+
+	@Test
+	public void testDatabindingServiceUsageChangeControl() throws NoRendererFoundException,
+		NoPropertyDescriptorFoundExeption {
+		final boolean initialValue = true;
+		final WritableValue mockedObservable = new WritableValue(realm, initialValue, Boolean.class);
+
+		final Button button = setUpDatabindingTest(mockedObservable);
+		SWTTestUtil.clickButton(button);
+
+		assertEquals(button.getSelection(), mockedObservable.getValue());
+
+	}
+
+	/**
+	 * Universal set up stuff for the data binding test cases.
+	 *
+	 * @param mockedObservable
+	 * @return
+	 * @throws NoRendererFoundException
+	 * @throws NoPropertyDescriptorFoundExeption
+	 */
+	private Button setUpDatabindingTest(final WritableValue mockedObservable) throws NoRendererFoundException,
+		NoPropertyDescriptorFoundExeption {
+		Mockito.reset(databindingService);
+
+		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
+			mockedObservable);
+		final Dictionary<String, Object> dictionary = new Hashtable<String, Object>();
+		dictionary.put("service.ranking", 5);
+
+		final Control renderControl = renderControl(new SWTGridCell(0, 2, renderer));
+		final Button button = (Button) renderControl;
+		return button;
+	}
 }

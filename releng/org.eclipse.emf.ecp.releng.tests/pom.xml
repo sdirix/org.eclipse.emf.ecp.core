@@ -16,6 +16,7 @@
 
 	<modules>
 		<!-- Bundles/Features -->
+		<module>../../bundles/org.eclipse.emf.ecp.test.common</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.dynamictree.model</module>
         <module>../../tests/org.eclipse.emf.ecp.view.dynamictree.model.edit</module>
         <module>../../tests/org.eclipse.emf.ecp.view.dynamictree.ui</module>
