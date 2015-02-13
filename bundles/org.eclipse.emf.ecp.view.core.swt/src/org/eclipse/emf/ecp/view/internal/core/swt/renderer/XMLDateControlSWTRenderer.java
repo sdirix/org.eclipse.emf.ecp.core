@@ -48,6 +48,8 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
@@ -141,9 +143,25 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 
 			dialog.pack();
 			dialog.layout();
-			dialog.setLocation(button.getParent().toDisplay(
-				button.getLocation().x + button.getSize().x - dialog.getSize().x,
-				button.getLocation().y + button.getSize().y));
+			final Point dialogSize = dialog.getSize();
+			final Rectangle displayBounds = dialog.getDisplay().getBounds();
+			final Point buttonLocation = button.toDisplay(button.getSize().x, button.getSize().y);
+
+			// TODO what if dialogsize > displaybounds? + some other cases
+
+			int dialogX = buttonLocation.x - dialogSize.x;
+			int dialogY = buttonLocation.y;
+			if (dialogY + dialogSize.y > displayBounds.height) {
+				dialogY = dialogY - button.getSize().y - dialogSize.y;
+			}
+			if (dialogX + dialogSize.x > displayBounds.width) {
+				dialogX = dialogX - dialogSize.x;
+			}
+			else if (dialogX - dialogSize.x < displayBounds.x) {
+				dialogX = buttonLocation.x - button.getSize().x;
+			}
+			dialog.setLocation(dialogX, dialogY);
+
 			dialog.open();
 		}
 	}

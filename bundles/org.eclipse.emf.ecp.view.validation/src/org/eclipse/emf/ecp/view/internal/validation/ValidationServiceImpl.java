@@ -387,9 +387,9 @@ public class ValidationServiceImpl implements ValidationService {
 	 * Notifies all listeners.
 	 */
 	public void notifyListeners() {
-		if (validationListener.size() > 0) {
+		if (validationListeners.size() > 0) {
 			final Set<Diagnostic> result = getDiagnosticResult();
-			for (final ViewValidationListener l : validationListener) {
+			for (final ViewValidationListener l : validationListeners) {
 				l.onNewValidation(result);
 			}
 		}
@@ -425,6 +425,8 @@ public class ValidationServiceImpl implements ValidationService {
 						continue;
 					}
 					final EObject diagnosticEobject = EObject.class.cast(diagnostic.getData().get(0));
+
+					// TODO performance
 					if (!isObjectStillValid(diagnosticEobject)) {
 						continue;
 					}
@@ -481,7 +483,8 @@ public class ValidationServiceImpl implements ValidationService {
 					continue;
 				}
 				final VElement childElement = (VElement) eObject;
-				if (childElement.getDiagnostic() != null) {
+				// check that the child is visible and enabled
+				if (childElement.getDiagnostic() != null && childElement.isEnabled() && childElement.isVisible()) {
 					vDiagnostic.getDiagnostics().addAll(childElement.getDiagnostic().getDiagnostics());
 				}
 			}
@@ -607,7 +610,7 @@ public class ValidationServiceImpl implements ValidationService {
 		validate(getAllEObjects(context.getDomainModel()));
 	}
 
-	private final Set<ViewValidationListener> validationListener = new LinkedHashSet<ViewValidationListener>();
+	private final Set<ViewValidationListener> validationListeners = new LinkedHashSet<ViewValidationListener>();
 
 	/**
 	 * {@inheritDoc}
@@ -616,7 +619,7 @@ public class ValidationServiceImpl implements ValidationService {
 	 */
 	@Override
 	public void registerValidationListener(ViewValidationListener listener) {
-		validationListener.add(listener);
+		validationListeners.add(listener);
 
 		listener.onNewValidation(getDiagnosticResult());
 	}
@@ -639,9 +642,7 @@ public class ValidationServiceImpl implements ValidationService {
 	 */
 	@Override
 	public void deregisterValidationListener(ViewValidationListener listener) {
-		// FIXME: doesn't look like deregistering is going on
-		validationListener.add(listener);
-		listener.onNewValidation(getDiagnosticResult());
+		validationListeners.remove(listener);
 	}
 
 	/**

@@ -21,6 +21,7 @@ import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.ecp.view.model.common.internal.databinding.FeaturePathDatabindingProviderService;
 import org.eclipse.emf.ecp.view.model.common.spi.databinding.DatabindingProviderService;
 import org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.ModelReferenceHelper;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.osgi.framework.BundleContext;
@@ -55,8 +56,6 @@ public class IndexDatabindingProviderService extends
 	public <P extends IProperty> P getProperty(
 			VFeaturePathDomainModelReference domainModelReference,
 			Class<P> propertyClass) {
-		// IEMFValueProperty property = (IEMFValueProperty)
-		// super.getProperty(domainModelReference, propertyClass);
 		final VIndexDomainModelReference indexDomainModelReference = (VIndexDomainModelReference) domainModelReference;
 
 		final EMFIndexedValueProperty valueProperty = new EMFIndexedValueProperty(
@@ -66,8 +65,13 @@ public class IndexDatabindingProviderService extends
 				.value(getPropertyOfChild(indexDomainModelReference
 						.getTargetDMR()));
 
+		if(domainModelReference.getDomainModelEReferencePath().isEmpty())
+			return (P) value;
+		
+		VFeaturePathDomainModelReference subDMR = (VFeaturePathDomainModelReference)ModelReferenceHelper.createDomainModelReference(domainModelReference.getDomainModelEReferencePath().get(domainModelReference.getDomainModelEReferencePath().size()-1), domainModelReference.getDomainModelEReferencePath().subList(0, domainModelReference.getDomainModelEReferencePath().size()-1));
+		IValueProperty property=(IValueProperty) super.getProperty(subDMR, propertyClass);
 		// property.value(valueProperty);
-		return (P) value;
+		return (P) property.value(value);
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })

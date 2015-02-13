@@ -15,6 +15,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import java.math.BigInteger;
 import java.util.Set;
@@ -618,5 +622,99 @@ public class ChangeBroker_Test {
 		assertEquals(2, registeredObservers.size());
 		assertTrue(registeredObservers.contains(obs1));
 		assertTrue(registeredObservers.contains(obs2));
+	}
+
+	@Test
+	public void testBlockNotification() {
+		final ReadOnlyEMFObserver readOnlyEMFObserver = mock(ReadOnlyEMFObserver.class);
+		final EMFObserver emfObserver = mock(EMFObserver.class);
+		broker.subscribe(readOnlyEMFObserver);
+		broker.subscribe(emfObserver);
+
+		broker.stopNotification(this);
+		tournament.setType(TournamentType.PRO);
+
+		verify(readOnlyEMFObserver, times(1)).handleNotification(any(Notification.class));
+		verify(emfObserver, times(0)).handleNotification(any(Notification.class));
+	}
+
+	@Test
+	public void testBlockNotificationAndCallContinue() {
+		final ReadOnlyEMFObserver readOnlyEMFObserver = mock(ReadOnlyEMFObserver.class);
+		final EMFObserver emfObserver = mock(EMFObserver.class);
+		broker.subscribe(readOnlyEMFObserver);
+		broker.subscribe(emfObserver);
+
+		broker.stopNotification(this);
+		broker.continueNotification();
+		tournament.setType(TournamentType.PRO);
+
+		verify(readOnlyEMFObserver, times(1)).handleNotification(any(Notification.class));
+		verify(emfObserver, times(0)).handleNotification(any(Notification.class));
+	}
+
+	@Test
+	public void testUnBlockNotification() {
+		final ReadOnlyEMFObserver readOnlyEMFObserver = mock(ReadOnlyEMFObserver.class);
+		final EMFObserver emfObserver = mock(EMFObserver.class);
+		broker.subscribe(readOnlyEMFObserver);
+		broker.subscribe(emfObserver);
+
+		broker.stopNotification(this);
+		broker.continueNotification(this);
+		tournament.setType(TournamentType.PRO);
+
+		verify(readOnlyEMFObserver, times(1)).handleNotification(any(Notification.class));
+		verify(emfObserver, times(1)).handleNotification(any(Notification.class));
+	}
+
+	@Test
+	public void testMultipleBlockers() {
+		final ReadOnlyEMFObserver readOnlyEMFObserver = mock(ReadOnlyEMFObserver.class);
+		final EMFObserver emfObserver = mock(EMFObserver.class);
+		broker.subscribe(readOnlyEMFObserver);
+		broker.subscribe(emfObserver);
+
+		broker.stopNotification(this);
+		broker.stopNotification(this.getClass());
+		broker.continueNotification(this);
+		tournament.setType(TournamentType.PRO);
+
+		verify(readOnlyEMFObserver, times(1)).handleNotification(any(Notification.class));
+		verify(emfObserver, times(0)).handleNotification(any(Notification.class));
+	}
+
+	@Test
+	public void testRemoveMultipleBlockers() {
+		final ReadOnlyEMFObserver readOnlyEMFObserver = mock(ReadOnlyEMFObserver.class);
+		final EMFObserver emfObserver = mock(EMFObserver.class);
+		broker.subscribe(readOnlyEMFObserver);
+		broker.subscribe(emfObserver);
+
+		broker.stopNotification(this);
+		broker.stopNotification(this.getClass());
+		broker.continueNotification(this);
+		broker.continueNotification(this.getClass());
+		tournament.setType(TournamentType.PRO);
+
+		verify(readOnlyEMFObserver, times(1)).handleNotification(any(Notification.class));
+		verify(emfObserver, times(1)).handleNotification(any(Notification.class));
+	}
+
+	@Test
+	public void testRemovingBlockerContinuesUpdate() {
+
+		final ReadOnlyEMFObserver readOnlyEMFObserver = mock(ReadOnlyEMFObserver.class);
+		final EMFObserver emfObserver = mock(EMFObserver.class);
+		broker.subscribe(readOnlyEMFObserver);
+		broker.subscribe(emfObserver);
+
+		broker.stopNotification(this);
+		broker.stopNotification();
+		broker.continueNotification(this);
+		tournament.setType(TournamentType.PRO);
+
+		verify(readOnlyEMFObserver, times(1)).handleNotification(any(Notification.class));
+		verify(emfObserver, times(1)).handleNotification(any(Notification.class));
 	}
 }

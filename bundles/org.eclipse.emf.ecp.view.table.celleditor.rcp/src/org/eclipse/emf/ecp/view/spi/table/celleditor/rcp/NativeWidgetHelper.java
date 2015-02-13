@@ -22,8 +22,9 @@
  * Alexander Ljungberg <siker@norwinter.com> - Bug 260061
  * Jeanderson Candido <http://jeandersonbc.github.io> - Bug 414565
  *******************************************************************************/
-package org.eclipse.emf.ecp.edit.internal.swt.util;
+package org.eclipse.emf.ecp.view.spi.table.celleditor.rcp;
 
+import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
@@ -33,6 +34,9 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 
 /**
  * Util class for faking native widgets.
@@ -40,21 +44,66 @@ import org.eclipse.swt.widgets.Shell;
  * @author jfaltermeier
  *
  */
-public final class NativeWidgetFakeUtil {
+public final class NativeWidgetHelper {
 
 	private static final String WS_CARBON = "carbon";//$NON-NLS-1$
 	private static final String WS_COCOA = "cocoa";//$NON-NLS-1$
 
+	private static final String CHECKED_DEFAULT = "icons/checked.png"; //$NON-NLS-1$
+	private static final String UNCHECKED_DEFAULT = "icons/unchecked.png"; //$NON-NLS-1$
+
+	private static ServiceReference<ImageRegistryService> imageRegistryServiceReference;
+
 	private static ImageData checked;
 	private static ImageData unchecked;
 
-	private NativeWidgetFakeUtil() {
+	private NativeWidgetHelper() {
 		// util
 	}
 
 	/**
+	 * Creates screenshots of the platform's native checkbox in checked and unchecked state. The images can be accessed
+	 * via {@link NativeWidgetHelper#getCheckBoxImage(Control, CheckBoxState)}.
+	 *
+	 * @param control a control which provides the {@link org.eclipse.swt.widgets.Display Display} and {@link Shell} to
+	 *            create the screen shots
+	 */
+	public static void initCheckBoxImages(Control control) {
+		createCheckBoxImage(control, true);
+		createCheckBoxImage(control, false);
+	}
+
+	/**
+	 * Returns the image of a checkbox. If {@link NativeWidgetHelper#initCheckBoxImages(Control)} was called beforehand
+	 * this will return images resembling the platform's native widgets. Otherwise a default image (Windows 7) will be
+	 * returned.
+	 *
+	 * @param control a control which provides the {@link org.eclipse.swt.widgets.Display Display} to create the image
+	 * @param state the state of the checkbox
+	 * @return the image
+	 */
+	public static Image getCheckBoxImage(Control control, CheckBoxState state) {
+		switch (state) {
+		case checked:
+			if (checked != null) {
+				return new Image(control.getDisplay(), checked);
+			}
+			return getImage(CHECKED_DEFAULT);
+		case unchecked:
+			if (unchecked != null) {
+				return new Image(control.getDisplay(), unchecked);
+			}
+			return getImage(UNCHECKED_DEFAULT);
+		default:
+			return null;
+
+		}
+
+	}
+
+	/**
 	 * <p>
-	 * Returns an image of a native checkbox.
+	 * Fills the image cache for checkboxes.
 	 * </p>
 	 * <p>
 	 * This is based on org.eclipse.jface.snippets.viewers.Snippet061FakedNativeCellEditor
@@ -62,16 +111,8 @@ public final class NativeWidgetFakeUtil {
 	 *
 	 * @param control the control
 	 * @param type <code>true</code> for checked state, <code>false</code> otherwise
-	 * @return the image
 	 */
-	public static Image createCheckBoxImage(Control control, boolean type) {
-		if (type && checked != null) {
-			return new Image(control.getDisplay(), checked);
-		}
-		if (!type && unchecked != null) {
-			return new Image(control.getDisplay(), unchecked);
-		}
-
+	private static void createCheckBoxImage(Control control, boolean type) {
 		// Hopefully no platform uses exactly this color because we'll make
 		// it transparent in the image.
 		final Color greenScreen = new Color(control.getDisplay(), 222, 223, 224);
@@ -126,15 +167,46 @@ public final class NativeWidgetFakeUtil {
 			unchecked = imageData;
 		}
 
-		final Image img = new Image(control.getDisplay(), imageData);
 		image.dispose();
-
-		return img;
 	}
 
 	private static boolean isMac() {
 		final String ws = SWT.getPlatform();
 		return WS_CARBON.equals(ws) || WS_COCOA.equals(ws);
+	}
+
+	private static Image getImage(String path) {
+		final Bundle bundle = FrameworkUtil.getBundle(NativeWidgetHelper.class);
+		final Image image = getImageRegistryService().getImage(bundle, path);
+		bundle.getBundleContext().ungetService(imageRegistryServiceReference);
+		return image;
+	}
+
+	private static ImageRegistryService getImageRegistryService() {
+		final Bundle bundle = FrameworkUtil.getBundle(NativeWidgetHelper.class);
+		if (imageRegistryServiceReference == null) {
+			imageRegistryServiceReference = bundle.getBundleContext()
+				.getServiceReference(ImageRegistryService.class);
+		}
+		return bundle.getBundleContext().getService(imageRegistryServiceReference);
+	}
+
+	/**
+	 * Enum describing the state of a checkbox.
+	 *
+	 * @author jfaltermeier
+	 *
+	 */
+	public static enum CheckBoxState {
+		/**
+		 * The enabled, visible, checked state.
+		 */
+		checked,
+
+		/**
+		 * The enabled, visible, uncheched state.
+		 */
+		unchecked
 	}
 
 }

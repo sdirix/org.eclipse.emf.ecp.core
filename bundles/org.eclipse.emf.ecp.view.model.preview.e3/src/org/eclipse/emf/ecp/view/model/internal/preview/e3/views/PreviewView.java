@@ -423,6 +423,9 @@ public class PreviewView extends ViewPart implements ISelectionListener {
 		final FileDialog dialog = new FileDialog(parent.getShell(), SWT.OPEN);
 		dialog.setFilterExtensions(new String[] { "*.xmi" }); //$NON-NLS-1$
 		final String result = dialog.open();
+		if (result == null) {
+			return;
+		}
 		final ResourceSet rs = new ResourceSetImpl();
 		final AdapterFactoryEditingDomain domain = new AdapterFactoryEditingDomain(
 			new ComposedAdapterFactory(new AdapterFactory[] {

@@ -186,6 +186,9 @@ public class CustomControlSWTRenderer extends AbstractSWTRenderer<VCustomControl
 
 			@Override
 			public void run() {
+				if (getControls().size() == 0 || getControls().values().iterator().next().isDisposed()) {
+					return;
+				}
 				Label validationIcon = null;
 				switch (getControls().size()) {
 				case 3:

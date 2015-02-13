@@ -74,7 +74,7 @@ public class XMLDateControlRendererTester implements ECPRendererTester {
 		}
 
 		final Class<?> instanceClass = eAttributeType.getInstanceClass();
-		if (!getSupportedClassType().isAssignableFrom(instanceClass)) {
+		if (instanceClass == null || !getSupportedClassType().isAssignableFrom(instanceClass)) {
 			return NOT_APPLICABLE;
 		}
 

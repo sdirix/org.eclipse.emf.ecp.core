@@ -146,14 +146,18 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 		return SWTImageHelper.getImage(image);
 	}
 
+	// TODO this whole method is ugly as it has to many dependencies, the generating of the text should be delegated to
+	// some service
 	private Object getText(Object object) {
 		VFeaturePathDomainModelReference modelReference =
 			(VFeaturePathDomainModelReference) object;
 		if (VTableDomainModelReference.class.isInstance(modelReference)) {
-			final VTableDomainModelReference tableRef = VTableDomainModelReference.class.cast(modelReference);
-			if (tableRef.getDomainModelReference() != null) {
-				modelReference = (VFeaturePathDomainModelReference) tableRef.getDomainModelReference();
+			VTableDomainModelReference tableRef = VTableDomainModelReference.class.cast(modelReference);
+			while (tableRef.getDomainModelReference() != null
+				&& VTableDomainModelReference.class.isInstance(tableRef.getDomainModelReference())) {
+				tableRef = VTableDomainModelReference.class.cast(tableRef.getDomainModelReference());
 			}
+			modelReference = (VFeaturePathDomainModelReference) tableRef.getDomainModelReference();
 		}
 		if (modelReference == null) {
 			return null;
@@ -364,7 +368,7 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 
 			final CreateDomainModelReferenceWizard wizard = new CreateDomainModelReferenceWizard(
 				setting, getEditingDomain(setting), eclass,
-				reference == null ? "New Reference Element" : "Configure " + reference.getClass().getSimpleName(), //$NON-NLS-1$ //$NON-NLS-2$
+				reference == null ? "New Reference Element" : "Configure " + reference.eClass().getName(), //$NON-NLS-1$ //$NON-NLS-2$
 				Messages.NewModelElementWizard_WizardTitle_AddModelElement,
 				Messages.NewModelElementWizard_PageTitle_AddModelElement,
 				Messages.NewModelElementWizard_PageDescription_AddModelElement, reference);

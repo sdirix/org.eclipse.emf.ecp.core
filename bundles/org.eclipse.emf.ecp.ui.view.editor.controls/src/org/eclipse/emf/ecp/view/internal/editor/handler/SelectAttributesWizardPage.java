@@ -378,7 +378,8 @@ public class SelectAttributesWizardPage extends WizardPage {
 					.getEStructuralFeatureIterator();
 				while (structuralFeatureIterator.hasNext()) {
 					final EStructuralFeature feature = structuralFeatureIterator.next();
-					if (feature != null && feature.getEContainingClass().equals(eClass)) {
+					if (feature != null && feature.getEContainingClass() != null
+						&& feature.getEContainingClass().equals(eClass)) {
 						result.add(feature);
 					}
 				}
