@@ -24,7 +24,7 @@ import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 
 /**
  * EMF implementation of {@link EMFFormsDatabinding}.
- * 
+ *
  * @author Lucas Koehler
  *
  */

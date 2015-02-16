@@ -82,6 +82,11 @@
 		<module>../../tests/org.eclipse.emf.ecp.view.edapt.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.edapt.util.test</module>
 		
+		<!-- Databinding Services -->
+		<module>../../tests/org.eclipse.emfforms.core.services.databinding.featurepath.tests</module>
+		<module>../../tests/org.eclipse.emfforms.core.services.databinding.integrationtest</module>
+		<module>../../tests/org.eclipse.emfforms.core.services.databinding.testmodel</module>
+		<module>../../tests/org.eclipse.emfforms.core.services.databinding.tests</module>
 	</modules>
 	
 	<build>

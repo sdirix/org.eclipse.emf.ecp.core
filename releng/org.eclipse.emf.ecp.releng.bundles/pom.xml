@@ -252,7 +252,9 @@
 		<module>../../bundles/org.eclipse.emf.ecp.changebroker</module>
 		<module>../../bundles/org.eclipse.emf.ecp.changebroker.emfstore</module>
 		
-		
+		<!-- Databing Services -->
+		<module>../../bundles/org.eclipse.emfforms.core.services.databinding</module>
+		<module>../../bundles/org.eclipse.emfforms.core.services.databinding.featurepath</module>
 	</modules>
 
 	<build>
