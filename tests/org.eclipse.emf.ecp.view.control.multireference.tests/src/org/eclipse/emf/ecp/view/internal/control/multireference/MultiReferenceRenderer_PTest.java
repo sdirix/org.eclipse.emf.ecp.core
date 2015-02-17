@@ -1,0 +1,246 @@
+/*******************************************************************************
+ * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ * Lucas Koehler - initial API and implementation
+ ******************************************************************************/
+package org.eclipse.emf.ecp.view.internal.control.multireference;
+
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+import java.util.Collections;
+import java.util.Dictionary;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+
+import org.eclipse.core.databinding.observable.Realm;
+import org.eclipse.core.databinding.observable.list.IObservableList;
+import org.eclipse.core.databinding.observable.list.WritableList;
+import org.eclipse.emf.common.util.BasicEList;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener;
+import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
+import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
+import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
+import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
+import org.eclipse.emf.ecp.view.test.common.swt.spi.DatabindingClassRunner;
+import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.D;
+import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestFactory;
+import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage;
+import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Table;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mockito;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
+
+/**
+ * JUnit plugin tests for {@link MultiReferenceSWTRenderer}.
+ *
+ * @author Lucas Koehler
+ *
+ */
+@SuppressWarnings("restriction")
+@RunWith(DatabindingClassRunner.class)
+public class MultiReferenceRenderer_PTest {
+	private static BundleContext bundleContext;
+	private static Realm realm;
+	private EMFFormsDatabinding databindingService;
+	private ServiceRegistration<EMFFormsDatabinding> databindingRegisterService;
+	private MultiReferenceSWTRenderer renderer;
+	private Shell shell;
+
+	/**
+	 * Get {@link BundleContext} and {@link Realm} for the tests.
+	 */
+	@BeforeClass
+	public static void setUpBeforeClass() {
+		bundleContext = FrameworkUtil.getBundle(MultiReferenceRenderer_PTest.class).getBundleContext();
+		realm = Realm.getDefault();
+
+	}
+
+	/**
+	 * Set up executed before every test.
+	 * Mocks and registers the databinding service.
+	 * Creates a new {@link MultiReferenceSWTRenderer} to be tested. Mocks needed parameters and contents (e.g.
+	 * VControl, ViewModelContext).
+	 */
+	@Before
+	public void setUp() {
+		databindingService = mock(EMFFormsDatabinding.class);
+		final Dictionary<String, Object> dictionary = new Hashtable<String, Object>();
+		dictionary.put("service.ranking", 5); //$NON-NLS-1$
+		databindingRegisterService = bundleContext.registerService(
+			EMFFormsDatabinding.class, databindingService, dictionary);
+
+		shell = new Shell();
+
+		final D eObject = TestFactory.eINSTANCE.createD();
+		final EStructuralFeature eStructuralFeature = TestPackage.eINSTANCE.getD_YList();
+
+		final SWTRendererFactory factory = mock(SWTRendererFactory.class);
+		final ViewModelContext viewContext = mock(ViewModelContext.class);
+		final VControl vControl = Mockito.mock(VControl.class);
+		final Setting setting = mock(Setting.class);
+		final VDomainModelReference domainModelReference = mock(VDomainModelReference.class);
+
+		when(viewContext.getDomainModel()).thenReturn(eObject);
+		when(viewContext.getViewModel()).thenReturn(vControl);
+
+		when(vControl.getDomainModelReference()).thenReturn(domainModelReference);
+
+		when(setting.getEObject()).thenReturn(eObject);
+		when(setting.getEStructuralFeature()).thenReturn(eStructuralFeature);
+
+		when(domainModelReference.getIterator()).then(new Answer<Iterator<Setting>>() {
+			@Override
+			public Iterator<Setting> answer(InvocationOnMock invocation) {
+				return Collections.singleton(setting).iterator();
+			}
+		});
+		final BasicEList<DomainModelReferenceChangeListener> changeListener = new BasicEList<DomainModelReferenceChangeListener>();
+		when(domainModelReference.getChangeListener()).thenReturn(changeListener);
+
+		renderer = new MultiReferenceSWTRenderer(vControl, viewContext, factory);
+		renderer.init();
+	}
+
+	/**
+	 * Unregister databinding service after every test.
+	 */
+	@After
+	public void tearDown() {
+		databindingRegisterService.unregister();
+	}
+
+	/**
+	 * Test if the initial data binding is working.
+	 *
+	 * @throws NoRendererFoundException Renderer could not be found
+	 * @throws NoPropertyDescriptorFoundExeption Property descriptor could not be found
+	 */
+	@Test
+	public void testDatabindingServiceUsageInitialBinding() throws NoRendererFoundException,
+		NoPropertyDescriptorFoundExeption {
+		final List<Integer> initialList = new LinkedList<Integer>();
+		initialList.add(2);
+		initialList.add(4);
+		final WritableList mockedObservableList = new WritableList(realm, initialList, Integer.class);
+
+		final Table table = setUpDatabindingTests(mockedObservableList);
+
+		assertEquals(mockedObservableList.size(), table.getItemCount());
+		for (int i = 0; i < mockedObservableList.size(); i++) {
+			assertEquals(mockedObservableList.get(i).toString(), table.getItems()[i].getText(0));
+		}
+	}
+
+	/**
+	 * Tests whether adding values to the model is reflected in the control.
+	 *
+	 * @throws NoRendererFoundException Renderer could not be found
+	 * @throws NoPropertyDescriptorFoundExeption Property descriptor could not be found
+	 */
+	@Test
+	public void testDatabindingServiceUsageAddToModel() throws NoRendererFoundException,
+		NoPropertyDescriptorFoundExeption {
+		final List<Integer> initialList = new LinkedList<Integer>();
+		initialList.add(2);
+		initialList.add(4);
+		final WritableList mockedObservableList = new WritableList(realm, initialList, Integer.class);
+
+		final Table table = setUpDatabindingTests(mockedObservableList);
+
+		mockedObservableList.add(new Integer(6));
+
+		assertEquals(mockedObservableList.size(), table.getItemCount());
+		for (int i = 0; i < mockedObservableList.size(); i++) {
+			assertEquals(mockedObservableList.get(i).toString(), table.getItems()[i].getText(0));
+		}
+	}
+
+	/**
+	 * Tests whether removing values to the model is reflected in the control.
+	 *
+	 * @throws NoRendererFoundException Renderer could not be found
+	 * @throws NoPropertyDescriptorFoundExeption Property descriptor could not be found
+	 */
+	@Test
+	public void testDatabindingServiceUsageRemoveFromModel() throws NoRendererFoundException,
+		NoPropertyDescriptorFoundExeption {
+		final List<Integer> initialList = new LinkedList<Integer>();
+		initialList.add(2);
+		initialList.add(4);
+		final WritableList mockedObservableList = new WritableList(realm, initialList, Integer.class);
+
+		final Table table = setUpDatabindingTests(mockedObservableList);
+
+		mockedObservableList.remove(0);
+
+		assertEquals(mockedObservableList.size(), table.getItemCount());
+		for (int i = 0; i < mockedObservableList.size(); i++) {
+			assertEquals(mockedObservableList.get(i).toString(), table.getItems()[i].getText(0));
+		}
+	}
+
+	/**
+	 * Tests whether changing values of the model is reflected in the control.
+	 *
+	 * @throws NoRendererFoundException Renderer could not be found
+	 * @throws NoPropertyDescriptorFoundExeption Property descriptor could not be found
+	 */
+	@Test
+	public void testDatabindingServiceUsageChangeModel() throws NoRendererFoundException,
+		NoPropertyDescriptorFoundExeption {
+		final List<Integer> initialList = new LinkedList<Integer>();
+		initialList.add(2);
+		initialList.add(4);
+		final WritableList mockedObservableList = new WritableList(realm, initialList, Integer.class);
+
+		final Table table = setUpDatabindingTests(mockedObservableList);
+
+		mockedObservableList.set(1, 7);
+
+		assertEquals(mockedObservableList.size(), table.getItemCount());
+		for (int i = 0; i < mockedObservableList.size(); i++) {
+			assertEquals(mockedObservableList.get(i).toString(), table.getItems()[i].getText(0));
+		}
+	}
+
+	private Table setUpDatabindingTests(IObservableList mockedObservableList) throws NoRendererFoundException,
+		NoPropertyDescriptorFoundExeption {
+		when(databindingService.getObservableList(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
+			mockedObservableList);
+
+		final Composite composite = (Composite) renderer.render(new SWTGridCell(0, 0, renderer), shell);
+		final Composite controlComposite = (Composite) composite.getChildren()[1];
+		final Table table = (Table) controlComposite.getChildren()[0];
+
+		return table;
+	}
+}

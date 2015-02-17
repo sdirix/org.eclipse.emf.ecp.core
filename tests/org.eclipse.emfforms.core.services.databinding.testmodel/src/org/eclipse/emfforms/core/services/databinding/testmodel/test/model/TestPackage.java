@@ -17,8 +17,9 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
 /**
- * <!-- begin-user-doc --> The <b>Package</b> for the model. It contains
- * accessors for the meta objects to represent
+ * <!-- begin-user-doc -->
+ * The <b>Package</b> for the model.
+ * It contains accessors for the meta objects to represent
  * <ul>
  * <li>each class,</li>
  * <li>each feature of each class,</li>
@@ -31,41 +32,50 @@ import org.eclipse.emf.ecore.EReference;
  * @model kind="package"
  * @generated
  */
-public interface TestPackage extends EPackage {
+public interface TestPackage extends EPackage
+{
 	/**
-	 * The package name. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * The package name.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 */
 	String eNAME = "test"; //$NON-NLS-1$
 
 	/**
-	 * The package namespace URI. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * The package namespace URI.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 */
 	String eNS_URI = "test"; //$NON-NLS-1$
 
 	/**
-	 * The package namespace name. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * The package namespace name.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 */
 	String eNS_PREFIX = "test"; //$NON-NLS-1$
 
 	/**
-	 * The singleton instance of the package. <!-- begin-user-doc --> <!--
-	 * end-user-doc -->
+	 * The singleton instance of the package.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 */
 	TestPackage eINSTANCE = org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.TestPackageImpl
-			.init();
+		.init();
 
 	/**
 	 * The meta object id for the '
-	 * {@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.AImpl
-	 * <em>A</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * {@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.AImpl <em>A</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * 
 	 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.AImpl
 	 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.TestPackageImpl#getA()
@@ -74,8 +84,9 @@ public interface TestPackage extends EPackage {
 	int A = 0;
 
 	/**
-	 * The feature id for the '<em><b>B</b></em>' containment reference. <!--
-	 * begin-user-doc --> <!-- end-user-doc -->
+	 * The feature id for the '<em><b>B</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 * @ordered
@@ -83,8 +94,9 @@ public interface TestPackage extends EPackage {
 	int A__B = 0;
 
 	/**
-	 * The number of structural features of the '<em>A</em>' class. <!--
-	 * begin-user-doc --> <!-- end-user-doc -->
+	 * The number of structural features of the '<em>A</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 * @ordered
@@ -93,8 +105,9 @@ public interface TestPackage extends EPackage {
 
 	/**
 	 * The meta object id for the '
-	 * {@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.BImpl
-	 * <em>B</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * {@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.BImpl <em>B</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * 
 	 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.BImpl
 	 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.TestPackageImpl#getB()
@@ -103,8 +116,9 @@ public interface TestPackage extends EPackage {
 	int B = 1;
 
 	/**
-	 * The feature id for the '<em><b>C</b></em>' containment reference. <!--
-	 * begin-user-doc --> <!-- end-user-doc -->
+	 * The feature id for the '<em><b>C</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 * @ordered
@@ -112,8 +126,9 @@ public interface TestPackage extends EPackage {
 	int B__C = 0;
 
 	/**
-	 * The number of structural features of the '<em>B</em>' class. <!--
-	 * begin-user-doc --> <!-- end-user-doc -->
+	 * The number of structural features of the '<em>B</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 * @ordered
@@ -122,8 +137,9 @@ public interface TestPackage extends EPackage {
 
 	/**
 	 * The meta object id for the '
-	 * {@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.CImpl
-	 * <em>C</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * {@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.CImpl <em>C</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * 
 	 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.CImpl
 	 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.TestPackageImpl#getC()
@@ -132,8 +148,9 @@ public interface TestPackage extends EPackage {
 	int C = 2;
 
 	/**
-	 * The feature id for the '<em><b>D</b></em>' containment reference. <!--
-	 * begin-user-doc --> <!-- end-user-doc -->
+	 * The feature id for the '<em><b>D</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 * @ordered
@@ -141,8 +158,9 @@ public interface TestPackage extends EPackage {
 	int C__D = 0;
 
 	/**
-	 * The number of structural features of the '<em>C</em>' class. <!--
-	 * begin-user-doc --> <!-- end-user-doc -->
+	 * The number of structural features of the '<em>C</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 * @ordered
@@ -151,8 +169,9 @@ public interface TestPackage extends EPackage {
 
 	/**
 	 * The meta object id for the '
-	 * {@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.DImpl
-	 * <em>D</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * {@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.DImpl <em>D</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * 
 	 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.DImpl
 	 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.TestPackageImpl#getD()
@@ -161,8 +180,9 @@ public interface TestPackage extends EPackage {
 	int D = 3;
 
 	/**
-	 * The feature id for the '<em><b>X</b></em>' attribute. <!-- begin-user-doc
-	 * --> <!-- end-user-doc -->
+	 * The feature id for the '<em><b>X</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 * @ordered
@@ -170,18 +190,30 @@ public interface TestPackage extends EPackage {
 	int D__X = 0;
 
 	/**
-	 * The number of structural features of the '<em>D</em>' class. <!--
-	 * begin-user-doc --> <!-- end-user-doc -->
+	 * The feature id for the '<em><b>YList</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 * @ordered
 	 */
-	int D_FEATURE_COUNT = 1;
+	int D__YLIST = 1;
 
 	/**
-	 * Returns the meta object for class '
-	 * {@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.A
-	 * <em>A</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * The number of structural features of the '<em>D</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int D_FEATURE_COUNT = 2;
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.A
+	 * <em>A</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * 
 	 * @return the meta object for class '<em>A</em>'.
 	 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.A
@@ -191,8 +223,9 @@ public interface TestPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the containment reference '
-	 * {@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.A#getB
-	 * <em>B</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * {@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.A#getB <em>B</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * 
 	 * @return the meta object for the containment reference '<em>B</em>'.
 	 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.A#getB()
@@ -202,9 +235,10 @@ public interface TestPackage extends EPackage {
 	EReference getA_B();
 
 	/**
-	 * Returns the meta object for class '
-	 * {@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.B
-	 * <em>B</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * Returns the meta object for class '{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.B
+	 * <em>B</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * 
 	 * @return the meta object for class '<em>B</em>'.
 	 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.B
@@ -214,8 +248,9 @@ public interface TestPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the containment reference '
-	 * {@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.B#getC
-	 * <em>C</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * {@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.B#getC <em>C</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * 
 	 * @return the meta object for the containment reference '<em>C</em>'.
 	 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.B#getC()
@@ -225,9 +260,10 @@ public interface TestPackage extends EPackage {
 	EReference getB_C();
 
 	/**
-	 * Returns the meta object for class '
-	 * {@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.C
-	 * <em>C</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * Returns the meta object for class '{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.C
+	 * <em>C</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * 
 	 * @return the meta object for class '<em>C</em>'.
 	 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.C
@@ -237,8 +273,9 @@ public interface TestPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the containment reference '
-	 * {@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.C#getD
-	 * <em>D</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * {@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.C#getD <em>D</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * 
 	 * @return the meta object for the containment reference '<em>D</em>'.
 	 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.C#getD()
@@ -248,9 +285,10 @@ public interface TestPackage extends EPackage {
 	EReference getC_D();
 
 	/**
-	 * Returns the meta object for class '
-	 * {@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.D
-	 * <em>D</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * Returns the meta object for class '{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.D
+	 * <em>D</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * 
 	 * @return the meta object for class '<em>D</em>'.
 	 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.D
@@ -260,8 +298,9 @@ public interface TestPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the attribute '
-	 * {@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.D#getX
-	 * <em>X</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * {@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.D#getX <em>X</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * 
 	 * @return the meta object for the attribute '<em>X</em>'.
 	 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.D#getX()
@@ -271,8 +310,22 @@ public interface TestPackage extends EPackage {
 	EAttribute getD_X();
 
 	/**
-	 * Returns the factory that creates the instances of the model. <!--
-	 * begin-user-doc --> <!-- end-user-doc -->
+	 * Returns the meta object for the attribute list '
+	 * {@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.D#getYList <em>YList</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for the attribute list '<em>YList</em>'.
+	 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.D#getYList()
+	 * @see #getD()
+	 * @generated
+	 */
+	EAttribute getD_YList();
+
+	/**
+	 * Returns the factory that creates the instances of the model.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * 
 	 * @return the factory that creates the instances of the model.
 	 * @generated
@@ -280,8 +333,8 @@ public interface TestPackage extends EPackage {
 	TestFactory getTestFactory();
 
 	/**
-	 * <!-- begin-user-doc --> Defines literals for the meta objects that
-	 * represent
+	 * <!-- begin-user-doc -->
+	 * Defines literals for the meta objects that represent
 	 * <ul>
 	 * <li>each class,</li>
 	 * <li>each feature of each class,</li>
@@ -292,11 +345,13 @@ public interface TestPackage extends EPackage {
 	 * 
 	 * @generated
 	 */
-	interface Literals {
+	interface Literals
+	{
 		/**
 		 * The meta object literal for the '
-		 * {@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.AImpl
-		 * <em>A</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+		 * {@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.AImpl <em>A</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
 		 * 
 		 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.AImpl
 		 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.TestPackageImpl#getA()
@@ -305,8 +360,9 @@ public interface TestPackage extends EPackage {
 		EClass A = eINSTANCE.getA();
 
 		/**
-		 * The meta object literal for the '<em><b>B</b></em>' containment
-		 * reference feature. <!-- begin-user-doc --> <!-- end-user-doc -->
+		 * The meta object literal for the '<em><b>B</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
 		 * 
 		 * @generated
 		 */
@@ -314,8 +370,9 @@ public interface TestPackage extends EPackage {
 
 		/**
 		 * The meta object literal for the '
-		 * {@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.BImpl
-		 * <em>B</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+		 * {@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.BImpl <em>B</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
 		 * 
 		 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.BImpl
 		 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.TestPackageImpl#getB()
@@ -324,8 +381,9 @@ public interface TestPackage extends EPackage {
 		EClass B = eINSTANCE.getB();
 
 		/**
-		 * The meta object literal for the '<em><b>C</b></em>' containment
-		 * reference feature. <!-- begin-user-doc --> <!-- end-user-doc -->
+		 * The meta object literal for the '<em><b>C</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
 		 * 
 		 * @generated
 		 */
@@ -333,8 +391,9 @@ public interface TestPackage extends EPackage {
 
 		/**
 		 * The meta object literal for the '
-		 * {@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.CImpl
-		 * <em>C</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+		 * {@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.CImpl <em>C</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
 		 * 
 		 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.CImpl
 		 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.TestPackageImpl#getC()
@@ -343,8 +402,9 @@ public interface TestPackage extends EPackage {
 		EClass C = eINSTANCE.getC();
 
 		/**
-		 * The meta object literal for the '<em><b>D</b></em>' containment
-		 * reference feature. <!-- begin-user-doc --> <!-- end-user-doc -->
+		 * The meta object literal for the '<em><b>D</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
 		 * 
 		 * @generated
 		 */
@@ -352,8 +412,9 @@ public interface TestPackage extends EPackage {
 
 		/**
 		 * The meta object literal for the '
-		 * {@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.DImpl
-		 * <em>D</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+		 * {@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.DImpl <em>D</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
 		 * 
 		 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.DImpl
 		 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.TestPackageImpl#getD()
@@ -362,12 +423,22 @@ public interface TestPackage extends EPackage {
 		EClass D = eINSTANCE.getD();
 
 		/**
-		 * The meta object literal for the '<em><b>X</b></em>' attribute
-		 * feature. <!-- begin-user-doc --> <!-- end-user-doc -->
+		 * The meta object literal for the '<em><b>X</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
 		 * 
 		 * @generated
 		 */
 		EAttribute D__X = eINSTANCE.getD_X();
+
+		/**
+		 * The meta object literal for the '<em><b>YList</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @generated
+		 */
+		EAttribute D__YLIST = eINSTANCE.getD_YList();
 
 	}
 

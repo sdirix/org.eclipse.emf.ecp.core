@@ -20,35 +20,41 @@ import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestF
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage;
 
 /**
- * <!-- begin-user-doc --> An implementation of the model <b>Package</b>. <!--
- * end-user-doc -->
+ * <!-- begin-user-doc -->
+ * An implementation of the model <b>Package</b>.
+ * <!-- end-user-doc -->
  *
  * @generated
  */
-public class TestPackageImpl extends EPackageImpl implements TestPackage {
+public class TestPackageImpl extends EPackageImpl implements TestPackage
+{
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 *
 	 * @generated
 	 */
 	private EClass aEClass = null;
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 *
 	 * @generated
 	 */
 	private EClass bEClass = null;
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 *
 	 * @generated
 	 */
 	private EClass cEClass = null;
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 *
 	 * @generated
 	 */
@@ -56,8 +62,8 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with {@link org.eclipse.emf.ecore.EPackage.Registry
-	 * EPackage.Registry} by the
-	 * package package URI value.
+	 * EPackage.Registry} by the package
+	 * package URI value.
 	 * <p>
 	 * Note: the correct way to create the package is via the static factory method {@link #init init()}, which also
 	 * performs initialization of the package, or returns the registered package, if one already exists. <!--
@@ -68,20 +74,21 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * @see #init()
 	 * @generated
 	 */
-	private TestPackageImpl() {
+	private TestPackageImpl()
+	{
 		super(eNS_URI, TestFactory.eINSTANCE);
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 *
 	 * @generated
 	 */
 	private static boolean isInited = false;
 
 	/**
-	 * Creates, registers, and initializes the <b>Package</b> for this model,
-	 * and for any others upon which it depends.
+	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
 	 *
 	 * <p>
 	 * This method is used to initialize {@link TestPackage#eINSTANCE} when that field is accessed. Clients should not
@@ -93,16 +100,16 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * @see #initializePackageContents()
 	 * @generated
 	 */
-	public static TestPackage init() {
+	public static TestPackage init()
+	{
 		if (isInited) {
-			return (TestPackage) EPackage.Registry.INSTANCE
-				.getEPackage(TestPackage.eNS_URI);
+			return (TestPackage) EPackage.Registry.INSTANCE.getEPackage(TestPackage.eNS_URI);
 		}
 
 		// Obtain or create and register package
-		final TestPackageImpl theTestPackage = (TestPackageImpl) (EPackage.Registry.INSTANCE
-			.get(eNS_URI) instanceof TestPackageImpl ? EPackage.Registry.INSTANCE
-			.get(eNS_URI) : new TestPackageImpl());
+		final TestPackageImpl theTestPackage = (TestPackageImpl) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof TestPackageImpl ? EPackage.Registry.INSTANCE
+			.get(eNS_URI)
+			: new TestPackageImpl());
 
 		isInited = true;
 
@@ -121,110 +128,143 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 *
 	 * @generated
 	 */
 	@Override
-	public EClass getA() {
+	public EClass getA()
+	{
 		return aEClass;
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 *
 	 * @generated
 	 */
 	@Override
-	public EReference getA_B() {
+	public EReference getA_B()
+	{
 		return (EReference) aEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 *
 	 * @generated
 	 */
 	@Override
-	public EClass getB() {
+	public EClass getB()
+	{
 		return bEClass;
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 *
 	 * @generated
 	 */
 	@Override
-	public EReference getB_C() {
+	public EReference getB_C()
+	{
 		return (EReference) bEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 *
 	 * @generated
 	 */
 	@Override
-	public EClass getC() {
+	public EClass getC()
+	{
 		return cEClass;
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 *
 	 * @generated
 	 */
 	@Override
-	public EReference getC_D() {
+	public EReference getC_D()
+	{
 		return (EReference) cEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 *
 	 * @generated
 	 */
 	@Override
-	public EClass getD() {
+	public EClass getD()
+	{
 		return dEClass;
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 *
 	 * @generated
 	 */
 	@Override
-	public EAttribute getD_X() {
+	public EAttribute getD_X()
+	{
 		return (EAttribute) dEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 *
 	 * @generated
 	 */
 	@Override
-	public TestFactory getTestFactory() {
+	public EAttribute getD_YList()
+	{
+		return (EAttribute) dEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public TestFactory getTestFactory()
+	{
 		return (TestFactory) getEFactoryInstance();
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 *
 	 * @generated
 	 */
 	private boolean isCreated = false;
 
 	/**
-	 * Creates the meta-model objects for the package. This method is guarded to
-	 * have no affect on any invocation but its first. <!-- begin-user-doc -->
+	 * Creates the meta-model objects for the package. This method is
+	 * guarded to have no affect on any invocation but its first.
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
 	 * @generated
 	 */
-	public void createPackageContents() {
+	public void createPackageContents()
+	{
 		if (isCreated) {
 			return;
 		}
@@ -242,10 +282,12 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 
 		dEClass = createEClass(D);
 		createEAttribute(dEClass, D__X);
+		createEAttribute(dEClass, D__YLIST);
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 *
 	 * @generated
 	 */
@@ -253,12 +295,14 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 
 	/**
 	 * Complete the initialization of the package and its meta-model. This
-	 * method is guarded to have no affect on any invocation but its first. <!--
-	 * begin-user-doc --> <!-- end-user-doc -->
+	 * method is guarded to have no affect on any invocation but its first.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 *
 	 * @generated
 	 */
-	public void initializePackageContents() {
+	public void initializePackageContents()
+	{
 		if (isInitialized) {
 			return;
 		}
@@ -276,9 +320,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 		// Add supertypes to classes
 
 		// Initialize classes and features; add operations and parameters
-		initEClass(
-			aEClass,
-			org.eclipse.emfforms.core.services.databinding.testmodel.test.model.A.class,
+		initEClass(aEClass, org.eclipse.emfforms.core.services.databinding.testmodel.test.model.A.class,
 			"A", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(
 			getA_B(),
@@ -286,9 +328,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 			null,
 			"b", null, 0, 1, org.eclipse.emfforms.core.services.databinding.testmodel.test.model.A.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
-		initEClass(
-			bEClass,
-			org.eclipse.emfforms.core.services.databinding.testmodel.test.model.B.class,
+		initEClass(bEClass, org.eclipse.emfforms.core.services.databinding.testmodel.test.model.B.class,
 			"B", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(
 			getB_C(),
@@ -296,9 +336,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 			null,
 			"c", null, 0, 1, org.eclipse.emfforms.core.services.databinding.testmodel.test.model.B.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
-		initEClass(
-			cEClass,
-			org.eclipse.emfforms.core.services.databinding.testmodel.test.model.C.class,
+		initEClass(cEClass, org.eclipse.emfforms.core.services.databinding.testmodel.test.model.C.class,
 			"C", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(
 			getC_D(),
@@ -306,14 +344,16 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 			null,
 			"d", null, 0, 1, org.eclipse.emfforms.core.services.databinding.testmodel.test.model.C.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
-		initEClass(
-			dEClass,
-			org.eclipse.emfforms.core.services.databinding.testmodel.test.model.D.class,
+		initEClass(dEClass, org.eclipse.emfforms.core.services.databinding.testmodel.test.model.D.class,
 			"D", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEAttribute(
 			getD_X(),
 			ecorePackage.getEString(),
 			"x", null, 0, 1, org.eclipse.emfforms.core.services.databinding.testmodel.test.model.D.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(
+			getD_YList(),
+			ecorePackage.getEInt(),
+			"yList", null, 0, -1, org.eclipse.emfforms.core.services.databinding.testmodel.test.model.D.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		// Create resource
 		createResource(eNS_URI);

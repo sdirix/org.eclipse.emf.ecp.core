@@ -15,7 +15,9 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.eclipse.core.databinding.observable.Realm;
+import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.core.databinding.property.list.IListProperty;
 import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
@@ -75,21 +77,10 @@ public class EMFFormsDatabindingImpl implements EMFFormsDatabinding {
 	 */
 	@Override
 	public IValueProperty getValueProperty(VDomainModelReference domainModelReference) {
-		if (domainModelReference == null) {
-			throw new IllegalArgumentException("The given VDomainModelReference must not be null."); //$NON-NLS-1$
-		}
-		double highestPriority = DomainModelReferenceConverter.NOT_APPLICABLE;
-		DomainModelReferenceConverter bestConverter = null;
-		for (final DomainModelReferenceConverter converter : referenceConverters) {
-			final double priority = converter.isApplicable(domainModelReference);
-			if (priority > highestPriority) {
-				highestPriority = priority;
-				bestConverter = converter;
-			}
-		}
+		final DomainModelReferenceConverter bestConverter = getBestDomainModelReferenceConverter(domainModelReference);
 
 		if (bestConverter != null) {
-			return bestConverter.convert(domainModelReference);
+			return bestConverter.convertToValueProperty(domainModelReference);
 		}
 
 		throw new IllegalStateException("No applicable DomainModelReferenceConverter could be found."); //$NON-NLS-1$
@@ -111,5 +102,65 @@ public class EMFFormsDatabindingImpl implements EMFFormsDatabinding {
 	 */
 	protected void removeDomainModelReferenceConverter(DomainModelReferenceConverter converter) {
 		referenceConverters.remove(converter);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding#getObservableList(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference,
+	 *      org.eclipse.emf.ecore.EObject)
+	 */
+	@Override
+	public IObservableList getObservableList(VDomainModelReference domainModelReference, EObject object) {
+		if (domainModelReference == null) {
+			throw new IllegalArgumentException("The given VDomainModelReference must not be null."); //$NON-NLS-1$
+		}
+		if (object == null) {
+			throw new IllegalArgumentException("The given EObject must not be null."); //$NON-NLS-1$
+		}
+
+		final IListProperty listProperty = getListProperty(domainModelReference);
+		return listProperty.observe(realm, object);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding#getListProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)
+	 */
+	@Override
+	public IListProperty getListProperty(VDomainModelReference domainModelReference) {
+		final DomainModelReferenceConverter bestConverter = getBestDomainModelReferenceConverter(domainModelReference);
+
+		if (bestConverter != null) {
+			return bestConverter.convertToListProperty(domainModelReference);
+		}
+
+		throw new IllegalStateException("No applicable DomainModelReferenceConverter could be found."); //$NON-NLS-1$
+	}
+
+	/**
+	 * Returns the most suitable {@link DomainModelReferenceConverter}, that is registered to this
+	 * {@link EMFFormsDatabindingImpl}, for the given {@link VDomainModelReference}.
+	 *
+	 * @param domainModelReference The {@link VDomainModelReference} for which a {@link DomainModelReferenceConverter}
+	 *            is needed
+	 * @return The most suitable {@link DomainModelReferenceConverter}
+	 */
+	private DomainModelReferenceConverter getBestDomainModelReferenceConverter(
+		VDomainModelReference domainModelReference) {
+		if (domainModelReference == null) {
+			throw new IllegalArgumentException("The given VDomainModelReference must not be null."); //$NON-NLS-1$
+		}
+		double highestPriority = DomainModelReferenceConverter.NOT_APPLICABLE;
+		DomainModelReferenceConverter bestConverter = null;
+		for (final DomainModelReferenceConverter converter : referenceConverters) {
+			final double priority = converter.isApplicable(domainModelReference);
+			if (priority > highestPriority) {
+				highestPriority = priority;
+				bestConverter = converter;
+			}
+		}
+		return bestConverter;
 	}
 }

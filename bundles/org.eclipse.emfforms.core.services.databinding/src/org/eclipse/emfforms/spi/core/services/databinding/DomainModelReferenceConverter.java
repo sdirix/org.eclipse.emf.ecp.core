@@ -11,6 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emfforms.spi.core.services.databinding;
 
+import org.eclipse.core.databinding.property.list.IListProperty;
 import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 
@@ -45,5 +46,13 @@ public interface DomainModelReferenceConverter {
 	 * @param domainModelReference The {@link VDomainModelReference} that will be converted to a {@link IValueProperty}
 	 * @return The created {@link IValueProperty}, does not return <code>null</code>.
 	 */
-	IValueProperty convert(VDomainModelReference domainModelReference);
+	IValueProperty convertToValueProperty(VDomainModelReference domainModelReference);
+
+	/**
+	 * Converts a {@link VDomainModelReference} to an {@link IListProperty}.
+	 *
+	 * @param domainModelReference The {@link VDomainModelReference} that will be converted to an {@link IListProperty}
+	 * @return The created {@link IListProperty}, does not return <code>null</code>.
+	 */
+	IListProperty convertToListProperty(VDomainModelReference domainModelReference);
 }

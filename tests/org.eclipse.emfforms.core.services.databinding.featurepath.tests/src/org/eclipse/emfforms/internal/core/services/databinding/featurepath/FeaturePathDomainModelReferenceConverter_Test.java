@@ -17,7 +17,9 @@ import static org.mockito.Mockito.mock;
 
 import java.util.LinkedList;
 
+import org.eclipse.core.databinding.property.list.IListProperty;
 import org.eclipse.core.databinding.property.value.IValueProperty;
+import org.eclipse.emf.databinding.IEMFListProperty;
 import org.eclipse.emf.databinding.IEMFValueProperty;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -77,11 +79,11 @@ public class FeaturePathDomainModelReferenceConverter_Test {
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emfforms.core.services.databinding.featurepath.FeaturePathDomainModelReferenceConverter#convert(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * {@link org.eclipse.emfforms.core.services.databinding.featurepath.FeaturePathDomainModelReferenceConverter#convertToValueProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
 	 * .
 	 */
 	@Test
-	public void testConvert() {
+	public void testConvertToValueProperty() {
 		final VFeaturePathDomainModelReference pathReference = VViewFactory.eINSTANCE
 			.createFeaturePathDomainModelReference();
 		// create reference path to the attribute
@@ -95,7 +97,7 @@ public class FeaturePathDomainModelReferenceConverter_Test {
 		pathReference.getDomainModelEReferencePath().addAll(referencePath);
 		pathReference.setDomainModelEFeature(feature);
 
-		final IValueProperty valueProperty = converter.convert(pathReference);
+		final IValueProperty valueProperty = converter.convertToValueProperty(pathReference);
 
 		// The converter should return an IEMFValueProperty
 		assertTrue(valueProperty instanceof IEMFValueProperty);
@@ -112,18 +114,18 @@ public class FeaturePathDomainModelReferenceConverter_Test {
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emfforms.core.services.databinding.featurepath.FeaturePathDomainModelReferenceConverter#convert(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * {@link org.eclipse.emfforms.core.services.databinding.featurepath.FeaturePathDomainModelReferenceConverter#convertToValueProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
 	 * .
 	 */
 	@Test
-	public void testConvertNoReferencePath() {
+	public void testConvertToValuePropertyNoReferencePath() {
 		final VFeaturePathDomainModelReference pathReference = VViewFactory.eINSTANCE
 			.createFeaturePathDomainModelReference();
 
 		final EStructuralFeature feature = TestPackage.eINSTANCE.getD_X();
 		pathReference.setDomainModelEFeature(feature);
 
-		final IValueProperty valueProperty = converter.convert(pathReference);
+		final IValueProperty valueProperty = converter.convertToValueProperty(pathReference);
 
 		// The converter should return an IEMFValueProperty
 		assertTrue(valueProperty instanceof IEMFValueProperty);
@@ -140,21 +142,104 @@ public class FeaturePathDomainModelReferenceConverter_Test {
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emfforms.core.services.databinding.featurepath.FeaturePathDomainModelReferenceConverter#convert(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * {@link org.eclipse.emfforms.core.services.databinding.featurepath.FeaturePathDomainModelReferenceConverter#convertToValueProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
 	 * .
 	 */
 	@Test(expected = IllegalArgumentException.class)
-	public void testConvertNull() {
-		converter.convert(null);
+	public void testConvertToValuePropertyNull() {
+		converter.convertToValueProperty(null);
 	}
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emfforms.core.services.databinding.featurepath.FeaturePathDomainModelReferenceConverter#convert(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * {@link org.eclipse.emfforms.core.services.databinding.featurepath.FeaturePathDomainModelReferenceConverter#convertToValueProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
 	 * .
 	 */
 	@Test(expected = IllegalArgumentException.class)
-	public void testConvertWrongReferenceType() {
-		converter.convert(mock(VDomainModelReference.class));
+	public void testConvertToValuePropertyWrongReferenceType() {
+		converter.convertToValueProperty(mock(VDomainModelReference.class));
+	}
+
+	/**
+	 * Test method for
+	 * {@link org.eclipse.emfforms.core.services.databinding.featurepath.FeaturePathDomainModelReferenceConverter#convertToListProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * .
+	 */
+	@Test
+	public void testConvertToListProperty() {
+		final VFeaturePathDomainModelReference pathReference = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
+		// create reference path to the list
+		final LinkedList<EReference> referencePath = new LinkedList<EReference>();
+		referencePath.add(TestPackage.eINSTANCE.getA_B());
+		referencePath.add(TestPackage.eINSTANCE.getB_C());
+		referencePath.add(TestPackage.eINSTANCE.getC_D());
+
+		final EStructuralFeature feature = TestPackage.eINSTANCE.getD_YList();
+
+		pathReference.getDomainModelEReferencePath().addAll(referencePath);
+		pathReference.setDomainModelEFeature(feature);
+
+		final IListProperty listProperty = converter.convertToListProperty(pathReference);
+
+		// The converter should return an IEMFListProperty
+		assertTrue(listProperty instanceof IEMFListProperty);
+
+		final IEMFListProperty emfProperty = (IEMFListProperty) listProperty;
+
+		// Check EStructuralFeature of the property.
+		assertEquals(feature, emfProperty.getStructuralFeature());
+
+		// Check correct path.
+		final String expected = "A.b<B> => B.c<C> => C.d<D> => D.yList[]<EInt>"; //$NON-NLS-1$
+		assertEquals(expected, emfProperty.toString());
+	}
+
+	/**
+	 * Test method for
+	 * {@link org.eclipse.emfforms.core.services.databinding.featurepath.FeaturePathDomainModelReferenceConverter#convertToListProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * .
+	 */
+	@Test
+	public void testConvertToListPropertyNoReferencePath() {
+		final VFeaturePathDomainModelReference pathReference = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
+
+		final EStructuralFeature feature = TestPackage.eINSTANCE.getD_YList();
+		pathReference.setDomainModelEFeature(feature);
+
+		final IListProperty listProperty = converter.convertToListProperty(pathReference);
+
+		// The converter should return an IEMFListProperty
+		assertTrue(listProperty instanceof IEMFListProperty);
+
+		final IEMFListProperty emfProperty = (IEMFListProperty) listProperty;
+
+		// Check EStructuralFeature of the property.
+		assertEquals(feature, emfProperty.getStructuralFeature());
+
+		// Check correct path.
+		final String expected = "D.yList[]<EInt>"; //$NON-NLS-1$
+		assertEquals(expected, emfProperty.toString());
+	}
+
+	/**
+	 * Test method for
+	 * {@link org.eclipse.emfforms.core.services.databinding.featurepath.FeaturePathDomainModelReferenceConverter#convertToListProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * .
+	 */
+	@Test(expected = IllegalArgumentException.class)
+	public void testConvertToListPropertyNull() {
+		converter.convertToListProperty(null);
+	}
+
+	/**
+	 * Test method for
+	 * {@link org.eclipse.emfforms.core.services.databinding.featurepath.FeaturePathDomainModelReferenceConverter#convertToListProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * .
+	 */
+	@Test(expected = IllegalArgumentException.class)
+	public void testConvertToListPropertyWrongReferenceType() {
+		converter.convertToListProperty(mock(VDomainModelReference.class));
 	}
 }

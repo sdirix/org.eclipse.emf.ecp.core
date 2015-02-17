@@ -11,18 +11,20 @@
  */
 package org.eclipse.emfforms.core.services.databinding.testmodel.test.model;
 
+import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EObject;
 
 /**
- * <!-- begin-user-doc --> A representation of the model object '
- * <em><b>D</b></em>'. <!-- end-user-doc -->
+ * <!-- begin-user-doc -->
+ * A representation of the model object '<em><b>D</b></em>'.
+ * <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
  * <ul>
- * <li>
- * {@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.D#getX
- * <em>X</em>}</li>
+ * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.D#getX <em>X</em>}</li>
+ * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.D#getYList <em>YList</em>}</li>
  * </ul>
  * </p>
  *
@@ -30,13 +32,13 @@ import org.eclipse.emf.ecore.EObject;
  * @model
  * @generated
  */
-public interface D extends EObject {
+public interface D extends EObject
+{
 	/**
-	 * Returns the value of the '<em><b>X</b></em>' attribute. <!--
-	 * begin-user-doc -->
+	 * Returns the value of the '<em><b>X</b></em>' attribute.
+	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>X</em>' attribute isn't clear, there really
-	 * should be more of a description here...
+	 * If the meaning of the '<em>X</em>' attribute isn't clear, there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * 
@@ -49,15 +51,32 @@ public interface D extends EObject {
 	String getX();
 
 	/**
-	 * Sets the value of the '
-	 * {@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.D#getX
-	 * <em>X</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * Sets the value of the '{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.D#getX
+	 * <em>X</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * 
-	 * @param value
-	 *            the new value of the '<em>X</em>' attribute.
+	 * @param value the new value of the '<em>X</em>' attribute.
 	 * @see #getX()
 	 * @generated
 	 */
 	void setX(String value);
+
+	/**
+	 * Returns the value of the '<em><b>YList</b></em>' attribute list.
+	 * The list contents are of type {@link java.lang.Integer}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>YList</em>' attribute list isn't clear, there really should be more of a description
+	 * here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the value of the '<em>YList</em>' attribute list.
+	 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage#getD_YList()
+	 * @model
+	 * @generated
+	 */
+	EList<Integer> getYList();
 
 } // D

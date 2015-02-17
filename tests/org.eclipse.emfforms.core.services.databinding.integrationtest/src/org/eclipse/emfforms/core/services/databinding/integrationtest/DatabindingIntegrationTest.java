@@ -16,7 +16,9 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.LinkedList;
 
+import org.eclipse.core.databinding.property.list.IListProperty;
 import org.eclipse.core.databinding.property.value.IValueProperty;
+import org.eclipse.emf.databinding.IEMFListProperty;
 import org.eclipse.emf.databinding.IEMFValueProperty;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -62,7 +64,7 @@ public class DatabindingIntegrationTest {
 	}
 
 	@Test
-	public void testIntegration() {
+	public void testIntegrationValue() {
 		final VFeaturePathDomainModelReference pathReference = VViewFactory.eINSTANCE
 			.createFeaturePathDomainModelReference();
 		// create reference path to the attribute
@@ -92,4 +94,35 @@ public class DatabindingIntegrationTest {
 
 	}
 
+	@Test
+	public void testIntegrationList() {
+		// TODO
+		final VFeaturePathDomainModelReference pathReference = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
+		// create reference path to the attribute
+		final LinkedList<EReference> referencePath = new LinkedList<EReference>();
+		referencePath.add(TestPackage.eINSTANCE.getA_B());
+		referencePath.add(TestPackage.eINSTANCE.getB_C());
+		referencePath.add(TestPackage.eINSTANCE.getC_D());
+
+		final EStructuralFeature feature = TestPackage.eINSTANCE.getD_YList();
+
+		pathReference.getDomainModelEReferencePath().addAll(referencePath);
+		pathReference.setDomainModelEFeature(feature);
+
+		final IListProperty listProperty = databindingService.getListProperty(pathReference);
+
+		// The converter should return an IEMFListProperty
+		assertTrue(listProperty instanceof IEMFListProperty);
+
+		final IEMFListProperty emfListProperty = (IEMFListProperty) listProperty;
+
+		// Check EStructuralFeature of the property.
+		assertEquals(feature, emfListProperty.getStructuralFeature());
+
+		// Check correct path.
+		final String expected = "A.b<B> => B.c<C> => C.d<D> => D.yList[]<EInt>"; //$NON-NLS-1$
+		assertEquals(expected, emfListProperty.toString());
+
+	}
 }

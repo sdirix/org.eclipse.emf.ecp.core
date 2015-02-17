@@ -64,7 +64,7 @@ public class EMFFormsDatabindingImpl_ITest {
 	}
 
 	@Test
-	public void testServiceUsage() {
+	public void testServiceUsageValue() {
 		final DomainModelReferenceConverter converter = mock(DomainModelReferenceConverter.class);
 		final VFeaturePathDomainModelReference reference = mock(VFeaturePathDomainModelReference.class);
 		when(converter.isApplicable(reference)).thenReturn(0d);
@@ -72,8 +72,20 @@ public class EMFFormsDatabindingImpl_ITest {
 			DomainModelReferenceConverter.class, converter, null);
 		service.getValueProperty(reference);
 		verify(converter).isApplicable(reference);
-		verify(converter).convert(reference);
+		verify(converter).convertToValueProperty(reference);
 		converterService.unregister();
+	}
 
+	@Test
+	public void testServiceUsageList() {
+		final DomainModelReferenceConverter converter = mock(DomainModelReferenceConverter.class);
+		final VFeaturePathDomainModelReference reference = mock(VFeaturePathDomainModelReference.class);
+		when(converter.isApplicable(reference)).thenReturn(0d);
+		final ServiceRegistration<DomainModelReferenceConverter> converterService = bundleContext.registerService(
+			DomainModelReferenceConverter.class, converter, null);
+		service.getListProperty(reference);
+		verify(converter).isApplicable(reference);
+		verify(converter).convertToListProperty(reference);
+		converterService.unregister();
 	}
 }

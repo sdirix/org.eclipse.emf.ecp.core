@@ -14,15 +14,14 @@ package org.eclipse.emfforms.core.services.databinding.testmodel.test.model;
 import org.eclipse.emf.ecore.EObject;
 
 /**
- * <!-- begin-user-doc --> A representation of the model object '
- * <em><b>B</b></em>'. <!-- end-user-doc -->
+ * <!-- begin-user-doc -->
+ * A representation of the model object '<em><b>B</b></em>'.
+ * <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
  * <ul>
- * <li>
- * {@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.B#getC
- * <em>C</em>}</li>
+ * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.B#getC <em>C</em>}</li>
  * </ul>
  * </p>
  *
@@ -30,13 +29,14 @@ import org.eclipse.emf.ecore.EObject;
  * @model
  * @generated
  */
-public interface B extends EObject {
+public interface B extends EObject
+{
 	/**
-	 * Returns the value of the '<em><b>C</b></em>' containment reference. <!--
-	 * begin-user-doc -->
+	 * Returns the value of the '<em><b>C</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>C</em>' containment reference isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>C</em>' containment reference isn't clear, there really should be more of a
+	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * 
@@ -49,13 +49,12 @@ public interface B extends EObject {
 	C getC();
 
 	/**
-	 * Sets the value of the '
-	 * {@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.B#getC
-	 * <em>C</em>}' containment reference. <!-- begin-user-doc --> <!--
-	 * end-user-doc -->
+	 * Sets the value of the '{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.B#getC
+	 * <em>C</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * 
-	 * @param value
-	 *            the new value of the '<em>C</em>' containment reference.
+	 * @param value the new value of the '<em>C</em>' containment reference.
 	 * @see #getC()
 	 * @generated
 	 */
