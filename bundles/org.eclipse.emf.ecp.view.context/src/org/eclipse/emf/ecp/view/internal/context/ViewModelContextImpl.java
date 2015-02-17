@@ -537,7 +537,20 @@ public class ViewModelContextImpl implements ViewModelContext {
 			if (VDomainModelReference.class.isInstance(modelChangeListener)) {
 				domainModelChangeListener.add(0, modelChangeListener);
 			} else {
-				domainModelChangeListener.add(modelChangeListener);
+				// TODO hack for https://bugs.eclipse.org/bugs/show_bug.cgi?id=460158
+				int positionToInsert = -1;
+				for (int i = 0; i < domainModelChangeListener.size(); i++) {
+					final ModelChangeListener listener = domainModelChangeListener.get(i);
+					if (modelChangeListener.getClass().isInstance(listener)) {
+						positionToInsert = i;
+						break;
+					}
+				}
+				if (positionToInsert == -1) {
+					domainModelChangeListener.add(modelChangeListener);
+				} else {
+					domainModelChangeListener.add(positionToInsert, modelChangeListener);
+				}
 			}
 		} else {
 			parentContext.registerDomainChangeListener(modelChangeListener);
