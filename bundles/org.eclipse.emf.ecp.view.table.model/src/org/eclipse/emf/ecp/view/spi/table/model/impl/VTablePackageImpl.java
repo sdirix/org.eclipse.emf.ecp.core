@@ -269,7 +269,9 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.5
+	 *        <!-- end-user-doc -->
 	 *
 	 * @generated
 	 */
@@ -478,7 +480,9 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage
 	/**
 	 * Initializes the annotations for <b>http://www.eclipse.org/emf/2002/Ecore</b>.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.5
+	 *        <!-- end-user-doc -->
 	 *
 	 * @generated
 	 */

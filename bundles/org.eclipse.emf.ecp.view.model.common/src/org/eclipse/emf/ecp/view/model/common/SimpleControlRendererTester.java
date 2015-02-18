@@ -88,6 +88,7 @@ public abstract class SimpleControlRendererTester implements ECPRendererTester {
 	 *
 	 * @param eAnnotations the annotations
 	 * @return <code>true</code> if applicable, <code>false</code> otherwise
+	 * @since 1.5
 	 */
 	protected boolean checkFeatureETypeAnnotations(EList<EAnnotation> eAnnotations) {
 		return true;

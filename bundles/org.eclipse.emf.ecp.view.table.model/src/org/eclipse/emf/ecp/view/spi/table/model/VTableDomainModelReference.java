@@ -61,7 +61,9 @@ public interface VTableDomainModelReference extends VFeaturePathDomainModelRefer
 	 * If the meaning of the '<em>Domain Model Reference</em>' containment reference isn't clear, there really should be
 	 * more of a description here...
 	 * </p>
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.5
+	 *        <!-- end-user-doc -->
 	 *
 	 * @return the value of the '<em>Domain Model Reference</em>' containment reference.
 	 * @see #setDomainModelReference(VDomainModelReference)
@@ -76,7 +78,9 @@ public interface VTableDomainModelReference extends VFeaturePathDomainModelRefer
 	 * {@link org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference#getDomainModelReference
 	 * <em>Domain Model Reference</em>}' containment reference.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.5
+	 *        <!-- end-user-doc -->
 	 *
 	 * @param value the new value of the '<em>Domain Model Reference</em>' containment reference.
 	 * @see #getDomainModelReference()

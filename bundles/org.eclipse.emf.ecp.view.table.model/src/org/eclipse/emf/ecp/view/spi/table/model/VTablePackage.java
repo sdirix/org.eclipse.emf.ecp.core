@@ -301,7 +301,9 @@ public interface VTablePackage extends EPackage
 	/**
 	 * The feature id for the '<em><b>Domain Model Reference</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 *
+	 * @since 1.5
+	 *        <!-- end-user-doc -->
 	 *
 	 * @generated
 	 * @ordered
@@ -311,7 +313,9 @@ public interface VTablePackage extends EPackage
 	/**
 	 * The number of structural features of the '<em>Domain Model Reference</em>' class.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 *
+	 * @since 1.5
+	 *        <!-- end-user-doc -->
 	 *
 	 * @generated
 	 * @ordered
@@ -485,7 +489,9 @@ public interface VTablePackage extends EPackage
 	 * {@link org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference#getDomainModelReference
 	 * <em>Domain Model Reference</em>}'.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 *
+	 * @since 1.5
+	 *        <!-- end-user-doc -->
 	 *
 	 * @return the meta object for the containment reference '<em>Domain Model Reference</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference#getDomainModelReference()
@@ -653,7 +659,9 @@ public interface VTablePackage extends EPackage
 		/**
 		 * The meta object literal for the '<em><b>Domain Model Reference</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * 
+		 * @since 1.5
+		 *        <!-- end-user-doc -->
 		 *
 		 * @generated
 		 */

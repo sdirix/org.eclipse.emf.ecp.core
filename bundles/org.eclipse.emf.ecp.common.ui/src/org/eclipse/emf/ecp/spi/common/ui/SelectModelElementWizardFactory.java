@@ -27,6 +27,7 @@ import org.eclipse.swt.widgets.Display;
 
 /**
  * @author Jonas
+ * @since 1.5
  *
  */
 public abstract class SelectModelElementWizardFactory {

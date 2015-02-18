@@ -167,6 +167,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 * Returns whether debug is active or inactive.
 	 *
 	 * @return <code>true</code> if debug mode is enabled, <code>false</code> otherwise
+	 * @since 1.5
 	 */
 	protected boolean isDebug() {
 		return debugMode;

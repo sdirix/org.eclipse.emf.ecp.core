@@ -98,7 +98,9 @@ public class TableDomainModelReferenceItemProvider
 	/**
 	 * This adds a property descriptor for the Domain Model Reference feature.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.5
+	 *        <!-- end-user-doc -->
 	 *
 	 * @generated
 	 */

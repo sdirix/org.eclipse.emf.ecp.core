@@ -52,6 +52,7 @@ public class SelectModelElementCompositeImpl extends AbstractFilteredSelectionCo
 	 *
 	 * @param input the input for the selection
 	 * @param multiSelection whether multi selection is allowed
+	 * @since 1.5
 	 */
 	public SelectModelElementCompositeImpl(Object input, boolean multiSelection) {
 		super();

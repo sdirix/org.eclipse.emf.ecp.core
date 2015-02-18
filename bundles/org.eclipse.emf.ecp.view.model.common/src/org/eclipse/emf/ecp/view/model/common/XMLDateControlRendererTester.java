@@ -31,7 +31,7 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
  * Tester for Text Renderer.
  *
  * @author Eugen Neufeld
- *
+ * @noextend This class is not intended to be subclassed by clients.
  */
 public class XMLDateControlRendererTester implements ECPRendererTester {
 
