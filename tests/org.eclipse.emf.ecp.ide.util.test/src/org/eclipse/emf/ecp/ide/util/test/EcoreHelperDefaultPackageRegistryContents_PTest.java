@@ -21,6 +21,7 @@ import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.ecp.internal.ide.util.EcoreHelper;
+import org.junit.After;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -39,6 +40,11 @@ public class EcoreHelperDefaultPackageRegistryContents_PTest {
 		if (!project.exists()) {
 			installResourcesProject();
 		}
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		EcoreHelper.unregisterEcore(A_ECORE_PATH);
 	}
 
 	private static void installResourcesProject() throws Exception {
