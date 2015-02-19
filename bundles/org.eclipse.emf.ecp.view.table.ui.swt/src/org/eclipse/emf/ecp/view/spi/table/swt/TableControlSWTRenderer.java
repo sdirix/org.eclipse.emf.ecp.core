@@ -24,14 +24,11 @@ import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.core.databinding.observable.map.IObservableMap;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
-import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.Diagnostic;
-import org.eclipse.emf.databinding.EObjectObservableMap;
-import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -48,7 +45,6 @@ import org.eclipse.emf.ecp.edit.spi.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.ecp.view.internal.table.swt.Activator;
 import org.eclipse.emf.ecp.view.internal.table.swt.CellReadOnlyTesterHelper;
 import org.eclipse.emf.ecp.view.internal.table.swt.TableConfigurationHelper;
-import org.eclipse.emf.ecp.view.model.common.spi.databinding.DatabindingProviderService;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.AbstractControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.DiagnosticMessageExtractor;
@@ -115,8 +111,6 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
-import org.osgi.framework.InvalidSyntaxException;
-import org.osgi.framework.ServiceReference;
 
 /**
  * SWT Renderer for Table Control.
@@ -427,8 +421,10 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 						.getColumnWidthWeight() : 100)
 				.build(tableViewer);
 
-			column.setLabelProvider(new ECPCellLabelProvider(eStructuralFeature, cellEditor, getObservableMap(dmr,
-				eStructuralFeature, cp), getVElement(), dmr));
+			final IObservableMap observableMap = Activator.getInstance().getEMFFormsDatabinding().getValueProperty(dmr)
+				.observeDetail(cp.getKnownElements());
+			column.setLabelProvider(new ECPCellLabelProvider(eStructuralFeature, cellEditor, observableMap,
+				getVElement(), dmr));
 			column.getColumn().addSelectionListener(
 				getSelectionAdapter(tableViewer, comparator, column.getColumn(), columnNumber));
 
@@ -444,8 +440,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			columnNumber++;
 		}
 		tableViewer.setContentProvider(cp);
-		final IObservableList list = EMFEditObservables.observeList(getEditingDomain(mainSetting),
-			mainSetting.getEObject(), mainSetting.getEStructuralFeature());
+		final IObservableList list = Activator.getInstance().getEMFFormsDatabinding()
+			.getObservableList(tableDomainModelReference, getViewModelContext().getDomainModel());
 		tableViewer.setInput(list);
 
 		// IMPORTANT:
@@ -489,48 +485,6 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 				removeButton.setEnabled(true);
 			}
 		}
-	}
-
-	private IObservableMap getObservableMap(VDomainModelReference dmr, EStructuralFeature eStructuralFeature,
-		ObservableListContentProvider cp) {
-		if (eStructuralFeature
-			.isMany()) {
-			return new EObjectObservableMap(cp.getKnownElements(), eStructuralFeature);
-		}
-
-		return getValueProperty(dmr).observeDetail(
-			cp.getKnownElements());
-	}
-
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	private IValueProperty getValueProperty(VDomainModelReference dmr) {
-		ServiceReference<DatabindingProviderService> databindingProviderServiceReference = null;
-
-		try {
-			final Collection<ServiceReference<DatabindingProviderService>> serviceReferences = Activator.getInstance()
-				.getBundle()
-				.getBundleContext()
-				.getServiceReferences(DatabindingProviderService.class,
-					String.format("(domainModelReference=%s)", dmr.getClass().getName())); //$NON-NLS-1$
-			final Iterator<ServiceReference<DatabindingProviderService>> iterator = serviceReferences.iterator();
-			if (iterator.hasNext()) {
-				databindingProviderServiceReference = iterator.next();
-			}
-			if (databindingProviderServiceReference == null) {
-				throw new IllegalStateException("No DatabindingProviderService available."); //$NON-NLS-1$
-			}
-		} catch (final InvalidSyntaxException e) {
-			throw new IllegalStateException(e);
-		}
-
-		final DatabindingProviderService<VDomainModelReference> databindingProviderService = Activator.getInstance()
-			.getBundle().getBundleContext().getService(databindingProviderServiceReference);
-		final IValueProperty result = databindingProviderService.getProperty(dmr, IValueProperty.class);
-		Activator.getInstance()
-			.getBundle()
-			.getBundleContext().ungetService(databindingProviderServiceReference);
-
-		return result;
 	}
 
 	private SelectionAdapter getSelectionAdapter(final TableViewer tableViewer,
@@ -1075,8 +1029,9 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			final IObservableValue target = doCreateCellEditorObservable(cellEditor);
 			Assert.isNotNull(target, "doCreateCellEditorObservable(...) did not return an observable"); //$NON-NLS-1$
 
-			final IObservableValue model = doCreateElementObservable(cell.getElement(), cell);
-			Assert.isNotNull(model, "doCreateElementObservable(...) did not return an observable"); //$NON-NLS-1$
+			final IObservableValue model = Activator.getInstance().getEMFFormsDatabinding()
+				.getObservableValue(domainModelReference, (EObject) cell.getElement());
+			Assert.isNotNull(model, "The databinding service did not return an observable"); //$NON-NLS-1$
 
 			final Binding binding = createBinding(target, model);
 
@@ -1099,10 +1054,6 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 					((ECPCellEditor) cellEditor).getModelToTargetStrategy());
 			}
 			return getDataBindingContext().bindValue(target, model);
-		}
-
-		protected IObservableValue doCreateElementObservable(Object element, ViewerCell cell) {
-			return getValueProperty(domainModelReference).observe(element);
 		}
 
 		protected IObservableValue doCreateCellEditorObservable(CellEditor cellEditor) {
