@@ -23,10 +23,10 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+	ECPProviderRegistry_PTest.class,
 	ECPProjectManager_PTest.class,
 	ECPProject_PTest.class,
 	ECPProvider_PTest.class,
-	ECPProviderRegistry_PTest.class,
 	ECPRepository_PTest.class })
 /*
  * deactivated, because hudson is 50 times slower than local machine.

@@ -76,7 +76,9 @@ public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	 * The cached value of the '{@link #getDomainModelReference() <em>Domain Model Reference</em>}' containment
 	 * reference.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.5
+	 *        <!-- end-user-doc -->
 	 *
 	 * @see #getDomainModelReference()
 	 * @generated
@@ -129,7 +131,9 @@ public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.5
+	 *        <!-- end-user-doc -->
 	 *
 	 * @generated
 	 */
@@ -141,7 +145,9 @@ public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.5
+	 *        <!-- end-user-doc -->
 	 *
 	 * @generated
 	 */
@@ -166,7 +172,9 @@ public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.5
+	 *        <!-- end-user-doc -->
 	 *
 	 * @generated
 	 */

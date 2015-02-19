@@ -14,6 +14,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/model/LabelAlignment.java" type="org.eclipse.emf.ecp.view.spi.model.LabelAlignment">
+        <filter id="305365105">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.LabelAlignment"/>
+                <message_argument value="org.eclipse.emf.ecp.view.model_1.5.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/ecp/view/spi/model/VDomainModelReference.java" type="org.eclipse.emf.ecp.view.spi.model.VDomainModelReference">
         <filter comment="SPI change (1.3)" id="403804204">
             <message_arguments>

@@ -6,11 +6,11 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({
+	EcoreHelperDefaultPackageRegistryContents_PTest.class,
 	EcoreHelperNoDependencies_PTest.class,
 	EcoreHelperOneDependency_PTest.class,
 	EcoreHelperTwoDependencies_PTest.class,
-	EcoreHelperCyclicDependencies_PTest.class,
-	EcoreHelperDefaultPackageRegistryContents_PTest.class
+	EcoreHelperCyclicDependencies_PTest.class
 })
 public class AllTests {
 

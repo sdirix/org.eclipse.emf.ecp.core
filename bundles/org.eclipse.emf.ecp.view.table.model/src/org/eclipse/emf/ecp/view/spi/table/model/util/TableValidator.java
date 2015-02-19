@@ -46,7 +46,9 @@ import org.eclipse.emf.ecp.view.spi.table.model.VTablePackage;
 /**
  * <!-- begin-user-doc -->
  * The <b>Validator</b> for the model.
- * <!-- end-user-doc -->
+ * 
+ * @since 1.5
+ *        <!-- end-user-doc -->
  *
  * @see org.eclipse.emf.ecp.view.spi.table.model.VTablePackage
  * @generated

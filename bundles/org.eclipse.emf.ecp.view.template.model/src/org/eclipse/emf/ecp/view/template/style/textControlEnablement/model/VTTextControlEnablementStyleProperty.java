@@ -16,16 +16,18 @@ import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Style Property</b></em>'.
- * <!-- end-user-doc -->
+ * 
+ * @since 1.5
+ *        <!-- end-user-doc -->
  *
- * <p>
- * The following features are supported:
- * <ul>
- * <li>
- * {@link org.eclipse.emf.ecp.view.template.style.textControlEnablement.model.VTTextControlEnablementStyleProperty#isRenderDisableAsEditable
- * <em>Render Disable As Editable</em>}</li>
- * </ul>
- * </p>
+ *        <p>
+ *        The following features are supported:
+ *        <ul>
+ *        <li>
+ *        {@link org.eclipse.emf.ecp.view.template.style.textControlEnablement.model.VTTextControlEnablementStyleProperty#isRenderDisableAsEditable
+ *        <em>Render Disable As Editable</em>}</li>
+ *        </ul>
+ *        </p>
  *
  * @see org.eclipse.emf.ecp.view.template.style.textControlEnablement.model.VTTextControlEnablementPackage#getTextControlEnablementStyleProperty()
  * @model

@@ -15,8 +15,9 @@ package org.eclipse.emf.ecp.core.test;
 import static org.junit.Assert.assertEquals;
 
 import org.eclipse.emf.ecp.core.util.ECPUtil;
-import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
+import org.eclipse.emf.ecp.spi.core.InternalProvider;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 public class ECPProviderRegistry_PTest extends AbstractTest {
 
@@ -28,9 +29,12 @@ public class ECPProviderRegistry_PTest extends AbstractTest {
 	//
 	@Test
 	public void removeAddProviderTest() {
-		ECPUtil.getECPProviderRegistry().removeProvider(EMFStoreProvider.NAME);
-		assertEquals(0, ECPUtil.getECPProviderRegistry().getProviders().size());
-		ECPUtil.getECPProviderRegistry().addProvider(new EMFStoreProvider());
+		assertEquals(1, ECPUtil.getECPProviderRegistry().getProviders().size());
+		final InternalProvider mocked = Mockito.mock(InternalProvider.class);
+		Mockito.when(mocked.getName()).thenReturn("Mocked");
+		ECPUtil.getECPProviderRegistry().addProvider(mocked);
+		assertEquals(2, ECPUtil.getECPProviderRegistry().getProviders().size());
+		ECPUtil.getECPProviderRegistry().removeProvider("Mocked");
 		assertEquals(1, ECPUtil.getECPProviderRegistry().getProviders().size());
 	}
 }

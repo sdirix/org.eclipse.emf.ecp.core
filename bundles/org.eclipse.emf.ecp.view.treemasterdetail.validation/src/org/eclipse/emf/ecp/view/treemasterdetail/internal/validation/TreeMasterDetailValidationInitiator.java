@@ -159,7 +159,6 @@ public class TreeMasterDetailValidationInitiator implements
 						mapping.get(treeContextEntry).add(addedObject);
 						final Map<String, Object> context = new LinkedHashMap<String, Object>();
 						context.put(DETAIL_KEY, true);
-						context.put(ROOT_KEY, true);
 						final ViewModelContext childContext = treeContextEntry.context.getChildContext(addedObject,
 							treeContextEntry.control, ViewProviderHelper.getView(addedObject, context));
 						childContext.addContextUser(this);

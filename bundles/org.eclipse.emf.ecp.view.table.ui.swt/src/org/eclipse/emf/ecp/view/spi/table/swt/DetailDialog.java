@@ -75,6 +75,7 @@ public class DetailDialog extends Dialog {
 	 * @param selection the {@link EObject} to edit
 	 * @param tableControl the {@link VTableControl}
 	 * @param view the view model for the detail dialog. May <b>not</b> be <code>null</code>.
+	 * @since 1.5
 	 */
 	public DetailDialog(Shell parentShell, EObject selection, VTableControl tableControl, VView view) {
 		super(parentShell);

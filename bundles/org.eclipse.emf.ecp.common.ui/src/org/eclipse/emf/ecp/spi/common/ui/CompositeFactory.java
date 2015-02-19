@@ -56,6 +56,9 @@ public final class CompositeFactory {
 		return new SelectModelClassCompositeImpl(unsupportedEPackages, filteredEPackages, filteredEClasses);
 	}
 
+	/**
+	 * @since 1.5
+	 */
 	public static SelectionComposite<TableViewer> getTableSelectionComposite(Object rootObject, boolean multiSelection) {
 		return new SelectModelElementCompositeImpl(rootObject, multiSelection);
 	}

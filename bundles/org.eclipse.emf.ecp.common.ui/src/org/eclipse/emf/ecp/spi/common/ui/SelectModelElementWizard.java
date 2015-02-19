@@ -146,6 +146,7 @@ public class SelectModelElementWizard extends ECPWizard<SelectionComposite<? ext
 
 	/**
 	 * @return the pageName
+	 * @since 1.5
 	 */
 	public String getPageName() {
 		return pageName;
@@ -153,6 +154,7 @@ public class SelectModelElementWizard extends ECPWizard<SelectionComposite<? ext
 
 	/**
 	 * @return the description
+	 * @since 1.5
 	 */
 	public String getDescription() {
 		return description;
@@ -160,6 +162,7 @@ public class SelectModelElementWizard extends ECPWizard<SelectionComposite<? ext
 
 	/**
 	 * @return the pageTitle
+	 * @since 1.5
 	 */
 	public String getPageTitle() {
 		return pageTitle;
