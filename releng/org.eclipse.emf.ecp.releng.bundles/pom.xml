@@ -252,9 +252,12 @@
 		<module>../../bundles/org.eclipse.emf.ecp.changebroker</module>
 		<module>../../bundles/org.eclipse.emf.ecp.changebroker.emfstore</module>
 		
-		<!-- Databing Services -->
+		<!-- Core Services -->
 		<module>../../bundles/org.eclipse.emfforms.core.services.databinding</module>
 		<module>../../bundles/org.eclipse.emfforms.core.services.databinding.featurepath</module>
+		<module>../../bundles/org.eclipse.emf.emfforms.core.services.labelprovider</module>
+		<module>../../bundles/org.eclipse.emf.emfforms.core.services.emfspecificservice</module>
+		
 		<!-- Localization Services -->
 		<module>../../bundles/org.eclipse.emf.emfforms.localization</module>
 		
