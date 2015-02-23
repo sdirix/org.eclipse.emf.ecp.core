@@ -31,6 +31,7 @@ public class RAPWrapper implements DialogWrapper {
 	 *
 	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.DialogWrapper#openDialog(org.eclipse.jface.dialogs.Dialog,
 	 *      org.eclipse.emf.ecp.edit.spi.swt.util.ECPDialogExecutor)
+	 * @since 1.5
 	 */
 	@Override
 	public void openDialog(final Dialog dialog, final ECPDialogExecutor callBack) {
