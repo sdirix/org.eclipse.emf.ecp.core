@@ -65,7 +65,7 @@ import org.eclipse.emf.ecp.view.template.style.tableValidation.model.VTTableVali
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.emf.emfforms.spi.core.services.labelprovider.EMFFormsLabelProvider;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.databinding.viewers.ObservableMapCellLabelProvider;
@@ -205,11 +205,10 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 		final Label label = new Label(titleComposite, SWT.NONE);
 		label.setBackground(parent.getBackground());
-		final IItemPropertyDescriptor propDescriptor = getItemPropertyDescriptor(mainSetting);
-		String labelText = ""; //$NON-NLS-1$
-		if (propDescriptor != null) {
-			labelText = propDescriptor.getDisplayName(null);
-		}
+
+		final EMFFormsLabelProvider labelService = Activator.getInstance().getEMFFormsLabelProvider();
+		final String labelText = labelService.getDisplayName(getVElement().getDomainModelReference(),
+			getViewModelContext().getDomainModel());
 		label.setText(labelText);
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING).grab(true, false).applyTo(label);
 
@@ -398,15 +397,10 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			if (eStructuralFeatureIterator == null || !eStructuralFeatureIterator.hasNext()) {
 				continue;
 			}
+			final EMFFormsLabelProvider labelService = Activator.getInstance().getEMFFormsLabelProvider();
+			final String text = labelService.getDisplayName(dmr);
+			final String tooltipText = labelService.getDescription(dmr);
 			final EStructuralFeature eStructuralFeature = eStructuralFeatureIterator.next();
-			String text = eStructuralFeature.getName();
-			String tooltipText = eStructuralFeature.getName();
-			final IItemPropertyDescriptor itemPropertyDescriptor = getItemPropertyDescriptor(getCellSetting(dmr,
-				tempInstance));
-			if (itemPropertyDescriptor != null) {
-				text = itemPropertyDescriptor.getDisplayName(null);
-				tooltipText = itemPropertyDescriptor.getDescription(null);
-			}
 
 			final CellEditor cellEditor = createCellEditor(tempInstance, eStructuralFeature, tableViewer.getTable());
 			final TableViewerColumn column = TableViewerColumnBuilder

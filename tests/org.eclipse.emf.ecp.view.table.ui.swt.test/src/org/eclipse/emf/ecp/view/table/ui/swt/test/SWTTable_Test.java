@@ -45,11 +45,14 @@ import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableFactory;
 import org.eclipse.emf.ecp.view.spi.table.swt.TableControlSWTRenderer;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.DatabindingClassRunner;
+import org.eclipse.emf.emfforms.spi.core.services.labelprovider.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableColumn;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -68,6 +71,10 @@ import org.osgi.framework.ServiceRegistration;
 @SuppressWarnings("restriction")
 @RunWith(DatabindingClassRunner.class)
 public class SWTTable_Test {
+	private static final String DISPLAYNAME = "displayname";
+	private static final String DISPLAYNAME_COLUMNS = "displayname-columns";
+	private static final String DESCRIPTION = "description";
+	private static final String DESCRIPTION_COLUMNS = "description-columns";
 	private static BundleContext bundleContext;
 	private EMFFormsDatabinding databindingService;
 	private ServiceRegistration<EMFFormsDatabinding> databindingRegisterService;
@@ -75,6 +82,8 @@ public class SWTTable_Test {
 	private Shell shell;
 	private EClass domainModel;
 	private VTableControl vTableControl;
+	private EMFFormsLabelProvider labelProvider;
+	private ServiceRegistration<EMFFormsLabelProvider> labelRegisterService;
 
 	/**
 	 * Get {@link BundleContext} for the tests.
@@ -86,17 +95,26 @@ public class SWTTable_Test {
 
 	/**
 	 * Set up executed before every test.
-	 * Mocks and registers the databinding service.
+	 * Mocks and registers the databinding and label service.
 	 * Creates a new {@link TableControlSWTRenderer} to be tested. Mocks needed parameters and contents (e.g.
 	 * VControl, ViewModelContext).
 	 */
 	@Before
 	public void setUp() {
 		databindingService = mock(EMFFormsDatabinding.class);
+		labelProvider = mock(EMFFormsLabelProvider.class);
 		final Dictionary<String, Object> dictionary = new Hashtable<String, Object>();
 		dictionary.put("service.ranking", 5); //$NON-NLS-1$
 		databindingRegisterService = bundleContext.registerService(
 			EMFFormsDatabinding.class, databindingService, dictionary);
+		labelRegisterService = bundleContext.registerService(EMFFormsLabelProvider.class, labelProvider, dictionary);
+
+		when(labelProvider.getDescription(any(VDomainModelReference.class))).thenReturn(DESCRIPTION_COLUMNS);
+		when(labelProvider.getDescription(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
+			DESCRIPTION);
+		when(labelProvider.getDisplayName(any(VDomainModelReference.class))).thenReturn(DISPLAYNAME_COLUMNS);
+		when(labelProvider.getDisplayName(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
+			DISPLAYNAME);
 
 		shell = new Shell();
 
@@ -129,11 +147,34 @@ public class SWTTable_Test {
 	}
 
 	/**
-	 * Unregister databinding service after every test.
+	 * Unregister databinding and label service after every test.
 	 */
 	@After
 	public void tearDown() {
 		databindingRegisterService.unregister();
+		labelRegisterService.unregister();
+	}
+
+	@Test
+	public void testLabelServiceUsage() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		final IValueProperty columnValueProperty = new EMFValueProperty(EcorePackage.eINSTANCE.getEClass_Abstract());
+		final VDomainModelReference columnDMR = ((VTableDomainModelReference) vTableControl.getDomainModelReference())
+			.getColumnDomainModelReferences().get(0);
+		when(databindingService.getValueProperty(columnDMR)).thenReturn(columnValueProperty);
+
+		final Control renderedControl = renderer.render(new SWTGridCell(0, 0, renderer), shell);
+		final Composite composite = (Composite) renderedControl;
+		final Composite titleComposite = (Composite) composite.getChildren()[0];
+		final Label titleLabel = (Label) titleComposite.getChildren()[0];
+
+		assertEquals(DISPLAYNAME, titleLabel.getText());
+
+		final Control tableControl = getTable(renderedControl);
+		assertTrue(Table.class.isInstance(tableControl));
+		final Table table = (Table) tableControl;
+		final TableColumn column = table.getColumn(1);
+		assertEquals(DISPLAYNAME_COLUMNS, column.getText());
+		assertEquals(DESCRIPTION_COLUMNS, column.getToolTipText());
 	}
 
 	/**
