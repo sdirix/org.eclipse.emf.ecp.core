@@ -14,7 +14,9 @@ package org.eclipse.emf.ecp.view.internal.core.swt.renderer;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.when;
 
 import java.util.Collections;
@@ -48,6 +50,7 @@ import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.emfforms.spi.core.services.labelprovider.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
@@ -66,9 +69,11 @@ public abstract class AbstractControl_PTest {
 	protected static final String CUSTOM_VARIANT = "org.eclipse.rap.rwt.customVariant"; //$NON-NLS-1$
 	protected static BundleContext bundleContext;
 	protected static EMFFormsDatabinding databindingService;
-	protected static ServiceRegistration<EMFFormsDatabinding> databindingRegisterService;
+	private static ServiceRegistration<EMFFormsDatabinding> databindingRegisterService;
 	protected static Realm realm;
 	protected AbstractControlSWTRenderer<VControl> renderer;
+	protected static EMFFormsLabelProvider labelProvider;
+	private static ServiceRegistration<EMFFormsLabelProvider> labelRegisterService;
 
 	@BeforeClass
 	public static void setUpBeforeClass() {
@@ -76,16 +81,18 @@ public abstract class AbstractControl_PTest {
 		realm = Realm.getDefault();
 
 		databindingService = mock(EMFFormsDatabinding.class);
+		labelProvider = mock(EMFFormsLabelProvider.class);
 		final Dictionary<String, Object> dictionary = new Hashtable<String, Object>();
 		dictionary.put("service.ranking", 5);
 		databindingRegisterService = bundleContext.registerService(
 			EMFFormsDatabinding.class, databindingService, dictionary);
+		labelRegisterService = bundleContext.registerService(EMFFormsLabelProvider.class, labelProvider, dictionary);
 	}
 
 	@AfterClass
 	public static void tearDownAfterClass() {
 		databindingRegisterService.unregister();
-
+		labelRegisterService.unregister();
 	}
 
 	private Resource createResource() {
@@ -204,6 +211,30 @@ public abstract class AbstractControl_PTest {
 		final Control render = renderer.render(new SWTGridCell(0, 0, renderer), shell);
 		assertTrue(Label.class.isInstance(render));
 		assertEquals(text, Label.class.cast(render).getText());
+	}
+
+	/**
+	 * Tests whether the {@link EMFFormsLabelProvider} is used to get the labels of a control.
+	 *
+	 * @throws NoRendererFoundException
+	 * @throws NoPropertyDescriptorFoundExeption
+	 */
+	protected void labelServiceUsage() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		reset(labelProvider);
+		final String testDescription = "test-description";
+		final String testDisplayName = "test-displayname";
+		when(labelProvider.getDescription(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
+			testDescription);
+		when(labelProvider.getDisplayName(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
+			testDisplayName);
+
+		setMockLabelAlignment(LabelAlignment.LEFT);
+		final Control renderControl = renderControl(new SWTGridCell(0, 0, renderer));
+		assertTrue(Label.class.isInstance(renderControl));
+
+		final Label label = (Label) renderControl;
+		assertEquals(testDescription, label.getToolTipText());
+		assertEquals(testDisplayName, label.getText());
 	}
 
 	protected Control renderControl(SWTGridCell gridCell)

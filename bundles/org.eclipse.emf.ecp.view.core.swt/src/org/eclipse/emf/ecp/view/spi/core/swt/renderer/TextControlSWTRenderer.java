@@ -88,7 +88,8 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 	 * @return the string to show as the message
 	 */
 	protected String getTextMessage(Setting setting) {
-		return getItemPropertyDescriptor(setting).getDisplayName(null);
+		return Activator.getDefault().getEMFFormsLabelProvider()
+			.getDisplayName(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
 	}
 
 	/**

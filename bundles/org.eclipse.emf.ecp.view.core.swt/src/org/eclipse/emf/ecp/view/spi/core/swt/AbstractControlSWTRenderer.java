@@ -30,7 +30,6 @@ import org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
-import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
@@ -43,6 +42,7 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.emf.emfforms.spi.core.services.labelprovider.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
@@ -214,11 +214,8 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 	 *
 	 * @param parent the {@link Composite} to render onto
 	 * @return the created {@link Control} or null
-	 * @throws NoPropertyDescriptorFoundExeption thrown if the {@link org.eclipse.emf.ecore.EStructuralFeature
-	 *             EStructuralFeature} of the {@link VControl} doesn't have a registered {@link IItemPropertyDescriptor}
 	 */
-	protected final Control createLabel(final Composite parent)
-		throws NoPropertyDescriptorFoundExeption {
+	protected final Control createLabel(final Composite parent) {
 		Label label = null;
 		labelRender: if (getVElement().getLabelAlignment() == LabelAlignment.LEFT) {
 			if (!getVElement().getDomainModelReference().getIterator().hasNext()) {
@@ -228,12 +225,8 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 			if (setting == null) {
 				break labelRender;
 			}
-			final IItemPropertyDescriptor itemPropertyDescriptor = getItemPropertyDescriptor(setting);
 
-			if (itemPropertyDescriptor == null) {
-				throw new NoPropertyDescriptorFoundExeption(setting.getEObject(), setting.getEStructuralFeature());
-			}
-
+			final EMFFormsLabelProvider labelProvider = Activator.getDefault().getEMFFormsLabelProvider();
 			label = new Label(parent, SWT.NONE);
 			label.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_label"); //$NON-NLS-1$
 			label.setBackground(parent.getBackground());
@@ -242,10 +235,12 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 			if (mandatoryStyle.isHighliteMandatoryFields() && setting.getEStructuralFeature().getLowerBound() > 0) {
 				extra = mandatoryStyle.getMandatoryMarker();
 			}
-			final String labelText = itemPropertyDescriptor.getDisplayName(setting.getEObject());
+			final VDomainModelReference domainModelReference = getVElement().getDomainModelReference();
+			final EObject rootObject = getViewModelContext().getDomainModel();
+			final String labelText = labelProvider.getDisplayName(domainModelReference, rootObject);
 			if (labelText != null && labelText.trim().length() != 0) {
 				label.setText(labelText + extra);
-				label.setToolTipText(itemPropertyDescriptor.getDescription(setting.getEObject()));
+				label.setToolTipText(labelProvider.getDescription(domainModelReference, rootObject));
 			}
 
 		}

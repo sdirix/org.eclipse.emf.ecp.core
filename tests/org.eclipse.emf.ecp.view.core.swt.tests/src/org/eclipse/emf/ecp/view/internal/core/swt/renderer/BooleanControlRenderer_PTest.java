@@ -35,6 +35,7 @@ import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.DatabindingClassRunner;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.SWTTestUtil;
+import org.eclipse.emf.emfforms.spi.core.services.labelprovider.EMFFormsLabelProvider;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Control;
@@ -75,11 +76,6 @@ public class BooleanControlRenderer_PTest extends AbstractControl_PTest {
 		final Control render = renderControl(new SWTGridCell(0, 2, renderer));
 
 		assertControl(render);
-	}
-
-	@Test
-	public void renderLabel() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
-		renderLabel("Interface");
 	}
 
 	private void assertControl(Control render) {
@@ -154,5 +150,16 @@ public class BooleanControlRenderer_PTest extends AbstractControl_PTest {
 		final Control renderControl = renderControl(new SWTGridCell(0, 2, renderer));
 		final Button button = (Button) renderControl;
 		return button;
+	}
+
+	/**
+	 * Tests whether the {@link EMFFormsLabelProvider} is used to get the labels of the control.
+	 * 
+	 * @throws NoRendererFoundException
+	 * @throws NoPropertyDescriptorFoundExeption
+	 */
+	@Test
+	public void testLabelServiceUsage() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		labelServiceUsage();
 	}
 }

@@ -28,6 +28,7 @@ import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.DatabindingClassRunner;
+import org.eclipse.emf.emfforms.spi.core.services.labelprovider.EMFFormsLabelProvider;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Control;
@@ -128,5 +129,16 @@ public class EnumComboViewerRenderer_PTest extends AbstractControl_PTest {
 
 		final Combo combo = (Combo) renderControl;
 		return combo;
+	}
+
+	/**
+	 * Tests whether the {@link EMFFormsLabelProvider} is used to get the labels of the control.
+	 *
+	 * @throws NoRendererFoundException
+	 * @throws NoPropertyDescriptorFoundExeption
+	 */
+	@Test
+	public void testLabelServiceUsage() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		labelServiceUsage();
 	}
 }

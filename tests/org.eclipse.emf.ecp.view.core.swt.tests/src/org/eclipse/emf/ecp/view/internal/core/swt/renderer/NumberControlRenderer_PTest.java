@@ -37,6 +37,7 @@ import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.DatabindingClassRunner;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.SWTTestUtil;
+import org.eclipse.emf.emfforms.spi.core.services.labelprovider.EMFFormsLabelProvider;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
@@ -80,9 +81,15 @@ public class NumberControlRenderer_PTest extends AbstractControl_PTest {
 		assertControl(render);
 	}
 
+	/**
+	 * Tests whether the {@link EMFFormsLabelProvider} is used to get the labels of the control.
+	 *
+	 * @throws NoRendererFoundException
+	 * @throws NoPropertyDescriptorFoundExeption
+	 */
 	@Test
-	public void renderLabel() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
-		renderLabel("Lower Bound");
+	public void testLabelServiceUsage() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		labelServiceUsage();
 	}
 
 	private void assertControl(Control render) {
