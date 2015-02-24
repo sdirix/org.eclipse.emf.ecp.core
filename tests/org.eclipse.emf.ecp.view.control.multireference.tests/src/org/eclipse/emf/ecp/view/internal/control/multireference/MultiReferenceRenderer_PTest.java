@@ -39,6 +39,7 @@ import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.DatabindingClassRunner;
+import org.eclipse.emf.emfforms.spi.core.services.labelprovider.EMFFormsLabelProvider;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.D;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestFactory;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage;
@@ -46,6 +47,7 @@ import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableColumn;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -67,12 +69,16 @@ import org.osgi.framework.ServiceRegistration;
 @SuppressWarnings("restriction")
 @RunWith(DatabindingClassRunner.class)
 public class MultiReferenceRenderer_PTest {
+	private static final String TEST_DESCRIPTION = "test-description"; //$NON-NLS-1$
+	private static final String TEST_DISPLAYNAME = "test-displayName"; //$NON-NLS-1$
 	private static BundleContext bundleContext;
 	private static Realm realm;
 	private EMFFormsDatabinding databindingService;
 	private ServiceRegistration<EMFFormsDatabinding> databindingRegisterService;
 	private MultiReferenceSWTRenderer renderer;
 	private Shell shell;
+	private EMFFormsLabelProvider labelProvider;
+	private ServiceRegistration<EMFFormsLabelProvider> labelRegisterService;
 
 	/**
 	 * Get {@link BundleContext} and {@link Realm} for the tests.
@@ -86,17 +92,24 @@ public class MultiReferenceRenderer_PTest {
 
 	/**
 	 * Set up executed before every test.
-	 * Mocks and registers the databinding service.
+	 * Mocks and registers the databinding and label services.
 	 * Creates a new {@link MultiReferenceSWTRenderer} to be tested. Mocks needed parameters and contents (e.g.
 	 * VControl, ViewModelContext).
 	 */
 	@Before
 	public void setUp() {
 		databindingService = mock(EMFFormsDatabinding.class);
+		labelProvider = mock(EMFFormsLabelProvider.class);
+		when(labelProvider.getDescription(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
+			TEST_DESCRIPTION);
+		when(labelProvider.getDisplayName(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
+			TEST_DISPLAYNAME);
+
 		final Dictionary<String, Object> dictionary = new Hashtable<String, Object>();
 		dictionary.put("service.ranking", 5); //$NON-NLS-1$
 		databindingRegisterService = bundleContext.registerService(
 			EMFFormsDatabinding.class, databindingService, dictionary);
+		labelRegisterService = bundleContext.registerService(EMFFormsLabelProvider.class, labelProvider, dictionary);
 
 		shell = new Shell();
 
@@ -131,11 +144,12 @@ public class MultiReferenceRenderer_PTest {
 	}
 
 	/**
-	 * Unregister databinding service after every test.
+	 * Unregister databinding and label service after every test.
 	 */
 	@After
 	public void tearDown() {
 		databindingRegisterService.unregister();
+		labelRegisterService.unregister();
 	}
 
 	/**
@@ -242,5 +256,22 @@ public class MultiReferenceRenderer_PTest {
 		final Table table = (Table) controlComposite.getChildren()[0];
 
 		return table;
+	}
+
+	/**
+	 * Tests whether a {@link EMFFormsLabelProvider} is used to get labels.
+	 *
+	 * @throws NoRendererFoundException Renderer could not be found
+	 * @throws NoPropertyDescriptorFoundExeption Property descriptor could not be found
+	 */
+	@Test
+	public void testLabelServiceUsage() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		final Composite composite = (Composite) renderer.render(new SWTGridCell(0, 0, renderer), shell);
+		final Composite controlComposite = (Composite) composite.getChildren()[1];
+		final Table table = (Table) controlComposite.getChildren()[0];
+
+		final TableColumn column = table.getColumn(0);
+		assertEquals(TEST_DISPLAYNAME, column.getText());
+		assertEquals(TEST_DESCRIPTION, column.getToolTipText());
 	}
 }

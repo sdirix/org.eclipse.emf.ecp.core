@@ -36,8 +36,8 @@ import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
 import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
-import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
+import org.eclipse.emf.emfforms.spi.core.services.labelprovider.EMFFormsLabelProvider;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -269,14 +269,11 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 
 		final ObservableListContentProvider cp = new ObservableListContentProvider();
 
-		final EStructuralFeature eStructuralFeature = mainSetting.getEStructuralFeature();
-		String text = eStructuralFeature.getName();
-		String tooltipText = eStructuralFeature.getName();
-		final IItemPropertyDescriptor itemPropertyDescriptor = getItemPropertyDescriptor(mainSetting);
-		if (itemPropertyDescriptor != null) {
-			text = itemPropertyDescriptor.getDisplayName(null);
-			tooltipText = itemPropertyDescriptor.getDescription(null);
-		}
+		final EMFFormsLabelProvider labelService = Activator.getDefault().getEMFFormsLabelProvider();
+		final String text = labelService.getDisplayName(getVElement().getDomainModelReference(), getViewModelContext()
+			.getDomainModel());
+		final String tooltipText = labelService.getDescription(getVElement().getDomainModelReference(),
+			getViewModelContext().getDomainModel());
 
 		final TableViewerColumn column = TableViewerColumnBuilder
 			.create()
