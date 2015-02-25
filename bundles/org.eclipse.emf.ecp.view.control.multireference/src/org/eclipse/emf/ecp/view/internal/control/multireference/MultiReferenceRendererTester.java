@@ -11,8 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.control.multireference;
 
-import java.util.Iterator;
-
+import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.model.common.ECPRendererTester;
@@ -39,17 +38,10 @@ public class MultiReferenceRendererTester implements ECPRendererTester {
 		if (domainModelReference == null) {
 			return NOT_APPLICABLE;
 		}
-		EStructuralFeature feature = null;
-		int count = 0;
-		final Iterator<EStructuralFeature> structuralFeatureIterator = domainModelReference
-			.getEStructuralFeatureIterator();
-		while (structuralFeatureIterator.hasNext()) {
-			feature = structuralFeatureIterator.next();
-			count++;
-		}
-		if (count != 1) {
-			return NOT_APPLICABLE;
-		}
+		final VControl control = (VControl) vElement;
+		final IValueProperty valueProperty = Activator.getDefault().getEMFFormsDatabinding()
+			.getValueProperty(control.getDomainModelReference());
+		final EStructuralFeature feature = (EStructuralFeature) valueProperty.getValueType();
 		if (!feature.isMany()) {
 			return NOT_APPLICABLE;
 		}

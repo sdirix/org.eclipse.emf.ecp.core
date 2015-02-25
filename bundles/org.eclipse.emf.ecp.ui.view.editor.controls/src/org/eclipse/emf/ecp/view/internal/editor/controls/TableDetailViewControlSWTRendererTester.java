@@ -11,7 +11,8 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.editor.controls;
 
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.core.databinding.property.value.IValueProperty;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.model.common.ECPRendererTester;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
@@ -29,11 +30,11 @@ public class TableDetailViewControlSWTRendererTester implements ECPRendererTeste
 		if (!VControl.class.isInstance(vElement)) {
 			return NOT_APPLICABLE;
 		}
-		final Setting setting = VControl.class.cast(vElement).getDomainModelReference().getIterator().next();
-		if (setting == null) {
-			return NOT_APPLICABLE;
-		}
-		if (VTablePackage.eINSTANCE.getTableControl_DetailView() == setting.getEStructuralFeature()) {
+		final VControl control = (VControl) vElement;
+		final IValueProperty valueProperty = Activator.getDefault().getEMFFormsDatabinding()
+			.getValueProperty(control.getDomainModelReference());
+		final EStructuralFeature feature = (EStructuralFeature) valueProperty.getValueType();
+		if (VTablePackage.eINSTANCE.getTableControl_DetailView() == feature) {
 			return 10;
 		}
 		return NOT_APPLICABLE;

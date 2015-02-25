@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -7,29 +7,27 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- * Eugen Neufeld - initial API and implementation
+ * Lucas Koehler - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.template.internal.tooling;
+package org.eclipse.emf.ecp.view.indexdmr.tooling;
 
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
+import org.eclipse.core.runtime.Plugin;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
-import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 
 /**
  * The activator class controls the plug-in life cycle.
+ *
+ * @author Lucas Koehler
  */
-public class Activator extends AbstractUIPlugin {
+public class Activator extends Plugin {
 
 	/** The plug-in ID. */
-	public static final String PLUGIN_ID = "org.eclipse.emf.ecp.view.template.tooling"; //$NON-NLS-1$
+	public static final String PLUGIN_ID = "org.eclipse.emf.ecp.view.indexdmr.tooling"; //$NON-NLS-1$
 
+	// The shared instance
 	private static Activator plugin;
-
-	private ServiceReference<ReportService> reportServiceReference;
 
 	/**
 	 * The constructor.
@@ -37,8 +35,9 @@ public class Activator extends AbstractUIPlugin {
 	public Activator() {
 	}
 
-	/**
-	 * {@inheritDoc}
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
 	 */
 	@Override
 	public void start(BundleContext context) throws Exception {
@@ -46,8 +45,9 @@ public class Activator extends AbstractUIPlugin {
 		plugin = this;
 	}
 
-	/**
-	 * {@inheritDoc}
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
 	 */
 	@Override
 	public void stop(BundleContext context) throws Exception {
@@ -65,28 +65,6 @@ public class Activator extends AbstractUIPlugin {
 	}
 
 	/**
-	 * Log exceptions.
-	 *
-	 * @param exception the {@link Exception} to log
-	 */
-	public static void log(Exception exception) {
-		plugin.getLog().log(new Status(IStatus.ERROR, PLUGIN_ID, exception.getMessage(), exception));
-	}
-
-	/**
-	 * Returns the {@link ReportService}.
-	 *
-	 * @return the {@link ReportService}
-	 */
-	public ReportService getReportService() {
-		if (reportServiceReference == null) {
-			reportServiceReference = plugin.getBundle().getBundleContext()
-				.getServiceReference(ReportService.class);
-		}
-		return plugin.getBundle().getBundleContext().getService(reportServiceReference);
-	}
-
-	/**
 	 * Returns the {@link EMFFormsDatabinding} service.
 	 *
 	 * @return The {@link EMFFormsDatabinding}
@@ -101,5 +79,4 @@ public class Activator extends AbstractUIPlugin {
 
 		return service;
 	}
-
 }

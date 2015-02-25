@@ -11,12 +11,11 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.model.common;
 
-import java.util.Iterator;
-
+import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.EcorePackage;
+import org.eclipse.emf.ecp.view.internal.model.common.Activator;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
@@ -40,12 +39,9 @@ public class SingleReferenceRendererTester implements ECPRendererTester {
 			return NOT_APPLICABLE;
 		}
 		final VControl control = (VControl) vElement;
-		final Setting setting = getSetting(control);
-		if (setting == null) {
-			return NOT_APPLICABLE;
-		}
-
-		final EStructuralFeature feature = setting.getEStructuralFeature();
+		final IValueProperty valueProperty = Activator.getDefault().getEMFFormsDatabinding()
+			.getValueProperty(control.getDomainModelReference());
+		final EStructuralFeature feature = (EStructuralFeature) valueProperty.getValueType();
 		if (feature.isMany()) {
 			return NOT_APPLICABLE;
 		}
@@ -59,19 +55,4 @@ public class SingleReferenceRendererTester implements ECPRendererTester {
 		}
 		return NOT_APPLICABLE;
 	}
-
-	private Setting getSetting(VControl control) {
-		final Iterator<Setting> iterator = control.getDomainModelReference().getIterator();
-		int count = 0;
-		Setting setting = null;
-		while (iterator.hasNext()) {
-			count++;
-			setting = iterator.next();
-		}
-		if (count != 1) {
-			return null;
-		}
-		return setting;
-	}
-
 }

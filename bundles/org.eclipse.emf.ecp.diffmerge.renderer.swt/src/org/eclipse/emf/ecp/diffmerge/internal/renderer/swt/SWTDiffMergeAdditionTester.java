@@ -11,6 +11,8 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.diffmerge.internal.renderer.swt;
 
+import org.eclipse.core.databinding.property.value.IValueProperty;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.diffmerge.spi.context.DiffMergeModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
@@ -39,10 +41,14 @@ public class SWTDiffMergeAdditionTester implements ECPAdditionalRendererTester {
 		if (!VControl.class.isInstance(vElement)) {
 			return false;
 		}
-		if (!((VControl) vElement).getDomainModelReference().getEStructuralFeatureIterator().next().isChangeable()) {
+		final VControl control = (VControl) vElement;
+		final IValueProperty valueProperty = Activator.getInstance().getEMFFormsDatabinding()
+			.getValueProperty(control.getDomainModelReference());
+		final EStructuralFeature feature = (EStructuralFeature) valueProperty.getValueType();
+		if (!feature.isChangeable()) {
 			return false;
 		}
-		if (!((DiffMergeModelContext) viewModelContext).hasDiff((VControl) vElement)) {
+		if (!((DiffMergeModelContext) viewModelContext).hasDiff(control)) {
 			return false;
 		}
 		return true;

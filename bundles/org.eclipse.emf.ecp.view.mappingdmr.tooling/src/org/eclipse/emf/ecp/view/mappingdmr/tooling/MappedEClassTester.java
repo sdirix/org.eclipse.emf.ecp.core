@@ -11,6 +11,8 @@
  */
 package org.eclipse.emf.ecp.view.mappingdmr.tooling;
 
+import org.eclipse.core.databinding.property.value.IValueProperty;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.model.common.ECPRendererTester;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.mappingdmr.model.VMappingDomainModelReference;
@@ -37,10 +39,10 @@ public class MappedEClassTester implements ECPRendererTester {
 		}
 
 		final VControl control = (VControl) vElement;
-		if (VMappingdmrPackage.eINSTANCE
-			.getMappingDomainModelReference_MappedClass() == control
-			.getDomainModelReference().getEStructuralFeatureIterator()
-			.next()) {
+		final IValueProperty valueProperty = Activator.getDefault().getEMFFormsDatabinding()
+			.getValueProperty(control.getDomainModelReference());
+		final EStructuralFeature feature = (EStructuralFeature) valueProperty.getValueType();
+		if (VMappingdmrPackage.eINSTANCE.getMappingDomainModelReference_MappedClass() == feature) {
 			return 5;
 		}
 		return NOT_APPLICABLE;

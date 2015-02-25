@@ -22,8 +22,10 @@ import org.eclipse.emf.ecp.core.util.observer.ECPProjectContentChangedObserver;
 import org.eclipse.emf.ecp.view.model.provider.xmi.ViewModelFileExtensionsManager;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.workspace.internal.core.WorkspaceProvider;
+import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 
 /**
  * The activator class controls the plug-in life cycle.
@@ -92,5 +94,21 @@ public class Activator extends AbstractUIPlugin {
 	 */
 	public static Activator getDefault() {
 		return plugin;
+	}
+
+	/**
+	 * Returns the {@link EMFFormsDatabinding} service.
+	 *
+	 * @return The {@link EMFFormsDatabinding}
+	 */
+	public EMFFormsDatabinding getEMFFormsDatabinding() {
+		final ServiceReference<EMFFormsDatabinding> serviceReference = plugin.getBundle().getBundleContext()
+			.getServiceReference(EMFFormsDatabinding.class);
+
+		final EMFFormsDatabinding service = plugin.getBundle().getBundleContext()
+			.getService(serviceReference);
+		plugin.getBundle().getBundleContext().ungetService(serviceReference);
+
+		return service;
 	}
 }

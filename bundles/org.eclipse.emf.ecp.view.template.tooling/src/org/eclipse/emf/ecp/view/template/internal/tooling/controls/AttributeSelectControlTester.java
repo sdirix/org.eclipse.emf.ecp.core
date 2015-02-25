@@ -11,14 +11,14 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.template.internal.tooling.controls;
 
-import java.util.Iterator;
-
+import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.model.common.ECPRendererTester;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.template.internal.tooling.Activator;
 import org.eclipse.emf.ecp.view.template.selector.viewModelElement.model.VTViewModelElementPackage;
 
 /**
@@ -38,17 +38,10 @@ public class AttributeSelectControlTester implements ECPRendererTester {
 		if (dmr == null) {
 			return NOT_APPLICABLE;
 		}
-		final Iterator<EStructuralFeature> iterator = dmr.getEStructuralFeatureIterator();
-		if (iterator == null) {
-			return NOT_APPLICABLE;
-		}
-		if (!iterator.hasNext()) {
-			return NOT_APPLICABLE;
-		}
-		final EStructuralFeature feature = iterator.next();
-		if (feature == null) {
-			return NOT_APPLICABLE;
-		}
+		final VControl control = (VControl) vElement;
+		final IValueProperty valueProperty = Activator.getDefault().getEMFFormsDatabinding()
+			.getValueProperty(control.getDomainModelReference());
+		final EStructuralFeature feature = (EStructuralFeature) valueProperty.getValueType();
 		if (VTViewModelElementPackage.eINSTANCE.getViewModelElementSelector_Attribute().equals(feature)) {
 			return 5;
 		}

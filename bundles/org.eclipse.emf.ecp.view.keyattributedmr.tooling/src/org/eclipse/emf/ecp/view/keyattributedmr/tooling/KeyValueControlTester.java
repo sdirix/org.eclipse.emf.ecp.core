@@ -11,16 +11,18 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.keyattributedmr.tooling;
 
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.core.databinding.property.value.IValueProperty;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.model.common.ECPRendererTester;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.spi.keyattributedmr.model.VKeyAttributeDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.keyattributedmr.model.VKeyattributedmrPackage;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 
 /**
- * A Tester for the KeyValue Control which is added as a child of a {@link VKeyAttributeDomainModelReference}.
+ * A Tester for the KeyValue Control which is added as a child of a
+ * {@link org.eclipse.emf.ecp.view.spi.keyattributedmr.model.VKeyAttributeDomainModelReference
+ * VKeyAttributeDomainModelReference}.
  *
  * @author Eugen Neufeld
  *
@@ -36,11 +38,11 @@ public class KeyValueControlTester implements
 		}
 
 		final VControl control = (VControl) vElement;
-		final Setting setting = control.getDomainModelReference().getIterator()
-			.next();
-		if (VKeyAttributeDomainModelReference.class.isInstance(setting.getEObject())
-			&& VKeyattributedmrPackage.eINSTANCE.getKeyAttributeDomainModelReference_KeyValue() == setting
-				.getEStructuralFeature()) {
+		final IValueProperty valueProperty = Activator.getDefault().getEMFFormsDatabinding()
+			.getValueProperty(control.getDomainModelReference());
+		final EStructuralFeature feature = (EStructuralFeature) valueProperty.getValueType();
+
+		if (VKeyattributedmrPackage.eINSTANCE.getKeyAttributeDomainModelReference_KeyValue() == feature) {
 			return 6;
 		}
 

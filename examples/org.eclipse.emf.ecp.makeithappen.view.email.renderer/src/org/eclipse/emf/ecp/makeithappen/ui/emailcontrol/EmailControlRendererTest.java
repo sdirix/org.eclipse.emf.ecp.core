@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.ecp.makeithappen.ui.emailcontrol;
 
+import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.makeithappen.model.task.TaskPackage;
 import org.eclipse.emf.ecp.view.model.common.ECPRendererTester;
@@ -50,8 +51,10 @@ public class EmailControlRendererTest implements ECPRendererTester {
 		if (!VControl.class.isInstance(vElement)) {
 			return NOT_APPLICABLE;
 		}
-		final EStructuralFeature feature = VControl.class.cast(vElement).getDomainModelReference()
-			.getEStructuralFeatureIterator().next();
+		final VControl control = (VControl) vElement;
+		final IValueProperty valueProperty = Activator.getDefault().getEMFFormsDatabinding()
+			.getValueProperty(control.getDomainModelReference());
+		final EStructuralFeature feature = (EStructuralFeature) valueProperty.getValueType();
 		return isApplicableForFeature(feature, vElement, viewModelContext);
 	}
 

@@ -11,7 +11,10 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.mappingdmr.tooling;
 
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.core.databinding.observable.IObserving;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.model.common.ECPRendererTester;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.mappingdmr.model.VMappingDomainModelReference;
@@ -37,18 +40,18 @@ public class FeaturePathDMRSubMappedEClassReferenceTester implements
 		}
 
 		final VControl control = (VControl) vElement;
-		final Setting setting = control.getDomainModelReference().getIterator()
-			.next();
-		if (VMappingDomainModelReference.class.isInstance(setting.getEObject()
-			.eContainer())
+		final IObservableValue observableValue = Activator.getDefault().getEMFFormsDatabinding()
+			.getObservableValue(control.getDomainModelReference(), viewModelContext.getDomainModel());
+		final EStructuralFeature feature = (EStructuralFeature) observableValue.getValueType();
+		final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
+
+		if (VMappingDomainModelReference.class.isInstance(eObject.eContainer())
 			&& VViewPackage.eINSTANCE
-				.getFeaturePathDomainModelReference_DomainModelEFeature() == setting
-				.getEStructuralFeature()) {
+				.getFeaturePathDomainModelReference_DomainModelEFeature() == feature) {
 			return 6;
 		}
-		if (VMappingDomainModelReference.class.isInstance(setting.getEObject())
-			&& VMappingdmrPackage.eINSTANCE.getMappingDomainModelReference_DomainModelReference() == setting
-				.getEStructuralFeature()) {
+		if (VMappingDomainModelReference.class.isInstance(eObject)
+			&& VMappingdmrPackage.eINSTANCE.getMappingDomainModelReference_DomainModelReference() == feature) {
 			return 6;
 		}
 
