@@ -90,6 +90,8 @@
 		<module>../../tests/org.eclipse.emfforms.core.services.databinding.integrationtest</module>
 		<module>../../tests/org.eclipse.emfforms.core.services.databinding.testmodel</module>
 		<module>../../tests/org.eclipse.emfforms.core.services.databinding.tests</module>
+		<!-- Localization Bundle -->
+		<module>../../tests/org.eclipse.emf.emfforms.localization.tests</module>
 	</modules>
 	
 	<build>

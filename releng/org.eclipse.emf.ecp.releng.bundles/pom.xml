@@ -255,6 +255,9 @@
 		<!-- Databing Services -->
 		<module>../../bundles/org.eclipse.emfforms.core.services.databinding</module>
 		<module>../../bundles/org.eclipse.emfforms.core.services.databinding.featurepath</module>
+		<!-- Localization Services -->
+		<module>../../bundles/org.eclipse.emf.emfforms.localization</module>
+		
 	</modules>
 
 	<build>
