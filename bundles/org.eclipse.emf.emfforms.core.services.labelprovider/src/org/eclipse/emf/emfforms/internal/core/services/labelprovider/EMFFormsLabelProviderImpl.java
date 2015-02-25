@@ -85,14 +85,32 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider {
 		final EStructuralFeature structuralFeature = (EStructuralFeature) valueProperty.getValueType();
 		final EClass eContainingClass = structuralFeature.getEContainingClass();
 		if (eContainingClass.isAbstract() || eContainingClass.isInterface()) {
-			throw new IllegalStateException(
-				"The class of the Object that contains the feature whose display name is requested, is abstract or an interface."); //$NON-NLS-1$
+			return getFallbackLabel(structuralFeature);
 		}
 		final EObject tempInstance = EcoreUtil.create(eContainingClass);
 		final IItemPropertyDescriptor itemPropertyDescriptor = emfSpecificService.getAdapterFactoryItemDelegator()
 			.getPropertyDescriptor(tempInstance, structuralFeature);
 
 		return itemPropertyDescriptor.getDisplayName(tempInstance);
+	}
+
+	/**
+	 * Creates a fall back label from a {@link EStructuralFeature}.
+	 *
+	 * @param structuralFeature The {@link EStructuralFeature}
+	 * @return The fall back label
+	 */
+	private String getFallbackLabel(final EStructuralFeature structuralFeature) {
+		final String[] split = structuralFeature.getName().split("(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])"); //$NON-NLS-1$
+		final char[] charArray = split[0].toCharArray();
+		charArray[0] = Character.toUpperCase(charArray[0]);
+		split[0] = new String(charArray);
+		final StringBuilder sb = new StringBuilder();
+		for (final String str : split) {
+			sb.append(str);
+			sb.append(" "); //$NON-NLS-1$
+		}
+		return sb.toString().trim();
 	}
 
 	/**
@@ -130,8 +148,7 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider {
 		final EStructuralFeature structuralFeature = (EStructuralFeature) valueProperty.getValueType();
 		final EClass eContainingClass = structuralFeature.getEContainingClass();
 		if (eContainingClass.isAbstract() || eContainingClass.isInterface()) {
-			throw new IllegalStateException(
-				"The class of the Object that contains the feature whose description is requested, is abstract or an interface."); //$NON-NLS-1$
+			return getFallbackLabel(structuralFeature);
 		}
 		final EObject tempInstance = EcoreUtil.create(eContainingClass);
 		final IItemPropertyDescriptor itemPropertyDescriptor = emfSpecificService.getAdapterFactoryItemDelegator()
