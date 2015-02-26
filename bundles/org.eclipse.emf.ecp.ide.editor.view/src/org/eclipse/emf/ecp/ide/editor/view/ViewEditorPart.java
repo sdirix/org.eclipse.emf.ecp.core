@@ -149,36 +149,7 @@ public class ViewEditorPart extends EditorPart implements
 		partListener = new ViewPartListener();
 		getSite().getPage().addPartListener(partListener);
 
-		final IResourceChangeListener listener = new IResourceChangeListener() {
-			@Override
-			public void resourceChanged(IResourceChangeEvent event) {
-				final IResourceDelta delta = event.getDelta();
-				final IResourceDeltaVisitor visitor = new IResourceDeltaVisitor() {
-					@Override
-					public boolean visit(IResourceDelta delta)
-					{
-						if (delta.getKind() == IResourceDelta.REMOVED) {
-							final FileEditorInput fei = (FileEditorInput) instance.getEditorInput();
-							if (delta.getFullPath().equals(fei.getFile().getFullPath())) {
-								final IWorkbenchPage page = instance.getSite().getPage();
-								Display.getDefault().asyncExec(new Runnable() {
-									@Override
-									public void run() {
-										page.closeEditor(instance, false);
-									}
-								});
-								return false;
-							}
-						}
-						return true;
-					}
-				};
-				try {
-					delta.accept(visitor);
-				} catch (final CoreException ex) {
-				}
-			}
-		};
+		final IResourceChangeListener listener = new EditorResourceChangedListener();
 		ResourcesPlugin.getWorkspace().addResourceChangeListener(listener);
 	}
 
@@ -271,11 +242,11 @@ public class ViewEditorPart extends EditorPart implements
 						Messages.ViewEditorPart_MigrationErrorText1 +
 							Messages.ViewEditorPart_MigrationErrorText2);
 					Activator
-					.getDefault()
-					.getLog()
-					.log(
-						new Status(IStatus.ERROR, Activator.PLUGIN_ID, Messages.ViewEditorPart_MigrationErrorTitle,
-							e));
+						.getDefault()
+						.getLog()
+						.log(
+							new Status(IStatus.ERROR, Activator.PLUGIN_ID, Messages.ViewEditorPart_MigrationErrorTitle,
+								e));
 				} catch (final InterruptedException e) {
 					MessageDialog.openError(
 						Display.getDefault().getActiveShell(), Messages.ViewEditorPart_MigrationErrorTitle,
@@ -593,5 +564,46 @@ public class ViewEditorPart extends EditorPart implements
 	public void signalEcoreOutOfSync() {
 		ecoreOutOfSync = true;
 
+	}
+
+	/** Listens for changes in the editor's resource. */
+	private class EditorResourceChangedListener implements IResourceChangeListener {
+
+		/**
+		 * {@inheritDoc}
+		 *
+		 * @see org.eclipse.core.resources.IResourceChangeListener#resourceChanged(org.eclipse.core.resources.IResourceChangeEvent)
+		 */
+		@Override
+		public void resourceChanged(IResourceChangeEvent event) {
+			final IResourceDelta delta = event.getDelta();
+			final IResourceDeltaVisitor visitor = new IResourceDeltaVisitor() {
+				@Override
+				public boolean visit(IResourceDelta delta)
+				{
+					if (delta.getKind() == IResourceDelta.REMOVED) {
+						final FileEditorInput fei = (FileEditorInput) instance.getEditorInput();
+						if (delta.getFullPath().equals(fei.getFile().getFullPath())) {
+							final IWorkbenchPage page = instance.getSite().getPage();
+							Display.getDefault().asyncExec(new Runnable() {
+								@Override
+								public void run() {
+									page.closeEditor(instance, false);
+								}
+							});
+							return false;
+						}
+					}
+					return true;
+				}
+			};
+			try {
+				if (delta == null) {
+					return;
+				}
+				delta.accept(visitor);
+			} catch (final CoreException ex) {
+			}
+		}
 	}
 }
