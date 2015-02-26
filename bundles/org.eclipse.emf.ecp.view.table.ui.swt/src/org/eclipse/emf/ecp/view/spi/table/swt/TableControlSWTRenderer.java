@@ -24,6 +24,7 @@ import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.core.databinding.observable.map.IObservableMap;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
@@ -393,14 +394,14 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			if (dmr == null) {
 				continue;
 			}
-			final Iterator<EStructuralFeature> eStructuralFeatureIterator = dmr.getEStructuralFeatureIterator();
-			if (eStructuralFeatureIterator == null || !eStructuralFeatureIterator.hasNext()) {
-				continue;
-			}
+
+			final IValueProperty valueProperty = Activator.getInstance().getEMFFormsDatabinding().getValueProperty(dmr);
+			final EStructuralFeature eStructuralFeature = (EStructuralFeature) valueProperty.getValueType();
+			// TODO: continue in catch for checked exception
+
 			final EMFFormsLabelProvider labelService = Activator.getInstance().getEMFFormsLabelProvider();
 			final String text = labelService.getDisplayName(dmr);
 			final String tooltipText = labelService.getDescription(dmr);
-			final EStructuralFeature eStructuralFeature = eStructuralFeatureIterator.next();
 
 			final CellEditor cellEditor = createCellEditor(tempInstance, eStructuralFeature, tableViewer.getTable());
 			final TableViewerColumn column = TableViewerColumnBuilder

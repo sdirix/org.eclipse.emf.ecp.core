@@ -27,6 +27,7 @@ import org.eclipse.emf.ecp.spi.common.ui.SelectModelElementWizard;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.DefaultReferenceService;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
+import org.eclipse.emf.ecp.view.internal.editor.controls.Activator;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.custom.model.VCustomDomainModelReference;
@@ -204,12 +205,10 @@ public class CreateDomainModelReferenceWizard extends SelectModelElementWizard {
 			return false;
 		}
 
-		if (customizeDMRPage.getvControl().getDomainModelReference().getEStructuralFeatureIterator() == null) {
-			return false;
-		}
-		if (!customizeDMRPage.getvControl().getDomainModelReference().getEStructuralFeatureIterator().hasNext()) {
-			return false;
-		}
+		Activator.getDefault().getEMFFormsDatabinding()
+			.getValueProperty(customizeDMRPage.getvControl().getDomainModelReference());
+		// TODO: return false in catch block
+
 		return super.canFinish();
 	}
 
@@ -329,10 +328,10 @@ public class CreateDomainModelReferenceWizard extends SelectModelElementWizard {
 			if (getvControl().getDomainModelReference() == null) {
 				return false;
 			}
-			if (getvControl().getDomainModelReference().getEStructuralFeatureIterator() == null) {
-				return false;
-			}
-			return getvControl().getDomainModelReference().getEStructuralFeatureIterator().hasNext();
+			Activator.getDefault().getEMFFormsDatabinding().getValueProperty(getvControl().getDomainModelReference());
+			// TODO: return false in catch block
+
+			return true;
 		}
 
 	}

@@ -158,6 +158,7 @@ public class TextControlRenderer_PTest extends AbstractControl_PTest {
 		when(labelProvider.getDisplayName(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			"antiException");
 		Mockito.reset(databindingService);
+		mockDatabindingIsUnsettable();
 		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			mockedObservable);
 

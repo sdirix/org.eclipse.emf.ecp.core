@@ -17,6 +17,7 @@ import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.databinding.EMFUpdateValueStrategy;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
@@ -182,8 +183,9 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 		if (isDisableRenderedAsEditable()
 			&& (getVElement().getLabelAlignment() == LabelAlignment.NONE && gridCell.getColumn() == 1
 			|| getVElement().getLabelAlignment() == LabelAlignment.LEFT && gridCell.getColumn() == 2)) {
-			final EStructuralFeature feature = getVElement().getDomainModelReference().getEStructuralFeatureIterator()
-				.next();
+			final IValueProperty valueProperty = Activator.getDefault().getEMFFormsDatabinding()
+				.getValueProperty(getVElement().getDomainModelReference());
+			final EStructuralFeature feature = (EStructuralFeature) valueProperty;
 			Control controlToUnset = control;
 			if (feature.isUnsettable()) {
 				// if (!setting.isSet()) {

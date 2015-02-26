@@ -175,6 +175,7 @@ public class DateTimeControlRenderer_PTest extends AbstractControl_PTest {
 	private DateTime[] setUpDatabindingTest(final WritableValue mockedObservable) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
 		Mockito.reset(databindingService);
+		mockDatabindingIsUnsettable();
 		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			mockedObservable);
 

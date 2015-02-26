@@ -84,6 +84,7 @@ public interface VDomainModelReference extends EObject, ModelChangeListener
 	 *         reference
 	 * @since 1.3
 	 */
+	@Deprecated
 	Iterator<EStructuralFeature> getEStructuralFeatureIterator();
 
 	/**

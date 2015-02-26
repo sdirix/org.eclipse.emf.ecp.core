@@ -12,11 +12,11 @@
 package org.eclipse.emf.ecp.view.internal.editor.controls;
 
 import java.net.URL;
-import java.util.Iterator;
 
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.ecore.EReference;
@@ -213,13 +213,11 @@ public class TableDetailViewControlSWTRenderer extends SimpleControlSWTControlSW
 				if (domainModelReference.getDomainModelReference() == null) {
 					ref = (EReference) domainModelReference.getDomainModelEFeature();
 				} else {
-					final Iterator<EStructuralFeature> iterator = domainModelReference.getDomainModelReference()
-						.getEStructuralFeatureIterator();
-					if (iterator.hasNext()) {
-						final EStructuralFeature feature = iterator.next();
-						if (EReference.class.isInstance(feature)) {
-							ref = EReference.class.cast(feature);
-						}
+					final IValueProperty valueProperty = org.eclipse.emf.ecp.view.internal.editor.controls.Activator
+						.getDefault().getEMFFormsDatabinding().getValueProperty(domainModelReference);
+					final EStructuralFeature feature = (EStructuralFeature) valueProperty.getValueType();
+					if (EReference.class.isInstance(feature)) {
+						ref = EReference.class.cast(feature);
 					}
 				}
 

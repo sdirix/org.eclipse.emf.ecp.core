@@ -18,9 +18,6 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import java.util.Dictionary;
-import java.util.Hashtable;
-
 import org.eclipse.core.databinding.observable.value.WritableValue;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -142,10 +139,9 @@ public class BooleanControlRenderer_PTest extends AbstractControl_PTest {
 		NoPropertyDescriptorFoundExeption {
 		Mockito.reset(databindingService);
 
+		mockDatabindingIsUnsettable();
 		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			mockedObservable);
-		final Dictionary<String, Object> dictionary = new Hashtable<String, Object>();
-		dictionary.put("service.ranking", 5);
 
 		final Control renderControl = renderControl(new SWTGridCell(0, 2, renderer));
 		final Button button = (Button) renderControl;
@@ -154,7 +150,7 @@ public class BooleanControlRenderer_PTest extends AbstractControl_PTest {
 
 	/**
 	 * Tests whether the {@link EMFFormsLabelProvider} is used to get the labels of the control.
-	 * 
+	 *
 	 * @throws NoRendererFoundException
 	 * @throws NoPropertyDescriptorFoundExeption
 	 */

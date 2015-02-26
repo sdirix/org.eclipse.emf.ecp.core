@@ -23,6 +23,7 @@ import java.util.List;
 
 import org.eclipse.core.databinding.observable.Observables;
 import org.eclipse.core.databinding.observable.list.IObservableList;
+import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
@@ -341,8 +342,9 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 			final VTableDomainModelReference tableDomainModelReference = VTableDomainModelReference.class
 				.cast(setting.getEObject());
 
-			final EClass eclass = EReference.class.cast(
-				tableDomainModelReference.getEStructuralFeatureIterator().next()).getEReferenceType();
+			final IValueProperty valueProperty = Activator.getDefault().getEMFFormsDatabinding()
+				.getValueProperty(tableDomainModelReference);
+			final EClass eclass = EReference.class.cast(valueProperty.getValueType()).getEReferenceType();
 
 			final Collection<EClass> classes = ECPUtil.getSubClasses(VViewPackage.eINSTANCE
 				.getDomainModelReference());

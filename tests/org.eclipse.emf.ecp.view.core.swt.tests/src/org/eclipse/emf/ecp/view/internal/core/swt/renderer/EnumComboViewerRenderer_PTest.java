@@ -122,6 +122,7 @@ public class EnumComboViewerRenderer_PTest extends AbstractControl_PTest {
 	private Combo setUpDatabindingTest(final WritableValue mockedObservable) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
 		Mockito.reset(databindingService);
+		mockDatabindingIsUnsettable();
 		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			mockedObservable);
 

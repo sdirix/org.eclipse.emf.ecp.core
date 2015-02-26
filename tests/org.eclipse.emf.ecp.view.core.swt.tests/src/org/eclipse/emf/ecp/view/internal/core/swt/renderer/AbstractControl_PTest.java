@@ -26,6 +26,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import org.eclipse.core.databinding.observable.Realm;
+import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.URI;
@@ -133,17 +134,21 @@ public abstract class AbstractControl_PTest {
 				return Collections.singleton(setting).iterator();
 			}
 		});
-		when(domainModelReference.getEStructuralFeatureIterator()).then(new Answer<Iterator<EStructuralFeature>>() {
-			@Override
-			public Iterator<EStructuralFeature> answer(
-				InvocationOnMock invocation) throws Throwable {
-				return Collections.singleton(eStructuralFeature).iterator();
-			}
-		});
+
+		mockDatabindingIsUnsettable();
+
 		final BasicEList<DomainModelReferenceChangeListener> changeListener = new BasicEList<DomainModelReferenceChangeListener>();
 		when(domainModelReference.getChangeListener()).thenReturn(changeListener);
 		Mockito.when(vControl.getDomainModelReference()).thenReturn(
 			domainModelReference);
+	}
+
+	protected void mockDatabindingIsUnsettable() {
+		final EStructuralFeature structuralFeature = mock(EStructuralFeature.class);
+		when(structuralFeature.isUnsettable()).thenReturn(false);
+		final IValueProperty valueProperty = mock(IValueProperty.class);
+		when(valueProperty.getValueType()).thenReturn(structuralFeature);
+		when(databindingService.getValueProperty(any(VDomainModelReference.class))).thenReturn(valueProperty);
 	}
 
 	protected void setMockLabelAlignment(LabelAlignment labelAlignment) {

@@ -11,7 +11,9 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.core.swt;
 
+import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.common.util.Diagnostic;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.view.internal.core.swt.Activator;
 import org.eclipse.emf.ecp.view.internal.core.swt.renderer.RendererMessages;
@@ -110,7 +112,10 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 	 * @return true if unsettable, false otherwise
 	 */
 	protected boolean isUnsettable() {
-		return getVElement().getDomainModelReference().getEStructuralFeatureIterator().next().isUnsettable();
+		final IValueProperty valueProperty = Activator.getDefault().getEMFFormsDatabinding()
+			.getValueProperty(getVElement().getDomainModelReference());
+		final EStructuralFeature feature = (EStructuralFeature) valueProperty.getValueType();
+		return feature.isUnsettable();
 	}
 
 	private Control createUnsettableControl(Composite parent) {

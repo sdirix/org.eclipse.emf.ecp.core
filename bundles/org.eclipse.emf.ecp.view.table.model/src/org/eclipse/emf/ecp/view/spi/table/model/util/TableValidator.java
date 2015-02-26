@@ -14,13 +14,13 @@ package org.eclipse.emf.ecp.view.spi.table.model.util;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.DiagnosticChain;
@@ -33,6 +33,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.util.EObjectValidator;
+import org.eclipse.emf.ecp.view.internal.table.model.Activator;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.model.util.ViewValidator;
@@ -46,7 +47,7 @@ import org.eclipse.emf.ecp.view.spi.table.model.VTablePackage;
 /**
  * <!-- begin-user-doc -->
  * The <b>Validator</b> for the model.
- * 
+ *
  * @since 1.5
  *        <!-- end-user-doc -->
  *
@@ -289,11 +290,10 @@ public class TableValidator extends EObjectValidator
 		}
 
 		// test if table ends a multi reference
-		final Iterator<EStructuralFeature> iterator = pathToMultiRef.getEStructuralFeatureIterator();
-		if (!iterator.hasNext()) {
-			return true;
-		}
-		final EStructuralFeature feature = iterator.next();
+		final IValueProperty valueProperty = Activator.getDefault().getEMFFormsDatabinding()
+			.getValueProperty(pathToMultiRef);
+		// TODO: return true in the catch block
+		final EStructuralFeature feature = (EStructuralFeature) valueProperty.getValueType();
 		if (!EReference.class.isInstance(feature) || !feature.isMany()) {
 			if (diagnostics != null) {
 				final String message = "Domain model reference does not end at a multi reference."; //$NON-NLS-1$

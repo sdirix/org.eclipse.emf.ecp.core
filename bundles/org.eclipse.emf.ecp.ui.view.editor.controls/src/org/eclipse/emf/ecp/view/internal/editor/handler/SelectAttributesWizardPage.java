@@ -12,16 +12,17 @@
 package org.eclipse.emf.ecp.view.internal.editor.handler;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecp.view.internal.editor.controls.Activator;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -374,14 +375,13 @@ public class SelectAttributesWizardPage extends WizardPage {
 				if (domainModelReference == null) {
 					continue;
 				}
-				final Iterator<EStructuralFeature> structuralFeatureIterator = domainModelReference
-					.getEStructuralFeatureIterator();
-				while (structuralFeatureIterator.hasNext()) {
-					final EStructuralFeature feature = structuralFeatureIterator.next();
-					if (feature != null && feature.getEContainingClass() != null
-						&& feature.getEContainingClass().equals(eClass)) {
-						result.add(feature);
-					}
+
+				final IValueProperty valueProperty = Activator.getDefault().getEMFFormsDatabinding()
+					.getValueProperty(domainModelReference);
+				final EStructuralFeature feature = (EStructuralFeature) valueProperty.getValueType();
+				if (feature != null && feature.getEContainingClass() != null
+					&& feature.getEContainingClass().equals(eClass)) {
+					result.add(feature);
 				}
 			}
 

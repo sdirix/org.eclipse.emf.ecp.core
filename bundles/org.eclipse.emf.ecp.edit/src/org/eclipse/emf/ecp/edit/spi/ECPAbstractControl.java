@@ -15,6 +15,7 @@ import java.util.Iterator;
 import java.util.Locale;
 
 import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.Diagnostic;
@@ -218,22 +219,12 @@ public abstract class ECPAbstractControl {
 	 */
 	public final EStructuralFeature getFirstStructuralFeature() {
 		if (firstFeature == null) {
-			final Iterator<EStructuralFeature> iterator = control.getDomainModelReference()
-				.getEStructuralFeatureIterator();
-			int count = 0;
-			firstFeature = null;
-			while (iterator.hasNext()) {
-				count++;
-				if (firstFeature == null) {
-					firstFeature = iterator.next();
-				} else {
-					iterator.next();
-				}
-			}
-			if (count == 0) {
-				throw new IllegalArgumentException(
-					"The passed VDomainModelReference resolves to no EStructuralFeature."); //$NON-NLS-1$
-			}
+			final IValueProperty valueProperty = Activator.getDefault().getEMFFormsDatabinding()
+				.getValueProperty(control.getDomainModelReference());
+			// TODO: throw exception in catch
+			// throw new IllegalArgumentException(
+			//					"The passed VDomainModelReference resolves to no EStructuralFeature."); //$NON-NLS-1$
+			firstFeature = (EStructuralFeature) valueProperty.getValueType();
 		}
 		return firstFeature;
 	}
