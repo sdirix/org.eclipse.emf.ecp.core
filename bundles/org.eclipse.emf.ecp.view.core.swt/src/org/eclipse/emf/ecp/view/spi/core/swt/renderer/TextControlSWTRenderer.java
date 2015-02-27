@@ -22,7 +22,7 @@ import org.eclipse.emf.databinding.EMFUpdateValueStrategy;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.view.internal.core.swt.Activator;
-import org.eclipse.emf.ecp.view.internal.core.swt.renderer.RendererMessages;
+import org.eclipse.emf.ecp.view.internal.core.swt.MessageKeys;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
@@ -38,6 +38,7 @@ import org.eclipse.emf.ecp.view.template.style.alignment.model.VTAlignmentStyleP
 import org.eclipse.emf.ecp.view.template.style.textControlEnablement.model.VTTextControlEnablementStyleProperty;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emf.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
@@ -347,7 +348,8 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 	 */
 	@Override
 	protected String getUnsetText() {
-		return RendererMessages.StringControl_NoTextSetClickToSetText;
+		return LocalizationServiceHelper
+			.getString(getClass(), MessageKeys.StringControl_NoTextSetClickToSetText);
 	}
 
 }

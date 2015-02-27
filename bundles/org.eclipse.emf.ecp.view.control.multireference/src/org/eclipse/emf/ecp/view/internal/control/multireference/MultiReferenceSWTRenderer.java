@@ -40,6 +40,7 @@ import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.emf.emfforms.spi.core.services.labelprovider.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emf.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -190,7 +191,8 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 		final Button btnAddExisting = new Button(buttonComposite, SWT.PUSH);
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(btnAddExisting);
 		btnAddExisting.setImage(Activator.getImage("icons/link.png")); //$NON-NLS-1$
-		btnAddExisting.setToolTipText(Messages.MultiReferenceSWTRenderer_addExistingTooltip);
+		btnAddExisting.setToolTipText(LocalizationServiceHelper.getString(getClass(),
+			MessageKeys.MultiReferenceSWTRenderer_addExistingTooltip));
 		btnAddExisting.addSelectionListener(new SelectionAdapter() {
 
 			/**
@@ -209,7 +211,8 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 		final Button btnAddNew = new Button(buttonComposite, SWT.PUSH);
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(btnAddNew);
 		btnAddNew.setImage(Activator.getImage("icons/link_add.png")); //$NON-NLS-1$
-		btnAddNew.setToolTipText(Messages.MultiReferenceSWTRenderer_addNewTooltip);
+		btnAddNew.setToolTipText(LocalizationServiceHelper.getString(getClass(),
+			MessageKeys.MultiReferenceSWTRenderer_addNewTooltip));
 		btnAddNew.addSelectionListener(new SelectionAdapter() {
 
 			/**
@@ -228,7 +231,8 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 		final Button btnDelete = new Button(buttonComposite, SWT.PUSH);
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(btnDelete);
 		btnDelete.setImage(Activator.getImage("icons/delete.png")); //$NON-NLS-1$
-		btnDelete.setToolTipText(Messages.MultiReferenceSWTRenderer_deleteTooltip);
+		btnDelete.setToolTipText(LocalizationServiceHelper.getString(getClass(),
+			MessageKeys.MultiReferenceSWTRenderer_deleteTooltip));
 		btnDelete.addSelectionListener(new SelectionAdapter() {
 
 			/**

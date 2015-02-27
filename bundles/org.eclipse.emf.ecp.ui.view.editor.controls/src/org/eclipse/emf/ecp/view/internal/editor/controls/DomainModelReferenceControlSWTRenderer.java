@@ -30,7 +30,6 @@ import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.impl.EReferenceImpl;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.edit.internal.swt.SWTImageHelper;
-import org.eclipse.emf.ecp.edit.internal.swt.controls.ControlMessages;
 import org.eclipse.emf.ecp.edit.spi.swt.reference.DeleteReferenceAction;
 import org.eclipse.emf.ecp.edit.spi.swt.reference.NewReferenceAction;
 import org.eclipse.emf.ecp.edit.spi.util.ECPModelElementChangeListener;
@@ -53,6 +52,7 @@ import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
+import org.eclipse.emf.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -260,7 +260,7 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 
 		unsetLabel = new Label(mainComposite, SWT.NONE);
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(unsetLabel);
-		unsetLabel.setText(ControlMessages.LinkControl_NotSet);
+		unsetLabel.setText(LocalizationServiceHelper.getString(getClass(), "LinkControl_NotSet")); //$NON-NLS-1$
 		unsetLabel.setBackground(mainComposite.getBackground());
 		unsetLabel.setForeground(parentComposite.getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY));
 		unsetLabel.setAlignment(SWT.CENTER);
@@ -344,7 +344,7 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 	 */
 	@Override
 	protected String getUnsetText() {
-		return ControlMessages.LinkControl_NoLinkSetClickToSetLink;
+		return LocalizationServiceHelper.getString(getClass(), "LinkControl_NoLinkSetClickToSetLink"); //$NON-NLS-1$
 	}
 
 	/** SelectionAdapter for the set button. */
@@ -358,7 +358,6 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 			this.eStructuralFeature = eStructuralFeature;
 		}
 
-		@SuppressWarnings("restriction")
 		@Override
 		public void widgetSelected(SelectionEvent e) {
 			final Collection<EClass> classes = ECPUtil.getSubClasses(((EReferenceImpl) eStructuralFeature)
