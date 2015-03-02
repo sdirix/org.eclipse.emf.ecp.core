@@ -23,6 +23,8 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.emfforms.spi.core.services.emfspecificservice.EMFSpecificService;
 import org.eclipse.emf.emfforms.spi.core.services.labelprovider.EMFFormsLabelProvider;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 
 /**
@@ -81,7 +83,13 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider {
 	public String getDisplayName(VDomainModelReference domainModelReference) {
 		Assert.create(domainModelReference).notNull();
 
-		final IValueProperty valueProperty = emfFormsDatabinding.getValueProperty(domainModelReference);
+		IValueProperty valueProperty;
+		try {
+			valueProperty = emfFormsDatabinding.getValueProperty(domainModelReference);
+		} catch (final DatabindingFailedException ex) {
+			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+			return ex.getMessage();
+		}
 		final EStructuralFeature structuralFeature = (EStructuralFeature) valueProperty.getValueType();
 		final EClass eContainingClass = structuralFeature.getEContainingClass();
 		if (eContainingClass.isAbstract() || eContainingClass.isInterface()) {
@@ -124,8 +132,14 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider {
 		Assert.create(domainModelReference).notNull();
 		Assert.create(rootObject).notNull();
 
-		final IObservableValue observableValue = emfFormsDatabinding.getObservableValue(domainModelReference,
-			rootObject);
+		IObservableValue observableValue;
+		try {
+			observableValue = emfFormsDatabinding.getObservableValue(domainModelReference,
+				rootObject);
+		} catch (final DatabindingFailedException ex) {
+			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+			return ex.getMessage();
+		}
 		final IObserving observing = (IObserving) observableValue;
 		final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
 		final EObject value = (EObject) observing.getObserved();
@@ -144,7 +158,13 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider {
 	public String getDescription(VDomainModelReference domainModelReference) {
 		Assert.create(domainModelReference).notNull();
 
-		final IValueProperty valueProperty = emfFormsDatabinding.getValueProperty(domainModelReference);
+		IValueProperty valueProperty;
+		try {
+			valueProperty = emfFormsDatabinding.getValueProperty(domainModelReference);
+		} catch (final DatabindingFailedException ex) {
+			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+			return ex.getMessage();
+		}
 		final EStructuralFeature structuralFeature = (EStructuralFeature) valueProperty.getValueType();
 		final EClass eContainingClass = structuralFeature.getEContainingClass();
 		if (eContainingClass.isAbstract() || eContainingClass.isInterface()) {
@@ -168,8 +188,14 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider {
 		Assert.create(domainModelReference).notNull();
 		Assert.create(rootObject).notNull();
 
-		final IObservableValue observableValue = emfFormsDatabinding.getObservableValue(domainModelReference,
-			rootObject);
+		IObservableValue observableValue;
+		try {
+			observableValue = emfFormsDatabinding.getObservableValue(domainModelReference,
+				rootObject);
+		} catch (final DatabindingFailedException ex) {
+			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+			return ex.getMessage();
+		}
 		final IObserving observing = (IObserving) observableValue;
 		final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
 		final EObject value = (EObject) observing.getObserved();

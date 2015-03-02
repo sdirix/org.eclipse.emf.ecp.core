@@ -21,6 +21,7 @@ import org.eclipse.core.databinding.property.list.IListProperty;
 import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 
@@ -58,7 +59,8 @@ public class EMFFormsDatabindingImpl implements EMFFormsDatabinding {
 	 *      org.eclipse.emf.ecore.EObject)
 	 */
 	@Override
-	public IObservableValue getObservableValue(VDomainModelReference domainModelReference, EObject object) {
+	public IObservableValue getObservableValue(VDomainModelReference domainModelReference, EObject object)
+		throws DatabindingFailedException {
 		if (domainModelReference == null) {
 			throw new IllegalArgumentException("The given VDomainModelReference must not be null."); //$NON-NLS-1$
 		}
@@ -76,7 +78,8 @@ public class EMFFormsDatabindingImpl implements EMFFormsDatabinding {
 	 * @see org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding#getValueProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)
 	 */
 	@Override
-	public IValueProperty getValueProperty(VDomainModelReference domainModelReference) {
+	public IValueProperty getValueProperty(VDomainModelReference domainModelReference)
+		throws DatabindingFailedException {
 		final DomainModelReferenceConverter bestConverter = getBestDomainModelReferenceConverter(domainModelReference);
 
 		if (bestConverter != null) {
@@ -111,7 +114,8 @@ public class EMFFormsDatabindingImpl implements EMFFormsDatabinding {
 	 *      org.eclipse.emf.ecore.EObject)
 	 */
 	@Override
-	public IObservableList getObservableList(VDomainModelReference domainModelReference, EObject object) {
+	public IObservableList getObservableList(VDomainModelReference domainModelReference, EObject object)
+		throws DatabindingFailedException {
 		if (domainModelReference == null) {
 			throw new IllegalArgumentException("The given VDomainModelReference must not be null."); //$NON-NLS-1$
 		}
@@ -129,7 +133,7 @@ public class EMFFormsDatabindingImpl implements EMFFormsDatabinding {
 	 * @see org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding#getListProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)
 	 */
 	@Override
-	public IListProperty getListProperty(VDomainModelReference domainModelReference) {
+	public IListProperty getListProperty(VDomainModelReference domainModelReference) throws DatabindingFailedException {
 		final DomainModelReferenceConverter bestConverter = getBestDomainModelReferenceConverter(domainModelReference);
 
 		if (bestConverter != null) {

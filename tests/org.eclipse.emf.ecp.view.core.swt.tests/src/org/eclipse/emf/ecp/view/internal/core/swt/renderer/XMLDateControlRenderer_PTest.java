@@ -43,6 +43,7 @@ import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.DatabindingClassRunner;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.SWTTestUtil;
 import org.eclipse.emf.emfforms.spi.core.services.labelprovider.EMFFormsLabelProvider;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
@@ -58,7 +59,7 @@ import org.mockito.Mockito;
 public class XMLDateControlRenderer_PTest extends AbstractControl_PTest {
 
 	@Before
-	public void before() {
+	public void before() throws DatabindingFailedException {
 		final SWTRendererFactory factory = mock(SWTRendererFactory.class);
 		setup();
 		renderer = new XMLDateControlSWTRenderer(vControl, context, factory);
@@ -72,7 +73,7 @@ public class XMLDateControlRenderer_PTest extends AbstractControl_PTest {
 
 	@Test
 	public void renderControlLabelAlignmentNone()
-		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		setMockLabelAlignment(LabelAlignment.NONE);
 		final Control render = renderControl(new SWTGridCell(0, 1, renderer));
 		assertControl(render);
@@ -80,7 +81,7 @@ public class XMLDateControlRenderer_PTest extends AbstractControl_PTest {
 
 	@Test
 	public void renderControlLabelAlignmentLeft()
-		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		setMockLabelAlignment(LabelAlignment.LEFT);
 		final Control render = renderControl(new SWTGridCell(0, 2, renderer));
 
@@ -92,9 +93,11 @@ public class XMLDateControlRenderer_PTest extends AbstractControl_PTest {
 	 *
 	 * @throws NoRendererFoundException
 	 * @throws NoPropertyDescriptorFoundExeption
+	 * @throws DatabindingFailedException
 	 */
 	@Test
-	public void testLabelServiceUsage() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+	public void testLabelServiceUsage() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption,
+		DatabindingFailedException {
 		labelServiceUsage();
 	}
 
@@ -110,14 +113,14 @@ public class XMLDateControlRenderer_PTest extends AbstractControl_PTest {
 	}
 
 	@Override
-	protected void mockControl() {
+	protected void mockControl() throws DatabindingFailedException {
 		final SimpleTestObject eObject = TestFactory.eINSTANCE.createSimpleTestObject();
 		super.mockControl(eObject, TestPackage.eINSTANCE.getSimpleTestObject_XmlDate());
 	}
 
 	@Test
 	public void testDatabindingServiceUsageInitialBinding() throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption, DatatypeConfigurationException {
+		NoPropertyDescriptorFoundExeption, DatatypeConfigurationException, DatabindingFailedException {
 		final XMLGregorianCalendar initialValue = getXMLGregorianCalendarFromDate(new Date());
 
 		final WritableValue mockedObservable = new WritableValue(realm, initialValue, XMLGregorianCalendar.class);
@@ -130,7 +133,7 @@ public class XMLDateControlRenderer_PTest extends AbstractControl_PTest {
 
 	@Test
 	public void testDatabindingServiceUsageChangeObservable() throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption, DatatypeConfigurationException {
+		NoPropertyDescriptorFoundExeption, DatatypeConfigurationException, DatabindingFailedException {
 		final XMLGregorianCalendar initialValue = getXMLGregorianCalendarFromDate(new Date());
 		final XMLGregorianCalendar changedValue = getXMLGregorianCalendarFromDate(new Date(
 			System.currentTimeMillis() * 2));
@@ -146,7 +149,7 @@ public class XMLDateControlRenderer_PTest extends AbstractControl_PTest {
 
 	@Test
 	public void testDatabindingServiceUsageChangeControl() throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption, DatatypeConfigurationException {
+		NoPropertyDescriptorFoundExeption, DatatypeConfigurationException, DatabindingFailedException {
 		// TODO
 		final XMLGregorianCalendar initialValue = getXMLGregorianCalendarFromDate(new Date());
 		final XMLGregorianCalendar changedValue = getXMLGregorianCalendarFromDate(new Date(
@@ -168,9 +171,10 @@ public class XMLDateControlRenderer_PTest extends AbstractControl_PTest {
 	 * @return
 	 * @throws NoRendererFoundException
 	 * @throws NoPropertyDescriptorFoundExeption
+	 * @throws DatabindingFailedException
 	 */
 	private Text setUpDatabindingTest(final WritableValue mockedObservable) throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		Mockito.reset(databindingService);
 		mockDatabindingIsUnsettable();
 		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(

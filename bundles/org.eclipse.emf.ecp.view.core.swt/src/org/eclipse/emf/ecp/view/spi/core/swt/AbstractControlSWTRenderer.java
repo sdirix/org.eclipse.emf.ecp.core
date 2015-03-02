@@ -43,6 +43,7 @@ import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.emfforms.spi.core.services.labelprovider.EMFFormsLabelProvider;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
@@ -187,8 +188,9 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 	 * Returns an {@link IObservableValue} based on the control's domain model reference and domain model.
 	 *
 	 * @return the {@link IObservableValue}
+	 * @throws DatabindingFailedException if the databinding of the domain model object fails.
 	 */
-	protected final IObservableValue getModelValue() {
+	protected final IObservableValue getModelValue() throws DatabindingFailedException {
 		final VDomainModelReference ref = getVElement().getDomainModelReference();
 		final EObject eObject = getViewModelContext().getDomainModel();
 

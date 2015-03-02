@@ -38,6 +38,7 @@ import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.edit.command.SetCommand;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.dialogs.IDialogLabelKeys;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -290,7 +291,7 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 	}
 
 	@Override
-	protected Binding[] createBindings(Control control, Setting setting) {
+	protected Binding[] createBindings(Control control, Setting setting) throws DatabindingFailedException {
 		final Text text = (Text) ((Composite) control).getChildren()[0];
 		final Button button = (Button) ((Composite) control).getChildren()[1];
 		button.addSelectionListener(new SelectionAdapterExtension(text, button, getModelValue(),

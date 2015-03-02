@@ -40,6 +40,8 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Display;
@@ -95,7 +97,13 @@ public class GenerateTableColumnsForSubclassesHandler extends MasterDetailAction
 		}
 
 		final VTableDomainModelReference tableDMR = (VTableDomainModelReference) domainModelReference;
-		final IValueProperty valueProperty = Activator.getDefault().getEMFFormsDatabinding().getValueProperty(tableDMR);
+		IValueProperty valueProperty;
+		try {
+			valueProperty = Activator.getDefault().getEMFFormsDatabinding().getValueProperty(tableDMR);
+		} catch (final DatabindingFailedException ex) {
+			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+			return;
+		}
 		final Object eStructuralFeature = valueProperty.getValueType();
 		if (!EReference.class.isInstance(eStructuralFeature)) {
 			return;

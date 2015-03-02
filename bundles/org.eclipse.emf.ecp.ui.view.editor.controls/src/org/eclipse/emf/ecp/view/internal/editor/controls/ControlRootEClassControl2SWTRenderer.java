@@ -20,7 +20,6 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
-import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.ecp.edit.spi.util.ECPModelElementChangeListener;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer;
@@ -29,6 +28,8 @@ import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -69,7 +70,7 @@ public class ControlRootEClassControl2SWTRenderer extends SimpleControlSWTContro
 	 *      org.eclipse.emf.ecore.EStructuralFeature.Setting)
 	 */
 	@Override
-	protected Binding[] createBindings(Control control, final Setting setting) {
+	protected Binding[] createBindings(Control control, final Setting setting) throws DatabindingFailedException {
 
 		final Binding[] bindings = new Binding[3];
 		final IObservableValue value = SWTObservables.observeText(label);
@@ -78,7 +79,12 @@ public class ControlRootEClassControl2SWTRenderer extends SimpleControlSWTContro
 
 			@Override
 			public Object convert(Object value) {
-				return getModelValue().getValue();
+				try {
+					return getModelValue().getValue();
+				} catch (final DatabindingFailedException ex) {
+					Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+					return null;
+				}
 			}
 		}, new UpdateValueStrategy() {
 			@Override
@@ -93,7 +99,12 @@ public class ControlRootEClassControl2SWTRenderer extends SimpleControlSWTContro
 
 				@Override
 				public Object convert(Object value) {
-					return getModelValue().getValue();
+					try {
+						return getModelValue().getValue();
+					} catch (final DatabindingFailedException ex) {
+						Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+						return null;
+					}
 				}
 			}, new UpdateValueStrategy() {
 				@Override
@@ -107,7 +118,12 @@ public class ControlRootEClassControl2SWTRenderer extends SimpleControlSWTContro
 
 			@Override
 			public Object convert(Object value) {
-				return getModelValue().getValue();
+				try {
+					return getModelValue().getValue();
+				} catch (final DatabindingFailedException ex) {
+					Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+					return null;
+				}
 			}
 		}, new UpdateValueStrategy() {
 			@Override

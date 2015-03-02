@@ -33,11 +33,13 @@ import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
+import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
 import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.emf.emfforms.spi.core.services.labelprovider.EMFFormsLabelProvider;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -132,7 +134,14 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 			.hint(1, 300)
 			.applyTo(controlComposite);
 		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(controlComposite);
-		createContent(controlComposite, mainSetting);
+		try {
+			createContent(controlComposite, mainSetting);
+		} catch (final DatabindingFailedException ex) {
+			Activator.getDefault().getReportService().report(new RenderingFailedReport(ex));
+			final Label errorLabel = new Label(parent, SWT.NONE);
+			errorLabel.setText(ex.getMessage());
+			return errorLabel;
+		}
 
 		return composite;
 	}
@@ -242,7 +251,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 
 	}
 
-	private void createContent(Composite composite, Setting mainSetting) {
+	private void createContent(Composite composite, Setting mainSetting) throws DatabindingFailedException {
 		tableViewer = new TableViewer(composite, SWT.MULTI | SWT.V_SCROLL | SWT.FULL_SELECTION
 			| SWT.BORDER);
 		tableViewer.getTable().setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_multireference"); //$NON-NLS-1$

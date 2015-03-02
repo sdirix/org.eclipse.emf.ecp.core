@@ -23,6 +23,7 @@ import org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlJFaceViewerSWTRenderer
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.databinding.viewers.ViewersObservables;
 import org.eclipse.jface.viewers.ArrayContentProvider;
@@ -49,7 +50,7 @@ public class EnumComboViewerSWTRenderer extends SimpleControlJFaceViewerSWTRende
 	}
 
 	@Override
-	protected Binding[] createBindings(Viewer viewer, Setting setting) {
+	protected Binding[] createBindings(Viewer viewer, Setting setting) throws DatabindingFailedException {
 		final Binding binding = getDataBindingContext().bindValue(ViewersObservables.observeSingleSelection(viewer),
 			getModelValue());
 		final Binding tooltipBinding = getDataBindingContext().bindValue(

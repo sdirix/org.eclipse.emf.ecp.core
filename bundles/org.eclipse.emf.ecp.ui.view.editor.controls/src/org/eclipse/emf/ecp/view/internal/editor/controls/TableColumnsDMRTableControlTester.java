@@ -18,6 +18,8 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.table.model.VTablePackage;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 
 /**
  * @author Alexandra Buzila
@@ -38,8 +40,14 @@ public class TableColumnsDMRTableControlTester implements ECPRendererTester {
 			return NOT_APPLICABLE;
 		}
 		final VControl control = (VControl) vElement;
-		final IValueProperty valueProperty = Activator.getDefault().getEMFFormsDatabinding()
-			.getValueProperty(control.getDomainModelReference());
+		IValueProperty valueProperty;
+		try {
+			valueProperty = Activator.getDefault().getEMFFormsDatabinding()
+				.getValueProperty(control.getDomainModelReference());
+		} catch (final DatabindingFailedException ex) {
+			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+			return NOT_APPLICABLE;
+		}
 		return isApplicable((EStructuralFeature) valueProperty.getValueType());
 	}
 

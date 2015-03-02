@@ -30,8 +30,10 @@ import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
+import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
@@ -94,10 +96,17 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 		case 1:
 			return createValidationIcon(parent);
 		case 2:
-			if (isUnsettable()) {
-				return createUnsettableControl(parent);
+			try {
+				if (isUnsettable()) {
+					return createUnsettableControl(parent);
+				}
+				return createControl(parent);
+			} catch (final DatabindingFailedException ex) {
+				Activator.getDefault().getReportService().report(new RenderingFailedReport(ex));
+				final Label errorLabel = new Label(parent, SWT.NONE);
+				errorLabel.setText(ex.getMessage());
+				return errorLabel;
 			}
-			return createControl(parent);
 		default:
 			throw new IllegalArgumentException(
 				String
@@ -110,15 +119,16 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 	 * Returns true if the control is unsettable.
 	 *
 	 * @return true if unsettable, false otherwise
+	 * @throws DatabindingFailedException if the databinding fails
 	 */
-	protected boolean isUnsettable() {
+	protected boolean isUnsettable() throws DatabindingFailedException {
 		final IValueProperty valueProperty = Activator.getDefault().getEMFFormsDatabinding()
 			.getValueProperty(getVElement().getDomainModelReference());
 		final EStructuralFeature feature = (EStructuralFeature) valueProperty.getValueType();
 		return feature.isUnsettable();
 	}
 
-	private Control createUnsettableControl(Composite parent) {
+	private Control createUnsettableControl(Composite parent) throws DatabindingFailedException {
 		final Composite composite = new Composite(parent, SWT.NONE);
 		composite.setBackground(parent.getBackground());
 		GridLayoutFactory.fillDefaults().numColumns(2).equalWidth(false).applyTo(composite);
@@ -277,8 +287,9 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 	 *
 	 * @param parent the {@link Composite} to render onto
 	 * @return the rendered control
+	 * @throws DatabindingFailedException if the databinding of the control fails
 	 */
-	protected abstract Control createControl(Composite parent);
+	protected abstract Control createControl(Composite parent) throws DatabindingFailedException;
 
 	/**
 	 * {@inheritDoc}

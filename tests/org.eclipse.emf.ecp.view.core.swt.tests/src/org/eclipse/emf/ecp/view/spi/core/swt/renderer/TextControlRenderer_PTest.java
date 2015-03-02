@@ -34,6 +34,7 @@ import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.DatabindingClassRunner;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.SWTTestUtil;
 import org.eclipse.emf.emfforms.spi.core.services.labelprovider.EMFFormsLabelProvider;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
@@ -47,7 +48,7 @@ import org.mockito.Mockito;
 public class TextControlRenderer_PTest extends AbstractControl_PTest {
 
 	@Before
-	public void before() {
+	public void before() throws DatabindingFailedException {
 		final SWTRendererFactory factory = mock(SWTRendererFactory.class);
 		setup();
 		renderer = new TextControlSWTRenderer(vControl, context, factory);
@@ -61,7 +62,7 @@ public class TextControlRenderer_PTest extends AbstractControl_PTest {
 
 	@Test
 	public void renderControlLabelAlignmentNone()
-		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		when(labelProvider.getDisplayName(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			"antiException");
 		setMockLabelAlignment(LabelAlignment.NONE);
@@ -71,7 +72,7 @@ public class TextControlRenderer_PTest extends AbstractControl_PTest {
 
 	@Test
 	public void renderControlLabelAlignmentLeft()
-		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		when(labelProvider.getDisplayName(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			"antiException");
 		setMockLabelAlignment(LabelAlignment.LEFT);
@@ -85,9 +86,11 @@ public class TextControlRenderer_PTest extends AbstractControl_PTest {
 	 *
 	 * @throws NoRendererFoundException
 	 * @throws NoPropertyDescriptorFoundExeption
+	 * @throws DatabindingFailedException
 	 */
 	@Test
-	public void testLabelServiceUsage() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+	public void testLabelServiceUsage() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption,
+		DatabindingFailedException {
 		labelServiceUsage();
 	}
 
@@ -100,7 +103,7 @@ public class TextControlRenderer_PTest extends AbstractControl_PTest {
 	}
 
 	@Override
-	protected void mockControl() {
+	protected void mockControl() throws DatabindingFailedException {
 		final EStructuralFeature eObject = EcoreFactory.eINSTANCE.createEAttribute();
 		final EStructuralFeature eStructuralFeature = EcorePackage.eINSTANCE.getENamedElement_Name();
 		super.mockControl(eObject, eStructuralFeature);
@@ -108,7 +111,7 @@ public class TextControlRenderer_PTest extends AbstractControl_PTest {
 
 	@Test
 	public void testDatabindingServiceUsageInitialBinding() throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		final String initialValue = "initial";
 		final WritableValue mockedObservable = new WritableValue(realm, initialValue, String.class);
 		final Text text = setUpDatabindingTest(mockedObservable);
@@ -119,7 +122,7 @@ public class TextControlRenderer_PTest extends AbstractControl_PTest {
 
 	@Test
 	public void testDatabindingServiceUsageChangeObservable() throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		final String initialValue = "initial";
 		final String changedValue = "changed";
 		final WritableValue mockedObservable = new WritableValue(realm, initialValue, String.class);
@@ -133,7 +136,7 @@ public class TextControlRenderer_PTest extends AbstractControl_PTest {
 
 	@Test
 	public void testDatabindingServiceUsageChangeControl() throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		final String initialValue = "initial";
 		final String changedValue = "changed";
 		final WritableValue mockedObservable = new WritableValue(realm, initialValue, String.class);
@@ -152,9 +155,10 @@ public class TextControlRenderer_PTest extends AbstractControl_PTest {
 	 * @return
 	 * @throws NoRendererFoundException
 	 * @throws NoPropertyDescriptorFoundExeption
+	 * @throws DatabindingFailedException if the databinding failed
 	 */
 	private Text setUpDatabindingTest(final WritableValue mockedObservable) throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		when(labelProvider.getDisplayName(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			"antiException");
 		Mockito.reset(databindingService);
@@ -173,9 +177,11 @@ public class TextControlRenderer_PTest extends AbstractControl_PTest {
 	 *
 	 * @throws NoPropertyDescriptorFoundExeption
 	 * @throws NoRendererFoundException
+	 * @throws DatabindingFailedException
 	 */
 	@Test
-	public void testLabelServiceUsageTextField() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+	public void testLabelServiceUsageTextField() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption,
+		DatabindingFailedException {
 		reset(labelProvider);
 		final String testDisplayName = "test-displayname";
 		when(labelProvider.getDisplayName(any(VDomainModelReference.class), any(EObject.class))).thenReturn(

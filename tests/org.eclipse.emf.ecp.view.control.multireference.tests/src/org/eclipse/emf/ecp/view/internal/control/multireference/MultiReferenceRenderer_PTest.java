@@ -43,6 +43,7 @@ import org.eclipse.emf.emfforms.spi.core.services.labelprovider.EMFFormsLabelPro
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.D;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestFactory;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
@@ -95,9 +96,11 @@ public class MultiReferenceRenderer_PTest {
 	 * Mocks and registers the databinding and label services.
 	 * Creates a new {@link MultiReferenceSWTRenderer} to be tested. Mocks needed parameters and contents (e.g.
 	 * VControl, ViewModelContext).
+	 *
+	 * @throws DatabindingFailedException if the databinding failed
 	 */
 	@Before
-	public void setUp() {
+	public void setUp() throws DatabindingFailedException {
 		databindingService = mock(EMFFormsDatabinding.class);
 		labelProvider = mock(EMFFormsLabelProvider.class);
 		when(labelProvider.getDescription(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
@@ -157,10 +160,11 @@ public class MultiReferenceRenderer_PTest {
 	 *
 	 * @throws NoRendererFoundException Renderer could not be found
 	 * @throws NoPropertyDescriptorFoundExeption Property descriptor could not be found
+	 * @throws DatabindingFailedException if the databinding failed
 	 */
 	@Test
 	public void testDatabindingServiceUsageInitialBinding() throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		final List<Integer> initialList = new LinkedList<Integer>();
 		initialList.add(2);
 		initialList.add(4);
@@ -179,10 +183,11 @@ public class MultiReferenceRenderer_PTest {
 	 *
 	 * @throws NoRendererFoundException Renderer could not be found
 	 * @throws NoPropertyDescriptorFoundExeption Property descriptor could not be found
+	 * @throws DatabindingFailedException if the databinding failed
 	 */
 	@Test
 	public void testDatabindingServiceUsageAddToModel() throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		final List<Integer> initialList = new LinkedList<Integer>();
 		initialList.add(2);
 		initialList.add(4);
@@ -203,10 +208,11 @@ public class MultiReferenceRenderer_PTest {
 	 *
 	 * @throws NoRendererFoundException Renderer could not be found
 	 * @throws NoPropertyDescriptorFoundExeption Property descriptor could not be found
+	 * @throws DatabindingFailedException if the databinding failed
 	 */
 	@Test
 	public void testDatabindingServiceUsageRemoveFromModel() throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		final List<Integer> initialList = new LinkedList<Integer>();
 		initialList.add(2);
 		initialList.add(4);
@@ -227,10 +233,11 @@ public class MultiReferenceRenderer_PTest {
 	 *
 	 * @throws NoRendererFoundException Renderer could not be found
 	 * @throws NoPropertyDescriptorFoundExeption Property descriptor could not be found
+	 * @throws DatabindingFailedException if the databinding failed
 	 */
 	@Test
 	public void testDatabindingServiceUsageChangeModel() throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		final List<Integer> initialList = new LinkedList<Integer>();
 		initialList.add(2);
 		initialList.add(4);
@@ -247,7 +254,7 @@ public class MultiReferenceRenderer_PTest {
 	}
 
 	private Table setUpDatabindingTests(IObservableList mockedObservableList) throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		when(databindingService.getObservableList(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			mockedObservableList);
 
@@ -263,9 +270,11 @@ public class MultiReferenceRenderer_PTest {
 	 *
 	 * @throws NoRendererFoundException Renderer could not be found
 	 * @throws NoPropertyDescriptorFoundExeption Property descriptor could not be found
+	 * @throws DatabindingFailedException if the databinding failed
 	 */
 	@Test
-	public void testLabelServiceUsage() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+	public void testLabelServiceUsage() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption,
+		DatabindingFailedException {
 		final Composite composite = (Composite) renderer.render(new SWTGridCell(0, 0, renderer), shell);
 		final Composite controlComposite = (Composite) composite.getChildren()[1];
 		final Table table = (Table) controlComposite.getChildren()[0];

@@ -58,6 +58,7 @@ import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
+import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
@@ -67,6 +68,7 @@ import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.emfforms.spi.core.services.labelprovider.EMFFormsLabelProvider;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.databinding.viewers.ObservableMapCellLabelProvider;
@@ -235,8 +237,16 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 		GridLayoutFactory.fillDefaults().numColumns(numButtons).equalWidth(false).applyTo(buttonComposite);
 		final Composite controlComposite = createControlComposite(composite);
-		setTableViewer(createTableViewer(controlComposite, clazz,
-			mainSetting));
+		try {
+			setTableViewer(createTableViewer(controlComposite, clazz,
+				mainSetting));
+		} catch (final DatabindingFailedException ex) {
+			Activator.getInstance().getReportService().report(new RenderingFailedReport(ex));
+			final Label errorLabel = new Label(parent, SWT.NONE);
+			errorLabel.setText(ex.getMessage());
+			return errorLabel;
+
+		}
 
 		if (addButton != null && removeButton != null) {
 			final Button finalAddButton = addButton;
@@ -345,7 +355,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	}
 
 	private TableViewer createTableViewer(Composite composite, EClass clazz,
-		Setting mainSetting) {
+		Setting mainSetting) throws DatabindingFailedException {
 
 		final TableViewer tableViewer = new TableViewer(composite, SWT.MULTI | SWT.V_SCROLL | SWT.FULL_SELECTION
 			| SWT.BORDER);
@@ -395,9 +405,14 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 				continue;
 			}
 
-			final IValueProperty valueProperty = Activator.getInstance().getEMFFormsDatabinding().getValueProperty(dmr);
+			IValueProperty valueProperty;
+			try {
+				valueProperty = Activator.getInstance().getEMFFormsDatabinding().getValueProperty(dmr);
+			} catch (final DatabindingFailedException ex) {
+				Activator.getInstance().getReportService().report(new RenderingFailedReport(ex));
+				continue;
+			}
 			final EStructuralFeature eStructuralFeature = (EStructuralFeature) valueProperty.getValueType();
-			// TODO: continue in catch for checked exception
 
 			final EMFFormsLabelProvider labelService = Activator.getInstance().getEMFFormsLabelProvider();
 			final String text = labelService.getDisplayName(dmr);
@@ -416,8 +431,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 						.getColumnWidthWeight() : 100)
 				.build(tableViewer);
 
-			final IObservableMap observableMap = Activator.getInstance().getEMFFormsDatabinding().getValueProperty(dmr)
-				.observeDetail(cp.getKnownElements());
+			final IObservableMap observableMap = valueProperty.observeDetail(cp.getKnownElements());
 			column.setLabelProvider(new ECPCellLabelProvider(eStructuralFeature, cellEditor, observableMap,
 				getVElement(), dmr));
 			column.getColumn().addSelectionListener(
@@ -429,7 +443,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 					// eStructuralFeature,
 					// itemPropertyDescriptor
 					// null,
-					getVElement(), dmr);
+					getVElement(), dmr, valueProperty);
 				column.setEditingSupport(observableSupport);
 			}
 			columnNumber++;
@@ -948,15 +962,18 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 		private final VDomainModelReference domainModelReference;
 
+		private final IValueProperty valueProperty;
+
 		/**
 		 * @param viewer
 		 */
 		public ECPTableEditingSupport(ColumnViewer viewer, CellEditor cellEditor,
-			VTableControl tableControl, VDomainModelReference domainModelReference) {
+			VTableControl tableControl, VDomainModelReference domainModelReference, IValueProperty valueProperty) {
 			super(viewer);
 			this.cellEditor = cellEditor;
 			this.tableControl = tableControl;
 			this.domainModelReference = domainModelReference;
+			this.valueProperty = valueProperty;
 		}
 
 		private EditingState editingState;
@@ -1024,8 +1041,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			final IObservableValue target = doCreateCellEditorObservable(cellEditor);
 			Assert.isNotNull(target, "doCreateCellEditorObservable(...) did not return an observable"); //$NON-NLS-1$
 
-			final IObservableValue model = Activator.getInstance().getEMFFormsDatabinding()
-				.getObservableValue(domainModelReference, (EObject) cell.getElement());
+			final IObservableValue model = valueProperty.observe(cell.getElement());
 			Assert.isNotNull(model, "The databinding service did not return an observable"); //$NON-NLS-1$
 
 			final Binding binding = createBinding(target, model);

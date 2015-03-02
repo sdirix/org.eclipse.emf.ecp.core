@@ -32,6 +32,7 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.emfforms.spi.core.services.emfspecificservice.EMFSpecificService;
 import org.eclipse.emf.emfforms.spi.core.services.labelprovider.EMFFormsLabelProvider;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -66,9 +67,12 @@ public class EMFFormsLabelProviderImpl_ITest {
 	 * Set up that is executed before every test case.
 	 * Registers a databinding and an emf specific service.
 	 * Mocks various objects for the tests.
+	 *
+	 * @throws DatabindingFailedException should not happen, just needs to be thrown because the databinding service
+	 *             defines the throw in its interface.
 	 */
 	@BeforeClass
-	public static void setUpBeforeClass() {
+	public static void setUpBeforeClass() throws DatabindingFailedException {
 		bundleContext = FrameworkUtil.getBundle(EMFFormsLabelProviderImpl_Test.class).getBundleContext();
 
 		final Dictionary<String, Object> dictionary = new Hashtable<String, Object>();
@@ -108,9 +112,12 @@ public class EMFFormsLabelProviderImpl_ITest {
 
 	/**
 	 * Resets and newly configures the services for every test.
+	 *
+	 * @throws DatabindingFailedException should not happen, just needs to be thrown because the databinding service
+	 *             defines the throw in its interface.
 	 */
 	@Before
-	public void setUp() {
+	public void setUp() throws DatabindingFailedException {
 		reset(emfSpecificService);
 		reset(databindingService);
 		when(emfSpecificService.getAdapterFactoryItemDelegator()).thenReturn(adapterFactoryItemDelegator);
@@ -132,9 +139,12 @@ public class EMFFormsLabelProviderImpl_ITest {
 	/**
 	 * Tests that {@link EMFFormsLabelProviderImpl#getDisplayName(VDomainModelReference)} uses the databinding and emf
 	 * specific services.
+	 * 
+	 * @throws DatabindingFailedException should not happen, just needs to be thrown because the databinding service
+	 *             defines the throw in its interface.
 	 */
 	@Test
-	public void testServiceUsageDisplayNameOneParam() {
+	public void testServiceUsageDisplayNameOneParam() throws DatabindingFailedException {
 		final VDomainModelReference domainModelReference = mock(VDomainModelReference.class);
 		labelProvider.getDisplayName(domainModelReference);
 
@@ -145,9 +155,12 @@ public class EMFFormsLabelProviderImpl_ITest {
 	/**
 	 * Tests that {@link EMFFormsLabelProviderImpl#getDescription(VDomainModelReference)} uses the databinding and emf
 	 * specific services.
+	 * 
+	 * @throws DatabindingFailedException should not happen, just needs to be thrown because the databinding service
+	 *             defines the throw in its interface.
 	 */
 	@Test
-	public void testServiceUsageDescriptionOneParam() {
+	public void testServiceUsageDescriptionOneParam() throws DatabindingFailedException {
 		final VDomainModelReference domainModelReference = mock(VDomainModelReference.class);
 		labelProvider.getDescription(domainModelReference);
 
@@ -158,9 +171,12 @@ public class EMFFormsLabelProviderImpl_ITest {
 	/**
 	 * Tests that {@link EMFFormsLabelProviderImpl#getDisplayName(VDomainModelReference, EObject)} uses the databinding
 	 * and emf specific services.
+	 * 
+	 * @throws DatabindingFailedException should not happen, just needs to be thrown because the databinding service
+	 *             defines the throw in its interface.
 	 */
 	@Test
-	public void testServiceUsageDisplayNameTwoParam() {
+	public void testServiceUsageDisplayNameTwoParam() throws DatabindingFailedException {
 		final VDomainModelReference domainModelReference = mock(VDomainModelReference.class);
 		final EObject eObject = mock(EObject.class);
 		labelProvider.getDisplayName(domainModelReference, eObject);
@@ -172,9 +188,12 @@ public class EMFFormsLabelProviderImpl_ITest {
 	/**
 	 * Tests that {@link EMFFormsLabelProviderImpl#getDescription(VDomainModelReference, EObject)} uses the databinding
 	 * and emf specific services.
+	 * 
+	 * @throws DatabindingFailedException should not happen, just needs to be thrown because the databinding service
+	 *             defines the throw in its interface.
 	 */
 	@Test
-	public void testServiceUsageDescriptionTwoParam() {
+	public void testServiceUsageDescriptionTwoParam() throws DatabindingFailedException {
 		final VDomainModelReference domainModelReference = mock(VDomainModelReference.class);
 		final EObject eObject = mock(EObject.class);
 		labelProvider.getDescription(domainModelReference, eObject);

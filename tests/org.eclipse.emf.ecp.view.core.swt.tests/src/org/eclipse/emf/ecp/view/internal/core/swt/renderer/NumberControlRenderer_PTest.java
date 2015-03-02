@@ -38,6 +38,7 @@ import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.DatabindingClassRunner;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.SWTTestUtil;
 import org.eclipse.emf.emfforms.spi.core.services.labelprovider.EMFFormsLabelProvider;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
@@ -52,7 +53,7 @@ import org.mockito.Mockito;
 public class NumberControlRenderer_PTest extends AbstractControl_PTest {
 
 	@Before
-	public void before() {
+	public void before() throws DatabindingFailedException {
 		final SWTRendererFactory factory = mock(SWTRendererFactory.class);
 		setup();
 		renderer = new NumberControlSWTRenderer(vControl, context, factory);
@@ -66,7 +67,7 @@ public class NumberControlRenderer_PTest extends AbstractControl_PTest {
 
 	@Test
 	public void renderControlLabelAlignmentNone()
-		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		setMockLabelAlignment(LabelAlignment.NONE);
 		final Control render = renderControl(new SWTGridCell(0, 1, renderer));
 		assertControl(render);
@@ -74,7 +75,7 @@ public class NumberControlRenderer_PTest extends AbstractControl_PTest {
 
 	@Test
 	public void renderControlLabelAlignmentLeft()
-		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		setMockLabelAlignment(LabelAlignment.LEFT);
 		final Control render = renderControl(new SWTGridCell(0, 2, renderer));
 
@@ -86,9 +87,11 @@ public class NumberControlRenderer_PTest extends AbstractControl_PTest {
 	 *
 	 * @throws NoRendererFoundException
 	 * @throws NoPropertyDescriptorFoundExeption
+	 * @throws DatabindingFailedException
 	 */
 	@Test
-	public void testLabelServiceUsage() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+	public void testLabelServiceUsage() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption,
+		DatabindingFailedException {
 		labelServiceUsage();
 	}
 
@@ -103,7 +106,7 @@ public class NumberControlRenderer_PTest extends AbstractControl_PTest {
 	}
 
 	@Override
-	protected void mockControl() {
+	protected void mockControl() throws DatabindingFailedException {
 		final EStructuralFeature eObject = EcoreFactory.eINSTANCE.createEAttribute();
 		final EStructuralFeature eStructuralFeature = EcorePackage.eINSTANCE.getETypedElement_LowerBound();
 		super.mockControl(eObject, eStructuralFeature);
@@ -111,7 +114,7 @@ public class NumberControlRenderer_PTest extends AbstractControl_PTest {
 
 	@Test
 	public void testDatabindingServiceUsageInitialBinding() throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		final int initialValue = 13;
 		final WritableValue mockedObservable = new WritableValue(realm, initialValue, Integer.class);
 		final Text text = setUpDatabindingTest(mockedObservable);
@@ -124,7 +127,7 @@ public class NumberControlRenderer_PTest extends AbstractControl_PTest {
 
 	@Test
 	public void testDatabindingServiceUsageChangeObservable() throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		final int initialValue = 13;
 		final int changedValue = 42;
 		final WritableValue mockedObservable = new WritableValue(realm, initialValue, Integer.class);
@@ -140,7 +143,7 @@ public class NumberControlRenderer_PTest extends AbstractControl_PTest {
 
 	@Test
 	public void testDatabindingServiceUsageChangeControl() throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		final int initialValue = 13;
 		final int changedValue = 42;
 		final WritableValue mockedObservable = new WritableValue(realm, initialValue, String.class);
@@ -161,9 +164,10 @@ public class NumberControlRenderer_PTest extends AbstractControl_PTest {
 	 * @return
 	 * @throws NoRendererFoundException
 	 * @throws NoPropertyDescriptorFoundExeption
+	 * @throws DatabindingFailedException
 	 */
 	private Text setUpDatabindingTest(final WritableValue mockedObservable) throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		Mockito.reset(databindingService);
 		mockDatabindingIsUnsettable();
 		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(

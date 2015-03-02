@@ -17,6 +17,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.junit.After;
@@ -64,7 +65,7 @@ public class EMFFormsDatabindingImpl_ITest {
 	}
 
 	@Test
-	public void testServiceUsageValue() {
+	public void testServiceUsageValue() throws DatabindingFailedException {
 		final DomainModelReferenceConverter converter = mock(DomainModelReferenceConverter.class);
 		final VFeaturePathDomainModelReference reference = mock(VFeaturePathDomainModelReference.class);
 		when(converter.isApplicable(reference)).thenReturn(0d);
@@ -77,7 +78,7 @@ public class EMFFormsDatabindingImpl_ITest {
 	}
 
 	@Test
-	public void testServiceUsageList() {
+	public void testServiceUsageList() throws DatabindingFailedException {
 		final DomainModelReferenceConverter converter = mock(DomainModelReferenceConverter.class);
 		final VFeaturePathDomainModelReference reference = mock(VFeaturePathDomainModelReference.class);
 		when(converter.isApplicable(reference)).thenReturn(0d);

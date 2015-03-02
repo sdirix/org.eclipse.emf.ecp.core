@@ -12,6 +12,7 @@
 package org.eclipse.emf.ecp.view.internal.control.multireference;
 
 import org.eclipse.core.runtime.Plugin;
+import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
 import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
 import org.eclipse.emf.emfforms.spi.core.services.labelprovider.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
@@ -29,6 +30,7 @@ public class Activator extends Plugin {
 
 	private static Activator instance;
 	private ServiceReference<ImageRegistryService> imageRegistryServiceReference;
+	private ServiceReference<ReportService> reportServiceReference;
 
 	// BEGIN SUPRESS CATCH EXCEPTION
 	@Override
@@ -75,6 +77,19 @@ public class Activator extends Plugin {
 				.getServiceReference(ImageRegistryService.class);
 		}
 		return getBundle().getBundleContext().getService(imageRegistryServiceReference);
+	}
+
+	/**
+	 * Returns the {@link ReportService}.
+	 *
+	 * @return the {@link ReportService}
+	 */
+	public ReportService getReportService() {
+		if (reportServiceReference == null) {
+			reportServiceReference = instance.getBundle().getBundleContext()
+				.getServiceReference(ReportService.class);
+		}
+		return instance.getBundle().getBundleContext().getService(reportServiceReference);
 	}
 
 	/**

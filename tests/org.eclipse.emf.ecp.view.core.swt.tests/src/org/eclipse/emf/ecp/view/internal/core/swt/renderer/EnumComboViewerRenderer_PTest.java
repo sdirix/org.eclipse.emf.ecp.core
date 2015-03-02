@@ -29,6 +29,7 @@ import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.DatabindingClassRunner;
 import org.eclipse.emf.emfforms.spi.core.services.labelprovider.EMFFormsLabelProvider;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Control;
@@ -49,7 +50,7 @@ import org.mockito.Mockito;
 public class EnumComboViewerRenderer_PTest extends AbstractControl_PTest {
 
 	@Before
-	public void before() {
+	public void before() throws DatabindingFailedException {
 		final SWTRendererFactory factory = mock(SWTRendererFactory.class);
 		setup();
 		renderer = new EnumComboViewerSWTRenderer(vControl, context, factory);
@@ -64,17 +65,19 @@ public class EnumComboViewerRenderer_PTest extends AbstractControl_PTest {
 	/**
 	 * {@inheritDoc}
 	 *
+	 * @throws DatabindingFailedException
+	 *
 	 * @see org.eclipse.emf.ecp.view.internal.core.swt.renderer.AbstractControl_PTest#mockControl()
 	 */
 	@Override
-	protected void mockControl() {
+	protected void mockControl() throws DatabindingFailedException {
 		final SimpleTestObject eObject = TestFactory.eINSTANCE.createSimpleTestObject();
 		super.mockControl(eObject, TestPackage.eINSTANCE.getSimpleTestObject_MyEnum());
 	}
 
 	@Test
 	public void testDatabindingServiceUsageInitialBinding() throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		final TestEnum initialValue = TestEnum.B;
 		final WritableValue mockedObservable = new WritableValue(realm, initialValue, TestEnum.class);
 
@@ -85,7 +88,7 @@ public class EnumComboViewerRenderer_PTest extends AbstractControl_PTest {
 
 	@Test
 	public void testDatabindingServiceUsageChangeObservable() throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		final TestEnum initialValue = TestEnum.B;
 		final TestEnum changedValue = TestEnum.C;
 		final WritableValue mockedObservable = new WritableValue(realm, initialValue, TestEnum.class);
@@ -98,7 +101,7 @@ public class EnumComboViewerRenderer_PTest extends AbstractControl_PTest {
 
 	@Test
 	public void testDatabindingServiceUsageChangeControl() throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		final TestEnum initialValue = TestEnum.B;
 		final TestEnum changedValue = TestEnum.C;
 		final WritableValue mockedObservable = new WritableValue(realm, initialValue, TestEnum.class);
@@ -118,9 +121,10 @@ public class EnumComboViewerRenderer_PTest extends AbstractControl_PTest {
 	 * @return
 	 * @throws NoRendererFoundException
 	 * @throws NoPropertyDescriptorFoundExeption
+	 * @throws DatabindingFailedException
 	 */
 	private Combo setUpDatabindingTest(final WritableValue mockedObservable) throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		Mockito.reset(databindingService);
 		mockDatabindingIsUnsettable();
 		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
@@ -137,9 +141,11 @@ public class EnumComboViewerRenderer_PTest extends AbstractControl_PTest {
 	 *
 	 * @throws NoRendererFoundException
 	 * @throws NoPropertyDescriptorFoundExeption
+	 * @throws DatabindingFailedException
 	 */
 	@Test
-	public void testLabelServiceUsage() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+	public void testLabelServiceUsage() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption,
+		DatabindingFailedException {
 		labelServiceUsage();
 	}
 }

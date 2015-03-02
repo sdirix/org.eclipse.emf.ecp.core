@@ -35,8 +35,10 @@ public interface EMFFormsDatabinding {
 	 * @param domainModelReference The domain model reference pointing to the desired value
 	 * @param object The object containing the value of the reference
 	 * @return The resulting {@link IObservableValue}, does not return <code>null</code>.
+	 * @throws DatabindingFailedException if the databinding could not be executed successfully.
 	 */
-	IObservableValue getObservableValue(VDomainModelReference domainModelReference, EObject object);
+	IObservableValue getObservableValue(VDomainModelReference domainModelReference, EObject object)
+		throws DatabindingFailedException;
 
 	/**
 	 * Returns an {@link IObservableList} by observing the list described by the given {@link VDomainModelReference} of
@@ -45,22 +47,26 @@ public interface EMFFormsDatabinding {
 	 * @param domainModelReference The domain model reference pointing to the desired list
 	 * @param object The object containing the values of the reference
 	 * @return The resulting {@link IObservableList}, does not return <code>null</code>
+	 * @throws DatabindingFailedException if the databinding could not be executed successfully.
 	 */
-	IObservableList getObservableList(VDomainModelReference domainModelReference, EObject object);
+	IObservableList getObservableList(VDomainModelReference domainModelReference, EObject object)
+		throws DatabindingFailedException;
 
 	/**
 	 * Returns an {@link IValueProperty} described by the given {@link VDomainModelReference}.
 	 *
 	 * @param domainModelReference The domain model reference pointing to the desired value
 	 * @return The resulting {@link IValueProperty}, does not return <code>null</code>.
+	 * @throws DatabindingFailedException if the databinding could not be executed successfully.
 	 */
-	IValueProperty getValueProperty(VDomainModelReference domainModelReference);
+	IValueProperty getValueProperty(VDomainModelReference domainModelReference) throws DatabindingFailedException;
 
 	/**
 	 * Returns an {@link IListProperty} described by the given {@link VDomainModelReference}.
 	 *
 	 * @param domainModelReference The domain model reference pointing to the desired list
 	 * @return The resulting {@link IListProperty}, does not return <code>null</code>.
+	 * @throws DatabindingFailedException if the databinding could not be executed successfully.
 	 */
-	IListProperty getListProperty(VDomainModelReference domainModelReference);
+	IListProperty getListProperty(VDomainModelReference domainModelReference) throws DatabindingFailedException;
 }

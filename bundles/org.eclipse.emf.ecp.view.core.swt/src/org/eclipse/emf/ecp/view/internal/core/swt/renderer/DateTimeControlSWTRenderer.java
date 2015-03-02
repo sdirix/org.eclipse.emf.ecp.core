@@ -29,6 +29,8 @@ import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.edit.command.SetCommand;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.dialogs.IDialogLabelKeys;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -81,7 +83,7 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 	private ModelChangeListener domainModelChangeListener;
 
 	@Override
-	protected Binding[] createBindings(Control control, final Setting setting) {
+	protected Binding[] createBindings(Control control, final Setting setting) throws DatabindingFailedException {
 		this.setting = setting;
 
 		final DateTime date = (DateTime) ((Composite) ((Composite) ((Composite) control).getChildren()[0])
@@ -294,7 +296,13 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 			final Command removeCommand = SetCommand.create(getEditingDomain(setting), setting.getEObject(),
 				setting.getEStructuralFeature(), null);
 			getEditingDomain(setting).getCommandStack().execute(removeCommand);
-			updateChangeListener(getModelValue().getValue());
+			try {
+				updateChangeListener(getModelValue().getValue());
+			} catch (final DatabindingFailedException ex) {
+				Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+				// Do nothing. This cannot happen because if getModelValue() fails, the control will never be rendered
+				// and consequently this code will never be executed.
+			}
 		}
 
 	}

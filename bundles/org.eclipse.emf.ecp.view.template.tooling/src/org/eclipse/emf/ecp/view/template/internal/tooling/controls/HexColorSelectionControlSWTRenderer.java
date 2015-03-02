@@ -23,6 +23,7 @@ import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.template.internal.tooling.Messages;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -61,7 +62,7 @@ public class HexColorSelectionControlSWTRenderer extends SimpleControlSWTControl
 	 *      org.eclipse.emf.ecore.EStructuralFeature.Setting)
 	 */
 	@Override
-	protected Binding[] createBindings(Control control, Setting setting) {
+	protected Binding[] createBindings(Control control, Setting setting) throws DatabindingFailedException {
 		final Composite composite = Composite.class.cast(control);
 		final Control childControl = composite.getChildren()[0];
 		final IObservableValue value = SWTObservables.observeBackground(childControl);

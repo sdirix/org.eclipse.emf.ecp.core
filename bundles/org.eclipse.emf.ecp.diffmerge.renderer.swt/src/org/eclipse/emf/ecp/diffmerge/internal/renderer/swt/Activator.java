@@ -12,6 +12,7 @@
 package org.eclipse.emf.ecp.diffmerge.internal.renderer.swt;
 
 import org.eclipse.core.runtime.Plugin;
+import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
 import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.swt.graphics.Image;
@@ -28,6 +29,7 @@ public class Activator extends Plugin {
 
 	private static Activator instance;
 	private ServiceReference<ImageRegistryService> imageRegistryServiceReference;
+	private ServiceReference<ReportService> reportServiceReference;
 
 	// BEGIN SUPRESS CATCH EXCEPTION
 	@Override
@@ -74,6 +76,19 @@ public class Activator extends Plugin {
 	 */
 	public static Activator getInstance() {
 		return instance;
+	}
+
+	/**
+	 * Returns the {@link ReportService}.
+	 *
+	 * @return the {@link ReportService}
+	 */
+	public ReportService getReportService() {
+		if (reportServiceReference == null) {
+			reportServiceReference = instance.getBundle().getBundleContext()
+				.getServiceReference(ReportService.class);
+		}
+		return instance.getBundle().getBundleContext().getService(reportServiceReference);
 	}
 
 	/**

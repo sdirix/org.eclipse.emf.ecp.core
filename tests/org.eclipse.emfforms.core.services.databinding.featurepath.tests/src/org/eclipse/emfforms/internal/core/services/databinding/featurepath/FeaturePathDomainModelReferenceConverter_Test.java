@@ -28,6 +28,7 @@ import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emfforms.core.services.databinding.featurepath.FeaturePathDomainModelReferenceConverter;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter;
 import org.junit.Before;
 import org.junit.Test;
@@ -81,9 +82,11 @@ public class FeaturePathDomainModelReferenceConverter_Test {
 	 * Test method for
 	 * {@link org.eclipse.emfforms.core.services.databinding.featurepath.FeaturePathDomainModelReferenceConverter#convertToValueProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
 	 * .
+	 *
+	 * @throws DatabindingFailedException if the databinding failed
 	 */
 	@Test
-	public void testConvertToValueProperty() {
+	public void testConvertToValueProperty() throws DatabindingFailedException {
 		final VFeaturePathDomainModelReference pathReference = VViewFactory.eINSTANCE
 			.createFeaturePathDomainModelReference();
 		// create reference path to the attribute
@@ -116,9 +119,11 @@ public class FeaturePathDomainModelReferenceConverter_Test {
 	 * Test method for
 	 * {@link org.eclipse.emfforms.core.services.databinding.featurepath.FeaturePathDomainModelReferenceConverter#convertToValueProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
 	 * .
+	 * 
+	 * @throws DatabindingFailedException if the databinding failed
 	 */
 	@Test
-	public void testConvertToValuePropertyNoReferencePath() {
+	public void testConvertToValuePropertyNoReferencePath() throws DatabindingFailedException {
 		final VFeaturePathDomainModelReference pathReference = VViewFactory.eINSTANCE
 			.createFeaturePathDomainModelReference();
 
@@ -144,9 +149,25 @@ public class FeaturePathDomainModelReferenceConverter_Test {
 	 * Test method for
 	 * {@link org.eclipse.emfforms.core.services.databinding.featurepath.FeaturePathDomainModelReferenceConverter#convertToValueProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
 	 * .
+	 *
+	 * @throws DatabindingFailedException if the databinding failed
 	 */
 	@Test(expected = IllegalArgumentException.class)
-	public void testConvertToValuePropertyNull() {
+	public void testConvertToValuePropertyNoFeature() throws DatabindingFailedException {
+		final VFeaturePathDomainModelReference pathReference = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
+		converter.convertToValueProperty(pathReference);
+	}
+
+	/**
+	 * Test method for
+	 * {@link org.eclipse.emfforms.core.services.databinding.featurepath.FeaturePathDomainModelReferenceConverter#convertToValueProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * .
+	 *
+	 * @throws DatabindingFailedException if the databinding failed
+	 */
+	@Test(expected = IllegalArgumentException.class)
+	public void testConvertToValuePropertyNull() throws DatabindingFailedException {
 		converter.convertToValueProperty(null);
 	}
 
@@ -154,9 +175,11 @@ public class FeaturePathDomainModelReferenceConverter_Test {
 	 * Test method for
 	 * {@link org.eclipse.emfforms.core.services.databinding.featurepath.FeaturePathDomainModelReferenceConverter#convertToValueProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
 	 * .
+	 *
+	 * @throws DatabindingFailedException if the databinding failed
 	 */
 	@Test(expected = IllegalArgumentException.class)
-	public void testConvertToValuePropertyWrongReferenceType() {
+	public void testConvertToValuePropertyWrongReferenceType() throws DatabindingFailedException {
 		converter.convertToValueProperty(mock(VDomainModelReference.class));
 	}
 
@@ -164,9 +187,11 @@ public class FeaturePathDomainModelReferenceConverter_Test {
 	 * Test method for
 	 * {@link org.eclipse.emfforms.core.services.databinding.featurepath.FeaturePathDomainModelReferenceConverter#convertToListProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
 	 * .
+	 *
+	 * @throws DatabindingFailedException if the databinding failed
 	 */
 	@Test
-	public void testConvertToListProperty() {
+	public void testConvertToListProperty() throws DatabindingFailedException {
 		final VFeaturePathDomainModelReference pathReference = VViewFactory.eINSTANCE
 			.createFeaturePathDomainModelReference();
 		// create reference path to the list
@@ -199,9 +224,11 @@ public class FeaturePathDomainModelReferenceConverter_Test {
 	 * Test method for
 	 * {@link org.eclipse.emfforms.core.services.databinding.featurepath.FeaturePathDomainModelReferenceConverter#convertToListProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
 	 * .
+	 *
+	 * @throws DatabindingFailedException if the databinding failed
 	 */
 	@Test
-	public void testConvertToListPropertyNoReferencePath() {
+	public void testConvertToListPropertyNoReferencePath() throws DatabindingFailedException {
 		final VFeaturePathDomainModelReference pathReference = VViewFactory.eINSTANCE
 			.createFeaturePathDomainModelReference();
 
@@ -227,9 +254,11 @@ public class FeaturePathDomainModelReferenceConverter_Test {
 	 * Test method for
 	 * {@link org.eclipse.emfforms.core.services.databinding.featurepath.FeaturePathDomainModelReferenceConverter#convertToListProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
 	 * .
+	 *
+	 * @throws DatabindingFailedException if the databinding failed
 	 */
 	@Test(expected = IllegalArgumentException.class)
-	public void testConvertToListPropertyNull() {
+	public void testConvertToListPropertyNull() throws DatabindingFailedException {
 		converter.convertToListProperty(null);
 	}
 
@@ -237,9 +266,11 @@ public class FeaturePathDomainModelReferenceConverter_Test {
 	 * Test method for
 	 * {@link org.eclipse.emfforms.core.services.databinding.featurepath.FeaturePathDomainModelReferenceConverter#convertToListProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
 	 * .
+	 *
+	 * @throws DatabindingFailedException if the databinding failed
 	 */
 	@Test(expected = IllegalArgumentException.class)
-	public void testConvertToListPropertyWrongReferenceType() {
+	public void testConvertToListPropertyWrongReferenceType() throws DatabindingFailedException {
 		converter.convertToListProperty(mock(VDomainModelReference.class));
 	}
 }

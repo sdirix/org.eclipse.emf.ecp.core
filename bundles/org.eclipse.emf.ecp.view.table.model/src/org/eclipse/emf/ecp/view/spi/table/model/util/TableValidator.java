@@ -43,6 +43,8 @@ import org.eclipse.emf.ecp.view.spi.table.model.VTableColumnConfiguration;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTablePackage;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 
 /**
  * <!-- begin-user-doc -->
@@ -290,9 +292,14 @@ public class TableValidator extends EObjectValidator
 		}
 
 		// test if table ends a multi reference
-		final IValueProperty valueProperty = Activator.getDefault().getEMFFormsDatabinding()
-			.getValueProperty(pathToMultiRef);
-		// TODO: return true in the catch block
+		IValueProperty valueProperty;
+		try {
+			valueProperty = Activator.getDefault().getEMFFormsDatabinding()
+				.getValueProperty(pathToMultiRef);
+		} catch (final DatabindingFailedException ex) {
+			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+			return true;
+		}
 		final EStructuralFeature feature = (EStructuralFeature) valueProperty.getValueType();
 		if (!EReference.class.isInstance(feature) || !feature.isMany()) {
 			if (diagnostics != null) {

@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.junit.After;
 import org.junit.Before;
@@ -64,7 +65,7 @@ public class DatabindingIntegrationTest {
 	}
 
 	@Test
-	public void testIntegrationValue() {
+	public void testIntegrationValue() throws DatabindingFailedException {
 		final VFeaturePathDomainModelReference pathReference = VViewFactory.eINSTANCE
 			.createFeaturePathDomainModelReference();
 		// create reference path to the attribute
@@ -95,7 +96,7 @@ public class DatabindingIntegrationTest {
 	}
 
 	@Test
-	public void testIntegrationList() {
+	public void testIntegrationList() throws DatabindingFailedException {
 		// TODO
 		final VFeaturePathDomainModelReference pathReference = VViewFactory.eINSTANCE
 			.createFeaturePathDomainModelReference();

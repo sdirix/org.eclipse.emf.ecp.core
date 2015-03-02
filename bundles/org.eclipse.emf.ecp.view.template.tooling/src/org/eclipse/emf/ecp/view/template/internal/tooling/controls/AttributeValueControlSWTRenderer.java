@@ -24,6 +24,7 @@ import org.eclipse.emf.ecp.view.template.internal.tooling.util.ValueSelectionHel
 import org.eclipse.emf.ecp.view.template.selector.viewModelElement.model.VTViewModelElementSelector;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -61,7 +62,7 @@ public class AttributeValueControlSWTRenderer extends SimpleControlSWTControlSWT
 	 *      org.eclipse.emf.ecore.EStructuralFeature.Setting)
 	 */
 	@Override
-	protected Binding[] createBindings(Control control, Setting setting) {
+	protected Binding[] createBindings(Control control, Setting setting) throws DatabindingFailedException {
 		final Label label = (Label) Composite.class.cast(control).getChildren()[0];
 		final Binding binding = getDataBindingContext().bindValue(SWTObservables.observeText(label),
 			getModelValue(), new UpdateValueStrategy(), new UpdateValueStrategy() {

@@ -28,6 +28,8 @@ import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.viewers.ArrayContentProvider;
@@ -376,8 +378,14 @@ public class SelectAttributesWizardPage extends WizardPage {
 					continue;
 				}
 
-				final IValueProperty valueProperty = Activator.getDefault().getEMFFormsDatabinding()
-					.getValueProperty(domainModelReference);
+				IValueProperty valueProperty;
+				try {
+					valueProperty = Activator.getDefault().getEMFFormsDatabinding()
+						.getValueProperty(domainModelReference);
+				} catch (final DatabindingFailedException ex) {
+					Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+					continue;
+				}
 				final EStructuralFeature feature = (EStructuralFeature) valueProperty.getValueType();
 				if (feature != null && feature.getEContainingClass() != null
 					&& feature.getEContainingClass().equals(eClass)) {

@@ -7,13 +7,12 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- * Lucas Koehler- initial API and implementation
+ * Lucas Koehler - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.makeithappen.ui.emailcontrol;
+package org.eclipse.emf.emfforms.internal.core.services.labelprovider;
 
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
-import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 
@@ -25,7 +24,7 @@ import org.osgi.framework.ServiceReference;
 public class Activator extends Plugin {
 
 	/** The plug-in ID. */
-	public static final String PLUGIN_ID = "org.eclipse.emf.ecp.makeithappen.view.email.renderer"; //$NON-NLS-1$
+	public static final String PLUGIN_ID = "org.eclipse.emf.emfforms.core.services.labelprovider"; //$NON-NLS-1$
 
 	// The shared instance
 	private static Activator plugin;
@@ -78,21 +77,5 @@ public class Activator extends Plugin {
 				.getServiceReference(ReportService.class);
 		}
 		return plugin.getBundle().getBundleContext().getService(reportServiceReference);
-	}
-
-	/**
-	 * Returns the {@link EMFFormsDatabinding} service.
-	 *
-	 * @return The {@link EMFFormsDatabinding}
-	 */
-	public EMFFormsDatabinding getEMFFormsDatabinding() {
-		final ServiceReference<EMFFormsDatabinding> serviceReference = plugin.getBundle().getBundleContext()
-			.getServiceReference(EMFFormsDatabinding.class);
-
-		final EMFFormsDatabinding service = plugin.getBundle().getBundleContext()
-			.getService(serviceReference);
-		plugin.getBundle().getBundleContext().ungetService(serviceReference);
-
-		return service;
 	}
 }

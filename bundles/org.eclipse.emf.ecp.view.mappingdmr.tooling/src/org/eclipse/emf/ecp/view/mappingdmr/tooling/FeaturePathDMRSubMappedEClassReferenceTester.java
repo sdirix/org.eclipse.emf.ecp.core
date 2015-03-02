@@ -22,6 +22,8 @@ import org.eclipse.emf.ecp.view.spi.mappingdmr.model.VMappingdmrPackage;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 
 /**
  * A Tester for the FeaturePathControl which is added as a child of a {@link VMappingDomainModelReference}.
@@ -40,8 +42,14 @@ public class FeaturePathDMRSubMappedEClassReferenceTester implements
 		}
 
 		final VControl control = (VControl) vElement;
-		final IObservableValue observableValue = Activator.getDefault().getEMFFormsDatabinding()
-			.getObservableValue(control.getDomainModelReference(), viewModelContext.getDomainModel());
+		IObservableValue observableValue;
+		try {
+			observableValue = Activator.getDefault().getEMFFormsDatabinding()
+				.getObservableValue(control.getDomainModelReference(), viewModelContext.getDomainModel());
+		} catch (final DatabindingFailedException ex) {
+			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+			return NOT_APPLICABLE;
+		}
 		final EStructuralFeature feature = (EStructuralFeature) observableValue.getValueType();
 		final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
 

@@ -20,6 +20,8 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.template.internal.tooling.Activator;
 import org.eclipse.emf.ecp.view.template.selector.viewModelElement.model.VTViewModelElementPackage;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 
 /**
  * The tester for the {@link ViewModelSelectControlSWTRenderer}.
@@ -39,8 +41,14 @@ public class AttributeValueControlTester implements ECPRendererTester {
 			return NOT_APPLICABLE;
 		}
 		final VControl control = (VControl) vElement;
-		final IValueProperty valueProperty = Activator.getDefault().getEMFFormsDatabinding()
-			.getValueProperty(control.getDomainModelReference());
+		IValueProperty valueProperty;
+		try {
+			valueProperty = Activator.getDefault().getEMFFormsDatabinding()
+				.getValueProperty(control.getDomainModelReference());
+		} catch (final DatabindingFailedException ex) {
+			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+			return NOT_APPLICABLE;
+		}
 		final EStructuralFeature feature = (EStructuralFeature) valueProperty.getValueType();
 		if (VTViewModelElementPackage.eINSTANCE.getViewModelElementSelector_AttributeValue().equals(feature)) {
 			return 5;

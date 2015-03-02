@@ -33,6 +33,7 @@ import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.DatabindingClassRunner;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.SWTTestUtil;
 import org.eclipse.emf.emfforms.spi.core.services.labelprovider.EMFFormsLabelProvider;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Control;
@@ -46,7 +47,7 @@ import org.mockito.Mockito;
 public class BooleanControlRenderer_PTest extends AbstractControl_PTest {
 
 	@Before
-	public void before() {
+	public void before() throws DatabindingFailedException {
 		final SWTRendererFactory factory = mock(SWTRendererFactory.class);
 		setup();
 		renderer = new BooleanControlSWTRenderer(vControl, context, factory);
@@ -83,7 +84,7 @@ public class BooleanControlRenderer_PTest extends AbstractControl_PTest {
 	}
 
 	@Override
-	protected void mockControl() {
+	protected void mockControl() throws DatabindingFailedException {
 		final EClass eObject = EcoreFactory.eINSTANCE.createEClass();
 		final EStructuralFeature eStructuralFeature = EcorePackage.eINSTANCE
 			.getEClass_Interface();
@@ -92,7 +93,7 @@ public class BooleanControlRenderer_PTest extends AbstractControl_PTest {
 
 	@Test
 	public void testDatabindingServiceUsageInitialBinding() throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		final boolean initialValue = true;
 		final WritableValue mockedObservable = new WritableValue(realm, initialValue, Boolean.class);
 
@@ -103,7 +104,7 @@ public class BooleanControlRenderer_PTest extends AbstractControl_PTest {
 
 	@Test
 	public void testDatabindingServiceUsageChangeObservable() throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		final boolean initialValue = true;
 		final boolean changedValue = false;
 		final WritableValue mockedObservable = new WritableValue(realm, initialValue, Boolean.class);
@@ -116,7 +117,7 @@ public class BooleanControlRenderer_PTest extends AbstractControl_PTest {
 
 	@Test
 	public void testDatabindingServiceUsageChangeControl() throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		final boolean initialValue = true;
 		final WritableValue mockedObservable = new WritableValue(realm, initialValue, Boolean.class);
 
@@ -134,9 +135,10 @@ public class BooleanControlRenderer_PTest extends AbstractControl_PTest {
 	 * @return
 	 * @throws NoRendererFoundException
 	 * @throws NoPropertyDescriptorFoundExeption
+	 * @throws DatabindingFailedException
 	 */
 	private Button setUpDatabindingTest(final WritableValue mockedObservable) throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		Mockito.reset(databindingService);
 
 		mockDatabindingIsUnsettable();

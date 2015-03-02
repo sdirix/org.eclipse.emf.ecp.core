@@ -41,6 +41,8 @@ import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.wizard.IWizardPage;
@@ -205,9 +207,13 @@ public class CreateDomainModelReferenceWizard extends SelectModelElementWizard {
 			return false;
 		}
 
-		Activator.getDefault().getEMFFormsDatabinding()
-			.getValueProperty(customizeDMRPage.getvControl().getDomainModelReference());
-		// TODO: return false in catch block
+		try {
+			Activator.getDefault().getEMFFormsDatabinding()
+				.getValueProperty(customizeDMRPage.getvControl().getDomainModelReference());
+		} catch (final DatabindingFailedException ex) {
+			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+			return false;
+		}
 
 		return super.canFinish();
 	}
@@ -328,8 +334,13 @@ public class CreateDomainModelReferenceWizard extends SelectModelElementWizard {
 			if (getvControl().getDomainModelReference() == null) {
 				return false;
 			}
-			Activator.getDefault().getEMFFormsDatabinding().getValueProperty(getvControl().getDomainModelReference());
-			// TODO: return false in catch block
+			try {
+				Activator.getDefault().getEMFFormsDatabinding()
+					.getValueProperty(getvControl().getDomainModelReference());
+			} catch (final DatabindingFailedException ex) {
+				Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+				return false;
+			}
 
 			return true;
 		}

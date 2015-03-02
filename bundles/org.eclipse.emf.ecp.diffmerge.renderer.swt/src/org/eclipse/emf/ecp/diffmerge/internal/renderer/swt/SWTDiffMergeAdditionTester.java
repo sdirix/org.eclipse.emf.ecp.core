@@ -18,6 +18,8 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.swt.ECPAdditionalRendererTester;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 
 /**
  * The tester for {@link SWTDiffMergeAddition}.
@@ -42,8 +44,14 @@ public class SWTDiffMergeAdditionTester implements ECPAdditionalRendererTester {
 			return false;
 		}
 		final VControl control = (VControl) vElement;
-		final IValueProperty valueProperty = Activator.getInstance().getEMFFormsDatabinding()
-			.getValueProperty(control.getDomainModelReference());
+		IValueProperty valueProperty;
+		try {
+			valueProperty = Activator.getInstance().getEMFFormsDatabinding()
+				.getValueProperty(control.getDomainModelReference());
+		} catch (final DatabindingFailedException ex) {
+			Activator.getInstance().getReportService().report(new DatabindingFailedReport(ex));
+			return false;
+		}
 		final EStructuralFeature feature = (EStructuralFeature) valueProperty.getValueType();
 		if (!feature.isChangeable()) {
 			return false;

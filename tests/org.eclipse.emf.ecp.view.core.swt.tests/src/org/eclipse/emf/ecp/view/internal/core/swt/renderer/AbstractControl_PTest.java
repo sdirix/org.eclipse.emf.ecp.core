@@ -52,6 +52,7 @@ import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.emfforms.spi.core.services.labelprovider.EMFFormsLabelProvider;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
@@ -119,7 +120,7 @@ public abstract class AbstractControl_PTest {
 	}
 
 	protected void mockControl(EObject eObject,
-		final EStructuralFeature eStructuralFeature) {
+		final EStructuralFeature eStructuralFeature) throws DatabindingFailedException {
 		final VDomainModelReference domainModelReference = Mockito
 			.mock(VDomainModelReference.class);
 		final Setting setting = mock(Setting.class);
@@ -143,7 +144,7 @@ public abstract class AbstractControl_PTest {
 			domainModelReference);
 	}
 
-	protected void mockDatabindingIsUnsettable() {
+	protected void mockDatabindingIsUnsettable() throws DatabindingFailedException {
 		final EStructuralFeature structuralFeature = mock(EStructuralFeature.class);
 		when(structuralFeature.isUnsettable()).thenReturn(false);
 		final IValueProperty valueProperty = mock(IValueProperty.class);
@@ -159,7 +160,7 @@ public abstract class AbstractControl_PTest {
 	protected VControl vControl;
 	private Shell shell;
 
-	protected void setup() {
+	protected void setup() throws DatabindingFailedException {
 		vControl = Mockito.mock(VControl.class);
 		mockControl();
 		context = Mockito.mock(ViewModelContext.class);
@@ -248,5 +249,5 @@ public abstract class AbstractControl_PTest {
 		return render;
 	}
 
-	protected abstract void mockControl();
+	protected abstract void mockControl() throws DatabindingFailedException;
 }

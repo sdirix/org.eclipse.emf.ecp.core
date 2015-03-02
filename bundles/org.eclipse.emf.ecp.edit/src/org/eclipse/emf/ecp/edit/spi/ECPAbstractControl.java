@@ -36,6 +36,7 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 
 /**
  * The {@link ECPAbstractControl} is the abstract class describing a control.
@@ -219,11 +220,14 @@ public abstract class ECPAbstractControl {
 	 */
 	public final EStructuralFeature getFirstStructuralFeature() {
 		if (firstFeature == null) {
-			final IValueProperty valueProperty = Activator.getDefault().getEMFFormsDatabinding()
-				.getValueProperty(control.getDomainModelReference());
-			// TODO: throw exception in catch
-			// throw new IllegalArgumentException(
-			//					"The passed VDomainModelReference resolves to no EStructuralFeature."); //$NON-NLS-1$
+			IValueProperty valueProperty;
+			try {
+				valueProperty = Activator.getDefault().getEMFFormsDatabinding()
+					.getValueProperty(control.getDomainModelReference());
+			} catch (final DatabindingFailedException ex) {
+				throw new IllegalArgumentException(
+					"The passed VDomainModelReference resolves to no EStructuralFeature."); //$NON-NLS-1$
+			}
 			firstFeature = (EStructuralFeature) valueProperty.getValueType();
 		}
 		return firstFeature;

@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.widgets.Composite;
@@ -45,9 +46,10 @@ public abstract class SimpleControlSWTControlSWTRenderer extends SimpleControlSW
 	 *
 	 * @param parent the {@link Composite} to render onto
 	 * @return the rendered control
+	 * @throws DatabindingFailedException if the databinding of the control fails
 	 */
 	@Override
-	protected final Control createControl(Composite parent) {
+	protected final Control createControl(Composite parent) throws DatabindingFailedException {
 		if (!getVElement().getDomainModelReference().getIterator().hasNext()) {
 			return null;
 		}
@@ -80,8 +82,9 @@ public abstract class SimpleControlSWTControlSWTRenderer extends SimpleControlSW
 	 * @param control the {@link Control} to create the binding for
 	 * @param setting the current {@link Setting}
 	 * @return all the bindings created by this renderer
+	 * @throws DatabindingFailedException if the creation of the bindings fails.
 	 */
-	protected abstract Binding[] createBindings(Control control, Setting setting);
+	protected abstract Binding[] createBindings(Control control, Setting setting) throws DatabindingFailedException;
 
 	/**
 	 * Creates the Control.
@@ -89,7 +92,8 @@ public abstract class SimpleControlSWTControlSWTRenderer extends SimpleControlSW
 	 * @param parent the {@link Composite} to use as a parent
 	 * @param setting the {@link Setting}
 	 * @return the created control
+	 * @throws DatabindingFailedException if the creation of the control fails due to databinding problems
 	 */
-	protected abstract Control createSWTControl(Composite parent, Setting setting);
+	protected abstract Control createSWTControl(Composite parent, Setting setting) throws DatabindingFailedException;
 
 }

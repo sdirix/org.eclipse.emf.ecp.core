@@ -30,6 +30,7 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.emfforms.spi.core.services.emfspecificservice.EMFSpecificService;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.D;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.junit.Before;
 import org.junit.Test;
@@ -82,9 +83,12 @@ public class EMFFormsLabelProviderImpl_Test {
 	 * Test method for
 	 * {@link org.eclipse.emf.emfforms.internal.core.services.labelprovider.EMFFormsLabelProviderImpl#getDisplayName(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
 	 * .
+	 * 
+	 * @throws DatabindingFailedException should not happen, just needs to be thrown because the databinding service
+	 *             defines the throw in its interface.
 	 */
 	@Test
-	public void testGetDisplayNameOneParam() {
+	public void testGetDisplayNameOneParam() throws DatabindingFailedException {
 		final String expectedResult = "expected"; //$NON-NLS-1$
 		final EStructuralFeature structuralFeature = mock(EStructuralFeature.class);
 		final VDomainModelReference domainModelReference = mock(VDomainModelReference.class);
@@ -116,9 +120,12 @@ public class EMFFormsLabelProviderImpl_Test {
 	 * Test method for
 	 * {@link org.eclipse.emf.emfforms.internal.core.services.labelprovider.EMFFormsLabelProviderImpl#getDisplayName(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference, org.eclipse.emf.ecore.EObject)}
 	 * .
+	 * 
+	 * @throws DatabindingFailedException should not happen, just needs to be thrown because the databinding service
+	 *             defines the throw in its interface.
 	 */
 	@Test
-	public void testGetDisplayNameTwoParams() {
+	public void testGetDisplayNameTwoParams() throws DatabindingFailedException {
 		final String expectedResult = "expected"; //$NON-NLS-1$
 		final EObject eObject = mock(EObject.class);
 		final EObject value = mock(EObject.class);
@@ -171,9 +178,12 @@ public class EMFFormsLabelProviderImpl_Test {
 	 * Test method for
 	 * {@link org.eclipse.emf.emfforms.internal.core.services.labelprovider.EMFFormsLabelProviderImpl#getDescription(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
 	 * .
+	 * 
+	 * @throws DatabindingFailedException should not happen, just needs to be thrown because the databinding service
+	 *             defines the throw in its interface.
 	 */
 	@Test
-	public void testGetDescriptionOneParam() {
+	public void testGetDescriptionOneParam() throws DatabindingFailedException {
 		final String expectedResult = "expected"; //$NON-NLS-1$
 		final EStructuralFeature structuralFeature = mock(EStructuralFeature.class);
 		final VDomainModelReference domainModelReference = mock(VDomainModelReference.class);
@@ -205,9 +215,12 @@ public class EMFFormsLabelProviderImpl_Test {
 	 * Test method for
 	 * {@link org.eclipse.emf.emfforms.internal.core.services.labelprovider.EMFFormsLabelProviderImpl#getDescription(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference, org.eclipse.emf.ecore.EObject)}
 	 * .
+	 * 
+	 * @throws DatabindingFailedException should not happen, just needs to be thrown because the databinding service
+	 *             defines the throw in its interface.
 	 */
 	@Test
-	public void testGetDescriptionTwoParams() {
+	public void testGetDescriptionTwoParams() throws DatabindingFailedException {
 		final String expectedResult = "expected"; //$NON-NLS-1$
 		final EObject eObject = mock(EObject.class);
 		final EObject value = mock(EObject.class);

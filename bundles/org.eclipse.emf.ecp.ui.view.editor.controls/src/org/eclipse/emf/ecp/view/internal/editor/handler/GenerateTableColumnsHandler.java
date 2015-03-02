@@ -33,6 +33,8 @@ import org.eclipse.emf.ecp.view.spi.treemasterdetail.ui.swt.MasterDetailAction;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
 
@@ -83,7 +85,13 @@ public class GenerateTableColumnsHandler extends MasterDetailAction {
 		}
 
 		final VTableDomainModelReference tableDMR = (VTableDomainModelReference) domainModelReference;
-		final IValueProperty valueProperty = Activator.getDefault().getEMFFormsDatabinding().getValueProperty(tableDMR);
+		IValueProperty valueProperty;
+		try {
+			valueProperty = Activator.getDefault().getEMFFormsDatabinding().getValueProperty(tableDMR);
+		} catch (final DatabindingFailedException ex) {
+			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+			return;
+		}
 		final Object eStructuralFeature = valueProperty.getValueType();
 		if (!EReference.class.isInstance(eStructuralFeature)) {
 			return;

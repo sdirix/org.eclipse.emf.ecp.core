@@ -22,7 +22,6 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
-import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.ecp.edit.spi.swt.reference.DeleteReferenceAction;
 import org.eclipse.emf.ecp.edit.spi.swt.reference.NewReferenceAction;
 import org.eclipse.emf.ecp.edit.spi.util.ECPModelElementChangeListener;
@@ -38,6 +37,8 @@ import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -81,7 +82,7 @@ public class TableDetailViewControlSWTRenderer extends SimpleControlSWTControlSW
 	 *      org.eclipse.emf.ecore.EStructuralFeature.Setting)
 	 */
 	@Override
-	protected Binding[] createBindings(Control control, final Setting setting) {
+	protected Binding[] createBindings(Control control, final Setting setting) throws DatabindingFailedException {
 		final Binding[] bindings = new Binding[3];
 		final IObservableValue value = SWTObservables.observeText(label);
 
@@ -89,7 +90,12 @@ public class TableDetailViewControlSWTRenderer extends SimpleControlSWTControlSW
 
 			@Override
 			public Object convert(Object value) {
-				return getModelValue().getValue();
+				try {
+					return getModelValue().getValue();
+				} catch (final DatabindingFailedException ex) {
+					Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+					return null;
+				}
 			}
 		}, new UpdateValueStrategy() {
 			@Override
@@ -104,7 +110,12 @@ public class TableDetailViewControlSWTRenderer extends SimpleControlSWTControlSW
 
 				@Override
 				public Object convert(Object value) {
-					return getModelValue().getValue();
+					try {
+						return getModelValue().getValue();
+					} catch (final DatabindingFailedException ex) {
+						Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+						return null;
+					}
 				}
 			}, new UpdateValueStrategy() {
 				@Override
@@ -118,7 +129,12 @@ public class TableDetailViewControlSWTRenderer extends SimpleControlSWTControlSW
 
 			@Override
 			public Object convert(Object value) {
-				return getModelValue().getValue();
+				try {
+					return getModelValue().getValue();
+				} catch (final DatabindingFailedException ex) {
+					Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+					return null;
+				}
 			}
 		}, new UpdateValueStrategy() {
 			@Override
@@ -213,8 +229,14 @@ public class TableDetailViewControlSWTRenderer extends SimpleControlSWTControlSW
 				if (domainModelReference.getDomainModelReference() == null) {
 					ref = (EReference) domainModelReference.getDomainModelEFeature();
 				} else {
-					final IValueProperty valueProperty = org.eclipse.emf.ecp.view.internal.editor.controls.Activator
-						.getDefault().getEMFFormsDatabinding().getValueProperty(domainModelReference);
+					IValueProperty valueProperty;
+					try {
+						valueProperty = org.eclipse.emf.ecp.view.internal.editor.controls.Activator
+							.getDefault().getEMFFormsDatabinding().getValueProperty(domainModelReference);
+					} catch (final DatabindingFailedException ex) {
+						Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+						return;
+					}
 					final EStructuralFeature feature = (EStructuralFeature) valueProperty.getValueType();
 					if (EReference.class.isInstance(feature)) {
 						ref = EReference.class.cast(feature);

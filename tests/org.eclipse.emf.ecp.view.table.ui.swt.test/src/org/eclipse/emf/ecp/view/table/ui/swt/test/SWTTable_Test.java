@@ -46,6 +46,7 @@ import org.eclipse.emf.ecp.view.spi.table.model.VTableFactory;
 import org.eclipse.emf.ecp.view.spi.table.swt.TableControlSWTRenderer;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.DatabindingClassRunner;
 import org.eclipse.emf.emfforms.spi.core.services.labelprovider.EMFFormsLabelProvider;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -156,7 +157,8 @@ public class SWTTable_Test {
 	}
 
 	@Test
-	public void testLabelServiceUsage() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+	public void testLabelServiceUsage() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption,
+		DatabindingFailedException {
 		final IValueProperty columnValueProperty = new EMFValueProperty(EcorePackage.eINSTANCE.getEClass_Abstract());
 		final VDomainModelReference columnDMR = ((VTableDomainModelReference) vTableControl.getDomainModelReference())
 			.getColumnDomainModelReferences().get(0);
@@ -182,10 +184,11 @@ public class SWTTable_Test {
 	 *
 	 * @throws NoRendererFoundException Renderer could not be found
 	 * @throws NoPropertyDescriptorFoundExeption Property descriptor could not be found
+	 * @throws DatabindingFailedException if the databinidng failed
 	 */
 	@Test
 	public void testDatabindingServiceUsageInitialBinding() throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		final List<EClass> initialList = createInitialList();
 
 		final WritableList mockedObservableList = new WritableList(initialList, EClass.class);
@@ -200,10 +203,11 @@ public class SWTTable_Test {
 	 *
 	 * @throws NoRendererFoundException Renderer could not be found
 	 * @throws NoPropertyDescriptorFoundExeption Property descriptor could not be found
+	 * @throws DatabindingFailedException if the databinidng failed
 	 */
 	@Test
 	public void testDatabindingServiceUsageAddToModel() throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		final List<EClass> initialList = createInitialList();
 
 		final WritableList mockedObservableList = new WritableList(initialList, EClass.class);
@@ -222,10 +226,11 @@ public class SWTTable_Test {
 	 *
 	 * @throws NoRendererFoundException Renderer could not be found
 	 * @throws NoPropertyDescriptorFoundExeption Property descriptor could not be found
+	 * @throws DatabindingFailedException if the databinidng failed
 	 */
 	@Test
 	public void testDatabindingServiceUsageRemoveFromModel() throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		final List<EClass> initialList = createInitialList();
 
 		final WritableList mockedObservableList = new WritableList(initialList, EClass.class);
@@ -242,10 +247,11 @@ public class SWTTable_Test {
 	 *
 	 * @throws NoRendererFoundException Renderer could not be found
 	 * @throws NoPropertyDescriptorFoundExeption Property descriptor could not be found
+	 * @throws DatabindingFailedException if the databinidng failed
 	 */
 	@Test
 	public void testDatabindingServiceUsageChangeModel() throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		final List<EClass> initialList = createInitialList();
 
 		final WritableList mockedObservableList = new WritableList(initialList, EClass.class);
@@ -281,7 +287,7 @@ public class SWTTable_Test {
 
 	private Table setUpDatabindingTests(IObservableList mockedObservableList, EClass class1, EClass class2)
 		throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 
 		final IValueProperty columnValueProperty = new EMFValueProperty(EcorePackage.eINSTANCE.getEClass_Abstract());
 		final VDomainModelReference columnDMR = ((VTableDomainModelReference) vTableControl.getDomainModelReference())

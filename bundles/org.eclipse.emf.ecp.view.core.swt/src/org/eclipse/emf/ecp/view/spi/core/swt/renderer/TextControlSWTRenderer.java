@@ -30,12 +30,14 @@ import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.provider.ECPTooltipModifierHelper;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
+import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
 import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.ecp.view.template.style.alignment.model.AlignmentType;
 import org.eclipse.emf.ecp.view.template.style.alignment.model.VTAlignmentStyleProperty;
 import org.eclipse.emf.ecp.view.template.style.textControlEnablement.model.VTTextControlEnablementStyleProperty;
 import org.eclipse.emf.edit.command.SetCommand;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
@@ -61,7 +63,7 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 	}
 
 	@Override
-	protected Binding[] createBindings(Control control, Setting setting) {
+	protected Binding[] createBindings(Control control, Setting setting) throws DatabindingFailedException {
 		final TargetToModelUpdateStrategy targetToModelUpdateStrategy = new TargetToModelUpdateStrategy(
 			setting.getEStructuralFeature().isUnsettable());
 		final ModelToTargetUpdateStrategy modelToTargetUpdateStrategy = new ModelToTargetUpdateStrategy(false);
@@ -183,11 +185,8 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 		if (isDisableRenderedAsEditable()
 			&& (getVElement().getLabelAlignment() == LabelAlignment.NONE && gridCell.getColumn() == 1
 			|| getVElement().getLabelAlignment() == LabelAlignment.LEFT && gridCell.getColumn() == 2)) {
-			final IValueProperty valueProperty = Activator.getDefault().getEMFFormsDatabinding()
-				.getValueProperty(getVElement().getDomainModelReference());
-			final EStructuralFeature feature = (EStructuralFeature) valueProperty;
 			Control controlToUnset = control;
-			if (feature.isUnsettable()) {
+			if (isControlUnsettable()) {
 				// if (!setting.isSet()) {
 				// return;
 				// }
@@ -197,6 +196,20 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 		} else {
 			super.setControlEnabled(gridCell, control, enabled);
 		}
+	}
+
+	private boolean isControlUnsettable() {
+		IValueProperty valueProperty;
+		try {
+			valueProperty = Activator.getDefault().getEMFFormsDatabinding()
+				.getValueProperty(getVElement().getDomainModelReference());
+		} catch (final DatabindingFailedException ex) {
+			Activator.getDefault().getReportService().report(new RenderingFailedReport(ex));
+			return false;
+		}
+		final EStructuralFeature feature = (EStructuralFeature) valueProperty;
+		final boolean unsettable = feature.isUnsettable();
+		return unsettable;
 	}
 
 	private boolean isDisableRenderedAsEditable() {

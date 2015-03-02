@@ -22,6 +22,8 @@ import org.eclipse.emf.ecp.view.template.internal.tooling.Activator;
 import org.eclipse.emf.ecp.view.template.model.VTTemplatePackage;
 import org.eclipse.emf.ecp.view.template.style.tableValidation.model.VTTableValidationPackage;
 import org.eclipse.emf.ecp.view.template.style.validation.model.VTValidationPackage;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 
 /**
  * The tester for the
@@ -43,8 +45,14 @@ public class TemplateImagePathControlTester implements ECPRendererTester {
 			return NOT_APPLICABLE;
 		}
 		final VControl control = (VControl) vElement;
-		final IValueProperty valueProperty = Activator.getDefault().getEMFFormsDatabinding()
-			.getValueProperty(control.getDomainModelReference());
+		IValueProperty valueProperty;
+		try {
+			valueProperty = Activator.getDefault().getEMFFormsDatabinding()
+				.getValueProperty(control.getDomainModelReference());
+		} catch (final DatabindingFailedException ex) {
+			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+			return NOT_APPLICABLE;
+		}
 		final EStructuralFeature feature = (EStructuralFeature) valueProperty.getValueType();
 		// tablevalidation
 		if (VTTableValidationPackage.eINSTANCE.getTableValidationStyleProperty_ImagePath().equals(feature)) {

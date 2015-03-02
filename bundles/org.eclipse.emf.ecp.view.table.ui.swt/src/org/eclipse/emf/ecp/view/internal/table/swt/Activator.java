@@ -16,6 +16,7 @@ import java.net.URL;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
 import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.emfforms.spi.core.services.labelprovider.EMFFormsLabelProvider;
@@ -99,6 +100,7 @@ public class Activator extends Plugin {
 	}
 
 	private VTViewTemplateProvider viewTemplate;
+	private ServiceReference<ReportService> reportServiceReference;
 
 	/**
 	 * Returns the current Instance of the {@link VTViewTemplateProvider}.
@@ -124,6 +126,19 @@ public class Activator extends Plugin {
 	 */
 	public static Activator getInstance() {
 		return instance;
+	}
+
+	/**
+	 * Returns the {@link ReportService}.
+	 *
+	 * @return the {@link ReportService}
+	 */
+	public ReportService getReportService() {
+		if (reportServiceReference == null) {
+			reportServiceReference = instance.getBundle().getBundleContext()
+				.getServiceReference(ReportService.class);
+		}
+		return instance.getBundle().getBundleContext().getService(reportServiceReference);
 	}
 
 	/**

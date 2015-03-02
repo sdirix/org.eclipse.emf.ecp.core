@@ -45,14 +45,18 @@ public interface DomainModelReferenceConverter {
 	 *
 	 * @param domainModelReference The {@link VDomainModelReference} that will be converted to a {@link IValueProperty}
 	 * @return The created {@link IValueProperty}, does not return <code>null</code>.
+	 * @throws DatabindingFailedException if no value property could be created due to an invalid
+	 *             {@link VDomainModelReference}.
 	 */
-	IValueProperty convertToValueProperty(VDomainModelReference domainModelReference);
+	IValueProperty convertToValueProperty(VDomainModelReference domainModelReference) throws DatabindingFailedException;
 
 	/**
 	 * Converts a {@link VDomainModelReference} to an {@link IListProperty}.
 	 *
 	 * @param domainModelReference The {@link VDomainModelReference} that will be converted to an {@link IListProperty}
 	 * @return The created {@link IListProperty}, does not return <code>null</code>.
+	 * @throws DatabindingFailedException if no value property could be created due to an invalid
+	 *             {@link VDomainModelReference}.
 	 */
-	IListProperty convertToListProperty(VDomainModelReference domainModelReference);
+	IListProperty convertToListProperty(VDomainModelReference domainModelReference) throws DatabindingFailedException;
 }

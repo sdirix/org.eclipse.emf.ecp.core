@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
@@ -46,9 +47,10 @@ public abstract class SimpleControlJFaceViewerSWTRenderer extends SimpleControlS
 	 *
 	 * @param parent the {@link Composite} to render onto
 	 * @return the rendered control
+	 * @throws DatabindingFailedException if the creation of the control fails due to failed databinding
 	 */
 	@Override
-	protected final Control createControl(Composite parent) {
+	protected final Control createControl(Composite parent) throws DatabindingFailedException {
 		final Setting setting = getVElement().getDomainModelReference().getIterator().next();
 
 		final Viewer viewer = createJFaceViewer(parent, setting);
@@ -75,9 +77,10 @@ public abstract class SimpleControlJFaceViewerSWTRenderer extends SimpleControlS
 	 * @param viewer the {@link Viewer} to create the binding for
 	 * @param setting the current {@link Setting}
 	 * @return all the bindings created by this renderer
+	 * @throws DatabindingFailedException if the creation of the bindings failed
 	 */
 	protected abstract Binding[] createBindings(Viewer viewer,
-		Setting setting);
+		Setting setting) throws DatabindingFailedException;
 
 	/**
 	 * Creates the {@link Viewer}.

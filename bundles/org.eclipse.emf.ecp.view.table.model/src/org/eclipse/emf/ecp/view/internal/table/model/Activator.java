@@ -12,6 +12,7 @@
 package org.eclipse.emf.ecp.view.internal.table.model;
 
 import org.eclipse.core.runtime.Plugin;
+import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -28,6 +29,8 @@ public class Activator extends Plugin {
 
 	// The shared instance
 	private static Activator plugin;
+
+	private ServiceReference<ReportService> reportServiceReference;
 
 	/**
 	 * The constructor.
@@ -62,6 +65,19 @@ public class Activator extends Plugin {
 	 */
 	public static Activator getDefault() {
 		return plugin;
+	}
+
+	/**
+	 * Returns the {@link ReportService}.
+	 *
+	 * @return the {@link ReportService}
+	 */
+	public ReportService getReportService() {
+		if (reportServiceReference == null) {
+			reportServiceReference = plugin.getBundle().getBundleContext()
+				.getServiceReference(ReportService.class);
+		}
+		return plugin.getBundle().getBundleContext().getService(reportServiceReference);
 	}
 
 	/**

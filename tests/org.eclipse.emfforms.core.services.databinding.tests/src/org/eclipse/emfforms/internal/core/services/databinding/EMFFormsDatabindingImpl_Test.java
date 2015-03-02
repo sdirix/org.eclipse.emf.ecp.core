@@ -27,6 +27,7 @@ import org.eclipse.core.databinding.property.value.SimpleValueProperty;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter;
 import org.junit.Before;
 import org.junit.Test;
@@ -53,9 +54,11 @@ public class EMFFormsDatabindingImpl_Test {
 	 * Test method for
 	 * {@link org.eclipse.emfforms.internal.core.services.databinding.EMFFormsDatabindingImpl#getObservableValue(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference, org.eclipse.emf.ecore.EObject)}
 	 * .
+	 *
+	 * @throws DatabindingFailedException if the databinding failed
 	 */
 	@Test
-	public void testGetObservableValue() {
+	public void testGetObservableValue() throws DatabindingFailedException {
 		final Realm realm = mock(Realm.class);
 		databindingService = spy(new EMFFormsDatabindingImpl(realm));
 		final VDomainModelReference reference = mock(VDomainModelReference.class);
@@ -82,9 +85,11 @@ public class EMFFormsDatabindingImpl_Test {
 	 * .
 	 * <p>
 	 * Tests whether the method returns the correct result for both arguments being <strong>null</strong>.
+	 *
+	 * @throws DatabindingFailedException if the databinding failed
 	 */
 	@Test(expected = IllegalArgumentException.class)
-	public void testGetObservableValueNullBoth() {
+	public void testGetObservableValueNullBoth() throws DatabindingFailedException {
 		databindingService.getObservableValue(null, null);
 	}
 
@@ -95,9 +100,11 @@ public class EMFFormsDatabindingImpl_Test {
 	 * <p>
 	 * Tests whether the method returns the correct result for the VDomainModelReference argument being
 	 * <strong>null</strong>.
+	 *
+	 * @throws DatabindingFailedException if the databinding failed
 	 */
 	@Test(expected = IllegalArgumentException.class)
-	public void testGetObservableValueNullDomainModelReference() {
+	public void testGetObservableValueNullDomainModelReference() throws DatabindingFailedException {
 		databindingService.getObservableValue(null, mock(EObject.class));
 	}
 
@@ -107,9 +114,11 @@ public class EMFFormsDatabindingImpl_Test {
 	 * .
 	 * <p>
 	 * Tests whether the method returns the correct result for the EObject argument being <strong>null</strong>.
+	 * 
+	 * @throws DatabindingFailedException if the databinding failed
 	 */
 	@Test(expected = IllegalArgumentException.class)
-	public void testGetObservableValueNullObject() {
+	public void testGetObservableValueNullObject() throws DatabindingFailedException {
 		databindingService.getObservableValue(mock(VDomainModelReference.class), null);
 	}
 
@@ -117,9 +126,11 @@ public class EMFFormsDatabindingImpl_Test {
 	 * Test method for
 	 * {@link org.eclipse.emfforms.internal.core.services.databinding.EMFFormsDatabindingImpl#getValueProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
 	 * .
+	 * 
+	 * @throws DatabindingFailedException if the databinding failed
 	 */
 	@Test(expected = IllegalStateException.class)
-	public void testGetValuePropertyNoApplicableConverter() {
+	public void testGetValuePropertyNoApplicableConverter() throws DatabindingFailedException {
 		databindingService.getValueProperty(mock(VDomainModelReference.class));
 	}
 
@@ -128,9 +139,11 @@ public class EMFFormsDatabindingImpl_Test {
 	 * {@link org.eclipse.emfforms.internal.core.services.databinding.EMFFormsDatabindingImpl#getValueProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
 	 * .
 	 * Tests whether the correct converter is used when one is applicable and one is not.
+	 *
+	 * @throws DatabindingFailedException if the databinding failed
 	 */
 	@Test
-	public void testGetValuePropertyOneApplicable() {
+	public void testGetValuePropertyOneApplicable() throws DatabindingFailedException {
 		final VDomainModelReference reference = mock(VDomainModelReference.class);
 		final DomainModelReferenceConverter converter1 = mock(DomainModelReferenceConverter.class);
 		final DomainModelReferenceConverter converter2 = mock(DomainModelReferenceConverter.class);
@@ -153,9 +166,11 @@ public class EMFFormsDatabindingImpl_Test {
 	 * .
 	 * Tests whether the correct converter is used when there are two applicable ones with different priorities.
 	 * Also tests whether the correct result is returned.
+	 *
+	 * @throws DatabindingFailedException if the databinding failed
 	 */
 	@Test
-	public void testGetValuePropertyTwoApplicable() {
+	public void testGetValuePropertyTwoApplicable() throws DatabindingFailedException {
 		final VDomainModelReference reference = mock(VFeaturePathDomainModelReference.class);
 		final DomainModelReferenceConverter converter1 = mock(DomainModelReferenceConverter.class);
 		final DomainModelReferenceConverter converter2 = mock(DomainModelReferenceConverter.class);
@@ -178,9 +193,11 @@ public class EMFFormsDatabindingImpl_Test {
 	 * .
 	 * Tests whether the {@link EMFFormsDatabindingImpl} considers all {@link DomainModelReferenceConverter}s, that are
 	 * registered to it, for its conversions.
+	 *
+	 * @throws DatabindingFailedException if the databinding failed
 	 */
 	@Test
-	public void testGetValuePropertyAllConsidered() {
+	public void testGetValuePropertyAllConsidered() throws DatabindingFailedException {
 		final VDomainModelReference reference = mock(VDomainModelReference.class);
 
 		final DomainModelReferenceConverter converter1 = mock(DomainModelReferenceConverter.class);
@@ -204,9 +221,11 @@ public class EMFFormsDatabindingImpl_Test {
 	 * .
 	 * <p>
 	 * Tests whether the method returns the correct result for a <strong>null</strong> argument.
+	 *
+	 * @throws DatabindingFailedException if the databinding failed
 	 */
 	@Test(expected = IllegalArgumentException.class)
-	public void testGetValuePropertyNull() {
+	public void testGetValuePropertyNull() throws DatabindingFailedException {
 		databindingService.getValueProperty(null);
 	}
 
@@ -214,9 +233,11 @@ public class EMFFormsDatabindingImpl_Test {
 	 * Test method for
 	 * {@link org.eclipse.emfforms.internal.core.services.databinding.EMFFormsDatabindingImpl#getObservableList(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference, org.eclipse.emf.ecore.EObject)}
 	 * .
+	 *
+	 * @throws DatabindingFailedException if the databinding failed
 	 */
 	@Test
-	public void testGetObservableList() {
+	public void testGetObservableList() throws DatabindingFailedException {
 		final Realm realm = mock(Realm.class);
 		databindingService = spy(new EMFFormsDatabindingImpl(realm));
 		final VDomainModelReference reference = mock(VDomainModelReference.class);
@@ -243,9 +264,11 @@ public class EMFFormsDatabindingImpl_Test {
 	 * .
 	 * <p>
 	 * Tests whether the method returns the correct result for both arguments being <strong>null</strong>.
+	 *
+	 * @throws DatabindingFailedException if the databinding failed
 	 */
 	@Test(expected = IllegalArgumentException.class)
-	public void testGetObservableListNullBoth() {
+	public void testGetObservableListNullBoth() throws DatabindingFailedException {
 		databindingService.getObservableList(null, null);
 	}
 
@@ -256,9 +279,11 @@ public class EMFFormsDatabindingImpl_Test {
 	 * <p>
 	 * Tests whether the method returns the correct result for the VDomainModelReference argument being
 	 * <strong>null</strong>.
+	 *
+	 * @throws DatabindingFailedException if the databinding failed
 	 */
 	@Test(expected = IllegalArgumentException.class)
-	public void testGetObservableListNullDomainModelReference() {
+	public void testGetObservableListNullDomainModelReference() throws DatabindingFailedException {
 		databindingService.getObservableList(null, mock(EObject.class));
 	}
 
@@ -268,9 +293,11 @@ public class EMFFormsDatabindingImpl_Test {
 	 * .
 	 * <p>
 	 * Tests whether the method returns the correct result for the EObject argument being <strong>null</strong>.
+	 *
+	 * @throws DatabindingFailedException if the databinding failed
 	 */
 	@Test(expected = IllegalArgumentException.class)
-	public void testGetObservableListNullObject() {
+	public void testGetObservableListNullObject() throws DatabindingFailedException {
 		databindingService.getObservableList(mock(VDomainModelReference.class), null);
 	}
 
@@ -278,9 +305,11 @@ public class EMFFormsDatabindingImpl_Test {
 	 * Test method for
 	 * {@link org.eclipse.emfforms.internal.core.services.databinding.EMFFormsDatabindingImpl#getListProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
 	 * .
+	 *
+	 * @throws DatabindingFailedException if the databinding failed
 	 */
 	@Test(expected = IllegalStateException.class)
-	public void testGetListPropertyNoApplicableConverter() {
+	public void testGetListPropertyNoApplicableConverter() throws DatabindingFailedException {
 		databindingService.getListProperty(mock(VDomainModelReference.class));
 	}
 
@@ -289,9 +318,11 @@ public class EMFFormsDatabindingImpl_Test {
 	 * {@link org.eclipse.emfforms.internal.core.services.databinding.EMFFormsDatabindingImpl#getListProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
 	 * .
 	 * Tests whether the correct converter is used when one is applicable and one is not.
+	 *
+	 * @throws DatabindingFailedException if the databinding failed
 	 */
 	@Test
-	public void testGetListPropertyOneApplicable() {
+	public void testGetListPropertyOneApplicable() throws DatabindingFailedException {
 		final VDomainModelReference reference = mock(VDomainModelReference.class);
 		final DomainModelReferenceConverter converter1 = mock(DomainModelReferenceConverter.class);
 		final DomainModelReferenceConverter converter2 = mock(DomainModelReferenceConverter.class);
@@ -314,9 +345,11 @@ public class EMFFormsDatabindingImpl_Test {
 	 * .
 	 * Tests whether the correct converter is used when there are two applicable ones with different priorities.
 	 * Also tests whether the correct result is returned.
+	 *
+	 * @throws DatabindingFailedException if the databinding failed
 	 */
 	@Test
-	public void testGetListPropertyTwoApplicable() {
+	public void testGetListPropertyTwoApplicable() throws DatabindingFailedException {
 		final VDomainModelReference reference = mock(VFeaturePathDomainModelReference.class);
 		final DomainModelReferenceConverter converter1 = mock(DomainModelReferenceConverter.class);
 		final DomainModelReferenceConverter converter2 = mock(DomainModelReferenceConverter.class);
@@ -339,9 +372,11 @@ public class EMFFormsDatabindingImpl_Test {
 	 * .
 	 * Tests whether the {@link EMFFormsDatabindingImpl} considers all {@link DomainModelReferenceConverter}s, that are
 	 * registered to it, for its conversions.
+	 *
+	 * @throws DatabindingFailedException if the databinding failed
 	 */
 	@Test
-	public void testGetListPropertyAllConsidered() {
+	public void testGetListPropertyAllConsidered() throws DatabindingFailedException {
 		final VDomainModelReference reference = mock(VDomainModelReference.class);
 
 		final DomainModelReferenceConverter converter1 = mock(DomainModelReferenceConverter.class);
@@ -365,9 +400,11 @@ public class EMFFormsDatabindingImpl_Test {
 	 * .
 	 * <p>
 	 * Tests whether the method returns the correct result for a <strong>null</strong> argument.
+	 *
+	 * @throws DatabindingFailedException if the databinding failed
 	 */
 	@Test(expected = IllegalArgumentException.class)
-	public void testGetListPropertyNull() {
+	public void testGetListPropertyNull() throws DatabindingFailedException {
 		databindingService.getListProperty(null);
 	}
 
@@ -375,9 +412,11 @@ public class EMFFormsDatabindingImpl_Test {
 	 * Test method for
 	 * {@link org.eclipse.emfforms.internal.core.services.databinding.EMFFormsDatabindingImpl#removeDomainModelReferenceConverter(org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter)}
 	 * .
+	 *
+	 * @throws DatabindingFailedException if the databinding failed
 	 */
 	@Test(expected = IllegalStateException.class)
-	public void testRemoveDomainModelReferenceConverter() {
+	public void testRemoveDomainModelReferenceConverter() throws DatabindingFailedException {
 		final VDomainModelReference reference = mock(VFeaturePathDomainModelReference.class);
 		final DomainModelReferenceConverter converter1 = mock(DomainModelReferenceConverter.class);
 

@@ -56,6 +56,8 @@ import org.eclipse.emf.edit.ui.dnd.EditingDomainViewerDropAdapter;
 import org.eclipse.emf.edit.ui.dnd.LocalTransfer;
 import org.eclipse.emf.edit.ui.dnd.ViewerDragAdapter;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -342,8 +344,14 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 			final VTableDomainModelReference tableDomainModelReference = VTableDomainModelReference.class
 				.cast(setting.getEObject());
 
-			final IValueProperty valueProperty = Activator.getDefault().getEMFFormsDatabinding()
-				.getValueProperty(tableDomainModelReference);
+			IValueProperty valueProperty;
+			try {
+				valueProperty = Activator.getDefault().getEMFFormsDatabinding()
+					.getValueProperty(tableDomainModelReference);
+			} catch (final DatabindingFailedException ex) {
+				Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+				return;
+			}
 			final EClass eclass = EReference.class.cast(valueProperty.getValueType()).getEReferenceType();
 
 			final Collection<EClass> classes = ECPUtil.getSubClasses(VViewPackage.eINSTANCE

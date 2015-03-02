@@ -20,6 +20,7 @@ import org.eclipse.emf.databinding.IEMFValueProperty;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter;
 
 /**
@@ -52,7 +53,8 @@ public class FeaturePathDomainModelReferenceConverter implements DomainModelRefe
 	 * @see org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter#convertToValueProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)
 	 */
 	@Override
-	public IValueProperty convertToValueProperty(VDomainModelReference domainModelReference) {
+	public IValueProperty convertToValueProperty(VDomainModelReference domainModelReference)
+		throws DatabindingFailedException {
 		if (domainModelReference == null) {
 			throw new IllegalArgumentException("The given VDomainModelReference must not be null."); //$NON-NLS-1$
 		}
@@ -62,6 +64,11 @@ public class FeaturePathDomainModelReferenceConverter implements DomainModelRefe
 		}
 
 		final VFeaturePathDomainModelReference featurePathReference = (VFeaturePathDomainModelReference) domainModelReference;
+		if (featurePathReference.getDomainModelEFeature() == null) {
+			throw new DatabindingFailedException(
+				"The field domainModelEFeature of the given VFeaturePathDomainModelReference must not be null."); //$NON-NLS-1$
+		}
+
 		final List<EReference> referencePath = featurePathReference.getDomainModelEReferencePath();
 
 		if (referencePath.isEmpty()) {
@@ -78,10 +85,13 @@ public class FeaturePathDomainModelReferenceConverter implements DomainModelRefe
 	/**
 	 * {@inheritDoc}
 	 *
+	 * @throws DatabindingFailedException
+	 *
 	 * @see org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter#convertToListProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)
 	 */
 	@Override
-	public IListProperty convertToListProperty(VDomainModelReference domainModelReference) {
+	public IListProperty convertToListProperty(VDomainModelReference domainModelReference)
+		throws DatabindingFailedException {
 		if (domainModelReference == null) {
 			throw new IllegalArgumentException("The given VDomainModelReference must not be null."); //$NON-NLS-1$
 		}
@@ -91,6 +101,11 @@ public class FeaturePathDomainModelReferenceConverter implements DomainModelRefe
 		}
 
 		final VFeaturePathDomainModelReference featurePathReference = (VFeaturePathDomainModelReference) domainModelReference;
+		if (featurePathReference.getDomainModelEFeature() == null) {
+			throw new DatabindingFailedException(
+				"The field domainModelEFeature of the given VFeaturePathDomainModelReference must not be null."); //$NON-NLS-1$
+		}
+
 		final List<EReference> referencePath = featurePathReference.getDomainModelEReferencePath();
 
 		if (referencePath.isEmpty()) {

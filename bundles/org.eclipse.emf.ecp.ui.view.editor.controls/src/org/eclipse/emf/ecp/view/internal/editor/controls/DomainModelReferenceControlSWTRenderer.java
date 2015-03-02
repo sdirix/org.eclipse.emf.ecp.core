@@ -29,7 +29,6 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.impl.EReferenceImpl;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
-import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.ecp.edit.internal.swt.SWTImageHelper;
 import org.eclipse.emf.ecp.edit.internal.swt.controls.ControlMessages;
 import org.eclipse.emf.ecp.edit.spi.swt.reference.DeleteReferenceAction;
@@ -52,6 +51,8 @@ import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -109,7 +110,7 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 	 *      org.eclipse.emf.ecore.EStructuralFeature.Setting)
 	 */
 	@Override
-	protected Binding[] createBindings(Control control, final Setting setting) {
+	protected Binding[] createBindings(Control control, final Setting setting) throws DatabindingFailedException {
 
 		final Binding[] bindings = new Binding[2];
 		final IObservableValue value = SWTObservables.observeText(setLabel);
@@ -118,7 +119,12 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 
 			@Override
 			public Object convert(Object value) { // target to model
-				return getModelValue().getValue();
+				try {
+					return getModelValue().getValue();
+				} catch (final DatabindingFailedException ex) {
+					Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+					return null;
+				}
 			}
 		}, new UpdateValueStrategy() {// model to target
 				@Override
@@ -230,7 +236,7 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 	 *      org.eclipse.emf.ecore.EStructuralFeature.Setting)
 	 */
 	@Override
-	protected Control createSWTControl(Composite parent, Setting setting) {
+	protected Control createSWTControl(Composite parent, Setting setting) throws DatabindingFailedException {
 
 		this.setting = setting;
 
@@ -288,8 +294,9 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 
 	/**
 	 * @param parentComposite
+	 * @throws DatabindingFailedException
 	 */
-	private void createButtons(Composite composite) {
+	private void createButtons(Composite composite) throws DatabindingFailedException {
 		final Button unsetBtn = createButtonForAction(new DeleteReferenceAction(getEditingDomain(setting), setting,
 			getItemPropertyDescriptor(setting), null), composite);
 		unsetBtn.addSelectionListener(new SelectionListener() {
