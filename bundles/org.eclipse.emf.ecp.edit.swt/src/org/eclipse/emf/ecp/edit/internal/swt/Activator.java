@@ -21,6 +21,7 @@ import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecp.edit.spi.ECPControlFactory;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
+import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Image;
@@ -226,4 +227,19 @@ public class Activator extends Plugin {
 		return viewTemplate;
 	}
 
+	/**
+	 * Returns the {@link EMFFormsEditSupport} service.
+	 *
+	 * @return The {@link EMFFormsEditSupport}
+	 */
+	public EMFFormsEditSupport getEMFFormsEditSupport() {
+		final ServiceReference<EMFFormsEditSupport> serviceReference = plugin.getBundle().getBundleContext()
+			.getServiceReference(EMFFormsEditSupport.class);
+
+		final EMFFormsEditSupport service = plugin.getBundle().getBundleContext()
+			.getService(serviceReference);
+		plugin.getBundle().getBundleContext().ungetService(serviceReference);
+
+		return service;
+	}
 }

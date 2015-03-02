@@ -12,10 +12,8 @@
 package org.eclipse.emf.ecp.diffmerge.internal.renderer.swt;
 
 import org.eclipse.emf.common.notify.Adapter;
-import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.diffmerge.spi.context.DiffMergeModelContext;
 import org.eclipse.emf.ecp.diffmerge.swt.DiffDialogHelper;
 import org.eclipse.emf.ecp.spi.diffmerge.model.VDiffAttachment;
@@ -29,10 +27,6 @@ import org.eclipse.emf.ecp.view.spi.swt.AbstractAdditionalSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
-import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
-import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
-import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
@@ -154,30 +148,10 @@ public class SWTDiffMergeAddition extends AbstractAdditionalSWTRenderer<VControl
 
 	private void openDiffDialog(DiffMergeModelContext diffModelContext, VControl vControl) {
 
-		final Setting setting = vControl.getDomainModelReference().getIterator().next();
-		if (setting == null) {
-			return;
-		}
-		final IItemPropertyDescriptor itemPropertyDescriptor = getItemPropertyDescriptor(setting);
-		final String label = itemPropertyDescriptor.getDisplayName(setting.getEObject());
+		final String label = Activator.getInstance().getEMFFormsLabelProvider()
+			.getDisplayName(vControl.getDomainModelReference(), diffModelContext.getDomainModel());
 
 		DiffDialogHelper.showDialog(diffModelContext, vControl, label);
-
-	}
-
-	private IItemPropertyDescriptor getItemPropertyDescriptor(Setting setting) {
-		final ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
-			new ReflectiveItemProviderAdapterFactory(),
-			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
-		final AdapterFactoryItemDelegator adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(
-			composedAdapterFactory);
-
-		final IItemPropertyDescriptor descriptor = adapterFactoryItemDelegator.getPropertyDescriptor(
-			setting.getEObject(),
-			setting.getEStructuralFeature());
-		composedAdapterFactory.dispose();
-		return descriptor;
-
 	}
 
 }

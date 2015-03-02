@@ -14,6 +14,7 @@ package org.eclipse.emf.ecp.diffmerge.internal.renderer.swt;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
 import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
+import org.eclipse.emf.emfforms.spi.core.services.labelprovider.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.swt.graphics.Image;
 import org.osgi.framework.BundleContext;
@@ -101,6 +102,22 @@ public class Activator extends Plugin {
 			.getServiceReference(EMFFormsDatabinding.class);
 
 		final EMFFormsDatabinding service = instance.getBundle().getBundleContext()
+			.getService(serviceReference);
+		instance.getBundle().getBundleContext().ungetService(serviceReference);
+
+		return service;
+	}
+
+	/**
+	 * Returns the {@link EMFFormsLabelProvider} service.
+	 *
+	 * @return The {@link EMFFormsLabelProvider}
+	 */
+	public EMFFormsLabelProvider getEMFFormsLabelProvider() {
+		final ServiceReference<EMFFormsLabelProvider> serviceReference = instance.getBundle().getBundleContext()
+			.getServiceReference(EMFFormsLabelProvider.class);
+
+		final EMFFormsLabelProvider service = instance.getBundle().getBundleContext()
 			.getService(serviceReference);
 		instance.getBundle().getBundleContext().ungetService(serviceReference);
 

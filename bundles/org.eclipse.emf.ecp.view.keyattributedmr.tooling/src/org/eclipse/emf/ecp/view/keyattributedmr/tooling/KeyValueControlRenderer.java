@@ -14,7 +14,6 @@ package org.eclipse.emf.ecp.view.keyattributedmr.tooling;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.view.internal.editor.controls.ExpectedValueControlRenderer;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.keyattributedmr.model.VKeyAttributeDomainModelReference;
@@ -25,6 +24,8 @@ import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Label;
 
@@ -46,9 +47,13 @@ public class KeyValueControlRenderer extends ExpectedValueControlRenderer {
 
 	@Override
 	protected void onSelectButton(Label control) {
-		final Setting setting = getSetting(getVElement());
-
-		final VKeyAttributeDomainModelReference condition = (VKeyAttributeDomainModelReference) setting.getEObject();
+		VKeyAttributeDomainModelReference condition;
+		try {
+			condition = (VKeyAttributeDomainModelReference) getObservedEObject();
+		} catch (final DatabindingFailedException ex) {
+			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+			return;
+		}
 
 		if (!VFeaturePathDomainModelReference.class.isInstance(condition.getKeyDMR())) {
 			MessageDialog.openError(control.getShell(), "No Feature Path Domain Model Reference found", //$NON-NLS-1$

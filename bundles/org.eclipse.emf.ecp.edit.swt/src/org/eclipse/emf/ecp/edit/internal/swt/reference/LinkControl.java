@@ -139,7 +139,7 @@ public class LinkControl extends SingleControl {
 		final Button[] buttons = new Button[3];
 		final Setting setting = getFirstSetting();
 		buttons[0] = createButtonForAction(new DeleteReferenceAction(getEditingDomain(getFirstSetting()), setting,
-			getItemPropertyDescriptor(setting), getService(ReferenceService.class)), composite);
+			getService(ReferenceService.class)), composite);
 		buttons[1] = createButtonForAction(new AddReferenceAction(getEditingDomain(getFirstSetting()), setting,
 			getItemPropertyDescriptor(setting), getService(ReferenceService.class)), composite);
 		buttons[2] = createButtonForAction(new NewReferenceAction(getEditingDomain(getFirstSetting()), setting,

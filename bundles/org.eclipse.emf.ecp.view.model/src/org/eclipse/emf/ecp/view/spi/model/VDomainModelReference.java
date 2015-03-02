@@ -66,6 +66,7 @@ public interface VDomainModelReference extends EObject, ModelChangeListener
 	 * @return true if resolution succeeded and false otherwise
 	 * @since 1.3
 	 */
+	@Deprecated
 	boolean init(EObject object);
 
 	/**
@@ -74,6 +75,7 @@ public interface VDomainModelReference extends EObject, ModelChangeListener
 	 *
 	 * @return the {@link Iterator} for this domain model reference
 	 */
+	@Deprecated
 	Iterator<Setting> getIterator();
 
 	/**

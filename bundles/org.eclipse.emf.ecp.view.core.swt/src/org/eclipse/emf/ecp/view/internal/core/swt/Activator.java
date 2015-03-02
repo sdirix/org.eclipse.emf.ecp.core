@@ -20,6 +20,7 @@ import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.emfforms.spi.core.services.labelprovider.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.swt.graphics.Image;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -193,6 +194,22 @@ public class Activator extends Plugin {
 			.getServiceReference(EMFFormsLabelProvider.class);
 
 		final EMFFormsLabelProvider service = plugin.getBundle().getBundleContext()
+			.getService(serviceReference);
+		plugin.getBundle().getBundleContext().ungetService(serviceReference);
+
+		return service;
+	}
+
+	/**
+	 * Returns the {@link EMFFormsEditSupport} service.
+	 *
+	 * @return The {@link EMFFormsEditSupport}
+	 */
+	public EMFFormsEditSupport getEMFFormsEditSupport() {
+		final ServiceReference<EMFFormsEditSupport> serviceReference = plugin.getBundle().getBundleContext()
+			.getServiceReference(EMFFormsEditSupport.class);
+
+		final EMFFormsEditSupport service = plugin.getBundle().getBundleContext()
 			.getService(serviceReference);
 		plugin.getBundle().getBundleContext().ungetService(serviceReference);
 

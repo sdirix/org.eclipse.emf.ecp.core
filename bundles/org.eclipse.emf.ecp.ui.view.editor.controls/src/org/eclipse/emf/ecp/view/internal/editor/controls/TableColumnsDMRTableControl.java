@@ -51,11 +51,11 @@ import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
-import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.ui.dnd.EditingDomainViewerDropAdapter;
 import org.eclipse.emf.edit.ui.dnd.LocalTransfer;
 import org.eclipse.emf.edit.ui.dnd.ViewerDragAdapter;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
+import org.eclipse.emf.emfforms.spi.core.services.labelprovider.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
@@ -150,9 +150,13 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 		viewer.getTable().setHeaderVisible(true);
 		viewer.getTable().setLinesVisible(true);
 		final TableViewerColumn column = new TableViewerColumn(viewer, SWT.NONE);
-		final IItemPropertyDescriptor propertyDescriptor = getItemPropertyDescriptor(setting);
-		column.getColumn().setText(propertyDescriptor.getDisplayName(null));
-		column.getColumn().setToolTipText(propertyDescriptor.getDescription(null));
+		final EMFFormsLabelProvider emfFormsLabelProvider = Activator.getDefault().getEMFFormsLabelProvider();// TODO
+		column.getColumn().setText(
+			emfFormsLabelProvider.getDisplayName(getVElement().getDomainModelReference(), getViewModelContext()
+				.getDomainModel()));
+		column.getColumn().setToolTipText(
+			emfFormsLabelProvider.getDescription(getVElement().getDomainModelReference(), getViewModelContext()
+				.getDomainModel()));
 		layout.setColumnData(column.getColumn(), new ColumnWeightData(1, true));
 
 		viewer.setLabelProvider(labelProvider);

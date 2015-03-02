@@ -13,9 +13,9 @@ package org.eclipse.emf.ecp.view.spi.table.swt;
 
 import java.util.Collections;
 
+import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.edit.spi.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.ecp.view.internal.table.swt.Activator;
@@ -24,6 +24,8 @@ import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogLabelKeys;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -82,8 +84,15 @@ public class TableControlDetailDialogSWTRenderer extends TableControlSWTRenderer
 		if (view == null) {
 			VView detailView = getVElement().getDetailView();
 			if (detailView == null) {
-				final Setting setting = getVElement().getDomainModelReference().getIterator().next();
-				final EReference reference = (EReference) setting.getEStructuralFeature();
+				IValueProperty valueProperty;
+				try {
+					valueProperty = Activator.getInstance().getEMFFormsDatabinding()
+						.getValueProperty(getVElement().getDomainModelReference());
+				} catch (final DatabindingFailedException ex) {
+					Activator.getInstance().getReportService().report(new DatabindingFailedReport(ex));
+					return null; // possible because the only caller is null safe.
+				}
+				final EReference reference = (EReference) valueProperty.getValueType();
 				detailView = ViewProviderHelper.getView(EcoreUtil.create(reference.getEReferenceType()),
 					Collections.<String, Object> emptyMap());
 			}

@@ -15,6 +15,7 @@ import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import org.eclipse.core.databinding.observable.IObserving;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.notify.AdapterFactory;
@@ -33,6 +34,7 @@ import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerComparator;
@@ -130,8 +132,15 @@ public class MappedEClassControlSWTRenderer extends
 
 	@Override
 	protected void linkValue(Shell shell) {
-		final VMappingDomainModelReference dmr = (VMappingDomainModelReference) getVElement()
-			.getDomainModelReference().getIterator().next().getEObject();
+		IObserving observing;
+		try {
+			observing = (IObserving) Activator.getDefault().getEMFFormsDatabinding()
+				.getObservableValue(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
+		} catch (final DatabindingFailedException ex) {
+			showLinkValueFailedMessageDialog(shell, ex);
+			return;
+		}
+		final VMappingDomainModelReference dmr = (VMappingDomainModelReference) observing.getObserved();
 		final ComposedAdapterFactory adapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
 			new ReflectiveItemProviderAdapterFactory(),
 			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });

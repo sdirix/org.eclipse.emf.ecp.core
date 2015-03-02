@@ -15,6 +15,8 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecp.edit.spi.ECPControlFactory;
+import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
+import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.swt.graphics.Image;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -91,6 +93,8 @@ public class Activator extends Plugin {
 
 	private ServiceReference<ECPControlFactory> controlFactoryReference;
 
+	private ServiceReference<ReportService> reportServiceReference;
+
 	/**
 	 * Returns the {@link ECPControlFactory}.
 	 *
@@ -113,5 +117,34 @@ public class Activator extends Plugin {
 		}
 		plugin.getBundle().getBundleContext().ungetService(controlFactoryReference);
 		controlFactoryReference = null;
+	}
+
+	/**
+	 * Returns the {@link ReportService}.
+	 *
+	 * @return the {@link ReportService}
+	 */
+	public ReportService getReportService() {
+		if (reportServiceReference == null) {
+			reportServiceReference = plugin.getBundle().getBundleContext()
+				.getServiceReference(ReportService.class);
+		}
+		return plugin.getBundle().getBundleContext().getService(reportServiceReference);
+	}
+
+	/**
+	 * Returns the {@link EMFFormsDatabinding} service.
+	 *
+	 * @return The {@link EMFFormsDatabinding}
+	 */
+	public EMFFormsDatabinding getEMFFormsDatabinding() {
+		final ServiceReference<EMFFormsDatabinding> serviceReference = plugin.getBundle().getBundleContext()
+			.getServiceReference(EMFFormsDatabinding.class);
+
+		final EMFFormsDatabinding service = plugin.getBundle().getBundleContext()
+			.getService(serviceReference);
+		plugin.getBundle().getBundleContext().ungetService(serviceReference);
+
+		return service;
 	}
 }

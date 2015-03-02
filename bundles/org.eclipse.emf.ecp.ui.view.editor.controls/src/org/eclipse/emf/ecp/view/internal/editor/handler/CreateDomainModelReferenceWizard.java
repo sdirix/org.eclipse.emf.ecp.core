@@ -18,6 +18,8 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -61,7 +63,8 @@ public class CreateDomainModelReferenceWizard extends SelectModelElementWizard {
 	private WizardPageExtension firstPage;
 	private final EClass eclass;
 	private final EditingDomain editingDomain;
-	private final Setting setting;
+	private final EObject eObject;
+	private final EStructuralFeature structuralFeature;
 	private final VDomainModelReference domainModelReference;
 
 	/**
@@ -79,8 +82,29 @@ public class CreateDomainModelReferenceWizard extends SelectModelElementWizard {
 	public CreateDomainModelReferenceWizard(final Setting setting, final EditingDomain editingDomain,
 		final EClass eclass, final String windowTitle,
 		final String pageName, String pageTitle, String description, VDomainModelReference domainModelReference) {
+		this(setting.getEObject(), setting.getEStructuralFeature(), editingDomain, eclass, windowTitle, pageName,
+			pageTitle, description, domainModelReference);
+	}
+
+	/**
+	 * A wizard used for creating a new DomainModelReference.
+	 *
+	 * @param eObject The {@link EObject} to use
+	 * @param structuralFeature The corresponding {@link EStructuralFeature}
+	 * @param editingDomain - the setting's editing domain
+	 * @param eclass - the root EClass of the VView the setting belongs to
+	 * @param windowTitle - title for the wizard window
+	 * @param pageName - the name of the page
+	 * @param pageTitle - the title of the page
+	 * @param description - the description
+	 * @param domainModelReference - the domain model reference
+	 */
+	public CreateDomainModelReferenceWizard(final EObject eObject, final EStructuralFeature structuralFeature,
+		final EditingDomain editingDomain, final EClass eclass, final String windowTitle, final String pageName,
+		String pageTitle, String description, VDomainModelReference domainModelReference) {
 		super(windowTitle, pageName, pageTitle, description);
-		this.setting = setting;
+		this.eObject = eObject;
+		this.structuralFeature = structuralFeature;
 		this.editingDomain = editingDomain;
 		this.eclass = eclass;
 		this.domainModelReference = domainModelReference;
@@ -169,13 +193,13 @@ public class CreateDomainModelReferenceWizard extends SelectModelElementWizard {
 			return false;
 		}
 		Command command = null;
-		if (setting.getEStructuralFeature().isMany()) {
-			command = AddCommand.create(editingDomain, setting.getEObject(),
-				setting.getEStructuralFeature(), customizeDMRPage.getvControl().getDomainModelReference());
+		if (structuralFeature.isMany()) {
+			command = AddCommand.create(editingDomain, eObject,
+				structuralFeature, customizeDMRPage.getvControl().getDomainModelReference());
 		}
 		else {
-			command = SetCommand.create(editingDomain, setting.getEObject(),
-				setting.getEStructuralFeature(), customizeDMRPage.getvControl().getDomainModelReference());
+			command = SetCommand.create(editingDomain, eObject,
+				structuralFeature, customizeDMRPage.getvControl().getDomainModelReference());
 		}
 		editingDomain.getCommandStack().execute(command);
 		return super.performFinish();

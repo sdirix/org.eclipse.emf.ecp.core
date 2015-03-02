@@ -11,16 +11,18 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.core.swt;
 
-import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.Set;
 
 import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.observable.IObserving;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.observable.value.WritableValue;
+import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.edit.spi.swt.util.SWTValidationHelper;
 import org.eclipse.emf.ecp.view.internal.core.swt.Activator;
@@ -33,6 +35,7 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
+import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
 import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.ecp.view.template.style.mandatory.model.VTMandatoryFactory;
@@ -44,6 +47,7 @@ import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.emfforms.spi.core.services.labelprovider.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
@@ -162,14 +166,26 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 	 * @param setting the {@link Setting} to use for identifying the {@link IItemPropertyDescriptor}.
 	 * @return the {@link IItemPropertyDescriptor}
 	 */
+	@Deprecated
 	protected final IItemPropertyDescriptor getItemPropertyDescriptor(Setting setting) {
-		if (setting == null) {
+		return getItemPropertyDescriptor(setting.getEObject(), setting.getEStructuralFeature());
+	}
+
+	/**
+	 * Return the {@link IItemPropertyDescriptor} describing this {@link EObject} and {@link EStructuralFeature}.
+	 *
+	 * @param eObject The {@link EObject} to use for identifying the {@link IItemPropertyDescriptor}.
+	 * @param structuralFeature The {@link EStructuralFeature} to use for identifying the
+	 *            {@link IItemPropertyDescriptor}.
+	 * @return the {@link IItemPropertyDescriptor}
+	 */
+	@Deprecated
+	protected final IItemPropertyDescriptor getItemPropertyDescriptor(EObject eObject,
+		EStructuralFeature structuralFeature) {
+		if (eObject == null || structuralFeature == null) {
 			return null;
 		}
-		final IItemPropertyDescriptor descriptor = adapterFactoryItemDelegator.getPropertyDescriptor(
-			setting.getEObject(),
-			setting.getEStructuralFeature());
-		return descriptor;
+		return adapterFactoryItemDelegator.getPropertyDescriptor(eObject, structuralFeature);
 	}
 
 	/**
@@ -208,7 +224,17 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 	 * @return the {@link EditingDomain} of this {@link Setting}
 	 */
 	protected final EditingDomain getEditingDomain(Setting setting) {
-		return AdapterFactoryEditingDomain.getEditingDomainFor(setting.getEObject());
+		return getEditingDomain(setting.getEObject());
+	}
+
+	/**
+	 * Returns the {@link EditingDomain} for the provided {@link EObject domain model}.
+	 *
+	 * @param domainModel The provided {@link EObject domain model}
+	 * @return The {@link EditingDomain} of this {@link EObject domain model}
+	 */
+	protected final EditingDomain getEditingDomain(EObject domainModel) {
+		return AdapterFactoryEditingDomain.getEditingDomainFor(domainModel);
 	}
 
 	/**
@@ -220,11 +246,12 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 	protected final Control createLabel(final Composite parent) {
 		Label label = null;
 		labelRender: if (getVElement().getLabelAlignment() == LabelAlignment.LEFT) {
-			if (!getVElement().getDomainModelReference().getIterator().hasNext()) {
-				break labelRender;
-			}
-			final Setting setting = getVElement().getDomainModelReference().getIterator().next();
-			if (setting == null) {
+			final VDomainModelReference domainModelReference = getVElement().getDomainModelReference();
+			IValueProperty valueProperty;
+			try {
+				valueProperty = Activator.getDefault().getEMFFormsDatabinding().getValueProperty(domainModelReference);
+			} catch (final DatabindingFailedException ex) {
+				Activator.getDefault().getReportService().report(new RenderingFailedReport(ex));
 				break labelRender;
 			}
 
@@ -234,10 +261,10 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 			label.setBackground(parent.getBackground());
 			String extra = ""; //$NON-NLS-1$
 			final VTMandatoryStyleProperty mandatoryStyle = getMandatoryStyle();
-			if (mandatoryStyle.isHighliteMandatoryFields() && setting.getEStructuralFeature().getLowerBound() > 0) {
+			final EStructuralFeature structuralFeature = (EStructuralFeature) valueProperty.getValueType();
+			if (mandatoryStyle.isHighliteMandatoryFields() && structuralFeature.getLowerBound() > 0) {
 				extra = mandatoryStyle.getMandatoryMarker();
 			}
-			final VDomainModelReference domainModelReference = getVElement().getDomainModelReference();
 			final EObject rootObject = getViewModelContext().getDomainModel();
 			final String labelText = labelProvider.getDisplayName(domainModelReference, rootObject);
 			if (labelText != null && labelText.trim().length() != 0) {
@@ -281,16 +308,17 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 	}
 
 	private void updateControl() {
-		final Iterator<Setting> settings = getVElement().getDomainModelReference().getIterator();
-		if (settings.hasNext()) {
-			value.setValue(settings.next().getEObject());
+		try {
+			final IObservableValue observableValue = Activator.getDefault().getEMFFormsDatabinding()
+				.getObservableValue(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
+			value.setValue(((IObserving) observableValue).getObserved());
 			applyEnable();
-		} else {
+		} catch (final DatabindingFailedException ex) {
 			value.setValue(null);
 			for (final Entry<SWTGridCell, Control> entry : getControls().entrySet()) {
 				setControlEnabled(entry.getKey(), entry.getValue(), false);
-
 			}
+			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
 		}
 	}
 }

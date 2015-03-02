@@ -298,7 +298,7 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 	 */
 	private void createButtons(Composite composite) throws DatabindingFailedException {
 		final Button unsetBtn = createButtonForAction(new DeleteReferenceAction(getEditingDomain(setting), setting,
-			getItemPropertyDescriptor(setting), null), composite);
+			null), composite);
 		unsetBtn.addSelectionListener(new SelectionListener() {
 
 			@Override

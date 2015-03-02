@@ -56,6 +56,8 @@ import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.jface.databinding.viewers.ViewerSupport;
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.swt.SWT;
@@ -397,13 +399,18 @@ public abstract class ECPAbstractCustomControlSWT
 		vControl.setDomainModelReference(modelReference);
 		vControl.setDiagnostic(VViewFactory.eINSTANCE.createDiagnostic());
 		createControl.init(getViewModelContext(), vControl);
-		final Iterator<Setting> iterator = domainModelReference.getIterator();
-		final boolean hasNext = iterator.hasNext();
-		if (hasNext) {
-			controlMap.put(iterator.next().getEStructuralFeature(), createControl);
-			return createControl;
+
+		IValueProperty valueProperty;
+		try {
+			valueProperty = Activator.getDefault().getEMFFormsDatabinding()
+				.getValueProperty(domainModelReference);
+		} catch (final DatabindingFailedException ex) {
+			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+			return null;
 		}
-		return null;
+		final EStructuralFeature structuralFeature = (EStructuralFeature) valueProperty.getValueType();
+		controlMap.put(structuralFeature, createControl);
+		return createControl;
 	}
 
 	/**

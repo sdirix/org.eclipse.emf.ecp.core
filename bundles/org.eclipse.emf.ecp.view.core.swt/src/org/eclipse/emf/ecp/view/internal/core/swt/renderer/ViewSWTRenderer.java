@@ -15,8 +15,12 @@ package org.eclipse.emf.ecp.view.internal.core.swt.renderer;
 
 import java.util.Collection;
 
+import org.eclipse.core.databinding.observable.IObserving;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.common.notify.AdapterFactory;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecp.view.internal.core.swt.Activator;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.VContainedContainer;
@@ -31,6 +35,8 @@ import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
@@ -125,9 +131,18 @@ public class ViewSWTRenderer extends ContainerSWTRenderer<VView> {
 				.grab(true, false).span(xSpan, 1);
 
 		if (Text.class.isInstance(control) && vControl.getDomainModelReference() != null) {
-			final Setting setting = vControl.getDomainModelReference().getIterator().next();
+			IObservableValue observableValue;
+			try {
+				observableValue = Activator.getDefault().getEMFFormsDatabinding()
+					.getObservableValue(vControl.getDomainModelReference(), getViewModelContext().getDomainModel());
+			} catch (final DatabindingFailedException ex) {
+				Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+				return gdf;
+			}
+			final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
+			final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
 
-			if (isMultiLine(setting)) {
+			if (isMultiLine(eObject, structuralFeature)) {
 				gdf = gdf.hint(50, 200); // set x hint to enable wrapping
 			}
 		}
@@ -135,14 +150,14 @@ public class ViewSWTRenderer extends ContainerSWTRenderer<VView> {
 		return gdf;
 	}
 
-	private boolean isMultiLine(Setting setting) {
+	private boolean isMultiLine(EObject eObject, EStructuralFeature structuralFeature) {
 		final ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
 			new ReflectiveItemProviderAdapterFactory(),
 			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
 		final AdapterFactoryItemDelegator adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(
 			composedAdapterFactory);
 		final IItemPropertyDescriptor descriptor = adapterFactoryItemDelegator.getPropertyDescriptor(
-			setting.getEObject(), setting.getEStructuralFeature());
+			eObject, structuralFeature);
 		final boolean multiline = descriptor.isMultiLine(null);
 
 		composedAdapterFactory.dispose();

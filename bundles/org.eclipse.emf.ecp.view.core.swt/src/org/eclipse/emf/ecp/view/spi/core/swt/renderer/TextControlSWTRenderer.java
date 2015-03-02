@@ -37,8 +37,9 @@ import org.eclipse.emf.ecp.view.template.style.alignment.model.AlignmentType;
 import org.eclipse.emf.ecp.view.template.style.alignment.model.VTAlignmentStyleProperty;
 import org.eclipse.emf.ecp.view.template.style.textControlEnablement.model.VTTextControlEnablementStyleProperty;
 import org.eclipse.emf.edit.command.SetCommand;
-import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emf.emfforms.spi.localization.LocalizationServiceHelper;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
@@ -136,7 +137,8 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 	 */
 	protected int getTextWidgetStyle() {
 		int textStyle = SWT.SINGLE | SWT.BORDER;
-		if (getItemPropertyDescriptor(getVElement().getDomainModelReference().getIterator().next()).isMultiLine(null)) {
+		final EMFFormsEditSupport editSupport = Activator.getDefault().getEMFFormsEditSupport();
+		if (editSupport.isMultiLine(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel())) {
 			textStyle = SWT.MULTI | SWT.WRAP | SWT.V_SCROLL | SWT.H_SCROLL | SWT.BORDER;
 		}
 		textStyle |= getAlignment();

@@ -17,7 +17,13 @@ import java.util.Enumeration;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import org.eclipse.core.databinding.observable.IObserving;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.internal.swt.controls.AbstractTextControl;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.viewers.ITreeContentProvider;
@@ -63,9 +69,19 @@ public class TemplateIconControl extends AbstractTextControl {
 				}
 				try {
 					final String url = new File(filePath).toURL().toExternalForm();
-					getDomainModelReference().getIterator().next().set(url);
+					final IObservableValue observableValue = Activator
+						.getDefault()
+						.getEMFFormsDatabinding()
+						.getObservableValue(getControl().getDomainModelReference(),
+							getViewModelContext().getDomainModel());
+					final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
+					final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
+					eObject.eSet(structuralFeature, url);
 				} catch (final MalformedURLException ex) {
 
+				} catch (final DatabindingFailedException ex) {
+					Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+					return; // TODO: is this correct?
 				}
 			}
 

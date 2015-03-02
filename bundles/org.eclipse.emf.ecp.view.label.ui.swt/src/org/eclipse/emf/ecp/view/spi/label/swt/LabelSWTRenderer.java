@@ -12,7 +12,6 @@
 package org.eclipse.emf.ecp.view.spi.label.swt;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -20,9 +19,7 @@ import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
-import org.eclipse.emf.databinding.EMFObservables;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.label.model.VLabel;
 import org.eclipse.emf.ecp.view.spi.label.model.VLabelStyle;
@@ -34,10 +31,12 @@ import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
+import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
 import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
 import org.eclipse.emf.ecp.view.template.style.fontProperties.model.VTFontPropertiesFactory;
 import org.eclipse.emf.ecp.view.template.style.fontProperties.model.VTFontPropertiesStyleProperty;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.jface.databinding.swt.ISWTObservableValue;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.swt.SWT;
@@ -135,14 +134,13 @@ public class LabelSWTRenderer extends AbstractSWTRenderer<VLabel> {
 
 	private void setText(Label label) {
 		if (getVElement().getDomainModelReference() != null) {
-			final Iterator<Setting> iterator = getVElement().getDomainModelReference().getIterator();
-			if (iterator.hasNext()) {
-				final Setting setting = iterator.next();
-
+			try {
+				final IObservableValue observableValue = Activator
+					.getDefault()
+					.getEMFFormsDatabinding()
+					.getObservableValue(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
 				final ISWTObservableValue observeText = SWTObservables.observeText(label);
-				final IObservableValue observeValue = EMFObservables.observeValue(setting.getEObject(),
-					setting.getEStructuralFeature());
-				final Binding binding = getDataBindingContext().bindValue(observeText, observeValue);
+				final Binding binding = getDataBindingContext().bindValue(observeText, observableValue);
 
 				label.addDisposeListener(new DisposeListener() {
 					@Override
@@ -150,6 +148,9 @@ public class LabelSWTRenderer extends AbstractSWTRenderer<VLabel> {
 						binding.dispose();
 					}
 				});
+			} catch (final DatabindingFailedException ex) {
+				Activator.getDefault().getReportService().report(new RenderingFailedReport(ex));
+				label.setText(ex.getMessage());
 			}
 		} else {
 			final IObservableValue modelValue = EMFEditObservables.observeValue(

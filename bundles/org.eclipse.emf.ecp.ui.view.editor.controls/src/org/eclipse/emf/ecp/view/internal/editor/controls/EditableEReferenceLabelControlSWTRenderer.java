@@ -12,11 +12,15 @@
 package org.eclipse.emf.ecp.view.internal.editor.controls;
 
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecp.edit.spi.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
-import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.emf.emfforms.spi.core.services.labelprovider.EMFFormsLabelProvider;
+import org.eclipse.jface.dialogs.IDialogLabelKeys;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.GridLayoutFactory;
+import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -55,14 +59,11 @@ public abstract class EditableEReferenceLabelControlSWTRenderer extends EReferen
 
 		GridLayoutFactory.fillDefaults().numColumns(3).spacing(0, 0).equalWidth(false).applyTo(composite);
 
-		final IItemPropertyDescriptor itemPropertyDescriptor = getItemPropertyDescriptor(setting);
-
-		String labelText = ""; //$NON-NLS-1$
-		String tooltip = ""; //$NON-NLS-1$
-		if (itemPropertyDescriptor != null) {
-			labelText = itemPropertyDescriptor.getDisplayName(setting.getEObject());
-			tooltip = itemPropertyDescriptor.getDescription(setting.getEObject());
-		}
+		final EMFFormsLabelProvider labelProvider = Activator.getDefault().getEMFFormsLabelProvider();
+		final String labelText = labelProvider.getDisplayName(getVElement().getDomainModelReference(),
+			getViewModelContext().getDomainModel());
+		final String tooltip = labelProvider.getDescription(getVElement().getDomainModelReference(),
+			getViewModelContext().getDomainModel());
 
 		final Button selectClass = new Button(composite, SWT.PUSH);
 		selectClass.setText("Link " + labelText); //$NON-NLS-1$
@@ -111,4 +112,24 @@ public abstract class EditableEReferenceLabelControlSWTRenderer extends EReferen
 	 * @param shell the Shell
 	 */
 	protected abstract void linkValue(Shell shell);
+
+	/**
+	 * Shows an error message dialog indicating a failed value link due to an exception.
+	 *
+	 * @param shell The parent {@link Shell} of the message dialog
+	 * @param ex The {@link Exception} causing the failure
+	 */
+	protected void showLinkValueFailedMessageDialog(Shell shell, final Exception ex) {
+		final MessageDialog dialog = new MessageDialog(
+			shell, "Link Value Failed", null, //$NON-NLS-1$
+			"The value could not be linked due to an exception: " + ex.getMessage(), MessageDialog.ERROR, new String[] { //$NON-NLS-1$
+			JFaceResources.getString(IDialogLabelKeys.OK_LABEL_KEY) }, 0);
+
+		new ECPDialogExecutor(dialog) {
+			@Override
+			public void handleResult(int codeResult) {
+				// no op
+			}
+		}.execute();
+	}
 }

@@ -35,6 +35,8 @@ import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.wizard.WizardDialog;
@@ -63,8 +65,13 @@ public class LeafConditionControlRenderer extends ExpectedValueControlRenderer {
 	 */
 	@Override
 	protected void onSelectButton(Label control) {
-		final Setting setting = getSetting(getVElement());
-		final LeafCondition condition = (LeafCondition) setting.getEObject();
+		LeafCondition condition;
+		try {
+			condition = (LeafCondition) getObservedEObject();
+		} catch (final DatabindingFailedException ex) {
+			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+			return;
+		}
 
 		if (condition.getDomainModelReference() == null) {
 			MessageDialog.openError(control.getShell(), "No Feature Path Domain Model Reference found", //$NON-NLS-1$

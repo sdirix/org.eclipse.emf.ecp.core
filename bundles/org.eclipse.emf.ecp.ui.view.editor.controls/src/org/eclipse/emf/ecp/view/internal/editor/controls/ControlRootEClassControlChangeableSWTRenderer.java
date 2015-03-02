@@ -31,7 +31,6 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
-import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.ecp.ide.view.internal.service.IDEViewModelRegistryImpl;
 import org.eclipse.emf.ecp.ide.view.service.IDEViewModelRegistry;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
@@ -41,6 +40,8 @@ import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
@@ -139,7 +140,17 @@ public class ControlRootEClassControlChangeableSWTRenderer extends ControlRootEC
 			final Object selection = dialog.getFirstResult();
 			if (EClass.class.isInstance(selection)) {
 				final EClass selectedFeature = (EClass) selection;
-				final VView view = (VView) getVElement().getDomainModelReference().getIterator().next().getEObject();
+				final VView view;
+				try {
+					view = (VView) Activator
+						.getDefault()
+						.getEMFFormsDatabinding()
+						.getObservableValue(getVElement().getDomainModelReference(),
+							getViewModelContext().getDomainModel());
+				} catch (final DatabindingFailedException ex) {
+					Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+					return;
+				}
 
 				if (view.getRootEClass() != null) {
 					getViewModelRegistry().unregister(

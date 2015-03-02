@@ -33,6 +33,7 @@ import org.eclipse.emf.ecp.view.spi.swt.layout.LayoutProviderHelper;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
 import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
@@ -118,11 +119,17 @@ public abstract class AbstractSectionSWTRenderer extends
 		final Map<VContainedElement, SWTGridDescription> controlGridDescription = new LinkedHashMap<VContainedElement, SWTGridDescription>();
 
 		if (VControl.class.isInstance(child)
-			&& (VControl.class.cast(child).getDomainModelReference() == null || !VControl.class
-				.cast(child).getDomainModelReference().getIterator()
-				.hasNext())) {
+			&& VControl.class.cast(child).getDomainModelReference() == null) {
 			return columnComposite;
 		}
+		try {
+			Activator.getDefault().getEMFFormsDatabinding()
+				.getValueProperty(VControl.class.cast(child).getDomainModelReference());
+		} catch (final DatabindingFailedException ex) {
+			Activator.getDefault().getReportService().report(new RenderingFailedReport(ex));
+			return columnComposite;
+		}
+
 		final AbstractSWTRenderer<VElement> renderer = getSWTRendererFactory()
 			.getRenderer(child, getViewModelContext());
 		if (renderer == null) {
@@ -154,12 +161,6 @@ public abstract class AbstractSectionSWTRenderer extends
 			maximalGridDescription.getColumns(), false));
 
 		try {
-			if (VControl.class.isInstance(child)
-				&& (VControl.class.cast(child).getDomainModelReference() == null || !VControl.class
-					.cast(child).getDomainModelReference()
-					.getIterator().hasNext())) {
-				return columnComposite;
-			}
 			final SWTGridDescription gridDescription2 = rowGridDescription
 				.get(child);
 			if (gridDescription2 == null) {

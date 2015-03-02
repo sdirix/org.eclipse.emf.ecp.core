@@ -14,17 +14,18 @@ package org.eclipse.emf.ecp.view.internal.editor.controls;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Iterator;
 
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
+import org.eclipse.core.databinding.observable.IObserving;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.Enumerator;
 import org.eclipse.emf.databinding.EMFUpdateValueStrategy;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EEnumLiteral;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.impl.EEnumImpl;
@@ -233,18 +234,16 @@ public abstract class ExpectedValueControlRenderer extends SimpleControlSWTContr
 	 */
 	protected abstract void onSelectButton(Label text);
 
-	protected Setting getSetting(VControl control) {
-		final Iterator<Setting> iterator = control.getDomainModelReference().getIterator();
-		int count = 0;
-		Setting setting = null;
-		while (iterator.hasNext()) {
-			count++;
-			setting = iterator.next();
-		}
-		if (count != 1) {
-			return null;
-		}
-		return setting;
+	/**
+	 * Returns the model object representing the value for this renderer's domain model reference.
+	 *
+	 * @return the EObject
+	 * @throws DatabindingFailedException if the databinding fails
+	 */
+	protected EObject getObservedEObject() throws DatabindingFailedException {
+		final IObserving observableValue = (IObserving) Activator.getDefault().getEMFFormsDatabinding()
+			.getObservableValue(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
+		return (EObject) observableValue.getObserved();
 	}
 
 	/**

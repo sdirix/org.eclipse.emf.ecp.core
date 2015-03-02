@@ -16,11 +16,12 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
@@ -31,6 +32,8 @@ import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -138,8 +141,15 @@ public class TableControlDetailPanelRenderer extends TableControlSWTRenderer {
 		if (view == null) {
 			VView detailView = getVElement().getDetailView();
 			if (detailView == null) {
-				final Setting setting = getVElement().getDomainModelReference().getIterator().next();
-				final EReference reference = (EReference) setting.getEStructuralFeature();
+				IValueProperty valueProperty;
+				try {
+					valueProperty = Activator.getInstance().getEMFFormsDatabinding()
+						.getValueProperty(getVElement().getDomainModelReference());
+				} catch (final DatabindingFailedException ex) {
+					Activator.getInstance().getReportService().report(new DatabindingFailedReport(ex));
+					return null; // possible because the only caller is null safe.
+				}
+				final EReference reference = (EReference) valueProperty.getValueType();
 				detailView = ViewProviderHelper.getView(EcoreUtil.create(reference.getEReferenceType()),
 					Collections.<String, Object> emptyMap());
 			}
@@ -227,13 +237,14 @@ public class TableControlDetailPanelRenderer extends TableControlSWTRenderer {
 	}
 
 	@Override
-	protected void deleteRows(List<EObject> deletionList, Setting mainSetting) {
-		super.deleteRows(deletionList, mainSetting);
+	protected void deleteRows(List<EObject> deletionList, final EObject eObject,
+		final EStructuralFeature structuralFeature) {
+		super.deleteRows(deletionList, eObject, structuralFeature);
 		final Set<Diagnostic> toDelete = new LinkedHashSet<Diagnostic>();
-		for (final EObject eObject : deletionList) {
+		for (final EObject deleteObject : deletionList) {
 			// getViewModelContext().removeChildContext(eObject);
-			toDelete.addAll(getVElement().getDiagnostic().getDiagnostics(eObject));
-			final TreeIterator<EObject> eAllContents = eObject.eAllContents();
+			toDelete.addAll(getVElement().getDiagnostic().getDiagnostics(deleteObject));
+			final TreeIterator<EObject> eAllContents = deleteObject.eAllContents();
 			while (eAllContents.hasNext()) {
 				toDelete.addAll(getVElement().getDiagnostic().getDiagnostics(eAllContents.next()));
 			}

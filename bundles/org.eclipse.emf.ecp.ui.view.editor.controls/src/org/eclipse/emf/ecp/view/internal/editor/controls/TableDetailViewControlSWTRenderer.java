@@ -195,7 +195,7 @@ public class TableDetailViewControlSWTRenderer extends SimpleControlSWTControlSW
 
 		/* delete button */
 		final Button deleteButton = createButtonForAction(new DeleteReferenceAction(getEditingDomain(setting), setting,
-			getItemPropertyDescriptor(setting), null), buttonComposite);
+			null), buttonComposite);
 		deleteButton.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {

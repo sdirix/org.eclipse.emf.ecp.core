@@ -13,13 +13,14 @@ package org.eclipse.emf.ecp.view.template.internal.tooling.controls;
 
 import java.io.IOException;
 
+import org.eclipse.core.databinding.observable.IObserving;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.internal.ide.util.EcoreHelper;
 import org.eclipse.emf.ecp.view.internal.editor.controls.EditableEReferenceLabelControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
@@ -32,6 +33,7 @@ import org.eclipse.emf.ecp.view.template.internal.tooling.util.DMRCreationWizard
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplate;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Shell;
@@ -80,13 +82,22 @@ public class DMRSelectorControlSWTRenderer extends EditableEReferenceLabelContro
 			}
 		}
 
-		final Setting setting = getVElement().getDomainModelReference().getIterator().next();
+		IObservableValue observableValue;
+		try {
+			observableValue = Activator.getDefault().getEMFFormsDatabinding()
+				.getObservableValue(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
+		} catch (final DatabindingFailedException ex) {
+			showLinkValueFailedMessageDialog(shell, ex);
+			return;
+		}
+		final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
+		final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
 
 		final VFeaturePathDomainModelReference value = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
 		value.setDomainModelEFeature(featureToSet);
 
-		final EditingDomain editingDomain = getEditingDomain(setting);
-		final Command command = SetCommand.create(editingDomain, setting.getEObject(), setting.getEStructuralFeature(),
+		final EditingDomain editingDomain = getEditingDomain(eObject);
+		final Command command = SetCommand.create(editingDomain, eObject, structuralFeature,
 			value);
 		editingDomain.getCommandStack().execute(command);
 

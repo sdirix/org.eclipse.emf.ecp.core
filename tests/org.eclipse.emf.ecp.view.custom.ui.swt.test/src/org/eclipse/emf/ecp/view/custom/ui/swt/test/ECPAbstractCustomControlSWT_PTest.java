@@ -28,6 +28,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
+import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EAttribute;
@@ -53,6 +54,7 @@ import org.eclipse.emf.ecp.view.test.common.swt.spi.SWTViewTestHelper;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -471,13 +473,15 @@ public class ECPAbstractCustomControlSWT_PTest {
 	}
 
 	private VDomainModelReference getFeature(Collection<VDomainModelReference> features,
-		EStructuralFeature structuralFeature, boolean isEditable) {
+		EStructuralFeature structuralFeature, boolean isEditable) throws DatabindingFailedException {
 		final Iterator<VDomainModelReference> iterator = features.iterator();
 
 		while (iterator.hasNext()) {
 			final VDomainModelReference feature = iterator.next();
-			final Setting setting = feature.getIterator().next();
-			if (setting.getEStructuralFeature() == structuralFeature) { // && feature.isEditable() == isEditable
+			final IValueProperty valueProperty = Activator.getDefault().getEMFFormsDatabinding()
+				.getValueProperty(feature);
+			final EStructuralFeature currentStructuralFeature = (EStructuralFeature) valueProperty.getValueType();
+			if (currentStructuralFeature == structuralFeature) { // && feature.isEditable() == isEditable
 				return feature;
 			}
 		}
@@ -486,7 +490,7 @@ public class ECPAbstractCustomControlSWT_PTest {
 	}
 
 	@Test
-	public void testCustomControlGetHelp() {
+	public void testCustomControlGetHelp() throws DatabindingFailedException {
 		final VDomainModelReference feature = getFeature(customControl.getResolvedReferences(),
 			VCustomPackage.eINSTANCE.getCustomDomainModelReference_BundleName(), true);
 		final String help = customControl.getStubSWTHelper().getHelp(feature);
@@ -512,7 +516,7 @@ public class ECPAbstractCustomControlSWT_PTest {
 	}
 
 	@Test
-	public void testCustomControlGetLabel() {
+	public void testCustomControlGetLabel() throws DatabindingFailedException {
 		final VDomainModelReference feature = getFeature(customControl.getResolvedReferences(),
 			VCustomPackage.eINSTANCE.getCustomDomainModelReference_BundleName(), true);
 		final String label = customControl.getStubSWTHelper().getLabel(feature);

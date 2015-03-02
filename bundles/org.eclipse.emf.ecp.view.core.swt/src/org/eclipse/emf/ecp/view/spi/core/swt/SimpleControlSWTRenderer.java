@@ -11,10 +11,12 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.core.swt;
 
+import org.eclipse.core.databinding.observable.IObserving;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.common.util.Diagnostic;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.view.internal.core.swt.Activator;
 import org.eclipse.emf.ecp.view.internal.core.swt.MessageKeys;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
@@ -33,8 +35,9 @@ import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
 import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emf.emfforms.spi.localization.LocalizationServiceHelper;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
@@ -151,14 +154,25 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				super.widgetSelected(e);
-				final Setting setting = getVElement().getDomainModelReference().getIterator().next();
+				IObservableValue observableValue;
+				try {
+					observableValue = Activator
+						.getDefault()
+						.getEMFFormsDatabinding()
+						.getObservableValue(getVElement().getDomainModelReference(),
+							getViewModelContext().getDomainModel());
+				} catch (final DatabindingFailedException ex) {
+					Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+					return;
+				}
+				final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
+				final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
 				Object value = null;
-				if (!setting.isSet()) {
+				if (!eObject.eIsSet(structuralFeature)) {
 					sl.topControl = baseControl;
-					unsetButton.setText(LocalizationServiceHelper
-						.getString(getClass(), MessageKeys.SimpleControlSWTRenderer_Unset));
-					value = setting
-						.getEStructuralFeature().getDefaultValue();
+					unsetButton.setText(LocalizationServiceHelper.getString(getClass(),
+						MessageKeys.SimpleControlSWTRenderer_Unset));
+					value = structuralFeature.getDefaultValue();
 				}
 				else {
 					sl.topControl = createUnsetLabel;
@@ -166,14 +180,16 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 						.getString(getClass(), MessageKeys.SimpleControlSWTRenderer_Set));
 					value = SetCommand.UNSET_VALUE;
 				}
-				final EditingDomain editingDomain = getEditingDomain(setting);
+				final EditingDomain editingDomain = getEditingDomain(eObject);
 				editingDomain.getCommandStack().execute(
-					SetCommand.create(editingDomain, setting.getEObject(), setting.getEStructuralFeature(), value));
+					SetCommand.create(editingDomain, eObject, structuralFeature, value));
 				composite.layout();
 			}
 		});
 
-		if (getVElement().getDomainModelReference().getIterator().next().isSet()) {
+		final EStructuralFeature structuralFeature = (EStructuralFeature) getModelValue().getValueType();
+		final EObject eObject = (EObject) ((IObserving) getModelValue()).getObserved();
+		if (eObject.eIsSet(structuralFeature)) {
 			sl.topControl = baseControl;
 			unsetButton.setText(LocalizationServiceHelper
 				.getString(getClass(), MessageKeys.SimpleControlSWTRenderer_Unset));

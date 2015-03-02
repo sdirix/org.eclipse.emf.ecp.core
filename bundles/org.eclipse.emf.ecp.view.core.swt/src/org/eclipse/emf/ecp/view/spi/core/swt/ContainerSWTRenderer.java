@@ -40,6 +40,7 @@ import org.eclipse.emf.ecp.view.spi.swt.layout.LayoutProviderHelper;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
 import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -106,8 +107,14 @@ public abstract class ContainerSWTRenderer<VELEMENT extends VElement> extends Ab
 
 		for (final VContainedElement child : getChildren()) {
 
-			if (VControl.class.isInstance(child) && (VControl.class.cast(child).getDomainModelReference() == null
-				|| !VControl.class.cast(child).getDomainModelReference().getIterator().hasNext())) {
+			if (VControl.class.isInstance(child) && VControl.class.cast(child).getDomainModelReference() == null) {
+				continue;
+			}
+			try {
+				Activator.getDefault().getEMFFormsDatabinding()
+					.getValueProperty(VControl.class.cast(child).getDomainModelReference());
+			} catch (final DatabindingFailedException ex) {
+				Activator.getDefault().getReportService().report(new RenderingFailedReport(ex));
 				continue;
 			}
 
@@ -147,8 +154,14 @@ public abstract class ContainerSWTRenderer<VELEMENT extends VElement> extends Ab
 		}
 		columnComposite.setLayout(getLayout(maximalGridDescription.getColumns(), false));
 		for (final VContainedElement child : getChildren()) {
-			if (VControl.class.isInstance(child) && (VControl.class.cast(child).getDomainModelReference() == null
-				|| !VControl.class.cast(child).getDomainModelReference().getIterator().hasNext())) {
+			if (VControl.class.isInstance(child) && VControl.class.cast(child).getDomainModelReference() == null) {
+				continue;
+			}
+			try {
+				Activator.getDefault().getEMFFormsDatabinding()
+					.getValueProperty(VControl.class.cast(child).getDomainModelReference());
+			} catch (final DatabindingFailedException ex) {
+				Activator.getDefault().getReportService().report(new RenderingFailedReport(ex));
 				continue;
 			}
 			final SWTGridDescription gridDescription = rowGridDescription.get(child);

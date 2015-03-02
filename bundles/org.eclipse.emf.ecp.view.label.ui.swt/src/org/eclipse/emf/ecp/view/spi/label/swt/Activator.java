@@ -12,13 +12,15 @@
 package org.eclipse.emf.ecp.view.spi.label.swt;
 
 import org.eclipse.core.runtime.Plugin;
+import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
+import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 
 /**
  * Activator of the lable.ui.swt bundle.
- * 
+ *
  * @author Eugen Neufeld
  * @since 1.5
  *
@@ -61,6 +63,8 @@ public class Activator extends Plugin {
 
 	private VTViewTemplateProvider viewTemplate;
 
+	private ServiceReference<ReportService> reportServiceReference;
+
 	/**
 	 * Returns the current Instance of the {@link VTViewTemplateProvider}.
 	 *
@@ -78,4 +82,32 @@ public class Activator extends Plugin {
 		return viewTemplate;
 	}
 
+	/**
+	 * Returns the {@link ReportService}.
+	 *
+	 * @return the {@link ReportService}
+	 */
+	public ReportService getReportService() {
+		if (reportServiceReference == null) {
+			reportServiceReference = plugin.getBundle().getBundleContext()
+				.getServiceReference(ReportService.class);
+		}
+		return plugin.getBundle().getBundleContext().getService(reportServiceReference);
+	}
+
+	/**
+	 * Returns the {@link EMFFormsDatabinding} service.
+	 *
+	 * @return The {@link EMFFormsDatabinding}
+	 */
+	public EMFFormsDatabinding getEMFFormsDatabinding() {
+		final ServiceReference<EMFFormsDatabinding> serviceReference = plugin.getBundle().getBundleContext()
+			.getServiceReference(EMFFormsDatabinding.class);
+
+		final EMFFormsDatabinding service = plugin.getBundle().getBundleContext()
+			.getService(serviceReference);
+		plugin.getBundle().getBundleContext().ungetService(serviceReference);
+
+		return service;
+	}
 }

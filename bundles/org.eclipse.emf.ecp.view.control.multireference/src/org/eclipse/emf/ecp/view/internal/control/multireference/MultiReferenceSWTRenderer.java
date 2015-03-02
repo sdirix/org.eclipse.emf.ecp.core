@@ -12,15 +12,15 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.control.multireference;
 
-import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.core.databinding.observable.IObserving;
 import org.eclipse.core.databinding.observable.list.IObservableList;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.edit.internal.swt.controls.TableViewerColumnBuilder;
 import org.eclipse.emf.ecp.edit.spi.ReferenceService;
 import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
@@ -119,14 +119,12 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 		composite.setLayout(new GridLayout(1, false));
 		composite.setBackgroundMode(SWT.INHERIT_FORCE);
 
-		final Iterator<Setting> settings = getVElement().getDomainModelReference().getIterator();
-		if (!settings.hasNext()) {
-			return null;
+		try {
+			createTitleComposite(composite);
+		} catch (final DatabindingFailedException ex) {
+			Activator.getDefault().getReportService().report(new RenderingFailedReport(ex));
+			return createErrorLabel(parent, ex);
 		}
-
-		final Setting mainSetting = settings.next();
-
-		createTitleComposite(composite, mainSetting);
 
 		createLabelProvider();
 
@@ -136,15 +134,26 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 			.applyTo(controlComposite);
 		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(controlComposite);
 		try {
-			createContent(controlComposite, mainSetting);
+			createContent(controlComposite);
 		} catch (final DatabindingFailedException ex) {
 			Activator.getDefault().getReportService().report(new RenderingFailedReport(ex));
-			final Label errorLabel = new Label(parent, SWT.NONE);
-			errorLabel.setText(ex.getMessage());
-			return errorLabel;
+			return createErrorLabel(parent, ex);
 		}
 
 		return composite;
+	}
+
+	/**
+	 * Creates an error label for the given {@link Exception}.
+	 *
+	 * @param parent The parent of the {@link Label}
+	 * @param ex The {@link Exception} causing the error
+	 * @return The error {@link Label}
+	 */
+	protected Control createErrorLabel(Composite parent, final Exception ex) {
+		final Label errorLabel = new Label(parent, SWT.NONE);
+		errorLabel.setText(ex.getMessage());
+		return errorLabel;
 	}
 
 	private void createLabelProvider() {
@@ -167,8 +176,8 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 		super.dispose();
 	}
 
-	private void createTitleComposite(Composite composite, final Setting mainSetting)
-		throws NoPropertyDescriptorFoundExeption {
+	private void createTitleComposite(Composite composite)
+		throws NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		final Composite titleComposite = new Composite(composite, SWT.NONE);
 		titleComposite.setBackgroundMode(SWT.INHERIT_FORCE);
 		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING)
@@ -188,6 +197,11 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 		GridDataFactory.fillDefaults().grab(true, false).align(SWT.END, SWT.FILL)
 			.applyTo(buttonComposite);
 
+		final IObservableValue observableValue = Activator.getDefault().getEMFFormsDatabinding()
+			.getObservableValue(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
+		final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
+		final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
+
 		final Button btnAddExisting = new Button(buttonComposite, SWT.PUSH);
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(btnAddExisting);
 		btnAddExisting.setImage(Activator.getImage("icons/link.png")); //$NON-NLS-1$
@@ -203,7 +217,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				super.widgetSelected(e);
-				handleAddExisting(tableViewer, mainSetting);
+				handleAddExisting(tableViewer, eObject, structuralFeature);
 			}
 
 		});
@@ -223,7 +237,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				super.widgetSelected(e);
-				handleAddNew(tableViewer, mainSetting);
+				handleAddNew(tableViewer, eObject, structuralFeature);
 			}
 
 		});
@@ -243,7 +257,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				super.widgetSelected(e);
-				handleDelete(tableViewer, mainSetting);
+				handleDelete(tableViewer, eObject, structuralFeature);
 			}
 
 		});
@@ -255,7 +269,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 
 	}
 
-	private void createContent(Composite composite, Setting mainSetting) throws DatabindingFailedException {
+	private void createContent(Composite composite) throws DatabindingFailedException {
 		tableViewer = new TableViewer(composite, SWT.MULTI | SWT.V_SCROLL | SWT.FULL_SELECTION
 			| SWT.BORDER);
 		tableViewer.getTable().setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_multireference"); //$NON-NLS-1$
@@ -352,24 +366,25 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	 * Method for adding an existing element.
 	 *
 	 * @param tableViewer the {@link TableViewer}
-	 * @param setting the {@link Setting} to add to
+	 * @param eObject The {@link EObject} to add to
+	 * @param structuralFeature The corresponding {@link EStructuralFeature}
 	 */
-	protected void handleAddExisting(TableViewer tableViewer, Setting setting) {
+	protected void handleAddExisting(TableViewer tableViewer, EObject eObject, EStructuralFeature structuralFeature) {
 		final ReferenceService referenceService = getViewModelContext().getService(ReferenceService.class);
-		referenceService.addExistingModelElements(setting.getEObject(), (EReference) setting.getEStructuralFeature());
-		referenceService.openInNewContext(setting.getEObject());
+		referenceService.addExistingModelElements(eObject, (EReference) structuralFeature);
+		referenceService.openInNewContext(eObject);
 	}
 
 	/**
 	 * Method for adding a new element.
 	 *
 	 * @param tableViewer the {@link TableViewer}
-	 * @param setting the {@link Setting} to add to
+	 * @param eObject The {@link EObject} to add to
+	 * @param structuralFeature The corresponding {@link EStructuralFeature}
 	 */
-	protected void handleAddNew(TableViewer tableViewer, Setting setting) {
+	protected void handleAddNew(TableViewer tableViewer, EObject eObject, EStructuralFeature structuralFeature) {
 		final ReferenceService referenceService = getViewModelContext().getService(ReferenceService.class);
-		referenceService.addNewModelElements(setting.getEObject(),
-			(EReference) setting.getEStructuralFeature());
+		referenceService.addNewModelElements(eObject, (EReference) structuralFeature);
 
 	}
 
@@ -377,15 +392,15 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	 * Method for deleting elements.
 	 *
 	 * @param tableViewer the {@link TableViewer}
-	 * @param mainSetting the {@link Setting} to delete from
+	 * @param eObject The {@link EObject} to delete from
+	 * @param structuralFeature The corresponding {@link EStructuralFeature}
 	 */
-	protected void handleDelete(TableViewer tableViewer, Setting mainSetting) {
+	protected void handleDelete(TableViewer tableViewer, EObject eObject, EStructuralFeature structuralFeature) {
 		final List<?> deletionList = IStructuredSelection.class.cast(tableViewer.getSelection()).toList();
 
-		final EObject modelElement = mainSetting.getEObject();
-		final EditingDomain editingDomain = getEditingDomain(mainSetting);
+		final EditingDomain editingDomain = getEditingDomain(eObject);
 		editingDomain.getCommandStack().execute(
-			RemoveCommand.create(editingDomain, modelElement, mainSetting.getEStructuralFeature(), deletionList));
+			RemoveCommand.create(editingDomain, eObject, structuralFeature, deletionList));
 	}
 
 	/**

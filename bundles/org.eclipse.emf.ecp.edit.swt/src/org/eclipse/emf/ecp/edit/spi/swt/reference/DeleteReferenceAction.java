@@ -26,7 +26,6 @@ import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
-import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -45,12 +44,10 @@ public class DeleteReferenceAction extends ECPSWTAction {
 	 * The constructor for a delete reference action.
 	 *
 	 * @param editingDomain the {@link EditingDomain} to use
-	 * @param itemPropertyDescriptor the {@link IItemPropertyDescriptor} to use
 	 * @param setting the {@link Setting} to use
 	 * @param referenceService the {@link ReferenceService} to use
 	 */
-	public DeleteReferenceAction(EditingDomain editingDomain, Setting setting,
-		IItemPropertyDescriptor itemPropertyDescriptor, ReferenceService referenceService) {
+	public DeleteReferenceAction(EditingDomain editingDomain, Setting setting, ReferenceService referenceService) {
 		super(editingDomain, setting);
 		// TODO remove PlatformUI
 

@@ -18,14 +18,14 @@ import org.eclipse.core.databinding.Binding;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecp.view.internal.core.swt.Activator;
 import org.eclipse.emf.ecp.view.internal.core.swt.MessageKeys;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlJFaceViewerSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
-import org.eclipse.emf.edit.provider.IItemLabelProvider;
-import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emf.emfforms.spi.localization.LocalizationServiceHelper;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.databinding.viewers.ViewersObservables;
 import org.eclipse.jface.viewers.ArrayContentProvider;
@@ -70,13 +70,13 @@ public class EnumComboViewerSWTRenderer extends SimpleControlJFaceViewerSWTRende
 	@Override
 	protected Viewer createJFaceViewer(Composite parent, Setting setting) {
 		final ComboViewer combo = new ComboViewer(parent);
-		final IItemLabelProvider labelProvider = getItemPropertyDescriptor(setting).getLabelProvider(null);
 		combo.setContentProvider(new ArrayContentProvider());
 		combo.setLabelProvider(new LabelProvider() {
 
 			@Override
 			public String getText(Object element) {
-				return labelProvider.getText(element);
+				return Activator.getDefault().getEMFFormsEditSupport()
+					.getText(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel(), element);
 			}
 
 		});

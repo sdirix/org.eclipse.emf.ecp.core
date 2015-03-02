@@ -11,19 +11,24 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.template.internal.tooling.controls;
 
+import org.eclipse.core.databinding.observable.IObserving;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.notify.AdapterFactory;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.internal.editor.controls.EditableEReferenceLabelControlSWTRenderer;
 import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
+import org.eclipse.emf.ecp.view.template.internal.tooling.Activator;
 import org.eclipse.emf.ecp.view.template.selector.viewModelElement.model.VTViewModelElementSelector;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Shell;
@@ -54,7 +59,16 @@ public class AttributeSelectControlSWTRenderer extends EditableEReferenceLabelCo
 	 */
 	@Override
 	protected void linkValue(Shell shell) {
-		final Setting setting = getVElement().getDomainModelReference().getIterator().next();
+		IObservableValue observableValue;
+		try {
+			observableValue = Activator.getDefault().getEMFFormsDatabinding()
+				.getObservableValue(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
+		} catch (final DatabindingFailedException ex) {
+			showLinkValueFailedMessageDialog(shell, ex);
+			return;
+		}
+		final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
+		final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
 
 		final ComposedAdapterFactory adapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
 			new CustomReflectiveItemProviderAdapterFactory(),
@@ -64,7 +78,7 @@ public class AttributeSelectControlSWTRenderer extends EditableEReferenceLabelCo
 		final ListDialog ld = new ListDialog(shell);
 		ld.setLabelProvider(labelProvider);
 		ld.setContentProvider(ArrayContentProvider.getInstance());
-		ld.setInput(VTViewModelElementSelector.class.cast(setting.getEObject()).getClassType().getEAllAttributes());
+		ld.setInput(VTViewModelElementSelector.class.cast(eObject).getClassType().getEAllAttributes());
 		ld.setBlockOnOpen(true);
 		final int open = ld.open();
 		adapterFactory.dispose();
@@ -75,9 +89,8 @@ public class AttributeSelectControlSWTRenderer extends EditableEReferenceLabelCo
 
 		final Object result = ld.getResult()[0];
 
-		final EditingDomain editingDomain = getEditingDomain(setting);
-		final Command command = SetCommand.create(editingDomain, setting.getEObject(), setting.getEStructuralFeature(),
-			result);
+		final EditingDomain editingDomain = getEditingDomain(eObject);
+		final Command command = SetCommand.create(editingDomain, eObject, structuralFeature, result);
 		editingDomain.getCommandStack().execute(command);
 	}
 
