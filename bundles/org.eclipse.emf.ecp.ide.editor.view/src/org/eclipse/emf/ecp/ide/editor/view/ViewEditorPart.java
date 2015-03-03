@@ -365,6 +365,16 @@ public class ViewEditorPart extends EditorPart implements
 	private void showView() {
 		final VView view = getView();
 
+		if (XMLResource.class.isInstance(view.eResource())
+			&& !XMLResource.class.cast(view.eResource()).getEObjectToExtensionMap().isEmpty()) {
+			// we are showing a view which wasn't fully loaded
+			MessageDialog
+				.openWarning(
+					parent.getShell(),
+					Messages.ViewEditorPart_LoadedPartyTitle,
+					Messages.ViewEditorPart_LoadedPartyDescription);
+		}
+
 		try {
 			render = ECPSWTViewRenderer.INSTANCE.render(parent, view);
 		} catch (final ECPRendererException ex) {
