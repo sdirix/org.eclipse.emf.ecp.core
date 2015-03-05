@@ -21,10 +21,12 @@ import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.databinding.EMFObservables;
+import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.label.model.VLabel;
 import org.eclipse.emf.ecp.view.spi.label.model.VLabelStyle;
+import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
@@ -35,6 +37,7 @@ import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
 import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
 import org.eclipse.emf.ecp.view.template.style.fontProperties.model.VTFontPropertiesFactory;
 import org.eclipse.emf.ecp.view.template.style.fontProperties.model.VTFontPropertiesStyleProperty;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.jface.databinding.swt.ISWTObservableValue;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.swt.SWT;
@@ -55,6 +58,8 @@ import org.eclipse.swt.widgets.Label;
  *
  */
 public class LabelSWTRenderer extends AbstractSWTRenderer<VLabel> {
+	private final EMFDataBindingContext dbc;
+
 	/**
 	 * @param vElement the view model element to be rendered
 	 * @param viewContext the view context
@@ -62,7 +67,7 @@ public class LabelSWTRenderer extends AbstractSWTRenderer<VLabel> {
 	 */
 	public LabelSWTRenderer(VLabel vElement, ViewModelContext viewContext, SWTRendererFactory factory) {
 		super(vElement, viewContext, factory);
-		// TODO Auto-generated constructor stub
+		dbc = new EMFDataBindingContext();
 	}
 
 	private SWTGridDescription rendererGridDescription;
@@ -91,6 +96,7 @@ public class LabelSWTRenderer extends AbstractSWTRenderer<VLabel> {
 			dataBindingContext.dispose();
 			dataBindingContext = null;
 		}
+		dbc.dispose();
 		super.dispose();
 	}
 
@@ -146,11 +152,12 @@ public class LabelSWTRenderer extends AbstractSWTRenderer<VLabel> {
 				});
 			}
 		} else {
-			if (getVElement().getName() != null) {
-				label.setText(getVElement().getName());
-			} else {
-				label.setText(""); //$NON-NLS-1$
-			}
+			final IObservableValue modelValue = EMFEditObservables.observeValue(
+				AdapterFactoryEditingDomain.getEditingDomainFor(getVElement()), getVElement(),
+				VViewPackage.eINSTANCE.getElement_Label());
+			final IObservableValue targetValue = SWTObservables.observeText(label);
+
+			dbc.bindValue(targetValue, modelValue);
 		}
 	}
 
