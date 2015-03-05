@@ -19,8 +19,8 @@ import java.util.Locale;
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.edit.internal.swt.controls.NumericalHelper;
 import org.eclipse.emf.ecp.edit.spi.ViewLocaleService;
 import org.eclipse.emf.ecp.edit.spi.swt.util.ECPDialogExecutor;
@@ -31,8 +31,9 @@ import org.eclipse.emf.ecp.view.spi.core.swt.renderer.TextControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.edit.command.SetCommand;
-import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emf.emfforms.spi.localization.LocalizationServiceHelper;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.jface.dialogs.IDialogLabelKeys;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.JFaceResources;
@@ -72,13 +73,20 @@ public class NumberControlSWTRenderer extends TextControlSWTRenderer {
 	}
 
 	@Override
-	protected String getTextMessage(Setting setting) {
-		if (NumericalHelper.isInteger(getInstanceClass(setting.getEStructuralFeature()))) {
-			return LocalizationServiceHelper.getString(getClass(), MessageKeys.NumericalControl_FormatNumerical);
-		} else if (NumericalHelper.isDouble(getInstanceClass(setting.getEStructuralFeature()))) {
-			return LocalizationServiceHelper.getString(getClass(), MessageKeys.NumericalControl_FormatNumericalDecimal);
+	protected String getTextMessage() {
+		try {
+			final IValueProperty valueProperty = Activator.getDefault().getEMFFormsDatabinding()
+				.getValueProperty(getVElement().getDomainModelReference());
+			final EStructuralFeature structuralFeature = (EStructuralFeature) valueProperty.getValueType();
+			if (NumericalHelper.isInteger(getInstanceClass(structuralFeature))) {
+				return LocalizationServiceHelper.getString(getClass(), MessageKeys.NumericalControl_FormatNumerical);
+			} else if (NumericalHelper.isDouble(getInstanceClass(structuralFeature))) {
+				return LocalizationServiceHelper.getString(getClass(),
+					MessageKeys.NumericalControl_FormatNumericalDecimal);
+			}
+		} catch (final DatabindingFailedException ex) {
+			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
 		}
-
 		return ""; //$NON-NLS-1$
 	}
 

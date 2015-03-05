@@ -15,13 +15,14 @@ import java.net.URL;
 
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.UpdateValueStrategy;
+import org.eclipse.core.databinding.observable.IObserving;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.notify.AdapterFactory;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.edit.spi.swt.reference.DeleteReferenceAction;
 import org.eclipse.emf.ecp.edit.spi.swt.reference.NewReferenceAction;
 import org.eclipse.emf.ecp.edit.spi.util.ECPModelElementChangeListener;
@@ -161,11 +162,15 @@ public class TableDetailViewControlSWTRenderer extends SimpleControlSWTControlSW
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer#createSWTControl(org.eclipse.swt.widgets.Composite,
-	 *      org.eclipse.emf.ecore.EStructuralFeature.Setting)
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer#createSWTControl(org.eclipse.swt.widgets.Composite)
 	 */
 	@Override
-	protected Control createSWTControl(Composite parent, final Setting setting) {
+	protected Control createSWTControl(Composite parent) throws DatabindingFailedException {
+		final IObservableValue observableValue = Activator.getDefault().getEMFFormsDatabinding()
+			.getObservableValue(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
+		final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
+		final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
+
 		/* parent composite */
 		final Composite composite = new Composite(parent, SWT.NONE);
 		composite.setBackground(parent.getBackground());
@@ -194,14 +199,14 @@ public class TableDetailViewControlSWTRenderer extends SimpleControlSWTControlSW
 		GridLayoutFactory.fillDefaults().numColumns(2).equalWidth(false).spacing(2, 0).applyTo(buttonComposite);
 
 		/* delete button */
-		final Button deleteButton = createButtonForAction(new DeleteReferenceAction(getEditingDomain(setting), setting,
-			null), buttonComposite);
+		final Button deleteButton = createButtonForAction(new DeleteReferenceAction(getEditingDomain(eObject), eObject,
+			structuralFeature, null), buttonComposite);
 		deleteButton.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				final Command setCommand = SetCommand.create(getEditingDomain(setting), setting.getEObject(),
-					setting.getEStructuralFeature(), null);
-				getEditingDomain(setting).getCommandStack().execute(setCommand);
+				final Command setCommand = SetCommand.create(getEditingDomain(eObject), eObject, structuralFeature,
+					null);
+				getEditingDomain(eObject).getCommandStack().execute(setCommand);
 			}
 
 			@Override
@@ -210,14 +215,14 @@ public class TableDetailViewControlSWTRenderer extends SimpleControlSWTControlSW
 		});
 
 		/* create button */
-		final Button createButton = createButtonForAction(new NewReferenceAction(getEditingDomain(setting), setting,
-			getItemPropertyDescriptor(setting), null), buttonComposite);
+		final Button createButton = createButtonForAction(new NewReferenceAction(getEditingDomain(eObject), eObject,
+			structuralFeature, getItemPropertyDescriptor(eObject, structuralFeature), null), buttonComposite);
 		createButton.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				final VView detailView = VViewFactory.eINSTANCE.createView();
-				final VTableControl tableControl = (VTableControl) setting.getEObject();
+				final VTableControl tableControl = (VTableControl) eObject;
 				if (tableControl.getDomainModelReference() == null) {
 					MessageDialog.openInformation(Display.getDefault().getActiveShell(),
 						"Set Domain Model Reference", "Please set a Domain Model Reference first."); //$NON-NLS-1$ //$NON-NLS-2$
@@ -249,9 +254,9 @@ public class TableDetailViewControlSWTRenderer extends SimpleControlSWTControlSW
 					return;
 				}
 				detailView.setRootEClass(ref.getEReferenceType());
-				final Command setCommand = SetCommand.create(getEditingDomain(setting), setting.getEObject(),
-					setting.getEStructuralFeature(), detailView);
-				getEditingDomain(setting).getCommandStack().execute(setCommand);
+				final Command setCommand = SetCommand.create(getEditingDomain(eObject), eObject,
+					structuralFeature, detailView);
+				getEditingDomain(eObject).getCommandStack().execute(setCommand);
 			}
 
 			@Override

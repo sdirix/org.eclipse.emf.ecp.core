@@ -12,14 +12,13 @@
 package org.eclipse.emf.ecp.view.internal.core.swt.renderer;
 
 import org.eclipse.core.databinding.Binding;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.view.internal.core.swt.MessageKeys;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
-import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emf.emfforms.spi.localization.LocalizationServiceHelper;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
@@ -50,7 +49,7 @@ public class BooleanControlSWTRenderer extends SimpleControlSWTControlSWTRendere
 	}
 
 	@Override
-	protected Control createSWTControl(final Composite parent, Setting setting) {
+	protected Control createSWTControl(final Composite parent) {
 		final Button check = new Button(parent, SWT.CHECK);
 		check.setBackground(parent.getBackground());
 		check.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_boolean"); //$NON-NLS-1$

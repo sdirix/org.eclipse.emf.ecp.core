@@ -11,12 +11,16 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.editor.controls;
 
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.core.databinding.observable.IObserving;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.spi.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.emfforms.spi.core.services.labelprovider.EMFFormsLabelProvider;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.jface.dialogs.IDialogLabelKeys;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -49,13 +53,11 @@ public abstract class EditableEReferenceLabelControlSWTRenderer extends EReferen
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.internal.editor.controls.ControlRootEClassControl2SWTRenderer#createSWTControl(org.eclipse.swt.widgets.Composite,
-	 *      org.eclipse.emf.ecore.EStructuralFeature.Setting)
+	 * @see org.eclipse.emf.ecp.view.internal.editor.controls.ControlRootEClassControl2SWTRenderer#createSWTControl(org.eclipse.swt.widgets.Composite)
 	 */
 	@Override
-	protected Control createSWTControl(final Composite parent2, final Setting setting) {
-		// TODO Auto-generated method stub
-		final Composite composite = (Composite) super.createSWTControl(parent2, setting);
+	protected Control createSWTControl(final Composite parent2) throws DatabindingFailedException {
+		final Composite composite = (Composite) super.createSWTControl(parent2);
 
 		GridLayoutFactory.fillDefaults().numColumns(3).spacing(0, 0).equalWidth(false).applyTo(composite);
 
@@ -87,6 +89,11 @@ public abstract class EditableEReferenceLabelControlSWTRenderer extends EReferen
 		final Button unset = new Button(composite, SWT.PUSH);
 		unset.setText("Unset"); //$NON-NLS-1$
 		unset.setToolTipText("Unset"); //$NON-NLS-1$
+		final IObservableValue observableValue = Activator.getDefault().getEMFFormsDatabinding()
+			.getObservableValue(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
+		final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
+		final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
+
 		unset.addSelectionListener(new SelectionAdapter() {
 
 			/**
@@ -97,7 +104,7 @@ public abstract class EditableEReferenceLabelControlSWTRenderer extends EReferen
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				super.widgetSelected(e);
-				setting.unset();
+				eObject.eUnset(structuralFeature);
 				composite.layout(true, true);
 			}
 

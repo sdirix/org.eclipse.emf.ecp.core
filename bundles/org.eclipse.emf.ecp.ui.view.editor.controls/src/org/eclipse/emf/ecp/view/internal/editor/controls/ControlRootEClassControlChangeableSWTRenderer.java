@@ -26,7 +26,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EPackage.Descriptor;
 import org.eclipse.emf.ecore.EPackage.Registry;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
@@ -78,19 +77,17 @@ public class ControlRootEClassControlChangeableSWTRenderer extends ControlRootEC
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.internal.editor.controls.ControlRootEClassControl2SWTRenderer#createSWTControl(org.eclipse.swt.widgets.Composite,
-	 *      org.eclipse.emf.ecore.EStructuralFeature.Setting)
+	 * @see org.eclipse.emf.ecp.view.internal.editor.controls.ControlRootEClassControl2SWTRenderer#createSWTControl(org.eclipse.swt.widgets.Composite)
 	 */
 	@Override
-	protected Control createSWTControl(final Composite parent2, Setting setting) {
-		// TODO Auto-generated method stub
-		final Composite composite = (Composite) super.createSWTControl(parent2, setting);
+	protected Control createSWTControl(final Composite parent2) {
+		final Composite composite = (Composite) super.createSWTControl(parent2);
 
 		GridLayoutFactory.fillDefaults().numColumns(2).spacing(0, 0).equalWidth(false).applyTo(composite);
 
 		final Button selectClass = new Button(composite, SWT.PUSH);
-		selectClass.setText("Link Root EClass");
-		selectClass.setToolTipText("Link Root EClass");
+		selectClass.setText("Link Root EClass"); //$NON-NLS-1$
+		selectClass.setToolTipText("Link Root EClass"); //$NON-NLS-1$
 		selectClass.addSelectionListener(new SelectionAdapter() {
 
 			/**

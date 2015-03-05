@@ -13,7 +13,6 @@
 package org.eclipse.emf.ecp.view.spi.core.swt;
 
 import org.eclipse.core.databinding.Binding;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
@@ -50,12 +49,7 @@ public abstract class SimpleControlSWTControlSWTRenderer extends SimpleControlSW
 	 */
 	@Override
 	protected final Control createControl(Composite parent) throws DatabindingFailedException {
-		if (!getVElement().getDomainModelReference().getIterator().hasNext()) {
-			return null;
-		}
-		final Setting setting = getVElement().getDomainModelReference().getIterator().next();
-
-		final Control control = createSWTControl(parent, setting);
+		final Control control = createSWTControl(parent);
 		if (control == null) {
 			return null;
 		}
@@ -89,10 +83,9 @@ public abstract class SimpleControlSWTControlSWTRenderer extends SimpleControlSW
 	 * Creates the Control.
 	 *
 	 * @param parent the {@link Composite} to use as a parent
-	 * @param setting the {@link Setting}
 	 * @return the created control
 	 * @throws DatabindingFailedException if the creation of the control fails due to databinding problems
 	 */
-	protected abstract Control createSWTControl(Composite parent, Setting setting) throws DatabindingFailedException;
+	protected abstract Control createSWTControl(Composite parent) throws DatabindingFailedException;
 
 }

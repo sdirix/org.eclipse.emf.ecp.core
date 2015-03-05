@@ -13,7 +13,6 @@
 package org.eclipse.emf.ecp.view.internal.core.swt.renderer;
 
 import org.eclipse.core.databinding.Binding;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl;
 import org.eclipse.emf.ecp.edit.spi.ECPControlFactory;
 import org.eclipse.emf.ecp.view.internal.core.swt.Activator;
@@ -48,7 +47,7 @@ public class ECPLegacyControlSWTRenderer extends SimpleControlSWTControlSWTRende
 	private SWTControl control;
 
 	@Override
-	protected Control createSWTControl(Composite parent, Setting setting) {
+	protected Control createSWTControl(Composite parent) {
 		final ECPControlFactory controlFactory = Activator.getDefault().getECPControlFactory();
 
 		if (controlFactory == null) {

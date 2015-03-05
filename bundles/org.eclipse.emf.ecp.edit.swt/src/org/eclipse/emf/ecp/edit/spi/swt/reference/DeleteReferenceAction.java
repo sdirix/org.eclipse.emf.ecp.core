@@ -15,7 +15,9 @@ import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.DynamicEObjectImpl;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.ecp.edit.internal.swt.reference.ReferenceMessageKeys;
@@ -54,6 +56,19 @@ public class DeleteReferenceAction extends ECPSWTAction {
 		setImageDescriptor(Activator.getImageDescriptor("icons/delete.png")); //$NON-NLS-1$
 		setToolTipText(LocalizationServiceHelper.getString(DeleteReferenceAction.class,
 			ReferenceMessageKeys.DeleteReferenceAction_DeleteReference));
+	}
+
+	/**
+	 * The constructor for a delete reference action.
+	 *
+	 * @param editingDomain The {@link EditingDomain} to use
+	 * @param eObject The {@link EObject} to use
+	 * @param structuralFeature The {@link EStructuralFeature} defining which feature of the {@link EObject} is used
+	 * @param referenceService The {@link ReferenceService} to use
+	 */
+	public DeleteReferenceAction(EditingDomain editingDomain, EObject eObject, EStructuralFeature structuralFeature,
+		ReferenceService referenceService) {
+		this(editingDomain, ((InternalEObject) eObject).eSetting(structuralFeature), referenceService);
 	}
 
 	@Override
@@ -114,8 +129,10 @@ public class DeleteReferenceAction extends ECPSWTAction {
 			question,
 			MessageDialog.QUESTION,
 			new String[] {
-				LocalizationServiceHelper.getString(DeleteReferenceAction.class, ReferenceMessageKeys.DeleteReferenceAction_Yes),
-				LocalizationServiceHelper.getString(DeleteReferenceAction.class, ReferenceMessageKeys.DeleteReferenceAction_No) },
+				LocalizationServiceHelper.getString(DeleteReferenceAction.class,
+					ReferenceMessageKeys.DeleteReferenceAction_Yes),
+				LocalizationServiceHelper.getString(DeleteReferenceAction.class,
+					ReferenceMessageKeys.DeleteReferenceAction_No) },
 			0);
 
 		boolean confirm = false;

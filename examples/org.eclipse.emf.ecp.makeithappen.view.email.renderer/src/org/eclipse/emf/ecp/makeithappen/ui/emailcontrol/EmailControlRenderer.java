@@ -15,7 +15,6 @@ import java.awt.Desktop;
 import java.io.IOException;
 import java.net.URI;
 
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.renderer.TextControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
@@ -48,12 +47,12 @@ public class EmailControlRenderer extends TextControlSWTRenderer {
 	}
 
 	@Override
-	protected Control createSWTControl(Composite parent, final Setting setting) {
+	protected Control createSWTControl(Composite parent) {
 		final Composite main = new Composite(parent, SWT.NONE);
 		GridLayoutFactory.fillDefaults().numColumns(2).applyTo(main);
 		GridDataFactory.fillDefaults().grab(true, false)
 			.align(SWT.FILL, SWT.BEGINNING).applyTo(main);
-		final Control control = super.createSWTControl(main, setting);
+		final Control control = super.createSWTControl(main);
 		final Button button = new Button(main, SWT.PUSH);
 		button.setText("Send Mail"); //$NON-NLS-1$
 		button.addSelectionListener(new SelectionAdapter() {

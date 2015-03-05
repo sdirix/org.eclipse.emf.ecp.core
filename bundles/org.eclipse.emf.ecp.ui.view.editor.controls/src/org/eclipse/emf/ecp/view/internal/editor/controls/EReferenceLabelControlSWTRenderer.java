@@ -19,7 +19,6 @@ import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.edit.spi.util.ECPModelElementChangeListener;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer;
@@ -181,7 +180,7 @@ public class EReferenceLabelControlSWTRenderer extends SimpleControlSWTControlSW
 	 *      org.eclipse.emf.ecore.EStructuralFeature.Setting)
 	 */
 	@Override
-	protected Control createSWTControl(Composite parent2, Setting setting) {
+	protected Control createSWTControl(Composite parent2) throws DatabindingFailedException {
 		final Composite composite2 = new Composite(parent2, SWT.NONE);
 		composite2.setBackground(parent2.getBackground());
 		GridLayoutFactory.fillDefaults().numColumns(1).spacing(0, 0).equalWidth(false).applyTo(composite2);

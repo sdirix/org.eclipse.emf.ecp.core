@@ -15,9 +15,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.databinding.Binding;
+import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EEnumLiteral;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.internal.core.swt.Activator;
 import org.eclipse.emf.ecp.view.internal.core.swt.MessageKeys;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
@@ -52,7 +53,7 @@ public class EnumComboViewerSWTRenderer extends SimpleControlJFaceViewerSWTRende
 	}
 
 	@Override
-	protected Binding[] createBindings(Viewer viewer, Setting setting) throws DatabindingFailedException {
+	protected Binding[] createBindings(Viewer viewer) throws DatabindingFailedException {
 		final Binding binding = getDataBindingContext().bindValue(ViewersObservables.observeSingleSelection(viewer),
 			getModelValue());
 		final Binding tooltipBinding = getDataBindingContext().bindValue(
@@ -64,11 +65,13 @@ public class EnumComboViewerSWTRenderer extends SimpleControlJFaceViewerSWTRende
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlJFaceViewerSWTRenderer#createJFaceViewer(org.eclipse.swt.widgets.Composite,
-	 *      org.eclipse.emf.ecore.EStructuralFeature.Setting)
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlJFaceViewerSWTRenderer#createJFaceViewer(org.eclipse.swt.widgets.Composite)
 	 */
 	@Override
-	protected Viewer createJFaceViewer(Composite parent, Setting setting) {
+	protected Viewer createJFaceViewer(Composite parent) throws DatabindingFailedException {
+		final IValueProperty valueProperty = Activator.getDefault().getEMFFormsDatabinding()
+			.getValueProperty(getVElement().getDomainModelReference());
+		final EStructuralFeature structuralFeature = (EStructuralFeature) valueProperty.getValueType();
 		final ComboViewer combo = new ComboViewer(parent);
 		combo.setContentProvider(new ArrayContentProvider());
 		combo.setLabelProvider(new LabelProvider() {
@@ -81,7 +84,7 @@ public class EnumComboViewerSWTRenderer extends SimpleControlJFaceViewerSWTRende
 
 		});
 		final List<Object> inputValues = new ArrayList<Object>();
-		for (final EEnumLiteral literal : EEnum.class.cast(setting.getEStructuralFeature().getEType()).getELiterals()) {
+		for (final EEnumLiteral literal : EEnum.class.cast(structuralFeature.getEType()).getELiterals()) {
 			inputValues.add(literal.getInstance());
 		}
 		combo.setInput(inputValues);

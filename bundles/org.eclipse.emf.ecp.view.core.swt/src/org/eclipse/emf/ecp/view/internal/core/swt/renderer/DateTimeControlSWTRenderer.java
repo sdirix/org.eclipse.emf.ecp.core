@@ -22,7 +22,6 @@ import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.edit.spi.ViewLocaleService;
 import org.eclipse.emf.ecp.view.internal.core.swt.Activator;
 import org.eclipse.emf.ecp.view.internal.core.swt.MessageKeys;
@@ -33,9 +32,9 @@ import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.edit.command.SetCommand;
+import org.eclipse.emf.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
-import org.eclipse.emf.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.dialogs.IDialogLabelKeys;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -144,7 +143,7 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 	}
 
 	@Override
-	protected Control createSWTControl(Composite parent, Setting setting) {
+	protected Control createSWTControl(Composite parent) throws DatabindingFailedException {
 		composite = new Composite(parent, SWT.NONE);
 		composite.setBackground(parent.getBackground());
 		GridLayoutFactory.fillDefaults().numColumns(2).spacing(2, 0).equalWidth(false)
@@ -194,7 +193,11 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 		bDate.setToolTipText(LocalizationServiceHelper
 			.getString(getClass(), MessageKeys.DateTimeControlSWTRenderer_SelectData));
 
-		if (setting.isSet()) {
+		final IObservableValue observableValue = Activator.getDefault().getEMFFormsDatabinding()
+			.getObservableValue(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
+		final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
+		final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
+		if (eObject.eIsSet(structuralFeature)) {
 			stackLayout.topControl = dateTimeComposite;
 		} else {
 			stackLayout.topControl = unsetLabel;

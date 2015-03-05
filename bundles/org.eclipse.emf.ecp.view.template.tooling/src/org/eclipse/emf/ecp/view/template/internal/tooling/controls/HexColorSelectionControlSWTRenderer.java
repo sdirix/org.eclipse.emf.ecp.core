@@ -13,17 +13,21 @@ package org.eclipse.emf.ecp.view.template.internal.tooling.controls;
 
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.UpdateValueStrategy;
+import org.eclipse.core.databinding.observable.IObserving;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.common.command.Command;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
+import org.eclipse.emf.ecp.view.template.internal.tooling.Activator;
 import org.eclipse.emf.ecp.view.template.internal.tooling.Messages;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -98,11 +102,10 @@ public class HexColorSelectionControlSWTRenderer extends SimpleControlSWTControl
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer#createSWTControl(org.eclipse.swt.widgets.Composite,
-	 *      org.eclipse.emf.ecore.EStructuralFeature.Setting)
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer#createSWTControl(org.eclipse.swt.widgets.Composite)
 	 */
 	@Override
-	protected Control createSWTControl(final Composite parent, final Setting setting) {
+	protected Control createSWTControl(final Composite parent) {
 		final Composite composite = new Composite(parent, SWT.NONE);
 		GridLayoutFactory.fillDefaults().numColumns(2).equalWidth(false).applyTo(composite);
 		final Label colorExample = new Label(composite, SWT.BORDER);
@@ -124,7 +127,7 @@ public class HexColorSelectionControlSWTRenderer extends SimpleControlSWTControl
 				final ColorDialog cd = new ColorDialog(parent.getShell());
 				final RGB rgb = cd.open();
 
-				setValue(getString(rgb), setting);
+				setValue(getString(rgb));
 			}
 
 		});
@@ -138,10 +141,20 @@ public class HexColorSelectionControlSWTRenderer extends SimpleControlSWTControl
 		return red + green + blue;
 	}
 
-	private void setValue(String hexColor, Setting setting) {
-		final EditingDomain editingDomain = getEditingDomain(setting);
-		final Command command = SetCommand.create(editingDomain, setting.getEObject(), setting.getEStructuralFeature(),
-			hexColor);
+	private void setValue(String hexColor) {
+		IObservableValue observableValue;
+		try {
+			observableValue = Activator.getDefault().getEMFFormsDatabinding()
+				.getObservableValue(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
+		} catch (final DatabindingFailedException ex) {
+			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+			return;
+		}
+		final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
+		final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
+
+		final EditingDomain editingDomain = getEditingDomain(eObject);
+		final Command command = SetCommand.create(editingDomain, eObject, structuralFeature, hexColor);
 		editingDomain.getCommandStack().execute(command);
 	}
 

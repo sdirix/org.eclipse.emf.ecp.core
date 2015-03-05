@@ -20,7 +20,6 @@ import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.databinding.EMFUpdateValueStrategy;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.view.internal.core.swt.Activator;
 import org.eclipse.emf.ecp.view.internal.core.swt.MessageKeys;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
@@ -80,20 +79,19 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 	}
 
 	@Override
-	protected Control createSWTControl(Composite parent, Setting setting) {
+	protected Control createSWTControl(Composite parent) {
 		final Text text = new Text(parent, getTextWidgetStyle());
 		text.setData(CUSTOM_VARIANT, getTextVariantID());
-		text.setMessage(getTextMessage(setting));
+		text.setMessage(getTextMessage());
 		return text;
 	}
 
 	/**
 	 * Returns the text which should be set as the message text on the Text field.
 	 *
-	 * @param setting the setting being shown in the text field
 	 * @return the string to show as the message
 	 */
-	protected String getTextMessage(Setting setting) {
+	protected String getTextMessage() {
 		return Activator.getDefault().getEMFFormsLabelProvider()
 			.getDisplayName(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
 	}

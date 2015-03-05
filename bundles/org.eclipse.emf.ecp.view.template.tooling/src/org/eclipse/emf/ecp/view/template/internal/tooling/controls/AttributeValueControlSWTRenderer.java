@@ -88,7 +88,7 @@ public class AttributeValueControlSWTRenderer extends SimpleControlSWTControlSWT
 	 *      org.eclipse.emf.ecore.EStructuralFeature.Setting)
 	 */
 	@Override
-	protected Control createSWTControl(final Composite parent, Setting setting) {
+	protected Control createSWTControl(final Composite parent) {
 		final Composite composite = new Composite(parent, SWT.NONE);
 		composite.setBackgroundMode(SWT.INHERIT_FORCE);
 		GridLayoutFactory.fillDefaults().numColumns(2).equalWidth(false).applyTo(composite);

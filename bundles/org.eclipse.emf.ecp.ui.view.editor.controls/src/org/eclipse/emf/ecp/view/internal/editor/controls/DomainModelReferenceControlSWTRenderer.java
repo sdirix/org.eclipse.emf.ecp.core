@@ -17,6 +17,7 @@ import java.util.HashSet;
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
+import org.eclipse.core.databinding.observable.IObserving;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.notify.AdapterFactory;
@@ -26,7 +27,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.impl.EReferenceImpl;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.edit.internal.swt.SWTImageHelper;
@@ -50,9 +50,9 @@ import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
+import org.eclipse.emf.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
-import org.eclipse.emf.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -94,7 +94,9 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 	private Composite mainComposite;
 	private StackLayout stackLayout;
 	private Label unsetLabel;
-	private Setting setting;
+	private EObject eObject;
+	private EStructuralFeature structuralFeature;
+	// private Setting setting;
 	private ECPModelElementChangeListener modelElementChangeListener;
 	private ComposedAdapterFactory composedAdapterFactory;
 	private AdapterFactoryItemDelegator adapterFactoryItemDelegator;
@@ -232,13 +234,14 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer#createSWTControl(org.eclipse.swt.widgets.Composite,
-	 *      org.eclipse.emf.ecore.EStructuralFeature.Setting)
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer#createSWTControl(org.eclipse.swt.widgets.Composite)
 	 */
 	@Override
-	protected Control createSWTControl(Composite parent, Setting setting) throws DatabindingFailedException {
-
-		this.setting = setting;
+	protected Control createSWTControl(Composite parent) throws DatabindingFailedException {
+		final IObservableValue observableValue = Activator.getDefault().getEMFFormsDatabinding()
+			.getObservableValue(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
+		eObject = (EObject) ((IObserving) observableValue).getObserved();
+		structuralFeature = (EStructuralFeature) observableValue.getValueType();
 
 		final Composite containerComposite = new Composite(parent, SWT.NONE);
 		containerComposite.setBackground(parent.getBackground());
@@ -276,7 +279,7 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 		setLabel.setBackground(contentSetComposite.getBackground());
 		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.FILL).applyTo(setLabel);
 
-		if (setting.isSet()) {
+		if (eObject.eIsSet(structuralFeature)) {
 			stackLayout.topControl = contentSetComposite;
 		} else {
 			stackLayout.topControl = unsetLabel;
@@ -297,15 +300,15 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 	 * @throws DatabindingFailedException
 	 */
 	private void createButtons(Composite composite) throws DatabindingFailedException {
-		final Button unsetBtn = createButtonForAction(new DeleteReferenceAction(getEditingDomain(setting), setting,
-			null), composite);
+		final Button unsetBtn = createButtonForAction(new DeleteReferenceAction(getEditingDomain(eObject), eObject,
+			structuralFeature, null), composite);
 		unsetBtn.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				final Command setCommand = SetCommand.create(getEditingDomain(setting), setting.getEObject(),
-					setting.getEStructuralFeature(), SetCommand.UNSET_VALUE);
-				getEditingDomain(setting).getCommandStack().execute(setCommand);
+				final Command setCommand = SetCommand.create(getEditingDomain(eObject), eObject, structuralFeature,
+					SetCommand.UNSET_VALUE);
+				getEditingDomain(eObject).getCommandStack().execute(setCommand);
 			}
 
 			@Override
@@ -314,11 +317,10 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 			}
 		});
 
-		final Button setBtn = createButtonForAction(new NewReferenceAction(getEditingDomain(setting), setting,
-			getItemPropertyDescriptor(setting), null), composite); // getViewModelContext().getService(ReferenceService.class)
-		setBtn.addSelectionListener(new SelectionAdapterExtension(setLabel, getModelValue(),
-			getViewModelContext(),
-			getDataBindingContext(), setting.getEStructuralFeature()));
+		final Button setBtn = createButtonForAction(new NewReferenceAction(getEditingDomain(eObject), eObject,
+			structuralFeature, getItemPropertyDescriptor(eObject, structuralFeature), null), composite); // getViewModelContext().getService(ReferenceService.class)
+		setBtn.addSelectionListener(new SelectionAdapterExtension(setLabel, getModelValue(), getViewModelContext(),
+			getDataBindingContext(), structuralFeature));
 
 	}
 
@@ -366,14 +368,14 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 			final EClass eclass = Helper.getRootEClass(getViewModelContext().getDomainModel());
 
 			VDomainModelReference reference = null;
-			if (VControl.class.isInstance(setting.getEObject())) {
-				reference = VControl.class.cast(setting.getEObject()).getDomainModelReference();
-			} else if (VLabel.class.isInstance(setting.getEObject())) {
-				reference = VLabel.class.cast(setting.getEObject()).getDomainModelReference();
+			if (VControl.class.isInstance(eObject)) {
+				reference = VControl.class.cast(eObject).getDomainModelReference();
+			} else if (VLabel.class.isInstance(eObject)) {
+				reference = VLabel.class.cast(eObject).getDomainModelReference();
 			}
 
 			final CreateDomainModelReferenceWizard wizard = new CreateDomainModelReferenceWizard(
-				setting, getEditingDomain(setting), eclass,
+				eObject, structuralFeature, getEditingDomain(eObject), eclass,
 				reference == null ? "New Reference Element" : "Configure " + reference.eClass().getName(), //$NON-NLS-1$ //$NON-NLS-2$
 				Messages.NewModelElementWizard_WizardTitle_AddModelElement,
 				Messages.NewModelElementWizard_PageTitle_AddModelElement,

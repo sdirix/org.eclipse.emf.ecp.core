@@ -16,8 +16,11 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.ecp.edit.internal.swt.reference.ReferenceMessageKeys;
 import org.eclipse.emf.ecp.edit.internal.swt.util.OverlayImageDescriptor;
@@ -99,8 +102,24 @@ public class NewReferenceAction extends ECPSWTAction {
 		} else if (attribute.endsWith("s")) {//$NON-NLS-1$
 			attribute = attribute.substring(0, attribute.length() - 1);
 		}
-		setToolTipText(LocalizationServiceHelper.getString(getClass(), ReferenceMessageKeys.NewReferenceAction_CreateAndLinkNew)
+		setToolTipText(LocalizationServiceHelper.getString(getClass(),
+			ReferenceMessageKeys.NewReferenceAction_CreateAndLinkNew)
 			+ attribute);
+	}
+
+	/**
+	 * The constructor for a new reference action.
+	 *
+	 * @param editingDomain The {@link EditingDomain} to use
+	 * @param itemPropertyDescriptor The {@link IItemPropertyDescriptor} to use
+	 * @param eObject The {@link EObject} to use
+	 * @param structuralFeature The {@link EStructuralFeature} defining which feature of the {@link EObject} is used
+	 * @param referenceService The {@link ReferenceService} to use
+	 */
+	public NewReferenceAction(EditingDomain editingDomain, EObject eObject, EStructuralFeature structuralFeature,
+		IItemPropertyDescriptor itemPropertyDescriptor, ReferenceService referenceService) {
+		this(editingDomain, ((InternalEObject) eObject).eSetting(structuralFeature), itemPropertyDescriptor,
+			referenceService);
 	}
 
 	/**

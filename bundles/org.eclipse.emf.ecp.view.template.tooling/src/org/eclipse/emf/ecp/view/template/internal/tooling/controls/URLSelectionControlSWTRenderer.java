@@ -15,11 +15,13 @@ import java.io.File;
 import java.net.MalformedURLException;
 
 import org.eclipse.core.databinding.Binding;
+import org.eclipse.core.databinding.observable.IObserving;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.emf.common.command.Command;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
@@ -29,6 +31,7 @@ import org.eclipse.emf.ecp.view.template.internal.tooling.Messages;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -85,11 +88,10 @@ public class URLSelectionControlSWTRenderer extends SimpleControlSWTControlSWTRe
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer#createSWTControl(org.eclipse.swt.widgets.Composite,
-	 *      org.eclipse.emf.ecore.EStructuralFeature.Setting)
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer#createSWTControl(org.eclipse.swt.widgets.Composite)
 	 */
 	@Override
-	protected Control createSWTControl(Composite parent, final Setting setting) {
+	protected Control createSWTControl(Composite parent) {
 		final Composite composite = new Composite(parent, SWT.NONE);
 		composite.setBackgroundMode(SWT.INHERIT_FORCE);
 		GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(false).applyTo(composite);
@@ -121,7 +123,7 @@ public class URLSelectionControlSWTRenderer extends SimpleControlSWTControlSWTRe
 				} catch (final MalformedURLException ex) {
 					Activator.log(ex);
 				}
-				setValue(selectedURL, setting);
+				setValue(selectedURL);
 			}
 
 		});
@@ -153,17 +155,27 @@ public class URLSelectionControlSWTRenderer extends SimpleControlSWTControlSWTRe
 
 				final String selectedURL = "platform:/plugin" + resource.getFullPath().toString(); //$NON-NLS-1$
 
-				setValue(selectedURL, setting);
+				setValue(selectedURL);
 			}
 
 		});
 		return composite;
 	}
 
-	private void setValue(String selectedURL, Setting setting) {
-		final EditingDomain editingDomain = getEditingDomain(setting);
-		final Command command = SetCommand.create(editingDomain, setting.getEObject(), setting.getEStructuralFeature(),
-			selectedURL);
+	private void setValue(String selectedURL) {
+		IObservableValue observableValue;
+		try {
+			observableValue = Activator.getDefault().getEMFFormsDatabinding()
+				.getObservableValue(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
+		} catch (final DatabindingFailedException ex) {
+			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+			return;
+		}
+		final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
+		final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
+
+		final EditingDomain editingDomain = getEditingDomain(eObject);
+		final Command command = SetCommand.create(editingDomain, eObject, structuralFeature, selectedURL);
 		editingDomain.getCommandStack().execute(command);
 	}
 
