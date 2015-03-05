@@ -115,7 +115,7 @@ public abstract class ExpectedValueControlRenderer extends SimpleControlSWTContr
 	 *      org.eclipse.emf.ecore.EStructuralFeature.Setting)
 	 */
 	@Override
-	protected Binding[] createBindings(Control control, Setting setting) throws DatabindingFailedException {
+	protected Binding[] createBindings(Control control) throws DatabindingFailedException {
 		final Label text = (Label) control;
 		final TargetToModelUpdateStrategy targetToModelUpdateStrategy = new TargetToModelUpdateStrategy();
 		final ModelToTargetUpdateStrategy modelToTargetUpdateStrategy = new ModelToTargetUpdateStrategy();

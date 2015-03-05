@@ -70,7 +70,7 @@ public class ControlRootEClassControl2SWTRenderer extends SimpleControlSWTContro
 	 *      org.eclipse.emf.ecore.EStructuralFeature.Setting)
 	 */
 	@Override
-	protected Binding[] createBindings(Control control, final Setting setting) throws DatabindingFailedException {
+	protected Binding[] createBindings(Control control) throws DatabindingFailedException {
 
 		final Binding[] bindings = new Binding[3];
 		final IObservableValue value = SWTObservables.observeText(label);

@@ -43,7 +43,7 @@ public class BooleanControlSWTRenderer extends SimpleControlSWTControlSWTRendere
 	}
 
 	@Override
-	protected Binding[] createBindings(Control control, Setting setting) throws DatabindingFailedException {
+	protected Binding[] createBindings(Control control) throws DatabindingFailedException {
 		final Binding binding = getDataBindingContext().bindValue(SWTObservables.observeSelection(control),
 			getModelValue());
 		return new Binding[] { binding };

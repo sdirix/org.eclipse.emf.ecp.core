@@ -62,7 +62,7 @@ public class HexColorSelectionControlSWTRenderer extends SimpleControlSWTControl
 	 *      org.eclipse.emf.ecore.EStructuralFeature.Setting)
 	 */
 	@Override
-	protected Binding[] createBindings(Control control, Setting setting) throws DatabindingFailedException {
+	protected Binding[] createBindings(Control control) throws DatabindingFailedException {
 		final Composite composite = Composite.class.cast(control);
 		final Control childControl = composite.getChildren()[0];
 		final IObservableValue value = SWTObservables.observeBackground(childControl);

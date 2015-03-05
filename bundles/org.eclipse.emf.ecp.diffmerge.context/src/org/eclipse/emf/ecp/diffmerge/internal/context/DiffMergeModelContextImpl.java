@@ -12,16 +12,19 @@
 package org.eclipse.emf.ecp.diffmerge.internal.context;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.core.databinding.observable.IObserving;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.diffmerge.spi.context.ControlPair;
 import org.eclipse.emf.ecp.diffmerge.spi.context.DiffMergeModelContext;
@@ -33,8 +36,9 @@ import org.eclipse.emf.ecp.view.spi.model.VAttachment;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
-import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.util.ViewModelUtil;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 
 /**
  * Implementation of the DiffMergeModelContext based on the {@link ViewModelContextImpl}.
@@ -126,22 +130,26 @@ public class DiffMergeModelContextImpl extends ViewModelContextImpl implements
 
 	private void readAlreadyMerged(Set<VDomainModelReference> mergedReferences) {
 		for (final VDomainModelReference domainModelReference : mergedReferences) {
-			domainModelReference.init(getDomainModel());
-			final Iterator<Setting> iterator = domainModelReference.getIterator();
-			while (iterator.hasNext()) {
-				final Setting setting = iterator.next();
-				Set<VControl> controls = getControlsFor(setting);
-				controls = getValidMergeControls(controls);
-				if (controls == null) {
-					continue;
-				}
-				for (final VControl vControl : controls) {
-					markControl(vControl, true);
-				}
-				// break for table not for custom
-				if (VFeaturePathDomainModelReference.class.isInstance(domainModelReference)) {
-					break;
-				}
+			IObservableValue observableValue;
+			try {
+				observableValue = Activator.getDefault().getEMFFormsDatabinding()
+					.getObservableValue(domainModelReference, getDomainModel());
+			} catch (final DatabindingFailedException ex) {
+				Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+				continue;
+			}
+			final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
+			final InternalEObject internalEObject = (InternalEObject) ((IObserving) observableValue)
+				.getObserved();
+			final Setting setting = internalEObject.eSetting(structuralFeature);
+
+			Set<VControl> controls = getControlsFor(setting);
+			controls = getValidMergeControls(controls);
+			if (controls == null) {
+				continue;
+			}
+			for (final VControl vControl : controls) {
+				markControl(vControl, true);
 			}
 		}
 	}

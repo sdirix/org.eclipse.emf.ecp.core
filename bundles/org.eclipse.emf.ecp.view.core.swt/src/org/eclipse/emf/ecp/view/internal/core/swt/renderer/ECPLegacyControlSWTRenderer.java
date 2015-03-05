@@ -82,7 +82,7 @@ public class ECPLegacyControlSWTRenderer extends SimpleControlSWTControlSWTRende
 	}
 
 	@Override
-	protected Binding[] createBindings(Control control, Setting setting) {
+	protected Binding[] createBindings(Control control) {
 		// TODO Auto-generated method stub
 		return null;
 	}

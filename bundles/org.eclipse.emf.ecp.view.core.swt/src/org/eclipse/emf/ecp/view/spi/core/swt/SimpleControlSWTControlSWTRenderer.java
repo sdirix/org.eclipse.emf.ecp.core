@@ -59,7 +59,7 @@ public abstract class SimpleControlSWTControlSWTRenderer extends SimpleControlSW
 		if (control == null) {
 			return null;
 		}
-		final Binding[] bindings = createBindings(control, setting);
+		final Binding[] bindings = createBindings(control);
 
 		control.addDisposeListener(new DisposeListener() {
 			@Override
@@ -80,11 +80,10 @@ public abstract class SimpleControlSWTControlSWTRenderer extends SimpleControlSW
 	 * Create the {@link Binding Bindings} for this controls.
 	 *
 	 * @param control the {@link Control} to create the binding for
-	 * @param setting the current {@link Setting}
 	 * @return all the bindings created by this renderer
 	 * @throws DatabindingFailedException if the creation of the bindings fails.
 	 */
-	protected abstract Binding[] createBindings(Control control, Setting setting) throws DatabindingFailedException;
+	protected abstract Binding[] createBindings(Control control) throws DatabindingFailedException;
 
 	/**
 	 * Creates the Control.

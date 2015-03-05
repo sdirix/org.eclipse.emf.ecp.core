@@ -62,7 +62,7 @@ public class AttributeValueControlSWTRenderer extends SimpleControlSWTControlSWT
 	 *      org.eclipse.emf.ecore.EStructuralFeature.Setting)
 	 */
 	@Override
-	protected Binding[] createBindings(Control control, Setting setting) throws DatabindingFailedException {
+	protected Binding[] createBindings(Control control) throws DatabindingFailedException {
 		final Label label = (Label) Composite.class.cast(control).getChildren()[0];
 		final Binding binding = getDataBindingContext().bindValue(SWTObservables.observeText(label),
 			getModelValue(), new UpdateValueStrategy(), new UpdateValueStrategy() {

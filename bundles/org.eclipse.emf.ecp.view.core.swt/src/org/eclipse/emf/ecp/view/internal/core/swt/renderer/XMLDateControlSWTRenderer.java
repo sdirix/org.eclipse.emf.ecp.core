@@ -293,17 +293,18 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 	}
 
 	@Override
-	protected Binding[] createBindings(Control control, Setting setting) throws DatabindingFailedException {
+	protected Binding[] createBindings(Control control) throws DatabindingFailedException {
+		final EStructuralFeature structuralFeature = (EStructuralFeature) getModelValue().getValueType();
 		final Text text = (Text) ((Composite) control).getChildren()[0];
 		final Button button = (Button) ((Composite) control).getChildren()[1];
 		button.addSelectionListener(new SelectionAdapterExtension(text, button, getModelValue(),
 			getViewModelContext(),
-			getDataBindingContext(), setting.getEStructuralFeature()));
+			getDataBindingContext(), structuralFeature));
 
 		final IObservableValue value = SWTObservables.observeText(text, SWT.FocusOut);
 
 		final DateTargetToModelUpdateStrategy targetToModelUpdateStrategy = new DateTargetToModelUpdateStrategy(
-			setting.getEStructuralFeature(), getModelValue(), getDataBindingContext(),
+			structuralFeature, getModelValue(), getDataBindingContext(),
 			text);
 
 		final DateModelToTargetUpdateStrategy modelToTargetUpdateStrategy = new DateModelToTargetUpdateStrategy(false);

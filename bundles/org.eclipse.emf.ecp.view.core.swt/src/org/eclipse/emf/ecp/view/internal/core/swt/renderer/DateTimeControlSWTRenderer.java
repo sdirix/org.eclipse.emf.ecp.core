@@ -16,9 +16,12 @@ import java.util.Locale;
 
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.UpdateValueStrategy;
+import org.eclipse.core.databinding.observable.IObserving;
 import org.eclipse.core.databinding.observable.value.DateAndTimeObservableValue;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.edit.spi.ViewLocaleService;
 import org.eclipse.emf.ecp.view.internal.core.swt.Activator;
@@ -80,13 +83,12 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 
 	private Shell dialog;
 
-	private Setting setting;
+	// private Setting setting;
 
 	private ModelChangeListener domainModelChangeListener;
 
 	@Override
-	protected Binding[] createBindings(Control control, final Setting setting) throws DatabindingFailedException {
-		this.setting = setting;
+	protected Binding[] createBindings(Control control) throws DatabindingFailedException {
 
 		final DateTime date = (DateTime) ((Composite) ((Composite) ((Composite) control).getChildren()[0])
 			.getChildren()[0]).getChildren()[0];
@@ -111,9 +113,15 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 
 			@Override
 			public void notifyChange(ModelChangeNotification notification) {
-				if (setting.getEStructuralFeature().equals(notification.getStructuralFeature())) {
+				EStructuralFeature structuralFeature;
+				try {
+					structuralFeature = (EStructuralFeature) getModelValue().getValueType();
+				} catch (final DatabindingFailedException ex) {
+					Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+					return;
+				}
+				if (structuralFeature.equals(notification.getStructuralFeature())) {
 					updateChangeListener(notification.getRawNotification().getNewValue());
-
 				}
 			}
 		};
@@ -298,15 +306,17 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 
 		@Override
 		public void widgetSelected(SelectionEvent e) {
-			final Command removeCommand = SetCommand.create(getEditingDomain(setting), setting.getEObject(),
-				setting.getEStructuralFeature(), null);
-			getEditingDomain(setting).getCommandStack().execute(removeCommand);
 			try {
+				final EStructuralFeature structuralFeature = (EStructuralFeature) getModelValue().getValueType();
+				final EObject eObject = (EObject) ((IObserving) getModelValue()).getObserved();
+				final Command removeCommand = SetCommand.create(getEditingDomain(eObject), eObject, structuralFeature,
+					null);
+				getEditingDomain(eObject).getCommandStack().execute(removeCommand);
 				updateChangeListener(getModelValue().getValue());
 			} catch (final DatabindingFailedException ex) {
 				Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
-				// Do nothing. This cannot happen because if getModelValue() fails, the control will never be rendered
-				// and consequently this code will never be executed.
+				// Do nothing. This should not happen because if getModelValue() fails, the control will never be
+				// rendered and consequently this code will never be executed.
 			}
 		}
 

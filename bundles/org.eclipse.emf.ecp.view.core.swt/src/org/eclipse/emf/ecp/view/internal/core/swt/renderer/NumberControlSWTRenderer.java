@@ -83,19 +83,21 @@ public class NumberControlSWTRenderer extends TextControlSWTRenderer {
 	}
 
 	@Override
-	protected Binding[] createBindings(Control control, Setting setting) throws DatabindingFailedException {
+	protected Binding[] createBindings(Control control) throws DatabindingFailedException {
+		final EStructuralFeature structuralFeature = (EStructuralFeature) getModelValue().getValueType();
+
 		final NumericalTargetToModelUpdateStrategy targetToModelStrategy = new NumericalTargetToModelUpdateStrategy(
-			setting.getEStructuralFeature(), getViewModelContext(), getModelValue(), getDataBindingContext(),
+			structuralFeature, getViewModelContext(), getModelValue(), getDataBindingContext(),
 			(Text) control);
 		final NumericalModelToTargetUpdateStrategy modelToTargetStrategy = new NumericalModelToTargetUpdateStrategy(
-			getInstanceClass(setting.getEStructuralFeature()), getViewModelContext(), false);
+			getInstanceClass(structuralFeature), getViewModelContext(), false);
 		final Binding binding = bindValue(control, getModelValue(), getDataBindingContext(),
 			targetToModelStrategy,
 			modelToTargetStrategy);
 		final Binding tooltipBinding = createTooltipBinding(control, getModelValue(), getDataBindingContext(),
 			targetToModelStrategy,
 			new NumericalModelToTargetUpdateStrategy(
-				getInstanceClass(setting.getEStructuralFeature()), getViewModelContext(), true));
+				getInstanceClass(structuralFeature), getViewModelContext(), true));
 		return new Binding[] { binding, tooltipBinding };
 	}
 

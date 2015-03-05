@@ -65,9 +65,10 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 	}
 
 	@Override
-	protected Binding[] createBindings(Control control, Setting setting) throws DatabindingFailedException {
+	protected Binding[] createBindings(Control control) throws DatabindingFailedException {
+		final EStructuralFeature structuralFeature = (EStructuralFeature) getModelValue().getValueType();
 		final TargetToModelUpdateStrategy targetToModelUpdateStrategy = new TargetToModelUpdateStrategy(
-			setting.getEStructuralFeature().isUnsettable());
+			structuralFeature.isUnsettable());
 		final ModelToTargetUpdateStrategy modelToTargetUpdateStrategy = new ModelToTargetUpdateStrategy(false);
 		final Binding binding = bindValue(control, getModelValue(), getDataBindingContext(),
 			targetToModelUpdateStrategy,
