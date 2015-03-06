@@ -22,7 +22,7 @@ import org.junit.runners.Suite.SuiteClasses;
  *
  */
 @RunWith(Suite.class)
-@SuiteClasses({ DatabindingIntegrationTest.class })
+@SuiteClasses({ DatabindingIntegration_ITest.class })
 public class AllTests {
 
 }

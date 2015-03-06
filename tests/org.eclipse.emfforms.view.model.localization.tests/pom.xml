@@ -12,6 +12,8 @@
 	<groupId>org.eclipse.emf.ecp</groupId>
 	<artifactId>org.eclipse.emfforms.view.model.localization.tests</artifactId>
 	<version>1.6.0-SNAPSHOT</version>
+	<packaging>eclipse-plugin</packaging>
+	<!-- 
 	<packaging>eclipse-test-plugin</packaging>
 
 	<build>
@@ -28,4 +30,5 @@
 			</plugin>
 		</plugins>
 	</build>
+	 -->
 </project>

@@ -41,7 +41,7 @@ import org.osgi.framework.ServiceReference;
  * @author Lucas Koehler
  *
  */
-public class DatabindingIntegrationTest {
+public class DatabindingIntegration_ITest {
 
 	private static BundleContext bundleContext;
 	private EMFFormsDatabinding databindingService;
@@ -49,7 +49,7 @@ public class DatabindingIntegrationTest {
 
 	@BeforeClass
 	public static void setUpBeforeClass() {
-		bundleContext = FrameworkUtil.getBundle(DatabindingIntegrationTest.class).getBundleContext();
+		bundleContext = FrameworkUtil.getBundle(DatabindingIntegration_ITest.class).getBundleContext();
 	}
 
 	@Before
