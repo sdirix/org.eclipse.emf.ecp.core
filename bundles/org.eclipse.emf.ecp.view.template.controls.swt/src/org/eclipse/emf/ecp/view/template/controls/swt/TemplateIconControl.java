@@ -153,12 +153,18 @@ public class TemplateIconControl extends AbstractTextControl {
 			}
 			final String file = (String) selectedResult;
 			if (file.endsWith("png") || file.endsWith("gif") || file.endsWith("jpg")) { //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				getDomainModelReference()
-					.getIterator()
-					.next()
-					.set(
-						"platform:/plugin/" + iconTreeContentProvider.getLastBundle().getSymbolicName() + "/" //$NON-NLS-1$ //$NON-NLS-2$
-							+ file);
+				IObservableValue observableValue;
+				try {
+					observableValue = Activator.getDefault().getEMFFormsDatabinding()
+						.getObservableValue(getDomainModelReference(), getViewModelContext().getDomainModel());
+				} catch (final DatabindingFailedException ex) {
+					Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+					return;
+				}
+				final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
+				final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
+				eObject.eSet(structuralFeature, "platform:/plugin/" //$NON-NLS-1$
+					+ iconTreeContentProvider.getLastBundle().getSymbolicName() + "/" + file); //$NON-NLS-1$
 			}
 		}
 	}

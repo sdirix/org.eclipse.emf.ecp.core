@@ -13,18 +13,23 @@ package org.eclipse.emf.ecp.view.template.internal.tooling.controls;
 
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.UpdateValueStrategy;
+import org.eclipse.core.databinding.observable.IObserving;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.common.command.Command;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
+import org.eclipse.emf.ecp.view.template.internal.tooling.Activator;
 import org.eclipse.emf.ecp.view.template.internal.tooling.Messages;
 import org.eclipse.emf.ecp.view.template.internal.tooling.util.ValueSelectionHelper;
 import org.eclipse.emf.ecp.view.template.selector.viewModelElement.model.VTViewModelElementSelector;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -100,24 +105,32 @@ public class AttributeValueControlSWTRenderer extends SimpleControlSWTControlSWT
 		GridDataFactory.fillDefaults().align(SWT.BEGINNING, SWT.BEGINNING).grab(false, false).applyTo(button);
 
 		button.addSelectionListener(new SelectionAdapter() {
-
 			/**
 			 * {@inheritDoc}
 			 *
 			 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
 			 */
-
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				super.widgetSelected(e);
-				final Setting setting = getVElement().getDomainModelReference().getIterator().next();
-				final Object result = ValueSelectionHelper.getValueSelectionDialog(parent.getShell(),
-					VTViewModelElementSelector.class.cast(setting.getEObject()).getAttribute());
+				IObservableValue observableValue;
+				try {
+					observableValue = Activator
+						.getDefault()
+						.getEMFFormsDatabinding()
+						.getObservableValue(getVElement().getDomainModelReference(),
+							getViewModelContext().getDomainModel());
+				} catch (final DatabindingFailedException ex) {
+					Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+					return;
+				}
+				final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
+				final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
 
-				final EditingDomain editingDomain = getEditingDomain(setting);
-				final Command command = SetCommand.create(editingDomain, setting.getEObject(),
-					setting.getEStructuralFeature(),
-					result);
+				final Object result = ValueSelectionHelper.getValueSelectionDialog(parent.getShell(),
+					VTViewModelElementSelector.class.cast(eObject).getAttribute());
+				final EditingDomain editingDomain = getEditingDomain(eObject);
+				final Command command = SetCommand.create(editingDomain, eObject, structuralFeature, result);
 				editingDomain.getCommandStack().execute(command);
 			}
 		});

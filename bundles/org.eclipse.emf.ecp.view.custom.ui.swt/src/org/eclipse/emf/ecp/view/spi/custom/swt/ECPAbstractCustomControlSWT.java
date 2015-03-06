@@ -12,7 +12,6 @@
 package org.eclipse.emf.ecp.view.spi.custom.swt;
 
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +19,7 @@ import java.util.Map;
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
+import org.eclipse.core.databinding.observable.IObserving;
 import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.property.value.IValueProperty;
@@ -32,6 +32,7 @@ import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.edit.spi.ECPAbstractControl;
 import org.eclipse.emf.ecp.edit.spi.ECPControlFactory;
@@ -360,24 +361,19 @@ public abstract class ECPAbstractCustomControlSWT
 	 * @return the setting or throws an {@link IllegalStateException} if too many or too few elements are found.
 	 */
 	private Setting getFirstSetting(VDomainModelReference modelFeature) {
-		final Iterator<Setting> iterator = modelFeature.getIterator();
-		int numElments = 0;
-		Setting setting = null;
-		while (iterator.hasNext()) {
-			setting = iterator.next();
-			numElments++;
+		IObservableValue observableValue;
+		try {
+			observableValue = Activator.getDefault().getEMFFormsDatabinding()
+				.getObservableValue(modelFeature, getViewModelContext().getDomainModel());
+		} catch (final DatabindingFailedException ex) {
+			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+			throw new IllegalStateException("The databinding failed due to an incorrect VDomainModelReference: " //$NON-NLS-1$
+				+ ex.getMessage());
 		}
-		if (numElments == 0) {
-			throw new IllegalStateException("The VDomainModelReference was not initialised."); //$NON-NLS-1$
-		}
-		else if (numElments > 1) {
-			throw new IllegalStateException(
-				"The VDomainModelReference is ambigous, please use VDomainModelReference which resolve to exactly one setting."); //$NON-NLS-1$
-		}
-		// if (!isEditable()) {
-		// throw new IllegalArgumentException("Feature is not registered as editable");
-		// }
-		return setting;
+		final InternalEObject internalEObject = (InternalEObject) ((IObserving) observableValue).getObserved();
+		final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
+
+		return internalEObject.eSetting(structuralFeature);
 	}
 
 	/**

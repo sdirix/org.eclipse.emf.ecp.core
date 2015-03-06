@@ -11,10 +11,11 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.edit.spi;
 
-import java.util.Iterator;
 import java.util.Locale;
 
 import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.observable.IObserving;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notifier;
@@ -22,6 +23,7 @@ import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecp.internal.edit.Activator;
 import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
@@ -37,6 +39,7 @@ import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 
 /**
  * The {@link ECPAbstractControl} is the abstract class describing a control.
@@ -194,20 +197,20 @@ public abstract class ECPAbstractControl {
 	 */
 	public final Setting getFirstSetting() {
 		if (firstSetting == null) {
-			final Iterator<Setting> iterator = control.getDomainModelReference().getIterator();
-			int count = 0;
-			firstSetting = null;
-			while (iterator.hasNext()) {
-				count++;
-				final Setting setting = iterator.next();
-				if (firstSetting == null) {
-					firstSetting = setting;
-				}
+			IObservableValue observableValue;
+			try {
+				observableValue = Activator.getDefault().getEMFFormsDatabinding()
+					.getObservableValue(control.getDomainModelReference(), getViewModelContext().getDomainModel());
+			} catch (final DatabindingFailedException ex) {
+				Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+				throw new IllegalStateException("The databinding failed due to an incorrect VDomainModelReference: " //$NON-NLS-1$
+					+ ex.getMessage());
 			}
-			if (count == 0) {
-				Activator.logException(new IllegalArgumentException(control.getName() + " : " + //$NON-NLS-1$
-					"The passed VDomainModelReference resolves to no setting.")); //$NON-NLS-1$
-			}
+			final InternalEObject internalEObject = (InternalEObject) ((IObserving) observableValue).getObserved();
+			final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
+
+			firstSetting = internalEObject.eSetting(structuralFeature);
+			return firstSetting;
 		}
 		return firstSetting;
 	}
