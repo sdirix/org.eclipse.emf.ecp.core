@@ -96,8 +96,8 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider {
 			return getFallbackLabel(structuralFeature);
 		}
 		final EObject tempInstance = EcoreUtil.create(eContainingClass);
-		final IItemPropertyDescriptor itemPropertyDescriptor = emfSpecificService.getAdapterFactoryItemDelegator()
-			.getPropertyDescriptor(tempInstance, structuralFeature);
+		final IItemPropertyDescriptor itemPropertyDescriptor = emfSpecificService.getIItemPropertyDescriptor(
+			tempInstance, structuralFeature);
 
 		return itemPropertyDescriptor.getDisplayName(tempInstance);
 	}
@@ -143,8 +143,9 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider {
 		final IObserving observing = (IObserving) observableValue;
 		final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
 		final EObject value = (EObject) observing.getObserved();
-		final IItemPropertyDescriptor itemPropertyDescriptor = emfSpecificService.getAdapterFactoryItemDelegator()
-			.getPropertyDescriptor(value, structuralFeature);
+		observableValue.dispose();
+		final IItemPropertyDescriptor itemPropertyDescriptor = emfSpecificService.getIItemPropertyDescriptor(value,
+			structuralFeature);
 
 		return itemPropertyDescriptor.getDisplayName(value);
 	}
@@ -171,8 +172,8 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider {
 			return getFallbackLabel(structuralFeature);
 		}
 		final EObject tempInstance = EcoreUtil.create(eContainingClass);
-		final IItemPropertyDescriptor itemPropertyDescriptor = emfSpecificService.getAdapterFactoryItemDelegator()
-			.getPropertyDescriptor(tempInstance, structuralFeature);
+		final IItemPropertyDescriptor itemPropertyDescriptor = emfSpecificService.getIItemPropertyDescriptor(
+			tempInstance, structuralFeature);
 
 		return itemPropertyDescriptor.getDescription(tempInstance);
 	}
@@ -199,8 +200,10 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider {
 		final IObserving observing = (IObserving) observableValue;
 		final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
 		final EObject value = (EObject) observing.getObserved();
-		final IItemPropertyDescriptor itemPropertyDescriptor = emfSpecificService.getAdapterFactoryItemDelegator()
-			.getPropertyDescriptor(value, structuralFeature);
+		observableValue.dispose();
+
+		final IItemPropertyDescriptor itemPropertyDescriptor = emfSpecificService.getIItemPropertyDescriptor(value,
+			structuralFeature);
 
 		return itemPropertyDescriptor.getDescription(value);
 	}

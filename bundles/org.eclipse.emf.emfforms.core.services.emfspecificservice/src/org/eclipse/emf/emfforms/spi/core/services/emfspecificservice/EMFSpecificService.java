@@ -11,8 +11,11 @@
  ******************************************************************************/
 package org.eclipse.emf.emfforms.spi.core.services.emfspecificservice;
 
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
 /**
  * The {@link EMFSpecificService} offers EMF specific functionality. Thereby, it provides the following things:
@@ -25,17 +28,19 @@ import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
  *
  */
 public interface EMFSpecificService {
-	/**
-	 * Returns a {@link ComposedAdapterFactory}.
-	 *
-	 * @return The {@link ComposedAdapterFactory}
-	 */
-	ComposedAdapterFactory getComposedAdapterFactory();
+	// /**
+	// * Returns a {@link ComposedAdapterFactory}.
+	// *
+	// * @return The {@link ComposedAdapterFactory}
+	// */
+	// ComposedAdapterFactory getComposedAdapterFactory();
+	//
+	// /**
+	// * Returns a {@link AdapterFactoryItemDelegator}.
+	// *
+	// * @return The {@link AdapterFactoryItemDelegator}
+	// */
+	// AdapterFactoryItemDelegator getAdapterFactoryItemDelegator();
 
-	/**
-	 * Returns a {@link AdapterFactoryItemDelegator}.
-	 *
-	 * @return The {@link AdapterFactoryItemDelegator}
-	 */
-	AdapterFactoryItemDelegator getAdapterFactoryItemDelegator();
+	IItemPropertyDescriptor getIItemPropertyDescriptor(EObject eObject, EStructuralFeature eStructuralFeature);
 }

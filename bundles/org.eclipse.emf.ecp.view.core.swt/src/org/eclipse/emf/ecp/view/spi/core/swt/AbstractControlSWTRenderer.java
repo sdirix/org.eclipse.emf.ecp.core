@@ -307,11 +307,13 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 		return validationLabel;
 	}
 
+	// TODO remove method!
 	private void updateControl() {
 		try {
 			final IObservableValue observableValue = Activator.getDefault().getEMFFormsDatabinding()
 				.getObservableValue(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
 			value.setValue(((IObserving) observableValue).getObserved());
+			observableValue.dispose();
 			applyEnable();
 		} catch (final DatabindingFailedException ex) {
 			value.setValue(null);

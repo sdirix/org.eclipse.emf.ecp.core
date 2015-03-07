@@ -107,14 +107,7 @@ public abstract class ContainerSWTRenderer<VELEMENT extends VElement> extends Ab
 
 		for (final VContainedElement child : getChildren()) {
 
-			if (VControl.class.isInstance(child) && VControl.class.cast(child).getDomainModelReference() == null) {
-				continue;
-			}
-			try {
-				Activator.getDefault().getEMFFormsDatabinding()
-					.getValueProperty(VControl.class.cast(child).getDomainModelReference());
-			} catch (final DatabindingFailedException ex) {
-				Activator.getDefault().getReportService().report(new RenderingFailedReport(ex));
+			if (!isValidElement(child)) {
 				continue;
 			}
 
@@ -154,14 +147,7 @@ public abstract class ContainerSWTRenderer<VELEMENT extends VElement> extends Ab
 		}
 		columnComposite.setLayout(getLayout(maximalGridDescription.getColumns(), false));
 		for (final VContainedElement child : getChildren()) {
-			if (VControl.class.isInstance(child) && VControl.class.cast(child).getDomainModelReference() == null) {
-				continue;
-			}
-			try {
-				Activator.getDefault().getEMFFormsDatabinding()
-					.getValueProperty(VControl.class.cast(child).getDomainModelReference());
-			} catch (final DatabindingFailedException ex) {
-				Activator.getDefault().getReportService().report(new RenderingFailedReport(ex));
+			if (!isValidElement(child)) {
 				continue;
 			}
 			final SWTGridDescription gridDescription = rowGridDescription.get(child);
@@ -204,6 +190,22 @@ public abstract class ContainerSWTRenderer<VELEMENT extends VElement> extends Ab
 		}
 
 		return columnComposite;
+	}
+
+	private boolean isValidElement(VContainedElement child) {
+		if (VControl.class.isInstance(child)) {
+			if (VControl.class.cast(child).getDomainModelReference() == null) {
+				return false;
+			}
+			try {
+				Activator.getDefault().getEMFFormsDatabinding()
+					.getValueProperty(VControl.class.cast(child).getDomainModelReference());
+			} catch (final DatabindingFailedException ex) {
+				Activator.getDefault().getReportService().report(new RenderingFailedReport(ex));
+				return false;
+			}
+		}
+		return true;
 	}
 
 	// TODO: possible duplicate code

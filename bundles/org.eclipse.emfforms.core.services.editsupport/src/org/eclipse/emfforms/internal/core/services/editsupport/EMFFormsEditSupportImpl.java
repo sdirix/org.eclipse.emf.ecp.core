@@ -113,8 +113,10 @@ public class EMFFormsEditSupportImpl implements EMFFormsEditSupport {
 		final IObserving observing = (IObserving) observableValue;
 		final EObject value = (EObject) observing.getObserved();
 		final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
-		final IItemPropertyDescriptor itemPropertyDescriptor = emfSpecificService.getAdapterFactoryItemDelegator()
-			.getPropertyDescriptor(value, structuralFeature);
+		observableValue.dispose();
+
+		final IItemPropertyDescriptor itemPropertyDescriptor = emfSpecificService.getIItemPropertyDescriptor(value,
+			structuralFeature);
 
 		return itemPropertyDescriptor.isMultiLine(value);
 	}
@@ -141,8 +143,10 @@ public class EMFFormsEditSupportImpl implements EMFFormsEditSupport {
 		final IObserving observing = (IObserving) observableValue;
 		final EObject value = (EObject) observing.getObserved();
 		final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
-		final IItemPropertyDescriptor itemPropertyDescriptor = emfSpecificService.getAdapterFactoryItemDelegator()
-			.getPropertyDescriptor(value, structuralFeature);
+		observableValue.dispose();
+
+		final IItemPropertyDescriptor itemPropertyDescriptor = emfSpecificService.getIItemPropertyDescriptor(value,
+			structuralFeature);
 
 		return itemPropertyDescriptor.canSetProperty(value);
 	}
@@ -170,8 +174,10 @@ public class EMFFormsEditSupportImpl implements EMFFormsEditSupport {
 		final IObserving observing = (IObserving) observableValue;
 		final EObject value = (EObject) observing.getObserved();
 		final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
-		final IItemPropertyDescriptor itemPropertyDescriptor = emfSpecificService.getAdapterFactoryItemDelegator()
-			.getPropertyDescriptor(value, structuralFeature);
+		observableValue.dispose();
+
+		final IItemPropertyDescriptor itemPropertyDescriptor = emfSpecificService.getIItemPropertyDescriptor(value,
+			structuralFeature);
 		final IItemLabelProvider labelProvider = itemPropertyDescriptor.getLabelProvider(rootObject);
 
 		return labelProvider.getText(element);
@@ -200,8 +206,10 @@ public class EMFFormsEditSupportImpl implements EMFFormsEditSupport {
 		final IObserving observing = (IObserving) observableValue;
 		final EObject value = (EObject) observing.getObserved();
 		final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
-		final IItemPropertyDescriptor itemPropertyDescriptor = emfSpecificService.getAdapterFactoryItemDelegator()
-			.getPropertyDescriptor(value, structuralFeature);
+		observableValue.dispose();
+
+		final IItemPropertyDescriptor itemPropertyDescriptor = emfSpecificService.getIItemPropertyDescriptor(value,
+			structuralFeature);
 		final IItemLabelProvider labelProvider = itemPropertyDescriptor.getLabelProvider(rootObject);
 
 		return labelProvider.getImage(element);

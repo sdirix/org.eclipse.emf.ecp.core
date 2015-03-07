@@ -27,7 +27,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
-import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.emfforms.spi.core.services.emfspecificservice.EMFSpecificService;
 import org.eclipse.emf.emfforms.spi.core.services.labelprovider.EMFFormsLabelProvider;
@@ -58,7 +57,6 @@ public class EMFFormsLabelProviderImpl_ITest {
 	private static ServiceRegistration<EMFSpecificService> emfSpecificRegisterService;
 	private static EMFFormsLabelProviderImpl labelProvider;
 	private static ServiceReference<EMFFormsLabelProvider> serviceReference;
-	private static AdapterFactoryItemDelegator adapterFactoryItemDelegator;
 	private static IValueProperty valueProperty;
 	private static EObjectObservableValue observableValue;
 	private static IItemPropertyDescriptor itemPropertyDescriptor;
@@ -98,10 +96,8 @@ public class EMFFormsLabelProviderImpl_ITest {
 		when(itemPropertyDescriptor.getDescription(any(EObject.class))).thenReturn("description"); //$NON-NLS-1$
 		when(itemPropertyDescriptor.getDisplayName(any(EObject.class))).thenReturn("displayName"); //$NON-NLS-1$
 
-		adapterFactoryItemDelegator = mock(AdapterFactoryItemDelegator.class);
-		when(adapterFactoryItemDelegator.getPropertyDescriptor(any(EObject.class), same(structuralFeature)))
-			.thenReturn(itemPropertyDescriptor);
-		when(emfSpecificService.getAdapterFactoryItemDelegator()).thenReturn(adapterFactoryItemDelegator);
+		when(emfSpecificService.getIItemPropertyDescriptor(any(EObject.class), same(structuralFeature))).thenReturn(
+			itemPropertyDescriptor);
 		when(databindingService.getValueProperty(any(VDomainModelReference.class))).thenReturn(valueProperty);
 		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			observableValue);
@@ -118,9 +114,7 @@ public class EMFFormsLabelProviderImpl_ITest {
 	 */
 	@Before
 	public void setUp() throws DatabindingFailedException {
-		reset(emfSpecificService);
 		reset(databindingService);
-		when(emfSpecificService.getAdapterFactoryItemDelegator()).thenReturn(adapterFactoryItemDelegator);
 		when(databindingService.getValueProperty(any(VDomainModelReference.class))).thenReturn(valueProperty);
 		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			observableValue);
@@ -139,7 +133,7 @@ public class EMFFormsLabelProviderImpl_ITest {
 	/**
 	 * Tests that {@link EMFFormsLabelProviderImpl#getDisplayName(VDomainModelReference)} uses the databinding and emf
 	 * specific services.
-	 * 
+	 *
 	 * @throws DatabindingFailedException should not happen, just needs to be thrown because the databinding service
 	 *             defines the throw in its interface.
 	 */
@@ -149,13 +143,12 @@ public class EMFFormsLabelProviderImpl_ITest {
 		labelProvider.getDisplayName(domainModelReference);
 
 		verify(databindingService).getValueProperty(domainModelReference);
-		verify(emfSpecificService).getAdapterFactoryItemDelegator();
 	}
 
 	/**
 	 * Tests that {@link EMFFormsLabelProviderImpl#getDescription(VDomainModelReference)} uses the databinding and emf
 	 * specific services.
-	 * 
+	 *
 	 * @throws DatabindingFailedException should not happen, just needs to be thrown because the databinding service
 	 *             defines the throw in its interface.
 	 */
@@ -165,13 +158,12 @@ public class EMFFormsLabelProviderImpl_ITest {
 		labelProvider.getDescription(domainModelReference);
 
 		verify(databindingService).getValueProperty(domainModelReference);
-		verify(emfSpecificService).getAdapterFactoryItemDelegator();
 	}
 
 	/**
 	 * Tests that {@link EMFFormsLabelProviderImpl#getDisplayName(VDomainModelReference, EObject)} uses the databinding
 	 * and emf specific services.
-	 * 
+	 *
 	 * @throws DatabindingFailedException should not happen, just needs to be thrown because the databinding service
 	 *             defines the throw in its interface.
 	 */
@@ -182,13 +174,12 @@ public class EMFFormsLabelProviderImpl_ITest {
 		labelProvider.getDisplayName(domainModelReference, eObject);
 
 		verify(databindingService).getObservableValue(domainModelReference, eObject);
-		verify(emfSpecificService).getAdapterFactoryItemDelegator();
 	}
 
 	/**
 	 * Tests that {@link EMFFormsLabelProviderImpl#getDescription(VDomainModelReference, EObject)} uses the databinding
 	 * and emf specific services.
-	 * 
+	 *
 	 * @throws DatabindingFailedException should not happen, just needs to be thrown because the databinding service
 	 *             defines the throw in its interface.
 	 */
@@ -199,6 +190,5 @@ public class EMFFormsLabelProviderImpl_ITest {
 		labelProvider.getDescription(domainModelReference, eObject);
 
 		verify(databindingService).getObservableValue(domainModelReference, eObject);
-		verify(emfSpecificService).getAdapterFactoryItemDelegator();
 	}
 }

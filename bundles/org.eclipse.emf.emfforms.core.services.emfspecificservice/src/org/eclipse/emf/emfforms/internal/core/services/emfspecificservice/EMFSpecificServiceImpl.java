@@ -12,8 +12,13 @@
 package org.eclipse.emf.emfforms.internal.core.services.emfspecificservice;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.emfforms.spi.core.services.emfspecificservice.EMFSpecificService;
 
@@ -25,30 +30,62 @@ import org.eclipse.emf.emfforms.spi.core.services.emfspecificservice.EMFSpecific
  */
 public class EMFSpecificServiceImpl implements EMFSpecificService {
 
-	private ComposedAdapterFactory composedAdapterFactory; // TODO: discuss: need dispose?
+	// private ComposedAdapterFactory composedAdapterFactory; // TODO: discuss: need dispose?
+	//
+	// /**
+	// * {@inheritDoc}
+	// *
+	// * @see
+	// org.eclipse.emf.emfforms.spi.core.services.emfspecificservice.EMFSpecificService#getComposedAdapterFactory()
+	// */
+	// @Override
+	// public ComposedAdapterFactory getComposedAdapterFactory() {
+	// if (composedAdapterFactory == null) {
+	// composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
+	// new ReflectiveItemProviderAdapterFactory(),
+	// new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
+	// }
+	// return composedAdapterFactory;
+	// }
+	//
+	// /**
+	// * {@inheritDoc}
+	// *
+	// * @see
+	// org.eclipse.emf.emfforms.spi.core.services.emfspecificservice.EMFSpecificService#getAdapterFactoryItemDelegator()
+	// */
+	// @Override
+	// public AdapterFactoryItemDelegator getAdapterFactoryItemDelegator() {
+	// return new AdapterFactoryItemDelegator(getComposedAdapterFactory());
+	// }
 
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.emfforms.spi.core.services.emfspecificservice.EMFSpecificService#getComposedAdapterFactory()
+	 * @see EMFSpecificService#getIItemPropertyDescriptor(EObject, EStructuralFeature)
 	 */
 	@Override
-	public ComposedAdapterFactory getComposedAdapterFactory() {
-		if (composedAdapterFactory == null) {
-			composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
-				new ReflectiveItemProviderAdapterFactory(),
-				new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
+	public IItemPropertyDescriptor getIItemPropertyDescriptor(EObject eObject, EStructuralFeature eStructuralFeature) {
+		final EditingDomain editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(eObject);
+		AdapterFactoryItemDelegator itemDelegator;
+		if (editingDomain != null && AdapterFactoryEditingDomain.class.isInstance(editingDomain)) {
+			itemDelegator = getAdapterFactoryItemDelegator(AdapterFactoryEditingDomain.class.cast(editingDomain)
+				.getAdapterFactory());
+		} else {
+			final ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
+				new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE),
+				// new CustomReflectiveItemProvider(), <-- move to common bundle,
+				// then remove the ReflectiveItemProviderAdapterFactory
+				new ReflectiveItemProviderAdapterFactory()
+			});
+			itemDelegator = getAdapterFactoryItemDelegator(composedAdapterFactory);
+			composedAdapterFactory.dispose();
 		}
-		return composedAdapterFactory;
+
+		return itemDelegator.getPropertyDescriptor(eObject, eStructuralFeature);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.emfforms.spi.core.services.emfspecificservice.EMFSpecificService#getAdapterFactoryItemDelegator()
-	 */
-	@Override
-	public AdapterFactoryItemDelegator getAdapterFactoryItemDelegator() {
-		return new AdapterFactoryItemDelegator(getComposedAdapterFactory());
+	private AdapterFactoryItemDelegator getAdapterFactoryItemDelegator(AdapterFactory adapterFactory) {
+		return new AdapterFactoryItemDelegator(adapterFactory);
 	}
 }

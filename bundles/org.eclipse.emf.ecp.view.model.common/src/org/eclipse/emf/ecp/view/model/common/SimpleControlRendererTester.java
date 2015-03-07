@@ -56,6 +56,7 @@ public abstract class SimpleControlRendererTester implements ECPRendererTester {
 		}
 		final EStructuralFeature feature = (EStructuralFeature) observableValue.getValueType();
 		final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
+		observableValue.dispose();
 		// if the feature is a multiValue and the description is a singlevalue continue
 		if (isSingleValue() == feature.isMany()) {
 			return NOT_APPLICABLE;

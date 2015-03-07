@@ -73,17 +73,15 @@ public class EMFFormsLabelProviderImpl_Test {
 		labelProvider.setEMFSpecificService(emfSpecificService);
 
 		itemPropertyDescriptor = mock(IItemPropertyDescriptor.class);
-		adapterFactoryItemDelegator = mock(AdapterFactoryItemDelegator.class);
-		when(adapterFactoryItemDelegator.getPropertyDescriptor(any(Object.class), any(Object.class))).thenReturn(
-			itemPropertyDescriptor);
-		when(emfSpecificService.getAdapterFactoryItemDelegator()).thenReturn(adapterFactoryItemDelegator);
+		when(emfSpecificService.getIItemPropertyDescriptor(any(EObject.class), any(EStructuralFeature.class)))
+			.thenReturn(itemPropertyDescriptor);
 	}
 
 	/**
 	 * Test method for
 	 * {@link org.eclipse.emf.emfforms.internal.core.services.labelprovider.EMFFormsLabelProviderImpl#getDisplayName(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
 	 * .
-	 * 
+	 *
 	 * @throws DatabindingFailedException should not happen, just needs to be thrown because the databinding service
 	 *             defines the throw in its interface.
 	 */
@@ -120,7 +118,7 @@ public class EMFFormsLabelProviderImpl_Test {
 	 * Test method for
 	 * {@link org.eclipse.emf.emfforms.internal.core.services.labelprovider.EMFFormsLabelProviderImpl#getDisplayName(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference, org.eclipse.emf.ecore.EObject)}
 	 * .
-	 * 
+	 *
 	 * @throws DatabindingFailedException should not happen, just needs to be thrown because the databinding service
 	 *             defines the throw in its interface.
 	 */
@@ -178,7 +176,7 @@ public class EMFFormsLabelProviderImpl_Test {
 	 * Test method for
 	 * {@link org.eclipse.emf.emfforms.internal.core.services.labelprovider.EMFFormsLabelProviderImpl#getDescription(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
 	 * .
-	 * 
+	 *
 	 * @throws DatabindingFailedException should not happen, just needs to be thrown because the databinding service
 	 *             defines the throw in its interface.
 	 */
@@ -215,7 +213,7 @@ public class EMFFormsLabelProviderImpl_Test {
 	 * Test method for
 	 * {@link org.eclipse.emf.emfforms.internal.core.services.labelprovider.EMFFormsLabelProviderImpl#getDescription(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference, org.eclipse.emf.ecore.EObject)}
 	 * .
-	 * 
+	 *
 	 * @throws DatabindingFailedException should not happen, just needs to be thrown because the databinding service
 	 *             defines the throw in its interface.
 	 */
