@@ -16,6 +16,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.NoSuchElementException;
 
+import org.eclipse.emf.ecp.test.common.DefaultRealm;
 import org.eclipse.emf.ecp.view.internal.rule.RuleService;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.model.VContainedContainer;
@@ -34,6 +35,7 @@ import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalLayout;
 import org.eclipse.emf.emfstore.bowling.BowlingFactory;
 import org.eclipse.emf.emfstore.bowling.BowlingPackage;
 import org.eclipse.emf.emfstore.bowling.Player;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -51,14 +53,21 @@ public class DynamicRuleService_Test {
 	private RuleService rs;
 	private VView view;
 	private Player domainObject;
+	private DefaultRealm realm;
 
 	/**
 	 * @throws java.lang.Exception
 	 */
 	@Before
 	public void setUp() throws Exception {
+		realm = new DefaultRealm();
 		rs = new RuleService();
 		domainObject = createDomainObject();
+	}
+
+	@After
+	public void tearDown() {
+		realm.dispose();
 	}
 
 	private void initialize() {

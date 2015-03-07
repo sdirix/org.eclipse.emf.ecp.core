@@ -19,6 +19,7 @@ import java.math.BigDecimal;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecp.test.common.DefaultRealm;
 import org.eclipse.emf.ecp.view.internal.rule.RuleService;
 import org.eclipse.emf.ecp.view.internal.rule.RuleServiceHelperImpl;
 import org.eclipse.emf.ecp.view.internal.unset.UnsetService;
@@ -64,9 +65,11 @@ public class UnsetRuleIntegration_Test extends CommonRuleTest {
 	private VView view;
 
 	private ViewModelContext context;
+	private DefaultRealm realm;
 
 	@Before
 	public void before() {
+		realm = new DefaultRealm();
 		fan = BowlingFactory.eINSTANCE.createFan();
 		merchandise = BowlingFactory.eINSTANCE.createMerchandise();
 		merchandise.setPrice(price);
@@ -83,6 +86,7 @@ public class UnsetRuleIntegration_Test extends CommonRuleTest {
 		if (context != null) {
 			context.dispose();
 		}
+		realm.dispose();
 	}
 
 	@Test

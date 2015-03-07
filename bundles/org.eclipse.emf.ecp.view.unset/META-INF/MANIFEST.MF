@@ -15,3 +15,4 @@ Require-Bundle: org.eclipse.emf.ecp.view.context;bundle-version="[1.5.0,2.0.0)",
 Export-Package: org.eclipse.emf.ecp.view.internal.unset;version="1.6.0
  ";x-friends:="org.eclipse.emf.ecp.view.unset.test"
 Bundle-Activator: org.eclipse.emf.ecp.view.internal.unset.Activator
+Bundle-ActivationPolicy: lazy

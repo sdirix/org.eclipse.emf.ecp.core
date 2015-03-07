@@ -32,6 +32,7 @@ import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.impl.BasicEObjectImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.common.spi.UniqueSetting;
+import org.eclipse.emf.ecp.test.common.DefaultRealm;
 import org.eclipse.emf.ecp.test.university.Assistant;
 import org.eclipse.emf.ecp.test.university.Person;
 import org.eclipse.emf.ecp.test.university.Professor;
@@ -276,6 +277,8 @@ public class RuleService_PTest extends CommonRuleTest {
 
 	private ViewModelContext context;
 
+	private DefaultRealm realm;
+
 	/**
 	 * Sets the up.
 	 *
@@ -283,6 +286,7 @@ public class RuleService_PTest extends CommonRuleTest {
 	 */
 	@Before
 	public void setUp() throws Exception {
+		realm = new DefaultRealm();
 		player = BowlingFactory.eINSTANCE.createPlayer();
 		league = BowlingFactory.eINSTANCE.createLeague();
 		league.getPlayers().add(player);
@@ -318,6 +322,7 @@ public class RuleService_PTest extends CommonRuleTest {
 		if (context != null) {
 			context.dispose();
 		}
+		realm.dispose();
 	}
 
 	private RuleService instantiateRuleService() {

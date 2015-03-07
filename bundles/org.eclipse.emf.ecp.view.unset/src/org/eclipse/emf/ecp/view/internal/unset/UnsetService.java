@@ -159,7 +159,7 @@ public class UnsetService implements ViewModelService {
 		}
 		final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
 		final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
-
+		observableValue.dispose();
 		if (!objectToFeatureMap.containsKey(eObject)) {
 			objectToFeatureMap
 				.put(eObject, new LinkedHashSet<FeatureWrapper>());
@@ -194,7 +194,7 @@ public class UnsetService implements ViewModelService {
 		}
 		final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
 		final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
-
+		observableValue.dispose();
 		final Set<FeatureWrapper> wrappers = objectToFeatureMap
 			.get(eObject);
 		FeatureWrapper wrapper = null;

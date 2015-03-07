@@ -141,7 +141,7 @@ public class ViewSWTRenderer extends ContainerSWTRenderer<VView> {
 			}
 			final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
 			final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
-
+			observableValue.dispose();
 			if (isMultiLine(eObject, structuralFeature)) {
 				gdf = gdf.hint(50, 200); // set x hint to enable wrapping
 			}

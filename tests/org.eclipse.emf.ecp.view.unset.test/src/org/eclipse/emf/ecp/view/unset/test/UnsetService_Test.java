@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.common.spi.UniqueSetting;
+import org.eclipse.emf.ecp.test.common.DefaultRealm;
 import org.eclipse.emf.ecp.view.internal.unset.UnsetService;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorization;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationElement;
@@ -71,9 +72,11 @@ public class UnsetService_Test {
 	private VView view;
 
 	private ViewModelContext context;
+	private DefaultRealm realm;
 
 	@Before
 	public void before() {
+		realm = new DefaultRealm();
 		fan = BowlingFactory.eINSTANCE.createFan();
 		merchandise = BowlingFactory.eINSTANCE.createMerchandise();
 		merchandise.setPrice(price);
@@ -90,6 +93,7 @@ public class UnsetService_Test {
 		if (context != null) {
 			context.dispose();
 		}
+		realm.dispose();
 	}
 
 	// ///////////////////////////////////////////////////////////////////////////////////////////////////////////////

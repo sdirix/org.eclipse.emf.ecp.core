@@ -23,6 +23,7 @@ import java.util.Set;
 
 import org.eclipse.emf.ecp.common.spi.BidirectionalMap;
 import org.eclipse.emf.ecp.common.spi.UniqueSetting;
+import org.eclipse.emf.ecp.test.common.DefaultRealm;
 import org.eclipse.emf.ecp.view.internal.rule.RuleRegistry;
 import org.eclipse.emf.ecp.view.internal.rule.RuleService;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
@@ -41,6 +42,7 @@ import org.eclipse.emf.emfstore.bowling.BowlingPackage;
 import org.eclipse.emf.emfstore.bowling.Fan;
 import org.eclipse.emf.emfstore.bowling.Merchandise;
 import org.eclipse.emf.emfstore.bowling.Tournament;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -77,12 +79,19 @@ public class RuleRegistry_Test {
 	private VView view;
 	private VControl control1;
 	private VControl control2;
+	private DefaultRealm realm;
 
 	@Before
 	public void setUp() {
+		realm = new DefaultRealm();
 		ruleService = new RuleService();
 		createView();
 		createDomainObject();
+	}
+
+	@After
+	public void tearDown() {
+		realm.dispose();
 	}
 
 	private void createDomainObject() {

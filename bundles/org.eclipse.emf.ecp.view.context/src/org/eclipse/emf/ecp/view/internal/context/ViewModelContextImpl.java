@@ -314,7 +314,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 		final IObserving observing = (IObserving) observableValue;
 		final EObject eObject = (EObject) observing.getObserved();
 		final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
-
+		observableValue.dispose();
 		final UniqueSetting uniqueSetting = UniqueSetting.createSetting(eObject, structuralFeature);
 		if (settingToControlMap.containsKey(uniqueSetting)) {
 			settingToControlMap.get(uniqueSetting).remove(vControl);
