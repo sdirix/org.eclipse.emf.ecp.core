@@ -57,7 +57,7 @@ import org.junit.Test;
  * @author jfaltermeier
  *
  */
-public class UnsetService_Test {
+public class UnsetService_PTest {
 
 	private Fan fan;
 	private Merchandise merchandise;

@@ -50,7 +50,7 @@ import org.junit.Test;
  * @author jfaltermeier
  *
  */
-public class UnsetRuleIntegration_Test extends CommonRuleTest {
+public class UnsetRuleIntegration_PTest extends CommonRuleTest {
 
 	private static final String FOO = "foo";
 	private Fan fan;

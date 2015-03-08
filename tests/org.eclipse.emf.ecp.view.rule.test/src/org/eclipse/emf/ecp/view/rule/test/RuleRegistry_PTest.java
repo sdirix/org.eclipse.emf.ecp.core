@@ -52,7 +52,7 @@ import org.junit.Test;
  * @author jfaltermeier
  *
  */
-public class RuleRegistry_Test {
+public class RuleRegistry_PTest {
 	// assertions are pretty complex
 	// BEGIN COMPLEX CODE
 	private static final String CONDITION_TO_SETTINGS_FIELD_NAME = "conditionToSettings";

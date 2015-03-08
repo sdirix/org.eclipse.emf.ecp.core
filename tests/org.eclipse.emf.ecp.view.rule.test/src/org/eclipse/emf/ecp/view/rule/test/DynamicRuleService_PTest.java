@@ -44,7 +44,7 @@ import org.junit.Test;
  * @author jfaltermeier
  *
  */
-public class DynamicRuleService_Test {
+public class DynamicRuleService_PTest {
 
 	private static final double HEIGHT = 2;
 	private static final double HEIGHT_ALT = 3;

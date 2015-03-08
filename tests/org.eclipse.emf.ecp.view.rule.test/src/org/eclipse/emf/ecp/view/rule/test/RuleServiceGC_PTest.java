@@ -38,7 +38,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class RuleServiceGC_Test extends CommonRuleTest {
+public class RuleServiceGC_PTest extends CommonRuleTest {
 
 	private ViewModelContext context;
 	private DefaultRealm realm;
