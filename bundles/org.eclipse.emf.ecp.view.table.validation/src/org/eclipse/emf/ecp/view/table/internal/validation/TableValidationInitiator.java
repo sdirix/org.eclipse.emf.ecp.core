@@ -33,6 +33,7 @@ import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
 import org.eclipse.emf.ecp.view.spi.table.model.DetailEditing;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
+import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 
@@ -105,10 +106,18 @@ public class TableValidationInitiator implements GlobalViewModelService {
 				final VTableControl tableControl = VTableControl.class.cast(eObject);
 
 				if (tableControl.getDetailEditing() == DetailEditing.WITH_PANEL) {
+					final VTableDomainModelReference tableDomainModelReference = (VTableDomainModelReference) tableControl
+						.getDomainModelReference();
 					final IObservableValue observableValue;
 					try {
-						observableValue = Activator.getDefault().getEMFFormsDatabinding()
-							.getObservableValue(tableControl.getDomainModelReference(), context.getDomainModel());
+						if (tableDomainModelReference.getDomainModelReference() != null) {
+							observableValue = Activator.getDefault().getEMFFormsDatabinding()
+								.getObservableValue(tableDomainModelReference.getDomainModelReference(),
+									context.getDomainModel());
+						} else {
+							observableValue = Activator.getDefault().getEMFFormsDatabinding()
+								.getObservableValue(tableDomainModelReference, context.getDomainModel());
+						}
 					} catch (final DatabindingFailedException ex) {
 						Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
 						continue;
@@ -139,8 +148,16 @@ public class TableValidationInitiator implements GlobalViewModelService {
 	private VView getView(VTableControl tableControl) throws DatabindingFailedException {
 		VView detailView = tableControl.getDetailView();
 		if (detailView == null) {
-			final IValueProperty valueProperty = Activator.getDefault().getEMFFormsDatabinding()
-				.getValueProperty(tableControl.getDomainModelReference());
+			final VTableDomainModelReference tableDomainModelReference = (VTableDomainModelReference) tableControl
+				.getDomainModelReference();
+			final IValueProperty valueProperty;
+			if (tableDomainModelReference.getDomainModelReference() != null) {
+				valueProperty = Activator.getDefault().getEMFFormsDatabinding()
+					.getValueProperty(tableDomainModelReference.getDomainModelReference());
+			} else {
+				valueProperty = Activator.getDefault().getEMFFormsDatabinding()
+					.getValueProperty(tableDomainModelReference);
+			}
 			final EReference reference = (EReference) valueProperty.getValueType();
 			detailView = ViewProviderHelper.getView(
 				EcoreUtil.create(reference.getEReferenceType()),

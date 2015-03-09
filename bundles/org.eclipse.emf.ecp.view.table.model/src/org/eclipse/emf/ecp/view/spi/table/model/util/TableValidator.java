@@ -45,6 +45,7 @@ import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTablePackage;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
+import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 
 /**
  * <!-- begin-user-doc -->
@@ -106,6 +107,27 @@ public class TableValidator extends EObjectValidator
 	 * @generated
 	 */
 	protected ViewValidator viewValidator;
+	/**
+	 * The test EMFFormsDatabinding service.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated NOT
+	 */
+	private EMFFormsDatabinding emfFormsDatabinding;
+
+	/**
+	 * Creates an instance of the switch.
+	 * <!-- begin-user-doc -->
+	 * This is a constructor for test cases.
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated NOT
+	 */
+	TableValidator(EMFFormsDatabinding emfFormsDatabinding) {
+		this();
+		this.emfFormsDatabinding = emfFormsDatabinding;
+	}
 
 	/**
 	 * Creates an instance of the switch.
@@ -294,7 +316,7 @@ public class TableValidator extends EObjectValidator
 		// test if table ends a multi reference
 		IValueProperty valueProperty;
 		try {
-			valueProperty = Activator.getDefault().getEMFFormsDatabinding()
+			valueProperty = getEMFFormsDatabinding()
 				.getValueProperty(pathToMultiRef);
 		} catch (final DatabindingFailedException ex) {
 			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
@@ -373,6 +395,13 @@ public class TableValidator extends EObjectValidator
 		}
 		return true;
 
+	}
+
+	private EMFFormsDatabinding getEMFFormsDatabinding() {
+		if (emfFormsDatabinding != null) {
+			return emfFormsDatabinding;
+		}
+		return Activator.getDefault().getEMFFormsDatabinding();
 	}
 
 	// END COMPLEX CODE
