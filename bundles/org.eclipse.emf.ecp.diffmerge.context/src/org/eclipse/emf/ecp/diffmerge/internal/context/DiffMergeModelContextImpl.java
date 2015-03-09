@@ -36,7 +36,6 @@ import org.eclipse.emf.ecp.view.spi.model.VAttachment;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
-import org.eclipse.emf.ecp.view.spi.model.util.ViewModelUtil;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 
@@ -169,9 +168,6 @@ public class DiffMergeModelContextImpl extends ViewModelContextImpl implements
 		final VElement viewModelLeft = EcoreUtil.copy(getViewModel());
 		final VElement viewModelRight = EcoreUtil.copy(getViewModel());
 
-		ViewModelUtil.resolveDomainReferences(viewModelLeft, getLeftModel());
-		ViewModelUtil.resolveDomainReferences(viewModelRight, getRightModel());
-
 		final TreeIterator<EObject> mainViewModel = getViewModel().eAllContents();
 		final TreeIterator<EObject> leftViewModel = viewModelLeft.eAllContents();
 		final TreeIterator<EObject> rightViewModel = viewModelRight.eAllContents();
@@ -184,7 +180,8 @@ public class DiffMergeModelContextImpl extends ViewModelContextImpl implements
 			final EObject leftEObject = leftViewModel.next();
 			final EObject rightEObject = rightViewModel.next();
 			if (VControl.class.isInstance(mainEObject)) {
-				if (hasDiff((VControl) leftEObject, (VControl) rightEObject, (VControl) mainEObject)) {
+				if (hasDiff((VControl) leftEObject, getLeftModel(), (VControl) rightEObject, getRightModel(),
+					(VControl) mainEObject)) {
 					final VControl control = (VControl) mainEObject;
 					controlDiffMap.put(control, new ControlPair((VControl) leftEObject,
 						(VControl) rightEObject));
@@ -253,12 +250,15 @@ public class DiffMergeModelContextImpl extends ViewModelContextImpl implements
 	 * Checks whether the controls have a diff.
 	 *
 	 * @param leftControl the left control to check
+	 * @param leftDomainModel The domain model of the left control
 	 * @param rightControl the right control to check
+	 * @param rightDomainModel The domain model of the right control
 	 * @param targetControl the target control to check
 	 * @return true if there is a diff, false otherwise
 	 */
-	protected boolean hasDiff(VControl leftControl, VControl rightControl, VControl targetControl) {
-		return !CompareControls.areEqual(leftControl, rightControl);
+	protected boolean hasDiff(VControl leftControl, EObject leftDomainModel, VControl rightControl,
+		EObject rightDomainModel, VControl targetControl) {
+		return !CompareControls.areEqual(leftControl, leftDomainModel, rightControl, rightDomainModel);
 	}
 
 	/** {@inheritDoc} **/
