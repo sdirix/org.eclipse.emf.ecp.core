@@ -255,6 +255,7 @@
 		<!-- Core Services -->
 		<module>../../bundles/org.eclipse.emfforms.core.services.databinding</module>
 		<module>../../bundles/org.eclipse.emfforms.core.services.databinding.featurepath</module>
+		<module>../../bundles/org.eclipse.emfforms.core.services.databinding.index</module>
 		<module>../../bundles/org.eclipse.emf.emfforms.core.services.labelprovider</module>
 		<module>../../bundles/org.eclipse.emf.emfforms.core.services.emfspecificservice</module>
 		<module>../../bundles/org.eclipse.emfforms.core.services.editsupport</module>

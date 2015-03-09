@@ -7,11 +7,9 @@ Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Export-Package: org.eclipse.emfforms.core.services.databinding.testmod
- el.test.model;version="1.6.0",org.eclipse.emfforms.core.services.data
- binding.testmodel.test.model.impl;version="1.6.0";x-internal:=true,or
- g.eclipse.emfforms.core.services.databinding.testmodel.test.model.uti
- l;version="1.6.0";x-internal:=true
+Export-Package: org.eclipse.emfforms.core.services.databinding.testmodel.test.model;version="1.6.0",
+ org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl;version="1.6.0";x-internal:=true,
+ org.eclipse.emfforms.core.services.databinding.testmodel.test.model.util;version="1.6.0";x-internal:=true
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.9.0,4.0.0)",
  org.eclipse.emf.ecore;bundle-version="[2.9.0,3.0.0)";visibility:=reexport
 Bundle-ActivationPolicy: lazy

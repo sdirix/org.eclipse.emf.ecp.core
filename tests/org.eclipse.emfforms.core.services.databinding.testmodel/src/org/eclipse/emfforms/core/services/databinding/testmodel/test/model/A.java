@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Lucas Koehler - initial API and implementation
  */
@@ -39,7 +39,7 @@ public interface A extends EObject
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>B</em>' containment reference.
 	 * @see #setB(B)
 	 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage#getA_B()
@@ -53,7 +53,7 @@ public interface A extends EObject
 	 * <em>B</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>B</em>' containment reference.
 	 * @see #getB()
 	 * @generated

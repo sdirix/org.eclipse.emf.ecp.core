@@ -11,12 +11,16 @@
  */
 package org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl;
 
+import java.util.Collection;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.B;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.C;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage;
@@ -29,6 +33,7 @@ import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestP
  * The following features are implemented:
  * <ul>
  * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.BImpl#getC <em>C</em>}</li>
+ * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.BImpl#getCList <em>CList</em>}</li>
  * </ul>
  * </p>
  *
@@ -46,6 +51,17 @@ public class BImpl extends MinimalEObjectImpl.Container implements B
 	 * @ordered
 	 */
 	protected C c;
+
+	/**
+	 * The cached value of the '{@link #getCList() <em>CList</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @see #getCList()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<C> cList;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -142,6 +158,22 @@ public class BImpl extends MinimalEObjectImpl.Container implements B
 	 * @generated
 	 */
 	@Override
+	public EList<C> getCList()
+	{
+		if (cList == null)
+		{
+			cList = new EObjectResolvingEList<C>(C.class, this, TestPackage.B__CLIST);
+		}
+		return cList;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
 	{
 		switch (featureID)
@@ -165,6 +197,8 @@ public class BImpl extends MinimalEObjectImpl.Container implements B
 		{
 		case TestPackage.B__C:
 			return getC();
+		case TestPackage.B__CLIST:
+			return getCList();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -175,6 +209,7 @@ public class BImpl extends MinimalEObjectImpl.Container implements B
 	 *
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue)
 	{
@@ -182,6 +217,10 @@ public class BImpl extends MinimalEObjectImpl.Container implements B
 		{
 		case TestPackage.B__C:
 			setC((C) newValue);
+			return;
+		case TestPackage.B__CLIST:
+			getCList().clear();
+			getCList().addAll((Collection<? extends C>) newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);
@@ -201,6 +240,9 @@ public class BImpl extends MinimalEObjectImpl.Container implements B
 		case TestPackage.B__C:
 			setC((C) null);
 			return;
+		case TestPackage.B__CLIST:
+			getCList().clear();
+			return;
 		}
 		super.eUnset(featureID);
 	}
@@ -218,6 +260,8 @@ public class BImpl extends MinimalEObjectImpl.Container implements B
 		{
 		case TestPackage.B__C:
 			return c != null;
+		case TestPackage.B__CLIST:
+			return cList != null && !cList.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

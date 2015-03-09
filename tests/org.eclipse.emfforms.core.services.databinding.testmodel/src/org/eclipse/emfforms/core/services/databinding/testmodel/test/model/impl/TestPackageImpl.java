@@ -182,6 +182,18 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage
 	 * @generated
 	 */
 	@Override
+	public EReference getB_CList()
+	{
+		return (EReference) bEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
 	public EClass getC()
 	{
 		return cEClass;
@@ -276,6 +288,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage
 
 		bEClass = createEClass(B);
 		createEReference(bEClass, B__C);
+		createEReference(bEClass, B__CLIST);
 
 		cEClass = createEClass(C);
 		createEReference(cEClass, C__D);
@@ -335,6 +348,11 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage
 			getC(),
 			null,
 			"c", null, 0, 1, org.eclipse.emfforms.core.services.databinding.testmodel.test.model.B.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+			getB_CList(),
+			getC(),
+			null,
+			"cList", null, 0, -1, org.eclipse.emfforms.core.services.databinding.testmodel.test.model.B.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(cEClass, org.eclipse.emfforms.core.services.databinding.testmodel.test.model.C.class,
 			"C", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
