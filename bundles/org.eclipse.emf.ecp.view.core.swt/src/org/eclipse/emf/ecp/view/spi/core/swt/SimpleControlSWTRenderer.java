@@ -126,7 +126,7 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 	 * @throws DatabindingFailedException if the databinding fails
 	 */
 	protected boolean isUnsettable() throws DatabindingFailedException {
-		final IValueProperty valueProperty = Activator.getDefault().getEMFFormsDatabinding()
+		final IValueProperty valueProperty = getEMFFormsDatabinding()
 			.getValueProperty(getVElement().getDomainModelReference());
 		final EStructuralFeature feature = (EStructuralFeature) valueProperty.getValueType();
 		return feature.isUnsettable();
@@ -156,9 +156,7 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 				super.widgetSelected(e);
 				IObservableValue observableValue;
 				try {
-					observableValue = Activator
-						.getDefault()
-						.getEMFFormsDatabinding()
+					observableValue = getEMFFormsDatabinding()
 						.getObservableValue(getVElement().getDomainModelReference(),
 							getViewModelContext().getDomainModel());
 				} catch (final DatabindingFailedException ex) {

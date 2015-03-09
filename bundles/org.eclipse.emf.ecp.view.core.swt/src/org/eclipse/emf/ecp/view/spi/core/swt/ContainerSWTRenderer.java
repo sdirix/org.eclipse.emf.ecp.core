@@ -41,6 +41,7 @@ import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
 import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -198,7 +199,7 @@ public abstract class ContainerSWTRenderer<VELEMENT extends VElement> extends Ab
 				return false;
 			}
 			try {
-				Activator.getDefault().getEMFFormsDatabinding()
+				getEMFFormsDatabinding()
 					.getValueProperty(VControl.class.cast(child).getDomainModelReference());
 			} catch (final DatabindingFailedException ex) {
 				Activator.getDefault().getReportService().report(new RenderingFailedReport(ex));
@@ -206,6 +207,15 @@ public abstract class ContainerSWTRenderer<VELEMENT extends VElement> extends Ab
 			}
 		}
 		return true;
+	}
+
+	/**
+	 * Package visible method, to allow an easy replacement.
+	 *
+	 * @return The EMFFormsDatabinding
+	 */
+	EMFFormsDatabinding getEMFFormsDatabinding() {
+		return Activator.getDefault().getEMFFormsDatabinding();
 	}
 
 	// TODO: possible duplicate code

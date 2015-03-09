@@ -32,7 +32,6 @@ import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.edit.command.SetCommand;
-import org.eclipse.emf.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.jface.databinding.swt.SWTObservables;
@@ -183,17 +182,15 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 		GridDataFactory.fillDefaults().grab(false, false).align(SWT.CENTER, SWT.CENTER).applyTo(bUnset);
 		bUnset.setImage(Activator.getImage("icons/delete.png")); //$NON-NLS-1$
 		bUnset.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_dateTime_buttonUnset"); //$NON-NLS-1$
-		bUnset.setToolTipText(LocalizationServiceHelper
-			.getString(getClass(), MessageKeys.DateTimeControlSWTRenderer_CleanDate));
+		bUnset.setToolTipText(getLocalizedString(MessageKeys.DateTimeControlSWTRenderer_CleanDate));
 
 		final Button bDate = new Button(composite, SWT.PUSH);
 		GridDataFactory.fillDefaults().grab(false, false).align(SWT.CENTER, SWT.CENTER).applyTo(bDate);
 		bDate.setImage(Activator.getImage("icons/date.png")); //$NON-NLS-1$
 		bDate.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_dateTime_buttonSet"); //$NON-NLS-1$
-		bDate.setToolTipText(LocalizationServiceHelper
-			.getString(getClass(), MessageKeys.DateTimeControlSWTRenderer_SelectData));
+		bDate.setToolTipText(getLocalizedString(MessageKeys.DateTimeControlSWTRenderer_SelectData));
 
-		final IObservableValue observableValue = Activator.getDefault().getEMFFormsDatabinding()
+		final IObservableValue observableValue = getEMFFormsDatabinding()
 			.getObservableValue(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
 		final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
 		final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
@@ -224,8 +221,7 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 	 */
 	@Override
 	protected String getUnsetText() {
-		return LocalizationServiceHelper
-			.getString(getClass(), MessageKeys.DateTimeControl_NoDateSetClickToSetDate);
+		return getLocalizedString(MessageKeys.DateTimeControl_NoDateSetClickToSetDate);
 	}
 
 	/**

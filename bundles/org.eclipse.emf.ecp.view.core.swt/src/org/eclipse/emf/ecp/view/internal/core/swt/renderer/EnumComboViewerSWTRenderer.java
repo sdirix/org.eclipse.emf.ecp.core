@@ -27,6 +27,7 @@ import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.databinding.viewers.ViewersObservables;
 import org.eclipse.jface.viewers.ArrayContentProvider;
@@ -69,7 +70,7 @@ public class EnumComboViewerSWTRenderer extends SimpleControlJFaceViewerSWTRende
 	 */
 	@Override
 	protected Viewer createJFaceViewer(Composite parent) throws DatabindingFailedException {
-		final IValueProperty valueProperty = Activator.getDefault().getEMFFormsDatabinding()
+		final IValueProperty valueProperty = getEMFFormsDatabinding()
 			.getValueProperty(getVElement().getDomainModelReference());
 		final EStructuralFeature structuralFeature = (EStructuralFeature) valueProperty.getValueType();
 		final ComboViewer combo = new ComboViewer(parent);
@@ -78,7 +79,7 @@ public class EnumComboViewerSWTRenderer extends SimpleControlJFaceViewerSWTRende
 
 			@Override
 			public String getText(Object element) {
-				return Activator.getDefault().getEMFFormsEditSupport()
+				return getEMFFormsEditSupport()
 					.getText(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel(), element);
 			}
 
@@ -101,6 +102,15 @@ public class EnumComboViewerSWTRenderer extends SimpleControlJFaceViewerSWTRende
 	protected String getUnsetText() {
 		return LocalizationServiceHelper
 			.getString(getClass(), MessageKeys.EEnumControl_NoValueSetClickToSetValue);
+	}
+
+	/**
+	 * Package visible method, to allow an easy replacement.
+	 * 
+	 * @return The EMFFormsEditSupport
+	 */
+	EMFFormsEditSupport getEMFFormsEditSupport() {
+		return Activator.getDefault().getEMFFormsEditSupport();
 	}
 
 }

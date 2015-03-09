@@ -36,6 +36,7 @@ import org.eclipse.emf.ecp.view.template.style.alignment.model.AlignmentType;
 import org.eclipse.emf.ecp.view.template.style.alignment.model.VTAlignmentStyleProperty;
 import org.eclipse.emf.ecp.view.template.style.textControlEnablement.model.VTTextControlEnablementStyleProperty;
 import org.eclipse.emf.edit.command.SetCommand;
+import org.eclipse.emf.emfforms.spi.core.services.labelprovider.EMFFormsLabelProvider;
 import org.eclipse.emf.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
@@ -92,8 +93,12 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 	 * @return the string to show as the message
 	 */
 	protected String getTextMessage() {
-		return Activator.getDefault().getEMFFormsLabelProvider()
+		return getEMFFormsLabelProvider()
 			.getDisplayName(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
+	}
+
+	EMFFormsLabelProvider getEMFFormsLabelProvider() {
+		return Activator.getDefault().getEMFFormsLabelProvider();
 	}
 
 	/**
@@ -136,12 +141,21 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 	 */
 	protected int getTextWidgetStyle() {
 		int textStyle = SWT.SINGLE | SWT.BORDER;
-		final EMFFormsEditSupport editSupport = Activator.getDefault().getEMFFormsEditSupport();
+		final EMFFormsEditSupport editSupport = getEMFFormsEditSupport();
 		if (editSupport.isMultiLine(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel())) {
 			textStyle = SWT.MULTI | SWT.WRAP | SWT.V_SCROLL | SWT.H_SCROLL | SWT.BORDER;
 		}
 		textStyle |= getAlignment();
 		return textStyle;
+	}
+
+	/**
+	 * Package visible method, to allow an easy replacement.
+	 *
+	 * @return The EMFFormsEditSupport
+	 */
+	EMFFormsEditSupport getEMFFormsEditSupport() {
+		return Activator.getDefault().getEMFFormsEditSupport();
 	}
 
 	private int getAlignment() {
@@ -203,7 +217,7 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 	private boolean isControlUnsettable() {
 		IValueProperty valueProperty;
 		try {
-			valueProperty = Activator.getDefault().getEMFFormsDatabinding()
+			valueProperty = getEMFFormsDatabinding()
 				.getValueProperty(getVElement().getDomainModelReference());
 		} catch (final DatabindingFailedException ex) {
 			Activator.getDefault().getReportService().report(new RenderingFailedReport(ex));

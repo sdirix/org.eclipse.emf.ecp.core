@@ -15,11 +15,6 @@ package org.eclipse.emf.ecp.view.internal.core.swt.renderer;
 
 import java.util.Collection;
 
-import org.eclipse.core.databinding.observable.IObserving;
-import org.eclipse.core.databinding.observable.value.IObservableValue;
-import org.eclipse.emf.common.notify.AdapterFactory;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.internal.core.swt.Activator;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer;
@@ -31,12 +26,7 @@ import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
-import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
-import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
-import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
-import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
-import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
+import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
@@ -131,18 +121,8 @@ public class ViewSWTRenderer extends ContainerSWTRenderer<VView> {
 				.grab(true, false).span(xSpan, 1);
 
 		if (Text.class.isInstance(control) && vControl.getDomainModelReference() != null) {
-			IObservableValue observableValue;
-			try {
-				observableValue = Activator.getDefault().getEMFFormsDatabinding()
-					.getObservableValue(vControl.getDomainModelReference(), getViewModelContext().getDomainModel());
-			} catch (final DatabindingFailedException ex) {
-				Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
-				return gdf;
-			}
-			final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
-			final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
-			observableValue.dispose();
-			if (isMultiLine(eObject, structuralFeature)) {
+			if (getEMFFormsEditSupport().isMultiLine(vControl.getDomainModelReference(),
+				getViewModelContext().getDomainModel())) {
 				gdf = gdf.hint(50, 200); // set x hint to enable wrapping
 			}
 		}
@@ -150,19 +130,12 @@ public class ViewSWTRenderer extends ContainerSWTRenderer<VView> {
 		return gdf;
 	}
 
-	private boolean isMultiLine(EObject eObject, EStructuralFeature structuralFeature) {
-		final ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
-			new ReflectiveItemProviderAdapterFactory(),
-			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
-		final AdapterFactoryItemDelegator adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(
-			composedAdapterFactory);
-		final IItemPropertyDescriptor descriptor = adapterFactoryItemDelegator.getPropertyDescriptor(
-			eObject, structuralFeature);
-		final boolean multiline = descriptor.isMultiLine(null);
-
-		composedAdapterFactory.dispose();
-
-		return multiline;
-
+	/**
+	 * Package visible method, to allow an easy replacement.
+	 * 
+	 * @return The EMFFormsEditSupport
+	 */
+	EMFFormsEditSupport getEMFFormsEditSupport() {
+		return Activator.getDefault().getEMFFormsEditSupport();
 	}
 }

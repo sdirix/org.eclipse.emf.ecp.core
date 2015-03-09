@@ -11,13 +11,10 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.core.swt;
 
-import java.util.Map.Entry;
 import java.util.Set;
 
 import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.observable.IObserving;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
-import org.eclipse.core.databinding.observable.value.WritableValue;
 import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
@@ -34,7 +31,6 @@ import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
-import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
 import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
@@ -46,8 +42,8 @@ import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.emfforms.spi.core.services.labelprovider.EMFFormsLabelProvider;
+import org.eclipse.emf.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
-import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
@@ -79,9 +75,9 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 	private ComposedAdapterFactory composedAdapterFactory;
 	private DataBindingContext dataBindingContext;
 	private IObservableValue modelValue;
-	private final WritableValue value = new WritableValue();
 	private DomainModelReferenceChangeListener domainModelReferenceChangeListener;
 
+	// TODO is this needed?
 	@Override
 	protected void postInit() {
 		super.postInit();
@@ -98,15 +94,13 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 
 					@Override
 					public void run() {
-						if (!value.isDisposed()) {
-							updateControl();
-						}
+						applyEnable();
 					}
 				});
 			}
 		};
 		getVElement().getDomainModelReference().getChangeListener().add(domainModelReferenceChangeListener);
-		updateControl();
+		applyEnable();
 	}
 
 	@Override
@@ -116,9 +110,6 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 		}
 
 		domainModelReferenceChangeListener = null;
-		if (value != null) {
-			value.dispose();
-		}
 
 		if (composedAdapterFactory != null) {
 			composedAdapterFactory.dispose();
@@ -211,7 +202,7 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 		final EObject eObject = getViewModelContext().getDomainModel();
 
 		if (modelValue == null) {
-			final EMFFormsDatabinding databindingService = Activator.getDefault().getEMFFormsDatabinding();
+			final EMFFormsDatabinding databindingService = getEMFFormsDatabinding();
 			modelValue = databindingService.getObservableValue(ref, eObject);
 		}
 		return modelValue;
@@ -249,13 +240,13 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 			final VDomainModelReference domainModelReference = getVElement().getDomainModelReference();
 			IValueProperty valueProperty;
 			try {
-				valueProperty = Activator.getDefault().getEMFFormsDatabinding().getValueProperty(domainModelReference);
+				valueProperty = getEMFFormsDatabinding().getValueProperty(domainModelReference);
 			} catch (final DatabindingFailedException ex) {
 				Activator.getDefault().getReportService().report(new RenderingFailedReport(ex));
 				break labelRender;
 			}
 
-			final EMFFormsLabelProvider labelProvider = Activator.getDefault().getEMFFormsLabelProvider();
+			final EMFFormsLabelProvider labelProvider = getEMFFormsLabelProvider();
 			label = new Label(parent, SWT.NONE);
 			label.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_label"); //$NON-NLS-1$
 			label.setBackground(parent.getBackground());
@@ -274,6 +265,34 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 
 		}
 		return label;
+	}
+
+	/**
+	 * Method, to allow an easy replacement.
+	 * 
+	 * @return The EMFFormsDatabinding
+	 */
+	protected EMFFormsDatabinding getEMFFormsDatabinding() {
+		return Activator.getDefault().getEMFFormsDatabinding();
+	}
+
+	/**
+	 * Package visible method, to allow an easy replacement.
+	 *
+	 * @return The EMFFormsLabelProvider
+	 */
+	EMFFormsLabelProvider getEMFFormsLabelProvider() {
+		return Activator.getDefault().getEMFFormsLabelProvider();
+	}
+
+	/**
+	 * Provides a localized string for a key.
+	 * 
+	 * @param key The Key to get the value for
+	 * @return The localized String
+	 */
+	protected String getLocalizedString(String key) {
+		return LocalizationServiceHelper.getString(getClass(), key);
 	}
 
 	private VTMandatoryStyleProperty getMandatoryStyle() {
@@ -307,20 +326,4 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 		return validationLabel;
 	}
 
-	// TODO remove method!
-	private void updateControl() {
-		try {
-			final IObservableValue observableValue = Activator.getDefault().getEMFFormsDatabinding()
-				.getObservableValue(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
-			value.setValue(((IObserving) observableValue).getObserved());
-			observableValue.dispose();
-			applyEnable();
-		} catch (final DatabindingFailedException ex) {
-			value.setValue(null);
-			for (final Entry<SWTGridCell, Control> entry : getControls().entrySet()) {
-				setControlEnabled(entry.getKey(), entry.getValue(), false);
-			}
-			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
-		}
-	}
 }

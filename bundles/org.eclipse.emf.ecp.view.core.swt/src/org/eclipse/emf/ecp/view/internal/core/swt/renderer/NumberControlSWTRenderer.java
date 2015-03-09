@@ -75,7 +75,7 @@ public class NumberControlSWTRenderer extends TextControlSWTRenderer {
 	@Override
 	protected String getTextMessage() {
 		try {
-			final IValueProperty valueProperty = Activator.getDefault().getEMFFormsDatabinding()
+			final IValueProperty valueProperty = getEMFFormsDatabinding()
 				.getValueProperty(getVElement().getDomainModelReference());
 			final EStructuralFeature structuralFeature = (EStructuralFeature) valueProperty.getValueType();
 			if (NumericalHelper.isInteger(getInstanceClass(structuralFeature))) {
