@@ -9,7 +9,7 @@
  * Contributors:
  * jfaltermeier - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.table.model.test;
+package org.eclipse.emf.ecp.view.spi.table.model.util;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -25,11 +25,11 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.core.databinding.property.Properties;
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
@@ -39,13 +39,15 @@ import org.eclipse.emf.ecp.view.spi.model.util.ViewValidator;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableFactory;
 import org.eclipse.emf.ecp.view.spi.table.model.VTablePackage;
-import org.eclipse.emf.ecp.view.spi.table.model.util.TableValidator;
 import org.eclipse.emf.emfstore.bowling.BowlingPackage;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
+import org.mockito.Mockito;
 
 /**
  * @author jfaltermeier
@@ -57,13 +59,14 @@ public class TableDMRValidation_Test {
 	private VControl control;
 	private VTableDomainModelReference table;
 
-	private EValidator validator;
+	private TableValidator validator;
 	private BasicDiagnostic chain;
 	private LinkedHashMap<Object, Object> context;
 	private final Boolean createChain;
 	private VFeaturePathDomainModelReference column1;
 	private VFeaturePathDomainModelReference column2;
 	private VFeaturePathDomainModelReference tableDMR;
+	private EMFFormsDatabinding emfFormsDatabinding;
 
 	public TableDMRValidation_Test(Boolean createChain) {
 		this.createChain = createChain;
@@ -93,7 +96,8 @@ public class TableDMRValidation_Test {
 		table.getColumnDomainModelReferences().add(column2);
 		control.setDomainModelReference(table);
 
-		validator = TableValidator.INSTANCE;
+		emfFormsDatabinding = Mockito.mock(EMFFormsDatabinding.class);
+		validator = new TableValidator(emfFormsDatabinding);
 		context = new LinkedHashMap<Object, Object>();
 		if (createChain) {
 			chain = new BasicDiagnostic();
@@ -111,14 +115,32 @@ public class TableDMRValidation_Test {
 		ref.getDomainModelEReferencePath().add(BowlingPackage.eINSTANCE.getReferee_League());
 		ref.setDomainModelEFeature(BowlingPackage.eINSTANCE.getLeague_Players());
 		table.setDomainModelReference(ref);
+		try {
+			Mockito.doReturn(Properties.selfValue(BowlingPackage.eINSTANCE.getLeague_Players())).when(
+				emfFormsDatabinding).getValueProperty(ref);
+		} catch (final DatabindingFailedException ex) {
+			fail(ex.getMessage());
+		}
 	}
 
 	private void okColumn1() {
 		column1.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Name());
+		try {
+			Mockito.doReturn(Properties.selfValue(BowlingPackage.eINSTANCE.getPlayer_Name())).when(
+				emfFormsDatabinding).getValueProperty(column1);
+		} catch (final DatabindingFailedException ex) {
+			fail(ex.getMessage());
+		}
 	}
 
 	private void okColumn2() {
 		column2.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Gender());
+		try {
+			Mockito.doReturn(Properties.selfValue(BowlingPackage.eINSTANCE.getPlayer_Gender())).when(
+				emfFormsDatabinding).getValueProperty(column2);
+		} catch (final DatabindingFailedException ex) {
+			fail(ex.getMessage());
+		}
 	}
 
 	private boolean validate() {
@@ -236,6 +258,12 @@ public class TableDMRValidation_Test {
 		okColumn2();
 		view.setRootEClass(BowlingPackage.eINSTANCE.getFan());
 		tableDMR.setDomainModelEFeature(BowlingPackage.eINSTANCE.getFan_FavouritePlayer());
+		try {
+			Mockito.doReturn(Properties.selfValue(BowlingPackage.eINSTANCE.getFan_FavouritePlayer())).when(
+				emfFormsDatabinding).getValueProperty(tableDMR);
+		} catch (final DatabindingFailedException ex) {
+			fail(ex.getMessage());
+		}
 		assertFalse(validate());
 		if (createChain) {
 			assertEquals(Diagnostic.ERROR, chain.getSeverity());
@@ -250,6 +278,12 @@ public class TableDMRValidation_Test {
 		okColumn2();
 		view.setRootEClass(BowlingPackage.eINSTANCE.getFan());
 		tableDMR.setDomainModelEFeature(BowlingPackage.eINSTANCE.getFan_FavouritePlayer());
+		try {
+			Mockito.doReturn(Properties.selfValue(BowlingPackage.eINSTANCE.getFan_FavouritePlayer())).when(
+				emfFormsDatabinding).getValueProperty(tableDMR);
+		} catch (final DatabindingFailedException ex) {
+			fail(ex.getMessage());
+		}
 		assertFalse(validate());
 		if (createChain) {
 			assertEquals(Diagnostic.ERROR, chain.getSeverity());
@@ -263,6 +297,12 @@ public class TableDMRValidation_Test {
 		okColumn2();
 		view.setRootEClass(BowlingPackage.eINSTANCE.getFan());
 		tableDMR.setDomainModelEFeature(BowlingPackage.eINSTANCE.getFan_EMails());
+		try {
+			Mockito.doReturn(Properties.selfValue(BowlingPackage.eINSTANCE.getFan_EMails())).when(
+				emfFormsDatabinding).getValueProperty(tableDMR);
+		} catch (final DatabindingFailedException ex) {
+			fail(ex.getMessage());
+		}
 		assertFalse(validate());
 		if (createChain) {
 			assertEquals(Diagnostic.ERROR, chain.getSeverity());
@@ -277,6 +317,12 @@ public class TableDMRValidation_Test {
 		okColumn2();
 		view.setRootEClass(BowlingPackage.eINSTANCE.getFan());
 		tableDMR.setDomainModelEFeature(BowlingPackage.eINSTANCE.getFan_EMails());
+		try {
+			Mockito.doReturn(Properties.selfValue(BowlingPackage.eINSTANCE.getFan_EMails())).when(
+				emfFormsDatabinding).getValueProperty(tableDMR);
+		} catch (final DatabindingFailedException ex) {
+			fail(ex.getMessage());
+		}
 		assertFalse(validate());
 		if (createChain) {
 			assertEquals(Diagnostic.ERROR, chain.getSeverity());
