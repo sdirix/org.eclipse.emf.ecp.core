@@ -46,6 +46,8 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextDisposeListener;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
+import org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexdmrFactory;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.VAttachment;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
@@ -302,11 +304,14 @@ public class RuleService_PTest extends CommonRuleTest {
 
 		controlPName = VViewFactory.eINSTANCE.createControl();
 
+		final VIndexDomainModelReference indexDMR = VIndexdmrFactory.eINSTANCE.createIndexDomainModelReference();
+		indexDMR.setIndex(0);
+		indexDMR.setDomainModelEFeature(BowlingPackage.eINSTANCE.getLeague_Players());
 		final VFeaturePathDomainModelReference domainModelReference = VViewFactory.eINSTANCE
 			.createFeaturePathDomainModelReference();
 		domainModelReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Name());
-		domainModelReference.getDomainModelEReferencePath().add(BowlingPackage.eINSTANCE.getLeague_Players());
-		controlPName.setDomainModelReference(domainModelReference);
+		indexDMR.setTargetDMR(domainModelReference);
+		controlPName.setDomainModelReference(indexDMR);
 
 		column.getChildren().add(controlPName);
 
@@ -713,11 +718,14 @@ public class RuleService_PTest extends CommonRuleTest {
 	public void testShowRuleWithAndConditionBothConditionsApply() {
 
 		final VControl control1 = VViewFactory.eINSTANCE.createControl();
+		final VIndexDomainModelReference indexDMR = VIndexdmrFactory.eINSTANCE.createIndexDomainModelReference();
+		indexDMR.setDomainModelEFeature(BowlingPackage.eINSTANCE.getLeague_Players());
+		indexDMR.setIndex(0);
 		final VFeaturePathDomainModelReference domainModelReference = VViewFactory.eINSTANCE
 			.createFeaturePathDomainModelReference();
 		domainModelReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Height());
-		domainModelReference.getDomainModelEReferencePath().add(BowlingPackage.eINSTANCE.getLeague_Players());
-		control1.setDomainModelReference(domainModelReference);
+		indexDMR.setTargetDMR(domainModelReference);
+		control1.setDomainModelReference(indexDMR);
 		column.getChildren().add(control1);
 
 		addLeagueShowRuleWithAndCondition(
