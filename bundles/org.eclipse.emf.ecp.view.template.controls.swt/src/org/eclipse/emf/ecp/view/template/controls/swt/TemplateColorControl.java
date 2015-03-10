@@ -15,7 +15,15 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.eclipse.core.databinding.UpdateValueStrategy;
+import org.eclipse.core.databinding.observable.IObserving;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecp.edit.internal.swt.controls.AbstractTextControl;
+import org.eclipse.emf.ecp.internal.edit.Activator;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.jface.databinding.swt.ISWTObservableValue;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -56,8 +64,20 @@ public class TemplateColorControl extends AbstractTextControl {
 			@Override
 			public void mouseUp(MouseEvent e) {
 				final ColorDialog cd = new ColorDialog(composite.getShell());
+				IObservableValue observableValue;
+				try {
+					observableValue = Activator.getDefault().getEMFFormsDatabinding()
+						.getObservableValue(getDomainModelReference(), getViewModelContext().getDomainModel());
+				} catch (final DatabindingFailedException ex) {
+					Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+					return;
+				}
+				final InternalEObject internalEObject = (InternalEObject) ((IObserving) observableValue).getObserved();
+				final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
+				final Setting setting = internalEObject.eSetting(structuralFeature);
+
 				cd.setText(Messages.TemplateColorControl_SelectColor);
-				cd.setRGB(colors.get(getDomainModelReference().getIterator().next()).getRGB());
+				cd.setRGB(colors.get(setting).getRGB());
 				final RGB rgb = cd.open();
 				if (rgb == null) {
 					return;
@@ -67,7 +87,7 @@ public class TemplateColorControl extends AbstractTextControl {
 				final String green = Integer.toHexString(0x100 | rgb.green).substring(1);
 				final String blue = Integer.toHexString(0x100 | rgb.blue).substring(1);
 				final String result = red + green + blue;
-				getDomainModelReference().getIterator().next().set(result);
+				internalEObject.eSet(structuralFeature, result);
 			}
 
 			@Override

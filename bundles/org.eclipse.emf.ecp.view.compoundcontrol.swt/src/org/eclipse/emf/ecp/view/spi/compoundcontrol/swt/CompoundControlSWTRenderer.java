@@ -140,9 +140,8 @@ public class CompoundControlSWTRenderer extends AbstractSWTRenderer<VCompoundCon
 					}
 					// TODO who should apply the layout
 					control.setLayoutData(LayoutProviderHelper.getLayoutData(childGridCell, gridDescription,
-						gridDescription,
-						gridDescription, childGridCell.getRenderer().getVElement(),
-						control));
+						gridDescription, gridDescription, childGridCell.getRenderer().getVElement(),
+						getViewModelContext().getDomainModel(), control));
 				}
 				for (final SWTGridCell childGridCell : gridDescription.getGrid()) {
 					childGridCell.getRenderer().finalizeRendering(column);

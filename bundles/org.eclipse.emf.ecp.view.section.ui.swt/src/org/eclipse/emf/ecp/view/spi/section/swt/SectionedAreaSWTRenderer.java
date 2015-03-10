@@ -148,9 +148,8 @@ public class SectionedAreaSWTRenderer extends
 		SWTGridDescription fullGridDescription, VElement vElement,
 		Control control) {
 
-		final Object layoutData = LayoutProviderHelper.getLayoutData(gridCell,
-			gridDescription, currentRowGridDescription,
-			fullGridDescription, vElement, control);
+		final Object layoutData = LayoutProviderHelper.getLayoutData(gridCell, gridDescription,
+			currentRowGridDescription, fullGridDescription, vElement, getViewModelContext().getDomainModel(), control);
 		if (!GridData.class.isInstance(layoutData)) {
 			return;
 		}

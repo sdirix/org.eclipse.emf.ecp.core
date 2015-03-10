@@ -18,6 +18,7 @@ import java.util.List;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.internal.swt.Activator;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.swt.widgets.Control;
@@ -118,16 +119,16 @@ public final class LayoutProviderHelper {
 	 * @param currentRowGridDescription the {@link GridDescription} of the current row
 	 * @param fullGridDescription the {@link GridDescription} of the whole container
 	 * @param vElement the {@link VElement} which is currently rendered
+	 * @param domainModel The domain model object whose feature is currently rendered
 	 * @param control the rendered {@link Control}
 	 * @return the Object being the layout data to set
 	 */
 	public static Object getLayoutData(SWTGridCell gridCell, SWTGridDescription controlGridDescription,
 		SWTGridDescription currentRowGridDescription, SWTGridDescription fullGridDescription, VElement vElement,
-		Control control) {
+		EObject domainModel, Control control) {
 		checkProviderLength();
 		return getLayoutProvider().get(0).getLayoutData(gridCell, controlGridDescription, currentRowGridDescription,
-			fullGridDescription,
-			vElement, control);
+			fullGridDescription, vElement, domainModel, control);
 	}
 
 	private static void checkProviderLength() {

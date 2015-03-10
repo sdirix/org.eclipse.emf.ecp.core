@@ -134,7 +134,8 @@ public class SWTStackLayoutRenderer extends AbstractSWTRenderer<VStackLayout> {
 					continue;
 				}
 				control.setLayoutData(LayoutProviderHelper.getLayoutData(currentCell, elementGridDescription,
-					elementGridDescription, elementGridDescription, currentCell.getRenderer().getVElement(), control));
+					elementGridDescription, elementGridDescription, currentCell.getRenderer().getVElement(),
+					getViewModelContext().getDomainModel(), control));
 			}
 
 			for (final SWTGridCell currentCell : elementGridDescription.getGrid()) {

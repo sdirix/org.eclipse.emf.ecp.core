@@ -18,6 +18,7 @@ import org.eclipse.emf.ecp.ui.view.swt.DebugSWTReportConsumer;
 import org.eclipse.emf.ecp.ui.view.swt.InvalidGridDescriptionReportConsumer;
 import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
 import org.eclipse.emf.ecp.view.spi.model.util.ViewModelUtil;
+import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 
@@ -93,6 +94,22 @@ public class Activator extends Plugin {
 		final ServiceReference<ReportService> serviceReference =
 			bundleContext.getServiceReference(ReportService.class);
 		return bundleContext.getService(serviceReference);
+	}
+
+	/**
+	 * Returns the {@link EMFFormsEditSupport} service.
+	 *
+	 * @return The {@link EMFFormsEditSupport}
+	 */
+	public EMFFormsEditSupport getEMFFormsEditSupport() {
+		final ServiceReference<EMFFormsEditSupport> serviceReference = plugin.getBundle().getBundleContext()
+			.getServiceReference(EMFFormsEditSupport.class);
+
+		final EMFFormsEditSupport service = plugin.getBundle().getBundleContext()
+			.getService(serviceReference);
+		plugin.getBundle().getBundleContext().ungetService(serviceReference);
+
+		return service;
 	}
 
 }

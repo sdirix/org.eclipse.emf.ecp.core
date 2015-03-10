@@ -11,6 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.swt.layout;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Layout;
@@ -40,12 +41,13 @@ public interface LayoutProvider {
 	 * @param currentRowGridDescription the {@link SWTGridDescription} of the current row
 	 * @param fullGridDescription the {@link SWTGridDescription} of the whole container
 	 * @param vElement the {@link VElement} which is currently rendered
+	 * @param domainModel The domain model object whose feature is currently rendered
 	 * @param control the rendered {@link Control}
 	 * @return the Object being the layout data to set
 	 */
 	Object getLayoutData(SWTGridCell gridCell, SWTGridDescription controlGridDescription,
 		SWTGridDescription currentRowGridDescription, SWTGridDescription fullGridDescription, VElement vElement,
-		Control control);
+		EObject domainModel, Control control);
 
 	/**
 	 * A simple spanning Layout.

@@ -340,8 +340,7 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 		Control control) {
 
 		control.setLayoutData(LayoutProviderHelper.getLayoutData(gridCell, gridDescription, currentRowGridDescription,
-			fullGridDescription,
-			vElement, control));
+			fullGridDescription, vElement, getViewModelContext().getDomainModel(), control));
 
 	}
 
