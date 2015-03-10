@@ -55,8 +55,8 @@ public class ECPLegacyControlSWTRenderer extends SimpleControlSWTControlSWTRende
 			return null;
 		}
 
-		control = controlFactory.createControl(SWTControl.class,
-			getVElement().getDomainModelReference());
+		control = controlFactory.createControl(SWTControl.class, getViewModelContext().getDomainModel(), getVElement()
+			.getDomainModelReference());
 
 		Activator.getDefault().ungetECPControlFactory();
 		if (control == null) {
