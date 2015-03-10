@@ -16,10 +16,12 @@ import java.util.Set;
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
+import org.eclipse.core.databinding.observable.IObserving;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.databinding.EMFUpdateValueStrategy;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecp.view.internal.core.swt.Activator;
 import org.eclipse.emf.ecp.view.internal.core.swt.MessageKeys;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
@@ -39,6 +41,7 @@ import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.emfforms.spi.core.services.labelprovider.EMFFormsLabelProvider;
 import org.eclipse.emf.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.swt.SWT;
@@ -307,8 +310,21 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 		public Object convert(Object value) {
 			final Object converted = convertValue(value);
 			if (tooltip && String.class.isInstance(converted)) {
-				return ECPTooltipModifierHelper.modifyString(String.class.cast(converted), getVElement()
-					.getDomainModelReference().getIterator().next());
+				IObservableValue observableValue;
+				try {
+					observableValue = Activator
+						.getDefault()
+						.getEMFFormsDatabinding()
+						.getObservableValue(getVElement().getDomainModelReference(),
+							getViewModelContext().getDomainModel());
+				} catch (final DatabindingFailedException ex) {
+					Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+					return converted;
+				}
+				final InternalEObject internalEObject = (InternalEObject) ((IObserving) observableValue).getObserved();
+				final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
+				return ECPTooltipModifierHelper.modifyString(String.class.cast(converted),
+					internalEObject.eSetting(structuralFeature));
 			}
 			return converted;
 		}

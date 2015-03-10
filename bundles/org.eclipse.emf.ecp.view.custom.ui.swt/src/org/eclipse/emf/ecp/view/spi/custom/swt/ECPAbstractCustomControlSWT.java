@@ -332,9 +332,13 @@ public abstract class ECPAbstractCustomControlSWT
 	 */
 	protected final void createViewerBinding(VDomainModelReference customControlFeature, StructuredViewer viewer,
 		IValueProperty[] labelProperties) {
-
-		final IObservableList list = getObservableList(customControlFeature);
-		ViewerSupport.bind(viewer, list, labelProperties);
+		try {
+			final IObservableList list = Activator.getDefault().getEMFFormsDatabinding()
+				.getObservableList(customControlFeature, getViewModelContext().getDomainModel());
+			ViewerSupport.bind(viewer, list, labelProperties);
+		} catch (final DatabindingFailedException ex) {
+			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+		}
 	}
 
 	/**
@@ -343,12 +347,14 @@ public abstract class ECPAbstractCustomControlSWT
 	 * @param domainModelReference the {@link VDomainModelReference} to use
 	 * @return the {@link IObservableList}
 	 * @since 1.3
+	 * @deprecated This method is deprecated and must not be used anymore. Use the
+	 *             {@link org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding
+	 *             databinding service} instead.
 	 */
+	@Deprecated
 	protected final IObservableList getObservableList(VDomainModelReference domainModelReference) {
-		final Setting setting = domainModelReference.getIterator().next();
-		return EMFEditObservables.observeList(
-			getEditingDomain(setting),
-			setting.getEObject(), setting.getEStructuralFeature());
+		throw new UnsupportedOperationException(
+			"This method is deprecated and must not be used anymore. Use the databinding service instead."); //$NON-NLS-1$
 	}
 
 	/**

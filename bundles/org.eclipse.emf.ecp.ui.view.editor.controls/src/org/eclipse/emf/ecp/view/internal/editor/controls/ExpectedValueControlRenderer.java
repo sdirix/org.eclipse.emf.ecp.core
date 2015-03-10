@@ -26,7 +26,9 @@ import org.eclipse.emf.databinding.EMFUpdateValueStrategy;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.EEnumImpl;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer;
@@ -34,6 +36,7 @@ import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.provider.ECPTooltipModifierHelper;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -50,7 +53,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.dialogs.ListDialog;
 
 /**
@@ -270,8 +272,21 @@ public abstract class ExpectedValueControlRenderer extends SimpleControlSWTContr
 		public Object convert(Object value) {
 			final Object converted = value.toString();
 			if (String.class.isInstance(converted)) {
-				return ECPTooltipModifierHelper.modifyString(String.class.cast(converted), getVElement()
-					.getDomainModelReference().getIterator().next());
+				IObservableValue observableValue;
+				try {
+					observableValue = Activator
+						.getDefault()
+						.getEMFFormsDatabinding()
+						.getObservableValue(getVElement().getDomainModelReference(),
+							getViewModelContext().getDomainModel());
+				} catch (final DatabindingFailedException ex) {
+					Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+					return converted;
+				}
+				final InternalEObject internalEObject = (InternalEObject) ((IObserving) observableValue).getObserved();
+				final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
+				return ECPTooltipModifierHelper.modifyString(String.class.cast(converted),
+					internalEObject.eSetting(structuralFeature));
 			}
 			return converted;
 		}
@@ -288,8 +303,6 @@ public abstract class ExpectedValueControlRenderer extends SimpleControlSWTContr
 
 		/**
 		 * Constructor for indicating whether a value is unsettable.
-		 *
-		 * @param unsettable true if value is unsettable, false otherwise
 		 */
 		public TargetToModelUpdateStrategy() {
 		}
