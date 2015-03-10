@@ -276,27 +276,33 @@ public abstract class ECPAbstractCustomControlSWT
 		throws NoPropertyDescriptorFoundExeption {
 		Label label = null;
 		labelRender: if (getCustomControl().getLabelAlignment() == LabelAlignment.LEFT) {
-			final Setting setting = getCustomControl().getDomainModelReference().getIterator().next();
-			if (setting == null) {
+			IValueProperty valueProperty;
+			try {
+				valueProperty = Activator.getDefault().getEMFFormsDatabinding()
+					.getValueProperty(getCustomControl().getDomainModelReference());
+			} catch (final DatabindingFailedException ex) {
+				Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
 				break labelRender;
 			}
-			final IItemPropertyDescriptor itemPropertyDescriptor = getItemPropertyDescriptor(setting);
-
-			if (itemPropertyDescriptor == null) {
-				throw new NoPropertyDescriptorFoundExeption(setting.getEObject(), setting.getEStructuralFeature());
-			}
+			final EStructuralFeature structuralFeature = (EStructuralFeature) valueProperty.getValueType();
 
 			label = new Label(parent, SWT.NONE);
 			label.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_label"); //$NON-NLS-1$
 			label.setBackground(parent.getBackground());
 			String extra = ""; //$NON-NLS-1$
-			if (setting.getEStructuralFeature().getLowerBound() > 0) {
+			if (structuralFeature.getLowerBound() > 0) {
 				extra = "*"; //$NON-NLS-1$
 			}
-			final String labelText = itemPropertyDescriptor.getDisplayName(setting.getEObject());
+			final String labelText = Activator.getDefault().getEMFFormsLabelProvider()
+				.getDisplayName(getCustomControl().getDomainModelReference(), getViewModelContext().getDomainModel());
 			if (labelText != null && labelText.trim().length() != 0) {
 				label.setText(labelText + extra);
-				label.setToolTipText(itemPropertyDescriptor.getDescription(setting.getEObject()));
+				final String toolTipText = Activator
+					.getDefault()
+					.getEMFFormsLabelProvider()
+					.getDescription(getCustomControl().getDomainModelReference(),
+						getViewModelContext().getDomainModel());
+				label.setToolTipText(toolTipText);
 			}
 
 		}
@@ -504,7 +510,7 @@ public abstract class ECPAbstractCustomControlSWT
 	 * @since 1.3
 	 */
 	protected final EditingDomain getEditingDomain() {
-		return getEditingDomain(getCustomControl().getDomainModelReference().getIterator().next());
+		return getEditingDomain(getFirstSetting(getCustomControl().getDomainModelReference()));
 	}
 
 	/**
