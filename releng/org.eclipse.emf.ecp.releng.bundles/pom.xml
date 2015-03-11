@@ -204,7 +204,6 @@
 
 		<!-- mapping dmr -->
 		<module>../../bundles/org.eclipse.emf.ecp.view.mappingdmr.tooling</module>
-		<module>../../bundles/org.eclipse.emf.ecp.view.mappingdmr.databinding</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.mappingdmr.model</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.mappingdmr.model.edit</module>
 		
@@ -238,7 +237,6 @@
 		<module>../../bundles/org.eclipse.emf.ecp.view.indexdmr.model</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.indexdmr.model.edit</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.indexdmr.tooling</module>
-		<module>../../bundles/org.eclipse.emf.ecp.view.indexdmr.databinding</module>
 		
 		<!-- Migration -->
 		<module>../../bundles/org.eclipse.emf.ecp.view.migrator</module>
