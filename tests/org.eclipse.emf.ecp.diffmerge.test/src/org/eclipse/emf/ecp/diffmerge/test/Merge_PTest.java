@@ -67,17 +67,14 @@ public class Merge_PTest {
 		dmr.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Name());
 		controlToCopyFrom.setDomainModelReference(dmr);
 
-		dmr.init(player1);
-
 		final Player player2 = BowlingFactory.eINSTANCE.createPlayer();
 		addEobjectToResource(player2);
 		player2.setName("b"); //$NON-NLS-1$
 		final VFeaturePathDomainModelReference dmr2 = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
 		dmr2.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Name());
 		controlToCopyTo.setDomainModelReference(dmr2);
-		dmr2.init(player2);
 
-		DefaultMergeUtil.copyValues(controlToCopyFrom, controlToCopyTo);
+		DefaultMergeUtil.copyValues(controlToCopyFrom, player1, controlToCopyTo, player2);
 
 		assertEquals("a", player2.getName()); //$NON-NLS-1$
 	}
@@ -94,7 +91,6 @@ public class Merge_PTest {
 		final VFeaturePathDomainModelReference dmr = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
 		dmr.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_EMails());
 		controlToCopyFrom.setDomainModelReference(dmr);
-		dmr.init(player1);
 
 		final Player player2 = BowlingFactory.eINSTANCE.createPlayer();
 		addEobjectToResource(player2);
@@ -103,9 +99,8 @@ public class Merge_PTest {
 		final VFeaturePathDomainModelReference dmr2 = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
 		dmr2.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_EMails());
 		controlToCopyTo.setDomainModelReference(dmr2);
-		dmr2.init(player2);
 
-		DefaultMergeUtil.copyValues(controlToCopyFrom, controlToCopyTo);
+		DefaultMergeUtil.copyValues(controlToCopyFrom, player1, controlToCopyTo, player2);
 
 		assertEquals(2, player2.getEMails().size());
 		assertEquals("a", player2.getEMails().get(0)); //$NON-NLS-1$
@@ -126,7 +121,6 @@ public class Merge_PTest {
 		dmr.setDomainModelEFeature(BowlingPackage.eINSTANCE.getMerchandise_Name());
 		dmr.getDomainModelEReferencePath().add(BowlingPackage.eINSTANCE.getFan_FavouriteMerchandise());
 		controlToCopyFrom.setDomainModelReference(dmr);
-		dmr.init(fan1);
 
 		final Fan fan2 = BowlingFactory.eINSTANCE.createFan();
 		fan2.setFavouriteMerchandise(BowlingFactory.eINSTANCE.createMerchandise());
@@ -136,9 +130,8 @@ public class Merge_PTest {
 		dmr2.setDomainModelEFeature(BowlingPackage.eINSTANCE.getMerchandise_Name());
 		dmr2.getDomainModelEReferencePath().add(BowlingPackage.eINSTANCE.getFan_FavouriteMerchandise());
 		controlToCopyTo.setDomainModelReference(dmr2);
-		dmr2.init(fan2);
 
-		DefaultMergeUtil.copyValues(controlToCopyFrom, controlToCopyTo);
+		DefaultMergeUtil.copyValues(controlToCopyFrom, fan1, controlToCopyTo, fan2);
 
 		assertNotEquals(fan1.getFavouriteMerchandise(), fan2.getFavouriteMerchandise());
 		assertEquals("a", fan2.getFavouriteMerchandise().getName()); //$NON-NLS-1$
@@ -166,7 +159,6 @@ public class Merge_PTest {
 				.createTableDomainModelReference();
 			dmr.setDomainModelEFeature(BowlingPackage.eINSTANCE.getFan_FanMerchandise());
 			controlToCopyFrom.setDomainModelReference(dmr);
-			dmr.init(fan1);
 		}
 
 		final Fan fan2 = BowlingFactory.eINSTANCE.createFan();
@@ -182,10 +174,9 @@ public class Merge_PTest {
 				.createTableDomainModelReference();
 			dmr2.setDomainModelEFeature(BowlingPackage.eINSTANCE.getFan_FanMerchandise());
 			controlToCopyTo.setDomainModelReference(dmr2);
-			dmr2.init(fan2);
 		}
 
-		DefaultMergeUtil.copyValues(controlToCopyFrom, controlToCopyTo);
+		DefaultMergeUtil.copyValues(controlToCopyFrom, fan1, controlToCopyTo, fan2);
 
 		assertEquals(fan1.getFanMerchandise().size(), fan2.getFanMerchandise().size());
 		assertNotEquals(fan1.getFanMerchandise().get(0), fan2.getFanMerchandise().get(0));

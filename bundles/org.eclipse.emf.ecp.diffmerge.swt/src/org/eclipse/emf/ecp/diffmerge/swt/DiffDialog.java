@@ -72,6 +72,7 @@ public class DiffDialog {
 	private final DiffMergeModelContext viewModelContext;
 
 	private VControl mergeControl;
+	private EObject mergeDomainObject;
 	private boolean diffConfirmed = true;
 
 	/**
@@ -268,11 +269,11 @@ public class DiffDialog {
 				new ReflectiveItemProviderAdapterFactory(),
 				new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) }),
 			new BasicCommandStack(), resourceSet);
-		final EObject domainObject = EcoreUtil.copy(viewModelContext.getDomainModel());
+		mergeDomainObject = EcoreUtil.copy(viewModelContext.getDomainModel());
 		resourceSet.eAdapters().add(new AdapterFactoryEditingDomain.EditingDomainProvider(domain));
 		final Resource resource = resourceSet.createResource(URI.createURI("VIRTUAL_URI_TEMP")); //$NON-NLS-1$
-		resource.getContents().add(domainObject);
-		createControl(targetGroup, mergeControl, domainObject, false);
+		resource.getContents().add(mergeDomainObject);
+		createControl(targetGroup, mergeControl, mergeDomainObject, false);
 
 		return targetGroup;
 	}
@@ -312,7 +313,7 @@ public class DiffDialog {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				super.widgetSelected(e);
-				replaceMainWith(left);
+				replaceMainWith(left, viewModelContext.getLeftModel());
 			}
 
 		});
@@ -341,7 +342,7 @@ public class DiffDialog {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				super.widgetSelected(e);
-				replaceMainWith(right);
+				replaceMainWith(right, viewModelContext.getRightModel());
 			}
 
 		});
@@ -363,8 +364,8 @@ public class DiffDialog {
 		}
 	}
 
-	private void replaceMainWith(VControl replaceControl) {
-		DefaultMergeUtil.copyValues(replaceControl, mergeControl);
+	private void replaceMainWith(VControl replaceControl, EObject replaceDomainModel) {
+		DefaultMergeUtil.copyValues(replaceControl, replaceDomainModel, mergeControl, mergeDomainObject);
 	}
 
 	/**
@@ -402,7 +403,7 @@ public class DiffDialog {
 	}
 
 	private void saveAndCloseDialog(final Shell shell) {
-		DefaultMergeUtil.copyValues(mergeControl, main);
+		DefaultMergeUtil.copyValues(mergeControl, mergeDomainObject, main, viewModelContext.getDomainModel());
 
 		viewModelContext.markControl(main, diffConfirmed);
 
