@@ -38,6 +38,10 @@ public class EMFIndexedValueProperty extends EMFValueProperty {
 	public EMFIndexedValueProperty(int index,
 		EStructuralFeature eStructuralFeature) {
 		super(eStructuralFeature);
+		if (index < 0) {
+			throw new IllegalArgumentException(
+				"\t \t \t \t \t Who thinks it's a good idea to use a negative list index?!"); //$NON-NLS-1$
+		}
 		this.index = index;
 	}
 
@@ -46,6 +50,9 @@ public class EMFIndexedValueProperty extends EMFValueProperty {
 	protected Object doGetValue(Object source) {
 		final Object result = super.doGetValue(source);
 		final EList<Object> list = (EList<Object>) result;
+		if (list != null && index >= list.size()) {
+			return null;
+		}
 		return list.get(index);
 	}
 
