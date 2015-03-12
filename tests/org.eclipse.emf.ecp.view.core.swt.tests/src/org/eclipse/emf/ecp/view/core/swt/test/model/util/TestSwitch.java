@@ -14,10 +14,9 @@ package org.eclipse.emf.ecp.view.core.swt.test.model.util;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.util.Switch;
-
-import org.eclipse.emf.ecp.view.core.swt.test.model.*;
+import org.eclipse.emf.ecp.view.core.swt.test.model.SimpleTestObject;
+import org.eclipse.emf.ecp.view.core.swt.test.model.TestPackage;
 
 /**
  * <!-- begin-user-doc -->

@@ -19,6 +19,7 @@ import org.eclipse.emf.ecp.ui.view.swt.InvalidGridDescriptionReportConsumer;
 import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
 import org.eclipse.emf.ecp.view.spi.model.util.ViewModelUtil;
 import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
+import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 
@@ -105,7 +106,20 @@ public class Activator extends Plugin {
 		final ServiceReference<EMFFormsEditSupport> serviceReference = plugin.getBundle().getBundleContext()
 			.getServiceReference(EMFFormsEditSupport.class);
 
-		final EMFFormsEditSupport service = plugin.getBundle().getBundleContext()
+		final EMFFormsEditSupport service = plugin.getBundle().getBundleContext().getService(serviceReference);
+		plugin.getBundle().getBundleContext().ungetService(serviceReference);
+		return service;
+	}
+	/**
+	 * Returns the {@link EMFFormsRendererFactory} service.
+	 *
+	 * @return The {@link EMFFormsRendererFactory}
+	 */
+	public EMFFormsRendererFactory getEMFFormsRendererFactory() {
+		final ServiceReference<EMFFormsRendererFactory> serviceReference = plugin.getBundle().getBundleContext()
+			.getServiceReference(EMFFormsRendererFactory.class);
+
+		final EMFFormsRendererFactory service = plugin.getBundle().getBundleContext()
 			.getService(serviceReference);
 		plugin.getBundle().getBundleContext().ungetService(serviceReference);
 

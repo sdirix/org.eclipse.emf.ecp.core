@@ -15,7 +15,8 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VAbstractCategorization;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationElement;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
+import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
+import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
 
 /**
  * Tab renderer for VCategorizationElement.
@@ -26,13 +27,17 @@ import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 public class CategorizationElementTabbedSWTRenderer extends AbstractSWTTabRenderer<VCategorizationElement> {
 
 	/**
+	 * Default constructor.
+	 *
 	 * @param vElement the view model element to be rendered
 	 * @param viewContext the view context
-	 * @param factory the {@link SWTRendererFactory}
+	 * @param reportService the {@link ReportService}
+	 * @param emfFormsRendererFactory The {@link EMFFormsRendererFactory}
 	 */
 	public CategorizationElementTabbedSWTRenderer(VCategorizationElement vElement, ViewModelContext viewContext,
-		SWTRendererFactory factory) {
-		super(vElement, viewContext, factory);
+		ReportService reportService,
+		EMFFormsRendererFactory emfFormsRendererFactory) {
+		super(vElement, viewContext, reportService, emfFormsRendererFactory);
 	}
 
 	/**

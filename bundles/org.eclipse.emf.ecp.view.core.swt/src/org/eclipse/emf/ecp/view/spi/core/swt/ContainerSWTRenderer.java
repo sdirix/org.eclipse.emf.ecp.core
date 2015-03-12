@@ -34,7 +34,6 @@ import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractAdditionalSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
-import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.LayoutProviderHelper;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
@@ -42,6 +41,8 @@ import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
 import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.swt.core.EMFFormsNoRendererException;
+import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -58,13 +59,33 @@ import org.eclipse.swt.widgets.Layout;
  *
  */
 public abstract class ContainerSWTRenderer<VELEMENT extends VElement> extends AbstractSWTRenderer<VELEMENT> {
+	private final EMFFormsRendererFactory factory;
+	private final EMFFormsDatabinding emfFormsDatabinding;
+
 	/**
+	 * The {@link EMFFormsRendererFactory} to use.
+	 *
+	 * @return the {@link EMFFormsRendererFactory}
+	 * @since 1.6
+	 */
+	protected final EMFFormsRendererFactory getEMFFormsRendererFactory() {
+		return factory;
+	}
+
+	/**
+	 * Default constructor.
+	 *
 	 * @param vElement the view model element to be rendered
 	 * @param viewContext the view context
-	 * @param factory the {@link SWTRendererFactory}
+	 * @param reportService the {@link ReportService}
+	 * @param factory the {@link EMFFormsRendererFactory}
+	 * @param emfFormsDatabinding The {@link EMFFormsDatabinding}
 	 */
-	public ContainerSWTRenderer(VELEMENT vElement, ViewModelContext viewContext, SWTRendererFactory factory) {
-		super(vElement, viewContext, factory);
+	public ContainerSWTRenderer(VELEMENT vElement, ViewModelContext viewContext, ReportService reportService,
+		EMFFormsRendererFactory factory, EMFFormsDatabinding emfFormsDatabinding) {
+		super(vElement, viewContext, reportService);
+		this.factory = factory;
+		this.emfFormsDatabinding = emfFormsDatabinding;
 	}
 
 	private SWTGridDescription rendererGridDescription;
@@ -96,7 +117,6 @@ public abstract class ContainerSWTRenderer<VELEMENT extends VElement> extends Ab
 			return null;
 		}
 
-		final ReportService reportService = Activator.getDefault().getReportService();
 		final Composite columnComposite = getComposite(parent);
 		columnComposite.setData(CUSTOM_VARIANT, getCustomVariant());
 		columnComposite.setBackground(parent.getBackground());
@@ -112,18 +132,20 @@ public abstract class ContainerSWTRenderer<VELEMENT extends VElement> extends Ab
 				continue;
 			}
 
-			final AbstractSWTRenderer<VElement> renderer = getSWTRendererFactory().getRenderer(child,
-				getViewModelContext());
-
-			if (renderer == null) {
-				reportService.report(new StatusReport(
-					new Status(IStatus.INFO, Activator.PLUGIN_ID, String.format(
-						"No Renderer for %s found.", child.eClass().getName())))); //$NON-NLS-1$
+			AbstractSWTRenderer<VElement> renderer;
+			try {
+				renderer = getEMFFormsRendererFactory().getRendererInstance(child,
+					getViewModelContext());
+			} catch (final EMFFormsNoRendererException ex) {
+				getReportService().report(
+					new StatusReport(
+						new Status(IStatus.INFO, Activator.PLUGIN_ID, String.format(
+							"No Renderer for %s found.", child.eClass().getName()), ex))); //$NON-NLS-1$
 				continue;
 			}
 
-			final Collection<AbstractAdditionalSWTRenderer<VElement>> additionalRenderers = getSWTRendererFactory()
-				.getAdditionalRenderer(child,
+			final Collection<AbstractAdditionalSWTRenderer<VElement>> additionalRenderers = getEMFFormsRendererFactory()
+				.getAdditionalRendererInstances(child,
 					getViewModelContext());
 			SWTGridDescription gridDescription = renderer.getGridDescription(GridDescriptionFactory.INSTANCE
 				.createEmptyGridDescription());
@@ -162,13 +184,13 @@ public abstract class ContainerSWTRenderer<VELEMENT extends VElement> extends Ab
 					control = childGridCell.getRenderer().render(childGridCell,
 						columnComposite);
 				} catch (final NoRendererFoundException ex) {
-					reportService.report(new RenderingFailedReport(ex));
+					getReportService().report(new RenderingFailedReport(ex));
 					if (ViewModelUtil.isDebugMode()) {
 						control = renderDiagnoseControl(columnComposite, child);
 					}
 
 				} catch (final NoPropertyDescriptorFoundExeption ex) {
-					reportService.report(new RenderingFailedReport(ex));
+					getReportService().report(new RenderingFailedReport(ex));
 					if (ViewModelUtil.isDebugMode()) {
 						control = renderDiagnoseControl(columnComposite, child);
 					}
@@ -202,7 +224,7 @@ public abstract class ContainerSWTRenderer<VELEMENT extends VElement> extends Ab
 				getEMFFormsDatabinding()
 					.getValueProperty(VControl.class.cast(child).getDomainModelReference());
 			} catch (final DatabindingFailedException ex) {
-				Activator.getDefault().getReportService().report(new RenderingFailedReport(ex));
+				getReportService().report(new RenderingFailedReport(ex));
 				return false;
 			}
 		}
@@ -214,8 +236,8 @@ public abstract class ContainerSWTRenderer<VELEMENT extends VElement> extends Ab
 	 *
 	 * @return The EMFFormsDatabinding
 	 */
-	EMFFormsDatabinding getEMFFormsDatabinding() {
-		return Activator.getDefault().getEMFFormsDatabinding();
+	private EMFFormsDatabinding getEMFFormsDatabinding() {
+		return emfFormsDatabinding;
 	}
 
 	// TODO: possible duplicate code
@@ -270,6 +292,26 @@ public abstract class ContainerSWTRenderer<VELEMENT extends VElement> extends Ab
 	 */
 	protected Layout getLayout(int numControls, boolean equalWidth) {
 		return LayoutProviderHelper.getColumnLayout(numControls, equalWidth);
+	}
+
+	/**
+	 * Sets the LayoutData for the specified control.
+	 *
+	 * @param gridCell the {@link GridCell} used to render the control
+	 * @param gridDescription the {@link GridDescription} of the parent which rendered the control
+	 * @param currentRowGridDescription the {@link GridDescription} of the current row
+	 * @param fullGridDescription the {@link GridDescription} of the whole container
+	 * @param vElement the {@link VElement} to set the layoutData for
+	 * @param control the control to set the layout to
+	 * @since 1.3
+	 */
+	protected void setLayoutDataForControl(SWTGridCell gridCell, SWTGridDescription gridDescription,
+		SWTGridDescription currentRowGridDescription, SWTGridDescription fullGridDescription, VElement vElement,
+		Control control) {
+
+		control.setLayoutData(LayoutProviderHelper.getLayoutData(gridCell, gridDescription, currentRowGridDescription,
+			fullGridDescription, vElement, getViewModelContext().getDomainModel(), control));
+
 	}
 
 	/**

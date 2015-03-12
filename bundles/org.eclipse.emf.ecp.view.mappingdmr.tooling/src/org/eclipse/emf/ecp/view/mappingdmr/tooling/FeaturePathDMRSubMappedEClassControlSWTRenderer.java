@@ -31,7 +31,7 @@ import org.eclipse.emf.ecp.view.spi.mappingdmr.model.VMappingDomainModelReferenc
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
-import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
+import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.wizard.WizardDialog;
@@ -144,11 +144,11 @@ public class FeaturePathDMRSubMappedEClassControlSWTRenderer extends
 	/**
 	 * @param vElement the view model element to be rendered
 	 * @param viewContext the view context
-	 * @param factory the {@link SWTRendererFactory}
+	 * @param reportService the {@link ReportService}
 	 */
 	public FeaturePathDMRSubMappedEClassControlSWTRenderer(VControl vElement, ViewModelContext viewContext,
-		SWTRendererFactory factory) {
-		super(vElement, viewContext, factory);
+		ReportService reportService) {
+		super(vElement, viewContext, reportService);
 	}
 
 	@Override

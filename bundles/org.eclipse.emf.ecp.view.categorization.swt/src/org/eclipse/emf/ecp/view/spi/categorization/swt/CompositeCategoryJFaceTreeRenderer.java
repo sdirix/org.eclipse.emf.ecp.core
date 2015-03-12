@@ -17,7 +17,8 @@ import org.eclipse.emf.ecp.view.spi.categorization.model.VAbstractCategorization
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorization;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationElement;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
+import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
+import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
 
 /**
  * Tree renderer for composite category.
@@ -28,13 +29,17 @@ import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 public class CompositeCategoryJFaceTreeRenderer extends AbstractJFaceTreeRenderer<VCategorization> {
 
 	/**
+	 * Default constructor.
+	 *
 	 * @param vElement the view model element to be rendered
 	 * @param viewContext the view context
-	 * @param factory the {@link SWTRendererFactory}
+	 * @param reportService the {@link ReportService}
+	 * @param emfFormsRendererFactory The {@link EMFFormsRendererFactory}
 	 */
 	public CompositeCategoryJFaceTreeRenderer(VCategorization vElement, ViewModelContext viewContext,
-		SWTRendererFactory factory) {
-		super(vElement, viewContext, factory);
+		ReportService reportService,
+		EMFFormsRendererFactory emfFormsRendererFactory) {
+		super(vElement, viewContext, reportService, emfFormsRendererFactory);
 	}
 
 	private VCategorizationElement categorizationElement;

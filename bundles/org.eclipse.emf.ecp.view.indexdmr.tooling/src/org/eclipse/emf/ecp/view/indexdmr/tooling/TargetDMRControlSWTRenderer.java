@@ -32,7 +32,7 @@ import org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
-import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
+import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.wizard.WizardDialog;
@@ -52,9 +52,9 @@ public class TargetDMRControlSWTRenderer extends
 	/**
 	 * @param vElement the view model element to be rendered
 	 * @param viewContext the view context
-	 * @param factory the {@link SWTRendererFactory}
+	 * @param factory the {@link ReportService}
 	 */
-	public TargetDMRControlSWTRenderer(VControl vElement, ViewModelContext viewContext, SWTRendererFactory factory) {
+	public TargetDMRControlSWTRenderer(VControl vElement, ViewModelContext viewContext, ReportService factory) {
 		super(vElement, viewContext, factory);
 	}
 

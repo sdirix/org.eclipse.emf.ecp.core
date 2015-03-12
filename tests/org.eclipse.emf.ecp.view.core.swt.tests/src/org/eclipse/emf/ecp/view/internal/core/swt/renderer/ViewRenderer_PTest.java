@@ -11,14 +11,18 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
-import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.DatabindingClassRunner;
+import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
+import org.eclipse.emfforms.spi.swt.core.EMFFormsNoRendererException;
+import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
@@ -39,17 +43,20 @@ public class ViewRenderer_PTest {
 	private VView view;
 	private ViewModelContext context;
 	private Shell shell;
-	private SWTRendererFactory factory;
+	private EMFFormsRendererFactory rendererFactory;
 
 	@Before
 	public void setUp() {
-		factory = mock(SWTRendererFactory.class);
-
+		final ReportService reportService = mock(ReportService.class);
+		final EMFFormsDatabinding databindingService = mock(EMFFormsDatabinding.class);
+		rendererFactory = mock(EMFFormsRendererFactory.class);
+		final EMFFormsEditSupport editSupport = mock(EMFFormsEditSupport.class);
 		view = Mockito.mock(VView.class);
 
 		context = Mockito.mock(ViewModelContext.class);
 		shell = new Shell();
-		viewRenderer = new ViewSWTRenderer(view, context, factory);
+		viewRenderer = new ViewSWTRenderer(view, context, reportService, rendererFactory, databindingService,
+			editSupport);
 		viewRenderer.init();
 
 	}
@@ -80,7 +87,7 @@ public class ViewRenderer_PTest {
 
 	@Test
 	public void testMultipleSimpleCompositeView() throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption, EMFFormsNoRendererException {
 		final BasicEList<VContainedElement> basicEList = new BasicEList<VContainedElement>();
 		final VContainedElement control1 = mock(VContainedElement.class);
 		final VContainedElement control2 = mock(VContainedElement.class);
@@ -91,8 +98,8 @@ public class ViewRenderer_PTest {
 		final AbstractSWTRenderer<VElement> mockRenderer1 = createCompositeMockRenderer(control1, 1);
 		final AbstractSWTRenderer<VElement> mockRenderer2 = createCompositeMockRenderer(control2, 1);
 
-		when(factory.getRenderer(control1, context)).thenReturn(mockRenderer1);
-		when(factory.getRenderer(control2, context)).thenReturn(mockRenderer2);
+		when(rendererFactory.getRendererInstance(control1, context)).thenReturn(mockRenderer1);
+		when(rendererFactory.getRendererInstance(control2, context)).thenReturn(mockRenderer2);
 
 		final Control render = viewRenderer.render(new SWTGridCell(0, 0, viewRenderer), shell);
 		assertTrue(Composite.class.isInstance(render));
@@ -108,7 +115,7 @@ public class ViewRenderer_PTest {
 
 	@Test
 	public void testMultipleComplexGridDescriptionView() throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption, EMFFormsNoRendererException {
 		final BasicEList<VContainedElement> basicEList = new BasicEList<VContainedElement>();
 		final VContainedElement control1 = mock(VContainedElement.class);
 		final VContainedElement control2 = mock(VContainedElement.class);
@@ -122,9 +129,9 @@ public class ViewRenderer_PTest {
 		final AbstractSWTRenderer<VElement> mockRenderer2 = createCompositeMockRenderer(control2, 3);
 		final AbstractSWTRenderer<VElement> mockRenderer3 = createCompositeMockRenderer(control3, 2);
 
-		when(factory.getRenderer(control1, context)).thenReturn(mockRenderer1);
-		when(factory.getRenderer(control2, context)).thenReturn(mockRenderer2);
-		when(factory.getRenderer(control3, context)).thenReturn(mockRenderer3);
+		when(rendererFactory.getRendererInstance(control1, context)).thenReturn(mockRenderer1);
+		when(rendererFactory.getRendererInstance(control2, context)).thenReturn(mockRenderer2);
+		when(rendererFactory.getRendererInstance(control3, context)).thenReturn(mockRenderer3);
 
 		final Control render = viewRenderer.render(new SWTGridCell(0, 0, viewRenderer), shell);
 		assertTrue(Composite.class.isInstance(render));

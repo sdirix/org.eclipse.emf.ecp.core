@@ -19,7 +19,9 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.group.model.VGroup;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
-import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
+import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
+import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
 import org.eclipse.nebula.widgets.pgroup.PGroup;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ExpandEvent;
@@ -35,12 +37,17 @@ import org.eclipse.swt.widgets.Composite;
 public class PGroupRenderer extends ContainerSWTRenderer<VGroup> {
 
 	/**
+	 * Default constructor.
+	 *
 	 * @param vElement the view model element to be rendered
 	 * @param viewContext the view context
-	 * @param factory the {@link SWTRendererFactory}
+	 * @param reportService the {@link ReportService}
+	 * @param factory the {@link EMFFormsRendererFactory}
+	 * @param emfFormsDatabinding The {@link EMFFormsDatabinding}
 	 */
-	public PGroupRenderer(VGroup vElement, ViewModelContext viewContext, SWTRendererFactory factory) {
-		super(vElement, viewContext, factory);
+	public PGroupRenderer(VGroup vElement, ViewModelContext viewContext, ReportService reportService,
+		EMFFormsRendererFactory factory, EMFFormsDatabinding emfFormsDatabinding) {
+		super(vElement, viewContext, reportService, factory, emfFormsDatabinding);
 	}
 
 	@Override

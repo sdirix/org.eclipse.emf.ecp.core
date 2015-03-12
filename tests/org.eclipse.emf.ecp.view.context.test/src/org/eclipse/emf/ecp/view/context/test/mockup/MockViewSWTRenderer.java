@@ -14,11 +14,14 @@ package org.eclipse.emf.ecp.view.context.test.mockup;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecp.view.internal.context.ViewModelContextImpl;
 import org.eclipse.emf.ecp.view.internal.core.swt.renderer.ViewSWTRenderer;
-import org.eclipse.emf.ecp.view.internal.swt.SWTRendererFactoryImpl;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
-import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
+import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
+import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
+import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
+import org.mockito.Mockito;
 
 public final class MockViewSWTRenderer {
 
@@ -29,26 +32,31 @@ public final class MockViewSWTRenderer {
 	private static VView vElement = VViewFactory.eINSTANCE.createView();
 	private static ViewModelContext viewModelContext = new ViewModelContextImpl(vElement,
 		EcoreFactory.eINSTANCE.createEObject());
-	private static SWTRendererFactory rendererFactory = new SWTRendererFactoryImpl();
+	private static ReportService reportService = Mockito.mock(ReportService.class);
 
-	public MockViewSWTRenderer(VView vElement, ViewModelContext viewModelContext, SWTRendererFactory rendererFactory) {
+	private static EMFFormsDatabinding emfFormsDatabinding = Mockito.mock(EMFFormsDatabinding.class);
+	private static EMFFormsEditSupport emfFormsEditSupport = Mockito.mock(EMFFormsEditSupport.class);
+	private static EMFFormsRendererFactory emfFormsRendererFactory = Mockito.mock(EMFFormsRendererFactory.class);
+
+	public MockViewSWTRenderer(VView vElement, ViewModelContext viewModelContext, ReportService rendererFactory) {
 
 	}
 
 	public static ViewSWTRenderer withInvalidGridDescription() {
-		return new ViewSWTRendererWithInvalidGridDescription(vElement, viewModelContext, rendererFactory);
+		return new ViewSWTRendererWithInvalidGridDescription(vElement, viewModelContext, reportService);
 	}
 
 	public static ViewSWTRenderer withoutPropertyDescriptor() {
-		return new ViewSWTRendererWithNoPropertyDescriptorFoundException(vElement, viewModelContext, rendererFactory);
+		return new ViewSWTRendererWithNoPropertyDescriptorFoundException(vElement, viewModelContext, reportService);
 	}
 
 	public static ViewSWTRenderer withoutRenderer() {
-		return new ViewSWTRendererWithNoRendererFoundException(vElement, viewModelContext, rendererFactory);
+		return new ViewSWTRendererWithNoRendererFoundException(vElement, viewModelContext, reportService);
 	}
 
 	public static ViewSWTRenderer newRenderer() {
-		return new ViewSWTRenderer(vElement, viewModelContext, rendererFactory);
+		return new ViewSWTRenderer(vElement, viewModelContext, reportService, emfFormsRendererFactory,
+			emfFormsDatabinding, emfFormsEditSupport);
 	}
 
 }

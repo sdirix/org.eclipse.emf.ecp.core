@@ -16,10 +16,10 @@ import java.util.List;
 
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
-import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
@@ -40,10 +40,9 @@ public final class EmptyVElementSWTRenderer extends AbstractSWTRenderer<VElement
 	/**
 	 * @param vElement the view model element to be rendered
 	 * @param viewContext the view context
-	 * @param factory the {@link SWTRendererFactory}
 	 */
-	public EmptyVElementSWTRenderer(VElement vElement, ViewModelContext viewContext, SWTRendererFactory factory) {
-		super(vElement, viewContext, factory);
+	public EmptyVElementSWTRenderer(VElement vElement, ViewModelContext viewContext, ReportService reportService) {
+		super(vElement, viewContext, reportService);
 		gridDescription = GridDescriptionFactory.INSTANCE.createEmptyGridDescription();
 		final SWTGridCell gc = new SWTGridCell(0, 0, this);
 		gc.setHorizontalFill(true);

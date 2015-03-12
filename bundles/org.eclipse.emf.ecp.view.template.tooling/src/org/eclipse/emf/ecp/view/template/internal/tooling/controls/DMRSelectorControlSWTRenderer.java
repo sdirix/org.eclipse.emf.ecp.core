@@ -27,7 +27,7 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
-import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
+import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
 import org.eclipse.emf.ecp.view.template.internal.tooling.Activator;
 import org.eclipse.emf.ecp.view.template.internal.tooling.util.DMRCreationWizard;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplate;
@@ -50,10 +50,10 @@ public class DMRSelectorControlSWTRenderer extends EditableEReferenceLabelContro
 	/**
 	 * @param vElement the view model element to be rendered
 	 * @param viewContext the view context
-	 * @param factory the {@link SWTRendererFactory}
+	 * @param reportService the {@link ReportService}
 	 */
-	public DMRSelectorControlSWTRenderer(VControl vElement, ViewModelContext viewContext, SWTRendererFactory factory) {
-		super(vElement, viewContext, factory);
+	public DMRSelectorControlSWTRenderer(VControl vElement, ViewModelContext viewContext, ReportService reportService) {
+		super(vElement, viewContext, reportService);
 	}
 
 	@Override

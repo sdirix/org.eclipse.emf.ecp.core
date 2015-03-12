@@ -16,16 +16,14 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import java.util.Collections;
-import java.util.Dictionary;
-import java.util.Hashtable;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.eclipse.core.databinding.observable.IObserving;
 import org.eclipse.core.databinding.observable.Realm;
 import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.core.databinding.observable.list.WritableList;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -34,10 +32,12 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
+import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
+import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.DatabindingClassRunner;
 import org.eclipse.emf.emfforms.spi.core.services.labelprovider.EMFFormsLabelProvider;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.D;
@@ -55,11 +55,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceRegistration;
 
 /**
  * JUnit plugin tests for {@link MultiReferenceSWTRenderer}.
@@ -72,21 +67,17 @@ import org.osgi.framework.ServiceRegistration;
 public class MultiReferenceRenderer_PTest {
 	private static final String TEST_DESCRIPTION = "test-description"; //$NON-NLS-1$
 	private static final String TEST_DISPLAYNAME = "test-displayName"; //$NON-NLS-1$
-	private static BundleContext bundleContext;
 	private static Realm realm;
 	private EMFFormsDatabinding databindingService;
-	private ServiceRegistration<EMFFormsDatabinding> databindingRegisterService;
 	private MultiReferenceSWTRenderer renderer;
 	private Shell shell;
 	private EMFFormsLabelProvider labelProvider;
-	private ServiceRegistration<EMFFormsLabelProvider> labelRegisterService;
 
 	/**
-	 * Get {@link BundleContext} and {@link Realm} for the tests.
+	 * Get {@link Realm} for the tests.
 	 */
 	@BeforeClass
 	public static void setUpBeforeClass() {
-		bundleContext = FrameworkUtil.getBundle(MultiReferenceRenderer_PTest.class).getBundleContext();
 		realm = Realm.getDefault();
 
 	}
@@ -108,18 +99,12 @@ public class MultiReferenceRenderer_PTest {
 		when(labelProvider.getDisplayName(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			TEST_DISPLAYNAME);
 
-		final Dictionary<String, Object> dictionary = new Hashtable<String, Object>();
-		dictionary.put("service.ranking", 5); //$NON-NLS-1$
-		databindingRegisterService = bundleContext.registerService(
-			EMFFormsDatabinding.class, databindingService, dictionary);
-		labelRegisterService = bundleContext.registerService(EMFFormsLabelProvider.class, labelProvider, dictionary);
-
 		shell = new Shell();
 
 		final D eObject = TestFactory.eINSTANCE.createD();
 		final EStructuralFeature eStructuralFeature = TestPackage.eINSTANCE.getD_YList();
 
-		final SWTRendererFactory factory = mock(SWTRendererFactory.class);
+		final ReportService reportService = mock(ReportService.class);
 		final ViewModelContext viewContext = mock(ViewModelContext.class);
 		final VControl vControl = Mockito.mock(VControl.class);
 		final Setting setting = mock(Setting.class);
@@ -133,16 +118,14 @@ public class MultiReferenceRenderer_PTest {
 		when(setting.getEObject()).thenReturn(eObject);
 		when(setting.getEStructuralFeature()).thenReturn(eStructuralFeature);
 
-		when(domainModelReference.getIterator()).then(new Answer<Iterator<Setting>>() {
-			@Override
-			public Iterator<Setting> answer(InvocationOnMock invocation) {
-				return Collections.singleton(setting).iterator();
-			}
-		});
 		final BasicEList<DomainModelReferenceChangeListener> changeListener = new BasicEList<DomainModelReferenceChangeListener>();
 		when(domainModelReference.getChangeListener()).thenReturn(changeListener);
 
-		renderer = new MultiReferenceSWTRenderer(vControl, viewContext, factory);
+		final ImageRegistryService imageRegistryService = mock(ImageRegistryService.class);
+		final VTViewTemplateProvider templateProvider = mock(VTViewTemplateProvider.class);
+
+		renderer = new MultiReferenceSWTRenderer(vControl, viewContext, reportService, databindingService,
+			labelProvider, templateProvider, imageRegistryService);
 		renderer.init();
 	}
 
@@ -151,8 +134,6 @@ public class MultiReferenceRenderer_PTest {
 	 */
 	@After
 	public void tearDown() {
-		databindingRegisterService.unregister();
-		labelRegisterService.unregister();
 	}
 
 	/**
@@ -257,7 +238,10 @@ public class MultiReferenceRenderer_PTest {
 		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		when(databindingService.getObservableList(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			mockedObservableList);
-
+		final TestObservableValue observableValue = mock(TestObservableValue.class);
+		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
+			observableValue);
+		when(observableValue.getObserved()).thenReturn(mock(EObject.class));
 		final Composite composite = (Composite) renderer.render(new SWTGridCell(0, 0, renderer), shell);
 		final Composite controlComposite = (Composite) composite.getChildren()[1];
 		final Table table = (Table) controlComposite.getChildren()[0];
@@ -275,6 +259,12 @@ public class MultiReferenceRenderer_PTest {
 	@Test
 	public void testLabelServiceUsage() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption,
 		DatabindingFailedException {
+
+		final TestObservableValue observableValue = mock(TestObservableValue.class);
+		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
+			observableValue);
+		when(observableValue.getObserved()).thenReturn(mock(EObject.class));
+
 		final Composite composite = (Composite) renderer.render(new SWTGridCell(0, 0, renderer), shell);
 		final Composite controlComposite = (Composite) composite.getChildren()[1];
 		final Table table = (Table) controlComposite.getChildren()[0];
@@ -282,5 +272,14 @@ public class MultiReferenceRenderer_PTest {
 		final TableColumn column = table.getColumn(0);
 		assertEquals(TEST_DISPLAYNAME, column.getText());
 		assertEquals(TEST_DESCRIPTION, column.getToolTipText());
+	}
+
+	/**
+	 * Helper Interface for mocking.
+	 *
+	 * @author Eugen Neufeld
+	 *
+	 */
+	public interface TestObservableValue extends IObservableValue, IObserving {
 	}
 }

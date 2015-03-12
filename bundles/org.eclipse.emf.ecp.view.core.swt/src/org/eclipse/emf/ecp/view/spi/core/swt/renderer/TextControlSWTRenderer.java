@@ -28,8 +28,8 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
 import org.eclipse.emf.ecp.view.spi.provider.ECPTooltipModifierHelper;
-import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
 import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
@@ -42,6 +42,7 @@ import org.eclipse.emf.emfforms.spi.core.services.labelprovider.EMFFormsLabelPro
 import org.eclipse.emf.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
+import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.swt.SWT;
@@ -58,13 +59,25 @@ import org.eclipse.swt.widgets.Text;
  */
 public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 
+	private final EMFFormsEditSupport emfFormsEditSupport;
+
 	/**
+	 * Default constructor.
+	 *
 	 * @param vElement the view model element to be rendered
 	 * @param viewContext the view context
-	 * @param factory the {@link SWTRendererFactory}
+	 * @param reportService The {@link ReportService}
+	 * @param emfFormsDatabinding The {@link EMFFormsDatabinding}
+	 * @param emfFormsLabelProvider The {@link EMFFormsLabelProvider}
+	 * @param vtViewTemplateProvider The {@link VTViewTemplateProvider}
+	 * @param emfFormsEditSupport The {@link EMFFormsEditSupport}
 	 */
-	public TextControlSWTRenderer(VControl vElement, ViewModelContext viewContext, SWTRendererFactory factory) {
-		super(vElement, viewContext, factory);
+	public TextControlSWTRenderer(VControl vElement, ViewModelContext viewContext,
+		ReportService reportService,
+		EMFFormsDatabinding emfFormsDatabinding, EMFFormsLabelProvider emfFormsLabelProvider,
+		VTViewTemplateProvider vtViewTemplateProvider, EMFFormsEditSupport emfFormsEditSupport) {
+		super(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider);
+		this.emfFormsEditSupport = emfFormsEditSupport;
 	}
 
 	@Override
@@ -98,10 +111,6 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 	protected String getTextMessage() {
 		return getEMFFormsLabelProvider()
 			.getDisplayName(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
-	}
-
-	EMFFormsLabelProvider getEMFFormsLabelProvider() {
-		return Activator.getDefault().getEMFFormsLabelProvider();
 	}
 
 	/**
@@ -152,21 +161,15 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 		return textStyle;
 	}
 
-	/**
-	 * Package visible method, to allow an easy replacement.
-	 *
-	 * @return The EMFFormsEditSupport
-	 */
-	EMFFormsEditSupport getEMFFormsEditSupport() {
-		return Activator.getDefault().getEMFFormsEditSupport();
+	private EMFFormsEditSupport getEMFFormsEditSupport() {
+		return emfFormsEditSupport;
 	}
 
 	private int getAlignment() {
-		final VTViewTemplateProvider vtViewTemplateProvider = Activator.getDefault().getVTViewTemplateProvider();
-		if (vtViewTemplateProvider == null) {
+		if (getVTViewTemplateProvider() == null) {
 			return getDefaultAlignment();
 		}
-		final Set<VTStyleProperty> styleProperties = vtViewTemplateProvider
+		final Set<VTStyleProperty> styleProperties = getVTViewTemplateProvider()
 			.getStyleProperties(getVElement(), getViewModelContext());
 		for (final VTStyleProperty styleProperty : styleProperties) {
 			if (VTAlignmentStyleProperty.class.isInstance(styleProperty)) {
@@ -223,7 +226,7 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 			valueProperty = getEMFFormsDatabinding()
 				.getValueProperty(getVElement().getDomainModelReference());
 		} catch (final DatabindingFailedException ex) {
-			Activator.getDefault().getReportService().report(new RenderingFailedReport(ex));
+			getReportService().report(new RenderingFailedReport(ex));
 			return false;
 		}
 		final EStructuralFeature feature = (EStructuralFeature) valueProperty;
@@ -232,7 +235,7 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 	}
 
 	private boolean isDisableRenderedAsEditable() {
-		final VTViewTemplateProvider vtViewTemplateProvider = Activator.getDefault().getVTViewTemplateProvider();
+		final VTViewTemplateProvider vtViewTemplateProvider = getVTViewTemplateProvider();
 		if (vtViewTemplateProvider == null) {
 			return false;
 		}
@@ -312,13 +315,11 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 			if (tooltip && String.class.isInstance(converted)) {
 				IObservableValue observableValue;
 				try {
-					observableValue = Activator
-						.getDefault()
-						.getEMFFormsDatabinding()
+					observableValue = getEMFFormsDatabinding()
 						.getObservableValue(getVElement().getDomainModelReference(),
 							getViewModelContext().getDomainModel());
 				} catch (final DatabindingFailedException ex) {
-					Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+					getReportService().report(new DatabindingFailedReport(ex));
 					return converted;
 				}
 				final InternalEObject internalEObject = (InternalEObject) ((IObserving) observableValue).getObserved();

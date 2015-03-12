@@ -13,6 +13,7 @@ package org.eclipse.emf.ecp.view.model.common;
 
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
 
 /**
  * Common super class for renderer.
@@ -26,6 +27,7 @@ public abstract class AbstractRenderer<VELEMENT extends VElement> {
 	private final VELEMENT vElement;
 	private final ViewModelContext viewModelContext;
 	private boolean disposed;
+	private final ReportService reportService;
 
 	/**
 	 * Default constructor.
@@ -33,15 +35,20 @@ public abstract class AbstractRenderer<VELEMENT extends VElement> {
 	 * @param vElement the {@link VElement} to be rendered
 	 * @param viewContext the {@link ViewModelContext} to use
 	 */
-	public AbstractRenderer(final VELEMENT vElement, final ViewModelContext viewContext) {
+	public AbstractRenderer(final VELEMENT vElement, final ViewModelContext viewContext, ReportService reportService) {
+
 		if (vElement == null) {
 			throw new IllegalArgumentException("vElement must not be null"); //$NON-NLS-1$
 		}
 		if (viewContext == null) {
 			throw new IllegalArgumentException("vContext must not be null"); //$NON-NLS-1$
 		}
+		if (reportService == null) {
+			throw new IllegalArgumentException("reportService must not be null"); //$NON-NLS-1$
+		}
 		this.vElement = vElement;
 		this.viewModelContext = viewContext;
+		this.reportService = reportService;
 	}
 
 	/**
@@ -80,6 +87,16 @@ public abstract class AbstractRenderer<VELEMENT extends VElement> {
 			throw new IllegalStateException("Renderer is disposed"); //$NON-NLS-1$
 		}
 
+	}
+
+	/**
+	 * The {@link SWTRendererFactory} instance to use.
+	 *
+	 * @return the {@link SWTRendererFactory}
+	 */
+	protected final ReportService getReportService() {
+		checkRenderer();
+		return reportService;
 	}
 
 }

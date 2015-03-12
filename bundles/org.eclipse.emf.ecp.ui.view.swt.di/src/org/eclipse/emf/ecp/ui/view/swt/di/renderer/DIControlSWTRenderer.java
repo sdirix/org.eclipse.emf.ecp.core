@@ -18,12 +18,15 @@ import org.eclipse.emf.ecp.view.model.common.di.renderer.POJORendererFactory;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.AbstractControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
+import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
+import org.eclipse.emf.emfforms.spi.core.services.labelprovider.EMFFormsLabelProvider;
+import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
@@ -35,13 +38,19 @@ import org.eclipse.swt.widgets.Control;
 public class DIControlSWTRenderer extends AbstractControlSWTRenderer<VControl> {
 
 	/**
+	 * Default constructor.
+	 *
 	 * @param vElement the view model element to be rendered
 	 * @param viewContext the view context
-	 * @param factory the {@link SWTRendererFactory}
+	 * @param emfFormsDatabinding The {@link EMFFormsDatabinding}
+	 * @param emfFormsLabelProvider The {@link EMFFormsLabelProvider}
+	 * @param reportService The {@link ReportService}
+	 * @param vtViewTemplateProvider The {@link VTViewTemplateProvider}
 	 */
-	public DIControlSWTRenderer(VControl vElement, ViewModelContext viewContext, SWTRendererFactory factory) {
-		super(vElement, viewContext, factory);
-		// TODO Auto-generated constructor stub
+	public DIControlSWTRenderer(VControl vElement, ViewModelContext viewContext, ReportService reportService,
+		EMFFormsDatabinding emfFormsDatabinding, EMFFormsLabelProvider emfFormsLabelProvider,
+		VTViewTemplateProvider vtViewTemplateProvider) {
+		super(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider);
 	}
 
 	private SWTGridDescription rendererGridDescription;
@@ -73,8 +82,7 @@ public class DIControlSWTRenderer extends AbstractControlSWTRenderer<VControl> {
 		NoPropertyDescriptorFoundExeption {
 		pojo = POJORendererFactory.getInstance().getRenderer(getVElement(), getViewModelContext());
 		final IEclipseContext childContext = DIRendererUtil.getContextForElement(getVElement(), getViewModelContext());
-		SWTContextUtil.setAbstractSWTRendererObjects(childContext, getVElement(), getViewModelContext(),
-			getSWTRendererFactory(), parent);
+		SWTContextUtil.setAbstractSWTRendererObjects(childContext, getVElement(), getViewModelContext(), parent);
 		childContext.set(SWTGridCell.class, cell);
 		return (Control) DIRendererUtil.render(pojo, getVElement(), getViewModelContext());
 	}

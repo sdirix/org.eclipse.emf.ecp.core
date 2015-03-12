@@ -44,6 +44,7 @@ import org.osgi.framework.Bundle;
  * @author Eugen
  *
  */
+@Deprecated
 public class SWTRendererFactoryImpl implements SWTRendererFactory {
 
 	private static final String TEST_DYNAMIC = "dynamicTest";//$NON-NLS-1$
@@ -209,7 +210,7 @@ public class SWTRendererFactoryImpl implements SWTRendererFactory {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory#getRenderer(org.eclipse.emf.ecp.view.spi.model.VElement,
+	 * @see org.eclipse.emf.ecp.view.spi.swt.ReportService#getRenderer(org.eclipse.emf.ecp.view.spi.model.VElement,
 	 *      org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
 	@Override
@@ -253,9 +254,9 @@ public class SWTRendererFactoryImpl implements SWTRendererFactory {
 		if (bestCandidate == null) {
 			reportService.report(new NoRendererFoundReport(vElement));
 			if (ViewModelUtil.isDebugMode()) {
-				bestCandidate = new UnknownVElementSWTRenderer(vElement, viewContext, this);
+				bestCandidate = new UnknownVElementSWTRenderer(vElement, viewContext, reportService);
 			} else {
-				bestCandidate = new EmptyVElementSWTRenderer(vElement, viewContext, this);
+				bestCandidate = new EmptyVElementSWTRenderer(vElement, viewContext, reportService);
 			}
 		}
 
@@ -269,9 +270,8 @@ public class SWTRendererFactoryImpl implements SWTRendererFactory {
 		final Class<? extends AbstractSWTRenderer<VElement>> rendererClass) {
 		try {
 			return rendererClass
-				.getConstructor(vElement.getClass().getInterfaces()[0], ViewModelContext.class,
-					SWTRendererFactory.class)
-				.newInstance(vElement, viewContext, this);
+				.getConstructor(vElement.getClass().getInterfaces()[0], ViewModelContext.class)
+				.newInstance(vElement, viewContext);
 		} catch (final InstantiationException ex) {
 			reportService.report(new RendererInitFailedReport(ex));
 		} catch (final IllegalAccessException ex) {
@@ -293,7 +293,7 @@ public class SWTRendererFactoryImpl implements SWTRendererFactory {
 	 *
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory#getAdditionalRenderer(org.eclipse.emf.ecp.view.spi.model.VElement,
+	 * @see org.eclipse.emf.ecp.view.spi.swt.ReportService#getAdditionalRenderer(org.eclipse.emf.ecp.view.spi.model.VElement,
 	 *      org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
 	@Override

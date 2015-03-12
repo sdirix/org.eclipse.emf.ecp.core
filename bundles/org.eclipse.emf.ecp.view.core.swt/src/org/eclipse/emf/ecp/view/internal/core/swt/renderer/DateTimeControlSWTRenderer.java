@@ -30,10 +30,13 @@ import org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
-import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
+import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
+import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.edit.command.SetCommand;
+import org.eclipse.emf.emfforms.spi.core.services.labelprovider.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
+import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.dialogs.IDialogLabelKeys;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -62,13 +65,20 @@ import org.eclipse.swt.widgets.Shell;
 public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 
 	/**
+	 * Default constructor.
+	 *
 	 * @param vElement the view model element to be rendered
 	 * @param viewContext the view context
-	 * @param factory the {@link SWTRendererFactory}
+	 * @param reportService The {@link ReportService}
+	 * @param emfFormsDatabinding The {@link EMFFormsDatabinding}
+	 * @param emfFormsLabelProvider The {@link EMFFormsLabelProvider}
+	 * @param vtViewTemplateProvider The {@link VTViewTemplateProvider}
 	 */
-	public DateTimeControlSWTRenderer(VControl vElement, ViewModelContext viewContext, SWTRendererFactory factory) {
-		super(vElement, viewContext, factory);
-		// TODO Auto-generated constructor stub
+	public DateTimeControlSWTRenderer(VControl vElement, ViewModelContext viewContext,
+		ReportService reportService,
+		EMFFormsDatabinding emfFormsDatabinding, EMFFormsLabelProvider emfFormsLabelProvider,
+		VTViewTemplateProvider vtViewTemplateProvider) {
+		super(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider);
 	}
 
 	private Label unsetLabel;
@@ -115,7 +125,7 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 				try {
 					structuralFeature = (EStructuralFeature) getModelValue().getValueType();
 				} catch (final DatabindingFailedException ex) {
-					Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+					getReportService().report(new DatabindingFailedReport(ex));
 					return;
 				}
 				if (structuralFeature.equals(notification.getStructuralFeature())) {
@@ -313,7 +323,7 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 				getEditingDomain(eObject).getCommandStack().execute(removeCommand);
 				updateChangeListener(getModelValue().getValue());
 			} catch (final DatabindingFailedException ex) {
-				Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+				getReportService().report(new DatabindingFailedReport(ex));
 				// Do nothing. This should not happen because if getModelValue() fails, the control will never be
 				// rendered and consequently this code will never be executed.
 			}

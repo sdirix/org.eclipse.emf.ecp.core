@@ -26,7 +26,7 @@ import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemP
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
-import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
+import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
 import org.eclipse.emf.ecp.view.template.internal.tooling.Activator;
 import org.eclipse.emf.ecp.view.template.internal.tooling.Messages;
 import org.eclipse.emf.edit.command.SetCommand;
@@ -51,12 +51,15 @@ import org.eclipse.ui.dialogs.ISelectionStatusValidator;
 public class ViewModelSelectControlSWTRenderer extends EditableEReferenceLabelControlSWTRenderer {
 
 	/**
+	 * Default constructor.
+	 *
 	 * @param vElement the view model element to be rendered
 	 * @param viewContext the view context
-	 * @param factory the {@link SWTRendererFactory}
+	 * @param reportService the {@link ReportService}
 	 */
-	public ViewModelSelectControlSWTRenderer(VControl vElement, ViewModelContext viewContext, SWTRendererFactory factory) {
-		super(vElement, viewContext, factory);
+	public ViewModelSelectControlSWTRenderer(VControl vElement, ViewModelContext viewContext,
+		ReportService reportService) {
+		super(vElement, viewContext, reportService);
 	}
 
 	private static final String PLUGIN_ID = "org.eclipse.emf.ecp.view.template.tooling"; //$NON-NLS-1$

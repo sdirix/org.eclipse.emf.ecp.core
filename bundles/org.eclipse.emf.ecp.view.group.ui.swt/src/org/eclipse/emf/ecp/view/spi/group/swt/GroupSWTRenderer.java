@@ -21,9 +21,11 @@ import org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.group.model.VGroup;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
-import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
+import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emfforms.internal.group.swt.GroupTextProperty;
+import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
@@ -35,13 +37,19 @@ import org.eclipse.swt.widgets.Group;
  *
  */
 public class GroupSWTRenderer extends ContainerSWTRenderer<VGroup> {
+
 	/**
+	 * Default constructor.
+	 *
 	 * @param vElement the view model element to be rendered
 	 * @param viewContext the view context
-	 * @param factory the {@link SWTRendererFactory}
+	 * @param reportService the {@link ReportService}
+	 * @param factory the {@link EMFFormsRendererFactory}
+	 * @param emfFormsDatabinding The {@link EMFFormsDatabinding}
 	 */
-	public GroupSWTRenderer(VGroup vElement, ViewModelContext viewContext, SWTRendererFactory factory) {
-		super(vElement, viewContext, factory);
+	public GroupSWTRenderer(VGroup vElement, ViewModelContext viewContext, ReportService reportService,
+		EMFFormsRendererFactory factory, EMFFormsDatabinding emfFormsDatabinding) {
+		super(vElement, viewContext, reportService, factory, emfFormsDatabinding);
 		dbc = new EMFDataBindingContext();
 	}
 
@@ -81,6 +89,7 @@ public class GroupSWTRenderer extends ContainerSWTRenderer<VGroup> {
 			AdapterFactoryEditingDomain.getEditingDomainFor(getVElement()), getVElement(),
 			VViewPackage.eINSTANCE.getElement_Label());
 		final IObservableValue targetValue = new GroupTextProperty().observe(group);
+		// FIXME fixed with JFace-Databinding 4.5
 		// final IObservableValue targetValue = SWTObservables.observeText(group);
 
 		dbc.bindValue(targetValue, modelValue);

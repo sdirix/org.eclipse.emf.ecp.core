@@ -14,7 +14,9 @@ package org.eclipse.emf.ecp.view.label.rap;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.label.model.VLabel;
 import org.eclipse.emf.ecp.view.spi.label.swt.LabelSWTRenderer;
-import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
+import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
+import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
+import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.swt.widgets.Label;
 
 /**
@@ -24,12 +26,17 @@ import org.eclipse.swt.widgets.Label;
 public class LabelRapRenderer extends LabelSWTRenderer {
 
 	/**
-	 * @param vElement the view model element to be rendered
-	 * @param viewContext the view context
-	 * @param factory the {@link SWTRendererFactory}
+	 * Default Constructor.
+	 *
+	 * @param vElement the view element to be rendered
+	 * @param viewContext The view model context
+	 * @param reportService the ReportService to use
+	 * @param emfFormsDatabinding the EMFFormsDatabinding to use
+	 * @param vtViewTemplateProvider the VTViewTemplateProvider to use
 	 */
-	public LabelRapRenderer(VLabel vElement, ViewModelContext viewContext, SWTRendererFactory factory) {
-		super(vElement, viewContext, factory);
+	public LabelRapRenderer(final VLabel vElement, final ViewModelContext viewContext, ReportService reportService,
+		EMFFormsDatabinding emfFormsDatabinding, VTViewTemplateProvider vtViewTemplateProvider) {
+		super(vElement, viewContext, reportService, emfFormsDatabinding, vtViewTemplateProvider);
 	}
 
 	/*

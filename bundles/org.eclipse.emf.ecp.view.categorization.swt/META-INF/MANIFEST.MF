@@ -12,7 +12,8 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.7.0,4.0.0)",
  org.eclipse.emf.ecp.view.core.swt;bundle-version="[1.5.0,2.0.0)",
  org.eclipse.emf.ecp.edit.swt;bundle-version="[1.5.0,2.0.0)",
  org.eclipse.emf.ecp.view.model.common;bundle-version="[1.5.0,2.0.0)",
- org.eclipse.emf.emfforms.localization;bundle-version="[1.5.0,2.0.0)"
+ org.eclipse.emf.emfforms.localization;bundle-version="[1.5.0,2.0.0)",
+ org.eclipse.emfforms.swt.core;bundle-version="[1.6.0,2.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Import-Package: org.eclipse.emf.edit.ui.provider;version="0.0.0",
@@ -27,3 +28,5 @@ Import-Package: org.eclipse.emf.edit.ui.provider;version="0.0.0",
 Export-Package: org.eclipse.emf.ecp.view.internal.categorization.swt;v
  ersion="1.6.0";x-internal:=true,org.eclipse.emf.ecp.view.spi.categori
  zation.swt;version="1.6.0"
+Service-Component: OSGI-INF/categorizationElementTabbedRendererService.xml,OSGI-INF/compositeCategoryTreeRendererService.xml,OSGI-INF/compositeCategoryTabRendererService.xml,OSGI-INF/swtCategorizationElementRendererService.xml,OSGI-INF/swtCategorizationRendererService.xml,
+ OSGI-INF/swtCategoryRendererService.xml

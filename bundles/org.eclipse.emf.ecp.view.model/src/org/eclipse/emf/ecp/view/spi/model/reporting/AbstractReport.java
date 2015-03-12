@@ -12,7 +12,7 @@
 package org.eclipse.emf.ecp.view.spi.model.reporting;
 
 /**
- * Common base type for reports that may be reported to the {@link ReportService}.
+ * Common base type for reports that may be reported to the {@link SWTRendererFactory}.
  *
  * @author emueller
  * @since 1.5

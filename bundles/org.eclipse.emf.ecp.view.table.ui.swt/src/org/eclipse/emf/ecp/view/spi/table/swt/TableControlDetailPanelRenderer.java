@@ -26,14 +26,18 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
-import org.eclipse.emf.ecp.view.internal.table.swt.Activator;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
 import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
-import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
+import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
+import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
+import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
+import org.eclipse.emf.emfforms.spi.core.services.labelprovider.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
+import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -56,13 +60,22 @@ import org.eclipse.swt.widgets.Label;
 public class TableControlDetailPanelRenderer extends TableControlSWTRenderer {
 
 	/**
+	 * Default constructor.
+	 *
 	 * @param vElement the view model element to be rendered
 	 * @param viewContext the view context
-	 * @param factory the {@link SWTRendererFactory}
+	 * @param emfFormsDatabinding The {@link EMFFormsDatabinding}
+	 * @param emfFormsLabelProvider The {@link EMFFormsLabelProvider}
+	 * @param reportService The {@link ReportService}
+	 * @param vtViewTemplateProvider The {@link VTViewTemplateProvider}
+	 * @param imageRegistryService The {@link ImageRegistryService}
 	 */
 	public TableControlDetailPanelRenderer(VTableControl vElement, ViewModelContext viewContext,
-		SWTRendererFactory factory) {
-		super(vElement, viewContext, factory);
+		ReportService reportService,
+		EMFFormsDatabinding emfFormsDatabinding, EMFFormsLabelProvider emfFormsLabelProvider,
+		VTViewTemplateProvider vtViewTemplateProvider, ImageRegistryService imageRegistryService) {
+		super(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider,
+			imageRegistryService);
 	}
 
 	private ECPSWTView ecpView;
@@ -143,10 +156,10 @@ public class TableControlDetailPanelRenderer extends TableControlSWTRenderer {
 			if (detailView == null) {
 				IValueProperty valueProperty;
 				try {
-					valueProperty = Activator.getInstance().getEMFFormsDatabinding()
+					valueProperty = getEMFFormsDatabinding()
 						.getValueProperty(getVElement().getDomainModelReference());
 				} catch (final DatabindingFailedException ex) {
-					Activator.getInstance().getReportService().report(new DatabindingFailedReport(ex));
+					getReportService().report(new DatabindingFailedReport(ex));
 					return null; // possible because the only caller is null safe.
 				}
 				final EReference reference = (EReference) valueProperty.getValueType();
@@ -189,11 +202,11 @@ public class TableControlDetailPanelRenderer extends TableControlSWTRenderer {
 		final EObject object = (EObject) selection.getFirstElement();
 		final VView detailView = getView();
 		if (detailView == null) {
-			if (isDebug()) {
-				final Label label = new Label(compositeToRenderOn, SWT.NONE);
-				label.setBackground(compositeToRenderOn.getDisplay().getSystemColor(SWT.COLOR_RED));
-				label.setText("No Detail View found."); //$NON-NLS-1$
-			}
+
+			final Label label = new Label(compositeToRenderOn, SWT.NONE);
+			label.setBackground(compositeToRenderOn.getDisplay().getSystemColor(SWT.COLOR_RED));
+			label.setText("No Detail View found."); //$NON-NLS-1$
+
 		}
 		else {
 			final ViewModelContext childContext = getViewModelContext().getChildContext(object, getVElement(),
@@ -202,7 +215,7 @@ public class TableControlDetailPanelRenderer extends TableControlSWTRenderer {
 			try {
 				ecpView = ECPSWTViewRenderer.INSTANCE.render(compositeToRenderOn, childContext);
 			} catch (final ECPRendererException ex) {
-				Activator.log(ex);
+				getReportService().report(new RenderingFailedReport(ex));
 			}
 		}
 		border.layout(true, true);

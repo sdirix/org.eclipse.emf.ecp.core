@@ -22,24 +22,29 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.section.model.VSection;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractAdditionalSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
-import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.LayoutProviderHelper;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
 import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.swt.core.EMFFormsNoRendererException;
+import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Layout;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 
 /**
  * Common super class for all section renderer.
@@ -53,10 +58,10 @@ public abstract class AbstractSectionSWTRenderer extends
 	/**
 	 * @param vElement the view model element to be rendered
 	 * @param viewContext the view context
-	 * @param factory the {@link SWTRendererFactory}
+	 * @param reportService the {@link ReportService}
 	 */
-	public AbstractSectionSWTRenderer(VSection vElement, ViewModelContext viewContext, SWTRendererFactory factory) {
-		super(vElement, viewContext, factory);
+	public AbstractSectionSWTRenderer(VSection vElement, ViewModelContext viewContext, ReportService reportService) {
+		super(vElement, viewContext, reportService);
 	}
 
 	@Override
@@ -130,14 +135,16 @@ public abstract class AbstractSectionSWTRenderer extends
 			return columnComposite;
 		}
 
-		final AbstractSWTRenderer<VElement> renderer = getSWTRendererFactory()
-			.getRenderer(child, getViewModelContext());
-		if (renderer == null) {
-			// TODO log
+		AbstractSWTRenderer<VElement> renderer;
+		try {
+			renderer = getEMFFormsRendererFactory()
+				.getRendererInstance(child, getViewModelContext());
+		} catch (final EMFFormsNoRendererException ex) {
+			getReportService().report(new RenderingFailedReport(ex));
 			return columnComposite;
 		}
-		final Collection<AbstractAdditionalSWTRenderer<VElement>> additionalRenderers = getSWTRendererFactory()
-			.getAdditionalRenderer(child, getViewModelContext());
+		final Collection<AbstractAdditionalSWTRenderer<VElement>> additionalRenderers = getEMFFormsRendererFactory()
+			.getAdditionalRendererInstances(child, getViewModelContext());
 		SWTGridDescription gridDescription = renderer
 			.getGridDescription(GridDescriptionFactory.INSTANCE
 				.createEmptyGridDescription());
@@ -217,5 +224,38 @@ public abstract class AbstractSectionSWTRenderer extends
 			}
 			getControls().get(gridCell).setVisible(visible);
 		}
+	}
+
+	/**
+	 * Access to the EMFFormsRendererFactory.
+	 *
+	 * @return The {@link EMFFormsRendererFactory}
+	 */
+	protected EMFFormsRendererFactory getEMFFormsRendererFactory() {
+		final BundleContext bundleContext = FrameworkUtil.getBundle(getClass()).getBundleContext();
+		final ServiceReference<EMFFormsRendererFactory> serviceReference = bundleContext
+			.getServiceReference(EMFFormsRendererFactory.class);
+		final EMFFormsRendererFactory rendererFactory = bundleContext.getService(serviceReference);
+		bundleContext.ungetService(serviceReference);
+		return rendererFactory;
+	}
+
+	/**
+	 * Sets the LayoutData for the specified control.
+	 *
+	 * @param gridCell the {@link GridCell} used to render the control
+	 * @param gridDescription the {@link GridDescription} of the parent which rendered the control
+	 * @param currentRowGridDescription the {@link GridDescription} of the current row
+	 * @param fullGridDescription the {@link GridDescription} of the whole container
+	 * @param vElement the {@link VElement} to set the layoutData for
+	 * @param control the control to set the layout to
+	 */
+	private void setLayoutDataForControl(SWTGridCell gridCell, SWTGridDescription gridDescription,
+		SWTGridDescription currentRowGridDescription, SWTGridDescription fullGridDescription, VElement vElement,
+		Control control) {
+
+		control.setLayoutData(LayoutProviderHelper.getLayoutData(gridCell, gridDescription, currentRowGridDescription,
+			fullGridDescription, vElement, getViewModelContext().getDomainModel(), control));
+
 	}
 }

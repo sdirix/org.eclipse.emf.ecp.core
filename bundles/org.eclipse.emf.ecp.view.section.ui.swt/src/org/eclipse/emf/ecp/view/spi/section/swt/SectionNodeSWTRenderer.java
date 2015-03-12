@@ -21,14 +21,16 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
 import org.eclipse.emf.ecp.view.spi.section.model.VSection;
 import org.eclipse.emf.ecp.view.spi.section.model.VSectionPackage;
 import org.eclipse.emf.ecp.view.spi.section.model.VSectionedArea;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
-import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
+import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
+import org.eclipse.emfforms.spi.swt.core.EMFFormsNoRendererException;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
@@ -48,10 +50,10 @@ public class SectionNodeSWTRenderer extends AbstractSectionSWTRenderer {
 	/**
 	 * @param vElement the view model element to be rendered
 	 * @param viewContext the view context
-	 * @param factory the {@link SWTRendererFactory}
+	 * @param reportService the {@link ReportService}
 	 */
-	public SectionNodeSWTRenderer(VSection vElement, ViewModelContext viewContext, SWTRendererFactory factory) {
-		super(vElement, viewContext, factory);
+	public SectionNodeSWTRenderer(VSection vElement, ViewModelContext viewContext, ReportService reportService) {
+		super(vElement, viewContext, reportService);
 	}
 
 	private Set<AbstractSectionSWTRenderer> childRenderers;
@@ -103,8 +105,14 @@ public class SectionNodeSWTRenderer extends AbstractSectionSWTRenderer {
 		/* add children */
 		int row = 1;
 		for (final VSection item : getVElement().getChildItems()) {
-			final AbstractSWTRenderer<?> itemRenderer = getSWTRendererFactory()
-				.getRenderer(item, getViewModelContext());
+			AbstractSWTRenderer<?> itemRenderer;
+			try {
+				itemRenderer = getEMFFormsRendererFactory()
+					.getRendererInstance(item, getViewModelContext());
+			} catch (final EMFFormsNoRendererException ex) {
+				getReportService().report(new RenderingFailedReport(ex));
+				continue;
+			}
 			final SWTGridDescription itemGridDescription = itemRenderer
 				.getGridDescription(GridDescriptionFactory.INSTANCE
 					.createEmptyGridDescription());

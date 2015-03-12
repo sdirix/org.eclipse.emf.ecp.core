@@ -17,20 +17,22 @@ import java.util.Map;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.emf.ecp.view.internal.horizontal.swt.Activator;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.horizontal.model.VHorizontalLayout;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
+import org.eclipse.emf.ecp.view.spi.model.reporting.StatusReport;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
-import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.LayoutProviderHelper;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
 import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
+import org.eclipse.emfforms.spi.swt.core.EMFFormsNoRendererException;
+import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -44,14 +46,20 @@ import org.eclipse.swt.widgets.Control;
  */
 public class HorizontalLayoutSWTRenderer extends AbstractSWTRenderer<VHorizontalLayout> {
 
+	private final EMFFormsRendererFactory rendererFactory;
+
 	/**
-	 * @param vElement the view model element to be rendered
-	 * @param viewContext the view context
-	 * @param factory the {@link SWTRendererFactory}
+	 * Default Constructor.
+	 *
+	 * @param vElement the view element to be rendered
+	 * @param viewContext The view model context
+	 * @param reportService the ReportService to use
+	 * @param rendererFactory the EMFFormsRendererFactory to use
 	 */
-	public HorizontalLayoutSWTRenderer(VHorizontalLayout vElement, ViewModelContext viewContext,
-		SWTRendererFactory factory) {
-		super(vElement, viewContext, factory);
+	public HorizontalLayoutSWTRenderer(final VHorizontalLayout vElement, final ViewModelContext viewContext,
+		ReportService reportService, EMFFormsRendererFactory rendererFactory) {
+		super(vElement, viewContext, reportService);
+		this.rendererFactory = rendererFactory;
 	}
 
 	private static final String CONTROL_COLUMN_COMPOSITE = "org_eclipse_emf_ecp_ui_layout_horizontal"; //$NON-NLS-1$
@@ -100,15 +108,14 @@ public class HorizontalLayoutSWTRenderer extends AbstractSWTRenderer<VHorizontal
 		final Map<VContainedElement, AbstractSWTRenderer<VElement>> elementRendererMap = new LinkedHashMap<VContainedElement, AbstractSWTRenderer<VElement>>();
 		for (final VContainedElement child : getVElement().getChildren()) {
 
-			final AbstractSWTRenderer<VElement> renderer = getSWTRendererFactory().getRenderer(child,
-				getViewModelContext());
-			if (renderer == null) {
-				Activator
-					.getDefault()
-					.getLog()
-					.log(
-						new Status(IStatus.INFO, Activator.PLUGIN_ID, String.format(
-							"No Renderer for %s found.", child.eClass().getName()))); //$NON-NLS-1$
+			AbstractSWTRenderer<VElement> renderer;
+			try {
+				renderer = rendererFactory.getRendererInstance(child,
+					getViewModelContext());
+			} catch (final EMFFormsNoRendererException ex) {
+				getReportService().report(new StatusReport(
+					new Status(IStatus.INFO, "org.eclipse.emf.ecp.view.horizontal.ui.swt",//$NON-NLS-1$
+						String.format("No Renderer for %s found.", child.eClass().getName())))); //$NON-NLS-1$
 				continue;
 			}
 			elementRendererMap.put(child, renderer);
@@ -142,7 +149,7 @@ public class HorizontalLayoutSWTRenderer extends AbstractSWTRenderer<VHorizontal
 					childGridCell.getRenderer().finalizeRendering(column);
 				}
 			} catch (final NoPropertyDescriptorFoundExeption e) {
-				Activator.getDefault().getReportService().report(new RenderingFailedReport(e));
+				getReportService().report(new RenderingFailedReport(e));
 				continue;
 			}
 		}

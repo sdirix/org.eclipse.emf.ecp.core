@@ -24,6 +24,7 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
  * @since 1.2
  *
  */
+@Deprecated
 public interface SWTRendererFactory {
 
 	/**

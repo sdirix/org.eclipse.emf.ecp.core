@@ -15,7 +15,6 @@ package org.eclipse.emf.ecp.view.internal.core.swt.renderer;
 
 import java.util.Collection;
 
-import org.eclipse.emf.ecp.view.internal.core.swt.Activator;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.VContainedContainer;
@@ -23,10 +22,12 @@ import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
-import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
+import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
+import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
+import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
@@ -39,13 +40,23 @@ import org.eclipse.swt.widgets.Text;
  */
 public class ViewSWTRenderer extends ContainerSWTRenderer<VView> {
 
+	private final EMFFormsEditSupport emfFormsEditSupport;
+
 	/**
+	 * Default constructor.
+	 *
 	 * @param vElement the view model element to be rendered
 	 * @param viewContext the view context
-	 * @param factory the {@link SWTRendererFactory}
+	 * @param reportService the {@link ReportService}
+	 * @param factory the {@link EMFFormsRendererFactory}
+	 * @param emfFormsDatabinding The {@link EMFFormsDatabinding}
+	 * @param emfFormsEditSupport The {@link EMFFormsEditSupport}
 	 */
-	public ViewSWTRenderer(VView vElement, ViewModelContext viewContext, SWTRendererFactory factory) {
-		super(vElement, viewContext, factory);
+	public ViewSWTRenderer(VView vElement, ViewModelContext viewContext, ReportService reportService,
+		EMFFormsRendererFactory factory, EMFFormsDatabinding emfFormsDatabinding,
+		EMFFormsEditSupport emfFormsEditSupport) {
+		super(vElement, viewContext, reportService, factory, emfFormsDatabinding);
+		this.emfFormsEditSupport = emfFormsEditSupport;
 	}
 
 	@Override
@@ -130,12 +141,7 @@ public class ViewSWTRenderer extends ContainerSWTRenderer<VView> {
 		return gdf;
 	}
 
-	/**
-	 * Package visible method, to allow an easy replacement.
-	 * 
-	 * @return The EMFFormsEditSupport
-	 */
-	EMFFormsEditSupport getEMFFormsEditSupport() {
-		return Activator.getDefault().getEMFFormsEditSupport();
+	private EMFFormsEditSupport getEMFFormsEditSupport() {
+		return emfFormsEditSupport;
 	}
 }

@@ -17,19 +17,23 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import org.eclipse.core.databinding.observable.value.WritableValue;
+import org.eclipse.core.databinding.property.Properties;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.core.swt.test.model.SimpleTestObject;
 import org.eclipse.emf.ecp.view.core.swt.test.model.TestEnum;
 import org.eclipse.emf.ecp.view.core.swt.test.model.TestFactory;
 import org.eclipse.emf.ecp.view.core.swt.test.model.TestPackage;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
+import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.DatabindingClassRunner;
 import org.eclipse.emf.emfforms.spi.core.services.labelprovider.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Control;
@@ -38,7 +42,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
+import org.mockito.Matchers;
 
 /**
  * Plugin test for {@link EnumComboViewerSWTRenderer}.
@@ -49,11 +53,19 @@ import org.mockito.Mockito;
 @RunWith(DatabindingClassRunner.class)
 public class EnumComboViewerRenderer_PTest extends AbstractControl_PTest {
 
+	private EMFFormsEditSupport editSupport;
+
 	@Before
 	public void before() throws DatabindingFailedException {
-		final SWTRendererFactory factory = mock(SWTRendererFactory.class);
+		final ReportService reportService = mock(ReportService.class);
+		databindingService = mock(EMFFormsDatabinding.class);
+		labelProvider = mock(EMFFormsLabelProvider.class);
+		templateProvider = mock(VTViewTemplateProvider.class);
+		editSupport = mock(EMFFormsEditSupport.class);
+
 		setup();
-		renderer = new EnumComboViewerSWTRenderer(vControl, context, factory);
+		renderer = new EnumComboViewerSWTRenderer(vControl, context, reportService, databindingService, labelProvider,
+			templateProvider, editSupport);
 		renderer.init();
 	}
 
@@ -67,7 +79,7 @@ public class EnumComboViewerRenderer_PTest extends AbstractControl_PTest {
 	 *
 	 * @throws DatabindingFailedException
 	 *
-	 * @see org.eclipse.emf.ecp.view.internal.core.swt.renderer.AbstractControl_PTest#mockControl()
+	 * @see org.org.eclipse.emf.ecp.view.internal.core.swt.renderer.AbstractControl_PTest#mockControl()
 	 */
 	@Override
 	protected void mockControl() throws DatabindingFailedException {
@@ -79,7 +91,14 @@ public class EnumComboViewerRenderer_PTest extends AbstractControl_PTest {
 	public void testDatabindingServiceUsageInitialBinding() throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		final TestEnum initialValue = TestEnum.B;
-		final WritableValue mockedObservable = new WritableValue(realm, initialValue, TestEnum.class);
+
+		final WritableValue mockedObservable = new WritableValue(realm, initialValue,
+			TestPackage.eINSTANCE.getSimpleTestObject_MyEnum());
+
+		when(
+			editSupport.getText(any(VDomainModelReference.class), any(EObject.class),
+				Matchers.eq(mockedObservable.getValue())))
+			.thenReturn(mockedObservable.getValue().toString());
 
 		final Combo combo = setUpDatabindingTest(mockedObservable);
 		assertEquals(initialValue.getName(), combo.getText());
@@ -91,10 +110,21 @@ public class EnumComboViewerRenderer_PTest extends AbstractControl_PTest {
 		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		final TestEnum initialValue = TestEnum.B;
 		final TestEnum changedValue = TestEnum.C;
-		final WritableValue mockedObservable = new WritableValue(realm, initialValue, TestEnum.class);
+		final WritableValue mockedObservable = new WritableValue(realm, initialValue,
+			TestPackage.eINSTANCE.getSimpleTestObject_MyEnum());
+		when(
+			editSupport.getText(any(VDomainModelReference.class), any(EObject.class),
+				Matchers.same(initialValue)))
+			.thenReturn(initialValue.toString());
+
+		when(
+			editSupport.getText(any(VDomainModelReference.class), any(EObject.class),
+				Matchers.same(changedValue)))
+			.thenReturn(changedValue.toString());
 
 		final Combo combo = setUpDatabindingTest(mockedObservable);
 		mockedObservable.setValue(changedValue);
+
 		assertEquals(changedValue.getName(), combo.getText());
 
 	}
@@ -104,10 +134,11 @@ public class EnumComboViewerRenderer_PTest extends AbstractControl_PTest {
 		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		final TestEnum initialValue = TestEnum.B;
 		final TestEnum changedValue = TestEnum.C;
-		final WritableValue mockedObservable = new WritableValue(realm, initialValue, TestEnum.class);
+		final WritableValue mockedObservable = new WritableValue(realm, initialValue,
+			TestPackage.eINSTANCE.getSimpleTestObject_MyEnum());
 
 		final Combo combo = setUpDatabindingTest(mockedObservable);
-		combo.setText(changedValue.getName());
+		combo.select(2);
 		combo.notifyListeners(SWT.Selection, new Event());
 
 		assertEquals(changedValue.getName(), ((TestEnum) mockedObservable.getValue()).getName());
@@ -125,10 +156,11 @@ public class EnumComboViewerRenderer_PTest extends AbstractControl_PTest {
 	 */
 	private Combo setUpDatabindingTest(final WritableValue mockedObservable) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
-		Mockito.reset(databindingService);
 		mockDatabindingIsUnsettable();
 		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			mockedObservable);
+		when(databindingService.getValueProperty(any(VDomainModelReference.class))).thenReturn(
+			Properties.selfValue(mockedObservable.getValueType()));
 
 		final Control renderControl = renderControl(new SWTGridCell(0, 2, renderer));
 

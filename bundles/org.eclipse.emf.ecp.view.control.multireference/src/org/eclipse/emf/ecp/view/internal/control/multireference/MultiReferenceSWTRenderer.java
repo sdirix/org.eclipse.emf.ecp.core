@@ -27,20 +27,23 @@ import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemP
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.AbstractControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
 import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
+import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
+import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.emf.emfforms.spi.core.services.labelprovider.EMFFormsLabelProvider;
-import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emf.emfforms.spi.localization.LocalizationServiceHelper;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -61,12 +64,14 @@ import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.TableColumn;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * Renderer for MultiReferenceControl.
@@ -77,14 +82,24 @@ import org.eclipse.swt.widgets.TableColumn;
 @SuppressWarnings("restriction")
 public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VControl> {
 
+	private final ImageRegistryService imageRegistryService;
+
 	/**
+	 * Default constructor.
+	 *
 	 * @param vElement the view model element to be rendered
 	 * @param viewContext the view context
-	 * @param factory the {@link SWTRendererFactory}
+	 * @param emfFormsDatabinding The {@link EMFFormsDatabinding}
+	 * @param emfFormsLabelProvider The {@link EMFFormsLabelProvider}
+	 * @param reportService The {@link ReportService}
+	 * @param vtViewTemplateProvider The {@link VTViewTemplateProvider}
+	 * @param imageRegistryService The {@link ImageRegistryService}
 	 */
-	public MultiReferenceSWTRenderer(VControl vElement, ViewModelContext viewContext, SWTRendererFactory factory) {
-		super(vElement, viewContext, factory);
-		// TODO Auto-generated constructor stub
+	public MultiReferenceSWTRenderer(VControl vElement, ViewModelContext viewContext, ReportService reportService,
+		EMFFormsDatabinding emfFormsDatabinding, EMFFormsLabelProvider emfFormsLabelProvider,
+		VTViewTemplateProvider vtViewTemplateProvider, ImageRegistryService imageRegistryService) {
+		super(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider);
+		this.imageRegistryService = imageRegistryService;
 	}
 
 	private Label validationIcon;
@@ -122,7 +137,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 		try {
 			createTitleComposite(composite);
 		} catch (final DatabindingFailedException ex) {
-			Activator.getDefault().getReportService().report(new RenderingFailedReport(ex));
+			getReportService().report(new RenderingFailedReport(ex));
 			return createErrorLabel(parent, ex);
 		}
 
@@ -136,7 +151,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 		try {
 			createContent(controlComposite);
 		} catch (final DatabindingFailedException ex) {
-			Activator.getDefault().getReportService().report(new RenderingFailedReport(ex));
+			getReportService().report(new RenderingFailedReport(ex));
 			return createErrorLabel(parent, ex);
 		}
 
@@ -197,14 +212,14 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 		GridDataFactory.fillDefaults().grab(true, false).align(SWT.END, SWT.FILL)
 			.applyTo(buttonComposite);
 
-		final IObservableValue observableValue = Activator.getDefault().getEMFFormsDatabinding()
+		final IObservableValue observableValue = getEMFFormsDatabinding()
 			.getObservableValue(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
 		final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
 		final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
 
 		final Button btnAddExisting = new Button(buttonComposite, SWT.PUSH);
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(btnAddExisting);
-		btnAddExisting.setImage(Activator.getImage("icons/link.png")); //$NON-NLS-1$
+		btnAddExisting.setImage(getImage("icons/link.png")); //$NON-NLS-1$
 		btnAddExisting.setToolTipText(LocalizationServiceHelper.getString(getClass(),
 			MessageKeys.MultiReferenceSWTRenderer_addExistingTooltip));
 		btnAddExisting.addSelectionListener(new SelectionAdapter() {
@@ -224,7 +239,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 
 		final Button btnAddNew = new Button(buttonComposite, SWT.PUSH);
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(btnAddNew);
-		btnAddNew.setImage(Activator.getImage("icons/link_add.png")); //$NON-NLS-1$
+		btnAddNew.setImage(getImage("icons/link_add.png")); //$NON-NLS-1$
 		btnAddNew.setToolTipText(LocalizationServiceHelper.getString(getClass(),
 			MessageKeys.MultiReferenceSWTRenderer_addNewTooltip));
 		btnAddNew.addSelectionListener(new SelectionAdapter() {
@@ -244,7 +259,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 
 		final Button btnDelete = new Button(buttonComposite, SWT.PUSH);
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(btnDelete);
-		btnDelete.setImage(Activator.getImage("icons/delete.png")); //$NON-NLS-1$
+		btnDelete.setImage(getImage("icons/delete.png")); //$NON-NLS-1$
 		btnDelete.setToolTipText(LocalizationServiceHelper.getString(getClass(),
 			MessageKeys.MultiReferenceSWTRenderer_deleteTooltip));
 		btnDelete.addSelectionListener(new SelectionAdapter() {
@@ -267,6 +282,10 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 			btnDelete.setEnabled(false);
 		}
 
+	}
+
+	private Image getImage(String path) {
+		return imageRegistryService.getImage(FrameworkUtil.getBundle(getClass()), path);
 	}
 
 	private void createContent(Composite composite) throws DatabindingFailedException {
@@ -296,7 +315,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 
 		final ObservableListContentProvider cp = new ObservableListContentProvider();
 
-		final EMFFormsLabelProvider labelService = Activator.getDefault().getEMFFormsLabelProvider();
+		final EMFFormsLabelProvider labelService = getEMFFormsLabelProvider();
 		final String text = labelService.getDisplayName(getVElement().getDomainModelReference(), getViewModelContext()
 			.getDomainModel());
 		final String tooltipText = labelService.getDescription(getVElement().getDomainModelReference(),
@@ -316,7 +335,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 
 		tableViewer.setLabelProvider(labelProvider);
 		tableViewer.setContentProvider(cp);
-		final IObservableList list = Activator.getDefault().getEMFFormsDatabinding()
+		final IObservableList list = getEMFFormsDatabinding()
 			.getObservableList(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
 		tableViewer.setInput(list);
 

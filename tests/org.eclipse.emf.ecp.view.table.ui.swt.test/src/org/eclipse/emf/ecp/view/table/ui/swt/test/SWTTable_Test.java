@@ -36,14 +36,16 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
+import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableFactory;
 import org.eclipse.emf.ecp.view.spi.table.swt.TableControlSWTRenderer;
+import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
+import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.DatabindingClassRunner;
 import org.eclipse.emf.emfforms.spi.core.services.labelprovider.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
@@ -126,10 +128,15 @@ public class SWTTable_Test {
 		vTableControl = VTableFactory.eINSTANCE.createTableControl();
 		vTableControl.setDomainModelReference(tableDomainModelReference);
 
-		final SWTRendererFactory factory = mock(SWTRendererFactory.class);
+		final ReportService reportservice = mock(ReportService.class);
+		final EMFFormsDatabinding emfFormsDatabinding = mock(EMFFormsDatabinding.class);
+		final EMFFormsLabelProvider emfFormsLabelProvider = mock(EMFFormsLabelProvider.class);
+		final VTViewTemplateProvider vtViewTemplateProvider = mock(VTViewTemplateProvider.class);
+		final ImageRegistryService imageRegistryService = mock(ImageRegistryService.class);
 		final ViewModelContext viewContext = new ViewModelContextImpl(vTableControl, domainModel);
 
-		renderer = new TableControlSWTRenderer(vTableControl, viewContext, factory);
+		renderer = new TableControlSWTRenderer(vTableControl, viewContext, reportservice, emfFormsDatabinding,
+			emfFormsLabelProvider, vtViewTemplateProvider, imageRegistryService);
 		renderer.init();
 	}
 

@@ -17,18 +17,23 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.group.model.VGroup;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
+import org.eclipse.emf.ecp.view.spi.model.reporting.StatusReport;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractAdditionalSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
-import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
+import org.eclipse.emfforms.spi.swt.core.EMFFormsNoRendererException;
+import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -42,13 +47,20 @@ import org.eclipse.swt.widgets.Label;
  */
 public class EmbeddedGroupSWTRenderer extends AbstractSWTRenderer<VGroup> {
 
+	private final EMFFormsRendererFactory rendererFactory;
+
 	/**
-	 * @param vElement the view model element to be rendered
-	 * @param viewContext the view context
-	 * @param factory the {@link SWTRendererFactory}
+	 * Default Constructor.
+	 *
+	 * @param vElement the view element to be rendered
+	 * @param viewContext The view model context
+	 * @param reportService the ReportService to use
+	 * @param rendererFactory the EMFFormsRendererFactory to use
 	 */
-	public EmbeddedGroupSWTRenderer(VGroup vElement, ViewModelContext viewContext, SWTRendererFactory factory) {
-		super(vElement, viewContext, factory);
+	public EmbeddedGroupSWTRenderer(final VGroup vElement, final ViewModelContext viewContext,
+		ReportService reportService, EMFFormsRendererFactory rendererFactory) {
+		super(vElement, viewContext, reportService);
+		this.rendererFactory = rendererFactory;
 	}
 
 	private SWTGridDescription currentGridDescription;
@@ -64,10 +76,19 @@ public class EmbeddedGroupSWTRenderer extends AbstractSWTRenderer<VGroup> {
 		final Map<Integer, List<SWTGridCell>> gridCellsPerRow = new LinkedHashMap<Integer, List<SWTGridCell>>();
 		for (final VContainedElement containedElement : getVElement().getChildren()) {
 			gridCellsPerRow.put(row, new ArrayList<SWTGridCell>());
-			final AbstractSWTRenderer<VElement> renderer = getSWTRendererFactory().getRenderer(containedElement,
-				getViewModelContext());
-			final Collection<AbstractAdditionalSWTRenderer<VElement>> additionalRenderers = getSWTRendererFactory()
-				.getAdditionalRenderer(containedElement, getViewModelContext());
+			AbstractSWTRenderer<VElement> renderer;
+			try {
+				renderer = rendererFactory.getRendererInstance(containedElement,
+					getViewModelContext());
+			} catch (final EMFFormsNoRendererException ex) {
+				getReportService().report(
+					new StatusReport(
+						new Status(IStatus.INFO, "org.eclipse.emf.ecp.view.group.swt.embedded", String.format( //$NON-NLS-1$
+							"No Renderer for %s found.", containedElement.eClass().getName()), ex))); //$NON-NLS-1$
+				continue;
+			}
+			final Collection<AbstractAdditionalSWTRenderer<VElement>> additionalRenderers = rendererFactory
+				.getAdditionalRendererInstances(containedElement, getViewModelContext());
 			SWTGridDescription rendererGridDescription = renderer.getGridDescription(GridDescriptionFactory.INSTANCE
 				.createEmptyGridDescription());
 			for (final AbstractAdditionalSWTRenderer<VElement> additionalRenderer : additionalRenderers) {

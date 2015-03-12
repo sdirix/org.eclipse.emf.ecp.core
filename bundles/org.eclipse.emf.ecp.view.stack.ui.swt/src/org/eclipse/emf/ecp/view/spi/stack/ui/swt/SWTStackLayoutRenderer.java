@@ -23,22 +23,28 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
+import org.eclipse.emf.ecp.view.spi.model.reporting.StatusReport;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.stack.model.VStackItem;
 import org.eclipse.emf.ecp.view.spi.stack.model.VStackLayout;
 import org.eclipse.emf.ecp.view.spi.stack.model.VStackPackage;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
-import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.LayoutProviderHelper;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
 import org.eclipse.emf.emfforms.spi.localization.LocalizationServiceHelper;
+import org.eclipse.emfforms.spi.swt.core.EMFFormsNoRendererException;
+import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 
 /**
  * The SWT {@link VStackLayout} renderer.
@@ -49,12 +55,14 @@ import org.eclipse.swt.widgets.Control;
 public class SWTStackLayoutRenderer extends AbstractSWTRenderer<VStackLayout> {
 
 	/**
+	 * Default constructor.
+	 *
 	 * @param vElement the view model element to be rendered
 	 * @param viewContext the view context
-	 * @param factory the {@link SWTRendererFactory}
+	 * @param reportService the {@link ReportService}
 	 */
-	public SWTStackLayoutRenderer(VStackLayout vElement, ViewModelContext viewContext, SWTRendererFactory factory) {
-		super(vElement, viewContext, factory);
+	public SWTStackLayoutRenderer(VStackLayout vElement, ViewModelContext viewContext, ReportService reportService) {
+		super(vElement, viewContext, reportService);
 	}
 
 	private static final String CONTROL_STACK_COMPOSITE = "org_eclipse_emf_ecp_ui_layout_stack"; //$NON-NLS-1$
@@ -101,17 +109,16 @@ public class SWTStackLayoutRenderer extends AbstractSWTRenderer<VStackLayout> {
 
 		final Map<VStackItem, AbstractSWTRenderer<VElement>> elementRendererMap = new LinkedHashMap<VStackItem, AbstractSWTRenderer<VElement>>();
 		for (final VStackItem item : getVElement().getStackItems()) {
-			final AbstractSWTRenderer<VElement> renderer = getSWTRendererFactory().getRenderer(item,
-				getViewModelContext());
-			if (renderer == null) {
-				Activator
-					.getDefault()
-					.getLog()
-					.log(
-						new Status(IStatus.INFO, Activator.PLUGIN_ID, String.format(
-							LocalizationServiceHelper.getString(getClass(),
-								MessageKeys.SWTStackLayoutRenderer_NoRendererForItemCompositeFound), item.eClass()
-								.getName())));
+			AbstractSWTRenderer<VElement> renderer;
+			try {
+				renderer = getEMFFormsRendererFactory().getRendererInstance(item,
+					getViewModelContext());
+			} catch (final EMFFormsNoRendererException ex) {
+				getReportService().report(new StatusReport(
+					new Status(IStatus.INFO, Activator.PLUGIN_ID, String.format(
+						LocalizationServiceHelper.getString(getClass(),
+							MessageKeys.SWTStackLayoutRenderer_NoRendererForItemCompositeFound), item.eClass()
+							.getName(), ex))));
 				continue;
 			}
 			elementRendererMap.put(item, renderer);
@@ -217,5 +224,14 @@ public class SWTStackLayoutRenderer extends AbstractSWTRenderer<VStackLayout> {
 		stackLayout = null;
 		stackComposite = null;
 		super.dispose();
+	}
+
+	private EMFFormsRendererFactory getEMFFormsRendererFactory() {
+		final BundleContext bundleContext = FrameworkUtil.getBundle(getClass()).getBundleContext();
+		final ServiceReference<EMFFormsRendererFactory> serviceReference = bundleContext
+			.getServiceReference(EMFFormsRendererFactory.class);
+		final EMFFormsRendererFactory rendererFactory = bundleContext.getService(serviceReference);
+		bundleContext.ungetService(serviceReference);
+		return rendererFactory;
 	}
 }

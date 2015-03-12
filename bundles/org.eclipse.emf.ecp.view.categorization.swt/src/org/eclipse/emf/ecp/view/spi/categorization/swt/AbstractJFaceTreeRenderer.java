@@ -31,10 +31,11 @@ import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationElement;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategory;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
+import org.eclipse.emf.ecp.view.spi.model.reporting.StatusReport;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
-import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
@@ -43,6 +44,8 @@ import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ITableItemLabelProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
+import org.eclipse.emfforms.spi.swt.core.EMFFormsNoRendererException;
+import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -78,13 +81,24 @@ import org.eclipse.swt.widgets.TreeItem;
  */
 public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> extends AbstractSWTRenderer<VELEMENT> {
 
+	private final EMFFormsRendererFactory emfFormsRendererFactory;
+
+	private EMFFormsRendererFactory getEMFFormsRendererFactory() {
+		return emfFormsRendererFactory;
+	}
+
 	/**
+	 * Default constructor.
+	 *
 	 * @param vElement the view model element to be rendered
 	 * @param viewContext the view context
-	 * @param factory the {@link SWTRendererFactory}
+	 * @param reportService the {@link ReportService}
+	 * @param emfFormsRendererFactory The {@link EMFFormsRendererFactory}
 	 */
-	public AbstractJFaceTreeRenderer(VELEMENT vElement, ViewModelContext viewContext, SWTRendererFactory factory) {
-		super(vElement, viewContext, factory);
+	public AbstractJFaceTreeRenderer(VELEMENT vElement, ViewModelContext viewContext, ReportService reportService,
+		EMFFormsRendererFactory emfFormsRendererFactory) {
+		super(vElement, viewContext, reportService);
+		this.emfFormsRendererFactory = emfFormsRendererFactory;
 	}
 
 	private SWTGridDescription gridDescription;
@@ -123,15 +137,15 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 
 		if (categorizations.size() == 1 && categorizations.get(0) instanceof VCategory) {
 			final VElement child = getCategorizations().get(0);
-			final AbstractSWTRenderer<VElement> renderer = getSWTRendererFactory().getRenderer(child,
-				getViewModelContext());
-			if (renderer == null) {
-				Activator
-					.getDefault()
-					.getLog()
-					.log(
+			AbstractSWTRenderer<VElement> renderer;
+			try {
+				renderer = getEMFFormsRendererFactory().getRendererInstance(child,
+					getViewModelContext());
+			} catch (final EMFFormsNoRendererException ex) {
+				getReportService().report(
+					new StatusReport(
 						new Status(IStatus.INFO, Activator.PLUGIN_ID, String.format(
-							"No Renderer for %s found.", child.eClass().getName()))); //$NON-NLS-1$
+							"No Renderer for %s found.", child.eClass().getName(), ex)))); //$NON-NLS-1$
 				return null;
 			}
 			final Control render = renderer.render(cell, parent);
@@ -473,15 +487,15 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 			final VElement child = (VElement) selection;
 			try {
 
-				final AbstractSWTRenderer<VElement> renderer = getSWTRendererFactory().getRenderer(child,
-					viewModelContext);
-				if (renderer == null) {
-					Activator
-						.getDefault()
-						.getLog()
-						.log(
+				AbstractSWTRenderer<VElement> renderer;
+				try {
+					renderer = getEMFFormsRendererFactory().getRendererInstance(child,
+						viewModelContext);
+				} catch (final EMFFormsNoRendererException ex) {
+					getReportService().report(
+						new StatusReport(
 							new Status(IStatus.INFO, Activator.PLUGIN_ID, String.format(
-								"No Renderer for %s found.", child.eClass().getName()))); //$NON-NLS-1$
+								"No Renderer for %s found.", child.eClass().getName(), ex)))); //$NON-NLS-1$
 					return;
 				}
 				// we have a VCategory-> thus only one element in the grid
@@ -494,9 +508,9 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 					.applyTo(render);
 				vCategorizationElement.setCurrentSelection((VCategorizableElement) child);
 			} catch (final NoRendererFoundException e) {
-				Activator.getDefault().getReportService().report(new RenderingFailedReport(e));
+				getReportService().report(new RenderingFailedReport(e));
 			} catch (final NoPropertyDescriptorFoundExeption e) {
-				Activator.getDefault().getReportService().report(new RenderingFailedReport(e));
+				getReportService().report(new RenderingFailedReport(e));
 			}
 
 			childComposite.layout();

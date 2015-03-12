@@ -28,7 +28,9 @@ import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.eclipse.core.databinding.observable.value.WritableValue;
+import org.eclipse.core.databinding.property.Properties;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.spi.ViewLocaleService;
 import org.eclipse.emf.ecp.view.core.swt.test.model.SimpleTestObject;
 import org.eclipse.emf.ecp.view.core.swt.test.model.TestFactory;
@@ -36,14 +38,17 @@ import org.eclipse.emf.ecp.view.core.swt.test.model.TestPackage;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
+import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.DatabindingClassRunner;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.SWTTestUtil;
 import org.eclipse.emf.emfforms.spi.core.services.labelprovider.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
@@ -60,9 +65,14 @@ public class XMLDateControlRenderer_PTest extends AbstractControl_PTest {
 
 	@Before
 	public void before() throws DatabindingFailedException {
-		final SWTRendererFactory factory = mock(SWTRendererFactory.class);
+		final ReportService reportService = mock(ReportService.class);
+		databindingService = mock(EMFFormsDatabinding.class);
+		labelProvider = mock(EMFFormsLabelProvider.class);
+		templateProvider = mock(VTViewTemplateProvider.class);
+		final EMFFormsEditSupport editSupport = mock(EMFFormsEditSupport.class);
 		setup();
-		renderer = new XMLDateControlSWTRenderer(vControl, context, factory);
+		renderer = new XMLDateControlSWTRenderer(vControl, context, reportService, databindingService, labelProvider,
+			templateProvider, editSupport);
 		renderer.init();
 	}
 
@@ -75,6 +85,16 @@ public class XMLDateControlRenderer_PTest extends AbstractControl_PTest {
 	public void renderControlLabelAlignmentNone()
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		setMockLabelAlignment(LabelAlignment.NONE);
+		final TestObservableValue mockedObservableValue = mock(TestObservableValue.class);
+		when(mockedObservableValue.getRealm()).thenReturn(realm);
+		final EObject mockedEObject = mock(EObject.class);
+		when(mockedEObject.eIsSet(any(EStructuralFeature.class))).thenReturn(true);
+		when(mockedObservableValue.getObserved()).thenReturn(mockedEObject);
+		final EStructuralFeature mockedEStructuralFeature = mock(EStructuralFeature.class);
+		when(mockedEStructuralFeature.isUnsettable()).thenReturn(false);
+		when(mockedObservableValue.getValueType()).thenReturn(mockedEStructuralFeature);
+		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
+			mockedObservableValue);
 		final Control render = renderControl(new SWTGridCell(0, 1, renderer));
 		assertControl(render);
 	}
@@ -83,6 +103,16 @@ public class XMLDateControlRenderer_PTest extends AbstractControl_PTest {
 	public void renderControlLabelAlignmentLeft()
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		setMockLabelAlignment(LabelAlignment.LEFT);
+		final TestObservableValue mockedObservableValue = mock(TestObservableValue.class);
+		when(mockedObservableValue.getRealm()).thenReturn(realm);
+		final EObject mockedEObject = mock(EObject.class);
+		when(mockedEObject.eIsSet(any(EStructuralFeature.class))).thenReturn(true);
+		when(mockedObservableValue.getObserved()).thenReturn(mockedEObject);
+		final EStructuralFeature mockedEStructuralFeature = mock(EStructuralFeature.class);
+		when(mockedEStructuralFeature.isUnsettable()).thenReturn(false);
+		when(mockedObservableValue.getValueType()).thenReturn(mockedEStructuralFeature);
+		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
+			mockedObservableValue);
 		final Control render = renderControl(new SWTGridCell(0, 2, renderer));
 
 		assertControl(render);
@@ -123,7 +153,8 @@ public class XMLDateControlRenderer_PTest extends AbstractControl_PTest {
 		NoPropertyDescriptorFoundExeption, DatatypeConfigurationException, DatabindingFailedException {
 		final XMLGregorianCalendar initialValue = getXMLGregorianCalendarFromDate(new Date());
 
-		final WritableValue mockedObservable = new WritableValue(realm, initialValue, XMLGregorianCalendar.class);
+		final WritableValue mockedObservable = new WritableValue(realm, initialValue,
+			TestPackage.eINSTANCE.getSimpleTestObject_XmlDate());
 		final Text text = setUpDatabindingTest(mockedObservable);
 
 		final String expected = formatXMLGregorianCalendar(initialValue);
@@ -137,7 +168,8 @@ public class XMLDateControlRenderer_PTest extends AbstractControl_PTest {
 		final XMLGregorianCalendar initialValue = getXMLGregorianCalendarFromDate(new Date());
 		final XMLGregorianCalendar changedValue = getXMLGregorianCalendarFromDate(new Date(
 			System.currentTimeMillis() * 2));
-		final WritableValue mockedObservable = new WritableValue(realm, initialValue, XMLGregorianCalendar.class);
+		final WritableValue mockedObservable = new WritableValue(realm, initialValue,
+			TestPackage.eINSTANCE.getSimpleTestObject_XmlDate());
 
 		final Text text = setUpDatabindingTest(mockedObservable);
 		mockedObservable.setValue(changedValue);
@@ -154,7 +186,8 @@ public class XMLDateControlRenderer_PTest extends AbstractControl_PTest {
 		final XMLGregorianCalendar initialValue = getXMLGregorianCalendarFromDate(new Date());
 		final XMLGregorianCalendar changedValue = getXMLGregorianCalendarFromDate(new Date(
 			System.currentTimeMillis() * 2));
-		final WritableValue mockedObservable = new WritableValue(realm, initialValue, XMLGregorianCalendar.class);
+		final WritableValue mockedObservable = new WritableValue(realm, initialValue,
+			TestPackage.eINSTANCE.getSimpleTestObject_XmlDate());
 
 		final Text text = setUpDatabindingTest(mockedObservable);
 		SWTTestUtil.typeAndFocusOut(text, formatXMLGregorianCalendar(changedValue));
@@ -179,6 +212,8 @@ public class XMLDateControlRenderer_PTest extends AbstractControl_PTest {
 		mockDatabindingIsUnsettable();
 		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			mockedObservable);
+		when(databindingService.getValueProperty(any(VDomainModelReference.class))).thenReturn(
+			Properties.selfValue(mockedObservable.getValueType()));
 
 		final Control renderControl = renderControl(new SWTGridCell(0, 2, renderer));
 		final Composite composite = (Composite) renderControl;

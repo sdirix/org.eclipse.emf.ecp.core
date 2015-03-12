@@ -17,7 +17,6 @@ import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.view.internal.core.swt.Activator;
 import org.eclipse.emf.ecp.view.internal.core.swt.MessageKeys;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
@@ -28,16 +27,18 @@ import org.eclipse.emf.ecp.view.spi.model.util.ViewModelUtil;
 import org.eclipse.emf.ecp.view.spi.provider.ECPTooltipModifierHelper;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
 import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
+import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emf.emfforms.spi.core.services.labelprovider.EMFFormsLabelProvider;
 import org.eclipse.emf.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
+import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
@@ -56,13 +57,21 @@ import org.eclipse.swt.widgets.Label;
  *
  */
 public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRenderer<VControl> {
+
 	/**
+	 * Default constructor.
+	 *
 	 * @param vElement the view model element to be rendered
 	 * @param viewContext the view context
-	 * @param factory the {@link SWTRendererFactory}
+	 * @param reportService The {@link ReportService}
+	 * @param emfFormsDatabinding The {@link EMFFormsDatabinding}
+	 * @param emfFormsLabelProvider The {@link EMFFormsLabelProvider}
+	 * @param vtViewTemplateProvider The {@link VTViewTemplateProvider}
 	 */
-	public SimpleControlSWTRenderer(VControl vElement, ViewModelContext viewContext, SWTRendererFactory factory) {
-		super(vElement, viewContext, factory);
+	public SimpleControlSWTRenderer(VControl vElement, ViewModelContext viewContext, ReportService reportService,
+		EMFFormsDatabinding emfFormsDatabinding, EMFFormsLabelProvider emfFormsLabelProvider,
+		VTViewTemplateProvider vtViewTemplateProvider) {
+		super(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider);
 	}
 
 	private SWTGridDescription rendererGridDescription;
@@ -106,7 +115,7 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 				}
 				return createControl(parent);
 			} catch (final DatabindingFailedException ex) {
-				Activator.getDefault().getReportService().report(new RenderingFailedReport(ex));
+				getReportService().report(new RenderingFailedReport(ex));
 				final Label errorLabel = new Label(parent, SWT.NONE);
 				errorLabel.setText(ex.getMessage());
 				return errorLabel;
@@ -160,7 +169,7 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 						.getObservableValue(getVElement().getDomainModelReference(),
 							getViewModelContext().getDomainModel());
 				} catch (final DatabindingFailedException ex) {
-					Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+					getReportService().report(new DatabindingFailedReport(ex));
 					return;
 				}
 				final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
@@ -270,8 +279,7 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 			break;
 		default:
 			if (ViewModelUtil.isDebugMode()) {
-				final ReportService reportService = Activator.getDefault().getReportService();
-				reportService.report(new AbstractReport("Wrong number of controls!")); //$NON-NLS-1$
+				getReportService().report(new AbstractReport("Wrong number of controls!")); //$NON-NLS-1$
 			}
 			return;
 		}

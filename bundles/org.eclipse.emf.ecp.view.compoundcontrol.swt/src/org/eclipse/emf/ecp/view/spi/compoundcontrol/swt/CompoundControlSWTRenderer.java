@@ -23,19 +23,24 @@ import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
 import org.eclipse.emf.ecp.view.spi.model.reporting.StatusReport;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
-import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.LayoutProviderHelper;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
 import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
+import org.eclipse.emfforms.spi.swt.core.EMFFormsNoRendererException;
+import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 
 /**
  * {@link AbstractSWTRenderer} for the {@link VCompoundControl} view model.
@@ -48,11 +53,11 @@ public class CompoundControlSWTRenderer extends AbstractSWTRenderer<VCompoundCon
 	/**
 	 * @param vElement the view model element to be rendered
 	 * @param viewContext the view context
-	 * @param factory the {@link SWTRendererFactory}
+	 * @param reportService the {@link ReportService}
 	 */
 	public CompoundControlSWTRenderer(VCompoundControl vElement, ViewModelContext viewContext,
-		SWTRendererFactory factory) {
-		super(vElement, viewContext, factory);
+		ReportService reportService) {
+		super(vElement, viewContext, reportService);
 	}
 
 	private static final String COMPOUND_CONTROL = "org_eclipse_emf_ecp_ui_compound_control"; //$NON-NLS-1$
@@ -104,12 +109,12 @@ public class CompoundControlSWTRenderer extends AbstractSWTRenderer<VCompoundCon
 		for (final VControl child : getVElement().getControls()) {
 
 			child.setLabelAlignment(LabelAlignment.NONE);
-			final AbstractSWTRenderer<VElement> renderer = getSWTRendererFactory().getRenderer(child,
-				getViewModelContext());
-			if (renderer == null) {
-				Activator
-					.getDefault()
-					.getReportService()
+			AbstractSWTRenderer<VElement> renderer;
+			try {
+				renderer = getEMFFormsRendererFactory().getRendererInstance(child,
+					getViewModelContext());
+			} catch (final EMFFormsNoRendererException ex) {
+				getReportService()
 					.report(
 						new StatusReport(
 							new Status(IStatus.INFO, Activator.PLUGIN_ID, String.format(
@@ -155,4 +160,12 @@ public class CompoundControlSWTRenderer extends AbstractSWTRenderer<VCompoundCon
 		return columnComposite;
 	}
 
+	private EMFFormsRendererFactory getEMFFormsRendererFactory() {
+		final BundleContext bundleContext = FrameworkUtil.getBundle(getClass()).getBundleContext();
+		final ServiceReference<EMFFormsRendererFactory> serviceReference = bundleContext
+			.getServiceReference(EMFFormsRendererFactory.class);
+		final EMFFormsRendererFactory rendererFactory = bundleContext.getService(serviceReference);
+		bundleContext.ungetService(serviceReference);
+		return rendererFactory;
+	}
 }

@@ -22,6 +22,8 @@ import java.text.DecimalFormat;
 import java.util.Locale;
 
 import org.eclipse.core.databinding.observable.value.WritableValue;
+import org.eclipse.core.databinding.property.Properties;
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcoreFactory;
@@ -31,14 +33,17 @@ import org.eclipse.emf.ecp.edit.spi.ViewLocaleService;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
+import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.DatabindingClassRunner;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.SWTTestUtil;
 import org.eclipse.emf.emfforms.spi.core.services.labelprovider.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
@@ -46,7 +51,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 
 @SuppressWarnings("restriction")
 @RunWith(DatabindingClassRunner.class)
@@ -54,9 +58,14 @@ public class NumberControlRenderer_PTest extends AbstractControl_PTest {
 
 	@Before
 	public void before() throws DatabindingFailedException {
-		final SWTRendererFactory factory = mock(SWTRendererFactory.class);
+		final ReportService reportService = mock(ReportService.class);
+		databindingService = mock(EMFFormsDatabinding.class);
+		labelProvider = mock(EMFFormsLabelProvider.class);
+		templateProvider = mock(VTViewTemplateProvider.class);
+		final EMFFormsEditSupport editSupport = mock(EMFFormsEditSupport.class);
 		setup();
-		renderer = new NumberControlSWTRenderer(vControl, context, factory);
+		renderer = new NumberControlSWTRenderer(vControl, context, reportService, databindingService, labelProvider,
+			templateProvider, editSupport);
 		renderer.init();
 	}
 
@@ -65,18 +74,51 @@ public class NumberControlRenderer_PTest extends AbstractControl_PTest {
 		dispose();
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Test
 	public void renderControlLabelAlignmentNone()
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		setMockLabelAlignment(LabelAlignment.NONE);
+		final TestObservableValue mockedObservableValue = mock(TestObservableValue.class);
+		when(mockedObservableValue.getRealm()).thenReturn(realm);
+		final EObject mockedEObject = mock(EObject.class);
+		when(mockedEObject.eIsSet(any(EStructuralFeature.class))).thenReturn(true);
+		when(mockedObservableValue.getObserved()).thenReturn(mockedEObject);
+		final EStructuralFeature mockedEStructuralFeature = mock(EStructuralFeature.class);
+		final EClassifier mockedEClassifier = mock(EClassifier.class);
+		final Class clazz = Double.class;
+		when(mockedEClassifier.getInstanceClass()).thenReturn(clazz);
+		when(mockedEStructuralFeature.getEType()).thenReturn(mockedEClassifier);
+		when(mockedObservableValue.getValueType()).thenReturn(mockedEStructuralFeature);
+		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
+			mockedObservableValue);
+		when(databindingService.getValueProperty(any(VDomainModelReference.class))).thenReturn(
+			Properties.selfValue(mockedEStructuralFeature));
 		final Control render = renderControl(new SWTGridCell(0, 1, renderer));
 		assertControl(render);
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Test
 	public void renderControlLabelAlignmentLeft()
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		setMockLabelAlignment(LabelAlignment.LEFT);
+		final TestObservableValue mockedObservableValue = mock(TestObservableValue.class);
+		when(mockedObservableValue.getRealm()).thenReturn(realm);
+		final EObject mockedEObject = mock(EObject.class);
+		when(mockedEObject.eIsSet(any(EStructuralFeature.class))).thenReturn(true);
+		when(mockedObservableValue.getObserved()).thenReturn(mockedEObject);
+		final EStructuralFeature mockedEStructuralFeature = mock(EStructuralFeature.class);
+		final EClassifier mockedEClassifier = mock(EClassifier.class);
+		final Class clazz = Double.class;
+		when(mockedEClassifier.getInstanceClass()).thenReturn(clazz);
+		when(mockedEStructuralFeature.getEType()).thenReturn(mockedEClassifier);
+		when(mockedObservableValue.getValueType()).thenReturn(mockedEStructuralFeature);
+		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
+			mockedObservableValue);
+		when(databindingService.getValueProperty(any(VDomainModelReference.class))).thenReturn(
+			Properties.selfValue(mockedEStructuralFeature));
+
 		final Control render = renderControl(new SWTGridCell(0, 2, renderer));
 
 		assertControl(render);
@@ -116,7 +158,8 @@ public class NumberControlRenderer_PTest extends AbstractControl_PTest {
 	public void testDatabindingServiceUsageInitialBinding() throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		final int initialValue = 13;
-		final WritableValue mockedObservable = new WritableValue(realm, initialValue, Integer.class);
+		final WritableValue mockedObservable = new WritableValue(realm, initialValue,
+			EcorePackage.eINSTANCE.getETypedElement_LowerBound());
 		final Text text = setUpDatabindingTest(mockedObservable);
 
 		final DecimalFormat format = getDecimalFormat(Integer.class);
@@ -130,7 +173,8 @@ public class NumberControlRenderer_PTest extends AbstractControl_PTest {
 		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		final int initialValue = 13;
 		final int changedValue = 42;
-		final WritableValue mockedObservable = new WritableValue(realm, initialValue, Integer.class);
+		final WritableValue mockedObservable = new WritableValue(realm, initialValue,
+			EcorePackage.eINSTANCE.getETypedElement_LowerBound());
 
 		final Text text = setUpDatabindingTest(mockedObservable);
 		mockedObservable.setValue(changedValue);
@@ -146,7 +190,8 @@ public class NumberControlRenderer_PTest extends AbstractControl_PTest {
 		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		final int initialValue = 13;
 		final int changedValue = 42;
-		final WritableValue mockedObservable = new WritableValue(realm, initialValue, String.class);
+		final WritableValue mockedObservable = new WritableValue(realm, initialValue,
+			EcorePackage.eINSTANCE.getETypedElement_LowerBound());
 
 		final Text text = setUpDatabindingTest(mockedObservable);
 
@@ -168,10 +213,11 @@ public class NumberControlRenderer_PTest extends AbstractControl_PTest {
 	 */
 	private Text setUpDatabindingTest(final WritableValue mockedObservable) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
-		Mockito.reset(databindingService);
 		mockDatabindingIsUnsettable();
 		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			mockedObservable);
+		when(databindingService.getValueProperty(any(VDomainModelReference.class))).thenReturn(
+			Properties.selfValue(mockedObservable.getValueType()));
 
 		final Control renderControl = renderControl(new SWTGridCell(0, 2, renderer));
 		final Text text = (Text) renderControl;

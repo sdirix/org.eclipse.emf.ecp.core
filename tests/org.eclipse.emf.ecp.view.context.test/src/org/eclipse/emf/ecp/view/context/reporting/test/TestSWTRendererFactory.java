@@ -23,7 +23,6 @@ import org.eclipse.emf.ecp.view.model.common.ECPStaticRendererTester;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
-import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.swt.widgets.Composite;
 
 /**
@@ -46,10 +45,6 @@ public class TestSWTRendererFactory {
 
 	public ECPSWTView render(Composite parent, ViewModelContext viewModelContext) throws ECPRendererException {
 		final ECPSWTViewRendererImpl renderer = new ECPSWTViewRendererImpl() {
-			@Override
-			protected SWTRendererFactory createFactory() {
-				return factory;
-			}
 		};
 		return renderer.render(parent, viewModelContext);
 	}

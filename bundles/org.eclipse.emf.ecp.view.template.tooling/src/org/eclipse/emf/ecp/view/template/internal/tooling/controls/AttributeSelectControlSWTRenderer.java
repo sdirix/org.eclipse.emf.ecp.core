@@ -21,7 +21,7 @@ import org.eclipse.emf.ecp.view.internal.editor.controls.EditableEReferenceLabel
 import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
-import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
+import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
 import org.eclipse.emf.ecp.view.template.internal.tooling.Activator;
 import org.eclipse.emf.ecp.view.template.selector.viewModelElement.model.VTViewModelElementSelector;
 import org.eclipse.emf.edit.command.SetCommand;
@@ -44,12 +44,15 @@ import org.eclipse.ui.dialogs.ListDialog;
 public class AttributeSelectControlSWTRenderer extends EditableEReferenceLabelControlSWTRenderer {
 
 	/**
+	 * Default constructor.
+	 *
 	 * @param vElement the view model element to be rendered
 	 * @param viewContext the view context
-	 * @param factory the {@link SWTRendererFactory}
+	 * @param reportService the {@link ReportService}
 	 */
-	public AttributeSelectControlSWTRenderer(VControl vElement, ViewModelContext viewContext, SWTRendererFactory factory) {
-		super(vElement, viewContext, factory);
+	public AttributeSelectControlSWTRenderer(VControl vElement, ViewModelContext viewContext,
+		ReportService reportService) {
+		super(vElement, viewContext, reportService);
 	}
 
 	/**

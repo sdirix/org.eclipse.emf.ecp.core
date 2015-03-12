@@ -14,6 +14,7 @@ package org.eclipse.emf.ecp.view.context.test.mockup;
 import org.eclipse.emf.ecp.view.internal.core.swt.renderer.ViewSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
@@ -30,8 +31,8 @@ public class ViewSWTRendererWithNoPropertyDescriptorFoundException extends ViewS
 	 * @param factory the {@link SWTRendererFactory}
 	 */
 	public ViewSWTRendererWithNoPropertyDescriptorFoundException(VView vElement, ViewModelContext viewContext,
-		SWTRendererFactory factory) {
-		super(vElement, viewContext, factory);
+		ReportService factory) {
+		super(vElement, viewContext, factory, null, null, null);
 	}
 
 	@Override

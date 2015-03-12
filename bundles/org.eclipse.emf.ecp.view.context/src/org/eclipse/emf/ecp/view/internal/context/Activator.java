@@ -83,9 +83,9 @@ public class Activator extends Plugin {
 	}
 
 	/**
-	 * Returns the {@link ReportService}.
+	 * Returns the {@link SWTRendererFactory}.
 	 *
-	 * @return the {@link ReportService}
+	 * @return the {@link SWTRendererFactory}
 	 */
 	public ReportService getReportService() {
 		if (reportServiceReference == null) {

@@ -11,21 +11,27 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.categorization.swt;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecp.view.internal.categorization.swt.Activator;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VAbstractCategorization;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
+import org.eclipse.emf.ecp.view.spi.model.reporting.StatusReport;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
-import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
+import org.eclipse.emfforms.spi.swt.core.EMFFormsNoRendererException;
+import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
@@ -40,14 +46,24 @@ import org.eclipse.swt.widgets.Control;
  * @param <VELEMENT> the {@link VElement}
  */
 public abstract class AbstractSWTTabRenderer<VELEMENT extends VElement> extends AbstractSWTRenderer<VELEMENT> {
+	private final EMFFormsRendererFactory emfFormsRendererFactory;
+
+	private EMFFormsRendererFactory getEMFFormsRendererFactory() {
+		return emfFormsRendererFactory;
+	}
 
 	/**
+	 * Default constructor.
+	 *
 	 * @param vElement the view model element to be rendered
 	 * @param viewContext the view context
-	 * @param factory the {@link SWTRendererFactory}
+	 * @param reportService the {@link ReportService}
+	 * @param emfFormsRendererFactory The {@link EMFFormsRendererFactory}
 	 */
-	public AbstractSWTTabRenderer(VELEMENT vElement, ViewModelContext viewContext, SWTRendererFactory factory) {
-		super(vElement, viewContext, factory);
+	public AbstractSWTTabRenderer(VELEMENT vElement, ViewModelContext viewContext, ReportService reportService,
+		EMFFormsRendererFactory emfFormsRendererFactory) {
+		super(vElement, viewContext, reportService);
+		this.emfFormsRendererFactory = emfFormsRendererFactory;
 	}
 
 	@Override
@@ -78,8 +94,17 @@ public abstract class AbstractSWTTabRenderer<VELEMENT extends VElement> extends 
 			}
 			item.setText(categorizationName);
 
-			final AbstractSWTRenderer<VElement> renderer = getSWTRendererFactory().getRenderer(categorization,
-				getViewModelContext());
+			AbstractSWTRenderer<VElement> renderer;
+			try {
+				renderer = getEMFFormsRendererFactory().getRendererInstance(categorization,
+					getViewModelContext());
+			} catch (final EMFFormsNoRendererException ex) {
+				getReportService().report(
+					new StatusReport(
+						new Status(IStatus.INFO, Activator.PLUGIN_ID, String.format(
+							"No Renderer for %s found.", categorization.eClass().getName(), ex)))); //$NON-NLS-1$
+				return null;
+			}
 			final SWTGridDescription gridDescription = renderer.getGridDescription(GridDescriptionFactory.INSTANCE
 				.createEmptyGridDescription());
 			for (final SWTGridCell gridCell : gridDescription.getGrid()) {

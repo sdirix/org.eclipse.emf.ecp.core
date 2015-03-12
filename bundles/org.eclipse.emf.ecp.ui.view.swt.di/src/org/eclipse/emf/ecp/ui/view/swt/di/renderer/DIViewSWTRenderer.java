@@ -18,10 +18,13 @@ import org.eclipse.emf.ecp.view.model.common.di.renderer.DIRendererUtil;
 import org.eclipse.emf.ecp.view.model.common.di.renderer.POJORendererFactory;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
+import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
+import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
@@ -33,12 +36,19 @@ import org.eclipse.swt.widgets.Control;
 public class DIViewSWTRenderer extends ViewSWTRenderer {
 
 	/**
+	 * Default constructor.
+	 *
 	 * @param vElement the view model element to be rendered
 	 * @param viewContext the view context
-	 * @param factory the {@link SWTRendererFactory}
+	 * @param reportService the {@link ReportService}
+	 * @param factory the {@link EMFFormsRendererFactory}
+	 * @param emfFormsDatabinding The {@link EMFFormsDatabinding}
+	 * @param emfFormsEditSupport The {@link EMFFormsEditSupport}
 	 */
-	public DIViewSWTRenderer(VView vElement, ViewModelContext viewContext, SWTRendererFactory factory) {
-		super(vElement, viewContext, factory);
+	public DIViewSWTRenderer(VView vElement, ViewModelContext viewContext, ReportService reportService,
+		EMFFormsRendererFactory factory, EMFFormsDatabinding emfFormsDatabinding,
+		EMFFormsEditSupport emfFormsEditSupport) {
+		super(vElement, viewContext, reportService, factory, emfFormsDatabinding, emfFormsEditSupport);
 	}
 
 	private Object pojo;
@@ -54,8 +64,7 @@ public class DIViewSWTRenderer extends ViewSWTRenderer {
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		pojo = POJORendererFactory.getInstance().getRenderer(getVElement(), getViewModelContext());
 		final IEclipseContext childContext = DIRendererUtil.getContextForElement(getVElement(), getViewModelContext());
-		SWTContextUtil.setAbstractSWTRendererObjects(childContext, getVElement(), getViewModelContext(),
-			getSWTRendererFactory(), parent);
+		SWTContextUtil.setAbstractSWTRendererObjects(childContext, getVElement(), getViewModelContext(), parent);
 		childContext.set(SWTGridCell.class, cell);
 		DIRendererUtil.render(pojo, getVElement(), getViewModelContext());
 		return parent;

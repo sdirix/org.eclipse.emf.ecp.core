@@ -26,14 +26,16 @@ import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
+import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.DatabindingClassRunner;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.SWTTestUtil;
 import org.eclipse.emf.emfforms.spi.core.services.labelprovider.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Control;
@@ -48,9 +50,13 @@ public class BooleanControlRenderer_PTest extends AbstractControl_PTest {
 
 	@Before
 	public void before() throws DatabindingFailedException {
-		final SWTRendererFactory factory = mock(SWTRendererFactory.class);
+		final ReportService reportService = mock(ReportService.class);
+		databindingService = mock(EMFFormsDatabinding.class);
+		labelProvider = mock(EMFFormsLabelProvider.class);
+		templateProvider = mock(VTViewTemplateProvider.class);
 		setup();
-		renderer = new BooleanControlSWTRenderer(vControl, context, factory);
+		renderer = new BooleanControlSWTRenderer(vControl, context, reportService, databindingService, labelProvider,
+			templateProvider);
 		renderer.init();
 	}
 
@@ -61,16 +67,24 @@ public class BooleanControlRenderer_PTest extends AbstractControl_PTest {
 
 	@Test
 	public void renderControlLabelAlignmentNone()
-		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		setMockLabelAlignment(LabelAlignment.NONE);
+		final TestObservableValue mockedObservableValue = mock(TestObservableValue.class);
+		when(mockedObservableValue.getRealm()).thenReturn(realm);
+		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
+			mockedObservableValue);
 		final Control render = renderControl(new SWTGridCell(0, 1, renderer));
 		assertControl(render);
 	}
 
 	@Test
 	public void renderControlLabelAlignmentLeft()
-		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		setMockLabelAlignment(LabelAlignment.LEFT);
+		final TestObservableValue mockedObservableValue = mock(TestObservableValue.class);
+		when(mockedObservableValue.getRealm()).thenReturn(realm);
+		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
+			mockedObservableValue);
 		final Control render = renderControl(new SWTGridCell(0, 2, renderer));
 
 		assertControl(render);

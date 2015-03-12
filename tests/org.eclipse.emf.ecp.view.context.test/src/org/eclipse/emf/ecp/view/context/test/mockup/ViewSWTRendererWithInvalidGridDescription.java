@@ -14,6 +14,7 @@ package org.eclipse.emf.ecp.view.context.test.mockup;
 import org.eclipse.emf.ecp.view.internal.core.swt.renderer.ViewSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
@@ -26,8 +27,8 @@ public class ViewSWTRendererWithInvalidGridDescription extends ViewSWTRenderer {
 	 * @param factory the {@link SWTRendererFactory}
 	 */
 	public ViewSWTRendererWithInvalidGridDescription(VView vElement, ViewModelContext viewContext,
-		SWTRendererFactory factory) {
-		super(vElement, viewContext, factory);
+		ReportService factory) {
+		super(vElement, viewContext, factory, null, null, null);
 	}
 
 	@Override

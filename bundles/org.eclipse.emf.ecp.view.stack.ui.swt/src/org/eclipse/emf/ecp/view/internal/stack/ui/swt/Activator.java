@@ -15,6 +15,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
+import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -69,9 +70,9 @@ public class Activator extends Plugin {
 	}
 
 	/**
-	 * Returns the {@link ReportService}.
+	 * Returns the {@link SWTRendererFactory}.
 	 *
-	 * @return the {@link ReportService}
+	 * @return the {@link SWTRendererFactory}
 	 */
 	public ReportService getReportService() {
 		if (reportServiceReference == null) {

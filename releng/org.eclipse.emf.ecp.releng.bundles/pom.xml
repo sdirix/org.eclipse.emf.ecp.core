@@ -257,6 +257,8 @@
 		<module>../../bundles/org.eclipse.emf.emfforms.core.services.labelprovider</module>
 		<module>../../bundles/org.eclipse.emf.emfforms.core.services.emfspecificservice</module>
 		<module>../../bundles/org.eclipse.emfforms.core.services.editsupport</module>
+		<module>../../bundles/org.eclipse.emfforms.swt.core</module>
+		<module>../../bundles/org.eclipse.emfforms.swt.core.plugin</module>
 		
 		<!-- Localization Services -->
 		<module>../../bundles/org.eclipse.emf.emfforms.localization</module>

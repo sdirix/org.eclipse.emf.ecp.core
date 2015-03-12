@@ -24,19 +24,21 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.label.model.VLabel;
 import org.eclipse.emf.ecp.view.spi.label.model.VLabelStyle;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
+import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
-import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
 import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
 import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
+import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.ecp.view.template.style.fontProperties.model.VTFontPropertiesFactory;
 import org.eclipse.emf.ecp.view.template.style.fontProperties.model.VTFontPropertiesStyleProperty;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.jface.databinding.swt.ISWTObservableValue;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.swt.SWT;
@@ -58,14 +60,23 @@ import org.eclipse.swt.widgets.Label;
  */
 public class LabelSWTRenderer extends AbstractSWTRenderer<VLabel> {
 	private final EMFDataBindingContext dbc;
+	private final EMFFormsDatabinding emfFormsDatabinding;
+	private final VTViewTemplateProvider vtViewTemplateProvider;
 
 	/**
-	 * @param vElement the view model element to be rendered
-	 * @param viewContext the view context
-	 * @param factory the {@link SWTRendererFactory}
+	 * Default Constructor.
+	 *
+	 * @param vElement the view element to be rendered
+	 * @param viewContext The view model context
+	 * @param reportService the ReportService to use
+	 * @param emfFormsDatabinding the EMFFormsDatabinding to use
+	 * @param vtViewTemplateProvider the VTViewTemplateProvider to use
 	 */
-	public LabelSWTRenderer(VLabel vElement, ViewModelContext viewContext, SWTRendererFactory factory) {
-		super(vElement, viewContext, factory);
+	public LabelSWTRenderer(final VLabel vElement, final ViewModelContext viewContext, ReportService reportService,
+		EMFFormsDatabinding emfFormsDatabinding, VTViewTemplateProvider vtViewTemplateProvider) {
+		super(vElement, viewContext, reportService);
+		this.emfFormsDatabinding = emfFormsDatabinding;
+		this.vtViewTemplateProvider = vtViewTemplateProvider;
 		dbc = new EMFDataBindingContext();
 	}
 
@@ -135,9 +146,7 @@ public class LabelSWTRenderer extends AbstractSWTRenderer<VLabel> {
 	private void setText(Label label) {
 		if (getVElement().getDomainModelReference() != null) {
 			try {
-				final IObservableValue observableValue = Activator
-					.getDefault()
-					.getEMFFormsDatabinding()
+				final IObservableValue observableValue = emfFormsDatabinding
 					.getObservableValue(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
 				final ISWTObservableValue observeText = SWTObservables.observeText(label);
 				final Binding binding = getDataBindingContext().bindValue(observeText, observableValue);
@@ -149,7 +158,7 @@ public class LabelSWTRenderer extends AbstractSWTRenderer<VLabel> {
 					}
 				});
 			} catch (final DatabindingFailedException ex) {
-				Activator.getDefault().getReportService().report(new RenderingFailedReport(ex));
+				getReportService().report(new RenderingFailedReport(ex));
 				label.setText(ex.getMessage());
 			}
 		} else {
@@ -222,7 +231,7 @@ public class LabelSWTRenderer extends AbstractSWTRenderer<VLabel> {
 
 	private VTFontPropertiesStyleProperty getFontProperty() {
 		VTFontPropertiesStyleProperty fontProperties;
-		final Set<VTStyleProperty> styleProperties = Activator.getDefault().getVTViewTemplateProvider()
+		final Set<VTStyleProperty> styleProperties = vtViewTemplateProvider
 			.getStyleProperties(getVElement(), getViewModelContext());
 		for (final VTStyleProperty styleProperty : styleProperties) {
 			if (VTFontPropertiesStyleProperty.class.isInstance(styleProperty)) {

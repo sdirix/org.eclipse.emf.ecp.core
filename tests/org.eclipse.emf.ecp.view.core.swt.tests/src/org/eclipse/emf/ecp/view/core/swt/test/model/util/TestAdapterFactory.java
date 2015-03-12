@@ -14,12 +14,10 @@ package org.eclipse.emf.ecp.view.core.swt.test.model.util;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
-
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
-
 import org.eclipse.emf.ecore.EObject;
-
-import org.eclipse.emf.ecp.view.core.swt.test.model.*;
+import org.eclipse.emf.ecp.view.core.swt.test.model.SimpleTestObject;
+import org.eclipse.emf.ecp.view.core.swt.test.model.TestPackage;
 
 /**
  * <!-- begin-user-doc -->

@@ -16,6 +16,7 @@ import static org.mockito.Mockito.mock;
 
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
 import org.junit.After;
 import org.junit.Test;
 
@@ -36,7 +37,8 @@ public class AbstractRenderer_Test {
 	public void testInitNotNull() {
 		final VElement vElement = mock(VElement.class);
 		final ViewModelContext viewModelContext = mock(ViewModelContext.class);
-		abstractRenderer = new AbstractRenderer<VElement>(vElement, viewModelContext) {
+		final ReportService reportService = mock(ReportService.class);
+		abstractRenderer = new AbstractRenderer<VElement>(vElement, viewModelContext, reportService) {
 		};
 		assertSame(vElement, abstractRenderer.getVElement());
 		assertSame(viewModelContext, abstractRenderer.getViewModelContext());
@@ -45,14 +47,16 @@ public class AbstractRenderer_Test {
 	@Test(expected = IllegalArgumentException.class)
 	public void testInitVElementNull() {
 		final VElement vElement = mock(VElement.class);
-		abstractRenderer = new AbstractRenderer<VElement>(vElement, null) {
+		final ReportService reportService = mock(ReportService.class);
+		abstractRenderer = new AbstractRenderer<VElement>(vElement, null, reportService) {
 		};
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testInitVContextNull() {
 		final ViewModelContext viewModelContext = mock(ViewModelContext.class);
-		abstractRenderer = new AbstractRenderer<VElement>(null, viewModelContext) {
+		final ReportService reportService = mock(ReportService.class);
+		abstractRenderer = new AbstractRenderer<VElement>(null, viewModelContext, reportService) {
 		};
 	}
 
@@ -60,7 +64,8 @@ public class AbstractRenderer_Test {
 	public void testDispose() {
 		final VElement vElement = mock(VElement.class);
 		final ViewModelContext viewModelContext = mock(ViewModelContext.class);
-		abstractRenderer = new AbstractRenderer<VElement>(vElement, viewModelContext) {
+		final ReportService reportService = mock(ReportService.class);
+		abstractRenderer = new AbstractRenderer<VElement>(vElement, viewModelContext, reportService) {
 		};
 		abstractRenderer.dispose();
 		abstractRenderer.checkRenderer();
@@ -70,7 +75,8 @@ public class AbstractRenderer_Test {
 	public void testDisposeGetVElement() {
 		final VElement vElement = mock(VElement.class);
 		final ViewModelContext viewModelContext = mock(ViewModelContext.class);
-		abstractRenderer = new AbstractRenderer<VElement>(vElement, viewModelContext) {
+		final ReportService reportService = mock(ReportService.class);
+		abstractRenderer = new AbstractRenderer<VElement>(vElement, viewModelContext, reportService) {
 		};
 		abstractRenderer.dispose();
 		abstractRenderer.getVElement();
@@ -80,7 +86,8 @@ public class AbstractRenderer_Test {
 	public void testDisposeGetVContext() {
 		final VElement vElement = mock(VElement.class);
 		final ViewModelContext viewModelContext = mock(ViewModelContext.class);
-		abstractRenderer = new AbstractRenderer<VElement>(vElement, viewModelContext) {
+		final ReportService reportService = mock(ReportService.class);
+		abstractRenderer = new AbstractRenderer<VElement>(vElement, viewModelContext, reportService) {
 		};
 		abstractRenderer.dispose();
 		abstractRenderer.getViewModelContext();
@@ -90,7 +97,8 @@ public class AbstractRenderer_Test {
 	public void testNotDisposes() {
 		final VElement vElement = mock(VElement.class);
 		final ViewModelContext viewModelContext = mock(ViewModelContext.class);
-		abstractRenderer = new AbstractRenderer<VElement>(vElement, viewModelContext) {
+		final ReportService reportService = mock(ReportService.class);
+		abstractRenderer = new AbstractRenderer<VElement>(vElement, viewModelContext, reportService) {
 		};
 		abstractRenderer.checkRenderer();
 	}

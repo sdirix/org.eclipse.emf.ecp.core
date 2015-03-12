@@ -22,15 +22,14 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.edit.spi.swt.util.SWTValidationHelper;
-import org.eclipse.emf.ecp.view.internal.core.swt.Activator;
 import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
-import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
 import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
@@ -62,13 +61,54 @@ import org.eclipse.swt.widgets.Label;
  */
 public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> extends AbstractSWTRenderer<VCONTROL> {
 
+	private final EMFFormsDatabinding emfFormsDatabinding;
+	private final EMFFormsLabelProvider emfFormsLabelProvider;
+	private final VTViewTemplateProvider vtViewTemplateProvider;
+
 	/**
+	 * Default constructor.
+	 *
 	 * @param vElement the view model element to be rendered
 	 * @param viewContext the view context
-	 * @param factory the {@link SWTRendererFactory}
+	 * @param emfFormsDatabinding The {@link EMFFormsDatabinding}
+	 * @param emfFormsLabelProvider The {@link EMFFormsLabelProvider}
+	 * @param reportService The {@link ReportService}
+	 * @param vtViewTemplateProvider The {@link VTViewTemplateProvider}
 	 */
-	public AbstractControlSWTRenderer(VCONTROL vElement, ViewModelContext viewContext, SWTRendererFactory factory) {
-		super(vElement, viewContext, factory);
+	public AbstractControlSWTRenderer(VCONTROL vElement, ViewModelContext viewContext, ReportService reportService,
+		EMFFormsDatabinding emfFormsDatabinding, EMFFormsLabelProvider emfFormsLabelProvider,
+		VTViewTemplateProvider vtViewTemplateProvider) {
+		super(vElement, viewContext, reportService);
+		this.emfFormsDatabinding = emfFormsDatabinding;
+		this.emfFormsLabelProvider = emfFormsLabelProvider;
+		this.vtViewTemplateProvider = vtViewTemplateProvider;
+	}
+
+	/**
+	 * The {@link EMFFormsDatabinding} to use.
+	 *
+	 * @return The EMFFormsDatabinding
+	 */
+	protected EMFFormsDatabinding getEMFFormsDatabinding() {
+		return emfFormsDatabinding;
+	}
+
+	/**
+	 * The {@link EMFFormsLabelProvider} to use.
+	 *
+	 * @return The EMFFormsLabelProvider
+	 */
+	protected EMFFormsLabelProvider getEMFFormsLabelProvider() {
+		return emfFormsLabelProvider;
+	}
+
+	/**
+	 * The {@link VTViewTemplateProvider} to use.
+	 *
+	 * @return The VTViewTemplateProvider
+	 */
+	protected VTViewTemplateProvider getVTViewTemplateProvider() {
+		return vtViewTemplateProvider;
 	}
 
 	private AdapterFactoryItemDelegator adapterFactoryItemDelegator;
@@ -242,7 +282,7 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 			try {
 				valueProperty = getEMFFormsDatabinding().getValueProperty(domainModelReference);
 			} catch (final DatabindingFailedException ex) {
-				Activator.getDefault().getReportService().report(new RenderingFailedReport(ex));
+				getReportService().report(new RenderingFailedReport(ex));
 				break labelRender;
 			}
 
@@ -268,26 +308,8 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 	}
 
 	/**
-	 * Method, to allow an easy replacement.
-	 * 
-	 * @return The EMFFormsDatabinding
-	 */
-	protected EMFFormsDatabinding getEMFFormsDatabinding() {
-		return Activator.getDefault().getEMFFormsDatabinding();
-	}
-
-	/**
-	 * Package visible method, to allow an easy replacement.
-	 *
-	 * @return The EMFFormsLabelProvider
-	 */
-	EMFFormsLabelProvider getEMFFormsLabelProvider() {
-		return Activator.getDefault().getEMFFormsLabelProvider();
-	}
-
-	/**
 	 * Provides a localized string for a key.
-	 * 
+	 *
 	 * @param key The Key to get the value for
 	 * @return The localized String
 	 */
@@ -296,7 +318,6 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 	}
 
 	private VTMandatoryStyleProperty getMandatoryStyle() {
-		final VTViewTemplateProvider vtViewTemplateProvider = Activator.getDefault().getVTViewTemplateProvider();
 		if (vtViewTemplateProvider == null) {
 			return getDefaultStyle();
 		}
