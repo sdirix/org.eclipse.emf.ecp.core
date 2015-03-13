@@ -11,6 +11,8 @@
  */
 package org.eclipse.emfforms.core.services.databinding.testmodel.test.model;
 
+import org.eclipse.emf.common.util.EMap;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -22,6 +24,9 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.C#getD <em>D</em>}</li>
+ * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.C#getEClassToString <em>EClass To
+ * String</em>}</li>
+ * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.C#getEClassToA <em>EClass To A</em>}</li>
  * </ul>
  * </p>
  *
@@ -59,5 +64,43 @@ public interface C extends EObject
 	 * @generated
 	 */
 	void setD(D value);
+
+	/**
+	 * Returns the value of the '<em><b>EClass To String</b></em>' map.
+	 * The key is of type {@link org.eclipse.emf.ecore.EClass},
+	 * and the value is of type {@link java.lang.String},
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>EClass To String</em>' map isn't clear, there really should be more of a description
+	 * here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the value of the '<em>EClass To String</em>' map.
+	 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage#getC_EClassToString()
+	 * @model mapType=
+	 *        "org.eclipse.emfforms.core.services.databinding.testmodel.test.model.EClassToEStringMap<org.eclipse.emf.ecore.EClass, org.eclipse.emf.ecore.EString>"
+	 * @generated
+	 */
+	EMap<EClass, String> getEClassToString();
+
+	/**
+	 * Returns the value of the '<em><b>EClass To A</b></em>' map.
+	 * The key is of type {@link org.eclipse.emf.ecore.EClass},
+	 * and the value is of type {@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.A},
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>EClass To A</em>' map isn't clear, there really should be more of a description
+	 * here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the value of the '<em>EClass To A</em>' map.
+	 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage#getC_EClassToA()
+	 * @model mapType=
+	 *        "org.eclipse.emfforms.core.services.databinding.testmodel.test.model.EClassToAMap<org.eclipse.emf.ecore.EClass, org.eclipse.emfforms.core.services.databinding.testmodel.test.model.A>"
+	 * @generated
+	 */
+	EMap<EClass, A> getEClassToA();
 
 } // C

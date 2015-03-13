@@ -11,6 +11,9 @@
  */
 package org.eclipse.emfforms.core.services.databinding.testmodel.test.model.util;
 
+import java.util.Map;
+
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
@@ -121,6 +124,24 @@ public class TestSwitch<T> extends Switch<T>
 			}
 			return result;
 		}
+		case TestPackage.ECLASS_TO_ESTRING_MAP: {
+			@SuppressWarnings("unchecked")
+			final Map.Entry<EClass, String> eClassToEStringMap = (Map.Entry<EClass, String>) theEObject;
+			T result = caseEClassToEStringMap(eClassToEStringMap);
+			if (result == null) {
+				result = defaultCase(theEObject);
+			}
+			return result;
+		}
+		case TestPackage.ECLASS_TO_AMAP: {
+			@SuppressWarnings("unchecked")
+			final Map.Entry<EClass, A> eClassToAMap = (Map.Entry<EClass, A>) theEObject;
+			T result = caseEClassToAMap(eClassToAMap);
+			if (result == null) {
+				result = defaultCase(theEObject);
+			}
+			return result;
+		}
 		default:
 			return defaultCase(theEObject);
 		}
@@ -190,6 +211,40 @@ public class TestSwitch<T> extends Switch<T>
 	 * @generated
 	 */
 	public T caseD(D object)
+	{
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>EClass To EString Map</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 *
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>EClass To EString Map</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseEClassToEStringMap(Map.Entry<EClass, String> object)
+	{
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>EClass To AMap</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 *
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>EClass To AMap</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseEClassToAMap(Map.Entry<EClass, A> object)
 	{
 		return null;
 	}

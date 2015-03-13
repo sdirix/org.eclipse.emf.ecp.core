@@ -11,6 +11,8 @@
  */
 package org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl;
 
+import java.util.Map;
+
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
@@ -59,6 +61,22 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage
 	 * @generated
 	 */
 	private EClass dEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	private EClass eClassToEStringMapEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	private EClass eClassToAMapEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with {@link org.eclipse.emf.ecore.EPackage.Registry
@@ -218,6 +236,30 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage
 	 * @generated
 	 */
 	@Override
+	public EReference getC_EClassToString()
+	{
+		return (EReference) cEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EReference getC_EClassToA()
+	{
+		return (EReference) cEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
 	public EClass getD()
 	{
 		return dEClass;
@@ -245,6 +287,78 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage
 	public EAttribute getD_YList()
 	{
 		return (EAttribute) dEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EClass getEClassToEStringMap()
+	{
+		return eClassToEStringMapEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EReference getEClassToEStringMap_Key()
+	{
+		return (EReference) eClassToEStringMapEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EAttribute getEClassToEStringMap_Value()
+	{
+		return (EAttribute) eClassToEStringMapEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EClass getEClassToAMap()
+	{
+		return eClassToAMapEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EReference getEClassToAMap_Key()
+	{
+		return (EReference) eClassToAMapEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EReference getEClassToAMap_Value()
+	{
+		return (EReference) eClassToAMapEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -292,10 +406,20 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage
 
 		cEClass = createEClass(C);
 		createEReference(cEClass, C__D);
+		createEReference(cEClass, C__ECLASS_TO_STRING);
+		createEReference(cEClass, C__ECLASS_TO_A);
 
 		dEClass = createEClass(D);
 		createEAttribute(dEClass, D__X);
 		createEAttribute(dEClass, D__YLIST);
+
+		eClassToEStringMapEClass = createEClass(ECLASS_TO_ESTRING_MAP);
+		createEReference(eClassToEStringMapEClass, ECLASS_TO_ESTRING_MAP__KEY);
+		createEAttribute(eClassToEStringMapEClass, ECLASS_TO_ESTRING_MAP__VALUE);
+
+		eClassToAMapEClass = createEClass(ECLASS_TO_AMAP);
+		createEReference(eClassToAMapEClass, ECLASS_TO_AMAP__KEY);
+		createEReference(eClassToAMapEClass, ECLASS_TO_AMAP__VALUE);
 	}
 
 	/**
@@ -361,6 +485,16 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage
 			getD(),
 			null,
 			"d", null, 0, 1, org.eclipse.emfforms.core.services.databinding.testmodel.test.model.C.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+			getC_EClassToString(),
+			getEClassToEStringMap(),
+			null,
+			"eClassToString", null, 0, -1, org.eclipse.emfforms.core.services.databinding.testmodel.test.model.C.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+			getC_EClassToA(),
+			getEClassToAMap(),
+			null,
+			"eClassToA", null, 0, -1, org.eclipse.emfforms.core.services.databinding.testmodel.test.model.C.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(dEClass, org.eclipse.emfforms.core.services.databinding.testmodel.test.model.D.class,
 			"D", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
@@ -372,6 +506,31 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage
 			getD_YList(),
 			ecorePackage.getEInt(),
 			"yList", null, 0, -1, org.eclipse.emfforms.core.services.databinding.testmodel.test.model.D.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(eClassToEStringMapEClass, Map.Entry.class,
+			"EClassToEStringMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(
+			getEClassToEStringMap_Key(),
+			ecorePackage.getEClass(),
+			null,
+			"key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(
+			getEClassToEStringMap_Value(),
+			ecorePackage.getEString(),
+			"value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(eClassToAMapEClass, Map.Entry.class,
+			"EClassToAMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(
+			getEClassToAMap_Key(),
+			ecorePackage.getEClass(),
+			null,
+			"key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+			getEClassToAMap_Value(),
+			getA(),
+			null,
+			"value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		// Create resource
 		createResource(eNS_URI);

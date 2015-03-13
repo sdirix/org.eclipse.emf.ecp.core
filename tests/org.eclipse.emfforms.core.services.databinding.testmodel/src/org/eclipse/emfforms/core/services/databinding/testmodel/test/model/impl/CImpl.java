@@ -13,10 +13,15 @@ package org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+import org.eclipse.emf.ecore.util.EcoreEMap;
+import org.eclipse.emf.ecore.util.InternalEList;
+import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.A;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.C;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.D;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage;
@@ -29,6 +34,10 @@ import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestP
  * The following features are implemented:
  * <ul>
  * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.CImpl#getD <em>D</em>}</li>
+ * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.CImpl#getEClassToString <em>
+ * EClass To String</em>}</li>
+ * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.CImpl#getEClassToA <em>EClass To
+ * A</em>}</li>
  * </ul>
  * </p>
  *
@@ -46,6 +55,28 @@ public class CImpl extends MinimalEObjectImpl.Container implements C
 	 * @ordered
 	 */
 	protected D d;
+
+	/**
+	 * The cached value of the '{@link #getEClassToString() <em>EClass To String</em>}' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @see #getEClassToString()
+	 * @generated
+	 * @ordered
+	 */
+	protected EMap<EClass, String> eClassToString;
+
+	/**
+	 * The cached value of the '{@link #getEClassToA() <em>EClass To A</em>}' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @see #getEClassToA()
+	 * @generated
+	 * @ordered
+	 */
+	protected EMap<EClass, A> eClassToA;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -142,12 +173,50 @@ public class CImpl extends MinimalEObjectImpl.Container implements C
 	 * @generated
 	 */
 	@Override
+	public EMap<EClass, String> getEClassToString()
+	{
+		if (eClassToString == null)
+		{
+			eClassToString = new EcoreEMap<EClass, String>(TestPackage.Literals.ECLASS_TO_ESTRING_MAP,
+				EClassToEStringMapImpl.class, this, TestPackage.C__ECLASS_TO_STRING);
+		}
+		return eClassToString;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EMap<EClass, A> getEClassToA()
+	{
+		if (eClassToA == null)
+		{
+			eClassToA = new EcoreEMap<EClass, A>(TestPackage.Literals.ECLASS_TO_AMAP, EClassToAMapImpl.class, this,
+				TestPackage.C__ECLASS_TO_A);
+		}
+		return eClassToA;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
 	{
 		switch (featureID)
 		{
 		case TestPackage.C__D:
 			return basicSetD(null, msgs);
+		case TestPackage.C__ECLASS_TO_STRING:
+			return ((InternalEList<?>) getEClassToString()).basicRemove(otherEnd, msgs);
+		case TestPackage.C__ECLASS_TO_A:
+			return ((InternalEList<?>) getEClassToA()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -165,6 +234,16 @@ public class CImpl extends MinimalEObjectImpl.Container implements C
 		{
 		case TestPackage.C__D:
 			return getD();
+		case TestPackage.C__ECLASS_TO_STRING:
+			if (coreType) {
+				return getEClassToString();
+			}
+			return getEClassToString().map();
+		case TestPackage.C__ECLASS_TO_A:
+			if (coreType) {
+				return getEClassToA();
+			}
+			return getEClassToA().map();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -182,6 +261,12 @@ public class CImpl extends MinimalEObjectImpl.Container implements C
 		{
 		case TestPackage.C__D:
 			setD((D) newValue);
+			return;
+		case TestPackage.C__ECLASS_TO_STRING:
+			((EStructuralFeature.Setting) getEClassToString()).set(newValue);
+			return;
+		case TestPackage.C__ECLASS_TO_A:
+			((EStructuralFeature.Setting) getEClassToA()).set(newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);
@@ -201,6 +286,12 @@ public class CImpl extends MinimalEObjectImpl.Container implements C
 		case TestPackage.C__D:
 			setD((D) null);
 			return;
+		case TestPackage.C__ECLASS_TO_STRING:
+			getEClassToString().clear();
+			return;
+		case TestPackage.C__ECLASS_TO_A:
+			getEClassToA().clear();
+			return;
 		}
 		super.eUnset(featureID);
 	}
@@ -218,6 +309,10 @@ public class CImpl extends MinimalEObjectImpl.Container implements C
 		{
 		case TestPackage.C__D:
 			return d != null;
+		case TestPackage.C__ECLASS_TO_STRING:
+			return eClassToString != null && !eClassToString.isEmpty();
+		case TestPackage.C__ECLASS_TO_A:
+			return eClassToA != null && !eClassToA.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
