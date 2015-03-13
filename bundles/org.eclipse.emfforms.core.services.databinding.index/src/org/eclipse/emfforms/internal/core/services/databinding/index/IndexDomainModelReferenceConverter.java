@@ -9,7 +9,7 @@
  * Contributors:
  * Lucas Koehler - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emfforms.core.services.databinding.index;
+package org.eclipse.emfforms.internal.core.services.databinding.index;
 
 import java.util.List;
 
@@ -18,6 +18,7 @@ import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.databinding.EMFProperties;
 import org.eclipse.emf.databinding.IEMFValueProperty;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
@@ -91,6 +92,8 @@ public class IndexDomainModelReferenceConverter implements DomainModelReferenceC
 				"The field domainModelEFeature of the given VIndexDomainModelReference must not be null."); //$NON-NLS-1$
 		}
 
+		checkListType(indexReference.getDomainModelEFeature());
+
 		final List<EReference> referencePath = indexReference.getDomainModelEReferencePath();
 		IValueProperty valueProperty;
 		if (referencePath.isEmpty()) {
@@ -131,6 +134,8 @@ public class IndexDomainModelReferenceConverter implements DomainModelReferenceC
 				"The field domainModelEFeature of the given VIndexDomainModelReference must not be null."); //$NON-NLS-1$
 		}
 
+		checkListType(indexReference.getDomainModelEFeature());
+
 		final List<EReference> referencePath = indexReference.getDomainModelEReferencePath();
 		IValueProperty valueProperty;
 		if (referencePath.isEmpty()) {
@@ -149,4 +154,20 @@ public class IndexDomainModelReferenceConverter implements DomainModelReferenceC
 		return valueProperty.list(emfFormsDatabinding.getListProperty(indexReference.getTargetDMR()));
 	}
 
+	/**
+	 * Checks whether the given structural feature references a proper list to generate a value or list property.
+	 *
+	 * @param structuralFeature The feature to check
+	 * @throws IllegalListTypeException if the structural feature doesn't reference a proper list.
+	 */
+	private void checkListType(EStructuralFeature structuralFeature) throws IllegalListTypeException {
+		if (!structuralFeature.isMany()) {
+			throw new IllegalListTypeException(
+				"The VIndexDomainModelReference's domainModelEFeature must reference a list."); //$NON-NLS-1$
+		}
+		if (!EReference.class.isInstance(structuralFeature)) {
+			throw new IllegalListTypeException(
+				"The VIndexDomainModelReference's domainModelEFeature must reference a list of EObjects."); //$NON-NLS-1$
+		}
+	}
 }

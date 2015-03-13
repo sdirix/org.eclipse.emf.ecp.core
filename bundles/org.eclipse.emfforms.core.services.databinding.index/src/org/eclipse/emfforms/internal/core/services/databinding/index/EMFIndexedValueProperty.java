@@ -10,7 +10,7 @@
  * Eugen Neufeld - initial API and implementation
  * Lucas Koehler - moved, adjusted comments
  ******************************************************************************/
-package org.eclipse.emfforms.core.services.databinding.index;
+package org.eclipse.emfforms.internal.core.services.databinding.index;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.databinding.internal.EMFValueProperty;

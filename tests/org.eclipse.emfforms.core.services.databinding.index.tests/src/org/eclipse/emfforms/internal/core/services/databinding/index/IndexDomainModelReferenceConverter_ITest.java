@@ -9,7 +9,7 @@
  * Contributors:
  * Lucas Koehler - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emfforms.core.services.databinding.index;
+package org.eclipse.emfforms.internal.core.services.databinding.index;
 
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;

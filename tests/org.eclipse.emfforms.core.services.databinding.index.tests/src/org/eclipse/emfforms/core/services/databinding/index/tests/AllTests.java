@@ -11,8 +11,8 @@
  ******************************************************************************/
 package org.eclipse.emfforms.core.services.databinding.index.tests;
 
-import org.eclipse.emfforms.core.services.databinding.index.EMFIndexedValueProperty_Test;
-import org.eclipse.emfforms.core.services.databinding.index.IndexDomainModelReferenceConverter_Test;
+import org.eclipse.emfforms.internal.core.services.databinding.index.EMFIndexedValueProperty_Test;
+import org.eclipse.emfforms.internal.core.services.databinding.index.IndexDomainModelReferenceConverter_Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;

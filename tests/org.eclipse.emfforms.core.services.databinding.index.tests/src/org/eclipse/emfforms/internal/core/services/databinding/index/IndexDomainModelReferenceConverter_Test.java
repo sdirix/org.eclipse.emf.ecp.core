@@ -9,7 +9,7 @@
  * Contributors:
  * Lucas Koehler - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emfforms.core.services.databinding.index;
+package org.eclipse.emfforms.internal.core.services.databinding.index;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -60,7 +60,7 @@ public class IndexDomainModelReferenceConverter_Test {
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emfforms.core.services.databinding.index.IndexDomainModelReferenceConverter#isApplicable(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * {@link org.eclipse.emfforms.internal.core.services.databinding.index.IndexDomainModelReferenceConverter#isApplicable(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
 	 * .
 	 */
 	@Test
@@ -75,7 +75,7 @@ public class IndexDomainModelReferenceConverter_Test {
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emfforms.core.services.databinding.index.IndexDomainModelReferenceConverter#convertToValueProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * {@link org.eclipse.emfforms.internal.core.services.databinding.index.IndexDomainModelReferenceConverter#convertToValueProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
 	 * .
 	 *
 	 * @throws DatabindingFailedException if the databinding failed
@@ -107,7 +107,7 @@ public class IndexDomainModelReferenceConverter_Test {
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emfforms.core.services.databinding.index.IndexDomainModelReferenceConverter#convertToValueProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * {@link org.eclipse.emfforms.internal.core.services.databinding.index.IndexDomainModelReferenceConverter#convertToValueProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
 	 * .
 	 *
 	 * @throws DatabindingFailedException if the databinding failed
@@ -138,7 +138,34 @@ public class IndexDomainModelReferenceConverter_Test {
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emfforms.core.services.databinding.index.IndexDomainModelReferenceConverter#convertToValueProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * {@link org.eclipse.emfforms.internal.core.services.databinding.index.IndexDomainModelReferenceConverter#convertToValueProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * .
+	 *
+	 * @throws DatabindingFailedException if the databinding failed
+	 */
+	@Test(expected = IllegalListTypeException.class)
+	public void testConvertToValuePropertyWrongListType() throws DatabindingFailedException {
+		final VIndexDomainModelReference indexDMR = VIndexdmrFactory.eINSTANCE.createIndexDomainModelReference();
+		indexDMR.setDomainModelEFeature(TestPackage.eINSTANCE.getD_YList());
+		indexDMR.setIndex(1);
+
+		final VFeaturePathDomainModelReference targetDMR = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
+		targetDMR.setDomainModelEFeature(TestPackage.eINSTANCE.getD_X());
+		indexDMR.setTargetDMR(targetDMR);
+
+		final IEMFValueProperty targetValueProperty = EMFProperties.value(TestPackage.eINSTANCE.getD_X());
+		final EMFFormsDatabinding emfFormsDatabinding = mock(EMFFormsDatabinding.class);
+		when(emfFormsDatabinding.getValueProperty(targetDMR)).thenReturn(targetValueProperty);
+		converter.setEMFFormsDatabinding(emfFormsDatabinding);
+
+		converter.convertToValueProperty(indexDMR);
+
+	}
+
+	/**
+	 * Test method for
+	 * {@link org.eclipse.emfforms.internal.core.services.databinding.index.IndexDomainModelReferenceConverter#convertToValueProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
 	 * .
 	 *
 	 * @throws DatabindingFailedException if the databinding failed
@@ -151,7 +178,7 @@ public class IndexDomainModelReferenceConverter_Test {
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emfforms.core.services.databinding.index.IndexDomainModelReferenceConverter#convertToValueProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * {@link org.eclipse.emfforms.internal.core.services.databinding.index.IndexDomainModelReferenceConverter#convertToValueProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
 	 * .
 	 *
 	 * @throws DatabindingFailedException if the databinding failed (expected for this test case)
@@ -163,7 +190,7 @@ public class IndexDomainModelReferenceConverter_Test {
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emfforms.core.services.databinding.index.IndexDomainModelReferenceConverter#convertToValueProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * {@link org.eclipse.emfforms.internal.core.services.databinding.index.IndexDomainModelReferenceConverter#convertToValueProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
 	 * .
 	 *
 	 * @throws DatabindingFailedException if the databinding failed
@@ -175,7 +202,7 @@ public class IndexDomainModelReferenceConverter_Test {
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emfforms.core.services.databinding.index.IndexDomainModelReferenceConverter#convertToListProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * {@link org.eclipse.emfforms.internal.core.services.databinding.index.IndexDomainModelReferenceConverter#convertToListProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
 	 * .
 	 *
 	 * @throws DatabindingFailedException if the databinding failed
@@ -207,7 +234,7 @@ public class IndexDomainModelReferenceConverter_Test {
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emfforms.core.services.databinding.index.IndexDomainModelReferenceConverter#convertToListProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * {@link org.eclipse.emfforms.internal.core.services.databinding.index.IndexDomainModelReferenceConverter#convertToListProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
 	 * .
 	 *
 	 * @throws DatabindingFailedException if the databinding failed
@@ -238,7 +265,33 @@ public class IndexDomainModelReferenceConverter_Test {
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emfforms.core.services.databinding.index.IndexDomainModelReferenceConverter#convertToListProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * {@link org.eclipse.emfforms.internal.core.services.databinding.index.IndexDomainModelReferenceConverter#convertToListProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * .
+	 *
+	 * @throws DatabindingFailedException if the databinding failed
+	 */
+	@Test(expected = IllegalListTypeException.class)
+	public void testConvertToListPropertyWrongListType() throws DatabindingFailedException {
+		final VIndexDomainModelReference indexDMR = VIndexdmrFactory.eINSTANCE.createIndexDomainModelReference();
+		indexDMR.setDomainModelEFeature(TestPackage.eINSTANCE.getD_YList());
+		indexDMR.setIndex(1);
+
+		final VFeaturePathDomainModelReference targetDMR = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
+		targetDMR.setDomainModelEFeature(TestPackage.eINSTANCE.getD_YList());
+		indexDMR.setTargetDMR(targetDMR);
+
+		final IEMFListProperty targetListProperty = EMFProperties.list(TestPackage.eINSTANCE.getD_YList());
+		final EMFFormsDatabinding emfFormsDatabinding = mock(EMFFormsDatabinding.class);
+		when(emfFormsDatabinding.getListProperty(targetDMR)).thenReturn(targetListProperty);
+		converter.setEMFFormsDatabinding(emfFormsDatabinding);
+
+		converter.convertToListProperty(indexDMR);
+	}
+
+	/**
+	 * Test method for
+	 * {@link org.eclipse.emfforms.internal.core.services.databinding.index.IndexDomainModelReferenceConverter#convertToListProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
 	 * .
 	 *
 	 * @throws DatabindingFailedException if the databinding failed
@@ -250,7 +303,7 @@ public class IndexDomainModelReferenceConverter_Test {
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emfforms.core.services.databinding.index.IndexDomainModelReferenceConverter#convertToListProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * {@link org.eclipse.emfforms.internal.core.services.databinding.index.IndexDomainModelReferenceConverter#convertToListProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
 	 * .
 	 *
 	 * @throws DatabindingFailedException if the databinding failed
@@ -262,7 +315,7 @@ public class IndexDomainModelReferenceConverter_Test {
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emfforms.core.services.databinding.index.IndexDomainModelReferenceConverter#convertToListProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * {@link org.eclipse.emfforms.internal.core.services.databinding.index.IndexDomainModelReferenceConverter#convertToListProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
 	 * .
 	 *
 	 * @throws DatabindingFailedException if the databinding failed (expected for this test case)

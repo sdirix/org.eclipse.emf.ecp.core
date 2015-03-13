@@ -9,7 +9,7 @@
  * Contributors:
  * Lucas Koehler - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emfforms.core.services.databinding.index;
+package org.eclipse.emfforms.internal.core.services.databinding.index;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -22,14 +22,14 @@ import org.junit.Test;
 
 /**
  * JUnit test cases for {@link EMFIndexedValueProperty}.
- * 
+ *
  * @author Lucas Koehler
  *
  */
 public class EMFIndexedValueProperty_Test {
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emfforms.core.services.databinding.index.EMFIndexedValueProperty#EMFIndexedValueProperty(int, org.eclipse.emf.ecore.EStructuralFeature)}
+	 * {@link org.eclipse.emfforms.internal.core.services.databinding.index.EMFIndexedValueProperty#EMFIndexedValueProperty(int, org.eclipse.emf.ecore.EStructuralFeature)}
 	 * .
 	 */
 	@Test(expected = IllegalArgumentException.class)
@@ -39,7 +39,7 @@ public class EMFIndexedValueProperty_Test {
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emfforms.core.services.databinding.index.EMFIndexedValueProperty#doGetValue(java.lang.Object)}
+	 * {@link org.eclipse.emfforms.internal.core.services.databinding.index.EMFIndexedValueProperty#doGetValue(java.lang.Object)}
 	 * .
 	 */
 	@Test
@@ -52,7 +52,7 @@ public class EMFIndexedValueProperty_Test {
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emfforms.core.services.databinding.index.EMFIndexedValueProperty#doGetValue(java.lang.Object)}
+	 * {@link org.eclipse.emfforms.internal.core.services.databinding.index.EMFIndexedValueProperty#doGetValue(java.lang.Object)}
 	 * .
 	 */
 	@Test
@@ -70,7 +70,7 @@ public class EMFIndexedValueProperty_Test {
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emfforms.core.services.databinding.index.EMFIndexedValueProperty#doSetValue(java.lang.Object, java.lang.Object)}
+	 * {@link org.eclipse.emfforms.internal.core.services.databinding.index.EMFIndexedValueProperty#doSetValue(java.lang.Object, java.lang.Object)}
 	 * .
 	 */
 	@Test
@@ -90,7 +90,7 @@ public class EMFIndexedValueProperty_Test {
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emfforms.core.services.databinding.index.EMFIndexedValueProperty#doSetValue(java.lang.Object, java.lang.Object)}
+	 * {@link org.eclipse.emfforms.internal.core.services.databinding.index.EMFIndexedValueProperty#doSetValue(java.lang.Object, java.lang.Object)}
 	 * .
 	 */
 	@Test
@@ -108,7 +108,7 @@ public class EMFIndexedValueProperty_Test {
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emfforms.core.services.databinding.index.EMFIndexedValueProperty#doSetValue(java.lang.Object, java.lang.Object)}
+	 * {@link org.eclipse.emfforms.internal.core.services.databinding.index.EMFIndexedValueProperty#doSetValue(java.lang.Object, java.lang.Object)}
 	 * .
 	 */
 	@Test(expected = IndexOutOfBoundsException.class)
