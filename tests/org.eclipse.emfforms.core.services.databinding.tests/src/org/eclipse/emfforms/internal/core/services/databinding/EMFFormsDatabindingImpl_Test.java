@@ -114,7 +114,7 @@ public class EMFFormsDatabindingImpl_Test {
 	 * .
 	 * <p>
 	 * Tests whether the method returns the correct result for the EObject argument being <strong>null</strong>.
-	 * 
+	 *
 	 * @throws DatabindingFailedException if the databinding failed
 	 */
 	@Test(expected = IllegalArgumentException.class)
@@ -126,10 +126,10 @@ public class EMFFormsDatabindingImpl_Test {
 	 * Test method for
 	 * {@link org.eclipse.emfforms.internal.core.services.databinding.EMFFormsDatabindingImpl#getValueProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
 	 * .
-	 * 
+	 *
 	 * @throws DatabindingFailedException if the databinding failed
 	 */
-	@Test(expected = IllegalStateException.class)
+	@Test(expected = DatabindingFailedException.class)
 	public void testGetValuePropertyNoApplicableConverter() throws DatabindingFailedException {
 		databindingService.getValueProperty(mock(VDomainModelReference.class));
 	}
@@ -308,7 +308,7 @@ public class EMFFormsDatabindingImpl_Test {
 	 *
 	 * @throws DatabindingFailedException if the databinding failed
 	 */
-	@Test(expected = IllegalStateException.class)
+	@Test(expected = DatabindingFailedException.class)
 	public void testGetListPropertyNoApplicableConverter() throws DatabindingFailedException {
 		databindingService.getListProperty(mock(VDomainModelReference.class));
 	}
@@ -415,7 +415,7 @@ public class EMFFormsDatabindingImpl_Test {
 	 *
 	 * @throws DatabindingFailedException if the databinding failed
 	 */
-	@Test(expected = IllegalStateException.class)
+	@Test(expected = DatabindingFailedException.class)
 	public void testRemoveDomainModelReferenceConverter() throws DatabindingFailedException {
 		final VDomainModelReference reference = mock(VFeaturePathDomainModelReference.class);
 		final DomainModelReferenceConverter converter1 = mock(DomainModelReferenceConverter.class);
