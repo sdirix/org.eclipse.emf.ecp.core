@@ -13,8 +13,10 @@ package org.eclipse.emf.ecp.view.spi.custom.swt;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.DataBindingContext;
@@ -23,6 +25,7 @@ import org.eclipse.core.databinding.observable.IObserving;
 import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.property.value.IValueProperty;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
@@ -39,8 +42,10 @@ import org.eclipse.emf.ecp.edit.spi.ECPControlFactory;
 import org.eclipse.emf.ecp.view.internal.custom.swt.Activator;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.custom.model.ECPCustomControlChangeListener;
+import org.eclipse.emf.ecp.view.spi.custom.model.ECPHardcodedReferences;
 import org.eclipse.emf.ecp.view.spi.custom.model.VCustomControl;
 import org.eclipse.emf.ecp.view.spi.custom.model.VCustomDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.custom.model.impl.VCustomDomainModelReferenceImpl;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
@@ -57,6 +62,7 @@ import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
+import org.eclipse.emf.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.jface.databinding.viewers.ViewerSupport;
@@ -66,6 +72,7 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
+import org.osgi.framework.Bundle;
 
 /**
  * Extend this class in order to provide an own implementation of an {@link ECPAbstractCustomControlSWT}.
@@ -136,6 +143,45 @@ public abstract class ECPAbstractCustomControlSWT
 	 * @since 1.3
 	 */
 	protected void postInit() {
+		if (!VCustomDomainModelReference.class.isInstance(customControl.getDomainModelReference())) {
+			return;
+		}
+		final VCustomDomainModelReference customDomainModelReference = VCustomDomainModelReference.class
+			.cast(customControl.getDomainModelReference());
+
+		final ECPHardcodedReferences hardcodedReferences = loadObject(customDomainModelReference.getBundleName(),
+			customDomainModelReference.getClassName());
+		if (!customDomainModelReference.isControlChecked()) {
+			// read stuff from control
+			final Set<VDomainModelReference> controlReferences = new LinkedHashSet<VDomainModelReference>();
+			controlReferences.addAll(hardcodedReferences.getNeededDomainModelReferences());
+			controlReferences.addAll(customDomainModelReference.getDomainModelReferences());
+			customDomainModelReference.getDomainModelReferences().clear();
+			customDomainModelReference.getDomainModelReferences().addAll(controlReferences);
+			customDomainModelReference.setControlChecked(true);
+		}
+	}
+
+	private static ECPHardcodedReferences loadObject(String bundleName, String clazz) {
+		final Bundle bundle = Platform.getBundle(bundleName);
+		if (bundle == null) {
+			new ClassNotFoundException(String.format(LocalizationServiceHelper.getString(
+				VCustomDomainModelReferenceImpl.class, "BundleNotFound_ExceptionMessage"), clazz, bundleName)); //$NON-NLS-1$
+			return null;
+		}
+		try {
+			final Class<?> loadClass = bundle.loadClass(clazz);
+			if (!ECPHardcodedReferences.class.isAssignableFrom(loadClass)) {
+				return null;
+			}
+			return ECPHardcodedReferences.class.cast(loadClass.newInstance());
+		} catch (final ClassNotFoundException ex) {
+			return null;
+		} catch (final InstantiationException ex) {
+			return null;
+		} catch (final IllegalAccessException ex) {
+			return null;
+		}
 
 	}
 

@@ -86,7 +86,7 @@ public class EMFFormsDatabindingImpl implements EMFFormsDatabinding {
 			return bestConverter.convertToValueProperty(domainModelReference);
 		}
 
-		throw new IllegalStateException("No applicable DomainModelReferenceConverter could be found."); //$NON-NLS-1$
+		throw new DatabindingFailedException("No applicable DomainModelReferenceConverter could be found."); //$NON-NLS-1$
 	}
 
 	/**
@@ -140,7 +140,7 @@ public class EMFFormsDatabindingImpl implements EMFFormsDatabinding {
 			return bestConverter.convertToListProperty(domainModelReference);
 		}
 
-		throw new IllegalStateException("No applicable DomainModelReferenceConverter could be found."); //$NON-NLS-1$
+		throw new DatabindingFailedException("No applicable DomainModelReferenceConverter could be found."); //$NON-NLS-1$
 	}
 
 	/**
