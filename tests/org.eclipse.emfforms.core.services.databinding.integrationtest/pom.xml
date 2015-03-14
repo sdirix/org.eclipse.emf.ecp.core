@@ -22,7 +22,26 @@
 				<configuration>
 		          	<useUIHarness>true</useUIHarness>
 		          	<useUIThread>true</useUIThread>
-					
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>target-platform-configuration</artifactId>
+				<configuration>
+					<dependency-resolution>
+						<extraRequirements>
+							<requirement>
+								<type>p2-installable-unit</type>
+								<id>org.eclipse.equinox.ds</id>
+								<versionRange>0.0.0</versionRange>
+							</requirement>
+							<requirement>
+								<type>p2-installable-unit</type>
+								<id>org.eclipse.emfforms.core.services.databinding.featurepath</id>
+								<versionRange>0.0.0</versionRange>
+							</requirement>
+						</extraRequirements>
+					</dependency-resolution>
 				</configuration>
 			</plugin>
 		</plugins>
