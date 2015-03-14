@@ -104,20 +104,20 @@ public class ValidationServiceImpl implements ValidationService {
 					}
 					final EObject observed = (EObject) ((IObserving) observableValue).getObserved();
 					validate(observed);
-					// TODO: check if necessary
-					// final Set<EObject> eObjectsToValidate = new LinkedHashSet<EObject>();
-					// eObjectsToValidate.add(observed);
-					// final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
-					// if (EReference.class.isInstance(structuralFeature)) {
-					// if (structuralFeature.isMany()) {
-					// @SuppressWarnings("unchecked")
-					// final List<EObject> list = (List<EObject>) observableValue.getValue();
-					// eObjectsToValidate.addAll(list);
-					// } else {
-					// eObjectsToValidate.add((EObject) observableValue.getValue());
-					// }
-					// }
-					// validate(eObjectsToValidate);
+					// TODO: add test case fo this
+					final Set<EObject> eObjectsToValidate = new LinkedHashSet<EObject>();
+					eObjectsToValidate.add(observed);
+					final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
+					if (EReference.class.isInstance(structuralFeature)) {
+						if (structuralFeature.isMany()) {
+							@SuppressWarnings("unchecked")
+							final List<EObject> list = (List<EObject>) observableValue.getValue();
+							eObjectsToValidate.addAll(list);
+						} else {
+							eObjectsToValidate.add((EObject) observableValue.getValue());
+						}
+					}
+					validate(eObjectsToValidate);
 				}
 			}
 			if (!VElement.class.isInstance(notification.getNotifier())) {
@@ -153,20 +153,19 @@ public class ValidationServiceImpl implements ValidationService {
 				}
 				final EObject observed = (EObject) ((IObserving) observableValue).getObserved();
 				validate(observed);
-				// TODO: check if necessary
-				// final Set<EObject> eObjectsToValidate = new LinkedHashSet<EObject>();
-				// eObjectsToValidate.add(observed);
-				// final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
-				// if (EReference.class.isInstance(structuralFeature)) {
-				// if (structuralFeature.isMany()) {
-				// @SuppressWarnings("unchecked")
-				// final List<EObject> list = (List<EObject>) observableValue.getValue();
-				// eObjectsToValidate.addAll(list);
-				// } else {
-				// eObjectsToValidate.add((EObject) observableValue.getValue());
-				// }
-				// }
-				// validate(eObjectsToValidate);
+				final Set<EObject> eObjectsToValidate = new LinkedHashSet<EObject>();
+				eObjectsToValidate.add(observed);
+				final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
+				if (EReference.class.isInstance(structuralFeature)) {
+					if (structuralFeature.isMany()) {
+						@SuppressWarnings("unchecked")
+						final List<EObject> list = (List<EObject>) observableValue.getValue();
+						eObjectsToValidate.addAll(list);
+					} else {
+						eObjectsToValidate.add((EObject) observableValue.getValue());
+					}
+				}
+				validate(eObjectsToValidate);
 			}
 		}
 
