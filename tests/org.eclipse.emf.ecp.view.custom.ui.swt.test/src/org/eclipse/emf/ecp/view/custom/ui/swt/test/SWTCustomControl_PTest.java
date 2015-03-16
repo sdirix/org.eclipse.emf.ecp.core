@@ -114,7 +114,7 @@ public class SWTCustomControl_PTest {
 		return view;
 	}
 
-	@Test
+	@Test(expected = IllegalStateException.class)
 	public void testCustomControlinViewWithoutClass() throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption, EMFFormsNoRendererException {
 		final VView view = VViewFactory.eINSTANCE.createView();

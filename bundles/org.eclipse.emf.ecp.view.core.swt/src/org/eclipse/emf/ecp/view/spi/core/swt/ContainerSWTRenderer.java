@@ -39,7 +39,6 @@ import org.eclipse.emf.ecp.view.spi.swt.layout.LayoutProviderHelper;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
 import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
-import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsNoRendererException;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
@@ -220,13 +219,14 @@ public abstract class ContainerSWTRenderer<VELEMENT extends VElement> extends Ab
 			if (VControl.class.cast(child).getDomainModelReference() == null) {
 				return false;
 			}
-			try {
-				getEMFFormsDatabinding()
-					.getValueProperty(VControl.class.cast(child).getDomainModelReference());
-			} catch (final DatabindingFailedException ex) {
-				getReportService().report(new RenderingFailedReport(ex));
-				return false;
-			}
+			// TODO: define behaviour that defines when a control is valid
+			// try {
+			// getEMFFormsDatabinding()
+			// .getValueProperty(VControl.class.cast(child).getDomainModelReference());
+			// } catch (final DatabindingFailedException ex) {
+			// getReportService().report(new RenderingFailedReport(ex));
+			// return false;
+			// }
 		}
 		return true;
 	}
@@ -237,6 +237,7 @@ public abstract class ContainerSWTRenderer<VELEMENT extends VElement> extends Ab
 	 * @return The EMFFormsDatabinding
 	 */
 	private EMFFormsDatabinding getEMFFormsDatabinding() {
+		// Method is eventually needed to check the validity of controls that are to be rendered.
 		return emfFormsDatabinding;
 	}
 

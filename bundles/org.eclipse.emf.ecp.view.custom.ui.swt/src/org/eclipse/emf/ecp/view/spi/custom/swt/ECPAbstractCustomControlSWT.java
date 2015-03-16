@@ -189,7 +189,6 @@ public abstract class ECPAbstractCustomControlSWT
 	 * Is called by the framework to trigger a dispose of the control.
 	 */
 	public final void dispose() {
-		viewModelContext = null;
 		if (composedAdapterFactory != null) {
 			composedAdapterFactory.dispose();
 		}
@@ -211,6 +210,7 @@ public abstract class ECPAbstractCustomControlSWT
 			}
 			controlMap.clear();
 		}
+		viewModelContext = null;
 
 		Activator.getDefault().ungetECPControlFactory();
 		controlFactory = null;
