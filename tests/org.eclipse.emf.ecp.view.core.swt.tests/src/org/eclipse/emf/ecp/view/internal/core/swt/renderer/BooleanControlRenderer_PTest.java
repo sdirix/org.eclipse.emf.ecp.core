@@ -18,12 +18,12 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import org.eclipse.core.databinding.observable.value.WritableValue;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
+import org.eclipse.emf.ecp.view.core.swt.tests.ObservingWritableValue;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
@@ -109,7 +109,7 @@ public class BooleanControlRenderer_PTest extends AbstractControl_PTest {
 	public void testDatabindingServiceUsageInitialBinding() throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		final boolean initialValue = true;
-		final WritableValue mockedObservable = new WritableValue(realm, initialValue, Boolean.class);
+		final ObservingWritableValue mockedObservable = new ObservingWritableValue(realm, initialValue, Boolean.class);
 
 		final Button button = setUpDatabindingTest(mockedObservable);
 		assertEquals(initialValue, button.getSelection());
@@ -121,7 +121,7 @@ public class BooleanControlRenderer_PTest extends AbstractControl_PTest {
 		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		final boolean initialValue = true;
 		final boolean changedValue = false;
-		final WritableValue mockedObservable = new WritableValue(realm, initialValue, Boolean.class);
+		final ObservingWritableValue mockedObservable = new ObservingWritableValue(realm, initialValue, Boolean.class);
 
 		final Button button = setUpDatabindingTest(mockedObservable);
 		mockedObservable.setValue(changedValue);
@@ -133,7 +133,7 @@ public class BooleanControlRenderer_PTest extends AbstractControl_PTest {
 	public void testDatabindingServiceUsageChangeControl() throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		final boolean initialValue = true;
-		final WritableValue mockedObservable = new WritableValue(realm, initialValue, Boolean.class);
+		final ObservingWritableValue mockedObservable = new ObservingWritableValue(realm, initialValue, Boolean.class);
 
 		final Button button = setUpDatabindingTest(mockedObservable);
 		SWTTestUtil.clickButton(button);
@@ -151,7 +151,7 @@ public class BooleanControlRenderer_PTest extends AbstractControl_PTest {
 	 * @throws NoPropertyDescriptorFoundExeption
 	 * @throws DatabindingFailedException
 	 */
-	private Button setUpDatabindingTest(final WritableValue mockedObservable) throws NoRendererFoundException,
+	private Button setUpDatabindingTest(final ObservingWritableValue mockedObservable) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		Mockito.reset(databindingService);
 

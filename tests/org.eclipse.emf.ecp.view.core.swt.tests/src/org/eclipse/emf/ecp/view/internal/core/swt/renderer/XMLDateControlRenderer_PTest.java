@@ -27,7 +27,6 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
-import org.eclipse.core.databinding.observable.value.WritableValue;
 import org.eclipse.core.databinding.property.Properties;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -35,6 +34,7 @@ import org.eclipse.emf.ecp.edit.spi.ViewLocaleService;
 import org.eclipse.emf.ecp.view.core.swt.test.model.SimpleTestObject;
 import org.eclipse.emf.ecp.view.core.swt.test.model.TestFactory;
 import org.eclipse.emf.ecp.view.core.swt.test.model.TestPackage;
+import org.eclipse.emf.ecp.view.core.swt.tests.ObservingWritableValue;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
@@ -153,7 +153,7 @@ public class XMLDateControlRenderer_PTest extends AbstractControl_PTest {
 		NoPropertyDescriptorFoundExeption, DatatypeConfigurationException, DatabindingFailedException {
 		final XMLGregorianCalendar initialValue = getXMLGregorianCalendarFromDate(new Date());
 
-		final WritableValue mockedObservable = new WritableValue(realm, initialValue,
+		final ObservingWritableValue mockedObservable = new ObservingWritableValue(realm, initialValue,
 			TestPackage.eINSTANCE.getSimpleTestObject_XmlDate());
 		final Text text = setUpDatabindingTest(mockedObservable);
 
@@ -168,7 +168,7 @@ public class XMLDateControlRenderer_PTest extends AbstractControl_PTest {
 		final XMLGregorianCalendar initialValue = getXMLGregorianCalendarFromDate(new Date());
 		final XMLGregorianCalendar changedValue = getXMLGregorianCalendarFromDate(new Date(
 			System.currentTimeMillis() * 2));
-		final WritableValue mockedObservable = new WritableValue(realm, initialValue,
+		final ObservingWritableValue mockedObservable = new ObservingWritableValue(realm, initialValue,
 			TestPackage.eINSTANCE.getSimpleTestObject_XmlDate());
 
 		final Text text = setUpDatabindingTest(mockedObservable);
@@ -186,7 +186,7 @@ public class XMLDateControlRenderer_PTest extends AbstractControl_PTest {
 		final XMLGregorianCalendar initialValue = getXMLGregorianCalendarFromDate(new Date());
 		final XMLGregorianCalendar changedValue = getXMLGregorianCalendarFromDate(new Date(
 			System.currentTimeMillis() * 2));
-		final WritableValue mockedObservable = new WritableValue(realm, initialValue,
+		final ObservingWritableValue mockedObservable = new ObservingWritableValue(realm, initialValue,
 			TestPackage.eINSTANCE.getSimpleTestObject_XmlDate());
 
 		final Text text = setUpDatabindingTest(mockedObservable);
@@ -206,7 +206,7 @@ public class XMLDateControlRenderer_PTest extends AbstractControl_PTest {
 	 * @throws NoPropertyDescriptorFoundExeption
 	 * @throws DatabindingFailedException
 	 */
-	private Text setUpDatabindingTest(final WritableValue mockedObservable) throws NoRendererFoundException,
+	private Text setUpDatabindingTest(final ObservingWritableValue mockedObservable) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		Mockito.reset(databindingService);
 		mockDatabindingIsUnsettable();

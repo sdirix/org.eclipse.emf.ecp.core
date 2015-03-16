@@ -21,7 +21,6 @@ import static org.mockito.Mockito.when;
 import java.text.DecimalFormat;
 import java.util.Locale;
 
-import org.eclipse.core.databinding.observable.value.WritableValue;
 import org.eclipse.core.databinding.property.Properties;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
@@ -30,6 +29,7 @@ import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecp.edit.internal.swt.controls.NumericalHelper;
 import org.eclipse.emf.ecp.edit.spi.ViewLocaleService;
+import org.eclipse.emf.ecp.view.core.swt.tests.ObservingWritableValue;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
@@ -158,7 +158,7 @@ public class NumberControlRenderer_PTest extends AbstractControl_PTest {
 	public void testDatabindingServiceUsageInitialBinding() throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		final int initialValue = 13;
-		final WritableValue mockedObservable = new WritableValue(realm, initialValue,
+		final ObservingWritableValue mockedObservable = new ObservingWritableValue(realm, initialValue,
 			EcorePackage.eINSTANCE.getETypedElement_LowerBound());
 		final Text text = setUpDatabindingTest(mockedObservable);
 
@@ -173,7 +173,7 @@ public class NumberControlRenderer_PTest extends AbstractControl_PTest {
 		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		final int initialValue = 13;
 		final int changedValue = 42;
-		final WritableValue mockedObservable = new WritableValue(realm, initialValue,
+		final ObservingWritableValue mockedObservable = new ObservingWritableValue(realm, initialValue,
 			EcorePackage.eINSTANCE.getETypedElement_LowerBound());
 
 		final Text text = setUpDatabindingTest(mockedObservable);
@@ -190,7 +190,7 @@ public class NumberControlRenderer_PTest extends AbstractControl_PTest {
 		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		final int initialValue = 13;
 		final int changedValue = 42;
-		final WritableValue mockedObservable = new WritableValue(realm, initialValue,
+		final ObservingWritableValue mockedObservable = new ObservingWritableValue(realm, initialValue,
 			EcorePackage.eINSTANCE.getETypedElement_LowerBound());
 
 		final Text text = setUpDatabindingTest(mockedObservable);
@@ -211,7 +211,7 @@ public class NumberControlRenderer_PTest extends AbstractControl_PTest {
 	 * @throws NoPropertyDescriptorFoundExeption
 	 * @throws DatabindingFailedException
 	 */
-	private Text setUpDatabindingTest(final WritableValue mockedObservable) throws NoRendererFoundException,
+	private Text setUpDatabindingTest(final ObservingWritableValue mockedObservable) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		mockDatabindingIsUnsettable();
 		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(

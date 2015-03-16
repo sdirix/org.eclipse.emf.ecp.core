@@ -18,11 +18,11 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import org.eclipse.core.databinding.observable.value.WritableValue;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
+import org.eclipse.emf.ecp.view.core.swt.tests.ObservingWritableValue;
 import org.eclipse.emf.ecp.view.internal.core.swt.renderer.AbstractControl_PTest;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
@@ -139,7 +139,7 @@ public class TextControlRenderer_PTest extends AbstractControl_PTest {
 	public void testDatabindingServiceUsageInitialBinding() throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		final String initialValue = "initial";
-		final WritableValue mockedObservable = new WritableValue(realm, initialValue,
+		final ObservingWritableValue mockedObservable = new ObservingWritableValue(realm, initialValue,
 			EcorePackage.eINSTANCE.getENamedElement_Name());
 		final Text text = setUpDatabindingTest(mockedObservable);
 
@@ -152,7 +152,7 @@ public class TextControlRenderer_PTest extends AbstractControl_PTest {
 		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		final String initialValue = "initial";
 		final String changedValue = "changed";
-		final WritableValue mockedObservable = new WritableValue(realm, initialValue,
+		final ObservingWritableValue mockedObservable = new ObservingWritableValue(realm, initialValue,
 			EcorePackage.eINSTANCE.getENamedElement_Name());
 
 		final Text text = setUpDatabindingTest(mockedObservable);
@@ -167,7 +167,7 @@ public class TextControlRenderer_PTest extends AbstractControl_PTest {
 		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		final String initialValue = "initial";
 		final String changedValue = "changed";
-		final WritableValue mockedObservable = new WritableValue(realm, initialValue,
+		final ObservingWritableValue mockedObservable = new ObservingWritableValue(realm, initialValue,
 			EcorePackage.eINSTANCE.getENamedElement_Name());
 
 		final Text text = setUpDatabindingTest(mockedObservable);
@@ -186,7 +186,7 @@ public class TextControlRenderer_PTest extends AbstractControl_PTest {
 	 * @throws NoPropertyDescriptorFoundExeption
 	 * @throws DatabindingFailedException if the databinding failed
 	 */
-	private Text setUpDatabindingTest(final WritableValue mockedObservable) throws NoRendererFoundException,
+	private Text setUpDatabindingTest(final ObservingWritableValue mockedObservable) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		when(labelProvider.getDisplayName(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			"antiException");

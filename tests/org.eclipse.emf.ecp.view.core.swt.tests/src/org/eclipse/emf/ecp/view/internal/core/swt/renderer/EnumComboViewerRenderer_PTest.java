@@ -16,13 +16,13 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import org.eclipse.core.databinding.observable.value.WritableValue;
 import org.eclipse.core.databinding.property.Properties;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.core.swt.test.model.SimpleTestObject;
 import org.eclipse.emf.ecp.view.core.swt.test.model.TestEnum;
 import org.eclipse.emf.ecp.view.core.swt.test.model.TestFactory;
 import org.eclipse.emf.ecp.view.core.swt.test.model.TestPackage;
+import org.eclipse.emf.ecp.view.core.swt.tests.ObservingWritableValue;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
@@ -92,7 +92,7 @@ public class EnumComboViewerRenderer_PTest extends AbstractControl_PTest {
 		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		final TestEnum initialValue = TestEnum.B;
 
-		final WritableValue mockedObservable = new WritableValue(realm, initialValue,
+		final ObservingWritableValue mockedObservable = new ObservingWritableValue(realm, initialValue,
 			TestPackage.eINSTANCE.getSimpleTestObject_MyEnum());
 
 		when(
@@ -110,7 +110,7 @@ public class EnumComboViewerRenderer_PTest extends AbstractControl_PTest {
 		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		final TestEnum initialValue = TestEnum.B;
 		final TestEnum changedValue = TestEnum.C;
-		final WritableValue mockedObservable = new WritableValue(realm, initialValue,
+		final ObservingWritableValue mockedObservable = new ObservingWritableValue(realm, initialValue,
 			TestPackage.eINSTANCE.getSimpleTestObject_MyEnum());
 		when(
 			editSupport.getText(any(VDomainModelReference.class), any(EObject.class),
@@ -134,7 +134,7 @@ public class EnumComboViewerRenderer_PTest extends AbstractControl_PTest {
 		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		final TestEnum initialValue = TestEnum.B;
 		final TestEnum changedValue = TestEnum.C;
-		final WritableValue mockedObservable = new WritableValue(realm, initialValue,
+		final ObservingWritableValue mockedObservable = new ObservingWritableValue(realm, initialValue,
 			TestPackage.eINSTANCE.getSimpleTestObject_MyEnum());
 
 		final Combo combo = setUpDatabindingTest(mockedObservable);
@@ -154,7 +154,7 @@ public class EnumComboViewerRenderer_PTest extends AbstractControl_PTest {
 	 * @throws NoPropertyDescriptorFoundExeption
 	 * @throws DatabindingFailedException
 	 */
-	private Combo setUpDatabindingTest(final WritableValue mockedObservable) throws NoRendererFoundException,
+	private Combo setUpDatabindingTest(final ObservingWritableValue mockedObservable) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		mockDatabindingIsUnsettable();
 		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
