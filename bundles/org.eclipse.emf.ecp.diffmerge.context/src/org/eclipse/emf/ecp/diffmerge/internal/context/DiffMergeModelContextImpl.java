@@ -36,6 +36,7 @@ import org.eclipse.emf.ecp.view.spi.model.VAttachment;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.spi.model.util.ViewModelUtil;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 
@@ -167,6 +168,10 @@ public class DiffMergeModelContextImpl extends ViewModelContextImpl implements
 
 		final VElement viewModelLeft = EcoreUtil.copy(getViewModel());
 		final VElement viewModelRight = EcoreUtil.copy(getViewModel());
+
+		// TODO: remove when compare works for table references without iterators and settings
+		ViewModelUtil.resolveDomainReferences(viewModelLeft, getLeftModel());
+		ViewModelUtil.resolveDomainReferences(viewModelRight, getRightModel());
 
 		final TreeIterator<EObject> mainViewModel = getViewModel().eAllContents();
 		final TreeIterator<EObject> leftViewModel = viewModelLeft.eAllContents();

@@ -11,15 +11,13 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.diffmerge.internal.context;
 
-import org.eclipse.core.databinding.observable.IObserving;
-import org.eclipse.core.databinding.observable.value.IObservableValue;
+import java.util.Iterator;
+
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
-import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
-import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 
 /**
  * Class to compare Controls for equality.
@@ -58,43 +56,78 @@ public final class CompareControls {
 	 */
 	public static boolean areEqual(VDomainModelReference left, EObject leftDomainModel, VDomainModelReference right,
 		EObject rightDomainModel) {
-		IObservableValue leftObservableValue;
-		IObservableValue rightObservableValue;
-		try {
-			leftObservableValue = Activator.getDefault().getEMFFormsDatabinding()
-				.getObservableValue(left, leftDomainModel);
-			rightObservableValue = Activator.getDefault().getEMFFormsDatabinding()
-				.getObservableValue(right, rightDomainModel);
-		} catch (final DatabindingFailedException ex) {
-			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
-			return false;
-		}
-		final EObject leftEObject = (EObject) ((IObserving) leftObservableValue).getObserved();
-		final EStructuralFeature leftStructuralFeature = (EStructuralFeature) leftObservableValue.getValueType();
-		final EObject rightEObject = (EObject) ((IObserving) rightObservableValue).getObserved();
-		final EStructuralFeature rightStructuralFeature = (EStructuralFeature) rightObservableValue.getValueType();
+		final Iterator<Setting> leftSettings = left.getIterator();
+		final Iterator<Setting> rightSettings = right.getIterator();
+		boolean leftHasNext = leftSettings.hasNext();
+		boolean rightHasNext = rightSettings.hasNext();
+		while (leftHasNext && rightHasNext) {
+			final Setting leftSetting = leftSettings.next();
+			final Setting rightSetting = rightSettings.next();
+			final Object leftValue = leftSetting.get(true);
+			final Object rightValue = rightSetting.get(true);
+			leftHasNext = leftSettings.hasNext();
+			rightHasNext = rightSettings.hasNext();
 
-		final Object leftValue = leftEObject.eGet(leftStructuralFeature, true);
-		final Object rightValue = rightEObject.eGet(rightStructuralFeature, true);
+			if (leftValue == null && rightValue == null) {
+				continue;
+			}
+			// TODO handle EReference (single and many)
+			if (EcorePackage.eINSTANCE.getEReference().isInstance(leftSetting.getEStructuralFeature())
+				|| EcorePackage.eINSTANCE.getEReference().isInstance(rightSetting.getEStructuralFeature())) {
+				continue;
+			}
+			if (leftValue == null && rightValue != null) {
+				return false;
+			}
+			if (leftValue != null && rightValue == null) {
+				return false;
+			}
+			if (!leftValue.equals(rightValue)) {
+				return false;
+			}
 
-		if (leftValue == null && rightValue == null) {
-			return true;
 		}
-		// TODO handle EReference (single and many)
-		if (EcorePackage.eINSTANCE.getEReference().isInstance(leftStructuralFeature)
-			|| EcorePackage.eINSTANCE.getEReference().isInstance(rightStructuralFeature)) {
-			return true;
-		}
+		// will be false if one iterator still has elements
+		return !leftHasNext && !rightHasNext;
 
-		if (leftValue == null && rightValue != null) {
-			return false;
-		}
-		if (leftValue != null && rightValue == null) {
-			return false;
-		}
-		if (leftValue.equals(rightValue)) {
-			return true;
-		}
-		return false;
+		// TODO: New code does not work so far for table domain model references:
+		// IObservableValue leftObservableValue;
+		// IObservableValue rightObservableValue;
+		// try {
+		// leftObservableValue = Activator.getDefault().getEMFFormsDatabinding()
+		// .getObservableValue(left, leftDomainModel);
+		// rightObservableValue = Activator.getDefault().getEMFFormsDatabinding()
+		// .getObservableValue(right, rightDomainModel);
+		// } catch (final DatabindingFailedException ex) {
+		// Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+		// return false;
+		// }
+		// final EObject leftEObject = (EObject) ((IObserving) leftObservableValue).getObserved();
+		// final EStructuralFeature leftStructuralFeature = (EStructuralFeature) leftObservableValue.getValueType();
+		// final EObject rightEObject = (EObject) ((IObserving) rightObservableValue).getObserved();
+		// final EStructuralFeature rightStructuralFeature = (EStructuralFeature) rightObservableValue.getValueType();
+		//
+		// final Object leftValue = leftEObject.eGet(leftStructuralFeature, true);
+		// final Object rightValue = rightEObject.eGet(rightStructuralFeature, true);
+		//
+		// if (leftValue == null && rightValue == null) {
+		// return true;
+		// }
+		// // TODO handle EReference (single and many)
+		// if (EcorePackage.eINSTANCE.getEReference().isInstance(leftStructuralFeature)
+		// || EcorePackage.eINSTANCE.getEReference().isInstance(rightStructuralFeature)) {
+		// return true;
+		// }
+		//
+		// if (leftValue == null && rightValue != null) {
+		// return false;
+		// }
+		// if (leftValue != null && rightValue == null) {
+		// return false;
+		// }
+		// if (leftValue.equals(rightValue)) {
+		// return true;
+		// }
+		// return false;
 	}
 }

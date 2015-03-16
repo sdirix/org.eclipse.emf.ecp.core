@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecp.diffmerge.spi.context.DefaultMergeUtil;
+import org.eclipse.emf.ecp.test.common.DefaultRealm;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
@@ -34,6 +35,8 @@ import org.eclipse.emf.emfstore.bowling.BowlingPackage;
 import org.eclipse.emf.emfstore.bowling.Fan;
 import org.eclipse.emf.emfstore.bowling.Merchandise;
 import org.eclipse.emf.emfstore.bowling.Player;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -43,6 +46,17 @@ import org.junit.Test;
  *
  */
 public class Merge_PTest {
+	private DefaultRealm realm;
+
+	@Before
+	public void setUp() {
+		realm = new DefaultRealm();
+	}
+
+	@After
+	public void tearDown() {
+		realm.dispose();
+	}
 
 	private void addEobjectToResource(EObject eObject) {
 		final ResourceSet resourceSet = new ResourceSetImpl();
