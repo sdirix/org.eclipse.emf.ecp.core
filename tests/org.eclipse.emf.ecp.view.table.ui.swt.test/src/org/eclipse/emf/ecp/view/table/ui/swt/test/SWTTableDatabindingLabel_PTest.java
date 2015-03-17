@@ -17,13 +17,12 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import java.util.Dictionary;
-import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.core.databinding.observable.list.WritableList;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.databinding.internal.EMFValueProperty;
 import org.eclipse.emf.ecore.EClass;
@@ -56,14 +55,9 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
-import org.junit.After;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceRegistration;
 
 /**
  * JUnit tests for {@link TableControlSWTRenderer} testing the data binding of the table.
@@ -73,44 +67,30 @@ import org.osgi.framework.ServiceRegistration;
  */
 @SuppressWarnings("restriction")
 @RunWith(DatabindingClassRunner.class)
-public class SWTTable_Test {
+public class SWTTableDatabindingLabel_PTest {
 	private static final String DISPLAYNAME = "displayname";
 	private static final String DISPLAYNAME_COLUMNS = "displayname-columns";
 	private static final String DESCRIPTION = "description";
 	private static final String DESCRIPTION_COLUMNS = "description-columns";
-	private static BundleContext bundleContext;
 	private EMFFormsDatabinding databindingService;
-	private ServiceRegistration<EMFFormsDatabinding> databindingRegisterService;
 	private TableControlSWTRenderer renderer;
 	private Shell shell;
 	private EClass domainModel;
 	private VTableControl vTableControl;
 	private EMFFormsLabelProvider labelProvider;
-	private ServiceRegistration<EMFFormsLabelProvider> labelRegisterService;
-
-	/**
-	 * Get {@link BundleContext} for the tests.
-	 */
-	@BeforeClass
-	public static void setUpBeforeClass() {
-		bundleContext = FrameworkUtil.getBundle(SWTTable_Test.class).getBundleContext();
-	}
 
 	/**
 	 * Set up executed before every test.
 	 * Mocks and registers the databinding and label service.
 	 * Creates a new {@link TableControlSWTRenderer} to be tested. Mocks needed parameters and contents (e.g.
 	 * VControl, ViewModelContext).
+	 *
+	 * @throws DatabindingFailedException
 	 */
 	@Before
-	public void setUp() {
+	public void setUp() throws DatabindingFailedException {
 		databindingService = mock(EMFFormsDatabinding.class);
 		labelProvider = mock(EMFFormsLabelProvider.class);
-		final Dictionary<String, Object> dictionary = new Hashtable<String, Object>();
-		dictionary.put("service.ranking", 5); //$NON-NLS-1$
-		databindingRegisterService = bundleContext.registerService(
-			EMFFormsDatabinding.class, databindingService, dictionary);
-		labelRegisterService = bundleContext.registerService(EMFFormsLabelProvider.class, labelProvider, dictionary);
 
 		when(labelProvider.getDescription(any(VDomainModelReference.class))).thenReturn(DESCRIPTION_COLUMNS);
 		when(labelProvider.getDescription(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
@@ -128,15 +108,18 @@ public class SWTTable_Test {
 		vTableControl = VTableFactory.eINSTANCE.createTableControl();
 		vTableControl.setDomainModelReference(tableDomainModelReference);
 
+		final IValueProperty valueProperty = new EMFValueProperty(EcorePackage.eINSTANCE.getEClass_ESuperTypes());
+		final IObservableValue observableValue = valueProperty.observe(domainModel);
+		when(databindingService.getObservableValue(vTableControl.getDomainModelReference(), domainModel)).thenReturn(
+			observableValue);
+
 		final ReportService reportservice = mock(ReportService.class);
-		final EMFFormsDatabinding emfFormsDatabinding = mock(EMFFormsDatabinding.class);
-		final EMFFormsLabelProvider emfFormsLabelProvider = mock(EMFFormsLabelProvider.class);
 		final VTViewTemplateProvider vtViewTemplateProvider = mock(VTViewTemplateProvider.class);
 		final ImageRegistryService imageRegistryService = mock(ImageRegistryService.class);
 		final ViewModelContext viewContext = new ViewModelContextImpl(vTableControl, domainModel);
 
-		renderer = new TableControlSWTRenderer(vTableControl, viewContext, reportservice, emfFormsDatabinding,
-			emfFormsLabelProvider, vtViewTemplateProvider, imageRegistryService);
+		renderer = new TableControlSWTRenderer(vTableControl, viewContext, reportservice, databindingService,
+			labelProvider, vtViewTemplateProvider, imageRegistryService);
 		renderer.init();
 	}
 
@@ -152,15 +135,6 @@ public class SWTTable_Test {
 		tableDomainModelReference.getColumnDomainModelReferences().add(columnReference1);
 
 		return tableDomainModelReference;
-	}
-
-	/**
-	 * Unregister databinding and label service after every test.
-	 */
-	@After
-	public void tearDown() {
-		databindingRegisterService.unregister();
-		labelRegisterService.unregister();
 	}
 
 	@Test
