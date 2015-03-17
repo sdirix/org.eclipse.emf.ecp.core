@@ -14,6 +14,7 @@ package org.eclipse.emf.ecp.view.stack.ui.swt.test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
+import org.eclipse.emf.ecp.test.common.DefaultRealm;
 import org.eclipse.emf.ecp.view.internal.stack.ui.swt.StackItemViewService;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
@@ -32,6 +33,7 @@ import org.junit.Test;
 public class StackItemViewService_Test {
 
 	private static final String NAME = "Name";
+	private DefaultRealm realm;
 	private Player domain;
 	private ViewModelContext context;
 	private VView view;
@@ -42,10 +44,13 @@ public class StackItemViewService_Test {
 	@After
 	public void after() {
 		context.dispose();
+		realm.dispose();
 	}
 
 	@Before
 	public void before() {
+		realm = new DefaultRealm();
+
 		domain = BowlingFactory.eINSTANCE.createPlayer();
 
 		view = VViewFactory.eINSTANCE.createView();

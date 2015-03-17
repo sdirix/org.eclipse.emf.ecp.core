@@ -13,6 +13,7 @@ package org.eclipse.emf.ecp.view.stack.ui.swt.test;
 
 import static org.junit.Assert.assertEquals;
 
+import org.eclipse.emf.ecp.test.common.DefaultRealm;
 import org.eclipse.emf.ecp.view.internal.stack.ui.swt.StackItemViewService;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
@@ -31,6 +32,7 @@ import org.junit.Test;
 
 public class DynamicDMRStackItemViewService_Test {
 
+	private DefaultRealm realm;
 	private Fan fan;
 	private ViewModelContext context;
 	private VView view;
@@ -45,10 +47,13 @@ public class DynamicDMRStackItemViewService_Test {
 		if (context != null) {
 			context.dispose();
 		}
+		realm.dispose();
 	}
 
 	@Before
 	public void before() {
+		realm = new DefaultRealm();
+
 		fan = BowlingFactory.eINSTANCE.createFan();
 		player1 = BowlingFactory.eINSTANCE.createPlayer();
 		player2 = BowlingFactory.eINSTANCE.createPlayer();

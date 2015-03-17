@@ -113,6 +113,9 @@ public class StackItemViewService implements ViewModelService {
 		}
 		final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
 		final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
+		if (!eObject.eClass().getEAllStructuralFeatures().contains(structuralFeature)) {
+			return null;
+		}
 
 		addToRegistry(eObject, structuralFeature, stack);
 		return ((InternalEObject) eObject).eSetting(structuralFeature);
