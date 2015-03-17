@@ -30,7 +30,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class StackItemViewService_Test {
+public class StackItemViewService_PTest {
 
 	private static final String NAME = "Name";
 	private DefaultRealm realm;

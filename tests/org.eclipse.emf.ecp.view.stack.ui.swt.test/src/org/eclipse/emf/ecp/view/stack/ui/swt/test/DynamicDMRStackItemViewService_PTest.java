@@ -30,7 +30,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class DynamicDMRStackItemViewService_Test {
+public class DynamicDMRStackItemViewService_PTest {
 
 	private DefaultRealm realm;
 	private Fan fan;
