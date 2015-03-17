@@ -388,8 +388,12 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 
 			IValueProperty valueProperty;
 			try {
-				valueProperty = Activator.getDefault().getEMFFormsDatabinding()
-					.getValueProperty(tableDomainModelReference);
+				valueProperty = Activator
+					.getDefault()
+					.getEMFFormsDatabinding()
+					.getValueProperty(
+						tableDomainModelReference.getDomainModelReference() == null ? tableDomainModelReference
+							: tableDomainModelReference.getDomainModelReference());
 			} catch (final DatabindingFailedException ex) {
 				Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
 				return;

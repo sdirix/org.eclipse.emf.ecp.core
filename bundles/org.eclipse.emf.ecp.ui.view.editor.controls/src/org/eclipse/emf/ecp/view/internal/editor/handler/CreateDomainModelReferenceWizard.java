@@ -38,6 +38,7 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
+import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
@@ -230,12 +231,19 @@ public class CreateDomainModelReferenceWizard extends SelectModelElementWizard {
 			}
 			return false;
 		}
-
+		VDomainModelReference dmrToCheck = customizeDMRPage.getvControl().getDomainModelReference();
+		if (VTableDomainModelReference.class.isInstance(dmrToCheck)) {
+			final VTableDomainModelReference tableDomainModelReference = VTableDomainModelReference.class
+				.cast(dmrToCheck);
+			if (tableDomainModelReference.getDomainModelReference() != null) {
+				dmrToCheck = tableDomainModelReference.getDomainModelReference();
+			}
+		}
 		try {
 			Activator.getDefault().getEMFFormsDatabinding()
-				.getValueProperty(customizeDMRPage.getvControl().getDomainModelReference());
+				.getValueProperty(dmrToCheck);
 		} catch (final DatabindingFailedException ex) {
-			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+			// Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
 			return false;
 		}
 
@@ -358,9 +366,17 @@ public class CreateDomainModelReferenceWizard extends SelectModelElementWizard {
 			if (getvControl().getDomainModelReference() == null) {
 				return false;
 			}
+			VDomainModelReference dmrToCheck = getvControl().getDomainModelReference();
+			if (VTableDomainModelReference.class.isInstance(dmrToCheck)) {
+				final VTableDomainModelReference tableDomainModelReference = VTableDomainModelReference.class
+					.cast(dmrToCheck);
+				if (tableDomainModelReference.getDomainModelReference() != null) {
+					dmrToCheck = tableDomainModelReference.getDomainModelReference();
+				}
+			}
 			try {
 				Activator.getDefault().getEMFFormsDatabinding()
-					.getValueProperty(getvControl().getDomainModelReference());
+					.getValueProperty(dmrToCheck);
 			} catch (final DatabindingFailedException ex) {
 				Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
 				return false;

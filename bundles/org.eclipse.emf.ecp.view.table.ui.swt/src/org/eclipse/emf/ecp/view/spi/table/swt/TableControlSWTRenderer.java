@@ -181,10 +181,15 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	@Override
 	protected Control renderControl(SWTGridCell gridCell, final Composite parent) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
+		final VTableDomainModelReference tableDomainModelReference = (VTableDomainModelReference) getVElement()
+			.getDomainModelReference();
+		final VDomainModelReference dmrToCheck = tableDomainModelReference.getDomainModelReference() == null ? tableDomainModelReference
+			: tableDomainModelReference.getDomainModelReference();
 		IObservableValue observableValue;
 		try {
 			observableValue = getEMFFormsDatabinding()
-				.getObservableValue(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
+				.getObservableValue(dmrToCheck
+					, getViewModelContext().getDomainModel());
 		} catch (final DatabindingFailedException ex) {
 			getReportService().report(new RenderingFailedReport(ex));
 			return null;
@@ -211,7 +216,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		label.setBackground(parent.getBackground());
 
 		final EMFFormsLabelProvider labelService = getEMFFormsLabelProvider();
-		final String labelText = labelService.getDisplayName(getVElement().getDomainModelReference(),
+		final String labelText = labelService.getDisplayName(dmrToCheck,
 			getViewModelContext().getDomainModel());
 		label.setText(labelText);
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING).grab(true, false).applyTo(label);
@@ -449,8 +454,10 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			columnNumber++;
 		}
 		tableViewer.setContentProvider(cp);
+
 		final IObservableList list = getEMFFormsDatabinding()
-			.getObservableList(tableDomainModelReference, getViewModelContext().getDomainModel());
+			.getObservableList(tableDomainModelReference.getDomainModelReference() == null ? tableDomainModelReference
+				: tableDomainModelReference.getDomainModelReference(), getViewModelContext().getDomainModel());
 		tableViewer.setInput(list);
 
 		// IMPORTANT:
