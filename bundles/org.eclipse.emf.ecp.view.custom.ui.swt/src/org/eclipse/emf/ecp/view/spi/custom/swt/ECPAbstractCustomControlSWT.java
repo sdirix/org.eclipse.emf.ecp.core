@@ -430,6 +430,7 @@ public abstract class ECPAbstractCustomControlSWT
 		}
 		final InternalEObject internalEObject = (InternalEObject) ((IObserving) observableValue).getObserved();
 		final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
+		observableValue.dispose();
 
 		return internalEObject.eSetting(structuralFeature);
 	}

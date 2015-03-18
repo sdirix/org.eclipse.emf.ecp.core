@@ -120,6 +120,7 @@ public class ViewModelSelectControlSWTRenderer extends EditableEReferenceLabelCo
 		}
 		final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
 		final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
+		observableValue.dispose();
 		final EditingDomain editingDomain = getEditingDomain(eObject);
 		final Command command = SetCommand.create(editingDomain, eObject, structuralFeature, result);
 		editingDomain.getCommandStack().execute(command);

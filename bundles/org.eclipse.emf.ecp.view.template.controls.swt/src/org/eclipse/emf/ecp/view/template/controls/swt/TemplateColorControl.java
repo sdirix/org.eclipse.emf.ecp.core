@@ -75,6 +75,7 @@ public class TemplateColorControl extends AbstractTextControl {
 				final InternalEObject internalEObject = (InternalEObject) ((IObserving) observableValue).getObserved();
 				final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
 				final Setting setting = internalEObject.eSetting(structuralFeature);
+				observableValue.dispose();
 
 				cd.setText(Messages.TemplateColorControl_SelectColor);
 				cd.setRGB(colors.get(setting).getRGB());

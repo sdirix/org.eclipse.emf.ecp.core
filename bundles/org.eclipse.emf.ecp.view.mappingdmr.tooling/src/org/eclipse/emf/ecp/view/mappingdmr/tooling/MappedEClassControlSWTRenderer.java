@@ -16,6 +16,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.eclipse.core.databinding.observable.IObserving;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.notify.AdapterFactory;
@@ -132,15 +133,17 @@ public class MappedEClassControlSWTRenderer extends
 
 	@Override
 	protected void linkValue(Shell shell) {
-		IObserving observing;
+		IObservableValue observableValue;
 		try {
-			observing = (IObserving) Activator.getDefault().getEMFFormsDatabinding()
+			observableValue = Activator.getDefault().getEMFFormsDatabinding()
 				.getObservableValue(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
 		} catch (final DatabindingFailedException ex) {
 			showLinkValueFailedMessageDialog(shell, ex);
 			return;
 		}
-		final VMappingDomainModelReference dmr = (VMappingDomainModelReference) observing.getObserved();
+		final VMappingDomainModelReference dmr = (VMappingDomainModelReference) ((IObserving) observableValue)
+			.getObserved();
+		observableValue.dispose();
 		final ComposedAdapterFactory adapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
 			new ReflectiveItemProviderAdapterFactory(),
 			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });

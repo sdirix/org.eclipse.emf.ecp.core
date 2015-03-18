@@ -72,6 +72,7 @@ public class AttributeSelectControlSWTRenderer extends EditableEReferenceLabelCo
 		}
 		final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
 		final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
+		observableValue.dispose();
 
 		final ComposedAdapterFactory adapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
 			new CustomReflectiveItemProviderAdapterFactory(),

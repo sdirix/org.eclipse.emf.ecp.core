@@ -208,6 +208,7 @@ public abstract class ECPAbstractControl {
 			}
 			final InternalEObject internalEObject = (InternalEObject) ((IObserving) observableValue).getObserved();
 			final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
+			observableValue.dispose();
 
 			firstSetting = internalEObject.eSetting(structuralFeature);
 			return firstSetting;

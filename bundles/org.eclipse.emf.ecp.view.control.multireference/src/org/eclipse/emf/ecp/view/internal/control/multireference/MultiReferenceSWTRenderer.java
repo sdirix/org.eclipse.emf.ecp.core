@@ -216,6 +216,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 			.getObservableValue(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
 		final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
 		final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
+		observableValue.dispose();
 
 		final Button btnAddExisting = new Button(buttonComposite, SWT.PUSH);
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(btnAddExisting);

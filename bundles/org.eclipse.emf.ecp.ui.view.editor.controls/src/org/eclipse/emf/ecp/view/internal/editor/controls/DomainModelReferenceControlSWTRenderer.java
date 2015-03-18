@@ -267,6 +267,7 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 			.getObservableValue(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
 		eObject = (EObject) ((IObserving) observableValue).getObserved();
 		structuralFeature = (EStructuralFeature) observableValue.getValueType();
+		observableValue.dispose();
 
 		final Composite containerComposite = new Composite(parent, SWT.NONE);
 		containerComposite.setBackground(parent.getBackground());

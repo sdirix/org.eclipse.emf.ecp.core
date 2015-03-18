@@ -125,6 +125,7 @@ public class TableValidationInitiator implements GlobalViewModelService {
 					final IObserving observing = (IObserving) observableValue;
 					final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
 					final EObject observed = (EObject) observing.getObserved();
+					observableValue.dispose();
 
 					mapping.put(UniqueSetting.createSetting(observed, structuralFeature), new TableContextMapping(
 						tableControl, context));

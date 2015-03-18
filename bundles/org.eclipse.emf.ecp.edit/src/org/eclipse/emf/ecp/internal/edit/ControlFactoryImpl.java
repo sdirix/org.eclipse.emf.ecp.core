@@ -228,6 +228,7 @@ public final class ControlFactoryImpl implements ECPControlFactory {
 		}
 		final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
 		final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
+		observableValue.dispose();
 
 		for (final ECPControlDescription description : controlDescriptors) {
 

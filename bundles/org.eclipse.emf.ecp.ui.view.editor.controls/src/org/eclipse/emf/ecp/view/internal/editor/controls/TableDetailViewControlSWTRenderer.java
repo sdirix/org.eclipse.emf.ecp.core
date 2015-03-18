@@ -197,6 +197,7 @@ public class TableDetailViewControlSWTRenderer extends SimpleControlSWTControlSW
 			.getObservableValue(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
 		final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
 		final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
+		observableValue.dispose();
 
 		/* parent composite */
 		final Composite composite = new Composite(parent, SWT.NONE);

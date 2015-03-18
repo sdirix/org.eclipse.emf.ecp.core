@@ -15,6 +15,7 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.notify.AdapterFactory;
@@ -138,8 +139,9 @@ public class ControlRootEClassControlChangeableSWTRenderer extends ControlRootEC
 			if (EClass.class.isInstance(selection)) {
 				final EClass selectedFeature = (EClass) selection;
 				final VView view;
+				final IObservableValue observableValue;
 				try {
-					view = (VView) Activator
+					observableValue = Activator
 						.getDefault()
 						.getEMFFormsDatabinding()
 						.getObservableValue(getVElement().getDomainModelReference(),
@@ -148,6 +150,8 @@ public class ControlRootEClassControlChangeableSWTRenderer extends ControlRootEC
 					Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
 					return;
 				}
+				view = (VView) observableValue.getValue();
+				observableValue.dispose();
 
 				if (view.getRootEClass() != null) {
 					getViewModelRegistry().unregister(

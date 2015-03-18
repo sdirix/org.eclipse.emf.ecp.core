@@ -272,6 +272,8 @@ public class VTDomainModelReferenceSelectorImpl extends MinimalEObjectImpl.Conta
 		final EObject selectorEObject = (EObject) ((IObserving) selectorObservableValue).getObserved();
 		final EStructuralFeature selectorStructuralFeature = (EStructuralFeature) selectorObservableValue
 			.getValueType();
+		controlObservableValue.dispose();
+		selectorObservableValue.dispose();
 
 		final boolean equal = UniqueSetting.createSetting(selectorEObject, selectorStructuralFeature).equals(
 			UniqueSetting.createSetting(controlEObject, controlStructuralFeature));

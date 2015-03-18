@@ -196,6 +196,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		}
 		final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
 		final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
+		observableValue.dispose();
 
 		final EClass clazz = ((EReference) structuralFeature).getEReferenceType();
 
@@ -742,6 +743,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 				}
 				final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
 				final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
+				observableValue.dispose();
 
 				validationIcon.setImage(getValidationIcon(getVElement().getDiagnostic().getHighestSeverity()));
 
@@ -862,6 +864,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 				final EStructuralFeature structuralFeature1 = (EStructuralFeature) observableValue1.getValueType();
 				final EObject observed1 = (EObject) ((IObserving) observableValue1).getObserved();
 				value1 = observed1.eGet(structuralFeature1, true);
+				observableValue1.dispose();
 			} catch (final DatabindingFailedException ex) {
 				value1 = null;
 			}
@@ -871,6 +874,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 				final EStructuralFeature structuralFeature2 = (EStructuralFeature) observableValue2.getValueType();
 				final EObject observed2 = (EObject) ((IObserving) observableValue2).getObserved();
 				value2 = observed2.eGet(structuralFeature2, true);
+				observableValue2.dispose();
 			} catch (final DatabindingFailedException ex) {
 				value2 = null;
 			}
@@ -944,6 +948,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
 			final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
 			final Setting setting = ((InternalEObject) eObject).eSetting(structuralFeature);
+			observableValue.dispose();
 
 			final VDiagnostic vDiagnostic = vTableControl.getDiagnostic();
 			if (vDiagnostic != null) {

@@ -70,6 +70,7 @@ public class TargetDMRControlSWTRenderer extends
 		}
 		final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
 		final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
+		observableValue.dispose();
 
 		final VIndexDomainModelReference mappingDomainModelReference = VIndexDomainModelReference.class
 			.cast(eObject);

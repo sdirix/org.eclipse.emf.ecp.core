@@ -76,6 +76,7 @@ public class TemplateIconControl extends AbstractTextControl {
 							getViewModelContext().getDomainModel());
 					final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
 					final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
+					observableValue.dispose();
 					eObject.eSet(structuralFeature, url);
 				} catch (final MalformedURLException ex) {
 
@@ -163,6 +164,7 @@ public class TemplateIconControl extends AbstractTextControl {
 				}
 				final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
 				final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
+				observableValue.dispose();
 				eObject.eSet(structuralFeature, "platform:/plugin/" //$NON-NLS-1$
 					+ iconTreeContentProvider.getLastBundle().getSymbolicName() + "/" + file); //$NON-NLS-1$
 			}

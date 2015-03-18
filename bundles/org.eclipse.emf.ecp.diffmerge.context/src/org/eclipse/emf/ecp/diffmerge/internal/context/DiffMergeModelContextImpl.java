@@ -142,6 +142,7 @@ public class DiffMergeModelContextImpl extends ViewModelContextImpl implements
 			final InternalEObject internalEObject = (InternalEObject) ((IObserving) observableValue)
 				.getObserved();
 			final Setting setting = internalEObject.eSetting(structuralFeature);
+			observableValue.dispose();
 
 			Set<VControl> controls = getControlsFor(setting);
 			controls = getValidMergeControls(controls);

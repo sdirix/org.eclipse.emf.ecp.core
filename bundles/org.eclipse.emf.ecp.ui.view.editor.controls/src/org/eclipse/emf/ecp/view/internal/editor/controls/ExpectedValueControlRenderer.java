@@ -267,9 +267,11 @@ public abstract class ExpectedValueControlRenderer extends SimpleControlSWTContr
 	 * @throws DatabindingFailedException if the databinding fails
 	 */
 	protected EObject getObservedEObject() throws DatabindingFailedException {
-		final IObserving observableValue = (IObserving) Activator.getDefault().getEMFFormsDatabinding()
+		final IObservableValue observableValue = Activator.getDefault().getEMFFormsDatabinding()
 			.getObservableValue(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
-		return (EObject) observableValue.getObserved();
+		final EObject result = (EObject) ((IObserving) observableValue).getObserved();
+		observableValue.dispose();
+		return result;
 	}
 
 	/**
@@ -309,6 +311,7 @@ public abstract class ExpectedValueControlRenderer extends SimpleControlSWTContr
 				}
 				final InternalEObject internalEObject = (InternalEObject) ((IObserving) observableValue).getObserved();
 				final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
+				observableValue.dispose();
 				return ECPTooltipModifierHelper.modifyString(String.class.cast(converted),
 					internalEObject.eSetting(structuralFeature));
 			}

@@ -174,6 +174,7 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 				}
 				final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
 				final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
+				observableValue.dispose();
 				Object value = null;
 				if (!eObject.eIsSet(structuralFeature)) {
 					sl.topControl = baseControl;

@@ -118,6 +118,7 @@ public class ValidationServiceImpl implements ValidationService {
 						}
 					}
 					validate(eObjectsToValidate);
+					observableValue.dispose();
 				}
 			}
 			if (!VElement.class.isInstance(notification.getNotifier())) {
@@ -166,6 +167,7 @@ public class ValidationServiceImpl implements ValidationService {
 					}
 				}
 				validate(eObjectsToValidate);
+				observableValue.dispose();
 			}
 		}
 

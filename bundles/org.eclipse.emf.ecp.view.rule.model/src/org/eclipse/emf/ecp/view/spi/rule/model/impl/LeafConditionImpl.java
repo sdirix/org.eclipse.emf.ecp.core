@@ -503,6 +503,7 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 					}
 					final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
 					final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
+					observableValue.dispose();
 
 					try {
 						result |= doEvaluate(eObject, structuralFeature, expectedValue, true,

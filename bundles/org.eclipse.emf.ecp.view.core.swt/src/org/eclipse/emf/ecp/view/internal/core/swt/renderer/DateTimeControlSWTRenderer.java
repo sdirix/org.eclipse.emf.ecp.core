@@ -204,6 +204,7 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 			.getObservableValue(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
 		final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
 		final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
+		observableValue.dispose();
 		if (eObject.eIsSet(structuralFeature)) {
 			stackLayout.topControl = dateTimeComposite;
 		} else {

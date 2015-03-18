@@ -22,7 +22,6 @@ import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.databinding.EMFUpdateValueStrategy;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecp.view.internal.core.swt.Activator;
 import org.eclipse.emf.ecp.view.internal.core.swt.MessageKeys;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer;
@@ -324,6 +323,7 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 				}
 				final InternalEObject internalEObject = (InternalEObject) ((IObserving) observableValue).getObserved();
 				final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
+				observableValue.dispose();
 				return ECPTooltipModifierHelper.modifyString(String.class.cast(converted),
 					internalEObject.eSetting(structuralFeature));
 			}

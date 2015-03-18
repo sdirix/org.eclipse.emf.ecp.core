@@ -92,6 +92,7 @@ public class DMRSelectorControlSWTRenderer extends EditableEReferenceLabelContro
 		}
 		final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
 		final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
+		observableValue.dispose();
 
 		final VFeaturePathDomainModelReference value = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
 		value.setDomainModelEFeature(featureToSet);

@@ -71,6 +71,7 @@ public class FeaturePathDMRControlSWTRenderer extends
 		}
 		final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
 		final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
+		observableValue.dispose();
 
 		final VKeyAttributeDomainModelReference mappingDomainModelReference = VKeyAttributeDomainModelReference.class
 			.cast(eObject);

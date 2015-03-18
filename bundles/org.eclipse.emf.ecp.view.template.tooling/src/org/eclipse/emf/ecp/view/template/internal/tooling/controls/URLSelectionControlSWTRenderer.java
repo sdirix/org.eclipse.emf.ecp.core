@@ -200,6 +200,7 @@ public class URLSelectionControlSWTRenderer extends SimpleControlSWTControlSWTRe
 		}
 		final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
 		final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
+		observableValue.dispose();
 
 		final EditingDomain editingDomain = getEditingDomain(eObject);
 		final Command command = SetCommand.create(editingDomain, eObject, structuralFeature, selectedURL);

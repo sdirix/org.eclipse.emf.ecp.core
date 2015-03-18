@@ -68,6 +68,9 @@ public final class DefaultMergeUtil {
 		final EObject toEObject = (EObject) ((IObserving) toObservableValue).getObserved();
 		final EStructuralFeature toStructuralFeature = (EStructuralFeature) toObservableValue.getValueType();
 
+		fromObservableValue.dispose();
+		toObservableValue.dispose();
+
 		if (!toStructuralFeature.isChangeable()) {
 			return;
 		}

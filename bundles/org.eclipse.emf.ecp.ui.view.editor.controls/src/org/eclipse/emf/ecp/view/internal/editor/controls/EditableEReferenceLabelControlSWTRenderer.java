@@ -93,6 +93,7 @@ public abstract class EditableEReferenceLabelControlSWTRenderer extends EReferen
 			.getObservableValue(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
 		final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
 		final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
+		observableValue.dispose();
 
 		unset.addSelectionListener(new SelectionAdapter() {
 

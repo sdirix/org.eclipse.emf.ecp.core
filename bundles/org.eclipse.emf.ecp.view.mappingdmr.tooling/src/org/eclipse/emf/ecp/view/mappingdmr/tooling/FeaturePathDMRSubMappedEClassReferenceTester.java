@@ -52,6 +52,7 @@ public class FeaturePathDMRSubMappedEClassReferenceTester implements
 		}
 		final EStructuralFeature feature = (EStructuralFeature) observableValue.getValueType();
 		final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
+		observableValue.dispose();
 
 		if (VMappingDomainModelReference.class.isInstance(eObject.eContainer())
 			&& VViewPackage.eINSTANCE

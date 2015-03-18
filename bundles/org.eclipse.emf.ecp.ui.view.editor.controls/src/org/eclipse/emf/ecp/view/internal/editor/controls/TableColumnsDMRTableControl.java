@@ -140,6 +140,7 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 			.getObservableValue(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
 		structuralFeature = (EStructuralFeature) observableValue.getValueType();
 		eObject = (EObject) ((IObserving) observableValue).getObserved();
+		observableValue.dispose();
 
 		final Composite composite = new Composite(parent, SWT.NONE);
 		composite.setBackgroundMode(SWT.INHERIT_FORCE);
@@ -324,6 +325,7 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 			}
 			structuralFeature = (EStructuralFeature) observableValue.getValueType();
 			eObject = (EObject) ((IObserving) observableValue).getObserved();
+			observableValue.dispose();
 			viewer.setInput(list);
 		}
 	}
