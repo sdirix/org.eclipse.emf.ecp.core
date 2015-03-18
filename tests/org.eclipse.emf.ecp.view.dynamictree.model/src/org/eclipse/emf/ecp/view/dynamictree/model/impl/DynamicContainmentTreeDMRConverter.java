@@ -154,6 +154,10 @@ public class DynamicContainmentTreeDMRConverter implements DomainModelReferenceC
 				"The base item index of the DynamicContainmentTreeDomainModelReference could not be resolved because its container is null."); //$NON-NLS-1$
 		}
 		final DynamicContainmentItem packingItem = (DynamicContainmentItem) parent;
+		if (packingItem.getBaseItemIndex() == null) {
+			throw new DatabindingFailedException(
+				"The base item index of the DynamicContainmentTreeDomainModelReference must not be null."); //$NON-NLS-1$
+		}
 		return packingItem.getBaseItemIndex();
 	}
 
