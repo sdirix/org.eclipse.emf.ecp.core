@@ -24,6 +24,8 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 
 /**
  * An implementation of {@link DomainModelReferenceConverter} that converts {@link VIndexDomainModelReference
@@ -33,25 +35,46 @@ import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
  *
  */
 public class IndexDomainModelReferenceConverter implements DomainModelReferenceConverter {
-
 	private EMFFormsDatabinding emfFormsDatabinding;
+	private ServiceReference<EMFFormsDatabinding> databindingServiceReference;
 
 	/**
 	 * Sets the {@link EMFFormsDatabinding}.
 	 *
 	 * @param emfFormsDatabinding the emfFormsDatabinding to set
 	 */
-	protected void setEMFFormsDatabinding(EMFFormsDatabinding emfFormsDatabinding) {
+	void setEMFFormsDatabinding(EMFFormsDatabinding emfFormsDatabinding) {
 		this.emfFormsDatabinding = emfFormsDatabinding;
 	}
 
 	/**
 	 * Unsets the {@link EMFFormsDatabinding}.
-	 *
-	 * @param emfFormsDatabinding the emfFormsDatabinding to unset
 	 */
-	protected void unsetEMFFormsDatabinding(EMFFormsDatabinding emfFormsDatabinding) {
-		this.emfFormsDatabinding = null;
+	void unsetEMFFormsDatabinding() {
+		emfFormsDatabinding = null;
+	}
+
+	/**
+	 * This method is called by the OSGI framework when this {@link DomainModelReferenceConverter} is activated. It
+	 * retrieves the {@link EMFFormsDatabinding EMF Forms databinding service}.
+	 *
+	 * @param bundleContext The {@link BundleContext} of this classes bundle.
+	 */
+	protected final void activate(BundleContext bundleContext) {
+		databindingServiceReference = bundleContext.getServiceReference(EMFFormsDatabinding.class);
+		setEMFFormsDatabinding(bundleContext.getService(databindingServiceReference));
+
+	}
+
+	/**
+	 * This method is called by the OSGI framework when this {@link DomainModelReferenceConverter} is deactivated.
+	 * It frees the {@link EMFFormsDatabinding EMF Forms databinding service}.
+	 *
+	 * @param bundleContext The {@link BundleContext} of this classes bundle.
+	 */
+	protected final void deactivate(BundleContext bundleContext) {
+		unsetEMFFormsDatabinding();
+		bundleContext.ungetService(databindingServiceReference);
 	}
 
 	/**
