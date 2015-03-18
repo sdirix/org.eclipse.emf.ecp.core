@@ -94,7 +94,8 @@ public class EMFFormsRendererFactoryImpl implements EMFFormsRendererFactory {
 			}
 		}
 		if (bestService == null) {
-			throw new EMFFormsNoRendererException("No fitting EMFFormsRendererService available!"); //$NON-NLS-1$
+			throw new EMFFormsNoRendererException(String.format(
+				"No fitting EMFFormsRendererService for %1$s available!", vElement.eClass().getName())); //$NON-NLS-1$
 		}
 		final AbstractSWTRenderer<VElement> rendererInstance = bestService.getRendererInstance(vElement,
 			viewModelContext);

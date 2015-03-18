@@ -12,9 +12,13 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.categorization.swt;
 
+import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.emf.databinding.EMFDataBindingContext;
+import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.emf.ecp.view.internal.categorization.swt.MessageKeys;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorization;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
@@ -23,7 +27,9 @@ import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.LayoutProviderHelper;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.emfforms.spi.localization.LocalizationServiceHelper;
+import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -37,6 +43,8 @@ import org.eclipse.swt.widgets.Label;
  *
  */
 public class SWTCategorizationRenderer extends AbstractSWTRenderer<VCategorization> {
+	private final EMFDataBindingContext dataBindingContext;
+
 	/**
 	 * Default constructor.
 	 *
@@ -46,6 +54,7 @@ public class SWTCategorizationRenderer extends AbstractSWTRenderer<VCategorizati
 	 */
 	public SWTCategorizationRenderer(VCategorization vElement, ViewModelContext viewContext, ReportService reportService) {
 		super(vElement, viewContext, reportService);
+		dataBindingContext = new EMFDataBindingContext();
 	}
 
 	private SWTGridDescription rendererGridDescription;
@@ -64,6 +73,7 @@ public class SWTCategorizationRenderer extends AbstractSWTRenderer<VCategorizati
 	@Override
 	protected void dispose() {
 		rendererGridDescription = null;
+		dataBindingContext.dispose();
 		super.dispose();
 	}
 
@@ -99,8 +109,13 @@ public class SWTCategorizationRenderer extends AbstractSWTRenderer<VCategorizati
 		headingLbl.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_categorization_title"); //$NON-NLS-1$
 		final Label whatToDoLbl = new Label(categoryComposite, SWT.NONE);
 		whatToDoLbl.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_categorization_message"); //$NON-NLS-1$
-		final String headingText = getVElement().getName();
-		headingLbl.setText(headingText == null ? "" : headingText); //$NON-NLS-1$
+
+		final IObservableValue modelValue = EMFEditObservables.observeValue(
+			AdapterFactoryEditingDomain.getEditingDomainFor(getVElement()), getVElement(),
+			VViewPackage.eINSTANCE.getElement_Label());
+		final IObservableValue targetValue = SWTObservables.observeText(headingLbl);
+		dataBindingContext.bindValue(targetValue, modelValue);
+
 		whatToDoLbl.setText(LocalizationServiceHelper.getString(getClass(), MessageKeys.Categorization_Selection));
 		return categoryComposite;
 	}
