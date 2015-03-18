@@ -33,3 +33,5 @@ Export-Package: org.eclipse.emf.ecp.view.template.internal.tooling;ver
  ards;version="1.6.0";x-internal:=true
 Import-Package: org.eclipse.emf.edit.ui.provider;version="0.0.0",
  org.eclipse.jface.databinding.swt;version="0.0.0"
+Bundle-ActivationPolicy: lazy
+Bundle-Activator: org.eclipse.emf.ecp.view.template.internal.tooling.Activator
