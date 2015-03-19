@@ -13,7 +13,6 @@ package org.eclipse.emf.emfforms.internal.core.services.labelprovider;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.same;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -25,7 +24,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.test.common.DefaultRealm;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
-import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.emfforms.spi.core.services.emfspecificservice.EMFSpecificService;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.D;
@@ -46,7 +44,6 @@ public class EMFFormsLabelProviderImpl_Test {
 
 	private EMFFormsLabelProviderImpl labelProvider;
 	private EMFSpecificService emfSpecificService;
-	private AdapterFactoryItemDelegator adapterFactoryItemDelegator;
 	private IItemPropertyDescriptor itemPropertyDescriptor;
 	private IValueProperty valueProperty;
 	private EObjectObservableValue observableValue;
@@ -108,7 +105,6 @@ public class EMFFormsLabelProviderImpl_Test {
 		final String result = labelProvider.getDisplayName(domainModelReference);
 
 		verify(databindingService).getValueProperty(domainModelReference);
-		verify(adapterFactoryItemDelegator).getPropertyDescriptor(any(D.class), same(structuralFeature));
 		verify(itemPropertyDescriptor).getDisplayName(any(D.class));
 		assertEquals(expectedResult, result);
 	}
@@ -146,7 +142,6 @@ public class EMFFormsLabelProviderImpl_Test {
 		final String result = labelProvider.getDisplayName(domainModelReference, eObject);
 
 		verify(databindingService).getObservableValue(domainModelReference, eObject);
-		verify(adapterFactoryItemDelegator).getPropertyDescriptor(value, structuralFeature);
 		verify(itemPropertyDescriptor).getDisplayName(value);
 		assertEquals(expectedResult, result);
 	}
@@ -203,7 +198,6 @@ public class EMFFormsLabelProviderImpl_Test {
 		final String result = labelProvider.getDescription(domainModelReference);
 
 		verify(databindingService).getValueProperty(domainModelReference);
-		verify(adapterFactoryItemDelegator).getPropertyDescriptor(any(D.class), same(structuralFeature));
 		verify(itemPropertyDescriptor).getDescription(any(D.class));
 		assertEquals(expectedResult, result);
 	}
@@ -241,7 +235,6 @@ public class EMFFormsLabelProviderImpl_Test {
 		final String result = labelProvider.getDescription(domainModelReference, eObject);
 
 		verify(databindingService).getObservableValue(domainModelReference, eObject);
-		verify(adapterFactoryItemDelegator).getPropertyDescriptor(value, structuralFeature);
 		verify(itemPropertyDescriptor).getDescription(value);
 		assertEquals(expectedResult, result);
 	}
