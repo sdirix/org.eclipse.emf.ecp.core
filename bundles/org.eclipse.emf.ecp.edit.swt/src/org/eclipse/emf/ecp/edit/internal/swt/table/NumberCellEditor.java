@@ -16,6 +16,7 @@ import java.text.ParseException;
 import java.text.ParsePosition;
 import java.util.Locale;
 
+import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.databinding.EMFUpdateValueStrategy;
@@ -26,6 +27,7 @@ import org.eclipse.emf.ecp.edit.spi.ViewLocaleService;
 import org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor;
 import org.eclipse.emf.ecp.edit.spi.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.databinding.viewers.CellEditorProperties;
@@ -141,10 +143,10 @@ public class NumberCellEditor extends TextCellEditor implements ECPCellEditor {
 	 *
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getTargetToModelStrategy()
+	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getTargetToModelStrategy(org.eclipse.core.databinding.DataBindingContext)
 	 */
 	@Override
-	public UpdateValueStrategy getTargetToModelStrategy() {
+	public UpdateValueStrategy getTargetToModelStrategy(final DataBindingContext databindingContext) {
 		return new EMFUpdateValueStrategy() {
 
 			@Override
@@ -221,13 +223,11 @@ public class NumberCellEditor extends TextCellEditor implements ECPCellEditor {
 					return null;
 				}
 
-				// Object result = getModelValue().getValue();
 				final Object result = null;
 
-				final MessageDialog messageDialog = new MessageDialog(getText().getShell(),
+				final MessageDialog messageDialog = new MessageDialog(text.getShell(),
 					LocalizationServiceHelper.getString(getClass(), TableMessageKeys.NumberCellEditor_InvalidNumber),
-					null,
-					LocalizationServiceHelper.getString(getClass(),
+					null, LocalizationServiceHelper.getString(getClass(),
 						TableMessageKeys.NumberCellEditor_NumberYouEnteredIsInvalid), MessageDialog.ERROR,
 					new String[] { JFaceResources.getString(IDialogLabelKeys.OK_LABEL_KEY) }, 0);
 
@@ -238,18 +238,11 @@ public class NumberCellEditor extends TextCellEditor implements ECPCellEditor {
 					}
 				}.execute();
 
-				if (result == null) {
-					getText().setText(""); //$NON-NLS-1$
-				} else {
-					final DecimalFormat format = NumericalHelper.setupFormat(getLocale(),
-						getInstanceClass());
-					getText().setText(format.format(result));
-				}
+				databindingContext.updateTargets();
 
-				// if (getStructuralFeature().isUnsettable() && result == null) {
-				// showUnsetLabel();
-				// return SetCommand.UNSET_VALUE;
-				// }
+				if (eStructuralFeature.isUnsettable()) {
+					return SetCommand.UNSET_VALUE;
+				}
 				return result;
 			}
 		};
@@ -259,10 +252,10 @@ public class NumberCellEditor extends TextCellEditor implements ECPCellEditor {
 	 *
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getModelToTargetStrategy()
+	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getModelToTargetStrategy(org.eclipse.core.databinding.DataBindingContext)
 	 */
 	@Override
-	public UpdateValueStrategy getModelToTargetStrategy() {
+	public UpdateValueStrategy getModelToTargetStrategy(DataBindingContext databindingContext) {
 		return new EMFUpdateValueStrategy() {
 			@Override
 			public Object convert(Object value) {

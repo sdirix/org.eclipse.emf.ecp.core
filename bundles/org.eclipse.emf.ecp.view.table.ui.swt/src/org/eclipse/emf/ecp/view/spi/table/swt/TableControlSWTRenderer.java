@@ -1120,8 +1120,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		protected Binding createBinding(IObservableValue target, IObservableValue model) {
 			if (ECPCellEditor.class.isInstance(cellEditor)) {
 				return getDataBindingContext().bindValue(target, model,
-					((ECPCellEditor) cellEditor).getTargetToModelStrategy(),
-					((ECPCellEditor) cellEditor).getModelToTargetStrategy());
+					((ECPCellEditor) cellEditor).getTargetToModelStrategy(getDataBindingContext()),
+					((ECPCellEditor) cellEditor).getModelToTargetStrategy(getDataBindingContext()));
 			}
 			return getDataBindingContext().bindValue(target, model);
 		}
