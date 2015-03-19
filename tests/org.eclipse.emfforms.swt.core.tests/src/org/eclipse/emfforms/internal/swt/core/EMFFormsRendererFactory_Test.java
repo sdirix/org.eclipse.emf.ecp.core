@@ -19,6 +19,7 @@ import java.util.Collection;
 
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractAdditionalSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
@@ -82,7 +83,9 @@ public class EMFFormsRendererFactory_Test {
 			.thenReturn(renderer1);
 
 		rendererFactory.addEMFFormsRendererService(rendererService1);
-		rendererFactory.getRendererInstance(mock(VElement.class), mock(ViewModelContext.class));
+		final VElement mockedVElement = mock(VElement.class);
+		when(mockedVElement.eClass()).thenReturn(VViewPackage.eINSTANCE.getControl());
+		rendererFactory.getRendererInstance(mockedVElement, mock(ViewModelContext.class));
 	}
 
 	/**
