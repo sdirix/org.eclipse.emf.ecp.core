@@ -323,6 +323,7 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 				}
 				final InternalEObject internalEObject = (InternalEObject) ((IObserving) observableValue).getObserved();
 				final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
+				observableValue.dispose();
 				return ECPTooltipModifierHelper.modifyString(String.class.cast(converted),
 					internalEObject.eSetting(structuralFeature));
 			}

@@ -215,7 +215,7 @@ public class NumberControlRenderer_PTest extends AbstractControl_PTest {
 		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		mockDatabindingIsUnsettable();
 		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
-			mockedObservable);
+			mockedObservable, new ObservingWritableValue(mockedObservable));
 		when(databindingService.getValueProperty(any(VDomainModelReference.class))).thenReturn(
 			Properties.selfValue(mockedObservable.getValueType()));
 

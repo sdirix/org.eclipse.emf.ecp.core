@@ -193,7 +193,7 @@ public class TextControlRenderer_PTest extends AbstractControl_PTest {
 		Mockito.reset(databindingService);
 		mockDatabindingIsUnsettable();
 		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
-			mockedObservable);
+			mockedObservable, new ObservingWritableValue(mockedObservable));
 
 		final Control renderControl = renderControl(new SWTGridCell(0, 2, renderer));
 		final Text text = (Text) renderControl;

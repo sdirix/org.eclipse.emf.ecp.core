@@ -43,6 +43,17 @@ public class ObservingWritableValue extends WritableValue implements IObserving 
 	}
 
 	/**
+	 * Creates a new instance based on another ObservingWritableValue.
+	 *
+	 * @param observingWritableValue The ObservingWritableValue.
+	 */
+	public ObservingWritableValue(ObservingWritableValue observingWritableValue)
+	{
+		super(observingWritableValue.getRealm(), observingWritableValue.getValue(), observingWritableValue
+			.getValueType());
+	}
+
+	/**
 	 * {@inheritDoc}
 	 *
 	 * @see org.eclipse.core.databinding.observable.IObserving#getObserved()
