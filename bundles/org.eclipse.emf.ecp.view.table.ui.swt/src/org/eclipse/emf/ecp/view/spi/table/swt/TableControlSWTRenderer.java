@@ -732,11 +732,17 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 					return;
 				}
 
+				final VTableDomainModelReference tableDMR = (VTableDomainModelReference) getVElement()
+					.getDomainModelReference();
 				IObservableValue observableValue;
 				try {
-					observableValue = getEMFFormsDatabinding()
-						.getObservableValue(getVElement().getDomainModelReference(),
+					if (tableDMR.getDomainModelReference() != null) {
+						observableValue = getEMFFormsDatabinding().getObservableValue(
+							tableDMR.getDomainModelReference(), getViewModelContext().getDomainModel());
+					} else {
+						observableValue = getEMFFormsDatabinding().getObservableValue(tableDMR,
 							getViewModelContext().getDomainModel());
+					}
 				} catch (final DatabindingFailedException ex) {
 					getReportService().report(new DatabindingFailedReport(ex));
 					return;

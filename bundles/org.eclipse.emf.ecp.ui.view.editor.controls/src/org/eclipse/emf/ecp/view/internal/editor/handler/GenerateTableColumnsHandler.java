@@ -87,7 +87,12 @@ public class GenerateTableColumnsHandler extends MasterDetailAction {
 		final VTableDomainModelReference tableDMR = (VTableDomainModelReference) domainModelReference;
 		IValueProperty valueProperty;
 		try {
-			valueProperty = Activator.getDefault().getEMFFormsDatabinding().getValueProperty(tableDMR);
+			if (tableDMR.getDomainModelReference() != null) {
+				valueProperty = Activator.getDefault().getEMFFormsDatabinding()
+					.getValueProperty(tableDMR.getDomainModelReference());
+			} else {
+				valueProperty = Activator.getDefault().getEMFFormsDatabinding().getValueProperty(tableDMR);
+			}
 		} catch (final DatabindingFailedException ex) {
 			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
 			return;

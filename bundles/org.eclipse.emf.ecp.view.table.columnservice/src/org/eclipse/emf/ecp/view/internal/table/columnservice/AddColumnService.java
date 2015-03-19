@@ -67,11 +67,17 @@ public class AddColumnService implements ViewModelService {
 		}
 		if (VTableDomainModelReference.class.cast(tableControl.getDomainModelReference())
 			.getColumnDomainModelReferences().size() < 1) {
-
+			final VTableDomainModelReference tableDMR = (VTableDomainModelReference) tableControl
+				.getDomainModelReference();
 			final IValueProperty valueProperty;
 			try {
-				valueProperty = Activator.getDefault().getEMFFormsDatabinding()
-					.getValueProperty(tableControl.getDomainModelReference());
+				if (tableDMR.getDomainModelReference() != null) {
+					valueProperty = Activator.getDefault().getEMFFormsDatabinding()
+						.getValueProperty(tableDMR.getDomainModelReference());
+				} else {
+					valueProperty = Activator.getDefault().getEMFFormsDatabinding()
+						.getValueProperty(tableDMR);
+				}
 			} catch (final DatabindingFailedException ex) {
 				Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
 				return;
