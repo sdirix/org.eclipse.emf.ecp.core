@@ -9,20 +9,13 @@
   </parent>
   
   <artifactId>q7tests-kepler</artifactId>
-  <packaging>q7test</packaging>
+  <packaging>rcpttTest</packaging>
 
   <properties>
-    <eclipse-version>4.3.2</eclipse-version>
+    <eclipse-name>luna</eclipse-name>
+	<eclipse-sr>SR2</eclipse-sr>
   </properties>
-  <profiles>
-    <profile>
-      <id>q7cloud</id>
-      <activation>
-	<property>
-	  <name>useCloud</name>
-	  <value>true</value>
-	</property>
-      </activation>
+
       <build>
 	<plugins>
 	  <plugin>
@@ -32,7 +25,5 @@
 	  </plugin>
 	</plugins>
       </build>
-    </profile>
-  </profiles>
 
 </project>
