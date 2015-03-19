@@ -23,8 +23,8 @@ import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.databinding.EObjectObservableValue;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecp.test.common.DefaultRealm;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
-import org.eclipse.emf.ecp.view.test.common.swt.spi.DatabindingClassRunner;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.emfforms.spi.core.services.emfspecificservice.EMFSpecificService;
@@ -32,9 +32,9 @@ import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.D;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * JUnit tests for {@link EMFFormsLabelProviderImpl}.
@@ -42,7 +42,6 @@ import org.junit.runner.RunWith;
  * @author Lucas Koehler
  *
  */
-@RunWith(DatabindingClassRunner.class)
 public class EMFFormsLabelProviderImpl_Test {
 
 	private EMFFormsLabelProviderImpl labelProvider;
@@ -52,6 +51,7 @@ public class EMFFormsLabelProviderImpl_Test {
 	private IValueProperty valueProperty;
 	private EObjectObservableValue observableValue;
 	private EMFFormsDatabinding databindingService;
+	private DefaultRealm defaultRealm;
 
 	/**
 	 * Set up that is executed before every test case.
@@ -60,6 +60,7 @@ public class EMFFormsLabelProviderImpl_Test {
 	 */
 	@Before
 	public void setUp() {
+		defaultRealm = new DefaultRealm();
 		labelProvider = new EMFFormsLabelProviderImpl();
 
 		databindingService = mock(EMFFormsDatabinding.class);
@@ -75,6 +76,14 @@ public class EMFFormsLabelProviderImpl_Test {
 		itemPropertyDescriptor = mock(IItemPropertyDescriptor.class);
 		when(emfSpecificService.getIItemPropertyDescriptor(any(EObject.class), any(EStructuralFeature.class)))
 			.thenReturn(itemPropertyDescriptor);
+	}
+
+	/**
+	 * Clean up the realm.
+	 */
+	@After
+	public void tearDown() {
+		defaultRealm.dispose();
 	}
 
 	/**
