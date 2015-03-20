@@ -29,16 +29,19 @@
 								<runner>
 									<version>${ci4rcptt-maven-version}</version>
 								</runner>
+								<!--
 								<vmArgs>
 									<vmArg>-Dhttp.proxyHost=proxy.eclipse.org</vmArg>
 									<vmArg>-Dhttp.proxyPort=9898</vmArg>
 									<vmArg>-Dhttps.proxyHost=proxy.eclipse.org</vmArg>
 									<vmArg>-Dhttps.proxyPort=9898</vmArg>
 								</vmArgs>
+								-->
 							<aut>
 								<!--<explicit>https://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/${eclipse-name}/${eclipse-sr}/eclipse-modeling-${eclipse-name}-${eclipse-sr}-win32-x86_64.zip&amp;r=1</explicit>-->
 								<explicit>http://mirror.netcologne.de/eclipse//technology/epp/downloads/release/${eclipse-name}/${eclipse-sr}/eclipse-modeling-${eclipse-name}-${eclipse-sr}-linux-gtk-x86_64.tar.gz</explicit>								
 								<!--win32-x86_64.zip-->
+								<!--linux-gtk-x86_64.tar.gz-->
 								
 									<!--
 									<groupId>org.eclipse</groupId>
@@ -70,11 +73,12 @@
 								<project>${project.basedir}/../project</project>
 							</projects>
 
+							<!--
 							<testOptions>
 								<execTimeout>7200</execTimeout>
 								<testExecTimeout>8000</testExecTimeout>
 							</testOptions>
-
+							-->
 						</configuration>
 					</plugin>
 				</plugins>
