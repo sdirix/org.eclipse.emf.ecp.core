@@ -11,48 +11,29 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
-	<properties>
-		<aut-base-path>https://hudson.eclipse.org/ecp/job/ecp-develop/lastSuccessfulBuild/artifact/releng/org.eclipse.emf.ecp.products/target/products/</aut-base-path>
-	</properties>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>com.xored.ci4rcptt</groupId>
+				<artifactId>ci4rcptt-maven-plugin</artifactId>
+				<version>${ci4rcptt-maven-version}</version>
+				<extensions>true</extensions>
+				<configuration>
+						<runner>
+							<version>${ci4rcptt-runner-version}</version>
+						</runner>
+					<aut>
+						<explicit>${currentBuild}/products/org.eclipse.emf.ecp.3x-[platform].zip</explicit>
 
-
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>com.xored.ci4rcptt</groupId>
-						<artifactId>ci4rcptt-maven-plugin</artifactId>
-						<version>${ci4rcptt-maven-version}</version>
-						<extensions>true</extensions>
-						<configuration>
-								<runner>
-									<version>${ci4rcptt-maven-version}</version>
-								</runner>
-								<!--
-								<vmArgs>
-									<vmArg>-Dhttp.proxyHost=proxy.eclipse.org</vmArg>
-									<vmArg>-Dhttp.proxyPort=9898</vmArg>
-									<vmArg>-Dhttps.proxyHost=proxy.eclipse.org</vmArg>
-									<vmArg>-Dhttps.proxyPort=9898</vmArg>
-								</vmArgs>
-								-->
-							<aut>
-								<explicit>${aut-base-path}/org.eclipse.emf.ecp.3x-[platform].zip</explicit>
-
-								<args>
-									<arg>-nl</arg>
-									<arg>en</arg>
-								</args>
-							</aut>
-							
-							<!--
-							<testOptions>
-								<execTimeout>1000000</execTimeout>
-								<testExecTimeout>1000000</testExecTimeout>
-							</testOptions>
-							-->
-						</configuration>
-					</plugin>
-				</plugins>
-			</build>
+						<args>
+							<arg>-nl</arg>
+							<arg>en</arg>
+						</args>
+					</aut>
+					
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 		
 </project>

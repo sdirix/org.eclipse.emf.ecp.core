@@ -27,27 +27,14 @@
 						<extensions>true</extensions>
 						<configuration>
 								<runner>
-									<version>${ci4rcptt-maven-version}</version>
+									<version>${ci4rcptt-runner-version}</version>
 								</runner>
-								<!--
-								<vmArgs>
-									<vmArg>-Dhttp.proxyHost=proxy.eclipse.org</vmArg>
-									<vmArg>-Dhttp.proxyPort=9898</vmArg>
-									<vmArg>-Dhttps.proxyHost=proxy.eclipse.org</vmArg>
-									<vmArg>-Dhttps.proxyPort=9898</vmArg>
-								</vmArgs>
-								-->
 							<aut>
 								<!--<explicit>https://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/${eclipse-name}/${eclipse-sr}/eclipse-modeling-${eclipse-name}-${eclipse-sr}-win32-x86_64.zip&amp;r=1</explicit>-->
 								<explicit>http://mirror.netcologne.de/eclipse//technology/epp/downloads/release/${eclipse-name}/${eclipse-sr}/eclipse-modeling-${eclipse-name}-${eclipse-sr}-linux-gtk-x86_64.tar.gz</explicit>								
 								<!--win32-x86_64.zip-->
 								<!--linux-gtk-x86_64.tar.gz-->
-								
-									<!--
-									<groupId>org.eclipse</groupId>
-		    						<artifactId>modeling</artifactId>
-		    						<version>${eclipse-version}</version>
-									-->
+
 								<injections>
 									<injection>
 										<site>${emfstore-update-site}</site>
@@ -62,7 +49,7 @@
 										</features>
 									</injection>
 									<injection>
-										<site>https://hudson.eclipse.org/ecp/job/ecp-develop/lastSuccessfulBuild/artifact/releng/org.eclipse.emf.ecp.repository/target/repository/</site>
+										<site>${currentBuild}/repository/</site>
 										<features>
 											<feature>org.eclipse.emf.ecp.sdk.feature.feature.group</feature>
 										</features>
@@ -73,12 +60,6 @@
 								<project>${project.basedir}/../project</project>
 							</projects>
 
-							<!--
-							<testOptions>
-								<execTimeout>7200</execTimeout>
-								<testExecTimeout>8000</testExecTimeout>
-							</testOptions>
-							-->
 						</configuration>
 					</plugin>
 				</plugins>
