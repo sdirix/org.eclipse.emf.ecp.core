@@ -30,8 +30,14 @@
 									<version>${ci4rcptt-runner-version}</version>
 								</runner>
 							<aut>
-								<!--<explicit>https://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/${eclipse-name}/${eclipse-sr}/eclipse-modeling-${eclipse-name}-${eclipse-sr}-win32-x86_64.zip&amp;r=1</explicit>-->
-								<explicit>http://mirror.netcologne.de/eclipse//technology/epp/downloads/release/${eclipse-name}/${eclipse-sr}/eclipse-modeling-${eclipse-name}-${eclipse-sr}-linux-gtk-x86_64.tar.gz</explicit>								
+								<!--
+								<explicit>https://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/${eclipse-name}/${eclipse-sr}/eclipse-modeling-${eclipse-name}-${eclipse-sr}-win32-x86_64.zip&r=1</explicit>
+								-->
+								<!--
+								<explicit>http://mirror.netcologne.de/eclipse//technology/epp/downloads/release/${eclipse-name}/${eclipse-sr}/eclipse-modeling-${eclipse-name}-${eclipse-sr}-linux-gtk-x86_64.tar.gz</explicit>
+								-->
+								<explicit>ftp://mirror.cc.columbia.edu/pub/software/eclipse/technology/epp/downloads/release/${eclipse-name}/${eclipse-sr}/eclipse-modeling-${eclipse-name}-${eclipse-sr}-linux-gtk-x86_64.tar.gz</explicit>
+								
 								<!--win32-x86_64.zip-->
 								<!--linux-gtk-x86_64.tar.gz-->
 
