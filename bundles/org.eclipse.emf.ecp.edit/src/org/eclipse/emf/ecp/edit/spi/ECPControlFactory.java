@@ -19,7 +19,7 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 
 /**
  * The ControlFactory provides a
- * method ({@link ECPControlFactory#createControl(Class, VDomainModelReference)}) for creating a
+ * method ({@link ECPControlFactory#createControl(Class,EObject, VDomainModelReference)}) for creating a
  * suitable
  * control with the known widgets.
  *
