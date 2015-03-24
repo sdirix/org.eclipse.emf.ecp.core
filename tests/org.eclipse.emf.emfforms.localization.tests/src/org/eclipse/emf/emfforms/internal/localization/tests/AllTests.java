@@ -11,19 +11,19 @@
  ******************************************************************************/
 package org.eclipse.emf.emfforms.internal.localization.tests;
 
-import org.eclipse.emf.emfforms.spi.localization.LocalizationServiceHelper_PTest;
+import org.eclipse.emf.emfforms.spi.localization.AbstractEMFFormsLocaleProvider_Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 /**
- * JUnit Plugin Test Suite for emfforms.localization .
+ * JUnit Test Suite for emfforms.localization .
  *
  * @author Eugen Neufeld
  *
  */
 @RunWith(Suite.class)
-@SuiteClasses({ LocalizationServiceHelper_PTest.class })
-public class AllPluginTests {
+@SuiteClasses({ AbstractEMFFormsLocaleProvider_Test.class })
+public class AllTests {
 	// JUnit 4 Test Suite
 }

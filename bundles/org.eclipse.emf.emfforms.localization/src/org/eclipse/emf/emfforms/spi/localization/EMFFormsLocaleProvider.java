@@ -27,4 +27,18 @@ public interface EMFFormsLocaleProvider {
 	 * @return the current {@link Locale}
 	 */
 	Locale getLocale();
+
+	/**
+	 * Add an EMFFormsLocaleChangeListener that gets notified about locale changes.
+	 * 
+	 * @param listener The EMFFormsLocaleChangeListener to add
+	 */
+	void addEMFFormsLocaleChangeListener(EMFFormsLocaleChangeListener listener);
+
+	/**
+	 * Remove an EMFFormsLocaleChangeListener.
+	 * 
+	 * @param listener The EMFFormsLocaleChangeListener to remove
+	 */
+	void removeEMFFormsLocaleChangeListener(EMFFormsLocaleChangeListener listener);
 }

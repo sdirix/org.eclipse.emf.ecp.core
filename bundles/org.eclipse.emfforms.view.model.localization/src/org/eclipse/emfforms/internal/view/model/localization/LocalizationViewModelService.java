@@ -22,6 +22,12 @@ import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
+import org.eclipse.emf.emfforms.spi.localization.EMFFormsLocaleChangeListener;
+import org.eclipse.emf.emfforms.spi.localization.EMFFormsLocaleProvider;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 
 /**
  * LocalizationViewModelService which will localize the view model.
@@ -29,7 +35,33 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * @author Eugen Neufeld
  *
  */
-public class LocalizationViewModelService implements ViewModelService {
+public class LocalizationViewModelService implements ViewModelService, EMFFormsLocaleChangeListener {
+
+	private EMFFormsLocaleProvider localeProvider;
+	private ServiceReference<EMFFormsLocaleProvider> serviceReference;
+	private BundleContext bundleContext;
+	private VElement view;
+
+	/**
+	 * Default constructor.
+	 */
+	public LocalizationViewModelService() {
+		super();
+		final Bundle bundle = FrameworkUtil.getBundle(getClass());
+		if (bundle == null) {
+			return;
+		}
+		bundleContext = bundle.getBundleContext();
+		if (bundleContext == null) {
+			return;
+		}
+		serviceReference = bundleContext.getServiceReference(EMFFormsLocaleProvider.class);
+		if (serviceReference == null) {
+			return;
+		}
+		localeProvider = bundleContext.getService(serviceReference);
+		localeProvider.addEMFFormsLocaleChangeListener(this);
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -38,10 +70,9 @@ public class LocalizationViewModelService implements ViewModelService {
 	 */
 	@Override
 	public void instantiate(ViewModelContext context) {
-		final VElement view = context.getViewModel();
+		view = context.getViewModel();
 		final LocalizationAdapter adapter = getLocalizationAdapter(view);
-		localize(adapter, view);
-		checkContents(adapter, view);
+		localizeView(adapter, view);
 
 		context.registerViewChangeListener(new ModelChangeListener() {
 
@@ -60,6 +91,11 @@ public class LocalizationViewModelService implements ViewModelService {
 				}
 			}
 		});
+	}
+
+	private void localizeView(LocalizationAdapter adapter, final VElement view) {
+		localize(adapter, view);
+		checkContents(adapter, view);
 	}
 
 	private LocalizationAdapter getLocalizationAdapter(VElement view) {
@@ -84,7 +120,7 @@ public class LocalizationViewModelService implements ViewModelService {
 
 	/**
 	 * The actual method localizing a {@link VElement}.
-	 * 
+	 *
 	 * @param localizationAdapter The LocalizationAdapter to use for localization
 	 * @param vElement The {@link VElement} to localize
 	 */
@@ -105,7 +141,10 @@ public class LocalizationViewModelService implements ViewModelService {
 	 */
 	@Override
 	public void dispose() {
-		// intentionally left empty
+		localeProvider.removeEMFFormsLocaleChangeListener(this);
+		if (bundleContext != null && serviceReference != null) {
+			bundleContext.ungetService(serviceReference);
+		}
 	}
 
 	/**
@@ -116,6 +155,17 @@ public class LocalizationViewModelService implements ViewModelService {
 	@Override
 	public int getPriority() {
 		return -100;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.emfforms.spi.localization.EMFFormsLocaleChangeListener#notifyLocaleChange()
+	 */
+	@Override
+	public void notifyLocaleChange() {
+		final LocalizationAdapter adapter = getLocalizationAdapter(view);
+		localizeView(adapter, view);
 	}
 
 }

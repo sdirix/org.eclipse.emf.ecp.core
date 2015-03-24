@@ -11,3 +11,4 @@ Require-Bundle: org.junit;bundle-version="[4.11.0,5.0.0)",
 Export-Package: org.eclipse.emfforms.internal.view.model.localization;
  version="1.6.0";x-internal:=true,org.eclipse.emfforms.view.model.loca
  lization.tests;version="1.6.0"
+Bundle-Localization: OSGI-INF/l10n/bundle

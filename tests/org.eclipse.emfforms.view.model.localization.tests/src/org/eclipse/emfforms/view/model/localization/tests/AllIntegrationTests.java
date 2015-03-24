@@ -9,21 +9,21 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.emfforms.internal.localization.tests;
+package org.eclipse.emfforms.view.model.localization.tests;
 
-import org.eclipse.emf.emfforms.spi.localization.LocalizationServiceHelper_PTest;
+import org.eclipse.emfforms.internal.view.model.localization.LocalizationViewModelService_ITest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 /**
- * JUnit Plugin Test Suite for emfforms.localization .
+ * JUnit 4 Integration Test Suite for view.model.localization.
  *
  * @author Eugen Neufeld
  *
  */
 @RunWith(Suite.class)
-@SuiteClasses({ LocalizationServiceHelper_PTest.class })
-public class AllPluginTests {
+@SuiteClasses({ LocalizationViewModelService_ITest.class })
+public class AllIntegrationTests {
 	// JUnit 4 Test Suite
 }

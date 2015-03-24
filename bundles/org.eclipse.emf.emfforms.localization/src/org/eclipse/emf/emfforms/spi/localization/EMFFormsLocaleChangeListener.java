@@ -9,21 +9,19 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.emfforms.internal.localization.tests;
+package org.eclipse.emf.emfforms.spi.localization;
 
-import org.eclipse.emf.emfforms.spi.localization.LocalizationServiceHelper_PTest;
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
-import org.junit.runners.Suite.SuiteClasses;
 
 /**
- * JUnit Plugin Test Suite for emfforms.localization .
+ * EMF Forms locale change listener.
  *
  * @author Eugen Neufeld
  *
  */
-@RunWith(Suite.class)
-@SuiteClasses({ LocalizationServiceHelper_PTest.class })
-public class AllPluginTests {
-	// JUnit 4 Test Suite
+public interface EMFFormsLocaleChangeListener {
+
+	/**
+	 * Notify about a locale change.
+	 */
+	void notifyLocaleChange();
 }
