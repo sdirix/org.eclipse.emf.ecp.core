@@ -32,7 +32,7 @@ public final class CompareControls {
 
 	/**
 	 * Compares to {@link VControl VControls}. This is just a convenience method which delegates to
-	 * {@link #areEqual(VDomainModelReference, VDomainModelReference)}.
+	 * {@link #areEqual(VDomainModelReference,EObject, VDomainModelReference,EObject)}.
 	 *
 	 * @param left the first VControl to compare
 	 * @param leftDomainModel The domain model of the left VControl
