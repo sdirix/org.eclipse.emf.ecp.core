@@ -18,6 +18,7 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
+import org.eclipse.emf.emfforms.spi.localization.EMFFormsLocaleProvider;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
@@ -37,26 +38,30 @@ public final class MockViewSWTRenderer {
 	private static EMFFormsDatabinding emfFormsDatabinding = Mockito.mock(EMFFormsDatabinding.class);
 	private static EMFFormsEditSupport emfFormsEditSupport = Mockito.mock(EMFFormsEditSupport.class);
 	private static EMFFormsRendererFactory emfFormsRendererFactory = Mockito.mock(EMFFormsRendererFactory.class);
+	private static EMFFormsLocaleProvider emfFormsLocaleProvider = Mockito.mock(EMFFormsLocaleProvider.class);
 
 	public MockViewSWTRenderer(VView vElement, ViewModelContext viewModelContext, ReportService rendererFactory) {
 
 	}
 
 	public static ViewSWTRenderer withInvalidGridDescription() {
-		return new ViewSWTRendererWithInvalidGridDescription(vElement, viewModelContext, reportService);
+		return new ViewSWTRendererWithInvalidGridDescription(vElement, viewModelContext, reportService,
+			emfFormsLocaleProvider);
 	}
 
 	public static ViewSWTRenderer withoutPropertyDescriptor() {
-		return new ViewSWTRendererWithNoPropertyDescriptorFoundException(vElement, viewModelContext, reportService);
+		return new ViewSWTRendererWithNoPropertyDescriptorFoundException(vElement, viewModelContext, reportService,
+			emfFormsLocaleProvider);
 	}
 
 	public static ViewSWTRenderer withoutRenderer() {
-		return new ViewSWTRendererWithNoRendererFoundException(vElement, viewModelContext, reportService);
+		return new ViewSWTRendererWithNoRendererFoundException(vElement, viewModelContext, reportService,
+			emfFormsLocaleProvider);
 	}
 
 	public static ViewSWTRenderer newRenderer() {
 		return new ViewSWTRenderer(vElement, viewModelContext, reportService, emfFormsRendererFactory,
-			emfFormsDatabinding, emfFormsEditSupport);
+			emfFormsDatabinding, emfFormsEditSupport, emfFormsLocaleProvider);
 	}
 
 }

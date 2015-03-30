@@ -40,9 +40,10 @@ import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.DatabindingClassRunner;
-import org.eclipse.emf.emfforms.spi.core.services.labelprovider.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
+import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.widgets.Button;
@@ -301,10 +302,11 @@ public class DateTimeControlRenderer_PTest extends AbstractControl_PTest {
 	 * @throws NoRendererFoundException
 	 * @throws NoPropertyDescriptorFoundExeption
 	 * @throws DatabindingFailedException
+	 * @throws NoLabelFoundException
 	 */
 	@Test
 	public void testLabelServiceUsage() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption,
-		DatabindingFailedException {
+		DatabindingFailedException, NoLabelFoundException {
 		labelServiceUsage();
 	}
 }

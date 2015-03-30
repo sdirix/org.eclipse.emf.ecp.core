@@ -11,16 +11,21 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.editor.controls;
 
+import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.IObserving;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.spi.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
-import org.eclipse.emf.emfforms.spi.core.services.labelprovider.EMFFormsLabelProvider;
+import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
+import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
+import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.dialogs.IDialogLabelKeys;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -39,6 +44,8 @@ import org.eclipse.swt.widgets.Shell;
  */
 public abstract class EditableEReferenceLabelControlSWTRenderer extends EReferenceLabelControlSWTRenderer {
 
+	private final EMFDataBindingContext viewModelDBC;
+
 	/**
 	 * @param vElement the view model element to be rendered
 	 * @param viewContext the view context
@@ -47,7 +54,7 @@ public abstract class EditableEReferenceLabelControlSWTRenderer extends EReferen
 	public EditableEReferenceLabelControlSWTRenderer(VControl vElement, ViewModelContext viewContext,
 		ReportService reportService) {
 		super(vElement, viewContext, reportService);
-		// TODO Auto-generated constructor stub
+		viewModelDBC = new EMFDataBindingContext();
 	}
 
 	/**
@@ -62,14 +69,48 @@ public abstract class EditableEReferenceLabelControlSWTRenderer extends EReferen
 		GridLayoutFactory.fillDefaults().numColumns(3).spacing(0, 0).equalWidth(false).applyTo(composite);
 
 		final EMFFormsLabelProvider labelProvider = Activator.getDefault().getEMFFormsLabelProvider();
-		final String labelText = labelProvider.getDisplayName(getVElement().getDomainModelReference(),
-			getViewModelContext().getDomainModel());
-		final String tooltip = labelProvider.getDescription(getVElement().getDomainModelReference(),
-			getViewModelContext().getDomainModel());
-
 		final Button selectClass = new Button(composite, SWT.PUSH);
-		selectClass.setText("Link " + labelText); //$NON-NLS-1$
-		selectClass.setToolTipText("Link " + tooltip); //$NON-NLS-1$
+		try {
+			final IObservableValue labelText = labelProvider.getDisplayName(getVElement().getDomainModelReference(),
+				getViewModelContext().getDomainModel());
+			final IObservableValue tooltip = labelProvider.getDescription(getVElement().getDomainModelReference(),
+				getViewModelContext().getDomainModel());
+
+			viewModelDBC.bindValue(SWTObservables.observeText(selectClass), labelText, null, new UpdateValueStrategy() {
+
+				/**
+				 * {@inheritDoc}
+				 * 
+				 * @see org.eclipse.core.databinding.UpdateValueStrategy#convert(java.lang.Object)
+				 */
+				@Override
+				public Object convert(Object value) {
+					final String result = (String) super.convert(value);
+					return "Link " + result; //$NON-NLS-1$
+				}
+
+			});
+			viewModelDBC.bindValue(SWTObservables.observeTooltipText(selectClass), tooltip, null,
+				new UpdateValueStrategy() {
+
+					/**
+					 * {@inheritDoc}
+					 * 
+					 * @see org.eclipse.core.databinding.UpdateValueStrategy#convert(java.lang.Object)
+					 */
+					@Override
+					public Object convert(Object value) {
+						final String result = (String) super.convert(value);
+						return "Link " + result; //$NON-NLS-1$
+					}
+
+				});
+		} catch (final NoLabelFoundException e) {
+			// FIXME Expectation?
+			getReportService().getReports().add(new RenderingFailedReport(e));
+			selectClass.setText("Link "); //$NON-NLS-1$
+			selectClass.setToolTipText("Link "); //$NON-NLS-1$
+		}
 		selectClass.addSelectionListener(new SelectionAdapter() {
 
 			/**
@@ -139,5 +180,16 @@ public abstract class EditableEReferenceLabelControlSWTRenderer extends EReferen
 				// no op
 			}
 		}.execute();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.internal.editor.controls.EReferenceLabelControlSWTRenderer#dispose()
+	 */
+	@Override
+	public void dispose() {
+		viewModelDBC.dispose();
+		super.dispose();
 	}
 }

@@ -19,6 +19,7 @@ import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.DatabindingClassRunner;
+import org.eclipse.emf.emfforms.spi.localization.EMFFormsLocaleProvider;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsNoRendererException;
@@ -51,12 +52,13 @@ public class ViewRenderer_PTest {
 		final EMFFormsDatabinding databindingService = mock(EMFFormsDatabinding.class);
 		rendererFactory = mock(EMFFormsRendererFactory.class);
 		final EMFFormsEditSupport editSupport = mock(EMFFormsEditSupport.class);
+		final EMFFormsLocaleProvider localeProvider = mock(EMFFormsLocaleProvider.class);
 		view = Mockito.mock(VView.class);
 
 		context = Mockito.mock(ViewModelContext.class);
 		shell = new Shell();
 		viewRenderer = new ViewSWTRenderer(view, context, reportService, rendererFactory, databindingService,
-			editSupport);
+			editSupport, localeProvider);
 		viewRenderer.init();
 
 	}

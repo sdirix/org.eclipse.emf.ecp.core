@@ -40,7 +40,7 @@ public class EMFFormsRendererFactoryImpl implements EMFFormsRendererFactory {
 	 *
 	 * @param rendererService The EMFFormsRendererService to add
 	 */
-	protected void addEMFFormsRendererService(EMFFormsRendererService<VElement> rendererService) {
+	public void addEMFFormsRendererService(EMFFormsRendererService<VElement> rendererService) {
 		rendererServices.add(rendererService);
 	}
 
@@ -49,7 +49,7 @@ public class EMFFormsRendererFactoryImpl implements EMFFormsRendererFactory {
 	 *
 	 * @param rendererService The EMFFormsRendererService to remove
 	 */
-	protected void removeEMFFormsRendererService(EMFFormsRendererService<VElement> rendererService) {
+	public void removeEMFFormsRendererService(EMFFormsRendererService<VElement> rendererService) {
 		rendererServices.remove(rendererService);
 	}
 
@@ -123,5 +123,12 @@ public class EMFFormsRendererFactoryImpl implements EMFFormsRendererFactory {
 		}
 
 		return renderers;
+	}
+
+	/**
+	 * Method for Tests to clear all services.
+	 */
+	public void clearRenderers() {
+		rendererServices.clear();
 	}
 }

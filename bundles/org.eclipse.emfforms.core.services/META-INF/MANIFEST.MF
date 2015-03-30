@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: EMFForms Core Services
+Bundle-SymbolicName: org.eclipse.emfforms.core.services
+Bundle-Version: 1.6.0.qualifier
+Bundle-Vendor: Eclipse Modeling Project
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ActivationPolicy: lazy
+Require-Bundle: org.eclipse.core.databinding.observable;bundle-version="[1.3.0,2.0.0)";visibility:=reexport,
+ org.eclipse.emf.ecp.view.model;bundle-version="[1.6.0,2.0.0)"
+Export-Package: org.eclipse.emfforms.spi.core.services.label;version="1.6.0"

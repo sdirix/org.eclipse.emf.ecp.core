@@ -19,6 +19,7 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.emfforms.spi.core.services.emfspecificservice.EMFSpecificService;
 
@@ -87,5 +88,31 @@ public class EMFSpecificServiceImpl implements EMFSpecificService {
 
 	private AdapterFactoryItemDelegator getAdapterFactoryItemDelegator(AdapterFactory adapterFactory) {
 		return new AdapterFactoryItemDelegator(adapterFactory);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.emfforms.spi.core.services.emfspecificservice.EMFSpecificService#getIItemPropertySource(org.eclipse.emf.ecore.EObject)
+	 */
+	@Override
+	public IItemPropertySource getIItemPropertySource(EObject eObject) {
+		final EditingDomain editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(eObject);
+		IItemPropertySource propertySource;
+		if (editingDomain != null && AdapterFactoryEditingDomain.class.isInstance(editingDomain)) {
+			propertySource = (IItemPropertySource) AdapterFactoryEditingDomain.class.cast(editingDomain)
+				.getAdapterFactory().adapt(eObject, IItemPropertySource.class);
+		} else {
+			final ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
+				new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE),
+				// new CustomReflectiveItemProvider(), <-- move to common bundle,
+				// then remove the ReflectiveItemProviderAdapterFactory
+				new ReflectiveItemProviderAdapterFactory()
+			});
+			propertySource = (IItemPropertySource) composedAdapterFactory.adapt(eObject, IItemPropertySource.class);
+			composedAdapterFactory.dispose();
+		}
+
+		return propertySource;
 	}
 }

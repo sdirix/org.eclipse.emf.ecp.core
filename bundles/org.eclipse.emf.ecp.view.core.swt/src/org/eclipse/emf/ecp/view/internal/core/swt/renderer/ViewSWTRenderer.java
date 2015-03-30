@@ -23,14 +23,19 @@ import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
+import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
+import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
+import org.eclipse.emf.emfforms.spi.localization.EMFFormsLocaleChangeListener;
+import org.eclipse.emf.emfforms.spi.localization.EMFFormsLocaleProvider;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Layout;
 import org.eclipse.swt.widgets.Text;
@@ -38,9 +43,11 @@ import org.eclipse.swt.widgets.Text;
 /**
  * The Class ViewSWTRenderer.
  */
-public class ViewSWTRenderer extends ContainerSWTRenderer<VView> {
+public class ViewSWTRenderer extends ContainerSWTRenderer<VView> implements EMFFormsLocaleChangeListener {
 
 	private final EMFFormsEditSupport emfFormsEditSupport;
+	private Composite renderControl;
+	private final EMFFormsLocaleProvider localeProvider;
 
 	/**
 	 * Default constructor.
@@ -51,12 +58,15 @@ public class ViewSWTRenderer extends ContainerSWTRenderer<VView> {
 	 * @param factory the {@link EMFFormsRendererFactory}
 	 * @param emfFormsDatabinding The {@link EMFFormsDatabinding}
 	 * @param emfFormsEditSupport The {@link EMFFormsEditSupport}
+	 * @param localeProvider The {@link EMFFormsLocaleProvider}
 	 */
 	public ViewSWTRenderer(VView vElement, ViewModelContext viewContext, ReportService reportService,
 		EMFFormsRendererFactory factory, EMFFormsDatabinding emfFormsDatabinding,
-		EMFFormsEditSupport emfFormsEditSupport) {
+		EMFFormsEditSupport emfFormsEditSupport, EMFFormsLocaleProvider localeProvider) {
 		super(vElement, viewContext, reportService, factory, emfFormsDatabinding);
 		this.emfFormsEditSupport = emfFormsEditSupport;
+		this.localeProvider = localeProvider;
+		localeProvider.addEMFFormsLocaleChangeListener(this);
 	}
 
 	@Override
@@ -144,4 +154,39 @@ public class ViewSWTRenderer extends ContainerSWTRenderer<VView> {
 	private EMFFormsEditSupport getEMFFormsEditSupport() {
 		return emfFormsEditSupport;
 	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.emfforms.spi.localization.EMFFormsLocaleChangeListener#notifyLocaleChange()
+	 */
+	@Override
+	public void notifyLocaleChange() {
+		renderControl.layout(true, true);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer#renderControl(org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell,
+	 *      org.eclipse.swt.widgets.Composite)
+	 */
+	@Override
+	protected Control renderControl(SWTGridCell gridCell, Composite parent) throws NoRendererFoundException,
+		NoPropertyDescriptorFoundExeption {
+		renderControl = (Composite) super.renderControl(gridCell, parent);
+		return renderControl;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer#dispose()
+	 */
+	@Override
+	protected void dispose() {
+		localeProvider.removeEMFFormsLocaleChangeListener(this);
+		super.dispose();
+	}
+
 }

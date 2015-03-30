@@ -20,6 +20,7 @@ import static org.mockito.Mockito.when;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.eclipse.core.databinding.observable.Observables;
 import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.core.databinding.observable.list.WritableList;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
@@ -46,9 +47,10 @@ import org.eclipse.emf.ecp.view.spi.table.swt.TableControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.DatabindingClassRunner;
-import org.eclipse.emf.emfforms.spi.core.services.labelprovider.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
+import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
@@ -68,10 +70,12 @@ import org.junit.runner.RunWith;
 @SuppressWarnings("restriction")
 @RunWith(DatabindingClassRunner.class)
 public class SWTTableDatabindingLabel_PTest {
-	private static final String DISPLAYNAME = "displayname";
-	private static final String DISPLAYNAME_COLUMNS = "displayname-columns";
-	private static final String DESCRIPTION = "description";
-	private static final String DESCRIPTION_COLUMNS = "description-columns";
+	private static final IObservableValue DISPLAYNAME = Observables.constantObservableValue("displayname");
+	private static final IObservableValue DISPLAYNAME_COLUMNS = Observables
+		.constantObservableValue("displayname-columns");
+	private static final IObservableValue DESCRIPTION = Observables.constantObservableValue("description");
+	private static final IObservableValue DESCRIPTION_COLUMNS = Observables
+		.constantObservableValue("description-columns");
 	private EMFFormsDatabinding databindingService;
 	private TableControlSWTRenderer renderer;
 	private Shell shell;
@@ -86,9 +90,10 @@ public class SWTTableDatabindingLabel_PTest {
 	 * VControl, ViewModelContext).
 	 *
 	 * @throws DatabindingFailedException
+	 * @throws NoLabelFoundException
 	 */
 	@Before
-	public void setUp() throws DatabindingFailedException {
+	public void setUp() throws DatabindingFailedException, NoLabelFoundException {
 		databindingService = mock(EMFFormsDatabinding.class);
 		labelProvider = mock(EMFFormsLabelProvider.class);
 
@@ -150,14 +155,14 @@ public class SWTTableDatabindingLabel_PTest {
 		final Composite titleComposite = (Composite) composite.getChildren()[0];
 		final Label titleLabel = (Label) titleComposite.getChildren()[0];
 
-		assertEquals(DISPLAYNAME, titleLabel.getText());
+		assertEquals(DISPLAYNAME.getValue(), titleLabel.getText());
 
 		final Control tableControl = getTable(renderedControl);
 		assertTrue(Table.class.isInstance(tableControl));
 		final Table table = (Table) tableControl;
 		final TableColumn column = table.getColumn(1);
-		assertEquals(DISPLAYNAME_COLUMNS, column.getText());
-		assertEquals(DESCRIPTION_COLUMNS, column.getToolTipText());
+		assertEquals(DISPLAYNAME_COLUMNS.getValue(), column.getText());
+		assertEquals(DESCRIPTION_COLUMNS.getValue(), column.getToolTipText());
 	}
 
 	/**

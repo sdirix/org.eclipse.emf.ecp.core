@@ -28,6 +28,7 @@ import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
+import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -45,6 +46,7 @@ import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
+import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTablePackage;
@@ -57,10 +59,12 @@ import org.eclipse.emf.edit.ui.dnd.EditingDomainViewerDropAdapter;
 import org.eclipse.emf.edit.ui.dnd.LocalTransfer;
 import org.eclipse.emf.edit.ui.dnd.ViewerDragAdapter;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
-import org.eclipse.emf.emfforms.spi.core.services.labelprovider.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
+import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
+import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -81,6 +85,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.TableColumn;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
@@ -110,6 +115,8 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 		vtViewTemplateProvider = bundleContext.getService(vtViewTemplateProviderServiceReference);
 	}
 
+	private final EMFDataBindingContext viewModelDBC;
+
 	/**
 	 * Default constructor.
 	 *
@@ -120,6 +127,7 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 	public TableColumnsDMRTableControl(VControl vElement, ViewModelContext viewContext,
 		ReportService reportService) {
 		super(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider);
+		viewModelDBC = new EMFDataBindingContext();
 	}
 
 	private ComposedAdapterFactory composedAdapterFactory;
@@ -183,13 +191,22 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 		viewer.getTable().setHeaderVisible(true);
 		viewer.getTable().setLinesVisible(true);
 		final TableViewerColumn column = new TableViewerColumn(viewer, SWT.NONE);
+		final TableColumn tableColumn = column.getColumn();
 		final EMFFormsLabelProvider emfFormsLabelProvider = Activator.getDefault().getEMFFormsLabelProvider();// TODO
-		column.getColumn().setText(
-			emfFormsLabelProvider.getDisplayName(getVElement().getDomainModelReference(), getViewModelContext()
-				.getDomainModel()));
-		column.getColumn().setToolTipText(
-			emfFormsLabelProvider.getDescription(getVElement().getDomainModelReference(), getViewModelContext()
-				.getDomainModel()));
+		try {
+			final IObservableValue labelText = emfFormsLabelProvider.getDisplayName(
+				getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
+			final IObservableValue tooltip = emfFormsLabelProvider.getDescription(
+				getVElement().getDomainModelReference(),getViewModelContext().getDomainModel());
+			viewModelDBC.bindValue(SWTObservables.observeText(tableComposite), labelText);
+			viewModelDBC.bindValue(SWTObservables.observeTooltipText(tableComposite), tooltip);
+		} catch (final NoLabelFoundException e) {
+			// FIXME Expectations?
+			getReportService().getReports().add(new RenderingFailedReport(e));
+			tableColumn.setText(e.getMessage());
+			tableColumn.setToolTipText(e.toString());
+		}
+
 		layout.setColumnData(column.getColumn(), new ColumnWeightData(1, true));
 
 		viewer.setLabelProvider(labelProvider);
@@ -250,6 +267,7 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 		labelProvider.dispose();
 		composedAdapterFactory.dispose();
 		tableControl.eAdapters().remove(adapter);
+		viewModelDBC.dispose();
 		super.dispose();
 	}
 

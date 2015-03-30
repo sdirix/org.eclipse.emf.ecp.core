@@ -11,10 +11,6 @@
  ******************************************************************************/
 package org.eclipse.emf.emfforms.spi.localization;
 
-import java.util.Locale;
-import java.util.ResourceBundle;
-
-import org.eclipse.osgi.service.localization.BundleLocalization;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
@@ -43,38 +39,28 @@ public final class LocalizationServiceHelper {
 			.getBundleContext();
 	}
 
-	private String getLocale() {
-		final ServiceReference<EMFFormsLocaleProvider> serviceReference = bundleContext
-			.getServiceReference(EMFFormsLocaleProvider.class);
+	private String innerGetString(Bundle bundle, String key) {
+		final ServiceReference<EMFFormsLocalizationService> serviceReference = bundleContext
+			.getServiceReference(EMFFormsLocalizationService.class);
 		if (serviceReference == null) {
 			return null;
 		}
-		final EMFFormsLocaleProvider localeProvider = bundleContext.getService(serviceReference);
-		final Locale result = localeProvider.getLocale();
-		bundleContext.ungetService(serviceReference);
-		return result.getLanguage();
-	}
-
-	private String getString(Bundle bundle, String localeLanguage, String key) {
-		final ServiceReference<BundleLocalization> serviceReference = bundleContext
-			.getServiceReference(BundleLocalization.class);
-		final BundleLocalization bundleLocalization = bundleContext.getService(serviceReference);
-		final ResourceBundle resourceBundle = bundleLocalization.getLocalization(bundle, localeLanguage);
-		if (resourceBundle == null) {
-			// TODO log -> move report service in common
-			return key;
-		}
-		if (!resourceBundle.containsKey(key)) {
-			// TODO log -> move report service in common
-			return key;
-		}
-		final String result = resourceBundle.getString(key);
+		final EMFFormsLocalizationService localeProvider = bundleContext.getService(serviceReference);
+		final String result = localeProvider.getString(bundle, key);
 		bundleContext.ungetService(serviceReference);
 		return result;
 	}
 
-	private String innerGetString(Bundle bundle, String key) {
-		return getString(bundle, getLocale(), key);
+	private String innerGetString(Class<?> clazz, String key) {
+		final ServiceReference<EMFFormsLocalizationService> serviceReference = bundleContext
+			.getServiceReference(EMFFormsLocalizationService.class);
+		if (serviceReference == null) {
+			return null;
+		}
+		final EMFFormsLocalizationService localeProvider = bundleContext.getService(serviceReference);
+		final String result = localeProvider.getString(clazz, key);
+		bundleContext.ungetService(serviceReference);
+		return result;
 	}
 
 	/**
@@ -96,6 +82,6 @@ public final class LocalizationServiceHelper {
 	 * @return The translated key
 	 */
 	public static String getString(Class<?> clazz, String key) {
-		return getString(FrameworkUtil.getBundle(clazz), key);
+		return getInstance().innerGetString(clazz, key);
 	}
 }

@@ -19,6 +19,7 @@ import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
+import org.eclipse.emf.emfforms.spi.localization.EMFFormsLocaleProvider;
 import org.eclipse.emf.emfstore.bowling.BowlingPackage;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -31,8 +32,8 @@ public class ViewSWTRendererWithNoPropertyDescriptorFoundException extends ViewS
 	 * @param factory the {@link SWTRendererFactory}
 	 */
 	public ViewSWTRendererWithNoPropertyDescriptorFoundException(VView vElement, ViewModelContext viewContext,
-		ReportService factory) {
-		super(vElement, viewContext, factory, null, null, null);
+		ReportService factory, EMFFormsLocaleProvider localeProvider) {
+		super(vElement, viewContext, factory, null, null, null, localeProvider);
 	}
 
 	@Override

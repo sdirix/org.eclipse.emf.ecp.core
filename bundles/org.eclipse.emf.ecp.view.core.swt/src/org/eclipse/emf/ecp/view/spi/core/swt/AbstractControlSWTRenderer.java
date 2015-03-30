@@ -42,11 +42,13 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.emfforms.spi.core.services.labelprovider.EMFFormsLabelProvider;
 import org.eclipse.emf.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
+import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
+import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
@@ -85,6 +87,7 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 		this.emfFormsDatabinding = emfFormsDatabinding;
 		this.emfFormsLabelProvider = emfFormsLabelProvider;
 		this.vtViewTemplateProvider = vtViewTemplateProvider;
+		viewModelDBC = new EMFDataBindingContext();
 	}
 
 	/**
@@ -119,6 +122,7 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 	private DataBindingContext dataBindingContext;
 	private IObservableValue modelValue;
 	private DomainModelReferenceChangeListener domainModelReferenceChangeListener;
+	private final EMFDataBindingContext viewModelDBC;
 
 	// TODO is this needed?
 	@Override
@@ -166,6 +170,7 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 			modelValue.dispose();
 			modelValue = null;
 		}
+		viewModelDBC.dispose();
 		super.dispose();
 	}
 
@@ -290,7 +295,7 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 			}
 
 			final EMFFormsLabelProvider labelProvider = getEMFFormsLabelProvider();
-			label = new Label(parent, SWT.NONE);
+			label = new Label(parent, SWT.BORDER);
 			label.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_label"); //$NON-NLS-1$
 			label.setBackground(parent.getBackground());
 			String extra = ""; //$NON-NLS-1$
@@ -300,10 +305,16 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 				extra = mandatoryStyle.getMandatoryMarker();
 			}
 			final EObject rootObject = getViewModelContext().getDomainModel();
-			final String labelText = labelProvider.getDisplayName(domainModelReference, rootObject);
-			if (labelText != null && labelText.trim().length() != 0) {
-				label.setText(labelText + extra);
-				label.setToolTipText(labelProvider.getDescription(domainModelReference, rootObject));
+			try {
+				final IObservableValue textObservable = SWTObservables.observeText(label);
+				final IObservableValue displayNameObservable = labelProvider.getDisplayName(domainModelReference, rootObject);
+				viewModelDBC.bindValue(textObservable, displayNameObservable);
+				final IObservableValue tooltipObservable = SWTObservables.observeTooltipText(label);
+				final IObservableValue descriptionObservable = labelProvider.getDescription(domainModelReference, rootObject);
+				viewModelDBC.bindValue(tooltipObservable, descriptionObservable);
+			} catch (final NoLabelFoundException e) {
+				//FIXME Expectations?
+				getReportService().report(new RenderingFailedReport(e));
 			}
 
 		}

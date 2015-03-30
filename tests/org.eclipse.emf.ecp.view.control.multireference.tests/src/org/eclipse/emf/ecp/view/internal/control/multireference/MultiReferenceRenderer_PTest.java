@@ -20,6 +20,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.core.databinding.observable.IObserving;
+import org.eclipse.core.databinding.observable.Observables;
 import org.eclipse.core.databinding.observable.Realm;
 import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.core.databinding.observable.list.WritableList;
@@ -39,12 +40,13 @@ import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.DatabindingClassRunner;
-import org.eclipse.emf.emfforms.spi.core.services.labelprovider.EMFFormsLabelProvider;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.D;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestFactory;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
+import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
@@ -62,7 +64,6 @@ import org.mockito.Mockito;
  * @author Lucas Koehler
  *
  */
-@SuppressWarnings("restriction")
 @RunWith(DatabindingClassRunner.class)
 public class MultiReferenceRenderer_PTest {
 	private static final String TEST_DESCRIPTION = "test-description"; //$NON-NLS-1$
@@ -89,15 +90,16 @@ public class MultiReferenceRenderer_PTest {
 	 * VControl, ViewModelContext).
 	 *
 	 * @throws DatabindingFailedException if the databinding failed
+	 * @throws NoLabelFoundException
 	 */
 	@Before
-	public void setUp() throws DatabindingFailedException {
+	public void setUp() throws DatabindingFailedException, NoLabelFoundException {
 		databindingService = mock(EMFFormsDatabinding.class);
 		labelProvider = mock(EMFFormsLabelProvider.class);
 		when(labelProvider.getDescription(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
-			TEST_DESCRIPTION);
+			Observables.constantObservableValue(TEST_DESCRIPTION));
 		when(labelProvider.getDisplayName(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
-			TEST_DISPLAYNAME);
+			Observables.constantObservableValue(TEST_DISPLAYNAME));
 
 		shell = new Shell();
 

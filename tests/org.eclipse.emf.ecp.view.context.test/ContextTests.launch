@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <launchConfiguration type="org.eclipse.pde.ui.JunitLaunchConfig">
 <setAttribute key="additional_plugins">
+<setEntry value="org.eclipse.emfforms.core.services.emf:1.6.0.qualifier:default:true"/>
+<setEntry value="org.eclipse.emfforms.core.services:1.6.0.qualifier:default:true"/>
+<setEntry value="org.eclipse.emfforms.localization.default:1.6.0.qualifier:default:true"/>
 <setEntry value="org.eclipse.equinox.ds:1.4.200.v20131126-2331:default:false"/>
 <setEntry value="org.hamcrest.library:1.3.0.v201305281000:default:false"/>
 <setEntry value="org.junit:4.11.0.v201303080030:default:false"/>

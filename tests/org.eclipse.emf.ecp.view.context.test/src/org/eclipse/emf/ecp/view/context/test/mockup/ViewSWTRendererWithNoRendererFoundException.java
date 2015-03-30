@@ -18,6 +18,7 @@ import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
+import org.eclipse.emf.emfforms.spi.localization.EMFFormsLocaleProvider;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
@@ -29,8 +30,8 @@ public class ViewSWTRendererWithNoRendererFoundException extends ViewSWTRenderer
 	 * @param reportService the {@link ReportService}
 	 */
 	public ViewSWTRendererWithNoRendererFoundException(VView vElement, ViewModelContext viewContext,
-		ReportService reportService) {
-		super(vElement, viewContext, reportService, null, null, null);
+		ReportService reportService, EMFFormsLocaleProvider localeProvider) {
+		super(vElement, viewContext, reportService, null, null, null, localeProvider);
 	}
 
 	@Override

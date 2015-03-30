@@ -18,6 +18,7 @@ import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
+import org.eclipse.emf.emfforms.spi.localization.EMFFormsLocaleProvider;
 
 public class ViewSWTRendererWithInvalidGridDescription extends ViewSWTRenderer {
 
@@ -27,8 +28,8 @@ public class ViewSWTRendererWithInvalidGridDescription extends ViewSWTRenderer {
 	 * @param factory the {@link SWTRendererFactory}
 	 */
 	public ViewSWTRendererWithInvalidGridDescription(VView vElement, ViewModelContext viewContext,
-		ReportService factory) {
-		super(vElement, viewContext, factory, null, null, null);
+		ReportService factory, EMFFormsLocaleProvider localeProvider) {
+		super(vElement, viewContext, factory, null, null, null, localeProvider);
 	}
 
 	@Override

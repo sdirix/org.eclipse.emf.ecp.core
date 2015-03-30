@@ -37,12 +37,13 @@ import org.eclipse.emf.ecp.view.template.style.alignment.model.AlignmentType;
 import org.eclipse.emf.ecp.view.template.style.alignment.model.VTAlignmentStyleProperty;
 import org.eclipse.emf.ecp.view.template.style.textControlEnablement.model.VTTextControlEnablementStyleProperty;
 import org.eclipse.emf.edit.command.SetCommand;
-import org.eclipse.emf.emfforms.spi.core.services.labelprovider.EMFFormsLabelProvider;
 import org.eclipse.emf.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
+import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
+import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
@@ -108,8 +109,15 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 	 * @return the string to show as the message
 	 */
 	protected String getTextMessage() {
-		return getEMFFormsLabelProvider()
-			.getDisplayName(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
+		try {
+			return (String) getEMFFormsLabelProvider()
+				.getDisplayName(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel())
+				.getValue();
+		} catch (final NoLabelFoundException ex) {
+			//FIXME Expectations?
+			getReportService().report(new RenderingFailedReport(ex));
+		}
+		return ""; //$NON-NLS-1$
 	}
 
 	/**

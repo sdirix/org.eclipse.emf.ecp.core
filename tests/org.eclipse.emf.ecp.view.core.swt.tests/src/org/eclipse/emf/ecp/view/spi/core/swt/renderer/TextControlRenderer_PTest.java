@@ -18,6 +18,8 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import org.eclipse.core.databinding.observable.Observables;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcoreFactory;
@@ -33,10 +35,11 @@ import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.DatabindingClassRunner;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.SWTTestUtil;
-import org.eclipse.emf.emfforms.spi.core.services.labelprovider.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
+import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
+import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
@@ -69,9 +72,10 @@ public class TextControlRenderer_PTest extends AbstractControl_PTest {
 
 	@Test
 	public void renderControlLabelAlignmentNone()
-		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption, DatabindingFailedException {
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption, DatabindingFailedException,
+		NoLabelFoundException {
 		when(labelProvider.getDisplayName(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
-			"antiException");
+			Observables.constantObservableValue("antiException", String.class));
 		setMockLabelAlignment(LabelAlignment.NONE);
 		final TestObservableValue mockedObservableValue = mock(TestObservableValue.class);
 		when(mockedObservableValue.getRealm()).thenReturn(realm);
@@ -88,9 +92,10 @@ public class TextControlRenderer_PTest extends AbstractControl_PTest {
 
 	@Test
 	public void renderControlLabelAlignmentLeft()
-		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption, DatabindingFailedException {
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption, DatabindingFailedException,
+		NoLabelFoundException {
 		when(labelProvider.getDisplayName(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
-			"antiException");
+			Observables.constantObservableValue("antiException", String.class));
 		setMockLabelAlignment(LabelAlignment.LEFT);
 		final TestObservableValue mockedObservableValue = mock(TestObservableValue.class);
 		when(mockedObservableValue.getRealm()).thenReturn(realm);
@@ -113,10 +118,11 @@ public class TextControlRenderer_PTest extends AbstractControl_PTest {
 	 * @throws NoRendererFoundException
 	 * @throws NoPropertyDescriptorFoundExeption
 	 * @throws DatabindingFailedException
+	 * @throws NoLabelFoundException
 	 */
 	@Test
 	public void testLabelServiceUsage() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption,
-		DatabindingFailedException {
+		DatabindingFailedException, NoLabelFoundException {
 		labelServiceUsage();
 	}
 
@@ -137,7 +143,7 @@ public class TextControlRenderer_PTest extends AbstractControl_PTest {
 
 	@Test
 	public void testDatabindingServiceUsageInitialBinding() throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
+		NoPropertyDescriptorFoundExeption, DatabindingFailedException, NoLabelFoundException {
 		final String initialValue = "initial";
 		final ObservingWritableValue mockedObservable = new ObservingWritableValue(realm, initialValue,
 			EcorePackage.eINSTANCE.getENamedElement_Name());
@@ -149,7 +155,7 @@ public class TextControlRenderer_PTest extends AbstractControl_PTest {
 
 	@Test
 	public void testDatabindingServiceUsageChangeObservable() throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
+		NoPropertyDescriptorFoundExeption, DatabindingFailedException, NoLabelFoundException {
 		final String initialValue = "initial";
 		final String changedValue = "changed";
 		final ObservingWritableValue mockedObservable = new ObservingWritableValue(realm, initialValue,
@@ -164,7 +170,7 @@ public class TextControlRenderer_PTest extends AbstractControl_PTest {
 
 	@Test
 	public void testDatabindingServiceUsageChangeControl() throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
+		NoPropertyDescriptorFoundExeption, DatabindingFailedException, NoLabelFoundException {
 		final String initialValue = "initial";
 		final String changedValue = "changed";
 		final ObservingWritableValue mockedObservable = new ObservingWritableValue(realm, initialValue,
@@ -185,11 +191,12 @@ public class TextControlRenderer_PTest extends AbstractControl_PTest {
 	 * @throws NoRendererFoundException
 	 * @throws NoPropertyDescriptorFoundExeption
 	 * @throws DatabindingFailedException if the databinding failed
+	 * @throws NoLabelFoundException
 	 */
 	private Text setUpDatabindingTest(final ObservingWritableValue mockedObservable) throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
+		NoPropertyDescriptorFoundExeption, DatabindingFailedException, NoLabelFoundException {
 		when(labelProvider.getDisplayName(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
-			"antiException");
+			Observables.constantObservableValue("antiException"));
 		Mockito.reset(databindingService);
 		mockDatabindingIsUnsettable();
 		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
@@ -207,11 +214,12 @@ public class TextControlRenderer_PTest extends AbstractControl_PTest {
 	 * @throws NoPropertyDescriptorFoundExeption
 	 * @throws NoRendererFoundException
 	 * @throws DatabindingFailedException
+	 * @throws NoLabelFoundException
 	 */
 	@Test
 	public void testLabelServiceUsageTextField() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption,
-		DatabindingFailedException {
-		final String testDisplayName = "test-displayname";
+		DatabindingFailedException, NoLabelFoundException {
+		final IObservableValue testDisplayName = Observables.constantObservableValue("test-displayname", String.class);
 		when(labelProvider.getDisplayName(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			testDisplayName);
 

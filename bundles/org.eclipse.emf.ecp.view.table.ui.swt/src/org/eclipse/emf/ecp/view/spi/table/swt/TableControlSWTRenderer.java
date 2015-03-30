@@ -31,6 +31,7 @@ import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.Diagnostic;
+import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -69,11 +70,12 @@ import org.eclipse.emf.ecp.view.template.style.tableValidation.model.VTTableVali
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.emf.emfforms.spi.core.services.labelprovider.EMFFormsLabelProvider;
 import org.eclipse.emf.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
+import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.databinding.viewers.ObservableMapCellLabelProvider;
@@ -140,6 +142,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	private Button addButton;
 	private Button removeButton;
 	private final ImageRegistryService imageRegistryService;
+	private final EMFDataBindingContext viewModelDBC;
 
 	/**
 	 * Default constructor.
@@ -157,6 +160,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		VTViewTemplateProvider vtViewTemplateProvider, ImageRegistryService imageRegistryService) {
 		super(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider);
 		this.imageRegistryService = imageRegistryService;
+		viewModelDBC = new EMFDataBindingContext();
 	}
 
 	/**
@@ -217,11 +221,21 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		label.setBackground(parent.getBackground());
 
 		final EMFFormsLabelProvider labelService = getEMFFormsLabelProvider();
-		final String labelText = labelService.getDisplayName(dmrToCheck,
-			getViewModelContext().getDomainModel());
-		label.setText(labelText);
-		final String labelTooltipText = labelService.getDescription(dmrToCheck, getViewModelContext().getDomainModel());
-		label.setToolTipText(labelTooltipText);
+		try {
+			final IObservableValue labelText = labelService.getDisplayName(dmrToCheck,
+				getViewModelContext().getDomainModel());
+
+			viewModelDBC.bindValue(SWTObservables.observeText(label), labelText);
+
+			final IObservableValue labelTooltipText = labelService.getDescription(dmrToCheck, getViewModelContext()
+				.getDomainModel());
+			viewModelDBC.bindValue(SWTObservables.observeTooltipText(label), labelTooltipText);
+		} catch (final NoLabelFoundException e) {
+			// FIXME Expectation?
+			getReportService().report(new RenderingFailedReport(e));
+			label.setText(e.getMessage());
+			label.setToolTipText(e.toString());
+		}
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING).grab(true, false).applyTo(label);
 
 		// VALIDATION
@@ -423,14 +437,10 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			final EStructuralFeature eStructuralFeature = (EStructuralFeature) valueProperty.getValueType();
 
 			final EMFFormsLabelProvider labelService = getEMFFormsLabelProvider();
-			final String text = labelService.getDisplayName(dmr);
-			final String tooltipText = labelService.getDescription(dmr);
 
 			final CellEditor cellEditor = createCellEditor(tempInstance, eStructuralFeature, tableViewer.getTable());
 			final TableViewerColumn column = TableViewerColumnBuilder
 				.create()
-				.setText(text)
-				.setToolTipText(tooltipText)
 				.setResizable(true)
 				.setMoveable(false)
 				.setStyle(SWT.NONE)
@@ -438,7 +448,17 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 					ECPCellEditor.class.isInstance(cellEditor) ? ECPCellEditor.class.cast(cellEditor)
 						.getColumnWidthWeight() : 100)
 				.build(tableViewer);
-
+			try {
+				final IObservableValue text = labelService.getDisplayName(dmr);
+				viewModelDBC.bindValue(SWTObservables.observeText(column.getColumn()), text);
+				final IObservableValue tooltipText = labelService.getDescription(dmr);
+				viewModelDBC.bindValue(SWTObservables.observeTooltipText(column.getColumn()), tooltipText);
+			} catch (final NoLabelFoundException ex) {
+				getReportService().report(new RenderingFailedReport(ex));
+				// FIXME Expectation?
+				column.getColumn().setText(ex.getMessage());
+				column.getColumn().setToolTipText(ex.toString());
+			}
 			final IObservableMap observableMap = valueProperty.observeDetail(cp.getKnownElements());
 			column.setLabelProvider(new ECPCellLabelProvider(eStructuralFeature, cellEditor, observableMap,
 				getVElement(), dmr));
@@ -824,6 +844,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	@Override
 	protected void dispose() {
 		rendererGridDescription = null;
+		viewModelDBC.dispose();
 		super.dispose();
 	}
 

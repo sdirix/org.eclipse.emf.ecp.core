@@ -16,6 +16,7 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
+import org.eclipse.emf.emfforms.spi.localization.EMFFormsLocaleProvider;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
@@ -35,6 +36,7 @@ public class ViewSWTRendererService implements EMFFormsRendererService<VView> {
 	private EMFFormsRendererFactory rendererFactory;
 	private ReportService reportService;
 	private EMFFormsEditSupport editSupport;
+	private EMFFormsLocaleProvider localeProvider;
 	private ServiceReference<EMFFormsRendererFactory> serviceReference;
 
 	/**
@@ -111,6 +113,24 @@ public class ViewSWTRendererService implements EMFFormsRendererService<VView> {
 	}
 
 	/**
+	 * Called by the initializer to set the EMFFormsLocaleProvider.
+	 *
+	 * @param localeProvider The EMFFormsLocaleProvider
+	 */
+	protected void setEMFFormsLocaleProvider(EMFFormsLocaleProvider localeProvider) {
+		this.localeProvider = localeProvider;
+	}
+
+	/**
+	 * Called by the initializer to unset the EMFFormsLocaleProvider.
+	 *
+	 * @param localeProvider The EMFFormsLocaleProvider
+	 */
+	protected void unsetEMFFormsLocaleProvider(EMFFormsLocaleProvider localeProvider) {
+		this.localeProvider = null;
+	}
+
+	/**
 	 * {@inheritDoc}
 	 *
 	 * @see org.eclipse.emfforms.spi.swt.core.EMFFormsRendererService#isApplicable(org.eclipse.emf.ecp.view.spi.model.VElement)
@@ -132,7 +152,7 @@ public class ViewSWTRendererService implements EMFFormsRendererService<VView> {
 	@Override
 	public AbstractSWTRenderer<VView> getRendererInstance(VView vElement, ViewModelContext viewModelContext) {
 		return new ViewSWTRenderer(vElement, viewModelContext, reportService, rendererFactory, databindingService,
-			editSupport);
+			editSupport, localeProvider);
 	}
 
 }

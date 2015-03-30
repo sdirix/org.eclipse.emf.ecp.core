@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.emf.edit.provider.IItemPropertySource;
 
 /**
  * The {@link EMFSpecificService} offers EMF specific functionality. Thereby, it provides the following things:
@@ -43,4 +44,6 @@ public interface EMFSpecificService {
 	// AdapterFactoryItemDelegator getAdapterFactoryItemDelegator();
 
 	IItemPropertyDescriptor getIItemPropertyDescriptor(EObject eObject, EStructuralFeature eStructuralFeature);
+
+	IItemPropertySource getIItemPropertySource(EObject eObject);
 }

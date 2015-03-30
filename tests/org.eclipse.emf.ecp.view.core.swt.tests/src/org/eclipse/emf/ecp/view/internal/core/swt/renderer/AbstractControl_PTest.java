@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import org.eclipse.core.databinding.observable.IObserving;
+import org.eclipse.core.databinding.observable.Observables;
 import org.eclipse.core.databinding.observable.Realm;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.property.value.IValueProperty;
@@ -52,9 +53,10 @@ import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
-import org.eclipse.emf.emfforms.spi.core.services.labelprovider.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
+import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
@@ -209,11 +211,13 @@ public abstract class AbstractControl_PTest {
 	 *
 	 * @throws NoRendererFoundException
 	 * @throws NoPropertyDescriptorFoundExeption
+	 * @throws NoLabelFoundException
 	 */
-	protected void labelServiceUsage() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+	protected void labelServiceUsage() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption,
+		NoLabelFoundException {
 		reset(labelProvider);
-		final String testDescription = "test-description";
-		final String testDisplayName = "test-displayname";
+		final IObservableValue testDescription = Observables.constantObservableValue("test-description", String.class);
+		final IObservableValue testDisplayName = Observables.constantObservableValue("test-displayname", String.class);
 		when(labelProvider.getDescription(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			testDescription);
 		when(labelProvider.getDisplayName(any(VDomainModelReference.class), any(EObject.class))).thenReturn(

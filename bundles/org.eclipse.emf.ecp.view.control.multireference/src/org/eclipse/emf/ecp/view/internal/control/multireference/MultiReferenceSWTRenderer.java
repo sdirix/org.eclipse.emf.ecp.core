@@ -18,6 +18,7 @@ import org.eclipse.core.databinding.observable.IObserving;
 import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.common.notify.AdapterFactory;
+import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -40,10 +41,12 @@ import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
-import org.eclipse.emf.emfforms.spi.core.services.labelprovider.EMFFormsLabelProvider;
 import org.eclipse.emf.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
+import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
+import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -100,12 +103,14 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 		VTViewTemplateProvider vtViewTemplateProvider, ImageRegistryService imageRegistryService) {
 		super(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider);
 		this.imageRegistryService = imageRegistryService;
+		viewModelDBC = new EMFDataBindingContext();
 	}
 
 	private Label validationIcon;
 	private AdapterFactoryLabelProvider labelProvider;
 	private ComposedAdapterFactory composedAdapterFactory;
 	private TableViewer tableViewer;
+	private final EMFDataBindingContext viewModelDBC;
 
 	/**
 	 * {@inheritDoc}
@@ -188,6 +193,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	protected void dispose() {
 		composedAdapterFactory.dispose();
 		labelProvider.dispose();
+		viewModelDBC.dispose();
 		super.dispose();
 	}
 
@@ -317,19 +323,28 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 		final ObservableListContentProvider cp = new ObservableListContentProvider();
 
 		final EMFFormsLabelProvider labelService = getEMFFormsLabelProvider();
-		final String text = labelService.getDisplayName(getVElement().getDomainModelReference(), getViewModelContext()
-			.getDomainModel());
-		final String tooltipText = labelService.getDescription(getVElement().getDomainModelReference(),
-			getViewModelContext().getDomainModel());
 
 		final TableViewerColumn column = TableViewerColumnBuilder
 			.create()
-			.setText(text)
-			.setToolTipText(tooltipText)
 			.setResizable(false)
 			.setMoveable(false)
 			.setStyle(SWT.NONE)
 			.build(tableViewer);
+
+		final IObservableValue textObservableValue = SWTObservables.observeText(column.getColumn());
+		final IObservableValue tooltipObservableValue = SWTObservables.observeTooltipText(column.getColumn());
+		try {
+			viewModelDBC.bindValue(textObservableValue,
+				labelService.getDisplayName(getVElement().getDomainModelReference(), getViewModelContext()
+					.getDomainModel()));
+
+			viewModelDBC.bindValue(tooltipObservableValue,
+				labelService.getDescription(getVElement().getDomainModelReference(), getViewModelContext()
+					.getDomainModel()));
+		} catch (final NoLabelFoundException e) {
+			//FIXME Expectations?
+			getReportService().report(new RenderingFailedReport(e));
+		}
 
 		column.getColumn().addSelectionListener(
 			getSelectionAdapter(tableViewer, comparator, column.getColumn(), 0));
