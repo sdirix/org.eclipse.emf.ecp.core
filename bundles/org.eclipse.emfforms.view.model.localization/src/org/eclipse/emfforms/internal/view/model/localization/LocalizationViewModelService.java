@@ -141,7 +141,9 @@ public class LocalizationViewModelService implements ViewModelService, EMFFormsL
 	 */
 	@Override
 	public void dispose() {
-		localeProvider.removeEMFFormsLocaleChangeListener(this);
+		if (localeProvider != null) {
+			localeProvider.removeEMFFormsLocaleChangeListener(this);
+		}
 		if (bundleContext != null && serviceReference != null) {
 			bundleContext.ungetService(serviceReference);
 		}
