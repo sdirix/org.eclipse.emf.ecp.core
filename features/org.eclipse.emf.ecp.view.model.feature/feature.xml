@@ -144,13 +144,6 @@
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.emf.emfforms.core.services.labelprovider"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.emf.emfforms.localization"
          download-size="0"
          install-size="0"
@@ -194,6 +187,27 @@
 
    <plugin
          id="org.eclipse.emfforms.swt.core.plugin"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emfforms.core.services"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emfforms.core.services.emf"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emfforms.localization.default"
          download-size="0"
          install-size="0"
          version="0.0.0"
