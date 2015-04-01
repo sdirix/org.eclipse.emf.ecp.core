@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?><target name="ECP RCP" sequenceNumber="247">
+<?pde version="3.8"?><target name="ECP RCP" sequenceNumber="250">
 <locations>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.equinox.sdk.feature.group" version="3.11.0.v20141210-0918"/>
-<unit id="org.eclipse.platform.ide" version="4.5.0.I20141210-2000"/>
-<repository location="http://download.eclipse.org/eclipse/updates/4.5milestones/S-4.5M4-201412102000/"/>
+<unit id="org.eclipse.equinox.sdk.feature.group" version="3.11.0.v20150320-0346"/>
+<unit id="org.eclipse.platform.ide" version="4.5.0.I20150320-0800"/>
+<repository location="http://download.eclipse.org/eclipse/updates/4.5milestones/S-4.5M6-201503200800/"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.emf.emfstore.client.transaction.feature.feature.group" version="1.4.0.v20140912-0421"/>
@@ -17,18 +17,18 @@
 <repository location="http://download.eclipse.org/emf-store/releases_14"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.jdt.feature.group" version="3.11.0.v20141210-2000"/>
-<unit id="org.eclipse.emf.sdk.feature.group" version="2.11.0.v20141215-0350"/>
-<unit id="org.eclipse.gef.sdk.feature.group" version="3.10.0.201412150306"/>
-<unit id="org.eclipse.graphiti.feature.feature.group" version="0.12.0.v20141217-1136"/>
-<unit id="org.eclipse.graphiti.export.feature.feature.group" version="0.12.0.v20141217-1136"/>
-<unit id="org.eclipse.emf.validation.sdk.feature.group" version="1.9.0.201412161741"/>
-<unit id="org.eclipse.emf.transaction.sdk.feature.group" version="1.9.0.201412161904"/>
-<unit id="org.eclipse.net4j.sdk.feature.group" version="4.3.0.v20140308-0604"/>
-<unit id="org.eclipse.emf.cdo.sdk.feature.group" version="4.3.0.v20140606-1557"/>
-<unit id="org.eclipse.pde.feature.group" version="3.11.0.v20141210-2000"/>
-<unit id="org.eclipse.ocl.all.sdk.feature.group" version="5.1.0.v20141108-1946"/>
-<repository location="http://download.eclipse.org/releases/mars/201412191000"/>
+<unit id="org.eclipse.jdt.feature.group" version="3.11.0.v20150320-0800"/>
+<unit id="org.eclipse.emf.sdk.feature.group" version="2.11.0.v20150323-0420"/>
+<unit id="org.eclipse.gef.sdk.feature.group" version="3.10.0.201502020307"/>
+<unit id="org.eclipse.graphiti.feature.feature.group" version="0.12.0.v20150325-0826"/>
+<unit id="org.eclipse.graphiti.export.feature.feature.group" version="0.12.0.v20150325-0826"/>
+<unit id="org.eclipse.emf.validation.sdk.feature.group" version="1.9.0.201503250348"/>
+<unit id="org.eclipse.emf.transaction.sdk.feature.group" version="1.9.0.201503250534"/>
+<unit id="org.eclipse.net4j.sdk.feature.group" version="4.4.0.v20150324-0950"/>
+<unit id="org.eclipse.emf.cdo.sdk.feature.group" version="4.4.0.v20150324-0950"/>
+<unit id="org.eclipse.pde.feature.group" version="3.11.0.v20150320-0800"/>
+<unit id="org.eclipse.ocl.all.sdk.feature.group" version="5.1.0.v20150321-0925"/>
+<repository location="http://download.eclipse.org/releases/mars/201503271000"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.mockito.mockito-all" version="1.9.5"/>
