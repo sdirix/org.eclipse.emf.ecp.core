@@ -11,13 +11,14 @@
  ******************************************************************************/
 package org.eclipse.emfforms.core.services.emf.tests;
 
+import org.eclipse.emfforms.internal.core.services.label.EMFFormsLabelProviderDefaultImpl_Test;
 import org.eclipse.emfforms.internal.core.services.label.EMFFormsLabelProviderImpl_Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({ EMFFormsLabelProviderImpl_Test.class })
+@SuiteClasses({ EMFFormsLabelProviderImpl_Test.class, EMFFormsLabelProviderDefaultImpl_Test.class })
 public class AllTests {
 	// JUnit 4 Test Suite
 }

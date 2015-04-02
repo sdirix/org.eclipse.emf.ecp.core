@@ -9,4 +9,5 @@
    <reference bind="setEMFFormsLocalizationService" cardinality="0..1" interface="org.eclipse.emf.emfforms.spi.localization.EMFFormsLocalizationService" name="EMFFormsLocalizationService" policy="dynamic" unbind="unsetEMFFormsLocalizationService"/>
    <reference bind="setEMFFormsLocaleProvider" cardinality="0..1" interface="org.eclipse.emf.emfforms.spi.localization.EMFFormsLocaleProvider" name="EMFFormsLocaleProvider" policy="dynamic" unbind="unsetEMFFormsLocaleProvider"/>
    <reference bind="setEMFSpecificService" cardinality="0..1" interface="org.eclipse.emf.emfforms.spi.core.services.emfspecificservice.EMFSpecificService" name="EMFSpecificService" policy="dynamic" unbind="unsetEMFSpecificService"/>
+   <property name="service.ranking" type="Integer" value="2"/>
 </scr:component>

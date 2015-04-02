@@ -16,4 +16,4 @@ Require-Bundle: org.eclipse.emfforms.core.services;bundle-version="[1.6.0,2.0.0)
  org.eclipse.emf.emfforms.core.services.emfspecificservice;bundle-version="[1.6.0,2.0.0)"
 Import-Package: org.osgi.framework;version="[1.7.0,2.0.0)"
 Export-Package: org.eclipse.emfforms.internal.core.services.label;version="1.6.0";x-internal:=true
-Service-Component: OSGI-INF/emfLabelProvider.xml
+Service-Component: OSGI-INF/emfLabelProvider.xml, OSGI-INF/emfLabelProviderDefault.xml

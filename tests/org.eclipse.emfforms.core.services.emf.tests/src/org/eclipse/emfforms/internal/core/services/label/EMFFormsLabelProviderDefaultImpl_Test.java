@@ -9,7 +9,7 @@
  * Contributors:
  * Lucas Koehler - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.emfforms.internal.core.services.labelprovider;
+package org.eclipse.emfforms.internal.core.services.label;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
@@ -18,6 +18,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import org.eclipse.core.databinding.observable.Realm;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.databinding.EObjectObservableValue;
 import org.eclipse.emf.ecore.EObject;
@@ -40,9 +41,9 @@ import org.junit.Test;
  * @author Lucas Koehler
  *
  */
-public class EMFFormsLabelProviderImpl_Test {
+public class EMFFormsLabelProviderDefaultImpl_Test {
 
-	private EMFFormsLabelProviderImpl labelProvider;
+	private EMFFormsLabelProviderDefaultImpl labelProvider;
 	private EMFSpecificService emfSpecificService;
 	private IItemPropertyDescriptor itemPropertyDescriptor;
 	private IValueProperty valueProperty;
@@ -58,7 +59,7 @@ public class EMFFormsLabelProviderImpl_Test {
 	@Before
 	public void setUp() {
 		defaultRealm = new DefaultRealm();
-		labelProvider = new EMFFormsLabelProviderImpl();
+		labelProvider = new EMFFormsLabelProviderDefaultImpl();
 
 		databindingService = mock(EMFFormsDatabinding.class);
 		labelProvider.setEMFFormsDatabinding(databindingService);
@@ -85,7 +86,7 @@ public class EMFFormsLabelProviderImpl_Test {
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emf.emfforms.internal.core.services.labelprovider.EMFFormsLabelProviderImpl#getDisplayName(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * {@link EMFFormsLabelProviderDefaultImpl#getDisplayName(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
 	 * .
 	 *
 	 * @throws DatabindingFailedException should not happen, just needs to be thrown because the databinding service
@@ -102,16 +103,16 @@ public class EMFFormsLabelProviderImpl_Test {
 		when(valueProperty.getValueType()).thenReturn(structuralFeature);
 		when(databindingService.getValueProperty(domainModelReference)).thenReturn(valueProperty);
 
-		final String result = labelProvider.getDisplayName(domainModelReference);
+		final IObservableValue result = labelProvider.getDisplayName(domainModelReference);
 
 		verify(databindingService).getValueProperty(domainModelReference);
 		verify(itemPropertyDescriptor).getDisplayName(any(D.class));
-		assertEquals(expectedResult, result);
+		assertEquals(expectedResult, result.getValue());
 	}
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emf.emfforms.internal.core.services.labelprovider.EMFFormsLabelProviderImpl#getDisplayName(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * {@link EMFFormsLabelProviderDefaultImpl#getDisplayName(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
 	 * .
 	 */
 	@Test(expected = IllegalArgumentException.class)
@@ -121,7 +122,7 @@ public class EMFFormsLabelProviderImpl_Test {
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emf.emfforms.internal.core.services.labelprovider.EMFFormsLabelProviderImpl#getDisplayName(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference, org.eclipse.emf.ecore.EObject)}
+	 * {@link EMFFormsLabelProviderDefaultImpl#getDisplayName(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference, org.eclipse.emf.ecore.EObject)}
 	 * .
 	 *
 	 * @throws DatabindingFailedException should not happen, just needs to be thrown because the databinding service
@@ -139,16 +140,16 @@ public class EMFFormsLabelProviderImpl_Test {
 		when(observableValue.getValueType()).thenReturn(structuralFeature);
 		when(observableValue.getObserved()).thenReturn(value);
 		when(databindingService.getObservableValue(domainModelReference, eObject)).thenReturn(observableValue);
-		final String result = labelProvider.getDisplayName(domainModelReference, eObject);
+		final IObservableValue result = labelProvider.getDisplayName(domainModelReference, eObject);
 
 		verify(databindingService).getObservableValue(domainModelReference, eObject);
 		verify(itemPropertyDescriptor).getDisplayName(value);
-		assertEquals(expectedResult, result);
+		assertEquals(expectedResult, result.getValue());
 	}
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emf.emfforms.internal.core.services.labelprovider.EMFFormsLabelProviderImpl#getDisplayName(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference, org.eclipse.emf.ecore.EObject)}
+	 * {@link EMFFormsLabelProviderDefaultImpl#getDisplayName(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference, org.eclipse.emf.ecore.EObject)}
 	 * .
 	 */
 	@Test(expected = IllegalArgumentException.class)
@@ -158,7 +159,7 @@ public class EMFFormsLabelProviderImpl_Test {
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emf.emfforms.internal.core.services.labelprovider.EMFFormsLabelProviderImpl#getDisplayName(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference, org.eclipse.emf.ecore.EObject)}
+	 * {@link EMFFormsLabelProviderDefaultImpl#getDisplayName(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference, org.eclipse.emf.ecore.EObject)}
 	 * .
 	 */
 	@Test(expected = IllegalArgumentException.class)
@@ -168,7 +169,7 @@ public class EMFFormsLabelProviderImpl_Test {
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emf.emfforms.internal.core.services.labelprovider.EMFFormsLabelProviderImpl#getDisplayName(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference, org.eclipse.emf.ecore.EObject)}
+	 * {@link EMFFormsLabelProviderDefaultImpl#getDisplayName(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference, org.eclipse.emf.ecore.EObject)}
 	 * .
 	 */
 	@Test(expected = IllegalArgumentException.class)
@@ -178,7 +179,7 @@ public class EMFFormsLabelProviderImpl_Test {
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emf.emfforms.internal.core.services.labelprovider.EMFFormsLabelProviderImpl#getDescription(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * {@link EMFFormsLabelProviderDefaultImpl#getDescription(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
 	 * .
 	 *
 	 * @throws DatabindingFailedException should not happen, just needs to be thrown because the databinding service
@@ -195,16 +196,16 @@ public class EMFFormsLabelProviderImpl_Test {
 		when(valueProperty.getValueType()).thenReturn(structuralFeature);
 		when(databindingService.getValueProperty(domainModelReference)).thenReturn(valueProperty);
 
-		final String result = labelProvider.getDescription(domainModelReference);
+		final IObservableValue result = labelProvider.getDescription(domainModelReference);
 
 		verify(databindingService).getValueProperty(domainModelReference);
 		verify(itemPropertyDescriptor).getDescription(any(D.class));
-		assertEquals(expectedResult, result);
+		assertEquals(expectedResult, result.getValue());
 	}
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emf.emfforms.internal.core.services.labelprovider.EMFFormsLabelProviderImpl#getDescription(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * {@link EMFFormsLabelProviderDefaultImpl#getDescription(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
 	 * .
 	 */
 	@Test(expected = IllegalArgumentException.class)
@@ -214,7 +215,7 @@ public class EMFFormsLabelProviderImpl_Test {
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emf.emfforms.internal.core.services.labelprovider.EMFFormsLabelProviderImpl#getDescription(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference, org.eclipse.emf.ecore.EObject)}
+	 * {@link EMFFormsLabelProviderDefaultImpl#getDescription(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference, org.eclipse.emf.ecore.EObject)}
 	 * .
 	 *
 	 * @throws DatabindingFailedException should not happen, just needs to be thrown because the databinding service
@@ -232,16 +233,16 @@ public class EMFFormsLabelProviderImpl_Test {
 		when(observableValue.getValueType()).thenReturn(structuralFeature);
 		when(observableValue.getObserved()).thenReturn(value);
 		when(databindingService.getObservableValue(domainModelReference, eObject)).thenReturn(observableValue);
-		final String result = labelProvider.getDescription(domainModelReference, eObject);
+		final IObservableValue result = labelProvider.getDescription(domainModelReference, eObject);
 
 		verify(databindingService).getObservableValue(domainModelReference, eObject);
 		verify(itemPropertyDescriptor).getDescription(value);
-		assertEquals(expectedResult, result);
+		assertEquals(expectedResult, result.getValue());
 	}
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emf.emfforms.internal.core.services.labelprovider.EMFFormsLabelProviderImpl#getDescription(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference, org.eclipse.emf.ecore.EObject)}
+	 * {@link EMFFormsLabelProviderDefaultImpl#getDescription(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference, org.eclipse.emf.ecore.EObject)}
 	 * .
 	 */
 	@Test(expected = IllegalArgumentException.class)
@@ -251,7 +252,7 @@ public class EMFFormsLabelProviderImpl_Test {
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emf.emfforms.internal.core.services.labelprovider.EMFFormsLabelProviderImpl#getDescription(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference, org.eclipse.emf.ecore.EObject)}
+	 * {@link EMFFormsLabelProviderDefaultImpl#getDescription(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference, org.eclipse.emf.ecore.EObject)}
 	 * .
 	 */
 	@Test(expected = IllegalArgumentException.class)
@@ -261,7 +262,7 @@ public class EMFFormsLabelProviderImpl_Test {
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emf.emfforms.internal.core.services.labelprovider.EMFFormsLabelProviderImpl#getDescription(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference, org.eclipse.emf.ecore.EObject)}
+	 * {@link EMFFormsLabelProviderDefaultImpl#getDescription(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference, org.eclipse.emf.ecore.EObject)}
 	 * .
 	 */
 	@Test(expected = IllegalArgumentException.class)

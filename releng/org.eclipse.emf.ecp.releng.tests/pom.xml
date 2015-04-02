@@ -94,7 +94,6 @@
 		<module>../../tests/org.eclipse.emfforms.core.services.databinding.integrationtest</module>
 		<module>../../tests/org.eclipse.emfforms.core.services.databinding.testmodel</module>
 		<module>../../tests/org.eclipse.emfforms.core.services.databinding.tests</module>
-		<module>../../tests/org.eclipse.emf.emfforms.core.services.labelprovider.tests</module>
 		<module>../../tests/org.eclipse.emfforms.swt.core.tests</module>
 		<module>../../tests/org.eclipse.emfforms.core.services.emf.tests</module>
 		
