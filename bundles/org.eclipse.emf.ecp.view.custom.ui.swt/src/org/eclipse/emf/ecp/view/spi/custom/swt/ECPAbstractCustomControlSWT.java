@@ -56,6 +56,7 @@ import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
+import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
@@ -65,6 +66,8 @@ import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
+import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
+import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.databinding.viewers.ViewerSupport;
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.swt.SWT;
@@ -116,6 +119,7 @@ public abstract class ECPAbstractCustomControlSWT
 	private AdapterFactoryItemDelegator adapterFactoryItemDelegator;
 	private VCustomControl customControl;
 	private DataBindingContext dataBindingContext;
+	private final EMFDataBindingContext viewModelDBC = new EMFDataBindingContext();
 
 	/**
 	 * Called by the framework to trigger an initialization.
@@ -195,6 +199,7 @@ public abstract class ECPAbstractCustomControlSWT
 		if (dataBindingContext != null) {
 			dataBindingContext.dispose();
 		}
+		viewModelDBC.dispose();
 		customControl = null;
 		if (adapterMap != null) {
 			for (final VDomainModelReference domainModelReference : adapterMap.keySet()) {
@@ -335,20 +340,43 @@ public abstract class ECPAbstractCustomControlSWT
 			label = new Label(parent, SWT.NONE);
 			label.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_label"); //$NON-NLS-1$
 			label.setBackground(parent.getBackground());
-			String extra = ""; //$NON-NLS-1$
-			if (structuralFeature.getLowerBound() > 0) {
-				extra = "*"; //$NON-NLS-1$
-			}
-			final String labelText = Activator.getDefault().getEMFFormsLabelProvider()
-				.getDisplayName(getCustomControl().getDomainModelReference(), getViewModelContext().getDomainModel());
-			if (labelText != null && labelText.trim().length() != 0) {
-				label.setText(labelText + extra);
-				final String toolTipText = Activator
-					.getDefault()
-					.getEMFFormsLabelProvider()
-					.getDescription(getCustomControl().getDomainModelReference(),
-						getViewModelContext().getDomainModel());
-				label.setToolTipText(toolTipText);
+
+			try {
+				viewModelDBC.bindValue(
+					SWTObservables.observeText(label),
+					Activator
+						.getDefault()
+						.getEMFFormsLabelProvider()
+						.getDisplayName(getCustomControl().getDomainModelReference(),
+							getViewModelContext().getDomainModel()), null, new UpdateValueStrategy() {
+
+						/**
+						 * {@inheritDoc}
+						 * 
+						 * @see org.eclipse.core.databinding.UpdateValueStrategy#convert(java.lang.Object)
+						 */
+						@Override
+						public Object convert(Object value) {
+							final String labelText = (String) super.convert(value);
+							String extra = ""; //$NON-NLS-1$
+							if (structuralFeature.getLowerBound() > 0) {
+								extra = "*"; //$NON-NLS-1$
+							}
+							return labelText + extra;
+						}
+
+					});
+				viewModelDBC.bindValue(
+					SWTObservables.observeTooltipText(label),
+					Activator
+						.getDefault()
+						.getEMFFormsLabelProvider()
+						.getDescription(getCustomControl().getDomainModelReference(),
+							getViewModelContext().getDomainModel()));
+			} catch (final NoLabelFoundException e) {
+				Activator.getDefault().getReportService().report(new RenderingFailedReport(e));
+				label.setText(e.getMessage());
+				label.setToolTipText(e.toString());
 			}
 
 		}

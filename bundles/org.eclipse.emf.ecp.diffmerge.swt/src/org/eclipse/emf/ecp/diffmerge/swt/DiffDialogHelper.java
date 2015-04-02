@@ -15,6 +15,7 @@ import org.eclipse.emf.ecp.diffmerge.spi.context.ControlPair;
 import org.eclipse.emf.ecp.diffmerge.spi.context.DiffMergeModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.emfforms.spi.localization.LocalizationServiceHelper;
+import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
@@ -82,7 +83,11 @@ public final class DiffDialogHelper {
 	}
 
 	private static String getControlLabel(VControl control, DiffMergeModelContext diffModelContext) {
-		return Activator.getInstance().getEMFFormsLabelProvider()
-			.getDisplayName(control.getDomainModelReference(), diffModelContext.getDomainModel());
+		try {
+			return (String) Activator.getInstance().getEMFFormsLabelProvider()
+				.getDisplayName(control.getDomainModelReference(), diffModelContext.getDomainModel()).getValue();
+		} catch (final NoLabelFoundException e) {
+			return e.getMessage();
+		}
 	}
 }

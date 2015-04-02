@@ -21,12 +21,14 @@ import org.eclipse.emf.ecp.spi.diffmerge.model.VDiffmergePackage;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VAttachment;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.spi.model.reporting.AbstractReport;
 import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractAdditionalSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
+import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
@@ -148,8 +150,14 @@ public class SWTDiffMergeAddition extends AbstractAdditionalSWTRenderer<VControl
 
 	private void openDiffDialog(DiffMergeModelContext diffModelContext, VControl vControl) {
 
-		final String label = Activator.getInstance().getEMFFormsLabelProvider()
-			.getDisplayName(vControl.getDomainModelReference(), diffModelContext.getDomainModel());
+		String label;
+		try {
+			label = (String) Activator.getInstance().getEMFFormsLabelProvider()
+				.getDisplayName(vControl.getDomainModelReference(), diffModelContext.getDomainModel()).getValue();
+		} catch (final NoLabelFoundException ex) {
+			Activator.getInstance().getReportService().report(new AbstractReport(ex));
+			label = ex.getMessage();
+		}
 
 		DiffDialogHelper.showDialog(diffModelContext, vControl, label);
 	}
