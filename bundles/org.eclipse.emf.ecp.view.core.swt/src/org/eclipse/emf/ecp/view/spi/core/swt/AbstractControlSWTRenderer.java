@@ -14,6 +14,7 @@ package org.eclipse.emf.ecp.view.spi.core.swt;
 import java.util.Set;
 
 import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.IObserving;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.property.value.IValueProperty;
@@ -286,7 +287,7 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 		Label label = null;
 		labelRender: if (getVElement().getLabelAlignment() == LabelAlignment.LEFT) {
 			final VDomainModelReference domainModelReference = getVElement().getDomainModelReference();
-			IValueProperty valueProperty;
+			final IValueProperty valueProperty;
 			try {
 				valueProperty = getEMFFormsDatabinding().getValueProperty(domainModelReference);
 			} catch (final DatabindingFailedException ex) {
@@ -295,25 +296,41 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 			}
 
 			final EMFFormsLabelProvider labelProvider = getEMFFormsLabelProvider();
-			label = new Label(parent, SWT.BORDER);
+			label = new Label(parent, SWT.NONE);
 			label.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_label"); //$NON-NLS-1$
 			label.setBackground(parent.getBackground());
-			String extra = ""; //$NON-NLS-1$
-			final VTMandatoryStyleProperty mandatoryStyle = getMandatoryStyle();
-			final EStructuralFeature structuralFeature = (EStructuralFeature) valueProperty.getValueType();
-			if (mandatoryStyle.isHighliteMandatoryFields() && structuralFeature.getLowerBound() > 0) {
-				extra = mandatoryStyle.getMandatoryMarker();
-			}
+
 			final EObject rootObject = getViewModelContext().getDomainModel();
 			try {
 				final IObservableValue textObservable = SWTObservables.observeText(label);
-				final IObservableValue displayNameObservable = labelProvider.getDisplayName(domainModelReference, rootObject);
-				viewModelDBC.bindValue(textObservable, displayNameObservable);
+				final IObservableValue displayNameObservable = labelProvider.getDisplayName(domainModelReference,
+					rootObject);
+				viewModelDBC.bindValue(textObservable, displayNameObservable, null, new UpdateValueStrategy() {
+
+					/**
+					 * {@inheritDoc}
+					 *
+					 * @see org.eclipse.core.databinding.UpdateValueStrategy#convert(java.lang.Object)
+					 */
+					@Override
+					public Object convert(Object value) {
+						String extra = ""; //$NON-NLS-1$
+						final VTMandatoryStyleProperty mandatoryStyle = getMandatoryStyle();
+						final EStructuralFeature structuralFeature = (EStructuralFeature) valueProperty.getValueType();
+						if (mandatoryStyle.isHighliteMandatoryFields() && structuralFeature.getLowerBound() > 0) {
+							extra = mandatoryStyle.getMandatoryMarker();
+						}
+						final String result = (String) super.convert(value);
+						return result + extra;
+					}
+
+				});
 				final IObservableValue tooltipObservable = SWTObservables.observeTooltipText(label);
-				final IObservableValue descriptionObservable = labelProvider.getDescription(domainModelReference, rootObject);
+				final IObservableValue descriptionObservable = labelProvider.getDescription(domainModelReference,
+					rootObject);
 				viewModelDBC.bindValue(tooltipObservable, descriptionObservable);
 			} catch (final NoLabelFoundException e) {
-				//FIXME Expectations?
+				// FIXME Expectations?
 				getReportService().report(new RenderingFailedReport(e));
 			}
 

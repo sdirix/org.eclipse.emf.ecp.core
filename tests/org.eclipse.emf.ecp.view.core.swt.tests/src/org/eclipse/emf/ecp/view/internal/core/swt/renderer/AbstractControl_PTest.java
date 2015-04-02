@@ -228,8 +228,8 @@ public abstract class AbstractControl_PTest {
 		assertTrue(Label.class.isInstance(renderControl));
 
 		final Label label = (Label) renderControl;
-		assertEquals(testDescription, label.getToolTipText());
-		assertEquals(testDisplayName, label.getText());
+		assertEquals(testDescription.getValue(), label.getToolTipText());
+		assertEquals(testDisplayName.getValue(), label.getText());
 	}
 
 	protected Control renderControl(SWTGridCell gridCell)

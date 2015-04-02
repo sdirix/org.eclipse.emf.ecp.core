@@ -239,6 +239,6 @@ public class TextControlRenderer_PTest extends AbstractControl_PTest {
 		assertTrue(Text.class.isInstance(renderControl));
 
 		final Text text = (Text) renderControl;
-		assertEquals(testDisplayName, text.getMessage());
+		assertEquals(testDisplayName.getValue(), text.getMessage());
 	}
 }
