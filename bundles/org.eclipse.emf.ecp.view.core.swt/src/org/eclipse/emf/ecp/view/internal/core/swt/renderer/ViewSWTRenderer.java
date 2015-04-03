@@ -27,10 +27,10 @@ import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
-import org.eclipse.emf.emfforms.spi.localization.EMFFormsLocaleChangeListener;
-import org.eclipse.emf.emfforms.spi.localization.EMFFormsLocaleProvider;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
+import org.eclipse.emfforms.spi.core.services.locale.EMFFormsLocaleChangeListener;
+import org.eclipse.emfforms.spi.core.services.locale.EMFFormsLocaleProvider;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -158,7 +158,7 @@ public class ViewSWTRenderer extends ContainerSWTRenderer<VView> implements EMFF
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.emfforms.spi.localization.EMFFormsLocaleChangeListener#notifyLocaleChange()
+	 * @see org.eclipse.emfforms.spi.core.locale.EMFFormsLocaleChangeListener#notifyLocaleChange()
 	 */
 	@Override
 	public void notifyLocaleChange() {

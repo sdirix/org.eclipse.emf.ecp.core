@@ -19,8 +19,8 @@ import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
-import org.eclipse.emf.emfforms.spi.localization.EMFFormsLocaleProvider;
 import org.eclipse.emf.emfstore.bowling.BowlingPackage;
+import org.eclipse.emfforms.spi.core.services.locale.EMFFormsLocaleProvider;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 

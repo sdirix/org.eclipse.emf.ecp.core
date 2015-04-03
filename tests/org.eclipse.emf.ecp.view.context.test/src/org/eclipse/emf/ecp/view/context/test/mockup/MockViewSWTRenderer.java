@@ -18,9 +18,9 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
-import org.eclipse.emf.emfforms.spi.localization.EMFFormsLocaleProvider;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
+import org.eclipse.emfforms.spi.core.services.locale.EMFFormsLocaleProvider;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
 import org.mockito.Mockito;
 

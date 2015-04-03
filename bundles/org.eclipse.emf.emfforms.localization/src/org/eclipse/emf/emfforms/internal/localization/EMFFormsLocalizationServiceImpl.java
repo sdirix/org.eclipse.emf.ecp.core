@@ -14,8 +14,8 @@ package org.eclipse.emf.emfforms.internal.localization;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import org.eclipse.emf.emfforms.spi.localization.EMFFormsLocaleProvider;
 import org.eclipse.emf.emfforms.spi.localization.EMFFormsLocalizationService;
+import org.eclipse.emfforms.spi.core.services.locale.EMFFormsLocaleProvider;
 import org.eclipse.osgi.service.localization.BundleLocalization;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;

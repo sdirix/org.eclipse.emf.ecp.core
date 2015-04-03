@@ -24,9 +24,9 @@ import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalFactory;
 import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalLayout;
-import org.eclipse.emf.emfforms.spi.localization.AbstractEMFFormsLocaleProvider;
-import org.eclipse.emf.emfforms.spi.localization.EMFFormsLocaleProvider;
 import org.eclipse.emf.emfforms.spi.localization.LocalizationServiceHelper;
+import org.eclipse.emfforms.spi.core.services.locale.AbstractEMFFormsLocaleProvider;
+import org.eclipse.emfforms.spi.core.services.locale.EMFFormsLocaleProvider;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -57,7 +57,7 @@ public class LocalizationViewModelService_ITest {
 		/**
 		 * {@inheritDoc}
 		 *
-		 * @see org.eclipse.emf.emfforms.spi.localization.EMFFormsLocaleProvider#getLocale()
+		 * @see org.eclipse.emfforms.spi.core.services.locale.EMFFormsLocaleProvider#getLocale()
 		 */
 		@Override
 		public Locale getLocale() {

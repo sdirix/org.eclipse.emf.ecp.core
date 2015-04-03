@@ -13,7 +13,7 @@ package org.eclipse.emfforms.internal.localization.defaultlocale;
 
 import java.util.Locale;
 
-import org.eclipse.emf.emfforms.spi.localization.AbstractEMFFormsLocaleProvider;
+import org.eclipse.emfforms.spi.core.services.locale.AbstractEMFFormsLocaleProvider;
 
 /**
  * EMFFormsLocaleProvider that works on the default {@link Locale}.
@@ -26,7 +26,7 @@ public class DefaultLocaleProvider extends AbstractEMFFormsLocaleProvider {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.emfforms.spi.localization.EMFFormsLocaleProvider#getLocale()
+	 * @see org.eclipse.emfforms.spi.core.services.locale.EMFFormsLocaleProvider#getLocale()
 	 */
 	@Override
 	public Locale getLocale() {

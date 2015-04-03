@@ -9,7 +9,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.emfforms.spi.localization;
+package org.eclipse.emfforms.spi.core.services.locale;
 
 import java.util.Locale;
 

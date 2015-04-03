@@ -9,7 +9,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.emfforms.spi.localization;
+package org.eclipse.emfforms.spi.core.services.locale;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -22,7 +22,7 @@ import org.junit.Test;
 
 /**
  * Test cases for the AbstractEMFFormsLocaleProvider.
- * 
+ *
  * @author Eugen Neufeld
  *
  */
@@ -35,7 +35,7 @@ public class AbstractEMFFormsLocaleProvider_Test {
 		/**
 		 * {@inheritDoc}
 		 *
-		 * @see org.eclipse.emf.emfforms.spi.localization.EMFFormsLocaleProvider#getLocale()
+		 * @see org.eclipse.emfforms.spi.core.services.locale.EMFFormsLocaleProvider#getLocale()
 		 */
 		@Override
 		public Locale getLocale() {
@@ -51,7 +51,7 @@ public class AbstractEMFFormsLocaleProvider_Test {
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emf.emfforms.spi.localization.AbstractEMFFormsLocaleProvider#addEMFFormsLocaleChangeListener(org.eclipse.emf.emfforms.spi.localization.EMFFormsLocaleChangeListener)}
+	 * {@link org.eclipse.emfforms.spi.core.services.locale.AbstractEMFFormsLocaleProvider#addEMFFormsLocaleChangeListener(org.eclipse.emfforms.spi.core.services.locale.EMFFormsLocaleChangeListener)}
 	 * .
 	 */
 	@Test
@@ -64,7 +64,7 @@ public class AbstractEMFFormsLocaleProvider_Test {
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emf.emfforms.spi.localization.AbstractEMFFormsLocaleProvider#addEMFFormsLocaleChangeListener(org.eclipse.emf.emfforms.spi.localization.EMFFormsLocaleChangeListener)}
+	 * {@link org.eclipse.emfforms.spi.core.services.locale.AbstractEMFFormsLocaleProvider#addEMFFormsLocaleChangeListener(org.eclipse.emfforms.spi.core.services.locale.EMFFormsLocaleChangeListener)}
 	 * .
 	 */
 	@Test
@@ -78,7 +78,7 @@ public class AbstractEMFFormsLocaleProvider_Test {
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emf.emfforms.spi.localization.AbstractEMFFormsLocaleProvider#addEMFFormsLocaleChangeListener(org.eclipse.emf.emfforms.spi.localization.EMFFormsLocaleChangeListener)}
+	 * {@link org.eclipse.emfforms.spi.core.services.locale.AbstractEMFFormsLocaleProvider#addEMFFormsLocaleChangeListener(org.eclipse.emfforms.spi.core.services.locale.EMFFormsLocaleChangeListener)}
 	 * .
 	 */
 	@Test
@@ -94,7 +94,7 @@ public class AbstractEMFFormsLocaleProvider_Test {
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emf.emfforms.spi.localization.AbstractEMFFormsLocaleProvider#removeEMFFormsLocaleChangeListener(org.eclipse.emf.emfforms.spi.localization.EMFFormsLocaleChangeListener)}
+	 * {@link org.eclipse.emfforms.spi.core.services.locale.AbstractEMFFormsLocaleProvider#removeEMFFormsLocaleChangeListener(org.eclipse.emfforms.spi.core.services.locale.EMFFormsLocaleChangeListener)}
 	 * .
 	 */
 	@Test
@@ -108,7 +108,7 @@ public class AbstractEMFFormsLocaleProvider_Test {
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emf.emfforms.spi.localization.AbstractEMFFormsLocaleProvider#removeEMFFormsLocaleChangeListener(org.eclipse.emf.emfforms.spi.localization.EMFFormsLocaleChangeListener)}
+	 * {@link org.eclipse.emfforms.spi.core.services.locale.AbstractEMFFormsLocaleProvider#removeEMFFormsLocaleChangeListener(org.eclipse.emfforms.spi.core.services.locale.EMFFormsLocaleChangeListener)}
 	 * .
 	 */
 	@Test

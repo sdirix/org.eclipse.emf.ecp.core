@@ -22,8 +22,8 @@ import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
-import org.eclipse.emf.emfforms.spi.localization.EMFFormsLocaleChangeListener;
-import org.eclipse.emf.emfforms.spi.localization.EMFFormsLocaleProvider;
+import org.eclipse.emfforms.spi.core.services.locale.EMFFormsLocaleChangeListener;
+import org.eclipse.emfforms.spi.core.services.locale.EMFFormsLocaleProvider;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
@@ -162,7 +162,7 @@ public class LocalizationViewModelService implements ViewModelService, EMFFormsL
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.emfforms.spi.localization.EMFFormsLocaleChangeListener#notifyLocaleChange()
+	 * @see org.eclipse.emfforms.spi.core.services.locale.EMFFormsLocaleChangeListener#notifyLocaleChange()
 	 */
 	@Override
 	public void notifyLocaleChange() {
