@@ -40,7 +40,7 @@ import org.osgi.framework.ServiceRegistration;
 
 /**
  * Plugin Tests cases for the LocalizationViewModelService.
- * 
+ *
  * @author Eugen Neufeld
  *
  */
@@ -118,7 +118,8 @@ public class LocalizationViewModelService_ITest {
 			public String answer(InvocationOnMock invocation) throws Throwable {
 				final Object object = invocation.getArguments()[0];
 				final String parameter = object.toString();
-				return LocalizationServiceHelper.getString(LocalizationViewModelService_ITest.class, parameter);
+				return LocalizationServiceHelper.getString(LocalizationViewModelService_ITest.class,
+					parameter);
 			}
 		});
 		view.eAdapters().add(adapter);

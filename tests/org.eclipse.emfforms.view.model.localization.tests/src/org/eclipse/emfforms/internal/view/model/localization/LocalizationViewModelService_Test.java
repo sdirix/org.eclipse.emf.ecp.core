@@ -38,6 +38,10 @@ public class LocalizationViewModelService_Test {
 		localizationViewModelService = spy(new LocalizationViewModelService());
 	}
 
+	private String getLocalizableString(String name) {
+		return name.substring(1);
+	}
+
 	/**
 	 * Test method for
 	 * {@link org.eclipse.emfforms.internal.view.model.localization.LocalizationViewModelService#instantiate(org.eclipse.emf.ecp.view.spi.context.ViewModelContext)}
@@ -68,9 +72,9 @@ public class LocalizationViewModelService_Test {
 		final ViewModelContext viewModelContext = mock(ViewModelContext.class);
 		when(viewModelContext.getViewModel()).thenReturn(view);
 		final LocalizationAdapter adapter = mock(LocalizationAdapter.class);
-		when(adapter.localize(viewName)).thenReturn(viewLabel);
-		when(adapter.localize(layoutName)).thenReturn(layoutLabel);
-		when(adapter.localize(controlName)).thenReturn(controlLabel);
+		when(adapter.localize(getLocalizableString(viewName))).thenReturn(viewLabel);
+		when(adapter.localize(getLocalizableString(layoutName))).thenReturn(layoutLabel);
+		when(adapter.localize(getLocalizableString(controlName))).thenReturn(controlLabel);
 		view.eAdapters().add(adapter);
 
 		localizationViewModelService.instantiate(viewModelContext);
@@ -123,8 +127,8 @@ public class LocalizationViewModelService_Test {
 		layout.getChildren().add(control);
 
 		final LocalizationAdapter adapter = mock(LocalizationAdapter.class);
-		when(adapter.localize(controlName)).thenReturn(controlLabel);
-		when(adapter.localize(controlName2)).thenReturn(controlLabel2);
+		when(adapter.localize(getLocalizableString(controlName))).thenReturn(controlLabel);
+		when(adapter.localize(getLocalizableString(controlName2))).thenReturn(controlLabel2);
 		view.eAdapters().add(adapter);
 
 		final ViewModelContext viewModelContext = spy(new ViewModelContextImpl(view,
@@ -149,7 +153,7 @@ public class LocalizationViewModelService_Test {
 		final VView view = VViewFactory.eINSTANCE.createView();
 
 		final LocalizationAdapter adapter = mock(LocalizationAdapter.class);
-		when(adapter.localize(controlName)).thenReturn(controlLabel);
+		when(adapter.localize(getLocalizableString(controlName))).thenReturn(controlLabel);
 		view.eAdapters().add(adapter);
 
 		final ViewModelContext viewModelContext = spy(new ViewModelContextImpl(view,
@@ -182,7 +186,7 @@ public class LocalizationViewModelService_Test {
 		layout.getChildren().add(control);
 
 		final LocalizationAdapter adapter = mock(LocalizationAdapter.class);
-		when(adapter.localize(controlName)).thenReturn(controlLabel);
+		when(adapter.localize(getLocalizableString(controlName))).thenReturn(controlLabel);
 		view.eAdapters().add(adapter);
 
 		final ViewModelContext viewModelContext = spy(new ViewModelContextImpl(view,
@@ -212,8 +216,8 @@ public class LocalizationViewModelService_Test {
 		final VView view = VViewFactory.eINSTANCE.createView();
 
 		final LocalizationAdapter adapter = mock(LocalizationAdapter.class);
-		when(adapter.localize(controlName)).thenReturn(controlLabel);
-		when(adapter.localize(layoutName)).thenReturn(layoutLabel);
+		when(adapter.localize(getLocalizableString(controlName))).thenReturn(controlLabel);
+		when(adapter.localize(getLocalizableString(layoutName))).thenReturn(layoutLabel);
 		view.eAdapters().add(adapter);
 
 		final ViewModelContext viewModelContext = spy(new ViewModelContextImpl(view,
@@ -252,8 +256,8 @@ public class LocalizationViewModelService_Test {
 		layout.getChildren().add(control);
 
 		final LocalizationAdapter adapter = mock(LocalizationAdapter.class);
-		when(adapter.localize(controlName)).thenReturn(controlLabel);
-		when(adapter.localize(layoutName)).thenReturn(layoutLabel);
+		when(adapter.localize(getLocalizableString(controlName))).thenReturn(controlLabel);
+		when(adapter.localize(getLocalizableString(layoutName))).thenReturn(layoutLabel);
 		view.eAdapters().add(adapter);
 		final ViewModelContext viewModelContext = spy(new ViewModelContextImpl(view,
 			EcoreFactory.eINSTANCE.createEObject(), localizationViewModelService));
