@@ -26,7 +26,10 @@ import org.osgi.framework.ServiceReference;
  */
 public class Activator extends Plugin {
 
-	private static final String PLUGIN_ID = "org.eclipse.emf.ecp.view.template.controls.swt"; //$NON-NLS-1$
+	/**
+	 * The bundle ID.
+	 */
+	public static final String PLUGIN_ID = "org.eclipse.emf.ecp.view.template.controls.swt"; //$NON-NLS-1$
 	private static Activator plugin;
 	private static BundleContext context;
 

@@ -63,32 +63,7 @@ public class TemplateColorControl extends AbstractTextControl {
 
 			@Override
 			public void mouseUp(MouseEvent e) {
-				final ColorDialog cd = new ColorDialog(composite.getShell());
-				IObservableValue observableValue;
-				try {
-					observableValue = Activator.getDefault().getEMFFormsDatabinding()
-						.getObservableValue(getDomainModelReference(), getViewModelContext().getDomainModel());
-				} catch (final DatabindingFailedException ex) {
-					Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
-					return;
-				}
-				final InternalEObject internalEObject = (InternalEObject) ((IObserving) observableValue).getObserved();
-				final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
-				final Setting setting = internalEObject.eSetting(structuralFeature);
-				observableValue.dispose();
-
-				cd.setText(Messages.TemplateColorControl_SelectColor);
-				cd.setRGB(colors.get(setting).getRGB());
-				final RGB rgb = cd.open();
-				if (rgb == null) {
-					return;
-				}
-
-				final String red = Integer.toHexString(0x100 | rgb.red).substring(1);
-				final String green = Integer.toHexString(0x100 | rgb.green).substring(1);
-				final String blue = Integer.toHexString(0x100 | rgb.blue).substring(1);
-				final String result = red + green + blue;
-				internalEObject.eSet(structuralFeature, result);
+				showColorDialog(composite);
 			}
 
 			@Override
@@ -162,6 +137,35 @@ public class TemplateColorControl extends AbstractTextControl {
 	@Override
 	protected String getUnsetButtonTooltip() {
 		return Messages.TemplateColorControl_UnsetColor;
+	}
+
+	private void showColorDialog(final Composite composite) {
+		final ColorDialog cd = new ColorDialog(composite.getShell());
+		IObservableValue observableValue;
+		try {
+			observableValue = Activator.getDefault().getEMFFormsDatabinding()
+				.getObservableValue(getDomainModelReference(), getViewModelContext().getDomainModel());
+		} catch (final DatabindingFailedException ex) {
+			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+			return;
+		}
+		final InternalEObject internalEObject = (InternalEObject) ((IObserving) observableValue).getObserved();
+		final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
+		final Setting setting = internalEObject.eSetting(structuralFeature);
+		observableValue.dispose();
+
+		cd.setText(Messages.TemplateColorControl_SelectColor);
+		cd.setRGB(colors.get(setting).getRGB());
+		final RGB rgb = cd.open();
+		if (rgb == null) {
+			return;
+		}
+
+		final String red = Integer.toHexString(0x100 | rgb.red).substring(1);
+		final String green = Integer.toHexString(0x100 | rgb.green).substring(1);
+		final String blue = Integer.toHexString(0x100 | rgb.blue).substring(1);
+		final String result = red + green + blue;
+		internalEObject.eSet(structuralFeature, result);
 	}
 
 	/**

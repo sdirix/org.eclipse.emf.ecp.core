@@ -71,7 +71,8 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 	 * @param reportService the ReportService to use
 	 * @since 1.3
 	 */
-	public AbstractSWTRenderer(final VELEMENT vElement, final ViewModelContext viewContext, ReportService reportService) {
+	public AbstractSWTRenderer(final VELEMENT vElement, final ViewModelContext viewContext,
+		ReportService reportService) {
 		super(vElement, viewContext, reportService);
 	}
 
@@ -323,6 +324,7 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 
 	/**
 	 * @return String the default font name on the system.
+	 * @param control The control to derive the default font name from
 	 *
 	 * @since 1.5
 	 */
