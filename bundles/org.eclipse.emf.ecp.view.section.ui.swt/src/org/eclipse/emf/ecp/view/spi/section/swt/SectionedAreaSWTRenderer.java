@@ -54,13 +54,16 @@ public class SectionedAreaSWTRenderer extends
 	 * @param viewContext the view context
 	 * @param reportService the {@link ReportService}
 	 */
-	public SectionedAreaSWTRenderer(VSectionedArea vElement, ViewModelContext viewContext, ReportService reportService) {
+	public SectionedAreaSWTRenderer(VSectionedArea vElement, ViewModelContext viewContext,
+		ReportService reportService) {
 		super(vElement, viewContext, reportService);
 	}
 
 	private static final String CUSTOM_VARIANT_VALUE = "org_eclipse_emf_ecp_ui_section"; //$NON-NLS-1$
 
 	private SWTGridDescription gridDescription;
+
+	private AbstractSectionSWTRenderer rootRenderer;
 
 	@Override
 	public SWTGridDescription getGridDescription(
@@ -86,17 +89,16 @@ public class SectionedAreaSWTRenderer extends
 		SWTGridDescription rowGridDescription = null;
 		SWTGridDescription controlGridDescription = null;
 		final VSection child = getVElement().getRoot();
-		AbstractSWTRenderer<VElement> renderer;
 		try {
-			renderer = getEMFFormsRendererFactory()
-				.getRendererInstance(child, getViewModelContext());
+			rootRenderer = AbstractSectionSWTRenderer.class.cast(getEMFFormsRendererFactory()
+				.getRendererInstance(child, getViewModelContext()));
 		} catch (final EMFFormsNoRendererException ex) {
 			getReportService().report(new RenderingFailedReport(ex));
 			return columnComposite;
 		}
 		final Collection<AbstractAdditionalSWTRenderer<VElement>> additionalRenderers = getEMFFormsRendererFactory()
 			.getAdditionalRendererInstances(child, getViewModelContext());
-		SWTGridDescription gridDescription = renderer
+		SWTGridDescription gridDescription = rootRenderer
 			.getGridDescription(GridDescriptionFactory.INSTANCE
 				.createEmptyGridDescription());
 		controlGridDescription = gridDescription;
@@ -107,8 +109,8 @@ public class SectionedAreaSWTRenderer extends
 		}
 		rowGridDescription = gridDescription;
 		maximalGridDescription = gridDescription;
-		final Set<AbstractSWTRenderer<VElement>> allRenderer = new LinkedHashSet<AbstractSWTRenderer<VElement>>();
-		allRenderer.add(renderer);
+		final Set<AbstractSWTRenderer<?>> allRenderer = new LinkedHashSet<AbstractSWTRenderer<?>>();
+		allRenderer.add(rootRenderer);
 		allRenderer.addAll(additionalRenderers);
 
 		if (maximalGridDescription == null) {
@@ -183,5 +185,17 @@ public class SectionedAreaSWTRenderer extends
 		final EMFFormsRendererFactory rendererFactory = bundleContext.getService(serviceReference);
 		bundleContext.ungetService(serviceReference);
 		return rendererFactory;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#finalizeRendering(org.eclipse.swt.widgets.Composite)
+	 */
+	@Override
+	public void finalizeRendering(Composite parent) {
+		/* after all children have been rendered, we can init the visibility state */
+		rootRenderer.initCollapseState();
+		super.finalizeRendering(parent);
 	}
 }
