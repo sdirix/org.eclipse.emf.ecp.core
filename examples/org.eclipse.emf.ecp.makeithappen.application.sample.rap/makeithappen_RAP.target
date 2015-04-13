@@ -12,7 +12,7 @@
 <unit id="org.eclipse.emf.ecp.rap.util.feature.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.emf.ecp.emfforms.runtime.feature.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.emf.ecp.rap.sdk.feature.feature.group" version="0.0.0"/>
-<repository location="http://download.eclipse.org/ecp/releases/releases_15"/>
+<repository location="http://download.eclipse.org/ecp/releases/releases_target_15"/>
 </location>
 </locations>
 </target>
