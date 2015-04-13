@@ -99,7 +99,7 @@
 		<module>../../tests/org.eclipse.emfforms.core.services.emf.tests</module>
 		
 		<!-- Localization Bundle -->
-		<module>../../tests/org.eclipse.emf.emfforms.localization.tests</module>
+		<module>../../tests/org.eclipse.emfforms.localization.tests</module>
 		<module>../../tests/org.eclipse.emfforms.view.model.localization.tests</module>
 	</modules>
 	

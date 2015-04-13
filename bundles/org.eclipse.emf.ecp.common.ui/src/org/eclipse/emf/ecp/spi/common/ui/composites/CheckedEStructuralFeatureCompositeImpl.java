@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecp.internal.common.ui.MessageKeys;
-import org.eclipse.emf.emfforms.spi.localization.LocalizationServiceHelper;
+import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;

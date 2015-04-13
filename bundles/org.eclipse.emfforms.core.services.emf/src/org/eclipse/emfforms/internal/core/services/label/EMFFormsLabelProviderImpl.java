@@ -26,15 +26,15 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.common.spi.asserts.Assert;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
-import org.eclipse.emf.emfforms.spi.core.services.emfspecificservice.EMFSpecificService;
-import org.eclipse.emf.emfforms.spi.localization.EMFFormsLocalizationService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.emfspecificservice.EMFSpecificService;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
 import org.eclipse.emfforms.spi.core.services.locale.EMFFormsLocaleChangeListener;
 import org.eclipse.emfforms.spi.core.services.locale.EMFFormsLocaleProvider;
+import org.eclipse.emfforms.spi.localization.EMFFormsLocalizationService;
 
 /**
  * Implementation of {@link EMFFormsLabelProvider}. It provides a label service that delivers the display name and

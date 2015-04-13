@@ -29,9 +29,9 @@ import org.eclipse.emf.ecp.edit.spi.ECPControlFactory;
 import org.eclipse.emf.ecp.edit.spi.util.ECPApplicableTester;
 import org.eclipse.emf.ecp.edit.spi.util.ECPStaticApplicableTester;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
-import org.eclipse.emf.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
+import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 import org.osgi.framework.Bundle;
 
 /**

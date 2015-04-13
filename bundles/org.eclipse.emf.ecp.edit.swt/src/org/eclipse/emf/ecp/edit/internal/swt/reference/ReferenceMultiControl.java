@@ -19,7 +19,7 @@ import org.eclipse.emf.ecp.edit.spi.swt.actions.ECPSWTAction;
 import org.eclipse.emf.ecp.edit.spi.swt.reference.AddReferenceAction;
 import org.eclipse.emf.ecp.edit.spi.swt.reference.NewReferenceAction;
 import org.eclipse.emf.ecp.edit.spi.util.ECPStaticApplicableTester;
-import org.eclipse.emf.emfforms.spi.localization.LocalizationServiceHelper;
+import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 
 /**
  * This class defines a Control which is used for displaying {@link org.eclipse.emf.ecore.EStructuralFeature}s which

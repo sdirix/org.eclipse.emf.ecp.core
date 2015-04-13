@@ -255,16 +255,16 @@
 		<module>../../bundles/org.eclipse.emfforms.core.services.databinding.featurepath</module>
 		<module>../../bundles/org.eclipse.emfforms.core.services.databinding.index</module>
 		<module>../../bundles/org.eclipse.emfforms.core.services.databinding.mapping</module>
-		<module>../../bundles/org.eclipse.emf.emfforms.core.services.emfspecificservice</module>
+		<module>../../bundles/org.eclipse.emfforms.core.services.emfspecificservice</module>
 		<module>../../bundles/org.eclipse.emfforms.core.services.editsupport</module>
 		<module>../../bundles/org.eclipse.emfforms.swt.core</module>
 		<module>../../bundles/org.eclipse.emfforms.swt.core.plugin</module>
 		<module>../../bundles/org.eclipse.emfforms.core.services</module>
 		<module>../../bundles/org.eclipse.emfforms.core.services.emf</module>
-		<module>../../bundles/org.eclipse.emfforms.localization.default</module>
+		<module>../../bundles/org.eclipse.emfforms.core.services.locale.default</module>
 		
 		<!-- Localization Services -->
-		<module>../../bundles/org.eclipse.emf.emfforms.localization</module>
+		<module>../../bundles/org.eclipse.emfforms.localization</module>
 		<module>../../bundles/org.eclipse.emfforms.view.model.localization</module>
 		
 	</modules>

@@ -8,7 +8,7 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Require-Bundle: org.eclipse.emf.ecore;bundle-version="[2.10.0,3.0.0)",
  org.eclipse.emf.ecp.view.model;bundle-version="[1.5.0,2.0.0)",
  org.eclipse.emfforms.core.services.databinding;bundle-version="[1.5.0,2.0.0)",
- org.eclipse.emf.emfforms.core.services.emfspecificservice;bundle-version="[1.5.0,2.0.0)",
+ org.eclipse.emfforms.core.services.emfspecificservice;bundle-version="[1.5.0,2.0.0)",
  org.eclipse.core.databinding.observable;bundle-version="[1.4.0,2.0.0)",
  org.eclipse.emf.ecp.common;bundle-version="[1.5.0,2.0.0)",
  org.eclipse.emf.edit;bundle-version="[2.10.0,3.0.0)",

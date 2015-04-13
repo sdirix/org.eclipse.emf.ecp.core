@@ -33,7 +33,7 @@ import org.eclipse.emf.ecp.view.spi.model.LocalizationAdapter;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.model.util.ViewModelUtil;
-import org.eclipse.emf.emfforms.spi.localization.LocalizationServiceHelper;
+import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 
 /**
  * Manages the view models provided by the file extension point.

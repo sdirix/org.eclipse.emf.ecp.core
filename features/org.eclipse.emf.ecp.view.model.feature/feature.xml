@@ -137,14 +137,14 @@
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.emf.emfforms.core.services.emfspecificservice"
+         id="org.eclipse.emfforms.core.services.emfspecificservice"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.emf.emfforms.localization"
+         id="org.eclipse.emfforms.localization"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -207,7 +207,7 @@
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.emfforms.localization.default"
+         id="org.eclipse.emfforms.core.services.locale.default"
          download-size="0"
          install-size="0"
          version="0.0.0"

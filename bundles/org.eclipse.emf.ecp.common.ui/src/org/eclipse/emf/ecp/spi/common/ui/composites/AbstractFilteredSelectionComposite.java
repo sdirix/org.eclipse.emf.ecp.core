@@ -15,7 +15,7 @@ package org.eclipse.emf.ecp.spi.common.ui.composites;
 import org.eclipse.emf.ecp.internal.common.ui.MessageKeys;
 import org.eclipse.emf.ecp.spi.common.ui.CompositeProvider;
 import org.eclipse.emf.ecp.spi.common.ui.ECPViewerFilter;
-import org.eclipse.emf.emfforms.spi.localization.LocalizationServiceHelper;
+import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
