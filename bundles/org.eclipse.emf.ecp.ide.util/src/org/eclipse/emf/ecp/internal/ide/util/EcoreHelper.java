@@ -68,7 +68,7 @@ public final class EcoreHelper {
 	 * @param ecorePath - path to the ecore
 	 * @throws IOException if resource cannot be loaded
 	 *
-	 * */
+	 */
 	public static void registerEcore(String ecorePath) throws IOException {
 		if (ecorePath == null) {
 			return;
@@ -128,6 +128,17 @@ public final class EcoreHelper {
 		EPackage.Registry.INSTANCE.put(ePackage.getNsURI(), ePackage);
 		ALL_NSURIS_REGISTERED_BY_TOOLING.add(ePackage.getNsURI());
 		WORKSPACEURI_TO_REGISTEREDPACKAGE.put(platformResourceURI, ePackage);
+		registerSubpackages(ePackage);
+	}
+
+	/**
+	 * @param ePackage - the EPackage whose subpackages need to be registered
+	 */
+	private static void registerSubpackages(EPackage ePackage) {
+		for (final EPackage subpackage : ePackage.getESubpackages()) {
+			EPackage.Registry.INSTANCE.put(subpackage.getNsURI(), subpackage);
+			registerSubpackages(subpackage);
+		}
 	}
 
 	/**
@@ -176,7 +187,7 @@ public final class EcoreHelper {
 	 *
 	 * @param ecorePath - the path of the ecore to be removed.
 	 *
-	 * */
+	 */
 	public static void unregisterEcore(String ecorePath) {
 		if (ecorePath == null || ECOREPATH_TO_WORKSPACEURIS.get(ecorePath) == null) {
 			return;
@@ -223,6 +234,17 @@ public final class EcoreHelper {
 			}
 			EPackage.Registry.INSTANCE.remove(pkgToRemove.getNsURI());
 			ALL_NSURIS_REGISTERED_BY_TOOLING.remove(pkgToRemove.getNsURI());
+			unregisterSubpackages(pkgToRemove);
+		}
+	}
+
+	/**
+	 * @param ePackage - the EPackage whose subpackages need to be unregistered
+	 */
+	private static void unregisterSubpackages(EPackage ePackage) {
+		for (final EPackage subpackage : ePackage.getESubpackages()) {
+			EPackage.Registry.INSTANCE.remove(subpackage.getNsURI());
+			unregisterSubpackages(subpackage);
 		}
 	}
 
