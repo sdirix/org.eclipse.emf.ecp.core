@@ -27,3 +27,4 @@ Import-Package: org.eclipse.jface.layout;version="0.0.0",
 Export-Package: org.eclipse.emf.ecp.makeithappen.ui.emailcontrol;versi
  on="1.6.0"
 Service-Component: OSGI-INF/emailRendererService.xml
+Bundle-ActivationPolicy: lazy
