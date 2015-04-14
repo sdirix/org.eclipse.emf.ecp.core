@@ -34,6 +34,7 @@ import org.eclipse.swt.widgets.DateTime;
  * @author Eugen Neufeld
  *
  */
+@Deprecated
 public class DateTimeControl extends SingleControl {
 
 	private DateTime dateWidget;

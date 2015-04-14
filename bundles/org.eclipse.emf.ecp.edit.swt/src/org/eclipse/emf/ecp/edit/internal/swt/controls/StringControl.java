@@ -23,6 +23,7 @@ import org.eclipse.swt.widgets.Text;
  * @author Eugen Neufeld
  *
  */
+@Deprecated
 public class StringControl extends AbstractTextControl {
 
 	/** {@inheritDoc} */

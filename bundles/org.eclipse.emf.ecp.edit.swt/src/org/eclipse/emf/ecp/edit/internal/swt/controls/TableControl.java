@@ -104,6 +104,7 @@ import org.eclipse.swt.widgets.TableColumn;
  * @author emueller
  */
 // this class is not serialized
+@Deprecated
 public class TableControl extends SWTControl {
 
 	private static final String FIXED_COLUMNS = "org.eclipse.rap.rwt.fixedColumns"; //$NON-NLS-1$

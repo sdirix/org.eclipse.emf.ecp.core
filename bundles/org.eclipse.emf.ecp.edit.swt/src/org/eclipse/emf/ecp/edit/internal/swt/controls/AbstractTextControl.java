@@ -39,6 +39,7 @@ import org.eclipse.swt.widgets.ToolTip;
  *
  * @author Eugen Neufeld
  */
+@Deprecated
 public abstract class AbstractTextControl extends SingleControl {
 
 	/**

@@ -38,6 +38,7 @@ import org.eclipse.swt.widgets.Text;
  * @author Eugen Neufeld
  * @author emueller
  */
+@Deprecated
 public class NumericalControl extends AbstractTextControl {
 
 	@Override

@@ -30,6 +30,7 @@ import org.eclipse.swt.widgets.Control;
  * @author Eugen Neufeld
  *
  */
+@Deprecated
 public class BooleanControl extends SingleControl {
 
 	private Button check;
