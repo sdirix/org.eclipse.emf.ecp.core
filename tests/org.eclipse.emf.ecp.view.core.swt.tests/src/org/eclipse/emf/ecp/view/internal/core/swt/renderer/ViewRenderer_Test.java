@@ -38,7 +38,7 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
 @RunWith(DatabindingClassRunner.class)
-public class ViewRenderer_PTest {
+public class ViewRenderer_Test {
 
 	private ViewSWTRenderer viewRenderer;
 	private VView view;

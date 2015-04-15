@@ -21,12 +21,15 @@ import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
+import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
+import org.eclipse.emfforms.spi.core.services.locale.EMFFormsLocaleProvider;
+import org.eclipse.emfforms.spi.localization.EMFFormsLocalizationService;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererService;
 
 /**
@@ -42,6 +45,9 @@ public class XMLDateControlSWTRendererService implements EMFFormsRendererService
 	private ReportService reportService;
 	private VTViewTemplateProvider vtViewTemplateProvider;
 	private EMFFormsEditSupport editSupport;
+	private EMFFormsLocalizationService localizationService;
+	private EMFFormsLocaleProvider localeProvider;
+	private ImageRegistryService imageRegistryService;
 
 	/**
 	 * Called by the initializer to set the EMFFormsDatabinding.
@@ -134,6 +140,60 @@ public class XMLDateControlSWTRendererService implements EMFFormsRendererService
 	}
 
 	/**
+	 * Called by the initializer to set the EMFFormsLocalizationService.
+	 *
+	 * @param localizationService The EMFFormsLocalizationService
+	 */
+	protected void setEMFFormsLocalizationService(EMFFormsLocalizationService localizationService) {
+		this.localizationService = localizationService;
+	}
+
+	/**
+	 * Called by the initializer to unset the EMFFormsLocalizationService.
+	 *
+	 * @param localizationService The EMFFormsLocalizationService
+	 */
+	protected void unsetEMFFormsLocalizationService(EMFFormsLocalizationService localizationService) {
+		this.localizationService = null;
+	}
+
+	/**
+	 * Called by the initializer to set the EMFFormsLocaleProvider.
+	 *
+	 * @param localeProvider The EMFFormsLocaleProvider
+	 */
+	protected void setEMFFormsLocaleProvider(EMFFormsLocaleProvider localeProvider) {
+		this.localeProvider = localeProvider;
+	}
+
+	/**
+	 * Called by the initializer to unset the EMFFormsLocaleProvider.
+	 *
+	 * @param localeProvider The EMFFormsLocaleProvider
+	 */
+	protected void unsetEMFFormsLocaleProvider(EMFFormsLocaleProvider localeProvider) {
+		this.localeProvider = null;
+	}
+
+	/**
+	 * Called by the initializer to set the ImageRegistryService.
+	 *
+	 * @param imageRegistryService The ImageRegistryService
+	 */
+	protected void setImageRegistryService(ImageRegistryService imageRegistryService) {
+		this.imageRegistryService = imageRegistryService;
+	}
+
+	/**
+	 * Called by the initializer to unset the ImageRegistryService.
+	 *
+	 * @param imageRegistryService The ImageRegistryService
+	 */
+	protected void unsetImageRegistryService(ImageRegistryService imageRegistryService) {
+		this.imageRegistryService = null;
+	}
+
+	/**
 	 * {@inheritDoc}
 	 *
 	 * @see org.eclipse.emfforms.spi.swt.core.EMFFormsRendererService#isApplicable(org.eclipse.emf.ecp.view.spi.model.VElement)
@@ -179,7 +239,8 @@ public class XMLDateControlSWTRendererService implements EMFFormsRendererService
 	@Override
 	public AbstractSWTRenderer<VControl> getRendererInstance(VControl vElement, ViewModelContext viewModelContext) {
 		return new XMLDateControlSWTRenderer(vElement, viewModelContext, reportService, databindingService,
-			labelProvider, vtViewTemplateProvider, editSupport);
+			labelProvider, vtViewTemplateProvider, editSupport, localizationService, localeProvider,
+			imageRegistryService);
 	}
 
 }

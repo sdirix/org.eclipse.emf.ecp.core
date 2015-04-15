@@ -23,7 +23,6 @@ import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.spi.ViewLocaleService;
-import org.eclipse.emf.ecp.view.internal.core.swt.Activator;
 import org.eclipse.emf.ecp.view.internal.core.swt.MessageKeys;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer;
@@ -31,12 +30,14 @@ import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
+import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
+import org.eclipse.emfforms.spi.localization.EMFFormsLocalizationService;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.dialogs.IDialogLabelKeys;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -55,6 +56,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.DateTime;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * A control which can handle {@link java.util.Date Date}.
@@ -63,6 +65,10 @@ import org.eclipse.swt.widgets.Shell;
  *
  */
 public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
+
+	private final EMFFormsLocalizationService localizationService;
+
+	private final ImageRegistryService imageRegistryService;
 
 	/**
 	 * Default constructor.
@@ -73,12 +79,17 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 	 * @param emfFormsDatabinding The {@link EMFFormsDatabinding}
 	 * @param emfFormsLabelProvider The {@link EMFFormsLabelProvider}
 	 * @param vtViewTemplateProvider The {@link VTViewTemplateProvider}
+	 * @param localizationService The {@link EMFFormsLocalizationService}
+	 * @param imageRegistryService The {@link ImageRegistryService}
 	 */
 	public DateTimeControlSWTRenderer(VControl vElement, ViewModelContext viewContext,
 		ReportService reportService,
 		EMFFormsDatabinding emfFormsDatabinding, EMFFormsLabelProvider emfFormsLabelProvider,
-		VTViewTemplateProvider vtViewTemplateProvider) {
+		VTViewTemplateProvider vtViewTemplateProvider, EMFFormsLocalizationService localizationService,
+		ImageRegistryService imageRegistryService) {
 		super(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider);
+		this.localizationService = localizationService;
+		this.imageRegistryService = imageRegistryService;
 	}
 
 	private Label unsetLabel;
@@ -190,13 +201,13 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 
 		final Button bUnset = new Button(dateTimeComposite, SWT.PUSH);
 		GridDataFactory.fillDefaults().grab(false, false).align(SWT.CENTER, SWT.CENTER).applyTo(bUnset);
-		bUnset.setImage(Activator.getImage("icons/delete.png")); //$NON-NLS-1$
+		bUnset.setImage(imageRegistryService.getImage(FrameworkUtil.getBundle(getClass()), "icons/delete.png")); //$NON-NLS-1$
 		bUnset.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_dateTime_buttonUnset"); //$NON-NLS-1$
 		bUnset.setToolTipText(getLocalizedString(MessageKeys.DateTimeControlSWTRenderer_CleanDate));
 
 		final Button bDate = new Button(composite, SWT.PUSH);
 		GridDataFactory.fillDefaults().grab(false, false).align(SWT.CENTER, SWT.CENTER).applyTo(bDate);
-		bDate.setImage(Activator.getImage("icons/date.png")); //$NON-NLS-1$
+		bDate.setImage(imageRegistryService.getImage(FrameworkUtil.getBundle(getClass()), "icons/date.png")); //$NON-NLS-1$
 		bDate.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_dateTime_buttonSet"); //$NON-NLS-1$
 		bDate.setToolTipText(getLocalizedString(MessageKeys.DateTimeControlSWTRenderer_SelectData));
 
@@ -233,6 +244,10 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 	@Override
 	protected String getUnsetText() {
 		return getLocalizedString(MessageKeys.DateTimeControl_NoDateSetClickToSetDate);
+	}
+
+	private String getLocalizedString(String key) {
+		return localizationService.getString(getClass(), key);
 	}
 
 	/**

@@ -25,6 +25,8 @@ import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedRepor
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
+import org.eclipse.emfforms.spi.core.services.locale.EMFFormsLocaleProvider;
+import org.eclipse.emfforms.spi.localization.EMFFormsLocalizationService;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererService;
 
 /**
@@ -41,6 +43,8 @@ public class NumberControlSWTRendererService implements EMFFormsRendererService<
 	private ReportService reportService;
 	private VTViewTemplateProvider vtViewTemplateProvider;
 	private EMFFormsEditSupport editSupport;
+	private EMFFormsLocaleProvider localeProvider;
+	private EMFFormsLocalizationService localizationService;
 
 	/**
 	 * Called by the initializer to set the EMFFormsDatabinding.
@@ -133,6 +137,42 @@ public class NumberControlSWTRendererService implements EMFFormsRendererService<
 	}
 
 	/**
+	 * Called by the initializer to set the EMFFormsLocalizationService.
+	 *
+	 * @param localizationService The EMFFormsLocalizationService
+	 */
+	protected void setEMFFormsLocalizationService(EMFFormsLocalizationService localizationService) {
+		this.localizationService = localizationService;
+	}
+
+	/**
+	 * Called by the initializer to unset the EMFFormsLocalizationService.
+	 *
+	 * @param localizationService The EMFFormsLocalizationService
+	 */
+	protected void unsetEMFFormsLocalizationService(EMFFormsLocalizationService localizationService) {
+		this.localizationService = null;
+	}
+
+	/**
+	 * Called by the initializer to set the EMFFormsLocaleProvider.
+	 *
+	 * @param localeProvider The EMFFormsLocaleProvider
+	 */
+	protected void setEMFFormsLocaleProvider(EMFFormsLocaleProvider localeProvider) {
+		this.localeProvider = localeProvider;
+	}
+
+	/**
+	 * Called by the initializer to unset the EMFFormsLocaleProvider.
+	 *
+	 * @param localeProvider The EMFFormsLocaleProvider
+	 */
+	protected void unsetEMFFormsLocaleProvider(EMFFormsLocaleProvider localeProvider) {
+		this.localeProvider = null;
+	}
+
+	/**
 	 * {@inheritDoc}
 	 *
 	 * @see org.eclipse.emfforms.spi.swt.core.EMFFormsRendererService#isApplicable(org.eclipse.emf.ecp.view.spi.model.VElement)
@@ -197,7 +237,7 @@ public class NumberControlSWTRendererService implements EMFFormsRendererService<
 	@Override
 	public AbstractSWTRenderer<VControl> getRendererInstance(VControl vElement, ViewModelContext viewModelContext) {
 		return new NumberControlSWTRenderer(vElement, viewModelContext, reportService, databindingService,
-			labelProvider, vtViewTemplateProvider, editSupport);
+			labelProvider, vtViewTemplateProvider, editSupport, localizationService, localeProvider);
 	}
 
 }

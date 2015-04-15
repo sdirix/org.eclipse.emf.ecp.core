@@ -47,7 +47,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 
 @RunWith(DatabindingClassRunner.class)
-public class BooleanControlRenderer_PTest extends AbstractControl_PTest {
+public class BooleanControlRenderer_Test extends AbstractControl_Test {
 
 	@Before
 	public void before() throws DatabindingFailedException {

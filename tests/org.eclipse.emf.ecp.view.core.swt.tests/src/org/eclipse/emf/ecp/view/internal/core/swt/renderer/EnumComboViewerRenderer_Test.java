@@ -52,7 +52,7 @@ import org.mockito.Matchers;
  *
  */
 @RunWith(DatabindingClassRunner.class)
-public class EnumComboViewerRenderer_PTest extends AbstractControl_PTest {
+public class EnumComboViewerRenderer_Test extends AbstractControl_Test {
 
 	private EMFFormsEditSupport editSupport;
 
@@ -80,7 +80,7 @@ public class EnumComboViewerRenderer_PTest extends AbstractControl_PTest {
 	 *
 	 * @throws DatabindingFailedException
 	 *
-	 * @see org.org.eclipse.emf.ecp.view.internal.core.swt.renderer.AbstractControl_PTest#mockControl()
+	 * @see org.AbstractControl_Test.eclipse.emf.ecp.view.internal.core.swt.renderer.AbstractControl_PTest#mockControl()
 	 */
 	@Override
 	protected void mockControl() throws DatabindingFailedException {

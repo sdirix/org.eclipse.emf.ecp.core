@@ -25,7 +25,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecp.view.core.swt.tests.ObservingWritableValue;
-import org.eclipse.emf.ecp.view.internal.core.swt.renderer.AbstractControl_PTest;
+import org.eclipse.emf.ecp.view.internal.core.swt.renderer.AbstractControl_Test;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
@@ -50,7 +50,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 
 @RunWith(DatabindingClassRunner.class)
-public class TextControlRenderer_PTest extends AbstractControl_PTest {
+public class TextControlRenderer_Test extends AbstractControl_Test {
 
 	@Before
 	public void before() throws DatabindingFailedException {

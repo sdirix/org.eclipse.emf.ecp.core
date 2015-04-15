@@ -48,7 +48,6 @@ import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedRepor
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
-import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
@@ -336,16 +335,6 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 
 		}
 		return label;
-	}
-
-	/**
-	 * Provides a localized string for a key.
-	 *
-	 * @param key The Key to get the value for
-	 * @return The localized String
-	 */
-	protected String getLocalizedString(String key) {
-		return LocalizationServiceHelper.getString(getClass(), key);
 	}
 
 	private VTMandatoryStyleProperty getMandatoryStyle() {

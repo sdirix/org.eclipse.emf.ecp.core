@@ -28,9 +28,8 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecp.edit.internal.swt.controls.NumericalHelper;
-import org.eclipse.emf.ecp.edit.spi.ViewLocaleService;
 import org.eclipse.emf.ecp.view.core.swt.tests.ObservingWritableValue;
-import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.internal.core.swt.MessageKeys;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
@@ -45,6 +44,8 @@ import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
+import org.eclipse.emfforms.spi.core.services.locale.EMFFormsLocaleProvider;
+import org.eclipse.emfforms.spi.localization.EMFFormsLocalizationService;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
@@ -55,7 +56,7 @@ import org.junit.runner.RunWith;
 
 @SuppressWarnings("restriction")
 @RunWith(DatabindingClassRunner.class)
-public class NumberControlRenderer_PTest extends AbstractControl_PTest {
+public class NumberControlRenderer_Test extends AbstractControl_Test {
 
 	@Before
 	public void before() throws DatabindingFailedException {
@@ -63,10 +64,19 @@ public class NumberControlRenderer_PTest extends AbstractControl_PTest {
 		databindingService = mock(EMFFormsDatabinding.class);
 		labelProvider = mock(EMFFormsLabelProvider.class);
 		templateProvider = mock(VTViewTemplateProvider.class);
+		final EMFFormsLocalizationService localizationService = mock(EMFFormsLocalizationService.class);
+		when(
+			localizationService.getString(NumberControlSWTRenderer.class, MessageKeys.NumericalControl_FormatNumerical))
+			.thenReturn("#");
+		when(
+			localizationService.getString(NumberControlSWTRenderer.class,
+				MessageKeys.NumericalControl_FormatNumericalDecimal)).thenReturn("#.#");
+		final EMFFormsLocaleProvider localeProvider = mock(EMFFormsLocaleProvider.class);
+		when(localeProvider.getLocale()).thenReturn(Locale.getDefault());
 		final EMFFormsEditSupport editSupport = mock(EMFFormsEditSupport.class);
 		setup();
 		renderer = new NumberControlSWTRenderer(vControl, context, reportService, databindingService, labelProvider,
-			templateProvider, editSupport);
+			templateProvider, editSupport, localizationService, localeProvider);
 		renderer.init();
 	}
 
@@ -227,15 +237,7 @@ public class NumberControlRenderer_PTest extends AbstractControl_PTest {
 	}
 
 	private DecimalFormat getDecimalFormat(Class<?> instanceClass) {
-		return NumericalHelper.setupFormat(getLocale(context), instanceClass);
-	}
-
-	private Locale getLocale(ViewModelContext viewModelContext) {
-		final ViewLocaleService service = viewModelContext.getService(ViewLocaleService.class);
-		if (service == null) {
-			return Locale.getDefault();
-		}
-		return service.getLocale();
+		return NumericalHelper.setupFormat(Locale.getDefault(), instanceClass);
 	}
 
 }

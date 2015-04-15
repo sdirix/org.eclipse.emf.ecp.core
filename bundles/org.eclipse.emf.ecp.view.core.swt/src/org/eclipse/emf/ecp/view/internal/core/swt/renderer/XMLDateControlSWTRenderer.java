@@ -26,9 +26,7 @@ import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.internal.swt.util.DateUtil;
-import org.eclipse.emf.ecp.edit.spi.ViewLocaleService;
 import org.eclipse.emf.ecp.edit.spi.swt.util.ECPDialogExecutor;
-import org.eclipse.emf.ecp.view.internal.core.swt.Activator;
 import org.eclipse.emf.ecp.view.internal.core.swt.MessageKeys;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.renderer.TextControlSWTRenderer;
@@ -36,12 +34,15 @@ import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
+import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
+import org.eclipse.emfforms.spi.core.services.locale.EMFFormsLocaleProvider;
+import org.eclipse.emfforms.spi.localization.EMFFormsLocalizationService;
 import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.dialogs.IDialogLabelKeys;
@@ -62,6 +63,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.DateTime;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Eugen
@@ -69,6 +71,10 @@ import org.eclipse.swt.widgets.Text;
  */
 @SuppressWarnings("restriction")
 public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
+
+	private final EMFFormsLocaleProvider localeProvider;
+	private final EMFFormsLocalizationService localizationService;
+	private final ImageRegistryService imageRegistryService;
 
 	/**
 	 * Default constructor.
@@ -80,13 +86,21 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 	 * @param emfFormsLabelProvider The {@link EMFFormsLabelProvider}
 	 * @param vtViewTemplateProvider The {@link VTViewTemplateProvider}
 	 * @param emfFormsEditSupport The {@link EMFFormsEditSupport}
+	 * @param localizationService The {@link EMFFormsLocalizationService}
+	 * @param localeProvider The {@link EMFFormsLocaleProvider}
+	 * @param imageRegistryService The {@link ImageRegistryService}
 	 */
 	public XMLDateControlSWTRenderer(VControl vElement, ViewModelContext viewContext,
 		ReportService reportService,
 		EMFFormsDatabinding emfFormsDatabinding, EMFFormsLabelProvider emfFormsLabelProvider,
-		VTViewTemplateProvider vtViewTemplateProvider, EMFFormsEditSupport emfFormsEditSupport) {
+		VTViewTemplateProvider vtViewTemplateProvider, EMFFormsEditSupport emfFormsEditSupport,
+		EMFFormsLocalizationService localizationService, EMFFormsLocaleProvider localeProvider,
+		ImageRegistryService imageRegistryService) {
 		super(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider,
 			emfFormsEditSupport);
+		this.localizationService = localizationService;
+		this.localeProvider = localeProvider;
+		this.imageRegistryService = imageRegistryService;
 	}
 
 	private static final DateFormat CHECK_FORMAT = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH); //$NON-NLS-1$
@@ -126,7 +140,7 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 
 			final DateTime calendar = new DateTime(dialog, SWT.CALENDAR | SWT.BORDER);
 			final XMLGregorianCalendar gregorianCalendar = (XMLGregorianCalendar) modelValue.getValue();
-			final Calendar cal = Calendar.getInstance(getLocale(viewModelContext));
+			final Calendar cal = Calendar.getInstance(localeProvider.getLocale());
 			if (gregorianCalendar != null) {
 				cal.setTime(gregorianCalendar.toGregorianCalendar().getTime());
 			}
@@ -288,7 +302,7 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.CENTER).applyTo(text);
 		final Button bDate = new Button(main, SWT.PUSH);
 		GridDataFactory.fillDefaults().grab(false, false).align(SWT.CENTER, SWT.CENTER).applyTo(bDate);
-		bDate.setImage(Activator.getImage("icons/date.png")); //$NON-NLS-1$
+		bDate.setImage(imageRegistryService.getImage(FrameworkUtil.getBundle(getClass()), "icons/date.png")); //$NON-NLS-1$
 		bDate.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_xmldate"); //$NON-NLS-1$
 
 		return main;
@@ -335,17 +349,9 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 	 * @return the {@link DateFormat}
 	 */
 	protected DateFormat setupFormat() {
-		final DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM, getLocale(getViewModelContext()));
+		final DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM, localeProvider.getLocale());
 		df.setLenient(false);
 		return df;
-	}
-
-	private Locale getLocale(ViewModelContext viewModelContext) {
-		final ViewLocaleService service = viewModelContext.getService(ViewLocaleService.class);
-		if (service == null) {
-			return Locale.getDefault();
-		}
-		return service.getLocale();
 	}
 
 	/**
@@ -377,7 +383,7 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 	 */
 	@Override
 	protected String getUnsetText() {
-		return LocalizationServiceHelper
+		return localizationService
 			.getString(getClass(), MessageKeys.XmlDateControlText_NoDateSetClickToSetDate);
 	}
 

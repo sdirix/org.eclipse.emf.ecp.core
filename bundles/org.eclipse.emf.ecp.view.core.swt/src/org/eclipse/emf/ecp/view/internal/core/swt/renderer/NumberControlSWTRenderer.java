@@ -14,7 +14,6 @@ package org.eclipse.emf.ecp.view.internal.core.swt.renderer;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.ParsePosition;
-import java.util.Locale;
 
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.DataBindingContext;
@@ -22,7 +21,6 @@ import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.internal.swt.controls.NumericalHelper;
-import org.eclipse.emf.ecp.edit.spi.ViewLocaleService;
 import org.eclipse.emf.ecp.edit.spi.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.ecp.view.internal.core.swt.Activator;
 import org.eclipse.emf.ecp.view.internal.core.swt.MessageKeys;
@@ -37,7 +35,8 @@ import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedRepor
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
-import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
+import org.eclipse.emfforms.spi.core.services.locale.EMFFormsLocaleProvider;
+import org.eclipse.emfforms.spi.localization.EMFFormsLocalizationService;
 import org.eclipse.jface.dialogs.IDialogLabelKeys;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.JFaceResources;
@@ -53,6 +52,9 @@ import org.eclipse.swt.widgets.Text;
  */
 public class NumberControlSWTRenderer extends TextControlSWTRenderer {
 
+	private final EMFFormsLocalizationService localizationService;
+	private final EMFFormsLocaleProvider localeProvider;
+
 	/**
 	 * Default constructor.
 	 *
@@ -63,13 +65,18 @@ public class NumberControlSWTRenderer extends TextControlSWTRenderer {
 	 * @param emfFormsLabelProvider The {@link EMFFormsLabelProvider}
 	 * @param vtViewTemplateProvider The {@link VTViewTemplateProvider}
 	 * @param emfFormsEditSupport The {@link EMFFormsEditSupport}
+	 * @param localizationService The {@link EMFFormsLocalizationService}
+	 * @param localeProvider The {@link EMFFormsLocaleProvider}
 	 */
 	public NumberControlSWTRenderer(VControl vElement, ViewModelContext viewContext,
 		ReportService reportService,
 		EMFFormsDatabinding emfFormsDatabinding, EMFFormsLabelProvider emfFormsLabelProvider,
-		VTViewTemplateProvider vtViewTemplateProvider, EMFFormsEditSupport emfFormsEditSupport) {
+		VTViewTemplateProvider vtViewTemplateProvider, EMFFormsEditSupport emfFormsEditSupport,
+		EMFFormsLocalizationService localizationService, EMFFormsLocaleProvider localeProvider) {
 		super(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider,
 			emfFormsEditSupport);
+		this.localizationService = localizationService;
+		this.localeProvider = localeProvider;
 	}
 
 	@Override
@@ -93,9 +100,9 @@ public class NumberControlSWTRenderer extends TextControlSWTRenderer {
 				.getValueProperty(getVElement().getDomainModelReference());
 			final EStructuralFeature structuralFeature = (EStructuralFeature) valueProperty.getValueType();
 			if (NumericalHelper.isInteger(getInstanceClass(structuralFeature))) {
-				return LocalizationServiceHelper.getString(getClass(), MessageKeys.NumericalControl_FormatNumerical);
+				return localizationService.getString(getClass(), MessageKeys.NumericalControl_FormatNumerical);
 			} else if (NumericalHelper.isDouble(getInstanceClass(structuralFeature))) {
-				return LocalizationServiceHelper.getString(getClass(),
+				return localizationService.getString(getClass(),
 					MessageKeys.NumericalControl_FormatNumericalDecimal);
 			}
 		} catch (final DatabindingFailedException ex) {
@@ -149,7 +156,7 @@ public class NumberControlSWTRenderer extends TextControlSWTRenderer {
 			if (value == null) {
 				return "";
 			}
-			final DecimalFormat format = NumericalHelper.setupFormat(getLocale(viewModelContext),
+			final DecimalFormat format = NumericalHelper.setupFormat(localeProvider.getLocale(),
 				instanceClass);
 			return format.format(value);
 		}
@@ -182,7 +189,7 @@ public class NumberControlSWTRenderer extends TextControlSWTRenderer {
 		}
 
 		private DecimalFormat getFormat() {
-			return NumericalHelper.setupFormat(getLocale(viewModelContext),
+			return NumericalHelper.setupFormat(localeProvider.getLocale(),
 				getInstanceClass(eStructuralFeature));
 		}
 
@@ -273,8 +280,8 @@ public class NumberControlSWTRenderer extends TextControlSWTRenderer {
 			final Object result = modelValue.getValue();
 
 			final MessageDialog messageDialog = new MessageDialog(text.getShell(),
-				LocalizationServiceHelper.getString(getClass(), MessageKeys.NumericalControl_InvalidNumber), null,
-				LocalizationServiceHelper.getString(getClass(), MessageKeys.NumericalControl_InvalidNumberWillBeUnset),
+				localizationService.getString(getClass(), MessageKeys.NumericalControl_InvalidNumber), null,
+				localizationService.getString(getClass(), MessageKeys.NumericalControl_InvalidNumberWillBeUnset),
 				MessageDialog.ERROR,
 				new String[] { JFaceResources.getString(IDialogLabelKeys.OK_LABEL_KEY) }, 0);
 
@@ -299,14 +306,6 @@ public class NumberControlSWTRenderer extends TextControlSWTRenderer {
 		}
 	}
 
-	private Locale getLocale(ViewModelContext viewModelContext) {
-		final ViewLocaleService service = viewModelContext.getService(ViewLocaleService.class);
-		if (service == null) {
-			return Locale.getDefault();
-		}
-		return service.getLocale();
-	}
-
 	/**
 	 * {@inheritDoc}
 	 *
@@ -314,7 +313,7 @@ public class NumberControlSWTRenderer extends TextControlSWTRenderer {
 	 */
 	@Override
 	protected String getUnsetText() {
-		return LocalizationServiceHelper.getString(getClass(), MessageKeys.NumericalControl_NoNumberClickToSetNumber);
+		return localizationService.getString(getClass(), MessageKeys.NumericalControl_NoNumberClickToSetNumber);
 	}
 
 }

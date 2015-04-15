@@ -19,8 +19,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.when;
 
-import java.util.Collections;
-import java.util.Iterator;
 import java.util.Map;
 
 import org.eclipse.core.databinding.observable.IObserving;
@@ -64,10 +62,8 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.Mockito;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 
-public abstract class AbstractControl_PTest {
+public abstract class AbstractControl_Test {
 	protected static final String CUSTOM_VARIANT = "org.eclipse.rap.rwt.customVariant"; //$NON-NLS-1$
 	protected EMFFormsDatabinding databindingService;
 	protected VTViewTemplateProvider templateProvider;
@@ -116,12 +112,6 @@ public abstract class AbstractControl_PTest {
 
 		when(setting.getEObject()).thenReturn(eObject);
 		when(setting.getEStructuralFeature()).thenReturn(eStructuralFeature);
-		when(domainModelReference.getIterator()).then(new Answer<Iterator<Setting>>() {
-			@Override
-			public Iterator<Setting> answer(InvocationOnMock invocation) throws Throwable {
-				return Collections.singleton(setting).iterator();
-			}
-		});
 
 		mockDatabindingIsUnsettable();
 
