@@ -23,7 +23,6 @@ import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
-import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.core.services.locale.EMFFormsLocaleProvider;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
 import org.eclipse.swt.widgets.Composite;
@@ -44,13 +43,11 @@ public class DIViewSWTRenderer extends ViewSWTRenderer {
 	 * @param reportService the {@link ReportService}
 	 * @param factory the {@link EMFFormsRendererFactory}
 	 * @param emfFormsDatabinding The {@link EMFFormsDatabinding}
-	 * @param emfFormsEditSupport The {@link EMFFormsEditSupport}
 	 * @param localeProvider The {@link EMFFormsLocaleProvider}
 	 */
 	public DIViewSWTRenderer(VView vElement, ViewModelContext viewContext, ReportService reportService,
-		EMFFormsRendererFactory factory, EMFFormsDatabinding emfFormsDatabinding,
-		EMFFormsEditSupport emfFormsEditSupport, EMFFormsLocaleProvider localeProvider) {
-		super(vElement, viewContext, reportService, factory, emfFormsDatabinding, emfFormsEditSupport, localeProvider);
+		EMFFormsRendererFactory factory, EMFFormsDatabinding emfFormsDatabinding, EMFFormsLocaleProvider localeProvider) {
+		super(vElement, viewContext, reportService, factory, emfFormsDatabinding, localeProvider);
 	}
 
 	private Object pojo;

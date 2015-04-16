@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.internal.swt.Activator;
@@ -51,9 +52,11 @@ public final class LayoutProviderHelper {
 	}
 
 	private static void readLayoutProviders() {
-		final IConfigurationElement[] controls = Platform.getExtensionRegistry()
-			.getConfigurationElementsFor(
-				EXTENSION_POINT_ID);
+		final IExtensionRegistry extensionRegistry = Platform.getExtensionRegistry();
+		if (extensionRegistry == null) {
+			return;
+		}
+		final IConfigurationElement[] controls = extensionRegistry.getConfigurationElementsFor(EXTENSION_POINT_ID);
 		for (final IConfigurationElement e : controls) {
 			try {
 				final String clazz = e.getAttribute(CLASS);
@@ -154,5 +157,15 @@ public final class LayoutProviderHelper {
 	public static Object getSpanningLayoutData(int spanX, int spanY) {
 		checkProviderLength();
 		return getLayoutProvider().get(0).getSpanningLayoutData(spanX, spanY);
+	}
+
+	/**
+	 * Allows to add a {@link LayoutProvider} directly.
+	 *
+	 * @param layoutProvider The {@link LayoutProvider}
+	 * @since 1.6
+	 */
+	public static void addLayoutProvider(LayoutProvider layoutProvider) {
+		layoutProviders.add(layoutProvider);
 	}
 }

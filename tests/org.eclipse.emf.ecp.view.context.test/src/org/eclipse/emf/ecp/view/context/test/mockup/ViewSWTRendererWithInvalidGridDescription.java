@@ -29,7 +29,7 @@ public class ViewSWTRendererWithInvalidGridDescription extends ViewSWTRenderer {
 	 */
 	public ViewSWTRendererWithInvalidGridDescription(VView vElement, ViewModelContext viewContext,
 		ReportService factory, EMFFormsLocaleProvider localeProvider) {
-		super(vElement, viewContext, factory, null, null, null, localeProvider);
+		super(vElement, viewContext, factory, null, null, localeProvider);
 	}
 
 	@Override

@@ -17,7 +17,6 @@ import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
-import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.core.services.locale.EMFFormsLocaleProvider;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererService;
@@ -35,7 +34,6 @@ public class ViewSWTRendererService implements EMFFormsRendererService<VView> {
 	private EMFFormsDatabinding databindingService;
 	private EMFFormsRendererFactory rendererFactory;
 	private ReportService reportService;
-	private EMFFormsEditSupport editSupport;
 	private EMFFormsLocaleProvider localeProvider;
 	private ServiceReference<EMFFormsRendererFactory> serviceReference;
 
@@ -95,24 +93,6 @@ public class ViewSWTRendererService implements EMFFormsRendererService<VView> {
 	}
 
 	/**
-	 * Called by the initializer to set the EMFFormsEditSupport.
-	 *
-	 * @param editSupport The EMFFormsEditSupport
-	 */
-	protected void setEMFFormsEditSupport(EMFFormsEditSupport editSupport) {
-		this.editSupport = editSupport;
-	}
-
-	/**
-	 * Called by the initializer to unset the EMFFormsEditSupport.
-	 *
-	 * @param editSupport The EMFFormsEditSupport
-	 */
-	protected void unsetEMFFormsEditSupport(EMFFormsEditSupport editSupport) {
-		this.editSupport = null;
-	}
-
-	/**
 	 * Called by the initializer to set the EMFFormsLocaleProvider.
 	 *
 	 * @param localeProvider The EMFFormsLocaleProvider
@@ -152,7 +132,7 @@ public class ViewSWTRendererService implements EMFFormsRendererService<VView> {
 	@Override
 	public AbstractSWTRenderer<VView> getRendererInstance(VView vElement, ViewModelContext viewModelContext) {
 		return new ViewSWTRenderer(vElement, viewModelContext, reportService, rendererFactory, databindingService,
-			editSupport, localeProvider);
+			localeProvider);
 	}
 
 }

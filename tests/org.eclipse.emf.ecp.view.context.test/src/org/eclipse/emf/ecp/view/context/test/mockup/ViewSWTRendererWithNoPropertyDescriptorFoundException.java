@@ -33,7 +33,7 @@ public class ViewSWTRendererWithNoPropertyDescriptorFoundException extends ViewS
 	 */
 	public ViewSWTRendererWithNoPropertyDescriptorFoundException(VView vElement, ViewModelContext viewContext,
 		ReportService factory, EMFFormsLocaleProvider localeProvider) {
-		super(vElement, viewContext, factory, null, null, null, localeProvider);
+		super(vElement, viewContext, factory, null, null, localeProvider);
 	}
 
 	@Override

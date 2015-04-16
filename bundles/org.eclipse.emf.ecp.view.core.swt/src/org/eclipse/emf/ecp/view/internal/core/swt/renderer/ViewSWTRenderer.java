@@ -17,35 +17,24 @@ import java.util.Collection;
 
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer;
-import org.eclipse.emf.ecp.view.spi.model.VContainedContainer;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
-import org.eclipse.emf.ecp.view.spi.model.VControl;
-import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
-import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
-import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.core.services.locale.EMFFormsLocaleChangeListener;
 import org.eclipse.emfforms.spi.core.services.locale.EMFFormsLocaleProvider;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
-import org.eclipse.jface.layout.GridDataFactory;
-import org.eclipse.jface.layout.GridLayoutFactory;
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Layout;
-import org.eclipse.swt.widgets.Text;
 
 /**
  * The Class ViewSWTRenderer.
  */
 public class ViewSWTRenderer extends ContainerSWTRenderer<VView> implements EMFFormsLocaleChangeListener {
 
-	private final EMFFormsEditSupport emfFormsEditSupport;
 	private Composite renderControl;
 	private final EMFFormsLocaleProvider localeProvider;
 
@@ -57,58 +46,13 @@ public class ViewSWTRenderer extends ContainerSWTRenderer<VView> implements EMFF
 	 * @param reportService the {@link ReportService}
 	 * @param factory the {@link EMFFormsRendererFactory}
 	 * @param emfFormsDatabinding The {@link EMFFormsDatabinding}
-	 * @param emfFormsEditSupport The {@link EMFFormsEditSupport}
 	 * @param localeProvider The {@link EMFFormsLocaleProvider}
 	 */
 	public ViewSWTRenderer(VView vElement, ViewModelContext viewContext, ReportService reportService,
-		EMFFormsRendererFactory factory, EMFFormsDatabinding emfFormsDatabinding,
-		EMFFormsEditSupport emfFormsEditSupport, EMFFormsLocaleProvider localeProvider) {
+		EMFFormsRendererFactory factory, EMFFormsDatabinding emfFormsDatabinding, EMFFormsLocaleProvider localeProvider) {
 		super(vElement, viewContext, reportService, factory, emfFormsDatabinding);
-		this.emfFormsEditSupport = emfFormsEditSupport;
 		this.localeProvider = localeProvider;
 		localeProvider.addEMFFormsLocaleChangeListener(this);
-	}
-
-	@Override
-	protected final void setLayoutDataForControl(SWTGridCell gridCell,
-		SWTGridDescription controlGridDescription,
-		SWTGridDescription currentRowGridDescription, SWTGridDescription fullGridDescription, VElement vElement,
-		Control control) {
-		if (VControl.class.isInstance(vElement)) {
-			// last column of control
-			if (gridCell.getColumn() + gridCell.getHorizontalSpan() == controlGridDescription.getColumns()) {
-				getControlGridData(gridCell.getHorizontalSpan() + fullGridDescription.getColumns()
-					- currentRowGridDescription.getColumns(), VControl.class.cast(vElement), control).applyTo(control);
-			} else if (controlGridDescription.getColumns() == 3 && gridCell.getColumn() == 0) {
-				GridDataFactory.fillDefaults().grab(false, false)
-					.align(SWT.BEGINNING, SWT.CENTER).applyTo(control);
-			} else if (controlGridDescription.getColumns() == 3 && gridCell.getColumn() == 1) {
-				GridDataFactory.fillDefaults().align(SWT.CENTER, SWT.CENTER)
-					.hint(16, 17).grab(false, false).applyTo(control);
-			} else if (controlGridDescription.getColumns() == 2 && gridCell.getColumn() == 0) {
-				GridDataFactory.fillDefaults().align(SWT.CENTER, SWT.CENTER)
-					.hint(16, 17).grab(false, false).applyTo(control);
-			}
-		} else if (VContainedContainer.class.isInstance(vElement)) {
-			GridDataFactory
-				.fillDefaults()
-				.align(gridCell.isHorizontalFill() ? SWT.FILL : SWT.BEGINNING,
-					gridCell.isVerticalFill() ? SWT.FILL : SWT.CENTER)
-				.grab(gridCell.isHorizontalGrab(), false)
-				.span(gridCell.getHorizontalSpan() + fullGridDescription.getColumns()
-					- currentRowGridDescription.getColumns(), 1).applyTo(control);
-		}
-		else {
-			// we have some kind of container -> render with necessary span
-			GridDataFactory
-				.fillDefaults()
-				.align(gridCell.isHorizontalFill() ? SWT.FILL : SWT.BEGINNING,
-					gridCell.isVerticalFill() ? SWT.FILL : SWT.CENTER)
-				.grab(gridCell.isHorizontalGrab(), gridCell.isVerticalGrab())
-				.span(gridCell.getHorizontalSpan() + fullGridDescription.getColumns()
-					- currentRowGridDescription.getColumns(), 1).applyTo(control);
-		}
-
 	}
 
 	/**
@@ -121,11 +65,6 @@ public class ViewSWTRenderer extends ContainerSWTRenderer<VView> implements EMFF
 		return getVElement().getChildren();
 	}
 
-	@Override
-	protected Layout getLayout(int numControls, boolean equalWidth) {
-		return GridLayoutFactory.fillDefaults().numColumns(numControls).equalWidth(equalWidth).create();
-	}
-
 	/**
 	 * {@inheritDoc}
 	 *
@@ -136,29 +75,10 @@ public class ViewSWTRenderer extends ContainerSWTRenderer<VView> implements EMFF
 		return "org_eclipse_emf_ecp_ui_layout_view"; //$NON-NLS-1$
 	}
 
-	private GridDataFactory getControlGridData(int xSpan, VControl vControl, Control control) {
-		GridDataFactory gdf =
-			GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER)
-				.grab(true, false).span(xSpan, 1);
-
-		if (Text.class.isInstance(control) && vControl.getDomainModelReference() != null) {
-			if (getEMFFormsEditSupport().isMultiLine(vControl.getDomainModelReference(),
-				getViewModelContext().getDomainModel())) {
-				gdf = gdf.hint(50, 200); // set x hint to enable wrapping
-			}
-		}
-
-		return gdf;
-	}
-
-	private EMFFormsEditSupport getEMFFormsEditSupport() {
-		return emfFormsEditSupport;
-	}
-
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emfforms.spi.core.locale.EMFFormsLocaleChangeListener#notifyLocaleChange()
+	 * @see EMFFormsLocaleChangeListener#notifyLocaleChange()
 	 */
 	@Override
 	public void notifyLocaleChange() {

@@ -98,6 +98,10 @@ public abstract class ContainerSWTRenderer<VELEMENT extends VElement> extends Ab
 	public SWTGridDescription getGridDescription(SWTGridDescription gridDescription) {
 		if (rendererGridDescription == null) {
 			rendererGridDescription = GridDescriptionFactory.INSTANCE.createSimpleGrid(1, 1, this);
+			rendererGridDescription.getGrid().get(0).setHorizontalFill(true);
+			rendererGridDescription.getGrid().get(0).setHorizontalGrab(true);
+			rendererGridDescription.getGrid().get(0).setVerticalFill(true);
+			rendererGridDescription.getGrid().get(0).setVerticalGrab(false);
 		}
 		return rendererGridDescription;
 	}

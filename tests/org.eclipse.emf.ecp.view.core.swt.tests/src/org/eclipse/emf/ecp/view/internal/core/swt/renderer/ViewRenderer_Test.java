@@ -17,10 +17,11 @@ import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
+import org.eclipse.emf.ecp.view.spi.swt.layout.LayoutProviderHelper;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
+import org.eclipse.emf.ecp.view.swt.internal.layout.ECPLayoutProvider;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
-import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.core.services.locale.EMFFormsLocaleProvider;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsNoRendererException;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
@@ -31,6 +32,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
@@ -45,22 +47,25 @@ public class ViewRenderer_Test {
 	private EMFFormsRendererFactory rendererFactory;
 	private DefaultRealm realm;
 
+	@BeforeClass
+	public static void setupClass() {
+		LayoutProviderHelper.addLayoutProvider(new ECPLayoutProvider());
+	}
+
 	@Before
 	public void setUp() {
 		realm = new DefaultRealm();
 		final ReportService reportService = mock(ReportService.class);
 		final EMFFormsDatabinding databindingService = mock(EMFFormsDatabinding.class);
 		rendererFactory = mock(EMFFormsRendererFactory.class);
-		final EMFFormsEditSupport editSupport = mock(EMFFormsEditSupport.class);
 		final EMFFormsLocaleProvider localeProvider = mock(EMFFormsLocaleProvider.class);
 		view = Mockito.mock(VView.class);
 
 		context = Mockito.mock(ViewModelContext.class);
 		shell = new Shell();
 		viewRenderer = new ViewSWTRenderer(view, context, reportService, rendererFactory, databindingService,
-			editSupport, localeProvider);
+			localeProvider);
 		viewRenderer.init();
-
 	}
 
 	@After

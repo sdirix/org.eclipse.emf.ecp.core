@@ -31,7 +31,7 @@ public class ViewSWTRendererWithNoRendererFoundException extends ViewSWTRenderer
 	 */
 	public ViewSWTRendererWithNoRendererFoundException(VView vElement, ViewModelContext viewContext,
 		ReportService reportService, EMFFormsLocaleProvider localeProvider) {
-		super(vElement, viewContext, reportService, null, null, null, localeProvider);
+		super(vElement, viewContext, reportService, null, null, localeProvider);
 	}
 
 	@Override

@@ -85,6 +85,7 @@ public class HorizontalLayoutSWTRenderer extends AbstractSWTRenderer<VHorizontal
 	public SWTGridDescription getGridDescription(SWTGridDescription gridDescription) {
 		if (rendererGridDescription == null) {
 			rendererGridDescription = GridDescriptionFactory.INSTANCE.createSimpleGrid(1, 1, this);
+			rendererGridDescription.getGrid().get(0).setVerticalGrab(false);
 		}
 		return rendererGridDescription;
 	}

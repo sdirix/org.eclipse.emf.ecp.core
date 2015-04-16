@@ -19,7 +19,6 @@ import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
-import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.core.services.locale.EMFFormsLocaleProvider;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
 import org.mockito.Mockito;
@@ -36,7 +35,6 @@ public final class MockViewSWTRenderer {
 	private static ReportService reportService = Mockito.mock(ReportService.class);
 
 	private static EMFFormsDatabinding emfFormsDatabinding = Mockito.mock(EMFFormsDatabinding.class);
-	private static EMFFormsEditSupport emfFormsEditSupport = Mockito.mock(EMFFormsEditSupport.class);
 	private static EMFFormsRendererFactory emfFormsRendererFactory = Mockito.mock(EMFFormsRendererFactory.class);
 	private static EMFFormsLocaleProvider emfFormsLocaleProvider = Mockito.mock(EMFFormsLocaleProvider.class);
 
@@ -61,7 +59,7 @@ public final class MockViewSWTRenderer {
 
 	public static ViewSWTRenderer newRenderer() {
 		return new ViewSWTRenderer(vElement, viewModelContext, reportService, emfFormsRendererFactory,
-			emfFormsDatabinding, emfFormsEditSupport, emfFormsLocaleProvider);
+			emfFormsDatabinding, emfFormsLocaleProvider);
 	}
 
 }
