@@ -22,6 +22,8 @@ import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
+import org.eclipse.emf.ecp.view.spi.model.reporting.AbstractReport;
+import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
 import org.eclipse.emfforms.spi.core.services.locale.EMFFormsLocaleChangeListener;
 import org.eclipse.emfforms.spi.core.services.locale.EMFFormsLocaleProvider;
 import org.osgi.framework.Bundle;
@@ -38,9 +40,11 @@ import org.osgi.framework.ServiceReference;
 public class LocalizationViewModelService implements ViewModelService, EMFFormsLocaleChangeListener {
 
 	private EMFFormsLocaleProvider localeProvider;
-	private ServiceReference<EMFFormsLocaleProvider> serviceReference;
+	private ServiceReference<EMFFormsLocaleProvider> localeServiceReference;
 	private BundleContext bundleContext;
 	private VElement view;
+	private ReportService reportService;
+	private ServiceReference<ReportService> reportServiceReference;
 
 	/**
 	 * Default constructor.
@@ -55,11 +59,15 @@ public class LocalizationViewModelService implements ViewModelService, EMFFormsL
 		if (bundleContext == null) {
 			return;
 		}
-		serviceReference = bundleContext.getServiceReference(EMFFormsLocaleProvider.class);
-		if (serviceReference == null) {
+		localeServiceReference = bundleContext.getServiceReference(EMFFormsLocaleProvider.class);
+		if (localeServiceReference == null) {
 			return;
 		}
-		localeProvider = bundleContext.getService(serviceReference);
+		localeProvider = bundleContext.getService(localeServiceReference);
+
+		reportServiceReference = bundleContext.getServiceReference(ReportService.class);
+		reportService = bundleContext.getService(reportServiceReference);
+
 		localeProvider.addEMFFormsLocaleChangeListener(this);
 	}
 
@@ -127,8 +135,14 @@ public class LocalizationViewModelService implements ViewModelService, EMFFormsL
 	protected void localize(LocalizationAdapter localizationAdapter, final VElement vElement) {
 		if (vElement.getName() == null) {
 			vElement.setLabel(""); //$NON-NLS-1$
-		} else if (vElement.getName().startsWith("%") && localizationAdapter != null) { //$NON-NLS-1$
-			vElement.setLabel(localizationAdapter.localize(vElement.getName().substring(1)));
+		} else if (vElement.getName().startsWith("%")) { //$NON-NLS-1$
+			if (localizationAdapter != null) {
+				vElement.setLabel(localizationAdapter.localize(vElement.getName().substring(1)));
+			} else {
+				reportService.report(new AbstractReport(
+					"No LocalizationAdapter found for the current view:" + view.toString())); //$NON-NLS-1$
+				vElement.setLabel(vElement.getName());
+			}
 		} else {
 			vElement.setLabel(vElement.getName());
 		}
@@ -144,8 +158,11 @@ public class LocalizationViewModelService implements ViewModelService, EMFFormsL
 		if (localeProvider != null) {
 			localeProvider.removeEMFFormsLocaleChangeListener(this);
 		}
-		if (bundleContext != null && serviceReference != null) {
-			bundleContext.ungetService(serviceReference);
+		if (bundleContext != null && localeServiceReference != null) {
+			bundleContext.ungetService(localeServiceReference);
+		}
+		if (bundleContext != null && reportServiceReference != null) {
+			bundleContext.ungetService(reportServiceReference);
 		}
 	}
 
