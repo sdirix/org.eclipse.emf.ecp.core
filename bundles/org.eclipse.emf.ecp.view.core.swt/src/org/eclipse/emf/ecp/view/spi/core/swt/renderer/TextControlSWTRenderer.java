@@ -46,6 +46,8 @@ import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
 import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
@@ -101,6 +103,16 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 		final Text text = new Text(parent, getTextWidgetStyle());
 		text.setData(CUSTOM_VARIANT, getTextVariantID());
 		text.setMessage(getTextMessage());
+		text.addFocusListener(new FocusListener() {
+			@Override
+			public void focusLost(FocusEvent e) {
+			}
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				text.selectAll();
+			}
+		});
 		return text;
 	}
 
