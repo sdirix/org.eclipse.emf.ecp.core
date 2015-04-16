@@ -19,6 +19,7 @@ import org.eclipse.emfforms.spi.localization.EMFFormsLocalizationService;
 import org.eclipse.osgi.service.localization.BundleLocalization;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.service.log.LogService;
 
 /**
  * Service Implementation for retrieving translated Strings.
@@ -30,6 +31,7 @@ public class EMFFormsLocalizationServiceImpl implements EMFFormsLocalizationServ
 
 	private EMFFormsLocaleProvider localeProvider;
 	private BundleLocalization bundleLocalization;
+	private LogService logService;
 
 	/**
 	 * Called by the framework to set the EMFFormsLocaleProvider.
@@ -65,6 +67,24 @@ public class EMFFormsLocalizationServiceImpl implements EMFFormsLocalizationServ
 	 */
 	protected void unsetBundleLocalization(BundleLocalization bundleLocalization) {
 		this.bundleLocalization = null;
+	}
+
+	/**
+	 * Called by the framework to set the LogService.
+	 *
+	 * @param logService The {@link LogService}
+	 */
+	protected void setLogService(LogService logService) {
+		this.logService = logService;
+	}
+
+	/**
+	 * Called by the framework to unset the LogService.
+	 *
+	 * @param logService The {@link LogService}
+	 */
+	protected void unsetLogService(LogService logService) {
+		this.logService = null;
 	}
 
 	/**
@@ -104,11 +124,21 @@ public class EMFFormsLocalizationServiceImpl implements EMFFormsLocalizationServ
 	private String getString(Bundle bundle, String localeLanguage, String key) {
 		final ResourceBundle resourceBundle = bundleLocalization.getLocalization(bundle, localeLanguage);
 		if (resourceBundle == null) {
-			// TODO log -> move report service in common
+			logService
+				.log(
+					LogService.LOG_WARNING,
+					String
+						.format(
+							"No ResourceBundle found for Language '%1$s' in Bundle %2$s with Version %3$s.", localeLanguage, bundle.getSymbolicName(), bundle.getVersion().toString())); //$NON-NLS-1$
 			return key;
 		}
 		if (!resourceBundle.containsKey(key)) {
-			// TODO log -> move report service in common
+			logService
+				.log(
+					LogService.LOG_WARNING,
+					String
+						.format(
+							"The ResourceBundle for Language '%1$s' in Bundle %2$s with Version %3$s doesn't contain the key '%4$s'.", localeLanguage, bundle.getSymbolicName(), bundle.getVersion().toString(), key)); //$NON-NLS-1$
 			return key;
 		}
 		final String result = resourceBundle.getString(key);

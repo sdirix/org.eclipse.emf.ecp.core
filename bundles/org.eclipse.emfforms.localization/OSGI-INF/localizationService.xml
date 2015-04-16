@@ -6,4 +6,5 @@
    </service>
    <reference bind="setBundleLocalization" cardinality="0..1" interface="org.eclipse.osgi.service.localization.BundleLocalization" name="BundleLocalization" policy="dynamic" unbind="unsetBundleLocalization"/>
    <reference bind="setEMFFormsLocaleProvider" cardinality="0..1" interface="org.eclipse.emfforms.spi.core.services.locale.EMFFormsLocaleProvider" name="EMFFormsLocaleProvider" policy="dynamic" unbind="unsetEMFFormsLocaleProvider"/>
+   <reference bind="setLogService" cardinality="0..1" interface="org.osgi.service.log.LogService" name="LogService" policy="dynamic" unbind="unsetLogService"/>
 </scr:component>
