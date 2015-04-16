@@ -41,12 +41,12 @@
 								<versionRange>0.0.0</versionRange>
 							</requirement>
 							<requirement>
-								<type>eclipse-feature</type>
+								<type>p2-installable-unit</type>
 								<id>org.eclipse.emfforms.core.services.databinding</id>
 								<versionRange>0.0.0</versionRange>
 							</requirement>
 							<requirement>
-								<type>eclipse-feature</type>
+								<type>p2-installable-unit</type>
 								<id>org.eclipse.emfforms.core.services.databinding.featurepath</id>
 								<versionRange>0.0.0</versionRange>
 							</requirement>
