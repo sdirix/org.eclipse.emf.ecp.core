@@ -29,6 +29,7 @@ import org.eclipse.core.databinding.observable.value.IValueChangeListener;
 import org.eclipse.core.databinding.observable.value.ValueChangeEvent;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecp.test.common.DefaultRealm;
 import org.eclipse.emf.ecp.view.core.swt.test.model.SimpleTestObject;
 import org.eclipse.emf.ecp.view.core.swt.test.model.TestFactory;
 import org.eclipse.emf.ecp.view.core.swt.test.model.TestPackage;
@@ -41,7 +42,6 @@ import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
-import org.eclipse.emf.ecp.view.test.common.swt.spi.DatabindingClassRunner;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
@@ -58,16 +58,17 @@ import org.eclipse.swt.widgets.Label;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
-@RunWith(DatabindingClassRunner.class)
 public class DateTimeControlRenderer_Test extends AbstractControl_Test {
+
+	private DefaultRealm realm;
 
 	@Before
 	public void before() throws DatabindingFailedException {
+		realm = new DefaultRealm();
 		final ReportService reportService = mock(ReportService.class);
 		databindingService = mock(EMFFormsDatabinding.class);
 		labelProvider = mock(EMFFormsLabelProvider.class);
@@ -85,6 +86,7 @@ public class DateTimeControlRenderer_Test extends AbstractControl_Test {
 
 	@After
 	public void testTearDown() {
+		realm.dispose();
 		dispose();
 	}
 

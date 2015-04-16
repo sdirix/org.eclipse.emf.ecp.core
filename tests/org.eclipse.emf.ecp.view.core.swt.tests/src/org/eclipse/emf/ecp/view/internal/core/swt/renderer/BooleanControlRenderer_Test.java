@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
+import org.eclipse.emf.ecp.test.common.DefaultRealm;
 import org.eclipse.emf.ecp.view.core.swt.tests.ObservingWritableValue;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
@@ -31,7 +32,6 @@ import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
-import org.eclipse.emf.ecp.view.test.common.swt.spi.DatabindingClassRunner;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.SWTTestUtil;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
@@ -43,14 +43,15 @@ import org.eclipse.swt.widgets.Control;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 
-@RunWith(DatabindingClassRunner.class)
 public class BooleanControlRenderer_Test extends AbstractControl_Test {
+
+	private DefaultRealm realm;
 
 	@Before
 	public void before() throws DatabindingFailedException {
+		realm = new DefaultRealm();
 		final ReportService reportService = mock(ReportService.class);
 		databindingService = mock(EMFFormsDatabinding.class);
 		labelProvider = mock(EMFFormsLabelProvider.class);
@@ -63,6 +64,7 @@ public class BooleanControlRenderer_Test extends AbstractControl_Test {
 
 	@After
 	public void testTearDown() {
+		realm.dispose();
 		dispose();
 	}
 

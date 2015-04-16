@@ -7,6 +7,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import org.eclipse.emf.common.util.BasicEList;
+import org.eclipse.emf.ecp.test.common.DefaultRealm;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
@@ -18,7 +19,6 @@ import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
-import org.eclipse.emf.ecp.view.test.common.swt.spi.DatabindingClassRunner;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.core.services.locale.EMFFormsLocaleProvider;
@@ -32,12 +32,10 @@ import org.eclipse.swt.widgets.Shell;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
-@RunWith(DatabindingClassRunner.class)
 public class ViewRenderer_Test {
 
 	private ViewSWTRenderer viewRenderer;
@@ -45,9 +43,11 @@ public class ViewRenderer_Test {
 	private ViewModelContext context;
 	private Shell shell;
 	private EMFFormsRendererFactory rendererFactory;
+	private DefaultRealm realm;
 
 	@Before
 	public void setUp() {
+		realm = new DefaultRealm();
 		final ReportService reportService = mock(ReportService.class);
 		final EMFFormsDatabinding databindingService = mock(EMFFormsDatabinding.class);
 		rendererFactory = mock(EMFFormsRendererFactory.class);
@@ -65,6 +65,7 @@ public class ViewRenderer_Test {
 
 	@After
 	public void tearDown() {
+		realm.dispose();
 		shell.dispose();
 	}
 

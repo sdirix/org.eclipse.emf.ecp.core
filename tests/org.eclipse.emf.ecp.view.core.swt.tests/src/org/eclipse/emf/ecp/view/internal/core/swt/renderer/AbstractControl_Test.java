@@ -23,7 +23,6 @@ import java.util.Map;
 
 import org.eclipse.core.databinding.observable.IObserving;
 import org.eclipse.core.databinding.observable.Observables;
-import org.eclipse.core.databinding.observable.Realm;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.common.command.BasicCommandStack;
@@ -58,8 +57,6 @@ import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -67,18 +64,8 @@ public abstract class AbstractControl_Test {
 	protected static final String CUSTOM_VARIANT = "org.eclipse.rap.rwt.customVariant"; //$NON-NLS-1$
 	protected EMFFormsDatabinding databindingService;
 	protected VTViewTemplateProvider templateProvider;
-	protected static Realm realm;
 	protected AbstractControlSWTRenderer<VControl> renderer;
 	protected EMFFormsLabelProvider labelProvider;
-
-	@BeforeClass
-	public static void setUpBeforeClass() {
-		realm = Realm.getDefault();
-	}
-
-	@AfterClass
-	public static void tearDownAfterClass() {
-	}
 
 	private Resource createResource() {
 		final Resource.Factory.Registry registry = Resource.Factory.Registry.INSTANCE;
