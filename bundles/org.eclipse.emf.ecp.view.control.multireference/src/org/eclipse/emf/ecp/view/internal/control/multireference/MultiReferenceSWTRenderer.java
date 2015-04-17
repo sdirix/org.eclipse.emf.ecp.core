@@ -12,17 +12,21 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.control.multireference;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.core.databinding.observable.IObserving;
 import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.internal.swt.controls.TableViewerColumnBuilder;
+import org.eclipse.emf.ecp.edit.spi.DeleteService;
+import org.eclipse.emf.ecp.edit.spi.EMFDeleteServiceImpl;
 import org.eclipse.emf.ecp.edit.spi.ReferenceService;
 import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
@@ -342,7 +346,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 				labelService.getDescription(getVElement().getDomainModelReference(), getViewModelContext()
 					.getDomainModel()));
 		} catch (final NoLabelFoundException e) {
-			//FIXME Expectations?
+			// FIXME Expectations?
 			getReportService().report(new RenderingFailedReport(e));
 		}
 
@@ -431,11 +435,39 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	 * @param structuralFeature The corresponding {@link EStructuralFeature}
 	 */
 	protected void handleDelete(TableViewer tableViewer, EObject eObject, EStructuralFeature structuralFeature) {
-		final List<?> deletionList = IStructuredSelection.class.cast(tableViewer.getSelection()).toList();
 
+		@SuppressWarnings("unchecked")
+		final List<Object> deletionList = IStructuredSelection.class.cast(tableViewer.getSelection()).toList();
 		final EditingDomain editingDomain = getEditingDomain(eObject);
-		editingDomain.getCommandStack().execute(
-			RemoveCommand.create(editingDomain, eObject, structuralFeature, deletionList));
+
+		/* assured by #isApplicable */
+		final EReference reference = EReference.class.cast(structuralFeature);
+
+		if (reference.isContainment()) {
+			DeleteService deleteService = getViewModelContext().getService(DeleteService.class);
+			if (deleteService == null) {
+				/*
+				 * #getService(Class<?>) will report to the reportservice if it could not be found
+				 * Use Default
+				 */
+				deleteService = new EMFDeleteServiceImpl();
+			}
+			deleteService.deleteElements(deletionList);
+		} else {
+			removeElements(editingDomain, eObject, reference, deletionList);
+		}
+	}
+
+	private void removeElements(EditingDomain editingDomain, Object source, EStructuralFeature feature,
+		Collection<Object> toRemove) {
+		final Command removeCommand = RemoveCommand.create(editingDomain, source, feature, toRemove);
+		if (removeCommand.canExecute()) {
+			if (editingDomain.getCommandStack() == null) {
+				removeCommand.execute();
+			} else {
+				editingDomain.getCommandStack().execute(removeCommand);
+			}
+		}
 	}
 
 	/**

@@ -30,6 +30,7 @@ import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.ecore.EClass;
@@ -41,6 +42,8 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecp.edit.internal.swt.controls.ECPFocusCellDrawHighlighter;
 import org.eclipse.emf.ecp.edit.internal.swt.controls.TableViewerColumnBuilder;
 import org.eclipse.emf.ecp.edit.internal.swt.util.CellEditorFactory;
+import org.eclipse.emf.ecp.edit.spi.DeleteService;
+import org.eclipse.emf.ecp.edit.spi.EMFDeleteServiceImpl;
 import org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor;
 import org.eclipse.emf.ecp.edit.spi.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.ecp.view.internal.table.swt.CellReadOnlyTesterHelper;
@@ -187,13 +190,13 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		NoPropertyDescriptorFoundExeption {
 		final VTableDomainModelReference tableDomainModelReference = (VTableDomainModelReference) getVElement()
 			.getDomainModelReference();
-		final VDomainModelReference dmrToCheck = tableDomainModelReference.getDomainModelReference() == null ? tableDomainModelReference
+		final VDomainModelReference dmrToCheck = tableDomainModelReference.getDomainModelReference() == null
+			? tableDomainModelReference
 			: tableDomainModelReference.getDomainModelReference();
 		IObservableValue observableValue;
 		try {
 			observableValue = getEMFFormsDatabinding()
-				.getObservableValue(dmrToCheck
-					, getViewModelContext().getDomainModel());
+				.getObservableValue(dmrToCheck, getViewModelContext().getDomainModel());
 		} catch (final DatabindingFailedException ex) {
 			getReportService().report(new RenderingFailedReport(ex));
 			return null;
@@ -518,8 +521,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			if (getRemoveButton() != null) {
 				getRemoveButton().setEnabled(false);
 			}
-		}
-		else {
+		} else {
 			if (getRemoveButton() != null) {
 				getRemoveButton().setEnabled(true);
 			}
@@ -630,8 +632,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		removeButton.setEnabled(false);
 		final String instanceName = clazz.getInstanceClass() == null ? "" : clazz.getInstanceClass().getSimpleName(); //$NON-NLS-1$
 		removeButton.setToolTipText(String.format(
-			LocalizationServiceHelper.getString(getClass(), MessageKeys.TableControl_RemoveSelected)
-			, instanceName));
+			LocalizationServiceHelper.getString(getClass(), MessageKeys.TableControl_RemoveSelected), instanceName));
 
 		final List<?> containments = (List<?>) eObject.eGet(structuralFeature, true);
 		if (containments.size() <= structuralFeature.getLowerBound()) {
@@ -672,7 +673,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			LocalizationServiceHelper.getString(getClass(), MessageKeys.TableControl_DeleteAreYouSure),
 			MessageDialog.CONFIRM, new String[] {
 				JFaceResources.getString(IDialogLabelKeys.YES_LABEL_KEY),
-				JFaceResources.getString(IDialogLabelKeys.NO_LABEL_KEY) }, 0);
+				JFaceResources.getString(IDialogLabelKeys.NO_LABEL_KEY) },
+			0);
 
 		new ECPDialogExecutor(dialog) {
 
@@ -705,9 +707,37 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 */
 	protected void deleteRows(List<EObject> deletionList, final EObject eObject,
 		final EStructuralFeature structuralFeature) {
+
 		final EditingDomain editingDomain = getEditingDomain(eObject);
-		editingDomain.getCommandStack().execute(
-			RemoveCommand.create(editingDomain, eObject, structuralFeature, deletionList));
+
+		/* assured by #isApplicable */
+		final EReference reference = EReference.class.cast(structuralFeature);
+		final List<Object> toDelete = new ArrayList<Object>(deletionList);
+		if (reference.isContainment()) {
+			DeleteService deleteService = getViewModelContext().getService(DeleteService.class);
+			if (deleteService == null) {
+				/*
+				 * #getService(Class<?>) will report to the reportservice if it could not be found
+				 * Use Default
+				 */
+				deleteService = new EMFDeleteServiceImpl();
+			}
+			deleteService.deleteElements(toDelete);
+		} else {
+			removeElements(editingDomain, eObject, reference, toDelete);
+		}
+	}
+
+	private void removeElements(EditingDomain editingDomain, Object source, EStructuralFeature feature,
+		Collection<Object> toRemove) {
+		final Command removeCommand = RemoveCommand.create(editingDomain, source, feature, toRemove);
+		if (removeCommand.canExecute()) {
+			if (editingDomain.getCommandStack() == null) {
+				removeCommand.execute();
+			} else {
+				editingDomain.getCommandStack().execute(removeCommand);
+			}
+		}
 	}
 
 	/**
