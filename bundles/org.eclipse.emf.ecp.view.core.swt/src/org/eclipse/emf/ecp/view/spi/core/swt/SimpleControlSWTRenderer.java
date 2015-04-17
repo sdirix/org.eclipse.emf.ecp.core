@@ -23,7 +23,6 @@ import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.reporting.AbstractReport;
 import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
-import org.eclipse.emf.ecp.view.spi.model.util.ViewModelUtil;
 import org.eclipse.emf.ecp.view.spi.provider.ECPTooltipModifierHelper;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
@@ -279,9 +278,7 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 			editControl = getControls().get(new SWTGridCell(0, 2, SimpleControlSWTRenderer.this));
 			break;
 		default:
-			if (ViewModelUtil.isDebugMode()) {
-				getReportService().report(new AbstractReport("Wrong number of controls!")); //$NON-NLS-1$
-			}
+			getReportService().report(new AbstractReport("Wrong number of controls!")); //$NON-NLS-1$
 			return;
 		}
 		// triggered due to another validation rule before this control is rendered

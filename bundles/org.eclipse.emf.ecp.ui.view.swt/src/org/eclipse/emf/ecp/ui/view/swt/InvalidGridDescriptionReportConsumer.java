@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -13,7 +13,6 @@ package org.eclipse.emf.ecp.ui.view.swt;
 
 import org.eclipse.emf.ecp.view.spi.model.reporting.AbstractReport;
 import org.eclipse.emf.ecp.view.spi.model.reporting.ReportServiceConsumer;
-import org.eclipse.emf.ecp.view.spi.model.util.ViewModelUtil;
 import org.eclipse.emf.ecp.view.spi.swt.reporting.InvalidGridDescriptionReport;
 
 /**
@@ -33,7 +32,7 @@ public class InvalidGridDescriptionReportConsumer implements ReportServiceConsum
 	 */
 	@Override
 	public void reported(AbstractReport reportEntity) {
-		if (InvalidGridDescriptionReport.class.isInstance(reportEntity) && ViewModelUtil.isDebugMode()) {
+		if (InvalidGridDescriptionReport.class.isInstance(reportEntity)) {
 			// TODO: mimics existing behavior; should we rather show a dialog?
 			throw new IllegalStateException("Invalid number of cells, expected exactly one cell!"); //$NON-NLS-1$
 		}
