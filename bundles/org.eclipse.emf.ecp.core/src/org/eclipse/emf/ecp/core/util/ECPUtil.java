@@ -140,9 +140,17 @@ public final class ECPUtil {
 
 		// avoid ConcurrentModificationException while iterating over the registry's key set
 		final List<String> keySet = new ArrayList<String>(Registry.INSTANCE.keySet());
-		for (final String nsURI : keySet)
-		{
-			final EPackage ePackage = Registry.INSTANCE.getEPackage(nsURI);
+		for (final String nsURI : keySet) {
+			EPackage ePackage;
+			try {
+				ePackage = Registry.INSTANCE.getEPackage(nsURI);
+			}
+			// BEGIN SUPRESS CATCH EXCEPTION
+			catch (final Exception ex) {// END SUPRESS CATCH EXCEPTION
+				/* If there is a wrongly configured EPackage the call to getEPackage might throw a runtime exception */
+				/* Catch here, so we can still loop through the whole registry */
+				continue;
+			}
 			for (final EClassifier eClassifier : ePackage.getEClassifiers()) {
 				if (eClassifier instanceof EClass) {
 					final EClass eClass = (EClass) eClassifier;
