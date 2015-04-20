@@ -17,7 +17,6 @@ Export-Package: org.eclipse.emf.ecp.emfstore.core.internal;version="1.6.0";
    org.eclipse.emf.ecp.emfstore.ui.e3,
    org.eclipse.emf.ecp.emfstore.ui.e4,
    org.eclipse.emf.ecp.changebroker.emfstore,
-   org.eclipse.emf.ecp.emfstore.core.rap",
- org.eclipse.emf.ecp.emfstore.core.rap"
+   org.eclipse.emf.ecp.emfstore.core.rap"
 Service-Component:  OSGI-INF/esWorkspaceProviderProvider.xml
 Bundle-Vendor: Eclipse Modeling Project
