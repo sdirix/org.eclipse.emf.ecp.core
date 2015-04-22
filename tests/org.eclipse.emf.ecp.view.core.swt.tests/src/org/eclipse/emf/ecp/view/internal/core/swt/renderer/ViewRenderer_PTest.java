@@ -17,10 +17,8 @@ import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
-import org.eclipse.emf.ecp.view.spi.swt.layout.LayoutProviderHelper;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
-import org.eclipse.emf.ecp.view.swt.internal.layout.ECPLayoutProvider;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.locale.EMFFormsLocaleProvider;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsNoRendererException;
@@ -38,7 +36,6 @@ import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
-@SuppressWarnings("restriction")
 public class ViewRenderer_PTest {
 
 	private ViewSWTRenderer viewRenderer;
@@ -50,7 +47,6 @@ public class ViewRenderer_PTest {
 
 	@BeforeClass
 	public static void setupClass() {
-		LayoutProviderHelper.addLayoutProvider(new ECPLayoutProvider());
 	}
 
 	@Before
