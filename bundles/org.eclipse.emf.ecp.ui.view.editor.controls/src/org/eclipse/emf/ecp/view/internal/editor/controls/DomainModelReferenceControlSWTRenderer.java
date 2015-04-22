@@ -54,6 +54,7 @@ import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.jface.action.Action;
@@ -89,6 +90,7 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 	private static final EMFFormsDatabinding emfFormsDatabinding;
 	private static final EMFFormsLabelProvider emfFormsLabelProvider;
 	private static final VTViewTemplateProvider vtViewTemplateProvider;
+	private static EMFFormsEditSupport emfFormsEditSupport;
 
 	static {
 		final BundleContext bundleContext = FrameworkUtil.getBundle(EReferenceLabelControlSWTRenderer.class)
@@ -96,6 +98,9 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 		final ServiceReference<EMFFormsDatabinding> emfFormsDatabindingServiceReference = bundleContext
 			.getServiceReference(EMFFormsDatabinding.class);
 		emfFormsDatabinding = bundleContext.getService(emfFormsDatabindingServiceReference);
+		final ServiceReference<EMFFormsEditSupport> emfFormsEditSupportServiceReference = bundleContext
+			.getServiceReference(EMFFormsEditSupport.class);
+		emfFormsEditSupport = bundleContext.getService(emfFormsEditSupportServiceReference);
 		final ServiceReference<EMFFormsLabelProvider> emfFormsLabelProviderServiceReference = bundleContext
 			.getServiceReference(EMFFormsLabelProvider.class);
 		emfFormsLabelProvider = bundleContext.getService(emfFormsLabelProviderServiceReference);
@@ -344,7 +349,8 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 		});
 
 		final Button setBtn = createButtonForAction(new NewReferenceAction(getEditingDomain(eObject), eObject,
-			structuralFeature, getItemPropertyDescriptor(eObject, structuralFeature), null), composite); // getViewModelContext().getService(ReferenceService.class)
+			structuralFeature, emfFormsEditSupport, emfFormsLabelProvider, null, getReportService(), getVElement()
+				.getDomainModelReference(), getViewModelContext().getDomainModel()), composite); // getViewModelContext().getService(ReferenceService.class)
 		setBtn.addSelectionListener(new SelectionAdapterExtension(setLabel, getModelValue(), getViewModelContext(),
 			getDataBindingContext(), structuralFeature));
 

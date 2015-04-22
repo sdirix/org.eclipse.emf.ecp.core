@@ -100,7 +100,7 @@ public class LeafConditionControlRenderer extends ExpectedValueControlRenderer {
 			final Setting valueDMRSeting = ((LeafConditionImpl) condition).eSetting(RulePackage.eINSTANCE
 				.getLeafCondition_ValueDomainModelReference());
 			final CreateDomainModelReferenceWizard dmrWizard = new CreateDomainModelReferenceWizard(valueDMRSeting,
-				getEditingDomain(valueDMRSeting), referenceType,
+				getEditingDomain(valueDMRSeting.getEObject()), referenceType,
 				"New Domain Model Reference", "New value reference", "New value reference", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				"Select the attribute to be tested.", null); //$NON-NLS-1$
 			final SelectionComposite<TreeViewer> compositeProvider = CompositeFactory.getSelectModelClassComposite(

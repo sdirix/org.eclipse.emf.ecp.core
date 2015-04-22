@@ -26,10 +26,14 @@ import org.eclipse.emf.ecp.edit.internal.swt.reference.ReferenceMessageKeys;
 import org.eclipse.emf.ecp.edit.internal.swt.util.OverlayImageDescriptor;
 import org.eclipse.emf.ecp.edit.spi.ReferenceService;
 import org.eclipse.emf.ecp.edit.spi.swt.actions.ECPSWTAction;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.reporting.AbstractReport;
+import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedImage;
-import org.eclipse.emf.edit.provider.IItemLabelProvider;
-import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
+import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
+import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
 import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.ImageData;
@@ -50,12 +54,18 @@ public class NewReferenceAction extends ECPSWTAction {
 	 * The constructor for a new reference action.
 	 *
 	 * @param editingDomain the {@link EditingDomain} to use
-	 * @param itemPropertyDescriptor teh {@link IItemPropertyDescriptor} to use
 	 * @param setting the {@link Setting} to use
+	 * @param editSupport the {@link EMFFormsEditSupport} to use
+	 * @param labelProvider the {@link EMFFormsLabelProvider} to use
 	 * @param referenceService the {@link ReferenceService} to use
+	 * @param reportService the {@link ReportService} to use
+	 * @param domainModelReference the {@link VDomainModelReference} to use
+	 * @param domainModel the domain model of the given {@link VDomainModelReference}
+	 *
 	 */
-	public NewReferenceAction(EditingDomain editingDomain, Setting setting,
-		IItemPropertyDescriptor itemPropertyDescriptor, ReferenceService referenceService) {
+	public NewReferenceAction(EditingDomain editingDomain, Setting setting, EMFFormsEditSupport editSupport,
+		EMFFormsLabelProvider labelProvider, ReferenceService referenceService, ReportService reportService,
+		VDomainModelReference domainModelReference, EObject domainModel) {
 		super(editingDomain, setting);
 		this.referenceService = referenceService;
 		Object obj = null;
@@ -66,9 +76,7 @@ public class NewReferenceAction extends ECPSWTAction {
 			obj = eReference.getEReferenceType().getEPackage().getEFactoryInstance()
 				.create(eReference.getEReferenceType());
 		}
-		final IItemLabelProvider labelProvider = itemPropertyDescriptor.getLabelProvider(
-			getSetting().getEObject());
-		Object labelProviderImageResult = labelProvider.getImage(obj);
+		Object labelProviderImageResult = editSupport.getImage(domainModelReference, domainModel, obj);
 
 		ImageData imageData = null;
 
@@ -94,7 +102,14 @@ public class NewReferenceAction extends ECPSWTAction {
 			OverlayImageDescriptor.LOWER_RIGHT);
 		setImageDescriptor(imageDescriptor);
 
-		String attribute = itemPropertyDescriptor.getDisplayName(eReference);
+		String attribute;
+		try {
+			attribute = (String) labelProvider.getDisplayName(domainModelReference, domainModel).getValue();
+		} catch (final NoLabelFoundException ex) {
+			reportService.report(new AbstractReport(ex));
+			setToolTipText(ex.getMessage());
+			return;
+		}
 		// TODO language, same text as in addreference
 		// make singular attribute labels
 		if (attribute.endsWith("ies")) {//$NON-NLS-1$
@@ -111,15 +126,20 @@ public class NewReferenceAction extends ECPSWTAction {
 	 * The constructor for a new reference action.
 	 *
 	 * @param editingDomain The {@link EditingDomain} to use
-	 * @param itemPropertyDescriptor The {@link IItemPropertyDescriptor} to use
 	 * @param eObject The {@link EObject} to use
 	 * @param structuralFeature The {@link EStructuralFeature} defining which feature of the {@link EObject} is used
+	 * @param editSupport The {@link EMFFormsEditSupport} to use
+	 * @param labelProvider the {@link EMFFormsLabelProvider} to use
 	 * @param referenceService The {@link ReferenceService} to use
+	 * @param reportService The {@link ReportService} to use
+	 * @param domainModelReference the {@link VDomainModelReference} to use
+	 * @param domainModel the domain model of the given {@link VDomainModelReference}
 	 */
 	public NewReferenceAction(EditingDomain editingDomain, EObject eObject, EStructuralFeature structuralFeature,
-		IItemPropertyDescriptor itemPropertyDescriptor, ReferenceService referenceService) {
-		this(editingDomain, ((InternalEObject) eObject).eSetting(structuralFeature), itemPropertyDescriptor,
-			referenceService);
+		EMFFormsEditSupport editSupport, EMFFormsLabelProvider labelProvider, ReferenceService referenceService,
+		ReportService reportService, VDomainModelReference domainModelReference, EObject domainModel) {
+		this(editingDomain, ((InternalEObject) eObject).eSetting(structuralFeature), editSupport, labelProvider,
+			referenceService, reportService, domainModelReference, domainModel);
 	}
 
 	/**

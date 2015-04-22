@@ -21,6 +21,7 @@ import org.eclipse.emf.ecp.view.spi.table.swt.TableControlDetailDialogSWTRendere
 import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererService;
 
@@ -37,6 +38,7 @@ public class TableControlDetailDialogSWTRendererService implements EMFFormsRende
 	private ReportService reportService;
 	private VTViewTemplateProvider vtViewTemplateProvider;
 	private ImageRegistryService imageRegistryService;
+	private EMFFormsEditSupport editSupport;
 
 	/**
 	 * Called by the initializer to set the EMFFormsDatabinding.
@@ -100,6 +102,24 @@ public class TableControlDetailDialogSWTRendererService implements EMFFormsRende
 	}
 
 	/**
+	 * Called by the initializer to set the EMFFormsEditSupport.
+	 *
+	 * @param editSupport The EMFFormsEditSupport
+	 */
+	protected void setEMFFormsEditSupport(EMFFormsEditSupport editSupport) {
+		this.editSupport = editSupport;
+	}
+
+	/**
+	 * Called by the initializer to unset the EMFFormsEditSupport.
+	 *
+	 * @param editSupport The EMFFormsEditSupport
+	 */
+	protected void unsetEMFFormsEditSupport(EMFFormsEditSupport editSupport) {
+		this.editSupport = null;
+	}
+
+	/**
 	 * {@inheritDoc}
 	 *
 	 * @see org.eclipse.emfforms.spi.swt.core.EMFFormsRendererService#getRendererInstance(org.eclipse.emf.ecp.view.spi.model.VElement,
@@ -109,7 +129,7 @@ public class TableControlDetailDialogSWTRendererService implements EMFFormsRende
 	public AbstractSWTRenderer<VTableControl> getRendererInstance(VTableControl vElement,
 		ViewModelContext viewModelContext) {
 		return new TableControlDetailDialogSWTRenderer(vElement, viewModelContext, reportService, databindingService,
-			labelProvider, vtViewTemplateProvider, imageRegistryService);
+			labelProvider, vtViewTemplateProvider, imageRegistryService, editSupport);
 	}
 
 }

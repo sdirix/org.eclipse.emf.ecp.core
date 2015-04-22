@@ -55,6 +55,7 @@ public interface VDomainModelReference extends EObject, ModelChangeListener
 	 * @model dataType="org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener" transient="true"
 	 * @generated
 	 */
+	@Deprecated
 	EList<DomainModelReferenceChangeListener> getChangeListener();
 
 	/**
@@ -96,6 +97,7 @@ public interface VDomainModelReference extends EObject, ModelChangeListener
 	 * @return the {@link Iterator} over setting paths for this domain model reference
 	 * @since 1.3
 	 */
+	@Deprecated
 	Iterator<SettingPath> getFullPathIterator();
 
 } // VDomainModelReference

@@ -76,6 +76,7 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
 import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
@@ -146,6 +147,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	private Button removeButton;
 	private final ImageRegistryService imageRegistryService;
 	private final EMFDataBindingContext viewModelDBC;
+	private final EMFFormsEditSupport emfFormsEditSupport;
 
 	/**
 	 * Default constructor.
@@ -157,12 +159,15 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 * @param reportService The {@link ReportService}
 	 * @param vtViewTemplateProvider The {@link VTViewTemplateProvider}
 	 * @param imageRegistryService The {@link ImageRegistryService}
+	 * @param emfFormsEditSupport The {@link EMFFormsEditSupport}
 	 */
 	public TableControlSWTRenderer(VTableControl vElement, ViewModelContext viewContext, ReportService reportService,
 		EMFFormsDatabinding emfFormsDatabinding, EMFFormsLabelProvider emfFormsLabelProvider,
-		VTViewTemplateProvider vtViewTemplateProvider, ImageRegistryService imageRegistryService) {
+		VTViewTemplateProvider vtViewTemplateProvider, ImageRegistryService imageRegistryService,
+		EMFFormsEditSupport emfFormsEditSupport) {
 		super(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider);
 		this.imageRegistryService = imageRegistryService;
+		this.emfFormsEditSupport = emfFormsEditSupport;
 		viewModelDBC = new EMFDataBindingContext();
 	}
 
@@ -474,7 +479,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 					// eStructuralFeature,
 					// itemPropertyDescriptor
 					// null,
-					getVElement(), dmr, valueProperty);
+					getVElement(), dmr, valueProperty, tempInstance);
 				column.setEditingSupport(observableSupport);
 			}
 			columnNumber++;
@@ -1101,15 +1106,22 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 		private final IValueProperty valueProperty;
 
+		private final VDomainModelReference domainModelReference;
+
+		private final EObject dmrRootEObject;
+
 		/**
 		 * @param viewer
 		 */
 		public ECPTableEditingSupport(ColumnViewer viewer, CellEditor cellEditor,
-			VTableControl tableControl, VDomainModelReference domainModelReference, IValueProperty valueProperty) {
+			VTableControl tableControl, VDomainModelReference domainModelReference, IValueProperty valueProperty,
+			EObject dmrRootEObject) {
 			super(viewer);
 			this.cellEditor = cellEditor;
 			this.tableControl = tableControl;
 			this.valueProperty = valueProperty;
+			this.domainModelReference = domainModelReference;
+			this.dmrRootEObject = dmrRootEObject;
 		}
 
 		private EditingState editingState;
@@ -1132,7 +1144,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
 			final Setting setting = ((InternalEObject) eObject).eSetting(structuralFeature);
 
-			editable &= getItemPropertyDescriptor(eObject, structuralFeature).canSetProperty(null);
+			editable &= emfFormsEditSupport.canSetProperty(domainModelReference, dmrRootEObject);
 			editable &= !CellReadOnlyTesterHelper.getInstance().isReadOnly(getVElement(), setting);
 
 			if (ECPCellEditor.class.isInstance(cellEditor)) {

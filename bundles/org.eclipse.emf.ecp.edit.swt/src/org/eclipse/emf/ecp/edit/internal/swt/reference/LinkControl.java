@@ -19,6 +19,7 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.ecp.edit.internal.swt.SWTImageHelper;
 import org.eclipse.emf.ecp.edit.internal.swt.controls.SingleControl;
 import org.eclipse.emf.ecp.edit.spi.ReferenceService;
@@ -143,7 +144,9 @@ public class LinkControl extends SingleControl {
 		buttons[1] = createButtonForAction(new AddReferenceAction(getEditingDomain(getFirstSetting()), setting,
 			getItemPropertyDescriptor(setting), getService(ReferenceService.class)), composite);
 		buttons[2] = createButtonForAction(new NewReferenceAction(getEditingDomain(getFirstSetting()), setting,
-			getItemPropertyDescriptor(setting), getService(ReferenceService.class)), composite);
+			Activator.getDefault().getEMFFormsEditSupport(), Activator.getDefault().getEMFFormsLabelProvider(),
+			getService(ReferenceService.class), Activator.getDefault().getReportService(), getDomainModelReference(),
+			getViewModelContext().getDomainModel()), composite);
 		return buttons;
 	}
 

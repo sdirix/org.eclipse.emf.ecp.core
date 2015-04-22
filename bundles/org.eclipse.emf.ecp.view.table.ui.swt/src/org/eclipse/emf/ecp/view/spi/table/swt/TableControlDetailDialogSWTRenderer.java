@@ -28,6 +28,7 @@ import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogLabelKeys;
@@ -61,13 +62,15 @@ public class TableControlDetailDialogSWTRenderer extends TableControlSWTRenderer
 	 * @param reportService The {@link ReportService}
 	 * @param vtViewTemplateProvider The {@link VTViewTemplateProvider}
 	 * @param imageRegistryService The {@link ImageRegistryService}
+	 * @param emfFormsEditSupport The {@link EMFFormsEditSupport}
 	 */
 	public TableControlDetailDialogSWTRenderer(VTableControl vElement, ViewModelContext viewContext,
 		ReportService reportService,
 		EMFFormsDatabinding emfFormsDatabinding, EMFFormsLabelProvider emfFormsLabelProvider,
-		VTViewTemplateProvider vtViewTemplateProvider, ImageRegistryService imageRegistryService) {
+		VTViewTemplateProvider vtViewTemplateProvider, ImageRegistryService imageRegistryService,
+		EMFFormsEditSupport emfFormsEditSupport) {
 		super(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider,
-			imageRegistryService);
+			imageRegistryService, emfFormsEditSupport);
 	}
 
 	private Button detailEditButton;

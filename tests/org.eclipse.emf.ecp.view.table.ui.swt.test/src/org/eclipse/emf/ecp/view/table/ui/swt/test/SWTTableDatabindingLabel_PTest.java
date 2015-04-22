@@ -49,6 +49,7 @@ import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.DatabindingClassRunner;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
 import org.eclipse.swt.widgets.Composite;
@@ -121,10 +122,11 @@ public class SWTTableDatabindingLabel_PTest {
 		final ReportService reportservice = mock(ReportService.class);
 		final VTViewTemplateProvider vtViewTemplateProvider = mock(VTViewTemplateProvider.class);
 		final ImageRegistryService imageRegistryService = mock(ImageRegistryService.class);
+		final EMFFormsEditSupport emfFormsEditSupport = mock(EMFFormsEditSupport.class);
 		final ViewModelContext viewContext = new ViewModelContextImpl(vTableControl, domainModel);
 
 		renderer = new TableControlSWTRenderer(vTableControl, viewContext, reportservice, databindingService,
-			labelProvider, vtViewTemplateProvider, imageRegistryService);
+			labelProvider, vtViewTemplateProvider, imageRegistryService, emfFormsEditSupport);
 		renderer.init();
 	}
 

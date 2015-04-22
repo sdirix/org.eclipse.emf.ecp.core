@@ -13,6 +13,7 @@
 package org.eclipse.emf.ecp.edit.internal.swt.reference;
 
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.ecp.edit.internal.swt.controls.MultiControl;
 import org.eclipse.emf.ecp.edit.spi.ReferenceService;
 import org.eclipse.emf.ecp.edit.spi.swt.actions.ECPSWTAction;
@@ -37,7 +38,9 @@ public class ReferenceMultiControl extends MultiControl {
 		actions[0] = new AddReferenceAction(getEditingDomain(firstSetting), firstSetting,
 			getItemPropertyDescriptor(firstSetting), getService(ReferenceService.class));
 		actions[1] = new NewReferenceAction(getEditingDomain(firstSetting), firstSetting,
-			getItemPropertyDescriptor(firstSetting), getService(ReferenceService.class));
+			Activator.getDefault().getEMFFormsEditSupport(), Activator.getDefault().getEMFFormsLabelProvider(),
+			getService(ReferenceService.class), Activator.getDefault().getReportService(), getDomainModelReference(),
+			getViewModelContext().getDomainModel());
 		return actions;
 	}
 

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -18,13 +18,10 @@ import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.IObserving;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.property.value.IValueProperty;
-import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.edit.spi.swt.util.SWTValidationHelper;
-import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
@@ -40,9 +37,6 @@ import org.eclipse.emf.ecp.view.template.style.mandatory.model.VTMandatoryFactor
 import org.eclipse.emf.ecp.view.template.style.mandatory.model.VTMandatoryStyleProperty;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
-import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
-import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
@@ -69,6 +63,7 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 	private final EMFFormsDatabinding emfFormsDatabinding;
 	private final EMFFormsLabelProvider emfFormsLabelProvider;
 	private final VTViewTemplateProvider vtViewTemplateProvider;
+	private boolean isDisposed;
 
 	/**
 	 * Default constructor.
@@ -88,6 +83,7 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 		this.emfFormsLabelProvider = emfFormsLabelProvider;
 		this.vtViewTemplateProvider = vtViewTemplateProvider;
 		viewModelDBC = new EMFDataBindingContext();
+		isDisposed = false;
 	}
 
 	/**
@@ -117,10 +113,7 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 		return vtViewTemplateProvider;
 	}
 
-	private AdapterFactoryItemDelegator adapterFactoryItemDelegator;
-	private ComposedAdapterFactory composedAdapterFactory;
 	private DataBindingContext dataBindingContext;
-	private IObservableValue modelValue;
 	private DomainModelReferenceChangeListener domainModelReferenceChangeListener;
 	private final EMFDataBindingContext viewModelDBC;
 
@@ -128,11 +121,6 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 	@Override
 	protected void postInit() {
 		super.postInit();
-		composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
-			new CustomReflectiveItemProviderAdapterFactory(),
-			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
-		adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(
-			composedAdapterFactory);
 		domainModelReferenceChangeListener = new DomainModelReferenceChangeListener() {
 
 			@Override
@@ -152,23 +140,16 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 
 	@Override
 	protected void dispose() {
+		isDisposed = true;
 		if (getVElement().getDomainModelReference() != null) {
 			getVElement().getDomainModelReference().getChangeListener().remove(domainModelReferenceChangeListener);
 		}
 
 		domainModelReferenceChangeListener = null;
 
-		if (composedAdapterFactory != null) {
-			composedAdapterFactory.dispose();
-			composedAdapterFactory = null;
-		}
 		if (dataBindingContext != null) {
 			dataBindingContext.dispose();
 			dataBindingContext = null;
-		}
-		if (modelValue != null) {
-			modelValue.dispose();
-			modelValue = null;
 		}
 		viewModelDBC.dispose();
 		super.dispose();
@@ -191,40 +172,11 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 	 * @return the color to be used as a background color
 	 */
 	protected final Color getValidationBackgroundColor(int severity) {
-		// TODO add real dispose check
-		if (modelValue == null) {
+		if (isDisposed) {
 			return null;
 		}
 		return SWTValidationHelper.INSTANCE
 			.getValidationBackgroundColor(severity, getVElement(), getViewModelContext());
-	}
-
-	/**
-	 * Return the {@link IItemPropertyDescriptor} describing this {@link Setting}.
-	 *
-	 * @param setting the {@link Setting} to use for identifying the {@link IItemPropertyDescriptor}.
-	 * @return the {@link IItemPropertyDescriptor}
-	 */
-	@Deprecated
-	protected final IItemPropertyDescriptor getItemPropertyDescriptor(Setting setting) {
-		return getItemPropertyDescriptor(setting.getEObject(), setting.getEStructuralFeature());
-	}
-
-	/**
-	 * Return the {@link IItemPropertyDescriptor} describing this {@link EObject} and {@link EStructuralFeature}.
-	 *
-	 * @param eObject The {@link EObject} to use for identifying the {@link IItemPropertyDescriptor}.
-	 * @param structuralFeature The {@link EStructuralFeature} to use for identifying the
-	 *            {@link IItemPropertyDescriptor}.
-	 * @return the {@link IItemPropertyDescriptor}
-	 */
-	@Deprecated
-	protected final IItemPropertyDescriptor getItemPropertyDescriptor(EObject eObject,
-		EStructuralFeature structuralFeature) {
-		if (eObject == null || structuralFeature == null) {
-			return null;
-		}
-		return adapterFactoryItemDelegator.getPropertyDescriptor(eObject, structuralFeature);
 	}
 
 	/**
@@ -249,21 +201,8 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 		final VDomainModelReference ref = getVElement().getDomainModelReference();
 		final EObject eObject = getViewModelContext().getDomainModel();
 
-		if (modelValue == null) {
-			final EMFFormsDatabinding databindingService = getEMFFormsDatabinding();
-			modelValue = databindingService.getObservableValue(ref, eObject);
-		}
-		return modelValue;
-	}
-
-	/**
-	 * Returns the {@link EditingDomain} for the provided {@link Setting}.
-	 *
-	 * @param setting the provided {@link Setting}
-	 * @return the {@link EditingDomain} of this {@link Setting}
-	 */
-	protected final EditingDomain getEditingDomain(Setting setting) {
-		return getEditingDomain(setting.getEObject());
+		final EMFFormsDatabinding databindingService = getEMFFormsDatabinding();
+		return databindingService.getObservableValue(ref, eObject);
 	}
 
 	/**

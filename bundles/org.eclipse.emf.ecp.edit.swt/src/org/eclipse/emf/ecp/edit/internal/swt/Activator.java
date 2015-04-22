@@ -20,8 +20,10 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecp.edit.spi.ECPControlFactory;
+import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
+import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Image;
@@ -237,6 +239,38 @@ public class Activator extends Plugin {
 			.getServiceReference(EMFFormsEditSupport.class);
 
 		final EMFFormsEditSupport service = plugin.getBundle().getBundleContext()
+			.getService(serviceReference);
+		plugin.getBundle().getBundleContext().ungetService(serviceReference);
+
+		return service;
+	}
+
+	/**
+	 * Returns the {@link EMFFormsLabelProvider} service.
+	 *
+	 * @return The {@link EMFFormsLabelProvider}
+	 */
+	public EMFFormsLabelProvider getEMFFormsLabelProvider() {
+		final ServiceReference<EMFFormsLabelProvider> serviceReference = plugin.getBundle().getBundleContext()
+			.getServiceReference(EMFFormsLabelProvider.class);
+
+		final EMFFormsLabelProvider service = plugin.getBundle().getBundleContext()
+			.getService(serviceReference);
+		plugin.getBundle().getBundleContext().ungetService(serviceReference);
+
+		return service;
+	}
+
+	/**
+	 * Returns the {@link ReportService}.
+	 *
+	 * @return The {@link ReportService}
+	 */
+	public ReportService getReportService() {
+		final ServiceReference<ReportService> serviceReference = plugin.getBundle().getBundleContext()
+			.getServiceReference(ReportService.class);
+
+		final ReportService service = plugin.getBundle().getBundleContext()
 			.getService(serviceReference);
 		plugin.getBundle().getBundleContext().ungetService(serviceReference);
 
