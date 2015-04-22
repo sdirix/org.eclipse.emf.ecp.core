@@ -63,15 +63,6 @@ public class CategorizationElementTabbedRendererService implements EMFFormsRende
 	}
 
 	/**
-	 * Called by the initializer to unset the ReportService.
-	 *
-	 * @param reportService The ReportService
-	 */
-	protected void unsetReportService(ReportService reportService) {
-		this.reportService = null;
-	}
-
-	/**
 	 * {@inheritDoc}
 	 *
 	 * @see org.eclipse.emfforms.spi.swt.core.EMFFormsRendererService#isApplicable(org.eclipse.emf.ecp.view.spi.model.VElement)

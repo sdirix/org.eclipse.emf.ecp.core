@@ -65,30 +65,12 @@ public class CollapsableGroupSWTRendererService implements EMFFormsRendererServi
 	}
 
 	/**
-	 * Called by the initializer to unset the EMFFormsDatabinding.
-	 *
-	 * @param databindingService The EMFFormsDatabinding
-	 */
-	protected void unsetEMFFormsDatabinding(EMFFormsDatabinding databindingService) {
-		this.databindingService = null;
-	}
-
-	/**
 	 * Called by the initializer to set the ReportService.
 	 *
 	 * @param reportService The ReportService
 	 */
 	protected void setReportService(ReportService reportService) {
 		this.reportService = reportService;
-	}
-
-	/**
-	 * Called by the initializer to unset the ReportService.
-	 *
-	 * @param reportService The ReportService
-	 */
-	protected void unsetReportService(ReportService reportService) {
-		this.reportService = null;
 	}
 
 	/**

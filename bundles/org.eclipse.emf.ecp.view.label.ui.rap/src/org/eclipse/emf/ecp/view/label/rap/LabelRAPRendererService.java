@@ -45,15 +45,6 @@ public class LabelRAPRendererService implements EMFFormsRendererService<VLabel> 
 	}
 
 	/**
-	 * Called by the initializer to unset the EMFFormsDatabinding.
-	 *
-	 * @param databindingService The EMFFormsDatabinding
-	 */
-	protected void unsetEMFFormsDatabinding(EMFFormsDatabinding databindingService) {
-		this.databindingService = null;
-	}
-
-	/**
 	 * Called by the initializer to set the ReportService.
 	 *
 	 * @param reportService The ReportService
@@ -63,30 +54,12 @@ public class LabelRAPRendererService implements EMFFormsRendererService<VLabel> 
 	}
 
 	/**
-	 * Called by the initializer to unset the ReportService.
-	 *
-	 * @param reportService The ReportService
-	 */
-	protected void unsetReportService(ReportService reportService) {
-		this.reportService = null;
-	}
-
-	/**
 	 * Called by the initializer to set the VTViewTemplateProvider.
 	 *
 	 * @param vtViewTemplateProvider The VTViewTemplateProvider
 	 */
 	protected void setVTViewTemplateProvider(VTViewTemplateProvider vtViewTemplateProvider) {
 		this.vtViewTemplateProvider = vtViewTemplateProvider;
-	}
-
-	/**
-	 * Called by the initializer to unset the VTViewTemplateProvider.
-	 *
-	 * @param vtViewTemplateProvider The VTViewTemplateProvider
-	 */
-	protected void unsetVTViewTemplateProvider(VTViewTemplateProvider vtViewTemplateProvider) {
-		vtViewTemplateProvider = null;
 	}
 
 	/**

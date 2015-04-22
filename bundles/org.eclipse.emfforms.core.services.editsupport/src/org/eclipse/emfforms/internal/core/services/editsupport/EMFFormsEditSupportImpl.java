@@ -47,15 +47,6 @@ public class EMFFormsEditSupportImpl implements EMFFormsEditSupport {
 	}
 
 	/**
-	 * Unsets the {@link EMFFormsDatabinding} service.
-	 *
-	 * @param emfFormsDatabinding The databinding service.
-	 */
-	protected void unsetEMFFormsDatabinding(EMFFormsDatabinding emfFormsDatabinding) {
-		this.emfFormsDatabinding = null;
-	}
-
-	/**
 	 * Sets the {@link EMFSpecificService}.
 	 *
 	 * @param emfSpecificService The {@link EMFSpecificService}
@@ -65,30 +56,12 @@ public class EMFFormsEditSupportImpl implements EMFFormsEditSupport {
 	}
 
 	/**
-	 * Unsets the {@link EMFSpecificService}.
-	 *
-	 * @param emfSpecificService The {@link EMFSpecificService}
-	 */
-	protected void unsetEMFSpecificService(EMFSpecificService emfSpecificService) {
-		this.emfSpecificService = null;
-	}
-
-	/**
 	 * Sets the {@link ReportService}.
 	 *
 	 * @param reportService The {@link ReportService}
 	 */
 	protected void setReportService(ReportService reportService) {
 		this.reportService = reportService;
-	}
-
-	/**
-	 * Unsets the {@link ReportService}.
-	 *
-	 * @param reportService The {@link ReportService}
-	 */
-	protected void unsetReportService(ReportService reportService) {
-		this.reportService = null;
 	}
 
 	/**

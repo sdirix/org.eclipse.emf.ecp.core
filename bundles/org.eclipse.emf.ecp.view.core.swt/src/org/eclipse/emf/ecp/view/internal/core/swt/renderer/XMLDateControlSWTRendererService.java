@@ -59,30 +59,12 @@ public class XMLDateControlSWTRendererService implements EMFFormsRendererService
 	}
 
 	/**
-	 * Called by the initializer to unset the EMFFormsDatabinding.
-	 *
-	 * @param databindingService The EMFFormsDatabinding
-	 */
-	protected void unsetEMFFormsDatabinding(EMFFormsDatabinding databindingService) {
-		this.databindingService = null;
-	}
-
-	/**
 	 * Called by the initializer to set the EMFFormsLabelProvider.
 	 *
 	 * @param labelProvider The EMFFormsLabelProvider
 	 */
 	protected void setEMFFormsLabelProvider(EMFFormsLabelProvider labelProvider) {
 		this.labelProvider = labelProvider;
-	}
-
-	/**
-	 * Called by the initializer to unset the EMFFormsLabelProvider.
-	 *
-	 * @param labelProvider The EMFFormsLabelProvider
-	 */
-	protected void unsetEMFFormsLabelProvider(EMFFormsLabelProvider labelProvider) {
-		this.labelProvider = null;
 	}
 
 	/**
@@ -95,30 +77,12 @@ public class XMLDateControlSWTRendererService implements EMFFormsRendererService
 	}
 
 	/**
-	 * Called by the initializer to unset the ReportService.
-	 *
-	 * @param reportService The ReportService
-	 */
-	protected void unsetReportService(ReportService reportService) {
-		this.reportService = null;
-	}
-
-	/**
 	 * Called by the initializer to set the VTViewTemplateProvider.
 	 *
 	 * @param vtViewTemplateProvider The VTViewTemplateProvider
 	 */
 	protected void setVTViewTemplateProvider(VTViewTemplateProvider vtViewTemplateProvider) {
 		this.vtViewTemplateProvider = vtViewTemplateProvider;
-	}
-
-	/**
-	 * Called by the initializer to unset the VTViewTemplateProvider.
-	 *
-	 * @param vtViewTemplateProvider The VTViewTemplateProvider
-	 */
-	protected void unsetVTViewTemplateProvider(VTViewTemplateProvider vtViewTemplateProvider) {
-		this.vtViewTemplateProvider = null;
 	}
 
 	/**
@@ -131,30 +95,12 @@ public class XMLDateControlSWTRendererService implements EMFFormsRendererService
 	}
 
 	/**
-	 * Called by the initializer to unset the EMFFormsEditSupport.
-	 *
-	 * @param editSupport The EMFFormsEditSupport
-	 */
-	protected void unsetEMFFormsEditSupport(EMFFormsEditSupport editSupport) {
-		this.editSupport = null;
-	}
-
-	/**
 	 * Called by the initializer to set the EMFFormsLocalizationService.
 	 *
 	 * @param localizationService The EMFFormsLocalizationService
 	 */
 	protected void setEMFFormsLocalizationService(EMFFormsLocalizationService localizationService) {
 		this.localizationService = localizationService;
-	}
-
-	/**
-	 * Called by the initializer to unset the EMFFormsLocalizationService.
-	 *
-	 * @param localizationService The EMFFormsLocalizationService
-	 */
-	protected void unsetEMFFormsLocalizationService(EMFFormsLocalizationService localizationService) {
-		this.localizationService = null;
 	}
 
 	/**
@@ -167,30 +113,12 @@ public class XMLDateControlSWTRendererService implements EMFFormsRendererService
 	}
 
 	/**
-	 * Called by the initializer to unset the EMFFormsLocaleProvider.
-	 *
-	 * @param localeProvider The EMFFormsLocaleProvider
-	 */
-	protected void unsetEMFFormsLocaleProvider(EMFFormsLocaleProvider localeProvider) {
-		this.localeProvider = null;
-	}
-
-	/**
 	 * Called by the initializer to set the ImageRegistryService.
 	 *
 	 * @param imageRegistryService The ImageRegistryService
 	 */
 	protected void setImageRegistryService(ImageRegistryService imageRegistryService) {
 		this.imageRegistryService = imageRegistryService;
-	}
-
-	/**
-	 * Called by the initializer to unset the ImageRegistryService.
-	 *
-	 * @param imageRegistryService The ImageRegistryService
-	 */
-	protected void unsetImageRegistryService(ImageRegistryService imageRegistryService) {
-		this.imageRegistryService = null;
 	}
 
 	/**

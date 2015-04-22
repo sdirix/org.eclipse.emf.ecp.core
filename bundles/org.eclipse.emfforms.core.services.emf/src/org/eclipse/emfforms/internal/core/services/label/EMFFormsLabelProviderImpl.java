@@ -122,15 +122,6 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 	}
 
 	/**
-	 * Unsets the {@link ReportService} service.
-	 *
-	 * @param reportService The ReportService service.
-	 */
-	protected void unsetReportService(ReportService reportService) {
-		this.reportService = null;
-	}
-
-	/**
 	 * Sets the {@link EMFFormsDatabinding} service.
 	 *
 	 * @param emfFormsDatabinding The databinding service.
@@ -140,30 +131,12 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 	}
 
 	/**
-	 * Unsets the {@link EMFFormsDatabinding} service.
-	 *
-	 * @param emfFormsDatabinding The databinding service.
-	 */
-	protected void unsetEMFFormsDatabinding(EMFFormsDatabinding emfFormsDatabinding) {
-		this.emfFormsDatabinding = null;
-	}
-
-	/**
 	 * Sets the {@link EMFFormsLocalizationService}.
 	 *
 	 * @param localizationService The {@link EMFFormsLocalizationService}
 	 */
 	protected void setEMFFormsLocalizationService(EMFFormsLocalizationService localizationService) {
 		this.localizationService = localizationService;
-	}
-
-	/**
-	 * Unsets the {@link EMFFormsLocalizationService}.
-	 *
-	 * @param localizationService The {@link EMFFormsLocalizationService}
-	 */
-	protected void unsetEMFFormsLocalizationService(EMFFormsLocalizationService localizationService) {
-		this.localizationService = null;
 	}
 
 	/**
@@ -177,30 +150,12 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 	}
 
 	/**
-	 * Unsets the {@link EMFFormsLocaleProvider}.
-	 *
-	 * @param localeProvider The {@link EMFFormsLocaleProvider}
-	 */
-	protected void unsetEMFFormsLocaleProvider(EMFFormsLocaleProvider localeProvider) {
-		this.localeProvider = null;
-	}
-
-	/**
 	 * Sets the {@link EMFSpecificService}.
 	 *
 	 * @param emfSpecificService The {@link EMFSpecificService}
 	 */
 	protected void setEMFSpecificService(EMFSpecificService emfSpecificService) {
 		this.emfSpecificService = emfSpecificService;
-	}
-
-	/**
-	 * Unsets the {@link EMFSpecificService}.
-	 *
-	 * @param emfSpecificService The {@link EMFSpecificService}
-	 */
-	protected void unsetEMFSpecificService(EMFSpecificService emfSpecificService) {
-		this.emfSpecificService = null;
 	}
 
 	/**

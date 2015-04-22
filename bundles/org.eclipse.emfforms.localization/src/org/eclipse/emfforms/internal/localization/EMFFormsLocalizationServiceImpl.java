@@ -43,15 +43,6 @@ public class EMFFormsLocalizationServiceImpl implements EMFFormsLocalizationServ
 	}
 
 	/**
-	 * Called by the framework to unset the EMFFormsLocaleProvider.
-	 *
-	 * @param localeProvider The {@link EMFFormsLocaleProvider}
-	 */
-	protected void unsetEMFFormsLocaleProvider(EMFFormsLocaleProvider localeProvider) {
-		this.localeProvider = null;
-	}
-
-	/**
 	 * Called by the framework to set the BundleLocalization.
 	 *
 	 * @param bundleLocalization The {@link BundleLocalization}
@@ -61,30 +52,12 @@ public class EMFFormsLocalizationServiceImpl implements EMFFormsLocalizationServ
 	}
 
 	/**
-	 * Called by the framework to unset the BundleLocalization.
-	 *
-	 * @param bundleLocalization The {@link BundleLocalization}
-	 */
-	protected void unsetBundleLocalization(BundleLocalization bundleLocalization) {
-		this.bundleLocalization = null;
-	}
-
-	/**
 	 * Called by the framework to set the LogService.
 	 *
 	 * @param logService The {@link LogService}
 	 */
 	protected void setLogService(LogService logService) {
 		this.logService = logService;
-	}
-
-	/**
-	 * Called by the framework to unset the LogService.
-	 *
-	 * @param logService The {@link LogService}
-	 */
-	protected void unsetLogService(LogService logService) {
-		this.logService = null;
 	}
 
 	/**
@@ -142,6 +115,11 @@ public class EMFFormsLocalizationServiceImpl implements EMFFormsLocalizationServ
 			return key;
 		}
 		final String result = resourceBundle.getString(key);
+		// try {
+		// return new String(result.getBytes("ISO-8859-1"), "UTF-8");
+		// } catch (final UnsupportedEncodingException ex) {
+		// return key;
+		// }
 		return result;
 	}
 

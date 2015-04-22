@@ -65,30 +65,12 @@ public class SWTCategoryRendererService implements EMFFormsRendererService<VCate
 	}
 
 	/**
-	 * Called by the initializer to unset the ReportService.
-	 *
-	 * @param reportService The ReportService
-	 */
-	protected void unsetReportService(ReportService reportService) {
-		this.reportService = null;
-	}
-
-	/**
 	 * Called by the initializer to set the EMFFormsDatabinding.
 	 *
 	 * @param databindingService The EMFFormsDatabinding
 	 */
 	protected void setEMFFormsDatabinding(EMFFormsDatabinding databindingService) {
 		this.databindingService = databindingService;
-	}
-
-	/**
-	 * Called by the initializer to unset the EMFFormsDatabinding.
-	 *
-	 * @param databindingService The EMFFormsDatabinding
-	 */
-	protected void unsetEMFFormsDatabinding(EMFFormsDatabinding databindingService) {
-		this.databindingService = null;
 	}
 
 	/**

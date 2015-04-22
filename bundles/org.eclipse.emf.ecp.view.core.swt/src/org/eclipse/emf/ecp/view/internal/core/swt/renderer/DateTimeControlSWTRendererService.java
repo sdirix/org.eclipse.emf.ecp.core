@@ -55,30 +55,12 @@ public class DateTimeControlSWTRendererService implements EMFFormsRendererServic
 	}
 
 	/**
-	 * Called by the initializer to unset the EMFFormsDatabinding.
-	 *
-	 * @param databindingService The EMFFormsDatabinding
-	 */
-	protected void unsetEMFFormsDatabinding(EMFFormsDatabinding databindingService) {
-		this.databindingService = null;
-	}
-
-	/**
 	 * Called by the initializer to set the EMFFormsLocalizationService.
 	 *
 	 * @param localizationService The EMFFormsLocalizationService
 	 */
 	protected void setEMFFormsLocalizationService(EMFFormsLocalizationService localizationService) {
 		this.localizationService = localizationService;
-	}
-
-	/**
-	 * Called by the initializer to unset the EMFFormsLocalizationService.
-	 *
-	 * @param localizationService The EMFFormsLocalizationService
-	 */
-	protected void unsetEMFFormsLocalizationService(EMFFormsLocalizationService localizationService) {
-		this.localizationService = null;
 	}
 
 	/**
@@ -91,30 +73,12 @@ public class DateTimeControlSWTRendererService implements EMFFormsRendererServic
 	}
 
 	/**
-	 * Called by the initializer to unset the EMFFormsLabelProvider.
-	 *
-	 * @param labelProvider The EMFFormsLabelProvider
-	 */
-	protected void unsetEMFFormsLabelProvider(EMFFormsLabelProvider labelProvider) {
-		this.labelProvider = null;
-	}
-
-	/**
 	 * Called by the initializer to set the ReportService.
 	 *
 	 * @param reportService The ReportService
 	 */
 	protected void setReportService(ReportService reportService) {
 		this.reportService = reportService;
-	}
-
-	/**
-	 * Called by the initializer to unset the ReportService.
-	 *
-	 * @param reportService The ReportService
-	 */
-	protected void unsetReportService(ReportService reportService) {
-		this.reportService = null;
 	}
 
 	/**
@@ -127,30 +91,12 @@ public class DateTimeControlSWTRendererService implements EMFFormsRendererServic
 	}
 
 	/**
-	 * Called by the initializer to unset the VTViewTemplateProvider.
-	 *
-	 * @param vtViewTemplateProvider The VTViewTemplateProvider
-	 */
-	protected void unsetVTViewTemplateProvider(VTViewTemplateProvider vtViewTemplateProvider) {
-		this.vtViewTemplateProvider = null;
-	}
-
-	/**
 	 * Called by the initializer to set the ImageRegistryService.
 	 *
 	 * @param imageRegistryService The ImageRegistryService
 	 */
 	protected void setImageRegistryService(ImageRegistryService imageRegistryService) {
 		this.imageRegistryService = imageRegistryService;
-	}
-
-	/**
-	 * Called by the initializer to unset the ImageRegistryService.
-	 *
-	 * @param imageRegistryService The ImageRegistryService
-	 */
-	protected void unsetImageRegistryService(ImageRegistryService imageRegistryService) {
-		this.imageRegistryService = null;
 	}
 
 	/**

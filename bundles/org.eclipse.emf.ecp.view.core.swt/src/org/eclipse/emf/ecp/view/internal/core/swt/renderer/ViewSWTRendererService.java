@@ -66,15 +66,6 @@ public class ViewSWTRendererService implements EMFFormsRendererService<VView> {
 	}
 
 	/**
-	 * Called by the initializer to unset the EMFFormsDatabinding.
-	 *
-	 * @param databindingService The EMFFormsDatabinding
-	 */
-	protected void unsetEMFFormsDatabinding(EMFFormsDatabinding databindingService) {
-		this.databindingService = null;
-	}
-
-	/**
 	 * Called by the initializer to set the ReportService.
 	 *
 	 * @param reportService The ReportService
@@ -84,30 +75,12 @@ public class ViewSWTRendererService implements EMFFormsRendererService<VView> {
 	}
 
 	/**
-	 * Called by the initializer to unset the ReportService.
-	 *
-	 * @param reportService The ReportService
-	 */
-	protected void unsetReportService(ReportService reportService) {
-		this.reportService = null;
-	}
-
-	/**
 	 * Called by the initializer to set the EMFFormsLocaleProvider.
 	 *
 	 * @param localeProvider The EMFFormsLocaleProvider
 	 */
 	protected void setEMFFormsLocaleProvider(EMFFormsLocaleProvider localeProvider) {
 		this.localeProvider = localeProvider;
-	}
-
-	/**
-	 * Called by the initializer to unset the EMFFormsLocaleProvider.
-	 *
-	 * @param localeProvider The EMFFormsLocaleProvider
-	 */
-	protected void unsetEMFFormsLocaleProvider(EMFFormsLocaleProvider localeProvider) {
-		this.localeProvider = null;
 	}
 
 	/**

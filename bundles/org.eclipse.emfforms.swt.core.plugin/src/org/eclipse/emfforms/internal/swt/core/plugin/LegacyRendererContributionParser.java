@@ -67,15 +67,6 @@ public class LegacyRendererContributionParser {
 	}
 
 	/**
-	 * Called by the initializer to unset the {@link ReportService}.
-	 *
-	 * @param reportService The ReportService to unset
-	 */
-	protected void unsetReportService(ReportService reportService) {
-		this.reportService = null;
-	}
-
-	/**
 	 * Activate method of OSGI Component.
 	 *
 	 * @param bundleContext The {@link BundleContext} to use
