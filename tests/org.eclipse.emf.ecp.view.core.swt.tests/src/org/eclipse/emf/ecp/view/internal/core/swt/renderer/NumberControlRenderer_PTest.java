@@ -54,7 +54,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 @SuppressWarnings("restriction")
-public class NumberControlRenderer_Test extends AbstractControl_Test {
+public class NumberControlRenderer_PTest extends AbstractControl_PTest {
 
 	private DefaultRealm realm;
 

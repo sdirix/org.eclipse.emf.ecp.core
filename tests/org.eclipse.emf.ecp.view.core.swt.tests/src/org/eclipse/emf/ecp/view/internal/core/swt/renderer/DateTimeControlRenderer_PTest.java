@@ -62,7 +62,7 @@ import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
-public class DateTimeControlRenderer_Test extends AbstractControl_Test {
+public class DateTimeControlRenderer_PTest extends AbstractControl_PTest {
 
 	private DefaultRealm realm;
 

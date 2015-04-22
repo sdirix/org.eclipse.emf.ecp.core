@@ -26,7 +26,7 @@ import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecp.test.common.DefaultRealm;
 import org.eclipse.emf.ecp.view.core.swt.tests.ObservingWritableValue;
-import org.eclipse.emf.ecp.view.internal.core.swt.renderer.AbstractControl_Test;
+import org.eclipse.emf.ecp.view.internal.core.swt.renderer.AbstractControl_PTest;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
@@ -48,7 +48,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-public class TextControlRenderer_Test extends AbstractControl_Test {
+public class TextControlRenderer_PTest extends AbstractControl_PTest {
 
 	private DefaultRealm realm;
 

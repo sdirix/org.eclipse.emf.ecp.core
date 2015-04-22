@@ -62,7 +62,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-public abstract class AbstractControl_Test {
+public abstract class AbstractControl_PTest {
 	protected static final String CUSTOM_VARIANT = "org.eclipse.rap.rwt.customVariant"; //$NON-NLS-1$
 	protected EMFFormsDatabinding databindingService;
 	protected VTViewTemplateProvider templateProvider;

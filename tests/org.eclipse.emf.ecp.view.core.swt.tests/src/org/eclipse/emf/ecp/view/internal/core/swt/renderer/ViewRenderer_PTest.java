@@ -38,7 +38,8 @@ import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
-public class ViewRenderer_Test {
+@SuppressWarnings("restriction")
+public class ViewRenderer_PTest {
 
 	private ViewSWTRenderer viewRenderer;
 	private VView view;

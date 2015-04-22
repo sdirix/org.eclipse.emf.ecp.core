@@ -61,7 +61,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-public class XMLDateControlRenderer_Test extends AbstractControl_Test {
+public class XMLDateControlRenderer_PTest extends AbstractControl_PTest {
 
 	private DefaultRealm realm;
 

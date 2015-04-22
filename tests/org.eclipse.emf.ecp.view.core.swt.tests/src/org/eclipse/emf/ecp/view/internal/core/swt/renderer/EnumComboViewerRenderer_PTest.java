@@ -7,46 +7,52 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- * Eugen Neufeld - initial API and implementation
- * Lucas Koehler - databinding tests
+ * Lucas Koehler - initial API and implementation
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.core.swt.renderer;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import org.eclipse.emf.ecore.EClass;
+import org.eclipse.core.databinding.property.Properties;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.EcoreFactory;
-import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecp.test.common.DefaultRealm;
+import org.eclipse.emf.ecp.view.core.swt.test.model.SimpleTestObject;
+import org.eclipse.emf.ecp.view.core.swt.test.model.TestEnum;
+import org.eclipse.emf.ecp.view.core.swt.test.model.TestFactory;
+import org.eclipse.emf.ecp.view.core.swt.test.model.TestPackage;
 import org.eclipse.emf.ecp.view.core.swt.tests.ObservingWritableValue;
-import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
-import org.eclipse.emf.ecp.view.test.common.swt.spi.SWTTestUtil;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Event;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
+import org.mockito.Matchers;
 
-public class BooleanControlRenderer_Test extends AbstractControl_Test {
+/**
+ * Plugin test for {@link EnumComboViewerSWTRenderer}.
+ *
+ * @author Lucas Koehler
+ *
+ */
+public class EnumComboViewerRenderer_PTest extends AbstractControl_PTest {
 
+	private EMFFormsEditSupport editSupport;
 	private DefaultRealm realm;
 
 	@Before
@@ -56,9 +62,11 @@ public class BooleanControlRenderer_Test extends AbstractControl_Test {
 		databindingService = mock(EMFFormsDatabinding.class);
 		labelProvider = mock(EMFFormsLabelProvider.class);
 		templateProvider = mock(VTViewTemplateProvider.class);
+		editSupport = mock(EMFFormsEditSupport.class);
+
 		setup();
-		renderer = new BooleanControlSWTRenderer(vControl, context, reportService, databindingService, labelProvider,
-			templateProvider);
+		renderer = new EnumComboViewerSWTRenderer(vControl, context, reportService, databindingService, labelProvider,
+			templateProvider, editSupport);
 		renderer.init();
 	}
 
@@ -68,80 +76,74 @@ public class BooleanControlRenderer_Test extends AbstractControl_Test {
 		dispose();
 	}
 
-	@Test
-	public void renderControlLabelAlignmentNone()
-		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption, DatabindingFailedException {
-		setMockLabelAlignment(LabelAlignment.NONE);
-		final TestObservableValue mockedObservableValue = mock(TestObservableValue.class);
-		when(mockedObservableValue.getRealm()).thenReturn(realm);
-		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
-			mockedObservableValue);
-		final Control render = renderControl(new SWTGridCell(0, 1, renderer));
-		assertControl(render);
-	}
-
-	@Test
-	public void renderControlLabelAlignmentLeft()
-		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption, DatabindingFailedException {
-		setMockLabelAlignment(LabelAlignment.LEFT);
-		final TestObservableValue mockedObservableValue = mock(TestObservableValue.class);
-		when(mockedObservableValue.getRealm()).thenReturn(realm);
-		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
-			mockedObservableValue);
-		final Control render = renderControl(new SWTGridCell(0, 2, renderer));
-
-		assertControl(render);
-	}
-
-	private void assertControl(Control render) {
-		assertTrue(Button.class.isInstance(render));
-		assertEquals(SWT.CHECK, Button.class.cast(render).getStyle()
-			& SWT.CHECK);
-		assertEquals("org_eclipse_emf_ecp_control_boolean", Button.class.cast(render).getData(CUSTOM_VARIANT));
-	}
-
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @throws DatabindingFailedException
+	 *
+	 * @see org.AbstractControl_PTest.eclipse.emf.ecp.view.internal.core.swt.renderer.AbstractControl_PTest#mockControl()
+	 */
 	@Override
 	protected void mockControl() throws DatabindingFailedException {
-		final EClass eObject = EcoreFactory.eINSTANCE.createEClass();
-		final EStructuralFeature eStructuralFeature = EcorePackage.eINSTANCE
-			.getEClass_Interface();
-		super.mockControl(eObject, eStructuralFeature);
+		final SimpleTestObject eObject = TestFactory.eINSTANCE.createSimpleTestObject();
+		super.mockControl(eObject, TestPackage.eINSTANCE.getSimpleTestObject_MyEnum());
 	}
 
 	@Test
 	public void testDatabindingServiceUsageInitialBinding() throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
-		final boolean initialValue = true;
-		final ObservingWritableValue mockedObservable = new ObservingWritableValue(realm, initialValue, Boolean.class);
+		final TestEnum initialValue = TestEnum.B;
 
-		final Button button = setUpDatabindingTest(mockedObservable);
-		assertEquals(initialValue, button.getSelection());
+		final ObservingWritableValue mockedObservable = new ObservingWritableValue(realm, initialValue,
+			TestPackage.eINSTANCE.getSimpleTestObject_MyEnum());
+
+		when(
+			editSupport.getText(any(VDomainModelReference.class), any(EObject.class),
+				Matchers.eq(mockedObservable.getValue())))
+			.thenReturn(mockedObservable.getValue().toString());
+
+		final Combo combo = setUpDatabindingTest(mockedObservable);
+		assertEquals(initialValue.getName(), combo.getText());
 
 	}
 
 	@Test
 	public void testDatabindingServiceUsageChangeObservable() throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
-		final boolean initialValue = true;
-		final boolean changedValue = false;
-		final ObservingWritableValue mockedObservable = new ObservingWritableValue(realm, initialValue, Boolean.class);
+		final TestEnum initialValue = TestEnum.B;
+		final TestEnum changedValue = TestEnum.C;
+		final ObservingWritableValue mockedObservable = new ObservingWritableValue(realm, initialValue,
+			TestPackage.eINSTANCE.getSimpleTestObject_MyEnum());
+		when(
+			editSupport.getText(any(VDomainModelReference.class), any(EObject.class),
+				Matchers.same(initialValue)))
+			.thenReturn(initialValue.toString());
 
-		final Button button = setUpDatabindingTest(mockedObservable);
+		when(
+			editSupport.getText(any(VDomainModelReference.class), any(EObject.class),
+				Matchers.same(changedValue)))
+			.thenReturn(changedValue.toString());
+
+		final Combo combo = setUpDatabindingTest(mockedObservable);
 		mockedObservable.setValue(changedValue);
-		assertEquals(changedValue, button.getSelection());
+
+		assertEquals(changedValue.getName(), combo.getText());
 
 	}
 
 	@Test
 	public void testDatabindingServiceUsageChangeControl() throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
-		final boolean initialValue = true;
-		final ObservingWritableValue mockedObservable = new ObservingWritableValue(realm, initialValue, Boolean.class);
+		final TestEnum initialValue = TestEnum.B;
+		final TestEnum changedValue = TestEnum.C;
+		final ObservingWritableValue mockedObservable = new ObservingWritableValue(realm, initialValue,
+			TestPackage.eINSTANCE.getSimpleTestObject_MyEnum());
 
-		final Button button = setUpDatabindingTest(mockedObservable);
-		SWTTestUtil.clickButton(button);
+		final Combo combo = setUpDatabindingTest(mockedObservable);
+		combo.select(2);
+		combo.notifyListeners(SWT.Selection, new Event());
 
-		assertEquals(button.getSelection(), mockedObservable.getValue());
+		assertEquals(changedValue.getName(), ((TestEnum) mockedObservable.getValue()).getName());
 
 	}
 
@@ -154,17 +156,18 @@ public class BooleanControlRenderer_Test extends AbstractControl_Test {
 	 * @throws NoPropertyDescriptorFoundExeption
 	 * @throws DatabindingFailedException
 	 */
-	private Button setUpDatabindingTest(final ObservingWritableValue mockedObservable) throws NoRendererFoundException,
+	private Combo setUpDatabindingTest(final ObservingWritableValue mockedObservable) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
-		Mockito.reset(databindingService);
-
 		mockDatabindingIsUnsettable();
 		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			mockedObservable);
+		when(databindingService.getValueProperty(any(VDomainModelReference.class))).thenReturn(
+			Properties.selfValue(mockedObservable.getValueType()));
 
 		final Control renderControl = renderControl(new SWTGridCell(0, 2, renderer));
-		final Button button = (Button) renderControl;
-		return button;
+
+		final Combo combo = (Combo) renderControl;
+		return combo;
 	}
 
 	/**
@@ -172,11 +175,12 @@ public class BooleanControlRenderer_Test extends AbstractControl_Test {
 	 *
 	 * @throws NoRendererFoundException
 	 * @throws NoPropertyDescriptorFoundExeption
+	 * @throws DatabindingFailedException
 	 * @throws NoLabelFoundException
 	 */
 	@Test
 	public void testLabelServiceUsage() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption,
-		NoLabelFoundException {
+		DatabindingFailedException, NoLabelFoundException {
 		labelServiceUsage();
 	}
 }
