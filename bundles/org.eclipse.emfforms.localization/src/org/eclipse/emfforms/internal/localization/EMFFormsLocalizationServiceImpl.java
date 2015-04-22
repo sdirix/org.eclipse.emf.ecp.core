@@ -43,6 +43,15 @@ public class EMFFormsLocalizationServiceImpl implements EMFFormsLocalizationServ
 	}
 
 	/**
+	 * Called by the framework to unset the EMFFormsLocaleProvider.
+	 *
+	 * @param localeProvider The {@link EMFFormsLocaleProvider}
+	 */
+	protected void unsetEMFFormsLocaleProvider(EMFFormsLocaleProvider localeProvider) {
+		this.localeProvider = null;
+	}
+
+	/**
 	 * Called by the framework to set the BundleLocalization.
 	 *
 	 * @param bundleLocalization The {@link BundleLocalization}
