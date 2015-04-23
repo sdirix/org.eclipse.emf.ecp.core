@@ -102,10 +102,10 @@ public class DateTimeControlSWTRendererService implements EMFFormsRendererServic
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emfforms.spi.swt.core.EMFFormsRendererService#isApplicable(org.eclipse.emf.ecp.view.spi.model.VElement)
+	 * @see org.eclipse.emfforms.spi.swt.core.EMFFormsRendererService#isApplicable(VElement,ViewModelContext)
 	 */
 	@Override
-	public double isApplicable(VElement vElement) {
+	public double isApplicable(VElement vElement, ViewModelContext viewModelContext) {
 		if (!VControl.class.isInstance(vElement)) {
 			return NOT_APPLICABLE;
 		}

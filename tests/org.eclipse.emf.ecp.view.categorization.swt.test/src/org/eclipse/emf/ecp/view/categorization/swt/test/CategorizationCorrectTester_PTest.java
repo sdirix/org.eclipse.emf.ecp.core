@@ -45,11 +45,11 @@ public class CategorizationCorrectTester_PTest {
 		final VCategorizationElement categorizationElement = mock(VCategorizationElement.class);
 		when(categorizationElement.getMainCategoryDepth()).thenReturn(0);
 		final CategorizationElementTabbedRendererService tabTester = new CategorizationElementTabbedRendererService();
-		final double applicable = tabTester.isApplicable(categorizationElement);
+		final double applicable = tabTester.isApplicable(categorizationElement, null);
 		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicable, 0d);
 
 		final SWTCategorizationElementRendererService treeTester = new SWTCategorizationElementRendererService();
-		final double applicableTree = treeTester.isApplicable(categorizationElement);
+		final double applicableTree = treeTester.isApplicable(categorizationElement, null);
 		assertEquals(1, applicableTree, 0d);
 	}
 
@@ -58,11 +58,11 @@ public class CategorizationCorrectTester_PTest {
 		final VCategorizationElement categorizationElement = mock(VCategorizationElement.class);
 		when(categorizationElement.getMainCategoryDepth()).thenReturn(1);
 		final CategorizationElementTabbedRendererService tabTester = new CategorizationElementTabbedRendererService();
-		final double applicable = tabTester.isApplicable(categorizationElement);
+		final double applicable = tabTester.isApplicable(categorizationElement, null);
 		assertEquals(1, applicable, 0d);
 
 		final SWTCategorizationElementRendererService treeTester = new SWTCategorizationElementRendererService();
-		final double applicableTree = treeTester.isApplicable(categorizationElement);
+		final double applicableTree = treeTester.isApplicable(categorizationElement, null);
 		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicableTree, 0d);
 	}
 
@@ -71,11 +71,11 @@ public class CategorizationCorrectTester_PTest {
 		final VCategorizationElement categorizationElement = mock(VCategorizationElement.class);
 		when(categorizationElement.getMainCategoryDepth()).thenReturn(2);
 		final CategorizationElementTabbedRendererService tabTester = new CategorizationElementTabbedRendererService();
-		final double applicable = tabTester.isApplicable(categorizationElement);
+		final double applicable = tabTester.isApplicable(categorizationElement, null);
 		assertEquals(1, applicable, 0d);
 
 		final SWTCategorizationElementRendererService treeTester = new SWTCategorizationElementRendererService();
-		final double applicableTree = treeTester.isApplicable(categorizationElement);
+		final double applicableTree = treeTester.isApplicable(categorizationElement, null);
 		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicableTree, 0d);
 	}
 
@@ -96,40 +96,40 @@ public class CategorizationCorrectTester_PTest {
 		final CompositeCategorySWTTabRendererService tabTester = new CompositeCategorySWTTabRendererService();
 		final CompositeCategoryJFaceTreeRendererService treeTester = new CompositeCategoryJFaceTreeRendererService();
 
-		final double applicable0 = defaultTester.isApplicable(categorization0);
+		final double applicable0 = defaultTester.isApplicable(categorization0, null);
 		assertEquals(1, applicable0, 0d);
 
-		final double applicableTab0 = tabTester.isApplicable(categorization0);
+		final double applicableTab0 = tabTester.isApplicable(categorization0, null);
 		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicableTab0, 0d);
 
-		final double applicableTree0 = treeTester.isApplicable(categorization0);
+		final double applicableTree0 = treeTester.isApplicable(categorization0, null);
 		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicableTree0, 0d);
 
-		final double applicable1 = defaultTester.isApplicable(categorization1);
+		final double applicable1 = defaultTester.isApplicable(categorization1, null);
 		assertEquals(1, applicable1, 0d);
 
-		final double applicableTab1 = tabTester.isApplicable(categorization1);
+		final double applicableTab1 = tabTester.isApplicable(categorization1, null);
 		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicableTab1, 0d);
 
-		final double applicableTree1 = treeTester.isApplicable(categorization1);
+		final double applicableTree1 = treeTester.isApplicable(categorization1, null);
 		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicableTree1, 0d);
 
-		final double applicable2 = defaultTester.isApplicable(categorization2);
+		final double applicable2 = defaultTester.isApplicable(categorization2, null);
 		assertEquals(1, applicable2, 0d);
 
-		final double applicableTab2 = tabTester.isApplicable(categorization2);
+		final double applicableTab2 = tabTester.isApplicable(categorization2, null);
 		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicableTab2, 0d);
 
-		final double applicableTree2 = treeTester.isApplicable(categorization2);
+		final double applicableTree2 = treeTester.isApplicable(categorization2, null);
 		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicableTree2, 0d);
 
-		final double applicable3 = defaultTester.isApplicable(categorization3);
+		final double applicable3 = defaultTester.isApplicable(categorization3, null);
 		assertEquals(1, applicable3, 0d);
 
-		final double applicableTab3 = tabTester.isApplicable(categorization3);
+		final double applicableTab3 = tabTester.isApplicable(categorization3, null);
 		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicableTab3, 0d);
 
-		final double applicableTree3 = treeTester.isApplicable(categorization3);
+		final double applicableTree3 = treeTester.isApplicable(categorization3, null);
 		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicableTree3, 0d);
 	}
 
@@ -150,40 +150,40 @@ public class CategorizationCorrectTester_PTest {
 		final CompositeCategorySWTTabRendererService tabTester = new CompositeCategorySWTTabRendererService();
 		final CompositeCategoryJFaceTreeRendererService treeTester = new CompositeCategoryJFaceTreeRendererService();
 
-		final double applicable0 = defaultTester.isApplicable(categorization0);
+		final double applicable0 = defaultTester.isApplicable(categorization0, null);
 		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicable0, 0d);
 
-		final double applicableTab0 = tabTester.isApplicable(categorization0);
+		final double applicableTab0 = tabTester.isApplicable(categorization0, null);
 		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicableTab0, 0d);
 
-		final double applicableTree0 = treeTester.isApplicable(categorization0);
+		final double applicableTree0 = treeTester.isApplicable(categorization0, null);
 		assertEquals(1, applicableTree0, 0d);
 
-		final double applicable1 = defaultTester.isApplicable(categorization1);
+		final double applicable1 = defaultTester.isApplicable(categorization1, null);
 		assertEquals(1, applicable1, 0d);
 
-		final double applicableTab1 = tabTester.isApplicable(categorization1);
+		final double applicableTab1 = tabTester.isApplicable(categorization1, null);
 		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicableTab1, 0d);
 
-		final double applicableTree1 = treeTester.isApplicable(categorization1);
+		final double applicableTree1 = treeTester.isApplicable(categorization1, null);
 		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicableTree1, 0d);
 
-		final double applicable2 = defaultTester.isApplicable(categorization2);
+		final double applicable2 = defaultTester.isApplicable(categorization2, null);
 		assertEquals(1, applicable2, 0d);
 
-		final double applicableTab2 = tabTester.isApplicable(categorization2);
+		final double applicableTab2 = tabTester.isApplicable(categorization2, null);
 		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicableTab2, 0d);
 
-		final double applicableTree2 = treeTester.isApplicable(categorization2);
+		final double applicableTree2 = treeTester.isApplicable(categorization2, null);
 		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicableTree2, 0d);
 
-		final double applicable3 = defaultTester.isApplicable(categorization3);
+		final double applicable3 = defaultTester.isApplicable(categorization3, null);
 		assertEquals(1, applicable3, 0d);
 
-		final double applicableTab3 = tabTester.isApplicable(categorization3);
+		final double applicableTab3 = tabTester.isApplicable(categorization3, null);
 		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicableTab3, 0d);
 
-		final double applicableTree3 = treeTester.isApplicable(categorization3);
+		final double applicableTree3 = treeTester.isApplicable(categorization3, null);
 		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicableTree3, 0d);
 	}
 
@@ -204,40 +204,40 @@ public class CategorizationCorrectTester_PTest {
 		final CompositeCategorySWTTabRendererService tabTester = new CompositeCategorySWTTabRendererService();
 		final CompositeCategoryJFaceTreeRendererService treeTester = new CompositeCategoryJFaceTreeRendererService();
 
-		final double applicable0 = defaultTester.isApplicable(categorization0);
+		final double applicable0 = defaultTester.isApplicable(categorization0, null);
 		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicable0, 0d);
 
-		final double applicableTab0 = tabTester.isApplicable(categorization0);
+		final double applicableTab0 = tabTester.isApplicable(categorization0, null);
 		assertEquals(1, applicableTab0, 0d);
 
-		final double applicableTree0 = treeTester.isApplicable(categorization0);
+		final double applicableTree0 = treeTester.isApplicable(categorization0, null);
 		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicableTree0, 0d);
 
-		final double applicable1 = defaultTester.isApplicable(categorization1);
+		final double applicable1 = defaultTester.isApplicable(categorization2, null);
 		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicable1, 0d);
 
-		final double applicableTab1 = tabTester.isApplicable(categorization1);
+		final double applicableTab1 = tabTester.isApplicable(categorization2, null);
 		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicableTab1, 0d);
 
-		final double applicableTree1 = treeTester.isApplicable(categorization1);
+		final double applicableTree1 = treeTester.isApplicable(categorization2, null);
 		assertEquals(1, applicableTree1, 0d);
 
-		final double applicable2 = defaultTester.isApplicable(categorization2);
+		final double applicable2 = defaultTester.isApplicable(categorization2, null);
 		assertEquals(1, applicable2, 0d);
 
-		final double applicableTab2 = tabTester.isApplicable(categorization2);
+		final double applicableTab2 = tabTester.isApplicable(categorization2, null);
 		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicableTab2, 0d);
 
-		final double applicableTree2 = treeTester.isApplicable(categorization2);
+		final double applicableTree2 = treeTester.isApplicable(categorization2, null);
 		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicableTree2, 0d);
 
-		final double applicable3 = defaultTester.isApplicable(categorization3);
+		final double applicable3 = defaultTester.isApplicable(categorization3, null);
 		assertEquals(1, applicable3, 0d);
 
-		final double applicableTab3 = tabTester.isApplicable(categorization3);
+		final double applicableTab3 = tabTester.isApplicable(categorization3, null);
 		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicableTab3, 0d);
 
-		final double applicableTree3 = treeTester.isApplicable(categorization3);
+		final double applicableTree3 = treeTester.isApplicable(categorization3, null);
 		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicableTree3, 0d);
 	}
 
@@ -258,40 +258,40 @@ public class CategorizationCorrectTester_PTest {
 		final CompositeCategorySWTTabRendererService tabTester = new CompositeCategorySWTTabRendererService();
 		final CompositeCategoryJFaceTreeRendererService treeTester = new CompositeCategoryJFaceTreeRendererService();
 
-		final double applicable0 = defaultTester.isApplicable(categorization0);
+		final double applicable0 = defaultTester.isApplicable(categorization0, null);
 		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicable0, 0d);
 
-		final double applicableTab0 = tabTester.isApplicable(categorization0);
+		final double applicableTab0 = tabTester.isApplicable(categorization0, null);
 		assertEquals(1, applicableTab0, 0d);
 
-		final double applicableTree0 = treeTester.isApplicable(categorization0);
+		final double applicableTree0 = treeTester.isApplicable(categorization0, null);
 		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicableTree0, 0d);
 
-		final double applicable1 = defaultTester.isApplicable(categorization1);
+		final double applicable1 = defaultTester.isApplicable(categorization1, null);
 		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicable1, 0d);
 
-		final double applicableTab1 = tabTester.isApplicable(categorization1);
+		final double applicableTab1 = tabTester.isApplicable(categorization1, null);
 		assertEquals(1, applicableTab1, 0d);
 
-		final double applicableTree1 = treeTester.isApplicable(categorization1);
+		final double applicableTree1 = treeTester.isApplicable(categorization1, null);
 		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicableTree1, 0d);
 
-		final double applicable2 = defaultTester.isApplicable(categorization2);
+		final double applicable2 = defaultTester.isApplicable(categorization2, null);
 		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicable2, 0d);
 
-		final double applicableTab2 = tabTester.isApplicable(categorization2);
+		final double applicableTab2 = tabTester.isApplicable(categorization2, null);
 		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicableTab2, 0d);
 
-		final double applicableTree2 = treeTester.isApplicable(categorization2);
+		final double applicableTree2 = treeTester.isApplicable(categorization2, null);
 		assertEquals(1, applicableTree2, 0d);
 
-		final double applicable3 = defaultTester.isApplicable(categorization3);
+		final double applicable3 = defaultTester.isApplicable(categorization3, null);
 		assertEquals(1, applicable3, 0d);
 
-		final double applicableTab3 = tabTester.isApplicable(categorization3);
+		final double applicableTab3 = tabTester.isApplicable(categorization3, null);
 		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicableTab3, 0d);
 
-		final double applicableTree3 = treeTester.isApplicable(categorization3);
+		final double applicableTree3 = treeTester.isApplicable(categorization3, null);
 		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicableTree3, 0d);
 	}
 }

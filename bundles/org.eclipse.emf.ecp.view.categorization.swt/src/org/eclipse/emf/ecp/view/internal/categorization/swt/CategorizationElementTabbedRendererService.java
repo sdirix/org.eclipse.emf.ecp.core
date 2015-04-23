@@ -65,10 +65,10 @@ public class CategorizationElementTabbedRendererService implements EMFFormsRende
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emfforms.spi.swt.core.EMFFormsRendererService#isApplicable(org.eclipse.emf.ecp.view.spi.model.VElement)
+	 * @see org.eclipse.emfforms.spi.swt.core.EMFFormsRendererService#isApplicable(VElement,ViewModelContext)
 	 */
 	@Override
-	public double isApplicable(VElement vElement) {
+	public double isApplicable(VElement vElement, ViewModelContext viewModelContext) {
 		if (VCategorizationElement.class.isInstance(vElement)) {
 			if (VCategorizationElement.class.cast(vElement).getMainCategoryDepth() != 0) {
 				return 1d;
