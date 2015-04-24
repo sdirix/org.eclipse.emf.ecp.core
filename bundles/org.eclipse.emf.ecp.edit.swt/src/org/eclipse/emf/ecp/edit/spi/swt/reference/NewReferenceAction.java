@@ -15,6 +15,7 @@ package org.eclipse.emf.ecp.edit.spi.swt.reference;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -104,7 +105,9 @@ public class NewReferenceAction extends ECPSWTAction {
 
 		String attribute;
 		try {
-			attribute = (String) labelProvider.getDisplayName(domainModelReference, domainModel).getValue();
+			final IObservableValue displayName = labelProvider.getDisplayName(domainModelReference, domainModel);
+			attribute = (String) displayName.getValue();
+			displayName.dispose();
 		} catch (final NoLabelFoundException ex) {
 			reportService.report(new AbstractReport(ex));
 			setToolTipText(ex.getMessage());

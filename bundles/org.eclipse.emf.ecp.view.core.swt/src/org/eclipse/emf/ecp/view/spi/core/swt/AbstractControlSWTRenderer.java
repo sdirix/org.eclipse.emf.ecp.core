@@ -153,6 +153,9 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 			dataBindingContext = null;
 		}
 		viewModelDBC.dispose();
+		if (modelValue != null) {
+			modelValue.dispose();
+		}
 		super.dispose();
 	}
 

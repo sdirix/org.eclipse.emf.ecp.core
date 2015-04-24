@@ -213,13 +213,13 @@ public class CategorizationCorrectTester_PTest {
 		final double applicableTree0 = treeTester.isApplicable(categorization0, null);
 		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicableTree0, 0d);
 
-		final double applicable1 = defaultTester.isApplicable(categorization2, null);
+		final double applicable1 = defaultTester.isApplicable(categorization1, null);
 		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicable1, 0d);
 
-		final double applicableTab1 = tabTester.isApplicable(categorization2, null);
+		final double applicableTab1 = tabTester.isApplicable(categorization1, null);
 		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicableTab1, 0d);
 
-		final double applicableTree1 = treeTester.isApplicable(categorization2, null);
+		final double applicableTree1 = treeTester.isApplicable(categorization1, null);
 		assertEquals(1, applicableTree1, 0d);
 
 		final double applicable2 = defaultTester.isApplicable(categorization2, null);
