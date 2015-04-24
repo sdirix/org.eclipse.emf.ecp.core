@@ -119,7 +119,7 @@ public class TextControlSWTRendererService implements EMFFormsRendererService<VC
 			return NOT_APPLICABLE;
 		}
 		if (String.class.isAssignableFrom(instanceClass)) {
-			return 1d;
+			return 1.1d;
 		}
 		return NOT_APPLICABLE;
 	}

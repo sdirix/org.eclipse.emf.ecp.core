@@ -39,7 +39,7 @@
 							</requirement>
 							<requirement>
 								<type>p2-installable-unit</type>
-								<id>org.eclipse.equinox.event</id>
+								<id>org.eclipse.equinox.ds</id>
 								<versionRange>0.0.0</versionRange>
 							</requirement>
 							<requirement>
@@ -60,6 +60,36 @@
 							<requirement>
 								<type>p2-installable-unit</type>
 								<id>org.eclipse.emf.ecp.view.template.service</id>
+								<versionRange>0.0.0</versionRange>
+							</requirement>
+							<requirement>
+								<type>p2-installable-unit</type>
+								<id>org.eclipse.emfforms.localization</id>
+								<versionRange>0.0.0</versionRange>
+							</requirement>
+							<requirement>
+								<type>p2-installable-unit</type>
+								<id>org.eclipse.emf.ecp.view.core.swt</id>
+								<versionRange>0.0.0</versionRange>
+							</requirement>
+							<requirement>
+								<type>p2-installable-unit</type>
+								<id>org.eclipse.emf.ecp.view.swt.layout</id>
+								<versionRange>0.0.0</versionRange>
+							</requirement>
+							<requirement>
+								<type>p2-installable-unit</type>
+								<id>org.eclipse.emf.ecore.edit</id>
+								<versionRange>0.0.0</versionRange>
+							</requirement>
+							<requirement>
+								<type>p2-installable-unit</type>
+								<id>org.eclipse.emf.ecp.view.model.edit</id>
+								<versionRange>0.0.0</versionRange>
+							</requirement>
+							<requirement>
+								<type>p2-installable-unit</type>
+								<id>org.eclipse.emfforms.view.model.localization</id>
 								<versionRange>0.0.0</versionRange>
 							</requirement>
 						</extraRequirements>

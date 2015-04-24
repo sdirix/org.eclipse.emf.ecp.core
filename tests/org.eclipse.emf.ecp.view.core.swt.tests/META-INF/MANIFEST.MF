@@ -6,7 +6,7 @@ Bundle-Version: 1.6.0.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
-Fragment-Host: org.eclipse.emf.ecp.view.core.swt;bundle-version="1.4.0"
+Fragment-Host: org.eclipse.emf.ecp.view.core.swt;bundle-version="[1.6.0,2.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: org.eclipse.emf.ecp.view.core.swt.test.model;version="
  1.6.0";x-internal:=true,org.eclipse.emf.ecp.view.core.swt.test.model.
