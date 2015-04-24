@@ -17,7 +17,7 @@ import org.eclipse.emf.emfstore.internal.client.model.ESWorkspaceProviderImpl;
  * @author neilmack
  *
  */
-public class ECPEMFUtils {
+public abstract class ECPEMFUtils {
 
 	/**
 	 * Helper method to get the instance of the {@link ESWorkspaceProviderImpl}.
@@ -25,7 +25,7 @@ public class ECPEMFUtils {
 	 * @return the {@link ESWorkspaceProviderImpl}
 	 * @since 1.5
 	 */
-	public static ESWorkspaceProviderImpl ESWorkspaceProviderInstance() {
+	public static ESWorkspaceProviderImpl getESWorkspaceProviderInstance() {
 		return Activator.getESWorkspaceProviderInstance();
 	}
 

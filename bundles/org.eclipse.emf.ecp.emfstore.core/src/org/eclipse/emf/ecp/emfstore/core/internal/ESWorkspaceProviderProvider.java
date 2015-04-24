@@ -21,6 +21,9 @@ import org.eclipse.emf.emfstore.internal.client.model.ESWorkspaceProviderImpl;
  */
 public interface ESWorkspaceProviderProvider {
 
-	public ESWorkspaceProviderImpl getESWorkspaceProviderInstance();
+	/**
+	 * @return an {@link ESWorkspaceProviderImpl}
+	 */
+	ESWorkspaceProviderImpl getESWorkspaceProviderInstance();
 
 }

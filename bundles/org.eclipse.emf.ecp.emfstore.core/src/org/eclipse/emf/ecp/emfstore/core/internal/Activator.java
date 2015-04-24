@@ -101,7 +101,7 @@ public class Activator extends Plugin {
 	}
 
 	/**
-	 * Helper method to obtain the relevant ESWorkspaceProvider
+	 * Helper method to obtain the relevant ESWorkspaceProvider.
 	 *
 	 * @return the {@link ESWorkspaceProviderImpl}
 	 */

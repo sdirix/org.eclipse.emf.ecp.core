@@ -58,7 +58,6 @@ import org.eclipse.emf.emfstore.client.util.RunESCommand;
 import org.eclipse.emf.emfstore.internal.client.model.Configuration;
 import org.eclipse.emf.emfstore.internal.client.model.ESWorkspaceProviderImpl;
 import org.eclipse.emf.emfstore.internal.client.model.ProjectSpace;
-import org.eclipse.emf.emfstore.internal.client.model.ServerInfo;
 import org.eclipse.emf.emfstore.internal.client.model.impl.ProjectSpaceImpl;
 import org.eclipse.emf.emfstore.internal.client.model.impl.api.ESLocalProjectImpl;
 import org.eclipse.emf.emfstore.internal.client.model.util.EMFStoreClientUtil;
@@ -134,7 +133,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 	@Override
 	public EditingDomain createEditingDomain(final InternalProject project) {
 
-		final EditingDomain domain = ECPEMFUtils.ESWorkspaceProviderInstance().getWorkspace().toInternalAPI()
+		final EditingDomain domain = ECPEMFUtils.getESWorkspaceProviderInstance().getWorkspace().toInternalAPI()
 			.getEditingDomain();
 
 		return domain;
@@ -511,7 +510,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 
 		if (projectSpace == null) {
 			boolean found = false;
-			final List<ESLocalProject> localProjects = ECPEMFUtils.ESWorkspaceProviderInstance().getWorkspace()
+			final List<ESLocalProject> localProjects = ECPEMFUtils.getESWorkspaceProviderInstance().getWorkspace()
 				.getLocalProjects();
 			for (final ESLocalProject localProject : localProjects) {
 				final String projectSpaceID = internalProject.getProperties().getValue(
@@ -524,7 +523,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 			}
 
 			if (!found && createNewIfNeeded) {
-				projectSpace = ECPEMFUtils.ESWorkspaceProviderInstance().getWorkspace()
+				projectSpace = ECPEMFUtils.getESWorkspaceProviderInstance().getWorkspace()
 					.createLocalProject(internalProject.getName());
 				internalProject.getProperties().addProperty(EMFStoreProvider.PROP_PROJECTSPACEID,
 					projectSpace.getLocalProjectId().getId());
@@ -536,7 +535,8 @@ public final class EMFStoreProvider extends DefaultProvider {
 	}
 
 	/**
-	 * This retrieves the {@link ServerInfo} from an {@link InternalRepository}.
+	 * This retrieves the {@link org.eclipse.emf.emfstore.internal.client.model.ServerInfo} from an
+	 * {@link InternalRepository}.
 	 * First it checks whether the {@link InternalRepository} has a ServerInfoID attached.
 	 * If an ID is attached, a ServerInfo is searched with this ID.
 	 * If no ID is attached or now ServerInfo was found a default ServerInfo is created.
@@ -549,7 +549,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 
 		if (serverInfo == null) {
 
-			final ESWorkspace workspace = ECPEMFUtils.ESWorkspaceProviderInstance().getWorkspace();
+			final ESWorkspace workspace = ECPEMFUtils.getESWorkspaceProviderInstance().getWorkspace();
 			boolean foundExisting = false;
 
 			for (final ESServer info : workspace.getServers()) {

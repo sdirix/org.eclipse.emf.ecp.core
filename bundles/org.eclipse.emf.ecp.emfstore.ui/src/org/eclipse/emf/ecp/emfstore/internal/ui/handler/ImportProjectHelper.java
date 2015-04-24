@@ -81,7 +81,7 @@ public final class ImportProjectHelper {
 				.execute(ExportImportControllerFactory.Import.getImportProjectSpaceController());
 			PreferenceHelper.setPreference(EXPORT_MODEL_PATH, file.getParent());
 
-			final List<ESLocalProject> localProjects = ECPEMFUtils.ESWorkspaceProviderInstance().getWorkspace()
+			final List<ESLocalProject> localProjects = ECPEMFUtils.getESWorkspaceProviderInstance().getWorkspace()
 				.getLocalProjects();
 			final ESLocalProject localProject = localProjects.get(localProjects.size() - 1);
 			final ECPProperties properties = ECPUtil.createProperties();

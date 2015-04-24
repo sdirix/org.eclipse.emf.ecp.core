@@ -20,13 +20,12 @@ import org.eclipse.emf.emfstore.internal.client.model.ESWorkspaceProviderImpl;
  */
 public class ESWorkspaceProviderProviderImpl implements ESWorkspaceProviderProvider {
 
-	private String token = null;
+	private String token;
 
 	/**
 	 * Default constructor.
 	 */
-	public ESWorkspaceProviderProviderImpl()
-	{
+	public ESWorkspaceProviderProviderImpl() {
 
 	}
 
@@ -38,8 +37,7 @@ public class ESWorkspaceProviderProviderImpl implements ESWorkspaceProviderProvi
 	 *
 	 * @param aToken a token to associate with the instance
 	 */
-	public ESWorkspaceProviderProviderImpl(String aToken)
-	{
+	public ESWorkspaceProviderProviderImpl(String aToken) {
 
 		token = aToken;
 	}
@@ -54,9 +52,9 @@ public class ESWorkspaceProviderProviderImpl implements ESWorkspaceProviderProvi
 		// TODO Auto-generated method stub
 		if (token == null) {
 			return ESWorkspaceProviderImpl.getInstance();
-		} else {
-			return ESWorkspaceProviderImpl.getInstance(token);
 		}
+		return ESWorkspaceProviderImpl.getInstance(token);
+
 	}
 
 }
