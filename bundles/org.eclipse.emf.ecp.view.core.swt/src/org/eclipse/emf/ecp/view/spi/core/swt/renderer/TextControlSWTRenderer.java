@@ -114,7 +114,7 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 				.getDisplayName(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel())
 				.getValue();
 		} catch (final NoLabelFoundException ex) {
-			//FIXME Expectations?
+			// FIXME Expectations?
 			getReportService().report(new RenderingFailedReport(ex));
 		}
 		return ""; //$NON-NLS-1$
@@ -322,16 +322,13 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 			if (tooltip && String.class.isInstance(converted)) {
 				IObservableValue observableValue;
 				try {
-					observableValue = getEMFFormsDatabinding()
-						.getObservableValue(getVElement().getDomainModelReference(),
-							getViewModelContext().getDomainModel());
+					observableValue = getModelValue();
 				} catch (final DatabindingFailedException ex) {
 					getReportService().report(new DatabindingFailedReport(ex));
 					return converted;
 				}
 				final InternalEObject internalEObject = (InternalEObject) ((IObserving) observableValue).getObserved();
 				final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
-				observableValue.dispose();
 				return ECPTooltipModifierHelper.modifyString(String.class.cast(converted),
 					internalEObject.eSetting(structuralFeature));
 			}

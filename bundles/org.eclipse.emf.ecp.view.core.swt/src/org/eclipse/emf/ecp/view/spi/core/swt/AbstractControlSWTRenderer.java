@@ -64,6 +64,7 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 	private final EMFFormsLabelProvider emfFormsLabelProvider;
 	private final VTViewTemplateProvider vtViewTemplateProvider;
 	private boolean isDisposed;
+	private IObservableValue modelValue;
 
 	/**
 	 * Default constructor.
@@ -198,11 +199,14 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 	 * @throws DatabindingFailedException if the databinding of the domain model object fails.
 	 */
 	protected final IObservableValue getModelValue() throws DatabindingFailedException {
-		final VDomainModelReference ref = getVElement().getDomainModelReference();
-		final EObject eObject = getViewModelContext().getDomainModel();
+		if (modelValue == null) {
+			final VDomainModelReference ref = getVElement().getDomainModelReference();
+			final EObject eObject = getViewModelContext().getDomainModel();
 
-		final EMFFormsDatabinding databindingService = getEMFFormsDatabinding();
-		return databindingService.getObservableValue(ref, eObject);
+			final EMFFormsDatabinding databindingService = getEMFFormsDatabinding();
+			modelValue = databindingService.getObservableValue(ref, eObject);
+		}
+		return modelValue;
 	}
 
 	/**
