@@ -61,14 +61,12 @@ public class SWTRendererFactoryImpl implements SWTRendererFactory {
 	/**
 	 * A description of all available renderers.
 	 */
-	private final Set<ECPRendererDescription> rendererDescriptors =
-		new LinkedHashSet<ECPRendererDescription>();
+	private final Set<ECPRendererDescription> rendererDescriptors = new LinkedHashSet<ECPRendererDescription>();
 
 	/**
 	 * A description of all additionally available renderers.
 	 */
-	private final Set<ECPAdditionalRendererDescription> additionalRendererDescriptors =
-		new LinkedHashSet<ECPAdditionalRendererDescription>();
+	private final Set<ECPAdditionalRendererDescription> additionalRendererDescriptors = new LinkedHashSet<ECPAdditionalRendererDescription>();
 
 	/**
 	 * Default constructor for the renderer factory.
@@ -106,14 +104,13 @@ public class SWTRendererFactoryImpl implements SWTRendererFactory {
 				try {
 					final Class<AbstractSWTRenderer<VElement>> renderer = loadClass(configurationElement
 						.getContributor().getName(), configurationElement
-						.getAttribute("renderer")); //$NON-NLS-1$
+							.getAttribute("renderer")); //$NON-NLS-1$
 
 					final Set<ECPRendererTester> tester = new LinkedHashSet<ECPRendererTester>();
 					for (final IConfigurationElement testerExtension : configurationElement.getChildren()) {
 						if (TEST_DYNAMIC.equals(testerExtension.getName())) {
 							tester.add((ECPRendererTester) testerExtension.createExecutableExtension(RENDERER_TESTER));
-						}
-						else if (TEST_STATIC.equals(testerExtension.getName())) {
+						} else if (TEST_STATIC.equals(testerExtension.getName())) {
 
 							final int priority = Integer.parseInt(testerExtension.getAttribute(TESTER_PRIORITY));
 
@@ -150,7 +147,7 @@ public class SWTRendererFactoryImpl implements SWTRendererFactory {
 				try {
 					final Class<AbstractAdditionalSWTRenderer<VElement>> renderer = loadClass(configurationElement
 						.getContributor().getName(), configurationElement
-						.getAttribute("renderer")); //$NON-NLS-1$
+							.getAttribute("renderer")); //$NON-NLS-1$
 					final ECPAdditionalRendererTester tester = (ECPAdditionalRendererTester) configurationElement
 						.createExecutableExtension("tester"); //$NON-NLS-1$
 					// final Set<ECPAdditionalRendererTester> tester = new LinkedHashSet<ECPAdditionalRendererTester>();
@@ -210,9 +207,8 @@ public class SWTRendererFactoryImpl implements SWTRendererFactory {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.swt.ReportService#getRenderer(org.eclipse.emf.ecp.view.spi.model.VElement,
-	 *      org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
-	 */
+	 * @see SWTRendererFactory#getRenderer(VElement, ViewModelContext)
+	 **/
 	@Override
 	public AbstractSWTRenderer<VElement> getRenderer(VElement vElement, ViewModelContext viewContext) {
 
@@ -293,7 +289,7 @@ public class SWTRendererFactoryImpl implements SWTRendererFactory {
 	 *
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.swt.ReportService#getAdditionalRenderer(org.eclipse.emf.ecp.view.spi.model.VElement,
+	 * @see SWTRendererFactory#getAdditionalRenderer(org.eclipse.emf.ecp.view.spi.model.VElement,
 	 *      org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
 	@Override
@@ -301,8 +297,7 @@ public class SWTRendererFactoryImpl implements SWTRendererFactory {
 		ViewModelContext viewModelContext) {
 
 		final ReportService reportService = Activator.getDefault().getReportService();
-		final Set<AbstractAdditionalSWTRenderer<VElement>> renderers =
-			new LinkedHashSet<AbstractAdditionalSWTRenderer<VElement>>();
+		final Set<AbstractAdditionalSWTRenderer<VElement>> renderers = new LinkedHashSet<AbstractAdditionalSWTRenderer<VElement>>();
 
 		for (final ECPAdditionalRendererDescription description : additionalRendererDescriptors) {
 			final ECPAdditionalRendererTester tester = description.getTester();

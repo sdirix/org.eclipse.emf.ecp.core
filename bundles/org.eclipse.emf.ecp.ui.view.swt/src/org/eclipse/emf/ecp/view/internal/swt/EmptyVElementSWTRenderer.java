@@ -40,6 +40,7 @@ public final class EmptyVElementSWTRenderer extends AbstractSWTRenderer<VElement
 	/**
 	 * @param vElement the view model element to be rendered
 	 * @param viewContext the view context
+	 * @param reportService teh {@link ReportService}
 	 */
 	public EmptyVElementSWTRenderer(VElement vElement, ViewModelContext viewContext, ReportService reportService) {
 		super(vElement, viewContext, reportService);
