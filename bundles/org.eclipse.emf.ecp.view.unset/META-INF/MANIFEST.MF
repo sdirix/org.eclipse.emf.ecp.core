@@ -16,3 +16,4 @@ Export-Package: org.eclipse.emf.ecp.view.internal.unset;version="1.6.0
  ";x-friends:="org.eclipse.emf.ecp.view.unset.test"
 Bundle-Activator: org.eclipse.emf.ecp.view.internal.unset.Activator
 Bundle-ActivationPolicy: lazy
+Import-Package: org.eclipse.emfforms.spi.common.report;version="[1.6.0,2.0.0)"

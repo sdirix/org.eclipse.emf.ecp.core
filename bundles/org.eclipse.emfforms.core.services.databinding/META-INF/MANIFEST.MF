@@ -13,3 +13,4 @@ Export-Package: org.eclipse.emfforms.internal.core.services.databindin
  ices.databinding;version="1.6.0"
 Service-Component: OSGI-INF/databindingService.xml
 Bundle-ActivationPolicy: lazy
+Import-Package: org.eclipse.emfforms.spi.common.report;version="[1.6.0,2.0.0)"

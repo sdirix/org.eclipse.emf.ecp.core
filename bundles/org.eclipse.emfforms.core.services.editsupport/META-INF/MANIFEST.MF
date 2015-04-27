@@ -18,3 +18,4 @@ Export-Package: org.eclipse.emfforms.internal.core.services.editsuppor
  ices.editsupport;version="1.6.0"
 Bundle-ActivationPolicy: lazy
 Service-Component: OSGI-INF/emfFormsEditSupport.xml
+Import-Package: org.eclipse.emfforms.spi.common.report;version="[1.6.0,2.0.0)"

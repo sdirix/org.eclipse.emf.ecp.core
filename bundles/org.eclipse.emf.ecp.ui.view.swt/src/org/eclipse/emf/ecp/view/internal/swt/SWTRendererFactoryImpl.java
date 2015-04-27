@@ -26,8 +26,6 @@ import org.eclipse.emf.ecp.view.model.common.ECPRendererTester;
 import org.eclipse.emf.ecp.view.model.common.ECPStaticRendererTester;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
-import org.eclipse.emf.ecp.view.spi.model.reporting.AbstractReport;
-import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
 import org.eclipse.emf.ecp.view.spi.model.util.ViewModelUtil;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractAdditionalSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
@@ -38,6 +36,8 @@ import org.eclipse.emf.ecp.view.spi.swt.reporting.AmbiguousRendererPriorityRepor
 import org.eclipse.emf.ecp.view.spi.swt.reporting.ECPRendererDescriptionInitFailedReport;
 import org.eclipse.emf.ecp.view.spi.swt.reporting.NoRendererFoundReport;
 import org.eclipse.emf.ecp.view.spi.swt.reporting.RendererInitFailedReport;
+import org.eclipse.emfforms.spi.common.report.AbstractReport;
+import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.osgi.framework.Bundle;
 
 /**

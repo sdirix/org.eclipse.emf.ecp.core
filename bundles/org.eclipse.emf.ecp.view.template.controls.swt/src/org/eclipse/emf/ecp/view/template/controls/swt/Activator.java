@@ -13,7 +13,7 @@
 package org.eclipse.emf.ecp.view.template.controls.swt;
 
 import org.eclipse.core.runtime.Plugin;
-import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
+import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;

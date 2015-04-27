@@ -23,3 +23,4 @@ Bundle-ActivationPolicy: lazy
 Export-Package: org.eclipse.emf.ecp.ide.editor.view;version="1.6.0";x-
  friends:="org.eclipse.emf.ecp.view.model.preview.e3",org.eclipse.emf.
  ecp.ide.editor.view.messages;version="1.6.0";x-internal:=true
+Import-Package: org.eclipse.emfforms.spi.common.report;version="[1.6.0,2.0.0)"

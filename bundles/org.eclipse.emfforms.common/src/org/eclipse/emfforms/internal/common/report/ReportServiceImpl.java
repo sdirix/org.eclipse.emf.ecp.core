@@ -9,22 +9,27 @@
  * Contributors:
  * Edgar Mueller - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.model.internal.reporting;
+package org.eclipse.emfforms.internal.common.report;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.eclipse.emf.ecp.view.spi.model.reporting.AbstractReport;
-import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
-import org.eclipse.emf.ecp.view.spi.model.reporting.ReportServiceConsumer;
+import org.eclipse.emfforms.spi.common.report.AbstractReport;
+import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.common.report.ReportServiceConsumer;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
 
 /**
  * Implementation of a {@link ReportService}.
  *
  * @author emueller
  */
+@Component
 public class ReportServiceImpl implements ReportService {
 
 	private final List<AbstractReport> reports;
@@ -74,9 +79,10 @@ public class ReportServiceImpl implements ReportService {
 	 *
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.model.reporting.ReportService#addConsumer(org.eclipse.emf.ecp.view.spi.model.reporting.ReportServiceConsumer)
+	 * @see org.eclipse.emfforms.spi.common.report.ReportService#addConsumer(org.eclipse.emfforms.spi.common.report.ReportServiceConsumer)
 	 */
 	@Override
+	@Reference(cardinality = ReferenceCardinality.MULTIPLE, policy = ReferencePolicy.DYNAMIC)
 	public void addConsumer(ReportServiceConsumer consumer) {
 		consumers.add(consumer);
 	}
@@ -85,7 +91,7 @@ public class ReportServiceImpl implements ReportService {
 	 *
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.model.reporting.ReportService#removeConsumer(org.eclipse.emf.ecp.view.spi.model.reporting.ReportServiceConsumer)
+	 * @see org.eclipse.emfforms.spi.common.report.ReportService#removeConsumer(org.eclipse.emfforms.spi.common.report.ReportServiceConsumer)
 	 */
 	@Override
 	public void removeConsumer(ReportServiceConsumer consumer) {

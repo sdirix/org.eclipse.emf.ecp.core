@@ -18,3 +18,4 @@ Bundle-ActivationPolicy: lazy
 Bundle-Vendor: Eclipse Modeling Project
 Export-Package: org.eclipse.emf.ecp.view.template.controls.swt;version
  ="1.6.0";x-internal:=true
+Import-Package: org.eclipse.emfforms.spi.common.report;version="[1.6.0,2.0.0)"

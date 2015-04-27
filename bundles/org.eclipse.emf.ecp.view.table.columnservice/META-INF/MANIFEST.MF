@@ -15,3 +15,4 @@ Export-Package: org.eclipse.emf.ecp.view.internal.table.columnservice;
 Bundle-Vendor: Eclipse Modeling Project
 Bundle-Activator: org.eclipse.emf.ecp.view.internal.table.columnservice.Activator
 Bundle-ActivationPolicy: lazy
+Import-Package: org.eclipse.emfforms.spi.common.report;version="[1.6.0,2.0.0)"

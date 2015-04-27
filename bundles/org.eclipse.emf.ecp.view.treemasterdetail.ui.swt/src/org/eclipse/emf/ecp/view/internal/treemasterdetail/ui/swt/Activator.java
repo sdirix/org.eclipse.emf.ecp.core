@@ -12,8 +12,8 @@
 package org.eclipse.emf.ecp.view.internal.treemasterdetail.ui.swt;
 
 import org.eclipse.core.runtime.Plugin;
-import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
+import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 

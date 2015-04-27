@@ -16,3 +16,4 @@ Bundle-ActivationPolicy: lazy
 Export-Package: org.eclipse.emf.ecp.view.internal.context;version="1.6
  .0";x-internal:=true,org.eclipse.emf.ecp.view.spi.context;version="1.
  6.0"
+Import-Package: org.eclipse.emfforms.spi.common.report;version="[1.6.0,2.0.0)"

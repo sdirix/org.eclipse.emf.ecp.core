@@ -16,12 +16,13 @@ import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecp.ui.view.swt.DebugSWTReportConsumer;
 import org.eclipse.emf.ecp.ui.view.swt.InvalidGridDescriptionReportConsumer;
-import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
 import org.eclipse.emf.ecp.view.spi.model.util.ViewModelUtil;
+import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * The activator class controls the plug-in life cycle.
@@ -33,6 +34,10 @@ public class Activator extends Plugin {
 
 	// The shared instance
 	private static Activator plugin;
+
+	private ServiceRegistration<DebugSWTReportConsumer> registerDebugConsumerService;
+
+	private ServiceRegistration<InvalidGridDescriptionReportConsumer> registerInvalidGridConsumerService;
 
 	/**
 	 * The constructor.
@@ -48,8 +53,10 @@ public class Activator extends Plugin {
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		if (ViewModelUtil.isDebugMode()) {
-			getReportService().addConsumer(new DebugSWTReportConsumer());
-			getReportService().addConsumer(new InvalidGridDescriptionReportConsumer());
+			registerDebugConsumerService = context.registerService(DebugSWTReportConsumer.class,
+				new DebugSWTReportConsumer(), null);
+			registerInvalidGridConsumerService = context.registerService(InvalidGridDescriptionReportConsumer.class,
+				new InvalidGridDescriptionReportConsumer(), null);
 		}
 		plugin = this;
 	}
@@ -61,6 +68,8 @@ public class Activator extends Plugin {
 	@Override
 	public void stop(BundleContext context) throws Exception {
 		plugin = null;
+		registerDebugConsumerService.unregister();
+		registerInvalidGridConsumerService.unregister();
 		super.stop(context);
 	}
 
@@ -110,6 +119,7 @@ public class Activator extends Plugin {
 		plugin.getBundle().getBundleContext().ungetService(serviceReference);
 		return service;
 	}
+
 	/**
 	 * Returns the {@link EMFFormsRendererFactory} service.
 	 *

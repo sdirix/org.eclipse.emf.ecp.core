@@ -9,7 +9,7 @@
  * Contributors:
  * Edgar Mueller - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.spi.model.reporting;
+package org.eclipse.emfforms.spi.common.report;
 
 import java.util.List;
 

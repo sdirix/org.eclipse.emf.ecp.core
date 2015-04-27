@@ -16,7 +16,7 @@ import static org.mockito.Mockito.mock;
 
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
-import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
+import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.junit.After;
 import org.junit.Test;
 

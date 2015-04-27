@@ -13,7 +13,7 @@ package org.eclipse.emf.ecp.view.spi.swt;
 
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
-import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
+import org.eclipse.emfforms.spi.common.report.ReportService;
 
 /**
  * The renderer for additional controls.

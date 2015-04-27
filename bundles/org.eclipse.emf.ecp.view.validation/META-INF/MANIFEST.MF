@@ -20,3 +20,4 @@ Export-Package: org.eclipse.emf.ecp.view.internal.validation;version="
  mf.ecp.view.custom.ui,  org.eclipse.emf.ecp.edit.swt,  org.eclipse.em
  f.ecp.test.model",org.eclipse.emf.ecp.view.spi.validation;version="1.
  6.0"
+Import-Package: org.eclipse.emfforms.spi.common.report;version="[1.6.0,2.0.0)"

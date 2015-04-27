@@ -14,12 +14,17 @@ package org.eclipse.emfforms.internal.localization;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import org.eclipse.emfforms.spi.common.report.AbstractReport;
+import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.locale.EMFFormsLocaleProvider;
 import org.eclipse.emfforms.spi.localization.EMFFormsLocalizationService;
 import org.eclipse.osgi.service.localization.BundleLocalization;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
-import org.osgi.service.log.LogService;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
 
 /**
  * Service Implementation for retrieving translated Strings.
@@ -27,17 +32,19 @@ import org.osgi.service.log.LogService;
  * @author Eugen Neufeld
  *
  */
+@Component(name = "localizationService")
 public class EMFFormsLocalizationServiceImpl implements EMFFormsLocalizationService {
 
 	private EMFFormsLocaleProvider localeProvider;
 	private BundleLocalization bundleLocalization;
-	private LogService logService;
+	private ReportService reportService;
 
 	/**
 	 * Called by the framework to set the EMFFormsLocaleProvider.
 	 *
 	 * @param localeProvider The {@link EMFFormsLocaleProvider}
 	 */
+	@Reference(cardinality = ReferenceCardinality.OPTIONAL, policy = ReferencePolicy.DYNAMIC)
 	protected void setEMFFormsLocaleProvider(EMFFormsLocaleProvider localeProvider) {
 		this.localeProvider = localeProvider;
 	}
@@ -56,17 +63,19 @@ public class EMFFormsLocalizationServiceImpl implements EMFFormsLocalizationServ
 	 *
 	 * @param bundleLocalization The {@link BundleLocalization}
 	 */
+	@Reference
 	protected void setBundleLocalization(BundleLocalization bundleLocalization) {
 		this.bundleLocalization = bundleLocalization;
 	}
 
 	/**
-	 * Called by the framework to set the LogService.
+	 * Called by the framework to set the ReportService.
 	 *
-	 * @param logService The {@link LogService}
+	 * @param reportService The {@link ReportService}
 	 */
-	protected void setLogService(LogService logService) {
-		this.logService = logService;
+	@Reference
+	protected void setReportService(ReportService reportService) {
+		this.reportService = reportService;
 	}
 
 	/**
@@ -106,21 +115,19 @@ public class EMFFormsLocalizationServiceImpl implements EMFFormsLocalizationServ
 	private String getString(Bundle bundle, String localeLanguage, String key) {
 		final ResourceBundle resourceBundle = bundleLocalization.getLocalization(bundle, localeLanguage);
 		if (resourceBundle == null) {
-			logService
-				.log(
-					LogService.LOG_WARNING,
+			reportService
+				.report(new AbstractReport(
 					String
 						.format(
-							"No ResourceBundle found for Language '%1$s' in Bundle %2$s with Version %3$s.", localeLanguage, bundle.getSymbolicName(), bundle.getVersion().toString())); //$NON-NLS-1$
+							"No ResourceBundle found for Language '%1$s' in Bundle %2$s with Version %3$s.", localeLanguage, bundle.getSymbolicName(), bundle.getVersion().toString()))); //$NON-NLS-1$
 			return key;
 		}
 		if (!resourceBundle.containsKey(key)) {
-			logService
-				.log(
-					LogService.LOG_WARNING,
+			reportService
+				.report(new AbstractReport(
 					String
 						.format(
-							"The ResourceBundle for Language '%1$s' in Bundle %2$s with Version %3$s doesn't contain the key '%4$s'.", localeLanguage, bundle.getSymbolicName(), bundle.getVersion().toString(), key)); //$NON-NLS-1$
+							"The ResourceBundle for Language '%1$s' in Bundle %2$s with Version %3$s doesn't contain the key '%4$s'.", localeLanguage, bundle.getSymbolicName(), bundle.getVersion().toString(), key))); //$NON-NLS-1$
 			return key;
 		}
 		final String result = resourceBundle.getString(key);

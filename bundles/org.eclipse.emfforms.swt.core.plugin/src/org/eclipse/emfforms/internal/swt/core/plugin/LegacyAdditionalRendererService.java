@@ -15,10 +15,10 @@ import java.lang.reflect.InvocationTargetException;
 
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
-import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractAdditionalSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.swt.ECPAdditionalRendererTester;
 import org.eclipse.emf.ecp.view.spi.swt.reporting.RendererInitFailedReport;
+import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsAdditionalRendererService;
 
 /**

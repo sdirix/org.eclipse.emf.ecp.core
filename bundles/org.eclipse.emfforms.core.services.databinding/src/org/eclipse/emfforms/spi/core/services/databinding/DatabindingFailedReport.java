@@ -13,7 +13,7 @@ package org.eclipse.emfforms.spi.core.services.databinding;
 
 import java.text.MessageFormat;
 
-import org.eclipse.emf.ecp.view.spi.model.reporting.AbstractReport;
+import org.eclipse.emfforms.spi.common.report.AbstractReport;
 
 /**
  * A rendering report indicating that the databinding is not possible due to an exception.

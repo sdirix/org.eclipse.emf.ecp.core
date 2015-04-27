@@ -13,10 +13,10 @@ package org.eclipse.emf.ecp.view.internal.stack.ui.swt;
 
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
-import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
 import org.eclipse.emf.ecp.view.spi.stack.model.VStackItem;
 import org.eclipse.emf.ecp.view.spi.stack.ui.swt.SWTStackItemRenderer;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
+import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererService;

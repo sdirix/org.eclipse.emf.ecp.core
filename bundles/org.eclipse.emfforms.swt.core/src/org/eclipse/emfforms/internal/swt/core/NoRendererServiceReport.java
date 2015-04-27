@@ -11,7 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emfforms.internal.swt.core;
 
-import org.eclipse.emf.ecp.view.spi.model.reporting.AbstractReport;
+import org.eclipse.emfforms.spi.common.report.AbstractReport;
 
 /**
  * A report to describe that there is no fitting renderer service.

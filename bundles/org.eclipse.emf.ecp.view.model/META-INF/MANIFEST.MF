@@ -16,3 +16,4 @@ Export-Package: org.eclipse.emf.ecp.view.model.internal.reporting;vers
  on="1.6.0",org.eclipse.emf.ecp.view.spi.model.impl;version="1.6.0",or
  g.eclipse.emf.ecp.view.spi.model.reporting;version="1.6.0",org.eclips
  e.emf.ecp.view.spi.model.util;version="1.6.0"
+Import-Package: org.eclipse.emfforms.spi.common.report;version="[1.6.0,2.0.0)"
