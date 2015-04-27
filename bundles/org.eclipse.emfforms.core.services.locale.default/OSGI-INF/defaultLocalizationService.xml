@@ -2,6 +2,6 @@
 <scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="org.eclipse.emfforms.localization.default">
    <implementation class="org.eclipse.emfforms.internal.core.services.locale.defaultlocale.DefaultLocaleProvider"/>
    <service>
-      <provide interface="org.eclipse.emfforms.spi.core.services.locale.EMFFormsLocaleProvider"/>
+      <provide interface="org.eclipse.emfforms.spi.common.locale.EMFFormsLocaleProvider"/>
    </service>
 </scr:component>

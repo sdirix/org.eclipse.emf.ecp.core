@@ -9,3 +9,4 @@ Bundle-ActivationPolicy: lazy
 Service-Component: OSGI-INF/defaultLocalizationService.xml
 Require-Bundle: org.eclipse.emfforms.core.services;bundle-version="[1.6.0,2.0.0)"
 Export-Package: org.eclipse.emfforms.internal.core.services.locale.defaultlocale;version="1.6.0"
+Import-Package: org.eclipse.emfforms.spi.common.locale;version="[1.6.0,2.0.0)"

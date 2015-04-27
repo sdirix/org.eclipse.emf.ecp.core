@@ -22,4 +22,5 @@ Export-Package: org.eclipse.emf.ecp.view.context;version="1.6.0";x-int
  ernal:=true,org.eclipse.emf.ecp.view.context.reporting.test;version="
  1.6.0";x-internal:=true,org.eclipse.emf.ecp.view.context.test.mockup;
  version="1.6.0";x-internal:=true
-Import-Package: org.eclipse.swt.widgets;version="0.0.0"
+Import-Package: org.eclipse.emfforms.spi.common.locale;version="1.6.0",
+ org.eclipse.swt.widgets;version="0.0.0"

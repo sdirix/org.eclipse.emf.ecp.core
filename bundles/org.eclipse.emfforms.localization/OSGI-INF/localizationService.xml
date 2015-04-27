@@ -5,7 +5,7 @@
     <service>
         <provide interface="org.eclipse.emfforms.spi.localization.EMFFormsLocalizationService"/>
     </service>
-    <reference name="EMFFormsLocaleProvider" interface="org.eclipse.emfforms.spi.core.services.locale.EMFFormsLocaleProvider" cardinality="0..1" policy="dynamic" bind="setEMFFormsLocaleProvider" unbind="unsetEMFFormsLocaleProvider"/>
+    <reference name="EMFFormsLocaleProvider" interface="org.eclipse.emfforms.spi.common.locale.EMFFormsLocaleProvider" cardinality="0..1" policy="dynamic" bind="setEMFFormsLocaleProvider" unbind="unsetEMFFormsLocaleProvider"/>
     <reference name="BundleLocalization" interface="org.eclipse.osgi.service.localization.BundleLocalization" bind="setBundleLocalization"/>
     <reference name="ReportService" interface="org.eclipse.emfforms.spi.common.report.ReportService" bind="setReportService"/>
 </scr:component>

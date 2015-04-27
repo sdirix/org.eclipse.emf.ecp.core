@@ -9,7 +9,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emfforms.spi.core.services.locale;
+package org.eclipse.emfforms.spi.common.locale;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -27,7 +27,7 @@ public abstract class AbstractEMFFormsLocaleProvider implements EMFFormsLocalePr
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emfforms.spi.core.services.locale.EMFFormsLocaleProvider#addEMFFormsLocaleChangeListener(org.eclipse.emfforms.spi.core.services.locale.EMFFormsLocaleChangeListener)
+	 * @see org.eclipse.emfforms.spi.common.locale.EMFFormsLocaleProvider#addEMFFormsLocaleChangeListener(org.eclipse.emfforms.spi.common.locale.EMFFormsLocaleChangeListener)
 	 */
 	@Override
 	public void addEMFFormsLocaleChangeListener(EMFFormsLocaleChangeListener listener) {
@@ -37,7 +37,7 @@ public abstract class AbstractEMFFormsLocaleProvider implements EMFFormsLocalePr
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emfforms.spi.core.services.locale.EMFFormsLocaleProvider#removeEMFFormsLocaleChangeListener(org.eclipse.emfforms.spi.core.services.locale.EMFFormsLocaleChangeListener)
+	 * @see org.eclipse.emfforms.spi.common.locale.EMFFormsLocaleProvider#removeEMFFormsLocaleChangeListener(org.eclipse.emfforms.spi.common.locale.EMFFormsLocaleChangeListener)
 	 */
 	@Override
 	public void removeEMFFormsLocaleChangeListener(EMFFormsLocaleChangeListener listener) {

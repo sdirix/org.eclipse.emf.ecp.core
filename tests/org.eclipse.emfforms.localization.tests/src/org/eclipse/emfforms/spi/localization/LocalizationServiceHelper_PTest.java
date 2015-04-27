@@ -15,7 +15,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.Locale;
 
-import org.eclipse.emfforms.spi.core.services.locale.EMFFormsLocaleProvider;
+import org.eclipse.emfforms.spi.common.locale.EMFFormsLocaleProvider;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.osgi.framework.BundleContext;

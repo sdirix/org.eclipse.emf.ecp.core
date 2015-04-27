@@ -25,6 +25,8 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.common.spi.asserts.Assert;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emfforms.spi.common.locale.EMFFormsLocaleChangeListener;
+import org.eclipse.emfforms.spi.common.locale.EMFFormsLocaleProvider;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
@@ -32,8 +34,6 @@ import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.emfspecificservice.EMFSpecificService;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
-import org.eclipse.emfforms.spi.core.services.locale.EMFFormsLocaleChangeListener;
-import org.eclipse.emfforms.spi.core.services.locale.EMFFormsLocaleProvider;
 import org.eclipse.emfforms.spi.localization.EMFFormsLocalizationService;
 
 /**
@@ -324,7 +324,7 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emfforms.spi.core.services.locale.EMFFormsLocaleChangeListener#notifyLocaleChange()
+	 * @see org.eclipse.emfforms.spi.common.locale.EMFFormsLocaleChangeListener#notifyLocaleChange()
 	 */
 	@Override
 	public void notifyLocaleChange() {
