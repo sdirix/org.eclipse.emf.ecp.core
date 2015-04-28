@@ -86,7 +86,10 @@ public class EMFFormsDatabindingImpl implements EMFFormsDatabinding {
 			return bestConverter.convertToValueProperty(domainModelReference);
 		}
 
-		throw new DatabindingFailedException("No applicable DomainModelReferenceConverter could be found."); //$NON-NLS-1$
+		throw new DatabindingFailedException(
+			String
+				.format(
+					"No applicable DomainModelReferenceConverter could be found for %1$s .", domainModelReference.eClass().getName())); //$NON-NLS-1$
 	}
 
 	/**
