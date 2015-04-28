@@ -17,6 +17,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecp.view.model.internal.reporting.LogConsumer;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.common.report.ReportServiceConsumer;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
@@ -39,7 +40,7 @@ public class Activator extends Plugin {
 
 	private ServiceReference<ReportService> reportServiceReference;
 
-	private ServiceRegistration<LogConsumer> registerLogConsumerService;
+	private ServiceRegistration<ReportServiceConsumer> registerLogConsumerService;
 
 	/**
 	 * The constructor.
@@ -52,7 +53,7 @@ public class Activator extends Plugin {
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		final LogConsumer logConsumer = new LogConsumer();
-		registerLogConsumerService = context.registerService(LogConsumer.class, logConsumer, null);
+		registerLogConsumerService = context.registerService(ReportServiceConsumer.class, logConsumer, null);
 		plugin = this;
 	}
 

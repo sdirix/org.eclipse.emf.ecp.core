@@ -18,6 +18,7 @@ import org.eclipse.emf.ecp.ui.view.swt.DebugSWTReportConsumer;
 import org.eclipse.emf.ecp.ui.view.swt.InvalidGridDescriptionReportConsumer;
 import org.eclipse.emf.ecp.view.spi.model.util.ViewModelUtil;
 import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.common.report.ReportServiceConsumer;
 import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
 import org.osgi.framework.BundleContext;
@@ -35,9 +36,9 @@ public class Activator extends Plugin {
 	// The shared instance
 	private static Activator plugin;
 
-	private ServiceRegistration<DebugSWTReportConsumer> registerDebugConsumerService;
+	private ServiceRegistration<ReportServiceConsumer> registerDebugConsumerService;
 
-	private ServiceRegistration<InvalidGridDescriptionReportConsumer> registerInvalidGridConsumerService;
+	private ServiceRegistration<ReportServiceConsumer> registerInvalidGridConsumerService;
 
 	/**
 	 * The constructor.
@@ -53,9 +54,9 @@ public class Activator extends Plugin {
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		if (ViewModelUtil.isDebugMode()) {
-			registerDebugConsumerService = context.registerService(DebugSWTReportConsumer.class,
+			registerDebugConsumerService = context.registerService(ReportServiceConsumer.class,
 				new DebugSWTReportConsumer(), null);
-			registerInvalidGridConsumerService = context.registerService(InvalidGridDescriptionReportConsumer.class,
+			registerInvalidGridConsumerService = context.registerService(ReportServiceConsumer.class,
 				new InvalidGridDescriptionReportConsumer(), null);
 		}
 		plugin = this;
