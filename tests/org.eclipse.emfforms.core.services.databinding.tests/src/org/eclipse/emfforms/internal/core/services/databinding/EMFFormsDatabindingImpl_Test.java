@@ -24,9 +24,11 @@ import org.eclipse.core.databinding.property.list.IListProperty;
 import org.eclipse.core.databinding.property.list.SimpleListProperty;
 import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.core.databinding.property.value.SimpleValueProperty;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter;
 import org.junit.Before;
@@ -131,7 +133,11 @@ public class EMFFormsDatabindingImpl_Test {
 	 */
 	@Test(expected = DatabindingFailedException.class)
 	public void testGetValuePropertyNoApplicableConverter() throws DatabindingFailedException {
-		databindingService.getValueProperty(mock(VDomainModelReference.class));
+		final VDomainModelReference modelReference = mock(VDomainModelReference.class);
+		final EClass eClass = mock(EClass.class);
+		when(eClass.getName()).thenReturn("test"); //$NON-NLS-1$
+		when(modelReference.eClass()).thenReturn(eClass);
+		databindingService.getValueProperty(modelReference);
 	}
 
 	/**
@@ -418,6 +424,7 @@ public class EMFFormsDatabindingImpl_Test {
 	@Test(expected = DatabindingFailedException.class)
 	public void testRemoveDomainModelReferenceConverter() throws DatabindingFailedException {
 		final VDomainModelReference reference = mock(VFeaturePathDomainModelReference.class);
+		when(reference.eClass()).thenReturn(VViewPackage.eINSTANCE.getFeaturePathDomainModelReference());
 		final DomainModelReferenceConverter converter1 = mock(DomainModelReferenceConverter.class);
 
 		when(converter1.isApplicable(reference)).thenReturn(5d);
