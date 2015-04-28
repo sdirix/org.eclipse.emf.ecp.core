@@ -54,7 +54,7 @@ public class DeleteReferenceAction extends ECPSWTAction {
 		super(editingDomain, setting);
 		// TODO remove PlatformUI
 
-		setImageDescriptor(Activator.getImageDescriptor("icons/delete.png")); //$NON-NLS-1$
+		setImageDescriptor(Activator.getImageDescriptor("icons/unset_reference.png")); //$NON-NLS-1$
 		setToolTipText(LocalizationServiceHelper.getString(DeleteReferenceAction.class,
 			ReferenceMessageKeys.DeleteReferenceAction_DeleteReference));
 	}

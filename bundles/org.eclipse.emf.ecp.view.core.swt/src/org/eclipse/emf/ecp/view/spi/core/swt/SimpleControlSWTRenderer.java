@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -17,7 +17,7 @@ import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.view.internal.core.swt.MessageKeys;
+import org.eclipse.emf.ecp.view.internal.core.swt.Activator;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
@@ -37,7 +37,6 @@ import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedExcep
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
-import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
@@ -56,6 +55,11 @@ import org.eclipse.swt.widgets.Label;
  *
  */
 public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRenderer<VControl> {
+
+	private static final String ICONS_UNSET_REFERENCE = "icons/unset_reference.png"; //$NON-NLS-1$
+	private static final String ICONS_UNSET_FEATURE = "icons/unset_feature.png"; //$NON-NLS-1$
+	private static final String ICONS_SET_REFERENCE = "icons/set_reference.png"; //$NON-NLS-1$
+	private static final String ICONS_SET_FEATURE = "icons/set_feature.png"; //$NON-NLS-1$
 
 	/**
 	 * Default constructor.
@@ -124,7 +128,8 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 			throw new IllegalArgumentException(
 				String
 					.format(
-						"The provided SWTGridCell (%1$s) cannot be used by this (%2$s) renderer.", gridCell.toString(), toString())); //$NON-NLS-1$
+						"The provided SWTGridCell (%1$s) cannot be used by this (%2$s) renderer.", gridCell.toString(), //$NON-NLS-1$
+						toString()));
 		}
 	}
 
@@ -178,20 +183,17 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 				Object value = null;
 				if (!eObject.eIsSet(structuralFeature)) {
 					sl.topControl = baseControl;
-					unsetButton.setText(LocalizationServiceHelper.getString(getClass(),
-						MessageKeys.SimpleControlSWTRenderer_Unset));
+					unsetButton.setImage(Activator.getImage(ICONS_UNSET_FEATURE));
 					value = structuralFeature.getDefaultValue();
-				}
-				else {
+				} else {
 					sl.topControl = createUnsetLabel;
-					unsetButton.setText(LocalizationServiceHelper
-						.getString(getClass(), MessageKeys.SimpleControlSWTRenderer_Set));
+					unsetButton.setImage(Activator.getImage(ICONS_SET_FEATURE));
 					value = SetCommand.UNSET_VALUE;
 				}
 				final EditingDomain editingDomain = getEditingDomain(eObject);
 				editingDomain.getCommandStack().execute(
 					SetCommand.create(editingDomain, eObject, structuralFeature, value));
-				composite.layout();
+				controlComposite.layout();
 			}
 		});
 
@@ -199,13 +201,10 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 		final EObject eObject = (EObject) ((IObserving) getModelValue()).getObserved();
 		if (eObject.eIsSet(structuralFeature)) {
 			sl.topControl = baseControl;
-			unsetButton.setText(LocalizationServiceHelper
-				.getString(getClass(), MessageKeys.SimpleControlSWTRenderer_Unset));
-		}
-		else {
+			unsetButton.setImage(Activator.getImage(ICONS_UNSET_FEATURE));
+		} else {
 			sl.topControl = createUnsetLabel;
-			unsetButton.setText(LocalizationServiceHelper
-				.getString(getClass(), MessageKeys.SimpleControlSWTRenderer_Set));
+			unsetButton.setImage(Activator.getImage(ICONS_SET_FEATURE));
 		}
 
 		return composite;

@@ -85,8 +85,7 @@ import org.osgi.framework.Bundle;
  *
  */
 @SuppressWarnings("deprecation")
-public abstract class ECPAbstractCustomControlSWT
-{
+public abstract class ECPAbstractCustomControlSWT {
 	/**
 	 * Variant constant for indicating RAP controls.
 	 *
@@ -308,7 +307,7 @@ public abstract class ECPAbstractCustomControlSWT
 		case ADD_IMAGE:
 			return Activator.getImage("icons/add.png"); //$NON-NLS-1$
 		case DELETE_IMAGE:
-			return Activator.getImage("icons/delete.png"); //$NON-NLS-1$
+			return Activator.getImage("icons/unset_reference.png"); //$NON-NLS-1$
 		default:
 			return null;
 		}
@@ -351,7 +350,8 @@ public abstract class ECPAbstractCustomControlSWT
 						.getDefault()
 						.getEMFFormsLabelProvider()
 						.getDisplayName(getCustomControl().getDomainModelReference(),
-							getViewModelContext().getDomainModel()), null, new UpdateValueStrategy() {
+							getViewModelContext().getDomainModel()),
+					null, new UpdateValueStrategy() {
 
 						/**
 						 * {@inheritDoc}

@@ -115,7 +115,7 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 			.getChildren()[0]).getChildren()[1];
 		final Button unsetBtn = (Button) ((Composite) ((Composite) ((Composite) control).getChildren()[0])
 			.getChildren()[0])
-			.getChildren()[2];
+				.getChildren()[2];
 		final Button setBtn = (Button) ((Composite) control).getChildren()[1];
 
 		final IObservableValue dateObserver = SWTObservables.observeSelection(date);
@@ -201,7 +201,8 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 
 		final Button bUnset = new Button(dateTimeComposite, SWT.PUSH);
 		GridDataFactory.fillDefaults().grab(false, false).align(SWT.CENTER, SWT.CENTER).applyTo(bUnset);
-		bUnset.setImage(imageRegistryService.getImage(FrameworkUtil.getBundle(getClass()), "icons/delete.png")); //$NON-NLS-1$
+		bUnset
+			.setImage(imageRegistryService.getImage(FrameworkUtil.getBundle(getClass()), "icons/unset_feature.png")); //$NON-NLS-1$
 		bUnset.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_dateTime_buttonUnset"); //$NON-NLS-1$
 		bUnset.setToolTipText(getLocalizedString(MessageKeys.DateTimeControlSWTRenderer_CleanDate));
 
