@@ -27,6 +27,7 @@ import org.eclipse.emf.ecp.edit.internal.swt.reference.ReferenceMessageKeys;
 import org.eclipse.emf.ecp.edit.internal.swt.util.OverlayImageDescriptor;
 import org.eclipse.emf.ecp.edit.spi.ReferenceService;
 import org.eclipse.emf.ecp.edit.spi.swt.actions.ECPSWTAction;
+import org.eclipse.emf.ecp.edit.spi.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedImage;
@@ -36,7 +37,9 @@ import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
 import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.window.Window;
 import org.eclipse.swt.graphics.ImageData;
 
 /**
@@ -94,8 +97,7 @@ public class NewReferenceAction extends ECPSWTAction {
 		}
 		if (URL.class.isInstance(labelProviderImageResult)) {
 			imageData = Activator.getImageData((URL) labelProviderImageResult);
-		}
-		else {
+		} else {
 			imageData = Activator.getImageData((URL) null);
 		}
 
@@ -199,8 +201,40 @@ public class NewReferenceAction extends ECPSWTAction {
 	public void run() {
 		// checks if we try to create a container for ourself, this is not allowed
 		final EReference eReference = (EReference) getSetting().getEStructuralFeature();
-		referenceService.addNewModelElements(getSetting().getEObject(),
-			eReference);
+		if (eReference.isContainment() && getSetting().getEObject().eIsSet(eReference)) {
+			final MessageDialog dialog = getContainmentWarningDialog();
+			new ECPDialogExecutor(dialog) {
+				@Override
+				public void handleResult(int codeResult) {
+					if (codeResult == Window.OK) {
+						addNewElementsToReferenceService(getSetting().getEObject(), eReference);
+					}
+				}
+			}.execute();
+		}
+		addNewElementsToReferenceService(getSetting().getEObject(), eReference);
 	}
 
+	private void addNewElementsToReferenceService(EObject eObject, EReference eReference) {
+		if (referenceService == null) {
+			return;
+		}
+		referenceService.addNewModelElements(eObject, eReference);
+	}
+
+	private MessageDialog getContainmentWarningDialog() {
+		return new MessageDialog(null,
+			LocalizationServiceHelper.getString(NewReferenceAction.class,
+				ReferenceMessageKeys.NewReferenceAction_Confirmation),
+			null,
+			LocalizationServiceHelper.getString(NewReferenceAction.class,
+				ReferenceMessageKeys.NewReferenceAction_Warning),
+			MessageDialog.WARNING,
+			new String[] {
+				LocalizationServiceHelper.getString(NewReferenceAction.class,
+					ReferenceMessageKeys.NewReferenceAction_Yes),
+				LocalizationServiceHelper.getString(NewReferenceAction.class,
+					ReferenceMessageKeys.NewReferenceAction_No) },
+			0);
+	}
 }
