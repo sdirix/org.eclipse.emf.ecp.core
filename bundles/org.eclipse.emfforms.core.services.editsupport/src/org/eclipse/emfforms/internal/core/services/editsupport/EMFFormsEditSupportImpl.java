@@ -166,7 +166,7 @@ public class EMFFormsEditSupportImpl implements EMFFormsEditSupport {
 	public Object getImage(VDomainModelReference domainModelReference, EObject rootObject, Object element) {
 		Assert.create(domainModelReference).notNull();
 		Assert.create(rootObject).notNull();
-		Assert.create(element).notNull();
+		// Assert.create(element).notNull();
 
 		IObservableValue observableValue;
 		try {
