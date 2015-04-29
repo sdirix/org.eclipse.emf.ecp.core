@@ -14,7 +14,6 @@ package org.eclipse.emfforms.internal.core.services.databinding;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import org.eclipse.core.databinding.observable.Realm;
 import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.property.list.IListProperty;
@@ -34,23 +33,6 @@ import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 public class EMFFormsDatabindingImpl implements EMFFormsDatabinding {
 
 	private final Set<DomainModelReferenceConverter> referenceConverters = new LinkedHashSet<DomainModelReferenceConverter>();
-	private final Realm realm;
-
-	/**
-	 * Creates a new instance of {@link EMFFormsDatabindingImpl}.
-	 */
-	public EMFFormsDatabindingImpl() {
-		realm = Realm.getDefault();
-	}
-
-	/**
-	 * Creates a new instance of {@link EMFFormsDatabindingImpl} with a given {@link Realm}.
-	 *
-	 * @param realm The {@link Realm} to be used by this {@link EMFFormsDatabindingImpl}
-	 */
-	EMFFormsDatabindingImpl(Realm realm) {
-		this.realm = realm;
-	}
 
 	/**
 	 * {@inheritDoc}
@@ -69,7 +51,7 @@ public class EMFFormsDatabindingImpl implements EMFFormsDatabinding {
 		}
 
 		final IValueProperty valueProperty = getValueProperty(domainModelReference, object);
-		return valueProperty.observe(realm, object);
+		return valueProperty.observe(object);
 	}
 
 	/**
@@ -127,7 +109,7 @@ public class EMFFormsDatabindingImpl implements EMFFormsDatabinding {
 		}
 
 		final IListProperty listProperty = getListProperty(domainModelReference, object);
-		return listProperty.observe(realm, object);
+		return listProperty.observe(object);
 	}
 
 	/**

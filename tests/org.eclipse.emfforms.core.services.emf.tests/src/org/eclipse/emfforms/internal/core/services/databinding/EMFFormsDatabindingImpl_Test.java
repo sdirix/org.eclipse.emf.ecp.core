@@ -19,7 +19,6 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import org.eclipse.core.databinding.observable.Realm;
 import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.property.list.IListProperty;
@@ -28,11 +27,13 @@ import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.core.databinding.property.value.SimpleValueProperty;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecp.test.common.DefaultRealm;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -45,13 +46,20 @@ import org.junit.Test;
 public class EMFFormsDatabindingImpl_Test {
 
 	private EMFFormsDatabindingImpl databindingService;
+	private DefaultRealm realm;
 
 	/**
 	 * Set up that is executed before every test.
 	 */
 	@Before
 	public void setUp() {
+		realm = new DefaultRealm();
 		databindingService = new EMFFormsDatabindingImpl();
+	}
+
+	@After
+	public void tearDown() {
+		realm.dispose();
 	}
 
 	/**
@@ -63,8 +71,7 @@ public class EMFFormsDatabindingImpl_Test {
 	 */
 	@Test
 	public void testGetObservableValue() throws DatabindingFailedException {
-		final Realm realm = mock(Realm.class);
-		databindingService = spy(new EMFFormsDatabindingImpl(realm));
+		databindingService = spy(new EMFFormsDatabindingImpl());
 		final VDomainModelReference reference = mock(VDomainModelReference.class);
 		final EObject eObject = mock(EObject.class);
 		final DomainModelReferenceConverter converter1 = mock(DomainModelReferenceConverter.class);
@@ -73,13 +80,13 @@ public class EMFFormsDatabindingImpl_Test {
 
 		when(converter1.isApplicable(reference)).thenReturn(0d);
 		when(converter1.convertToValueProperty(reference, eObject)).thenReturn(expectedResultProperty);
-		when(expectedResultProperty.observe(realm, eObject)).thenReturn(expectedObservableValue);
+		when(expectedResultProperty.observe(eObject)).thenReturn(expectedObservableValue);
 
 		databindingService.addDomainModelReferenceConverter(converter1);
 		final IObservableValue resultObservableValue = databindingService.getObservableValue(reference, eObject);
 
 		verify(databindingService).getValueProperty(reference, eObject);
-		verify(expectedResultProperty).observe(realm, eObject);
+		verify(expectedResultProperty).observe(eObject);
 		assertEquals(expectedObservableValue, resultObservableValue);
 	}
 
@@ -248,8 +255,7 @@ public class EMFFormsDatabindingImpl_Test {
 	 */
 	@Test
 	public void testGetObservableList() throws DatabindingFailedException {
-		final Realm realm = mock(Realm.class);
-		databindingService = spy(new EMFFormsDatabindingImpl(realm));
+		databindingService = spy(new EMFFormsDatabindingImpl());
 		final VDomainModelReference reference = mock(VDomainModelReference.class);
 		final EObject eObject = mock(EObject.class);
 		final DomainModelReferenceConverter converter1 = mock(DomainModelReferenceConverter.class);
@@ -258,13 +264,13 @@ public class EMFFormsDatabindingImpl_Test {
 
 		when(converter1.isApplicable(reference)).thenReturn(0d);
 		when(converter1.convertToListProperty(reference, eObject)).thenReturn(expectedResultProperty);
-		when(expectedResultProperty.observe(realm, eObject)).thenReturn(expectedObservableList);
+		when(expectedResultProperty.observe(eObject)).thenReturn(expectedObservableList);
 
 		databindingService.addDomainModelReferenceConverter(converter1);
 		final IObservableList resultObservableList = databindingService.getObservableList(reference, eObject);
 
 		verify(databindingService).getListProperty(reference, eObject);
-		verify(expectedResultProperty).observe(realm, eObject);
+		verify(expectedResultProperty).observe(eObject);
 		assertEquals(expectedObservableList, resultObservableList);
 	}
 

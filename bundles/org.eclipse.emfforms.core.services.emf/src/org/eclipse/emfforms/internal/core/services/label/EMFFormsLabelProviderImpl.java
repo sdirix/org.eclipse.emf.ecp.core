@@ -316,7 +316,7 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 		final String keyDefault = String.format(DESCRIPTION, eClassName, featureName);
 		final String description = localizationService.getString(bundleClass,
 			keyDefault);
-		if (description != keyDefault) {
+		if (!keyDefault.equals(description)) {
 			return description;
 		}
 		final String descriptionWithSubstitution = localizationService.getString(bundleClass,

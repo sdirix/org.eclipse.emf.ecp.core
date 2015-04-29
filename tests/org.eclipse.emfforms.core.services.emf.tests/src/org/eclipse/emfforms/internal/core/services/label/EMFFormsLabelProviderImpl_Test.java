@@ -13,6 +13,7 @@ package org.eclipse.emfforms.internal.core.services.label;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -227,6 +228,7 @@ public class EMFFormsLabelProviderImpl_Test {
 		final IValueProperty valueProperty = mock(IValueProperty.class);
 		when(databinding.getValueProperty(domainModelReference, null)).thenReturn(valueProperty);
 		final EStructuralFeature eStructuralFeature = mock(EStructuralFeature.class);
+		when(eStructuralFeature.getName()).thenReturn("myFeature"); //$NON-NLS-1$
 		when(eStructuralFeature.getEContainingClass()).thenReturn(EcorePackage.eINSTANCE.getEObject());
 		when(valueProperty.getValueType()).thenReturn(eStructuralFeature);
 
@@ -236,6 +238,9 @@ public class EMFFormsLabelProviderImpl_Test {
 		labelProvider.setEMFSpecificService(emfSpecificService);
 
 		final EMFFormsLocalizationService localizationService = mock(EMFFormsLocalizationService.class);
+		final String descriptionKey = String.format(
+			"_UI_%1$s_%2$s_description", EcorePackage.eINSTANCE.getEObject().getName(), eStructuralFeature.getName()); //$NON-NLS-1$
+		when(localizationService.getString(any(Class.class), eq(descriptionKey))).thenReturn(descriptionKey);
 		labelProvider.setEMFFormsLocalizationService(localizationService);
 
 		final String key = String.format(
@@ -332,6 +337,10 @@ public class EMFFormsLabelProviderImpl_Test {
 		final EMFFormsLocalizationService localizationService = mock(EMFFormsLocalizationService.class);
 		labelProvider.setEMFFormsLocalizationService(localizationService);
 
+		final String descriptionKey = String.format(
+			"_UI_%1$s_%2$s_description", EcorePackage.eINSTANCE.getEObject().getName(), eStructuralFeature.getName()); //$NON-NLS-1$
+		when(localizationService.getString(any(Class.class), eq(descriptionKey))).thenReturn(descriptionKey);
+
 		final String key = String.format(
 			"_UI_%1$s_%2$s_feature", EcorePackage.eINSTANCE.getEObject().getName(), eStructuralFeature.getName()); //$NON-NLS-1$
 		final String featureText = "My Feature"; //$NON-NLS-1$
@@ -366,6 +375,10 @@ public class EMFFormsLabelProviderImpl_Test {
 
 		final EMFFormsLocalizationService localizationService = mock(EMFFormsLocalizationService.class);
 		labelProvider.setEMFFormsLocalizationService(localizationService);
+
+		final String descriptionKey = String.format(
+			"_UI_%1$s_%2$s_description", EcorePackage.eINSTANCE.getEObject().getName(), eStructuralFeature.getName()); //$NON-NLS-1$
+		when(localizationService.getString(any(Class.class), eq(descriptionKey))).thenReturn(descriptionKey);
 
 		final String keyDisplayName = String.format(
 			"_UI_%1$s_%2$s_feature", EcorePackage.eINSTANCE.getEObject().getName(), eStructuralFeature.getName()); //$NON-NLS-1$
