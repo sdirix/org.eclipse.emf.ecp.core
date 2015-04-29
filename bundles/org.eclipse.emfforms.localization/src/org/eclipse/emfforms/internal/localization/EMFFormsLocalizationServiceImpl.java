@@ -130,13 +130,7 @@ public class EMFFormsLocalizationServiceImpl implements EMFFormsLocalizationServ
 							"The ResourceBundle for Language '%1$s' in Bundle %2$s with Version %3$s doesn't contain the key '%4$s'.", localeLanguage, bundle.getSymbolicName(), bundle.getVersion().toString(), key))); //$NON-NLS-1$
 			return key;
 		}
-		final String result = resourceBundle.getString(key);
-		// try {
-		// return new String(result.getBytes("ISO-8859-1"), "UTF-8");
-		// } catch (final UnsupportedEncodingException ex) {
-		// return key;
-		// }
-		return result;
+		return resourceBundle.getString(key);
 	}
 
 }
