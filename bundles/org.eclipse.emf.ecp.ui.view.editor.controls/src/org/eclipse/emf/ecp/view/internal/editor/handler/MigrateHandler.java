@@ -74,7 +74,7 @@ public class MigrateHandler extends AbstractHandler {
 			IValueProperty valueProperty;
 			try {
 				valueProperty = Activator.getDefault().getEMFFormsDatabinding()
-					.getValueProperty(control.getDomainModelReference());
+					.getValueProperty(control.getDomainModelReference(), null);
 			} catch (final DatabindingFailedException ex) {
 				Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
 				continue;

@@ -437,7 +437,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 			IValueProperty valueProperty;
 			try {
-				valueProperty = getEMFFormsDatabinding().getValueProperty(dmr);
+				valueProperty = getEMFFormsDatabinding().getValueProperty(dmr, getViewModelContext().getDomainModel());
 			} catch (final DatabindingFailedException ex) {
 				getReportService().report(new RenderingFailedReport(ex));
 				continue;

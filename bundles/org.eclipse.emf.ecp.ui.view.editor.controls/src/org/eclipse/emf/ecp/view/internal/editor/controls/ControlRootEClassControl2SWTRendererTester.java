@@ -39,7 +39,7 @@ public class ControlRootEClassControl2SWTRendererTester implements ECPRendererTe
 		IValueProperty valueProperty;
 		try {
 			valueProperty = Activator.getDefault().getEMFFormsDatabinding()
-				.getValueProperty(control.getDomainModelReference());
+				.getValueProperty(control.getDomainModelReference(), context.getDomainModel());
 		} catch (final DatabindingFailedException ex) {
 			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
 			return NOT_APPLICABLE;

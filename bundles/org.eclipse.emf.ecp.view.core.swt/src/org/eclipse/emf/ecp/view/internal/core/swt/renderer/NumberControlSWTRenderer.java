@@ -97,7 +97,7 @@ public class NumberControlSWTRenderer extends TextControlSWTRenderer {
 	protected String getTextMessage() {
 		try {
 			final IValueProperty valueProperty = getEMFFormsDatabinding()
-				.getValueProperty(getVElement().getDomainModelReference());
+				.getValueProperty(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
 			final EStructuralFeature structuralFeature = (EStructuralFeature) valueProperty.getValueType();
 			if (NumericalHelper.isInteger(getInstanceClass(structuralFeature))) {
 				return localizationService.getString(getClass(), MessageKeys.NumericalControl_FormatNumerical);

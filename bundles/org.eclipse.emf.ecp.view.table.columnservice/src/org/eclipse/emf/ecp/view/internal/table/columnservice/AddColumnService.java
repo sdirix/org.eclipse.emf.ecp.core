@@ -36,6 +36,8 @@ import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedRepor
  */
 public class AddColumnService implements ViewModelService {
 
+	private ViewModelContext context;
+
 	/**
 	 * {@inheritDoc}
 	 *
@@ -43,6 +45,7 @@ public class AddColumnService implements ViewModelService {
 	 */
 	@Override
 	public void instantiate(ViewModelContext context) {
+		this.context = context;
 		final VElement viewModel = context.getViewModel();
 		if (viewModel instanceof VTableControl) {
 			addColumnsIfNeeded((VTableControl) viewModel);
@@ -73,10 +76,10 @@ public class AddColumnService implements ViewModelService {
 			try {
 				if (tableDMR.getDomainModelReference() != null) {
 					valueProperty = Activator.getDefault().getEMFFormsDatabinding()
-						.getValueProperty(tableDMR.getDomainModelReference());
+						.getValueProperty(tableDMR.getDomainModelReference(), context.getDomainModel());
 				} else {
 					valueProperty = Activator.getDefault().getEMFFormsDatabinding()
-						.getValueProperty(tableDMR);
+						.getValueProperty(tableDMR, context.getDomainModel());
 				}
 			} catch (final DatabindingFailedException ex) {
 				Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));

@@ -13,6 +13,7 @@ package org.eclipse.emfforms.spi.core.services.databinding;
 
 import org.eclipse.core.databinding.property.list.IListProperty;
 import org.eclipse.core.databinding.property.value.IValueProperty;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 
 /**
@@ -44,19 +45,23 @@ public interface DomainModelReferenceConverter {
 	 * Converts a {@link VDomainModelReference} to a {@link IValueProperty}.
 	 *
 	 * @param domainModelReference The {@link VDomainModelReference} that will be converted to a {@link IValueProperty}
+	 * @param object The root object of the rendered form
 	 * @return The created {@link IValueProperty}, does not return <code>null</code>.
 	 * @throws DatabindingFailedException if no value property could be created due to an invalid
 	 *             {@link VDomainModelReference}.
 	 */
-	IValueProperty convertToValueProperty(VDomainModelReference domainModelReference) throws DatabindingFailedException;
+	IValueProperty convertToValueProperty(VDomainModelReference domainModelReference, EObject object)
+		throws DatabindingFailedException;
 
 	/**
 	 * Converts a {@link VDomainModelReference} to an {@link IListProperty}.
 	 *
 	 * @param domainModelReference The {@link VDomainModelReference} that will be converted to an {@link IListProperty}
+	 * @param object The root object of the rendered form
 	 * @return The created {@link IListProperty}, does not return <code>null</code>.
 	 * @throws DatabindingFailedException if no value property could be created due to an invalid
 	 *             {@link VDomainModelReference}.
 	 */
-	IListProperty convertToListProperty(VDomainModelReference domainModelReference) throws DatabindingFailedException;
+	IListProperty convertToListProperty(VDomainModelReference domainModelReference, EObject object)
+		throws DatabindingFailedException;
 }

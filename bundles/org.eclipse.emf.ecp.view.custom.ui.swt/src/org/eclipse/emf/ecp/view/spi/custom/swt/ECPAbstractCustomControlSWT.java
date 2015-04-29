@@ -329,8 +329,11 @@ public abstract class ECPAbstractCustomControlSWT
 		labelRender: if (getCustomControl().getLabelAlignment() == LabelAlignment.LEFT) {
 			IValueProperty valueProperty;
 			try {
-				valueProperty = Activator.getDefault().getEMFFormsDatabinding()
-					.getValueProperty(getCustomControl().getDomainModelReference());
+				valueProperty = Activator
+					.getDefault()
+					.getEMFFormsDatabinding()
+					.getValueProperty(getCustomControl().getDomainModelReference(),
+						getViewModelContext().getDomainModel());
 			} catch (final DatabindingFailedException ex) {
 				Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
 				break labelRender;
@@ -352,7 +355,7 @@ public abstract class ECPAbstractCustomControlSWT
 
 						/**
 						 * {@inheritDoc}
-						 * 
+						 *
 						 * @see org.eclipse.core.databinding.UpdateValueStrategy#convert(java.lang.Object)
 						 */
 						@Override
@@ -487,7 +490,7 @@ public abstract class ECPAbstractCustomControlSWT
 		IValueProperty valueProperty;
 		try {
 			valueProperty = Activator.getDefault().getEMFFormsDatabinding()
-				.getValueProperty(domainModelReference);
+				.getValueProperty(domainModelReference, getViewModelContext().getDomainModel());
 		} catch (final DatabindingFailedException ex) {
 			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
 			return null;

@@ -100,7 +100,8 @@ public class EnumComboViewerSWTRendererService implements EMFFormsRendererServic
 		final VControl control = (VControl) vElement;
 		IValueProperty valueProperty;
 		try {
-			valueProperty = databindingService.getValueProperty(control.getDomainModelReference());
+			valueProperty = databindingService.getValueProperty(control.getDomainModelReference(),
+				viewModelContext.getDomainModel());
 		} catch (final DatabindingFailedException ex) {
 			reportService.report(new DatabindingFailedReport(ex));
 			return NOT_APPLICABLE;

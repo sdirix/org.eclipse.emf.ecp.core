@@ -68,9 +68,11 @@ public class TableValidationInitiator implements GlobalViewModelService {
 	}
 
 	private final Map<UniqueSetting, TableContextMapping> mapping = new LinkedHashMap<UniqueSetting, TableContextMapping>();
+	private ViewModelContext context;
 
 	@Override
 	public void instantiate(ViewModelContext context) {
+		this.context = context;
 		context.registerDomainChangeListener(new ModelChangeListener() {
 
 			@Override
@@ -154,10 +156,10 @@ public class TableValidationInitiator implements GlobalViewModelService {
 			final IValueProperty valueProperty;
 			if (tableDomainModelReference.getDomainModelReference() != null) {
 				valueProperty = Activator.getDefault().getEMFFormsDatabinding()
-					.getValueProperty(tableDomainModelReference.getDomainModelReference());
+					.getValueProperty(tableDomainModelReference.getDomainModelReference(), context.getDomainModel());
 			} else {
 				valueProperty = Activator.getDefault().getEMFFormsDatabinding()
-					.getValueProperty(tableDomainModelReference);
+					.getValueProperty(tableDomainModelReference, context.getDomainModel());
 			}
 			final EReference reference = (EReference) valueProperty.getValueType();
 			detailView = ViewProviderHelper.getView(

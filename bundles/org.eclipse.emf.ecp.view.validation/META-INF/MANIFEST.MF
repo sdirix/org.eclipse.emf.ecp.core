@@ -10,7 +10,6 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.emf.ecp.view.model;bundle-version="[1.5.0,2.0.0)",
  org.eclipse.emf.ecp.common;bundle-version="[1.5.0,2.0.0)",
  org.eclipse.emf.edit;bundle-version="[2.8.0,3.0.0)",
- org.eclipse.emfforms.core.services.databinding;bundle-version="[1.6.0,2.0.0)",
  org.eclipse.core.databinding.observable;bundle-version="[1.4.0,2.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
@@ -20,4 +19,5 @@ Export-Package: org.eclipse.emf.ecp.view.internal.validation;version="
  mf.ecp.view.custom.ui,  org.eclipse.emf.ecp.edit.swt,  org.eclipse.em
  f.ecp.test.model",org.eclipse.emf.ecp.view.spi.validation;version="1.
  6.0"
-Import-Package: org.eclipse.emfforms.spi.common.report;version="[1.6.0,2.0.0)"
+Import-Package: org.eclipse.emfforms.spi.common.report;version="[1.6.0,2.0.0)",
+ org.eclipse.emfforms.spi.core.services.databinding;version="1.6.0"

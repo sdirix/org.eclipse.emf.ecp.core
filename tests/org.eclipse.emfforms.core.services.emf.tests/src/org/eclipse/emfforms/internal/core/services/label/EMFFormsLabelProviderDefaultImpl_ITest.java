@@ -103,7 +103,8 @@ public class EMFFormsLabelProviderDefaultImpl_ITest {
 
 		when(emfSpecificService.getIItemPropertyDescriptor(any(EObject.class), same(structuralFeature))).thenReturn(
 			itemPropertyDescriptor);
-		when(databindingService.getValueProperty(any(VDomainModelReference.class))).thenReturn(valueProperty);
+		when(databindingService.getValueProperty(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
+			valueProperty);
 		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			observableValue);
 
@@ -123,7 +124,8 @@ public class EMFFormsLabelProviderDefaultImpl_ITest {
 	@Before
 	public void setUp() throws DatabindingFailedException {
 		reset(databindingService);
-		when(databindingService.getValueProperty(any(VDomainModelReference.class))).thenReturn(valueProperty);
+		when(databindingService.getValueProperty(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
+			valueProperty);
 		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			observableValue);
 		realm = new DefaultRealm();
@@ -161,7 +163,7 @@ public class EMFFormsLabelProviderDefaultImpl_ITest {
 		final VDomainModelReference domainModelReference = mock(VDomainModelReference.class);
 		labelProvider.getDisplayName(domainModelReference);
 
-		verify(databindingService).getValueProperty(domainModelReference);
+		verify(databindingService).getValueProperty(same(domainModelReference), any(EObject.class));
 	}
 
 	/**
@@ -178,7 +180,7 @@ public class EMFFormsLabelProviderDefaultImpl_ITest {
 		final VDomainModelReference domainModelReference = mock(VDomainModelReference.class);
 		labelProvider.getDescription(domainModelReference);
 
-		verify(databindingService).getValueProperty(domainModelReference);
+		verify(databindingService).getValueProperty(same(domainModelReference), any(EObject.class));
 	}
 
 	/**

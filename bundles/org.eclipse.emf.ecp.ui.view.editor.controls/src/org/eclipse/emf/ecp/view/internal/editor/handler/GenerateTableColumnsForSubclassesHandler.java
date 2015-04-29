@@ -99,7 +99,7 @@ public class GenerateTableColumnsForSubclassesHandler extends MasterDetailAction
 		final VTableDomainModelReference tableDMR = (VTableDomainModelReference) domainModelReference;
 		IValueProperty valueProperty;
 		try {
-			valueProperty = Activator.getDefault().getEMFFormsDatabinding().getValueProperty(tableDMR);
+			valueProperty = Activator.getDefault().getEMFFormsDatabinding().getValueProperty(tableDMR, null);
 		} catch (final DatabindingFailedException ex) {
 			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
 			return;

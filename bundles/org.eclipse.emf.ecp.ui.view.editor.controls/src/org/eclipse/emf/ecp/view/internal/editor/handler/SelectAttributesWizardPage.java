@@ -381,7 +381,7 @@ public class SelectAttributesWizardPage extends WizardPage {
 				IValueProperty valueProperty;
 				try {
 					valueProperty = Activator.getDefault().getEMFFormsDatabinding()
-						.getValueProperty(domainModelReference);
+						.getValueProperty(domainModelReference, null);
 				} catch (final DatabindingFailedException ex) {
 					Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
 					continue;

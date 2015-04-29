@@ -21,6 +21,7 @@ import java.util.Dictionary;
 import java.util.Hashtable;
 
 import org.eclipse.core.databinding.property.value.IValueProperty;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexdmrFactory;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
@@ -62,7 +63,7 @@ public class IndexDomainModelReferenceConverter_ITest {
 		final Dictionary<String, Object> dictionary = new Hashtable<String, Object>();
 		dictionary.put("service.ranking", 50); //$NON-NLS-1$
 		emfFormsDatabinding = mock(EMFFormsDatabinding.class);
-		when(emfFormsDatabinding.getValueProperty(any(VDomainModelReference.class))).thenReturn(
+		when(emfFormsDatabinding.getValueProperty(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			mock(IValueProperty.class));
 		bundleContext.registerService(EMFFormsDatabinding.class, emfFormsDatabinding, dictionary);
 		serviceReference = bundleContext
@@ -86,8 +87,8 @@ public class IndexDomainModelReferenceConverter_ITest {
 			.createFeaturePathDomainModelReference();
 		indexReference.setTargetDMR(targetReference);
 
-		indexConverter.convertToValueProperty(indexReference);
-		verify(emfFormsDatabinding).getValueProperty(targetReference);
+		indexConverter.convertToValueProperty(indexReference, mock(EObject.class));
+		verify(emfFormsDatabinding).getValueProperty(targetReference, mock(EObject.class));
 
 	}
 }

@@ -56,17 +56,21 @@ public interface EMFFormsDatabinding {
 	 * Returns an {@link IValueProperty} described by the given {@link VDomainModelReference}.
 	 *
 	 * @param domainModelReference The domain model reference pointing to the desired value
+	 * @param object The root object of the rendered form
 	 * @return The resulting {@link IValueProperty}, does not return <code>null</code>.
 	 * @throws DatabindingFailedException if the databinding could not be executed successfully.
 	 */
-	IValueProperty getValueProperty(VDomainModelReference domainModelReference) throws DatabindingFailedException;
+	IValueProperty getValueProperty(VDomainModelReference domainModelReference, EObject object)
+		throws DatabindingFailedException;
 
 	/**
 	 * Returns an {@link IListProperty} described by the given {@link VDomainModelReference}.
 	 *
 	 * @param domainModelReference The domain model reference pointing to the desired list
+	 * @param object The root object of the rendered form
 	 * @return The resulting {@link IListProperty}, does not return <code>null</code>.
 	 * @throws DatabindingFailedException if the databinding could not be executed successfully.
 	 */
-	IListProperty getListProperty(VDomainModelReference domainModelReference) throws DatabindingFailedException;
+	IListProperty getListProperty(VDomainModelReference domainModelReference, EObject object)
+		throws DatabindingFailedException;
 }

@@ -17,10 +17,13 @@ import org.eclipse.core.databinding.property.list.IListProperty;
 import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.databinding.EMFProperties;
 import org.eclipse.emf.databinding.IEMFValueProperty;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
@@ -96,10 +99,10 @@ public class IndexDomainModelReferenceConverter implements DomainModelReferenceC
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter#convertToValueProperty(VDomainModelReference)
+	 * @see org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter#convertToValueProperty(VDomainModelReference,EObject)
 	 */
 	@Override
-	public IValueProperty convertToValueProperty(VDomainModelReference domainModelReference)
+	public IValueProperty convertToValueProperty(VDomainModelReference domainModelReference, EObject object)
 		throws DatabindingFailedException {
 		if (domainModelReference == null) {
 			throw new IllegalArgumentException("The given VDomainModelReference must not be null."); //$NON-NLS-1$
@@ -120,28 +123,29 @@ public class IndexDomainModelReferenceConverter implements DomainModelReferenceC
 		final List<EReference> referencePath = indexReference.getDomainModelEReferencePath();
 		IValueProperty valueProperty;
 		if (referencePath.isEmpty()) {
-			valueProperty = new EMFIndexedValueProperty(indexReference.getIndex(),
+			valueProperty = new EMFIndexedValueProperty(getEditingDomain(object), indexReference.getIndex(),
 				indexReference.getDomainModelEFeature());
 		} else {
 			IEMFValueProperty emfValueProperty = EMFProperties.value(referencePath.get(0));
 			for (int i = 1; i < referencePath.size(); i++) {
 				emfValueProperty = emfValueProperty.value(referencePath.get(i));
 			}
-			final EMFIndexedValueProperty indexedValueProperty = new EMFIndexedValueProperty(indexReference.getIndex(),
+			final EMFIndexedValueProperty indexedValueProperty = new EMFIndexedValueProperty(getEditingDomain(object),
+				indexReference.getIndex(),
 				indexReference.getDomainModelEFeature());
 			valueProperty = emfValueProperty.value(indexedValueProperty);
 		}
 
-		return valueProperty.value(emfFormsDatabinding.getValueProperty(indexReference.getTargetDMR()));
+		return valueProperty.value(emfFormsDatabinding.getValueProperty(indexReference.getTargetDMR(), object));
 	}
 
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter#convertToListProperty(VDomainModelReference)
+	 * @see org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter#convertToListProperty(VDomainModelReference,EObject)
 	 */
 	@Override
-	public IListProperty convertToListProperty(VDomainModelReference domainModelReference)
+	public IListProperty convertToListProperty(VDomainModelReference domainModelReference, EObject object)
 		throws DatabindingFailedException {
 		if (domainModelReference == null) {
 			throw new IllegalArgumentException("The given VDomainModelReference must not be null."); //$NON-NLS-1$
@@ -162,19 +166,20 @@ public class IndexDomainModelReferenceConverter implements DomainModelReferenceC
 		final List<EReference> referencePath = indexReference.getDomainModelEReferencePath();
 		IValueProperty valueProperty;
 		if (referencePath.isEmpty()) {
-			valueProperty = new EMFIndexedValueProperty(indexReference.getIndex(),
+			valueProperty = new EMFIndexedValueProperty(getEditingDomain(object), indexReference.getIndex(),
 				indexReference.getDomainModelEFeature());
 		} else {
 			IEMFValueProperty emfValueProperty = EMFProperties.value(referencePath.get(0));
 			for (int i = 1; i < referencePath.size(); i++) {
 				emfValueProperty = emfValueProperty.value(referencePath.get(i));
 			}
-			final EMFIndexedValueProperty indexedValueProperty = new EMFIndexedValueProperty(indexReference.getIndex(),
+			final EMFIndexedValueProperty indexedValueProperty = new EMFIndexedValueProperty(getEditingDomain(object),
+				indexReference.getIndex(),
 				indexReference.getDomainModelEFeature());
 			valueProperty = emfValueProperty.value(indexedValueProperty);
 		}
 
-		return valueProperty.list(emfFormsDatabinding.getListProperty(indexReference.getTargetDMR()));
+		return valueProperty.list(emfFormsDatabinding.getListProperty(indexReference.getTargetDMR(), object));
 	}
 
 	/**
@@ -192,5 +197,9 @@ public class IndexDomainModelReferenceConverter implements DomainModelReferenceC
 			throw new IllegalListTypeException(
 				"The VIndexDomainModelReference's domainModelEFeature must reference a list of EObjects."); //$NON-NLS-1$
 		}
+	}
+
+	private EditingDomain getEditingDomain(EObject object) throws DatabindingFailedException {
+		return AdapterFactoryEditingDomain.getEditingDomainFor(object);
 	}
 }

@@ -115,7 +115,8 @@ public abstract class AbstractControl_PTest {
 		when(structuralFeature.isUnsettable()).thenReturn(false);
 		final IValueProperty valueProperty = mock(IValueProperty.class);
 		when(valueProperty.getValueType()).thenReturn(structuralFeature);
-		when(databindingService.getValueProperty(any(VDomainModelReference.class))).thenReturn(valueProperty);
+		when(databindingService.getValueProperty(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
+			valueProperty);
 	}
 
 	protected void setMockLabelAlignment(LabelAlignment labelAlignment) {

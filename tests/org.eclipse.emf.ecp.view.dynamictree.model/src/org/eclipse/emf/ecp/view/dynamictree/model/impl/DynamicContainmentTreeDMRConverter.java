@@ -94,19 +94,19 @@ public class DynamicContainmentTreeDMRConverter implements DomainModelReferenceC
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter#convertToValueProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)
+	 * @see org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter#convertToValueProperty(VDomainModelReference,EObject)
 	 */
 	@Override
-	public IValueProperty convertToValueProperty(VDomainModelReference domainModelReference)
+	public IValueProperty convertToValueProperty(VDomainModelReference domainModelReference, EObject object)
 		throws DatabindingFailedException {
 		final DynamicContainmentTreeDomainModelReference dynamicContainmentTreeReference = getAndCheckDynamicContainmentTreeDMR(domainModelReference);
 
 		final int index = getIndex(dynamicContainmentTreeReference);
 
 		final EMFIndexedValuePropertyDelegator indexedProperty = getIndexedRootProperty(
-			dynamicContainmentTreeReference, index);
+			dynamicContainmentTreeReference, index, object);
 		final IValueProperty valuePropertyFromBase = emfFormsDatabinding
-			.getValueProperty(dynamicContainmentTreeReference.getPathFromBase());
+			.getValueProperty(dynamicContainmentTreeReference.getPathFromBase(), object);
 
 		return indexedProperty.value(valuePropertyFromBase);
 	}
@@ -114,28 +114,29 @@ public class DynamicContainmentTreeDMRConverter implements DomainModelReferenceC
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter#convertToListProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)
+	 * @see org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter#convertToListProperty(VDomainModelReference,EObject)
 	 */
 	@Override
-	public IListProperty convertToListProperty(VDomainModelReference domainModelReference)
+	public IListProperty convertToListProperty(VDomainModelReference domainModelReference, EObject object)
 		throws DatabindingFailedException {
 		final DynamicContainmentTreeDomainModelReference dynamicContainmentTreeReference = getAndCheckDynamicContainmentTreeDMR(domainModelReference);
 
 		final int index = getIndex(dynamicContainmentTreeReference);
 
 		final EMFIndexedValuePropertyDelegator indexedProperty = getIndexedRootProperty(
-			dynamicContainmentTreeReference, index);
+			dynamicContainmentTreeReference, index, object);
 		final IListProperty listPropertyFromBase = emfFormsDatabinding
-			.getListProperty(dynamicContainmentTreeReference.getPathFromBase());
+			.getListProperty(dynamicContainmentTreeReference.getPathFromBase(), object);
 
 		return indexedProperty.list(listPropertyFromBase);
 	}
 
 	private EMFIndexedValuePropertyDelegator getIndexedRootProperty(
-		final DynamicContainmentTreeDomainModelReference dynamicContainmentTreeReference, final int index)
+		final DynamicContainmentTreeDomainModelReference dynamicContainmentTreeReference, final int index,
+		EObject object)
 		throws DatabindingFailedException, IllegalListTypeException {
 		final IValueProperty valuePropertyFromRoot = emfFormsDatabinding
-			.getValueProperty(dynamicContainmentTreeReference.getPathFromRoot());
+			.getValueProperty(dynamicContainmentTreeReference.getPathFromRoot(), object);
 		final EStructuralFeature structuralFeature = (EStructuralFeature) valuePropertyFromRoot.getValueType();
 		checkListType(structuralFeature);
 

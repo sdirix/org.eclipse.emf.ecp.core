@@ -197,7 +197,7 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 			final IObservableValue labelText = emfFormsLabelProvider.getDisplayName(
 				getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
 			final IObservableValue tooltip = emfFormsLabelProvider.getDescription(
-				getVElement().getDomainModelReference(),getViewModelContext().getDomainModel());
+				getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
 			viewModelDBC.bindValue(SWTObservables.observeText(tableComposite), labelText);
 			viewModelDBC.bindValue(SWTObservables.observeTooltipText(tableComposite), tooltip);
 		} catch (final NoLabelFoundException e) {
@@ -413,7 +413,8 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 					.getEMFFormsDatabinding()
 					.getValueProperty(
 						tableDomainModelReference.getDomainModelReference() == null ? tableDomainModelReference
-							: tableDomainModelReference.getDomainModelReference());
+							: tableDomainModelReference.getDomainModelReference(),
+						getViewModelContext().getDomainModel());
 			} catch (final DatabindingFailedException ex) {
 				Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
 				return;

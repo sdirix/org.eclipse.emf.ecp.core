@@ -68,22 +68,22 @@ public class EMFFormsDatabindingImpl implements EMFFormsDatabinding {
 			throw new IllegalArgumentException("The given EObject must not be null."); //$NON-NLS-1$
 		}
 
-		final IValueProperty valueProperty = getValueProperty(domainModelReference);
+		final IValueProperty valueProperty = getValueProperty(domainModelReference, object);
 		return valueProperty.observe(realm, object);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding#getValueProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)
+	 * @see org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding#getValueProperty(VDomainModelReference,EObject)
 	 */
 	@Override
-	public IValueProperty getValueProperty(VDomainModelReference domainModelReference)
+	public IValueProperty getValueProperty(VDomainModelReference domainModelReference, EObject object)
 		throws DatabindingFailedException {
 		final DomainModelReferenceConverter bestConverter = getBestDomainModelReferenceConverter(domainModelReference);
 
 		if (bestConverter != null) {
-			return bestConverter.convertToValueProperty(domainModelReference);
+			return bestConverter.convertToValueProperty(domainModelReference, object);
 		}
 
 		throw new DatabindingFailedException(
@@ -126,21 +126,22 @@ public class EMFFormsDatabindingImpl implements EMFFormsDatabinding {
 			throw new IllegalArgumentException("The given EObject must not be null."); //$NON-NLS-1$
 		}
 
-		final IListProperty listProperty = getListProperty(domainModelReference);
+		final IListProperty listProperty = getListProperty(domainModelReference, object);
 		return listProperty.observe(realm, object);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding#getListProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)
+	 * @see org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding#getListProperty(VDomainModelReference,EObject)
 	 */
 	@Override
-	public IListProperty getListProperty(VDomainModelReference domainModelReference) throws DatabindingFailedException {
+	public IListProperty getListProperty(VDomainModelReference domainModelReference, EObject object)
+		throws DatabindingFailedException {
 		final DomainModelReferenceConverter bestConverter = getBestDomainModelReferenceConverter(domainModelReference);
 
 		if (bestConverter != null) {
-			return bestConverter.convertToListProperty(domainModelReference);
+			return bestConverter.convertToListProperty(domainModelReference, object);
 		}
 
 		throw new DatabindingFailedException("No applicable DomainModelReferenceConverter could be found."); //$NON-NLS-1$

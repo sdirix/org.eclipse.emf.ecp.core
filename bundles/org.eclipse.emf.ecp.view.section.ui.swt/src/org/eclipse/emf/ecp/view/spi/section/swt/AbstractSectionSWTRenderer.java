@@ -128,8 +128,11 @@ public abstract class AbstractSectionSWTRenderer extends
 			return columnComposite;
 		}
 		try {
-			Activator.getDefault().getEMFFormsDatabinding()
-				.getValueProperty(VControl.class.cast(child).getDomainModelReference());
+			Activator
+				.getDefault()
+				.getEMFFormsDatabinding()
+				.getValueProperty(VControl.class.cast(child).getDomainModelReference(),
+					getViewModelContext().getDomainModel());
 		} catch (final DatabindingFailedException ex) {
 			Activator.getDefault().getReportService().report(new RenderingFailedReport(ex));
 			return columnComposite;

@@ -12,6 +12,8 @@
 package org.eclipse.emfforms.internal.core.services.databinding;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.same;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
@@ -70,13 +72,13 @@ public class EMFFormsDatabindingImpl_Test {
 		final IObservableValue expectedObservableValue = mock(IObservableValue.class);
 
 		when(converter1.isApplicable(reference)).thenReturn(0d);
-		when(converter1.convertToValueProperty(reference)).thenReturn(expectedResultProperty);
+		when(converter1.convertToValueProperty(reference, eObject)).thenReturn(expectedResultProperty);
 		when(expectedResultProperty.observe(realm, eObject)).thenReturn(expectedObservableValue);
 
 		databindingService.addDomainModelReferenceConverter(converter1);
 		final IObservableValue resultObservableValue = databindingService.getObservableValue(reference, eObject);
 
-		verify(databindingService).getValueProperty(reference);
+		verify(databindingService).getValueProperty(reference, eObject);
 		verify(expectedResultProperty).observe(realm, eObject);
 		assertEquals(expectedObservableValue, resultObservableValue);
 	}
@@ -126,7 +128,7 @@ public class EMFFormsDatabindingImpl_Test {
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emfforms.internal.core.services.databinding.EMFFormsDatabindingImpl#getValueProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * {@link org.eclipse.emfforms.internal.core.services.databinding.EMFFormsDatabindingImpl#getValueProperty(VDomainModelReference,EObject)}
 	 * .
 	 *
 	 * @throws DatabindingFailedException if the databinding failed
@@ -137,12 +139,12 @@ public class EMFFormsDatabindingImpl_Test {
 		final EClass eClass = mock(EClass.class);
 		when(eClass.getName()).thenReturn("test"); //$NON-NLS-1$
 		when(modelReference.eClass()).thenReturn(eClass);
-		databindingService.getValueProperty(modelReference);
+		databindingService.getValueProperty(modelReference, mock(EObject.class));
 	}
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emfforms.internal.core.services.databinding.EMFFormsDatabindingImpl#getValueProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * {@link org.eclipse.emfforms.internal.core.services.databinding.EMFFormsDatabindingImpl#getValueProperty(VDomainModelReference,EObject)}
 	 * .
 	 * Tests whether the correct converter is used when one is applicable and one is not.
 	 *
@@ -156,19 +158,20 @@ public class EMFFormsDatabindingImpl_Test {
 		final IValueProperty expectedResultProperty = mock(IValueProperty.class);
 
 		when(converter1.isApplicable(reference)).thenReturn(0d);
-		when(converter1.convertToValueProperty(reference)).thenReturn(expectedResultProperty);
+		when(converter1.convertToValueProperty(same(reference), any(EObject.class))).thenReturn(expectedResultProperty);
 		when(converter2.isApplicable(reference)).thenReturn(DomainModelReferenceConverter.NOT_APPLICABLE);
-		when(converter2.convertToValueProperty(reference)).thenReturn(mock(IValueProperty.class));
+		when(converter2.convertToValueProperty(same(reference), any(EObject.class))).thenReturn(
+			mock(IValueProperty.class));
 
 		databindingService.addDomainModelReferenceConverter(converter1);
 		databindingService.addDomainModelReferenceConverter(converter2);
-		final IValueProperty valueProperty = databindingService.getValueProperty(reference);
+		final IValueProperty valueProperty = databindingService.getValueProperty(reference, mock(EObject.class));
 		assertEquals(expectedResultProperty, valueProperty);
 	}
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emfforms.internal.core.services.databinding.EMFFormsDatabindingImpl#getValueProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * {@link org.eclipse.emfforms.internal.core.services.databinding.EMFFormsDatabindingImpl#getValueProperty(VDomainModelReference,EObject)}
 	 * .
 	 * Tests whether the correct converter is used when there are two applicable ones with different priorities.
 	 * Also tests whether the correct result is returned.
@@ -183,19 +186,20 @@ public class EMFFormsDatabindingImpl_Test {
 		final IValueProperty expectedResultProperty = mock(IValueProperty.class);
 
 		when(converter1.isApplicable(reference)).thenReturn(5d);
-		when(converter1.convertToValueProperty(reference)).thenReturn(expectedResultProperty);
+		when(converter1.convertToValueProperty(same(reference), any(EObject.class))).thenReturn(expectedResultProperty);
 		when(converter2.isApplicable(reference)).thenReturn(1d);
-		when(converter2.convertToValueProperty(reference)).thenReturn(mock(SimpleValueProperty.class));
+		when(converter2.convertToValueProperty(same(reference), any(EObject.class))).thenReturn(
+			mock(SimpleValueProperty.class));
 
 		databindingService.addDomainModelReferenceConverter(converter1);
 		databindingService.addDomainModelReferenceConverter(converter2);
-		final IValueProperty valueProperty = databindingService.getValueProperty(reference);
+		final IValueProperty valueProperty = databindingService.getValueProperty(reference, mock(EObject.class));
 		assertEquals(expectedResultProperty, valueProperty);
 	}
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emfforms.internal.core.services.databinding.EMFFormsDatabindingImpl#getValueProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * {@link org.eclipse.emfforms.internal.core.services.databinding.EMFFormsDatabindingImpl#getValueProperty(VDomainModelReference,EObject)}
 	 * .
 	 * Tests whether the {@link EMFFormsDatabindingImpl} considers all {@link DomainModelReferenceConverter}s, that are
 	 * registered to it, for its conversions.
@@ -214,7 +218,7 @@ public class EMFFormsDatabindingImpl_Test {
 		databindingService.addDomainModelReferenceConverter(converter2);
 		databindingService.addDomainModelReferenceConverter(converter3);
 
-		databindingService.getValueProperty(reference);
+		databindingService.getValueProperty(reference, mock(EObject.class));
 
 		verify(converter1).isApplicable(reference);
 		verify(converter2).isApplicable(reference);
@@ -223,7 +227,7 @@ public class EMFFormsDatabindingImpl_Test {
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emfforms.internal.core.services.databinding.EMFFormsDatabindingImpl#getValueProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * {@link org.eclipse.emfforms.internal.core.services.databinding.EMFFormsDatabindingImpl#getValueProperty(VDomainModelReference,EObject)}
 	 * .
 	 * <p>
 	 * Tests whether the method returns the correct result for a <strong>null</strong> argument.
@@ -232,12 +236,12 @@ public class EMFFormsDatabindingImpl_Test {
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testGetValuePropertyNull() throws DatabindingFailedException {
-		databindingService.getValueProperty(null);
+		databindingService.getValueProperty(null, mock(EObject.class));
 	}
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emfforms.internal.core.services.databinding.EMFFormsDatabindingImpl#getObservableList(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference, org.eclipse.emf.ecore.EObject)}
+	 * {@link org.eclipse.emfforms.internal.core.services.databinding.EMFFormsDatabindingImpl#getObservableList(VDomainModelReference, org.eclipse.emf.ecore.EObject)}
 	 * .
 	 *
 	 * @throws DatabindingFailedException if the databinding failed
@@ -253,13 +257,13 @@ public class EMFFormsDatabindingImpl_Test {
 		final IObservableList expectedObservableList = mock(IObservableList.class);
 
 		when(converter1.isApplicable(reference)).thenReturn(0d);
-		when(converter1.convertToListProperty(reference)).thenReturn(expectedResultProperty);
+		when(converter1.convertToListProperty(reference, eObject)).thenReturn(expectedResultProperty);
 		when(expectedResultProperty.observe(realm, eObject)).thenReturn(expectedObservableList);
 
 		databindingService.addDomainModelReferenceConverter(converter1);
 		final IObservableList resultObservableList = databindingService.getObservableList(reference, eObject);
 
-		verify(databindingService).getListProperty(reference);
+		verify(databindingService).getListProperty(reference, eObject);
 		verify(expectedResultProperty).observe(realm, eObject);
 		assertEquals(expectedObservableList, resultObservableList);
 	}
@@ -309,19 +313,19 @@ public class EMFFormsDatabindingImpl_Test {
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emfforms.internal.core.services.databinding.EMFFormsDatabindingImpl#getListProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * {@link org.eclipse.emfforms.internal.core.services.databinding.EMFFormsDatabindingImpl#getListProperty(VDomainModelReference,EObject)}
 	 * .
 	 *
 	 * @throws DatabindingFailedException if the databinding failed
 	 */
 	@Test(expected = DatabindingFailedException.class)
 	public void testGetListPropertyNoApplicableConverter() throws DatabindingFailedException {
-		databindingService.getListProperty(mock(VDomainModelReference.class));
+		databindingService.getListProperty(mock(VDomainModelReference.class), mock(EObject.class));
 	}
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emfforms.internal.core.services.databinding.EMFFormsDatabindingImpl#getListProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * {@link org.eclipse.emfforms.internal.core.services.databinding.EMFFormsDatabindingImpl#getListProperty(VDomainModelReference,EObject)}
 	 * .
 	 * Tests whether the correct converter is used when one is applicable and one is not.
 	 *
@@ -335,19 +339,20 @@ public class EMFFormsDatabindingImpl_Test {
 		final IListProperty expectedResultProperty = mock(IListProperty.class);
 
 		when(converter1.isApplicable(reference)).thenReturn(0d);
-		when(converter1.convertToListProperty(reference)).thenReturn(expectedResultProperty);
+		when(converter1.convertToListProperty(same(reference), any(EObject.class))).thenReturn(expectedResultProperty);
 		when(converter2.isApplicable(reference)).thenReturn(DomainModelReferenceConverter.NOT_APPLICABLE);
-		when(converter2.convertToListProperty(reference)).thenReturn(mock(IListProperty.class));
+		when(converter2.convertToListProperty(same(reference), any(EObject.class))).thenReturn(
+			mock(IListProperty.class));
 
 		databindingService.addDomainModelReferenceConverter(converter1);
 		databindingService.addDomainModelReferenceConverter(converter2);
-		final IListProperty listProperty = databindingService.getListProperty(reference);
+		final IListProperty listProperty = databindingService.getListProperty(reference, mock(EObject.class));
 		assertEquals(expectedResultProperty, listProperty);
 	}
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emfforms.internal.core.services.databinding.EMFFormsDatabindingImpl#getListProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * {@link org.eclipse.emfforms.internal.core.services.databinding.EMFFormsDatabindingImpl#getListProperty(VDomainModelReference,EObject)}
 	 * .
 	 * Tests whether the correct converter is used when there are two applicable ones with different priorities.
 	 * Also tests whether the correct result is returned.
@@ -362,19 +367,20 @@ public class EMFFormsDatabindingImpl_Test {
 		final IListProperty expectedResultProperty = mock(IListProperty.class);
 
 		when(converter1.isApplicable(reference)).thenReturn(5d);
-		when(converter1.convertToListProperty(reference)).thenReturn(expectedResultProperty);
+		when(converter1.convertToListProperty(same(reference), any(EObject.class))).thenReturn(expectedResultProperty);
 		when(converter2.isApplicable(reference)).thenReturn(1d);
-		when(converter2.convertToListProperty(reference)).thenReturn(mock(SimpleListProperty.class));
+		when(converter2.convertToListProperty(same(reference), any(EObject.class))).thenReturn(
+			mock(SimpleListProperty.class));
 
 		databindingService.addDomainModelReferenceConverter(converter1);
 		databindingService.addDomainModelReferenceConverter(converter2);
-		final IListProperty listProperty = databindingService.getListProperty(reference);
+		final IListProperty listProperty = databindingService.getListProperty(reference, mock(EObject.class));
 		assertEquals(expectedResultProperty, listProperty);
 	}
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emfforms.internal.core.services.databinding.EMFFormsDatabindingImpl#getValueProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * {@link org.eclipse.emfforms.internal.core.services.databinding.EMFFormsDatabindingImpl#getValueProperty(VDomainModelReference,EObject)}
 	 * .
 	 * Tests whether the {@link EMFFormsDatabindingImpl} considers all {@link DomainModelReferenceConverter}s, that are
 	 * registered to it, for its conversions.
@@ -393,7 +399,7 @@ public class EMFFormsDatabindingImpl_Test {
 		databindingService.addDomainModelReferenceConverter(converter2);
 		databindingService.addDomainModelReferenceConverter(converter3);
 
-		databindingService.getListProperty(reference);
+		databindingService.getListProperty(reference, mock(EObject.class));
 
 		verify(converter1).isApplicable(reference);
 		verify(converter2).isApplicable(reference);
@@ -402,7 +408,7 @@ public class EMFFormsDatabindingImpl_Test {
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emfforms.internal.core.services.databinding.EMFFormsDatabindingImpl#getValueProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * {@link org.eclipse.emfforms.internal.core.services.databinding.EMFFormsDatabindingImpl#getValueProperty(VDomainModelReference,EObject)}
 	 * .
 	 * <p>
 	 * Tests whether the method returns the correct result for a <strong>null</strong> argument.
@@ -411,7 +417,7 @@ public class EMFFormsDatabindingImpl_Test {
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testGetListPropertyNull() throws DatabindingFailedException {
-		databindingService.getListProperty(null);
+		databindingService.getListProperty(null, mock(EObject.class));
 	}
 
 	/**
@@ -431,6 +437,6 @@ public class EMFFormsDatabindingImpl_Test {
 
 		databindingService.addDomainModelReferenceConverter(converter1);
 		databindingService.removeDomainModelReferenceConverter(converter1);
-		databindingService.getValueProperty(reference);
+		databindingService.getValueProperty(reference, mock(EObject.class));
 	}
 }

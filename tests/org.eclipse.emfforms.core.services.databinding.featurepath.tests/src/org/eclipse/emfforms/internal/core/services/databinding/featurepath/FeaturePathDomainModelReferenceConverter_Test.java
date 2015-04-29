@@ -19,18 +19,28 @@ import java.util.LinkedList;
 
 import org.eclipse.core.databinding.property.list.IListProperty;
 import org.eclipse.core.databinding.property.value.IValueProperty;
+import org.eclipse.emf.common.command.BasicCommandStack;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.databinding.IEMFListProperty;
 import org.eclipse.emf.databinding.IEMFValueProperty;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EcoreFactory;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emfforms.core.services.databinding.featurepath.FeaturePathDomainModelReferenceConverter;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -42,6 +52,26 @@ import org.junit.Test;
 public class FeaturePathDomainModelReferenceConverter_Test {
 
 	private FeaturePathDomainModelReferenceConverter converter;
+	private static EObject validEObject;
+
+	@BeforeClass
+	public static void setupClass() {
+		validEObject = createValidEObject();
+	}
+
+	private static EObject createValidEObject() {
+		final ResourceSet rs = new ResourceSetImpl();
+		final AdapterFactoryEditingDomain domain = new AdapterFactoryEditingDomain(
+			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE),
+			new BasicCommandStack(), rs);
+		rs.eAdapters().add(new AdapterFactoryEditingDomain.EditingDomainProvider(domain));
+		final Resource resource = rs.createResource(URI.createURI("VIRTAUAL_URI")); //$NON-NLS-1$
+		final EObject domainObject = EcoreFactory.eINSTANCE.createEObject();
+		if (resource != null) {
+			resource.getContents().add(domainObject);
+		}
+		return domainObject;
+	}
 
 	/**
 	 * Set up that is executed before every test.
@@ -49,6 +79,7 @@ public class FeaturePathDomainModelReferenceConverter_Test {
 	@Before
 	public void setUp() {
 		converter = new FeaturePathDomainModelReferenceConverter();
+
 	}
 
 	/**
@@ -80,7 +111,7 @@ public class FeaturePathDomainModelReferenceConverter_Test {
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emfforms.core.services.databinding.featurepath.FeaturePathDomainModelReferenceConverter#convertToValueProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * {@link org.eclipse.emfforms.core.services.databinding.featurepath.FeaturePathDomainModelReferenceConverter#convertToValueProperty(VDomainModelReference,EObject)}
 	 * .
 	 *
 	 * @throws DatabindingFailedException if the databinding failed
@@ -100,7 +131,7 @@ public class FeaturePathDomainModelReferenceConverter_Test {
 		pathReference.getDomainModelEReferencePath().addAll(referencePath);
 		pathReference.setDomainModelEFeature(feature);
 
-		final IValueProperty valueProperty = converter.convertToValueProperty(pathReference);
+		final IValueProperty valueProperty = converter.convertToValueProperty(pathReference, validEObject);
 
 		// The converter should return an IEMFValueProperty
 		assertTrue(valueProperty instanceof IEMFValueProperty);
@@ -117,7 +148,7 @@ public class FeaturePathDomainModelReferenceConverter_Test {
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emfforms.core.services.databinding.featurepath.FeaturePathDomainModelReferenceConverter#convertToValueProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * {@link org.eclipse.emfforms.core.services.databinding.featurepath.FeaturePathDomainModelReferenceConverter#convertToValueProperty(VDomainModelReference,EObject)}
 	 * .
 	 *
 	 * @throws DatabindingFailedException if the databinding failed
@@ -130,7 +161,7 @@ public class FeaturePathDomainModelReferenceConverter_Test {
 		final EStructuralFeature feature = TestPackage.eINSTANCE.getD_X();
 		pathReference.setDomainModelEFeature(feature);
 
-		final IValueProperty valueProperty = converter.convertToValueProperty(pathReference);
+		final IValueProperty valueProperty = converter.convertToValueProperty(pathReference, validEObject);
 
 		// The converter should return an IEMFValueProperty
 		assertTrue(valueProperty instanceof IEMFValueProperty);
@@ -147,7 +178,7 @@ public class FeaturePathDomainModelReferenceConverter_Test {
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emfforms.core.services.databinding.featurepath.FeaturePathDomainModelReferenceConverter#convertToValueProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * {@link org.eclipse.emfforms.core.services.databinding.featurepath.FeaturePathDomainModelReferenceConverter#convertToValueProperty(VDomainModelReference,EObject)}
 	 * .
 	 *
 	 * @throws DatabindingFailedException if the databinding failed
@@ -156,36 +187,36 @@ public class FeaturePathDomainModelReferenceConverter_Test {
 	public void testConvertToValuePropertyNoFeature() throws DatabindingFailedException {
 		final VFeaturePathDomainModelReference pathReference = VViewFactory.eINSTANCE
 			.createFeaturePathDomainModelReference();
-		converter.convertToValueProperty(pathReference);
+		converter.convertToValueProperty(pathReference, validEObject);
 	}
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emfforms.core.services.databinding.featurepath.FeaturePathDomainModelReferenceConverter#convertToValueProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * {@link org.eclipse.emfforms.core.services.databinding.featurepath.FeaturePathDomainModelReferenceConverter#convertToValueProperty(VDomainModelReference,EObject)}
 	 * .
 	 *
 	 * @throws DatabindingFailedException if the databinding failed
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testConvertToValuePropertyNull() throws DatabindingFailedException {
-		converter.convertToValueProperty(null);
+		converter.convertToValueProperty(null, validEObject);
 	}
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emfforms.core.services.databinding.featurepath.FeaturePathDomainModelReferenceConverter#convertToValueProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * {@link org.eclipse.emfforms.core.services.databinding.featurepath.FeaturePathDomainModelReferenceConverter#convertToValueProperty(VDomainModelReference,EObject)}
 	 * .
 	 *
 	 * @throws DatabindingFailedException if the databinding failed
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testConvertToValuePropertyWrongReferenceType() throws DatabindingFailedException {
-		converter.convertToValueProperty(mock(VDomainModelReference.class));
+		converter.convertToValueProperty(mock(VDomainModelReference.class), validEObject);
 	}
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emfforms.core.services.databinding.featurepath.FeaturePathDomainModelReferenceConverter#convertToListProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * {@link org.eclipse.emfforms.core.services.databinding.featurepath.FeaturePathDomainModelReferenceConverter#convertToListProperty(VDomainModelReference,EObject)}
 	 * .
 	 *
 	 * @throws DatabindingFailedException if the databinding failed
@@ -205,7 +236,7 @@ public class FeaturePathDomainModelReferenceConverter_Test {
 		pathReference.getDomainModelEReferencePath().addAll(referencePath);
 		pathReference.setDomainModelEFeature(feature);
 
-		final IListProperty listProperty = converter.convertToListProperty(pathReference);
+		final IListProperty listProperty = converter.convertToListProperty(pathReference, validEObject);
 
 		// The converter should return an IEMFListProperty
 		assertTrue(listProperty instanceof IEMFListProperty);
@@ -222,7 +253,7 @@ public class FeaturePathDomainModelReferenceConverter_Test {
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emfforms.core.services.databinding.featurepath.FeaturePathDomainModelReferenceConverter#convertToListProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * {@link org.eclipse.emfforms.core.services.databinding.featurepath.FeaturePathDomainModelReferenceConverter#convertToListProperty(VDomainModelReference,EObject)}
 	 * .
 	 *
 	 * @throws DatabindingFailedException if the databinding failed
@@ -231,12 +262,12 @@ public class FeaturePathDomainModelReferenceConverter_Test {
 	public void testConvertToListPropertyNoFeature() throws DatabindingFailedException {
 		final VFeaturePathDomainModelReference pathReference = VViewFactory.eINSTANCE
 			.createFeaturePathDomainModelReference();
-		converter.convertToListProperty(pathReference);
+		converter.convertToListProperty(pathReference, validEObject);
 	}
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emfforms.core.services.databinding.featurepath.FeaturePathDomainModelReferenceConverter#convertToListProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * {@link org.eclipse.emfforms.core.services.databinding.featurepath.FeaturePathDomainModelReferenceConverter#convertToListProperty(VDomainModelReference,EObject)}
 	 * .
 	 *
 	 * @throws DatabindingFailedException if the databinding failed
@@ -249,7 +280,7 @@ public class FeaturePathDomainModelReferenceConverter_Test {
 		final EStructuralFeature feature = TestPackage.eINSTANCE.getD_YList();
 		pathReference.setDomainModelEFeature(feature);
 
-		final IListProperty listProperty = converter.convertToListProperty(pathReference);
+		final IListProperty listProperty = converter.convertToListProperty(pathReference, validEObject);
 
 		// The converter should return an IEMFListProperty
 		assertTrue(listProperty instanceof IEMFListProperty);
@@ -266,25 +297,25 @@ public class FeaturePathDomainModelReferenceConverter_Test {
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emfforms.core.services.databinding.featurepath.FeaturePathDomainModelReferenceConverter#convertToListProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * {@link org.eclipse.emfforms.core.services.databinding.featurepath.FeaturePathDomainModelReferenceConverter#convertToListProperty(VDomainModelReference,EObject)}
 	 * .
 	 *
 	 * @throws DatabindingFailedException if the databinding failed
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testConvertToListPropertyNull() throws DatabindingFailedException {
-		converter.convertToListProperty(null);
+		converter.convertToListProperty(null, validEObject);
 	}
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emfforms.core.services.databinding.featurepath.FeaturePathDomainModelReferenceConverter#convertToListProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * {@link org.eclipse.emfforms.core.services.databinding.featurepath.FeaturePathDomainModelReferenceConverter#convertToListProperty(VDomainModelReference,EObject)}
 	 * .
 	 *
 	 * @throws DatabindingFailedException if the databinding failed
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testConvertToListPropertyWrongReferenceType() throws DatabindingFailedException {
-		converter.convertToListProperty(mock(VDomainModelReference.class));
+		converter.convertToListProperty(mock(VDomainModelReference.class), validEObject);
 	}
 }

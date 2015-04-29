@@ -79,7 +79,7 @@ public class DatabindingIntegration_ITest {
 		pathReference.getDomainModelEReferencePath().addAll(referencePath);
 		pathReference.setDomainModelEFeature(feature);
 
-		final IValueProperty valueProperty = databindingService.getValueProperty(pathReference);
+		final IValueProperty valueProperty = databindingService.getValueProperty(pathReference, null);
 
 		// The converter should return an IEMFValueProperty
 		assertTrue(valueProperty instanceof IEMFValueProperty);
@@ -111,7 +111,7 @@ public class DatabindingIntegration_ITest {
 		pathReference.getDomainModelEReferencePath().addAll(referencePath);
 		pathReference.setDomainModelEFeature(feature);
 
-		final IListProperty listProperty = databindingService.getListProperty(pathReference);
+		final IListProperty listProperty = databindingService.getListProperty(pathReference, null);
 
 		// The converter should return an IEMFListProperty
 		assertTrue(listProperty instanceof IEMFListProperty);

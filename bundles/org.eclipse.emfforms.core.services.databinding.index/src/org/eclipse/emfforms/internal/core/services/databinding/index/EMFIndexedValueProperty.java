@@ -12,9 +12,14 @@
  ******************************************************************************/
 package org.eclipse.emfforms.internal.core.services.databinding.index;
 
+import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.databinding.internal.EMFValueProperty;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.edit.command.AddCommand;
+import org.eclipse.emf.edit.command.SetCommand;
+import org.eclipse.emf.edit.domain.EditingDomain;
 
 /**
  * This class provides a ValueProperty that supports addressing specific elements of a list by an index.
@@ -27,17 +32,20 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 public class EMFIndexedValueProperty extends EMFValueProperty {
 
 	private final int index;
+	private final EditingDomain editingDomain;
 
 	/**
 	 * Constructor for an Index ValueProperty.
 	 *
+	 * @param editingDomain The {@link EditingDomain}
 	 * @param index The index
 	 * @param eStructuralFeature
 	 *            the {@link EStructuralFeature} of the indexed feature
 	 */
-	public EMFIndexedValueProperty(int index,
+	public EMFIndexedValueProperty(EditingDomain editingDomain, int index,
 		EStructuralFeature eStructuralFeature) {
 		super(eStructuralFeature);
+		this.editingDomain = editingDomain;
 		if (index < 0) {
 			throw new IllegalArgumentException(
 				"\t \t \t \t \t Who thinks it's a good idea to use a negative list index?!"); //$NON-NLS-1$
@@ -56,12 +64,20 @@ public class EMFIndexedValueProperty extends EMFValueProperty {
 		return list.get(index);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	protected void doSetValue(Object source, Object value) {
+		final EObject eObject = (EObject) source;
 		final Object result = super.doGetValue(source);
 		final EList<Object> list = (EList<Object>) result;
-		list.add(index, value);
+		Command command;
+		// FIXME allow add?
+		if (index == list.size()) {
+			command = AddCommand.create(editingDomain, eObject, getFeature(), value, index);
+		}
+		else {
+			command = SetCommand.create(editingDomain, eObject, getFeature(), value, index);
+		}
+		editingDomain.getCommandStack().execute(command);
 	}
 
 	@Override

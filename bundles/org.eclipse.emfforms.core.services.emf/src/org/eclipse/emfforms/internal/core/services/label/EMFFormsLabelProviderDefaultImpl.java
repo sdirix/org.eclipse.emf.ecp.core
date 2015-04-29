@@ -79,7 +79,7 @@ public class EMFFormsLabelProviderDefaultImpl implements EMFFormsLabelProvider {
 
 		IValueProperty valueProperty;
 		try {
-			valueProperty = emfFormsDatabinding.getValueProperty(domainModelReference);
+			valueProperty = emfFormsDatabinding.getValueProperty(domainModelReference, null);
 		} catch (final DatabindingFailedException ex) {
 			reportService.report(new DatabindingFailedReport(ex));
 			return getConstantObservableValue(ex.getMessage());
@@ -155,7 +155,7 @@ public class EMFFormsLabelProviderDefaultImpl implements EMFFormsLabelProvider {
 
 		IValueProperty valueProperty;
 		try {
-			valueProperty = emfFormsDatabinding.getValueProperty(domainModelReference);
+			valueProperty = emfFormsDatabinding.getValueProperty(domainModelReference, null);
 		} catch (final DatabindingFailedException ex) {
 			reportService.report(new DatabindingFailedReport(ex));
 			return getConstantObservableValue(ex.getMessage());

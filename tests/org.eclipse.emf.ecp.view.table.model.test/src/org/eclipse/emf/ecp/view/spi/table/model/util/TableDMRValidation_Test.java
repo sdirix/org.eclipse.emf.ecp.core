@@ -117,7 +117,7 @@ public class TableDMRValidation_Test {
 		table.setDomainModelReference(ref);
 		try {
 			Mockito.doReturn(Properties.selfValue(BowlingPackage.eINSTANCE.getLeague_Players())).when(
-				emfFormsDatabinding).getValueProperty(ref);
+				emfFormsDatabinding).getValueProperty(ref, null);
 		} catch (final DatabindingFailedException ex) {
 			fail(ex.getMessage());
 		}
@@ -127,7 +127,7 @@ public class TableDMRValidation_Test {
 		column1.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Name());
 		try {
 			Mockito.doReturn(Properties.selfValue(BowlingPackage.eINSTANCE.getPlayer_Name())).when(
-				emfFormsDatabinding).getValueProperty(column1);
+				emfFormsDatabinding).getValueProperty(column1, null);
 		} catch (final DatabindingFailedException ex) {
 			fail(ex.getMessage());
 		}
@@ -137,7 +137,7 @@ public class TableDMRValidation_Test {
 		column2.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Gender());
 		try {
 			Mockito.doReturn(Properties.selfValue(BowlingPackage.eINSTANCE.getPlayer_Gender())).when(
-				emfFormsDatabinding).getValueProperty(column2);
+				emfFormsDatabinding).getValueProperty(column2, null);
 		} catch (final DatabindingFailedException ex) {
 			fail(ex.getMessage());
 		}
@@ -260,7 +260,7 @@ public class TableDMRValidation_Test {
 		tableDMR.setDomainModelEFeature(BowlingPackage.eINSTANCE.getFan_FavouritePlayer());
 		try {
 			Mockito.doReturn(Properties.selfValue(BowlingPackage.eINSTANCE.getFan_FavouritePlayer())).when(
-				emfFormsDatabinding).getValueProperty(tableDMR);
+				emfFormsDatabinding).getValueProperty(tableDMR, null);
 		} catch (final DatabindingFailedException ex) {
 			fail(ex.getMessage());
 		}
@@ -280,7 +280,7 @@ public class TableDMRValidation_Test {
 		tableDMR.setDomainModelEFeature(BowlingPackage.eINSTANCE.getFan_FavouritePlayer());
 		try {
 			Mockito.doReturn(Properties.selfValue(BowlingPackage.eINSTANCE.getFan_FavouritePlayer())).when(
-				emfFormsDatabinding).getValueProperty(tableDMR);
+				emfFormsDatabinding).getValueProperty(tableDMR, null);
 		} catch (final DatabindingFailedException ex) {
 			fail(ex.getMessage());
 		}
@@ -299,7 +299,7 @@ public class TableDMRValidation_Test {
 		tableDMR.setDomainModelEFeature(BowlingPackage.eINSTANCE.getFan_EMails());
 		try {
 			Mockito.doReturn(Properties.selfValue(BowlingPackage.eINSTANCE.getFan_EMails())).when(
-				emfFormsDatabinding).getValueProperty(tableDMR);
+				emfFormsDatabinding).getValueProperty(tableDMR, null);
 		} catch (final DatabindingFailedException ex) {
 			fail(ex.getMessage());
 		}
@@ -319,7 +319,7 @@ public class TableDMRValidation_Test {
 		tableDMR.setDomainModelEFeature(BowlingPackage.eINSTANCE.getFan_EMails());
 		try {
 			Mockito.doReturn(Properties.selfValue(BowlingPackage.eINSTANCE.getFan_EMails())).when(
-				emfFormsDatabinding).getValueProperty(tableDMR);
+				emfFormsDatabinding).getValueProperty(tableDMR, null);
 		} catch (final DatabindingFailedException ex) {
 			fail(ex.getMessage());
 		}

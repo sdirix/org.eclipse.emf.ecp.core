@@ -135,7 +135,6 @@
 		<module>../../tests/org.eclipse.emfforms.core.services.databinding.mapping.tests</module>
 		<module>../../tests/org.eclipse.emfforms.core.services.databinding.integrationtest</module>
 		<module>../../tests/org.eclipse.emfforms.core.services.databinding.testmodel</module>
-		<module>../../tests/org.eclipse.emfforms.core.services.databinding.tests</module>
 		<module>../../tests/org.eclipse.emfforms.swt.core.tests</module>
 		<module>../../tests/org.eclipse.emfforms.common.tests</module>
 		<module>../../tests/org.eclipse.emfforms.core.services.emf.tests</module>

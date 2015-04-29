@@ -15,7 +15,10 @@ package org.eclipse.emfforms.internal.core.services.databinding.mapping;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.databinding.internal.EMFValueProperty;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.edit.command.ChangeCommand;
+import org.eclipse.emf.edit.domain.EditingDomain;
 
 /**
  * This class provides a ValueProperty for EClass Mappings.
@@ -28,16 +31,19 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 public class EMFMappingValueProperty extends EMFValueProperty {
 
 	private final EClass mappedEClass;
+	private final EditingDomain editingDomain;
 
 	/**
 	 * Constructor for a EClassMapping ValueProperty.
 	 *
+	 * @param editingDomain The {@link EditingDomain}
 	 * @param mappedEClass the EClass being mapped
 	 * @param eStructuralFeature the {@link EStructuralFeature} of the map
 	 */
-	public EMFMappingValueProperty(EClass mappedEClass,
+	public EMFMappingValueProperty(EditingDomain editingDomain, EClass mappedEClass,
 		EStructuralFeature eStructuralFeature) {
 		super(eStructuralFeature);
+		this.editingDomain = editingDomain;
 		this.mappedEClass = mappedEClass;
 	}
 
@@ -51,10 +57,18 @@ public class EMFMappingValueProperty extends EMFValueProperty {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	protected void doSetValue(Object source, Object value) {
+	protected void doSetValue(Object source, final Object value) {
 		final Object result = super.doGetValue(source);
-		final EMap<EClass, Object> map = (EMap<EClass, Object>) result;
-		map.put(mappedEClass, value);
+		final EObject eObject = (EObject) source;
+		final ChangeCommand command = new ChangeCommand(eObject) {
+
+			@Override
+			protected void doExecute() {
+				final EMap<EClass, Object> map = (EMap<EClass, Object>) result;
+				map.put(mappedEClass, value);
+			}
+		};
+		editingDomain.getCommandStack().execute(command);
 	}
 
 	@Override

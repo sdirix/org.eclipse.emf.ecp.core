@@ -105,7 +105,7 @@ public class NumberControlRenderer_PTest extends AbstractControl_PTest {
 		when(mockedObservableValue.getValueType()).thenReturn(mockedEStructuralFeature);
 		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			mockedObservableValue);
-		when(databindingService.getValueProperty(any(VDomainModelReference.class))).thenReturn(
+		when(databindingService.getValueProperty(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			Properties.selfValue(mockedEStructuralFeature));
 		final Control render = renderControl(new SWTGridCell(0, 1, renderer));
 		assertControl(render);
@@ -129,7 +129,7 @@ public class NumberControlRenderer_PTest extends AbstractControl_PTest {
 		when(mockedObservableValue.getValueType()).thenReturn(mockedEStructuralFeature);
 		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			mockedObservableValue);
-		when(databindingService.getValueProperty(any(VDomainModelReference.class))).thenReturn(
+		when(databindingService.getValueProperty(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			Properties.selfValue(mockedEStructuralFeature));
 
 		final Control render = renderControl(new SWTGridCell(0, 2, renderer));
@@ -230,7 +230,7 @@ public class NumberControlRenderer_PTest extends AbstractControl_PTest {
 		mockDatabindingIsUnsettable();
 		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			mockedObservable, new ObservingWritableValue(mockedObservable));
-		when(databindingService.getValueProperty(any(VDomainModelReference.class))).thenReturn(
+		when(databindingService.getValueProperty(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			Properties.selfValue(mockedObservable.getValueType()));
 
 		final Control renderControl = renderControl(new SWTGridCell(0, 2, renderer));

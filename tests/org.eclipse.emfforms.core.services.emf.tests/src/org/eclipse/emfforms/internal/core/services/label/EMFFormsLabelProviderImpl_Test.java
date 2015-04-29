@@ -80,7 +80,7 @@ public class EMFFormsLabelProviderImpl_Test {
 	public void testGetDisplayNameVDomainModelReferenceThrowDatabindingException() throws NoLabelFoundException,
 		DatabindingFailedException {
 		final VDomainModelReference domainModelReference = mock(VDomainModelReference.class);
-		when(databinding.getValueProperty(domainModelReference)).thenThrow(DatabindingFailedException.class);
+		when(databinding.getValueProperty(domainModelReference, null)).thenThrow(DatabindingFailedException.class);
 
 		final ReportService reportService = mock(ReportService.class);
 		labelProvider.setReportService(reportService);
@@ -92,7 +92,7 @@ public class EMFFormsLabelProviderImpl_Test {
 	public void testGetDisplayNameVDomainModelReference() throws NoLabelFoundException, DatabindingFailedException {
 		final VDomainModelReference domainModelReference = mock(VDomainModelReference.class);
 		final IValueProperty valueProperty = mock(IValueProperty.class);
-		when(databinding.getValueProperty(domainModelReference)).thenReturn(valueProperty);
+		when(databinding.getValueProperty(domainModelReference, null)).thenReturn(valueProperty);
 		final EStructuralFeature eStructuralFeature = mock(EStructuralFeature.class);
 		when(eStructuralFeature.getEContainingClass()).thenReturn(EcorePackage.eINSTANCE.getEObject());
 		when(valueProperty.getValueType()).thenReturn(eStructuralFeature);
@@ -119,7 +119,7 @@ public class EMFFormsLabelProviderImpl_Test {
 		DatabindingFailedException {
 		final VDomainModelReference domainModelReference = mock(VDomainModelReference.class);
 		final IValueProperty valueProperty = mock(IValueProperty.class);
-		when(databinding.getValueProperty(domainModelReference)).thenReturn(valueProperty);
+		when(databinding.getValueProperty(domainModelReference, null)).thenReturn(valueProperty);
 		final EStructuralFeature eStructuralFeature = mock(EStructuralFeature.class);
 		when(eStructuralFeature.getName()).thenReturn("myValue"); //$NON-NLS-1$
 		final EClass eClass = mock(EClass.class);
@@ -136,7 +136,7 @@ public class EMFFormsLabelProviderImpl_Test {
 		DatabindingFailedException {
 		final VDomainModelReference domainModelReference = mock(VDomainModelReference.class);
 		final IValueProperty valueProperty = mock(IValueProperty.class);
-		when(databinding.getValueProperty(domainModelReference)).thenReturn(valueProperty);
+		when(databinding.getValueProperty(domainModelReference, null)).thenReturn(valueProperty);
 		final EStructuralFeature eStructuralFeature = mock(EStructuralFeature.class);
 		when(eStructuralFeature.getName()).thenReturn("myValue"); //$NON-NLS-1$
 		final EClass eClass = mock(EClass.class);
@@ -212,7 +212,7 @@ public class EMFFormsLabelProviderImpl_Test {
 	public void testGetDescriptionVDomainModelReferenceThrowDatabindingException() throws NoLabelFoundException,
 		DatabindingFailedException {
 		final VDomainModelReference domainModelReference = mock(VDomainModelReference.class);
-		when(databinding.getValueProperty(domainModelReference)).thenThrow(DatabindingFailedException.class);
+		when(databinding.getValueProperty(domainModelReference, null)).thenThrow(DatabindingFailedException.class);
 
 		final ReportService reportService = mock(ReportService.class);
 		labelProvider.setReportService(reportService);
@@ -225,7 +225,7 @@ public class EMFFormsLabelProviderImpl_Test {
 		final VDomainModelReference domainModelReference = mock(VDomainModelReference.class);
 
 		final IValueProperty valueProperty = mock(IValueProperty.class);
-		when(databinding.getValueProperty(domainModelReference)).thenReturn(valueProperty);
+		when(databinding.getValueProperty(domainModelReference, null)).thenReturn(valueProperty);
 		final EStructuralFeature eStructuralFeature = mock(EStructuralFeature.class);
 		when(eStructuralFeature.getEContainingClass()).thenReturn(EcorePackage.eINSTANCE.getEObject());
 		when(valueProperty.getValueType()).thenReturn(eStructuralFeature);
@@ -259,7 +259,7 @@ public class EMFFormsLabelProviderImpl_Test {
 		DatabindingFailedException {
 		final VDomainModelReference domainModelReference = mock(VDomainModelReference.class);
 		final IValueProperty valueProperty = mock(IValueProperty.class);
-		when(databinding.getValueProperty(domainModelReference)).thenReturn(valueProperty);
+		when(databinding.getValueProperty(domainModelReference, null)).thenReturn(valueProperty);
 		final EStructuralFeature eStructuralFeature = mock(EStructuralFeature.class);
 		when(eStructuralFeature.getName()).thenReturn("myValue"); //$NON-NLS-1$
 		final EClass eClass = mock(EClass.class);
@@ -276,7 +276,7 @@ public class EMFFormsLabelProviderImpl_Test {
 		DatabindingFailedException {
 		final VDomainModelReference domainModelReference = mock(VDomainModelReference.class);
 		final IValueProperty valueProperty = mock(IValueProperty.class);
-		when(databinding.getValueProperty(domainModelReference)).thenReturn(valueProperty);
+		when(databinding.getValueProperty(domainModelReference, null)).thenReturn(valueProperty);
 		final EStructuralFeature eStructuralFeature = mock(EStructuralFeature.class);
 		when(eStructuralFeature.getName()).thenReturn("myValue"); //$NON-NLS-1$
 		final EClass eClass = mock(EClass.class);

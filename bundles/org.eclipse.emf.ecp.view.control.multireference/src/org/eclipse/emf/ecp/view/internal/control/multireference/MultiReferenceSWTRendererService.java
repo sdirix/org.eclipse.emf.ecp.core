@@ -107,7 +107,7 @@ public class MultiReferenceSWTRendererService implements EMFFormsRendererService
 		IValueProperty valueProperty;
 		try {
 			valueProperty = databindingService
-				.getValueProperty(control.getDomainModelReference());
+				.getValueProperty(control.getDomainModelReference(), viewModelContext.getDomainModel());
 		} catch (final DatabindingFailedException ex) {
 			reportService.report(new DatabindingFailedReport(ex));
 			return NOT_APPLICABLE;

@@ -135,7 +135,7 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 	 */
 	protected boolean isUnsettable() throws DatabindingFailedException {
 		final IValueProperty valueProperty = getEMFFormsDatabinding()
-			.getValueProperty(getVElement().getDomainModelReference());
+			.getValueProperty(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
 		final EStructuralFeature feature = (EStructuralFeature) valueProperty.getValueType();
 		return feature.isUnsettable();
 	}

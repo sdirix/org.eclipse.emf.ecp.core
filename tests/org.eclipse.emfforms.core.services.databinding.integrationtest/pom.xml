@@ -37,6 +37,11 @@
 							</requirement>
 							<requirement>
 								<type>p2-installable-unit</type>
+								<id>org.eclipse.emfforms.core.services.emf</id>
+								<versionRange>0.0.0</versionRange>
+							</requirement>
+							<requirement>
+								<type>p2-installable-unit</type>
 								<id>org.eclipse.emfforms.core.services.databinding.featurepath</id>
 								<versionRange>0.0.0</versionRange>
 							</requirement>

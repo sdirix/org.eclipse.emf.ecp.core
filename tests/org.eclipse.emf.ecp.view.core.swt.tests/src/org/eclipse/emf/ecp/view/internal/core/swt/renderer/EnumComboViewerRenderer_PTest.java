@@ -161,7 +161,7 @@ public class EnumComboViewerRenderer_PTest extends AbstractControl_PTest {
 		mockDatabindingIsUnsettable();
 		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			mockedObservable);
-		when(databindingService.getValueProperty(any(VDomainModelReference.class))).thenReturn(
+		when(databindingService.getValueProperty(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			Properties.selfValue(mockedObservable.getValueType()));
 
 		final Control renderControl = renderControl(new SWTGridCell(0, 2, renderer));

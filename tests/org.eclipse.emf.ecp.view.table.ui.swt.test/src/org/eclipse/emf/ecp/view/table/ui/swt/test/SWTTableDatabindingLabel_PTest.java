@@ -150,7 +150,7 @@ public class SWTTableDatabindingLabel_PTest {
 		final IValueProperty columnValueProperty = new EMFValueProperty(EcorePackage.eINSTANCE.getEClass_Abstract());
 		final VDomainModelReference columnDMR = ((VTableDomainModelReference) vTableControl.getDomainModelReference())
 			.getColumnDomainModelReferences().get(0);
-		when(databindingService.getValueProperty(columnDMR)).thenReturn(columnValueProperty);
+		when(databindingService.getValueProperty(columnDMR, domainModel)).thenReturn(columnValueProperty);
 
 		final Control renderedControl = renderer.render(new SWTGridCell(0, 0, renderer), shell);
 		final Composite composite = (Composite) renderedControl;
@@ -280,7 +280,7 @@ public class SWTTableDatabindingLabel_PTest {
 		final IValueProperty columnValueProperty = new EMFValueProperty(EcorePackage.eINSTANCE.getEClass_Abstract());
 		final VDomainModelReference columnDMR = ((VTableDomainModelReference) vTableControl.getDomainModelReference())
 			.getColumnDomainModelReferences().get(0);
-		when(databindingService.getValueProperty(columnDMR)).thenReturn(columnValueProperty);
+		when(databindingService.getValueProperty(columnDMR, domainModel)).thenReturn(columnValueProperty);
 
 		when(databindingService.getObservableList(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			mockedObservableList);

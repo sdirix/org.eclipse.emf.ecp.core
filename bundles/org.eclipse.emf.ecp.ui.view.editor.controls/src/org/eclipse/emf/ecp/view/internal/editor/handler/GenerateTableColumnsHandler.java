@@ -89,9 +89,9 @@ public class GenerateTableColumnsHandler extends MasterDetailAction {
 		try {
 			if (tableDMR.getDomainModelReference() != null) {
 				valueProperty = Activator.getDefault().getEMFFormsDatabinding()
-					.getValueProperty(tableDMR.getDomainModelReference());
+					.getValueProperty(tableDMR.getDomainModelReference(), null);
 			} else {
-				valueProperty = Activator.getDefault().getEMFFormsDatabinding().getValueProperty(tableDMR);
+				valueProperty = Activator.getDefault().getEMFFormsDatabinding().getValueProperty(tableDMR, null);
 			}
 		} catch (final DatabindingFailedException ex) {
 			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));

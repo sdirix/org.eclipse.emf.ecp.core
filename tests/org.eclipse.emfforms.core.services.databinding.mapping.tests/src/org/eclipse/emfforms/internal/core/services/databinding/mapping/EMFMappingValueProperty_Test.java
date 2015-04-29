@@ -14,7 +14,10 @@ package org.eclipse.emfforms.internal.core.services.databinding.mapping;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
+import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.A;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.C;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestFactory;
@@ -40,7 +43,7 @@ public class EMFMappingValueProperty_Test {
 		final A a1 = TestFactory.eINSTANCE.createA();
 		c.getEClassToA().put(eClass1, a1);
 
-		final EMFMappingValueProperty mappingValueProperty = new EMFMappingValueProperty(eClass1,
+		final EMFMappingValueProperty mappingValueProperty = new EMFMappingValueProperty(null, eClass1,
 			TestPackage.eINSTANCE.getC_EClassToA());
 		assertEquals(a1, mappingValueProperty.doGetValue(c));
 	}
@@ -55,7 +58,7 @@ public class EMFMappingValueProperty_Test {
 		final C c = TestFactory.eINSTANCE.createC();
 		final EClass eClass1 = TestPackage.eINSTANCE.getB();
 
-		final EMFMappingValueProperty mappingValueProperty = new EMFMappingValueProperty(eClass1,
+		final EMFMappingValueProperty mappingValueProperty = new EMFMappingValueProperty(null, eClass1,
 			TestPackage.eINSTANCE.getC_EClassToA());
 		assertNull(mappingValueProperty.doGetValue(c));
 	}
@@ -74,7 +77,11 @@ public class EMFMappingValueProperty_Test {
 		a2.setB(TestFactory.eINSTANCE.createB());
 		c.getEClassToA().put(eClass1, a1);
 
-		final EMFMappingValueProperty mappingValueProperty = new EMFMappingValueProperty(eClass1,
+		final AdapterFactoryEditingDomain domain = new AdapterFactoryEditingDomain(
+			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE),
+			new BasicCommandStack());
+
+		final EMFMappingValueProperty mappingValueProperty = new EMFMappingValueProperty(domain, eClass1,
 			TestPackage.eINSTANCE.getC_EClassToA());
 		assertEquals(a1, mappingValueProperty.doGetValue(c));
 
@@ -92,8 +99,11 @@ public class EMFMappingValueProperty_Test {
 		final C c = TestFactory.eINSTANCE.createC();
 		final EClass eClass1 = TestPackage.eINSTANCE.getA();
 		final A a1 = TestFactory.eINSTANCE.createA();
+		final AdapterFactoryEditingDomain domain = new AdapterFactoryEditingDomain(
+			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE),
+			new BasicCommandStack());
 
-		final EMFMappingValueProperty mappingValueProperty = new EMFMappingValueProperty(eClass1,
+		final EMFMappingValueProperty mappingValueProperty = new EMFMappingValueProperty(domain, eClass1,
 			TestPackage.eINSTANCE.getC_EClassToA());
 		mappingValueProperty.doSetValue(c, a1);
 

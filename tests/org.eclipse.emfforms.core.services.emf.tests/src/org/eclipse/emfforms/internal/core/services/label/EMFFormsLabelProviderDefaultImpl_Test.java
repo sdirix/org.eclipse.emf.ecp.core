@@ -101,11 +101,11 @@ public class EMFFormsLabelProviderDefaultImpl_Test {
 		when(structuralFeature.getEContainingClass()).thenReturn(TestPackage.eINSTANCE.getD());
 		when(itemPropertyDescriptor.getDisplayName(any(Object.class))).thenReturn(expectedResult);
 		when(valueProperty.getValueType()).thenReturn(structuralFeature);
-		when(databindingService.getValueProperty(domainModelReference)).thenReturn(valueProperty);
+		when(databindingService.getValueProperty(domainModelReference, null)).thenReturn(valueProperty);
 
 		final IObservableValue result = labelProvider.getDisplayName(domainModelReference);
 
-		verify(databindingService).getValueProperty(domainModelReference);
+		verify(databindingService).getValueProperty(domainModelReference, null);
 		verify(itemPropertyDescriptor).getDisplayName(any(D.class));
 		assertEquals(expectedResult, result.getValue());
 	}
@@ -194,11 +194,11 @@ public class EMFFormsLabelProviderDefaultImpl_Test {
 		when(structuralFeature.getEContainingClass()).thenReturn(TestPackage.eINSTANCE.getD());
 		when(itemPropertyDescriptor.getDescription(any(Object.class))).thenReturn(expectedResult);
 		when(valueProperty.getValueType()).thenReturn(structuralFeature);
-		when(databindingService.getValueProperty(domainModelReference)).thenReturn(valueProperty);
+		when(databindingService.getValueProperty(domainModelReference, null)).thenReturn(valueProperty);
 
 		final IObservableValue result = labelProvider.getDescription(domainModelReference);
 
-		verify(databindingService).getValueProperty(domainModelReference);
+		verify(databindingService).getValueProperty(domainModelReference, null);
 		verify(itemPropertyDescriptor).getDescription(any(D.class));
 		assertEquals(expectedResult, result.getValue());
 	}

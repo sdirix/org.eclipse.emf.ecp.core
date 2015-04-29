@@ -17,9 +17,13 @@ import org.eclipse.core.databinding.property.list.IListProperty;
 import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.databinding.EMFProperties;
 import org.eclipse.emf.databinding.IEMFValueProperty;
+import org.eclipse.emf.databinding.edit.EMFEditProperties;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter;
 
@@ -50,10 +54,10 @@ public class FeaturePathDomainModelReferenceConverter implements DomainModelRefe
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter#convertToValueProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)
+	 * @see org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter#convertToValueProperty(VDomainModelReference,EObject)
 	 */
 	@Override
-	public IValueProperty convertToValueProperty(VDomainModelReference domainModelReference)
+	public IValueProperty convertToValueProperty(VDomainModelReference domainModelReference, EObject object)
 		throws DatabindingFailedException {
 		if (domainModelReference == null) {
 			throw new IllegalArgumentException("The given VDomainModelReference must not be null."); //$NON-NLS-1$
@@ -70,9 +74,9 @@ public class FeaturePathDomainModelReferenceConverter implements DomainModelRefe
 		}
 
 		final List<EReference> referencePath = featurePathReference.getDomainModelEReferencePath();
-
+		final EditingDomain editingDomain = getEditingDomain(object);
 		if (referencePath.isEmpty()) {
-			return EMFProperties.value(featurePathReference.getDomainModelEFeature());
+			return EMFEditProperties.value(editingDomain, featurePathReference.getDomainModelEFeature());
 		}
 
 		IEMFValueProperty emfValueProperty = EMFProperties.value(referencePath.get(0));
@@ -82,15 +86,19 @@ public class FeaturePathDomainModelReferenceConverter implements DomainModelRefe
 		return emfValueProperty.value(featurePathReference.getDomainModelEFeature());
 	}
 
+	private EditingDomain getEditingDomain(EObject object) throws DatabindingFailedException {
+		return AdapterFactoryEditingDomain.getEditingDomainFor(object);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 *
 	 * @throws DatabindingFailedException
 	 *
-	 * @see org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter#convertToListProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)
+	 * @see org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter#convertToListProperty(VDomainModelReference,EObject)
 	 */
 	@Override
-	public IListProperty convertToListProperty(VDomainModelReference domainModelReference)
+	public IListProperty convertToListProperty(VDomainModelReference domainModelReference, EObject object)
 		throws DatabindingFailedException {
 		if (domainModelReference == null) {
 			throw new IllegalArgumentException("The given VDomainModelReference must not be null."); //$NON-NLS-1$
@@ -107,9 +115,9 @@ public class FeaturePathDomainModelReferenceConverter implements DomainModelRefe
 		}
 
 		final List<EReference> referencePath = featurePathReference.getDomainModelEReferencePath();
-
+		final EditingDomain editingDomain = getEditingDomain(object);
 		if (referencePath.isEmpty()) {
-			return EMFProperties.list(featurePathReference.getDomainModelEFeature());
+			return EMFEditProperties.list(editingDomain, featurePathReference.getDomainModelEFeature());
 		}
 
 		IEMFValueProperty emfValueProperty = EMFProperties.value(referencePath.get(0));

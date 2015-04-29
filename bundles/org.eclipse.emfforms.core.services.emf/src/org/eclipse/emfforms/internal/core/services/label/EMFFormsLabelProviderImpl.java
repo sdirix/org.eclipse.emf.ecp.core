@@ -169,7 +169,7 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 
 		IValueProperty valueProperty;
 		try {
-			valueProperty = emfFormsDatabinding.getValueProperty(domainModelReference);
+			valueProperty = emfFormsDatabinding.getValueProperty(domainModelReference, null);
 		} catch (final DatabindingFailedException ex) {
 			reportService.report(new DatabindingFailedReport(ex));
 			throw new NoLabelFoundException(ex);
@@ -252,7 +252,7 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 
 		IValueProperty valueProperty;
 		try {
-			valueProperty = emfFormsDatabinding.getValueProperty(domainModelReference);
+			valueProperty = emfFormsDatabinding.getValueProperty(domainModelReference, null);
 		} catch (final DatabindingFailedException ex) {
 			reportService.report(new DatabindingFailedReport(ex));
 			throw new NoLabelFoundException(ex);

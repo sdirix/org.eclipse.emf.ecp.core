@@ -234,7 +234,8 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 			final VDomainModelReference domainModelReference = getVElement().getDomainModelReference();
 			final IValueProperty valueProperty;
 			try {
-				valueProperty = getEMFFormsDatabinding().getValueProperty(domainModelReference);
+				valueProperty = getEMFFormsDatabinding().getValueProperty(domainModelReference,
+					getViewModelContext().getDomainModel());
 			} catch (final DatabindingFailedException ex) {
 				getReportService().report(new RenderingFailedReport(ex));
 				break labelRender;

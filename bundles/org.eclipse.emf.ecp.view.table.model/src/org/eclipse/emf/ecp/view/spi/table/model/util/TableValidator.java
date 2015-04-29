@@ -317,7 +317,7 @@ public class TableValidator extends EObjectValidator
 		IValueProperty valueProperty;
 		try {
 			valueProperty = getEMFFormsDatabinding()
-				.getValueProperty(pathToMultiRef);
+				.getValueProperty(pathToMultiRef, null);
 		} catch (final DatabindingFailedException ex) {
 			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
 			return true;

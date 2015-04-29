@@ -227,7 +227,7 @@ public abstract class ECPAbstractControl {
 			IValueProperty valueProperty;
 			try {
 				valueProperty = Activator.getDefault().getEMFFormsDatabinding()
-					.getValueProperty(control.getDomainModelReference());
+					.getValueProperty(control.getDomainModelReference(), viewModelContext.getDomainModel());
 			} catch (final DatabindingFailedException ex) {
 				throw new IllegalArgumentException(
 					"The passed VDomainModelReference resolves to no EStructuralFeature."); //$NON-NLS-1$

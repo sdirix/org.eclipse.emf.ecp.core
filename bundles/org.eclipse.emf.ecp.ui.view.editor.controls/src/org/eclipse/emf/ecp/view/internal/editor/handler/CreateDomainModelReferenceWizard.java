@@ -241,7 +241,7 @@ public class CreateDomainModelReferenceWizard extends SelectModelElementWizard {
 		}
 		try {
 			Activator.getDefault().getEMFFormsDatabinding()
-				.getValueProperty(dmrToCheck);
+				.getValueProperty(dmrToCheck, null);
 		} catch (final DatabindingFailedException ex) {
 			// Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
 			return false;
@@ -376,7 +376,7 @@ public class CreateDomainModelReferenceWizard extends SelectModelElementWizard {
 			}
 			try {
 				Activator.getDefault().getEMFFormsDatabinding()
-					.getValueProperty(dmrToCheck);
+					.getValueProperty(dmrToCheck, null);
 			} catch (final DatabindingFailedException ex) {
 				Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
 				return false;

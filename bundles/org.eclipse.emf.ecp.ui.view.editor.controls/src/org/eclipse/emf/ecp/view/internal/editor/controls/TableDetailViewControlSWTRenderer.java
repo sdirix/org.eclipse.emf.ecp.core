@@ -271,7 +271,8 @@ public class TableDetailViewControlSWTRenderer extends SimpleControlSWTControlSW
 					IValueProperty valueProperty;
 					try {
 						valueProperty = org.eclipse.emf.ecp.view.internal.editor.controls.Activator
-							.getDefault().getEMFFormsDatabinding().getValueProperty(domainModelReference);
+							.getDefault().getEMFFormsDatabinding()
+							.getValueProperty(domainModelReference, getViewModelContext().getDomainModel());
 					} catch (final DatabindingFailedException ex) {
 						Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
 						return;

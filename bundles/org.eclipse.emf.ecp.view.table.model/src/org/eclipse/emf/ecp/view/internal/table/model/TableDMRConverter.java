@@ -13,6 +13,7 @@ package org.eclipse.emf.ecp.view.internal.table.model;
 
 import org.eclipse.core.databinding.property.list.IListProperty;
 import org.eclipse.core.databinding.property.value.IValueProperty;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
@@ -75,10 +76,11 @@ public class TableDMRConverter implements DomainModelReferenceConverter {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter#convertToValueProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)
+	 * @see org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter#convertToValueProperty(VDomainModelReference,
+	 *      EObject)
 	 */
 	@Override
-	public IValueProperty convertToValueProperty(VDomainModelReference domainModelReference)
+	public IValueProperty convertToValueProperty(VDomainModelReference domainModelReference, EObject object)
 		throws DatabindingFailedException {
 		if (domainModelReference == null) {
 			throw new IllegalArgumentException("The given VDomainModelReference must not be null."); //$NON-NLS-1$
@@ -94,16 +96,17 @@ public class TableDMRConverter implements DomainModelReferenceConverter {
 			throw new DatabindingFailedException(
 				"The field domainModelReference of the given VTableDomainModelReference must not be null."); //$NON-NLS-1$
 		}
-		return emfFormsDatabinding.getValueProperty(tableDomainModelReference.getDomainModelReference());
+		return emfFormsDatabinding.getValueProperty(tableDomainModelReference.getDomainModelReference(), object);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter#convertToListProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)
+	 * @see org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter#convertToListProperty(VDomainModelReference,
+	 *      EObject)
 	 */
 	@Override
-	public IListProperty convertToListProperty(VDomainModelReference domainModelReference)
+	public IListProperty convertToListProperty(VDomainModelReference domainModelReference, EObject object)
 		throws DatabindingFailedException {
 		if (domainModelReference == null) {
 			throw new IllegalArgumentException("The given VDomainModelReference must not be null."); //$NON-NLS-1$
@@ -119,7 +122,7 @@ public class TableDMRConverter implements DomainModelReferenceConverter {
 			throw new DatabindingFailedException(
 				"The field domainModelReference of the given VTableDomainModelReference must not be null."); //$NON-NLS-1$
 		}
-		return emfFormsDatabinding.getListProperty(tableDomainModelReference.getDomainModelReference());
+		return emfFormsDatabinding.getListProperty(tableDomainModelReference.getDomainModelReference(), object);
 	}
 
 }

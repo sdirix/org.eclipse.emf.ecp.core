@@ -17,20 +17,30 @@ import static org.mockito.Mockito.when;
 
 import org.eclipse.core.databinding.property.list.IListProperty;
 import org.eclipse.core.databinding.property.value.IValueProperty;
+import org.eclipse.emf.common.command.BasicCommandStack;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.databinding.EMFProperties;
 import org.eclipse.emf.databinding.IEMFListProperty;
 import org.eclipse.emf.databinding.IEMFValueProperty;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EcoreFactory;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexdmrFactory;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -42,6 +52,26 @@ import org.junit.Test;
 public class IndexDomainModelReferenceConverter_Test {
 
 	private IndexDomainModelReferenceConverter converter;
+	private static EObject validEObject;
+
+	@BeforeClass
+	public static void setupClass() {
+		validEObject = createValidEObject();
+	}
+
+	private static EObject createValidEObject() {
+		final ResourceSet rs = new ResourceSetImpl();
+		final AdapterFactoryEditingDomain domain = new AdapterFactoryEditingDomain(
+			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE),
+			new BasicCommandStack(), rs);
+		rs.eAdapters().add(new AdapterFactoryEditingDomain.EditingDomainProvider(domain));
+		final Resource resource = rs.createResource(URI.createURI("VIRTAUAL_URI")); //$NON-NLS-1$
+		final EObject domainObject = EcoreFactory.eINSTANCE.createEObject();
+		if (resource != null) {
+			resource.getContents().add(domainObject);
+		}
+		return domainObject;
+	}
 
 	/**
 	 * Set up executed before every test case.
@@ -60,7 +90,7 @@ public class IndexDomainModelReferenceConverter_Test {
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emfforms.internal.core.services.databinding.index.IndexDomainModelReferenceConverter#isApplicable(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * {@link org.eclipse.emfforms.internal.core.services.databinding.index.IndexDomainModelReferenceConverter#isApplicable(VDomainModelReference)}
 	 * .
 	 */
 	@Test
@@ -75,7 +105,7 @@ public class IndexDomainModelReferenceConverter_Test {
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emfforms.internal.core.services.databinding.index.IndexDomainModelReferenceConverter#convertToValueProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * {@link org.eclipse.emfforms.internal.core.services.databinding.index.IndexDomainModelReferenceConverter#convertToValueProperty(VDomainModelReference,EObject)}
 	 * .
 	 *
 	 * @throws DatabindingFailedException if the databinding failed
@@ -96,10 +126,10 @@ public class IndexDomainModelReferenceConverter_Test {
 		IEMFValueProperty targetValueProperty = EMFProperties.value(TestPackage.eINSTANCE.getC_D());
 		targetValueProperty = targetValueProperty.value(TestPackage.eINSTANCE.getD_X());
 		final EMFFormsDatabinding emfFormsDatabinding = mock(EMFFormsDatabinding.class);
-		when(emfFormsDatabinding.getValueProperty(targetDMR)).thenReturn(targetValueProperty);
+		when(emfFormsDatabinding.getValueProperty(targetDMR, validEObject)).thenReturn(targetValueProperty);
 		converter.setEMFFormsDatabinding(emfFormsDatabinding);
 
-		final IValueProperty resultProperty = converter.convertToValueProperty(indexDMR);
+		final IValueProperty resultProperty = converter.convertToValueProperty(indexDMR, validEObject);
 
 		final String expected = "A.b<B> => B.cList<C> index 1 => C.d<D> => D.x<EString>"; //$NON-NLS-1$
 		assertEquals(expected, resultProperty.toString());
@@ -107,7 +137,7 @@ public class IndexDomainModelReferenceConverter_Test {
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emfforms.internal.core.services.databinding.index.IndexDomainModelReferenceConverter#convertToValueProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * {@link org.eclipse.emfforms.internal.core.services.databinding.index.IndexDomainModelReferenceConverter#convertToValueProperty(VDomainModelReference,EObject)}
 	 * .
 	 *
 	 * @throws DatabindingFailedException if the databinding failed
@@ -127,10 +157,10 @@ public class IndexDomainModelReferenceConverter_Test {
 		IEMFValueProperty targetValueProperty = EMFProperties.value(TestPackage.eINSTANCE.getC_D());
 		targetValueProperty = targetValueProperty.value(TestPackage.eINSTANCE.getD_X());
 		final EMFFormsDatabinding emfFormsDatabinding = mock(EMFFormsDatabinding.class);
-		when(emfFormsDatabinding.getValueProperty(targetDMR)).thenReturn(targetValueProperty);
+		when(emfFormsDatabinding.getValueProperty(targetDMR, validEObject)).thenReturn(targetValueProperty);
 		converter.setEMFFormsDatabinding(emfFormsDatabinding);
 
-		final IValueProperty resultProperty = converter.convertToValueProperty(indexDMR);
+		final IValueProperty resultProperty = converter.convertToValueProperty(indexDMR, validEObject);
 
 		final String expected = "B.cList<C> index 1 => C.d<D> => D.x<EString>"; //$NON-NLS-1$
 		assertEquals(expected, resultProperty.toString());
@@ -138,7 +168,7 @@ public class IndexDomainModelReferenceConverter_Test {
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emfforms.internal.core.services.databinding.index.IndexDomainModelReferenceConverter#convertToValueProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * {@link org.eclipse.emfforms.internal.core.services.databinding.index.IndexDomainModelReferenceConverter#convertToValueProperty(VDomainModelReference,EObject)}
 	 * .
 	 *
 	 * @throws DatabindingFailedException if the databinding failed
@@ -156,16 +186,16 @@ public class IndexDomainModelReferenceConverter_Test {
 
 		final IEMFValueProperty targetValueProperty = EMFProperties.value(TestPackage.eINSTANCE.getD_X());
 		final EMFFormsDatabinding emfFormsDatabinding = mock(EMFFormsDatabinding.class);
-		when(emfFormsDatabinding.getValueProperty(targetDMR)).thenReturn(targetValueProperty);
+		when(emfFormsDatabinding.getValueProperty(targetDMR, validEObject)).thenReturn(targetValueProperty);
 		converter.setEMFFormsDatabinding(emfFormsDatabinding);
 
-		converter.convertToValueProperty(indexDMR);
+		converter.convertToValueProperty(indexDMR, validEObject);
 
 	}
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emfforms.internal.core.services.databinding.index.IndexDomainModelReferenceConverter#convertToValueProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * {@link org.eclipse.emfforms.internal.core.services.databinding.index.IndexDomainModelReferenceConverter#convertToValueProperty(VDomainModelReference,EObject)}
 	 * .
 	 *
 	 * @throws DatabindingFailedException if the databinding failed
@@ -173,36 +203,36 @@ public class IndexDomainModelReferenceConverter_Test {
 	@Test(expected = DatabindingFailedException.class)
 	public void testConvertToValuePropertyNoFeature() throws DatabindingFailedException {
 		final VIndexDomainModelReference indexReference = VIndexdmrFactory.eINSTANCE.createIndexDomainModelReference();
-		converter.convertToValueProperty(indexReference);
+		converter.convertToValueProperty(indexReference, validEObject);
 	}
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emfforms.internal.core.services.databinding.index.IndexDomainModelReferenceConverter#convertToValueProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * {@link org.eclipse.emfforms.internal.core.services.databinding.index.IndexDomainModelReferenceConverter#convertToValueProperty(VDomainModelReference,EObject)}
 	 * .
 	 *
 	 * @throws DatabindingFailedException if the databinding failed (expected for this test case)
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testConvertToValuePropertyNull() throws DatabindingFailedException {
-		converter.convertToValueProperty(null);
+		converter.convertToValueProperty(null, validEObject);
 	}
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emfforms.internal.core.services.databinding.index.IndexDomainModelReferenceConverter#convertToValueProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * {@link org.eclipse.emfforms.internal.core.services.databinding.index.IndexDomainModelReferenceConverter#convertToValueProperty(VDomainModelReference,EObject)}
 	 * .
 	 *
 	 * @throws DatabindingFailedException if the databinding failed
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testConvertToValuePropertyWrongReferenceType() throws DatabindingFailedException {
-		converter.convertToValueProperty(mock(VDomainModelReference.class));
+		converter.convertToValueProperty(mock(VDomainModelReference.class), validEObject);
 	}
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emfforms.internal.core.services.databinding.index.IndexDomainModelReferenceConverter#convertToListProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * {@link org.eclipse.emfforms.internal.core.services.databinding.index.IndexDomainModelReferenceConverter#convertToListProperty(VDomainModelReference,EObject)}
 	 * .
 	 *
 	 * @throws DatabindingFailedException if the databinding failed
@@ -223,10 +253,10 @@ public class IndexDomainModelReferenceConverter_Test {
 		final IEMFValueProperty targetValueProperty = EMFProperties.value(TestPackage.eINSTANCE.getC_D());
 		final IEMFListProperty targetListProperty = targetValueProperty.list(TestPackage.eINSTANCE.getD_YList());
 		final EMFFormsDatabinding emfFormsDatabinding = mock(EMFFormsDatabinding.class);
-		when(emfFormsDatabinding.getListProperty(targetDMR)).thenReturn(targetListProperty);
+		when(emfFormsDatabinding.getListProperty(targetDMR, validEObject)).thenReturn(targetListProperty);
 		converter.setEMFFormsDatabinding(emfFormsDatabinding);
 
-		final IListProperty resultProperty = converter.convertToListProperty(indexDMR);
+		final IListProperty resultProperty = converter.convertToListProperty(indexDMR, validEObject);
 
 		final String expected = "A.b<B> => B.cList<C> index 1 => C.d<D> => D.yList[]<EInt>"; //$NON-NLS-1$
 		assertEquals(expected, resultProperty.toString());
@@ -234,7 +264,7 @@ public class IndexDomainModelReferenceConverter_Test {
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emfforms.internal.core.services.databinding.index.IndexDomainModelReferenceConverter#convertToListProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * {@link org.eclipse.emfforms.internal.core.services.databinding.index.IndexDomainModelReferenceConverter#convertToListProperty(VDomainModelReference,EObject)}
 	 * .
 	 *
 	 * @throws DatabindingFailedException if the databinding failed
@@ -254,10 +284,10 @@ public class IndexDomainModelReferenceConverter_Test {
 		final IEMFValueProperty targetValueProperty = EMFProperties.value(TestPackage.eINSTANCE.getC_D());
 		final IEMFListProperty targetListProperty = targetValueProperty.list(TestPackage.eINSTANCE.getD_YList());
 		final EMFFormsDatabinding emfFormsDatabinding = mock(EMFFormsDatabinding.class);
-		when(emfFormsDatabinding.getListProperty(targetDMR)).thenReturn(targetListProperty);
+		when(emfFormsDatabinding.getListProperty(targetDMR, validEObject)).thenReturn(targetListProperty);
 		converter.setEMFFormsDatabinding(emfFormsDatabinding);
 
-		final IListProperty resultProperty = converter.convertToListProperty(indexDMR);
+		final IListProperty resultProperty = converter.convertToListProperty(indexDMR, validEObject);
 
 		final String expected = "B.cList<C> index 1 => C.d<D> => D.yList[]<EInt>"; //$NON-NLS-1$
 		assertEquals(expected, resultProperty.toString());
@@ -265,7 +295,7 @@ public class IndexDomainModelReferenceConverter_Test {
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emfforms.internal.core.services.databinding.index.IndexDomainModelReferenceConverter#convertToListProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * {@link org.eclipse.emfforms.internal.core.services.databinding.index.IndexDomainModelReferenceConverter#convertToListProperty(VDomainModelReference,EObject)}
 	 * .
 	 *
 	 * @throws DatabindingFailedException if the databinding failed
@@ -283,39 +313,39 @@ public class IndexDomainModelReferenceConverter_Test {
 
 		final IEMFListProperty targetListProperty = EMFProperties.list(TestPackage.eINSTANCE.getD_YList());
 		final EMFFormsDatabinding emfFormsDatabinding = mock(EMFFormsDatabinding.class);
-		when(emfFormsDatabinding.getListProperty(targetDMR)).thenReturn(targetListProperty);
+		when(emfFormsDatabinding.getListProperty(targetDMR, validEObject)).thenReturn(targetListProperty);
 		converter.setEMFFormsDatabinding(emfFormsDatabinding);
 
-		converter.convertToListProperty(indexDMR);
+		converter.convertToListProperty(indexDMR, validEObject);
 	}
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emfforms.internal.core.services.databinding.index.IndexDomainModelReferenceConverter#convertToListProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * {@link org.eclipse.emfforms.internal.core.services.databinding.index.IndexDomainModelReferenceConverter#convertToListProperty(VDomainModelReference,EObject)}
 	 * .
 	 *
 	 * @throws DatabindingFailedException if the databinding failed
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testConvertToListPropertyNull() throws DatabindingFailedException {
-		converter.convertToListProperty(null);
+		converter.convertToListProperty(null, validEObject);
 	}
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emfforms.internal.core.services.databinding.index.IndexDomainModelReferenceConverter#convertToListProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * {@link org.eclipse.emfforms.internal.core.services.databinding.index.IndexDomainModelReferenceConverter#convertToListProperty(VDomainModelReference,EObject)}
 	 * .
 	 *
 	 * @throws DatabindingFailedException if the databinding failed
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testConvertToListPropertyWrongReferenceType() throws DatabindingFailedException {
-		converter.convertToListProperty(mock(VDomainModelReference.class));
+		converter.convertToListProperty(mock(VDomainModelReference.class), validEObject);
 	}
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emfforms.internal.core.services.databinding.index.IndexDomainModelReferenceConverter#convertToListProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * {@link org.eclipse.emfforms.internal.core.services.databinding.index.IndexDomainModelReferenceConverter#convertToListProperty(VDomainModelReference,EObject)}
 	 * .
 	 *
 	 * @throws DatabindingFailedException if the databinding failed (expected for this test case)
@@ -323,6 +353,6 @@ public class IndexDomainModelReferenceConverter_Test {
 	@Test(expected = DatabindingFailedException.class)
 	public void testConvertToListPropertyNoFeature() throws DatabindingFailedException {
 		final VIndexDomainModelReference indexReference = VIndexdmrFactory.eINSTANCE.createIndexDomainModelReference();
-		converter.convertToListProperty(indexReference);
+		converter.convertToListProperty(indexReference, validEObject);
 	}
 }

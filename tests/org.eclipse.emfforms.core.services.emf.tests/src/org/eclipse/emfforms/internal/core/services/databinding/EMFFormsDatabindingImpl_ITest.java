@@ -12,10 +12,13 @@
 package org.eclipse.emfforms.internal.core.services.databinding;
 
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter;
@@ -71,9 +74,9 @@ public class EMFFormsDatabindingImpl_ITest {
 		when(converter.isApplicable(reference)).thenReturn(0d);
 		final ServiceRegistration<DomainModelReferenceConverter> converterService = bundleContext.registerService(
 			DomainModelReferenceConverter.class, converter, null);
-		service.getValueProperty(reference);
+		service.getValueProperty(reference, mock(EObject.class));
 		verify(converter).isApplicable(reference);
-		verify(converter).convertToValueProperty(reference);
+		verify(converter).convertToValueProperty(eq(reference), any(EObject.class));
 		converterService.unregister();
 	}
 
@@ -84,9 +87,9 @@ public class EMFFormsDatabindingImpl_ITest {
 		when(converter.isApplicable(reference)).thenReturn(0d);
 		final ServiceRegistration<DomainModelReferenceConverter> converterService = bundleContext.registerService(
 			DomainModelReferenceConverter.class, converter, null);
-		service.getListProperty(reference);
+		service.getListProperty(reference, mock(EObject.class));
 		verify(converter).isApplicable(reference);
-		verify(converter).convertToListProperty(reference);
+		verify(converter).convertToListProperty(eq(reference), any(EObject.class));
 		converterService.unregister();
 	}
 }
