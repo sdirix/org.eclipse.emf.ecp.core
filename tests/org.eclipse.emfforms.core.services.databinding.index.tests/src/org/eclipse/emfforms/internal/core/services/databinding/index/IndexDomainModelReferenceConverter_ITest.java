@@ -13,6 +13,7 @@ package org.eclipse.emfforms.internal.core.services.databinding.index;
 
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.same;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -88,7 +89,7 @@ public class IndexDomainModelReferenceConverter_ITest {
 		indexReference.setTargetDMR(targetReference);
 
 		indexConverter.convertToValueProperty(indexReference, mock(EObject.class));
-		verify(emfFormsDatabinding).getValueProperty(targetReference, mock(EObject.class));
+		verify(emfFormsDatabinding).getValueProperty(same(targetReference), any(EObject.class));
 
 	}
 }

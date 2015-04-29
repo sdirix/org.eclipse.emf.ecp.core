@@ -13,6 +13,7 @@ package org.eclipse.emfforms.internal.core.services.databinding.mapping;
 
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.same;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -89,7 +90,7 @@ public class MappingDomainModelReferenceConverter_ITest {
 		mappingReference.setDomainModelReference(targetReference);
 
 		mappingConverter.convertToValueProperty(mappingReference, mock(EObject.class));
-		verify(emfFormsDatabinding).getValueProperty(targetReference, mock(EObject.class));
+		verify(emfFormsDatabinding).getValueProperty(same(targetReference), any(EObject.class));
 
 	}
 }
