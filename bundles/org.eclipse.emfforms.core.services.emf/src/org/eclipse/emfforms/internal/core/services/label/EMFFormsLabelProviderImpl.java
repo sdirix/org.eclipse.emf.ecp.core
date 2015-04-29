@@ -100,7 +100,8 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 	}
 
 	private static final String DISPLAY_NAME = "_UI_%1$s_%2$s_feature"; //$NON-NLS-1$
-	private static final String DESCRIPTION = "_UI_PropertyDescriptor_description"; //$NON-NLS-1$
+	private static final String DESCRIPTION = "_UI_%1$s_%2$s_description"; //$NON-NLS-1$
+	private static final String DESCRIPTION_COMPOSITE = "_UI_PropertyDescriptor_description"; //$NON-NLS-1$
 	private static final String TYPE = "_UI_%1$s_type"; //$NON-NLS-1$
 
 	private EMFFormsDatabinding emfFormsDatabinding;
@@ -312,8 +313,14 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 	}
 
 	private String getDescription(String eClassName, String featureName, Class<?> bundleClass) {
+		final String keyDefault = String.format(DESCRIPTION, eClassName, featureName);
+		final String description = localizationService.getString(bundleClass,
+			keyDefault);
+		if (description != keyDefault) {
+			return description;
+		}
 		final String descriptionWithSubstitution = localizationService.getString(bundleClass,
-			DESCRIPTION);
+			DESCRIPTION_COMPOSITE);
 		final String key = String.format(DISPLAY_NAME, eClassName, featureName);
 		final String featureSubstitution = getDisplayName(bundleClass, key);
 		final String eObjectSubstitution = localizationService.getString(bundleClass,
