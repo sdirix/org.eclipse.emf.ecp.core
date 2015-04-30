@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
+ * Philip Langer - bug fix 460968
  *
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.reference;
@@ -210,55 +211,86 @@ public class LinkControl extends SingleControl {
 	public Binding bindValue() {
 
 		final IObservableValue value = SWTObservables.observeText(hyperlink);
+		getDataBindingContext().bindValue(value, getModelValue(), createValueExtractingUpdateStrategy(),
+			new UpdateValueStrategy() {
+				@Override
+				public Object convert(Object value) {
+					updateChangeListener((EObject) value);
+					return "<a>" + getLinkText(value) + "</a>"; //$NON-NLS-1$ //$NON-NLS-2$
+				}
+			});
 
-		final Binding binding = getDataBindingContext().bindValue(value, getModelValue(), new UpdateValueStrategy() {
-
-			@Override
-			public Object convert(Object value) {
-				return getModelValue().getValue();
-			}
-		}, new UpdateValueStrategy() {
-			@Override
-			public Object convert(Object value) {
-				updateChangeListener((EObject) value);
-				return "<a>" + getLinkText(value) + "</a>"; //$NON-NLS-1$ //$NON-NLS-2$
-			}
-		});
 		final IObservableValue tooltipValue = SWTObservables.observeTooltipText(hyperlink);
-		getDataBindingContext().bindValue(tooltipValue, getModelValue(), new UpdateValueStrategy() {
-
-			@Override
-			public Object convert(Object value) {
-				return getModelValue().getValue();
-			}
-		}, new UpdateValueStrategy() {
-			@Override
-			public Object convert(Object value) {
-				return getLinkText(value);
-			}
-		});
+		getDataBindingContext().bindValue(tooltipValue, getModelValue(),
+			createValueExtractingUpdateStrategy(),
+			new UpdateValueStrategy() {
+				@Override
+				public Object convert(Object value) {
+					return getLinkText(value);
+				}
+			});
 
 		final IObservableValue imageValue = SWTObservables.observeImage(imageHyperlink);
 		getDataBindingContext().bindValue(imageValue, getModelValue(),
-			new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER)
-			, new UpdateValueStrategy() {
+			new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER),
+			new UpdateValueStrategy() {
 				@Override
 				public Object convert(Object value) {
 					return getImage(value);
 				}
 			});
 
+		final IObservableValue deleteButtonEnablement = SWTObservables.observeEnabled(getDeleteButton());
+		getDataBindingContext().bindValue(deleteButtonEnablement, getModelValue(),
+			createValueExtractingUpdateStrategy(),
+			new UpdateValueStrategy() {
+				@Override
+				public Object convert(Object value) {
+					return value != null;
+				}
+			});
+
 		return null;
 	}
 
+	private UpdateValueStrategy createValueExtractingUpdateStrategy() {
+		return new UpdateValueStrategy() {
+			@Override
+			public Object convert(Object value) {
+				return getModelValue().getValue();
+			}
+		};
+	}
+
+	/**
+	 * Returns the image to be used for the given linked {@code value}.
+	 *
+	 * @param value the value
+	 * @return The image.
+	 */
 	protected Object getImage(Object value) {
 		final Object image = getAdapterFactoryItemDelegator().getImage(value);
 		return SWTImageHelper.getImage(image);
 	}
 
+	/**
+	 * Returns the link text to be used for the given linked {@code value}.
+	 *
+	 * @param value the value
+	 * @return The link text.
+	 */
 	protected Object getLinkText(Object value) {
 		final String linkName = getAdapterFactoryItemDelegator().getText(value);
 		return linkName == null ? "" : linkName; //$NON-NLS-1$
+	}
+
+	/**
+	 * Returns the delete button of this control.
+	 *
+	 * @return The delete button of this control.
+	 */
+	protected Button getDeleteButton() {
+		return buttons[0];
 	}
 
 	/**
