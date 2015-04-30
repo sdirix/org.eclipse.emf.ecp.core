@@ -42,6 +42,8 @@ public final class UnknownVElementSWTRenderer extends AbstractSWTRenderer<VEleme
 
 	/**
 	 * Default constructor.
+	 * 
+	 * @since 1.6
 	 */
 	public UnknownVElementSWTRenderer(VElement vElement, ViewModelContext viewContext, ReportService reportService) {
 		super(vElement, viewContext, reportService);

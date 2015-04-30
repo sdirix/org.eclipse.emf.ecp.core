@@ -160,6 +160,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 * @param vtViewTemplateProvider The {@link VTViewTemplateProvider}
 	 * @param imageRegistryService The {@link ImageRegistryService}
 	 * @param emfFormsEditSupport The {@link EMFFormsEditSupport}
+	 * @since 1.6
 	 */
 	public TableControlSWTRenderer(VTableControl vElement, ViewModelContext viewContext, ReportService reportService,
 		EMFFormsDatabinding emfFormsDatabinding, EMFFormsLabelProvider emfFormsLabelProvider,
@@ -579,6 +580,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 *
 	 * @param url The {@link URL} pointing to the image
 	 * @return The retrieved Image
+	 * @since 1.6
 	 */
 	protected Image getImage(URL url) {
 		return imageRegistryService.getImage(url);
@@ -589,6 +591,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 *
 	 * @param path The bundle relative path pointing to the image
 	 * @return The retrieved Image
+	 * @since 1.6
 	 */
 	protected Image getImage(String path) {
 		return imageRegistryService.getImage(FrameworkUtil.getBundle(getClass()), path);
@@ -670,6 +673,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 * @param structuralFeature The containment reference {@link EStructuralFeature}
 	 * @param addButton the add button
 	 * @param removeButton the remove button
+	 * @since 1.6
 	 */
 	protected void deleteRowUserConfirmDialog(final List<EObject> deletionList, final EObject eObject,
 		final EStructuralFeature structuralFeature, final Button addButton, final Button removeButton) {
@@ -709,6 +713,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 * @param deletionList the list of {@link EObject EObjects} to delete
 	 * @param eObject The containment reference {@link EObject}
 	 * @param structuralFeature The containment reference {@link EStructuralFeature}
+	 * @since 1.6
 	 */
 	protected void deleteRows(List<EObject> deletionList, final EObject eObject,
 		final EStructuralFeature structuralFeature) {
@@ -753,6 +758,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 * @param clazz the {@link EClass} defining the EObject to create
 	 * @param eObject The containment reference {@link EObject}
 	 * @param structuralFeature The containment reference {@link EStructuralFeature}
+	 * @since 1.6
 	 */
 	protected void addRow(EClass clazz, EObject eObject, EStructuralFeature structuralFeature) {
 		if (clazz.isAbstract() || clazz.isInterface()) {

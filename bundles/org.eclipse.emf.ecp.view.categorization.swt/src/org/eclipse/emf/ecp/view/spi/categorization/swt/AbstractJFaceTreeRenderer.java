@@ -94,6 +94,7 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 	 * @param viewContext the view context
 	 * @param reportService the {@link ReportService}
 	 * @param emfFormsRendererFactory The {@link EMFFormsRendererFactory}
+	 * @since 1.6
 	 */
 	public AbstractJFaceTreeRenderer(VELEMENT vElement, ViewModelContext viewContext, ReportService reportService,
 		EMFFormsRendererFactory emfFormsRendererFactory) {

@@ -75,6 +75,7 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 	 * @param emfFormsLabelProvider The {@link EMFFormsLabelProvider}
 	 * @param reportService The {@link ReportService}
 	 * @param vtViewTemplateProvider The {@link VTViewTemplateProvider}
+	 * @since 1.6
 	 */
 	public AbstractControlSWTRenderer(VCONTROL vElement, ViewModelContext viewContext, ReportService reportService,
 		EMFFormsDatabinding emfFormsDatabinding, EMFFormsLabelProvider emfFormsLabelProvider,
@@ -91,6 +92,7 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 	 * The {@link EMFFormsDatabinding} to use.
 	 *
 	 * @return The EMFFormsDatabinding
+	 * @since 1.6
 	 */
 	protected EMFFormsDatabinding getEMFFormsDatabinding() {
 		return emfFormsDatabinding;
@@ -100,6 +102,7 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 	 * The {@link EMFFormsLabelProvider} to use.
 	 *
 	 * @return The EMFFormsLabelProvider
+	 * @since 1.6
 	 */
 	protected EMFFormsLabelProvider getEMFFormsLabelProvider() {
 		return emfFormsLabelProvider;
@@ -109,6 +112,7 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 	 * The {@link VTViewTemplateProvider} to use.
 	 *
 	 * @return The VTViewTemplateProvider
+	 * @since 1.6
 	 */
 	protected VTViewTemplateProvider getVTViewTemplateProvider() {
 		return vtViewTemplateProvider;
@@ -200,6 +204,7 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 	 *
 	 * @return the {@link IObservableValue}
 	 * @throws DatabindingFailedException if the databinding of the domain model object fails.
+	 * @since 1.6
 	 */
 	protected final IObservableValue getModelValue() throws DatabindingFailedException {
 		if (modelValue == null) {
@@ -217,6 +222,7 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 	 *
 	 * @param domainModel The provided {@link EObject domain model}
 	 * @return The {@link EditingDomain} of this {@link EObject domain model}
+	 * @since 1.6
 	 */
 	protected final EditingDomain getEditingDomain(EObject domainModel) {
 		return AdapterFactoryEditingDomain.getEditingDomainFor(domainModel);

@@ -71,6 +71,7 @@ public class LabelSWTRenderer extends AbstractSWTRenderer<VLabel> {
 	 * @param reportService the ReportService to use
 	 * @param emfFormsDatabinding the EMFFormsDatabinding to use
 	 * @param vtViewTemplateProvider the VTViewTemplateProvider to use
+	 * @since 1.6
 	 */
 	public LabelSWTRenderer(final VLabel vElement, final ViewModelContext viewContext, ReportService reportService,
 		EMFFormsDatabinding emfFormsDatabinding, VTViewTemplateProvider vtViewTemplateProvider) {

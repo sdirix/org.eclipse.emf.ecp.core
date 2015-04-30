@@ -51,6 +51,7 @@ public class SWTCategorizationRenderer extends AbstractSWTRenderer<VCategorizati
 	 * @param vElement the view model element to be rendered
 	 * @param viewContext the view context
 	 * @param reportService the {@link ReportService}
+	 * @since 1.6
 	 */
 	public SWTCategorizationRenderer(VCategorization vElement, ViewModelContext viewContext, ReportService reportService) {
 		super(vElement, viewContext, reportService);

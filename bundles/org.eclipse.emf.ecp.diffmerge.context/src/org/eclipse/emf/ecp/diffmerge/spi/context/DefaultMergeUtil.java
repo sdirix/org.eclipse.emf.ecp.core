@@ -49,6 +49,7 @@ public final class DefaultMergeUtil {
 	 * @param fromDomainModel The domain model belonging to the 'from control'.
 	 * @param to the {@link VControl} which values should be updated
 	 * @param toDomainModel The domain model belonging to the 'to control'.
+	 * @since 1.6
 	 */
 	@SuppressWarnings("unchecked")
 	public static void copyValues(VControl from, EObject fromDomainModel, VControl to, EObject toDomainModel) {

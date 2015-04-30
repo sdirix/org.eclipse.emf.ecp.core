@@ -50,7 +50,7 @@ import org.osgi.framework.ServiceReference;
  * Common super class for all section renderer.
  *
  * @author jfaltermeier
- *
+ * @noextend This class is not intended to be subclassed by clients.
  */
 public abstract class AbstractSectionSWTRenderer extends
 	AbstractSWTRenderer<VSection> {
@@ -59,6 +59,7 @@ public abstract class AbstractSectionSWTRenderer extends
 	 * @param vElement the view model element to be rendered
 	 * @param viewContext the view context
 	 * @param reportService the {@link ReportService}
+	 * @since 1.6
 	 */
 	public AbstractSectionSWTRenderer(VSection vElement, ViewModelContext viewContext, ReportService reportService) {
 		super(vElement, viewContext, reportService);
@@ -233,6 +234,7 @@ public abstract class AbstractSectionSWTRenderer extends
 	 * Access to the EMFFormsRendererFactory.
 	 *
 	 * @return The {@link EMFFormsRendererFactory}
+	 * @since 1.6
 	 */
 	protected EMFFormsRendererFactory getEMFFormsRendererFactory() {
 		final BundleContext bundleContext = FrameworkUtil.getBundle(getClass()).getBundleContext();
@@ -262,9 +264,11 @@ public abstract class AbstractSectionSWTRenderer extends
 
 	}
 
-		/**
+	/**
 	 * Called by the {@link org.eclipse.emf.ecp.view.spi.section.model.VSectionedArea} when all children have been
 	 * renderered. Initialises the collapse state based on {@link VSection#isCollapsed()}.
+	 *
+	 * @since 1.6
 	 */
 	protected abstract void initCollapseState();
 }

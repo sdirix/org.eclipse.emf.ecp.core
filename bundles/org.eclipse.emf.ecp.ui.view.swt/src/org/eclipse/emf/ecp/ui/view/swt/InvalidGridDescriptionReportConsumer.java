@@ -29,6 +29,7 @@ public class InvalidGridDescriptionReportConsumer implements ReportServiceConsum
 	 * {@inheritDoc}
 	 *
 	 * @see org.eclipse.emfforms.spi.common.report.ReportServiceConsumer#reported(org.eclipse.emfforms.spi.common.report.AbstractReport)
+	 * @since 1.6
 	 */
 	@Override
 	public void reported(AbstractReport reportEntity) {

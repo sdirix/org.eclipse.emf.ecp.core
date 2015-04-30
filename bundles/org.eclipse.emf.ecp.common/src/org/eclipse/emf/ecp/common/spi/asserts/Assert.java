@@ -16,6 +16,7 @@ package org.eclipse.emf.ecp.common.spi.asserts;
  *
  * @param <T> the type of the object the <code>Assert</code> class verifies.
  * @author Alexandra Buzila
+ * @since 1.6
  *
  */
 public final class Assert<T> {

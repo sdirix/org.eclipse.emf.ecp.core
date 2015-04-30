@@ -125,6 +125,7 @@ public final class LayoutProviderHelper {
 	 * @param domainModel The domain model object whose feature is currently rendered
 	 * @param control the rendered {@link Control}
 	 * @return the Object being the layout data to set
+	 * @since 1.6
 	 */
 	public static Object getLayoutData(SWTGridCell gridCell, SWTGridDescription controlGridDescription,
 		SWTGridDescription currentRowGridDescription, SWTGridDescription fullGridDescription, VElement vElement,

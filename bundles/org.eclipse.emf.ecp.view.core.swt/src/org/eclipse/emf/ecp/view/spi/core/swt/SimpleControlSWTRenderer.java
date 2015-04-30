@@ -66,6 +66,7 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 	 * @param emfFormsDatabinding The {@link EMFFormsDatabinding}
 	 * @param emfFormsLabelProvider The {@link EMFFormsLabelProvider}
 	 * @param vtViewTemplateProvider The {@link VTViewTemplateProvider}
+	 * @since 1.6
 	 */
 	public SimpleControlSWTRenderer(VControl vElement, ViewModelContext viewContext, ReportService reportService,
 		EMFFormsDatabinding emfFormsDatabinding, EMFFormsLabelProvider emfFormsLabelProvider,

@@ -81,6 +81,7 @@ public interface ECPCellEditor {
 	 *
 	 * @param databindingContext The {@link DataBindingContext} used by this strategy
 	 * @return the strategy
+	 * @since 1.6
 	 */
 	UpdateValueStrategy getTargetToModelStrategy(DataBindingContext databindingContext);
 
@@ -89,6 +90,7 @@ public interface ECPCellEditor {
 	 *
 	 * @param databindingContext The {@link DataBindingContext} used by this strategy
 	 * @return the strategy
+	 * @since 1.6
 	 */
 	UpdateValueStrategy getModelToTargetStrategy(DataBindingContext databindingContext);
 

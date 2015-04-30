@@ -43,6 +43,7 @@ public abstract class SimpleControlJFaceViewerSWTRenderer extends SimpleControlS
 	 * @param emfFormsDatabinding The {@link EMFFormsDatabinding}
 	 * @param emfFormsLabelProvider The {@link EMFFormsLabelProvider}
 	 * @param vtViewTemplateProvider The {@link VTViewTemplateProvider}
+	 * @since 1.6
 	 */
 	public SimpleControlJFaceViewerSWTRenderer(VControl vElement, ViewModelContext viewContext,
 		ReportService reportService,
@@ -84,6 +85,7 @@ public abstract class SimpleControlJFaceViewerSWTRenderer extends SimpleControlS
 	 * @param viewer the {@link Viewer} to create the binding for
 	 * @return all the bindings created by this renderer
 	 * @throws DatabindingFailedException if the creation of the bindings failed
+	 * @since 1.6
 	 */
 	protected abstract Binding[] createBindings(Viewer viewer) throws DatabindingFailedException;
 
@@ -93,6 +95,7 @@ public abstract class SimpleControlJFaceViewerSWTRenderer extends SimpleControlS
 	 * @param parent the {@link Composite} to use as a parent
 	 * @return the created {@link Viewer}
 	 * @throws DatabindingFailedException if the databinding fails
+	 * @since 1.6
 	 */
 	protected abstract Viewer createJFaceViewer(Composite parent) throws DatabindingFailedException;
 

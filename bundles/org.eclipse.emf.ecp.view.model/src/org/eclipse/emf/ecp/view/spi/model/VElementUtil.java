@@ -15,6 +15,7 @@ package org.eclipse.emf.ecp.view.spi.model;
  * This class provides helper methods for working with VElements.
  *
  * @author Eugen Neufeld
+ * @since 1.6
  *
  */
 public final class VElementUtil {

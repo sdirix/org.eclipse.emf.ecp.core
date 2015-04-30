@@ -17,6 +17,7 @@ import org.eclipse.emf.common.notify.impl.AdapterImpl;
  * Abstract definition of a LocalizationAdapter.
  *
  * @author Eugen Neufeld
+ * @since 1.6
  *
  */
 public abstract class LocalizationAdapter extends AdapterImpl {

@@ -46,6 +46,7 @@ public class GroupSWTRenderer extends ContainerSWTRenderer<VGroup> {
 	 * @param reportService the {@link ReportService}
 	 * @param factory the {@link EMFFormsRendererFactory}
 	 * @param emfFormsDatabinding The {@link EMFFormsDatabinding}
+	 * @since 1.6
 	 */
 	public GroupSWTRenderer(VGroup vElement, ViewModelContext viewContext, ReportService reportService,
 		EMFFormsRendererFactory factory, EMFFormsDatabinding emfFormsDatabinding) {

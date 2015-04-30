@@ -36,7 +36,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
 /**
  * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.spi.model.VElement} object.
  * <!-- begin-user-doc -->
- * 
+ *
  * @since 1.2
  *        <!-- end-user-doc -->
  *
@@ -110,7 +110,9 @@ public class ElementItemProvider
 	/**
 	 * This adds a property descriptor for the Label feature.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.6
+	 *        <!-- end-user-doc -->
 	 *
 	 * @generated
 	 */

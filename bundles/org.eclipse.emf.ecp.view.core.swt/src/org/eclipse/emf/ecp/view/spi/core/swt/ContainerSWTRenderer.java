@@ -79,6 +79,7 @@ public abstract class ContainerSWTRenderer<VELEMENT extends VElement> extends Ab
 	 * @param reportService the {@link ReportService}
 	 * @param factory the {@link EMFFormsRendererFactory}
 	 * @param emfFormsDatabinding The {@link EMFFormsDatabinding}
+	 * @since 1.6
 	 */
 	public ContainerSWTRenderer(VELEMENT vElement, ViewModelContext viewContext, ReportService reportService,
 		EMFFormsRendererFactory factory, EMFFormsDatabinding emfFormsDatabinding) {
@@ -304,7 +305,7 @@ public abstract class ContainerSWTRenderer<VELEMENT extends VElement> extends Ab
 	 * @param fullGridDescription the {@link GridDescription} of the whole container
 	 * @param vElement the {@link VElement} to set the layoutData for
 	 * @param control the control to set the layout to
-	 * @since 1.3
+	 * @since 1.6
 	 */
 	protected void setLayoutDataForControl(SWTGridCell gridCell, SWTGridDescription gridDescription,
 		SWTGridDescription currentRowGridDescription, SWTGridDescription fullGridDescription, VElement vElement,

@@ -26,10 +26,11 @@ public abstract class AbstractAdditionalSWTRenderer<VELEMENT extends VElement> e
 
 	/**
 	 * Default constructor.
-	 * 
+	 *
 	 * @param vElement the view model element to be rendered
 	 * @param viewContext the view context
 	 * @param reportService The {@link ReportService}
+	 * @since 1.6
 	 */
 	public AbstractAdditionalSWTRenderer(VELEMENT vElement, ViewModelContext viewContext, ReportService reportService) {
 		super(vElement, viewContext, reportService);

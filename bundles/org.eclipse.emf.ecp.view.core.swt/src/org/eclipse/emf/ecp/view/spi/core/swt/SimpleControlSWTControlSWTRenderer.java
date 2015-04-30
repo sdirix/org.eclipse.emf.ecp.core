@@ -42,6 +42,7 @@ public abstract class SimpleControlSWTControlSWTRenderer extends SimpleControlSW
 	 * @param emfFormsDatabinding The {@link EMFFormsDatabinding}
 	 * @param emfFormsLabelProvider The {@link EMFFormsLabelProvider}
 	 * @param vtViewTemplateProvider The {@link VTViewTemplateProvider}
+	 * @since 1.6
 	 */
 	public SimpleControlSWTControlSWTRenderer(VControl vElement, ViewModelContext viewContext,
 		ReportService reportService,
@@ -86,6 +87,7 @@ public abstract class SimpleControlSWTControlSWTRenderer extends SimpleControlSW
 	 * @param control the {@link Control} to create the binding for
 	 * @return all the bindings created by this renderer
 	 * @throws DatabindingFailedException if the creation of the bindings fails.
+	 * @since 1.6
 	 */
 	protected abstract Binding[] createBindings(Control control) throws DatabindingFailedException;
 
@@ -95,6 +97,7 @@ public abstract class SimpleControlSWTControlSWTRenderer extends SimpleControlSW
 	 * @param parent the {@link Composite} to use as a parent
 	 * @return the created control
 	 * @throws DatabindingFailedException if the creation of the control fails due to databinding problems
+	 * @since 1.6
 	 */
 	protected abstract Control createSWTControl(Composite parent) throws DatabindingFailedException;
 

@@ -69,7 +69,7 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 	 * @param vElement the view element to be rendered
 	 * @param viewContext The view model context
 	 * @param reportService the ReportService to use
-	 * @since 1.3
+	 * @since 1.6
 	 */
 	public AbstractSWTRenderer(final VELEMENT vElement, final ViewModelContext viewContext,
 		ReportService reportService) {
@@ -88,7 +88,7 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 	/**
 	 * Initializes the {@link AbstractSWTRenderer}.
 	 *
-	 * @since 1.3
+	 * @since 1.6
 	 */
 	public final void init() {
 		preInit();

@@ -34,6 +34,7 @@ public class SWTCategorizationElementRenderer extends AbstractJFaceTreeRenderer<
 	 * @param viewContext the view context
 	 * @param reportService the {@link ReportService}
 	 * @param emfFormsRendererFactory The {@link EMFFormsRendererFactory}
+	 * @since 1.6
 	 */
 	public SWTCategorizationElementRenderer(VCategorizationElement vElement, ViewModelContext viewContext,
 		ReportService reportService,

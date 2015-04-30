@@ -34,6 +34,8 @@ public abstract class AbstractRenderer<VELEMENT extends VElement> {
 	 *
 	 * @param vElement the {@link VElement} to be rendered
 	 * @param viewContext the {@link ViewModelContext} to use
+	 * @param reportService The {@link ReportService} to use
+	 * @since 1.6
 	 */
 	public AbstractRenderer(final VELEMENT vElement, final ViewModelContext viewContext, ReportService reportService) {
 
@@ -81,6 +83,8 @@ public abstract class AbstractRenderer<VELEMENT extends VElement> {
 
 	/**
 	 * Checks whether the renderer is disposed and if so throws an {@link IllegalStateException}.
+	 *
+	 * @since 1.6
 	 */
 	protected void checkRenderer() {
 		if (disposed) {
@@ -93,6 +97,7 @@ public abstract class AbstractRenderer<VELEMENT extends VElement> {
 	 * The {@link SWTRendererFactory} instance to use.
 	 *
 	 * @return the {@link SWTRendererFactory}
+	 * @since 1.6
 	 */
 	protected final ReportService getReportService() {
 		checkRenderer();

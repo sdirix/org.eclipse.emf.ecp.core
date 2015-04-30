@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.emfforms.swt.core" version="2">
+    <resource path="src/org/eclipse/emf/ecp/view/spi/swt/AbstractAdditionalSWTRenderer.java" type="org.eclipse.emf.ecp.view.spi.swt.AbstractAdditionalSWTRenderer">
+        <filter comment="SPI Change in 1.6" id="338722907">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.swt.AbstractAdditionalSWTRenderer"/>
+                <message_argument value="AbstractAdditionalSWTRenderer()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/swt/AbstractSWTRenderer.java">
+        <filter comment="SPI Change in 1.6" id="0"/>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/swt/AbstractSWTRenderer.java" type="org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer">
+        <filter comment="SPI Change in 1.6" id="338722907">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer"/>
+                <message_argument value="AbstractSWTRenderer()"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change in 1.6" id="338722907">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer"/>
+                <message_argument value="AbstractSWTRenderer(SWTRendererFactory)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change in 1.6" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer"/>
+                <message_argument value="getSWTRendererFactory()"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change in 1.6" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer"/>
+                <message_argument value="init(VELEMENT, ViewModelContext)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change in 1.6" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer"/>
+                <message_argument value="setLayoutDataForControl(SWTGridCell, SWTGridDescription, SWTGridDescription, SWTGridDescription, VElement, Control)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/swt/layout/LayoutProvider.java" type="org.eclipse.emf.ecp.view.spi.swt.layout.LayoutProvider">
+        <filter comment="SPI Change in 1.6" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.swt.layout.LayoutProvider"/>
+                <message_argument value="getLayoutData(SWTGridCell, SWTGridDescription, SWTGridDescription, SWTGridDescription, VElement, EObject, Control)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change in 1.6" id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.swt.layout.LayoutProvider"/>
+                <message_argument value="getLayoutData(SWTGridCell, SWTGridDescription, SWTGridDescription, SWTGridDescription, VElement, Control)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

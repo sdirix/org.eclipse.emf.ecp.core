@@ -55,6 +55,7 @@ public class HorizontalLayoutSWTRenderer extends AbstractSWTRenderer<VHorizontal
 	 * @param viewContext The view model context
 	 * @param reportService the ReportService to use
 	 * @param rendererFactory the EMFFormsRendererFactory to use
+	 * @since 1.6
 	 */
 	public HorizontalLayoutSWTRenderer(final VHorizontalLayout vElement, final ViewModelContext viewContext,
 		ReportService reportService, EMFFormsRendererFactory rendererFactory) {

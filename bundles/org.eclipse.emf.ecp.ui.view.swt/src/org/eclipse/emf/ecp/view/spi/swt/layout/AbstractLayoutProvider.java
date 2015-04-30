@@ -30,6 +30,7 @@ public abstract class AbstractLayoutProvider implements LayoutProvider {
 	 * @param domainModelReference the {@link VDomainModelReference} pointing to the feature to check
 	 * @param domainModel the root {@link EObject} of the domain model reference
 	 * @return true if multiline, false otherwise
+	 * @since 1.6
 	 */
 	protected static boolean isMultiLine(VDomainModelReference domainModelReference, EObject domainModel) {
 		return Activator.getDefault().getEMFFormsEditSupport().isMultiLine(domainModelReference, domainModel);

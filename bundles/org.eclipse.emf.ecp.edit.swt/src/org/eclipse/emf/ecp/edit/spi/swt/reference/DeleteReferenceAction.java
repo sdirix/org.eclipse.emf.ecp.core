@@ -48,6 +48,7 @@ public class DeleteReferenceAction extends ECPSWTAction {
 	 * @param editingDomain the {@link EditingDomain} to use
 	 * @param setting the {@link Setting} to use
 	 * @param referenceService the {@link ReferenceService} to use
+	 * @since 1.6
 	 */
 	public DeleteReferenceAction(EditingDomain editingDomain, Setting setting, ReferenceService referenceService) {
 		super(editingDomain, setting);
@@ -65,6 +66,7 @@ public class DeleteReferenceAction extends ECPSWTAction {
 	 * @param eObject The {@link EObject} to use
 	 * @param structuralFeature The {@link EStructuralFeature} defining which feature of the {@link EObject} is used
 	 * @param referenceService The {@link ReferenceService} to use
+	 * @since 1.6
 	 */
 	public DeleteReferenceAction(EditingDomain editingDomain, EObject eObject, EStructuralFeature structuralFeature,
 		ReferenceService referenceService) {

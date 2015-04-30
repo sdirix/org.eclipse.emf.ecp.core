@@ -41,7 +41,7 @@ public interface ECPControlFactory {
 	 * @param <T> the type of the control to return
 	 * @return the found control or null
 	 *
-	 * @since 1.2
+	 * @since 1.6
 	 */
 	<T> T createControl(Class<T> controlTypeClass, EObject domainModel, VDomainModelReference domainModelReference);
 

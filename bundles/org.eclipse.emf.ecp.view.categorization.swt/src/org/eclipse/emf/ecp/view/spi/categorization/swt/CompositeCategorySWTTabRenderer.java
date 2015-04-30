@@ -33,6 +33,7 @@ public class CompositeCategorySWTTabRenderer extends AbstractSWTTabRenderer<VCat
 	 * @param viewContext the view context
 	 * @param reportService the {@link ReportService}
 	 * @param emfFormsRendererFactory The {@link EMFFormsRendererFactory}
+	 * @since 1.6
 	 */
 	public CompositeCategorySWTTabRenderer(VCategorization vElement, ViewModelContext viewContext,
 		ReportService reportService, EMFFormsRendererFactory emfFormsRendererFactory) {

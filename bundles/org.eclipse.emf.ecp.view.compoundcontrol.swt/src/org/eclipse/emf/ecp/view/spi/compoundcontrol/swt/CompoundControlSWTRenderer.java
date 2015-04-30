@@ -54,6 +54,7 @@ public class CompoundControlSWTRenderer extends AbstractSWTRenderer<VCompoundCon
 	 * @param vElement the view model element to be rendered
 	 * @param viewContext the view context
 	 * @param reportService the {@link ReportService}
+	 * @since 1.6
 	 */
 	public CompoundControlSWTRenderer(VCompoundControl vElement, ViewModelContext viewContext,
 		ReportService reportService) {

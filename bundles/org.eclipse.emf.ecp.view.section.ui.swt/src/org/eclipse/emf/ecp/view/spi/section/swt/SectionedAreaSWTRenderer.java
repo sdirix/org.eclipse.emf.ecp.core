@@ -53,6 +53,7 @@ public class SectionedAreaSWTRenderer extends
 	 * @param vElement the view model element to be rendered
 	 * @param viewContext the view context
 	 * @param reportService the {@link ReportService}
+	 * @since 1.6
 	 */
 	public SectionedAreaSWTRenderer(VSectionedArea vElement, ViewModelContext viewContext,
 		ReportService reportService) {

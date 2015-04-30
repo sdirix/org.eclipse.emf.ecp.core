@@ -36,6 +36,7 @@ public class SectionLeafSWTRenderer extends AbstractSectionSWTRenderer {
 	 * @param vElement the view model element to be rendered
 	 * @param viewContext the view context
 	 * @param reportService the {@link ReportService}
+	 * @since 1.6
 	 */
 	public SectionLeafSWTRenderer(VSection vElement, ViewModelContext viewContext, ReportService reportService) {
 		super(vElement, viewContext, reportService);

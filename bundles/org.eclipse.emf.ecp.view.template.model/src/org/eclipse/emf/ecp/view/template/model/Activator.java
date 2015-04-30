@@ -23,6 +23,7 @@ import org.osgi.framework.ServiceReference;
  * The Class Activator.
  *
  * @author Lucas Koehler
+ * @since 1.6
  */
 public class Activator extends Plugin {
 

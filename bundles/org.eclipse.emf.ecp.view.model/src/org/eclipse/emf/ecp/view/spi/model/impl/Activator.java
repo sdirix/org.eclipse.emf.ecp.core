@@ -101,7 +101,7 @@ public class Activator extends Plugin {
 	 *
 	 * @param report
 	 *            the {@link AbstractReport} to be logged
-	 * @since 1.5
+	 * @since 1.6
 	 */
 	public static void log(AbstractReport report) {
 		getDefault().getLog().log(
@@ -115,7 +115,7 @@ public class Activator extends Plugin {
 	 * Returns the {@link ReportService}.
 	 *
 	 * @return the {@link ReportService}
-	 * @since 1.5
+	 * @since 1.6
 	 */
 	public ReportService getReportService() {
 		if (reportServiceReference == null) {

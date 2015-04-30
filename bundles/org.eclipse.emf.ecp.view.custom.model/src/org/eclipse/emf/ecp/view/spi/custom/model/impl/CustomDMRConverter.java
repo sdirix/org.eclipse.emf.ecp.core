@@ -7,7 +7,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- * Eugen - initial API and implementation
+ * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.custom.model.impl;
 
@@ -32,7 +32,10 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 
 /**
- * @author Eugen
+ * DomainModelReferenceConverter for CustomDomainModelReferences.
+ * 
+ * @author Eugen Neufeld
+ * @since 1.6
  *
  */
 @Component

@@ -39,6 +39,7 @@ public class VerticalLayoutSWTRenderer extends ContainerSWTRenderer<VVerticalLay
 	 * @param reportService the {@link ReportService}
 	 * @param factory the {@link EMFFormsRendererFactory}
 	 * @param emfFormsDatabinding The {@link EMFFormsDatabinding}
+	 * @since 1.6
 	 */
 	public VerticalLayoutSWTRenderer(VVerticalLayout vElement, ViewModelContext viewContext,
 		ReportService reportService,

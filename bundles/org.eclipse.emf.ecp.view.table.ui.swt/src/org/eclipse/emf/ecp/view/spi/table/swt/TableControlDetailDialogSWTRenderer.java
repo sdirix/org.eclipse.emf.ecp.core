@@ -63,6 +63,7 @@ public class TableControlDetailDialogSWTRenderer extends TableControlSWTRenderer
 	 * @param vtViewTemplateProvider The {@link VTViewTemplateProvider}
 	 * @param imageRegistryService The {@link ImageRegistryService}
 	 * @param emfFormsEditSupport The {@link EMFFormsEditSupport}
+	 * @since 1.6
 	 */
 	public TableControlDetailDialogSWTRenderer(VTableControl vElement, ViewModelContext viewContext,
 		ReportService reportService,

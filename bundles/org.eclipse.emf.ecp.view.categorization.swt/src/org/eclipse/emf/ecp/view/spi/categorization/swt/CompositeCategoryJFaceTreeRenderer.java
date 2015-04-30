@@ -35,6 +35,7 @@ public class CompositeCategoryJFaceTreeRenderer extends AbstractJFaceTreeRendere
 	 * @param viewContext the view context
 	 * @param reportService the {@link ReportService}
 	 * @param emfFormsRendererFactory The {@link EMFFormsRendererFactory}
+	 * @since 1.6
 	 */
 	public CompositeCategoryJFaceTreeRenderer(VCategorization vElement, ViewModelContext viewContext,
 		ReportService reportService,

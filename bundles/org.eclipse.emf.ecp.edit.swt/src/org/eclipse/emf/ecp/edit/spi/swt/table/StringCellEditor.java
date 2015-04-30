@@ -109,6 +109,7 @@ public class StringCellEditor extends TextCellEditor implements ECPCellEditor {
 	 * {@inheritDoc}
 	 *
 	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getTargetToModelStrategy(org.eclipse.core.databinding.DataBindingContext)
+	 * @since 1.6
 	 */
 	@Override
 	public UpdateValueStrategy getTargetToModelStrategy(DataBindingContext databindingContext) {
@@ -121,6 +122,7 @@ public class StringCellEditor extends TextCellEditor implements ECPCellEditor {
 	 * {@inheritDoc}
 	 *
 	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getModelToTargetStrategy(org.eclipse.core.databinding.DataBindingContext)
+	 * @since 1.6
 	 */
 	@Override
 	public UpdateValueStrategy getModelToTargetStrategy(DataBindingContext databindingContext) {

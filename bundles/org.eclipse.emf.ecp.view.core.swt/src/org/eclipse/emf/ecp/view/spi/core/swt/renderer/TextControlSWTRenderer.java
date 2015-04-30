@@ -71,6 +71,7 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 	 * @param emfFormsLabelProvider The {@link EMFFormsLabelProvider}
 	 * @param vtViewTemplateProvider The {@link VTViewTemplateProvider}
 	 * @param emfFormsEditSupport The {@link EMFFormsEditSupport}
+	 * @since 1.6
 	 */
 	public TextControlSWTRenderer(VControl vElement, ViewModelContext viewContext,
 		ReportService reportService,
@@ -107,6 +108,7 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 	 * Returns the text which should be set as the message text on the Text field.
 	 *
 	 * @return the string to show as the message
+	 * @since 1.6
 	 */
 	protected String getTextMessage() {
 		try {

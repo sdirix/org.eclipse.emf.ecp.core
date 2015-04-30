@@ -62,6 +62,7 @@ public class NewReferenceAction extends ECPSWTAction {
 	 * @param reportService the {@link ReportService} to use
 	 * @param domainModelReference the {@link VDomainModelReference} to use
 	 * @param domainModel the domain model of the given {@link VDomainModelReference}
+	 * @since 1.6
 	 *
 	 */
 	public NewReferenceAction(EditingDomain editingDomain, Setting setting, EMFFormsEditSupport editSupport,
@@ -137,6 +138,7 @@ public class NewReferenceAction extends ECPSWTAction {
 	 * @param reportService The {@link ReportService} to use
 	 * @param domainModelReference the {@link VDomainModelReference} to use
 	 * @param domainModel the domain model of the given {@link VDomainModelReference}
+	 * @since 1.6
 	 */
 	public NewReferenceAction(EditingDomain editingDomain, EObject eObject, EStructuralFeature structuralFeature,
 		EMFFormsEditSupport editSupport, EMFFormsLabelProvider labelProvider, ReferenceService referenceService,

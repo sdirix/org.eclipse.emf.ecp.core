@@ -125,6 +125,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 	 * @param vElement the view element to be rendered
 	 * @param viewContext The view model context
 	 * @param reportService the ReportService to use
+	 * @since 1.6
 	 */
 	public TreeMasterDetailSWTRenderer(final VTreeMasterDetail vElement, final ViewModelContext viewContext,
 		ReportService reportService) {

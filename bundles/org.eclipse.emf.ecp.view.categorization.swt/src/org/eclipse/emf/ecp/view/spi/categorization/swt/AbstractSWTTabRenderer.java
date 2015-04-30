@@ -62,6 +62,7 @@ public abstract class AbstractSWTTabRenderer<VELEMENT extends VElement> extends 
 	 * @param viewContext the view context
 	 * @param reportService the {@link ReportService}
 	 * @param emfFormsRendererFactory The {@link EMFFormsRendererFactory}
+	 * @since 1.6
 	 */
 	public AbstractSWTTabRenderer(VELEMENT vElement, ViewModelContext viewContext, ReportService reportService,
 		EMFFormsRendererFactory emfFormsRendererFactory) {

@@ -71,6 +71,7 @@ public class TableControlDetailPanelRenderer extends TableControlSWTRenderer {
 	 * @param vtViewTemplateProvider The {@link VTViewTemplateProvider}
 	 * @param imageRegistryService The {@link ImageRegistryService}
 	 * @param emfFormsEditSupport The {@link EMFFormsEditSupport}
+	 * @since 1.6
 	 */
 	public TableControlDetailPanelRenderer(VTableControl vElement, ViewModelContext viewContext,
 		ReportService reportService,

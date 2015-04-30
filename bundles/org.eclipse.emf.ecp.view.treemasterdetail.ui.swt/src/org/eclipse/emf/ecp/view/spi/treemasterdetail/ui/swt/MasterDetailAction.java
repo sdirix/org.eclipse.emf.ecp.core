@@ -65,7 +65,7 @@ public abstract class MasterDetailAction extends AbstractHandler {
 
 	/**
 	 * Sets the treeviewer of the tree master detail renderer.
-	 * 
+	 *
 	 * @param treeviewer the tree
 	 */
 	void setTreeViewer(TreeViewer treeviewer) {
@@ -74,8 +74,9 @@ public abstract class MasterDetailAction extends AbstractHandler {
 
 	/**
 	 * Returns the treeviewer renderered by the tree master detail renderer.
-	 * 
+	 *
 	 * @return the tree
+	 * @since 1.6
 	 */
 	protected TreeViewer getTreeViewer() {
 		return treeviewer;

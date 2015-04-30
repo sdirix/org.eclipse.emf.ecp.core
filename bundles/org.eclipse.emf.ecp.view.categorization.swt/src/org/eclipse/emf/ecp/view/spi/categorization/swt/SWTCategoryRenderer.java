@@ -39,6 +39,7 @@ public class SWTCategoryRenderer extends ContainerSWTRenderer<VCategory> {
 	 * @param reportService the {@link ReportService}
 	 * @param factory the {@link EMFFormsRendererFactory}
 	 * @param emfFormsDatabinding The {@link EMFFormsDatabinding}
+	 * @since 1.6
 	 */
 	public SWTCategoryRenderer(VCategory vElement, ViewModelContext viewContext, ReportService reportService,
 		EMFFormsRendererFactory factory, EMFFormsDatabinding emfFormsDatabinding) {

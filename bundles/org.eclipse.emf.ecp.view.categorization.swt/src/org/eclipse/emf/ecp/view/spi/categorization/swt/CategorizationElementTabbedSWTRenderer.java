@@ -33,6 +33,7 @@ public class CategorizationElementTabbedSWTRenderer extends AbstractSWTTabRender
 	 * @param viewContext the view context
 	 * @param reportService the {@link ReportService}
 	 * @param emfFormsRendererFactory The {@link EMFFormsRendererFactory}
+	 * @since 1.6
 	 */
 	public CategorizationElementTabbedSWTRenderer(VCategorizationElement vElement, ViewModelContext viewContext,
 		ReportService reportService,

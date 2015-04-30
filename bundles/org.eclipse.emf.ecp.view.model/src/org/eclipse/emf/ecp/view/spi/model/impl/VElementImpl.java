@@ -30,20 +30,21 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Renderable</b></em>'.
+ * 
  * @since 1.2
- * <!-- end-user-doc -->
- * <p>
- * The following features are implemented:
- * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VElementImpl#getName <em>Name</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VElementImpl#getLabel <em>Label</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VElementImpl#isVisible <em>Visible</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VElementImpl#isEnabled <em>Enabled</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VElementImpl#isReadonly <em>Readonly</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VElementImpl#getDiagnostic <em>Diagnostic</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VElementImpl#getAttachments <em>Attachments</em>}</li>
- * </ul>
- * </p>
+ *        <!-- end-user-doc -->
+ *        <p>
+ *        The following features are implemented:
+ *        <ul>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VElementImpl#getName <em>Name</em>}</li>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VElementImpl#getLabel <em>Label</em>}</li>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VElementImpl#isVisible <em>Visible</em>}</li>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VElementImpl#isEnabled <em>Enabled</em>}</li>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VElementImpl#isReadonly <em>Readonly</em>}</li>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VElementImpl#getDiagnostic <em>Diagnostic</em>}</li>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VElementImpl#getAttachments <em>Attachments</em>}</li>
+ *        </ul>
+ *        </p>
  *
  * @generated
  */
@@ -74,7 +75,9 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	/**
 	 * The default value of the '{@link #getLabel() <em>Label</em>}' attribute.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.6
+	 *        <!-- end-user-doc -->
 	 *
 	 * @see #getLabel()
 	 * @generated
@@ -85,7 +88,9 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	/**
 	 * The cached value of the '{@link #getLabel() <em>Label</em>}' attribute.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.6
+	 *        <!-- end-user-doc -->
 	 *
 	 * @see #getLabel()
 	 * @generated
@@ -234,7 +239,9 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.6
+	 *        <!-- end-user-doc -->
 	 *
 	 * @generated
 	 */
@@ -246,7 +253,9 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.6
+	 *        <!-- end-user-doc -->
 	 *
 	 * @generated
 	 */
