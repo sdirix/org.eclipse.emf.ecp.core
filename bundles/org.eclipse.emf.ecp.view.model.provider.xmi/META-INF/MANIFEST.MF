@@ -16,3 +16,4 @@ Export-Package: org.eclipse.emf.ecp.internal.view.model.provider.xmi;v
  ersion="1.6.0";x-internal:=true,org.eclipse.emf.ecp.view.model.provid
  er.xmi;version="1.6.0";x-friends:="org.eclipse.emf.ecp.ui.view.editor
  .controls"
+Import-Package: org.eclipse.emfforms.spi.common.report;version="[1.6.0,2.0.0)"

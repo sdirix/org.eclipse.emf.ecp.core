@@ -32,7 +32,7 @@ import org.eclipse.emf.ecp.internal.view.model.provider.xmi.Activator;
 import org.eclipse.emf.ecp.view.spi.model.LocalizationAdapter;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
-import org.eclipse.emf.ecp.view.spi.model.util.ViewModelUtil;
+import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 
 /**
@@ -121,11 +121,7 @@ public final class ViewModelFileExtensionsManager {
 		try {
 			resource.load(loadOptions);
 		} catch (final IOException exception) {
-			Activator.log(exception);
-			if (ViewModelUtil.isDebugMode()) {
-				dispose();
-				throw new IllegalStateException(exception);
-			}
+			Activator.getReportService().report(new AbstractReport(exception));
 		}
 		return resource;
 	}
