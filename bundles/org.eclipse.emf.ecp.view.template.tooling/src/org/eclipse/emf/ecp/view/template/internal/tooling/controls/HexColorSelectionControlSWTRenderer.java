@@ -152,7 +152,6 @@ public class HexColorSelectionControlSWTRenderer extends SimpleControlSWTControl
 				super.widgetSelected(e);
 				final ColorDialog cd = new ColorDialog(parent.getShell());
 				final RGB rgb = cd.open();
-
 				setValue(getString(rgb));
 			}
 
@@ -161,6 +160,9 @@ public class HexColorSelectionControlSWTRenderer extends SimpleControlSWTControl
 	}
 
 	private String getString(RGB rgb) {
+		if (rgb == null) {
+			return null;
+		}
 		final String red = Integer.toHexString(0x100 | rgb.red).substring(1);
 		final String green = Integer.toHexString(0x100 | rgb.green).substring(1);
 		final String blue = Integer.toHexString(0x100 | rgb.blue).substring(1);
