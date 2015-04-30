@@ -18,6 +18,7 @@ import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
+import org.eclipse.emf.ecp.view.internal.table.swt.Activator;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
@@ -114,10 +115,15 @@ public class DetailDialog extends Dialog {
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(content);
 
 		try {
-			ECPSWTViewRenderer.INSTANCE.render(content,
-				selection, view);
+			if (view == null) {
+				ECPSWTViewRenderer.INSTANCE.render(content,
+					selection);
+			} else {
+				ECPSWTViewRenderer.INSTANCE.render(content,
+					selection, view);
+			}
 		} catch (final ECPRendererException ex) {
-			ex.printStackTrace();
+			Activator.log(ex);
 		}
 
 		scrolledComposite.setContent(content);
