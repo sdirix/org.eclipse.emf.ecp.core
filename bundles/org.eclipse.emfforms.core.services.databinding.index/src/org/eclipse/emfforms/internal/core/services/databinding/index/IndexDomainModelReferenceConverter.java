@@ -15,8 +15,8 @@ import java.util.List;
 
 import org.eclipse.core.databinding.property.list.IListProperty;
 import org.eclipse.core.databinding.property.value.IValueProperty;
-import org.eclipse.emf.databinding.EMFProperties;
 import org.eclipse.emf.databinding.IEMFValueProperty;
+import org.eclipse.emf.databinding.edit.EMFEditProperties;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -126,7 +126,8 @@ public class IndexDomainModelReferenceConverter implements DomainModelReferenceC
 			valueProperty = new EMFIndexedValueProperty(getEditingDomain(object), indexReference.getIndex(),
 				indexReference.getDomainModelEFeature());
 		} else {
-			IEMFValueProperty emfValueProperty = EMFProperties.value(referencePath.get(0));
+			IEMFValueProperty emfValueProperty = EMFEditProperties
+				.value(getEditingDomain(object), referencePath.get(0));
 			for (int i = 1; i < referencePath.size(); i++) {
 				emfValueProperty = emfValueProperty.value(referencePath.get(i));
 			}
@@ -169,7 +170,8 @@ public class IndexDomainModelReferenceConverter implements DomainModelReferenceC
 			valueProperty = new EMFIndexedValueProperty(getEditingDomain(object), indexReference.getIndex(),
 				indexReference.getDomainModelEFeature());
 		} else {
-			IEMFValueProperty emfValueProperty = EMFProperties.value(referencePath.get(0));
+			IEMFValueProperty emfValueProperty = EMFEditProperties
+				.value(getEditingDomain(object), referencePath.get(0));
 			for (int i = 1; i < referencePath.size(); i++) {
 				emfValueProperty = emfValueProperty.value(referencePath.get(i));
 			}

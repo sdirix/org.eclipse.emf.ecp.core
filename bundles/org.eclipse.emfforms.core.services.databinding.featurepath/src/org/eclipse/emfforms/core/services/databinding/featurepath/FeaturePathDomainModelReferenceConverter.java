@@ -15,7 +15,6 @@ import java.util.List;
 
 import org.eclipse.core.databinding.property.list.IListProperty;
 import org.eclipse.core.databinding.property.value.IValueProperty;
-import org.eclipse.emf.databinding.EMFProperties;
 import org.eclipse.emf.databinding.IEMFValueProperty;
 import org.eclipse.emf.databinding.edit.EMFEditProperties;
 import org.eclipse.emf.ecore.EObject;
@@ -79,7 +78,7 @@ public class FeaturePathDomainModelReferenceConverter implements DomainModelRefe
 			return EMFEditProperties.value(editingDomain, featurePathReference.getDomainModelEFeature());
 		}
 
-		IEMFValueProperty emfValueProperty = EMFProperties.value(referencePath.get(0));
+		IEMFValueProperty emfValueProperty = EMFEditProperties.value(editingDomain, referencePath.get(0));
 		for (int i = 1; i < referencePath.size(); i++) {
 			emfValueProperty = emfValueProperty.value(referencePath.get(i));
 		}
@@ -120,7 +119,7 @@ public class FeaturePathDomainModelReferenceConverter implements DomainModelRefe
 			return EMFEditProperties.list(editingDomain, featurePathReference.getDomainModelEFeature());
 		}
 
-		IEMFValueProperty emfValueProperty = EMFProperties.value(referencePath.get(0));
+		IEMFValueProperty emfValueProperty = EMFEditProperties.value(editingDomain, referencePath.get(0));
 		for (int i = 1; i < referencePath.size(); i++) {
 			emfValueProperty = emfValueProperty.value(referencePath.get(i));
 		}
