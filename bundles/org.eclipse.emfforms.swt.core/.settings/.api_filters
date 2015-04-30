@@ -8,9 +8,6 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/emf/ecp/view/spi/swt/AbstractSWTRenderer.java">
-        <filter comment="SPI Change in 1.6" id="0"/>
-    </resource>
     <resource path="src/org/eclipse/emf/ecp/view/spi/swt/AbstractSWTRenderer.java" type="org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer">
         <filter comment="SPI Change in 1.6" id="338722907">
             <message_arguments>

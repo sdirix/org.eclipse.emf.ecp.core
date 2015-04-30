@@ -83,6 +83,7 @@ public class SectionLeafSWTRenderer extends AbstractSectionSWTRenderer {
 	 * {@inheritDoc}
 	 *
 	 * @see org.eclipse.emf.ecp.view.spi.section.swt.AbstractSectionSWTRenderer#initCollapseState()
+	 * @since 1.6
 	 */
 	@Override
 	protected void initCollapseState() {

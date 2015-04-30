@@ -254,6 +254,13 @@ public class TableControlDetailPanelRenderer extends TableControlSWTRenderer {
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.spi.table.swt.TableControlSWTRenderer#deleteRows(java.util.List,
+	 *      org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecore.EStructuralFeature)
+	 * @since 1.6
+	 */
 	@Override
 	protected void deleteRows(List<EObject> deletionList, final EObject eObject,
 		final EStructuralFeature structuralFeature) {
