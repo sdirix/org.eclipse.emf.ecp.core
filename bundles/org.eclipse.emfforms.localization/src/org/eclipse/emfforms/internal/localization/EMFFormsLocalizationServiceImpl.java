@@ -97,10 +97,6 @@ public class EMFFormsLocalizationServiceImpl implements EMFFormsLocalizationServ
 	 */
 	@Override
 	public String getString(Bundle bundle, String key) {
-		return innerGetString(bundle, key);
-	}
-
-	private String innerGetString(Bundle bundle, String key) {
 		return getString(bundle, getLocale(), key);
 	}
 
@@ -133,4 +129,37 @@ public class EMFFormsLocalizationServiceImpl implements EMFFormsLocalizationServ
 		return resourceBundle.getString(key);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emfforms.spi.localization.EMFFormsLocalizationService#hasKey(org.osgi.framework.Bundle,
+	 *      java.lang.String)
+	 */
+	@Override
+	public boolean hasKey(Bundle bundle, String key) {
+		return hasKey(bundle, getLocale(), key);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emfforms.spi.localization.EMFFormsLocalizationService#hasKey(java.lang.Class, java.lang.String)
+	 */
+	@Override
+	public boolean hasKey(Class<?> clazz, String key) {
+		return hasKey(FrameworkUtil.getBundle(clazz), key);
+	}
+
+	private boolean hasKey(Bundle bundle, String localeLanguage, String key) {
+		final ResourceBundle resourceBundle = bundleLocalization.getLocalization(bundle, localeLanguage);
+		if (resourceBundle == null) {
+			reportService
+				.report(new AbstractReport(
+					String
+						.format(
+							"No ResourceBundle found for Language '%1$s' in Bundle %2$s with Version %3$s.", localeLanguage, bundle.getSymbolicName(), bundle.getVersion().toString()))); //$NON-NLS-1$
+			return false;
+		}
+		return resourceBundle.containsKey(key);
+	}
 }

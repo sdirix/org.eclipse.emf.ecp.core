@@ -37,4 +37,22 @@ public interface EMFFormsLocalizationService {
 	 * @return The translated key
 	 */
 	String getString(Class<?> clazz, String key);
+
+	/**
+	 * Return whether the key in question is available.
+	 *
+	 * @param bundle The bundle in which to search for the key
+	 * @param key The key to search
+	 * @return true if the key is available in the bundle, false otherwise
+	 */
+	boolean hasKey(Bundle bundle, String key);
+
+	/**
+	 * Return whether the key in question is available.
+	 *
+	 * @param clazz The class in whose bundle to search for the key
+	 * @param key The key to search
+	 * @return true if the key is available in the bundle, false otherwise
+	 */
+	boolean hasKey(Class<?> clazz, String key);
 }
