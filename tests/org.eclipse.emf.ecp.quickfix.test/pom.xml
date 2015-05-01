@@ -24,13 +24,21 @@
 				<configuration>
 		          	<useUIHarness>true</useUIHarness>
 		          	<useUIThread>true</useUIThread>
-					<dependencies>
-						<dependency>
-                            <type>eclipse-plugin</type>
-                            <artifactId>org.eclipse.emf.ecp.quickfix</artifactId>
-                            <version>1.6.0</version>
-                        </dependency>
-					</dependencies>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>target-platform-configuration</artifactId>
+				<configuration>
+					<dependency-resolution>
+						<extraRequirements>
+							<requirement>
+								<type>eclipse-plugin</type>
+                            	<id>org.eclipse.emf.ecp.quickfix</id>
+								<versionRange>0.0.0</versionRange>
+							</requirement>
+						</extraRequirements>
+					</dependency-resolution>
 				</configuration>
 			</plugin>
 		</plugins>
