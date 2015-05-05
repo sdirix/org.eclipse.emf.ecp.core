@@ -49,6 +49,9 @@
 								</goals>
 							</execution>
 						</executions>
+						<configuration>
+							<excludeInnerJars>true</excludeInnerJars>
+						</configuration>
 					</plugin>
 				</plugins>
 			</build>

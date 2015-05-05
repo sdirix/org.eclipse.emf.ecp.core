@@ -148,6 +148,9 @@
 								</goals>
 							</execution>
 						</executions>
+						<configuration>
+							<excludeInnerJars>true</excludeInnerJars>
+						</configuration>
 					</plugin>
 					<plugin>
 						<groupId>org.eclipse.tycho</groupId>

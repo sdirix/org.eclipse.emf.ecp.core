@@ -114,6 +114,9 @@
 								</goals>
 							</execution>
 						</executions>
+						<configuration>
+							<excludeInnerJars>true</excludeInnerJars>
+						</configuration>
 					</plugin>
 					<!-- 3.b -->
 					<plugin>
