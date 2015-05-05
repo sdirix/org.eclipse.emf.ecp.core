@@ -69,8 +69,12 @@ public class Activator extends Plugin {
 	@Override
 	public void stop(BundleContext context) throws Exception {
 		plugin = null;
-		registerDebugConsumerService.unregister();
-		registerInvalidGridConsumerService.unregister();
+		if (registerDebugConsumerService != null) {
+			registerDebugConsumerService.unregister();
+		}
+		if (registerInvalidGridConsumerService != null) {
+			registerInvalidGridConsumerService.unregister();
+		}
 		super.stop(context);
 	}
 
