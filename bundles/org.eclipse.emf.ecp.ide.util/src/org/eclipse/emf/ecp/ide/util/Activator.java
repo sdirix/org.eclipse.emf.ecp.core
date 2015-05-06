@@ -13,6 +13,7 @@
 package org.eclipse.emf.ecp.ide.util;
 
 import org.eclipse.core.runtime.Plugin;
+import org.eclipse.core.runtime.Status;
 import org.osgi.framework.BundleContext;
 
 /**
@@ -61,4 +62,13 @@ public class Activator extends Plugin {
 		return plugin;
 	}
 
+	/**
+	 * Logs a message.
+	 *
+	 * @param severity the severity of the Message
+	 * @param message The warning to log
+	 */
+	public static void log(int severity, String message) {
+		plugin.getLog().log(new Status(severity, PLUGIN_ID, message));
+	}
 }
