@@ -36,6 +36,7 @@ import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.edit.command.SetCommand;
+import org.eclipse.emfforms.spi.common.locale.EMFFormsLocaleChangeListener;
 import org.eclipse.emfforms.spi.common.locale.EMFFormsLocaleProvider;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
@@ -291,6 +292,7 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 	}
 
 	private Shell dialog;
+	private EMFFormsLocaleChangeListener emfFormsLocaleChangeListener;
 
 	@Override
 	protected Control createSWTControl(Composite parent) {
@@ -298,7 +300,7 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 		main.setBackground(parent.getBackground());
 		GridLayoutFactory.fillDefaults().numColumns(2).applyTo(main);
 		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(main);
-		final Control text = super.createSWTControl(main);
+		final Text text = (Text) super.createSWTControl(main);
 		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.CENTER).applyTo(text);
 		final Button bDate = new Button(main, SWT.PUSH);
 		GridDataFactory.fillDefaults().grab(false, false).align(SWT.CENTER, SWT.CENTER).applyTo(bDate);
@@ -340,6 +342,22 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 
 		final Binding tooltipBinding = createTooltipBinding(control, getModelValue(), getDataBindingContext(),
 			targetToModelUpdateStrategy, new DateModelToTargetUpdateStrategy(true));
+
+		emfFormsLocaleChangeListener = new EMFFormsLocaleChangeListener() {
+
+			/**
+			 * {@inheritDoc}
+			 *
+			 * @see org.eclipse.emfforms.spi.common.locale.EMFFormsLocaleChangeListener#notifyLocaleChange()
+			 */
+			@Override
+			public void notifyLocaleChange() {
+				text.setMessage(getTextMessage());
+				binding.updateModelToTarget();
+			}
+		};
+		localeProvider.addEMFFormsLocaleChangeListener(emfFormsLocaleChangeListener);
+
 		return new Binding[] { binding, tooltipBinding };
 	}
 
@@ -397,6 +415,7 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 		if (dialog != null && !dialog.isDisposed()) {
 			dialog.dispose();
 		}
+		localeProvider.removeEMFFormsLocaleChangeListener(emfFormsLocaleChangeListener);
 		super.dispose();
 	}
 
