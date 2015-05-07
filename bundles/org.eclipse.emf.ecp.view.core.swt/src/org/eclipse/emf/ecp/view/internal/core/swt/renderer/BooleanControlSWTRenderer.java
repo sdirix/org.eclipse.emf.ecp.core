@@ -11,6 +11,8 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.core.swt.renderer;
 
+import javax.inject.Inject;
+
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.emf.ecp.view.internal.core.swt.MessageKeys;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
@@ -44,6 +46,7 @@ public class BooleanControlSWTRenderer extends SimpleControlSWTControlSWTRendere
 	 * @param emfFormsLabelProvider The {@link EMFFormsLabelProvider}
 	 * @param vtViewTemplateProvider The {@link VTViewTemplateProvider}
 	 */
+	@Inject
 	public BooleanControlSWTRenderer(VControl vElement, ViewModelContext viewContext,
 		ReportService reportService,
 		EMFFormsDatabinding emfFormsDatabinding, EMFFormsLabelProvider emfFormsLabelProvider,

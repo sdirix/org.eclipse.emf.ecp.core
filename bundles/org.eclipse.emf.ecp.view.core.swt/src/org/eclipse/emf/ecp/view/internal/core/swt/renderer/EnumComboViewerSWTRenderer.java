@@ -14,6 +14,8 @@ package org.eclipse.emf.ecp.view.internal.core.swt.renderer;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.ecore.EEnum;
@@ -59,6 +61,7 @@ public class EnumComboViewerSWTRenderer extends SimpleControlJFaceViewerSWTRende
 	 * @param vtViewTemplateProvider The {@link VTViewTemplateProvider}
 	 * @param emfFormsEditSupport The {@link EMFFormsEditSupport}
 	 */
+	@Inject
 	public EnumComboViewerSWTRenderer(VControl vElement, ViewModelContext viewContext,
 		ReportService reportService,
 		EMFFormsDatabinding emfFormsDatabinding, EMFFormsLabelProvider emfFormsLabelProvider,

@@ -15,6 +15,8 @@ package org.eclipse.emf.ecp.view.internal.core.swt.renderer;
 
 import java.util.Collection;
 
+import javax.inject.Inject;
+
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
@@ -48,6 +50,7 @@ public class ViewSWTRenderer extends ContainerSWTRenderer<VView> implements EMFF
 	 * @param emfFormsDatabinding The {@link EMFFormsDatabinding}
 	 * @param localeProvider The {@link EMFFormsLocaleProvider}
 	 */
+	@Inject
 	public ViewSWTRenderer(VView vElement, ViewModelContext viewContext, ReportService reportService,
 		EMFFormsRendererFactory factory, EMFFormsDatabinding emfFormsDatabinding, EMFFormsLocaleProvider localeProvider) {
 		super(vElement, viewContext, reportService, factory, emfFormsDatabinding);

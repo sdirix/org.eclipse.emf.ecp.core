@@ -9,7 +9,7 @@
 		<version>1.6.0-SNAPSHOT</version>
 		<relativePath>../../releng/org.eclipse.emf.ecp.releng.tests/</relativePath>
 	</parent>
-	<groupId>org.eclipse.emfforms</groupId>
+	<groupId>org.eclipse.emf.ecp</groupId>
 	<artifactId>org.eclipse.emfforms.swt.core.di.tests</artifactId>
 	<version>1.6.0-SNAPSHOT</version>
 	<packaging>eclipse-test-plugin</packaging>

@@ -20,15 +20,11 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
-import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
-import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
-import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
-import org.eclipse.emfforms.spi.localization.EMFFormsLocalizationService;
-import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererService;
+import org.eclipse.emfforms.spi.swt.core.di.EMFFormsDIRendererService;
 
 /**
  * DateTimeControlSWTRendererService which provides the {@link DateTimeControlSWTRenderer}.
@@ -36,14 +32,10 @@ import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererService;
  * @author Eugen Neufeld
  *
  */
-public class DateTimeControlSWTRendererService implements EMFFormsRendererService<VControl> {
+public class DateTimeControlSWTRendererService implements EMFFormsDIRendererService<VControl> {
 
 	private EMFFormsDatabinding databindingService;
-	private EMFFormsLabelProvider labelProvider;
 	private ReportService reportService;
-	private VTViewTemplateProvider vtViewTemplateProvider;
-	private EMFFormsLocalizationService localizationService;
-	private ImageRegistryService imageRegistryService;
 
 	/**
 	 * Called by the initializer to set the EMFFormsDatabinding.
@@ -52,24 +44,6 @@ public class DateTimeControlSWTRendererService implements EMFFormsRendererServic
 	 */
 	protected void setEMFFormsDatabinding(EMFFormsDatabinding databindingService) {
 		this.databindingService = databindingService;
-	}
-
-	/**
-	 * Called by the initializer to set the EMFFormsLocalizationService.
-	 *
-	 * @param localizationService The EMFFormsLocalizationService
-	 */
-	protected void setEMFFormsLocalizationService(EMFFormsLocalizationService localizationService) {
-		this.localizationService = localizationService;
-	}
-
-	/**
-	 * Called by the initializer to set the EMFFormsLabelProvider.
-	 *
-	 * @param labelProvider The EMFFormsLabelProvider
-	 */
-	protected void setEMFFormsLabelProvider(EMFFormsLabelProvider labelProvider) {
-		this.labelProvider = labelProvider;
 	}
 
 	/**
@@ -82,27 +56,9 @@ public class DateTimeControlSWTRendererService implements EMFFormsRendererServic
 	}
 
 	/**
-	 * Called by the initializer to set the VTViewTemplateProvider.
-	 *
-	 * @param vtViewTemplateProvider The VTViewTemplateProvider
-	 */
-	protected void setVTViewTemplateProvider(VTViewTemplateProvider vtViewTemplateProvider) {
-		this.vtViewTemplateProvider = vtViewTemplateProvider;
-	}
-
-	/**
-	 * Called by the initializer to set the ImageRegistryService.
-	 *
-	 * @param imageRegistryService The ImageRegistryService
-	 */
-	protected void setImageRegistryService(ImageRegistryService imageRegistryService) {
-		this.imageRegistryService = imageRegistryService;
-	}
-
-	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emfforms.spi.swt.core.EMFFormsRendererService#isApplicable(VElement,ViewModelContext)
+	 * @see org.eclipse.emfforms.spi.swt.core.di.EMFFormsDIRendererService#isApplicable(VElement,ViewModelContext)
 	 */
 	@Override
 	public double isApplicable(VElement vElement, ViewModelContext viewModelContext) {
@@ -140,13 +96,11 @@ public class DateTimeControlSWTRendererService implements EMFFormsRendererServic
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emfforms.spi.swt.core.EMFFormsRendererService#getRendererInstance(org.eclipse.emf.ecp.view.spi.model.VElement,
-	 *      org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
+	 * @see org.eclipse.emfforms.spi.swt.core.di.EMFFormsDIRendererService#getRendererClass()
 	 */
 	@Override
-	public AbstractSWTRenderer<VControl> getRendererInstance(VControl vElement, ViewModelContext viewModelContext) {
-		return new DateTimeControlSWTRenderer(vElement, viewModelContext, reportService, databindingService,
-			labelProvider, vtViewTemplateProvider, localizationService, imageRegistryService);
+	public Class<? extends AbstractSWTRenderer<VControl>> getRendererClass() {
+		return DateTimeControlSWTRenderer.class;
 	}
 
 }

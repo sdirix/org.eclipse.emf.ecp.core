@@ -13,6 +13,8 @@ package org.eclipse.emf.ecp.view.spi.core.swt.renderer;
 
 import java.util.Set;
 
+import javax.inject.Inject;
+
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
@@ -75,6 +77,7 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 	 * @param emfFormsEditSupport The {@link EMFFormsEditSupport}
 	 * @since 1.6
 	 */
+	@Inject
 	public TextControlSWTRenderer(VControl vElement, ViewModelContext viewContext,
 		ReportService reportService,
 		EMFFormsDatabinding emfFormsDatabinding, EMFFormsLabelProvider emfFormsLabelProvider,

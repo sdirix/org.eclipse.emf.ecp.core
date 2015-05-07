@@ -15,78 +15,20 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
-import org.eclipse.emfforms.spi.common.locale.EMFFormsLocaleProvider;
-import org.eclipse.emfforms.spi.common.report.ReportService;
-import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
-import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
-import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererService;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
+import org.eclipse.emfforms.spi.swt.core.di.EMFFormsDIRendererService;
 
 /**
- * NumberControlSWTRendererService which provides the NumberControlSWTRenderer.
+ * ViewSWTRendererService which provides the ViewSWTRenderer.
  *
  * @author Eugen Neufeld
  *
  */
-public class ViewSWTRendererService implements EMFFormsRendererService<VView> {
-
-	private EMFFormsDatabinding databindingService;
-	private EMFFormsRendererFactory rendererFactory;
-	private ReportService reportService;
-	private EMFFormsLocaleProvider localeProvider;
-	private ServiceReference<EMFFormsRendererFactory> serviceReference;
-
-	/**
-	 * Activate ViewSWTRendererService.
-	 *
-	 * @param bundleContext The {@link BundleContext}
-	 */
-	protected void activate(BundleContext bundleContext) {
-		serviceReference = bundleContext.getServiceReference(EMFFormsRendererFactory.class);
-		rendererFactory = bundleContext.getService(serviceReference);
-	}
-
-	/**
-	 * Deactivate ViewSWTRendererService.
-	 *
-	 * @param bundleContext The {@link BundleContext}
-	 */
-	protected void deactivate(BundleContext bundleContext) {
-		bundleContext.ungetService(serviceReference);
-	}
-
-	/**
-	 * Called by the initializer to set the EMFFormsDatabinding.
-	 *
-	 * @param databindingService The EMFFormsDatabinding
-	 */
-	protected void setEMFFormsDatabinding(EMFFormsDatabinding databindingService) {
-		this.databindingService = databindingService;
-	}
-
-	/**
-	 * Called by the initializer to set the ReportService.
-	 *
-	 * @param reportService The ReportService
-	 */
-	protected void setReportService(ReportService reportService) {
-		this.reportService = reportService;
-	}
-
-	/**
-	 * Called by the initializer to set the EMFFormsLocaleProvider.
-	 *
-	 * @param localeProvider The EMFFormsLocaleProvider
-	 */
-	protected void setEMFFormsLocaleProvider(EMFFormsLocaleProvider localeProvider) {
-		this.localeProvider = localeProvider;
-	}
+public class ViewSWTRendererService implements EMFFormsDIRendererService<VView> {
 
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emfforms.spi.swt.core.EMFFormsRendererService#isApplicable(VElement,ViewModelContext)
+	 * @see org.eclipse.emfforms.spi.swt.core.di.EMFFormsDIRendererService#isApplicable(VElement,ViewModelContext)
 	 */
 	@Override
 	public double isApplicable(VElement vElement, ViewModelContext viewModelContext) {
@@ -99,13 +41,11 @@ public class ViewSWTRendererService implements EMFFormsRendererService<VView> {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emfforms.spi.swt.core.EMFFormsRendererService#getRendererInstance(org.eclipse.emf.ecp.view.spi.model.VElement,
-	 *      org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
+	 * @see org.eclipse.emfforms.spi.swt.core.di.EMFFormsDIRendererService#getRendererClass()
 	 */
 	@Override
-	public AbstractSWTRenderer<VView> getRendererInstance(VView vElement, ViewModelContext viewModelContext) {
-		return new ViewSWTRenderer(vElement, viewModelContext, reportService, rendererFactory, databindingService,
-			localeProvider);
+	public Class<? extends AbstractSWTRenderer<VView>> getRendererClass() {
+		return ViewSWTRenderer.class;
 	}
 
 }

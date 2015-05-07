@@ -58,8 +58,10 @@ import org.eclipse.emf.ecp.view.spi.table.swt.TableControlSWTRenderer;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.DatabindingClassRunner;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.SWTTestUtil;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.SWTViewTestHelper;
+import org.eclipse.emfforms.internal.swt.core.di.EMFFormsContextProviderImpl;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsNoRendererException;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
+import org.eclipse.emfforms.spi.swt.core.di.EMFFormsContextProvider;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.custom.ScrolledComposite;
@@ -554,9 +556,11 @@ public class SWTTable_PTest {
 	private class ViewModelContextWithoutServices implements ViewModelContext {
 
 		private final VElement view;
+		private final EMFFormsContextProvider contextProvider;
 
 		public ViewModelContextWithoutServices(VElement view) {
 			this.view = view;
+			contextProvider = new EMFFormsContextProviderImpl();
 			ViewModelUtil.resolveDomainReferences(getViewModel(), getDomainModel());
 		}
 
@@ -641,6 +645,9 @@ public class SWTTable_PTest {
 		 */
 		@Override
 		public <T> boolean hasService(Class<T> serviceType) {
+			if (EMFFormsContextProvider.class.equals(serviceType)) {
+				return true;
+			}
 			return false;
 		}
 
@@ -649,8 +656,12 @@ public class SWTTable_PTest {
 		 *
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getService(java.lang.Class)
 		 */
+		@SuppressWarnings("unchecked")
 		@Override
 		public <T> T getService(Class<T> serviceType) {
+			if (EMFFormsContextProvider.class.equals(serviceType)) {
+				return (T) contextProvider;
+			}
 			return null;
 		}
 

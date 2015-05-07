@@ -19,6 +19,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.regex.Pattern;
 
+import javax.inject.Inject;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.eclipse.core.databinding.Binding;
@@ -91,6 +92,7 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 	 * @param localeProvider The {@link EMFFormsLocaleProvider}
 	 * @param imageRegistryService The {@link ImageRegistryService}
 	 */
+	@Inject
 	public XMLDateControlSWTRenderer(VControl vElement, ViewModelContext viewContext,
 		ReportService reportService,
 		EMFFormsDatabinding emfFormsDatabinding, EMFFormsLabelProvider emfFormsLabelProvider,

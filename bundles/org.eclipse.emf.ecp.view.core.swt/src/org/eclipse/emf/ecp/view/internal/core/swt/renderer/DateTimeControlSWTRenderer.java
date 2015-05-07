@@ -14,6 +14,8 @@ package org.eclipse.emf.ecp.view.internal.core.swt.renderer;
 import java.util.Calendar;
 import java.util.Locale;
 
+import javax.inject.Inject;
+
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.IObserving;
@@ -82,6 +84,7 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 	 * @param localizationService The {@link EMFFormsLocalizationService}
 	 * @param imageRegistryService The {@link ImageRegistryService}
 	 */
+	@Inject
 	public DateTimeControlSWTRenderer(VControl vElement, ViewModelContext viewContext,
 		ReportService reportService,
 		EMFFormsDatabinding emfFormsDatabinding, EMFFormsLabelProvider emfFormsLabelProvider,
@@ -115,7 +118,7 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 			.getChildren()[0]).getChildren()[1];
 		final Button unsetBtn = (Button) ((Composite) ((Composite) ((Composite) control).getChildren()[0])
 			.getChildren()[0])
-				.getChildren()[2];
+			.getChildren()[2];
 		final Button setBtn = (Button) ((Composite) control).getChildren()[1];
 
 		final IObservableValue dateObserver = SWTObservables.observeSelection(date);

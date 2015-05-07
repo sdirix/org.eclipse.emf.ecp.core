@@ -15,6 +15,8 @@ import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.ParsePosition;
 
+import javax.inject.Inject;
+
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
@@ -70,6 +72,7 @@ public class NumberControlSWTRenderer extends TextControlSWTRenderer {
 	 * @param localizationService The {@link EMFFormsLocalizationService}
 	 * @param localeProvider The {@link EMFFormsLocaleProvider}
 	 */
+	@Inject
 	public NumberControlSWTRenderer(VControl vElement, ViewModelContext viewContext,
 		ReportService reportService,
 		EMFFormsDatabinding emfFormsDatabinding, EMFFormsLabelProvider emfFormsLabelProvider,
