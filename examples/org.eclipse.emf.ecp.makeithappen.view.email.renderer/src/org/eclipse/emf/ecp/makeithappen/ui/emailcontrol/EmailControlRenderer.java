@@ -15,6 +15,8 @@ import java.awt.Desktop;
 import java.io.IOException;
 import java.net.URI;
 
+import javax.inject.Inject;
+
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.renderer.TextControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
@@ -52,6 +54,7 @@ public class EmailControlRenderer extends TextControlSWTRenderer {
 	 * @param vtViewTemplateProvider The {@link VTViewTemplateProvider}
 	 * @param emfFormsEditSupport The {@link EMFFormsEditSupport}
 	 */
+	@Inject
 	public EmailControlRenderer(VControl vElement, ViewModelContext viewContext,
 		ReportService reportService,
 		EMFFormsDatabinding emfFormsDatabinding, EMFFormsLabelProvider emfFormsLabelProvider,
