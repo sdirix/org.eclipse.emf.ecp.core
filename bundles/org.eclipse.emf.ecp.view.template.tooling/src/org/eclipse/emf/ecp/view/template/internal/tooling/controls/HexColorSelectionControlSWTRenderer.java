@@ -133,7 +133,7 @@ public class HexColorSelectionControlSWTRenderer extends SimpleControlSWTControl
 	@Override
 	protected Control createSWTControl(final Composite parent) {
 		final Composite composite = new Composite(parent, SWT.NONE);
-		GridLayoutFactory.fillDefaults().numColumns(2).equalWidth(false).applyTo(composite);
+		GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(false).applyTo(composite);
 		final Label colorExample = new Label(composite, SWT.BORDER);
 		GridDataFactory.fillDefaults().align(SWT.BEGINNING, SWT.FILL).grab(false, false).hint(40, SWT.DEFAULT)
 			.applyTo(colorExample);
@@ -152,10 +152,22 @@ public class HexColorSelectionControlSWTRenderer extends SimpleControlSWTControl
 				super.widgetSelected(e);
 				final ColorDialog cd = new ColorDialog(parent.getShell());
 				final RGB rgb = cd.open();
-				setValue(getString(rgb));
+				if (rgb != null) {
+					setValue(getString(rgb));
+				}
 			}
 
 		});
+		final Button unsetColorBtn = new Button(composite, SWT.PUSH);
+		GridDataFactory.fillDefaults().align(SWT.BEGINNING, SWT.FILL).grab(false, false).applyTo(unsetColorBtn);
+		unsetColorBtn.setText(Messages.HexColorSelectionControlSWTRenderer_UnsetColorBtn);
+		unsetColorBtn.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				setValue(null);
+			}
+		});
+
 		return composite;
 	}
 
