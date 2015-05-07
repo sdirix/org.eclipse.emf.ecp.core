@@ -198,8 +198,8 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 				getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
 			final IObservableValue tooltip = emfFormsLabelProvider.getDescription(
 				getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
-			viewModelDBC.bindValue(SWTObservables.observeText(tableComposite), labelText);
-			viewModelDBC.bindValue(SWTObservables.observeTooltipText(tableComposite), tooltip);
+			viewModelDBC.bindValue(SWTObservables.observeText(tableColumn), labelText);
+			viewModelDBC.bindValue(SWTObservables.observeTooltipText(tableColumn), tooltip);
 		} catch (final NoLabelFoundException e) {
 			// FIXME Expectations?
 			getReportService().getReports().add(new RenderingFailedReport(e));
