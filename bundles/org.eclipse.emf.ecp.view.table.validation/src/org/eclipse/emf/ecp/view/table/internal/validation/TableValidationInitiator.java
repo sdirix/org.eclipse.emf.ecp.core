@@ -167,7 +167,7 @@ public class TableValidationInitiator implements GlobalViewModelService {
 				Collections.<String, Object> emptyMap());
 		}
 
-		return EcoreUtil.copy(detailView);
+		return detailView;
 	}
 
 	@Override
