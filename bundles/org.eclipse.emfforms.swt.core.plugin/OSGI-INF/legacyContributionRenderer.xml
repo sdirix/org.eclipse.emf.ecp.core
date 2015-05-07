@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="org.eclipse.emfforms.swt.core.plugin">
-   <implementation class="org.eclipse.emfforms.internal.swt.core.plugin.LegacyRendererContributionParser"/>
-   <reference bind="setReportService" cardinality="1..1" interface="org.eclipse.emfforms.spi.common.report.ReportService" name="ReportService" policy="static" />
-</scr:component>

@@ -15,7 +15,9 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
@@ -195,7 +197,7 @@ public class EMFFormsRendererFactory_Test {
 	 * {@link org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory#getAdditionalRendererInstances(VElement, ViewModelContext)
 	 * EMFFormsRendererFactory#getAdditionalRendererInstances(VElement, ViewModelContext)}.
 	 * When one EMFFormsRendererService is registered then
-	 * {@link EMFFormsAdditionalRendererService#isApplicable(VElement)} is
+	 * {@link EMFFormsAdditionalRendererService#isApplicable(VElement, ViewModelContext)} is
 	 * called exactly once.
 	 */
 	@SuppressWarnings("unchecked")
@@ -204,13 +206,15 @@ public class EMFFormsRendererFactory_Test {
 		final VElement vElement = mock(VElement.class);
 		final ViewModelContext viewModelContext = mock(ViewModelContext.class);
 		final EMFFormsAdditionalRendererService<VElement> rendererService = mock(EMFFormsAdditionalRendererService.class);
-		when(rendererService.isApplicable(vElement)).thenReturn(true);
-		when(rendererService.getRendererInstance(vElement, viewModelContext)).thenReturn(
-			new MockedAbstractAdditionalSWTRenderer(vElement, viewModelContext, mock(ReportService.class)));
+		when(rendererService.isApplicable(vElement, viewModelContext)).thenReturn(true);
+		final Collection<AbstractAdditionalSWTRenderer<VElement>> mockedResults = new ArrayList<AbstractAdditionalSWTRenderer<VElement>>();
+		mockedResults
+			.add(new MockedAbstractAdditionalSWTRenderer(vElement, viewModelContext, mock(ReportService.class)));
+		when(rendererService.getRendererInstances(vElement, viewModelContext)).thenReturn(mockedResults);
 		rendererFactory.addEMFFormsAdditionalRendererService(rendererService);
 		final Collection<AbstractAdditionalSWTRenderer<VElement>> additionalRenderers = rendererFactory
 			.getAdditionalRendererInstances(vElement, viewModelContext);
-		Mockito.verify(rendererService, Mockito.times(1)).isApplicable(vElement);
+		Mockito.verify(rendererService, Mockito.times(1)).isApplicable(vElement, viewModelContext);
 		assertEquals(1, additionalRenderers.size());
 	}
 
@@ -243,10 +247,11 @@ public class EMFFormsRendererFactory_Test {
 	public void testGetAdditionalRendererInstanceNoFittingServices() {
 		final VElement vElement = mock(VElement.class);
 		final EMFFormsAdditionalRendererService<VElement> rendererService1 = mock(EMFFormsAdditionalRendererService.class);
-		when(rendererService1.isApplicable(vElement)).thenReturn(false);
+		when(rendererService1.isApplicable(Matchers.same(vElement), Matchers.any(ViewModelContext.class))).thenReturn(
+			false);
 		final AbstractAdditionalSWTRenderer<VElement> renderer1 = mock(AbstractAdditionalSWTRenderer.class);
-		when(rendererService1.getRendererInstance(Matchers.any(VElement.class), Matchers.any(ViewModelContext.class)))
-			.thenReturn(renderer1);
+		when(rendererService1.getRendererInstances(Matchers.any(VElement.class), Matchers.any(ViewModelContext.class)))
+			.thenReturn(Collections.singleton(renderer1));
 
 		rendererFactory.addEMFFormsAdditionalRendererService(rendererService1);
 		final Collection<AbstractAdditionalSWTRenderer<VElement>> additionalRenderers = rendererFactory

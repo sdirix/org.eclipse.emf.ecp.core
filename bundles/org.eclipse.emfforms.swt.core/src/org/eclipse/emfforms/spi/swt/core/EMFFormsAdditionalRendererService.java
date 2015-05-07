@@ -11,6 +11,8 @@
  ******************************************************************************/
 package org.eclipse.emfforms.spi.swt.core;
 
+import java.util.Collection;
+
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractAdditionalSWTRenderer;
@@ -27,19 +29,21 @@ public interface EMFFormsAdditionalRendererService<VELEMENT extends VElement> {
 
 	/**
 	 * Check whether the provided {@link VElement} can be rendered by the {@link AbstractAdditionalSWTRenderer} provided
-	 * by {@link #getRendererInstance(VElement, ViewModelContext)}.
+	 * by {@link #getRendererInstances(VElement, ViewModelContext)}.
 	 *
 	 * @param vElement The {@link VElement} to check
+	 * @param viewModelContext The {@link ViewModelContext} to use
 	 * @return true if the AbstractAdditionalSWTRenderer fits, false otherwise
 	 */
-	boolean isApplicable(VElement vElement);
+	boolean isApplicable(VElement vElement, ViewModelContext viewModelContext);
 
 	/**
-	 * Returns a renderer.
+	 * Returns a collection of renderers.
 	 *
 	 * @param vElement The {@link VElement} to create the renderer instance for
 	 * @param viewModelContext The {@link ViewModelContext} to use for the renderer instance
-	 * @return The AbstractAdditionalSWTRenderer
+	 * @return The collection of AbstractAdditionalSWTRenderers
 	 */
-	AbstractAdditionalSWTRenderer<VELEMENT> getRendererInstance(VELEMENT vElement, ViewModelContext viewModelContext);
+	Collection<AbstractAdditionalSWTRenderer<VELEMENT>> getRendererInstances(VELEMENT vElement,
+		ViewModelContext viewModelContext);
 }

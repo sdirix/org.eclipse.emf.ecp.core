@@ -12,15 +12,33 @@
 package org.eclipse.emfforms.internal.swt.core.plugin;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExtension;
+import org.eclipse.core.runtime.IExtensionPoint;
+import org.eclipse.core.runtime.InvalidRegistryObjectException;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecp.view.model.common.ECPRendererTester;
+import org.eclipse.emf.ecp.view.model.common.ECPStaticRendererTester;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
+import org.eclipse.emf.ecp.view.spi.swt.reporting.ECPRendererDescriptionInitFailedReport;
 import org.eclipse.emf.ecp.view.spi.swt.reporting.RendererInitFailedReport;
+import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererService;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Renderer service which uses the extension point derivates.
@@ -28,24 +46,91 @@ import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererService;
  * @author Eugen Neufeld
  *
  */
+@Component
 public class LegacyRendererService implements EMFFormsRendererService<VElement> {
 
-	private final Class<AbstractSWTRenderer<VElement>> renderer;
-	private final Set<ECPRendererTester> testerSet;
-	private final ReportService reportService;
+	private static final String TEST_DYNAMIC = "dynamicTest";//$NON-NLS-1$
+	private static final String TEST_STATIC = "staticTest";//$NON-NLS-1$
+	private static final String TESTER_PRIORITY = "priority";//$NON-NLS-1$
+	private static final String TESTER_VELEMENT = "element"; //$NON-NLS-1$
+	private static final String RENDERER_TESTER = "testClass"; //$NON-NLS-1$
+
+	private static final String RENDER_EXTENSION = "org.eclipse.emf.ecp.ui.view.swt.renderers"; //$NON-NLS-1$
+
+	private ReportService reportService;
+
+	private final Map<Set<ECPRendererTester>, Class<AbstractSWTRenderer<VElement>>> legacyRenderer = new LinkedHashMap<Set<ECPRendererTester>, Class<AbstractSWTRenderer<VElement>>>();
 
 	/**
-	 * Default constructor.
+	 * Called by the initializer to set the {@link ReportService}.
 	 *
-	 * @param renderer The AbstractSWTRenderer class
-	 * @param testerSet The Set of ECPRendererTester
-	 * @param reportService The ReportService
+	 * @param reportService The ReportService to set
 	 */
-	public LegacyRendererService(Class<AbstractSWTRenderer<VElement>> renderer, Set<ECPRendererTester> testerSet,
-		ReportService reportService) {
-		this.renderer = renderer;
-		this.testerSet = testerSet;
+	@Reference
+	protected void setReportService(ReportService reportService) {
 		this.reportService = reportService;
+	}
+
+	/**
+	 * Activate method of OSGI Component.
+	 *
+	 * @param bundleContext The {@link BundleContext} to use
+	 */
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		readRenderer(bundleContext);
+	}
+
+	private void readRenderer(BundleContext bundleContext) {
+		final IExtensionPoint extensionPoint = Platform.getExtensionRegistry()
+			.getExtensionPoint(RENDER_EXTENSION);
+		for (final IExtension extension : extensionPoint.getExtensions()) {
+
+			for (final IConfigurationElement configurationElement : extension
+				.getConfigurationElements()) {
+				try {
+					final Class<AbstractSWTRenderer<VElement>> renderer = loadClass(configurationElement
+						.getContributor().getName(), configurationElement
+						.getAttribute("renderer")); //$NON-NLS-1$
+
+					final Set<ECPRendererTester> tester = new LinkedHashSet<ECPRendererTester>();
+					for (final IConfigurationElement testerExtension : configurationElement.getChildren()) {
+						if (TEST_DYNAMIC.equals(testerExtension.getName())) {
+							tester.add((ECPRendererTester) testerExtension.createExecutableExtension(RENDERER_TESTER));
+						}
+						else if (TEST_STATIC.equals(testerExtension.getName())) {
+
+							final int priority = Integer.parseInt(testerExtension.getAttribute(TESTER_PRIORITY));
+
+							final String vElement = testerExtension.getAttribute(TESTER_VELEMENT);
+							final Class<? extends VElement> supportedEObject = loadClass(testerExtension
+								.getContributor()
+								.getName(), vElement);
+
+							tester.add(new ECPStaticRendererTester(priority,
+								supportedEObject));
+						}
+					}
+					legacyRenderer.put(tester, renderer);
+				} catch (final CoreException ex) {
+					reportService.report(new ECPRendererDescriptionInitFailedReport(ex));
+				} catch (final ClassNotFoundException ex) {
+					reportService.report(new ECPRendererDescriptionInitFailedReport(ex));
+				} catch (final InvalidRegistryObjectException ex) {
+					reportService.report(new ECPRendererDescriptionInitFailedReport(ex));
+				}
+			}
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	private static <T> Class<T> loadClass(String bundleName, String clazz)
+		throws ClassNotFoundException {
+		final Bundle bundle = Platform.getBundle(bundleName);
+		if (bundle == null) {
+			throw new ClassNotFoundException(clazz + bundleName);
+		}
+		return (Class<T>) bundle.loadClass(clazz);
 	}
 
 	/**
@@ -56,10 +141,12 @@ public class LegacyRendererService implements EMFFormsRendererService<VElement> 
 	@Override
 	public double isApplicable(VElement vElement, ViewModelContext viewModelContext) {
 		int currentPriority = -1;
-		for (final ECPRendererTester tester : testerSet) {
-			final int testerPriority = tester.isApplicable(vElement, viewModelContext);
-			if (testerPriority > currentPriority) {
-				currentPriority = testerPriority;
+		for (final Set<ECPRendererTester> testerSet : legacyRenderer.keySet()) {
+			for (final ECPRendererTester tester : testerSet) {
+				final int testerPriority = tester.isApplicable(vElement, viewModelContext);
+				if (testerPriority > currentPriority) {
+					currentPriority = testerPriority;
+				}
 			}
 		}
 		return currentPriority;
@@ -72,11 +159,33 @@ public class LegacyRendererService implements EMFFormsRendererService<VElement> 
 	 */
 	@Override
 	public AbstractSWTRenderer<VElement> getRendererInstance(VElement vElement, ViewModelContext viewModelContext) {
-		return createRenderer(vElement, viewModelContext, renderer);
+		return createRenderer(vElement, viewModelContext, getFittingRenderer(vElement, viewModelContext));
+	}
+
+	private Class<AbstractSWTRenderer<VElement>> getFittingRenderer(VElement vElement,
+		ViewModelContext viewModelContext) {
+		int currentPriority = -1;
+		Class<AbstractSWTRenderer<VElement>> best = null;
+		for (final Entry<Set<ECPRendererTester>, Class<AbstractSWTRenderer<VElement>>> testerSet : legacyRenderer
+			.entrySet()) {
+			for (final ECPRendererTester tester : testerSet.getKey()) {
+				final int testerPriority = tester.isApplicable(vElement, viewModelContext);
+				if (testerPriority > currentPriority) {
+					currentPriority = testerPriority;
+					best = testerSet.getValue();
+				}
+			}
+		}
+		return best;
 	}
 
 	private AbstractSWTRenderer<VElement> createRenderer(VElement vElement, ViewModelContext viewContext,
 		final Class<? extends AbstractSWTRenderer<VElement>> rendererClass) {
+		if (rendererClass == null) {
+			reportService.report(new AbstractReport(String
+				.format("RendererClass for %1$s is null!", vElement.getName()))); //$NON-NLS-1$
+			throw new IllegalStateException(String.format("RendererClass for %1$s is null!", vElement.getName())); //$NON-NLS-1$
+		}
 		try {
 			return rendererClass
 				.getConstructor(vElement.getClass().getInterfaces()[0], ViewModelContext.class, ReportService.class)

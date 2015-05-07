@@ -15,6 +15,7 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 
 import java.util.Collection;
+import java.util.Collections;
 
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
@@ -123,12 +124,15 @@ public class EMFFormsRendererFactory_ITest {
 		final AbstractAdditionalSWTRenderer<VElement> additionalSWTRenderer = new MockedAbstractAdditionalSWTRenderer(
 			vElement, viewModelContext, mock(ReportService.class));
 		final EMFFormsAdditionalRendererService<VElement> rendererService = mock(EMFFormsAdditionalRendererService.class);
-		Mockito.when(rendererService.getRendererInstance(vElement, viewModelContext)).thenReturn(additionalSWTRenderer);
-		Mockito.when(rendererService.isApplicable(Matchers.any(VElement.class))).thenReturn(true);
+		Mockito.when(rendererService.getRendererInstances(vElement, viewModelContext)).thenReturn(
+			Collections.singleton(additionalSWTRenderer));
+		Mockito.when(rendererService.isApplicable(Matchers.any(VElement.class), Matchers.any(ViewModelContext.class)))
+			.thenReturn(true);
 		bundleContext.registerService(EMFFormsAdditionalRendererService.class, rendererService, null);
 		final Collection<AbstractAdditionalSWTRenderer<VElement>> rendererInstances = rendererFactory
 			.getAdditionalRendererInstances(vElement, viewModelContext);
-		Mockito.verify(rendererService, Mockito.times(1)).isApplicable(Matchers.any(VElement.class));
+		Mockito.verify(rendererService, Mockito.times(1)).isApplicable(Matchers.any(VElement.class),
+			Matchers.any(ViewModelContext.class));
 		assertEquals(1, rendererInstances.size());
 	}
 

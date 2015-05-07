@@ -114,11 +114,14 @@ public class EMFFormsRendererFactoryImpl implements EMFFormsRendererFactory {
 		final Set<AbstractAdditionalSWTRenderer<VElement>> renderers = new LinkedHashSet<AbstractAdditionalSWTRenderer<VElement>>();
 
 		for (final EMFFormsAdditionalRendererService<VElement> rendererService : additionalRendererServices) {
-			if (rendererService.isApplicable(vElement)) {
-				final AbstractAdditionalSWTRenderer<VElement> rendererInstance = rendererService.getRendererInstance(
-					vElement, viewModelContext);
-				rendererInstance.init();
-				renderers.add(rendererInstance);
+			if (rendererService.isApplicable(vElement, viewModelContext)) {
+				final Collection<AbstractAdditionalSWTRenderer<VElement>> rendererInstances = rendererService
+					.getRendererInstances(
+						vElement, viewModelContext);
+				for (final AbstractAdditionalSWTRenderer<VElement> rendererInstance : rendererInstances) {
+					rendererInstance.init();
+					renderers.add(rendererInstance);
+				}
 			}
 		}
 
