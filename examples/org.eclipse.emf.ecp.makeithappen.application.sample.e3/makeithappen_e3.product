@@ -23,36 +23,18 @@
       <plugin id="com.ibm.icu"/>
       <plugin id="javax.annotation"/>
       <plugin id="javax.inject"/>
-      <plugin id="javax.servlet"/>
       <plugin id="javax.xml"/>
       <plugin id="org.apache.batik.css"/>
       <plugin id="org.apache.batik.util"/>
       <plugin id="org.apache.batik.util.gui"/>
-      <plugin id="org.eclipse.ant.core"/>
-      <plugin id="org.eclipse.compare.core"/>
       <plugin id="org.eclipse.core.commands"/>
       <plugin id="org.eclipse.core.contenttype"/>
       <plugin id="org.eclipse.core.databinding"/>
       <plugin id="org.eclipse.core.databinding.observable"/>
       <plugin id="org.eclipse.core.databinding.property"/>
       <plugin id="org.eclipse.core.expressions"/>
-      <plugin id="org.eclipse.core.filesystem"/>
-      <plugin id="org.eclipse.core.filesystem.aix.ppc" fragment="true"/>
-      <plugin id="org.eclipse.core.filesystem.hpux.ia64_32" fragment="true"/>
-      <plugin id="org.eclipse.core.filesystem.linux.ppc" fragment="true"/>
-      <plugin id="org.eclipse.core.filesystem.linux.x86" fragment="true"/>
-      <plugin id="org.eclipse.core.filesystem.linux.x86_64" fragment="true"/>
-      <plugin id="org.eclipse.core.filesystem.macosx" fragment="true"/>
-      <plugin id="org.eclipse.core.filesystem.solaris.sparc" fragment="true"/>
-      <plugin id="org.eclipse.core.filesystem.win32.x86" fragment="true"/>
-      <plugin id="org.eclipse.core.filesystem.win32.x86_64" fragment="true"/>
       <plugin id="org.eclipse.core.jobs"/>
-      <plugin id="org.eclipse.core.resources"/>
-      <plugin id="org.eclipse.core.resources.win32.x86" fragment="true"/>
-      <plugin id="org.eclipse.core.resources.win32.x86_64" fragment="true"/>
       <plugin id="org.eclipse.core.runtime"/>
-      <plugin id="org.eclipse.core.runtime.compatibility.registry" fragment="true"/>
-      <plugin id="org.eclipse.core.variables"/>
       <plugin id="org.eclipse.e4.core.commands"/>
       <plugin id="org.eclipse.e4.core.contexts"/>
       <plugin id="org.eclipse.e4.core.di"/>
@@ -84,16 +66,12 @@
       <plugin id="org.eclipse.emf.ecp.common.ui"/>
       <plugin id="org.eclipse.emf.ecp.edit"/>
       <plugin id="org.eclipse.emf.ecp.edit.swt"/>
-      <plugin id="org.eclipse.emf.ecp.edit.swt.test" fragment="true"/>
       <plugin id="org.eclipse.emf.ecp.makeithappen.application.sample.e3"/>
       <plugin id="org.eclipse.emf.ecp.makeithappen.model"/>
       <plugin id="org.eclipse.emf.ecp.makeithappen.model.edit"/>
       <plugin id="org.eclipse.emf.ecp.makeithappen.model.viewmodel"/>
       <plugin id="org.eclipse.emf.ecp.ui.view"/>
       <plugin id="org.eclipse.emf.ecp.ui.view.swt"/>
-      <plugin id="org.eclipse.emf.ecp.view.categorization.model"/>
-      <plugin id="org.eclipse.emf.ecp.view.categorization.model.edit"/>
-      <plugin id="org.eclipse.emf.ecp.view.categorization.swt"/>
       <plugin id="org.eclipse.emf.ecp.view.context"/>
       <plugin id="org.eclipse.emf.ecp.view.context.locale"/>
       <plugin id="org.eclipse.emf.ecp.view.control.multireference"/>
@@ -102,9 +80,6 @@
       <plugin id="org.eclipse.emf.ecp.view.group.model.edit"/>
       <plugin id="org.eclipse.emf.ecp.view.group.swt.embedded"/>
       <plugin id="org.eclipse.emf.ecp.view.group.ui.swt"/>
-      <plugin id="org.eclipse.emf.ecp.view.groupedgrid.model"/>
-      <plugin id="org.eclipse.emf.ecp.view.groupedgrid.model.edit"/>
-      <plugin id="org.eclipse.emf.ecp.view.groupedgrid.ui.swt"/>
       <plugin id="org.eclipse.emf.ecp.view.horizontal.model"/>
       <plugin id="org.eclipse.emf.ecp.view.horizontal.model.edit"/>
       <plugin id="org.eclipse.emf.ecp.view.horizontal.ui.swt"/>
@@ -120,7 +95,6 @@
       <plugin id="org.eclipse.emf.ecp.view.rule.model"/>
       <plugin id="org.eclipse.emf.ecp.view.rule.model.edit"/>
       <plugin id="org.eclipse.emf.ecp.view.swt.layout"/>
-      <plugin id="org.eclipse.emf.ecp.view.table.columnservice"/>
       <plugin id="org.eclipse.emf.ecp.view.table.model"/>
       <plugin id="org.eclipse.emf.ecp.view.table.model.edit"/>
       <plugin id="org.eclipse.emf.ecp.view.table.ui.swt"/>
@@ -134,8 +108,8 @@
       <plugin id="org.eclipse.emf.ecp.view.vertical.ui.swt"/>
       <plugin id="org.eclipse.emf.edit"/>
       <plugin id="org.eclipse.emf.edit.ui"/>
+      <plugin id="org.eclipse.emfforms.common"/>
       <plugin id="org.eclipse.emfforms.core.services"/>
-      <plugin id="org.eclipse.emfforms.core.services.databinding"/>
       <plugin id="org.eclipse.emfforms.core.services.databinding.featurepath"/>
       <plugin id="org.eclipse.emfforms.core.services.editsupport"/>
       <plugin id="org.eclipse.emfforms.core.services.emf"/>
@@ -146,21 +120,16 @@
       <plugin id="org.eclipse.emfforms.swt.core.plugin"/>
       <plugin id="org.eclipse.emfforms.view.model.localization"/>
       <plugin id="org.eclipse.equinox.app"/>
-      <plugin id="org.eclipse.equinox.bidi"/>
       <plugin id="org.eclipse.equinox.common"/>
       <plugin id="org.eclipse.equinox.ds"/>
       <plugin id="org.eclipse.equinox.event"/>
       <plugin id="org.eclipse.equinox.preferences"/>
-      <plugin id="org.eclipse.equinox.region" fragment="true"/>
       <plugin id="org.eclipse.equinox.registry"/>
-      <plugin id="org.eclipse.equinox.transforms.hook" fragment="true"/>
       <plugin id="org.eclipse.equinox.util"/>
-      <plugin id="org.eclipse.equinox.weaving.hook" fragment="true"/>
       <plugin id="org.eclipse.help"/>
       <plugin id="org.eclipse.jface"/>
       <plugin id="org.eclipse.jface.databinding"/>
       <plugin id="org.eclipse.osgi"/>
-      <plugin id="org.eclipse.osgi.compatibility.state" fragment="true"/>
       <plugin id="org.eclipse.osgi.services"/>
       <plugin id="org.eclipse.swt"/>
       <plugin id="org.eclipse.swt.carbon.macosx" fragment="true"/>
@@ -181,12 +150,9 @@
       <plugin id="org.eclipse.swt.photon.qnx.x86" fragment="true"/>
       <plugin id="org.eclipse.swt.win32.win32.x86" fragment="true"/>
       <plugin id="org.eclipse.swt.win32.win32.x86_64" fragment="true"/>
-      <plugin id="org.eclipse.team.core"/>
       <plugin id="org.eclipse.ui"/>
       <plugin id="org.eclipse.ui.views"/>
       <plugin id="org.eclipse.ui.workbench"/>
-      <plugin id="org.hamcrest.core"/>
-      <plugin id="org.junit"/>
       <plugin id="org.w3c.css.sac"/>
       <plugin id="org.w3c.dom.events"/>
       <plugin id="org.w3c.dom.smil"/>
