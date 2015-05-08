@@ -158,7 +158,6 @@
 		<module>../../bundles/org.eclipse.emf.ecp.view.table.model</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.table.model.edit</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.table.ui.swt</module>
-		<module>../../bundles/org.eclipse.emf.ecp.view.table.editor</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.table.columnservice</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.table.edapt</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.table.celleditor.rcp</module>
