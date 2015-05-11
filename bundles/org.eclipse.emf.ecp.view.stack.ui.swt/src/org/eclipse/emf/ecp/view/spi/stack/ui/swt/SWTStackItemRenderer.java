@@ -13,6 +13,8 @@ package org.eclipse.emf.ecp.view.spi.stack.ui.swt;
 
 import java.util.Collection;
 
+import javax.inject.Inject;
+
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
@@ -39,6 +41,7 @@ public class SWTStackItemRenderer extends ContainerSWTRenderer<VStackItem> {
 	 * @param emfFormsDatabinding The {@link EMFFormsDatabinding}
 	 * @since 1.6
 	 */
+	@Inject
 	public SWTStackItemRenderer(VStackItem vElement, ViewModelContext viewContext,
 		ReportService reportService,
 		EMFFormsRendererFactory factory, EMFFormsDatabinding emfFormsDatabinding) {
