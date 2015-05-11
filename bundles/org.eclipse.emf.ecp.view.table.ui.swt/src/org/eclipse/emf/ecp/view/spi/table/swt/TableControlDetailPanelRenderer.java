@@ -16,6 +16,8 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.inject.Inject;
+
 import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.TreeIterator;
@@ -73,6 +75,7 @@ public class TableControlDetailPanelRenderer extends TableControlSWTRenderer {
 	 * @param emfFormsEditSupport The {@link EMFFormsEditSupport}
 	 * @since 1.6
 	 */
+	@Inject
 	public TableControlDetailPanelRenderer(VTableControl vElement, ViewModelContext viewContext,
 		ReportService reportService,
 		EMFFormsDatabinding emfFormsDatabinding, EMFFormsLabelProvider emfFormsLabelProvider,
@@ -256,7 +259,7 @@ public class TableControlDetailPanelRenderer extends TableControlSWTRenderer {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.table.swt.TableControlSWTRenderer#deleteRows(java.util.List,
 	 *      org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecore.EStructuralFeature)
 	 * @since 1.6

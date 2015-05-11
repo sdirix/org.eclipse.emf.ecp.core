@@ -2,12 +2,6 @@
 <scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="org.eclipse.emf.ecp.view.table.ui.swt.panelRendererService">
    <implementation class="org.eclipse.emf.ecp.view.internal.table.swt.TableControlDetailPanelSWTRendererService"/>
    <service>
-      <provide interface="org.eclipse.emfforms.spi.swt.core.EMFFormsRendererService"/>
+      <provide interface="org.eclipse.emfforms.spi.swt.core.di.EMFFormsDIRendererService"/>
    </service>
-   <reference bind="setEMFFormsDatabinding" cardinality="1..1" interface="org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding" name="EMFFormsDatabinding" policy="static" />
-   <reference bind="setEMFFormsLabelProvider" cardinality="1..1" interface="org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider" name="EMFFormsLabelProvider" policy="static" />
-   <reference bind="setReportService" cardinality="1..1" interface="org.eclipse.emfforms.spi.common.report.ReportService" name="ReportService" policy="static" />
-   <reference bind="setVTViewTemplateProvider" cardinality="1..1" interface="org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider" name="VTViewTemplateProvider" policy="static" />
-   <reference bind="setImageRegistryService" cardinality="1..1" interface="org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService" name="ImageRegistryService" policy="static" />
-   <reference bind="setEMFFormsEditSupport" cardinality="1..1" interface="org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport" name="EMFFormsEditSupport" policy="static"/>
 </scr:component>

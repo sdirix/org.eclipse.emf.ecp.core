@@ -13,6 +13,8 @@ package org.eclipse.emf.ecp.view.spi.table.swt;
 
 import java.util.Collections;
 
+import javax.inject.Inject;
+
 import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -65,6 +67,7 @@ public class TableControlDetailDialogSWTRenderer extends TableControlSWTRenderer
 	 * @param emfFormsEditSupport The {@link EMFFormsEditSupport}
 	 * @since 1.6
 	 */
+	@Inject
 	public TableControlDetailDialogSWTRenderer(VTableControl vElement, ViewModelContext viewContext,
 		ReportService reportService,
 		EMFFormsDatabinding emfFormsDatabinding, EMFFormsLabelProvider emfFormsLabelProvider,
