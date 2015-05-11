@@ -180,6 +180,7 @@ public class EMFFormsLabelProviderImpl_Test {
 		final EObject eObject = EcoreFactory.eINSTANCE.createEObject();
 		final TestObservableValue observableValue = mock(TestObservableValue.class);
 		final EStructuralFeature eStructuralFeature = mock(EStructuralFeature.class);
+		when(eStructuralFeature.getEContainingClass()).thenReturn(EcorePackage.eINSTANCE.getEObject());
 		when(observableValue.getValueType()).thenReturn(eStructuralFeature);
 		when(observableValue.getObserved()).thenReturn(eObject);
 
@@ -324,6 +325,7 @@ public class EMFFormsLabelProviderImpl_Test {
 		final EObject eObject = EcoreFactory.eINSTANCE.createEObject();
 		final TestObservableValue observableValue = mock(TestObservableValue.class);
 		final EStructuralFeature eStructuralFeature = mock(EStructuralFeature.class);
+		when(eStructuralFeature.getEContainingClass()).thenReturn(EcorePackage.eINSTANCE.getEObject());
 		when(observableValue.getValueType()).thenReturn(eStructuralFeature);
 		when(observableValue.getObserved()).thenReturn(eObject);
 
@@ -363,6 +365,7 @@ public class EMFFormsLabelProviderImpl_Test {
 		final EObject eObject = EcoreFactory.eINSTANCE.createEObject();
 		final TestObservableValue observableValue = mock(TestObservableValue.class);
 		final EStructuralFeature eStructuralFeature = mock(EStructuralFeature.class);
+		when(eStructuralFeature.getEContainingClass()).thenReturn(EcorePackage.eINSTANCE.getEObject());
 		when(observableValue.getValueType()).thenReturn(eStructuralFeature);
 		when(observableValue.getObserved()).thenReturn(eObject);
 

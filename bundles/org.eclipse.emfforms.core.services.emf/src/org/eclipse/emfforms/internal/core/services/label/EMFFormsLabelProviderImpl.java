@@ -181,8 +181,10 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 			return getObservableValue(getFallbackLabel(structuralFeature));
 		}
 		final EObject tempInstance = EcoreUtil.create(eContainingClass);
+
 		final Class<?> editBundleClass = getEditBundleClass(tempInstance);
-		final String key = String.format(DISPLAY_NAME, tempInstance.eClass().getName(), structuralFeature.getName());
+		final String key = String.format(DISPLAY_NAME, structuralFeature.getEContainingClass().getName(),
+			structuralFeature.getName());
 		final WritableValue value = getObservableValue(getDisplayName(editBundleClass, key));
 		displayKeyObservableMap.put(new DisplayNameKey(key, editBundleClass), value);
 		return value;
@@ -232,7 +234,8 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 		observableValue.dispose();
 
 		final Class<?> editBundleClass = getEditBundleClass(value);
-		final String key = String.format(DISPLAY_NAME, value.eClass().getName(), structuralFeature.getName());
+		final String key = String.format(DISPLAY_NAME, structuralFeature.getEContainingClass().getName(),
+			structuralFeature.getName());
 		final WritableValue displayObserveValue = getObservableValue(getDisplayName(editBundleClass, key));
 		displayKeyObservableMap.put(new DisplayNameKey(key, editBundleClass), displayObserveValue);
 		return displayObserveValue;
@@ -265,9 +268,10 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 		}
 		final EObject tempInstance = EcoreUtil.create(eContainingClass);
 		final Class<?> editBundleClass = getEditBundleClass(tempInstance);
-		final WritableValue writableValue = getObservableValue(getDescription(tempInstance.eClass().getName(),
+		final WritableValue writableValue = getObservableValue(getDescription(structuralFeature.getEContainingClass()
+			.getName(),
 			structuralFeature.getName(), editBundleClass));
-		descriptionKeyObservableMap.put(new DescriptionKey(tempInstance.eClass().getName(),
+		descriptionKeyObservableMap.put(new DescriptionKey(structuralFeature.getEContainingClass().getName(),
 			structuralFeature.getName(), editBundleClass), writableValue);
 		return writableValue;
 	}
@@ -297,9 +301,10 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 		observableValue.dispose();
 
 		final Class<?> editBundleClass = getEditBundleClass(value);
-		final WritableValue writableValue = getObservableValue(getDescription(value.eClass().getName(),
+		final WritableValue writableValue = getObservableValue(getDescription(structuralFeature.getEContainingClass()
+			.getName(),
 			structuralFeature.getName(), editBundleClass));
-		descriptionKeyObservableMap.put(new DescriptionKey(value.eClass().getName(),
+		descriptionKeyObservableMap.put(new DescriptionKey(structuralFeature.getEContainingClass().getName(),
 			structuralFeature.getName(), editBundleClass), writableValue);
 		return writableValue;
 	}
