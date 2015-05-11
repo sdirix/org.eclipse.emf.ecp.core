@@ -18,6 +18,7 @@ import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.edit.command.ChangeCommand;
 import org.eclipse.emf.edit.command.DeleteCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -72,7 +73,7 @@ public class EMFDeleteServiceImpl implements DeleteService {
 	 * @see org.eclipse.emf.ecp.edit.spi.DeleteService#deleteElements(java.util.Collection)
 	 */
 	@Override
-	public void deleteElements(Collection<Object> toDelete) {
+	public void deleteElements(final Collection<Object> toDelete) {
 		if (toDelete == null || toDelete.isEmpty()) {
 			return;
 		}
@@ -89,7 +90,29 @@ public class EMFDeleteServiceImpl implements DeleteService {
 			} else {
 				editingDomain.getCommandStack().execute(deleteCommand);
 			}
+			return;
 		}
+
+		/*
+		 * the default DeleteCommand cannot be executed for whatever reason.
+		 * Wrap the default delete in a change command for undo support.
+		 */
+		final Command changeCommand = new ChangeCommand(editingDomain.getResourceSet()) {
+			@Override
+			protected void doExecute() {
+				deleteWithoutEditingDomain(toDelete);
+			}
+		};
+		if (changeCommand.canExecute()) {
+			if (editingDomain.getCommandStack() == null) {
+				changeCommand.execute();
+			} else {
+				editingDomain.getCommandStack().execute(changeCommand);
+			}
+			return;
+		}
+
+		throw new IllegalStateException("Delete was not successful."); //$NON-NLS-1$
 	}
 
 	private void deleteWithoutEditingDomain(Collection<Object> toDelete) {

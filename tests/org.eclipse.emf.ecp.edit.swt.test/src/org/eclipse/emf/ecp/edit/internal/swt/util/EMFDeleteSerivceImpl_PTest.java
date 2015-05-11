@@ -13,7 +13,10 @@ package org.eclipse.emf.ecp.edit.internal.swt.util;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
 
@@ -25,6 +28,10 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.emf.ecp.edit.spi.DeleteService;
 import org.eclipse.emf.ecp.edit.spi.EMFDeleteServiceImpl;
+import org.eclipse.emf.ecp.test.university.Address;
+import org.eclipse.emf.ecp.test.university.Professor;
+import org.eclipse.emf.ecp.test.university.UniversityFactory;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.emfstore.bowling.BowlingFactory;
@@ -53,8 +60,6 @@ public class EMFDeleteSerivceImpl_PTest {
 
 	@Before
 	public void setUp() {
-		deleteService = new EMFDeleteServiceImpl();
-
 		final ResourceSet resourceSet = new ResourceSetImpl();
 		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("*", new XMIResourceFactoryImpl()); //$NON-NLS-1$
 		domain = new AdapterFactoryEditingDomain(
@@ -82,6 +87,11 @@ public class EMFDeleteSerivceImpl_PTest {
 		tournament.getPlayers().add(player3);
 
 		game.setPlayer(player1);
+
+		deleteService = new EMFDeleteServiceImpl();
+		final ViewModelContext context = mock(ViewModelContext.class);
+		when(context.getDomainModel()).thenReturn(league);
+		deleteService.instantiate(context);
 	}
 
 	@Test
@@ -111,6 +121,24 @@ public class EMFDeleteSerivceImpl_PTest {
 		assertTrue(tournament.getPlayers().contains(player2));
 		assertTrue(tournament.getPlayers().contains(player3));
 		assertNull(game.getPlayer());
+	}
+
+	@Test
+	public void testDeleteElementNoChildOfParentReference() {
+		// setup
+		final Professor professor = UniversityFactory.eINSTANCE.createProfessor();
+		final Address address1 = UniversityFactory.eINSTANCE.createAddress();
+		final Address address2 = UniversityFactory.eINSTANCE.createAddress();
+		professor.getAddresses().add(address1);
+		professor.getAddresses().add(address2);
+		resource.getContents().add(professor);
+
+		// act
+		deleteService.deleteElement(address2);
+
+		// assert
+		assertEquals(1, professor.getAddresses().size());
+		assertSame(address1, professor.getAddresses().get(0));
 	}
 
 }
