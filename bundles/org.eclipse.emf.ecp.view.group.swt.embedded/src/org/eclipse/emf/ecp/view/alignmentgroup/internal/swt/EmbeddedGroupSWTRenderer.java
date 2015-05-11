@@ -17,6 +17,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
+
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
@@ -57,6 +59,7 @@ public class EmbeddedGroupSWTRenderer extends AbstractSWTRenderer<VGroup> {
 	 * @param reportService the ReportService to use
 	 * @param rendererFactory the EMFFormsRendererFactory to use
 	 */
+	@Inject
 	public EmbeddedGroupSWTRenderer(final VGroup vElement, final ViewModelContext viewContext,
 		ReportService reportService, EMFFormsRendererFactory rendererFactory) {
 		super(vElement, viewContext, reportService);

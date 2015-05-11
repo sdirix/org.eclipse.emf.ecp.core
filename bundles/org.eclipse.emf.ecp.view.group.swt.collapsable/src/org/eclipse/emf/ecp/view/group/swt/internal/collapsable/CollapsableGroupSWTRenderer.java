@@ -11,6 +11,8 @@
  */
 package org.eclipse.emf.ecp.view.group.swt.internal.collapsable;
 
+import javax.inject.Inject;
+
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.group.model.VGroup;
@@ -48,6 +50,7 @@ public class CollapsableGroupSWTRenderer extends ContainerSWTRenderer<VGroup> {
 	 * @param factory the {@link EMFFormsRendererFactory}
 	 * @param emfFormsDatabinding The {@link EMFFormsDatabinding}
 	 */
+	@Inject
 	public CollapsableGroupSWTRenderer(VGroup vElement, ViewModelContext viewContext, ReportService reportService,
 		EMFFormsRendererFactory factory, EMFFormsDatabinding emfFormsDatabinding) {
 		super(vElement, viewContext, reportService, factory, emfFormsDatabinding);

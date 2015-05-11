@@ -15,6 +15,8 @@ package org.eclipse.emf.ecp.view.group.swt.internal.collapsible.pgroup;
 
 import java.util.Collection;
 
+import javax.inject.Inject;
+
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.group.model.VGroup;
@@ -45,6 +47,7 @@ public class PGroupRenderer extends ContainerSWTRenderer<VGroup> {
 	 * @param factory the {@link EMFFormsRendererFactory}
 	 * @param emfFormsDatabinding The {@link EMFFormsDatabinding}
 	 */
+	@Inject
 	public PGroupRenderer(VGroup vElement, ViewModelContext viewContext, ReportService reportService,
 		EMFFormsRendererFactory factory, EMFFormsDatabinding emfFormsDatabinding) {
 		super(vElement, viewContext, reportService, factory, emfFormsDatabinding);

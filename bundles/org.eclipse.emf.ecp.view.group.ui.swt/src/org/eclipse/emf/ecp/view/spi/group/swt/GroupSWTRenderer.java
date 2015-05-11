@@ -13,6 +13,8 @@ package org.eclipse.emf.ecp.view.spi.group.swt;
 
 import java.util.Collection;
 
+import javax.inject.Inject;
+
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
@@ -48,6 +50,7 @@ public class GroupSWTRenderer extends ContainerSWTRenderer<VGroup> {
 	 * @param emfFormsDatabinding The {@link EMFFormsDatabinding}
 	 * @since 1.6
 	 */
+	@Inject
 	public GroupSWTRenderer(VGroup vElement, ViewModelContext viewContext, ReportService reportService,
 		EMFFormsRendererFactory factory, EMFFormsDatabinding emfFormsDatabinding) {
 		super(vElement, viewContext, reportService, factory, emfFormsDatabinding);
