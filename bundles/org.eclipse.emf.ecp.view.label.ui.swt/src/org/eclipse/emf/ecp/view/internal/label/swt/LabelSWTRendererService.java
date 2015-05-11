@@ -16,49 +16,15 @@ import org.eclipse.emf.ecp.view.spi.label.model.VLabel;
 import org.eclipse.emf.ecp.view.spi.label.swt.LabelSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
-import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
-import org.eclipse.emfforms.spi.common.report.ReportService;
-import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
-import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererService;
+import org.eclipse.emfforms.spi.swt.core.di.EMFFormsDIRendererService;
 
 /**
- * GroupSWTRendererService which provides the GroupSWTRenderer.
+ * LabelSWTRendererService which provides the LabelSWTRenderer.
  *
  * @author Eugen Neufeld
  *
  */
-public class LabelSWTRendererService implements EMFFormsRendererService<VLabel> {
-
-	private EMFFormsDatabinding databindingService;
-	private ReportService reportService;
-	private VTViewTemplateProvider vtViewTemplateProvider;
-
-	/**
-	 * Called by the initializer to set the EMFFormsDatabinding.
-	 *
-	 * @param databindingService The EMFFormsDatabinding
-	 */
-	protected void setEMFFormsDatabinding(EMFFormsDatabinding databindingService) {
-		this.databindingService = databindingService;
-	}
-
-	/**
-	 * Called by the initializer to set the ReportService.
-	 *
-	 * @param reportService The ReportService
-	 */
-	protected void setReportService(ReportService reportService) {
-		this.reportService = reportService;
-	}
-
-	/**
-	 * Called by the initializer to set the VTViewTemplateProvider.
-	 *
-	 * @param vtViewTemplateProvider The VTViewTemplateProvider
-	 */
-	protected void setVTViewTemplateProvider(VTViewTemplateProvider vtViewTemplateProvider) {
-		this.vtViewTemplateProvider = vtViewTemplateProvider;
-	}
+public class LabelSWTRendererService implements EMFFormsDIRendererService<VLabel> {
 
 	/**
 	 * {@inheritDoc}
@@ -75,14 +41,12 @@ public class LabelSWTRendererService implements EMFFormsRendererService<VLabel> 
 
 	/**
 	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emfforms.spi.swt.core.EMFFormsRendererService#getRendererInstance(org.eclipse.emf.ecp.view.spi.model.VElement,
-	 *      org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
+	 * 
+	 * @see org.eclipse.emfforms.spi.swt.core.di.EMFFormsDIRendererService#getRendererClass()
 	 */
 	@Override
-	public AbstractSWTRenderer<VLabel> getRendererInstance(VLabel vElement, ViewModelContext viewModelContext) {
-		return new LabelSWTRenderer(vElement, viewModelContext, reportService, databindingService,
-			vtViewTemplateProvider);
+	public Class<? extends AbstractSWTRenderer<VLabel>> getRendererClass() {
+		return LabelSWTRenderer.class;
 	}
 
 }

@@ -15,6 +15,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import javax.inject.Inject;
+
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
@@ -73,6 +75,7 @@ public class LabelSWTRenderer extends AbstractSWTRenderer<VLabel> {
 	 * @param vtViewTemplateProvider the VTViewTemplateProvider to use
 	 * @since 1.6
 	 */
+	@Inject
 	public LabelSWTRenderer(final VLabel vElement, final ViewModelContext viewContext, ReportService reportService,
 		EMFFormsDatabinding emfFormsDatabinding, VTViewTemplateProvider vtViewTemplateProvider) {
 		super(vElement, viewContext, reportService);
