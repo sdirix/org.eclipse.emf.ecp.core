@@ -173,7 +173,6 @@
 		<module>../../bundles/org.eclipse.emf.ecp.view.template.model.edit</module>
 		<!-- Template Helper Feature -->
 		<module>../../bundles/org.eclipse.emf.ecp.view.template.service</module>
-		<module>../../bundles/org.eclipse.emf.ecp.view.template.controls.swt</module>
 
 		<!-- IDE -->
 		<module>../../bundles/org.eclipse.emf.ecp.ide.editor.view</module>

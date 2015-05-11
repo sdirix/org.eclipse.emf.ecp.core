@@ -60,10 +60,6 @@
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.emf.ecp.view.template.helper.feature"
-         version="0.0.0"/>
-
-   <includes
          id="org.eclipse.emf.ecp.workspace.feature"
          version="0.0.0"/>
 
@@ -103,9 +99,6 @@
          id="org.eclipse.emf.ecp.view.model.editor.feature.source"
          version="0.0.0"/>
 
-   <includes
-         id="org.eclipse.emf.ecp.view.template.helper.feature.source"
-         version="0.0.0"/>
 
    <includes
          id="org.eclipse.emf.ecp.workspace.feature.source"

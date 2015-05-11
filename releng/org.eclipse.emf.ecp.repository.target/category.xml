@@ -66,9 +66,6 @@
    <feature id="org.eclipse.emf.ecp.view.model.editor.feature.source" version="0.0.0">
       <category name="org.eclipse.emf.ecp.emfforms"/>
    </feature>
-   <feature id="org.eclipse.emf.ecp.view.template.helper.feature.source" version="0.0.0">
-      <category name="org.eclipse.emf.ecp.emfforms"/>
-   </feature>
    <feature id="org.eclipse.emf.ecp.view.unset.feature.source" version="0.0.0">
       <category name="org.eclipse.emf.ecp.emfforms"/>
    </feature>
