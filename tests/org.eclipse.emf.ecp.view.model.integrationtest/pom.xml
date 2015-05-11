@@ -94,6 +94,46 @@
 							</requirement>
 							<requirement>
 								<type>eclipse-feature</type>
+								<id>org.eclipse.emf.ecp.view.treemasterdetail.feature</id>
+								<versionRange>0.0.0</versionRange>
+							</requirement>
+							<requirement>
+								<type>eclipse-feature</type>
+								<id>org.eclipse.emf.ecp.view.section.feature</id>
+								<versionRange>0.0.0</versionRange>
+							</requirement>
+							<requirement>
+								<type>eclipse-feature</type>
+								<id>org.eclipse.emf.ecp.view.viewproxy.feature</id>
+								<versionRange>0.0.0</versionRange>
+							</requirement>
+							<requirement>
+								<type>eclipse-feature</type>
+								<id>org.eclipse.emf.ecp.view.stack.feature</id>
+								<versionRange>0.0.0</versionRange>
+							</requirement>
+							<requirement>
+								<type>eclipse-feature</type>
+								<id>org.eclipse.emf.ecp.view.compoundcontrol.feature</id>
+								<versionRange>0.0.0</versionRange>
+							</requirement>
+							<requirement>
+								<type>eclipse-feature</type>
+								<id>org.eclipse.emf.ecp.view.indexdmr.feature</id>
+								<versionRange>0.0.0</versionRange>
+							</requirement>
+							<requirement>
+								<type>eclipse-feature</type>
+								<id>org.eclipse.emf.ecp.view.mappingdmr.feature</id>
+								<versionRange>0.0.0</versionRange>
+							</requirement>
+							<requirement>
+								<type>eclipse-feature</type>
+								<id>org.eclipse.emf.ecp.view.keyattributedmr.feature</id>
+								<versionRange>0.0.0</versionRange>
+							</requirement>
+							<requirement>
+								<type>eclipse-feature</type>
 								<id>org.eclipse.emf.ecp.emfstore.feature</id>
 								<versionRange>0.0.0</versionRange>
 							</requirement>
