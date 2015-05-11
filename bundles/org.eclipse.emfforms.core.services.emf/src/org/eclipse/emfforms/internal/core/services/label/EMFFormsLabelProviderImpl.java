@@ -15,26 +15,26 @@ import java.text.MessageFormat;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.eclipse.core.databinding.observable.IObserving;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.observable.value.WritableValue;
 import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.common.spi.asserts.Assert;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emfforms.internal.core.services.label.BundleResolver.NoBundleFoundException;
 import org.eclipse.emfforms.spi.common.locale.EMFFormsLocaleChangeListener;
 import org.eclipse.emfforms.spi.common.locale.EMFFormsLocaleProvider;
+import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
-import org.eclipse.emfforms.spi.core.services.emfspecificservice.EMFSpecificService;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
 import org.eclipse.emfforms.spi.localization.EMFFormsLocalizationService;
+import org.osgi.framework.Bundle;
 
 /**
  * Implementation of {@link EMFFormsLabelProvider}. It provides a label service that delivers the display name and
@@ -52,20 +52,20 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 	 */
 	private static class DisplayNameKey {
 		private final String key;
-		private final Class<?> bundleClass;
+		private final Bundle bundle;
 
-		public DisplayNameKey(String key, Class<?> bundleClass) {
+		public DisplayNameKey(String key, Bundle bundle) {
 			super();
 			this.key = key;
-			this.bundleClass = bundleClass;
+			this.bundle = bundle;
 		}
 
 		String getKey() {
 			return key;
 		}
 
-		Class<?> getBundleClass() {
-			return bundleClass;
+		Bundle getBundle() {
+			return bundle;
 		}
 	}
 
@@ -77,17 +77,17 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 	private static class DescriptionKey {
 		private final String eClassName;
 		private final String featureName;
-		private final Class<?> bundleClass;
+		private final Bundle bundle;
 
-		public DescriptionKey(String eClassName, String featureName, Class<?> bundleClass) {
+		public DescriptionKey(String eClassName, String featureName, Bundle bundle) {
 			super();
 			this.eClassName = eClassName;
 			this.featureName = featureName;
-			this.bundleClass = bundleClass;
+			this.bundle = bundle;
 		}
 
-		Class<?> getBundleClass() {
-			return bundleClass;
+		Bundle getBundle() {
+			return bundle;
 		}
 
 		String geteClassName() {
@@ -107,11 +107,11 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 	private EMFFormsDatabinding emfFormsDatabinding;
 	private EMFFormsLocalizationService localizationService;
 	private ReportService reportService;
+	private BundleResolver bundleResolver = new BundleResolverImpl();
 
 	private final Map<DisplayNameKey, WritableValue> displayKeyObservableMap = new LinkedHashMap<DisplayNameKey, WritableValue>();
 	private final Map<DescriptionKey, WritableValue> descriptionKeyObservableMap = new LinkedHashMap<DescriptionKey, WritableValue>();
 	private EMFFormsLocaleProvider localeProvider;
-	private EMFSpecificService emfSpecificService;
 
 	/**
 	 * Sets the {@link ReportService} service.
@@ -151,12 +151,12 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 	}
 
 	/**
-	 * Sets the {@link EMFSpecificService}.
+	 * Sets the {@link BundleResolver}.
 	 *
-	 * @param emfSpecificService The {@link EMFSpecificService}
+	 * @param bundleResolver The {@link BundleResolver}
 	 */
-	protected void setEMFSpecificService(EMFSpecificService emfSpecificService) {
-		this.emfSpecificService = emfSpecificService;
+	protected void setBundleResolver(BundleResolver bundleResolver) {
+		this.bundleResolver = bundleResolver;
 	}
 
 	/**
@@ -177,36 +177,18 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 		}
 		final EStructuralFeature structuralFeature = (EStructuralFeature) valueProperty.getValueType();
 		final EClass eContainingClass = structuralFeature.getEContainingClass();
-		if (eContainingClass.isAbstract() || eContainingClass.isInterface()) {
-			return getObservableValue(getFallbackLabel(structuralFeature));
+		Bundle bundle;
+		try {
+			bundle = bundleResolver.getEditBundle(eContainingClass);
+		} catch (final NoBundleFoundException ex) {
+			reportService.report(new AbstractReport(ex));
+			throw new NoLabelFoundException(ex);
 		}
-		final EObject tempInstance = EcoreUtil.create(eContainingClass);
-
-		final Class<?> editBundleClass = getEditBundleClass(tempInstance);
-		final String key = String.format(DISPLAY_NAME, structuralFeature.getEContainingClass().getName(),
+		final String key = String.format(DISPLAY_NAME, eContainingClass.getName(),
 			structuralFeature.getName());
-		final WritableValue value = getObservableValue(getDisplayName(editBundleClass, key));
-		displayKeyObservableMap.put(new DisplayNameKey(key, editBundleClass), value);
+		final WritableValue value = getObservableValue(getDisplayName(bundle, key));
+		displayKeyObservableMap.put(new DisplayNameKey(key, bundle), value);
 		return value;
-	}
-
-	/**
-	 * Creates a fall back label from a {@link EStructuralFeature}.
-	 *
-	 * @param structuralFeature The {@link EStructuralFeature}
-	 * @return The fall back label
-	 */
-	private String getFallbackLabel(final EStructuralFeature structuralFeature) {
-		final String[] split = structuralFeature.getName().split("(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])"); //$NON-NLS-1$
-		final char[] charArray = split[0].toCharArray();
-		charArray[0] = Character.toUpperCase(charArray[0]);
-		split[0] = new String(charArray);
-		final StringBuilder sb = new StringBuilder();
-		for (final String str : split) {
-			sb.append(str);
-			sb.append(" "); //$NON-NLS-1$
-		}
-		return sb.toString().trim();
 	}
 
 	/**
@@ -220,29 +202,27 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 		Assert.create(domainModelReference).notNull();
 		Assert.create(rootObject).notNull();
 
-		IObservableValue observableValue;
+		IValueProperty valueProperty;
 		try {
-			observableValue = emfFormsDatabinding.getObservableValue(domainModelReference,
-				rootObject);
+			valueProperty = emfFormsDatabinding.getValueProperty(domainModelReference, rootObject);
 		} catch (final DatabindingFailedException ex) {
 			reportService.report(new DatabindingFailedReport(ex));
 			throw new NoLabelFoundException(ex);
 		}
-		final IObserving observing = (IObserving) observableValue;
-		final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
-		final EObject value = (EObject) observing.getObserved();
-		observableValue.dispose();
+		final EStructuralFeature structuralFeature = (EStructuralFeature) valueProperty.getValueType();
 
-		final Class<?> editBundleClass = getEditBundleClass(value);
+		Bundle bundle;
+		try {
+			bundle = bundleResolver.getEditBundle(structuralFeature.getEContainingClass());
+		} catch (final NoBundleFoundException ex) {
+			reportService.report(new AbstractReport(ex));
+			throw new NoLabelFoundException(ex);
+		}
 		final String key = String.format(DISPLAY_NAME, structuralFeature.getEContainingClass().getName(),
 			structuralFeature.getName());
-		final WritableValue displayObserveValue = getObservableValue(getDisplayName(editBundleClass, key));
-		displayKeyObservableMap.put(new DisplayNameKey(key, editBundleClass), displayObserveValue);
+		final WritableValue displayObserveValue = getObservableValue(getDisplayName(bundle, key));
+		displayKeyObservableMap.put(new DisplayNameKey(key, bundle), displayObserveValue);
 		return displayObserveValue;
-	}
-
-	private Class<?> getEditBundleClass(final EObject value) {
-		return emfSpecificService.getIItemPropertySource(value).getClass();
 	}
 
 	/**
@@ -263,16 +243,18 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 		}
 		final EStructuralFeature structuralFeature = (EStructuralFeature) valueProperty.getValueType();
 		final EClass eContainingClass = structuralFeature.getEContainingClass();
-		if (eContainingClass.isAbstract() || eContainingClass.isInterface()) {
-			return getObservableValue(getFallbackLabel(structuralFeature));
+		Bundle bundle;
+		try {
+			bundle = bundleResolver.getEditBundle(eContainingClass);
+		} catch (final NoBundleFoundException ex) {
+			reportService.report(new AbstractReport(ex));
+			throw new NoLabelFoundException(ex);
 		}
-		final EObject tempInstance = EcoreUtil.create(eContainingClass);
-		final Class<?> editBundleClass = getEditBundleClass(tempInstance);
-		final WritableValue writableValue = getObservableValue(getDescription(structuralFeature.getEContainingClass()
+		final WritableValue writableValue = getObservableValue(getDescription(eContainingClass
 			.getName(),
-			structuralFeature.getName(), editBundleClass));
-		descriptionKeyObservableMap.put(new DescriptionKey(structuralFeature.getEContainingClass().getName(),
-			structuralFeature.getName(), editBundleClass), writableValue);
+			structuralFeature.getName(), bundle));
+		descriptionKeyObservableMap.put(new DescriptionKey(eContainingClass.getName(),
+			structuralFeature.getName(), bundle), writableValue);
 		return writableValue;
 	}
 
@@ -287,25 +269,26 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 		Assert.create(domainModelReference).notNull();
 		Assert.create(rootObject).notNull();
 
-		IObservableValue observableValue;
+		IValueProperty valueProperty;
 		try {
-			observableValue = emfFormsDatabinding.getObservableValue(domainModelReference,
-				rootObject);
+			valueProperty = emfFormsDatabinding.getValueProperty(domainModelReference, rootObject);
 		} catch (final DatabindingFailedException ex) {
 			reportService.report(new DatabindingFailedReport(ex));
 			throw new NoLabelFoundException(ex);
 		}
-		final IObserving observing = (IObserving) observableValue;
-		final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
-		final EObject value = (EObject) observing.getObserved();
-		observableValue.dispose();
-
-		final Class<?> editBundleClass = getEditBundleClass(value);
+		final EStructuralFeature structuralFeature = (EStructuralFeature) valueProperty.getValueType();
+		Bundle bundle;
+		try {
+			bundle = bundleResolver.getEditBundle(structuralFeature.getEContainingClass());
+		} catch (final NoBundleFoundException ex) {
+			reportService.report(new AbstractReport(ex));
+			throw new NoLabelFoundException(ex);
+		}
 		final WritableValue writableValue = getObservableValue(getDescription(structuralFeature.getEContainingClass()
 			.getName(),
-			structuralFeature.getName(), editBundleClass));
+			structuralFeature.getName(), bundle));
 		descriptionKeyObservableMap.put(new DescriptionKey(structuralFeature.getEContainingClass().getName(),
-			structuralFeature.getName(), editBundleClass), writableValue);
+			structuralFeature.getName(), bundle), writableValue);
 		return writableValue;
 	}
 
@@ -313,21 +296,21 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 		return new WritableValue(value, String.class);
 	}
 
-	private String getDisplayName(Class<?> bundleClass, String key) {
-		return localizationService.getString(bundleClass, key);
+	private String getDisplayName(Bundle bundle, String key) {
+		return localizationService.getString(bundle, key);
 	}
 
-	private String getDescription(String eClassName, String featureName, Class<?> bundleClass) {
+	private String getDescription(String eClassName, String featureName, Bundle bundle) {
 		final String keyDefault = String.format(DESCRIPTION, eClassName, featureName);
-		if (localizationService.hasKey(bundleClass, keyDefault)) {
-			return localizationService.getString(bundleClass,
+		if (localizationService.hasKey(bundle, keyDefault)) {
+			return localizationService.getString(bundle,
 				keyDefault);
 		}
-		final String descriptionWithSubstitution = localizationService.getString(bundleClass,
+		final String descriptionWithSubstitution = localizationService.getString(bundle,
 			DESCRIPTION_COMPOSITE);
 		final String key = String.format(DISPLAY_NAME, eClassName, featureName);
-		final String featureSubstitution = getDisplayName(bundleClass, key);
-		final String eObjectSubstitution = localizationService.getString(bundleClass,
+		final String featureSubstitution = getDisplayName(bundle, key);
+		final String eObjectSubstitution = localizationService.getString(bundle,
 			String.format(TYPE, eClassName));
 		return MessageFormat.format(descriptionWithSubstitution, featureSubstitution, eObjectSubstitution);
 	}
@@ -341,12 +324,12 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 	public void notifyLocaleChange() {
 		for (final DisplayNameKey displayNameKey : displayKeyObservableMap.keySet()) {
 			final WritableValue writableValue = displayKeyObservableMap.get(displayNameKey);
-			writableValue.setValue(getDisplayName(displayNameKey.getBundleClass(), displayNameKey.getKey()));
+			writableValue.setValue(getDisplayName(displayNameKey.getBundle(), displayNameKey.getKey()));
 		}
 		for (final DescriptionKey descriptionKey : descriptionKeyObservableMap.keySet()) {
 			final WritableValue writableValue = descriptionKeyObservableMap.get(descriptionKey);
 			writableValue.setValue(getDescription(descriptionKey.geteClassName(), descriptionKey.getFeatureName(),
-				descriptionKey.getBundleClass()));
+				descriptionKey.getBundle()));
 		}
 	}
 }

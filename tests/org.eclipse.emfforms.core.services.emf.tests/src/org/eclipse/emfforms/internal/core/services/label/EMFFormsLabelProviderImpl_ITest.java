@@ -22,17 +22,15 @@ import java.util.Dictionary;
 import java.util.Hashtable;
 
 import org.eclipse.core.databinding.property.value.IValueProperty;
-import org.eclipse.emf.databinding.EObjectObservableValue;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.test.common.DefaultRealm;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
-import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage;
+import org.eclipse.emfforms.internal.core.services.label.BundleResolver.NoBundleFoundException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
-import org.eclipse.emfforms.spi.core.services.emfspecificservice.EMFSpecificService;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
 import org.eclipse.emfforms.spi.localization.EMFFormsLocalizationService;
@@ -41,6 +39,7 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
@@ -57,15 +56,11 @@ public class EMFFormsLabelProviderImpl_ITest {
 	private static BundleContext bundleContext;
 	private static EMFFormsDatabinding databindingService;
 	private static ServiceRegistration<EMFFormsDatabinding> databindingRegisterService;
-	private static EMFSpecificService emfSpecificService;
-	private static ServiceRegistration<EMFSpecificService> emfSpecificRegisterService;
 	private static EMFFormsLabelProviderImpl labelProvider;
 	private static ServiceReference<EMFFormsLabelProvider> serviceReference;
 	private static EMFFormsLocalizationService localizationService;
 	private static ServiceRegistration<EMFFormsLocalizationService> localizationServiceReference;
 	private static IValueProperty valueProperty;
-	private static EObjectObservableValue observableValue;
-	private static IItemPropertySource itemPropertySource;
 	private DefaultRealm realm;
 
 	/**
@@ -75,9 +70,10 @@ public class EMFFormsLabelProviderImpl_ITest {
 	 *
 	 * @throws DatabindingFailedException should not happen, just needs to be thrown because the databinding service
 	 *             defines the throw in its interface.
+	 * @throws NoBundleFoundException
 	 */
 	@BeforeClass
-	public static void setUpBeforeClass() throws DatabindingFailedException {
+	public static void setUpBeforeClass() throws DatabindingFailedException, NoBundleFoundException {
 		bundleContext = FrameworkUtil.getBundle(EMFFormsLabelProviderImpl_Test.class).getBundleContext();
 
 		final Dictionary<String, Object> dictionary = new Hashtable<String, Object>();
@@ -91,9 +87,6 @@ public class EMFFormsLabelProviderImpl_ITest {
 		localizationServiceReference = bundleContext.registerService(EMFFormsLocalizationService.class,
 			localizationService,
 			dictionary);
-		emfSpecificService = mock(EMFSpecificService.class);
-		emfSpecificRegisterService = bundleContext.registerService(
-			EMFSpecificService.class, emfSpecificService, dictionary);
 
 		final EClass eContainingClass = TestPackage.eINSTANCE.getD();
 		final EStructuralFeature structuralFeature = mock(EStructuralFeature.class);
@@ -101,24 +94,22 @@ public class EMFFormsLabelProviderImpl_ITest {
 		when(structuralFeature.getName()).thenReturn("My Feature"); //$NON-NLS-1$
 		valueProperty = mock(IValueProperty.class);
 		when(valueProperty.getValueType()).thenReturn(structuralFeature);
-		observableValue = mock(EObjectObservableValue.class);
-		when(observableValue.getValueType()).thenReturn(structuralFeature);
 		final EObject eObject = mock(EObject.class);
 		final EClass eClass = mock(EClass.class);
 		when(eClass.getName()).thenReturn("My EClass"); //$NON-NLS-1$
 		when(eObject.eClass()).thenReturn(eClass);
-		when(observableValue.getObserved()).thenReturn(eObject);
-		itemPropertySource = mock(IItemPropertySource.class);
-		when(emfSpecificService.getIItemPropertySource(any(EObject.class))).thenReturn(itemPropertySource);
 		when(databindingService.getValueProperty(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			valueProperty);
-		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
-			observableValue);
 
-		when(localizationService.getString(same(itemPropertySource.getClass()), any(String.class))).thenReturn("Test"); //$NON-NLS-1$
+		final Bundle bundle = mock(Bundle.class);
+		final BundleResolver bundleResolver = mock(BundleResolver.class);
+		when(bundleResolver.getEditBundle(eContainingClass)).thenReturn(bundle);
+
+		when(localizationService.getString(same(bundle), any(String.class))).thenReturn("Test"); //$NON-NLS-1$
 
 		serviceReference = bundleContext.getServiceReference(EMFFormsLabelProvider.class);
 		labelProvider = (EMFFormsLabelProviderImpl) bundleContext.getService(serviceReference);
+		labelProvider.setBundleResolver(bundleResolver);
 	}
 
 	/**
@@ -132,8 +123,6 @@ public class EMFFormsLabelProviderImpl_ITest {
 		reset(databindingService);
 		when(databindingService.getValueProperty(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			valueProperty);
-		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
-			observableValue);
 		realm = new DefaultRealm();
 	}
 
@@ -151,7 +140,6 @@ public class EMFFormsLabelProviderImpl_ITest {
 	@AfterClass
 	public static void tearDownAfterClass() {
 		databindingRegisterService.unregister();
-		emfSpecificRegisterService.unregister();
 		localizationServiceReference.unregister();
 		bundleContext.ungetService(serviceReference);
 	}
@@ -202,7 +190,7 @@ public class EMFFormsLabelProviderImpl_ITest {
 		final EObject eObject = mock(EObject.class);
 		labelProvider.getDisplayName(domainModelReference, eObject);
 
-		verify(databindingService).getObservableValue(domainModelReference, eObject);
+		verify(databindingService).getValueProperty(domainModelReference, eObject);
 	}
 
 	/**
@@ -219,6 +207,6 @@ public class EMFFormsLabelProviderImpl_ITest {
 		final EObject eObject = mock(EObject.class);
 		labelProvider.getDescription(domainModelReference, eObject);
 
-		verify(databindingService).getObservableValue(domainModelReference, eObject);
+		verify(databindingService).getValueProperty(domainModelReference, eObject);
 	}
 }
