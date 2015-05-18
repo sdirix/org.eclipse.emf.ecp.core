@@ -45,14 +45,17 @@ import org.eclipse.emf.ecp.ide.editor.view.messages.Messages;
 import org.eclipse.emf.ecp.ide.view.service.ViewModelEditorCallback;
 import org.eclipse.emf.ecp.internal.ide.util.EcoreHelper;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
+import org.eclipse.emf.ecp.ui.view.swt.DefaultReferenceService;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
 import org.eclipse.emf.ecp.view.migrator.ViewModelMigrationException;
 import org.eclipse.emf.ecp.view.migrator.ViewModelMigrator;
 import org.eclipse.emf.ecp.view.migrator.ViewModelMigratorUtil;
 import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.reporting.StatusReport;
+import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -376,7 +379,9 @@ public class ViewEditorPart extends EditorPart implements
 		}
 
 		try {
-			render = ECPSWTViewRenderer.INSTANCE.render(parent, view);
+
+			render = ECPSWTViewRenderer.INSTANCE.render(parent, ViewModelContextFactory.INSTANCE
+				.createViewModelContext(ViewProviderHelper.getView(view, null), view, new DefaultReferenceService()));
 		} catch (final ECPRendererException ex) {
 			Activator.getDefault().getReportService().report(
 				new StatusReport(new Status(IStatus.ERROR, Activator.PLUGIN_ID, ex.getMessage(), ex)));
