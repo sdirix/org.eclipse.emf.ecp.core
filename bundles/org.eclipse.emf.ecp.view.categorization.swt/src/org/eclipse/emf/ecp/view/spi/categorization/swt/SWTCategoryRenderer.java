@@ -15,6 +15,8 @@ package org.eclipse.emf.ecp.view.spi.categorization.swt;
 import java.util.Collection;
 import java.util.Collections;
 
+import javax.inject.Inject;
+
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategory;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer;
@@ -41,6 +43,7 @@ public class SWTCategoryRenderer extends ContainerSWTRenderer<VCategory> {
 	 * @param emfFormsDatabinding The {@link EMFFormsDatabinding}
 	 * @since 1.6
 	 */
+	@Inject
 	public SWTCategoryRenderer(VCategory vElement, ViewModelContext viewContext, ReportService reportService,
 		EMFFormsRendererFactory factory, EMFFormsDatabinding emfFormsDatabinding) {
 		super(vElement, viewContext, reportService, factory, emfFormsDatabinding);

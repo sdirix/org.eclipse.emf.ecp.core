@@ -18,11 +18,7 @@ import org.eclipse.emf.ecp.view.spi.categorization.swt.CompositeCategorySWTTabRe
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
-import org.eclipse.emfforms.spi.common.report.ReportService;
-import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
-import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererService;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
+import org.eclipse.emfforms.spi.swt.core.di.EMFFormsDIRendererService;
 
 /**
  * CompositeCategorySWTTabRendererService which provides the CompositeCategorySWTTabRenderer.
@@ -30,39 +26,7 @@ import org.osgi.framework.ServiceReference;
  * @author Eugen Neufeld
  *
  */
-public class CompositeCategorySWTTabRendererService implements EMFFormsRendererService<VCategorization> {
-
-	private EMFFormsRendererFactory rendererFactory;
-	private ReportService reportService;
-	private ServiceReference<EMFFormsRendererFactory> serviceReference;
-
-	/**
-	 * Activate ViewSWTRendererService.
-	 *
-	 * @param bundleContext The {@link BundleContext}
-	 */
-	protected void activate(BundleContext bundleContext) {
-		serviceReference = bundleContext.getServiceReference(EMFFormsRendererFactory.class);
-		rendererFactory = bundleContext.getService(serviceReference);
-	}
-
-	/**
-	 * Deactivate ViewSWTRendererService.
-	 *
-	 * @param bundleContext The {@link BundleContext}
-	 */
-	protected void deactivate(BundleContext bundleContext) {
-		bundleContext.ungetService(serviceReference);
-	}
-
-	/**
-	 * Called by the initializer to set the ReportService.
-	 *
-	 * @param reportService The ReportService
-	 */
-	protected void setReportService(ReportService reportService) {
-		this.reportService = reportService;
-	}
+public class CompositeCategorySWTTabRendererService implements EMFFormsDIRendererService<VCategorization> {
 
 	/**
 	 * {@inheritDoc}
@@ -88,14 +52,12 @@ public class CompositeCategorySWTTabRendererService implements EMFFormsRendererS
 
 	/**
 	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emfforms.spi.swt.core.EMFFormsRendererService#getRendererInstance(org.eclipse.emf.ecp.view.spi.model.VElement,
-	 *      org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
+	 * 
+	 * @see org.eclipse.emfforms.spi.swt.core.di.EMFFormsDIRendererService#getRendererClass()
 	 */
 	@Override
-	public AbstractSWTRenderer<VCategorization> getRendererInstance(VCategorization vElement,
-		ViewModelContext viewModelContext) {
-		return new CompositeCategorySWTTabRenderer(vElement, viewModelContext, reportService, rendererFactory);
+	public Class<? extends AbstractSWTRenderer<VCategorization>> getRendererClass() {
+		return CompositeCategorySWTTabRenderer.class;
 	}
 
 }

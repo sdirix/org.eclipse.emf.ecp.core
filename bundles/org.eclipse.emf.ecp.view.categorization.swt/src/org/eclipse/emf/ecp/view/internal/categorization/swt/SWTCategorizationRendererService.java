@@ -18,8 +18,7 @@ import org.eclipse.emf.ecp.view.spi.categorization.swt.SWTCategorizationRenderer
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
-import org.eclipse.emfforms.spi.common.report.ReportService;
-import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererService;
+import org.eclipse.emfforms.spi.swt.core.di.EMFFormsDIRendererService;
 
 /**
  * SWTCategorizationRendererService which provides the SWTCategorizationRenderer.
@@ -27,18 +26,7 @@ import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererService;
  * @author Eugen Neufeld
  *
  */
-public class SWTCategorizationRendererService implements EMFFormsRendererService<VCategorization> {
-
-	private ReportService reportService;
-
-	/**
-	 * Called by the initializer to set the ReportService.
-	 *
-	 * @param reportService The ReportService
-	 */
-	protected void setReportService(ReportService reportService) {
-		this.reportService = reportService;
-	}
+public class SWTCategorizationRendererService implements EMFFormsDIRendererService<VCategorization> {
 
 	/**
 	 * {@inheritDoc}
@@ -64,14 +52,12 @@ public class SWTCategorizationRendererService implements EMFFormsRendererService
 
 	/**
 	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emfforms.spi.swt.core.EMFFormsRendererService#getRendererInstance(org.eclipse.emf.ecp.view.spi.model.VElement,
-	 *      org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
+	 * 
+	 * @see org.eclipse.emfforms.spi.swt.core.di.EMFFormsDIRendererService#getRendererClass()
 	 */
 	@Override
-	public AbstractSWTRenderer<VCategorization> getRendererInstance(VCategorization vElement,
-		ViewModelContext viewModelContext) {
-		return new SWTCategorizationRenderer(vElement, viewModelContext, reportService);
+	public Class<? extends AbstractSWTRenderer<VCategorization>> getRendererClass() {
+		return SWTCategorizationRenderer.class;
 	}
 
 }

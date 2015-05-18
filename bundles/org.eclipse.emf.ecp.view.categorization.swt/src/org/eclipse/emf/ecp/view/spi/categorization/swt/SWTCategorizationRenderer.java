@@ -12,6 +12,8 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.categorization.swt;
 
+import javax.inject.Inject;
+
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
@@ -53,6 +55,7 @@ public class SWTCategorizationRenderer extends AbstractSWTRenderer<VCategorizati
 	 * @param reportService the {@link ReportService}
 	 * @since 1.6
 	 */
+	@Inject
 	public SWTCategorizationRenderer(VCategorization vElement, ViewModelContext viewContext, ReportService reportService) {
 		super(vElement, viewContext, reportService);
 		dataBindingContext = new EMFDataBindingContext();

@@ -16,51 +16,15 @@ import org.eclipse.emf.ecp.view.spi.categorization.swt.CategorizationElementTabb
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
-import org.eclipse.emfforms.spi.common.report.ReportService;
-import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
-import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererService;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
+import org.eclipse.emfforms.spi.swt.core.di.EMFFormsDIRendererService;
 
 /**
- * NumberControlSWTRendererService which provides the NumberControlSWTRenderer.
+ * CategorizationElementTabbedRendererService which provides the CategorizationElementTabbedSWTRenderer.
  *
  * @author Eugen Neufeld
  *
  */
-public class CategorizationElementTabbedRendererService implements EMFFormsRendererService<VCategorizationElement> {
-
-	private EMFFormsRendererFactory rendererFactory;
-	private ReportService reportService;
-	private ServiceReference<EMFFormsRendererFactory> serviceReference;
-
-	/**
-	 * Activate ViewSWTRendererService.
-	 *
-	 * @param bundleContext The {@link BundleContext}
-	 */
-	protected void activate(BundleContext bundleContext) {
-		serviceReference = bundleContext.getServiceReference(EMFFormsRendererFactory.class);
-		rendererFactory = bundleContext.getService(serviceReference);
-	}
-
-	/**
-	 * Deactivate ViewSWTRendererService.
-	 *
-	 * @param bundleContext The {@link BundleContext}
-	 */
-	protected void deactivate(BundleContext bundleContext) {
-		bundleContext.ungetService(serviceReference);
-	}
-
-	/**
-	 * Called by the initializer to set the ReportService.
-	 *
-	 * @param reportService The ReportService
-	 */
-	protected void setReportService(ReportService reportService) {
-		this.reportService = reportService;
-	}
+public class CategorizationElementTabbedRendererService implements EMFFormsDIRendererService<VCategorizationElement> {
 
 	/**
 	 * {@inheritDoc}
@@ -80,13 +44,11 @@ public class CategorizationElementTabbedRendererService implements EMFFormsRende
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emfforms.spi.swt.core.EMFFormsRendererService#getRendererInstance(org.eclipse.emf.ecp.view.spi.model.VElement,
-	 *      org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
+	 * @see org.eclipse.emfforms.spi.swt.core.di.EMFFormsDIRendererService#getRendererClass()
 	 */
 	@Override
-	public AbstractSWTRenderer<VCategorizationElement> getRendererInstance(VCategorizationElement vElement,
-		ViewModelContext viewModelContext) {
-		return new CategorizationElementTabbedSWTRenderer(vElement, viewModelContext, reportService, rendererFactory);
+	public Class<? extends AbstractSWTRenderer<VCategorizationElement>> getRendererClass() {
+		return CategorizationElementTabbedSWTRenderer.class;
 	}
 
 }

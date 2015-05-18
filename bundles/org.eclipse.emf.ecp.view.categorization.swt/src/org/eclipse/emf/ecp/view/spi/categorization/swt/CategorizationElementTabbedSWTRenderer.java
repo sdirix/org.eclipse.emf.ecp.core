@@ -11,6 +11,8 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.categorization.swt;
 
+import javax.inject.Inject;
+
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VAbstractCategorization;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationElement;
@@ -35,6 +37,7 @@ public class CategorizationElementTabbedSWTRenderer extends AbstractSWTTabRender
 	 * @param emfFormsRendererFactory The {@link EMFFormsRendererFactory}
 	 * @since 1.6
 	 */
+	@Inject
 	public CategorizationElementTabbedSWTRenderer(VCategorizationElement vElement, ViewModelContext viewContext,
 		ReportService reportService,
 		EMFFormsRendererFactory emfFormsRendererFactory) {

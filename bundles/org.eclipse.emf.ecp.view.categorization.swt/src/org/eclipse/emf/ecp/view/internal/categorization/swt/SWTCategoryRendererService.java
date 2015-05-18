@@ -16,12 +16,7 @@ import org.eclipse.emf.ecp.view.spi.categorization.swt.SWTCategoryRenderer;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
-import org.eclipse.emfforms.spi.common.report.ReportService;
-import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
-import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
-import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererService;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
+import org.eclipse.emfforms.spi.swt.core.di.EMFFormsDIRendererService;
 
 /**
  * SWTCategoryRendererService which provides the SWTCategoryRenderer.
@@ -29,49 +24,7 @@ import org.osgi.framework.ServiceReference;
  * @author Eugen Neufeld
  *
  */
-public class SWTCategoryRendererService implements EMFFormsRendererService<VCategory> {
-
-	private EMFFormsRendererFactory rendererFactory;
-	private ReportService reportService;
-	private ServiceReference<EMFFormsRendererFactory> serviceReference;
-	private EMFFormsDatabinding databindingService;
-
-	/**
-	 * Activate ViewSWTRendererService.
-	 *
-	 * @param bundleContext The {@link BundleContext}
-	 */
-	protected void activate(BundleContext bundleContext) {
-		serviceReference = bundleContext.getServiceReference(EMFFormsRendererFactory.class);
-		rendererFactory = bundleContext.getService(serviceReference);
-	}
-
-	/**
-	 * Deactivate ViewSWTRendererService.
-	 *
-	 * @param bundleContext The {@link BundleContext}
-	 */
-	protected void deactivate(BundleContext bundleContext) {
-		bundleContext.ungetService(serviceReference);
-	}
-
-	/**
-	 * Called by the initializer to set the ReportService.
-	 *
-	 * @param reportService The ReportService
-	 */
-	protected void setReportService(ReportService reportService) {
-		this.reportService = reportService;
-	}
-
-	/**
-	 * Called by the initializer to set the EMFFormsDatabinding.
-	 *
-	 * @param databindingService The EMFFormsDatabinding
-	 */
-	protected void setEMFFormsDatabinding(EMFFormsDatabinding databindingService) {
-		this.databindingService = databindingService;
-	}
+public class SWTCategoryRendererService implements EMFFormsDIRendererService<VCategory> {
 
 	/**
 	 * {@inheritDoc}
@@ -89,13 +42,11 @@ public class SWTCategoryRendererService implements EMFFormsRendererService<VCate
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emfforms.spi.swt.core.EMFFormsRendererService#getRendererInstance(org.eclipse.emf.ecp.view.spi.model.VElement,
-	 *      org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
+	 * @see org.eclipse.emfforms.spi.swt.core.di.EMFFormsDIRendererService#getRendererClass()
 	 */
 	@Override
-	public AbstractSWTRenderer<VCategory> getRendererInstance(VCategory vElement,
-		ViewModelContext viewModelContext) {
-		return new SWTCategoryRenderer(vElement, viewModelContext, reportService, rendererFactory, databindingService);
+	public Class<? extends AbstractSWTRenderer<VCategory>> getRendererClass() {
+		return SWTCategoryRenderer.class;
 	}
 
 }

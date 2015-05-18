@@ -11,6 +11,8 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.categorization.swt;
 
+import javax.inject.Inject;
+
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VAbstractCategorization;
@@ -37,6 +39,7 @@ public class CompositeCategoryJFaceTreeRenderer extends AbstractJFaceTreeRendere
 	 * @param emfFormsRendererFactory The {@link EMFFormsRendererFactory}
 	 * @since 1.6
 	 */
+	@Inject
 	public CompositeCategoryJFaceTreeRenderer(VCategorization vElement, ViewModelContext viewContext,
 		ReportService reportService,
 		EMFFormsRendererFactory emfFormsRendererFactory) {
