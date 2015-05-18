@@ -15,6 +15,8 @@ package org.eclipse.emf.ecp.view.internal.control.multireference;
 import java.util.Collection;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import org.eclipse.core.databinding.observable.IObserving;
 import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
@@ -102,6 +104,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	 * @param vtViewTemplateProvider The {@link VTViewTemplateProvider}
 	 * @param imageRegistryService The {@link ImageRegistryService}
 	 */
+	@Inject
 	public MultiReferenceSWTRenderer(VControl vElement, ViewModelContext viewContext, ReportService reportService,
 		EMFFormsDatabinding emfFormsDatabinding, EMFFormsLabelProvider emfFormsLabelProvider,
 		VTViewTemplateProvider vtViewTemplateProvider, ImageRegistryService imageRegistryService) {
