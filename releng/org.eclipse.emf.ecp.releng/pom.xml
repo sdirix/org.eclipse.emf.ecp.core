@@ -94,6 +94,7 @@
 	</pluginRepositories>
 
 	<modules>
+		
 		<module>../../releng/org.eclipse.emf.ecp.target.rcp</module>
 		<module>../../releng/org.eclipse.emf.ecp.target.rap</module>
 		<module>../../releng/org.eclipse.emf.ecp.repository</module>
@@ -105,6 +106,8 @@
 		<module>../../releng/org.eclipse.emf.ecp.releng.features</module>
 		<module>../../releng/org.eclipse.emf.ecp.releng.tests</module>
 		<module>../../releng/org.eclipse.emf.ecp.releng.examples</module>
+		
+		<module>../../releng/spreadsheet/org.eclipse.emfforms.spreadsheet.releng</module>
 	</modules>
 
 	<build>

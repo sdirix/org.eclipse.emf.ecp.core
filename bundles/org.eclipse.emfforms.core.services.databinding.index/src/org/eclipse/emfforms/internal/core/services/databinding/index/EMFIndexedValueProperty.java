@@ -58,7 +58,7 @@ public class EMFIndexedValueProperty extends EMFValueProperty {
 	protected Object doGetValue(Object source) {
 		final Object result = super.doGetValue(source);
 		final EList<Object> list = (EList<Object>) result;
-		if (list != null && index >= list.size()) {
+		if (list == null || index >= list.size()) {
 			return null;
 		}
 		return list.get(index);

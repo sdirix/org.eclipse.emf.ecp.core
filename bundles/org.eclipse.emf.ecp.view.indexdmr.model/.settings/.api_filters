@@ -32,4 +32,54 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/indexdmr/model/VIndexDomainModelReference.java" type="org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference">
+        <filter comment="SPI Changes for 1.6" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference"/>
+                <message_argument value="getPrefixDMR()"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Changes for 1.6" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference"/>
+                <message_argument value="setPrefixDMR(VDomainModelReference)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/indexdmr/model/VIndexdmrPackage.java" type="org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexdmrPackage">
+        <filter comment="SPI Changes for 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexdmrPackage"/>
+                <message_argument value="INDEX_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT"/>
+                <message_argument value="5"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Changes for 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexdmrPackage"/>
+                <message_argument value="INDEX_DOMAIN_MODEL_REFERENCE__TARGET_DMR"/>
+                <message_argument value="3"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexdmrPackage"/>
+                <message_argument value="INDEX_DOMAIN_MODEL_REFERENCE__PREFIX_DMR"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Changes for 1.6" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexdmrPackage"/>
+                <message_argument value="getIndexDomainModelReference_PrefixDMR()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/indexdmr/model/VIndexdmrPackage.java" type="org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexdmrPackage$Literals">
+        <filter comment="SPI Changes for 1.6" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexdmrPackage.Literals"/>
+                <message_argument value="INDEX_DOMAIN_MODEL_REFERENCE__PREFIX_DMR"/>
+            </message_arguments>
+        </filter>
+    </resource>
 </component>

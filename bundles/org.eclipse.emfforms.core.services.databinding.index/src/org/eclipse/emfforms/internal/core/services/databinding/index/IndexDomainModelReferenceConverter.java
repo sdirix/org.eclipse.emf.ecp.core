@@ -113,30 +113,41 @@ public class IndexDomainModelReferenceConverter implements DomainModelReferenceC
 		}
 
 		final VIndexDomainModelReference indexReference = VIndexDomainModelReference.class.cast(domainModelReference);
-		if (indexReference.getDomainModelEFeature() == null) {
-			throw new DatabindingFailedException(
-				"The field domainModelEFeature of the given VIndexDomainModelReference must not be null."); //$NON-NLS-1$
-		}
 
-		checkListType(indexReference.getDomainModelEFeature());
-
-		final List<EReference> referencePath = indexReference.getDomainModelEReferencePath();
 		IValueProperty valueProperty;
-		if (referencePath.isEmpty()) {
-			valueProperty = new EMFIndexedValueProperty(getEditingDomain(object), indexReference.getIndex(),
-				indexReference.getDomainModelEFeature());
-		} else {
-			IEMFValueProperty emfValueProperty = EMFEditProperties
-				.value(getEditingDomain(object), referencePath.get(0));
-			for (int i = 1; i < referencePath.size(); i++) {
-				emfValueProperty = emfValueProperty.value(referencePath.get(i));
-			}
-			final EMFIndexedValueProperty indexedValueProperty = new EMFIndexedValueProperty(getEditingDomain(object),
-				indexReference.getIndex(),
-				indexReference.getDomainModelEFeature());
-			valueProperty = emfValueProperty.value(indexedValueProperty);
-		}
 
+		if (indexReference.getPrefixDMR() != null) {
+			final IValueProperty prefixProperty = emfFormsDatabinding.getValueProperty(indexReference.getPrefixDMR(),
+				object);
+			valueProperty = new EMFIndexedValueProperty(getEditingDomain(object), indexReference.getIndex(),
+				EStructuralFeature.class.cast(prefixProperty.getValueType()));
+		}
+		else {
+			if (indexReference.getDomainModelEFeature() == null) {
+				throw new DatabindingFailedException(
+					"The field domainModelEFeature of the given VIndexDomainModelReference must not be null."); //$NON-NLS-1$
+			}
+
+			checkListType(indexReference.getDomainModelEFeature());
+
+			final List<EReference> referencePath = indexReference.getDomainModelEReferencePath();
+
+			if (referencePath.isEmpty()) {
+				valueProperty = new EMFIndexedValueProperty(getEditingDomain(object), indexReference.getIndex(),
+					indexReference.getDomainModelEFeature());
+			} else {
+				IEMFValueProperty emfValueProperty = EMFEditProperties
+					.value(getEditingDomain(object), referencePath.get(0));
+				for (int i = 1; i < referencePath.size(); i++) {
+					emfValueProperty = emfValueProperty.value(referencePath.get(i));
+				}
+				final EMFIndexedValueProperty indexedValueProperty = new EMFIndexedValueProperty(
+					getEditingDomain(object),
+					indexReference.getIndex(),
+					indexReference.getDomainModelEFeature());
+				valueProperty = emfValueProperty.value(indexedValueProperty);
+			}
+		}
 		return valueProperty.value(emfFormsDatabinding.getValueProperty(indexReference.getTargetDMR(), object));
 	}
 
