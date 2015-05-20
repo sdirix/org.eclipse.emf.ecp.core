@@ -631,8 +631,21 @@ public class ValidationServiceImpl implements ValidationService {
 	 */
 	@Override
 	public void addValidationProvider(ValidationProvider validationProvider) {
+		addValidationProvider(validationProvider, true);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.validation.ValidationService#addValidationProvider(org.eclipse.emf.ecp.view.spi.validation.ValidationProvider,
+	 *      boolean)
+	 */
+	@Override
+	public void addValidationProvider(ValidationProvider validationProvider, boolean revalidate) {
 		validationProviders.add(validationProvider);
-		validate(getAllEObjects(context.getDomainModel()));
+		if (revalidate) {
+			validate(getAllEObjects(context.getDomainModel()));
+		}
 	}
 
 	/**
@@ -643,8 +656,21 @@ public class ValidationServiceImpl implements ValidationService {
 	 */
 	@Override
 	public void removeValidationProvider(ValidationProvider validationProvider) {
+		removeValidationProvider(validationProvider, true);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.validation.ValidationService#removeValidationProvider(org.eclipse.emf.ecp.view.spi.validation.ValidationProvider,
+	 *      boolean)
+	 */
+	@Override
+	public void removeValidationProvider(ValidationProvider validationProvider, boolean revalidate) {
 		validationProviders.remove(validationProvider);
-		validate(getAllEObjects(context.getDomainModel()));
+		if (revalidate) {
+			validate(getAllEObjects(context.getDomainModel()));
+		}
 	}
 
 	private final Set<ViewValidationListener> validationListeners = new LinkedHashSet<ViewValidationListener>();
