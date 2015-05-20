@@ -270,6 +270,8 @@
 		<module>../../bundles/org.eclipse.emfforms.localization</module>
 		<module>../../bundles/org.eclipse.emfforms.view.model.localization</module>
 		
+		<module>../../bundles/org.eclipse.emfforms.swt.control.text.autocomplete</module>
+		
 	</modules>
 
 	<build>
