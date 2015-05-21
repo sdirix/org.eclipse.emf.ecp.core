@@ -43,6 +43,9 @@ public class EMFFormsContextProviderImpl implements EMFFormsContextProvider {
 	 */
 	@Override
 	public void dispose() {
+		if (eclipseContext != null) {
+			eclipseContext.dispose();
+		}
 	}
 
 	/**
