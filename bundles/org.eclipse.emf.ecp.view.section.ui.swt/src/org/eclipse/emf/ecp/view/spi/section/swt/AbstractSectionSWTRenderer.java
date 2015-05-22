@@ -69,32 +69,13 @@ public abstract class AbstractSectionSWTRenderer extends
 	protected Control renderControl(SWTGridCell cell, Composite parent)
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		if (cell.getRenderer() == this) {
-			switch (cell.getColumn()) {
-			case 0:
+			if (cell.getColumn() == 0) {
 				return createFirstColumn(parent);
-
-			case 1:
-				if (getVElement().getChildren().size() < 3) {
-					return renderEmpty(parent);
-				}
-				return renderChild(parent, getVElement().getChildren().get(0));
-
-			case 2:
-				if (getVElement().getChildren().size() < 2) {
-					return renderEmpty(parent);
-				}
-				return renderChild(
-					parent,
-					getVElement().getChildren().get(
-						getVElement().getChildren().size() - 2));
-
-			case 3:
-				return renderChild(
-					parent,
-					getVElement().getChildren().get(
-						getVElement().getChildren().size() - 1));
-			default:
-				throw new IllegalArgumentException(""); //$NON-NLS-1$
+			} else if (cell.getColumn() < 0) {
+				return renderEmpty(parent);
+			} else {
+				/*-1 because label is column 0*/
+				return renderChild(parent, getVElement().getChildren().get(cell.getColumn() - 1));
 			}
 		}
 		return cell.getRenderer().render(cell, parent);
@@ -124,19 +105,20 @@ public abstract class AbstractSectionSWTRenderer extends
 		final Map<VContainedElement, SWTGridDescription> rowGridDescription = new LinkedHashMap<VContainedElement, SWTGridDescription>();
 		final Map<VContainedElement, SWTGridDescription> controlGridDescription = new LinkedHashMap<VContainedElement, SWTGridDescription>();
 
-		if (VControl.class.isInstance(child)
-			&& VControl.class.cast(child).getDomainModelReference() == null) {
-			return columnComposite;
-		}
-		try {
-			Activator
-				.getDefault()
-				.getEMFFormsDatabinding()
-				.getValueProperty(VControl.class.cast(child).getDomainModelReference(),
-					getViewModelContext().getDomainModel());
-		} catch (final DatabindingFailedException ex) {
-			Activator.getDefault().getReportService().report(new RenderingFailedReport(ex));
-			return columnComposite;
+		if (VControl.class.isInstance(child)) {
+			if (VControl.class.cast(child).getDomainModelReference() == null) {
+				return columnComposite;
+			}
+			try {
+				Activator
+					.getDefault()
+					.getEMFFormsDatabinding()
+					.getValueProperty(VControl.class.cast(child).getDomainModelReference(),
+						getViewModelContext().getDomainModel());
+			} catch (final DatabindingFailedException ex) {
+				Activator.getDefault().getReportService().report(new RenderingFailedReport(ex));
+				return columnComposite;
+			}
 		}
 
 		AbstractSWTRenderer<VElement> renderer;
@@ -190,7 +172,8 @@ public abstract class AbstractSectionSWTRenderer extends
 				setLayoutDataForControl(childGridCell,
 					controlGridDescription.get(child), gridDescription2,
 					maximalGridDescription, childGridCell.getRenderer()
-						.getVElement(), control);
+						.getVElement(),
+					control);
 
 			}
 			for (final SWTGridCell childGridCell : gridDescription2.getGrid()) {

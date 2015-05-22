@@ -137,7 +137,8 @@ public class SectionedAreaSWTRenderer extends
 				// TODO possible layout issues?
 				setLayoutDataForControl(childGridCell, controlGridDescription,
 					gridDescription2, maximalGridDescription, childGridCell
-						.getRenderer().getVElement(), control);
+						.getRenderer().getVElement(),
+					control);
 
 			}
 			for (final SWTGridCell childGridCell : gridDescription2.getGrid()) {
@@ -162,19 +163,14 @@ public class SectionedAreaSWTRenderer extends
 		if (!GridData.class.isInstance(layoutData)) {
 			return;
 		}
-		if (gridCell.getColumn() == 0) {
-			GridData.class.cast(layoutData).widthHint = 300;
-		} else if (gridCell.getColumn() == 1) {
-			GridData.class.cast(layoutData).widthHint = 20;
-		} else if (gridCell.getColumn() == 2) {
-			GridData.class.cast(layoutData).widthHint = 20;
-		} else if (gridCell.getColumn() == 3) {
+		final int lastColumnIndex = fullGridDescription.getColumns() - 1;
+		if (gridCell.getColumn() == lastColumnIndex) {
 			if (SectionLeafSWTRenderer.class.isInstance(gridCell
 				.getRenderer())) {
 				GridData.class.cast(layoutData).grabExcessHorizontalSpace = false;
 				GridData.class.cast(layoutData).horizontalAlignment = SWT.BEGINNING;
 			}
-			GridData.class.cast(layoutData).widthHint = 500;
+			GridData.class.cast(layoutData).widthHint = 250;
 		}
 		control.setLayoutData(layoutData);
 	}

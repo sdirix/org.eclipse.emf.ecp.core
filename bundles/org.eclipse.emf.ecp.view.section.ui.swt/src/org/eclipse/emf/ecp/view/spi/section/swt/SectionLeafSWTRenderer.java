@@ -47,9 +47,11 @@ public class SectionLeafSWTRenderer extends AbstractSectionSWTRenderer {
 	@Override
 	public SWTGridDescription getGridDescription(
 		SWTGridDescription gridDescription) {
+		/* +1 because of label */
+		final int columns = getVElement().getChildren().size() + 1;
 		if (rendererGridDescription == null) {
 			rendererGridDescription = GridDescriptionFactory.INSTANCE
-				.createSimpleGrid(1, 4, this);
+				.createSimpleGrid(1, columns, this);
 		}
 		return rendererGridDescription;
 	}
