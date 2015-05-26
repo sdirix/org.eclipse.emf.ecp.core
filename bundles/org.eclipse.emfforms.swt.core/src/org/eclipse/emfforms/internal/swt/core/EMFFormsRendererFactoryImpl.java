@@ -14,6 +14,7 @@ package org.eclipse.emfforms.internal.swt.core;
 import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
@@ -32,8 +33,8 @@ import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererService;
  */
 public class EMFFormsRendererFactoryImpl implements EMFFormsRendererFactory {
 
-	private final Set<EMFFormsRendererService<VElement>> rendererServices = new LinkedHashSet<EMFFormsRendererService<VElement>>();
-	private final Set<EMFFormsAdditionalRendererService<VElement>> additionalRendererServices = new LinkedHashSet<EMFFormsAdditionalRendererService<VElement>>();
+	private final Set<EMFFormsRendererService<VElement>> rendererServices = new CopyOnWriteArraySet<EMFFormsRendererService<VElement>>();
+	private final Set<EMFFormsAdditionalRendererService<VElement>> additionalRendererServices = new CopyOnWriteArraySet<EMFFormsAdditionalRendererService<VElement>>();
 
 	/**
 	 * Called by the initializer to add an {@link EMFFormsRendererService}.
