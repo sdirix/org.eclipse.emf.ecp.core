@@ -140,6 +140,7 @@
 		<module>../../tests/org.eclipse.emfforms.core.services.databinding.testmodel</module>
 		<module>../../tests/org.eclipse.emfforms.swt.core.tests</module>
 		<module>../../tests/org.eclipse.emfforms.swt.core.di.tests</module>
+		<module>../../tests/org.eclipse.emfforms.swt.core.di.extension.tests</module>
 		<module>../../tests/org.eclipse.emfforms.common.tests</module>
 		<module>../../tests/org.eclipse.emfforms.core.services.emf.tests</module>
 		

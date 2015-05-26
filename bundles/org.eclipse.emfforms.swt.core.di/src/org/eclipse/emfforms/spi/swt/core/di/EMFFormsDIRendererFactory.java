@@ -46,6 +46,15 @@ public class EMFFormsDIRendererFactory implements EMFFormsRendererService<VEleme
 	}
 
 	/**
+	 * Returns the {@link ReportService}.
+	 * 
+	 * @return The {@link ReportService}
+	 */
+	protected ReportService getReportService() {
+		return reportService;
+	}
+
+	/**
 	 * Called by the initializer to add an {@link EMFFormsDIRendererService}.
 	 *
 	 * @param diRendererService The EMFFormsDIRendererService to add

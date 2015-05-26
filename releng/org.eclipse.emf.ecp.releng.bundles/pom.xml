@@ -261,6 +261,7 @@
 		<module>../../bundles/org.eclipse.emfforms.core.services.editsupport</module>
 		<module>../../bundles/org.eclipse.emfforms.swt.core</module>
 		<module>../../bundles/org.eclipse.emfforms.swt.core.di</module>
+		<module>../../bundles/org.eclipse.emfforms.swt.core.di.extension</module>
 		<module>../../bundles/org.eclipse.emfforms.swt.core.plugin</module>
 		<module>../../bundles/org.eclipse.emfforms.core.services</module>
 		<module>../../bundles/org.eclipse.emfforms.core.services.emf</module>
