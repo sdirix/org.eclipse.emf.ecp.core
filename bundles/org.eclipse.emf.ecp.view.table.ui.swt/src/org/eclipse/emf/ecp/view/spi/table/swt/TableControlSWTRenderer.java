@@ -69,6 +69,10 @@ import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
 import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
+import org.eclipse.emf.ecp.view.template.style.background.model.VTBackgroundFactory;
+import org.eclipse.emf.ecp.view.template.style.background.model.VTBackgroundStyleProperty;
+import org.eclipse.emf.ecp.view.template.style.fontProperties.model.VTFontPropertiesFactory;
+import org.eclipse.emf.ecp.view.template.style.fontProperties.model.VTFontPropertiesStyleProperty;
 import org.eclipse.emf.ecp.view.template.style.tableValidation.model.VTTableValidationFactory;
 import org.eclipse.emf.ecp.view.template.style.tableValidation.model.VTTableValidationStyleProperty;
 import org.eclipse.emf.edit.command.AddCommand;
@@ -280,6 +284,18 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			errorLabel.setText(ex.getMessage());
 			return errorLabel;
 
+		}
+
+		/* Set background color */
+		final VTBackgroundStyleProperty backgroundStyleProperty = getBackgroundStyleProperty();
+		if (backgroundStyleProperty.getColor() != null) {
+			getTableViewer().getTable().setBackground(getSWTColor(backgroundStyleProperty.getColor()));
+		}
+
+		/* Set foreground color */
+		final VTFontPropertiesStyleProperty fontPropertiesStyleProperty = getFontPropertiesStyleProperty();
+		if (fontPropertiesStyleProperty.getColorHEX() != null) {
+			getTableViewer().getTable().setForeground(getSWTColor(fontPropertiesStyleProperty.getColorHEX()));
 		}
 
 		if (addButton != null && removeButton != null) {
@@ -601,18 +617,11 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	}
 
 	private VTTableValidationStyleProperty getTableValidationStyleProperty() {
-		VTTableValidationStyleProperty tableValidationStyleProperties;
-		final Set<VTStyleProperty> styleProperties = getVTViewTemplateProvider()
-			.getStyleProperties(getVElement(), getViewModelContext());
-		for (final VTStyleProperty styleProperty : styleProperties) {
-			if (VTTableValidationStyleProperty.class.isInstance(styleProperty)) {
-				tableValidationStyleProperties = VTTableValidationStyleProperty.class
-					.cast(styleProperty);
-				return tableValidationStyleProperties;
-			}
+		VTTableValidationStyleProperty tableValidationStyleProperties = getStyleProperty(
+			VTTableValidationStyleProperty.class);
+		if (tableValidationStyleProperties == null) {
+			tableValidationStyleProperties = getDefaultTableValidationStyleProperty();
 		}
-
-		tableValidationStyleProperties = getDefaultTableValidationStyleProperty();
 		return tableValidationStyleProperties;
 	}
 
@@ -624,6 +633,60 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			MessageKeys.TableControl_ValidationStatusColumn));
 		tableValidationProp.setImagePath(null);
 		return tableValidationProp;
+	}
+
+	private VTBackgroundStyleProperty getBackgroundStyleProperty() {
+		VTBackgroundStyleProperty styleProperty = getStyleProperty(VTBackgroundStyleProperty.class);
+		if (styleProperty == null) {
+			styleProperty = getDefaultBackgroundStyleProperty();
+		}
+		return styleProperty;
+	}
+
+	private VTBackgroundStyleProperty getDefaultBackgroundStyleProperty() {
+		return VTBackgroundFactory.eINSTANCE.createBackgroundStyleProperty();
+	}
+
+	private VTFontPropertiesStyleProperty getFontPropertiesStyleProperty() {
+		VTFontPropertiesStyleProperty styleProperty = getStyleProperty(VTFontPropertiesStyleProperty.class);
+		if (styleProperty == null) {
+			styleProperty = getDefaultFontPropertiesStyleProperty();
+		}
+		return styleProperty;
+	}
+
+	private VTFontPropertiesStyleProperty getDefaultFontPropertiesStyleProperty() {
+		final VTFontPropertiesStyleProperty property = VTFontPropertiesFactory.eINSTANCE
+			.createFontPropertiesStyleProperty();
+		property.setColorHEX("000000"); //$NON-NLS-1$
+		return property;
+	}
+
+	/**
+	 * Returns a {@link VTStyleProperty} of the given class or <code>null</code> if none was found.
+	 *
+	 * @param stylePropertyClass the style property class
+	 * @return the property or <code>null</code>
+	 */
+	private <SP extends VTStyleProperty> SP getStyleProperty(Class<SP> stylePropertyClass) {
+		final Set<VTStyleProperty> styleProperties = getVTViewTemplateProvider()
+			.getStyleProperties(getVElement(), getViewModelContext());
+		for (final VTStyleProperty styleProperty : styleProperties) {
+			if (stylePropertyClass.isInstance(styleProperty)) {
+				return stylePropertyClass.cast(styleProperty);
+			}
+		}
+		return null;
+	}
+
+	private Color getSWTColor(String colorHex) {
+		final String redString = colorHex.substring(0, 2);
+		final String greenString = colorHex.substring(2, 4);
+		final String blueString = colorHex.substring(4, 6);
+		final int red = Integer.parseInt(redString, 16);
+		final int green = Integer.parseInt(greenString, 16);
+		final int blue = Integer.parseInt(blueString, 16);
+		return new Color(Display.getDefault(), red, green, blue);
 	}
 
 	private CellEditor createCellEditor(final EObject tempInstance, final EStructuralFeature feature, Table table) {
@@ -1071,6 +1134,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 				cell.getControl().setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_edit_cellEditor_string"); //$NON-NLS-1$
 			}
 
+			cell.setForeground(getTableViewer().getTable().getForeground());
 			cell.setBackground(getBackground(element));
 		}
 
@@ -1081,7 +1145,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		 */
 		@Override
 		public Color getForeground(Object element) {
-			return null;
+			/* changing constructor to pass in table would be API/SPI break */
+			return getTableViewer().getTable().getForeground();
 		}
 
 		/**
@@ -1246,7 +1311,13 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 			@Override
 			public void afterEditorActivated(ColumnViewerEditorActivationEvent event) {
-				// do nothing
+				// set colors for cell editor
+				final Control control = cellEditor.getControl();
+				if (control == null || control.isDisposed()) {
+					return;
+				}
+				control.setBackground(getViewer().getControl().getBackground());
+				control.setForeground(getViewer().getControl().getForeground());
 			}
 
 			@Override
