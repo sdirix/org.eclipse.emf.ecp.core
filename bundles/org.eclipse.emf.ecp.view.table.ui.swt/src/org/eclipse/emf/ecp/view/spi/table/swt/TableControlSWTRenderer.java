@@ -98,6 +98,7 @@ import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.CellLabelProvider;
+import org.eclipse.jface.viewers.ColumnPixelData;
 import org.eclipse.jface.viewers.ColumnViewer;
 import org.eclipse.jface.viewers.ColumnViewerEditor;
 import org.eclipse.jface.viewers.ColumnViewerEditorActivationEvent;
@@ -145,6 +146,11 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 	private static final String ICON_ADD = "icons/add.png"; //$NON-NLS-1$
 	private static final String ICON_DELETE = "icons/delete.png"; //$NON-NLS-1$
+
+	private static final String RESIZABLE = "resizable"; //$NON-NLS-1$
+	private static final String WEIGHT = "weight"; //$NON-NLS-1$
+	private static final String MIN_WIDTH = "min_width"; //$NON-NLS-1$
+	private static final String WIDTH = "width"; //$NON-NLS-1$
 
 	private TableViewer tableViewer;
 
@@ -467,15 +473,22 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			final EMFFormsLabelProvider labelService = getEMFFormsLabelProvider();
 
 			final CellEditor cellEditor = createCellEditor(tempInstance, eStructuralFeature, tableViewer.getTable());
-			final TableViewerColumn column = TableViewerColumnBuilder
+
+			final TableViewerColumnBuilder columnBuilder = TableViewerColumnBuilder
 				.create()
-				.setResizable(true)
+				.setData(RESIZABLE, true)
 				.setMoveable(false)
-				.setStyle(SWT.NONE)
-				.setData("width", //$NON-NLS-1$
-					ECPCellEditor.class.isInstance(cellEditor) ? ECPCellEditor.class.cast(cellEditor)
-						.getColumnWidthWeight() : 100)
-				.build(tableViewer);
+				.setStyle(SWT.NONE);
+			if (ECPCellEditor.class.isInstance(cellEditor)) {
+				columnBuilder.setData(WEIGHT, ECPCellEditor.class.cast(cellEditor).getColumnWidthWeight());
+				columnBuilder.setData(MIN_WIDTH, ECPCellEditor.class.cast(cellEditor).getMinWidth());
+			} else {
+				columnBuilder.setData(WEIGHT, 100);
+				columnBuilder.setData(MIN_WIDTH, 0);
+			}
+
+			final TableViewerColumn column = columnBuilder.build(tableViewer);
+
 			try {
 				final IObservableValue text = labelService.getDisplayName(dmr);
 				viewModelDBC.bindValue(SWTObservables.observeText(column.getColumn()), text);
@@ -518,9 +531,19 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		final TableColumnLayout layout = new TableColumnLayout();
 		composite.setLayout(layout);
 		for (int i = 0; i < tableViewer.getTable().getColumns().length; i++) {
-			final Integer storedValue = (Integer) tableViewer.getTable().getColumns()[i].getData("width"); //$NON-NLS-1$
-			layout.setColumnData(tableViewer.getTable().getColumns()[i], new ColumnWeightData(storedValue == null ? 50
-				: storedValue));
+			final TableColumn tableColumn = tableViewer.getTable().getColumns()[i];
+
+			final boolean storedIsResizable = (Boolean) tableColumn.getData(RESIZABLE);
+
+			final Integer storedWidth = (Integer) tableColumn.getData(WIDTH);
+			if (storedWidth != null) {
+				layout.setColumnData(tableColumn, new ColumnPixelData(storedWidth, storedIsResizable));
+				continue;
+			}
+
+			final Integer storedWeight = (Integer) tableColumn.getData(WEIGHT);
+			final Integer storedMinWidth = (Integer) tableColumn.getData(MIN_WIDTH);
+			layout.setColumnData(tableColumn, new ColumnWeightData(storedWeight, storedMinWidth, storedIsResizable));
 		}
 
 		tableViewer.addSelectionChangedListener(new ISelectionChangedListener() {
@@ -577,7 +600,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		final TableViewerColumn column = TableViewerColumnBuilder.create()
 			.setMoveable(false)
 			.setText(columnName)
-			.setData("width", columnWidth) //$NON-NLS-1$
+			.setData(WIDTH, columnWidth)
+			.setData(RESIZABLE, true)
 			.build(tableViewer);
 
 		if (imagePath != null && !imagePath.isEmpty()) {

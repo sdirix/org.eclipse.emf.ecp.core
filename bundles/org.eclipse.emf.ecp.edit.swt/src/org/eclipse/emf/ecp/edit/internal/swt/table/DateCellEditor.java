@@ -311,4 +311,14 @@ public class DateCellEditor extends CellEditor implements ECPCellEditor {
 	public Image getImage(Object value) {
 		return null;
 	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getMinWidth()
+	 */
+	@Override
+	public int getMinWidth() {
+		return 0;
+	}
 }
