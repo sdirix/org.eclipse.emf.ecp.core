@@ -27,7 +27,8 @@ import org.eclipse.emfforms.spi.core.services.emfspecificservice.EMFSpecificServ
  * Implementation of {@link EMFSpecificService}.
  *
  * @author Lucas Koehler
- *
+ * @noextend This interface is not intended to be extended by clients.
+ * @noreference This method is not intended to be referenced by clients.
  */
 public class EMFSpecificServiceImpl implements EMFSpecificService {
 
@@ -92,7 +93,7 @@ public class EMFSpecificServiceImpl implements EMFSpecificService {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emfforms.spi.core.services.emfspecificservice.EMFSpecificService#getIItemPropertySource(org.eclipse.emf.ecore.EObject)
 	 */
 	@Override

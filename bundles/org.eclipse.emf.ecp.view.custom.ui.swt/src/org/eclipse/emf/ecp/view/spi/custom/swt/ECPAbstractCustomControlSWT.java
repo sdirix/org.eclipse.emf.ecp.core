@@ -53,9 +53,6 @@ import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
-import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
-import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
 import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -67,6 +64,9 @@ import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedExcep
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
 import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
+import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
+import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
+import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.databinding.viewers.ViewerSupport;
 import org.eclipse.jface.viewers.StructuredViewer;
@@ -713,7 +713,7 @@ public abstract class ECPAbstractCustomControlSWT {
 	 * Returns the GridDescription for this Renderer.
 	 *
 	 * @return the GridDescription
-	 * @since 1.3
+	 * @since 1.6
 	 */
 	public abstract SWTGridDescription getGridDescription();
 
@@ -725,7 +725,7 @@ public abstract class ECPAbstractCustomControlSWT {
 	 * @return the rendered {@link Control}
 	 * @throws NoRendererFoundException this is thrown when a renderer cannot be found
 	 * @throws NoPropertyDescriptorFoundExeption this is thrown when no property descriptor can be found
-	 * @since 1.3
+	 * @since 1.6
 	 */
 	public abstract Control renderControl(SWTGridCell cell, Composite parent) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption;
@@ -766,7 +766,7 @@ public abstract class ECPAbstractCustomControlSWT {
 	 * @param gridCell the {@link SWTGridCell} to enable/disable
 	 * @param control the {@link Control} to enable/disable
 	 * @param enabled true if the control should be enabled false otherwise
-	 * @since 1.3
+	 * @since 1.6
 	 */
 	protected void setControlEnabled(SWTGridCell gridCell, Control control, boolean enabled) {
 		// ignore labels as they are readonly per definition
@@ -808,7 +808,7 @@ public abstract class ECPAbstractCustomControlSWT {
 	 * @param rows the number of rows
 	 * @param columns the number of columns
 	 * @return the {@link GridDescription}
-	 * @since 1.3
+	 * @since 1.6
 	 */
 	protected final SWTGridDescription createSimpleGrid(int rows, int columns) {
 		return GridDescriptionFactory.INSTANCE.createSimpleGrid(rows, columns, null);

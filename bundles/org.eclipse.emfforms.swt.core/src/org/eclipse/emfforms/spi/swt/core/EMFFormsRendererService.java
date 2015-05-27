@@ -13,7 +13,6 @@ package org.eclipse.emfforms.spi.swt.core;
 
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
-import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
 
 /**
  * The EMFFormsRendererService encapsulates the tester and the access to the {@link AbstractSWTRenderer}.

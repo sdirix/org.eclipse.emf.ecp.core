@@ -9,13 +9,13 @@
  * Contributors:
  * Eugen - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.spi.swt.layout;
+package org.eclipse.emfforms.spi.swt.core.layout;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.emf.ecp.view.spi.model.VElement;
-import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
+import org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer;
 
 /**
  * A Factory to create {@link SWTGridDescription GridDescriptions}.

@@ -9,11 +9,11 @@
  * Contributors:
  * Eugen - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.spi.swt.layout;
+package org.eclipse.emfforms.spi.swt.core.layout;
 
 import org.eclipse.emf.ecp.view.model.common.AbstractGridCell;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
-import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
+import org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer;
 
 /**
  * A {@link SWTGridCell} has a row, a column and a renderer it is rendered by.

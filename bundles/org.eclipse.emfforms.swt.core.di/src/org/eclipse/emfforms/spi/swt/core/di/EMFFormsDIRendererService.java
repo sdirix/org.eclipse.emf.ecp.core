@@ -13,7 +13,7 @@ package org.eclipse.emfforms.spi.swt.core.di;
 
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
-import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
+import org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer;
 
 /**
  * This class defines a renderer service interface for dependency injection renderer services.
