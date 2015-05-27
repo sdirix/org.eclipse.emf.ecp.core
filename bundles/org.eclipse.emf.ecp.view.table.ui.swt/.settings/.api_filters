@@ -82,4 +82,12 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/table/swt/TableControlSWTRenderer.java" type="org.eclipse.emf.ecp.view.spi.table.swt.TableControlSWTRenderer$ECPCellLabelProvider">
+        <filter comment="SPI change in 1.6" id="338722907">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.swt.TableControlSWTRenderer.ECPCellLabelProvider"/>
+                <message_argument value="ECPCellLabelProvider(TableControlSWTRenderer, EStructuralFeature, CellEditor, IObservableMap, VTableControl, VDomainModelReference)"/>
+            </message_arguments>
+        </filter>
+    </resource>
 </component>

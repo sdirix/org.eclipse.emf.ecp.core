@@ -292,18 +292,6 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 		}
 
-		/* Set background color */
-		final VTBackgroundStyleProperty backgroundStyleProperty = getBackgroundStyleProperty();
-		if (backgroundStyleProperty.getColor() != null) {
-			getTableViewer().getTable().setBackground(getSWTColor(backgroundStyleProperty.getColor()));
-		}
-
-		/* Set foreground color */
-		final VTFontPropertiesStyleProperty fontPropertiesStyleProperty = getFontPropertiesStyleProperty();
-		if (fontPropertiesStyleProperty.getColorHEX() != null) {
-			getTableViewer().getTable().setForeground(getSWTColor(fontPropertiesStyleProperty.getColorHEX()));
-		}
-
 		if (addButton != null && removeButton != null) {
 			final Button finalAddButton = addButton;
 			final Button finalRemoveButton = removeButton;
@@ -419,6 +407,18 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		tableViewer.getTable().setHeaderVisible(true);
 		tableViewer.getTable().setLinesVisible(true);
 
+		/* Set background color */
+		final VTBackgroundStyleProperty backgroundStyleProperty = getBackgroundStyleProperty();
+		if (backgroundStyleProperty.getColor() != null) {
+			tableViewer.getTable().setBackground(getSWTColor(backgroundStyleProperty.getColor()));
+		}
+
+		/* Set foreground color */
+		final VTFontPropertiesStyleProperty fontPropertiesStyleProperty = getFontPropertiesStyleProperty();
+		if (fontPropertiesStyleProperty.getColorHEX() != null) {
+			tableViewer.getTable().setForeground(getSWTColor(fontPropertiesStyleProperty.getColorHEX()));
+		}
+
 		final TableViewerFocusCellManager focusCellManager = new TableViewerFocusCellManager(tableViewer,
 			new ECPFocusCellDrawHighlighter(tableViewer));
 		final ColumnViewerEditorActivationStrategy actSupport = new ColumnViewerEditorActivationStrategy(tableViewer) {
@@ -502,7 +502,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			}
 			final IObservableMap observableMap = valueProperty.observeDetail(cp.getKnownElements());
 			column.setLabelProvider(new ECPCellLabelProvider(eStructuralFeature, cellEditor, observableMap,
-				getVElement(), dmr));
+				getVElement(), dmr, tableViewer.getTable()));
 			column.getColumn().addSelectionListener(
 				getSelectionAdapter(tableViewer, comparator, column.getColumn(), columnNumber));
 
@@ -1085,6 +1085,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		private final CellEditor cellEditor;
 		private final VTableControl vTableControl;
 		private final VDomainModelReference dmr;
+		private final Table table;
 
 		/**
 		 * Constructor.
@@ -1097,14 +1098,17 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		 *            an {@link IObservableMap} instance that is passed to the {@link ObservableMapCellLabelProvider}
 		 * @param vTableControl the {@link VTableControl}
 		 * @param dmr the {@link VDomainModelReference} for this cell
+		 * @param table the swt table
+		 * @since 1.6
 		 */
 		public ECPCellLabelProvider(EStructuralFeature feature, CellEditor cellEditor, IObservableMap attributeMap,
-			VTableControl vTableControl, VDomainModelReference dmr) {
+			VTableControl vTableControl, VDomainModelReference dmr, Table table) {
 			super(attributeMap);
 			this.vTableControl = vTableControl;
 			this.feature = feature;
 			this.cellEditor = cellEditor;
 			this.dmr = dmr;
+			this.table = table;
 		}
 
 		/**
@@ -1158,7 +1162,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 				cell.getControl().setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_edit_cellEditor_string"); //$NON-NLS-1$
 			}
 
-			cell.setForeground(getTableViewer().getTable().getForeground());
+			cell.setForeground(getForeground(element));
 			cell.setBackground(getBackground(element));
 		}
 
@@ -1169,8 +1173,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		 */
 		@Override
 		public Color getForeground(Object element) {
-			/* changing constructor to pass in table would be API/SPI break */
-			return getTableViewer().getTable().getForeground();
+			return table.getForeground();
 		}
 
 		/**
