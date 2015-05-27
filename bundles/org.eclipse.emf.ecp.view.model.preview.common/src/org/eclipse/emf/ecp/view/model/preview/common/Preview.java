@@ -27,6 +27,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecp.edit.spi.EMFDeleteServiceImpl;
 import org.eclipse.emf.ecp.edit.spi.ReferenceService;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.DefaultReferenceService;
@@ -63,7 +64,7 @@ public class Preview {
 	 * The constructor.
 	 *
 	 * @param parent - the {@link Composite} in which to render
-	 * */
+	 */
 	public Preview(Composite parent) {
 		this.parent = parent;
 	}
@@ -73,7 +74,7 @@ public class Preview {
 	 *
 	 * @param view the {@link VView}
 	 * @param sampleData the sample data to be displayed in the view
-	 * */
+	 */
 	public void render(final VView view, EObject sampleData) {
 		if (adapter != null) {
 			removeAdapter();
@@ -147,7 +148,7 @@ public class Preview {
 			final VView copy = EcoreUtil.copy(view);
 			clearViewDiagnostics(copy);
 			final ViewModelContext viewModelContext = ViewModelContextFactory.INSTANCE.createViewModelContext(
-				copy, dummyData, previewRefServ, new PreviewLocalizationViewModelService());
+				copy, dummyData, previewRefServ, new PreviewLocalizationViewModelService(), new EMFDeleteServiceImpl());
 			composite = createComposite(parent);
 			render = ECPSWTViewRenderer.INSTANCE.render(composite, viewModelContext);
 			composite.layout();
