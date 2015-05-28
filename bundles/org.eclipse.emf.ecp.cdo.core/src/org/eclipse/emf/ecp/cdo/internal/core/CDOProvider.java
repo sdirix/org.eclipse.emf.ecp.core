@@ -105,7 +105,9 @@ public class CDOProvider extends DefaultProvider {
 	 * Get the CDO Provider singleton.
 	 *
 	 * @return the singleton instance or null
+	 * @deprecated use ECPUtil.getECPProviderRegistry().getProvider(CDOProvider.NAME) instead
 	 */
+	@Deprecated
 	public static CDOProvider getInstance() {
 		// TODO: what if instance is still null because constructor was never called?
 		return instance;
