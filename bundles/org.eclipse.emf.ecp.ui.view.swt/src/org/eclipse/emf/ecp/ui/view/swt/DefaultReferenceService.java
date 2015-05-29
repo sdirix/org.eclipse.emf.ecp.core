@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -33,6 +33,8 @@ import org.eclipse.emf.ecp.view.internal.swt.Activator;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
+import org.eclipse.emf.edit.command.AddCommand;
+import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
@@ -124,9 +126,41 @@ public class DefaultReferenceService implements ReferenceService {
 			return;
 		}
 
+		addElementToModel(newMEInstance, eObject);
+
 		ECPControlHelper.addModelElementInReference(eObject, newMEInstance, eReference,
 			editingDomain);
 		openInNewContext(newMEInstance);
+	}
+
+	/**
+	 * Tries to add {@code newElement} recursively upwards starting from {@code eObject}. If no applicable
+	 * {@link EObject} is found, the {@code newElement} will be added to {@code eObject}'s {@link Resource}.
+	 *
+	 * @param newElement
+	 *            The {@link EObject} which is added to the model.
+	 * @param eObject
+	 *            The starting point from which the {@code newElement} is recursively tried to be added upwards.
+	 */
+	private void addElementToModel(EObject newElement, EObject eObject) {
+		for (final EReference ref : eObject.eClass().getEAllReferences()) {
+			if (ref.isContainment() && ref.getEType().isInstance(newElement)) {
+				if (ref.isMany()) {
+					editingDomain.getCommandStack().execute(
+						AddCommand.create(editingDomain, eObject, ref, newElement));
+					return;
+				} else if (eObject.eGet(ref) == null) {
+					editingDomain.getCommandStack().execute(
+						SetCommand.create(editingDomain, eObject, ref, newElement));
+					return;
+				}
+			}
+		}
+		if (eObject.eContainer() != null) {
+			addElementToModel(newElement, eObject.eContainer());
+		} else {
+			eObject.eResource().getContents().add(newElement);
+		}
 	}
 
 	/**
