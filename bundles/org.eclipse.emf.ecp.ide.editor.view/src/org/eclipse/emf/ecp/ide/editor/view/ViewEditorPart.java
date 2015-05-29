@@ -41,6 +41,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.FeatureMap;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xml.type.AnyType;
+import org.eclipse.emf.ecp.edit.spi.EMFDeleteServiceImpl;
 import org.eclipse.emf.ecp.ide.editor.view.messages.Messages;
 import org.eclipse.emf.ecp.ide.view.service.ViewModelEditorCallback;
 import org.eclipse.emf.ecp.internal.ide.util.EcoreHelper;
@@ -381,7 +382,8 @@ public class ViewEditorPart extends EditorPart implements
 		try {
 
 			render = ECPSWTViewRenderer.INSTANCE.render(parent, ViewModelContextFactory.INSTANCE
-				.createViewModelContext(ViewProviderHelper.getView(view, null), view, new DefaultReferenceService()));
+				.createViewModelContext(ViewProviderHelper.getView(view, null), view, new DefaultReferenceService(),
+					new EMFDeleteServiceImpl()));
 		} catch (final ECPRendererException ex) {
 			Activator.getDefault().getReportService().report(
 				new StatusReport(new Status(IStatus.ERROR, Activator.PLUGIN_ID, ex.getMessage(), ex)));
