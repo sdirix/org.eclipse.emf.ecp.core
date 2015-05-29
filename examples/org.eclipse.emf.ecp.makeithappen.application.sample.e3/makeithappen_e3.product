@@ -3,17 +3,26 @@
 
 <product name="MakeItHappen Sample e3 Product" uid="org.eclipse.emf.ecp.makeithappen.sample.product.e3" id="org.eclipse.emf.ecp.makeithappen.application.sample.e3.product" application="org.eclipse.emf.ecp.makeithappen.application.sample.e3.application" version="1.6.0" useFeatures="false" includeLaunchers="true">
 
+
    <configIni use="default">
    </configIni>
 
    <launcherArgs>
-      <programArgs>-consoleLog -debugEMFForms
+      <programArgs>-consoleLog
       </programArgs>
       <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts
       </vmArgsMac>
    </launcherArgs>
 
    <windowImages i16="/org.eclipse.emf.ecp.makeithappen.application.sample.e3/icons/bricks.png"/>
+
+   <launcher>
+      <solaris/>
+      <win useIco="false">
+         <bmp/>
+      </win>
+   </launcher>
+
 
    <vm>
       <windows include="false">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7</windows>
@@ -117,6 +126,7 @@
       <plugin id="org.eclipse.emfforms.core.services.locale.default"/>
       <plugin id="org.eclipse.emfforms.localization"/>
       <plugin id="org.eclipse.emfforms.swt.core"/>
+      <plugin id="org.eclipse.emfforms.swt.core.di"/>
       <plugin id="org.eclipse.emfforms.swt.core.plugin"/>
       <plugin id="org.eclipse.emfforms.view.model.localization"/>
       <plugin id="org.eclipse.equinox.app"/>
