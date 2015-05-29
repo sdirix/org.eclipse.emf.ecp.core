@@ -82,6 +82,8 @@
 		<module>../../features/org.eclipse.emf.ecp.view.table.celleditor.rcp.feature</module>
 		
 		<module>../../features/org.eclipse.emfforms.swt.control.text.autocomplete.feature</module>
+		
+		<module>../../features/org.eclipse.emfforms.view.annotation.feature</module>
 	</modules>
 
 	<!-- Parent used for features. This POM contains all build steps for code signing. -->

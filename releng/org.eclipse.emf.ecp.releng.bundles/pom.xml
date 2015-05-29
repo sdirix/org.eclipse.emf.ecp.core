@@ -272,6 +272,9 @@
 		
 		<module>../../bundles/org.eclipse.emfforms.swt.control.text.autocomplete</module>
 		
+		<!-- Annotation attachement -->
+		<module>../../bundles/org.eclipse.emfforms.view.annotation.model</module>
+		<module>../../bundles/org.eclipse.emfforms.view.annotation.model.edit</module>
 	</modules>
 
 	<build>
