@@ -28,7 +28,6 @@ import org.eclipse.emfforms.internal.swt.treemasterdetail.defaultprovider.Defaul
 import org.eclipse.emfforms.internal.swt.treemasterdetail.defaultprovider.DefaultTreeWidthProvider;
 import org.eclipse.emfforms.internal.swt.treemasterdetail.defaultprovider.DefaultViewModelServiceProvider;
 import org.eclipse.emfforms.internal.swt.treemasterdetail.defaultprovider.DefaultViewerFilterProvider;
-import org.eclipse.emfforms.internal.swt.treemasterdetail.helpers.EcoreHelpers;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.ContentProviderProvider;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.DNDProvider;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.DetailCompositeBuilder;
@@ -88,7 +87,12 @@ public class DefaultTreeMasterDetailCustomization implements TreeMasterDetailSWT
 		viewServiceProvider = new DefaultViewModelServiceProvider();
 	}
 
-	private ComposedAdapterFactory getComposedAdapterFactory() {
+	/**
+	 * Gives access to the composed adapter factory.
+	 * 
+	 * @return the adapter factory
+	 */
+	protected ComposedAdapterFactory getComposedAdapterFactory() {
 		if (adapterFactory == null) {
 			adapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
 				new CustomReflectiveItemProviderAdapterFactory(),
@@ -97,7 +101,12 @@ public class DefaultTreeMasterDetailCustomization implements TreeMasterDetailSWT
 		return adapterFactory;
 	}
 
-	private AdapterFactoryContentProvider getAdapterFactoryContentProvider() {
+	/**
+	 * Returns the {@link AdapterFactoryContentProvider}.
+	 * 
+	 * @return the content provider
+	 */
+	protected AdapterFactoryContentProvider getAdapterFactoryContentProvider() {
 		if (adapterFactoryContentProvider == null) {
 			final ComposedAdapterFactory adapterFactory = getComposedAdapterFactory();
 			adapterFactoryContentProvider = new AdapterFactoryContentProvider(
@@ -114,13 +123,6 @@ public class DefaultTreeMasterDetailCustomization implements TreeMasterDetailSWT
 				@Override
 				public boolean hasChildren(Object object) {
 					return getChildren(object).length > 0;
-				}
-
-				@Override
-				public Object[] getChildren(Object object) {
-					// Filter all generic children
-					// TODO move out of default behaviour
-					return EcoreHelpers.filterGenericElements(super.getChildren(object));
 				}
 			};
 		}

@@ -294,6 +294,13 @@
 		<module>../../bundles/org.eclipse.emfforms.swt.controlgrid</module>
 		<module>../../bundles/org.eclipse.emfforms.view.controlgrid.model</module>
 		<module>../../bundles/org.eclipse.emfforms.view.controlgrid.model.edit</module>
+
+		<!-- EMF Forms Editor -->
+		<module>../../bundles/org.eclipse.emfforms.editor</module>
+		<module>../../bundles/org.eclipse.emfforms.editor.ecore</module>
+		<module>../../bundles/org.eclipse.emfforms.editor.genmodel</module>
+		<module>../../bundles/org.eclipse.emfforms.editor.viewmodel</module>
+
 	</modules>
 
 	<build>

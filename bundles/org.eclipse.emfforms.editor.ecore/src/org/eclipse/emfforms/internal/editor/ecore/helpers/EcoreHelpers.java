@@ -9,7 +9,7 @@
  * Contributors:
  * Clemens Elflein - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emfforms.internal.swt.treemasterdetail.helpers;
+package org.eclipse.emfforms.internal.editor.ecore.helpers;
 
 import java.util.LinkedList;
 import java.util.List;

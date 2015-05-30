@@ -11,6 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emfforms.internal.swt.treemasterdetail.defaultprovider;
 
+import java.util.Collection;
 import java.util.Collections;
 
 import org.eclipse.emf.ecp.common.spi.ChildrenDescriptorCollector;
@@ -25,25 +26,52 @@ import org.eclipse.swt.widgets.Menu;
 
 /**
  * The default menu provider.
- * 
+ *
  * @author Johannes Faltermeier
  *
  */
 public final class DefaultMenuProvider implements MenuProvider {
 
+	private ChildrenDescriptorCollector childrenDescriptorCollector;
+	private Collection<MasterDetailAction> rightClickActions;
+	private CreateElementCallback createElementCallback;
+
+	/**
+	 * Default constructor.
+	 */
+	public DefaultMenuProvider() {
+		childrenDescriptorCollector = new ChildrenDescriptorCollector();
+		rightClickActions = Collections.<MasterDetailAction> emptySet();
+		createElementCallback = new CreateElementCallback() {
+			@Override
+			public boolean beforeCreateElement(Object newElement) {
+				return true;
+			}
+		};
+	}
+
+	/**
+	 * Constructor.
+	 * 
+	 * @param childrenDescriptorCollector the child description collector to use
+	 * @param rightClickActions the right click actions to use
+	 * @param createElementCallback the create element callback
+	 */
+	public DefaultMenuProvider(ChildrenDescriptorCollector childrenDescriptorCollector,
+		Collection<MasterDetailAction> rightClickActions,
+		CreateElementCallback createElementCallback) {
+		this.childrenDescriptorCollector = childrenDescriptorCollector;
+		this.rightClickActions = rightClickActions;
+		this.createElementCallback = createElementCallback;
+	}
+
 	@Override
 	public Menu getMenu(TreeViewer treeViewer, EditingDomain editingDomain) {
-		final ChildrenDescriptorCollector childrenDescriptorCollector = new ChildrenDescriptorCollector();
 		final MenuManager menuMgr = new MenuManager();
 		menuMgr.setRemoveAllWhenShown(true);
 		menuMgr
 			.addMenuListener(new TreeMasterDetailMenuListener(childrenDescriptorCollector, menuMgr, treeViewer,
-				editingDomain, Collections.<MasterDetailAction> emptySet(), new CreateElementCallback() {
-					@Override
-					public boolean beforeCreateElement(Object newElement) {
-						return true;
-					}
-				}));
+				editingDomain, rightClickActions, createElementCallback));
 		final Menu menu = menuMgr.createContextMenu(treeViewer.getControl());
 		return menu;
 	}

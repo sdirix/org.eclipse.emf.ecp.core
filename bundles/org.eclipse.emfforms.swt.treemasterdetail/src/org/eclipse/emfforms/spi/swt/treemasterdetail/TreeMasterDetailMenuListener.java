@@ -22,7 +22,6 @@ import org.eclipse.emf.edit.command.CommandParameter;
 import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.emfforms.internal.swt.treemasterdetail.helpers.EcoreHelpers;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.util.CreateChildAction;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.util.CreateElementCallback;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.util.MasterDetailAction;
@@ -136,15 +135,14 @@ public class TreeMasterDetailMenuListener implements IMenuListener {
 		final EObject eObject) {
 		for (final Object descriptor : descriptors) {
 
-			final CommandParameter cp = (CommandParameter) descriptor;
 			if (!CommandParameter.class.isInstance(descriptor)) {
 				continue;
 			}
+			final CommandParameter cp = (CommandParameter) descriptor;
 			if (cp.getEReference() == null) {
 				continue;
 			}
-			if (EcoreHelpers.isGenericFeature(cp.getFeature())) {
-				// This ensures, that we won't show any generic features anymore
+			if (filterDescriptor(cp)) {
 				continue;
 			}
 			if (!cp.getEReference().isMany() && eObject.eIsSet(cp.getEStructuralFeature())) {
@@ -157,6 +155,16 @@ public class TreeMasterDetailMenuListener implements IMenuListener {
 			manager.add(new CreateChildAction(eObject, domain, treeViewer, cp, createElementCallback));
 		}
 
+	}
+
+	/**
+	 * Allows to prevent adding a create child action for the given {@link CommandParameter}.
+	 *
+	 * @param cp the descriptor
+	 * @return <code>true</code> if action should be filtered (=not created), <code>false</code> otherwise
+	 */
+	protected boolean filterDescriptor(CommandParameter cp) {
+		return false;
 	}
 
 	/**
@@ -182,8 +190,6 @@ public class TreeMasterDetailMenuListener implements IMenuListener {
 			public void run() {
 				super.run();
 				editingDomain.getCommandStack().execute(removeCommand);
-				// TODO
-				// treeViewer.setSelection(new StructuredSelection(input));
 			}
 		};
 

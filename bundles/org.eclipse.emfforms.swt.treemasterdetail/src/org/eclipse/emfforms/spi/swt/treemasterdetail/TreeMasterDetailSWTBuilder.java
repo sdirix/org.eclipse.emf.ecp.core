@@ -11,7 +11,13 @@
  ******************************************************************************/
 package org.eclipse.emfforms.spi.swt.treemasterdetail;
 
+import java.util.Collection;
+
+import org.eclipse.emf.ecp.common.spi.ChildrenDescriptorCollector;
 import org.eclipse.emfforms.internal.swt.treemasterdetail.DefaultTreeMasterDetailCustomization;
+import org.eclipse.emfforms.internal.swt.treemasterdetail.defaultprovider.DefaultMenuProvider;
+import org.eclipse.emfforms.spi.swt.treemasterdetail.util.CreateElementCallback;
+import org.eclipse.emfforms.spi.swt.treemasterdetail.util.MasterDetailAction;
 import org.eclipse.jface.viewers.IBaseLabelProvider;
 import org.eclipse.jface.viewers.IContentProvider;
 import org.eclipse.jface.viewers.ViewerFilter;
@@ -159,6 +165,25 @@ public final class TreeMasterDetailSWTBuilder {
 	 */
 	public TreeMasterDetailSWTBuilder customizeMenu(MenuProvider menu) {
 		behaviour.setMenu(menu);
+		return this;
+	}
+
+	/**
+	 * Use this method to customize the {@link org.eclipse.swt.widgets.Menu Menu} which is shown when an element in the
+	 * tree is right-clicked. The
+	 * default implementation will offer menu entries to create new elements based on EMF Edit and to delete elements.
+	 *
+	 * @param rightClickActions the additional right click actions which will be shown in the context menu
+	 * @param createElementCallback a callback which gets notified when a new child is created. this allows to veto the
+	 *            creation or to change the object to be added
+	 * @return self
+	 */
+	public TreeMasterDetailSWTBuilder customizeMenu(
+		Collection<MasterDetailAction> rightClickActions,
+		CreateElementCallback createElementCallback) {
+		behaviour
+			.setMenu(
+				new DefaultMenuProvider(new ChildrenDescriptorCollector(), rightClickActions, createElementCallback));
 		return this;
 	}
 

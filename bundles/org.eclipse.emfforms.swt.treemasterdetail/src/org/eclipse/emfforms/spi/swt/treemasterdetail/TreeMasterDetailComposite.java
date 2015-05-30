@@ -228,64 +228,60 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 		// Get the selected object, if it is an EObject, render the details using EMF Forms
 		final Object selectedObject = treeViewer.getSelection() != null ? ((StructuredSelection) treeViewer
 			.getSelection()).getFirstElement() : null;
-			if (selectedObject instanceof EObject) {
-				final EObject eObject = EObject.class.cast(selectedObject);
-				// Check, if the selected object would be rendered using a TreeMasterDetail. If so, render the provided
-				// detail view.
-				final VView view = ViewProviderHelper.getView((EObject) selectedObject, context);
-				if (view.getChildren().size() > 0 && view.getChildren().get(0) instanceof VTreeMasterDetail) {
-					// Yes, we need to render this node differently
-					final VTreeMasterDetail vTreeMasterDetail = (VTreeMasterDetail) view.getChildren().get(0);
-					try {
-						ECPSWTViewRenderer.INSTANCE.render(detailPanel, (EObject) selectedObject,
-							vTreeMasterDetail.getDetailView());
-						detailPanel.layout(true, true);
-					} catch (final ECPRendererException e) {
-					}
-
-				} else {
-					// No, everything is fine
-					try {
-						final VView view2 = ViewProviderHelper.getView(eObject, context);
-						final ViewModelContext modelContext = ViewModelContextFactory.INSTANCE.createViewModelContext(view2,
-							eObject, customization.getViewModelServices(view2, eObject));
-						ECPSWTViewRenderer.INSTANCE.render(detailPanel, modelContext);
-						detailPanel.layout(true, true);
-					} catch (final ECPRendererException e) {
-					}
-				}
-				// After rendering the Forms, compute the size of the form. So the scroll container knows when to scroll
-				if (ScrolledComposite.class.isInstance(detailComposite)) {
-					ScrolledComposite.class.cast(detailComposite)
-					.setMinSize(detailPanel.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		if (selectedObject instanceof EObject) {
+			final EObject eObject = EObject.class.cast(selectedObject);
+			// Check, if the selected object would be rendered using a TreeMasterDetail. If so, render the provided
+			// detail view.
+			final VView view = ViewProviderHelper.getView((EObject) selectedObject, context);
+			if (view.getChildren().size() > 0 && view.getChildren().get(0) instanceof VTreeMasterDetail) {
+				// Yes, we need to render this node differently
+				final VTreeMasterDetail vTreeMasterDetail = (VTreeMasterDetail) view.getChildren().get(0);
+				try {
+					ECPSWTViewRenderer.INSTANCE.render(detailPanel, (EObject) selectedObject,
+						vTreeMasterDetail.getDetailView());
+					detailPanel.layout(true, true);
+				} catch (final ECPRendererException e) {
 				}
 
-				// TODO JF why? should be already handled by menu listener. remove?!
-				// Set the context menu for creation of new elements
-				// fillContextMenu(treeViewer, editingDomain);
 			} else {
-				final Label hint = new Label(detailPanel, SWT.CENTER);
-				final FontDescriptor boldDescriptor = FontDescriptor.createFrom(hint.getFont()).setHeight(18)
-					.setStyle(SWT.BOLD);
-				final Font boldFont = boldDescriptor.createFont(hint.getDisplay());
-				hint.setFont(boldFont);
-				hint.setForeground(new Color(hint.getDisplay(), 190, 190, 190));
-				hint.setText("Select a node in the tree to edit it");
-				final GridData hintLayoutData = new GridData();
-				hintLayoutData.grabExcessVerticalSpace = true;
-				hintLayoutData.grabExcessHorizontalSpace = true;
-				hintLayoutData.horizontalAlignment = SWT.CENTER;
-				hintLayoutData.verticalAlignment = SWT.CENTER;
-				hint.setLayoutData(hintLayoutData);
-
-				detailPanel.pack();
-				detailPanel.layout(true, true);
-
-				if (ScrolledComposite.class.isInstance(detailComposite)) {
-					ScrolledComposite.class.cast(detailComposite)
-					.setMinSize(detailPanel.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+				// No, everything is fine
+				try {
+					final VView view2 = ViewProviderHelper.getView(eObject, context);
+					final ViewModelContext modelContext = ViewModelContextFactory.INSTANCE.createViewModelContext(view2,
+						eObject, customization.getViewModelServices(view2, eObject));
+					ECPSWTViewRenderer.INSTANCE.render(detailPanel, modelContext);
+					detailPanel.layout(true, true);
+				} catch (final ECPRendererException e) {
 				}
 			}
+			// After rendering the Forms, compute the size of the form. So the scroll container knows when to scroll
+			if (ScrolledComposite.class.isInstance(detailComposite)) {
+				ScrolledComposite.class.cast(detailComposite)
+					.setMinSize(detailPanel.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+			}
+		} else {
+			final Label hint = new Label(detailPanel, SWT.CENTER);
+			final FontDescriptor boldDescriptor = FontDescriptor.createFrom(hint.getFont()).setHeight(18)
+				.setStyle(SWT.BOLD);
+			final Font boldFont = boldDescriptor.createFont(hint.getDisplay());
+			hint.setFont(boldFont);
+			hint.setForeground(new Color(hint.getDisplay(), 190, 190, 190));
+			hint.setText("Select a node in the tree to edit it");
+			final GridData hintLayoutData = new GridData();
+			hintLayoutData.grabExcessVerticalSpace = true;
+			hintLayoutData.grabExcessHorizontalSpace = true;
+			hintLayoutData.horizontalAlignment = SWT.CENTER;
+			hintLayoutData.verticalAlignment = SWT.CENTER;
+			hint.setLayoutData(hintLayoutData);
+
+			detailPanel.pack();
+			detailPanel.layout(true, true);
+
+			if (ScrolledComposite.class.isInstance(detailComposite)) {
+				ScrolledComposite.class.cast(detailComposite)
+					.setMinSize(detailPanel.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+			}
+		}
 	}
 
 	/**

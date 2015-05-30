@@ -10,7 +10,7 @@
  * Clemens Elflein - initial API and implementation
  ******************************************************************************/
 
-package org.eclipse.emfforms.spi.swt.treemasterdetail.util;
+package org.eclipse.emfforms.internal.editor.ui;
 
 import java.util.LinkedHashMap;
 
@@ -26,13 +26,15 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.edit.command.CommandParameter;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emfforms.spi.swt.treemasterdetail.util.CreateChildAction;
+import org.eclipse.emfforms.spi.swt.treemasterdetail.util.CreateElementCallback;
 import org.eclipse.jface.viewers.ISelectionProvider;
 
 /**
  * The Class CreateChildActionWithAccelerator.
  * It extends the CreateChildAction to allow to run with a keyboard shortcut.
  */
-
+// TODO actually this should be only available in the ecore editor
 public final class CreateChildActionWithAccelerator extends CreateChildAction {
 
 	private static final LinkedHashMap<Class<?>, Character> ACCELERATORS = new LinkedHashMap<Class<?>, Character>();
@@ -59,7 +61,8 @@ public final class CreateChildActionWithAccelerator extends CreateChildAction {
 	 * @param createElementCallback the callback, null if not present.
 	 */
 	public CreateChildActionWithAccelerator(EObject parent, EditingDomain editingDomain,
-		ISelectionProvider selectionProvider, CommandParameter descriptor, CreateElementCallback createElementCallback) {
+		ISelectionProvider selectionProvider, CommandParameter descriptor,
+		CreateElementCallback createElementCallback) {
 		super(parent, editingDomain, selectionProvider, descriptor, createElementCallback);
 		final Object value = descriptor.getValue();
 
