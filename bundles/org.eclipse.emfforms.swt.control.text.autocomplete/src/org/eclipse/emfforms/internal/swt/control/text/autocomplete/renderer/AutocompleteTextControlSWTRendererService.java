@@ -84,6 +84,9 @@ public class AutocompleteTextControlSWTRendererService implements EMFFormsDIRend
 
 			final EAttribute attribute = EAttribute.class.cast(feature);
 			final Class<?> instanceClass = attribute.getEAttributeType().getInstanceClass();
+			if (instanceClass == null) {
+				return NOT_APPLICABLE;
+			}
 
 			if (!String.class.isAssignableFrom(instanceClass)) {
 				return NOT_APPLICABLE;
