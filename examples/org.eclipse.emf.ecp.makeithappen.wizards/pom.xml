@@ -226,7 +226,8 @@
           								<exclude>target/</exclude>
           								<exclude>**/pom.xml</exclude>
         							</excludes>
-									<filtering>true</filtering>
+        							<!-- Setting filtering to true will cause maven to look at the jar file and replace stuff. The result is an invalid jar -->
+									<filtering>false</filtering>
 								</resource>
 							</resources>
 						</configuration>
