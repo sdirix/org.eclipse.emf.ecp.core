@@ -414,7 +414,6 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	protected void handleAddExisting(TableViewer tableViewer, EObject eObject, EStructuralFeature structuralFeature) {
 		final ReferenceService referenceService = getViewModelContext().getService(ReferenceService.class);
 		referenceService.addExistingModelElements(eObject, (EReference) structuralFeature);
-		referenceService.openInNewContext(eObject);
 	}
 
 	/**
