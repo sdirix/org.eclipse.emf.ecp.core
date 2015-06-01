@@ -17,7 +17,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import org.eclipse.core.databinding.observable.Realm;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.databinding.EObjectObservableValue;
@@ -66,7 +65,7 @@ public class EMFFormsLabelProviderDefaultImpl_Test {
 
 		valueProperty = mock(IValueProperty.class);
 		observableValue = mock(EObjectObservableValue.class);
-		when(observableValue.getRealm()).thenReturn(Realm.getDefault());
+		// when(observableValue.getRealm()).thenReturn(Realm.getDefault());
 
 		emfSpecificService = mock(EMFSpecificService.class);
 		labelProvider.setEMFSpecificService(emfSpecificService);
