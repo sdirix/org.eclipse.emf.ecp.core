@@ -60,10 +60,10 @@ public abstract class AbstractFilteredSelectionComposite<T extends StructuredVie
 		GridLayoutFactory.fillDefaults().numColumns(2).equalWidth(false).applyTo(composite);
 
 		final Label filterLabel = new Label(composite, SWT.LEFT);
-		filterLabel.setText(LocalizationServiceHelper.getString(getClass(),
+		filterLabel.setText(LocalizationServiceHelper.getString(AbstractFilteredSelectionComposite.class,
 			MessageKeys.AbstractModelElementHelper_FilterLabel));
 		final Text filterInput = new Text(composite, SWT.SEARCH);
-		filterInput.setMessage(LocalizationServiceHelper.getString(getClass(),
+		filterInput.setMessage(LocalizationServiceHelper.getString(AbstractFilteredSelectionComposite.class,
 			MessageKeys.AbstractModelElementHelper_FilterText));
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING).grab(true, false).applyTo(filterInput);
 
