@@ -13,8 +13,10 @@
 package org.eclipse.emf.ecp.ide.util;
 
 import org.eclipse.core.runtime.Plugin;
-import org.eclipse.core.runtime.Status;
+import org.eclipse.emfforms.spi.common.report.AbstractReport;
+import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 
 /**
  * The activator class controls the plug-in life cycle.
@@ -26,6 +28,8 @@ public class Activator extends Plugin {
 
 	// The shared instance
 	private static Activator plugin;
+
+	private ReportService reportService;
 
 	/**
 	 * The constructor.
@@ -69,6 +73,20 @@ public class Activator extends Plugin {
 	 * @param message The warning to log
 	 */
 	public static void log(int severity, String message) {
-		plugin.getLog().log(new Status(severity, PLUGIN_ID, message));
+		plugin.getReportService().report(new AbstractReport(message, severity));
+	}
+
+	/**
+	 * Return the {@link ReportService}.
+	 *
+	 * @return The {@link ReportService}
+	 */
+	public ReportService getReportService() {
+		if (reportService == null) {
+			final ServiceReference<ReportService> serviceReference = getBundle().getBundleContext()
+				.getServiceReference(ReportService.class);
+			reportService = getBundle().getBundleContext().getService(serviceReference);
+		}
+		return reportService;
 	}
 }
