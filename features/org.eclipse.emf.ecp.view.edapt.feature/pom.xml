@@ -30,6 +30,7 @@
 				<configuration>
 					<excludes>
 					  <feature id="org.eclipse.emf.edapt.runtime.feature"/>
+					  <feature id="org.eclipse.emf.edapt.runtime.feature.source"/>
 					</excludes>
 				</configuration>
 			</plugin>

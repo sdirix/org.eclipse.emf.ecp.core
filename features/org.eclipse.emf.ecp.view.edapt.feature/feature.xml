@@ -24,6 +24,10 @@
          id="org.eclipse.emf.edapt.runtime.feature"
          version="0.0.0"/>
 
+   <includes
+         id="org.eclipse.emf.edapt.runtime.feature.source"
+         version="0.0.0"/>
+
    <plugin
          id="org.eclipse.emf.ecp.view.edapt"
          download-size="0"
