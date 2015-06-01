@@ -31,6 +31,9 @@
 					<excludes>
 						<plugin id="org.eclipse.emf.ecp.application.e4"/>
 					</excludes>
+					<excludes>
+						<plugin id="org.eclipse.emf.ecp.application.e4.source"/>
+					</excludes>
 				</configuration>
 			</plugin>
 		</plugins>
