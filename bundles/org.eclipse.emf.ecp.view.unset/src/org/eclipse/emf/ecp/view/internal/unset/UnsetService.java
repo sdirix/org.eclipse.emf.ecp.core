@@ -31,6 +31,7 @@ import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
+import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 
@@ -149,6 +150,11 @@ public class UnsetService implements ViewModelService {
 	}
 
 	private void addControlToMap(VControl control) {
+		if (control.getDomainModelReference() == null) {
+			Activator.getDefault().getReportService().report(
+				new AbstractReport(String.format("The provided control [%1$s] has no defined DMR.", control), 1)); //$NON-NLS-1$
+			return;
+		}
 		IObservableValue observableValue;
 		try {
 			observableValue = Activator.getDefault().getEMFFormsDatabinding()
