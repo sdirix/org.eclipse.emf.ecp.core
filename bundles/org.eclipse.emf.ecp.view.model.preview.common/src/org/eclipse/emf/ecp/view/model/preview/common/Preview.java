@@ -36,6 +36,7 @@ import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
 import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
+import org.eclipse.emf.ecp.view.spi.model.LocalizationAdapter;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
@@ -146,9 +147,15 @@ public class Preview {
 
 			final ReferenceService previewRefServ = new DefaultReferenceService();
 			final VView copy = EcoreUtil.copy(view);
+			copy.eAdapters().add(new LocalizationAdapter() {
+				@Override
+				public String localize(String key) {
+					return key;
+				}
+			});
 			clearViewDiagnostics(copy);
 			final ViewModelContext viewModelContext = ViewModelContextFactory.INSTANCE.createViewModelContext(
-				copy, dummyData, previewRefServ, new PreviewLocalizationViewModelService(), new EMFDeleteServiceImpl());
+				copy, dummyData, previewRefServ, new EMFDeleteServiceImpl());
 			composite = createComposite(parent);
 			render = ECPSWTViewRenderer.INSTANCE.render(composite, viewModelContext);
 			composite.layout();
