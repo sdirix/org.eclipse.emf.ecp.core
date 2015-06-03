@@ -435,12 +435,18 @@ public class VIndexDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 			list = (List<EObject>) getPrefixDMR().getIterator().next().get(true);
 		}
 
-		if (list.size() <= getIndex() && getIndex() != 0) {
+		if (list.size() < getIndex() && getIndex() != 0) {
 			return false;
 		}
 		EObject foundChild = null;
-		if (list.size() == 0) {
-			final EReference eReference = (EReference) getDomainModelEFeature();
+		if (list.size() == getIndex()) {
+			EReference eReference;
+			if (getPrefixDMR() == null) {
+				eReference = (EReference) getDomainModelEFeature();
+			}
+			else {
+				eReference = (EReference) getPrefixDMR().getEStructuralFeatureIterator().next();
+			}
 			foundChild = EcoreUtil.create(eReference.getEReferenceType());
 			list.add(foundChild);
 		}

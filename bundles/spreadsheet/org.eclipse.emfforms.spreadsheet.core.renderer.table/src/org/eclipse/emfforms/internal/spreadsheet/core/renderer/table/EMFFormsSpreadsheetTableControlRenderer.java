@@ -11,11 +11,12 @@
  ******************************************************************************/
 package org.eclipse.emfforms.internal.spreadsheet.core.renderer.table;
 
+import java.util.Collections;
+
 import org.apache.poi.ss.usermodel.Workbook;
-import org.eclipse.core.databinding.observable.Observables;
 import org.eclipse.core.databinding.observable.list.IObservableList;
-import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
@@ -23,10 +24,15 @@ import org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexdmrFactory;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
+import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
 import org.eclipse.emf.ecp.view.spi.table.model.DetailEditing;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
+import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
+import org.eclipse.emfforms.internal.spreadsheet.core.EMFFormsSpreadsheetViewModelContext;
 import org.eclipse.emfforms.internal.spreadsheet.core.renderer.EMFFormsSpreadsheetControlRenderer;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
@@ -34,7 +40,10 @@ import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsAbstractSpreadsheetRenderer;
+import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsExportTableParent;
+import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsNoRendererException;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetRenderTarget;
+import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetRendererFactory;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetReport;
 
 /**
@@ -48,6 +57,8 @@ public class EMFFormsSpreadsheetTableControlRenderer extends EMFFormsAbstractSpr
 	private final EMFFormsDatabinding emfformsDatabinding;
 	private final EMFFormsLabelProvider emfformsLabelProvider;
 	private final ReportService reportService;
+	private final EMFFormsSpreadsheetRendererFactory rendererFactory;
+	private final VTViewTemplateProvider vtViewTemplateProvider;
 
 	/**
 	 * Default constructor.
@@ -55,12 +66,17 @@ public class EMFFormsSpreadsheetTableControlRenderer extends EMFFormsAbstractSpr
 	 * @param emfformsDatabinding The EMFFormsDatabinding to use
 	 * @param emfformsLabelProvider The EMFFormsLabelProvider to use
 	 * @param reportService The {@link ReportService}
+	 * @param rendererFactory The EMFFormsSpreadsheetRendererFactory to use
+	 * @param vtViewTemplateProvider The VTViewTemplateProvider to use
 	 */
 	public EMFFormsSpreadsheetTableControlRenderer(EMFFormsDatabinding emfformsDatabinding,
-		EMFFormsLabelProvider emfformsLabelProvider, ReportService reportService) {
+		EMFFormsLabelProvider emfformsLabelProvider, ReportService reportService,
+		EMFFormsSpreadsheetRendererFactory rendererFactory, VTViewTemplateProvider vtViewTemplateProvider) {
 		this.emfformsDatabinding = emfformsDatabinding;
 		this.emfformsLabelProvider = emfformsLabelProvider;
 		this.reportService = reportService;
+		this.rendererFactory = rendererFactory;
+		this.vtViewTemplateProvider = vtViewTemplateProvider;
 	}
 
 	/**
@@ -76,51 +92,7 @@ public class EMFFormsSpreadsheetTableControlRenderer extends EMFFormsAbstractSpr
 		EMFFormsSpreadsheetRenderTarget eMFFormsSpreadsheetRenderTarget) {
 		final EMFFormsSpreadsheetControlRenderer controlRenderer = new EMFFormsSpreadsheetControlRenderer(
 			emfformsDatabinding,
-			new EMFFormsLabelProvider() {
-
-				@Override
-				public IObservableValue getDisplayName(VDomainModelReference domainModelReference, EObject rootObject)
-					throws NoLabelFoundException {
-					return emfformsLabelProvider.getDisplayName(domainModelReference, rootObject);
-				}
-
-				@Override
-				public IObservableValue getDisplayName(VDomainModelReference domainModelReference)
-					throws NoLabelFoundException {
-					if (VIndexDomainModelReference.class.isInstance(domainModelReference)
-						&& VIndexDomainModelReference.class.cast(domainModelReference).getPrefixDMR() != null) {
-						final VIndexDomainModelReference indexDMR = VIndexDomainModelReference.class
-							.cast(domainModelReference);
-						String prefixName = (String) emfformsLabelProvider.getDisplayName(indexDMR.getPrefixDMR())
-							.getValue();
-						if (prefixName == null || prefixName.length() == 0) {
-							try {
-								prefixName = EStructuralFeature.class.cast(
-									emfformsDatabinding.getValueProperty(indexDMR.getPrefixDMR(),
-										viewModelContext.getDomainModel()).getValueType()).getName();
-							} catch (final DatabindingFailedException ex) {
-								reportService
-									.report(new EMFFormsSpreadsheetReport(ex, EMFFormsSpreadsheetReport.ERROR));
-							}
-						}
-						return Observables.constantObservableValue(prefixName + "_" + indexDMR.getIndex() //$NON-NLS-1$
-							+ "_" + emfformsLabelProvider.getDisplayName(indexDMR.getTargetDMR()).getValue()); //$NON-NLS-1$
-					}
-					return emfformsLabelProvider.getDisplayName(domainModelReference);
-				}
-
-				@Override
-				public IObservableValue getDescription(VDomainModelReference domainModelReference, EObject rootObject)
-					throws NoLabelFoundException {
-					return emfformsLabelProvider.getDescription(domainModelReference, rootObject);
-				}
-
-				@Override
-				public IObservableValue getDescription(VDomainModelReference domainModelReference)
-					throws NoLabelFoundException {
-					return emfformsLabelProvider.getDescription(domainModelReference);
-				}
-			}, reportService);
+			emfformsLabelProvider, reportService, vtViewTemplateProvider);
 		int numColumns = 0;
 		try {
 			final IObservableList observableList = emfformsDatabinding.getObservableList(
@@ -128,33 +100,107 @@ public class EMFFormsSpreadsheetTableControlRenderer extends EMFFormsAbstractSpr
 
 			final VTableDomainModelReference tableDomainModelReference = (VTableDomainModelReference) vElement
 				.getDomainModelReference();
+
+			final EMFFormsExportTableParent exportTableParent = (EMFFormsExportTableParent) viewModelContext
+				.getContextValue(EMFFormsExportTableParent.EXPORT_TABLE_PARENT);
+
 			for (int i = 0; i < Math.max(observableList.size(), 3); i++) {
+				String prefixName = (String) emfformsLabelProvider.getDisplayName(
+					tableDomainModelReference.getDomainModelReference())
+					.getValue();
+				if (prefixName == null || prefixName.length() == 0) {
+					try {
+						prefixName = EStructuralFeature.class.cast(
+							emfformsDatabinding.getValueProperty(
+								tableDomainModelReference.getDomainModelReference(),
+								viewModelContext.getDomainModel()).getValueType()).getName();
+					} catch (final DatabindingFailedException ex) {
+						reportService
+							.report(new EMFFormsSpreadsheetReport(ex, EMFFormsSpreadsheetReport.ERROR));
+					}
+				}
+
+				final VIndexDomainModelReference indexDMR = VIndexdmrFactory.eINSTANCE
+					.createIndexDomainModelReference();
+				indexDMR.setPrefixDMR(EcoreUtil.copy(tableDomainModelReference.getDomainModelReference()));
+				indexDMR.setIndex(i);
+
+				EMFFormsExportTableParent tableParent;
+				if (exportTableParent == null) {
+					tableParent = new EMFFormsExportTableParent(indexDMR, indexDMR,
+						prefixName);
+				} else {
+					final VIndexDomainModelReference wrapper = exportTableParent.getIndexDMRToExtend();
+					wrapper.setTargetDMR(indexDMR);
+					tableParent = new EMFFormsExportTableParent(indexDMR, exportTableParent.getIndexDMRToResolve(),
+						exportTableParent.getLabelPrefix()
+							+ "_" + prefixName); //$NON-NLS-1$
+				}
 				for (final VDomainModelReference domainModelReference : tableDomainModelReference
 					.getColumnDomainModelReferences()) {
-					final VIndexDomainModelReference indexDMR = VIndexdmrFactory.eINSTANCE
-						.createIndexDomainModelReference();
-					indexDMR.setPrefixDMR(EcoreUtil.copy(tableDomainModelReference.getDomainModelReference()));
-					indexDMR.setIndex(i);
-					indexDMR.setTargetDMR(EcoreUtil.copy(domainModelReference));
 
 					final VControl vControl = VViewFactory.eINSTANCE.createControl();
-					vControl.setDomainModelReference(indexDMR);
 
-					numColumns += controlRenderer.render(workbook, vControl, viewModelContext,
+					vControl.setDomainModelReference(EcoreUtil.copy(domainModelReference));
+					// if (exportTableParent != null) {
+					// indexDMR.setTargetDMR(EcoreUtil.copy(domainModelReference));
+					// vControl.setDomainModelReference(EcoreUtil.copy(indexDMR));
+					// }
+					final ViewModelContext subViewModelContext = new EMFFormsSpreadsheetViewModelContext(
+						(VView) viewModelContext.getViewModel(),
+						viewModelContext.getDomainModel());
+					subViewModelContext.putContextValue(EMFFormsExportTableParent.EXPORT_TABLE_PARENT, tableParent);
+
+					numColumns += controlRenderer.render(workbook, vControl, subViewModelContext,
 						new EMFFormsSpreadsheetRenderTarget(
 							eMFFormsSpreadsheetRenderTarget.getSheetName(), eMFFormsSpreadsheetRenderTarget.getRow(),
 							eMFFormsSpreadsheetRenderTarget.getColumn()
 								+ numColumns));
 				}
-			}
-			if (vElement.getDetailEditing() != DetailEditing.NONE) {
-				reportService.report(new EMFFormsSpreadsheetReport(
-					"The fields defined in the detail were not rendered!", EMFFormsSpreadsheetReport.WARNING)); //$NON-NLS-1$
+
+				if (vElement.getDetailEditing() != DetailEditing.NONE) {
+					EObject tableEntry;
+					if (observableList.size() > i) {
+						tableEntry = (EObject) observableList.get(i);
+					} else {
+						tableEntry = EcoreUtil.create(EReference.class.cast(observableList.getElementType())
+							.getEReferenceType());
+					}
+					final VView viewModel = getView(vElement, tableEntry);
+
+					final ViewModelContext subViewModelContext = new EMFFormsSpreadsheetViewModelContext(viewModel,
+						viewModelContext.getDomainModel());
+
+					subViewModelContext.putContextValue(EMFFormsExportTableParent.EXPORT_TABLE_PARENT, tableParent);
+					try {
+						final EMFFormsAbstractSpreadsheetRenderer<VElement> renderer = rendererFactory
+							.getRendererInstance(viewModel, subViewModelContext);
+						final int renderedColumns = renderer.render(workbook,
+							viewModel, subViewModelContext, new EMFFormsSpreadsheetRenderTarget(
+								eMFFormsSpreadsheetRenderTarget.getSheetName(),
+								eMFFormsSpreadsheetRenderTarget.getRow(), eMFFormsSpreadsheetRenderTarget.getColumn()
+									+ numColumns));
+
+						numColumns += renderedColumns;
+					} catch (final EMFFormsNoRendererException ex) {
+						reportService.report(new EMFFormsSpreadsheetReport(ex, EMFFormsSpreadsheetReport.ERROR));
+					}
+				}
 			}
 
 		} catch (final DatabindingFailedException ex) {
 			reportService.report(new EMFFormsSpreadsheetReport(ex, EMFFormsSpreadsheetReport.ERROR));
+		} catch (final NoLabelFoundException ex) {
+			reportService.report(new EMFFormsSpreadsheetReport(ex, EMFFormsSpreadsheetReport.ERROR));
 		}
 		return numColumns;
+	}
+
+	private VView getView(VTableControl tableControl, EObject domainObject) throws DatabindingFailedException {
+		VView detailView = tableControl.getDetailView();
+		if (detailView == null) {
+			detailView = ViewProviderHelper.getView(domainObject, Collections.<String, Object> emptyMap());
+		}
+		return detailView;
 	}
 }

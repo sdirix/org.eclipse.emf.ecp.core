@@ -11,6 +11,8 @@
  ******************************************************************************/
 package org.eclipse.emfforms.internal.spreadsheet.core;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
@@ -35,6 +37,7 @@ public class EMFFormsSpreadsheetViewModelContext implements ViewModelContext {
 
 	private final VView view;
 	private final EObject domainModel;
+	private final Map<String, Object> contextValues = new LinkedHashMap<String, Object>();
 
 	/**
 	 * Default Constructor.
@@ -165,7 +168,7 @@ public class EMFFormsSpreadsheetViewModelContext implements ViewModelContext {
 	 */
 	@Override
 	public Object getContextValue(String key) {
-		return null;
+		return contextValues.get(key);
 	}
 
 	/**
@@ -175,7 +178,7 @@ public class EMFFormsSpreadsheetViewModelContext implements ViewModelContext {
 	 */
 	@Override
 	public void putContextValue(String key, Object value) {
-		// intentionally left empty
+		contextValues.put(key, value);
 	}
 
 	/**
