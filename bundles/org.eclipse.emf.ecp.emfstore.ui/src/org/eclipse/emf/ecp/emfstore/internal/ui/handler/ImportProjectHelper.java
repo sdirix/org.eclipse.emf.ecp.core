@@ -114,6 +114,9 @@ public final class ImportProjectHelper {
 		final ECPFileDialogHelper fileDialogHelper = bundleContext.getService(serviceReference);
 		final String result = fileDialogHelper.getPathForImport(shell);
 		bundleContext.ungetService(serviceReference);
+		if (result == null) {
+			return null;
+		}
 		return new File(result);
 	}
 
