@@ -164,7 +164,7 @@ public class StackItemViewService implements ViewModelService {
 					}
 				} else {
 					if (EcorePackage.eINSTANCE.getEEnum().isInstance(domainModelEFeature.getEType())) {
-						if (item.getValue().equals(Enumerator.class.cast(currentValue).getLiteral())) {
+						if (Enumerator.class.cast(currentValue).getLiteral().equals(item.getValue())) {
 							stack.setTopElement(item);
 							topElementSet = true;
 							break;
