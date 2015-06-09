@@ -15,7 +15,6 @@ import java.util.Collection;
 
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
-import org.eclipse.emf.ecp.view.spi.swt.AbstractAdditionalSWTRenderer;
 
 /**
  * The EMFFormsAdditionalRendererService encapsulates the tester and the access to the

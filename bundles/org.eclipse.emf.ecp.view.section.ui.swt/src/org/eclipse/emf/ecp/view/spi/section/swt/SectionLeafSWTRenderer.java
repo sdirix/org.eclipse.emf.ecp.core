@@ -15,9 +15,9 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.section.model.VSection;
 import org.eclipse.emf.ecp.view.spi.section.model.VSectionedArea;
-import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
-import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
 import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
+import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
@@ -47,9 +47,11 @@ public class SectionLeafSWTRenderer extends AbstractSectionSWTRenderer {
 	@Override
 	public SWTGridDescription getGridDescription(
 		SWTGridDescription gridDescription) {
+		/* +1 because of label */
+		final int columns = getVElement().getChildren().size() + 1;
 		if (rendererGridDescription == null) {
 			rendererGridDescription = GridDescriptionFactory.INSTANCE
-				.createSimpleGrid(1, 4, this);
+				.createSimpleGrid(1, columns, this);
 		}
 		return rendererGridDescription;
 	}

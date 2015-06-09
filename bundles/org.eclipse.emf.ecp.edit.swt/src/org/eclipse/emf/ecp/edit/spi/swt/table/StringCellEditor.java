@@ -153,4 +153,15 @@ public class StringCellEditor extends TextCellEditor implements ECPCellEditor {
 		return null;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getMinWidth()
+	 * @since 1.6
+	 */
+	@Override
+	public int getMinWidth() {
+		return 0;
+	}
+
 }

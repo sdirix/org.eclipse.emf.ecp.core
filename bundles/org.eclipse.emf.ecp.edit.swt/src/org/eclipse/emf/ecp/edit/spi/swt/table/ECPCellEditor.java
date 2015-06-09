@@ -100,4 +100,12 @@ public interface ECPCellEditor {
 	 * @param editable <code>true</code> if editable, <code>false</code> otherwise
 	 */
 	void setEditable(boolean editable);
+
+	/**
+	 * Returns the minimum width of the cell editor.
+	 *
+	 * @return the minimum width
+	 * @since 1.6
+	 */
+	int getMinWidth();
 }

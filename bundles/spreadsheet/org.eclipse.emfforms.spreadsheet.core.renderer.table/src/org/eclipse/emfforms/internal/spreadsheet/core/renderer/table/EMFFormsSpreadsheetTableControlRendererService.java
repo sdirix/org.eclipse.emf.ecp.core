@@ -14,12 +14,18 @@ package org.eclipse.emfforms.internal.spreadsheet.core.renderer.table;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
+import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsAbstractSpreadsheetRenderer;
+import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetRendererFactory;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetRendererService;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -34,6 +40,18 @@ public class EMFFormsSpreadsheetTableControlRendererService implements
 	private EMFFormsDatabinding emfformsDatabinding;
 	private EMFFormsLabelProvider emfformsLabelProvider;
 	private ReportService reportService;
+	private EMFFormsSpreadsheetRendererFactory emfformsSpreadsheetRendererFactory;
+	private VTViewTemplateProvider vtViewTemplateProvider;
+
+	/**
+	 * The VTViewTemplateProvider to use.
+	 *
+	 * @param vtViewTemplateProvider the VTViewTemplateProvider to set
+	 */
+	@Reference
+	protected void setVTViewTemplateProvider(VTViewTemplateProvider vtViewTemplateProvider) {
+		this.vtViewTemplateProvider = vtViewTemplateProvider;
+	}
 
 	/**
 	 * The ReportService to use.
@@ -65,6 +83,31 @@ public class EMFFormsSpreadsheetTableControlRendererService implements
 		this.emfformsLabelProvider = emfformsLabelProvider;
 	}
 
+	private ServiceReference<EMFFormsSpreadsheetRendererFactory> serviceReference;
+
+	/**
+	 * The activate method.
+	 *
+	 * @param bundleContext The BundleContext
+	 */
+	@Activate
+	public void activate(BundleContext bundleContext) {
+		serviceReference = bundleContext
+			.getServiceReference(EMFFormsSpreadsheetRendererFactory.class);
+		emfformsSpreadsheetRendererFactory = bundleContext
+			.getService(serviceReference);
+	}
+
+	/**
+	 * The deactivate method.
+	 *
+	 * @param bundleContext The BundleContext
+	 */
+	@Deactivate
+	public void deactivate(BundleContext bundleContext) {
+		bundleContext.ungetService(serviceReference);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 *
@@ -89,7 +132,8 @@ public class EMFFormsSpreadsheetTableControlRendererService implements
 	@Override
 	public EMFFormsAbstractSpreadsheetRenderer<VTableControl> getRendererInstance(
 		VTableControl vElement, ViewModelContext viewModelContext) {
-		return new EMFFormsSpreadsheetTableControlRenderer(emfformsDatabinding, emfformsLabelProvider, reportService);
+		return new EMFFormsSpreadsheetTableControlRenderer(emfformsDatabinding, emfformsLabelProvider, reportService,
+			emfformsSpreadsheetRendererFactory, vtViewTemplateProvider);
 	}
 
 }

@@ -85,7 +85,10 @@ public final class EMFStoreProvider extends DefaultProvider {
 
 	/**
 	 * EMFStore Provider Singleton.
+	 *
+	 * @deprecated use ECPUtil.getECPProviderRegistry().getProvider(EMFStoreProvider.NAME) instead
 	 */
+	@Deprecated
 	public static EMFStoreProvider INSTANCE;
 
 	/**

@@ -47,8 +47,8 @@ import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
-import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetReport;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsIdProvider;
+import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetReport;
 import org.eclipse.emfforms.spi.spreadsheet.core.importer.EMFFormsSpreadsheetImporter;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
@@ -95,11 +95,12 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 
 	private Collection<EObject> readData(Workbook workbook, EClass eClass) {
 		final ResourceSet rs = new ResourceSetImpl();
-		final Resource resource = rs.createResource(URI.createURI("VIRTAUAL_URI")); //$NON-NLS-1$
 		final AdapterFactoryEditingDomain domain = new AdapterFactoryEditingDomain(
 			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE),
 			new BasicCommandStack(), rs);
 		rs.eAdapters().add(new AdapterFactoryEditingDomain.EditingDomainProvider(domain));
+		final Resource resource = rs.createResource(URI.createURI("VIRTUAL_URI")); //$NON-NLS-1$
+
 		final List<EObject> result = new ArrayList<EObject>();
 
 		final Map<String, Map<Integer, Integer>> mapIdToSheetIdWithRowId = parseIds(workbook);
@@ -107,7 +108,7 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 			for (int sheetId = 0; sheetId < workbook.getNumberOfSheets(); sheetId++) {
 				final Sheet sheet = workbook.getSheetAt(sheetId);
 				final Row labelRow = sheet.getRow(0);
-				for (int rowId = 1; rowId < sheet.getPhysicalNumberOfRows(); rowId++) {
+				for (int rowId = 3; rowId <= sheet.getLastRowNum(); rowId++) {
 					final Row row = sheet.getRow(rowId);
 					final EObject eObject = EcoreUtil.create(eClass);
 					resource.getContents().add(eObject);
@@ -149,11 +150,16 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 			final VDomainModelReference dmr = deserializeDMR(serializedDMR);
 			try {
 				final IObservableValue observableValue = getObservableValue(dmr, eObject);
+				resolveDMR(dmr, eObject);
 				observableValue.setValue(getValue(value, observableValue.getValueType()));
 			} catch (final DatabindingFailedException ex) {
 				reportService.report(new EMFFormsSpreadsheetReport(ex, EMFFormsSpreadsheetReport.ERROR));
 			}
 		}
+	}
+
+	private void resolveDMR(VDomainModelReference dmr, EObject eObject) {
+		dmr.init(eObject);
 	}
 
 	private Map<String, Map<Integer, Integer>> parseIds(Workbook workbook) {
@@ -165,7 +171,7 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 			if (!EMFFormsIdProvider.ID_COLUMN.equals(labelRow.getCell(0).getStringCellValue())) {
 				return null;
 			}
-			for (int rowId = 1; rowId < sheet.getPhysicalNumberOfRows(); rowId++) {
+			for (int rowId = 3; rowId <= sheet.getLastRowNum(); rowId++) {
 				final Row row = sheet.getRow(rowId);
 				final String eObjectId = row.getCell(0).getStringCellValue();
 				if (!result.containsKey(eObjectId)) {

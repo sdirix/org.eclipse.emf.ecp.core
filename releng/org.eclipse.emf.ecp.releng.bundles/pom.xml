@@ -261,6 +261,7 @@
 		<module>../../bundles/org.eclipse.emfforms.core.services.editsupport</module>
 		<module>../../bundles/org.eclipse.emfforms.swt.core</module>
 		<module>../../bundles/org.eclipse.emfforms.swt.core.di</module>
+		<module>../../bundles/org.eclipse.emfforms.swt.core.di.extension</module>
 		<module>../../bundles/org.eclipse.emfforms.swt.core.plugin</module>
 		<module>../../bundles/org.eclipse.emfforms.core.services</module>
 		<module>../../bundles/org.eclipse.emfforms.core.services.emf</module>
@@ -270,6 +271,11 @@
 		<module>../../bundles/org.eclipse.emfforms.localization</module>
 		<module>../../bundles/org.eclipse.emfforms.view.model.localization</module>
 		
+		<module>../../bundles/org.eclipse.emfforms.swt.control.text.autocomplete</module>
+		
+		<!-- Annotation attachement -->
+		<module>../../bundles/org.eclipse.emfforms.view.annotation.model</module>
+		<module>../../bundles/org.eclipse.emfforms.view.annotation.model.edit</module>
 	</modules>
 
 	<build>

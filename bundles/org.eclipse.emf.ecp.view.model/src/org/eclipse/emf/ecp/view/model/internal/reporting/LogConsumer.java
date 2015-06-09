@@ -11,7 +11,9 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.model.internal.reporting;
 
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.ecp.view.spi.model.impl.Activator;
+import org.eclipse.emf.ecp.view.spi.model.util.ViewModelUtil;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportServiceConsumer;
 
@@ -30,7 +32,9 @@ public class LogConsumer implements ReportServiceConsumer {
 	 */
 	@Override
 	public void reported(AbstractReport reportEntity) {
-		Activator.log(reportEntity);
+		if (reportEntity.getSeverity() > IStatus.INFO || ViewModelUtil.isDebugMode()) {
+			Activator.log(reportEntity);
+		}
 	}
 
 }

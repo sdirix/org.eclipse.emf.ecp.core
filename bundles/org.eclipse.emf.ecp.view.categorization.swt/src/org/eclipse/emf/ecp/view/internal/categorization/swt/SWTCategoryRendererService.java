@@ -15,7 +15,7 @@ import org.eclipse.emf.ecp.view.spi.categorization.model.VCategory;
 import org.eclipse.emf.ecp.view.spi.categorization.swt.SWTCategoryRenderer;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
-import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
+import org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer;
 import org.eclipse.emfforms.spi.swt.core.di.EMFFormsDIRendererService;
 
 /**

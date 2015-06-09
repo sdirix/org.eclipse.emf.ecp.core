@@ -24,13 +24,13 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.section.model.VSection;
 import org.eclipse.emf.ecp.view.spi.section.model.VSectionPackage;
 import org.eclipse.emf.ecp.view.spi.section.model.VSectionedArea;
-import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
-import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
-import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
-import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
 import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsNoRendererException;
+import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
+import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
+import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
@@ -87,19 +87,12 @@ public class SectionNodeSWTRenderer extends AbstractSectionSWTRenderer {
 	@Override
 	public SWTGridDescription getGridDescription(
 		SWTGridDescription gridDescription) {
-		childRenderers = new LinkedHashSet<AbstractSectionSWTRenderer>();
+
 		rendererGridDescription = new SWTGridDescription();
-		rendererGridDescription.setColumns(4);
-		final List<SWTGridCell> gridCells = new ArrayList<SWTGridCell>();
+		childRenderers = new LinkedHashSet<AbstractSectionSWTRenderer>();
 
-		/* add self */
-		gridCells.add(createGridCell(0, 0, this));
-		gridCells.add(createGridCell(0, 1, this));
-		gridCells.add(createGridCell(0, 2, this));
-		gridCells.add(createGridCell(0, 3, this));
-
-		/* add children */
-		int row = 1;
+		/* get griddescriptions from child sections */
+		final List<SWTGridDescription> childGridDescriptions = new ArrayList<SWTGridDescription>();
 		for (final VSection item : getVElement().getChildItems()) {
 			AbstractSWTRenderer<?> itemRenderer;
 			try {
@@ -113,17 +106,104 @@ public class SectionNodeSWTRenderer extends AbstractSectionSWTRenderer {
 				.getGridDescription(GridDescriptionFactory.INSTANCE
 					.createEmptyGridDescription());
 			childRenderers.add((AbstractSectionSWTRenderer) itemRenderer);
-
-			final int itemRows = itemGridDescription.getRows();
-			for (final SWTGridCell itemCell : itemGridDescription.getGrid()) {
-				gridCells.add(createGridCell(itemCell.getRow() + row,
-					itemCell.getColumn(), itemCell.getRenderer()));
-			}
-			row = row + itemRows;
+			childGridDescriptions.add(itemGridDescription);
 		}
 
+		/* compute required column count based on self and children */
+		final int selfColumns = 1 + getVElement().getChildren().size();
+		int columns = selfColumns;
+		for (final SWTGridDescription childGridDescription : childGridDescriptions) {
+			columns = childGridDescription.getColumns() > columns ? childGridDescription.getColumns() : columns;
+		}
+
+		/* create grid description for this renderer */
+		rendererGridDescription.setColumns(columns);
+		final List<SWTGridCell> gridCells = new ArrayList<SWTGridCell>();
+		int emptyCellColumnIndicator = -1;
+
+		/* add self */
+		int row = 0;
+
+		/* label */
+		int curSelfColumn = 0;
+		gridCells.add(createGridCell(row, curSelfColumn++, this));
+		/* empty columns */
+		final int emptyColumns = columns - selfColumns;
+		for (int i = 0; i < emptyColumns; i++) {
+			gridCells.add(createGridCell(row, emptyCellColumnIndicator--, this));
+		}
+		/* regular columns */
+		for (int columnToAdd = 0; columnToAdd < getVElement().getChildren().size(); columnToAdd++) {
+			gridCells.add(createGridCell(row, curSelfColumn++, this));
+		}
+		row += 1;
+
+		/* add children */
+		for (final SWTGridDescription childGridDescription : childGridDescriptions) {
+			final SWTGridCell[][] sortedChildGridCells = getArrangedChildGridCells(childGridDescription, columns);
+			for (final SWTGridCell[] rowGridCells : sortedChildGridCells) {
+				/* There is always at least one column (index) */
+				final int currentRow = rowGridCells[0].getRow() + row;
+				final AbstractSWTRenderer<?> renderer = rowGridCells[0].getRenderer();
+				for (int i = 0; i < rowGridCells.length; i++) {
+					final SWTGridCell swtGridCell = rowGridCells[i];
+					if (swtGridCell != null) {
+						gridCells.add(
+							createGridCell(
+								currentRow,
+								swtGridCell.getColumn(),
+								swtGridCell.getRenderer()));
+					} else {
+						/* create empty column */
+						gridCells.add(createGridCell(currentRow, emptyCellColumnIndicator--, renderer));
+					}
+				}
+			}
+			row += childGridDescription.getRows();
+		}
+
+		rendererGridDescription.setRows(row);
 		rendererGridDescription.setGrid(gridCells);
 		return rendererGridDescription;
+	}
+
+	private SWTGridCell[][] getArrangedChildGridCells(SWTGridDescription childGridDescription, int columns) {
+		final SWTGridCell[][] result = new SWTGridCell[childGridDescription.getRows()][columns];
+		for (final SWTGridCell swtGridCell : childGridDescription.getGrid()) {
+			if (swtGridCell.getColumn() < 0) {
+				continue;
+			}
+			result[swtGridCell.getRow()][swtGridCell.getColumn()] = swtGridCell;
+		}
+		for (final SWTGridCell[] columnArray : result) {
+			shiftElementsToEndOfArrayButFirstElement(columnArray);
+		}
+		return result;
+	}
+
+	private static void shiftElementsToEndOfArrayButFirstElement(SWTGridCell[] columnArray) {
+		final int length = columnArray.length;
+		for (int i = length - 1; i >= 0; i--) {
+			if (columnArray[i] == null) {
+				final int index = getIndexToMove(columnArray, i);
+				if (index == -1) {
+					return;
+				}
+				columnArray[i] = columnArray[index];
+				columnArray[index] = null;
+			} else {
+				return;
+			}
+		}
+	}
+
+	private static int getIndexToMove(SWTGridCell[] columnArray, int index) {
+		for (int i = index - 1; i > 0; i--) {
+			if (columnArray[i] != null) {
+				return i;
+			}
+		}
+		return -1;
 	}
 
 	private SWTGridCell createGridCell(int row, int column,
@@ -197,7 +277,7 @@ public class SectionNodeSWTRenderer extends AbstractSectionSWTRenderer {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#applyEnable()
+	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#applyEnable()
 	 */
 	@Override
 	protected void applyEnable() {

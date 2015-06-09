@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -18,7 +18,6 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.impl.DynamicEObjectImpl;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.ecp.edit.internal.swt.reference.ReferenceMessageKeys;
 import org.eclipse.emf.ecp.edit.spi.ReferenceService;
@@ -76,10 +75,7 @@ public class DeleteReferenceAction extends ECPSWTAction {
 	@Override
 	public void run() {
 		super.run();
-		// TODO: Reactivate
-		if (DynamicEObjectImpl.class.isInstance(getSetting().getEObject())) {
-			return;
-		}
+
 		final EReference reference = (EReference) getSetting().getEStructuralFeature();
 
 		if (reference.isContainment()) // &&

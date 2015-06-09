@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.emf.ecp.edit.swt" version="2">
     <resource path="META-INF/MANIFEST.MF">
-        <filter comment="SPI Changes for 1.6" id="0"/>
         <filter comment="SPI change" id="923795461">
             <message_arguments>
                 <message_argument value="1.2.0"/>
@@ -55,10 +54,13 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/emf/ecp/edit/spi/swt/table/ECPCellEditor.java">
-        <filter comment="SPI Changes for 1.6" id="0"/>
-    </resource>
     <resource path="src/org/eclipse/emf/ecp/edit/spi/swt/table/ECPCellEditor.java" type="org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor">
+        <filter comment="SPI change" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor"/>
+                <message_argument value="getMinWidth()"/>
+            </message_arguments>
+        </filter>
         <filter comment="SPI Changes for 1.6" id="403804204">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor"/>

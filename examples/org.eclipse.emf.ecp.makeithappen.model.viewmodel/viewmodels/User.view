@@ -57,7 +57,7 @@
       </children>
     </children>
   </children>
-  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" name="%Control_tasks">
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" name="Control_tasks">
     <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference">
       <domainModelEFeature xsi:type="ecore:EReference" href="http://eclipse/org/emf/ecp/makeithappen/model/task#//User/tasks"/>
     </domainModelReference>

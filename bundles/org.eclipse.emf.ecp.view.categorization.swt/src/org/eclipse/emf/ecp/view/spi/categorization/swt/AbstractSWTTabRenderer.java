@@ -25,19 +25,20 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.model.reporting.StatusReport;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
-import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
-import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
-import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsNoRendererException;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
+import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
+import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
+import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
@@ -84,6 +85,7 @@ public abstract class AbstractSWTTabRenderer<VELEMENT extends VElement> extends 
 		final EList<VAbstractCategorization> categorizations = getCategorizations();
 		for (final VAbstractCategorization categorization : categorizations) {
 			final CTabItem item = new CTabItem(folder, SWT.NULL);
+			final ScrolledComposite scrolledComposite = new ScrolledComposite(folder, SWT.V_SCROLL | SWT.H_SCROLL);
 
 			final IObservableValue modelValue = EMFEditObservables.observeValue(
 				AdapterFactoryEditingDomain.getEditingDomainFor(categorization), categorization,
@@ -105,10 +107,15 @@ public abstract class AbstractSWTTabRenderer<VELEMENT extends VElement> extends 
 			final SWTGridDescription gridDescription = renderer.getGridDescription(GridDescriptionFactory.INSTANCE
 				.createEmptyGridDescription());
 			for (final SWTGridCell gridCell : gridDescription.getGrid()) {
-				final Control render = renderer.render(gridCell, folder);
+				final Control render = renderer.render(gridCell, scrolledComposite);
 				GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true)
 					.applyTo(render);
-				item.setControl(render);
+				scrolledComposite.setExpandHorizontal(true);
+				scrolledComposite.setExpandVertical(true);
+				scrolledComposite.setContent(render);
+				scrolledComposite.setMinSize(render.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+
+				item.setControl(scrolledComposite);
 			}
 
 		}
@@ -128,7 +135,7 @@ public abstract class AbstractSWTTabRenderer<VELEMENT extends VElement> extends 
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#dispose()
+	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#dispose()
 	 */
 	@Override
 	protected void dispose() {

@@ -7,13 +7,20 @@
    </configIni>
 
    <launcherArgs>
-      <programArgs>-consoleLog -debugEMFForms
+      <programArgs>-consoleLog
       </programArgs>
       <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts
       </vmArgsMac>
    </launcherArgs>
 
    <windowImages i16="/org.eclipse.emf.ecp.makeithappen.application.sample.e3/icons/bricks.png"/>
+
+   <launcher>
+      <solaris/>
+      <win useIco="false">
+         <bmp/>
+      </win>
+   </launcher>
 
    <vm>
       <windows include="false">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7</windows>
@@ -27,6 +34,7 @@
       <plugin id="org.apache.batik.css"/>
       <plugin id="org.apache.batik.util"/>
       <plugin id="org.apache.batik.util.gui"/>
+      <plugin id="org.apache.commons.jxpath"/>
       <plugin id="org.eclipse.core.commands"/>
       <plugin id="org.eclipse.core.contenttype"/>
       <plugin id="org.eclipse.core.databinding"/>
@@ -38,8 +46,10 @@
       <plugin id="org.eclipse.e4.core.commands"/>
       <plugin id="org.eclipse.e4.core.contexts"/>
       <plugin id="org.eclipse.e4.core.di"/>
+      <plugin id="org.eclipse.e4.core.di.annotations"/>
       <plugin id="org.eclipse.e4.core.di.extensions"/>
       <plugin id="org.eclipse.e4.core.services"/>
+      <plugin id="org.eclipse.e4.emf.xpath"/>
       <plugin id="org.eclipse.e4.ui.bindings"/>
       <plugin id="org.eclipse.e4.ui.css.core"/>
       <plugin id="org.eclipse.e4.ui.css.swt"/>
@@ -117,6 +127,7 @@
       <plugin id="org.eclipse.emfforms.core.services.locale.default"/>
       <plugin id="org.eclipse.emfforms.localization"/>
       <plugin id="org.eclipse.emfforms.swt.core"/>
+      <plugin id="org.eclipse.emfforms.swt.core.di"/>
       <plugin id="org.eclipse.emfforms.swt.core.plugin"/>
       <plugin id="org.eclipse.emfforms.view.model.localization"/>
       <plugin id="org.eclipse.equinox.app"/>

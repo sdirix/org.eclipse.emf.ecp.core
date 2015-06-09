@@ -60,15 +60,16 @@ import org.eclipse.emf.ecp.view.spi.model.reporting.StatusReport;
 import org.eclipse.emf.ecp.view.spi.provider.ECPTooltipModifierHelper;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
-import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
-import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
 import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
 import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
+import org.eclipse.emf.ecp.view.template.style.background.model.VTBackgroundFactory;
+import org.eclipse.emf.ecp.view.template.style.background.model.VTBackgroundStyleProperty;
+import org.eclipse.emf.ecp.view.template.style.fontProperties.model.VTFontPropertiesFactory;
+import org.eclipse.emf.ecp.view.template.style.fontProperties.model.VTFontPropertiesStyleProperty;
 import org.eclipse.emf.ecp.view.template.style.tableValidation.model.VTTableValidationFactory;
 import org.eclipse.emf.ecp.view.template.style.tableValidation.model.VTTableValidationStyleProperty;
 import org.eclipse.emf.edit.command.AddCommand;
@@ -82,6 +83,9 @@ import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
 import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
+import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
+import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
+import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.databinding.viewers.ObservableMapCellLabelProvider;
@@ -94,6 +98,7 @@ import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.CellLabelProvider;
+import org.eclipse.jface.viewers.ColumnPixelData;
 import org.eclipse.jface.viewers.ColumnViewer;
 import org.eclipse.jface.viewers.ColumnViewerEditor;
 import org.eclipse.jface.viewers.ColumnViewerEditorActivationEvent;
@@ -142,6 +147,11 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	private static final String ICON_ADD = "icons/add.png"; //$NON-NLS-1$
 	private static final String ICON_DELETE = "icons/delete.png"; //$NON-NLS-1$
 
+	private static final String RESIZABLE = "resizable"; //$NON-NLS-1$
+	private static final String WEIGHT = "weight"; //$NON-NLS-1$
+	private static final String MIN_WIDTH = "min_width"; //$NON-NLS-1$
+	private static final String WIDTH = "width"; //$NON-NLS-1$
+
 	private TableViewer tableViewer;
 
 	private Label validationIcon;
@@ -178,7 +188,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#getGridDescription(SWTGridDescription)
+	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#getGridDescription(SWTGridDescription)
 	 */
 	@Override
 	public SWTGridDescription getGridDescription(SWTGridDescription gridDescription) {
@@ -191,7 +201,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#renderControl(int, org.eclipse.swt.widgets.Composite,
+	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#renderControl(int, org.eclipse.swt.widgets.Composite,
 	 *      org.eclipse.emf.ecp.view.spi.model.VElement, org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
 	@Override
@@ -397,6 +407,18 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		tableViewer.getTable().setHeaderVisible(true);
 		tableViewer.getTable().setLinesVisible(true);
 
+		/* Set background color */
+		final VTBackgroundStyleProperty backgroundStyleProperty = getBackgroundStyleProperty();
+		if (backgroundStyleProperty.getColor() != null) {
+			tableViewer.getTable().setBackground(getSWTColor(backgroundStyleProperty.getColor()));
+		}
+
+		/* Set foreground color */
+		final VTFontPropertiesStyleProperty fontPropertiesStyleProperty = getFontPropertiesStyleProperty();
+		if (fontPropertiesStyleProperty.getColorHEX() != null) {
+			tableViewer.getTable().setForeground(getSWTColor(fontPropertiesStyleProperty.getColorHEX()));
+		}
+
 		final TableViewerFocusCellManager focusCellManager = new TableViewerFocusCellManager(tableViewer,
 			new ECPFocusCellDrawHighlighter(tableViewer));
 		final ColumnViewerEditorActivationStrategy actSupport = new ColumnViewerEditorActivationStrategy(tableViewer) {
@@ -451,15 +473,22 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			final EMFFormsLabelProvider labelService = getEMFFormsLabelProvider();
 
 			final CellEditor cellEditor = createCellEditor(tempInstance, eStructuralFeature, tableViewer.getTable());
-			final TableViewerColumn column = TableViewerColumnBuilder
+
+			final TableViewerColumnBuilder columnBuilder = TableViewerColumnBuilder
 				.create()
-				.setResizable(true)
+				.setData(RESIZABLE, true)
 				.setMoveable(false)
-				.setStyle(SWT.NONE)
-				.setData("width", //$NON-NLS-1$
-					ECPCellEditor.class.isInstance(cellEditor) ? ECPCellEditor.class.cast(cellEditor)
-						.getColumnWidthWeight() : 100)
-				.build(tableViewer);
+				.setStyle(SWT.NONE);
+			if (ECPCellEditor.class.isInstance(cellEditor)) {
+				columnBuilder.setData(WEIGHT, ECPCellEditor.class.cast(cellEditor).getColumnWidthWeight());
+				columnBuilder.setData(MIN_WIDTH, ECPCellEditor.class.cast(cellEditor).getMinWidth());
+			} else {
+				columnBuilder.setData(WEIGHT, 100);
+				columnBuilder.setData(MIN_WIDTH, 0);
+			}
+
+			final TableViewerColumn column = columnBuilder.build(tableViewer);
+
 			try {
 				final IObservableValue text = labelService.getDisplayName(dmr);
 				viewModelDBC.bindValue(SWTObservables.observeText(column.getColumn()), text);
@@ -473,7 +502,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			}
 			final IObservableMap observableMap = valueProperty.observeDetail(cp.getKnownElements());
 			column.setLabelProvider(new ECPCellLabelProvider(eStructuralFeature, cellEditor, observableMap,
-				getVElement(), dmr));
+				getVElement(), dmr, tableViewer.getTable()));
 			column.getColumn().addSelectionListener(
 				getSelectionAdapter(tableViewer, comparator, column.getColumn(), columnNumber));
 
@@ -502,9 +531,19 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		final TableColumnLayout layout = new TableColumnLayout();
 		composite.setLayout(layout);
 		for (int i = 0; i < tableViewer.getTable().getColumns().length; i++) {
-			final Integer storedValue = (Integer) tableViewer.getTable().getColumns()[i].getData("width"); //$NON-NLS-1$
-			layout.setColumnData(tableViewer.getTable().getColumns()[i], new ColumnWeightData(storedValue == null ? 50
-				: storedValue));
+			final TableColumn tableColumn = tableViewer.getTable().getColumns()[i];
+
+			final boolean storedIsResizable = (Boolean) tableColumn.getData(RESIZABLE);
+
+			final Integer storedWidth = (Integer) tableColumn.getData(WIDTH);
+			if (storedWidth != null) {
+				layout.setColumnData(tableColumn, new ColumnPixelData(storedWidth, storedIsResizable));
+				continue;
+			}
+
+			final Integer storedWeight = (Integer) tableColumn.getData(WEIGHT);
+			final Integer storedMinWidth = (Integer) tableColumn.getData(MIN_WIDTH);
+			layout.setColumnData(tableColumn, new ColumnWeightData(storedWeight, storedMinWidth, storedIsResizable));
 		}
 
 		tableViewer.addSelectionChangedListener(new ISelectionChangedListener() {
@@ -561,7 +600,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		final TableViewerColumn column = TableViewerColumnBuilder.create()
 			.setMoveable(false)
 			.setText(columnName)
-			.setData("width", columnWidth) //$NON-NLS-1$
+			.setData(WIDTH, columnWidth)
+			.setData(RESIZABLE, true)
 			.build(tableViewer);
 
 		if (imagePath != null && !imagePath.isEmpty()) {
@@ -601,18 +641,11 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	}
 
 	private VTTableValidationStyleProperty getTableValidationStyleProperty() {
-		VTTableValidationStyleProperty tableValidationStyleProperties;
-		final Set<VTStyleProperty> styleProperties = getVTViewTemplateProvider()
-			.getStyleProperties(getVElement(), getViewModelContext());
-		for (final VTStyleProperty styleProperty : styleProperties) {
-			if (VTTableValidationStyleProperty.class.isInstance(styleProperty)) {
-				tableValidationStyleProperties = VTTableValidationStyleProperty.class
-					.cast(styleProperty);
-				return tableValidationStyleProperties;
-			}
+		VTTableValidationStyleProperty tableValidationStyleProperties = getStyleProperty(
+			VTTableValidationStyleProperty.class);
+		if (tableValidationStyleProperties == null) {
+			tableValidationStyleProperties = getDefaultTableValidationStyleProperty();
 		}
-
-		tableValidationStyleProperties = getDefaultTableValidationStyleProperty();
 		return tableValidationStyleProperties;
 	}
 
@@ -624,6 +657,60 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			MessageKeys.TableControl_ValidationStatusColumn));
 		tableValidationProp.setImagePath(null);
 		return tableValidationProp;
+	}
+
+	private VTBackgroundStyleProperty getBackgroundStyleProperty() {
+		VTBackgroundStyleProperty styleProperty = getStyleProperty(VTBackgroundStyleProperty.class);
+		if (styleProperty == null) {
+			styleProperty = getDefaultBackgroundStyleProperty();
+		}
+		return styleProperty;
+	}
+
+	private VTBackgroundStyleProperty getDefaultBackgroundStyleProperty() {
+		return VTBackgroundFactory.eINSTANCE.createBackgroundStyleProperty();
+	}
+
+	private VTFontPropertiesStyleProperty getFontPropertiesStyleProperty() {
+		VTFontPropertiesStyleProperty styleProperty = getStyleProperty(VTFontPropertiesStyleProperty.class);
+		if (styleProperty == null) {
+			styleProperty = getDefaultFontPropertiesStyleProperty();
+		}
+		return styleProperty;
+	}
+
+	private VTFontPropertiesStyleProperty getDefaultFontPropertiesStyleProperty() {
+		final VTFontPropertiesStyleProperty property = VTFontPropertiesFactory.eINSTANCE
+			.createFontPropertiesStyleProperty();
+		property.setColorHEX("000000"); //$NON-NLS-1$
+		return property;
+	}
+
+	/**
+	 * Returns a {@link VTStyleProperty} of the given class or <code>null</code> if none was found.
+	 *
+	 * @param stylePropertyClass the style property class
+	 * @return the property or <code>null</code>
+	 */
+	private <SP extends VTStyleProperty> SP getStyleProperty(Class<SP> stylePropertyClass) {
+		final Set<VTStyleProperty> styleProperties = getVTViewTemplateProvider()
+			.getStyleProperties(getVElement(), getViewModelContext());
+		for (final VTStyleProperty styleProperty : styleProperties) {
+			if (stylePropertyClass.isInstance(styleProperty)) {
+				return stylePropertyClass.cast(styleProperty);
+			}
+		}
+		return null;
+	}
+
+	private Color getSWTColor(String colorHex) {
+		final String redString = colorHex.substring(0, 2);
+		final String greenString = colorHex.substring(2, 4);
+		final String blueString = colorHex.substring(4, 6);
+		final int red = Integer.parseInt(redString, 16);
+		final int green = Integer.parseInt(greenString, 16);
+		final int blue = Integer.parseInt(blueString, 16);
+		return new Color(Display.getDefault(), red, green, blue);
 	}
 
 	private CellEditor createCellEditor(final EObject tempInstance, final EStructuralFeature feature, Table table) {
@@ -853,7 +940,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#applyEnable()
+	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#applyEnable()
 	 */
 	@Override
 	protected void applyEnable() {
@@ -868,7 +955,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#applyReadOnly()
+	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#applyReadOnly()
 	 */
 	@Override
 	protected void applyReadOnly() {
@@ -883,7 +970,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#dispose()
+	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#dispose()
 	 */
 	@Override
 	protected void dispose() {
@@ -998,6 +1085,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		private final CellEditor cellEditor;
 		private final VTableControl vTableControl;
 		private final VDomainModelReference dmr;
+		private final Table table;
 
 		/**
 		 * Constructor.
@@ -1010,14 +1098,17 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		 *            an {@link IObservableMap} instance that is passed to the {@link ObservableMapCellLabelProvider}
 		 * @param vTableControl the {@link VTableControl}
 		 * @param dmr the {@link VDomainModelReference} for this cell
+		 * @param table the swt table
+		 * @since 1.6
 		 */
 		public ECPCellLabelProvider(EStructuralFeature feature, CellEditor cellEditor, IObservableMap attributeMap,
-			VTableControl vTableControl, VDomainModelReference dmr) {
+			VTableControl vTableControl, VDomainModelReference dmr, Table table) {
 			super(attributeMap);
 			this.vTableControl = vTableControl;
 			this.feature = feature;
 			this.cellEditor = cellEditor;
 			this.dmr = dmr;
+			this.table = table;
 		}
 
 		/**
@@ -1071,6 +1162,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 				cell.getControl().setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_edit_cellEditor_string"); //$NON-NLS-1$
 			}
 
+			cell.setForeground(getForeground(element));
 			cell.setBackground(getBackground(element));
 		}
 
@@ -1081,7 +1173,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		 */
 		@Override
 		public Color getForeground(Object element) {
-			return null;
+			return table.getForeground();
 		}
 
 		/**
@@ -1246,7 +1338,13 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 			@Override
 			public void afterEditorActivated(ColumnViewerEditorActivationEvent event) {
-				// do nothing
+				// set colors for cell editor
+				final Control control = cellEditor.getControl();
+				if (control == null || control.isDisposed()) {
+					return;
+				}
+				control.setBackground(getViewer().getControl().getBackground());
+				control.setForeground(getViewer().getControl().getForeground());
 			}
 
 			@Override

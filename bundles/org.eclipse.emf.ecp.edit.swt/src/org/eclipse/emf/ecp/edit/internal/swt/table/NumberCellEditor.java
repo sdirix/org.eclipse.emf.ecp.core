@@ -228,7 +228,8 @@ public class NumberCellEditor extends TextCellEditor implements ECPCellEditor {
 				final MessageDialog messageDialog = new MessageDialog(text.getShell(),
 					LocalizationServiceHelper.getString(getClass(), TableMessageKeys.NumberCellEditor_InvalidNumber),
 					null, LocalizationServiceHelper.getString(getClass(),
-						TableMessageKeys.NumberCellEditor_NumberYouEnteredIsInvalid), MessageDialog.ERROR,
+						TableMessageKeys.NumberCellEditor_NumberYouEnteredIsInvalid),
+					MessageDialog.ERROR,
 					new String[] { JFaceResources.getString(IDialogLabelKeys.OK_LABEL_KEY) }, 0);
 
 				new ECPDialogExecutor(messageDialog) {
@@ -297,5 +298,15 @@ public class NumberCellEditor extends TextCellEditor implements ECPCellEditor {
 	@Override
 	public Image getImage(Object value) {
 		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getMinWidth()
+	 */
+	@Override
+	public int getMinWidth() {
+		return 0;
 	}
 }

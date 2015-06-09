@@ -14,6 +14,7 @@ package org.eclipse.emf.ecp.view.spi.swt.layout;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.internal.swt.Activator;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emfforms.spi.swt.core.layout.LayoutProvider;
 
 /**
  * Abstract implementation of a {@link LayoutProvider} which contributes helper methods.

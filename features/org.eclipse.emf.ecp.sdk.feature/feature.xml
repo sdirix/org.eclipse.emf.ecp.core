@@ -23,4 +23,8 @@
          id="org.eclipse.emf.ecp.emfforms.sdk.feature"
          version="0.0.0"/>
 
+   <includes
+         id="org.eclipse.emf.ecp.sdk.e4.feature"
+         version="0.0.0"/>
+
 </feature>

@@ -91,6 +91,10 @@ public class EMFFormsEditSupportImpl implements EMFFormsEditSupport {
 
 		final IItemPropertyDescriptor itemPropertyDescriptor = emfSpecificService.getIItemPropertyDescriptor(value,
 			structuralFeature);
+		if (itemPropertyDescriptor == null) {
+			reportMissingPropertyDescriptor(value, structuralFeature);
+			return false;
+		}
 
 		return itemPropertyDescriptor.isMultiLine(value);
 	}
@@ -122,11 +126,7 @@ public class EMFFormsEditSupportImpl implements EMFFormsEditSupport {
 		final IItemPropertyDescriptor itemPropertyDescriptor = emfSpecificService.getIItemPropertyDescriptor(value,
 			structuralFeature);
 		if (itemPropertyDescriptor == null) {
-			reportService
-				.report(new AbstractReport(
-					String
-						.format(
-							"No IItemPropertyDescriptor for feature %2$s in EClass %1$s found.", value.eClass().getName(), structuralFeature.getName()))); //$NON-NLS-1$
+			reportMissingPropertyDescriptor(value, structuralFeature);
 			return false;
 		}
 		return itemPropertyDescriptor.canSetProperty(value);
@@ -159,6 +159,10 @@ public class EMFFormsEditSupportImpl implements EMFFormsEditSupport {
 
 		final IItemPropertyDescriptor itemPropertyDescriptor = emfSpecificService.getIItemPropertyDescriptor(value,
 			structuralFeature);
+		if (itemPropertyDescriptor == null) {
+			reportMissingPropertyDescriptor(value, structuralFeature);
+			return null;
+		}
 		final IItemLabelProvider labelProvider = itemPropertyDescriptor.getLabelProvider(rootObject);
 
 		return labelProvider.getText(element);
@@ -191,8 +195,21 @@ public class EMFFormsEditSupportImpl implements EMFFormsEditSupport {
 
 		final IItemPropertyDescriptor itemPropertyDescriptor = emfSpecificService.getIItemPropertyDescriptor(value,
 			structuralFeature);
+		if (itemPropertyDescriptor == null) {
+			reportMissingPropertyDescriptor(value, structuralFeature);
+			return null;
+		}
 		final IItemLabelProvider labelProvider = itemPropertyDescriptor.getLabelProvider(rootObject);
 
 		return labelProvider.getImage(element);
+	}
+
+	private void reportMissingPropertyDescriptor(final EObject value, final EStructuralFeature structuralFeature) {
+		reportService
+			.report(new AbstractReport(
+				String
+					.format(
+						"No IItemPropertyDescriptor for feature %2$s in EClass %1$s found.", value.eClass().getName(), //$NON-NLS-1$
+						structuralFeature.getName())));
 	}
 }

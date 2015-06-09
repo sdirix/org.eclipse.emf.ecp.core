@@ -22,11 +22,11 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsAbstractSpreadsheetRenderer;
+import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsNoRendererException;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetExporter;
+import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetRenderTarget;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetRendererFactory;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetReport;
-import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsNoRendererException;
-import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetRenderTarget;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
@@ -67,13 +67,16 @@ public class EMFFormsSpreadsheetExporterImpl implements EMFFormsSpreadsheetExpor
 		final BundleContext bundleContext = FrameworkUtil.getBundle(getClass()).getBundleContext();
 		final ServiceReference<EMFFormsSpreadsheetRendererFactory> serviceReference = bundleContext
 			.getServiceReference(EMFFormsSpreadsheetRendererFactory.class);
-		final EMFFormsSpreadsheetRendererFactory emfFormsSpreadsheetRendererFactory = bundleContext.getService(serviceReference);
+		final EMFFormsSpreadsheetRendererFactory emfFormsSpreadsheetRendererFactory = bundleContext
+			.getService(serviceReference);
 
 		try {
-			final EMFFormsAbstractSpreadsheetRenderer<VElement> renderer = emfFormsSpreadsheetRendererFactory.getRendererInstance(
-				viewModelContext.getViewModel(), viewModelContext);
-			renderer.render(workbook, viewModelContext.getViewModel(), viewModelContext, new EMFFormsSpreadsheetRenderTarget("root", //$NON-NLS-1$
-				1, 0));
+			final EMFFormsAbstractSpreadsheetRenderer<VElement> renderer = emfFormsSpreadsheetRendererFactory
+				.getRendererInstance(
+					viewModelContext.getViewModel(), viewModelContext);
+			renderer.render(workbook, viewModelContext.getViewModel(), viewModelContext,
+				new EMFFormsSpreadsheetRenderTarget("root", //$NON-NLS-1$
+					0, 0));
 		} catch (final EMFFormsNoRendererException ex) {
 			reportService.report(new EMFFormsSpreadsheetReport(ex, EMFFormsSpreadsheetReport.ERROR));
 		}

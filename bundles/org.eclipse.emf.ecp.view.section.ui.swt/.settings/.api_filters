@@ -45,6 +45,12 @@
                 <message_argument value="SectionLeafSWTRenderer()"/>
             </message_arguments>
         </filter>
+        <filter comment="EMFForms 1.6 SPI Change" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.section.swt.SectionLeafSWTRenderer"/>
+                <message_argument value="getGridDescription(SWTGridDescription)"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/emf/ecp/view/spi/section/swt/SectionNodeSWTRenderer.java" type="org.eclipse.emf.ecp.view.spi.section.swt.SectionNodeSWTRenderer">
         <filter comment="SPI Change in 1.6" id="338722907">
@@ -53,12 +59,36 @@
                 <message_argument value="SectionNodeSWTRenderer()"/>
             </message_arguments>
         </filter>
+        <filter comment="EMFForms 1.6 SPI Change" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.section.swt.SectionNodeSWTRenderer"/>
+                <message_argument value="getGridDescription(SWTGridDescription)"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/emf/ecp/view/spi/section/swt/SectionedAreaSWTRenderer.java" type="org.eclipse.emf.ecp.view.spi.section.swt.SectionedAreaSWTRenderer">
         <filter comment="SPI Change in 1.6" id="338722907">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.section.swt.SectionedAreaSWTRenderer"/>
                 <message_argument value="SectionedAreaSWTRenderer()"/>
+            </message_arguments>
+        </filter>
+        <filter comment="EMFForms 1.6 SPI Change" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.section.swt.SectionedAreaSWTRenderer"/>
+                <message_argument value="getGridDescription(SWTGridDescription)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="EMFForms 1.6 SPI Change" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.section.swt.SectionedAreaSWTRenderer"/>
+                <message_argument value="renderControl(SWTGridCell, Composite)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="EMFForms 1.6 SPI Change" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.section.swt.SectionedAreaSWTRenderer"/>
+                <message_argument value="setLayoutDataForControl(SWTGridCell, SWTGridDescription, SWTGridDescription, SWTGridDescription, VElement, Control)"/>
             </message_arguments>
         </filter>
         <filter comment="SPI Change in 1.6" id="421572723">

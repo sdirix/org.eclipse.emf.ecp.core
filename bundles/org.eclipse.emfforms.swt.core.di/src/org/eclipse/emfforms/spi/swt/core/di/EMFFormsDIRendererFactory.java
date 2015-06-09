@@ -18,9 +18,9 @@ import org.eclipse.e4.core.contexts.ContextInjectionFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
-import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererService;
 
 /**
@@ -43,6 +43,15 @@ public class EMFFormsDIRendererFactory implements EMFFormsRendererService<VEleme
 	 */
 	protected void setReportService(ReportService reportService) {
 		this.reportService = reportService;
+	}
+
+	/**
+	 * Returns the {@link ReportService}.
+	 * 
+	 * @return The {@link ReportService}
+	 */
+	protected ReportService getReportService() {
+		return reportService;
 	}
 
 	/**

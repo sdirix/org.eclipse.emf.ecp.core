@@ -16,3 +16,4 @@ Export-Package: org.eclipse.emf.ecp.view.internal.compoundcontrol.swt;
  version="1.6.0";x-internal:=true,org.eclipse.emf.ecp.view.spi.compoun
  dcontrol.swt;version="1.6.0"
 Bundle-Vendor: Eclipse Modeling Project
+Bundle-ActivationPolicy: lazy

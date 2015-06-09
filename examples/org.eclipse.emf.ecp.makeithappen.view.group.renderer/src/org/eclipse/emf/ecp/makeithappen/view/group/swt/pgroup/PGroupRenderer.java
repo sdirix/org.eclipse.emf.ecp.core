@@ -63,8 +63,8 @@ public class PGroupRenderer extends ContainerSWTRenderer<VGroup> {
 	protected Composite getComposite(Composite parent) {
 		parent.setBackgroundMode(SWT.INHERIT_FORCE);
 		final PGroup group = new PGroup(parent, SWT.SMOOTH);
-		if (getVElement().getName() != null) {
-			group.setText(getVElement().getName());
+		if (getVElement().getLabel() != null) {
+			group.setText(getVElement().getLabel());
 		}
 		return group;
 	}

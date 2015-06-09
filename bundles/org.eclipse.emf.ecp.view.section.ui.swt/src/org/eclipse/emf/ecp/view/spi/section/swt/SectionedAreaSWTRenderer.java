@@ -22,16 +22,16 @@ import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.section.model.VSection;
 import org.eclipse.emf.ecp.view.spi.section.model.VSectionedArea;
-import org.eclipse.emf.ecp.view.spi.swt.AbstractAdditionalSWTRenderer;
-import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
-import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.LayoutProviderHelper;
-import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
-import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
 import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.swt.core.AbstractAdditionalSWTRenderer;
+import org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsNoRendererException;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
+import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
+import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
+import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
@@ -137,7 +137,8 @@ public class SectionedAreaSWTRenderer extends
 				// TODO possible layout issues?
 				setLayoutDataForControl(childGridCell, controlGridDescription,
 					gridDescription2, maximalGridDescription, childGridCell
-						.getRenderer().getVElement(), control);
+						.getRenderer().getVElement(),
+					control);
 
 			}
 			for (final SWTGridCell childGridCell : gridDescription2.getGrid()) {
@@ -162,19 +163,14 @@ public class SectionedAreaSWTRenderer extends
 		if (!GridData.class.isInstance(layoutData)) {
 			return;
 		}
-		if (gridCell.getColumn() == 0) {
-			GridData.class.cast(layoutData).widthHint = 300;
-		} else if (gridCell.getColumn() == 1) {
-			GridData.class.cast(layoutData).widthHint = 20;
-		} else if (gridCell.getColumn() == 2) {
-			GridData.class.cast(layoutData).widthHint = 20;
-		} else if (gridCell.getColumn() == 3) {
+		final int lastColumnIndex = fullGridDescription.getColumns() - 1;
+		if (gridCell.getColumn() == lastColumnIndex) {
 			if (SectionLeafSWTRenderer.class.isInstance(gridCell
 				.getRenderer())) {
 				GridData.class.cast(layoutData).grabExcessHorizontalSpace = false;
 				GridData.class.cast(layoutData).horizontalAlignment = SWT.BEGINNING;
 			}
-			GridData.class.cast(layoutData).widthHint = 500;
+			GridData.class.cast(layoutData).widthHint = 250;
 		}
 		control.setLayoutData(layoutData);
 	}
@@ -191,7 +187,7 @@ public class SectionedAreaSWTRenderer extends
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#finalizeRendering(org.eclipse.swt.widgets.Composite)
+	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#finalizeRendering(org.eclipse.swt.widgets.Composite)
 	 */
 	@Override
 	public void finalizeRendering(Composite parent) {
