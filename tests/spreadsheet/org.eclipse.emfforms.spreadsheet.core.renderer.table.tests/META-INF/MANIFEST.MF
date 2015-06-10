@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: EMFForms Excel Table Tests
+Bundle-SymbolicName: org.eclipse.emfforms.spreadsheet.core.renderer.table.tests
+Bundle-Version: 1.0.0.qualifier
+Fragment-Host: org.eclipse.emfforms.spreadsheet.core.renderer.table;bundle-version="[1.0.0,2.0.0)"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-Vendor: Eclipse Modeling Project
+Require-Bundle: org.junit,
+ org.eclipse.emf.ecp.makeithappen.model,
+ org.eclipse.emf.ecp.test.common

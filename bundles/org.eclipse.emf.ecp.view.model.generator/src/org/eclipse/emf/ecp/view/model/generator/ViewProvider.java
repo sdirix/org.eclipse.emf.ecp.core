@@ -62,6 +62,7 @@ public class ViewProvider implements IViewProvider {
 			view.getChildren().add(control);
 		}
 		composedAdapterFactory.dispose();
+		view.setRootEClass(eObject.eClass());
 		return view;
 	}
 

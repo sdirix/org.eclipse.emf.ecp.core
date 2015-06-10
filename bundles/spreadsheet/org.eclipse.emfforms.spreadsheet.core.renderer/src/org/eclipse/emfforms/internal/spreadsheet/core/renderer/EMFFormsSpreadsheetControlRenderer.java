@@ -13,6 +13,7 @@ package org.eclipse.emfforms.internal.spreadsheet.core.renderer;
 
 import java.io.IOException;
 import java.io.StringWriter;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -113,18 +114,11 @@ public class EMFFormsSpreadsheetControlRenderer extends EMFFormsAbstractSpreadsh
 			formatRow = sheet.createRow(2);
 		}
 
-		Row valueRow = sheet.getRow(renderTarget.getRow() + 3);
-		if (valueRow == null) {
-			valueRow = sheet.createRow(renderTarget.getRow() + 3);
-		}
 		final Cell labelCell = labelRow.getCell(renderTarget.getColumn(),
 			Row.CREATE_NULL_AS_BLANK);
 		final Cell descriptionCell = descriptionRow.getCell(renderTarget.getColumn(),
 			Row.CREATE_NULL_AS_BLANK);
 		final Cell formatCell = formatRow.getCell(renderTarget.getColumn(),
-			Row.CREATE_NULL_AS_BLANK);
-
-		final Cell valueCell = valueRow.getCell(renderTarget.getColumn(),
 			Row.CREATE_NULL_AS_BLANK);
 
 		try {
@@ -138,42 +132,61 @@ public class EMFFormsSpreadsheetControlRenderer extends EMFFormsAbstractSpreadsh
 				dmrToResolve = exportTableParent.getIndexDMRToResolve();
 			}
 
-			final IObservableValue displayName = emfformsLabelProvider
-				.getDisplayName(dmrToResolve, viewModelContext.getDomainModel());
-			String labelValue = displayName.getValue().toString();
-			if (exportTableParent != null) {
-				labelValue = exportTableParent.getLabelPrefix() + "_" + labelValue; //$NON-NLS-1$
+			if (labelCell.getCellComment() == null) {
+				IObservableValue displayName;
+				if (viewModelContext.getDomainModel() != null) {
+					displayName = emfformsLabelProvider.getDisplayName(dmrToResolve, viewModelContext.getDomainModel());
+				}
+				else {
+					displayName = emfformsLabelProvider.getDisplayName(dmrToResolve);
+				}
+				String labelValue = displayName.getValue().toString();
+				if (exportTableParent != null) {
+					labelValue = exportTableParent.getLabelPrefix() + "_" + labelValue; //$NON-NLS-1$
+				}
+
+				String extra = ""; //$NON-NLS-1$
+				final VTMandatoryStyleProperty mandatoryStyle = getMandatoryStyle(vElement, viewModelContext);
+				final EStructuralFeature structuralFeature = (EStructuralFeature) emfformsDatabinding.getValueProperty(
+					dmrToResolve, viewModelContext.getDomainModel()).getValueType();
+				if (mandatoryStyle.isHighliteMandatoryFields() && structuralFeature.getLowerBound() > 0) {
+					extra = mandatoryStyle.getMandatoryMarker();
+				}
+				labelValue = labelValue + extra;
+
+				labelCell.setCellValue(labelValue);
+				displayName.dispose();
+
+				final Comment comment = createComment(workbook, sheet, dmrToResolve,
+					renderTarget.getRow(), renderTarget.getColumn());
+				labelCell.setCellComment(comment);
+
+				IObservableValue description;
+				if (viewModelContext.getDomainModel() != null) {
+					description = emfformsLabelProvider.getDescription(dmrToResolve, viewModelContext.getDomainModel());
+				}
+				else {
+					description = emfformsLabelProvider.getDescription(dmrToResolve);
+				}
+				descriptionCell.setCellValue(description.getValue().toString());
+				description.dispose();
+
+				final String format = getFormatDescription(structuralFeature);
+				formatCell.setCellValue(format);
 			}
+			if (viewModelContext.getDomainModel() != null) {
+				Row valueRow = sheet.getRow(renderTarget.getRow() + 3);
+				if (valueRow == null) {
+					valueRow = sheet.createRow(renderTarget.getRow() + 3);
+				}
+				final Cell valueCell = valueRow.getCell(renderTarget.getColumn(),
+					Row.CREATE_NULL_AS_BLANK);
 
-			String extra = ""; //$NON-NLS-1$
-			final VTMandatoryStyleProperty mandatoryStyle = getMandatoryStyle(vElement, viewModelContext);
-			final EStructuralFeature structuralFeature = (EStructuralFeature) emfformsDatabinding.getValueProperty(
-				dmrToResolve, viewModelContext.getDomainModel()).getValueType();
-			if (mandatoryStyle.isHighliteMandatoryFields() && structuralFeature.getLowerBound() > 0) {
-				extra = mandatoryStyle.getMandatoryMarker();
+				final IObservableValue observableValue = emfformsDatabinding
+					.getObservableValue(dmrToResolve, viewModelContext.getDomainModel());
+				valueCell.setCellValue(getValueString(observableValue.getValue(), observableValue.getValueType()));
+				observableValue.dispose();
 			}
-			labelValue = labelValue + extra;
-
-			labelCell.setCellValue(labelValue);
-			displayName.dispose();
-
-			final IObservableValue description = emfformsLabelProvider
-				.getDescription(dmrToResolve, viewModelContext.getDomainModel());
-			descriptionCell.setCellValue(description.getValue().toString());
-			description.dispose();
-
-			final String format = getFormatDescription(structuralFeature);
-			formatCell.setCellValue(format);
-
-			final IObservableValue observableValue = emfformsDatabinding
-				.getObservableValue(dmrToResolve,
-					viewModelContext.getDomainModel());
-			valueCell.setCellValue(getValueString(observableValue.getValue(), observableValue.getValueType()));
-			observableValue.dispose();
-
-			final Comment comment = createComment(workbook, sheet, dmrToResolve,
-				renderTarget.getRow(), renderTarget.getColumn());
-			labelCell.setCellComment(comment);
 
 			return 1;
 		} catch (final DatabindingFailedException ex) {
@@ -189,7 +202,10 @@ public class EMFFormsSpreadsheetControlRenderer extends EMFFormsAbstractSpreadsh
 
 	private String getFormatDescription(final EStructuralFeature structuralFeature) {
 		final StringBuilder sb = new StringBuilder();
-		for (final EAnnotation eAnnotation : structuralFeature.getEAnnotations()) {
+		final Set<EAnnotation> annotations = new LinkedHashSet<EAnnotation>();
+		annotations.addAll(structuralFeature.getEAnnotations());
+		annotations.addAll(structuralFeature.getEType().getEAnnotations());
+		for (final EAnnotation eAnnotation : annotations) {
 			final EMap<String, String> details = eAnnotation.getDetails();
 			for (final String key : details.keySet()) {
 				if ("http:///org/eclipse/emf/ecore/util/ExtendedMetaData".equals(eAnnotation.getSource())) { //$NON-NLS-1$
