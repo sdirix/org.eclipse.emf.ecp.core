@@ -333,9 +333,13 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 				final boolean observedNotNull = ((IObserving) getModelValue()).getObserved() != null;
 				final boolean enabled = observedNotNull && getVElement().isEnabled();
 				setControlEnabled(gridCell, getControls().get(gridCell), enabled);
+				if (Boolean.FALSE.equals(enabled)) {
+					getVElement().setDiagnostic(null);
+				}
 			} catch (final DatabindingFailedException ex) {
 				getReportService().report(new DatabindingFailedReport(ex));
 				setControlEnabled(gridCell, getControls().get(gridCell), false);
+				getVElement().setDiagnostic(null);
 			}
 		}
 	}
