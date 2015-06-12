@@ -75,7 +75,7 @@
 									</repository>
 									<repository>
 										<id>luna</id>
-										<url>http://download.eclipse.org/releases/luna</url>
+										<url>http://download.eclipse.org/releases/mars</url>
 										<layout>p2</layout>
 									</repository>
 								</repositories>

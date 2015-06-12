@@ -47,7 +47,7 @@ public class EMFFormsDIRendererFactory implements EMFFormsRendererService<VEleme
 
 	/**
 	 * Returns the {@link ReportService}.
-	 * 
+	 *
 	 * @return The {@link ReportService}
 	 */
 	protected ReportService getReportService() {
@@ -106,6 +106,7 @@ public class EMFFormsDIRendererFactory implements EMFFormsRendererService<VEleme
 	 *
 	 * @see org.eclipse.emfforms.spi.swt.core.EMFFormsRendererService#getRendererInstance(org.eclipse.emf.ecp.view.spi.model.VElement,
 	 *      org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
+	 * @since 1.6
 	 */
 	@Override
 	public AbstractSWTRenderer<VElement> getRendererInstance(VElement vElement, ViewModelContext viewModelContext) {
