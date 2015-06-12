@@ -77,6 +77,88 @@ import org.eclipse.ui.part.ViewPart;
 /** The {@link ViewPart} containing a rendered version a {@link VView}. */
 public class PreviewView extends ViewPart implements ISelectionListener {
 
+	/**
+	 * @author Jonas
+	 *
+	 */
+	private final class PreviewPaintListener implements PaintListener {
+		@Override
+		public void paintControl(PaintEvent e) {
+			// super.paintControl(e);
+			final Point point = container.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+			scrolledComposite.setMinSize(point);
+			container.layout(true);
+			scrolledComposite.layout(true);
+
+		}
+	}
+
+	/**
+	 * @author Jonas
+	 *
+	 */
+	private final class PreviewPartListener implements IPartListener2 {
+		@Override
+		public void partActivated(IWorkbenchPartReference partRef) {
+			if (ViewEditorPart.class.isInstance(partRef.getPart(true))) {
+				final ViewEditorPart part = (ViewEditorPart) partRef.getPart(true);
+				if (part.getView() != view) {
+					setView(part.getView());
+					sampleData = null;
+					render(view);
+				}
+				if (updateAutomatic) {
+					preView.registerForViewModelChanges();
+				}
+			}
+		}
+
+		@Override
+		public void partClosed(IWorkbenchPartReference partRef) {
+			if (PreviewView.class.isInstance(partRef.getPart(true))) {
+
+				getSite().getPage().removePartListener(this);
+			}
+
+			if (ViewEditorPart.class.isInstance(partRef.getPart(true))) {
+				if (updateAutomatic) {
+					preView.clear();
+				}
+				preView.removeView();
+				view = null;
+			}
+
+		}
+
+		@Override
+		public void partDeactivated(IWorkbenchPartReference partRef) {
+			final IWorkbenchPart part = partRef.getPart(true);
+			if (ViewEditorPart.class.isInstance(part) || PreviewView.class.isInstance(part)) {
+				removeAdapters();
+			}
+		}
+
+		@Override
+		public void partOpened(IWorkbenchPartReference partRef) {
+		}
+
+		@Override
+		public void partHidden(IWorkbenchPartReference partRef) {
+		}
+
+		@Override
+		public void partVisible(IWorkbenchPartReference partRef) {
+		}
+
+		@Override
+		public void partInputChanged(IWorkbenchPartReference partRef) {
+		}
+
+		@Override
+		public void partBroughtToTop(IWorkbenchPartReference partRef) {
+		}
+	}
+
 	private Preview preView;
 	private IPartListener2 partListener;
 	private Composite form;
@@ -98,7 +180,7 @@ public class PreviewView extends ViewPart implements ISelectionListener {
 	public PreviewView() {
 		super();
 		// PlatformUI.getWorkbench().getActiveWorkbenchWindow().getSelectionService()
-		//			.addSelectionListener("org.eclipse.emf.ecp.ui.ModelExplorerView", this); //$NON-NLS-1$
+		// .addSelectionListener("org.eclipse.emf.ecp.ui.ModelExplorerView", this); //$NON-NLS-1$
 	}
 
 	@Override
@@ -160,18 +242,7 @@ public class PreviewView extends ViewPart implements ISelectionListener {
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).applyTo(container);
 		container.setBackground(scrolledComposite.getBackground());
 		scrolledComposite.setContent(container);
-		container.addPaintListener(new PaintListener() {
-
-			@Override
-			public void paintControl(PaintEvent e) {
-				// super.paintControl(e);
-				final Point point = container.computeSize(SWT.DEFAULT, SWT.DEFAULT);
-				scrolledComposite.setMinSize(point);
-				container.layout(true);
-				scrolledComposite.layout(true);
-
-			}
-		});
+		container.addPaintListener(new PreviewPaintListener());
 		container.addControlListener(new ControlListener() {
 
 			@Override
@@ -211,68 +282,7 @@ public class PreviewView extends ViewPart implements ISelectionListener {
 		}
 
 		PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getEditorReferences();
-		partListener = new IPartListener2() {
-
-			@Override
-			public void partActivated(IWorkbenchPartReference partRef) {
-				if (ViewEditorPart.class.isInstance(partRef.getPart(true))) {
-					final ViewEditorPart part = (ViewEditorPart) partRef.getPart(true);
-					if (part.getView() != view) {
-						setView(part.getView());
-						sampleData = null;
-						render(view);
-					}
-					if (updateAutomatic) {
-						preView.registerForViewModelChanges();
-					}
-				}
-			}
-
-			@Override
-			public void partClosed(IWorkbenchPartReference partRef) {
-				if (PreviewView.class.isInstance(partRef.getPart(true))) {
-
-					getSite().getPage().removePartListener(this);
-				}
-
-				if (ViewEditorPart.class.isInstance(partRef.getPart(true))) {
-					if (updateAutomatic) {
-						preView.clear();
-					}
-					preView.removeView();
-					view = null;
-				}
-
-			}
-
-			@Override
-			public void partDeactivated(IWorkbenchPartReference partRef) {
-				final IWorkbenchPart part = partRef.getPart(true);
-				if (ViewEditorPart.class.isInstance(part) || PreviewView.class.isInstance(part)) {
-					removeAdapters();
-				}
-			}
-
-			@Override
-			public void partOpened(IWorkbenchPartReference partRef) {
-			}
-
-			@Override
-			public void partHidden(IWorkbenchPartReference partRef) {
-			}
-
-			@Override
-			public void partVisible(IWorkbenchPartReference partRef) {
-			}
-
-			@Override
-			public void partInputChanged(IWorkbenchPartReference partRef) {
-			}
-
-			@Override
-			public void partBroughtToTop(IWorkbenchPartReference partRef) {
-			}
-		};
+		partListener = new PreviewPartListener();
 		getSite().getPage().addPartListener(partListener);
 
 	}
@@ -452,7 +462,8 @@ public class PreviewView extends ViewPart implements ISelectionListener {
 					null,
 					"The loaded file contains an EObject of type " //$NON-NLS-1$
 						+ sampleData.eClass().getName()
-						+ ".\n\n Please select an input file containig an EObject with the same type as the Root EClass of the view. (" + view.getRootEClass().getName() + ")", //$NON-NLS-1$ //$NON-NLS-2$
+						+ ".\n\n Please select an input file containig an EObject with the same type as the Root EClass of the view. (" //$NON-NLS-1$
+						+ view.getRootEClass().getName() + ")", //$NON-NLS-1$
 					MessageDialog.ERROR, new String[] { "Ok" }, 0).open(); //$NON-NLS-1$
 				sampleData = null;
 			}
