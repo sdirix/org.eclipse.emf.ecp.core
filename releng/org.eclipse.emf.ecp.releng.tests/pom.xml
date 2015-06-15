@@ -138,6 +138,7 @@
 		<module>../../tests/org.eclipse.emfforms.core.services.databinding.mapping.tests</module>
 		<module>../../tests/org.eclipse.emfforms.core.services.databinding.integrationtest</module>
 		<module>../../tests/org.eclipse.emfforms.core.services.databinding.testmodel</module>
+		<module>../../tests/org.eclipse.emfforms.core.services.domainexpander.default.tests</module>
 		<module>../../tests/org.eclipse.emfforms.swt.core.tests</module>
 		<module>../../tests/org.eclipse.emfforms.swt.core.di.tests</module>
 		<module>../../tests/org.eclipse.emfforms.swt.core.di.extension.tests</module>
