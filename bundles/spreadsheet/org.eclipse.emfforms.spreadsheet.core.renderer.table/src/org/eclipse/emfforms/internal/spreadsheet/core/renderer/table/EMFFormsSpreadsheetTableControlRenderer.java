@@ -95,14 +95,22 @@ public class EMFFormsSpreadsheetTableControlRenderer extends EMFFormsAbstractSpr
 			emfformsLabelProvider, reportService, vtViewTemplateProvider);
 		int numColumns = 0;
 		try {
+			final EMFFormsExportTableParent exportTableParent = (EMFFormsExportTableParent) viewModelContext
+				.getContextValue(EMFFormsExportTableParent.EXPORT_TABLE_PARENT);
+
+			VDomainModelReference dmrToResolve = EcoreUtil.copy(vElement.getDomainModelReference());
+			if (exportTableParent != null) {
+				final VIndexDomainModelReference indexDMR = exportTableParent.getIndexDMRToExtend();
+				indexDMR.setTargetDMR(dmrToResolve);
+
+				dmrToResolve = exportTableParent.getIndexDMRToResolve();
+			}
+
 			final IObservableList observableList = emfformsDatabinding.getObservableList(
-				vElement.getDomainModelReference(), viewModelContext.getDomainModel());
+				dmrToResolve, viewModelContext.getDomainModel());
 
 			final VTableDomainModelReference tableDomainModelReference = (VTableDomainModelReference) vElement
 				.getDomainModelReference();
-
-			final EMFFormsExportTableParent exportTableParent = (EMFFormsExportTableParent) viewModelContext
-				.getContextValue(EMFFormsExportTableParent.EXPORT_TABLE_PARENT);
 
 			for (int i = 0; i < Math.max(observableList.size(), 3); i++) {
 				String prefixName = (String) emfformsLabelProvider.getDisplayName(
@@ -113,7 +121,8 @@ public class EMFFormsSpreadsheetTableControlRenderer extends EMFFormsAbstractSpr
 						prefixName = EStructuralFeature.class.cast(
 							emfformsDatabinding.getValueProperty(
 								tableDomainModelReference.getDomainModelReference(),
-								viewModelContext.getDomainModel()).getValueType()).getName();
+								viewModelContext.getDomainModel()).getValueType())
+							.getName();
 					} catch (final DatabindingFailedException ex) {
 						reportService
 							.report(new EMFFormsSpreadsheetReport(ex, EMFFormsSpreadsheetReport.ERROR));

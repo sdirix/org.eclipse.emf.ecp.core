@@ -25,6 +25,7 @@ import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emfforms.internal.view.model.localization.LocalizationViewModelService;
 
 /**
  * Spreadsheet specific implementation of the {@link ViewModelContext}.
@@ -33,6 +34,7 @@ import org.eclipse.emf.ecp.view.spi.model.VView;
  * @author Eugen Neufeld
  * @noextend This class is not intended to be subclassed by clients.
  */
+@SuppressWarnings("restriction")
 public class EMFFormsSpreadsheetViewModelContext implements ViewModelContext {
 
 	private final VView view;
@@ -45,10 +47,13 @@ public class EMFFormsSpreadsheetViewModelContext implements ViewModelContext {
 	 * @param view The {@link VView}
 	 * @param domainModel The {@link EObject}
 	 */
+
 	public EMFFormsSpreadsheetViewModelContext(VView view, EObject domainModel) {
 		this.view = view;
 		this.domainModel = domainModel;
 
+		final LocalizationViewModelService vms = new LocalizationViewModelService();
+		vms.instantiate(this);
 	}
 
 	/**

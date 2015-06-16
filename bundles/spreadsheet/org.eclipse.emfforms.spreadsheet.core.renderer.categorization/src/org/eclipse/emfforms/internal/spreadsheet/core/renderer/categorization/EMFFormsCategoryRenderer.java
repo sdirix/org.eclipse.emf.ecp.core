@@ -65,13 +65,13 @@ public class EMFFormsCategoryRenderer extends EMFFormsAbstractSpreadsheetRendere
 		try {
 			final EMFFormsAbstractSpreadsheetRenderer<VElement> renderer = rendererFactory.getRendererInstance(
 				vElement.getComposite(), viewModelContext);
-			final String sheetName = WorkbookUtil.createSafeSheetName(vElement.getName());
+			final String sheetName = WorkbookUtil.createSafeSheetName(vElement.getLabel());
 			final Sheet sheet = workbook.createSheet(sheetName);
 			sheet.createRow(0).getCell(0, Row.CREATE_NULL_AS_BLANK).setCellValue(EMFFormsIdProvider.ID_COLUMN);
-			sheet.createRow(1).getCell(0, Row.CREATE_NULL_AS_BLANK)
+			sheet.createRow(renderTarget.getRow() + 3).getCell(0, Row.CREATE_NULL_AS_BLANK)
 				.setCellValue(idProvider.getId(viewModelContext.getDomainModel()));
 			numberRenderedColumns += renderer.render(workbook, vElement.getComposite(), viewModelContext,
-				new EMFFormsSpreadsheetRenderTarget(sheetName, 1, 1));
+				new EMFFormsSpreadsheetRenderTarget(sheetName, 0, 1));
 		} catch (final EMFFormsNoRendererException ex) {
 			reportService.report(new EMFFormsSpreadsheetReport(ex, EMFFormsSpreadsheetReport.ERROR));
 		}

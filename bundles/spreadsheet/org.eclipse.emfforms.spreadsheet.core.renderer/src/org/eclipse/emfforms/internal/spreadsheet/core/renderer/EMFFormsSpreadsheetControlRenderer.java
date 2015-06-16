@@ -219,6 +219,9 @@ public class EMFFormsSpreadsheetControlRenderer extends EMFFormsAbstractSpreadsh
 						continue;
 					}
 				}
+				if ("appinfo".equals(key)) { //$NON-NLS-1$
+					continue;
+				}
 				sb.append(key);
 				sb.append("="); //$NON-NLS-1$
 				sb.append(details.get(key));
