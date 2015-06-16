@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.ecp.view.spi.model.util;
 
+import java.util.Iterator;
 import java.util.Map;
 
 import org.eclipse.emf.common.util.BasicDiagnostic;
@@ -47,8 +48,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage
  * @generated
  */
-public class ViewValidator extends EObjectValidator
-{
+public class ViewValidator extends EObjectValidator {
 	public static final String ECLASS_KEY = "dmr_resolvement_eclass"; //$NON-NLS-1$
 
 	/**
@@ -98,8 +98,7 @@ public class ViewValidator extends EObjectValidator
 	 *
 	 * @generated
 	 */
-	public ViewValidator()
-	{
+	public ViewValidator() {
 		super();
 	}
 
@@ -111,8 +110,7 @@ public class ViewValidator extends EObjectValidator
 	 * @generated
 	 */
 	@Override
-	protected EPackage getEPackage()
-	{
+	protected EPackage getEPackage() {
 		return VViewPackage.eINSTANCE;
 	}
 
@@ -124,10 +122,9 @@ public class ViewValidator extends EObjectValidator
 	 * @generated
 	 */
 	@Override
-	protected boolean validate(int classifierID, Object value, DiagnosticChain diagnostics, Map<Object, Object> context)
-	{
-		switch (classifierID)
-		{
+	protected boolean validate(int classifierID, Object value, DiagnosticChain diagnostics,
+		Map<Object, Object> context) {
+		switch (classifierID) {
 		case VViewPackage.DIAGNOSTIC:
 			return validateDiagnostic((VDiagnostic) value, diagnostics, context);
 		case VViewPackage.ATTACHMENT:
@@ -165,8 +162,8 @@ public class ViewValidator extends EObjectValidator
 	 *
 	 * @generated
 	 */
-	public boolean validateDiagnostic(VDiagnostic diagnostic, DiagnosticChain diagnostics, Map<Object, Object> context)
-	{
+	public boolean validateDiagnostic(VDiagnostic diagnostic, DiagnosticChain diagnostics,
+		Map<Object, Object> context) {
 		return validate_EveryDefaultConstraint(diagnostic, diagnostics, context);
 	}
 
@@ -176,8 +173,8 @@ public class ViewValidator extends EObjectValidator
 	 *
 	 * @generated
 	 */
-	public boolean validateAttachment(VAttachment attachment, DiagnosticChain diagnostics, Map<Object, Object> context)
-	{
+	public boolean validateAttachment(VAttachment attachment, DiagnosticChain diagnostics,
+		Map<Object, Object> context) {
 		return validate_EveryDefaultConstraint(attachment, diagnostics, context);
 	}
 
@@ -188,8 +185,7 @@ public class ViewValidator extends EObjectValidator
 	 * @generated
 	 */
 	public boolean validateDomainModelReference(VDomainModelReference domainModelReference,
-		DiagnosticChain diagnostics, Map<Object, Object> context)
-	{
+		DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return validate_EveryDefaultConstraint(domainModelReference, diagnostics, context);
 	}
 
@@ -201,8 +197,7 @@ public class ViewValidator extends EObjectValidator
 	 */
 	public boolean validateFeaturePathDomainModelReference(
 		VFeaturePathDomainModelReference featurePathDomainModelReference, DiagnosticChain diagnostics,
-		Map<Object, Object> context)
-	{
+		Map<Object, Object> context) {
 		if (!validate_NoCircularContainment(featurePathDomainModelReference, diagnostics, context)) {
 			return false;
 		}
@@ -257,7 +252,11 @@ public class ViewValidator extends EObjectValidator
 			&& featurePathDomainModelReference.eContainmentFeature().isMany()) {
 			final VDomainModelReference parent = VDomainModelReference.class.cast(featurePathDomainModelReference
 				.eContainer());
-			final EStructuralFeature feature = parent.getEStructuralFeatureIterator().next();
+			final Iterator<EStructuralFeature> structuralFeatureIterator = parent.getEStructuralFeatureIterator();
+			if (!structuralFeatureIterator.hasNext()) {
+				return true;
+			}
+			final EStructuralFeature feature = structuralFeatureIterator.next();
 			if (!EReference.class.isInstance(feature)) {
 				return true;
 			}
@@ -307,9 +306,9 @@ public class ViewValidator extends EObjectValidator
 					final String message = "Domain model reference is unresolveable. Failed on reference: " //$NON-NLS-1$
 						+ reference.getName();
 					if (featurePathDomainModelReference.eContainer() != null) {
-						diagnostics.add(createDiagnostic(Diagnostic.ERROR, 0, message
-							, featurePathDomainModelReference.eContainer(),
-							featurePathDomainModelReference.eContainingFeature()));
+						diagnostics.add(
+							createDiagnostic(Diagnostic.ERROR, 0, message, featurePathDomainModelReference.eContainer(),
+								featurePathDomainModelReference.eContainingFeature()));
 					}
 					diagnostics.add(createDiagnostic(Diagnostic.ERROR, 0, message, featurePathDomainModelReference,
 						VViewPackage.eINSTANCE.getFeaturePathDomainModelReference_DomainModelEReferencePath()));
@@ -366,8 +365,7 @@ public class ViewValidator extends EObjectValidator
 	 *
 	 * @generated
 	 */
-	public boolean validateElement(VElement element, DiagnosticChain diagnostics, Map<Object, Object> context)
-	{
+	public boolean validateElement(VElement element, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return validate_EveryDefaultConstraint(element, diagnostics, context);
 	}
 
@@ -377,8 +375,7 @@ public class ViewValidator extends EObjectValidator
 	 *
 	 * @generated
 	 */
-	public boolean validateView(VView view, DiagnosticChain diagnostics, Map<Object, Object> context)
-	{
+	public boolean validateView(VView view, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return validate_EveryDefaultConstraint(view, diagnostics, context);
 	}
 
@@ -389,8 +386,7 @@ public class ViewValidator extends EObjectValidator
 	 * @generated
 	 */
 	public boolean validateContainedElement(VContainedElement containedElement, DiagnosticChain diagnostics,
-		Map<Object, Object> context)
-	{
+		Map<Object, Object> context) {
 		return validate_EveryDefaultConstraint(containedElement, diagnostics, context);
 	}
 
@@ -400,8 +396,7 @@ public class ViewValidator extends EObjectValidator
 	 *
 	 * @generated
 	 */
-	public boolean validateContainer(VContainer container, DiagnosticChain diagnostics, Map<Object, Object> context)
-	{
+	public boolean validateContainer(VContainer container, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return validate_EveryDefaultConstraint(container, diagnostics, context);
 	}
 
@@ -412,8 +407,7 @@ public class ViewValidator extends EObjectValidator
 	 * @generated
 	 */
 	public boolean validateContainedContainer(VContainedContainer containedContainer, DiagnosticChain diagnostics,
-		Map<Object, Object> context)
-	{
+		Map<Object, Object> context) {
 		return validate_EveryDefaultConstraint(containedContainer, diagnostics, context);
 	}
 
@@ -423,8 +417,7 @@ public class ViewValidator extends EObjectValidator
 	 *
 	 * @generated
 	 */
-	public boolean validateControl(VControl control, DiagnosticChain diagnostics, Map<Object, Object> context)
-	{
+	public boolean validateControl(VControl control, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return validate_EveryDefaultConstraint(control, diagnostics, context);
 	}
 
@@ -435,8 +428,7 @@ public class ViewValidator extends EObjectValidator
 	 * @generated
 	 */
 	public boolean validateLabelAlignment(LabelAlignment labelAlignment, DiagnosticChain diagnostics,
-		Map<Object, Object> context)
-	{
+		Map<Object, Object> context) {
 		return true;
 	}
 
@@ -448,8 +440,7 @@ public class ViewValidator extends EObjectValidator
 	 */
 	public boolean validateDomainModelReferenceChangeListener(
 		DomainModelReferenceChangeListener domainModelReferenceChangeListener, DiagnosticChain diagnostics,
-		Map<Object, Object> context)
-	{
+		Map<Object, Object> context) {
 		return true;
 	}
 
@@ -461,8 +452,7 @@ public class ViewValidator extends EObjectValidator
 	 * @generated
 	 */
 	@Override
-	public ResourceLocator getResourceLocator()
-	{
+	public ResourceLocator getResourceLocator() {
 		// TODO
 		// Specialize this to return a resource locator for messages specific to this validator.
 		// Ensure that you remove @generated or mark it @generated NOT
