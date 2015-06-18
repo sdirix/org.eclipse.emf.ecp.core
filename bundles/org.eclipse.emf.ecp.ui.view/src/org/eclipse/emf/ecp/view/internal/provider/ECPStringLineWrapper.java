@@ -8,6 +8,7 @@
  *
  * Contributors:
  * Eugen - initial API and implementation
+ * Johannes Faltermeier - Bug 470478
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.provider;
 
@@ -18,9 +19,12 @@ import org.eclipse.emf.ecp.view.spi.provider.ECPStringModifier;
  * An {@link ECPStringModifier} which wraps texts automatically after 80 chars.
  *
  * @author Eugen Neufeld
+ * @author Johannes Faltermeier
  *
  */
 public class ECPStringLineWrapper implements ECPStringModifier {
+
+	private static final int MAX_LINE_LENGTH = 80;
 
 	/**
 	 * {@inheritDoc}
@@ -30,21 +34,35 @@ public class ECPStringLineWrapper implements ECPStringModifier {
 	 */
 	@Override
 	public String modifyString(String text, Setting setting) {
-		final StringBuilder sb = new StringBuilder(text);
-		final int maxLineLength = 80;
+		final String[] textLines = text.split("\\r?\\n"); //$NON-NLS-1$
+
+		final StringBuilder allLines = new StringBuilder();
+		for (int j = 0; j < textLines.length; j++) {
+			final String line = textLines[j];
+			if (j != 0) {
+				allLines.append("\n"); //$NON-NLS-1$
+			}
+			final String wrappedLine = wrapLine(line);
+			allLines.append(wrappedLine);
+		}
+
+		return allLines.toString();
+	}
+
+	private String wrapLine(final String line) {
+		final StringBuilder sb = new StringBuilder(line);
 		int i = 0;
-		// TODO check line breaks
-		while (i + maxLineLength < sb.length()) {
-			i = sb.lastIndexOf("\n", i + maxLineLength); //$NON-NLS-1$
+		while (i + MAX_LINE_LENGTH < sb.length()) {
+			i = sb.lastIndexOf("\n", i + MAX_LINE_LENGTH); //$NON-NLS-1$
 			if (i == -1) {
 				i = 0;
 			}
-			i = sb.lastIndexOf(" ", i + maxLineLength); //$NON-NLS-1$
+			i = sb.lastIndexOf(" ", i + MAX_LINE_LENGTH); //$NON-NLS-1$
 			int multiplicator = 2;
 			while (i == -1) {
-				i = sb.lastIndexOf(" ", i + multiplicator * maxLineLength); //$NON-NLS-1$
+				i = sb.lastIndexOf(" ", i + multiplicator * MAX_LINE_LENGTH); //$NON-NLS-1$
 				multiplicator++;
-				if (multiplicator * maxLineLength > sb.length()) {
+				if (multiplicator * MAX_LINE_LENGTH > sb.length()) {
 					break;
 				}
 			}
@@ -53,8 +71,8 @@ public class ECPStringLineWrapper implements ECPStringModifier {
 			}
 			sb.replace(i, i + 1, "\n"); //$NON-NLS-1$
 		}
-
-		return sb.toString();
+		final String wrappedLine = sb.toString();
+		return wrappedLine;
 	}
 
 }

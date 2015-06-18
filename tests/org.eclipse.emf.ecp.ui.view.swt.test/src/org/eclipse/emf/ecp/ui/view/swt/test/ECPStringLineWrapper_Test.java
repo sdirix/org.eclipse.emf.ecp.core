@@ -77,4 +77,15 @@ public class ECPStringLineWrapper_Test {
 			"kurz,\nsehrsehrsehrsehrsehrsehrsehrsehrsehrsehrsehrsehrsehrsehrsehrsehrsehrsehrsehrsehrsehrsehrsehrsehrsehrsehrsehrsehrsehrsehrsehrsehrsehrsehrsehrlang,\nkurz",
 			modifyString);
 	}
+
+	@Test
+	public void testModifyStringLongWithLineBreaks() {
+		final String modifyString = wrapper
+			.modifyString(
+				"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus varius et dolor at molestie. Suspendisse condimentum sem quis ligula semper. \nLorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus varius et dolor at molestie. Suspendisse condimentum sem quis ligula semper.",
+				null);
+		assertEquals(
+			"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus varius et\ndolor at molestie. Suspendisse condimentum sem quis ligula semper. \nLorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus varius et\ndolor at molestie. Suspendisse condimentum sem quis ligula semper.",
+			modifyString);
+	}
 }
