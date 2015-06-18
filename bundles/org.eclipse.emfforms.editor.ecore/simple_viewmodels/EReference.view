@@ -16,4 +16,9 @@
       <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/upperBound"/>
     </domainModelReference>
   </children>
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" name="Control containment">
+    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference">
+      <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/Ecore#//EReference/containment"/>
+    </domainModelReference>
+  </children>
 </org.eclipse.emf.ecp.view.model:View>
