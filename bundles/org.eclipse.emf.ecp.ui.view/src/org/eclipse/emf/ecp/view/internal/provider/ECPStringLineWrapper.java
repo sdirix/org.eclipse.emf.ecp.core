@@ -8,7 +8,7 @@
  *
  * Contributors:
  * Eugen - initial API and implementation
- * Johannes Faltermeier - Bug 470478
+ * Johannes Faltermeier - Bug 470478, Bug 459998
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.provider;
 
@@ -73,6 +73,16 @@ public class ECPStringLineWrapper implements ECPStringModifier {
 		}
 		final String wrappedLine = sb.toString();
 		return wrappedLine;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.provider.ECPStringModifier#getPriority()
+	 */
+	@Override
+	public double getPriority() {
+		return 0;
 	}
 
 }
