@@ -9,11 +9,11 @@
  * Contributors:
  * Eugen - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.ui.view.swt.test;
+package org.eclipse.emf.ecp.ui.view.linewrapper.tests;
 
 import static org.junit.Assert.assertEquals;
 
-import org.eclipse.emf.ecp.view.internal.provider.ECPStringLineWrapper;
+import org.eclipse.emf.ecp.internal.ui.view.linewrapper.ECPStringLineWrapper;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -21,7 +21,6 @@ import org.junit.Test;
  * @author Eugen
  *
  */
-@SuppressWarnings("restriction")
 public class ECPStringLineWrapper_Test {
 
 	private ECPStringLineWrapper wrapper;
@@ -36,7 +35,7 @@ public class ECPStringLineWrapper_Test {
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emf.ecp.view.internal.provider.ECPStringLineWrapper#modifyString(java.lang.String, org.eclipse.emf.ecore.EStructuralFeature.Setting)}
+	 * {@link org.eclipse.emf.ecp.internal.ui.view.linewrapper.ECPStringLineWrapper#modifyString(java.lang.String, org.eclipse.emf.ecore.EStructuralFeature.Setting)}
 	 * .
 	 */
 	@Test

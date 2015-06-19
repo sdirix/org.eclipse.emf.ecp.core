@@ -10,7 +10,7 @@
  * Eugen - initial API and implementation
  * Johannes Faltermeier - Bug 470478, Bug 459998
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.internal.provider;
+package org.eclipse.emf.ecp.internal.ui.view.linewrapper;
 
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.view.spi.provider.ECPStringModifier;

@@ -149,6 +149,8 @@
 		<module>../../tests/org.eclipse.emfforms.view.model.localization.tests</module>
 		
 		<module>../../tests/org.eclipse.emfforms.swt.control.text.autocomplete.tests</module>
+		
+		<module>../../tests/org.eclipse.emf.ecp.ui.view.linewrapper.tests</module>
 	</modules>
 	
 	<build>

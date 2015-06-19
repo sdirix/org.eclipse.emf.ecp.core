@@ -276,6 +276,8 @@
 		<!-- Annotation attachement -->
 		<module>../../bundles/org.eclipse.emfforms.view.annotation.model</module>
 		<module>../../bundles/org.eclipse.emfforms.view.annotation.model.edit</module>
+		
+		<module>../../bundles/org.eclipse.emf.ecp.ui.view.linewrapper</module>
 	</modules>
 
 	<build>
