@@ -11,6 +11,8 @@
  ******************************************************************************/
 package org.eclipse.emfforms.internal.spreadsheet.core.renderer.categorization;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -66,8 +68,17 @@ public class EMFFormsCategoryRenderer extends EMFFormsAbstractSpreadsheetRendere
 			final EMFFormsAbstractSpreadsheetRenderer<VElement> renderer = rendererFactory.getRendererInstance(
 				vElement.getComposite(), viewModelContext);
 			final String sheetName = WorkbookUtil.createSafeSheetName(vElement.getLabel());
-			final Sheet sheet = workbook.createSheet(sheetName);
-			sheet.createRow(0).getCell(0, Row.CREATE_NULL_AS_BLANK).setCellValue(EMFFormsIdProvider.ID_COLUMN);
+			Sheet sheet = workbook.getSheet(sheetName);
+			if (sheet == null) {
+				sheet = workbook.createSheet(sheetName);
+			}
+			final Cell cell = sheet.createRow(0).getCell(0, Row.CREATE_NULL_AS_BLANK);
+			cell.setCellValue(EMFFormsIdProvider.ID_COLUMN);
+
+			final CellStyle cellStyle = workbook.createCellStyle();
+			cellStyle.setLocked(true);
+			cell.setCellStyle(cellStyle);
+
 			sheet.createRow(renderTarget.getRow() + 3).getCell(0, Row.CREATE_NULL_AS_BLANK)
 				.setCellValue(idProvider.getId(viewModelContext.getDomainModel()));
 			numberRenderedColumns += renderer.render(workbook, vElement.getComposite(), viewModelContext,

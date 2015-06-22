@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.ClientAnchor;
 import org.apache.poi.ss.usermodel.Comment;
 import org.apache.poi.ss.usermodel.CreationHelper;
@@ -116,10 +117,23 @@ public class EMFFormsSpreadsheetControlRenderer extends EMFFormsAbstractSpreadsh
 
 		final Cell labelCell = labelRow.getCell(renderTarget.getColumn(),
 			Row.CREATE_NULL_AS_BLANK);
+		final CellStyle labelCellStyle = workbook.createCellStyle();
+		labelCellStyle.setLocked(true);
+		labelCell.setCellStyle(labelCellStyle);
+
 		final Cell descriptionCell = descriptionRow.getCell(renderTarget.getColumn(),
 			Row.CREATE_NULL_AS_BLANK);
+		final CellStyle descriptionCellStyle = workbook.createCellStyle();
+		descriptionCellStyle.setWrapText(true);
+		descriptionCellStyle.setLocked(true);
+		descriptionCell.setCellStyle(descriptionCellStyle);
+
 		final Cell formatCell = formatRow.getCell(renderTarget.getColumn(),
 			Row.CREATE_NULL_AS_BLANK);
+		final CellStyle formatCellStyle = workbook.createCellStyle();
+		formatCellStyle.setWrapText(true);
+		formatCellStyle.setLocked(true);
+		formatCell.setCellStyle(formatCellStyle);
 
 		try {
 			final EMFFormsExportTableParent exportTableParent = (EMFFormsExportTableParent) viewModelContext
@@ -136,8 +150,7 @@ public class EMFFormsSpreadsheetControlRenderer extends EMFFormsAbstractSpreadsh
 				IObservableValue displayName;
 				if (viewModelContext.getDomainModel() != null) {
 					displayName = emfformsLabelProvider.getDisplayName(dmrToResolve, viewModelContext.getDomainModel());
-				}
-				else {
+				} else {
 					displayName = emfformsLabelProvider.getDisplayName(dmrToResolve);
 				}
 				String labelValue = displayName.getValue().toString();
@@ -164,8 +177,7 @@ public class EMFFormsSpreadsheetControlRenderer extends EMFFormsAbstractSpreadsh
 				IObservableValue description;
 				if (viewModelContext.getDomainModel() != null) {
 					description = emfformsLabelProvider.getDescription(dmrToResolve, viewModelContext.getDomainModel());
-				}
-				else {
+				} else {
 					description = emfformsLabelProvider.getDescription(dmrToResolve);
 				}
 				descriptionCell.setCellValue(description.getValue().toString());
@@ -225,7 +237,7 @@ public class EMFFormsSpreadsheetControlRenderer extends EMFFormsAbstractSpreadsh
 				sb.append(key);
 				sb.append("="); //$NON-NLS-1$
 				sb.append(details.get(key));
-				sb.append("\t"); //$NON-NLS-1$
+				sb.append("\n"); //$NON-NLS-1$
 			}
 		}
 		return sb.toString().trim();
@@ -255,13 +267,10 @@ public class EMFFormsSpreadsheetControlRenderer extends EMFFormsAbstractSpreadsh
 			final EDataType eDataType = eAttribute.getEAttributeType();
 			final EFactory eFactory = eDataType.getEPackage().getEFactoryInstance();
 
-			if (eAttribute.isMany())
-			{
+			if (eAttribute.isMany()) {
 				final StringBuilder result = new StringBuilder();
-				for (final Object value : (List<?>) fromObject)
-				{
-					if (result.length() == 0)
-					{
+				for (final Object value : (List<?>) fromObject) {
+					if (result.length() == 0) {
 						result.append(' ');
 					}
 					result.append(eFactory.convertToString(eDataType, value));
