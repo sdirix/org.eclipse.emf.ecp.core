@@ -34,6 +34,7 @@ import org.eclipse.emf.ecp.view.template.style.mandatory.model.VTMandatoryFactor
 import org.eclipse.emf.ecp.view.template.style.mandatory.model.VTMandatoryStyleProperty;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
@@ -141,7 +142,9 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 				});
 			}
 		};
-		getVElement().getDomainModelReference().getChangeListener().add(domainModelReferenceChangeListener);
+		if (getVElement().getDomainModelReference() != null) {
+			getVElement().getDomainModelReference().getChangeListener().add(domainModelReferenceChangeListener);
+		}
 		applyEnable();
 	}
 
@@ -211,6 +214,11 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 	protected final IObservableValue getModelValue() throws DatabindingFailedException {
 		if (modelValue == null) {
 			final VDomainModelReference ref = getVElement().getDomainModelReference();
+			if (ref == null) {
+				throw new DatabindingFailedException(String
+					.format(
+						"No DomainModelReference could be found for the VElement %1$s.", getVElement().getName())); //$NON-NLS-1$
+			}
 			final EObject eObject = getViewModelContext().getDomainModel();
 
 			final EMFFormsDatabinding databindingService = getEMFFormsDatabinding();
@@ -246,6 +254,9 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 					getViewModelContext().getDomainModel());
 			} catch (final DatabindingFailedException ex) {
 				getReportService().report(new RenderingFailedReport(ex));
+				break labelRender;
+			} catch (final IllegalArgumentException ex) {
+				getReportService().report(new AbstractReport(ex));
 				break labelRender;
 			}
 

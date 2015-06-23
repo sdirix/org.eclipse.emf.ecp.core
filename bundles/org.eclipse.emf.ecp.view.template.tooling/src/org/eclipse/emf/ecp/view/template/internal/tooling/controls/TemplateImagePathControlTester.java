@@ -34,7 +34,7 @@ import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedRepor
  *
  */
 public class TemplateImagePathControlTester implements ECPRendererTester {
-
+	// BEGIN COMPLEX CODE
 	@Override
 	public int isApplicable(VElement vElement, ViewModelContext viewModelContext) {
 		if (!VControl.class.isInstance(vElement)) {
@@ -122,5 +122,5 @@ public class TemplateImagePathControlTester implements ECPRendererTester {
 		}
 		return NOT_APPLICABLE;
 	}
-
+	// END COMPLEX CODE
 }

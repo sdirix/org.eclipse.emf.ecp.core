@@ -71,6 +71,10 @@ public class FeaturePathDomainModelReferenceConverter implements DomainModelRefe
 			throw new DatabindingFailedException(
 				"The field domainModelEFeature of the given VFeaturePathDomainModelReference must not be null."); //$NON-NLS-1$
 		}
+		if (featurePathReference.getDomainModelEFeature().eIsProxy()) {
+			throw new DatabindingFailedException(
+				"The field domainModelEFeature of the given VFeaturePathDomainModelReference must not be a proxy."); //$NON-NLS-1$
+		}
 
 		final List<EReference> referencePath = featurePathReference.getDomainModelEReferencePath();
 		final EditingDomain editingDomain = getEditingDomain(object);
@@ -111,6 +115,10 @@ public class FeaturePathDomainModelReferenceConverter implements DomainModelRefe
 		if (featurePathReference.getDomainModelEFeature() == null) {
 			throw new DatabindingFailedException(
 				"The field domainModelEFeature of the given VFeaturePathDomainModelReference must not be null."); //$NON-NLS-1$
+		}
+		if (featurePathReference.getDomainModelEFeature().eIsProxy()) {
+			throw new DatabindingFailedException(
+				"The field domainModelEFeature of the given VFeaturePathDomainModelReference must not be a proxy."); //$NON-NLS-1$
 		}
 
 		final List<EReference> referencePath = featurePathReference.getDomainModelEReferencePath();
