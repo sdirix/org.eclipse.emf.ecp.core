@@ -65,7 +65,7 @@ public class EMFFormsSpreadsheetExporterImpl_ITest {
 	@Test
 	public void testRenderTemplate() throws DatatypeConfigurationException, IOException {
 		final EMFFormsSpreadsheetExporterImpl viewRenderer = new EMFFormsSpreadsheetExporterImpl();
-		final Workbook wb = viewRenderer.render(null, getView());
+		final Workbook wb = viewRenderer.render(null, getView(), null);
 		assertEquals(2, wb.getSheetAt(0).getLastRowNum());
 
 		final FileOutputStream fos = new FileOutputStream("export.xls");
@@ -78,7 +78,7 @@ public class EMFFormsSpreadsheetExporterImpl_ITest {
 		final EMFFormsSpreadsheetExporterImpl viewRenderer = new EMFFormsSpreadsheetExporterImpl();
 		final User user = getDomainModel();
 		final User user2 = getDomainModel();
-		final Workbook wb = viewRenderer.render(Arrays.asList(user, user2), getView());
+		final Workbook wb = viewRenderer.render(Arrays.asList(user, user2), getView(), null);
 		assertEquals(4, wb.getSheetAt(0).getLastRowNum());
 	}
 
@@ -87,7 +87,7 @@ public class EMFFormsSpreadsheetExporterImpl_ITest {
 		final EMFFormsSpreadsheetExporterImpl viewRenderer = new EMFFormsSpreadsheetExporterImpl();
 		final User user = getDomainModel();
 		final Task task = TaskFactory.eINSTANCE.createTask();
-		final Workbook wb = viewRenderer.render(Arrays.asList(user, task), getView());
+		final Workbook wb = viewRenderer.render(Arrays.asList(user, task), getView(), null);
 		assertEquals(3, wb.getSheetAt(0).getLastRowNum());
 	}
 
@@ -95,7 +95,7 @@ public class EMFFormsSpreadsheetExporterImpl_ITest {
 	public void testRender() throws DatatypeConfigurationException {
 		final EMFFormsSpreadsheetExporterImpl viewRenderer = new EMFFormsSpreadsheetExporterImpl();
 		final User user = getDomainModel();
-		final Workbook wb = viewRenderer.render(Collections.singleton(user), getView());
+		final Workbook wb = viewRenderer.render(Collections.singleton(user), getView(), null);
 		final Sheet sheet = wb.getSheetAt(0);
 		final Row row = sheet.getRow(3);
 		assertEquals(10, row.getLastCellNum());

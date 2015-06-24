@@ -13,6 +13,7 @@ package org.eclipse.emfforms.spi.spreadsheet.file;
 
 import java.io.File;
 import java.util.Collection;
+import java.util.Map;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.spi.model.VView;
@@ -38,5 +39,6 @@ public interface EMFFormsSpreadsheetFileExporter {
 	 * @param domainObjects The collection of {@link EObject} containing the data to export
 	 * @param viewModel The {@link VView} describing the rendered data
 	 */
-	void render(File file, Collection<EObject> domainObjects, VView viewModel);
+	void render(File file, Collection<EObject> domainObjects, VView viewModel,
+		Map<EObject, Map<String, String>> additionalInformation);
 }

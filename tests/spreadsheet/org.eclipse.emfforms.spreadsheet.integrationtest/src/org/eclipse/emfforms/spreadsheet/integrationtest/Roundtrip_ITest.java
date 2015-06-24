@@ -61,7 +61,13 @@ public class Roundtrip_ITest {
 		Map<String, Object> context=new LinkedHashMap<String, Object>();
 		context.put("root", true);
 		context.put("detail", true);
-		Workbook wb=viewRenderer.render(Collections.singleton(user),ViewProviderHelper.getView(user, context));
+		Map<EObject, Map<String, String>> additionalInformation=new LinkedHashMap<EObject, Map<String,String>>();
+		Map<String, String> keyValueMap=new LinkedHashMap<String, String>();
+		keyValueMap.put("MyColumn1", "MyValue1");
+		keyValueMap.put("MyColumn2", "MyValue2");
+		additionalInformation.put(user, keyValueMap);
+		
+		Workbook wb=viewRenderer.render(Collections.singleton(user),ViewProviderHelper.getView(user, context),additionalInformation);
 
 		saveWorkbook(wb,targetFile.getAbsolutePath());
 

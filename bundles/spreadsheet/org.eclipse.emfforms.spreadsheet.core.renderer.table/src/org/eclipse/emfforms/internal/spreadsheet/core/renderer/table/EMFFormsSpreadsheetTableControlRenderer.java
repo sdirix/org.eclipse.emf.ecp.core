@@ -41,6 +41,7 @@ import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsAbstractSpreadsheetRenderer;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsExportTableParent;
+import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsIdProvider;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsNoRendererException;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetRenderTarget;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetRendererFactory;
@@ -59,6 +60,7 @@ public class EMFFormsSpreadsheetTableControlRenderer extends EMFFormsAbstractSpr
 	private final ReportService reportService;
 	private final EMFFormsSpreadsheetRendererFactory rendererFactory;
 	private final VTViewTemplateProvider vtViewTemplateProvider;
+	private final EMFFormsIdProvider emfFormsIdProvider;
 
 	/**
 	 * Default constructor.
@@ -68,15 +70,18 @@ public class EMFFormsSpreadsheetTableControlRenderer extends EMFFormsAbstractSpr
 	 * @param reportService The {@link ReportService}
 	 * @param rendererFactory The EMFFormsSpreadsheetRendererFactory to use
 	 * @param vtViewTemplateProvider The VTViewTemplateProvider to use
+	 * @param emfFormsIdProvider The {@link EMFFormsIdProvider}
 	 */
 	public EMFFormsSpreadsheetTableControlRenderer(EMFFormsDatabinding emfformsDatabinding,
 		EMFFormsLabelProvider emfformsLabelProvider, ReportService reportService,
-		EMFFormsSpreadsheetRendererFactory rendererFactory, VTViewTemplateProvider vtViewTemplateProvider) {
+		EMFFormsSpreadsheetRendererFactory rendererFactory, VTViewTemplateProvider vtViewTemplateProvider,
+		EMFFormsIdProvider emfFormsIdProvider) {
 		this.emfformsDatabinding = emfformsDatabinding;
 		this.emfformsLabelProvider = emfformsLabelProvider;
 		this.reportService = reportService;
 		this.rendererFactory = rendererFactory;
 		this.vtViewTemplateProvider = vtViewTemplateProvider;
+		this.emfFormsIdProvider = emfFormsIdProvider;
 	}
 
 	/**
@@ -92,7 +97,7 @@ public class EMFFormsSpreadsheetTableControlRenderer extends EMFFormsAbstractSpr
 		EMFFormsSpreadsheetRenderTarget eMFFormsSpreadsheetRenderTarget) {
 		final EMFFormsSpreadsheetControlRenderer controlRenderer = new EMFFormsSpreadsheetControlRenderer(
 			emfformsDatabinding,
-			emfformsLabelProvider, reportService, vtViewTemplateProvider);
+			emfformsLabelProvider, reportService, vtViewTemplateProvider, emfFormsIdProvider);
 		int numColumns = 0;
 		try {
 			final EMFFormsExportTableParent exportTableParent = (EMFFormsExportTableParent) viewModelContext

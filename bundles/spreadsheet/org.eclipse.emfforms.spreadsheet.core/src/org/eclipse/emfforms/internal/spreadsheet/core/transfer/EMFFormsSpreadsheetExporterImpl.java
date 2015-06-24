@@ -12,9 +12,16 @@
 package org.eclipse.emfforms.internal.spreadsheet.core.transfer;
 
 import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.util.WorkbookUtil;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
@@ -22,6 +29,7 @@ import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emfforms.internal.spreadsheet.core.EMFFormsSpreadsheetViewModelContext;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsAbstractSpreadsheetRenderer;
+import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsIdProvider;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsNoRendererException;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetRenderTarget;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetRendererFactory;
@@ -39,6 +47,7 @@ import org.osgi.framework.ServiceReference;
 public class EMFFormsSpreadsheetExporterImpl implements EMFFormsSpreadsheetExporter {
 
 	private final ReportService reportService;
+	private final EMFFormsIdProvider idProvider;
 
 	/**
 	 * Default Constructor.
@@ -48,10 +57,14 @@ public class EMFFormsSpreadsheetExporterImpl implements EMFFormsSpreadsheetExpor
 		final ServiceReference<ReportService> reportServiceReference = bundleContext
 			.getServiceReference(ReportService.class);
 		reportService = bundleContext.getService(reportServiceReference);
+		final ServiceReference<EMFFormsIdProvider> idProviderServiceReference = bundleContext
+			.getServiceReference(EMFFormsIdProvider.class);
+		idProvider = bundleContext.getService(idProviderServiceReference);
 	}
 
 	@Override
-	public Workbook render(final Collection<? extends EObject> domainObjects, VView viewModel) {
+	public Workbook render(final Collection<? extends EObject> domainObjects, VView viewModel,
+		Map<EObject, Map<String, String>> additionalInformation) {
 
 		final BundleContext bundleContext = FrameworkUtil.getBundle(getClass()).getBundleContext();
 		final ServiceReference<EMFFormsSpreadsheetRendererFactory> serviceReference = bundleContext
@@ -97,7 +110,54 @@ public class EMFFormsSpreadsheetExporterImpl implements EMFFormsSpreadsheetExpor
 					reportService.report(new EMFFormsSpreadsheetReport(ex, EMFFormsSpreadsheetReport.ERROR));
 				}
 			}
+			writeAdditionalInfo(workbook, additionalInformation);
 		}
 		return workbook;
+	}
+
+	private void writeAdditionalInfo(Workbook workbook, Map<EObject, Map<String, String>> additionalInformation) {
+		if (additionalInformation == null) {
+			return;
+		}
+		final String sheetName = WorkbookUtil.createSafeSheetName("AdditionalInformation"); //$NON-NLS-1$
+		Sheet sheet = workbook.getSheet(sheetName);
+		if (sheet == null) {
+			sheet = workbook.createSheet(sheetName);
+		}
+		final Row titleRow = sheet.createRow(0);
+		final Cell idCell = titleRow.getCell(0, Row.CREATE_NULL_AS_BLANK);
+		idCell.setCellValue(EMFFormsIdProvider.ID_COLUMN);
+		final CellStyle cellStyle = workbook.createCellStyle();
+		cellStyle.setLocked(true);
+		idCell.setCellStyle(cellStyle);
+
+		final Map<String, Integer> keyColumnMap = new LinkedHashMap<String, Integer>();
+		int column = 1;
+		final Row valueRow = sheet.createRow(1);
+		for (final EObject eObject : additionalInformation.keySet()) {
+			// set id
+			valueRow.getCell(0, Row.CREATE_NULL_AS_BLANK).setCellValue(idProvider.getId(eObject));
+
+			// write key - values
+			final Map<String, String> keyValueMap = additionalInformation.get(eObject);
+			for (final String key : keyValueMap.keySet()) {
+				if (!keyColumnMap.containsKey(key)) {
+					keyColumnMap.put(key, column);
+					column++;
+				}
+				final Cell keyCell = titleRow.getCell(keyColumnMap.get(key), Row.CREATE_NULL_AS_BLANK);
+				keyCell.setCellValue(key);
+				final CellStyle keyCellStyle = workbook.createCellStyle();
+				keyCellStyle.setLocked(true);
+				keyCell.setCellStyle(keyCellStyle);
+
+				final Cell valueCell = valueRow.getCell(keyColumnMap.get(key), Row.CREATE_NULL_AS_BLANK);
+				valueCell.setCellValue(keyValueMap.get(key));
+				final CellStyle valueCellStyle = workbook.createCellStyle();
+				valueCellStyle.setLocked(true);
+				valueCell.setCellStyle(valueCellStyle);
+
+			}
+		}
 	}
 }

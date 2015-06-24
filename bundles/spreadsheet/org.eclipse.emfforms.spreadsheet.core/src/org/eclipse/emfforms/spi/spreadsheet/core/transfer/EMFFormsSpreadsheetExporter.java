@@ -12,6 +12,7 @@
 package org.eclipse.emfforms.spi.spreadsheet.core.transfer;
 
 import java.util.Collection;
+import java.util.Map;
 
 import org.apache.poi.ss.usermodel.Workbook;
 import org.eclipse.emf.ecore.EObject;
@@ -36,7 +37,9 @@ public interface EMFFormsSpreadsheetExporter {
 	 *
 	 * @param domainObjects The collection of {@link EObject} containing the data to export
 	 * @param viewModel The {@link VView} describing the rendered data
+	 * @param additionalInformation AdditionalInformation to export, can be null
 	 * @return The created {@link Workbook}
 	 */
-	Workbook render(Collection<? extends EObject> domainObjects, VView viewModel);
+	Workbook render(Collection<? extends EObject> domainObjects, VView viewModel,
+		Map<EObject, Map<String, String>> additionalInformation);
 }

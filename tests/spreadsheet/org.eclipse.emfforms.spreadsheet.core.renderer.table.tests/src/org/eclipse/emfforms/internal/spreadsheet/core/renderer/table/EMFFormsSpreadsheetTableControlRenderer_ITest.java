@@ -54,12 +54,11 @@ public class EMFFormsSpreadsheetTableControlRenderer_ITest {
 		File targetFile = new File("export.xls");
 		EObject domainModel = getDomainModel();
 		EObject domainModel2 = getDomainModel();
-		Workbook wb = viewRenderer.render(Arrays.asList(domainModel,domainModel2),getView());
+		Workbook wb = viewRenderer.render(Arrays.asList(domainModel,domainModel2),getView(),null);
 		
 		FileOutputStream fileOut = new FileOutputStream(targetFile.getAbsolutePath());
 		wb.write(fileOut);
-		
-		
+		fileOut.close();
 
 		// read data
 		final FileInputStream file = new FileInputStream(targetFile);
@@ -71,15 +70,13 @@ public class EMFFormsSpreadsheetTableControlRenderer_ITest {
 		for (final EObject model : domainModels) {
 			assertTrue(EcoreUtil.equals(model, domainModel));
 		}
+		file.close();
 	}
 
 	private EObject getDomainModel() {
 		Task task=TaskFactory.eINSTANCE.createTask();
-		task.setDescription("bla");
-		task.setName("task");
 		for(int i=0;i<3;i++){
 			Task subTask=TaskFactory.eINSTANCE.createTask();
-			subTask.setDescription("bla_"+i);
 			subTask.setName("task_"+i);
 			task.getSubTasks().add(subTask);
 			

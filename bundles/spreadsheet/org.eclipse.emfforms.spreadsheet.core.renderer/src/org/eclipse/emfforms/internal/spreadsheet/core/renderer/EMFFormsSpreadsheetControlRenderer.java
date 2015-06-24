@@ -55,6 +55,7 @@ import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsAbstractSpreadsheetRenderer;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsExportTableParent;
+import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsIdProvider;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetRenderTarget;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetReport;
 
@@ -69,6 +70,7 @@ public class EMFFormsSpreadsheetControlRenderer extends EMFFormsAbstractSpreadsh
 	private final EMFFormsLabelProvider emfformsLabelProvider;
 	private final ReportService reportService;
 	private final VTViewTemplateProvider vtViewTemplateProvider;
+	private final EMFFormsIdProvider idProvider;
 
 	/**
 	 * Default constructor.
@@ -77,14 +79,16 @@ public class EMFFormsSpreadsheetControlRenderer extends EMFFormsAbstractSpreadsh
 	 * @param emfformsLabelProvider The EMFFormsLabelProvider to use
 	 * @param reportService The {@link ReportService}
 	 * @param vtViewTemplateProvider The {@link VTViewTemplateProvider}
+	 * @param idProvider The {@link EMFFormsIdProvider}
 	 */
 	public EMFFormsSpreadsheetControlRenderer(EMFFormsDatabinding emfformsDatabinding,
 		EMFFormsLabelProvider emfformsLabelProvider, ReportService reportService,
-		VTViewTemplateProvider vtViewTemplateProvider) {
+		VTViewTemplateProvider vtViewTemplateProvider, EMFFormsIdProvider idProvider) {
 		this.emfformsDatabinding = emfformsDatabinding;
 		this.emfformsLabelProvider = emfformsLabelProvider;
 		this.reportService = reportService;
 		this.vtViewTemplateProvider = vtViewTemplateProvider;
+		this.idProvider = idProvider;
 	}
 
 	/**
@@ -115,20 +119,26 @@ public class EMFFormsSpreadsheetControlRenderer extends EMFFormsAbstractSpreadsh
 			formatRow = sheet.createRow(2);
 		}
 
-		final Cell labelCell = labelRow.getCell(renderTarget.getColumn(),
+		final Cell idCell = labelRow.getCell(0, Row.CREATE_NULL_AS_BLANK);
+		idCell.setCellValue(EMFFormsIdProvider.ID_COLUMN);
+		final CellStyle idCellStyle = workbook.createCellStyle();
+		idCellStyle.setLocked(true);
+		idCell.setCellStyle(idCellStyle);
+
+		final Cell labelCell = labelRow.getCell(renderTarget.getColumn() + 1,
 			Row.CREATE_NULL_AS_BLANK);
 		final CellStyle labelCellStyle = workbook.createCellStyle();
 		labelCellStyle.setLocked(true);
 		labelCell.setCellStyle(labelCellStyle);
 
-		final Cell descriptionCell = descriptionRow.getCell(renderTarget.getColumn(),
+		final Cell descriptionCell = descriptionRow.getCell(renderTarget.getColumn() + 1,
 			Row.CREATE_NULL_AS_BLANK);
 		final CellStyle descriptionCellStyle = workbook.createCellStyle();
 		descriptionCellStyle.setWrapText(true);
 		descriptionCellStyle.setLocked(true);
 		descriptionCell.setCellStyle(descriptionCellStyle);
 
-		final Cell formatCell = formatRow.getCell(renderTarget.getColumn(),
+		final Cell formatCell = formatRow.getCell(renderTarget.getColumn() + 1,
 			Row.CREATE_NULL_AS_BLANK);
 		final CellStyle formatCellStyle = workbook.createCellStyle();
 		formatCellStyle.setWrapText(true);
@@ -171,7 +181,7 @@ public class EMFFormsSpreadsheetControlRenderer extends EMFFormsAbstractSpreadsh
 				displayName.dispose();
 
 				final Comment comment = createComment(workbook, sheet, dmrToResolve,
-					renderTarget.getRow(), renderTarget.getColumn());
+					renderTarget.getRow(), renderTarget.getColumn() + 1);
 				labelCell.setCellComment(comment);
 
 				IObservableValue description;
@@ -191,7 +201,10 @@ public class EMFFormsSpreadsheetControlRenderer extends EMFFormsAbstractSpreadsh
 				if (valueRow == null) {
 					valueRow = sheet.createRow(renderTarget.getRow() + 3);
 				}
-				final Cell valueCell = valueRow.getCell(renderTarget.getColumn(),
+				valueRow.getCell(0, Row.CREATE_NULL_AS_BLANK)
+					.setCellValue(idProvider.getId(viewModelContext.getDomainModel()));
+
+				final Cell valueCell = valueRow.getCell(renderTarget.getColumn() + 1,
 					Row.CREATE_NULL_AS_BLANK);
 
 				final IObservableValue observableValue = emfformsDatabinding

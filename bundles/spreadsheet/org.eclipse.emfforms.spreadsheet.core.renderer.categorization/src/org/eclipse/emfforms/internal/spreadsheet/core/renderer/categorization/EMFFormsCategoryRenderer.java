@@ -11,10 +11,6 @@
  ******************************************************************************/
 package org.eclipse.emfforms.internal.spreadsheet.core.renderer.categorization;
 
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.WorkbookUtil;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategory;
@@ -22,7 +18,6 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsAbstractSpreadsheetRenderer;
-import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsIdProvider;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsNoRendererException;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetRenderTarget;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetRendererFactory;
@@ -36,20 +31,17 @@ import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetReport;
 public class EMFFormsCategoryRenderer extends EMFFormsAbstractSpreadsheetRenderer<VCategory> {
 
 	private final EMFFormsSpreadsheetRendererFactory rendererFactory;
-	private final EMFFormsIdProvider idProvider;
 	private final ReportService reportService;
 
 	/**
 	 * Default constructor.
 	 *
 	 * @param rendererFactory The EMFFormsSpreadsheetRendererFactory to use
-	 * @param idProvider The {@link EMFFormsIdProvider} to use
 	 * @param reportService The {@link ReportService} to use
 	 */
-	public EMFFormsCategoryRenderer(EMFFormsSpreadsheetRendererFactory rendererFactory, EMFFormsIdProvider idProvider,
+	public EMFFormsCategoryRenderer(EMFFormsSpreadsheetRendererFactory rendererFactory,
 		ReportService reportService) {
 		this.rendererFactory = rendererFactory;
-		this.idProvider = idProvider;
 		this.reportService = reportService;
 	}
 
@@ -68,21 +60,9 @@ public class EMFFormsCategoryRenderer extends EMFFormsAbstractSpreadsheetRendere
 			final EMFFormsAbstractSpreadsheetRenderer<VElement> renderer = rendererFactory.getRendererInstance(
 				vElement.getComposite(), viewModelContext);
 			final String sheetName = WorkbookUtil.createSafeSheetName(vElement.getLabel());
-			Sheet sheet = workbook.getSheet(sheetName);
-			if (sheet == null) {
-				sheet = workbook.createSheet(sheetName);
-			}
-			final Cell cell = sheet.createRow(0).getCell(0, Row.CREATE_NULL_AS_BLANK);
-			cell.setCellValue(EMFFormsIdProvider.ID_COLUMN);
 
-			final CellStyle cellStyle = workbook.createCellStyle();
-			cellStyle.setLocked(true);
-			cell.setCellStyle(cellStyle);
-
-			sheet.createRow(renderTarget.getRow() + 3).getCell(0, Row.CREATE_NULL_AS_BLANK)
-				.setCellValue(idProvider.getId(viewModelContext.getDomainModel()));
 			numberRenderedColumns += renderer.render(workbook, vElement.getComposite(), viewModelContext,
-				new EMFFormsSpreadsheetRenderTarget(sheetName, 0, 1));
+				new EMFFormsSpreadsheetRenderTarget(sheetName, 0, 0));
 		} catch (final EMFFormsNoRendererException ex) {
 			reportService.report(new EMFFormsSpreadsheetReport(ex, EMFFormsSpreadsheetReport.ERROR));
 		}

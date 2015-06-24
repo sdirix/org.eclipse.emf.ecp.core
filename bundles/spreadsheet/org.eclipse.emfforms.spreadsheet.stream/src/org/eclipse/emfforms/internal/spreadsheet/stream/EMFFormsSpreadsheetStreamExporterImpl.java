@@ -14,6 +14,7 @@ package org.eclipse.emfforms.internal.spreadsheet.stream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Collection;
+import java.util.Map;
 
 import org.apache.poi.ss.usermodel.Workbook;
 import org.eclipse.emf.ecore.EObject;
@@ -36,13 +37,15 @@ public class EMFFormsSpreadsheetStreamExporterImpl implements EMFFormsSpreadshee
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emfforms.spi.spreadsheet.stream.EMFFormsSpreadsheetStreamExporter#render(java.io.OutputStream,
 	 *      java.util.Collection, org.eclipse.emf.ecp.view.spi.model.VView)
 	 */
 	@Override
-	public void render(OutputStream outputStream, Collection<EObject> domainObjects, VView viewModel) {
-		final Workbook workbook = EMFFormsSpreadsheetExporter.INSTANCE.render(domainObjects, viewModel);
+	public void render(OutputStream outputStream, Collection<EObject> domainObjects, VView viewModel,
+		Map<EObject, Map<String, String>> additionalInformation) {
+		final Workbook workbook = EMFFormsSpreadsheetExporter.INSTANCE.render(domainObjects, viewModel,
+			additionalInformation);
 
 		final BundleContext bundleContext = FrameworkUtil.getBundle(getClass()).getBundleContext();
 		final ServiceReference<ReportService> serviceReference = bundleContext.getServiceReference(ReportService.class);

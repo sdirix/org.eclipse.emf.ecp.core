@@ -19,6 +19,7 @@ import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsAbstractSpreadsheetRenderer;
+import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsIdProvider;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetRendererService;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -36,6 +37,7 @@ public class EMFFormsSpreadsheetControlRendererService implements
 	private EMFFormsLabelProvider emfformsLabelProvider;
 	private ReportService reportService;
 	private VTViewTemplateProvider vtViewTemplateProvider;
+	private EMFFormsIdProvider emfFormsIdProvider;
 
 	/**
 	 * The VTViewTemplateProvider to use.
@@ -78,6 +80,16 @@ public class EMFFormsSpreadsheetControlRendererService implements
 	}
 
 	/**
+	 * The EMFFormsIdProvider to use.
+	 *
+	 * @param emfFormsIdProvider the EMFFormsIdProvider to set
+	 */
+	@Reference
+	protected void setEmfFormsIdProvider(EMFFormsIdProvider emfFormsIdProvider) {
+		this.emfFormsIdProvider = emfFormsIdProvider;
+	}
+
+	/**
 	 * {@inheritDoc}
 	 *
 	 * @see org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetRendererService#isApplicable(org.eclipse.emf.ecp.view.spi.model.VElement,
@@ -102,7 +114,7 @@ public class EMFFormsSpreadsheetControlRendererService implements
 	public EMFFormsAbstractSpreadsheetRenderer<VControl> getRendererInstance(
 		VControl vElement, ViewModelContext viewModelContext) {
 		return new EMFFormsSpreadsheetControlRenderer(emfformsDatabinding, emfformsLabelProvider, reportService,
-			vtViewTemplateProvider);
+			vtViewTemplateProvider, emfFormsIdProvider);
 	}
 
 }
