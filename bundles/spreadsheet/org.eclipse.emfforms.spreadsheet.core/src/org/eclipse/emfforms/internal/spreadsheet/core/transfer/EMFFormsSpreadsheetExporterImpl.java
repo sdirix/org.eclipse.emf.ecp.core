@@ -133,8 +133,9 @@ public class EMFFormsSpreadsheetExporterImpl implements EMFFormsSpreadsheetExpor
 
 		final Map<String, Integer> keyColumnMap = new LinkedHashMap<String, Integer>();
 		int column = 1;
-		final Row valueRow = sheet.createRow(1);
+		int row = 1;
 		for (final EObject eObject : additionalInformation.keySet()) {
+			final Row valueRow = sheet.createRow(row++);
 			// set id
 			valueRow.getCell(0, Row.CREATE_NULL_AS_BLANK).setCellValue(idProvider.getId(eObject));
 

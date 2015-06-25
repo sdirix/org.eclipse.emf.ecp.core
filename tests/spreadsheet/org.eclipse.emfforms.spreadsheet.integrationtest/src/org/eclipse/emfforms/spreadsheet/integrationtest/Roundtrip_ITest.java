@@ -16,6 +16,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -58,16 +59,19 @@ public class Roundtrip_ITest {
 		EMFFormsSpreadsheetExporter viewRenderer = EMFFormsSpreadsheetExporter.INSTANCE;
 		File targetFile = new File("export.xls");
 		EObject user = getDomainModel();
+		EObject user2 = getDomainModel();
 		Map<String, Object> context=new LinkedHashMap<String, Object>();
 		context.put("root", true);
 		context.put("detail", true);
 		Map<EObject, Map<String, String>> additionalInformation=new LinkedHashMap<EObject, Map<String,String>>();
 		Map<String, String> keyValueMap=new LinkedHashMap<String, String>();
 		keyValueMap.put("MyColumn1", "MyValue1");
-		keyValueMap.put("MyColumn2", "MyValue2");
+		Map<String, String> keyValueMap2=new LinkedHashMap<String, String>();
+		keyValueMap2.put("MyColumn2", "MyValue2");
 		additionalInformation.put(user, keyValueMap);
+		additionalInformation.put(user2, keyValueMap2);
 		
-		Workbook wb=viewRenderer.render(Collections.singleton(user),ViewProviderHelper.getView(user, context),additionalInformation);
+		Workbook wb=viewRenderer.render(Arrays.asList(user,user2),ViewProviderHelper.getView(user, context),additionalInformation);
 
 		saveWorkbook(wb,targetFile.getAbsolutePath());
 

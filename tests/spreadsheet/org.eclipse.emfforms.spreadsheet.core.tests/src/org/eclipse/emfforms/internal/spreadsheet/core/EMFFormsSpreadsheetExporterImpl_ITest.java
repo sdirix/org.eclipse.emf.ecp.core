@@ -68,7 +68,7 @@ public class EMFFormsSpreadsheetExporterImpl_ITest {
 		final Workbook wb = viewRenderer.render(null, getView(), null);
 		assertEquals(2, wb.getSheetAt(0).getLastRowNum());
 
-		final FileOutputStream fos = new FileOutputStream("export.xls");
+		final FileOutputStream fos = new FileOutputStream("export.xls"); //$NON-NLS-1$
 		wb.write(fos);
 		fos.close();
 	}
@@ -98,9 +98,9 @@ public class EMFFormsSpreadsheetExporterImpl_ITest {
 		final Workbook wb = viewRenderer.render(Collections.singleton(user), getView(), null);
 		final Sheet sheet = wb.getSheetAt(0);
 		final Row row = sheet.getRow(3);
-		assertEquals(10, row.getLastCellNum());
+		assertEquals(11, row.getLastCellNum());
 		for (int i = 0; i < 10; i++) {
-			final Cell cell = row.getCell(i);
+			final Cell cell = row.getCell(i + 1);
 			switch (i) {
 			case 0:
 				assertEquals(user.getFirstName(), cell.getStringCellValue());

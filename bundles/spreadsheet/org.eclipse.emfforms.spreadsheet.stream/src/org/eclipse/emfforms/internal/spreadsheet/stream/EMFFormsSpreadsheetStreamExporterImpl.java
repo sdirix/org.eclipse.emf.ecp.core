@@ -38,8 +38,8 @@ public class EMFFormsSpreadsheetStreamExporterImpl implements EMFFormsSpreadshee
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emfforms.spi.spreadsheet.stream.EMFFormsSpreadsheetStreamExporter#render(java.io.OutputStream,
-	 *      java.util.Collection, org.eclipse.emf.ecp.view.spi.model.VView)
+	 * @see org.eclipse.emfforms.spi.spreadsheet.stream.EMFFormsSpreadsheetStreamExporter#render(OutputStream,
+	 *      Collection, VView, Map)
 	 */
 	@Override
 	public void render(OutputStream outputStream, Collection<EObject> domainObjects, VView viewModel,

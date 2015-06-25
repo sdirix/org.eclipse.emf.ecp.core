@@ -39,8 +39,8 @@ public class EMFFormsSpreadsheetFileExporterImpl implements EMFFormsSpreadsheetF
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emfforms.spi.spreadsheet.file.EMFFormsSpreadsheetFileExporter#render(java.io.File,
-	 *      java.util.Collection, org.eclipse.emf.ecp.view.spi.model.VView)
+	 * @see org.eclipse.emfforms.spi.spreadsheet.file.EMFFormsSpreadsheetFileExporter#render(File, Collection, VView,
+	 *      Map)
 	 */
 	@Override
 	public void render(File file, Collection<EObject> domainObjects, VView viewModel,
