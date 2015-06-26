@@ -72,6 +72,11 @@ public class EMFFormsSpreadsheetExporterImpl implements EMFFormsSpreadsheetExpor
 		final EMFFormsSpreadsheetRendererFactory emfFormsSpreadsheetRendererFactory = bundleContext
 			.getService(serviceReference);
 		final Workbook workbook = new HSSFWorkbook();
+		final CellStyle cellStyle = workbook.createCellStyle();
+		cellStyle.setLocked(true);
+		final CellStyle cellStyle2 = workbook.createCellStyle();
+		cellStyle2.setLocked(true);
+		cellStyle2.setWrapText(true);
 
 		if (domainObjects == null) {
 			try {
@@ -127,9 +132,8 @@ public class EMFFormsSpreadsheetExporterImpl implements EMFFormsSpreadsheetExpor
 		final Row titleRow = sheet.createRow(0);
 		final Cell idCell = titleRow.getCell(0, Row.CREATE_NULL_AS_BLANK);
 		idCell.setCellValue(EMFFormsIdProvider.ID_COLUMN);
-		final CellStyle cellStyle = workbook.createCellStyle();
-		cellStyle.setLocked(true);
-		idCell.setCellStyle(cellStyle);
+		final CellStyle readOnly = workbook.getCellStyleAt((short) (workbook.getNumCellStyles() - 2));
+		idCell.setCellStyle(readOnly);
 
 		final Map<String, Integer> keyColumnMap = new LinkedHashMap<String, Integer>();
 		int column = 1;
@@ -148,15 +152,11 @@ public class EMFFormsSpreadsheetExporterImpl implements EMFFormsSpreadsheetExpor
 				}
 				final Cell keyCell = titleRow.getCell(keyColumnMap.get(key), Row.CREATE_NULL_AS_BLANK);
 				keyCell.setCellValue(key);
-				final CellStyle keyCellStyle = workbook.createCellStyle();
-				keyCellStyle.setLocked(true);
-				keyCell.setCellStyle(keyCellStyle);
+				keyCell.setCellStyle(readOnly);
 
 				final Cell valueCell = valueRow.getCell(keyColumnMap.get(key), Row.CREATE_NULL_AS_BLANK);
 				valueCell.setCellValue(keyValueMap.get(key));
-				final CellStyle valueCellStyle = workbook.createCellStyle();
-				valueCellStyle.setLocked(true);
-				valueCell.setCellStyle(valueCellStyle);
+				valueCell.setCellStyle(readOnly);
 
 			}
 		}

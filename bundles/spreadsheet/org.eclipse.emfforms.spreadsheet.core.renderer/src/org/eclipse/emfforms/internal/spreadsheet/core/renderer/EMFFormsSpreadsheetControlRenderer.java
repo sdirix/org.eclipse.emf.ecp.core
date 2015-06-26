@@ -119,31 +119,24 @@ public class EMFFormsSpreadsheetControlRenderer extends EMFFormsAbstractSpreadsh
 			formatRow = sheet.createRow(2);
 		}
 
+		final CellStyle readOnly = workbook.getCellStyleAt((short) (workbook.getNumCellStyles() - 2));
+		final CellStyle readOnlyWrap = workbook.getCellStyleAt((short) (workbook.getNumCellStyles() - 1));
+
 		final Cell idCell = labelRow.getCell(0, Row.CREATE_NULL_AS_BLANK);
 		idCell.setCellValue(EMFFormsIdProvider.ID_COLUMN);
-		final CellStyle idCellStyle = workbook.createCellStyle();
-		idCellStyle.setLocked(true);
-		idCell.setCellStyle(idCellStyle);
+		idCell.setCellStyle(readOnly);
 
 		final Cell labelCell = labelRow.getCell(renderTarget.getColumn() + 1,
 			Row.CREATE_NULL_AS_BLANK);
-		final CellStyle labelCellStyle = workbook.createCellStyle();
-		labelCellStyle.setLocked(true);
-		labelCell.setCellStyle(labelCellStyle);
+		labelCell.setCellStyle(readOnly);
 
 		final Cell descriptionCell = descriptionRow.getCell(renderTarget.getColumn() + 1,
 			Row.CREATE_NULL_AS_BLANK);
-		final CellStyle descriptionCellStyle = workbook.createCellStyle();
-		descriptionCellStyle.setWrapText(true);
-		descriptionCellStyle.setLocked(true);
-		descriptionCell.setCellStyle(descriptionCellStyle);
+		descriptionCell.setCellStyle(readOnlyWrap);
 
 		final Cell formatCell = formatRow.getCell(renderTarget.getColumn() + 1,
 			Row.CREATE_NULL_AS_BLANK);
-		final CellStyle formatCellStyle = workbook.createCellStyle();
-		formatCellStyle.setWrapText(true);
-		formatCellStyle.setLocked(true);
-		formatCell.setCellStyle(formatCellStyle);
+		formatCell.setCellStyle(readOnlyWrap);
 
 		try {
 			final EMFFormsExportTableParent exportTableParent = (EMFFormsExportTableParent) viewModelContext
