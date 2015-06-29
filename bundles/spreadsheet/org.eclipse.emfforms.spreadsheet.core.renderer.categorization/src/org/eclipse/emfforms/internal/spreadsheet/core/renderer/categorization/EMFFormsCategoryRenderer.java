@@ -62,7 +62,7 @@ public class EMFFormsCategoryRenderer extends EMFFormsAbstractSpreadsheetRendere
 			final String sheetName = WorkbookUtil.createSafeSheetName(vElement.getLabel());
 
 			numberRenderedColumns += renderer.render(workbook, vElement.getComposite(), viewModelContext,
-				new EMFFormsSpreadsheetRenderTarget(sheetName, 0, 0));
+				new EMFFormsSpreadsheetRenderTarget(sheetName, renderTarget.getRow(), 0));
 		} catch (final EMFFormsNoRendererException ex) {
 			reportService.report(new EMFFormsSpreadsheetReport(ex, EMFFormsSpreadsheetReport.ERROR));
 		}

@@ -134,7 +134,9 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 
 					@Override
 					public void run() {
-						applyEnable();
+						if (!isDisposed) {
+							applyEnable();
+						}
 					}
 				});
 			}
