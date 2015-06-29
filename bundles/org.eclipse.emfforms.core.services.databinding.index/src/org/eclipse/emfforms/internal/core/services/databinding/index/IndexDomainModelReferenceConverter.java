@@ -114,12 +114,13 @@ public class IndexDomainModelReferenceConverter implements DomainModelReferenceC
 
 		final VIndexDomainModelReference indexReference = VIndexDomainModelReference.class.cast(domainModelReference);
 
-		IValueProperty valueProperty;
+		final IValueProperty valueProperty;
 
 		if (indexReference.getPrefixDMR() != null) {
 			final IValueProperty prefixProperty = emfFormsDatabinding.getValueProperty(indexReference.getPrefixDMR(),
 				object);
-			valueProperty = new EMFIndexedValueProperty(getEditingDomain(object), indexReference.getIndex(),
+			valueProperty = new EMFIndexedValuePropertyDelegator(getEditingDomain(object),
+				indexReference.getIndex(), prefixProperty,
 				EStructuralFeature.class.cast(prefixProperty.getValueType()));
 		}
 		else {
@@ -174,7 +175,8 @@ public class IndexDomainModelReferenceConverter implements DomainModelReferenceC
 		if (indexReference.getPrefixDMR() != null) {
 			final IValueProperty prefixProperty = emfFormsDatabinding.getValueProperty(indexReference.getPrefixDMR(),
 				object);
-			valueProperty = new EMFIndexedValueProperty(getEditingDomain(object), indexReference.getIndex(),
+			valueProperty = new EMFIndexedValuePropertyDelegator(getEditingDomain(object), indexReference.getIndex(),
+				prefixProperty,
 				EStructuralFeature.class.cast(prefixProperty.getValueType()));
 		}
 		else {
