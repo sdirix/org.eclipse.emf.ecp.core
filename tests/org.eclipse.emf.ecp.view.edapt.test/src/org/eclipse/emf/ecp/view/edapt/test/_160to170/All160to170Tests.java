@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -9,20 +9,15 @@
  * Contributors:
  * jfaltermeier - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.edapt.test._140to150;
+package org.eclipse.emf.ecp.view.edapt.test._160to170;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
-/**
- * @author jfaltermeier
- *
- */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-	Table_PTest.class,
-	TableNewDMROldNS_PTest.class
+	UUIDIntroductionTest.class
 })
-public class All140to150Tests {
+public class All160to170Tests {
 
 }

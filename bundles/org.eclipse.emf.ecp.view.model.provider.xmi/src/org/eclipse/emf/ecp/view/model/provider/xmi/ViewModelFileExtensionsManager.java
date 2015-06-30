@@ -29,12 +29,12 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.emf.ecp.internal.view.model.provider.xmi.Activator;
 import org.eclipse.emf.ecp.view.spi.model.LocalizationAdapter;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewModelProperties;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
+import org.eclipse.emf.ecp.view.spi.model.util.VViewResourceFactoryImpl;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 
@@ -108,7 +108,7 @@ public final class ViewModelFileExtensionsManager {
 		final Map<String, Object> extensionToFactoryMap = resourceSet
 			.getResourceFactoryRegistry().getExtensionToFactoryMap();
 		extensionToFactoryMap.put(Resource.Factory.Registry.DEFAULT_EXTENSION,
-			new XMIResourceFactoryImpl());
+			new VViewResourceFactoryImpl());
 		resourceSet.getPackageRegistry().put(VViewPackage.eNS_URI,
 			VViewPackage.eINSTANCE);
 		final Resource resource = resourceSet.createResource(uri);

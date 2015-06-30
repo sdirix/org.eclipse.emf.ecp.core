@@ -11,8 +11,9 @@
     language="" usedGenPackages="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore"
     interfaceNamePattern="V{0}" classNamePattern="V{0}Impl" importOrganizing="true">
   <foreignModel>view.ecore</foreignModel>
-  <genPackages prefix="View" basePackage="org.eclipse.emf.ecp.view.spi" disposableProviderFactory="true"
-      extensibleProviderFactory="true" childCreationExtenders="true" ecorePackage="view.ecore#/">
+  <genPackages prefix="View" basePackage="org.eclipse.emf.ecp.view.spi" resource="XMI"
+      disposableProviderFactory="true" extensibleProviderFactory="true" childCreationExtenders="true"
+      ecorePackage="view.ecore#/">
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="view.ecore#//LabelAlignment">
       <genEnumLiterals ecoreEnumLiteral="view.ecore#//LabelAlignment/Left"/>
       <genEnumLiterals ecoreEnumLiteral="view.ecore#//LabelAlignment/None"/>

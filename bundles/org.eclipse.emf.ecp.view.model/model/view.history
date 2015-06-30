@@ -299,7 +299,7 @@
           featureName="value" dataValue="resolveable"/>
     </changes>
   </releases>
-  <releases>
+  <releases date="2015-08-16T21:20:47.038+0200" label="170">
     <changes xsi:type="history:OperationChange">
       <changes xsi:type="history:Create" target="view.ecore#/" referenceName="eClassifiers"
           element="view.ecore#//ViewModelProperties">
@@ -549,5 +549,8 @@
         featureName="value" dataValue="-1" oldDataValue="0"/>
     <changes xsi:type="history:Set" element="view.ecore#//Control/labelAlignment"
         featureName="defaultValueLiteral" dataValue="Default" oldDataValue="Left"/>
+    <changes xsi:type="history:Set" element="view.ecore#/" featureName="nsURI" dataValue="http://org/eclipse/emf/ecp/view/model/170"
+        oldDataValue="http://org/eclipse/emf/ecp/view/model"/>
   </releases>
+  <releases/>
 </history:History>

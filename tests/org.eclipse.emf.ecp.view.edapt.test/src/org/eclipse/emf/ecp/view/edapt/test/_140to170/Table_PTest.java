@@ -9,7 +9,7 @@
  * Contributors:
  * jfaltermeier - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.edapt.test._140to150;
+package org.eclipse.emf.ecp.view.edapt.test._140to170;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -18,6 +18,8 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
+import org.eclipse.emf.common.util.TreeIterator;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.edapt.test.AbstractMigrationTest;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
@@ -29,7 +31,7 @@ import org.eclipse.emf.emfstore.bowling.BowlingPackage;
  * @author jfaltermeier
  *
  */
-public class TableNewDMROldNS_PTest extends AbstractMigrationTest {
+public class Table_PTest extends AbstractMigrationTest {
 
 	/**
 	 * {@inheritDoc}
@@ -58,6 +60,12 @@ public class TableNewDMROldNS_PTest extends AbstractMigrationTest {
 		assertSame(BowlingPackage.eINSTANCE.getLeague_Players(), childDMR.getDomainModelEFeature());
 		assertEquals(1, childDMR.getDomainModelEReferencePath().size());
 		assertSame(BowlingPackage.eINSTANCE.getReferee_League(), childDMR.getDomainModelEReferencePath().get(0));
+		assertUUIDPresent(view);
+		final TreeIterator<EObject> contents = view.eAllContents();
+		while (contents.hasNext()) {
+			final EObject next = contents.next();
+			assertUUIDPresent(next);
+		}
 	}
 
 	/**
@@ -67,6 +75,6 @@ public class TableNewDMROldNS_PTest extends AbstractMigrationTest {
 	 */
 	@Override
 	protected String getPath() {
-		return "140/TableNewDMROldNS.view";
+		return "140/Table.view";
 	}
 }

@@ -471,6 +471,13 @@
                 <message_argument value="1"/>
             </message_arguments>
         </filter>
+        <filter comment="SPI Change 1.7.0" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage"/>
+                <message_argument value="eNS_URI"/>
+                <message_argument value="http://org/eclipse/emf/ecp/view/model"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/emf/ecp/view/spi/model/VViewPackage.java" type="org.eclipse.emf.ecp.view.spi.model.VViewPackage$Literals">
         <filter comment="SPI" id="403767336">

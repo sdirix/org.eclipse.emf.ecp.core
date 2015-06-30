@@ -9,18 +9,21 @@
  * Contributors:
  * jfaltermeier - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.edapt.test;
+package org.eclipse.emf.ecp.view.edapt.test._140to170;
 
-import org.eclipse.emf.ecp.view.edapt.test._140to170.All140to170Tests;
-import org.eclipse.emf.ecp.view.edapt.test._160to170.All160to170Tests;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
+/**
+ * @author jfaltermeier
+ *
+ */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-	All140to170Tests.class,
-	All160to170Tests.class
+	Table_PTest.class,
+	TableNewDMROldNS_PTest.class,
+	EmptyTableWithUUID_PTest.class
 })
-public class AllTests {
+public class All140to170Tests {
 
 }
