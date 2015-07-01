@@ -14,13 +14,14 @@ package org.eclipse.emfforms.internal.spreadsheet.core;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 
@@ -29,6 +30,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.xml.type.internal.XMLCalendar;
@@ -44,6 +46,7 @@ import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emfforms.internal.spreadsheet.core.transfer.EMFFormsSpreadsheetExporterImpl;
+import org.eclipse.emfforms.spi.spreadsheet.core.transfer.EMFFormsSpreadsheetExporter;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -63,14 +66,26 @@ public class EMFFormsSpreadsheetExporterImpl_ITest {
 	}
 
 	@Test
+	public void testRenderAdditional() throws DatatypeConfigurationException, IOException {
+		final EMFFormsSpreadsheetExporter viewRenderer = EMFFormsSpreadsheetExporter.INSTANCE;
+		final User user = getDomainModel();
+		final User user2 = getDomainModel();
+		final Map<EObject, Map<String, String>> additionalInformation = new LinkedHashMap<EObject, Map<String, String>>();
+		final Map<String, String> mapping1 = new LinkedHashMap<String, String>();
+		mapping1.put("Header", "Value1"); //$NON-NLS-1$//$NON-NLS-2$
+		additionalInformation.put(user, mapping1);
+		final Map<String, String> mapping2 = new LinkedHashMap<String, String>();
+		mapping2.put("Header", "Value2"); //$NON-NLS-1$//$NON-NLS-2$
+		additionalInformation.put(user2, mapping2);
+		final Workbook wb = viewRenderer.render(Arrays.asList(user, user2), getView(), additionalInformation);
+		assertEquals(4, wb.getSheetAt(0).getLastRowNum());
+	}
+
+	@Test
 	public void testRenderTemplate() throws DatatypeConfigurationException, IOException {
-		final EMFFormsSpreadsheetExporterImpl viewRenderer = new EMFFormsSpreadsheetExporterImpl();
+		final EMFFormsSpreadsheetExporter viewRenderer = EMFFormsSpreadsheetExporter.INSTANCE;
 		final Workbook wb = viewRenderer.render(null, getView(), null);
 		assertEquals(2, wb.getSheetAt(0).getLastRowNum());
-
-		final FileOutputStream fos = new FileOutputStream("export.xls"); //$NON-NLS-1$
-		wb.write(fos);
-		fos.close();
 	}
 
 	@Test

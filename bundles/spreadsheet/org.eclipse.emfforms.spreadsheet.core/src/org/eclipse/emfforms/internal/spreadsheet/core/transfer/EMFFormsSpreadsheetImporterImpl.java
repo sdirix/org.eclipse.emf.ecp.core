@@ -86,33 +86,17 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 		final List<EObject> result = new ArrayList<EObject>();
 
 		final Map<String, Map<Integer, Integer>> mapIdToSheetIdWithRowId = parseIds(workbook);
-		if (mapIdToSheetIdWithRowId == null) {
-			for (int sheetId = 0; sheetId < workbook.getNumberOfSheets(); sheetId++) {
+		for (final String eObjectId : mapIdToSheetIdWithRowId.keySet()) {
+			final Map<Integer, Integer> sheetIdToRowId = mapIdToSheetIdWithRowId.get(eObjectId);
+			final EObject eObject = EcoreUtil.create(eClass);
+			resource.getContents().add(eObject);
+			for (final Integer sheetId : sheetIdToRowId.keySet()) {
 				final Sheet sheet = workbook.getSheetAt(sheetId);
 				final Row labelRow = sheet.getRow(0);
-				for (int rowId = 3; rowId <= sheet.getLastRowNum(); rowId++) {
-					final Row row = sheet.getRow(rowId);
-					final EObject eObject = EcoreUtil.create(eClass);
-					resource.getContents().add(eObject);
-					extractRowInformation(labelRow, row, eObject);
-					result.add(eObject);
-
-				}
+				final Row row = sheet.getRow(sheetIdToRowId.get(sheetId));
+				extractRowInformation(labelRow, row, eObject);
 			}
-		}
-		else {
-			for (final String eObjectId : mapIdToSheetIdWithRowId.keySet()) {
-				final Map<Integer, Integer> sheetIdToRowId = mapIdToSheetIdWithRowId.get(eObjectId);
-				final EObject eObject = EcoreUtil.create(eClass);
-				resource.getContents().add(eObject);
-				for (final Integer sheetId : sheetIdToRowId.keySet()) {
-					final Sheet sheet = workbook.getSheetAt(sheetId);
-					final Row labelRow = sheet.getRow(0);
-					final Row row = sheet.getRow(sheetIdToRowId.get(sheetId));
-					extractRowInformation(labelRow, row, eObject);
-				}
-				result.add(eObject);
-			}
+			result.add(eObject);
 		}
 		return result;
 	}
@@ -152,7 +136,9 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 			final Sheet sheet = workbook.getSheetAt(sheetId);
 			final Row labelRow = sheet.getRow(0);
 			if (!EMFFormsIdProvider.ID_COLUMN.equals(labelRow.getCell(0).getStringCellValue())) {
-				return null;
+				throw new IllegalStateException(
+					String.format("The first column must always contain the EObject IDs. Expected %1$s but was %2$s.", //$NON-NLS-1$
+						EMFFormsIdProvider.ID_COLUMN, labelRow.getCell(0).getStringCellValue()));
 			}
 			for (int rowId = 3; rowId <= sheet.getLastRowNum(); rowId++) {
 				final Row row = sheet.getRow(rowId);
@@ -174,8 +160,7 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 			final EAttribute eAttribute = (EAttribute) valueType;
 			final EDataType eDataType = eAttribute.getEAttributeType();
 			final EFactory eFactory = eDataType.getEPackage().getEFactoryInstance();
-			if (eAttribute.isMany())
-			{
+			if (eAttribute.isMany()) {
 				final List<Object> result = new ArrayList<Object>();
 
 				for (final String element : value.split(" ")) //$NON-NLS-1$
@@ -186,8 +171,7 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 				return result;
 			}
 			return eFactory.createFromString(eDataType, value);
-		}
-		else if (EReference.class.isInstance(valueType)) {
+		} else if (EReference.class.isInstance(valueType)) {
 			if (EReference.class.cast(valueType).isMany()) {
 				return ECollections.EMPTY_ELIST;
 			}
