@@ -55,31 +55,33 @@ public class Roundtrip_ITest {
 	@Test
 	public void test() throws DatatypeConfigurationException, IOException {
 		// write data
-		EMFFormsSpreadsheetExporter viewRenderer = EMFFormsSpreadsheetExporter.INSTANCE;
-		File targetFile = new File("export.xls");
-		EObject user = getDomainModel();
-		EObject user2 = getDomainModel();
-		Map<String, Object> context=new LinkedHashMap<String, Object>();
-		context.put("root", true);
-		context.put("detail", true);
-		Map<EObject, Map<String, String>> additionalInformation=new LinkedHashMap<EObject, Map<String,String>>();
-		Map<String, String> keyValueMap=new LinkedHashMap<String, String>();
-		keyValueMap.put("MyColumn1", "MyValue1");
-		Map<String, String> keyValueMap2=new LinkedHashMap<String, String>();
-		keyValueMap2.put("MyColumn2", "MyValue2");
+		final EMFFormsSpreadsheetExporter viewRenderer = EMFFormsSpreadsheetExporter.INSTANCE;
+		final EObject user = getDomainModel();
+		final EObject user2 = getDomainModel();
+		final Map<String, Object> context = new LinkedHashMap<String, Object>();
+		context.put("root", true); //$NON-NLS-1$
+		context.put("detail", true); //$NON-NLS-1$
+		final Map<EObject, Map<String, String>> additionalInformation = new LinkedHashMap<EObject, Map<String, String>>();
+		final Map<String, String> keyValueMap = new LinkedHashMap<String, String>();
+		keyValueMap.put("MyColumn1", "MyValue1"); //$NON-NLS-1$ //$NON-NLS-2$
+		final Map<String, String> keyValueMap2 = new LinkedHashMap<String, String>();
+		keyValueMap2.put("MyColumn2", "MyValue2"); //$NON-NLS-1$ //$NON-NLS-2$
 		additionalInformation.put(user, keyValueMap);
 		additionalInformation.put(user2, keyValueMap2);
-		
-		Workbook wb=viewRenderer.render(Arrays.asList(user,user2),ViewProviderHelper.getView(user, context),additionalInformation);
 
-		saveWorkbook(wb,targetFile.getAbsolutePath());
+		final Workbook wb = viewRenderer.render(Arrays.asList(user, user2), ViewProviderHelper.getView(user, context),
+			additionalInformation);
+
+		final File targetFile = new File("export.xls"); //$NON-NLS-1$
+		saveWorkbook(wb, targetFile.getAbsolutePath());
 
 		// read data
 		final FileInputStream file = new FileInputStream(targetFile);
 		final Workbook workbook = new HSSFWorkbook(file);
-		
+
 		final EMFFormsSpreadsheetImporter spreadsheetImport = EMFFormsSpreadsheetImporter.INSTANCE;
-		final Collection<EObject> users = spreadsheetImport.importSpreadsheet(workbook, TaskPackage.eINSTANCE.getUser());
+		final Collection<EObject> users = spreadsheetImport.importSpreadsheet(workbook,
+			TaskPackage.eINSTANCE.getUser());
 		for (final EObject eObject : users) {
 			EcoreUtil.equals(eObject, user);
 		}
@@ -91,24 +93,24 @@ public class Roundtrip_ITest {
 		try {
 			fileOut = new FileOutputStream(absolutePath);
 			wb.write(fileOut);
-		} catch (FileNotFoundException e) {
+		} catch (final FileNotFoundException e) {
 			e.printStackTrace();
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			e.printStackTrace();
-		} finally{
+		} finally {
 			try {
 				fileOut.close();
-			} catch (IOException e) {
+			} catch (final IOException e) {
 				e.printStackTrace();
 			}
 		}
 	}
 
 	private EObject getDomainModel() {
-		User user=TaskFactory.eINSTANCE.createUser();
-		user.setFirstName("John");
-		user.setLastName("Doe");
-		user.setEmail("john.doe@mail.com");
+		final User user = TaskFactory.eINSTANCE.createUser();
+		user.setFirstName("John"); //$NON-NLS-1$
+		user.setLastName("Doe"); //$NON-NLS-1$
+		user.setEmail("john.doe@mail.com"); //$NON-NLS-1$
 		user.setWeight(1.1);
 		user.setHeigth(1);
 		user.setNationality(Nationality.ITALIAN);
