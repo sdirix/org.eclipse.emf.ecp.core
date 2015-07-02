@@ -18,7 +18,6 @@ import java.util.Map;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -50,7 +49,7 @@ public final class ViewModelFileExtensionsManager {
 	private static final String FILE_EXTENSION = "org.eclipse.emf.ecp.view.model.provider.xmi.file"; //$NON-NLS-1$
 	private static final String FILEPATH_ATTRIBUTE = "filePath"; //$NON-NLS-1$
 
-	private final Map<EClass, Map<VView, Map<String, String>>> map = new LinkedHashMap<EClass, Map<VView, Map<String, String>>>();
+	private final Map<EClass, Map<VView, ExtensionDescription>> map = new LinkedHashMap<EClass, Map<VView, ExtensionDescription>>();
 
 	private ViewModelFileExtensionsManager() {
 	}
@@ -84,18 +83,12 @@ public final class ViewModelFileExtensionsManager {
 				continue;
 			}
 			final ExtensionDescription extensionDescription = extensionURIS.get(uri);
-			view.eAdapters().add(new LocalizationAdapter() {
 
-				@Override
-				public String localize(String key) {
-					return LocalizationServiceHelper.getString(Platform.getBundle(extensionDescription.getBundleId()),
-						key);
-				}
-			});
 			if (!map.containsKey(view.getRootEClass())) {
-				map.put(view.getRootEClass(), new LinkedHashMap<VView, Map<String, String>>());
+				map.put(view.getRootEClass(), new LinkedHashMap<VView, ExtensionDescription>());
 			}
-			map.get(view.getRootEClass()).put(view, extensionDescription.getKeyValuPairs());
+
+			map.get(view.getRootEClass()).put(view, extensionDescription);
 		}
 
 	}
@@ -186,14 +179,14 @@ public final class ViewModelFileExtensionsManager {
 	 * @return a view model for the given eObject
 	 */
 	public VView createView(EObject eObject, Map<String, Object> context) {
-		final Map<VView, Map<String, String>> viewMap = map.get(eObject.eClass());
+		final Map<VView, ExtensionDescription> viewMap = map.get(eObject.eClass());
 		if (context == null) {
 			return viewMap.keySet().iterator().next();
 		}
 		VView bestFitting = null;
 		int maxNumberFittingKeyValues = -1;
 		for (final VView view : viewMap.keySet()) {
-			final Map<String, String> viewFilter = viewMap.get(view);
+			final Map<String, String> viewFilter = viewMap.get(view).getKeyValuPairs();
 			int currentFittingKeyValues = 0;
 			for (final String viewFilterKey : viewFilter.keySet()) {
 				if (context.containsKey(viewFilterKey)) {
@@ -218,9 +211,16 @@ public final class ViewModelFileExtensionsManager {
 			}
 		}
 
-		final Adapter adapter = bestFitting.eAdapters().get(0);
 		final VView copiedView = EcoreUtil.copy(bestFitting);
-		copiedView.eAdapters().add(adapter);
+		final String bundleId = map.get(bestFitting.getRootEClass()).get(bestFitting).getBundleId();
+		copiedView.eAdapters().add(new LocalizationAdapter() {
+
+			@Override
+			public String localize(String key) {
+				return LocalizationServiceHelper.getString(Platform.getBundle(bundleId),
+					key);
+			}
+		});
 		return copiedView;
 	}
 

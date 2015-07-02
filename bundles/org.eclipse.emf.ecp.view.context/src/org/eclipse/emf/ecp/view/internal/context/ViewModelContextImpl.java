@@ -555,6 +555,12 @@ public class ViewModelContextImpl implements ViewModelContext {
 		}
 		controlChangeListener.clear();
 
+		final Set<ViewModelContext> toDispose = new LinkedHashSet<ViewModelContext>(childContextUsers.keySet());
+		for (final ViewModelContext vmc : toDispose) {
+			vmc.dispose();
+		}
+		childContextUsers.clear();
+		childContexts.clear();
 		isDisposing = false;
 		isDisposed = true;
 
