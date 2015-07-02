@@ -16,6 +16,7 @@ package org.eclipse.emfforms.spi.core.services.domainexpander;
  * {@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReference VDomainModelReference} failed.
  *
  * @author Lucas Koehler
+ * @since 1.7
  *
  */
 public class EMFFormsExpandingFailedException extends Exception {

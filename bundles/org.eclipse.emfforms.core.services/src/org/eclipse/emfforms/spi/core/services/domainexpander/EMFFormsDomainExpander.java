@@ -20,6 +20,7 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
  * defined in the domain model reference but do not yet exist (= are null) in the domain model, are created.
  *
  * @author Lucas Koehler
+ * @since 1.7
  *
  */
 public interface EMFFormsDomainExpander {

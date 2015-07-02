@@ -24,6 +24,7 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
  * used in the {@link EMFFormsDomainExpander}.
  *
  * @author Lucas Koehler
+ * @since 1.7
  *
  */
 public interface EMFFormsDMRExpander {
