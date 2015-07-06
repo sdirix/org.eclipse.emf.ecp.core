@@ -70,6 +70,44 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 		Bundle getBundle() {
 			return bundle;
 		}
+
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + (bundle == null ? 0 : bundle.hashCode());
+			result = prime * result + (key == null ? 0 : key.hashCode());
+			return result;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj) {
+				return true;
+			}
+			if (obj == null) {
+				return false;
+			}
+			if (!(obj instanceof DisplayNameKey)) {
+				return false;
+			}
+			final DisplayNameKey other = (DisplayNameKey) obj;
+			if (bundle == null) {
+				if (other.bundle != null) {
+					return false;
+				}
+			} else if (!bundle.equals(other.bundle)) {
+				return false;
+			}
+			if (key == null) {
+				if (other.key != null) {
+					return false;
+				}
+			} else if (!key.equals(other.key)) {
+				return false;
+			}
+			return true;
+		}
 	}
 
 	/**
@@ -100,6 +138,55 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 		String getFeatureName() {
 			return featureName;
 		}
+
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + (bundle == null ? 0 : bundle.hashCode());
+			result = prime * result + (eClassName == null ? 0 : eClassName.hashCode());
+			result = prime * result + (featureName == null ? 0 : featureName.hashCode());
+			return result;
+		}
+
+		// BEGIN COMPLEX CODE
+		// path complexity check does not take returns into account
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj) {
+				return true;
+			}
+			if (obj == null) {
+				return false;
+			}
+			if (!(obj instanceof DescriptionKey)) {
+				return false;
+			}
+			final DescriptionKey other = (DescriptionKey) obj;
+			if (bundle == null) {
+				if (other.bundle != null) {
+					return false;
+				}
+			} else if (!bundle.equals(other.bundle)) {
+				return false;
+			}
+			if (eClassName == null) {
+				if (other.eClassName != null) {
+					return false;
+				}
+			} else if (!eClassName.equals(other.eClassName)) {
+				return false;
+			}
+			if (featureName == null) {
+				if (other.featureName != null) {
+					return false;
+				}
+			} else if (!featureName.equals(other.featureName)) {
+				return false;
+			}
+			return true;
+		}
+		// END COMPLEX CODE
 	}
 
 	private static final String DISPLAY_NAME = "_UI_%1$s_%2$s_feature"; //$NON-NLS-1$
