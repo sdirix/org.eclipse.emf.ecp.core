@@ -104,6 +104,7 @@ public class EMFFormsSpreadsheetControlRenderer extends EMFFormsAbstractSpreadsh
 		Sheet sheet = workbook.getSheet(renderTarget.getSheetName());
 		if (sheet == null) {
 			sheet = workbook.createSheet(renderTarget.getSheetName());
+			setupSheetFormat(sheet);
 		}
 		Row labelRow = sheet.getRow(0);
 		if (labelRow == null) {
@@ -113,7 +114,6 @@ public class EMFFormsSpreadsheetControlRenderer extends EMFFormsAbstractSpreadsh
 		if (descriptionRow == null) {
 			descriptionRow = sheet.createRow(1);
 		}
-
 		Row formatRow = sheet.getRow(2);
 		if (formatRow == null) {
 			formatRow = sheet.createRow(2);
@@ -216,6 +216,12 @@ public class EMFFormsSpreadsheetControlRenderer extends EMFFormsAbstractSpreadsh
 		}
 
 		return 0;
+	}
+
+	private static void setupSheetFormat(final Sheet sheet) {
+		sheet.setDefaultColumnWidth(30);
+		// do not scroll the first column (id) and the three top rows (label+info)
+		sheet.createFreezePane(1, 3);
 	}
 
 	private String getFormatDescription(final EStructuralFeature structuralFeature) {
