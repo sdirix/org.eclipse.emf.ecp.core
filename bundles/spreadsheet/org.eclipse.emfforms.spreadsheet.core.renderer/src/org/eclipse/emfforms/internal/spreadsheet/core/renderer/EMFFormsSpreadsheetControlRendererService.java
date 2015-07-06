@@ -21,6 +21,7 @@ import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsAbstractSpreadsheetRenderer;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsIdProvider;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetRendererService;
+import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsSpreadsheetValueConverterRegistry;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -38,6 +39,7 @@ public class EMFFormsSpreadsheetControlRendererService implements
 	private ReportService reportService;
 	private VTViewTemplateProvider vtViewTemplateProvider;
 	private EMFFormsIdProvider emfFormsIdProvider;
+	private EMFFormsSpreadsheetValueConverterRegistry converterRegistry;
 
 	/**
 	 * The VTViewTemplateProvider to use.
@@ -90,6 +92,16 @@ public class EMFFormsSpreadsheetControlRendererService implements
 	}
 
 	/**
+	 * The EMFFormsSpreadsheetValueConverterRegistry to use.
+	 *
+	 * @param converterRegistry the converter registry
+	 */
+	@Reference
+	public void setConverterRegistry(EMFFormsSpreadsheetValueConverterRegistry converterRegistry) {
+		this.converterRegistry = converterRegistry;
+	}
+
+	/**
 	 * {@inheritDoc}
 	 *
 	 * @see org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetRendererService#isApplicable(org.eclipse.emf.ecp.view.spi.model.VElement,
@@ -114,7 +126,7 @@ public class EMFFormsSpreadsheetControlRendererService implements
 	public EMFFormsAbstractSpreadsheetRenderer<VControl> getRendererInstance(
 		VControl vElement, ViewModelContext viewModelContext) {
 		return new EMFFormsSpreadsheetControlRenderer(emfformsDatabinding, emfformsLabelProvider, reportService,
-			vtViewTemplateProvider, emfFormsIdProvider);
+			vtViewTemplateProvider, emfFormsIdProvider, converterRegistry);
 	}
 
 }

@@ -25,14 +25,9 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.common.command.BasicCommandStack;
-import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EDataType;
-import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIConverter.ReadableInputStream;
@@ -46,6 +41,9 @@ import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedExcep
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsIdProvider;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetReport;
+import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsNoConverterException;
+import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsSpreadsheetValueConverter;
+import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsSpreadsheetValueConverterRegistry;
 import org.eclipse.emfforms.spi.spreadsheet.core.transfer.EMFFormsSpreadsheetImporter;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
@@ -101,6 +99,9 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 		return result;
 	}
 
+	/**
+	 * Extracts the information from the row and sets the value on the given root EObject.
+	 */
 	private void extractRowInformation(final Row labelRow, final Row row, final EObject eObject) {
 		for (int columnId = 0; columnId < row.getPhysicalNumberOfCells(); columnId++) {
 			final Cell cell = labelRow.getCell(columnId);
@@ -117,8 +118,12 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 			try {
 				final IObservableValue observableValue = getObservableValue(dmr, eObject);
 				resolveDMR(dmr, eObject);
-				observableValue.setValue(getValue(value, observableValue.getValueType()));
+				final EMFFormsSpreadsheetValueConverter converter = getValueConverter(dmr, eObject);
+				final Object convertedValue = converter.convertStringToValue(value, eObject, dmr);
+				observableValue.setValue(convertedValue);
 			} catch (final DatabindingFailedException ex) {
+				reportService.report(new EMFFormsSpreadsheetReport(ex, EMFFormsSpreadsheetReport.ERROR));
+			} catch (final EMFFormsNoConverterException ex) {
 				reportService.report(new EMFFormsSpreadsheetReport(ex, EMFFormsSpreadsheetReport.ERROR));
 			}
 		}
@@ -129,6 +134,9 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 		dmr.init(eObject);
 	}
 
+	/**
+	 * Returns a Map from EObject-ID to Sheet-ID to Row-ID.
+	 */
 	private Map<String, Map<Integer, Integer>> parseIds(Workbook workbook) {
 		final Map<String, Map<Integer, Integer>> result = new LinkedHashMap<String, Map<Integer, Integer>>();
 
@@ -152,35 +160,6 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 		return result;
 	}
 
-	private Object getValue(String value, Object valueType) {
-		if (value == null || value.length() == 0) {
-			return null;
-		}
-		if (EAttribute.class.isInstance(valueType)) {
-			final EAttribute eAttribute = (EAttribute) valueType;
-			final EDataType eDataType = eAttribute.getEAttributeType();
-			final EFactory eFactory = eDataType.getEPackage().getEFactoryInstance();
-			if (eAttribute.isMany()) {
-				final List<Object> result = new ArrayList<Object>();
-
-				for (final String element : value.split(" ")) //$NON-NLS-1$
-				{
-					result.add(eFactory.createFromString(eDataType, element));
-				}
-
-				return result;
-			}
-			return eFactory.createFromString(eDataType, value);
-		} else if (EReference.class.isInstance(valueType)) {
-			if (EReference.class.cast(valueType).isMany()) {
-				return ECollections.EMPTY_ELIST;
-			}
-			return null;
-		}
-
-		return value;
-	}
-
 	private IObservableValue getObservableValue(VDomainModelReference dmr, EObject eObject)
 		throws DatabindingFailedException {
 		final BundleContext bundleContext = FrameworkUtil.getBundle(getClass()).getBundleContext();
@@ -188,6 +167,16 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 			.getServiceReference(EMFFormsDatabinding.class);
 		final EMFFormsDatabinding emfFormsDatabinding = bundleContext.getService(serviceReference);
 		return emfFormsDatabinding.getObservableValue(dmr, eObject);
+	}
+
+	private EMFFormsSpreadsheetValueConverter getValueConverter(VDomainModelReference dmr, EObject eObject)
+		throws EMFFormsNoConverterException {
+		final BundleContext bundleContext = FrameworkUtil.getBundle(getClass()).getBundleContext();
+		final ServiceReference<EMFFormsSpreadsheetValueConverterRegistry> serviceReference = bundleContext
+			.getServiceReference(EMFFormsSpreadsheetValueConverterRegistry.class);
+		final EMFFormsSpreadsheetValueConverterRegistry emfFormsDatabinding = bundleContext
+			.getService(serviceReference);
+		return emfFormsDatabinding.getConverter(eObject, dmr);
 	}
 
 	private VDomainModelReference deserializeDMR(String serializedDMR) {

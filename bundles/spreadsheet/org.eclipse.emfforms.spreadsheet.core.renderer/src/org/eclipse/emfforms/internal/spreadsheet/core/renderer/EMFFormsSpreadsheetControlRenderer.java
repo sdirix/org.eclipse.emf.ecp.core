@@ -8,13 +8,13 @@
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
+ * Johannes Faltermeier - template pattern for extenders
  ******************************************************************************/
 package org.eclipse.emfforms.internal.spreadsheet.core.renderer;
 
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.apache.poi.ss.usermodel.Cell;
@@ -30,9 +30,6 @@ import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAnnotation;
-import org.eclipse.emf.ecore.EAttribute;
-import org.eclipse.emf.ecore.EDataType;
-import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -58,11 +55,15 @@ import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsExportTableParent;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsIdProvider;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetRenderTarget;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetReport;
+import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsNoConverterException;
+import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsSpreadsheetValueConverter;
+import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsSpreadsheetValueConverterRegistry;
 
 /**
  * Spreadsheet renderer for {@link VControl}.
  *
  * @author Eugen Neufeld
+ * @author Johannes Faltermeier
  */
 public class EMFFormsSpreadsheetControlRenderer extends EMFFormsAbstractSpreadsheetRenderer<VControl> {
 
@@ -71,6 +72,7 @@ public class EMFFormsSpreadsheetControlRenderer extends EMFFormsAbstractSpreadsh
 	private final ReportService reportService;
 	private final VTViewTemplateProvider vtViewTemplateProvider;
 	private final EMFFormsIdProvider idProvider;
+	private final EMFFormsSpreadsheetValueConverterRegistry converterRegistry;
 
 	/**
 	 * Default constructor.
@@ -80,15 +82,21 @@ public class EMFFormsSpreadsheetControlRenderer extends EMFFormsAbstractSpreadsh
 	 * @param reportService The {@link ReportService}
 	 * @param vtViewTemplateProvider The {@link VTViewTemplateProvider}
 	 * @param idProvider The {@link EMFFormsIdProvider}
+	 * @param converterRegistry the {@link EMFFormsSpreadsheetValueConverterRegistry}
 	 */
-	public EMFFormsSpreadsheetControlRenderer(EMFFormsDatabinding emfformsDatabinding,
-		EMFFormsLabelProvider emfformsLabelProvider, ReportService reportService,
-		VTViewTemplateProvider vtViewTemplateProvider, EMFFormsIdProvider idProvider) {
+	public EMFFormsSpreadsheetControlRenderer(
+		EMFFormsDatabinding emfformsDatabinding,
+		EMFFormsLabelProvider emfformsLabelProvider,
+		ReportService reportService,
+		VTViewTemplateProvider vtViewTemplateProvider,
+		EMFFormsIdProvider idProvider,
+		EMFFormsSpreadsheetValueConverterRegistry converterRegistry) {
 		this.emfformsDatabinding = emfformsDatabinding;
 		this.emfformsLabelProvider = emfformsLabelProvider;
 		this.reportService = reportService;
 		this.vtViewTemplateProvider = vtViewTemplateProvider;
 		this.idProvider = idProvider;
+		this.converterRegistry = converterRegistry;
 	}
 
 	/**
@@ -202,8 +210,13 @@ public class EMFFormsSpreadsheetControlRenderer extends EMFFormsAbstractSpreadsh
 
 				final IObservableValue observableValue = emfformsDatabinding
 					.getObservableValue(dmrToResolve, viewModelContext.getDomainModel());
-				valueCell.setCellValue(getValueString(observableValue.getValue(), observableValue.getValueType()));
+				final Object value = observableValue.getValue();
 				observableValue.dispose();
+				final EMFFormsSpreadsheetValueConverter converter = converterRegistry
+					.getConverter(viewModelContext.getDomainModel(), dmrToResolve);
+				final String cellValue = converter.convertValueToString(value,
+					viewModelContext.getDomainModel(), dmrToResolve);
+				valueCell.setCellValue(cellValue);
 			}
 
 			return 1;
@@ -212,6 +225,8 @@ public class EMFFormsSpreadsheetControlRenderer extends EMFFormsAbstractSpreadsh
 		} catch (final NoLabelFoundException ex) {
 			reportService.report(new EMFFormsSpreadsheetReport(ex, EMFFormsSpreadsheetReport.ERROR));
 		} catch (final IOException ex) {
+			reportService.report(new EMFFormsSpreadsheetReport(ex, EMFFormsSpreadsheetReport.ERROR));
+		} catch (final EMFFormsNoConverterException ex) {
 			reportService.report(new EMFFormsSpreadsheetReport(ex, EMFFormsSpreadsheetReport.ERROR));
 		}
 
@@ -271,30 +286,6 @@ public class EMFFormsSpreadsheetControlRenderer extends EMFFormsAbstractSpreadsh
 
 	private VTMandatoryStyleProperty getDefaultStyle() {
 		return VTMandatoryFactory.eINSTANCE.createMandatoryStyleProperty();
-	}
-
-	private String getValueString(Object fromObject, Object valueType) {
-		if (EAttribute.class.isInstance(valueType)) {
-			final EAttribute eAttribute = (EAttribute) valueType;
-			final EDataType eDataType = eAttribute.getEAttributeType();
-			final EFactory eFactory = eDataType.getEPackage().getEFactoryInstance();
-
-			if (eAttribute.isMany()) {
-				final StringBuilder result = new StringBuilder();
-				for (final Object value : (List<?>) fromObject) {
-					if (result.length() == 0) {
-						result.append(' ');
-					}
-					result.append(eFactory.convertToString(eDataType, value));
-				}
-				return result.toString();
-			}
-			return eFactory.convertToString(eDataType, fromObject);
-		}
-		if (fromObject == null) {
-			return ""; //$NON-NLS-1$
-		}
-		return fromObject.toString();
 	}
 
 	private Comment createComment(Workbook workbook, Sheet sheet, VDomainModelReference domainModelReference, int row,

@@ -22,6 +22,7 @@ import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsAbstractSpreadsheetRend
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsIdProvider;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetRendererFactory;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetRendererService;
+import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsSpreadsheetValueConverterRegistry;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
@@ -44,6 +45,7 @@ public class EMFFormsSpreadsheetTableControlRendererService implements
 	private EMFFormsSpreadsheetRendererFactory emfformsSpreadsheetRendererFactory;
 	private VTViewTemplateProvider vtViewTemplateProvider;
 	private EMFFormsIdProvider emfFormsIdProvider;
+	private EMFFormsSpreadsheetValueConverterRegistry converterRegistry;
 
 	/**
 	 * The VTViewTemplateProvider to use.
@@ -93,6 +95,16 @@ public class EMFFormsSpreadsheetTableControlRendererService implements
 	@Reference
 	protected void setEmfFormsIdProvider(EMFFormsIdProvider emfFormsIdProvider) {
 		this.emfFormsIdProvider = emfFormsIdProvider;
+	}
+
+	/**
+	 * The EMFFormsSpreadsheetValueConverterRegistry to use.
+	 *
+	 * @param converterRegistry the converter registry
+	 */
+	@Reference
+	public void setConverterRegistry(EMFFormsSpreadsheetValueConverterRegistry converterRegistry) {
+		this.converterRegistry = converterRegistry;
 	}
 
 	private ServiceReference<EMFFormsSpreadsheetRendererFactory> serviceReference;
@@ -145,7 +157,7 @@ public class EMFFormsSpreadsheetTableControlRendererService implements
 	public EMFFormsAbstractSpreadsheetRenderer<VTableControl> getRendererInstance(
 		VTableControl vElement, ViewModelContext viewModelContext) {
 		return new EMFFormsSpreadsheetTableControlRenderer(emfformsDatabinding, emfformsLabelProvider, reportService,
-			emfformsSpreadsheetRendererFactory, vtViewTemplateProvider, emfFormsIdProvider);
+			emfformsSpreadsheetRendererFactory, vtViewTemplateProvider, emfFormsIdProvider, converterRegistry);
 	}
 
 }

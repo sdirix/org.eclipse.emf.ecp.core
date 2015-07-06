@@ -46,6 +46,7 @@ import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsNoRendererException;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetRenderTarget;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetRendererFactory;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetReport;
+import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsSpreadsheetValueConverterRegistry;
 
 /**
  * Spreadsheet renderer for {@link VTableControl}.
@@ -61,6 +62,7 @@ public class EMFFormsSpreadsheetTableControlRenderer extends EMFFormsAbstractSpr
 	private final EMFFormsSpreadsheetRendererFactory rendererFactory;
 	private final VTViewTemplateProvider vtViewTemplateProvider;
 	private final EMFFormsIdProvider emfFormsIdProvider;
+	private final EMFFormsSpreadsheetValueConverterRegistry converterRegistry;
 
 	/**
 	 * Default constructor.
@@ -71,17 +73,23 @@ public class EMFFormsSpreadsheetTableControlRenderer extends EMFFormsAbstractSpr
 	 * @param rendererFactory The EMFFormsSpreadsheetRendererFactory to use
 	 * @param vtViewTemplateProvider The VTViewTemplateProvider to use
 	 * @param emfFormsIdProvider The {@link EMFFormsIdProvider}
+	 * @param converterRegistry the {@link EMFFormsSpreadsheetValueConverterRegistry}
 	 */
-	public EMFFormsSpreadsheetTableControlRenderer(EMFFormsDatabinding emfformsDatabinding,
-		EMFFormsLabelProvider emfformsLabelProvider, ReportService reportService,
-		EMFFormsSpreadsheetRendererFactory rendererFactory, VTViewTemplateProvider vtViewTemplateProvider,
-		EMFFormsIdProvider emfFormsIdProvider) {
+	public EMFFormsSpreadsheetTableControlRenderer(
+		EMFFormsDatabinding emfformsDatabinding,
+		EMFFormsLabelProvider emfformsLabelProvider,
+		ReportService reportService,
+		EMFFormsSpreadsheetRendererFactory rendererFactory,
+		VTViewTemplateProvider vtViewTemplateProvider,
+		EMFFormsIdProvider emfFormsIdProvider,
+		EMFFormsSpreadsheetValueConverterRegistry converterRegistry) {
 		this.emfformsDatabinding = emfformsDatabinding;
 		this.emfformsLabelProvider = emfformsLabelProvider;
 		this.reportService = reportService;
 		this.rendererFactory = rendererFactory;
 		this.vtViewTemplateProvider = vtViewTemplateProvider;
 		this.emfFormsIdProvider = emfFormsIdProvider;
+		this.converterRegistry = converterRegistry;
 	}
 
 	/**
@@ -97,7 +105,7 @@ public class EMFFormsSpreadsheetTableControlRenderer extends EMFFormsAbstractSpr
 		EMFFormsSpreadsheetRenderTarget eMFFormsSpreadsheetRenderTarget) {
 		final EMFFormsSpreadsheetControlRenderer controlRenderer = new EMFFormsSpreadsheetControlRenderer(
 			emfformsDatabinding,
-			emfformsLabelProvider, reportService, vtViewTemplateProvider, emfFormsIdProvider);
+			emfformsLabelProvider, reportService, vtViewTemplateProvider, emfFormsIdProvider, converterRegistry);
 		int numColumns = 0;
 		try {
 			final EMFFormsExportTableParent exportTableParent = (EMFFormsExportTableParent) viewModelContext
