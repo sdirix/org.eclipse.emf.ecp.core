@@ -12,6 +12,11 @@
 package org.eclipse.emfforms.spreadsheet.core.tests;
 
 import org.eclipse.emfforms.internal.spreadsheet.core.EMFFormsSpreadsheetRendererFactoryImpl_Test;
+import org.eclipse.emfforms.internal.spreadsheet.core.converter.EMFFormsSpreadsheetMultiAttributeConverter_Test;
+import org.eclipse.emfforms.internal.spreadsheet.core.converter.EMFFormsSpreadsheetMultiReferenceConverter_Test;
+import org.eclipse.emfforms.internal.spreadsheet.core.converter.EMFFormsSpreadsheetSingleAttributeConverter_Test;
+import org.eclipse.emfforms.internal.spreadsheet.core.converter.EMFFormsSpreadsheetSingleReferenceConverter_Test;
+import org.eclipse.emfforms.internal.spreadsheet.core.converter.EMFFormsSpreadsheetValueConverterRegistryImpl_Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
@@ -23,7 +28,14 @@ import org.junit.runners.Suite.SuiteClasses;
  *
  */
 @RunWith(Suite.class)
-@SuiteClasses({ EMFFormsSpreadsheetRendererFactoryImpl_Test.class })
+@SuiteClasses({
+	EMFFormsSpreadsheetRendererFactoryImpl_Test.class,
+	EMFFormsSpreadsheetValueConverterRegistryImpl_Test.class,
+	EMFFormsSpreadsheetMultiAttributeConverter_Test.class,
+	EMFFormsSpreadsheetMultiReferenceConverter_Test.class,
+	EMFFormsSpreadsheetSingleReferenceConverter_Test.class,
+	EMFFormsSpreadsheetSingleAttributeConverter_Test.class
+})
 public class AllTests {
 	// JUnit 4 TestSuite
 }

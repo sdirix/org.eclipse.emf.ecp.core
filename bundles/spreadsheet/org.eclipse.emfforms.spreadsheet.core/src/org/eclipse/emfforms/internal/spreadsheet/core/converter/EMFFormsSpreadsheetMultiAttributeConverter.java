@@ -89,7 +89,7 @@ public class EMFFormsSpreadsheetMultiAttributeConverter implements EMFFormsSprea
 		final EFactory eFactory = eDataType.getEPackage().getEFactoryInstance();
 		final StringBuilder result = new StringBuilder();
 		for (final Object value : (List<?>) fromObject) {
-			if (result.length() == 0) {
+			if (result.length() != 0) {
 				result.append(SEPARATOR);
 			}
 			result.append(eFactory.convertToString(eDataType, value));
