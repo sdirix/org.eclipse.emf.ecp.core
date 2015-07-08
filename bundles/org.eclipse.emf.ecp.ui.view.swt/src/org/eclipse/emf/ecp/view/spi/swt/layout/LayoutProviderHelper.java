@@ -47,7 +47,7 @@ public final class LayoutProviderHelper {
 
 	private static List<LayoutProvider> layoutProviders = new ArrayList<LayoutProvider>();
 
-	private static List<LayoutProvider> getLayoutProvider() {
+	private static synchronized List<LayoutProvider> getLayoutProvider() {
 		if (layoutProviders == null || layoutProviders.isEmpty()) {
 			readLayoutProviders();
 		}
