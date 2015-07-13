@@ -12,8 +12,9 @@
 package org.eclipse.emfforms.internal.core.services.label;
 
 import java.text.MessageFormat;
-import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.WeakHashMap;
 
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.observable.value.WritableValue;
@@ -199,8 +200,8 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 	private ReportService reportService;
 	private BundleResolver bundleResolver = new BundleResolverImpl();
 
-	private final Map<DisplayNameKey, WritableValue> displayKeyObservableMap = new LinkedHashMap<DisplayNameKey, WritableValue>();
-	private final Map<DescriptionKey, WritableValue> descriptionKeyObservableMap = new LinkedHashMap<DescriptionKey, WritableValue>();
+	private final Map<WritableValue, DisplayNameKey> displayKeyObservableMap = new WeakHashMap<WritableValue, DisplayNameKey>();
+	private final Map<WritableValue, DescriptionKey> descriptionKeyObservableMap = new WeakHashMap<WritableValue, DescriptionKey>();
 	private EMFFormsLocaleProvider localeProvider;
 	private ServiceReference<EMFFormsLabelProvider> defaultLabelProviderReference;
 	private EMFFormsLabelProvider labelProviderDefault;
@@ -301,7 +302,7 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 		final String key = String.format(DISPLAY_NAME, eContainingClass.getName(),
 			structuralFeature.getName());
 		final WritableValue value = getObservableValue(getDisplayName(bundle, key));
-		displayKeyObservableMap.put(new DisplayNameKey(key, bundle), value);
+		displayKeyObservableMap.put(value, new DisplayNameKey(key, bundle));
 		return value;
 	}
 
@@ -336,7 +337,7 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 		final String key = String.format(DISPLAY_NAME, structuralFeature.getEContainingClass().getName(),
 			structuralFeature.getName());
 		final WritableValue displayObserveValue = getObservableValue(getDisplayName(bundle, key));
-		displayKeyObservableMap.put(new DisplayNameKey(key, bundle), displayObserveValue);
+		displayKeyObservableMap.put(displayObserveValue, new DisplayNameKey(key, bundle));
 		return displayObserveValue;
 	}
 
@@ -369,8 +370,8 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 		final WritableValue writableValue = getObservableValue(getDescription(eContainingClass
 			.getName(),
 			structuralFeature.getName(), bundle));
-		descriptionKeyObservableMap.put(new DescriptionKey(eContainingClass.getName(),
-			structuralFeature.getName(), bundle), writableValue);
+		descriptionKeyObservableMap.put(writableValue, new DescriptionKey(eContainingClass.getName(),
+			structuralFeature.getName(), bundle));
 		return writableValue;
 	}
 
@@ -404,8 +405,9 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 		final WritableValue writableValue = getObservableValue(getDescription(structuralFeature.getEContainingClass()
 			.getName(),
 			structuralFeature.getName(), bundle));
-		descriptionKeyObservableMap.put(new DescriptionKey(structuralFeature.getEContainingClass().getName(),
-			structuralFeature.getName(), bundle), writableValue);
+		descriptionKeyObservableMap.put(writableValue,
+			new DescriptionKey(structuralFeature.getEContainingClass().getName(),
+				structuralFeature.getName(), bundle));
 		return writableValue;
 	}
 
@@ -439,12 +441,14 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 	 */
 	@Override
 	public void notifyLocaleChange() {
-		for (final DisplayNameKey displayNameKey : displayKeyObservableMap.keySet()) {
-			final WritableValue writableValue = displayKeyObservableMap.get(displayNameKey);
+		for (final Entry<WritableValue, DisplayNameKey> entry : displayKeyObservableMap.entrySet()) {
+			final DisplayNameKey displayNameKey = entry.getValue();
+			final WritableValue writableValue = entry.getKey();
 			writableValue.setValue(getDisplayName(displayNameKey.getBundle(), displayNameKey.getKey()));
 		}
-		for (final DescriptionKey descriptionKey : descriptionKeyObservableMap.keySet()) {
-			final WritableValue writableValue = descriptionKeyObservableMap.get(descriptionKey);
+		for (final Entry<WritableValue, DescriptionKey> entry : descriptionKeyObservableMap.entrySet()) {
+			final DescriptionKey descriptionKey = entry.getValue();
+			final WritableValue writableValue = entry.getKey();
 			writableValue.setValue(getDescription(descriptionKey.geteClassName(), descriptionKey.getFeatureName(),
 				descriptionKey.getBundle()));
 		}
