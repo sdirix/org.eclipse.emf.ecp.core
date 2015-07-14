@@ -11,13 +11,18 @@
  ******************************************************************************/
 package org.eclipse.emfforms.internal.spreadsheet.core.converter;
 
-import org.eclipse.emf.common.util.ECollections;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetReport;
 import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsSpreadsheetValueConverter;
 import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsSpreadsheetValueConverterHelper;
 import org.osgi.service.component.annotations.Component;
@@ -32,6 +37,9 @@ import org.osgi.service.component.annotations.ReferenceCardinality;
  */
 @Component(name = "EMFFormsSpreadsheetMultiReferenceConverter")
 public class EMFFormsSpreadsheetMultiReferenceConverter implements EMFFormsSpreadsheetValueConverter {
+
+	private static final String SEPARATOR = "\n\n\n"; //$NON-NLS-1$
+
 	private EMFFormsDatabinding databinding;
 	private ReportService reportService;
 
@@ -72,20 +80,39 @@ public class EMFFormsSpreadsheetMultiReferenceConverter implements EMFFormsSprea
 		return 0d;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public String convertValueToString(Object value, EObject domainObject, VDomainModelReference dmr) {
-		if (value == null) {
+	public String convertValueToString(Object values, EObject domainObject, VDomainModelReference dmr) {
+		if (values == null) {
 			return ""; //$NON-NLS-1$
 		}
-		return value.toString();
+		try {
+			final StringBuilder result = new StringBuilder();
+			for (final EObject value : (List<EObject>) values) {
+				if (result.length() != 0) {
+					result.append(SEPARATOR);
+				}
+				result.append(XMIStringConverterHelper.getSerializedEObject(value));
+			}
+			return result.toString();
+		} catch (final IOException ex) {
+			reportService.report(new EMFFormsSpreadsheetReport(ex, EMFFormsSpreadsheetReport.ERROR));
+		}
+		return ""; //$NON-NLS-1$
 	}
 
 	@Override
 	public Object convertStringToValue(String string, EObject domainObject, VDomainModelReference dmr) {
 		if (string == null || string.length() == 0) {
-			return null;
+			return Collections.emptyList();
 		}
-		return ECollections.EMPTY_ELIST;
+		final List<EObject> result = new ArrayList<EObject>();
+		final String[] split = string.split(SEPARATOR);
+		for (final String element : split) {
+			result.add(XMIStringConverterHelper.deserializeObject(element.trim(), reportService));
+		}
+
+		return result;
 	}
 
 }

@@ -12,12 +12,19 @@
 package org.eclipse.emfforms.internal.spreadsheet.core.converter;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecp.makeithappen.model.task.Task;
+import org.eclipse.emf.ecp.makeithappen.model.task.TaskFactory;
 import org.eclipse.emf.ecp.makeithappen.model.task.TaskPackage;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emfforms.spi.common.report.ReportService;
@@ -25,10 +32,20 @@ import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedExcep
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsSpreadsheetValueConverter;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class EMFFormsSpreadsheetMultiReferenceConverter_Test {
+
+	private static final String LINE_SEP = System.getProperty("line.separator"); //$NON-NLS-1$
+	private static final String EXPECTED = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + LINE_SEP + //$NON-NLS-1$
+		"<org.eclipse.emf.ecp.makeithappen.model.task:Task xmi:version=\"2.0\" xmlns:xmi=\"http://www.omg.org/XMI\" xmlns:org.eclipse.emf.ecp.makeithappen.model.task=\"http://eclipse/org/emf/ecp/makeithappen/model/task\" description=\"1\"/>" //$NON-NLS-1$
+		+ LINE_SEP +
+		"\n" + //$NON-NLS-1$
+		"\n" + //$NON-NLS-1$
+		"\n" + //$NON-NLS-1$
+		"<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + LINE_SEP + //$NON-NLS-1$
+		"<org.eclipse.emf.ecp.makeithappen.model.task:Task xmi:version=\"2.0\" xmlns:xmi=\"http://www.omg.org/XMI\" xmlns:org.eclipse.emf.ecp.makeithappen.model.task=\"http://eclipse/org/emf/ecp/makeithappen/model/task\" description=\"2\"/>" //$NON-NLS-1$
+		+ LINE_SEP;
 
 	private ReportService reportService;
 	private EMFFormsDatabinding databinding;
@@ -87,7 +104,6 @@ public class EMFFormsSpreadsheetMultiReferenceConverter_Test {
 		assertEquals(0d, converter.isApplicable(domainObject, dmr), 0d);
 	}
 
-	@Ignore
 	@Test
 	public void testToString() throws DatabindingFailedException {
 		final IValueProperty property = mock(IValueProperty.class);
@@ -96,10 +112,9 @@ public class EMFFormsSpreadsheetMultiReferenceConverter_Test {
 			.thenReturn(property);
 		converter.setDatabinding(databinding);
 		converter.setReportService(reportService);
-		// TODO our expectations are not really defined yet
+		assertEquals(EXPECTED, converter.convertValueToString(Arrays.asList(task("1"), task("2")), domainObject, dmr));//$NON-NLS-1$ //$NON-NLS-2$
 	}
 
-	@Ignore
 	@Test
 	public void testFromString() throws DatabindingFailedException {
 		final IValueProperty property = mock(IValueProperty.class);
@@ -108,7 +123,18 @@ public class EMFFormsSpreadsheetMultiReferenceConverter_Test {
 			.thenReturn(property);
 		converter.setDatabinding(databinding);
 		converter.setReportService(reportService);
-		// TODO our expectations are not really defined yet
+		@SuppressWarnings("unchecked")
+		final List<Task> tasks = (List<Task>) converter.convertStringToValue(EXPECTED, domainObject, dmr);
+		assertEquals(2, tasks.size());
+		assertTrue(EcoreUtil.equals(task("1"), tasks.get(0))); //$NON-NLS-1$
+		assertTrue(EcoreUtil.equals(task("2"), tasks.get(1))); //$NON-NLS-1$
+	}
+
+	private static Task task(String desc) {
+		final Task task = TaskFactory.eINSTANCE.createTask();
+		task.setDescription(desc);
+		return task;
+
 	}
 
 }

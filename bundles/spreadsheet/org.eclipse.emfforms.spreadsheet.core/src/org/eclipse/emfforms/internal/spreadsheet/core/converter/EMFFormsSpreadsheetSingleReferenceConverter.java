@@ -11,12 +11,15 @@
  ******************************************************************************/
 package org.eclipse.emfforms.internal.spreadsheet.core.converter;
 
+import java.io.IOException;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetReport;
 import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsSpreadsheetValueConverter;
 import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsSpreadsheetValueConverterHelper;
 import org.osgi.service.component.annotations.Component;
@@ -77,11 +80,20 @@ public class EMFFormsSpreadsheetSingleReferenceConverter implements EMFFormsSpre
 		if (value == null) {
 			return ""; //$NON-NLS-1$
 		}
-		return value.toString();
+		try {
+			return XMIStringConverterHelper.getSerializedEObject((EObject) value);
+		} catch (final IOException ex) {
+			reportService.report(new EMFFormsSpreadsheetReport(ex, EMFFormsSpreadsheetReport.ERROR));
+		}
+		return ""; //$NON-NLS-1$
 	}
 
 	@Override
 	public Object convertStringToValue(String string, EObject domainObject, VDomainModelReference dmr) {
-		return null;
+		if (string == null || string.isEmpty()) {
+			return null;
+		}
+		return XMIStringConverterHelper.deserializeObject(string, reportService);
 	}
+
 }
