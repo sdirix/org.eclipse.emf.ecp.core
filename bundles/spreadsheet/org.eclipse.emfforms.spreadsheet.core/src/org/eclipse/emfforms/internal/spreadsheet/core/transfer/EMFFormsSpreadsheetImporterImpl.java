@@ -116,9 +116,9 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 			final String serializedDMR = cellComment.getString().getString();
 			final VDomainModelReference dmr = deserializeDMR(serializedDMR);
 			try {
+				resolveDMR(dmr, eObject);
 				final IObservableValue observableValue = getObservableValue(dmr, eObject);
 				final EStructuralFeature feature = EStructuralFeature.class.cast(observableValue.getValueType());
-				resolveDMR(dmr, eObject);
 				final EMFFormsSpreadsheetValueConverter converter = getValueConverter(dmr, eObject);
 
 				Cell rowCell;
