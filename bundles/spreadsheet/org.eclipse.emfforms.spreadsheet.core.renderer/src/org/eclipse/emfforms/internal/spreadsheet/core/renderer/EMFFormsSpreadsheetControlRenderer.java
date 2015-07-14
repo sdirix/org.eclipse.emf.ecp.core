@@ -26,10 +26,12 @@ import org.apache.poi.ss.usermodel.Drawing;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.eclipse.core.databinding.observable.IObserving;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAnnotation;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -205,18 +207,22 @@ public class EMFFormsSpreadsheetControlRenderer extends EMFFormsAbstractSpreadsh
 				valueRow.getCell(0, Row.CREATE_NULL_AS_BLANK)
 					.setCellValue(idProvider.getId(viewModelContext.getDomainModel()));
 
-				final Cell valueCell = valueRow.getCell(renderTarget.getColumn() + 1,
-					Row.CREATE_NULL_AS_BLANK);
-
 				final IObservableValue observableValue = emfformsDatabinding
 					.getObservableValue(dmrToResolve, viewModelContext.getDomainModel());
-				final Object value = observableValue.getValue();
+				final EObject eObject = EObject.class.cast(IObserving.class.cast(observableValue).getObserved());
+				final EStructuralFeature feature = EStructuralFeature.class.cast(observableValue.getValueType());
+				/* only create new cells for non-unsettable features and unsettable feature which are set */
+				if (!feature.isUnsettable() || feature.isUnsettable() && eObject.eIsSet(feature)) {
+					final Object value = observableValue.getValue();
+					final EMFFormsSpreadsheetValueConverter converter = converterRegistry
+						.getConverter(viewModelContext.getDomainModel(), dmrToResolve);
+					final String cellValue = converter.convertValueToString(value,
+						viewModelContext.getDomainModel(), dmrToResolve);
+					final Cell valueCell = valueRow.getCell(renderTarget.getColumn() + 1,
+						Row.CREATE_NULL_AS_BLANK);
+					valueCell.setCellValue(cellValue);
+				}
 				observableValue.dispose();
-				final EMFFormsSpreadsheetValueConverter converter = converterRegistry
-					.getConverter(viewModelContext.getDomainModel(), dmrToResolve);
-				final String cellValue = converter.convertValueToString(value,
-					viewModelContext.getDomainModel(), dmrToResolve);
-				valueCell.setCellValue(cellValue);
 			}
 
 			return 1;

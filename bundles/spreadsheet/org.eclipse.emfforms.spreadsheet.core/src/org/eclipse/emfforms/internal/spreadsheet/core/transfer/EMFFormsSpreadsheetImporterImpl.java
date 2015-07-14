@@ -28,6 +28,7 @@ import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIConverter.ReadableInputStream;
@@ -103,7 +104,7 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 	 * Extracts the information from the row and sets the value on the given root EObject.
 	 */
 	private void extractRowInformation(final Row labelRow, final Row row, final EObject eObject) {
-		for (int columnId = 0; columnId < row.getPhysicalNumberOfCells(); columnId++) {
+		for (int columnId = 0; columnId < row.getLastCellNum(); columnId++) {
 			final Cell cell = labelRow.getCell(columnId);
 			if (cell == null) {
 				continue;
@@ -113,14 +114,24 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 				continue;
 			}
 			final String serializedDMR = cellComment.getString().getString();
-			final String value = row.getCell(columnId).getStringCellValue();
 			final VDomainModelReference dmr = deserializeDMR(serializedDMR);
 			try {
 				final IObservableValue observableValue = getObservableValue(dmr, eObject);
+				final EStructuralFeature feature = EStructuralFeature.class.cast(observableValue.getValueType());
 				resolveDMR(dmr, eObject);
 				final EMFFormsSpreadsheetValueConverter converter = getValueConverter(dmr, eObject);
-				final Object convertedValue = converter.convertStringToValue(value, eObject, dmr);
-				observableValue.setValue(convertedValue);
+
+				Cell rowCell;
+				if (feature.isUnsettable()) {
+					rowCell = row.getCell(columnId, Row.RETURN_NULL_AND_BLANK);
+				} else {
+					rowCell = row.getCell(columnId, Row.CREATE_NULL_AS_BLANK);
+				}
+				if (rowCell != null) {
+					final String value = rowCell.getStringCellValue();
+					final Object convertedValue = converter.convertStringToValue(value, eObject, dmr);
+					observableValue.setValue(convertedValue);
+				}
 			} catch (final DatabindingFailedException ex) {
 				reportService.report(new EMFFormsSpreadsheetReport(ex, EMFFormsSpreadsheetReport.ERROR));
 			} catch (final EMFFormsNoConverterException ex) {

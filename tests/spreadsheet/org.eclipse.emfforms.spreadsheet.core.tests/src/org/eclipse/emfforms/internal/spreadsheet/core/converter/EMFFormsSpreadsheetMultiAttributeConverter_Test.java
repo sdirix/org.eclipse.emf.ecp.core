@@ -12,7 +12,6 @@
 package org.eclipse.emfforms.internal.spreadsheet.core.converter;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
@@ -124,7 +123,9 @@ public class EMFFormsSpreadsheetMultiAttributeConverter_Test {
 			.thenReturn(property);
 		converter.setDatabinding(databinding);
 		converter.setReportService(reportService);
-		assertNull(converter.convertStringToValue("", domainObject, dmr)); //$NON-NLS-1$
+		final Object value = converter.convertStringToValue("", domainObject, dmr); //$NON-NLS-1$
+		final List<?> list = List.class.cast(value);
+		assertTrue(list.isEmpty());
 	}
 
 	@Test
@@ -135,7 +136,9 @@ public class EMFFormsSpreadsheetMultiAttributeConverter_Test {
 			.thenReturn(property);
 		converter.setDatabinding(databinding);
 		converter.setReportService(reportService);
-		assertNull(converter.convertStringToValue(null, domainObject, dmr));
+		final Object value = converter.convertStringToValue(null, domainObject, dmr);
+		final List<?> list = List.class.cast(value);
+		assertTrue(list.isEmpty());
 	}
 
 	@Test

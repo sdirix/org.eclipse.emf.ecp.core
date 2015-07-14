@@ -12,6 +12,7 @@
 package org.eclipse.emfforms.internal.spreadsheet.core.converter;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EAttribute;
@@ -100,7 +101,7 @@ public class EMFFormsSpreadsheetMultiAttributeConverter implements EMFFormsSprea
 	@Override
 	public Object convertStringToValue(String string, EObject domainObject, VDomainModelReference dmr) {
 		if (string == null || string.length() == 0) {
-			return null;
+			return Collections.emptyList();
 		}
 		final EStructuralFeature feature = EMFFormsSpreadsheetValueConverterHelper.getFeature(domainObject, dmr,
 			databinding,
