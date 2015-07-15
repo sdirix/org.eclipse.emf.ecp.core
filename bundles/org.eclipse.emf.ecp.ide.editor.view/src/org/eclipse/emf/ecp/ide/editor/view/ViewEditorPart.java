@@ -132,23 +132,17 @@ public class ViewEditorPart extends EditorPart implements
 		super.setPartName(input.getName());
 
 		basicCommandStack = new BasicCommandStack();
-		basicCommandStack.addCommandStackListener
-			(new CommandStackListener()
-			{
-				@Override
-				public void commandStackChanged(final EventObject event)
-				{
-					parent.getDisplay().asyncExec
-						(new Runnable()
-						{
-							@Override
-							public void run()
-							{
-								firePropertyChange(IEditorPart.PROP_DIRTY);
-							}
-						});
-				}
-			});
+		basicCommandStack.addCommandStackListener(new CommandStackListener() {
+			@Override
+			public void commandStackChanged(final EventObject event) {
+				parent.getDisplay().asyncExec(new Runnable() {
+					@Override
+					public void run() {
+						firePropertyChange(IEditorPart.PROP_DIRTY);
+					}
+				});
+			}
+		});
 
 		partListener = new ViewPartListener();
 		getSite().getPage().addPartListener(partListener);
@@ -306,7 +300,7 @@ public class ViewEditorPart extends EditorPart implements
 			// BEGIN SUPRESS CATCH EXCEPTION
 		} catch (final RuntimeException e) {
 			displayError(e);
-		}// END SUPRESS CATCH EXCEPTION
+		} // END SUPRESS CATCH EXCEPTION
 	}
 
 	private void registerEcore() {
@@ -401,59 +395,7 @@ public class ViewEditorPart extends EditorPart implements
 	 */
 	@Override
 	public void reloadViewModel() {
-		Display.getDefault().asyncExec(new Runnable() {
-
-			@Override
-			public void run() {
-				if (parent == null || parent.isDisposed()) {
-					final IWorkbenchPage page = instance.getSite().getPage();
-					page.closeEditor(instance, true);
-					return;
-				}
-				if (render != null) {
-					render.dispose();
-					render.getSWTControl().dispose();
-				}
-
-				final String ecorePath = getView().getEcorePath();
-				if (ecorePath != null) {
-					try {
-						EcoreHelper.registerEcore(ecorePath);
-					} catch (final IOException e) {
-						Activator.getDefault().getLog()
-							.log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
-					}
-				}
-
-				// reload view resource after EClass' package resource was loaded into the package registry
-				loadView(true);
-				final VView view = getView();
-
-				try {
-					Activator.getViewModelRegistry().registerViewModelEditor(view, instance);
-				} catch (final IOException e) {
-					Activator.getDefault().getLog()
-						.log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
-				}
-
-				if (view.getRootEClass() != null) {
-					if (view.getRootEClass().eResource() != null) {
-						Activator.getViewModelRegistry().register(
-							view.getRootEClass().eResource().getURI().toString(),
-							view);
-					} else {
-						Activator
-							.getDefault()
-							.getLog()
-							.log(
-								new Status(IStatus.WARNING, Activator.PLUGIN_ID,
-									"The Root EClass of the view cannot be resolved." + view.getRootEClass())); //$NON-NLS-1$
-					}
-				}
-				showView();
-				parent.layout(true);
-			}
-		});
+		Display.getDefault().asyncExec(new ReladViewModelRunnable());
 	}
 
 	@Override
@@ -496,6 +438,63 @@ public class ViewEditorPart extends EditorPart implements
 			Messages.ViewEditorPart_ViewCannotBeDisplayed, e);
 		final ErrorViewPart part = new ErrorViewPart(status);
 		part.createPartControl(parent);
+	}
+
+	/**
+	 * @author Jonas
+	 *
+	 */
+	private final class ReladViewModelRunnable implements Runnable {
+		@Override
+		public void run() {
+			if (parent == null || parent.isDisposed()) {
+				final IWorkbenchPage page = instance.getSite().getPage();
+				page.closeEditor(instance, true);
+				return;
+			}
+			if (render != null) {
+				render.dispose();
+				render.getSWTControl().dispose();
+			}
+
+			final String ecorePath = getView().getEcorePath();
+			if (ecorePath != null) {
+				try {
+					EcoreHelper.registerEcore(ecorePath);
+				} catch (final IOException e) {
+					Activator.getDefault().getLog()
+						.log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
+				}
+			}
+
+			// reload view resource after EClass' package resource was loaded into the package registry
+			loadView(true);
+			final VView view = getView();
+
+			try {
+				Activator.getViewModelRegistry().registerViewModelEditor(view, instance);
+			} catch (final IOException e) {
+				Activator.getDefault().getLog()
+					.log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
+			}
+
+			if (view.getRootEClass() != null) {
+				if (view.getRootEClass().eResource() != null) {
+					Activator.getViewModelRegistry().register(
+						view.getRootEClass().eResource().getURI().toString(),
+						view);
+				} else {
+					Activator
+						.getDefault()
+						.getLog()
+						.log(
+							new Status(IStatus.WARNING, Activator.PLUGIN_ID,
+								"The Root EClass of the view cannot be resolved." + view.getRootEClass())); //$NON-NLS-1$
+				}
+			}
+			showView();
+			parent.layout(true);
+		}
 	}
 
 	/**
@@ -601,8 +600,7 @@ public class ViewEditorPart extends EditorPart implements
 			final IResourceDelta delta = event.getDelta();
 			final IResourceDeltaVisitor visitor = new IResourceDeltaVisitor() {
 				@Override
-				public boolean visit(IResourceDelta delta)
-				{
+				public boolean visit(IResourceDelta delta) {
 					if (delta.getKind() == IResourceDelta.REMOVED) {
 						final FileEditorInput fei = (FileEditorInput) instance.getEditorInput();
 						if (delta.getFullPath().equals(fei.getFile().getFullPath())) {
