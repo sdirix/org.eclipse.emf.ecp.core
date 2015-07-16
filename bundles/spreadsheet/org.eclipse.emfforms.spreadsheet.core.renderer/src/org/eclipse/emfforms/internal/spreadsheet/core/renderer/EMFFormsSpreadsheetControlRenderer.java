@@ -207,12 +207,18 @@ public class EMFFormsSpreadsheetControlRenderer extends EMFFormsAbstractSpreadsh
 				valueRow.getCell(0, Row.CREATE_NULL_AS_BLANK)
 					.setCellValue(idProvider.getId(viewModelContext.getDomainModel()));
 
+				/* init dmr */
+				resolveDMR(viewModelContext, dmrToResolve);
 				final IObservableValue observableValue = emfformsDatabinding
 					.getObservableValue(dmrToResolve, viewModelContext.getDomainModel());
 				final EObject eObject = EObject.class.cast(IObserving.class.cast(observableValue).getObserved());
 				final EStructuralFeature feature = EStructuralFeature.class.cast(observableValue.getValueType());
 				/* only create new cells for non-unsettable features and unsettable feature which are set */
-				if (!feature.isUnsettable() || feature.isUnsettable() && eObject.eIsSet(feature)) {
+				/*
+				 * if the eObject is null, this means that the dmr could not be resolved correctly. in this case we want
+				 * to create an empty cell
+				 */
+				if (eObject == null || !feature.isUnsettable() || feature.isUnsettable() && eObject.eIsSet(feature)) {
 					final Object value = observableValue.getValue();
 					final EMFFormsSpreadsheetValueConverter converter = converterRegistry
 						.getConverter(viewModelContext.getDomainModel(), dmrToResolve);
@@ -237,6 +243,11 @@ public class EMFFormsSpreadsheetControlRenderer extends EMFFormsAbstractSpreadsh
 		}
 
 		return 0;
+	}
+
+	@SuppressWarnings("deprecation")
+	private void resolveDMR(ViewModelContext viewModelContext, VDomainModelReference dmrToResolve) {
+		dmrToResolve.init(viewModelContext.getDomainModel());
 	}
 
 	private static void setupSheetFormat(final Sheet sheet) {
