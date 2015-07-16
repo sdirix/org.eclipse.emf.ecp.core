@@ -77,7 +77,6 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.ElementTreeSelectionDialog;
 import org.eclipse.ui.dialogs.ISelectionStatusValidator;
-import org.eclipse.ui.internal.ErrorViewPart;
 import org.eclipse.ui.model.BaseWorkbenchContentProvider;
 import org.eclipse.ui.model.WorkbenchLabelProvider;
 import org.eclipse.ui.part.EditorPart;
@@ -89,7 +88,6 @@ import org.eclipse.ui.part.FileEditorInput;
  * @author Eugen Neufeld
  *
  */
-@SuppressWarnings("restriction")
 public class ViewEditorPart extends EditorPart implements
 	ViewModelEditorCallback {
 
@@ -130,6 +128,20 @@ public class ViewEditorPart extends EditorPart implements
 		super.setSite(site);
 		super.setInput(input);
 		super.setPartName(input.getName());
+
+		try {
+			loadView(false);
+			registerEcore();
+			// reload view resource after EClass' package resource was loaded into the package registry
+			loadView(true);
+			if (getView() == null) {
+				throw new IllegalArgumentException(Messages.ViewEditorPart_InvalidVView);
+			}
+			// BEGIN SUPRESS CATCH EXCEPTION
+		} catch (final Exception e) {
+			Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
+			throw new PartInitException(Messages.ViewEditorPart_ViewCannotBeDisplayed, e);
+		} // END SUPRESS CATCH EXCEPTION
 
 		basicCommandStack = new BasicCommandStack();
 		basicCommandStack.addCommandStackListener(new CommandStackListener() {
@@ -178,35 +190,29 @@ public class ViewEditorPart extends EditorPart implements
 	 * Loads the view model.
 	 *
 	 * @param migrate whether the view model should be migrated (if actually needed) <b>before</b> attempting to load it
+	 * @throws IOException if the view model resource failed to load
 	 */
-	private void loadView(boolean migrate) {
+	private void loadView(boolean migrate) throws IOException {
 		final FileEditorInput fei = (FileEditorInput) getEditorInput();
 
 		final ResourceSet resourceSet = createResourceSet();
-		try {
-			final URI resourceURI = URI.createURI(fei.getURI().toURL().toExternalForm());
+		final URI resourceURI = URI.createURI(fei.getURI().toURL().toExternalForm());
 
-			if (migrate) {
-				checkMigration(resourceURI);
-			}
+		if (migrate) {
+			checkMigration(resourceURI);
+		}
 
-			final Map<Object, Object> loadOptions = new HashMap<Object, Object>();
-			loadOptions
-				.put(XMLResource.OPTION_RECORD_UNKNOWN_FEATURE, Boolean.TRUE);
-
-			resource = resourceSet.createResource(resourceURI);
-
-			resource.load(loadOptions);
-			// resolve all proxies
-			int rsSize = resourceSet.getResources().size();
+		final Map<Object, Object> loadOptions = new HashMap<Object, Object>();
+		loadOptions
+			.put(XMLResource.OPTION_RECORD_UNKNOWN_FEATURE, Boolean.TRUE);
+		resource = resourceSet.createResource(resourceURI);
+		resource.load(loadOptions);
+		// resolve all proxies
+		int rsSize = resourceSet.getResources().size();
+		EcoreUtil.resolveAll(resourceSet);
+		while (rsSize != resourceSet.getResources().size()) {
 			EcoreUtil.resolveAll(resourceSet);
-			while (rsSize != resourceSet.getResources().size()) {
-				EcoreUtil.resolveAll(resourceSet);
-				rsSize = resourceSet.getResources().size();
-			}
-
-		} catch (final IOException e) {
-			Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
+			rsSize = resourceSet.getResources().size();
 		}
 	}
 
@@ -266,54 +272,37 @@ public class ViewEditorPart extends EditorPart implements
 	public void createPartControl(Composite parent) {
 		this.parent = parent;
 		parent.setBackground(parent.getDisplay().getSystemColor(SWT.COLOR_WHITE));
-		loadView(false);
 
-		registerEcore();
+		final VView view = getView();
 
+		Activator.getViewModelRegistry().registerViewModel(view, resource.getURI().toString());
 		try {
-			// reload view resource after EClass' package resource was loaded into the package registry
-			loadView(true);
-			final VView view = getView();
-
-			Activator.getViewModelRegistry().registerViewModel(view, resource.getURI().toString());
-			try {
-				Activator.getViewModelRegistry().registerViewModelEditor(view, this);
-			} catch (final IOException e) {
-				Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
+			Activator.getViewModelRegistry().registerViewModelEditor(view, this);
+		} catch (final IOException e) {
+			Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
+		}
+		if (view.getRootEClass() != null) {
+			if (view.getRootEClass().eResource() != null) {
+				Activator.getViewModelRegistry().register(view.getRootEClass().eResource().getURI().toString(),
+					view);
+			} else {
+				Activator
+					.getDefault()
+					.getLog()
+					.log(
+						new Status(IStatus.WARNING, Activator.PLUGIN_ID,
+							"The Root EClass of the view cannot be resolved." + view.getRootEClass())); //$NON-NLS-1$
 			}
-			if (view.getRootEClass() != null) {
-				if (view.getRootEClass().eResource() != null) {
-					Activator.getViewModelRegistry().register(view.getRootEClass().eResource().getURI().toString(),
-						view);
-				} else {
-					Activator
-						.getDefault()
-						.getLog()
-						.log(
-							new Status(IStatus.WARNING, Activator.PLUGIN_ID,
-								"The Root EClass of the view cannot be resolved." + view.getRootEClass())); //$NON-NLS-1$
-				}
-			}
-
-			showView();
-
-			// BEGIN SUPRESS CATCH EXCEPTION
-		} catch (final RuntimeException e) {
-			displayError(e);
-		} // END SUPRESS CATCH EXCEPTION
+		}
+		showView();
 	}
 
-	private void registerEcore() {
+	private void registerEcore() throws IOException {
 		final String ecorePath = getEcorePath();
 		if (ecorePath == null) {
 			return;
 		}
-		try {
-			EcoreHelper.registerEcore(ecorePath);
-		} catch (final IOException e) {
-			Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
-
-		}
+		EcoreHelper.registerEcore(ecorePath);
 	}
 
 	/**
@@ -432,14 +421,6 @@ public class ViewEditorPart extends EditorPart implements
 		return null;
 	}
 
-	private void displayError(Exception e) {
-		Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
-		final IStatus status = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
-			Messages.ViewEditorPart_ViewCannotBeDisplayed, e);
-		final ErrorViewPart part = new ErrorViewPart(status);
-		part.createPartControl(parent);
-	}
-
 	/**
 	 * @author Jonas
 	 *
@@ -468,7 +449,12 @@ public class ViewEditorPart extends EditorPart implements
 			}
 
 			// reload view resource after EClass' package resource was loaded into the package registry
-			loadView(true);
+			try {
+				loadView(true);
+			} catch (final IOException e) {
+				Activator.getDefault().getLog()
+					.log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
+			}
 			final VView view = getView();
 
 			try {
