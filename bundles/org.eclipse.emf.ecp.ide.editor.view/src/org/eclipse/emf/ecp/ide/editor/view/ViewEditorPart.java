@@ -130,6 +130,7 @@ public class ViewEditorPart extends EditorPart implements
 		super.setPartName(input.getName());
 
 		try {
+			basicCommandStack = new BasicCommandStack();
 			loadView(false);
 			registerEcore();
 			// reload view resource after EClass' package resource was loaded into the package registry
@@ -143,7 +144,6 @@ public class ViewEditorPart extends EditorPart implements
 			throw new PartInitException(Messages.ViewEditorPart_ViewCannotBeDisplayed, e);
 		} // END SUPRESS CATCH EXCEPTION
 
-		basicCommandStack = new BasicCommandStack();
 		basicCommandStack.addCommandStackListener(new CommandStackListener() {
 			@Override
 			public void commandStackChanged(final EventObject event) {
@@ -155,7 +155,6 @@ public class ViewEditorPart extends EditorPart implements
 				});
 			}
 		});
-
 		partListener = new ViewPartListener();
 		getSite().getPage().addPartListener(partListener);
 
