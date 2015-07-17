@@ -14,7 +14,7 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.ui.ide;bundle-version="[3.7.0,4.0.0)",
  org.eclipse.emf.common.ui;bundle-version="[2.5.0,3.0.0)",
  org.eclipse.emf.ecp.view.model.common;bundle-version="[1.5.0,2.0.0)",
- org.eclipse.emf.ecp.ide.util
+ org.eclipse.emf.ecp.ide.util;bundle-version="[1.5.0,2.0.0)"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Export-Package: org.eclipse.emf.ecp.view.model.internal.project.handlers;version="1.7.0";x-internal:="true",
