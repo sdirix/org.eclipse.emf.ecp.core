@@ -45,7 +45,9 @@ import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
+import org.eclipse.emf.ecp.view.spi.model.VViewModelProperties;
 import org.eclipse.emfforms.internal.spreadsheet.core.transfer.EMFFormsSpreadsheetExporterImpl;
+import org.eclipse.emfforms.internal.spreadsheet.core.transfer.EMFFormsSpreadsheetExporterImpl.ViewProvider;
 import org.eclipse.emfforms.spi.spreadsheet.core.transfer.EMFFormsSpreadsheetExporter;
 import org.junit.After;
 import org.junit.Before;
@@ -67,7 +69,12 @@ public class EMFFormsSpreadsheetExporterImpl_ITest {
 
 	@Test
 	public void testRenderAdditional() throws DatatypeConfigurationException, IOException {
-		final EMFFormsSpreadsheetExporter viewRenderer = EMFFormsSpreadsheetExporter.INSTANCE;
+		final EMFFormsSpreadsheetExporter viewRenderer = new EMFFormsSpreadsheetExporterImpl(new ViewProvider() {
+			@Override
+			public VView getViewModel(EObject viewEobject, VViewModelProperties properties) {
+				return getView();
+			}
+		});
 		final User user = getDomainModel();
 		final User user2 = getDomainModel();
 		final Map<EObject, Map<String, String>> additionalInformation = new LinkedHashMap<EObject, Map<String, String>>();
@@ -77,40 +84,61 @@ public class EMFFormsSpreadsheetExporterImpl_ITest {
 		final Map<String, String> mapping2 = new LinkedHashMap<String, String>();
 		mapping2.put("Header", "Value2"); //$NON-NLS-1$//$NON-NLS-2$
 		additionalInformation.put(user2, mapping2);
-		final Workbook wb = viewRenderer.render(Arrays.asList(user, user2), getView(), additionalInformation);
+		final Workbook wb = viewRenderer.render(Arrays.asList(user, user2), null,
+			null, additionalInformation);
 		assertEquals(4, wb.getSheetAt(0).getLastRowNum());
 	}
 
 	@Test
 	public void testRenderTemplate() throws DatatypeConfigurationException, IOException {
-		final EMFFormsSpreadsheetExporter viewRenderer = EMFFormsSpreadsheetExporter.INSTANCE;
-		final Workbook wb = viewRenderer.render(null, getView(), null);
+		final EMFFormsSpreadsheetExporter viewRenderer = new EMFFormsSpreadsheetExporterImpl(new ViewProvider() {
+			@Override
+			public VView getViewModel(EObject viewEobject, VViewModelProperties properties) {
+				return getView();
+			}
+		});
+		final Workbook wb = viewRenderer.render(null, null, null, null);
 		assertEquals(2, wb.getSheetAt(0).getLastRowNum());
 	}
 
 	@Test
 	public void testRenderMultiple() throws DatatypeConfigurationException {
-		final EMFFormsSpreadsheetExporterImpl viewRenderer = new EMFFormsSpreadsheetExporterImpl();
+		final EMFFormsSpreadsheetExporter viewRenderer = new EMFFormsSpreadsheetExporterImpl(new ViewProvider() {
+			@Override
+			public VView getViewModel(EObject viewEobject, VViewModelProperties properties) {
+				return getView();
+			}
+		});
 		final User user = getDomainModel();
 		final User user2 = getDomainModel();
-		final Workbook wb = viewRenderer.render(Arrays.asList(user, user2), getView(), null);
+		final Workbook wb = viewRenderer.render(Arrays.asList(user, user2), null, null, null);
 		assertEquals(4, wb.getSheetAt(0).getLastRowNum());
 	}
 
 	@Test
 	public void testRenderMultipleInvalid() throws DatatypeConfigurationException {
-		final EMFFormsSpreadsheetExporterImpl viewRenderer = new EMFFormsSpreadsheetExporterImpl();
+		final EMFFormsSpreadsheetExporter viewRenderer = new EMFFormsSpreadsheetExporterImpl(new ViewProvider() {
+			@Override
+			public VView getViewModel(EObject viewEobject, VViewModelProperties properties) {
+				return getView();
+			}
+		});
 		final User user = getDomainModel();
 		final Task task = TaskFactory.eINSTANCE.createTask();
-		final Workbook wb = viewRenderer.render(Arrays.asList(user, task), getView(), null);
+		final Workbook wb = viewRenderer.render(Arrays.asList(user, task), null, null, null);
 		assertEquals(3, wb.getSheetAt(0).getLastRowNum());
 	}
 
 	@Test
 	public void testRender() throws DatatypeConfigurationException {
-		final EMFFormsSpreadsheetExporterImpl viewRenderer = new EMFFormsSpreadsheetExporterImpl();
+		final EMFFormsSpreadsheetExporter viewRenderer = new EMFFormsSpreadsheetExporterImpl(new ViewProvider() {
+			@Override
+			public VView getViewModel(EObject viewEobject, VViewModelProperties properties) {
+				return getView();
+			}
+		});
 		final User user = getDomainModel();
-		final Workbook wb = viewRenderer.render(Collections.singleton(user), getView(), null);
+		final Workbook wb = viewRenderer.render(Collections.singleton(user), null, null, null);
 		final Sheet sheet = wb.getSheetAt(0);
 		final Row row = sheet.getRow(3);
 		assertEquals(11, row.getLastCellNum());

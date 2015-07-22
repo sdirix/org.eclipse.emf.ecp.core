@@ -45,7 +45,6 @@ import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.model.VViewModelProperties;
-import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
 import org.eclipse.emf.emfstore.bowling.BowlingFactory;
 import org.eclipse.emf.emfstore.bowling.BowlingPackage;
 import org.eclipse.emf.emfstore.bowling.Fan;
@@ -87,8 +86,7 @@ public class Roundtrip_ITest {
 		additionalInformation.put(user2, keyValueMap2);
 
 		final Workbook wb = viewRenderer.render(Arrays.asList(user, user2),
-			ViewProviderHelper.getView(user, properties),
-			additionalInformation);
+			user, properties, additionalInformation);
 
 		final File targetFile = new File("export.xls"); //$NON-NLS-1$
 		saveWorkbook(wb, targetFile.getAbsolutePath());
@@ -137,7 +135,6 @@ public class Roundtrip_ITest {
 
 	@Test
 	public void testUnsetFeatures() throws IOException, DatatypeConfigurationException {
-		final EMFFormsSpreadsheetExporter viewRenderer = EMFFormsSpreadsheetExporter.INSTANCE;
 
 		final Fan domainModel = BowlingFactory.eINSTANCE.createFan();
 		domainModel.setNumberOfTournamentsVisited(1);
@@ -154,7 +151,16 @@ public class Roundtrip_ITest {
 			control(BowlingPackage.eINSTANCE.getFan_FavouriteMerchandise()),
 			control(BowlingPackage.eINSTANCE.getFan_FanMerchandise()));
 
-		final Workbook wb = viewRenderer.render(Collections.singleton(domainModel), view, null);
+		@SuppressWarnings("restriction")
+		final EMFFormsSpreadsheetExporter viewRenderer = new org.eclipse.emfforms.internal.spreadsheet.core.transfer.EMFFormsSpreadsheetExporterImpl(
+			new org.eclipse.emfforms.internal.spreadsheet.core.transfer.EMFFormsSpreadsheetExporterImpl.ViewProvider() {
+				@Override
+				public VView getViewModel(EObject viewEobject, VViewModelProperties properties) {
+					return view;
+				}
+			});
+
+		final Workbook wb = viewRenderer.render(Collections.singleton(domainModel), null, null, null);
 
 		final File targetFile = new File("export.xls"); //$NON-NLS-1$
 		saveWorkbook(wb, targetFile.getAbsolutePath());
@@ -180,7 +186,6 @@ public class Roundtrip_ITest {
 
 	@Test
 	public void testMixingUnsetFeatures() throws IOException, DatatypeConfigurationException {
-		final EMFFormsSpreadsheetExporter viewRenderer = EMFFormsSpreadsheetExporter.INSTANCE;
 
 		final Fan domainModel1 = BowlingFactory.eINSTANCE.createFan();
 		domainModel1.setName("Hans"); //$NON-NLS-1$
@@ -196,7 +201,16 @@ public class Roundtrip_ITest {
 			control(BowlingPackage.eINSTANCE.getFan_FavouriteMerchandise()),
 			control(BowlingPackage.eINSTANCE.getFan_FanMerchandise()));
 
-		final Workbook wb = viewRenderer.render(Arrays.asList(domainModel1, domainModel2), view, null);
+		@SuppressWarnings("restriction")
+		final EMFFormsSpreadsheetExporter viewRenderer = new org.eclipse.emfforms.internal.spreadsheet.core.transfer.EMFFormsSpreadsheetExporterImpl(
+			new org.eclipse.emfforms.internal.spreadsheet.core.transfer.EMFFormsSpreadsheetExporterImpl.ViewProvider() {
+				@Override
+				public VView getViewModel(EObject viewEobject, VViewModelProperties properties) {
+					return view;
+				}
+			});
+
+		final Workbook wb = viewRenderer.render(Arrays.asList(domainModel1, domainModel2), null, null, null);
 
 		final File targetFile = new File("export.xls"); //$NON-NLS-1$
 		saveWorkbook(wb, targetFile.getAbsolutePath());

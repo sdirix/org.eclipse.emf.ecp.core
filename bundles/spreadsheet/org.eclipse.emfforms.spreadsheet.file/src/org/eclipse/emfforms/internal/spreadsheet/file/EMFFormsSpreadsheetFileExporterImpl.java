@@ -19,7 +19,7 @@ import java.util.Map;
 
 import org.apache.poi.ss.usermodel.Workbook;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emf.ecp.view.spi.model.VViewModelProperties;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetReport;
 import org.eclipse.emfforms.spi.spreadsheet.core.transfer.EMFFormsSpreadsheetExporter;
@@ -36,16 +36,10 @@ import org.osgi.framework.ServiceReference;
  */
 public class EMFFormsSpreadsheetFileExporterImpl implements EMFFormsSpreadsheetFileExporter {
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emfforms.spi.spreadsheet.file.EMFFormsSpreadsheetFileExporter#render(File, Collection, VView,
-	 *      Map)
-	 */
 	@Override
-	public void render(File file, Collection<EObject> domainObjects, VView viewModel,
-		Map<EObject, Map<String, String>> additionalInformation) {
-		final Workbook workbook = EMFFormsSpreadsheetExporter.INSTANCE.render(domainObjects, viewModel,
+	public void render(File file, Collection<EObject> domainObjects, EObject viewEobject,
+		VViewModelProperties properties, Map<EObject, Map<String, String>> additionalInformation) {
+		final Workbook workbook = EMFFormsSpreadsheetExporter.INSTANCE.render(domainObjects, viewEobject, properties,
 			additionalInformation);
 
 		final BundleContext bundleContext = FrameworkUtil.getBundle(getClass()).getBundleContext();

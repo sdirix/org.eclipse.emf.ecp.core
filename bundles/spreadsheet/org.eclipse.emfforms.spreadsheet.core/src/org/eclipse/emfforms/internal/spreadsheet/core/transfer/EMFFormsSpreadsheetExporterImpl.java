@@ -26,6 +26,8 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emf.ecp.view.spi.model.VViewModelProperties;
+import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
 import org.eclipse.emfforms.internal.spreadsheet.core.EMFFormsSpreadsheetViewModelContext;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsAbstractSpreadsheetRenderer;
@@ -48,11 +50,26 @@ public class EMFFormsSpreadsheetExporterImpl implements EMFFormsSpreadsheetExpor
 
 	private final ReportService reportService;
 	private final EMFFormsIdProvider idProvider;
+	private final ViewProvider viewProvider;
 
 	/**
 	 * Default Constructor.
 	 */
 	public EMFFormsSpreadsheetExporterImpl() {
+		this(new ViewProvider() {
+			@Override
+			public VView getViewModel(EObject viewEobject, VViewModelProperties properties) {
+				return ViewProviderHelper.getView(viewEobject, properties);
+			}
+		});
+	}
+
+	/**
+	 * Constructor which offers a way to influence the view model retrieval.
+	 *
+	 * @param viewProvider the provider which will be used to find the view model that will be rendered
+	 */
+	public EMFFormsSpreadsheetExporterImpl(ViewProvider viewProvider) {
 		final BundleContext bundleContext = FrameworkUtil.getBundle(getClass()).getBundleContext();
 		final ServiceReference<ReportService> reportServiceReference = bundleContext
 			.getServiceReference(ReportService.class);
@@ -60,18 +77,29 @@ public class EMFFormsSpreadsheetExporterImpl implements EMFFormsSpreadsheetExpor
 		final ServiceReference<EMFFormsIdProvider> idProviderServiceReference = bundleContext
 			.getServiceReference(EMFFormsIdProvider.class);
 		idProvider = bundleContext.getService(idProviderServiceReference);
+		this.viewProvider = viewProvider;
+
 	}
 
 	@Override
-	public Workbook render(final Collection<? extends EObject> domainObjects, VView viewModel,
-		Map<EObject, Map<String, String>> additionalInformation) {
-
+	public Workbook render(final Collection<? extends EObject> domainObjects, EObject viewEobject,
+		VViewModelProperties properties, Map<EObject, Map<String, String>> additionalInformation) {
 		final BundleContext bundleContext = FrameworkUtil.getBundle(getClass()).getBundleContext();
 		final ServiceReference<EMFFormsSpreadsheetRendererFactory> serviceReference = bundleContext
 			.getServiceReference(EMFFormsSpreadsheetRendererFactory.class);
 		final EMFFormsSpreadsheetRendererFactory emfFormsSpreadsheetRendererFactory = bundleContext
 			.getService(serviceReference);
+
 		final Workbook workbook = new HSSFWorkbook();
+
+		final VView viewModel = viewProvider.getViewModel(viewEobject, properties);
+		if (viewModel == null) {
+			reportService.report(
+				new EMFFormsSpreadsheetReport("No view model could be found for the given EObject/ViewModelProperties", //$NON-NLS-1$
+					EMFFormsSpreadsheetReport.ERROR));
+			return workbook;
+		}
+
 		final CellStyle cellStyle = workbook.createCellStyle();
 		cellStyle.setLocked(true);
 		final CellStyle cellStyle2 = workbook.createCellStyle();
@@ -160,5 +188,23 @@ public class EMFFormsSpreadsheetExporterImpl implements EMFFormsSpreadsheetExpor
 
 			}
 		}
+	}
+
+	/**
+	 * Interface which encapsulates the call to get a viewmodel for EObject + properties.
+	 *
+	 * @author Johannes Faltermeier
+	 *
+	 */
+	public interface ViewProvider {
+
+		/**
+		 * Returns the view model for the given EObject/properties.
+		 *
+		 * @param viewEobject the object
+		 * @param properties the {@link VViewModelProperties properties}
+		 * @return the view
+		 */
+		VView getViewModel(EObject viewEobject, VViewModelProperties properties);
 	}
 }

@@ -42,10 +42,13 @@ import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
+import org.eclipse.emf.ecp.view.spi.model.VViewModelProperties;
 import org.eclipse.emf.emfstore.bowling.BowlingFactory;
 import org.eclipse.emf.emfstore.bowling.BowlingPackage;
 import org.eclipse.emf.emfstore.bowling.Fan;
 import org.eclipse.emf.emfstore.bowling.Merchandise;
+import org.eclipse.emfforms.internal.spreadsheet.core.transfer.EMFFormsSpreadsheetExporterImpl;
+import org.eclipse.emfforms.internal.spreadsheet.core.transfer.EMFFormsSpreadsheetExporterImpl.ViewProvider;
 import org.eclipse.emfforms.spi.spreadsheet.core.transfer.EMFFormsSpreadsheetExporter;
 import org.eclipse.emfforms.spi.spreadsheet.core.transfer.EMFFormsSpreadsheetImporter;
 import org.junit.After;
@@ -68,11 +71,16 @@ public class EMFFormsSpreadsheetImportImpl_ITest {
 
 	@Test
 	public void testImportSpreadsheet() throws IOException, DatatypeConfigurationException {
-		final EMFFormsSpreadsheetExporter viewRenderer = EMFFormsSpreadsheetExporter.INSTANCE;
+		final EMFFormsSpreadsheetExporter viewRenderer = new EMFFormsSpreadsheetExporterImpl(new ViewProvider() {
+			@Override
+			public VView getViewModel(EObject viewEobject, VViewModelProperties properties) {
+				return getView();
+			}
+		});
 		final User user = getDomainModel();
 		final User user2 = getDomainModel();
 
-		final Workbook workbook = viewRenderer.render(Arrays.asList(user, user2), getView(), null);
+		final Workbook workbook = viewRenderer.render(Arrays.asList(user, user2), null, null, null);
 
 		final EMFFormsSpreadsheetImporter spreadsheetImport = EMFFormsSpreadsheetImporter.INSTANCE;
 		final Collection<EObject> users = spreadsheetImport.importSpreadsheet(workbook,
@@ -116,8 +124,6 @@ public class EMFFormsSpreadsheetImportImpl_ITest {
 
 	@Test
 	public void testImportSpreadsheetUnsetFeatures() throws IOException, DatatypeConfigurationException {
-		final EMFFormsSpreadsheetExporter viewRenderer = EMFFormsSpreadsheetExporter.INSTANCE;
-
 		final Fan domainModel = BowlingFactory.eINSTANCE.createFan();
 		domainModel.setNumberOfTournamentsVisited(1);
 		assertFalse(domainModel.isSetName());
@@ -133,7 +139,14 @@ public class EMFFormsSpreadsheetImportImpl_ITest {
 			control(BowlingPackage.eINSTANCE.getFan_FavouriteMerchandise()),
 			control(BowlingPackage.eINSTANCE.getFan_FanMerchandise()));
 
-		final Workbook workbook = viewRenderer.render(Collections.singleton(domainModel), view, null);
+		final EMFFormsSpreadsheetExporter viewRenderer = new EMFFormsSpreadsheetExporterImpl(new ViewProvider() {
+			@Override
+			public VView getViewModel(EObject viewEobject, VViewModelProperties properties) {
+				return view;
+			}
+		});
+
+		final Workbook workbook = viewRenderer.render(Collections.singleton(domainModel), null, null, null);
 
 		final EMFFormsSpreadsheetImporter spreadsheetImport = EMFFormsSpreadsheetImporter.INSTANCE;
 		final Collection<EObject> fans = spreadsheetImport.importSpreadsheet(workbook,
@@ -152,7 +165,6 @@ public class EMFFormsSpreadsheetImportImpl_ITest {
 	@Test
 	public void testImportSpreadsheetUnsettableFeaturesWithDefaultValue()
 		throws IOException, DatatypeConfigurationException {
-		final EMFFormsSpreadsheetExporter viewRenderer = EMFFormsSpreadsheetExporter.INSTANCE;
 
 		final Fan domainModel = BowlingFactory.eINSTANCE.createFan();
 		domainModel.eSet(BowlingPackage.eINSTANCE.getFan_Name(), null);
@@ -170,7 +182,14 @@ public class EMFFormsSpreadsheetImportImpl_ITest {
 			control(BowlingPackage.eINSTANCE.getFan_FavouriteMerchandise()),
 			control(BowlingPackage.eINSTANCE.getFan_FanMerchandise()));
 
-		final Workbook workbook = viewRenderer.render(Collections.singleton(domainModel), view, null);
+		final EMFFormsSpreadsheetExporter viewRenderer = new EMFFormsSpreadsheetExporterImpl(new ViewProvider() {
+			@Override
+			public VView getViewModel(EObject viewEobject, VViewModelProperties properties) {
+				return view;
+			}
+		});
+
+		final Workbook workbook = viewRenderer.render(Collections.singleton(domainModel), null, null, null);
 
 		final EMFFormsSpreadsheetImporter spreadsheetImport = EMFFormsSpreadsheetImporter.INSTANCE;
 		final Collection<EObject> fans = spreadsheetImport.importSpreadsheet(workbook,
@@ -190,7 +209,6 @@ public class EMFFormsSpreadsheetImportImpl_ITest {
 	@Test
 	public void testImportSpreadsheetUnsettableFeaturesWithNonDefaultValue()
 		throws IOException, DatatypeConfigurationException {
-		final EMFFormsSpreadsheetExporter viewRenderer = EMFFormsSpreadsheetExporter.INSTANCE;
 
 		final Fan domainModel = BowlingFactory.eINSTANCE.createFan();
 		domainModel.eSet(BowlingPackage.eINSTANCE.getFan_Name(), "Hans"); //$NON-NLS-1$
@@ -209,7 +227,14 @@ public class EMFFormsSpreadsheetImportImpl_ITest {
 			control(BowlingPackage.eINSTANCE.getFan_FavouriteMerchandise()),
 			control(BowlingPackage.eINSTANCE.getFan_FanMerchandise()));
 
-		final Workbook workbook = viewRenderer.render(Collections.singleton(domainModel), view, null);
+		final EMFFormsSpreadsheetExporter viewRenderer = new EMFFormsSpreadsheetExporterImpl(new ViewProvider() {
+			@Override
+			public VView getViewModel(EObject viewEobject, VViewModelProperties properties) {
+				return view;
+			}
+		});
+
+		final Workbook workbook = viewRenderer.render(Collections.singleton(domainModel), null, null, null);
 
 		final EMFFormsSpreadsheetImporter spreadsheetImport = EMFFormsSpreadsheetImporter.INSTANCE;
 		final Collection<EObject> fans = spreadsheetImport.importSpreadsheet(workbook,

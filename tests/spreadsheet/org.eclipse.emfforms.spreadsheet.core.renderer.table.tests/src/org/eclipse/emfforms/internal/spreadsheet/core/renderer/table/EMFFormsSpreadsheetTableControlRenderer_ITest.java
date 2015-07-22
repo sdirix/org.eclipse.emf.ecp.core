@@ -30,6 +30,7 @@ import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
+import org.eclipse.emf.ecp.view.spi.model.VViewModelProperties;
 import org.eclipse.emf.ecp.view.spi.table.model.DetailEditing;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
@@ -57,10 +58,17 @@ public class EMFFormsSpreadsheetTableControlRenderer_ITest {
 	@Test
 	public void test() throws DatatypeConfigurationException, DatabindingFailedException, IOException {
 		// write data
-		final EMFFormsSpreadsheetExporter viewRenderer = EMFFormsSpreadsheetExporter.INSTANCE;
+		@SuppressWarnings("restriction")
+		final EMFFormsSpreadsheetExporter viewRenderer = new org.eclipse.emfforms.internal.spreadsheet.core.transfer.EMFFormsSpreadsheetExporterImpl(
+			new org.eclipse.emfforms.internal.spreadsheet.core.transfer.EMFFormsSpreadsheetExporterImpl.ViewProvider() {
+				@Override
+				public VView getViewModel(EObject viewEobject, VViewModelProperties properties) {
+					return getView();
+				}
+			});
 		final EObject domainModel = getDomainModel();
 		final EObject domainModel2 = getDomainModel();
-		final Workbook workbook = viewRenderer.render(Arrays.asList(domainModel, domainModel2), getView(), null);
+		final Workbook workbook = viewRenderer.render(Arrays.asList(domainModel, domainModel2), null, null, null);
 
 		// read data
 

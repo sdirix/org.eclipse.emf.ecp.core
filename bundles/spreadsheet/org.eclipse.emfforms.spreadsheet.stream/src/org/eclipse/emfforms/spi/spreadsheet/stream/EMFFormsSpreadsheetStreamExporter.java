@@ -16,7 +16,7 @@ import java.util.Collection;
 import java.util.Map;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emf.ecp.view.spi.model.VViewModelProperties;
 import org.eclipse.emfforms.internal.spreadsheet.stream.EMFFormsSpreadsheetStreamExporterImpl;
 
 /**
@@ -37,8 +37,10 @@ public interface EMFFormsSpreadsheetStreamExporter {
 	 *
 	 * @param outputStream The {@link OutputStream} to write to
 	 * @param domainObjects The collection of {@link EObject} containing the data to export
-	 * @param viewModel The {@link VView} describing the rendered data
+	 * @param viewEobject the eObject which will be used to determine the view model
+	 * @param properties the {@link VViewModelProperties properties} which will be used to determine the view model
+	 * @param additionalInformation AdditionalInformation to export, can be null
 	 */
-	void render(OutputStream outputStream, Collection<EObject> domainObjects, VView viewModel,
-		Map<EObject, Map<String, String>> additionalInformation);
+	void render(OutputStream outputStream, Collection<EObject> domainObjects, EObject viewEobject,
+		VViewModelProperties properties, Map<EObject, Map<String, String>> additionalInformation);
 }
