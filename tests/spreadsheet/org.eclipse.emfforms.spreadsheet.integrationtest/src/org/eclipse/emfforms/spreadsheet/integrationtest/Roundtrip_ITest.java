@@ -44,6 +44,7 @@ import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
+import org.eclipse.emf.ecp.view.spi.model.VViewModelProperties;
 import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
 import org.eclipse.emf.emfstore.bowling.BowlingFactory;
 import org.eclipse.emf.emfstore.bowling.BowlingPackage;
@@ -74,9 +75,9 @@ public class Roundtrip_ITest {
 		final EMFFormsSpreadsheetExporter viewRenderer = EMFFormsSpreadsheetExporter.INSTANCE;
 		final EObject user = getDomainModel();
 		final EObject user2 = getDomainModel();
-		final Map<String, Object> context = new LinkedHashMap<String, Object>();
-		context.put("root", true); //$NON-NLS-1$
-		context.put("detail", true); //$NON-NLS-1$
+		final VViewModelProperties properties = VViewFactory.eINSTANCE.createViewModelLoadingProperties();
+		properties.addNonInheritableProperty("root", true); //$NON-NLS-1$
+		properties.addNonInheritableProperty("detail", true); //$NON-NLS-1$
 		final Map<EObject, Map<String, String>> additionalInformation = new LinkedHashMap<EObject, Map<String, String>>();
 		final Map<String, String> keyValueMap = new LinkedHashMap<String, String>();
 		keyValueMap.put("MyColumn1", "MyValue1"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -85,7 +86,8 @@ public class Roundtrip_ITest {
 		additionalInformation.put(user, keyValueMap);
 		additionalInformation.put(user2, keyValueMap2);
 
-		final Workbook wb = viewRenderer.render(Arrays.asList(user, user2), ViewProviderHelper.getView(user, context),
+		final Workbook wb = viewRenderer.render(Arrays.asList(user, user2),
+			ViewProviderHelper.getView(user, properties),
 			additionalInformation);
 
 		final File targetFile = new File("export.xls"); //$NON-NLS-1$

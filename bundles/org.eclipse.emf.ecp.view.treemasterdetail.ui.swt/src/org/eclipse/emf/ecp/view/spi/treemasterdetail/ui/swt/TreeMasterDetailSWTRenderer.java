@@ -16,9 +16,7 @@ package org.eclipse.emf.ecp.view.spi.treemasterdetail.ui.swt;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -48,8 +46,11 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
+import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emf.ecp.view.spi.model.VViewModelProperties;
 import org.eclipse.emf.ecp.view.spi.model.reporting.StatusReport;
+import org.eclipse.emf.ecp.view.spi.model.util.ViewModelPropertiesHelper;
 import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
@@ -858,15 +859,18 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 
 					final Object root = manipulateSelection(((RootObject) ((TreeViewer) event.getSource()).getInput())
 						.getRoot());
-					final Map<String, Object> context = new LinkedHashMap<String, Object>();
-					context.put(DETAIL_KEY, true);
+
+					final VElement viewModel = getViewModelContext().getViewModel();
+					final VViewModelProperties properties = ViewModelPropertiesHelper
+						.getInhertitedPropertiesOrEmpty(viewModel);
+					properties.addNonInheritableProperty(DETAIL_KEY, true);
 
 					/* root selected */
 					if (selected.equals(root)) {
-						context.put(ROOT_KEY, true);
+						properties.addNonInheritableProperty(ROOT_KEY, true);
 						VView vView = getVElement().getDetailView();
 						if (vView.getChildren().isEmpty()) {
-							vView = ViewProviderHelper.getView((EObject) selected, context);
+							vView = ViewProviderHelper.getView((EObject) selected, properties);
 						}
 						final ReferenceService referenceService = getViewModelContext().getService(
 							ReferenceService.class);
@@ -881,7 +885,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 					}
 					/* child selected */
 					else {
-						final VView view = ViewProviderHelper.getView((EObject) selected, context);
+						final VView view = ViewProviderHelper.getView((EObject) selected, properties);
 						final ReferenceService referenceService = getViewModelContext().getService(
 							ReferenceService.class);
 						final ViewModelContext childContext = getViewModelContext().getChildContext((EObject) selected,

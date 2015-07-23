@@ -26,4 +26,51 @@ import org.eclipse.emf.ecore.EObject;
  * @generated
  */
 public interface VViewModelProperties extends EObject {
+
+	/**
+	 * Creates new {@link VViewModelProperties properties} which inherit the {@link #getInheritableProperties()
+	 * inheritable properties} of this object.
+	 *
+	 * @return the new properties
+	 */
+	VViewModelProperties inherit();
+
+	/**
+	 * Returns <code>true</code> if there is either an inherited property or a non-inherited property for the given key.
+	 * Returns <code>false</code> otherwise.
+	 *
+	 * @param key the key to check
+	 * @return whether there is a property for the given key
+	 */
+	boolean containsKey(String key);
+
+	/**
+	 * Returns the property value for the given key or <code>null</code> if there is no property for the given key,
+	 *
+	 * @param key the key to get the value for
+	 * @return the value
+	 */
+	Object get(String key);
+
+	/**
+	 * Adds a new inheritable property. Returns the value which has been associated with the given key before the new
+	 * property was added or <code>null</code> if there was no value for the key.
+	 *
+	 * @param key the key to add
+	 * @param value the value to add
+	 * @return the previous value
+	 */
+	Object addInheritableProperty(String key, Object value);
+
+	/**
+	 * Adds a new non-inheritable property. Returns the value which has been associated with the given key before the
+	 * new
+	 * property was added or <code>null</code> if there was no value for the key.
+	 *
+	 * @param key the key to add
+	 * @param value the value to add
+	 * @return the previous value
+	 */
+	Object addNonInheritableProperty(String key, Object value);
+
 } // VViewModelProperties

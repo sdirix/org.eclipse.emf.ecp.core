@@ -11,8 +11,6 @@
  ******************************************************************************/
 package org.eclipse.emfforms.internal.spreadsheet.core.renderer.table;
 
-import java.util.Collections;
-
 import org.apache.poi.ss.usermodel.Workbook;
 import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.emf.ecore.EObject;
@@ -27,6 +25,8 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
+import org.eclipse.emf.ecp.view.spi.model.VViewModelProperties;
+import org.eclipse.emf.ecp.view.spi.model.util.ViewModelPropertiesHelper;
 import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
 import org.eclipse.emf.ecp.view.spi.table.model.DetailEditing;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
@@ -188,7 +188,7 @@ public class EMFFormsSpreadsheetTableControlRenderer extends EMFFormsAbstractSpr
 						tableEntry = EcoreUtil.create(EReference.class.cast(observableList.getElementType())
 							.getEReferenceType());
 					}
-					final VView viewModel = getView(vElement, tableEntry);
+					final VView viewModel = getView(vElement, tableEntry, viewModelContext);
 
 					final ViewModelContext subViewModelContext = new EMFFormsSpreadsheetViewModelContext(viewModel,
 						viewModelContext.getDomainModel());
@@ -218,10 +218,13 @@ public class EMFFormsSpreadsheetTableControlRenderer extends EMFFormsAbstractSpr
 		return numColumns;
 	}
 
-	private VView getView(VTableControl tableControl, EObject domainObject) throws DatabindingFailedException {
+	private VView getView(VTableControl tableControl, EObject domainObject, ViewModelContext viewModelContext)
+		throws DatabindingFailedException {
 		VView detailView = tableControl.getDetailView();
 		if (detailView == null) {
-			detailView = ViewProviderHelper.getView(domainObject, Collections.<String, Object> emptyMap());
+			final VElement viewModel = viewModelContext.getViewModel();
+			final VViewModelProperties properties = ViewModelPropertiesHelper.getInhertitedPropertiesOrEmpty(viewModel);
+			detailView = ViewProviderHelper.getView(domainObject, properties);
 		}
 		return detailView;
 	}

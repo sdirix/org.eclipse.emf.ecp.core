@@ -259,7 +259,7 @@ public class VViewImpl extends VElementImpl implements VView {
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.7
 	 *        <!-- end-user-doc -->
 	 *

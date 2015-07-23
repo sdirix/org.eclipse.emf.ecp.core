@@ -30,6 +30,7 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.emf.ecp.internal.view.model.provider.xmi.Activator;
 import org.eclipse.emf.ecp.view.spi.model.LocalizationAdapter;
 import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emf.ecp.view.spi.model.VViewModelProperties;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
@@ -166,21 +167,21 @@ public final class ViewModelFileExtensionsManager {
 
 	/**
 	 * @param eObject the object to be rendered
-	 * @param context a key-value-map from String to Object
+	 * @param properties the {@link VViewModelProperties properties}
 	 * @return if there is a xmi file registered containing a view model for the given type
 	 */
-	public boolean hasViewModelFor(EObject eObject, Map<String, Object> context) {
+	public boolean hasViewModelFor(EObject eObject, VViewModelProperties properties) {
 		return map.containsKey(eObject.eClass());
 	}
 
 	/**
 	 * @param eObject The {@link EObject} to create a view for
-	 * @param context a key-value-map from String to Object
+	 * @param properties the {@link VViewModelProperties properties}
 	 * @return a view model for the given eObject
 	 */
-	public VView createView(EObject eObject, Map<String, Object> context) {
+	public VView createView(EObject eObject, VViewModelProperties properties) {
 		final Map<VView, ExtensionDescription> viewMap = map.get(eObject.eClass());
-		if (context == null) {
+		if (properties == null) {
 			return viewMap.keySet().iterator().next();
 		}
 		VView bestFitting = null;
@@ -189,18 +190,16 @@ public final class ViewModelFileExtensionsManager {
 			final Map<String, String> viewFilter = viewMap.get(view).getKeyValuPairs();
 			int currentFittingKeyValues = 0;
 			for (final String viewFilterKey : viewFilter.keySet()) {
-				if (context.containsKey(viewFilterKey)) {
-					final Object contextValue = context.get(viewFilterKey);
+				if (properties.containsKey(viewFilterKey)) {
+					final Object contextValue = properties.get(viewFilterKey);
 					final String viewFilterValue = viewFilter.get(viewFilterKey);
 					if (contextValue.toString().equalsIgnoreCase(viewFilterValue)) {
 						currentFittingKeyValues++;
-					}
-					else {
+					} else {
 						currentFittingKeyValues = -1;
 						break;
 					}
-				}
-				else {
+				} else {
 					currentFittingKeyValues = -1;
 					break;
 				}
@@ -221,6 +220,7 @@ public final class ViewModelFileExtensionsManager {
 					key);
 			}
 		});
+		copiedView.setLoadingProperties(EcoreUtil.copy(properties));
 		return copiedView;
 	}
 

@@ -11,6 +11,8 @@
  */
 package org.eclipse.emf.ecp.view.spi.model.impl;
 
+import java.util.Map.Entry;
+
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
@@ -19,7 +21,9 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.InternalEList;
+import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.model.VViewModelLoadingProperties;
+import org.eclipse.emf.ecp.view.spi.model.VViewModelProperties;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 
 /**
@@ -211,6 +215,58 @@ public class VViewModelLoadingPropertiesImpl extends EObjectImpl implements VVie
 			return nonInheritableProperties != null && !nonInheritableProperties.isEmpty();
 		}
 		return super.eIsSet(featureID);
+	}
+
+	@Override
+	public boolean containsKey(String key) {
+		return getInheritableProperties().containsKey(key) || getNonInheritableProperties().containsKey(key);
+	}
+
+	@Override
+	public Object get(String key) {
+		if (getInheritableProperties().containsKey(key)) {
+			return getInheritableProperties().get(key);
+		}
+		if (getNonInheritableProperties().containsKey(key)) {
+			return getNonInheritableProperties().get(key);
+		}
+		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.model.VViewModelProperties#inherit()
+	 */
+	@Override
+	public VViewModelProperties inherit() {
+		final VViewModelLoadingProperties properties = VViewFactory.eINSTANCE.createViewModelLoadingProperties();
+		for (final Entry<String, Object> entry : getInheritableProperties().entrySet()) {
+			properties.getInheritableProperties().put(entry.getKey(), entry.getValue());
+		}
+		return properties;
+	}
+
+	@Override
+	public Object addInheritableProperty(String key, Object value) {
+		if (getNonInheritableProperties().containsKey(key)) {
+			final Object oldValue = getNonInheritableProperties().get(key);
+			getNonInheritableProperties().remove(key);
+			getInheritableProperties().put(key, value);
+			return oldValue;
+		}
+		return getInheritableProperties().put(key, value);
+	}
+
+	@Override
+	public Object addNonInheritableProperty(String key, Object value) {
+		if (getInheritableProperties().containsKey(key)) {
+			final Object oldValue = getInheritableProperties().get(key);
+			getInheritableProperties().remove(key);
+			getNonInheritableProperties().put(key, value);
+			return oldValue;
+		}
+		return getNonInheritableProperties().put(key, value);
 	}
 
 } // VViewModelPropertiesImpl

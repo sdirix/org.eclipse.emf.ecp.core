@@ -11,7 +11,6 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.table.internal.validation;
 
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -29,7 +28,10 @@ import org.eclipse.emf.ecp.view.spi.context.GlobalViewModelService;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
+import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emf.ecp.view.spi.model.VViewModelProperties;
+import org.eclipse.emf.ecp.view.spi.model.util.ViewModelPropertiesHelper;
 import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
 import org.eclipse.emf.ecp.view.spi.table.model.DetailEditing;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
@@ -162,9 +164,11 @@ public class TableValidationInitiator implements GlobalViewModelService {
 					.getValueProperty(tableDomainModelReference, context.getDomainModel());
 			}
 			final EReference reference = (EReference) valueProperty.getValueType();
+			final VElement viewModel = context.getViewModel();
+			final VViewModelProperties properties = ViewModelPropertiesHelper.getInhertitedPropertiesOrEmpty(viewModel);
 			detailView = ViewProviderHelper.getView(
 				EcoreUtil.create(reference.getEReferenceType()),
-				Collections.<String, Object> emptyMap());
+				properties);
 		}
 
 		return detailView;

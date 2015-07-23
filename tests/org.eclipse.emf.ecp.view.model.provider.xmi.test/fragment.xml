@@ -6,6 +6,13 @@
       <file
             filePath="viewmodel.view">
       </file>
+      <file
+            filePath="viewmodel2.view">
+         <filter
+               key="key"
+               value="value">
+         </filter>
+      </file>
    </extension>
 
 </fragment>

@@ -16,8 +16,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.Assert.assertEquals;
 
-import java.util.Map;
-
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.view.context.reporting.test.TestSWTRendererFactory.TestEMFFormsRendererService;
@@ -27,6 +25,7 @@ import org.eclipse.emf.ecp.view.internal.provider.ViewProviderImpl;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emf.ecp.view.spi.model.VViewModelProperties;
 import org.eclipse.emf.ecp.view.spi.model.impl.Activator;
 import org.eclipse.emf.ecp.view.spi.provider.IViewProvider;
 import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
@@ -161,14 +160,15 @@ public class RendererError_PTest {
 		final ViewProviderImpl viewProvider = new ViewProviderImpl(false);
 		viewProvider.clearProviders();
 		viewProvider.addProvider(new IViewProvider() {
+
 			@Override
-			public VView generate(EObject eObject, Map<String, Object> context) {
+			public VView provideViewModel(EObject eObject, VViewModelProperties properties) {
 				return null;
 			}
 
 			@Override
-			public int canRender(EObject eObject, Map<String, Object> context) {
-				return 0;
+			public double canProvideViewModel(EObject eObject, VViewModelProperties properties) {
+				return 0d;
 			}
 		});
 		viewProvider.getView(league, null);

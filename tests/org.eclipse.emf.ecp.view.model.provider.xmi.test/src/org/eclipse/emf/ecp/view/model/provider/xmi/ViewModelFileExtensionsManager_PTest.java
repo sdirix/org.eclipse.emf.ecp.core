@@ -12,10 +12,13 @@
 package org.eclipse.emf.ecp.view.model.provider.xmi;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
@@ -23,6 +26,8 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.view.model.provider.xmi.ViewModelFileExtensionsManager.ExtensionDescription;
 import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
+import org.eclipse.emf.ecp.view.spi.model.VViewModelLoadingProperties;
 import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
 import org.eclipse.emf.emfstore.bowling.BowlingPackage;
 import org.junit.Before;
@@ -35,12 +40,16 @@ import org.junit.Test;
 public class ViewModelFileExtensionsManager_PTest {
 
 	private static final String FILEPATH = "viewmodel.view";
+	private static final String FILEPATH2 = "viewmodel2.view";
 
-	private static final URI FILE_URI = URI.createPlatformPluginURI("org.eclipse.emf.ecp.view.model.provider.xmi"
-		+ "/" + FILEPATH, false);
 	private static final String VIEWNAME = "the view name";
 	private ViewModelFileExtensionsManager manager;
 	private final EClass eClass1 = BowlingPackage.eINSTANCE.getLeague();
+
+	private static URI uri(String filepath) {
+		return URI.createPlatformPluginURI("org.eclipse.emf.ecp.view.model.provider.xmi"
+			+ "/" + filepath, false);
+	}
 
 	@Before
 	public void init() throws IOException {
@@ -51,9 +60,10 @@ public class ViewModelFileExtensionsManager_PTest {
 	@Test
 	public void testGetExtensionURIs() {
 		final Map<URI, ExtensionDescription> extensionURIS = ViewModelFileExtensionsManager.getExtensionURIS();
-		assertEquals(1, extensionURIS.size());
-		final URI uri = extensionURIS.keySet().iterator().next();
-		assertEquals(FILE_URI, uri);
+		assertEquals(2, extensionURIS.size());
+		final Set<URI> keySet = extensionURIS.keySet();
+		assertTrue(keySet.contains(uri(FILEPATH)));
+		assertTrue(keySet.contains(uri(FILEPATH2)));
 
 	}
 
@@ -67,7 +77,19 @@ public class ViewModelFileExtensionsManager_PTest {
 	public void testCreateViewModel() {
 		final EObject eObject = EcoreUtil.create(eClass1);
 		final VView view = manager.createView(eObject, null);
+		assertNull(view.getLoadingProperties());
 		assertEquals(VIEWNAME, view.getName());
+	}
+
+	@Test
+	public void testCreateViewModel2() {
+		final EObject eObject = EcoreUtil.create(eClass1);
+		final VViewModelLoadingProperties properties = VViewFactory.eINSTANCE.createViewModelLoadingProperties();
+		properties.addInheritableProperty("key", "value");
+		final VView view = manager.createView(eObject, properties);
+		assertNotNull(view.getLoadingProperties());
+		assertEquals("value", view.getLoadingProperties().get("key"));
+		assertEquals("the view name 2", view.getName());
 	}
 
 	@Test

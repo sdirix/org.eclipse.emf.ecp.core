@@ -14,9 +14,7 @@ package org.eclipse.emf.ecp.view.internal.provider;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
-import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -24,6 +22,8 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.internal.ui.Activator;
 import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
+import org.eclipse.emf.ecp.view.spi.model.VViewModelProperties;
 import org.eclipse.emf.ecp.view.spi.provider.IViewProvider;
 import org.eclipse.emf.ecp.view.spi.provider.reporting.NoViewProviderFoundReport;
 import org.eclipse.emf.ecp.view.spi.provider.reporting.ViewModelIsNullReport;
@@ -140,14 +140,14 @@ public class ViewProviderImpl {
 	 * IViewProviders} and searches for the best fitting. If none can be found, then null is returned.
 	 *
 	 * @param eObject the {@link EObject} to find a {@link VView} for
-	 * @param context a key-value-map from String to Object
+	 * @param properties the {@link VViewModelProperties properties}
 	 * @return a view model for the given {@link EObject} or null if no suited provider could be found
 	 */
-	public VView getView(EObject eObject, Map<String, Object> context) {
-		int highestPrio = IViewProvider.NOT_APPLICABLE;
+	public VView getView(EObject eObject, VViewModelProperties properties) {
+		double highestPrio = IViewProvider.NOT_APPLICABLE;
 		IViewProvider selectedProvider = null;
-		if (context == null) {
-			context = new LinkedHashMap<String, Object>();
+		if (properties == null) {
+			properties = VViewFactory.eINSTANCE.createViewModelLoadingProperties();
 		}
 
 		Set<IViewProvider> providers;
@@ -162,7 +162,7 @@ public class ViewProviderImpl {
 		}
 
 		for (final IViewProvider viewProvider : providers) {
-			final int prio = viewProvider.canRender(eObject, context);
+			final double prio = viewProvider.canProvideViewModel(eObject, properties);
 			if (prio > highestPrio) {
 				highestPrio = prio;
 				selectedProvider = viewProvider;
@@ -170,7 +170,7 @@ public class ViewProviderImpl {
 		}
 
 		if (selectedProvider != null) {
-			final VView view = selectedProvider.generate(eObject, context);
+			final VView view = selectedProvider.provideViewModel(eObject, properties);
 			if (view == null) {
 				report(new ViewModelIsNullReport());
 			}
