@@ -274,14 +274,15 @@ public class SectionNodeSWTRenderer extends AbstractSectionSWTRenderer {
 		}
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#applyEnable()
-	 */
 	@Override
 	protected void applyEnable() {
 		expandableComposite.setEnabled(getVElement().isEnabled());
+	}
+
+	@Override
+	protected void applyReadOnly() {
+		super.applyReadOnly();
+		expandableComposite.getParent().setEnabled(true);
 	}
 
 	@Override
