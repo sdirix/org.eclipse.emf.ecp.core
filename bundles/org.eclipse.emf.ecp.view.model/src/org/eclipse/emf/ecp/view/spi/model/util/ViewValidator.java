@@ -36,6 +36,8 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emf.ecp.view.spi.model.VViewModelLoadingProperties;
+import org.eclipse.emf.ecp.view.spi.model.VViewModelProperties;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 
 /**
@@ -44,7 +46,6 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  *
  * @since 1.5
  *        <!-- end-user-doc -->
- *
  * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage
  * @generated
  */
@@ -146,6 +147,12 @@ public class ViewValidator extends EObjectValidator {
 			return validateContainedContainer((VContainedContainer) value, diagnostics, context);
 		case VViewPackage.CONTROL:
 			return validateControl((VControl) value, diagnostics, context);
+		case VViewPackage.VIEW_MODEL_LOADING_PROPERTIES:
+			return validateViewModelLoadingProperties((VViewModelLoadingProperties) value, diagnostics, context);
+		case VViewPackage.STRING_TO_OBJECT_MAP_ENTRY:
+			return validateStringToObjectMapEntry((Map.Entry<?, ?>) value, diagnostics, context);
+		case VViewPackage.VIEW_MODEL_PROPERTIES:
+			return validateViewModelProperties((VViewModelProperties) value, diagnostics, context);
 		case VViewPackage.LABEL_ALIGNMENT:
 			return validateLabelAlignment((LabelAlignment) value, diagnostics, context);
 		case VViewPackage.DOMAIN_MODEL_REFERENCE_CHANGE_LISTENER:
@@ -419,6 +426,43 @@ public class ViewValidator extends EObjectValidator {
 	 */
 	public boolean validateControl(VControl control, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return validate_EveryDefaultConstraint(control, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * 
+	 * @since 1.7
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public boolean validateViewModelLoadingProperties(VViewModelLoadingProperties viewModelLoadingProperties,
+		DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(viewModelLoadingProperties, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.7
+	 *        <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateStringToObjectMapEntry(Map.Entry<?, ?> stringToObjectMapEntry, DiagnosticChain diagnostics,
+		Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint((EObject) stringToObjectMapEntry, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.7
+	 *        <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateViewModelProperties(VViewModelProperties viewModelProperties, DiagnosticChain diagnostics,
+		Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(viewModelProperties, diagnostics, context);
 	}
 
 	/**

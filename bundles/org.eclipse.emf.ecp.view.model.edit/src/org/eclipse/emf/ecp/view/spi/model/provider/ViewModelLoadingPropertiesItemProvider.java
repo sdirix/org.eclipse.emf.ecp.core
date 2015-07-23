@@ -7,7 +7,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- * EclipseSource Muenchen GmbH - initial API and implementation
+ * Eugen Neufeld - initial API and implementation
  */
 package org.eclipse.emf.ecp.view.spi.model.provider;
 
@@ -16,27 +16,38 @@ import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.view.spi.model.VElement;
-import org.eclipse.emf.ecp.view.spi.model.VElementUtil;
-import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
+import org.eclipse.emf.ecp.view.spi.model.VViewModelLoadingProperties;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
-import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
+import org.eclipse.emf.edit.provider.IChildCreationExtender;
+import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
+import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
+import org.eclipse.emf.edit.provider.IItemPropertySource;
+import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
+import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
+import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
- * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.spi.model.VView} object.
+ * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.spi.model.VViewModelLoadingProperties}
+ * object.
  * <!-- begin-user-doc -->
  *
- * @since 1.2
+ * @since 1.7
  *        <!-- end-user-doc -->
  * @generated
  */
-public class ViewItemProvider
-	extends ElementItemProvider {
+public class ViewModelLoadingPropertiesItemProvider
+	extends ItemProviderAdapter
+	implements
+	IEditingDomainItemProvider,
+	IStructuredItemContentProvider,
+	ITreeItemContentProvider,
+	IItemLabelProvider,
+	IItemPropertySource {
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
@@ -44,7 +55,7 @@ public class ViewItemProvider
 	 *
 	 * @generated
 	 */
-	public ViewItemProvider(AdapterFactory adapterFactory) {
+	public ViewModelLoadingPropertiesItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -60,55 +71,8 @@ public class ViewItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addRootEClassPropertyDescriptor(object);
-			addEcorePathPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
-	}
-
-	/**
-	 * This adds a property descriptor for the Root EClass feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @generated
-	 */
-	protected void addRootEClassPropertyDescriptor(Object object) {
-		itemPropertyDescriptors
-			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-				getResourceLocator(),
-				getString("_UI_View_rootEClass_feature"), //$NON-NLS-1$
-				getString("_UI_PropertyDescriptor_description", "_UI_View_rootEClass_feature", "_UI_View_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				VViewPackage.Literals.VIEW__ROOT_ECLASS,
-				true,
-				false,
-				true,
-				null,
-				null,
-				null));
-	}
-
-	/**
-	 * This adds a property descriptor for the Ecore Path feature.
-	 * <!-- begin-user-doc -->
-	 *
-	 * @since 1.3
-	 *        <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addEcorePathPropertyDescriptor(Object object) {
-		itemPropertyDescriptors
-			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-				getResourceLocator(),
-				getString("_UI_View_ecorePath_feature"), //$NON-NLS-1$
-				getString("_UI_PropertyDescriptor_description", "_UI_View_ecorePath_feature", "_UI_View_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				VViewPackage.Literals.VIEW__ECORE_PATH,
-				true,
-				false,
-				false,
-				ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				null,
-				null));
 	}
 
 	/**
@@ -124,7 +88,8 @@ public class ViewItemProvider
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(VViewPackage.Literals.VIEW__CHILDREN);
+			childrenFeatures.add(VViewPackage.Literals.VIEW_MODEL_LOADING_PROPERTIES__INHERITABLE_PROPERTIES);
+			childrenFeatures.add(VViewPackage.Literals.VIEW_MODEL_LOADING_PROPERTIES__NON_INHERITABLE_PROPERTIES);
 		}
 		return childrenFeatures;
 	}
@@ -144,7 +109,7 @@ public class ViewItemProvider
 	}
 
 	/**
-	 * This returns View.gif.
+	 * This returns ViewModelLoadingProperties.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -152,7 +117,7 @@ public class ViewItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/View")); //$NON-NLS-1$
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/ViewModelLoadingProperties")); //$NON-NLS-1$
 	}
 
 	/**
@@ -160,17 +125,11 @@ public class ViewItemProvider
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
-	 * @generated NOT
-	 * @param object the adapted class
-	 * @return the label text
+	 * @generated
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((VView) object).getName();
-		if (label == null) {
-			label = VElementUtil.getCleanName(VElement.class.cast(object));
-		}
-		return label == null || label.length() == 0 ? getString("_UI_View_type") : label; //$NON-NLS-1$
+		return getString("_UI_ViewModelLoadingProperties_type"); //$NON-NLS-1$
 	}
 
 	/**
@@ -185,11 +144,9 @@ public class ViewItemProvider
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(VView.class)) {
-		case VViewPackage.VIEW__ECORE_PATH:
-			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
-			return;
-		case VViewPackage.VIEW__CHILDREN:
+		switch (notification.getFeatureID(VViewModelLoadingProperties.class)) {
+		case VViewPackage.VIEW_MODEL_LOADING_PROPERTIES__INHERITABLE_PROPERTIES:
+		case VViewPackage.VIEW_MODEL_LOADING_PROPERTIES__NON_INHERITABLE_PROPERTIES:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 			return;
 		}
@@ -208,8 +165,48 @@ public class ViewItemProvider
 	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
-		newChildDescriptors.add(createChildParameter(VViewPackage.Literals.VIEW__CHILDREN,
-			VViewFactory.eINSTANCE.createControl()));
+		newChildDescriptors
+			.add(createChildParameter(VViewPackage.Literals.VIEW_MODEL_LOADING_PROPERTIES__INHERITABLE_PROPERTIES,
+				VViewFactory.eINSTANCE.create(VViewPackage.Literals.STRING_TO_OBJECT_MAP_ENTRY)));
+
+		newChildDescriptors
+			.add(createChildParameter(VViewPackage.Literals.VIEW_MODEL_LOADING_PROPERTIES__NON_INHERITABLE_PROPERTIES,
+				VViewFactory.eINSTANCE.create(VViewPackage.Literals.STRING_TO_OBJECT_MAP_ENTRY)));
+	}
+
+	/**
+	 * This returns the label text for {@link org.eclipse.emf.edit.command.CreateChildCommand}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public String getCreateChildText(Object owner, Object feature, Object child, Collection<?> selection) {
+		final Object childFeature = feature;
+		final Object childObject = child;
+
+		final boolean qualify = childFeature == VViewPackage.Literals.VIEW_MODEL_LOADING_PROPERTIES__INHERITABLE_PROPERTIES
+			||
+			childFeature == VViewPackage.Literals.VIEW_MODEL_LOADING_PROPERTIES__NON_INHERITABLE_PROPERTIES;
+
+		if (qualify) {
+			return getString("_UI_CreateChild_text2", //$NON-NLS-1$
+				new Object[] { getTypeText(childObject), getFeatureText(childFeature), getTypeText(owner) });
+		}
+		return super.getCreateChildText(owner, feature, child, selection);
+	}
+
+	/**
+	 * Return the resource locator for this item provider's resources.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public ResourceLocator getResourceLocator() {
+		return ((IChildCreationExtender) adapterFactory).getResourceLocator();
 	}
 
 }
