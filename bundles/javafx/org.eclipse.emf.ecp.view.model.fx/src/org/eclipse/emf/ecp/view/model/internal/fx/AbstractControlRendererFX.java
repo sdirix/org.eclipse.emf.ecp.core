@@ -1,8 +1,5 @@
 package org.eclipse.emf.ecp.view.model.internal.fx;
 
-import javafx.scene.Node;
-import javafx.scene.control.Label;
-
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
@@ -22,6 +19,7 @@ import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
@@ -30,7 +28,11 @@ import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
+import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.fx.core.databinding.JFXBeanProperties;
+
+import javafx.scene.Node;
+import javafx.scene.control.Label;
 
 public abstract class AbstractControlRendererFX extends RendererFX<VControl> {
 
@@ -40,9 +42,15 @@ public abstract class AbstractControlRendererFX extends RendererFX<VControl> {
 	private ModelChangeListener viewChangeListener;
 	private IObservableValue modelValue;
 
-	@Override
-	public void init(final VControl control, ViewModelContext viewModelContext) {
-		super.init(control, viewModelContext);
+	/**
+	 * Default constructor.
+	 *
+	 * @param vElement the {@link VElement} to be rendered
+	 * @param viewContext the {@link ViewModelContext} to use
+	 * @param reportService The {@link ReportService} to use
+	 */
+	public AbstractControlRendererFX(VControl vElement, ViewModelContext viewContext, ReportService reportService) {
+		super(vElement, viewContext, reportService);
 		composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
 			new ReflectiveItemProviderAdapterFactory(),
 			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
