@@ -283,6 +283,10 @@
 		<module>../../bundles/org.eclipse.emf.ecp.ui.view.linewrapper</module>
 		
 		<module>../../bundles/org.eclipse.emfforms.swt.control.multiattribute</module>
+		
+		<!-- Quick fix -->
+		<module>../../bundles/org.eclipse.emf.ecp.quickfix</module>
+		<module>../../bundles/org.eclipse.emf.ecp.quickfix.ui.e4</module>
 	</modules>
 
 	<build>

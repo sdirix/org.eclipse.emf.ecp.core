@@ -83,9 +83,6 @@
 		<module>../../tests/org.eclipse.emf.ecp.ui.view.swt.test</module>
 		
 		<module>../../tests/org.eclipse.emf.ecp.view.categorization.swt.test</module>
-		<!-- 
-		<module>../../tests/org.eclipse.emf.ecp.view.context.test</module>
-		-->
 		<module>../../tests/org.eclipse.emf.ecp.view.custom.ui.swt.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.group.ui.swt.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.horizontal.ui.swt.test</module>
@@ -154,6 +151,10 @@
 		<module>../../tests/org.eclipse.emfforms.swt.control.text.autocomplete.tests</module>
 		
 		<module>../../tests/org.eclipse.emf.ecp.ui.view.linewrapper.tests</module>
+		
+		<module>../../tests/org.eclipse.emf.ecp.view.template.service.test</module>
+		
+		<module>../../tests/org.eclipse.emf.ecp.quickfix.test</module>
 	</modules>
 	
 	<build>
