@@ -66,6 +66,9 @@ public class WorkspaceProvider extends DefaultProvider {
 	/** Root URI Property Name. */
 	public static final String PROP_ROOT_URI = "rootURI"; //$NON-NLS-1$
 
+	/** Constant which is used to indicated the the {@link #PROP_ROOT_URI root uri} is not existing yet. */
+	public static final String VIRTUAL_ROOT_URI = "VIRTUAL_URI"; //$NON-NLS-1$
+
 	/**
 	 * The Workspace Provider Instance.
 	 *
@@ -228,8 +231,12 @@ public class WorkspaceProvider extends DefaultProvider {
 	// FIXME
 	@Override
 	public Notifier getRoot(InternalProject project) {
+		boolean demandLoad = true;
+		if (project.getProperties().getValue(PROP_ROOT_URI).equals(VIRTUAL_ROOT_URI)) {
+			demandLoad = false;
+		}
 		return project.getEditingDomain().getResourceSet()
-			.getResource(URI.createURI(project.getProperties().getValue(PROP_ROOT_URI)), true);
+			.getResource(URI.createURI(project.getProperties().getValue(PROP_ROOT_URI)), demandLoad);
 	}
 
 	@Override
@@ -263,10 +270,14 @@ public class WorkspaceProvider extends DefaultProvider {
 
 		editingDomain.getResourceSet().eAdapters().add(new ECPModelContextAdapter(project));
 		final URI uri = URI.createURI(project.getProperties().getValue(PROP_ROOT_URI));
-		try {
-			editingDomain.getResourceSet().getResource(uri, true);
-		} catch (final WrappedException we) {
-			project.close();
+		if (project.getProperties().getValue(PROP_ROOT_URI).equals(VIRTUAL_ROOT_URI)) {
+			editingDomain.getResourceSet().createResource(uri);
+		} else {
+			try {
+				editingDomain.getResourceSet().getResource(uri, true);
+			} catch (final WrappedException we) {
+				project.close();
+			}
 		}
 
 		return editingDomain;
