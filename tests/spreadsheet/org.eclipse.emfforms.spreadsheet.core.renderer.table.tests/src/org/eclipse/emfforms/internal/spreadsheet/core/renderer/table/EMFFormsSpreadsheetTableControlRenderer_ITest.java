@@ -74,7 +74,7 @@ public class EMFFormsSpreadsheetTableControlRenderer_ITest {
 
 		final EMFFormsSpreadsheetImporter spreadsheetImport = EMFFormsSpreadsheetImporter.INSTANCE;
 		final Collection<EObject> domainModels = spreadsheetImport.importSpreadsheet(workbook,
-			TaskPackage.eINSTANCE.getTask());
+			TaskPackage.eINSTANCE.getTask()).getImportedEObjects();
 
 		for (final EObject model : domainModels) {
 			assertTrue(EcoreUtil.equals(model, domainModel));

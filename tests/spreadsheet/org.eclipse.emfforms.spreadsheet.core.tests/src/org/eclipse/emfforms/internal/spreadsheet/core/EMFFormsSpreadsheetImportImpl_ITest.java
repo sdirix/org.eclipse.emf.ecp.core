@@ -84,7 +84,7 @@ public class EMFFormsSpreadsheetImportImpl_ITest {
 
 		final EMFFormsSpreadsheetImporter spreadsheetImport = EMFFormsSpreadsheetImporter.INSTANCE;
 		final Collection<EObject> users = spreadsheetImport.importSpreadsheet(workbook,
-			TaskPackage.eINSTANCE.getUser());
+			TaskPackage.eINSTANCE.getUser()).getImportedEObjects();
 		final Iterator<EObject> iterator = users.iterator();
 		assertTrue(EcoreUtil.equals(user, iterator.next()));
 		assertTrue(EcoreUtil.equals(user2, iterator.next()));
@@ -150,7 +150,7 @@ public class EMFFormsSpreadsheetImportImpl_ITest {
 
 		final EMFFormsSpreadsheetImporter spreadsheetImport = EMFFormsSpreadsheetImporter.INSTANCE;
 		final Collection<EObject> fans = spreadsheetImport.importSpreadsheet(workbook,
-			BowlingPackage.eINSTANCE.getFan());
+			BowlingPackage.eINSTANCE.getFan()).getImportedEObjects();
 
 		assertEquals(1, fans.size());
 		final Fan importedFan = (Fan) fans.iterator().next();
@@ -193,7 +193,7 @@ public class EMFFormsSpreadsheetImportImpl_ITest {
 
 		final EMFFormsSpreadsheetImporter spreadsheetImport = EMFFormsSpreadsheetImporter.INSTANCE;
 		final Collection<EObject> fans = spreadsheetImport.importSpreadsheet(workbook,
-			BowlingPackage.eINSTANCE.getFan());
+			BowlingPackage.eINSTANCE.getFan()).getImportedEObjects();
 
 		assertEquals(1, fans.size());
 		final Fan importedFan = (Fan) fans.iterator().next();
@@ -238,7 +238,7 @@ public class EMFFormsSpreadsheetImportImpl_ITest {
 
 		final EMFFormsSpreadsheetImporter spreadsheetImport = EMFFormsSpreadsheetImporter.INSTANCE;
 		final Collection<EObject> fans = spreadsheetImport.importSpreadsheet(workbook,
-			BowlingPackage.eINSTANCE.getFan());
+			BowlingPackage.eINSTANCE.getFan()).getImportedEObjects();
 
 		assertEquals(1, fans.size());
 		final Fan importedFan = (Fan) fans.iterator().next();

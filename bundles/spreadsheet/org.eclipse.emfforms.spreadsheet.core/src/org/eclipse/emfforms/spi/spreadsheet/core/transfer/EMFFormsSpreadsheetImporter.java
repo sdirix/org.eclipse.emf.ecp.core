@@ -11,12 +11,10 @@
  ******************************************************************************/
 package org.eclipse.emfforms.spi.spreadsheet.core.transfer;
 
-import java.util.Collection;
-
 import org.apache.poi.ss.usermodel.Workbook;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emfforms.internal.spreadsheet.core.transfer.EMFFormsSpreadsheetImporterImpl;
+import org.eclipse.emfforms.spi.spreadsheet.core.error.model.SpreadsheetImportResult;
 
 /**
  * Entry point for triggering the import from an Spreadsheet document.
@@ -35,8 +33,8 @@ public interface EMFFormsSpreadsheetImporter {
 	 *
 	 * @param workbook The Workbook to read from.
 	 * @param eClass The {@link EClass} of the stored objects
-	 * @return The Collection of all read objects
+	 * @return The result containing the collection of all read objects and the collected errors.
 	 */
-	Collection<EObject> importSpreadsheet(Workbook workbook, EClass eClass);
+	SpreadsheetImportResult importSpreadsheet(Workbook workbook, EClass eClass);
 
 }

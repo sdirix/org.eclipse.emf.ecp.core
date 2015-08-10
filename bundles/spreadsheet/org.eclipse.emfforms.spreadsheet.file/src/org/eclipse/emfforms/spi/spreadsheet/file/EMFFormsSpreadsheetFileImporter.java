@@ -12,11 +12,10 @@
 package org.eclipse.emfforms.spi.spreadsheet.file;
 
 import java.io.File;
-import java.util.Collection;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emfforms.internal.spreadsheet.file.EMFFormsSpreadsheetFileImporterImpl;
+import org.eclipse.emfforms.spi.spreadsheet.core.error.model.SpreadsheetImportResult;
 
 /**
  * Entry point for triggering the import from an Spreadsheet document.
@@ -35,8 +34,9 @@ public interface EMFFormsSpreadsheetFileImporter {
 	 *
 	 * @param file The File to read from.
 	 * @param eClass The {@link EClass} of the stored objects
-	 * @return The Collection of all read objects
+	 * @return The result containing the collection of all read objects and the collected errors. This may be
+	 *         <code>null</code> if no workbook can be created from the file.
 	 */
-	Collection<EObject> importSpreadsheet(File file, EClass eClass);
+	SpreadsheetImportResult importSpreadsheet(File file, EClass eClass);
 
 }

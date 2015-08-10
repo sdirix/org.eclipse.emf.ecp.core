@@ -22,6 +22,8 @@
 		<module>../../../bundles/spreadsheet/org.eclipse.emfforms.spreadsheet.core.renderer.table</module>
 		<module>../../../bundles/spreadsheet/org.eclipse.emfforms.spreadsheet.file</module>
 		<module>../../../bundles/spreadsheet/org.eclipse.emfforms.spreadsheet.stream</module>
+		<module>../../../bundles/spreadsheet/org.eclipse.emfforms.spreadsheet.core.error.model</module>
+		<module>../../../bundles/spreadsheet/org.eclipse.emfforms.spreadsheet.core.error.model.edit</module>
 	</modules>
 
 	<build>

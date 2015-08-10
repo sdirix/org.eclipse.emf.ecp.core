@@ -13,7 +13,6 @@ package org.eclipse.emfforms.internal.spreadsheet.core.transfer;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,6 +44,8 @@ import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetReport;
 import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsNoConverterException;
 import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsSpreadsheetValueConverter;
 import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsSpreadsheetValueConverterRegistry;
+import org.eclipse.emfforms.spi.spreadsheet.core.error.model.ErrorFactory;
+import org.eclipse.emfforms.spi.spreadsheet.core.error.model.SpreadsheetImportResult;
 import org.eclipse.emfforms.spi.spreadsheet.core.transfer.EMFFormsSpreadsheetImporter;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
@@ -70,11 +71,12 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 	}
 
 	@Override
-	public Collection<EObject> importSpreadsheet(Workbook workbook, EClass eClass) {
+	public SpreadsheetImportResult importSpreadsheet(Workbook workbook, EClass eClass) {
 		return readData(workbook, eClass);
 	}
 
-	private Collection<EObject> readData(Workbook workbook, EClass eClass) {
+	private SpreadsheetImportResult readData(Workbook workbook, EClass eClass) {
+		final SpreadsheetImportResult result = ErrorFactory.eINSTANCE.createSpreadsheetImportResult();
 		final ResourceSet rs = new ResourceSetImpl();
 		final AdapterFactoryEditingDomain domain = new AdapterFactoryEditingDomain(
 			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE),
@@ -82,7 +84,7 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 		rs.eAdapters().add(new AdapterFactoryEditingDomain.EditingDomainProvider(domain));
 		final Resource resource = rs.createResource(URI.createURI("VIRTUAL_URI")); //$NON-NLS-1$
 
-		final List<EObject> result = new ArrayList<EObject>();
+		final List<EObject> importedEObjects = new ArrayList<EObject>();
 
 		final Map<String, Map<Integer, Integer>> mapIdToSheetIdWithRowId = parseIds(workbook);
 		for (final String eObjectId : mapIdToSheetIdWithRowId.keySet()) {
@@ -95,8 +97,10 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 				final Row row = sheet.getRow(sheetIdToRowId.get(sheetId));
 				extractRowInformation(labelRow, row, eObject);
 			}
-			result.add(eObject);
+			importedEObjects.add(eObject);
 		}
+
+		result.getImportedEObjects().addAll(importedEObjects);
 		return result;
 	}
 
