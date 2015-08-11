@@ -153,7 +153,8 @@
 		<module>../../bundles/org.eclipse.emf.ecp.view.treemasterdetail.model</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.treemasterdetail.model.edit</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.treemasterdetail.ui.swt</module>
-
+		<module>../../bundles/org.eclipse.emfforms.swt.treemasterdetail</module>
+		
 		<!-- Table Feature -->
 		<module>../../bundles/org.eclipse.emf.ecp.view.table.model</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.table.model.edit</module>
