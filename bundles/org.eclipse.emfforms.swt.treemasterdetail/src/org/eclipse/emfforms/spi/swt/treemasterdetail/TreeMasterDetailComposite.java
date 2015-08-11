@@ -26,6 +26,7 @@ import org.eclipse.emf.ecp.view.treemasterdetail.model.VTreeMasterDetail;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
+import org.eclipse.emfforms.spi.swt.treemasterdetail.util.RootObject;
 import org.eclipse.jface.resource.FontDescriptor;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
@@ -112,6 +113,8 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 		this.input = input;
 		if (input instanceof Resource) {
 			editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(((Resource) input).getContents().get(0));
+		} else if (input instanceof RootObject) {
+			editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(RootObject.class.cast(input).getRoot());
 		} else {
 			editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(input);
 		}

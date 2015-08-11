@@ -40,6 +40,7 @@ import org.eclipse.emfforms.spi.swt.treemasterdetail.TreeViewerBuilder;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.TreeWidthProvider;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.ViewModelServiceProvider;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.ViewerFilterProvider;
+import org.eclipse.emfforms.spi.swt.treemasterdetail.util.RootObject;
 import org.eclipse.jface.viewers.IBaseLabelProvider;
 import org.eclipse.jface.viewers.IContentProvider;
 import org.eclipse.jface.viewers.TreeViewer;
@@ -101,6 +102,14 @@ public class DefaultTreeMasterDetailCustomization implements TreeMasterDetailSWT
 			final ComposedAdapterFactory adapterFactory = getComposedAdapterFactory();
 			adapterFactoryContentProvider = new AdapterFactoryContentProvider(
 				adapterFactory) {
+
+				@Override
+				public Object[] getElements(Object object) {
+					if (RootObject.class.isInstance(object)) {
+						return new Object[] { RootObject.class.cast(object).getRoot() };
+					}
+					return super.getElements(object);
+				}
 
 				@Override
 				public boolean hasChildren(Object object) {
