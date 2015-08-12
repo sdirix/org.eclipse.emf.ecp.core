@@ -220,9 +220,9 @@ public class ViewEditorPart extends EditorPart implements
 		if (migrator == null) {
 			return;
 		}
-		final boolean needsMigration = !migrator.checkMigration(resourceURI);
+		final Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
+		final boolean needsMigration = checkIfMigrationIsNeeded(shell, resourceURI, migrator);
 		if (needsMigration) {
-			final Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
 			final boolean migrate = MessageDialog.openQuestion(shell, Messages.ViewEditorPart_MigrationTitle,
 				Messages.ViewEditorPart_MigrationQuestion);
 			if (migrate) {
@@ -238,7 +238,7 @@ public class ViewEditorPart extends EditorPart implements
 					}
 				};
 				try {
-					new ProgressMonitorDialog(shell).run(false, false, runnable);
+					new ProgressMonitorDialog(shell).run(true, false, runnable);
 				} catch (final InvocationTargetException e) {
 					MessageDialog.openError(
 						Display.getDefault().getActiveShell(), Messages.ViewEditorPart_MigrationErrorTitle,
@@ -265,6 +265,20 @@ public class ViewEditorPart extends EditorPart implements
 
 			}
 		}
+	}
+
+	private boolean checkIfMigrationIsNeeded(Shell shell, final URI resourceURI, final ViewModelMigrator migrator) {
+		final CheckMigrationRunnable runnable = new CheckMigrationRunnable(migrator, resourceURI);
+		try {
+			new ProgressMonitorDialog(shell).run(true, false, runnable);
+		} catch (final InvocationTargetException ex) {
+			Activator.getDefault().getLog()
+				.log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, Messages.ViewEditorPart_MigrationErrorTitle, ex));
+		} catch (final InterruptedException ex) {
+			Activator.getDefault().getLog()
+				.log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, Messages.ViewEditorPart_MigrationErrorTitle, ex));
+		}
+		return runnable.getResult();
 	}
 
 	@Override
@@ -418,6 +432,44 @@ public class ViewEditorPart extends EditorPart implements
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * Runnable to check if a migration is needed.
+	 *
+	 * @author Johannes Faltermeier
+	 *
+	 */
+	private static final class CheckMigrationRunnable implements IRunnableWithProgress {
+		private final ViewModelMigrator migrator;
+		private final URI resourceURI;
+		private boolean needsMigration;
+
+		/**
+		 * Default constructor.
+		 *
+		 * @param migrator the migrator
+		 * @param resourceURI the resource uri to check
+		 */
+		public CheckMigrationRunnable(ViewModelMigrator migrator, URI resourceURI) {
+			this.migrator = migrator;
+			this.resourceURI = resourceURI;
+		}
+
+		@Override
+		public void run(IProgressMonitor monitor)
+			throws InvocationTargetException {
+			needsMigration = !migrator.checkMigration(resourceURI);
+		}
+
+		/**
+		 * Returns the result of the migration check.
+		 *
+		 * @return <code>true</code> if migration is needed, <code>false</code> otherwise
+		 */
+		public boolean getResult() {
+			return needsMigration;
+		}
 	}
 
 	/**
