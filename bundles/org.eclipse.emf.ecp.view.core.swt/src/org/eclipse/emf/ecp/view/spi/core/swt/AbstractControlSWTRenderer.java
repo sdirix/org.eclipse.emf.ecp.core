@@ -246,7 +246,7 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 	 */
 	protected final Control createLabel(final Composite parent) {
 		Label label = null;
-		labelRender: if (getVElement().getLabelAlignment() == LabelAlignment.LEFT) {
+		labelRender: if (hasLeftLabelAlignment()) {
 			final VDomainModelReference domainModelReference = getVElement().getDomainModelReference();
 			final IValueProperty valueProperty;
 			try {
@@ -301,6 +301,18 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 
 		}
 		return label;
+	}
+
+	/**
+	 * Whether the label for this control should be rendered on the left of the control. This is the case if the
+	 * {@link VControl#getLabelAlignment()} is set to {@link LabelAlignment#LEFT} or {@link LabelAlignment#DEFAULT}.
+	 *
+	 * @return <code>true</code> if label should be on the left, <code>false</code> otherwise
+	 * @since 1.7
+	 */
+	protected boolean hasLeftLabelAlignment() {
+		return getVElement().getLabelAlignment() == LabelAlignment.LEFT
+			|| getVElement().getLabelAlignment() == LabelAlignment.DEFAULT;
 	}
 
 	private VTMandatoryStyleProperty getMandatoryStyle() {

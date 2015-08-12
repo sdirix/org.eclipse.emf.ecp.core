@@ -302,9 +302,11 @@
   <releases>
     <changes xsi:type="history:OperationChange">
       <changes xsi:type="history:Create" target="view.ecore#/" referenceName="eClassifiers"
-          element="view.ecore#//ViewModelLoadingProperties">
-        <changes xsi:type="history:Set" element="view.ecore#//ViewModelLoadingProperties"
+          element="view.ecore#//ViewModelProperties">
+        <changes xsi:type="history:Set" element="view.ecore#//ViewModelProperties"
             featureName="name" dataValue="ViewModelProperties"/>
+        <changes xsi:type="history:Set" element="view.ecore#//ViewModelProperties"
+            featureName="abstract" dataValue="true" oldDataValue="false"/>
       </changes>
       <operation name="newClass">
         <parameters name="ePackage">
@@ -315,10 +317,12 @@
         </parameters>
         <parameters name="superClasses"/>
         <parameters name="abstr">
-          <dataValue>false</dataValue>
+          <dataValue>true</dataValue>
         </parameters>
       </operation>
     </changes>
+    <changes xsi:type="history:Set" element="view.ecore#//ViewModelProperties" featureName="interface"
+        dataValue="true" oldDataValue="false"/>
     <changes xsi:type="history:OperationChange">
       <changes xsi:type="history:Create" target="view.ecore#/" referenceName="eClassifiers"
           element="view.ecore#//StringToObjectMapEntry">
@@ -401,6 +405,29 @@
         </parameters>
         <parameters name="defaultValue">
           <dataValue xsi:nil="true"/>
+        </parameters>
+      </operation>
+    </changes>
+    <changes xsi:type="history:OperationChange">
+      <changes xsi:type="history:Create" target="view.ecore#/" referenceName="eClassifiers"
+          element="view.ecore#//ViewModelLoadingProperties">
+        <changes xsi:type="history:Set" element="view.ecore#//ViewModelLoadingProperties"
+            featureName="name" dataValue="ViewModelLoadingProperties"/>
+        <changes xsi:type="history:Add" element="view.ecore#//ViewModelLoadingProperties"
+            featureName="eSuperTypes" referenceValue="view.ecore#//ViewModelProperties"/>
+      </changes>
+      <operation name="newClass">
+        <parameters name="ePackage">
+          <referenceValue element="view.ecore#/"/>
+        </parameters>
+        <parameters name="name">
+          <dataValue>ViewModelLoadingProperties</dataValue>
+        </parameters>
+        <parameters name="superClasses">
+          <referenceValue element="view.ecore#//ViewModelProperties"/>
+        </parameters>
+        <parameters name="abstr">
+          <dataValue>false</dataValue>
         </parameters>
       </operation>
     </changes>
@@ -492,7 +519,7 @@
           <dataValue>loadingProperties</dataValue>
         </parameters>
         <parameters name="type">
-          <referenceValue element="view.ecore#//ViewModelLoadingProperties"/>
+          <referenceValue element="view.ecore#//ViewModelProperties"/>
         </parameters>
         <parameters name="lowerBound">
           <dataValue>1</dataValue>
@@ -508,34 +535,19 @@
     </changes>
     <changes xsi:type="history:Set" element="view.ecore#//View/loadingProperties"
         featureName="transient" dataValue="true" oldDataValue="false"/>
-    <changes xsi:type="history:OperationChange">
-      <changes xsi:type="history:Create" target="view.ecore#/" referenceName="eClassifiers"
-          element="view.ecore#//ViewModelProperties">
-        <changes xsi:type="history:Set" element="view.ecore#//ViewModelProperties"
-            featureName="name" dataValue="ViewModelProperties"/>
-        <changes xsi:type="history:Set" element="view.ecore#//ViewModelProperties"
-            featureName="abstract" dataValue="true" oldDataValue="false"/>
-      </changes>
-      <changes xsi:type="history:Add" element="view.ecore#//ViewModelLoadingProperties"
-          featureName="eSuperTypes" referenceValue="view.ecore#//ViewModelProperties"/>
-      <operation name="extractSuperClass2">
-        <parameters name="subClasses">
-          <referenceValue element="view.ecore#//ViewModelLoadingProperties"/>
-        </parameters>
-        <parameters name="toExtract"/>
-        <parameters name="ePackage">
-          <referenceValue element="view.ecore#/"/>
-        </parameters>
-        <parameters name="superClassName">
-          <dataValue>ViewModelProperties</dataValue>
-        </parameters>
-        <parameters name="abstr">
-          <dataValue>true</dataValue>
-        </parameters>
-        <parameters name="superSuperClasses"/>
-      </operation>
-    </changes>
-    <changes xsi:type="history:Set" element="view.ecore#//ViewModelProperties" featureName="interface"
-        dataValue="true" oldDataValue="false"/>
+    <changes xsi:type="history:Create" target="view.ecore#//LabelAlignment" referenceName="eLiterals"
+        element="view.ecore#//LabelAlignment/Top"/>
+    <changes xsi:type="history:Set" element="view.ecore#//LabelAlignment/Top" featureName="name"
+        dataValue="Top"/>
+    <changes xsi:type="history:Set" element="view.ecore#//LabelAlignment/Top" featureName="value"
+        dataValue="2" oldDataValue="0"/>
+    <changes xsi:type="history:Create" target="view.ecore#//LabelAlignment" referenceName="eLiterals"
+        element="view.ecore#//LabelAlignment/Default"/>
+    <changes xsi:type="history:Set" element="view.ecore#//LabelAlignment/Default"
+        featureName="name" dataValue="Default"/>
+    <changes xsi:type="history:Set" element="view.ecore#//LabelAlignment/Default"
+        featureName="value" dataValue="-1" oldDataValue="0"/>
+    <changes xsi:type="history:Set" element="view.ecore#//Control/labelAlignment"
+        featureName="defaultValueLiteral" dataValue="Default" oldDataValue="Left"/>
   </releases>
 </history:History>

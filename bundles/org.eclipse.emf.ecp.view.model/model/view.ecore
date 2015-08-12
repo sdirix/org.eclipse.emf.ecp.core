@@ -55,12 +55,14 @@
       eSuperTypes="#//ContainedElement #//Container"/>
   <eClassifiers xsi:type="ecore:EClass" name="Control" eSuperTypes="#//ContainedElement">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="labelAlignment" lowerBound="1"
-        eType="#//LabelAlignment" defaultValueLiteral="Left"/>
+        eType="#//LabelAlignment" defaultValueLiteral="Default"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="domainModelReference" lowerBound="1"
         eType="#//DomainModelReference" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="LabelAlignment">
+    <eLiterals name="Default" value="-1"/>
     <eLiterals name="Left"/>
+    <eLiterals name="Top" value="2"/>
     <eLiterals name="None" value="1"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="DomainModelReferenceChangeListener"

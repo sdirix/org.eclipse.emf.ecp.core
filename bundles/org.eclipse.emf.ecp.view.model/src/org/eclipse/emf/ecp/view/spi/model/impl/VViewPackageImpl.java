@@ -405,7 +405,6 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 *
 	 * @since 1.7
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	@Override
@@ -471,10 +470,9 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.7
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	@Override
@@ -870,7 +868,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 			!IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(controlEClass, VControl.class, "Control", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEAttribute(getControl_LabelAlignment(), getLabelAlignment(), "labelAlignment", "Left", 1, 1, //$NON-NLS-1$ //$NON-NLS-2$
+		initEAttribute(getControl_LabelAlignment(), getLabelAlignment(), "labelAlignment", "Default", 1, 1, //$NON-NLS-1$ //$NON-NLS-2$
 			VControl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
 			IS_ORDERED);
 		initEReference(getControl_DomainModelReference(), getDomainModelReference(), null, "domainModelReference", //$NON-NLS-1$
@@ -899,7 +897,9 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 
 		// Initialize enums and add enum literals
 		initEEnum(labelAlignmentEEnum, LabelAlignment.class, "LabelAlignment"); //$NON-NLS-1$
+		addEEnumLiteral(labelAlignmentEEnum, LabelAlignment.DEFAULT);
 		addEEnumLiteral(labelAlignmentEEnum, LabelAlignment.LEFT);
+		addEEnumLiteral(labelAlignmentEEnum, LabelAlignment.TOP);
 		addEEnumLiteral(labelAlignmentEEnum, LabelAlignment.NONE);
 
 		// Initialize data types
