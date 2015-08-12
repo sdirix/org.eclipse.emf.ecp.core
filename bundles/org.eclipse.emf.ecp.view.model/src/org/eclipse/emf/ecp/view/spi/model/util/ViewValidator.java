@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.ecp.view.spi.model.util;
 
+import java.text.MessageFormat;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -323,6 +324,20 @@ public class ViewValidator extends EObjectValidator {
 				return false;
 			}
 			current = reference.getEReferenceType();
+			if (current == null) {
+				/* Ecore is misconfigured */
+				final String message = MessageFormat.format(
+					"Domain model reference is unresolveable. EReference {0} has no type. Please check the ecore", //$NON-NLS-1$
+					reference.getName());
+				if (featurePathDomainModelReference.eContainer() != null) {
+					diagnostics.add(
+						createDiagnostic(Diagnostic.ERROR, 0, message, featurePathDomainModelReference.eContainer(),
+							featurePathDomainModelReference.eContainingFeature()));
+				}
+				diagnostics.add(createDiagnostic(Diagnostic.ERROR, 0, message, featurePathDomainModelReference,
+					VViewPackage.eINSTANCE.getFeaturePathDomainModelReference_DomainModelEReferencePath()));
+				return false;
+			}
 		}
 
 		// test if efeature resolveable
@@ -430,7 +445,7 @@ public class ViewValidator extends EObjectValidator {
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.7
 	 *        <!-- end-user-doc -->
 	 *
