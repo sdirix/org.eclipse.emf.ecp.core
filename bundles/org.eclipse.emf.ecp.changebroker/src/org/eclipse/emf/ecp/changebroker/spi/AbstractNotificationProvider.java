@@ -49,7 +49,7 @@ public abstract class AbstractNotificationProvider implements NotificationProvid
 	}
 
 	/**
-	 * Notifies all registered {@link org.eclipse.emf.ecp.changebroker.spi.EMFObserver receivers}.
+	 * Notifies all registered {@link org.eclipse.emf.ecp.changebroker.spi.ChangeObserver receivers}.
 	 *
 	 * @param notification the notification
 	 */
