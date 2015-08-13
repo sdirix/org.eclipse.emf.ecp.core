@@ -49,6 +49,7 @@ import org.eclipse.emf.emfstore.bowling.Fan;
 import org.eclipse.emf.emfstore.bowling.Merchandise;
 import org.eclipse.emfforms.internal.spreadsheet.core.transfer.EMFFormsSpreadsheetExporterImpl;
 import org.eclipse.emfforms.internal.spreadsheet.core.transfer.EMFFormsSpreadsheetExporterImpl.ViewProvider;
+import org.eclipse.emfforms.spi.spreadsheet.core.error.model.SpreadsheetImportResult;
 import org.eclipse.emfforms.spi.spreadsheet.core.transfer.EMFFormsSpreadsheetExporter;
 import org.eclipse.emfforms.spi.spreadsheet.core.transfer.EMFFormsSpreadsheetImporter;
 import org.junit.After;
@@ -83,8 +84,9 @@ public class EMFFormsSpreadsheetImportImpl_ITest {
 		final Workbook workbook = viewRenderer.render(Arrays.asList(user, user2), null, null, null);
 
 		final EMFFormsSpreadsheetImporter spreadsheetImport = EMFFormsSpreadsheetImporter.INSTANCE;
-		final Collection<EObject> users = spreadsheetImport.importSpreadsheet(workbook,
-			TaskPackage.eINSTANCE.getUser()).getImportedEObjects();
+		final SpreadsheetImportResult importResult = spreadsheetImport.importSpreadsheet(workbook,
+			TaskPackage.eINSTANCE.getUser());
+		final Collection<EObject> users = importResult.getImportedEObjects();
 		final Iterator<EObject> iterator = users.iterator();
 		assertTrue(EcoreUtil.equals(user, iterator.next()));
 		assertTrue(EcoreUtil.equals(user2, iterator.next()));

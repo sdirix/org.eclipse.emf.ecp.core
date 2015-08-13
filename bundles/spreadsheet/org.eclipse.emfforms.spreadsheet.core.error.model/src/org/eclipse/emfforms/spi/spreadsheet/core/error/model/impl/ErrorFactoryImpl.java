@@ -261,6 +261,11 @@ public class ErrorFactoryImpl extends EFactoryImpl implements ErrorFactory {
 	}
 
 	@Override
+	public EMFLocation createEMFLocation(EObject root) {
+		return createEMFLocation(root, null, null);
+	}
+
+	@Override
 	public EMFLocation createEMFLocation(EObject root, SettingLocation settingLocation) {
 		return createEMFLocation(root, settingLocation, null);
 	}

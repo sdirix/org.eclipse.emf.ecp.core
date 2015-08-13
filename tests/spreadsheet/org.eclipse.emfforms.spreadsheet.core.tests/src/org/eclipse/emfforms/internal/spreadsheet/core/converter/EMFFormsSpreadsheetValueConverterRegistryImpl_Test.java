@@ -20,21 +20,21 @@ import static org.mockito.Mockito.when;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
-import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsNoConverterException;
+import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsConverterException;
 import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsSpreadsheetValueConverter;
 import org.junit.Test;
 
 public class EMFFormsSpreadsheetValueConverterRegistryImpl_Test {
 
 	@Test
-	public void testAddConverter() throws EMFFormsNoConverterException {
+	public void testAddConverter() throws EMFFormsConverterException {
 		final EMFFormsSpreadsheetValueConverterRegistryImpl registry = new EMFFormsSpreadsheetValueConverterRegistryImpl();
 		final EObject object = mock(EObject.class);
 		final VDomainModelReference dmr = mock(VDomainModelReference.class);
 		boolean exception = false;
 		try {
 			registry.getConverter(object, dmr);
-		} catch (final EMFFormsNoConverterException ex) {
+		} catch (final EMFFormsConverterException ex) {
 			exception = true;
 		}
 		assertTrue(exception);
@@ -44,8 +44,8 @@ public class EMFFormsSpreadsheetValueConverterRegistryImpl_Test {
 		assertSame(converter, registry.getConverter(object, dmr));
 	}
 
-	@Test(expected = EMFFormsNoConverterException.class)
-	public void testRemoveConverter() throws EMFFormsNoConverterException {
+	@Test(expected = EMFFormsConverterException.class)
+	public void testRemoveConverter() throws EMFFormsConverterException {
 		final EMFFormsSpreadsheetValueConverterRegistryImpl registry = new EMFFormsSpreadsheetValueConverterRegistryImpl();
 		final EObject object = mock(EObject.class);
 		final VDomainModelReference dmr = mock(VDomainModelReference.class);
@@ -54,7 +54,7 @@ public class EMFFormsSpreadsheetValueConverterRegistryImpl_Test {
 		registry.addConverter(converter);
 		try {
 			assertSame(converter, registry.getConverter(object, dmr));
-		} catch (final EMFFormsNoConverterException ex1) {
+		} catch (final EMFFormsConverterException ex1) {
 			fail(ex1.getMessage());
 		}
 		registry.removeConverter(converter);
@@ -62,7 +62,7 @@ public class EMFFormsSpreadsheetValueConverterRegistryImpl_Test {
 	}
 
 	@Test
-	public void testGetConverterOneApplicableOneNotApplicable() throws EMFFormsNoConverterException {
+	public void testGetConverterOneApplicableOneNotApplicable() throws EMFFormsConverterException {
 		final EMFFormsSpreadsheetValueConverterRegistryImpl registry = new EMFFormsSpreadsheetValueConverterRegistryImpl();
 		final EObject object = mock(EObject.class);
 		final VDomainModelReference dmr = mock(VDomainModelReference.class);
@@ -76,7 +76,7 @@ public class EMFFormsSpreadsheetValueConverterRegistryImpl_Test {
 	}
 
 	@Test
-	public void testGetConverterMutipleApplicable() throws EMFFormsNoConverterException {
+	public void testGetConverterMutipleApplicable() throws EMFFormsConverterException {
 		final EMFFormsSpreadsheetValueConverterRegistryImpl registry = new EMFFormsSpreadsheetValueConverterRegistryImpl();
 		final EObject object = mock(EObject.class);
 		final VDomainModelReference dmr = mock(VDomainModelReference.class);
@@ -89,8 +89,8 @@ public class EMFFormsSpreadsheetValueConverterRegistryImpl_Test {
 		assertSame(applicable1, registry.getConverter(object, dmr));
 	}
 
-	@Test(expected = EMFFormsNoConverterException.class)
-	public void testGetConverterNoApplicable() throws EMFFormsNoConverterException {
+	@Test(expected = EMFFormsConverterException.class)
+	public void testGetConverterNoApplicable() throws EMFFormsConverterException {
 		final EMFFormsSpreadsheetValueConverterRegistryImpl registry = new EMFFormsSpreadsheetValueConverterRegistryImpl();
 		final EObject object = mock(EObject.class);
 		final VDomainModelReference dmr = mock(VDomainModelReference.class);
@@ -103,8 +103,8 @@ public class EMFFormsSpreadsheetValueConverterRegistryImpl_Test {
 		assertSame(applicable1, registry.getConverter(object, dmr));
 	}
 
-	@Test(expected = EMFFormsNoConverterException.class)
-	public void testGetConverterMultipleSamePrio() throws EMFFormsNoConverterException {
+	@Test(expected = EMFFormsConverterException.class)
+	public void testGetConverterMultipleSamePrio() throws EMFFormsConverterException {
 		final EMFFormsSpreadsheetValueConverterRegistryImpl registry = new EMFFormsSpreadsheetValueConverterRegistryImpl();
 		final EObject object = mock(EObject.class);
 		final VDomainModelReference dmr = mock(VDomainModelReference.class);

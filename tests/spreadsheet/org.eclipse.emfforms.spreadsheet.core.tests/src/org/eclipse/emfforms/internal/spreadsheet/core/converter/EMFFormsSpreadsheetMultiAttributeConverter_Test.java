@@ -29,6 +29,7 @@ import org.eclipse.emf.emfstore.bowling.BowlingPackage;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsConverterException;
 import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsSpreadsheetValueConverter;
 import org.junit.Before;
 import org.junit.Test;
@@ -116,7 +117,7 @@ public class EMFFormsSpreadsheetMultiAttributeConverter_Test {
 	}
 
 	@Test
-	public void testFromStringEmpty() throws DatabindingFailedException {
+	public void testFromStringEmpty() throws DatabindingFailedException, EMFFormsConverterException {
 		final IValueProperty property = mock(IValueProperty.class);
 		when(property.getValueType()).thenReturn(BowlingPackage.eINSTANCE.getPlayer_EMails());
 		when(databinding.getValueProperty(any(VDomainModelReference.class), any(EObject.class)))
@@ -129,7 +130,7 @@ public class EMFFormsSpreadsheetMultiAttributeConverter_Test {
 	}
 
 	@Test
-	public void testFromStringNull() throws DatabindingFailedException {
+	public void testFromStringNull() throws DatabindingFailedException, EMFFormsConverterException {
 		final IValueProperty property = mock(IValueProperty.class);
 		when(property.getValueType()).thenReturn(BowlingPackage.eINSTANCE.getPlayer_EMails());
 		when(databinding.getValueProperty(any(VDomainModelReference.class), any(EObject.class)))
@@ -142,7 +143,7 @@ public class EMFFormsSpreadsheetMultiAttributeConverter_Test {
 	}
 
 	@Test
-	public void testFromString() throws DatabindingFailedException {
+	public void testFromString() throws DatabindingFailedException, EMFFormsConverterException {
 		final IValueProperty property = mock(IValueProperty.class);
 		when(property.getValueType()).thenReturn(BowlingPackage.eINSTANCE.getPlayer_EMails());
 		when(databinding.getValueProperty(any(VDomainModelReference.class), any(EObject.class)))

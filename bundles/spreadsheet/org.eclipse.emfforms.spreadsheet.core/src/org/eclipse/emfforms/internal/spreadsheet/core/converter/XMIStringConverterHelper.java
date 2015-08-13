@@ -23,8 +23,6 @@ import org.eclipse.emf.ecore.resource.URIConverter.WriteableOutputStream;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
-import org.eclipse.emfforms.spi.common.report.ReportService;
-import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetReport;
 
 /**
  * Helper class for transforming EObjects to a string and vice versa.
@@ -63,20 +61,16 @@ public final class XMIStringConverterHelper {
 	 * Gets an EObject from an XMI string.
 	 *
 	 * @param object the XMI string
-	 * @param reportService the report service
 	 * @return the object
+	 * @throws IOException in case the object could not be deserialized
 	 */
-	public static EObject deserializeObject(String object, ReportService reportService) {
+	public static EObject deserializeObject(String object) throws IOException {
 		final ResourceSet rs = new ResourceSetImpl();
 		rs.getResourceFactoryRegistry().getExtensionToFactoryMap().put("*", new XMIResourceFactoryImpl()); //$NON-NLS-1$
 		final Resource resource = rs.createResource(URI.createURI("VIRTAUAL_URI")); //$NON-NLS-1$
 
 		final ReadableInputStream is = new ReadableInputStream(object, "UTF-8"); //$NON-NLS-1$
-		try {
-			resource.load(is, null);
-		} catch (final IOException ex) {
-			reportService.report(new EMFFormsSpreadsheetReport(ex, EMFFormsSpreadsheetReport.ERROR));
-		}
+		resource.load(is, null);
 		return resource.getContents().get(0);
 	}
 

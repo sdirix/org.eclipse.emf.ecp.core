@@ -18,7 +18,7 @@ import java.util.concurrent.CopyOnWriteArraySet;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
-import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsNoConverterException;
+import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsConverterException;
 import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsSpreadsheetValueConverter;
 import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsSpreadsheetValueConverterRegistry;
 import org.osgi.service.component.annotations.Component;
@@ -64,7 +64,7 @@ public class EMFFormsSpreadsheetValueConverterRegistryImpl implements EMFFormsSp
 	 */
 	@Override
 	public EMFFormsSpreadsheetValueConverter getConverter(EObject domainObject, VDomainModelReference dmr)
-		throws EMFFormsNoConverterException {
+		throws EMFFormsConverterException {
 		double highestPrio = -Double.MIN_VALUE;
 
 		final Set<EMFFormsSpreadsheetValueConverter> applicableConverters = new LinkedHashSet<EMFFormsSpreadsheetValueConverter>();
@@ -83,13 +83,13 @@ public class EMFFormsSpreadsheetValueConverterRegistryImpl implements EMFFormsSp
 			applicableConverters.add(current);
 		}
 		if (applicableConverters.isEmpty()) {
-			throw new EMFFormsNoConverterException(
-				MessageFormat.format("No converter found for domain model reference: {0}", dmr)); //$NON-NLS-1$
+			throw new EMFFormsConverterException(
+				MessageFormat.format("No converter found for domain model reference: {0}.", dmr)); //$NON-NLS-1$
 		}
 		if (applicableConverters.size() > 1) {
-			throw new EMFFormsNoConverterException(
+			throw new EMFFormsConverterException(
 				MessageFormat
-					.format("Multiple converters with same priority registered for domain model reference: {0}", dmr)); //$NON-NLS-1$
+					.format("Multiple converters with same priority registered for domain model reference: {0}.", dmr)); //$NON-NLS-1$
 		}
 		return applicableConverters.iterator().next();
 	}

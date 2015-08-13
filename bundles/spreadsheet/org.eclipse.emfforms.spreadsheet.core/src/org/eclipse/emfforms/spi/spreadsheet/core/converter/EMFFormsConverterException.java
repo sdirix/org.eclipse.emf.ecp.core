@@ -18,16 +18,16 @@ package org.eclipse.emfforms.spi.spreadsheet.core.converter;
  * @author Johannes Faltermeier
  *
  */
-public class EMFFormsNoConverterException extends Exception {
+public class EMFFormsConverterException extends Exception {
 
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Constructs a new {@link EMFFormsNoConverterException}.
+	 * Constructs a new {@link EMFFormsConverterException}.
 	 *
 	 * @param message The message of the exception
 	 */
-	public EMFFormsNoConverterException(String message) {
+	public EMFFormsConverterException(String message) {
 		super(message);
 	}
 }

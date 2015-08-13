@@ -12,7 +12,9 @@
 package org.eclipse.emfforms.internal.spreadsheet.core.transfer;
 
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +24,7 @@ import org.apache.poi.ss.usermodel.Comment;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.eclipse.core.databinding.observable.IObserving;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.util.URI;
@@ -36,15 +39,15 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
-import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsIdProvider;
-import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetReport;
-import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsNoConverterException;
+import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsConverterException;
 import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsSpreadsheetValueConverter;
 import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsSpreadsheetValueConverterRegistry;
 import org.eclipse.emfforms.spi.spreadsheet.core.error.model.ErrorFactory;
+import org.eclipse.emfforms.spi.spreadsheet.core.error.model.SettingLocation;
+import org.eclipse.emfforms.spi.spreadsheet.core.error.model.Severity;
 import org.eclipse.emfforms.spi.spreadsheet.core.error.model.SpreadsheetImportResult;
 import org.eclipse.emfforms.spi.spreadsheet.core.transfer.EMFFormsSpreadsheetImporter;
 import org.osgi.framework.BundleContext;
@@ -57,18 +60,6 @@ import org.osgi.framework.ServiceReference;
  * @author Eugen Neufeld
  */
 public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImporter {
-
-	private final ReportService reportService;
-
-	/**
-	 * Default Constructor.
-	 */
-	public EMFFormsSpreadsheetImporterImpl() {
-		final BundleContext bundleContext = FrameworkUtil.getBundle(getClass()).getBundleContext();
-		final ServiceReference<ReportService> reportServiceReference = bundleContext
-			.getServiceReference(ReportService.class);
-		reportService = bundleContext.getService(reportServiceReference);
-	}
 
 	@Override
 	public SpreadsheetImportResult importSpreadsheet(Workbook workbook, EClass eClass) {
@@ -86,7 +77,7 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 
 		final List<EObject> importedEObjects = new ArrayList<EObject>();
 
-		final Map<String, Map<Integer, Integer>> mapIdToSheetIdWithRowId = parseIds(workbook);
+		final Map<String, Map<Integer, Integer>> mapIdToSheetIdWithRowId = parseIds(workbook, result);
 		for (final String eObjectId : mapIdToSheetIdWithRowId.keySet()) {
 			final Map<Integer, Integer> sheetIdToRowId = mapIdToSheetIdWithRowId.get(eObjectId);
 			final EObject eObject = EcoreUtil.create(eClass);
@@ -95,7 +86,7 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 				final Sheet sheet = workbook.getSheetAt(sheetId);
 				final Row labelRow = sheet.getRow(0);
 				final Row row = sheet.getRow(sheetIdToRowId.get(sheetId));
-				extractRowInformation(labelRow, row, eObject);
+				extractRowInformation(labelRow, row, eObject, result, sheet.getSheetName());
 			}
 			importedEObjects.add(eObject);
 		}
@@ -107,67 +98,245 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 	/**
 	 * Extracts the information from the row and sets the value on the given root EObject.
 	 */
-	private void extractRowInformation(final Row labelRow, final Row row, final EObject eObject) {
-		for (int columnId = 0; columnId < row.getLastCellNum(); columnId++) {
-			final Cell cell = labelRow.getCell(columnId);
+	// BEGIN COMPLEX CODE
+	private void extractRowInformation(final Row dmrRow, final Row eObjectRow, final EObject eObject,
+		SpreadsheetImportResult errorReports, String sheetname) {
+		for (int columnId = 1; columnId < eObjectRow.getLastCellNum(); columnId++) {
+			/* get dmr comment */
+			final Cell cell = dmrRow.getCell(columnId);
 			if (cell == null) {
+				errorReports.reportError(
+					Severity.ERROR,
+					"The label cell containing the domain model reference comment has been deleted.", //$NON-NLS-1$
+					ErrorFactory.eINSTANCE.createEMFLocation(eObject),
+					ErrorFactory.eINSTANCE.createSheetLocation(sheetname, columnId, 0));
 				continue;
 			}
 			final Comment cellComment = cell.getCellComment();
 			if (cellComment == null) {
+				errorReports.reportError(
+					Severity.ERROR,
+					"The Domain Model Reference comment has been deleted.", //$NON-NLS-1$
+					ErrorFactory.eINSTANCE.createEMFLocation(eObject),
+					ErrorFactory.eINSTANCE.createSheetLocation(sheetname, columnId, 0));
 				continue;
 			}
 			final String serializedDMR = cellComment.getString().getString();
-			final VDomainModelReference dmr = deserializeDMR(serializedDMR);
-			try {
-				resolveDMR(dmr, eObject);
-				final IObservableValue observableValue = getObservableValue(dmr, eObject);
-				final EStructuralFeature feature = EStructuralFeature.class.cast(observableValue.getValueType());
-				final EMFFormsSpreadsheetValueConverter converter = getValueConverter(dmr, eObject);
-
-				Cell rowCell;
-				if (feature.isUnsettable()) {
-					rowCell = row.getCell(columnId, Row.RETURN_NULL_AND_BLANK);
-				} else {
-					rowCell = row.getCell(columnId, Row.CREATE_NULL_AS_BLANK);
-				}
-				if (rowCell != null) {
-					final String value = rowCell.getStringCellValue();
-					final Object convertedValue = converter.convertStringToValue(value, eObject, dmr);
-					observableValue.setValue(convertedValue);
-				}
-			} catch (final DatabindingFailedException ex) {
-				reportService.report(new EMFFormsSpreadsheetReport(ex, EMFFormsSpreadsheetReport.ERROR));
-			} catch (final EMFFormsNoConverterException ex) {
-				reportService.report(new EMFFormsSpreadsheetReport(ex, EMFFormsSpreadsheetReport.ERROR));
+			if (serializedDMR == null || serializedDMR.isEmpty()) {
+				errorReports.reportError(
+					Severity.ERROR,
+					"The Domain Model Reference comment is empty.", //$NON-NLS-1$
+					ErrorFactory.eINSTANCE.createEMFLocation(eObject),
+					ErrorFactory.eINSTANCE.createSheetLocation(sheetname, columnId, 0));
+				continue;
 			}
+
+			/* deserialize dmr */
+			VDomainModelReference dmr;
+			try {
+				dmr = deserializeDMR(serializedDMR);
+			} catch (final IOException ex1) {
+				errorReports.reportError(
+					Severity.ERROR,
+					"The Domain Model Reference could not be deserialized.", //$NON-NLS-1$
+					ErrorFactory.eINSTANCE.createEMFLocation(eObject),
+					ErrorFactory.eINSTANCE.createSheetLocation(sheetname, columnId, 0));
+				continue;
+			}
+
+			/* resolve dmr */
+			if (!resolveDMR(dmr, eObject)) {
+				errorReports.reportError(
+					Severity.ERROR,
+					"The Domain Model Reference could not be resolved.", //$NON-NLS-1$
+					ErrorFactory.eINSTANCE.createEMFLocation(eObject,
+						ErrorFactory.eINSTANCE.createDMRLocation(dmr)),
+					ErrorFactory.eINSTANCE.createSheetLocation(sheetname, columnId, 0));
+				continue;
+			}
+
+			/* initiate databinding */
+			IObservableValue observableValue;
+			try {
+				observableValue = getObservableValue(dmr, eObject);
+			} catch (final DatabindingFailedException ex) {
+				errorReports.reportError(
+					Severity.ERROR,
+					MessageFormat.format("Databinding could not initiated: {0}.", ex.getMessage()), //$NON-NLS-1$
+					ErrorFactory.eINSTANCE.createEMFLocation(eObject,
+						ErrorFactory.eINSTANCE.createDMRLocation(dmr)),
+					ErrorFactory.eINSTANCE.createSheetLocation(sheetname, columnId, 0));
+				continue;
+			}
+
+			/* access value converter */
+			EMFFormsSpreadsheetValueConverter converter;
+			try {
+				converter = getValueConverter(dmr, eObject);
+			} catch (final EMFFormsConverterException ex) {
+				errorReports.reportError(
+					Severity.ERROR,
+					"No value converter found.", //$NON-NLS-1$
+					ErrorFactory.eINSTANCE.createEMFLocation(eObject,
+						ErrorFactory.eINSTANCE.createDMRLocation(dmr)),
+					ErrorFactory.eINSTANCE.createSheetLocation(sheetname, columnId, 0));
+				continue;
+			}
+
+			final EStructuralFeature feature = EStructuralFeature.class.cast(observableValue.getValueType());
+
+			/* access cell with value */
+			Cell rowCell;
+			if (feature.isUnsettable()) {
+				rowCell = eObjectRow.getCell(columnId, Row.RETURN_NULL_AND_BLANK);
+			} else {
+				rowCell = eObjectRow.getCell(columnId, Row.CREATE_NULL_AS_BLANK);
+			}
+
+			if (rowCell == null) {
+				/* no error -> unsettable feature */
+				continue;
+			}
+
+			/* convert value */
+			Object convertedValue;
+			try {
+				final String value = rowCell.getStringCellValue();
+				convertedValue = converter.convertStringToValue(value, eObject, dmr);
+			} catch (final EMFFormsConverterException ex) {
+				errorReports.reportError(
+					Severity.ERROR,
+					ex.getMessage(),
+					ErrorFactory.eINSTANCE.createEMFLocation(eObject,
+						createSettingLocation(observableValue, feature),
+						ErrorFactory.eINSTANCE.createDMRLocation(dmr)),
+					ErrorFactory.eINSTANCE.createSheetLocation(sheetname, columnId, eObjectRow.getRowNum()));
+				continue;
+			}
+
+			/* check converted value */
+			if (convertedValue != null) {
+				if (!checkTypes(feature, convertedValue)) {
+					errorReports.reportError(
+						Severity.ERROR,
+						"The converted value cannot be set because of an invalid type.", //$NON-NLS-1$
+						ErrorFactory.eINSTANCE.createEMFLocation(eObject,
+							createSettingLocation(observableValue, feature),
+							ErrorFactory.eINSTANCE.createDMRLocation(dmr)),
+						ErrorFactory.eINSTANCE.createSheetLocation(sheetname, columnId, eObjectRow.getRowNum()));
+					continue;
+				}
+			}
+
+			/* set value */
+			observableValue.setValue(convertedValue);
 		}
+	}
+	// END COMPLEX CODE
+
+	/**
+	 * Checks whether the converted value can be set on the feature.
+	 */
+	private boolean checkTypes(final EStructuralFeature feature, final Object convertedValue) {
+		final Class<?> featureType = feature.getEType().getInstanceClass();
+
+		if (convertedValue == null) {
+			return !featureType.isPrimitive();
+		}
+
+		final Class<? extends Object> valueType = convertedValue.getClass();
+
+		if (feature.isMany()) {
+			if (Collection.class.isInstance(convertedValue)) {
+				final Collection<?> collection = Collection.class.cast(convertedValue);
+				for (final Object object : collection) {
+					if (!checkTypes(feature, object)) {
+						return false;
+					}
+				}
+				return true;
+			}
+			/* else continue with regular checks */
+		}
+
+		if (featureType.isPrimitive() && !valueType.isPrimitive()) {
+			final Class<?> primitiveClass = getPrimitiveClass(valueType);
+			if (primitiveClass == null) {
+				return false;
+			}
+			return featureType.isAssignableFrom(primitiveClass);
+		}
+
+		if (!featureType.isPrimitive() && valueType.isPrimitive()) {
+			final Class<?> primitiveClass = getPrimitiveClass(featureType);
+			if (primitiveClass == null) {
+				return false;
+			}
+			return primitiveClass.isAssignableFrom(valueType);
+		}
+
+		return featureType.isAssignableFrom(valueType);
+	}
+
+	private Class<?> getPrimitiveClass(Class<?> clazz) {
+		try {
+			return (Class<?>) clazz.getField("TYPE").get(null); //$NON-NLS-1$
+		} catch (final IllegalArgumentException ex) {
+		} catch (final IllegalAccessException ex) {
+		} catch (final NoSuchFieldException ex) {
+		} catch (final SecurityException ex) {
+		}
+		return null;
+	}
+
+	private SettingLocation createSettingLocation(IObservableValue observableValue, EStructuralFeature feature) {
+		final EObject eObject = EObject.class.cast(IObserving.class.cast(observableValue).getObserved());
+		return ErrorFactory.eINSTANCE.createSettingLocation(eObject, feature);
 	}
 
 	@SuppressWarnings("deprecation")
-	private void resolveDMR(VDomainModelReference dmr, EObject eObject) {
-		dmr.init(eObject);
+	private boolean resolveDMR(VDomainModelReference dmr, EObject eObject) {
+		return dmr.init(eObject);
 	}
 
 	/**
 	 * Returns a Map from EObject-ID to Sheet-ID to Row-ID.
 	 */
-	private Map<String, Map<Integer, Integer>> parseIds(Workbook workbook) {
+	private Map<String, Map<Integer, Integer>> parseIds(Workbook workbook, SpreadsheetImportResult errorReports) {
 		final Map<String, Map<Integer, Integer>> result = new LinkedHashMap<String, Map<Integer, Integer>>();
 
 		for (int sheetId = 0; sheetId < workbook.getNumberOfSheets(); sheetId++) {
 			final Sheet sheet = workbook.getSheetAt(sheetId);
 			final Row labelRow = sheet.getRow(0);
 			if (!EMFFormsIdProvider.ID_COLUMN.equals(labelRow.getCell(0).getStringCellValue())) {
-				throw new IllegalStateException(
+				/* ID Column is missing. We have to ignore this sheet */
+				errorReports.reportError(
+					Severity.ERROR,
 					String.format("The first column must always contain the EObject IDs. Expected %1$s but was %2$s.", //$NON-NLS-1$
-						EMFFormsIdProvider.ID_COLUMN, labelRow.getCell(0).getStringCellValue()));
+						EMFFormsIdProvider.ID_COLUMN, labelRow.getCell(0).getStringCellValue()),
+					ErrorFactory.eINSTANCE.createSheetLocation(workbook.getSheetName(sheetId), 0, 0));
+				continue;
 			}
 			for (int rowId = 3; rowId <= sheet.getLastRowNum(); rowId++) {
 				final Row row = sheet.getRow(rowId);
 				final String eObjectId = row.getCell(0).getStringCellValue();
+				if (eObjectId == null || eObjectId.isEmpty()) {
+					/* EObject id deleted */
+					errorReports.reportError(
+						Severity.ERROR,
+						"EObject ID has been deleted.", //$NON-NLS-1$
+						ErrorFactory.eINSTANCE.createSheetLocation(workbook.getSheetName(sheetId), 0, rowId));
+					continue;
+				}
 				if (!result.containsKey(eObjectId)) {
 					result.put(eObjectId, new LinkedHashMap<Integer, Integer>());
+				} else {
+					/* duplicate EObject ID */
+					errorReports.reportError(
+						Severity.ERROR,
+						"Duplicate EObject ID has been found. IDs need to be unique.", //$NON-NLS-1$
+						ErrorFactory.eINSTANCE.createSheetLocation(workbook.getSheetName(sheetId), 0, rowId));
+					continue;
 				}
 				result.get(eObjectId).put(sheetId, rowId);
 			}
@@ -185,7 +354,7 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 	}
 
 	private EMFFormsSpreadsheetValueConverter getValueConverter(VDomainModelReference dmr, EObject eObject)
-		throws EMFFormsNoConverterException {
+		throws EMFFormsConverterException {
 		final BundleContext bundleContext = FrameworkUtil.getBundle(getClass()).getBundleContext();
 		final ServiceReference<EMFFormsSpreadsheetValueConverterRegistry> serviceReference = bundleContext
 			.getServiceReference(EMFFormsSpreadsheetValueConverterRegistry.class);
@@ -194,16 +363,12 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 		return emfFormsDatabinding.getConverter(eObject, dmr);
 	}
 
-	private VDomainModelReference deserializeDMR(String serializedDMR) {
+	private VDomainModelReference deserializeDMR(String serializedDMR) throws IOException {
 		final ResourceSet rs = new ResourceSetImpl();
 		final Resource resource = rs.createResource(URI.createURI("VIRTAUAL_URI")); //$NON-NLS-1$
 
 		final ReadableInputStream is = new ReadableInputStream(serializedDMR, "UTF-8"); //$NON-NLS-1$
-		try {
-			resource.load(is, null);
-		} catch (final IOException ex) {
-			reportService.report(new EMFFormsSpreadsheetReport(ex, EMFFormsSpreadsheetReport.ERROR));
-		}
+		resource.load(is, null);
 		return (VDomainModelReference) resource.getContents().get(0);
 	}
 }

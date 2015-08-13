@@ -12,6 +12,7 @@
 package org.eclipse.emfforms.internal.spreadsheet.core.converter;
 
 import java.io.IOException;
+import java.text.MessageFormat;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -20,6 +21,7 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetReport;
+import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsConverterException;
 import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsSpreadsheetValueConverter;
 import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsSpreadsheetValueConverterHelper;
 import org.osgi.service.component.annotations.Component;
@@ -89,11 +91,17 @@ public class EMFFormsSpreadsheetSingleReferenceConverter implements EMFFormsSpre
 	}
 
 	@Override
-	public Object convertStringToValue(String string, EObject domainObject, VDomainModelReference dmr) {
+	public Object convertStringToValue(String string, EObject domainObject, VDomainModelReference dmr)
+		throws EMFFormsConverterException {
 		if (string == null || string.isEmpty()) {
 			return null;
 		}
-		return XMIStringConverterHelper.deserializeObject(string, reportService);
+		try {
+			return XMIStringConverterHelper.deserializeObject(string);
+		} catch (final IOException ex) {
+			throw new EMFFormsConverterException(
+				MessageFormat.format("The cell value {0} could not be deserialized to a model value.", string)); //$NON-NLS-1$
+		}
 	}
 
 }

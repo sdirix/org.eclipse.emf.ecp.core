@@ -27,6 +27,7 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsConverterException;
 import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsSpreadsheetValueConverter;
 import org.junit.Before;
 import org.junit.Test;
@@ -106,7 +107,7 @@ public class EMFFormsSpreadsheetSingleReferenceConverter_Test {
 	}
 
 	@Test
-	public void testFromString() throws DatabindingFailedException {
+	public void testFromString() throws DatabindingFailedException, EMFFormsConverterException {
 		final IValueProperty property = mock(IValueProperty.class);
 		when(property.getValueType()).thenReturn(TaskPackage.eINSTANCE.getTask_Assignee());
 		when(databinding.getValueProperty(any(VDomainModelReference.class), any(EObject.class)))
@@ -114,7 +115,8 @@ public class EMFFormsSpreadsheetSingleReferenceConverter_Test {
 		converter.setDatabinding(databinding);
 		converter.setReportService(reportService);
 		assertTrue(
-			EcoreUtil.equals(task("1"), Task.class.cast(converter.convertStringToValue(EXPECTED, domainObject, dmr)))); //$NON-NLS-1$
+			EcoreUtil.equals(task("1"), //$NON-NLS-1$
+				Task.class.cast(converter.convertStringToValue(EXPECTED, domainObject, dmr))));
 	}
 
 	private static Task task(String desc) {

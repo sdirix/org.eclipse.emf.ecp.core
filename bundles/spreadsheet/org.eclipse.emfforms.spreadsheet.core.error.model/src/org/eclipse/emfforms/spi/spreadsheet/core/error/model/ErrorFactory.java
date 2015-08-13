@@ -65,10 +65,40 @@ public interface ErrorFactory extends EFactory {
 	 */
 	EMFLocation createEMFLocation();
 
+	/**
+	 * Creates a new {@link EMFLocation}.
+	 *
+	 * @param root the root EObject
+	 * @return the location
+	 */
+	EMFLocation createEMFLocation(EObject root);
+
+	/**
+	 * Creates a new {@link EMFLocation}.
+	 *
+	 * @param root the root EObject
+	 * @param settingLocation the {@link SettingLocation}
+	 * @param dmrLocation the {@link DMRLocation}
+	 * @return the location
+	 */
 	EMFLocation createEMFLocation(EObject root, SettingLocation settingLocation, DMRLocation dmrLocation);
 
+	/**
+	 * Creates a new {@link EMFLocation}.
+	 *
+	 * @param root the root EObject
+	 * @param dmrLocation the {@link DMRLocation}
+	 * @return the location
+	 */
 	EMFLocation createEMFLocation(EObject root, DMRLocation dmrLocation);
 
+	/**
+	 * Creates a new {@link EMFLocation}.
+	 *
+	 * @param root the root EObject
+	 * @param settingLocation the {@link SettingLocation}
+	 * @return the location
+	 */
 	EMFLocation createEMFLocation(EObject root, SettingLocation settingLocation);
 
 	/**
@@ -81,6 +111,13 @@ public interface ErrorFactory extends EFactory {
 	 */
 	SettingLocation createSettingLocation();
 
+	/**
+	 * Creates a new {@link SettingLocation}.
+	 *
+	 * @param eObject the EObject of the Setting
+	 * @param feature the Feature of the Setting
+	 * @return the location
+	 */
 	SettingLocation createSettingLocation(EObject eObject, EStructuralFeature feature);
 
 	/**
@@ -93,6 +130,12 @@ public interface ErrorFactory extends EFactory {
 	 */
 	DMRLocation createDMRLocation();
 
+	/**
+	 * Creates a new {@link DMRLocation}.
+	 * 
+	 * @param dmr the domain model reference
+	 * @return the location
+	 */
 	DMRLocation createDMRLocation(VDomainModelReference dmr);
 
 	/**

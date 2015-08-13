@@ -11,6 +11,8 @@
  ******************************************************************************/
 package org.eclipse.emfforms.internal.spreadsheet.core.converter;
 
+import java.text.MessageFormat;
+
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EFactory;
@@ -19,6 +21,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsConverterException;
 import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsSpreadsheetValueConverter;
 import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsSpreadsheetValueConverterHelper;
 import org.osgi.service.component.annotations.Component;
@@ -86,7 +89,8 @@ public class EMFFormsSpreadsheetSingleAttributeConverter implements EMFFormsSpre
 	}
 
 	@Override
-	public Object convertStringToValue(String string, EObject domainObject, VDomainModelReference dmr) {
+	public Object convertStringToValue(String string, EObject domainObject, VDomainModelReference dmr)
+		throws EMFFormsConverterException {
 		if (string == null || string.length() == 0) {
 			return null;
 		}
@@ -96,7 +100,15 @@ public class EMFFormsSpreadsheetSingleAttributeConverter implements EMFFormsSpre
 		final EAttribute eAttribute = EAttribute.class.cast(feature);
 		final EDataType eDataType = eAttribute.getEAttributeType();
 		final EFactory eFactory = eDataType.getEPackage().getEFactoryInstance();
-		return eFactory.createFromString(eDataType, string);
+		try {
+			return eFactory.createFromString(eDataType, string);
+		}
+		// BEGIN SUPRESS CATCH EXCEPTION
+		catch (final RuntimeException ex) {
+			// END SUPRESS CATCH EXCEPTION
+			throw new EMFFormsConverterException(
+				MessageFormat.format("The cell value {0} could not converted to a model value.", string)); //$NON-NLS-1$
+		}
 	}
 
 }

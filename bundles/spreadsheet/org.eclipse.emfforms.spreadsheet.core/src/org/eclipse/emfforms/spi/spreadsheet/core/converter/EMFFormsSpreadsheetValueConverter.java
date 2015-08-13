@@ -46,8 +46,10 @@ public interface EMFFormsSpreadsheetValueConverter {
 	 * @param domainObject the domain object
 	 * @param dmr the {@link VDomainModelReference domain model reference}
 	 * @return the string representation
+	 * @throws EMFFormsConverterException in case the value could not be converted
 	 */
-	String convertValueToString(Object value, EObject domainObject, VDomainModelReference dmr);
+	String convertValueToString(Object value, EObject domainObject, VDomainModelReference dmr)
+		throws EMFFormsConverterException;
 
 	/**
 	 * Converts the given string representation to its value.
@@ -56,7 +58,9 @@ public interface EMFFormsSpreadsheetValueConverter {
 	 * @param domainObject the domain object
 	 * @param dmr the {@link VDomainModelReference domain model reference}
 	 * @return the value
+	 * @throws EMFFormsConverterException in case the value could not be converted
 	 */
-	Object convertStringToValue(String string, EObject domainObject, VDomainModelReference dmr);
+	Object convertStringToValue(String string, EObject domainObject, VDomainModelReference dmr)
+		throws EMFFormsConverterException;
 
 }

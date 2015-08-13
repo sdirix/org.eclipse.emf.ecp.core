@@ -28,9 +28,9 @@ public interface EMFFormsSpreadsheetValueConverterRegistry {
 	 * @param domainObject the domain object
 	 * @param dmr the domain model reference
 	 * @return the converter
-	 * @throws EMFFormsNoConverterException in case no suitable converter is registered
+	 * @throws EMFFormsConverterException in case no suitable converter is registered
 	 */
 	EMFFormsSpreadsheetValueConverter getConverter(EObject domainObject, VDomainModelReference dmr)
-		throws EMFFormsNoConverterException;
+		throws EMFFormsConverterException;
 
 }
