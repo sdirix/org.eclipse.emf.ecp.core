@@ -16,6 +16,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
@@ -39,7 +40,7 @@ public class ViewProviderImpl {
 	private static final String CLASS_CANNOT_BE_RESOLVED = "%1$s cannot be loaded because bundle %2$s cannot be resolved."; //$NON-NLS-1$
 	private static final String CLASS = "class"; //$NON-NLS-1$
 	private static final String EXTENSION_POINT_ID = "org.eclipse.emf.ecp.ui.view.viewModelProviders"; //$NON-NLS-1$
-	private final Set<IViewProvider> viewProviders = new LinkedHashSet<IViewProvider>();
+	private final Set<IViewProvider> viewProviders = new CopyOnWriteArraySet<IViewProvider>();
 	private final boolean shouldReadExtensionPointPerRequest;
 
 	/**

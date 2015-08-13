@@ -12,11 +12,14 @@
 package org.eclipse.emf.ecp.view.model.provider.xmi;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
@@ -184,7 +187,7 @@ public final class ViewModelFileExtensionsManager {
 		if (properties == null) {
 			return viewMap.keySet().iterator().next();
 		}
-		VView bestFitting = null;
+		final List<VView> bestFitting = new ArrayList<VView>();
 		int maxNumberFittingKeyValues = -1;
 		for (final VView view : viewMap.keySet()) {
 			final Map<String, String> viewFilter = viewMap.get(view).getKeyValuPairs();
@@ -206,12 +209,26 @@ public final class ViewModelFileExtensionsManager {
 			}
 			if (currentFittingKeyValues > maxNumberFittingKeyValues) {
 				maxNumberFittingKeyValues = currentFittingKeyValues;
-				bestFitting = view;
+				bestFitting.clear();
+				bestFitting.add(view);
+			} else if (currentFittingKeyValues == maxNumberFittingKeyValues) {
+				bestFitting.add(view);
 			}
 		}
 
-		final VView copiedView = EcoreUtil.copy(bestFitting);
-		final String bundleId = map.get(bestFitting.getRootEClass()).get(bestFitting).getBundleId();
+		if (bestFitting.isEmpty()) {
+			return null;
+		}
+
+		if (bestFitting.size() != 1) {
+			Activator.getReportService().report(new AbstractReport(
+				"Multiple view models have been found for the given View Model Loading Properties.", IStatus.WARNING)); //$NON-NLS-1$
+		}
+
+		final VView fittingView = bestFitting.get(0);
+
+		final VView copiedView = EcoreUtil.copy(fittingView);
+		final String bundleId = map.get(fittingView.getRootEClass()).get(fittingView).getBundleId();
 		copiedView.eAdapters().add(new LocalizationAdapter() {
 
 			@Override
