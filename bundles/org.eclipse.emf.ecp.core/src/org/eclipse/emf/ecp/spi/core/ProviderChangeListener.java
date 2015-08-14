@@ -9,22 +9,23 @@
  * Contributors:
  * jfaltermeier - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.emfstore.core.internal;
+package org.eclipse.emf.ecp.spi.core;
 
 import org.eclipse.emf.common.notify.Notification;
 
 /**
- * Listener to get informed about changes on project contents by the {@link EMFStoreProvider}.
+ * Listener to get informed about changes on project contents by the {@link InternalProvider}.
  *
  * @author jfaltermeier
+ * @since 1.7
  *
  */
-public interface EMFStoreProviderChangeListener {
+public interface ProviderChangeListener {
 
 	/**
-	 * Called when there is a new notification.
-	 * 
+	 * Called when there is a new change notification.
+	 *
 	 * @param notification the new notification
 	 */
-	void onNewNotification(Notification notification);
+	void notify(Notification notification);
 }

@@ -19,9 +19,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.Callable;
-import java.util.concurrent.CopyOnWriteArraySet;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -111,8 +109,6 @@ public final class EMFStoreProvider extends DefaultProvider {
 	 * Property constant for ServerInfoID.
 	 */
 	public static final String PROP_SERVERINFOID = "serverInfoID"; //$NON-NLS-1$
-
-	private final Set<EMFStoreProviderChangeListener> changeListeners = new CopyOnWriteArraySet<EMFStoreProviderChangeListener>();
 
 	private AdapterImpl adapter;
 
@@ -308,9 +304,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 				@Override
 				public void notify(Notification notification, IdEObjectCollection collection, EObject modelElement) {
 
-					for (final EMFStoreProviderChangeListener listener : changeListeners) {
-						listener.onNewNotification(notification);
-					}
+					notifyProviderChangeListeners(notification);
 
 					if (modelElement instanceof ProjectImpl) {
 						final ProjectSpaceImpl projectSpace = (ProjectSpaceImpl) modelElement.eContainer();
@@ -623,24 +617,6 @@ public final class EMFStoreProvider extends DefaultProvider {
 	@Override
 	public boolean isThreadSafe() {
 		return false;
-	}
-
-	/**
-	 * Registers a new {@link EMFStoreProviderChangeListener}.
-	 *
-	 * @param listener the listener
-	 */
-	public void registerChangeListener(EMFStoreProviderChangeListener listener) {
-		changeListeners.add(listener);
-	}
-
-	/**
-	 * Unregisters a new {@link EMFStoreProviderChangeListener}.
-	 *
-	 * @param listener the listener
-	 */
-	public void unregisterChangeListener(EMFStoreProviderChangeListener listener) {
-		changeListeners.remove(listener);
 	}
 
 }

@@ -17,7 +17,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Set;
 
-import org.eclipse.emf.ecp.changebroker.emfstore.internal.EMFStoreNotificationProvider;
+import org.eclipse.emf.ecp.changebroker.emfstore.internal.ECPNotificationProvider;
 import org.eclipse.emf.ecp.changebroker.spi.ChangeBroker;
 import org.eclipse.emf.ecp.changebroker.spi.NotificationProvider;
 import org.junit.Test;
@@ -46,7 +46,7 @@ public class ChangeBroker_ITest {
 			.cast(service);
 		final Set<NotificationProvider> notificationProviders = broker.getNotificationProviders();
 		assertEquals(1, notificationProviders.size());
-		assertTrue(EMFStoreNotificationProvider.class.isInstance(notificationProviders.iterator().next()));
+		assertTrue(ECPNotificationProvider.class.isInstance(notificationProviders.iterator().next()));
 		bundleContext.ungetService(serviceReference);
 
 	}

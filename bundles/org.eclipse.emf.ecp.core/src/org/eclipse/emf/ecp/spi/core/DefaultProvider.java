@@ -16,10 +16,12 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.command.CommandStack;
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
@@ -423,5 +425,45 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 	@Override
 	public boolean contains(InternalProject project, Object object) {
 		return false;
+	}
+
+	/**
+	 * List of registered {@link ProviderChangeListener}.
+	 *
+	 * @since 1.7
+	 */
+	private final Set<ProviderChangeListener> changeListeners = new CopyOnWriteArraySet<ProviderChangeListener>();
+
+	/**
+	 * Registers a new {@link ProviderChangeListener}.
+	 *
+	 * @param listener the listener
+	 * @since 1.7
+	 */
+	@Override
+	public void registerChangeListener(ProviderChangeListener listener) {
+		changeListeners.add(listener);
+	}
+
+	/**
+	 * Unregisters a new {@link ProviderChangeListener}.
+	 *
+	 * @param listener the listener
+	 * @since 1.7
+	 */
+	@Override
+	public void unregisterChangeListener(ProviderChangeListener listener) {
+		changeListeners.remove(listener);
+	}
+
+	/**
+	 * @param notification a {@link Notification}
+	 * @since 1.7
+	 */
+	protected void notifyProviderChangeListeners(Notification notification) {
+		for (final ProviderChangeListener listener : changeListeners) {
+			listener.notify(notification);
+		}
+
 	}
 }

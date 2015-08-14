@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" immediate="true" name="org.eclipse.emf.ecp.changebroker.emfstore">
-   <implementation class="org.eclipse.emf.ecp.changebroker.emfstore.internal.EMFStoreNotificationProvider"/>
+   <implementation class="org.eclipse.emf.ecp.changebroker.emfstore.internal.ECPNotificationProvider"/>
    <service>
       <provide interface="org.eclipse.emf.ecp.changebroker.spi.NotificationProvider"/>
    </service>

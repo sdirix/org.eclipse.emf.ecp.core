@@ -19,8 +19,8 @@ import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.core.util.observer.ECPProvidersChangedObserver;
-import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
-import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProviderChangeListener;
+import org.eclipse.emf.ecp.spi.core.InternalProvider;
+import org.eclipse.emf.ecp.spi.core.ProviderChangeListener;
 
 /**
  * {@link org.eclipse.emf.ecp.changebroker.spi.NotificationProvider NotificationProvider} acting as a source for
@@ -29,9 +29,7 @@ import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProviderChangeListener
  * @author jfaltermeier
  *
  */
-public class EMFStoreNotificationProvider extends AbstractNotificationProvider {
-
-	private static final String EMFSTORE_PROVIDER = "org.eclipse.emf.ecp.emfstore.provider"; //$NON-NLS-1$
+public class ECPNotificationProvider extends AbstractNotificationProvider implements ProviderChangeListener {
 
 	/**
 	 * Binds the project manager.
@@ -40,32 +38,31 @@ public class EMFStoreNotificationProvider extends AbstractNotificationProvider {
 	 */
 	public void bindManager(ECPProjectManager manager) {
 		manager.getProjects();
-		if (EMFStoreProvider.INSTANCE == null) {
-			ECPUtil.getECPObserverBus().register(new ECPProvidersChangedObserver() {
-				@Override
-				public void providersChanged(Collection<ECPProvider> oldProviders, Collection<ECPProvider> newProviders) {
-					for (final ECPProvider ecpProvider : newProviders) {
-						if (EMFSTORE_PROVIDER.equals(ecpProvider.getName())) {
-							ECPUtil.getResolvedElement(ecpProvider);
-							addObserver();
-							ECPUtil.getECPObserverBus().unregister(this);
-						}
-					}
+		ECPUtil.getECPObserverBus().register(new ECPProvidersChangedObserver() {
+			@Override
+			public void providersChanged(Collection<ECPProvider> oldProviders, Collection<ECPProvider> newProviders) {
+				for (final ECPProvider ecpProvider : newProviders) {
+					addObserver((InternalProvider) ecpProvider);
 				}
+			}
 
-			});
-		} else {
-			addObserver();
-		}
+		});
+
 	}
 
-	private void addObserver() {
-		EMFStoreProvider.INSTANCE.registerChangeListener(new EMFStoreProviderChangeListener() {
-			@Override
-			public void onNewNotification(Notification notification) {
-				notifyAllReceivers(notification);
-			}
-		});
+	private void addObserver(InternalProvider ecpProvider) {
+		ecpProvider.registerChangeListener(this);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.spi.core.ProviderChangeListener#notify(org.eclipse.emf.common.notify.Notification)
+	 */
+	@Override
+	public void notify(Notification notification) {
+		notifyAllReceivers(notification);
+
 	}
 
 }
