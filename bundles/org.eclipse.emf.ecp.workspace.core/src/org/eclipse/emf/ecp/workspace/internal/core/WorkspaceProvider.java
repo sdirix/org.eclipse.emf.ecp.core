@@ -112,7 +112,7 @@ public class WorkspaceProvider extends DefaultProvider {
 		if (context instanceof InternalProject) {
 			final InternalProject project = (InternalProject) context;
 			final EditingDomain editingDomain = project.getEditingDomain();
-			editingDomain.getResourceSet().eAdapters().add(new WorkspaceProjectObserver(project));
+			editingDomain.getResourceSet().eAdapters().add(new WorkspaceProjectObserver(project, this));
 		}
 
 	}
@@ -296,12 +296,14 @@ public class WorkspaceProvider extends DefaultProvider {
 	/**
 	 * Observes changes in a projects resource and notifies the project.
 	 */
-	private static class WorkspaceProjectObserver extends EContentAdapter {
+	private class WorkspaceProjectObserver extends EContentAdapter {
 
 		private final InternalProject project;
+		private final WorkspaceProvider provider;
 
-		public WorkspaceProjectObserver(InternalProject project) {
+		public WorkspaceProjectObserver(InternalProject project, WorkspaceProvider provider) {
 			this.project = project;
+			this.provider = provider;
 		}
 
 		@Override
@@ -309,6 +311,7 @@ public class WorkspaceProvider extends DefaultProvider {
 			super.notifyChanged(notification);
 
 			if (notification.getNotifier() instanceof EObject) {
+				provider.notifyProviderChangeListeners(notification);
 				final EObject eObject = (EObject) notification.getNotifier();
 				project.notifyObjectsChanged((Collection) Collections.singleton(eObject), false);
 
