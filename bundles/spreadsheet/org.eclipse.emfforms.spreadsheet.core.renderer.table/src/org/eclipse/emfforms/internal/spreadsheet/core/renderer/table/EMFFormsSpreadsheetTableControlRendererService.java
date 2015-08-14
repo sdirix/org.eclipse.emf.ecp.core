@@ -20,6 +20,7 @@ import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsAbstractSpreadsheetRenderer;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsIdProvider;
+import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetFormatDescriptionProvider;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetRendererFactory;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetRendererService;
 import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsSpreadsheetValueConverterRegistry;
@@ -46,6 +47,7 @@ public class EMFFormsSpreadsheetTableControlRendererService implements
 	private VTViewTemplateProvider vtViewTemplateProvider;
 	private EMFFormsIdProvider emfFormsIdProvider;
 	private EMFFormsSpreadsheetValueConverterRegistry converterRegistry;
+	private EMFFormsSpreadsheetFormatDescriptionProvider formatDescriptionProvider;
 
 	/**
 	 * The VTViewTemplateProvider to use.
@@ -107,6 +109,16 @@ public class EMFFormsSpreadsheetTableControlRendererService implements
 		this.converterRegistry = converterRegistry;
 	}
 
+	/**
+	 * The EMFFormsSpreadsheetFormatDescriptionProvider to use.
+	 *
+	 * @param formatDescriptionProvider the formatDescriptionProvider
+	 */
+	@Reference
+	public void setFormatDescriptionProvider(EMFFormsSpreadsheetFormatDescriptionProvider formatDescriptionProvider) {
+		this.formatDescriptionProvider = formatDescriptionProvider;
+	}
+
 	private ServiceReference<EMFFormsSpreadsheetRendererFactory> serviceReference;
 
 	/**
@@ -157,7 +169,8 @@ public class EMFFormsSpreadsheetTableControlRendererService implements
 	public EMFFormsAbstractSpreadsheetRenderer<VTableControl> getRendererInstance(
 		VTableControl vElement, ViewModelContext viewModelContext) {
 		return new EMFFormsSpreadsheetTableControlRenderer(emfformsDatabinding, emfformsLabelProvider, reportService,
-			emfformsSpreadsheetRendererFactory, vtViewTemplateProvider, emfFormsIdProvider, converterRegistry);
+			emfformsSpreadsheetRendererFactory, vtViewTemplateProvider, emfFormsIdProvider, converterRegistry,
+			formatDescriptionProvider);
 	}
 
 }

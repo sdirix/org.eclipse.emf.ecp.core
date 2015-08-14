@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2015 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -43,6 +43,7 @@ import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsAbstractSpreadsheetRend
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsExportTableParent;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsIdProvider;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsNoRendererException;
+import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetFormatDescriptionProvider;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetRenderTarget;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetRendererFactory;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetReport;
@@ -63,6 +64,7 @@ public class EMFFormsSpreadsheetTableControlRenderer extends EMFFormsAbstractSpr
 	private final VTViewTemplateProvider vtViewTemplateProvider;
 	private final EMFFormsIdProvider emfFormsIdProvider;
 	private final EMFFormsSpreadsheetValueConverterRegistry converterRegistry;
+	private final EMFFormsSpreadsheetFormatDescriptionProvider formatDescriptionProvider;
 
 	/**
 	 * Default constructor.
@@ -73,8 +75,10 @@ public class EMFFormsSpreadsheetTableControlRenderer extends EMFFormsAbstractSpr
 	 * @param rendererFactory The EMFFormsSpreadsheetRendererFactory to use
 	 * @param vtViewTemplateProvider The VTViewTemplateProvider to use
 	 * @param emfFormsIdProvider The {@link EMFFormsIdProvider}
-	 * @param converterRegistry the {@link EMFFormsSpreadsheetValueConverterRegistry}
+	 * @param converterRegistry The {@link EMFFormsSpreadsheetValueConverterRegistry}
+	 * @param formatDescriptionProvider The {@link EMFFormsSpreadsheetFormatDescriptionProvider}
 	 */
+	// BEGIN COMPLEX CODE
 	public EMFFormsSpreadsheetTableControlRenderer(
 		EMFFormsDatabinding emfformsDatabinding,
 		EMFFormsLabelProvider emfformsLabelProvider,
@@ -82,7 +86,8 @@ public class EMFFormsSpreadsheetTableControlRenderer extends EMFFormsAbstractSpr
 		EMFFormsSpreadsheetRendererFactory rendererFactory,
 		VTViewTemplateProvider vtViewTemplateProvider,
 		EMFFormsIdProvider emfFormsIdProvider,
-		EMFFormsSpreadsheetValueConverterRegistry converterRegistry) {
+		EMFFormsSpreadsheetValueConverterRegistry converterRegistry,
+		EMFFormsSpreadsheetFormatDescriptionProvider formatDescriptionProvider) {
 		this.emfformsDatabinding = emfformsDatabinding;
 		this.emfformsLabelProvider = emfformsLabelProvider;
 		this.reportService = reportService;
@@ -90,7 +95,9 @@ public class EMFFormsSpreadsheetTableControlRenderer extends EMFFormsAbstractSpr
 		this.vtViewTemplateProvider = vtViewTemplateProvider;
 		this.emfFormsIdProvider = emfFormsIdProvider;
 		this.converterRegistry = converterRegistry;
+		this.formatDescriptionProvider = formatDescriptionProvider;
 	}
+	// END COMPLEX CODE
 
 	/**
 	 * {@inheritDoc}
@@ -104,8 +111,8 @@ public class EMFFormsSpreadsheetTableControlRenderer extends EMFFormsAbstractSpr
 	public int render(Workbook workbook, VTableControl vElement, final ViewModelContext viewModelContext,
 		EMFFormsSpreadsheetRenderTarget eMFFormsSpreadsheetRenderTarget) {
 		final EMFFormsSpreadsheetControlRenderer controlRenderer = new EMFFormsSpreadsheetControlRenderer(
-			emfformsDatabinding,
-			emfformsLabelProvider, reportService, vtViewTemplateProvider, emfFormsIdProvider, converterRegistry);
+			emfformsDatabinding, emfformsLabelProvider, reportService, vtViewTemplateProvider, emfFormsIdProvider,
+			converterRegistry, formatDescriptionProvider);
 		int numColumns = 0;
 		try {
 			final EMFFormsExportTableParent exportTableParent = (EMFFormsExportTableParent) viewModelContext
@@ -164,10 +171,6 @@ public class EMFFormsSpreadsheetTableControlRenderer extends EMFFormsAbstractSpr
 					final VControl vControl = VViewFactory.eINSTANCE.createControl();
 
 					vControl.setDomainModelReference(EcoreUtil.copy(domainModelReference));
-					// if (exportTableParent != null) {
-					// indexDMR.setTargetDMR(EcoreUtil.copy(domainModelReference));
-					// vControl.setDomainModelReference(EcoreUtil.copy(indexDMR));
-					// }
 					final ViewModelContext subViewModelContext = new EMFFormsSpreadsheetViewModelContext(
 						(VView) viewModelContext.getViewModel(),
 						viewModelContext.getDomainModel());
@@ -181,13 +184,7 @@ public class EMFFormsSpreadsheetTableControlRenderer extends EMFFormsAbstractSpr
 				}
 
 				if (vElement.getDetailEditing() != DetailEditing.NONE) {
-					EObject tableEntry;
-					if (observableList.size() > i) {
-						tableEntry = (EObject) observableList.get(i);
-					} else {
-						tableEntry = EcoreUtil.create(EReference.class.cast(observableList.getElementType())
-							.getEReferenceType());
-					}
+					final EObject tableEntry = getTableEntry(observableList, i);
 					final VView viewModel = getView(vElement, tableEntry, viewModelContext);
 
 					final ViewModelContext subViewModelContext = new EMFFormsSpreadsheetViewModelContext(viewModel,
@@ -216,6 +213,17 @@ public class EMFFormsSpreadsheetTableControlRenderer extends EMFFormsAbstractSpr
 			reportService.report(new EMFFormsSpreadsheetReport(ex, EMFFormsSpreadsheetReport.ERROR));
 		}
 		return numColumns;
+	}
+
+	private EObject getTableEntry(final IObservableList observableList, int currentColumn) {
+		EObject tableEntry;
+		if (observableList.size() > currentColumn) {
+			tableEntry = (EObject) observableList.get(currentColumn);
+		} else {
+			tableEntry = EcoreUtil.create(EReference.class.cast(observableList.getElementType())
+				.getEReferenceType());
+		}
+		return tableEntry;
 	}
 
 	private VView getView(VTableControl tableControl, EObject domainObject, ViewModelContext viewModelContext)

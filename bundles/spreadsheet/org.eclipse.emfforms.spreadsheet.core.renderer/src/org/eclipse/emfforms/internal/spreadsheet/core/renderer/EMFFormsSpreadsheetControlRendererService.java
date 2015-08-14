@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2015 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -20,6 +20,7 @@ import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsAbstractSpreadsheetRenderer;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsIdProvider;
+import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetFormatDescriptionProvider;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetRendererService;
 import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsSpreadsheetValueConverterRegistry;
 import org.osgi.service.component.annotations.Component;
@@ -40,6 +41,7 @@ public class EMFFormsSpreadsheetControlRendererService implements
 	private VTViewTemplateProvider vtViewTemplateProvider;
 	private EMFFormsIdProvider emfFormsIdProvider;
 	private EMFFormsSpreadsheetValueConverterRegistry converterRegistry;
+	private EMFFormsSpreadsheetFormatDescriptionProvider formatDescriptionProvider;
 
 	/**
 	 * The VTViewTemplateProvider to use.
@@ -102,6 +104,16 @@ public class EMFFormsSpreadsheetControlRendererService implements
 	}
 
 	/**
+	 * The EMFFormsSpreadsheetFormatDescriptionProvider to use.
+	 *
+	 * @param formatDescriptionProvider the formatDescriptionProvider
+	 */
+	@Reference
+	public void setFormatDescriptionProvider(EMFFormsSpreadsheetFormatDescriptionProvider formatDescriptionProvider) {
+		this.formatDescriptionProvider = formatDescriptionProvider;
+	}
+
+	/**
 	 * {@inheritDoc}
 	 *
 	 * @see org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetRendererService#isApplicable(org.eclipse.emf.ecp.view.spi.model.VElement,
@@ -126,7 +138,7 @@ public class EMFFormsSpreadsheetControlRendererService implements
 	public EMFFormsAbstractSpreadsheetRenderer<VControl> getRendererInstance(
 		VControl vElement, ViewModelContext viewModelContext) {
 		return new EMFFormsSpreadsheetControlRenderer(emfformsDatabinding, emfformsLabelProvider, reportService,
-			vtViewTemplateProvider, emfFormsIdProvider, converterRegistry);
+			vtViewTemplateProvider, emfFormsIdProvider, converterRegistry, formatDescriptionProvider);
 	}
 
 }
