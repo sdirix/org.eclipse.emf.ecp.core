@@ -12,7 +12,6 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.changebroker.internal;
 
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
@@ -61,9 +60,9 @@ public class ChangeBrokerImpl implements ChangeBroker, NotificationReceiver {
 	private final FeatureStrategy readOnlyFeatureStrategy = new FeatureStrategy();
 	private final Strategy[] readOnlyStrategies;
 
-	private final Set<PreDeleteObserver> preDeleteObserver = new HashSet<PreDeleteObserver>();
-	private final Set<PostDeleteObserver> postDeleteObserver = new HashSet<PostDeleteObserver>();
-	private final Set<VetoableDeleteObserver> vetoableDeleteObserver = new HashSet<VetoableDeleteObserver>();
+	private final Set<PreDeleteObserver> preDeleteObserver = new CopyOnWriteArraySet<PreDeleteObserver>();
+	private final Set<PostDeleteObserver> postDeleteObserver = new CopyOnWriteArraySet<PostDeleteObserver>();
+	private final Set<VetoableDeleteObserver> vetoableDeleteObserver = new CopyOnWriteArraySet<VetoableDeleteObserver>();
 
 	/**
 	 * Default constructor.
