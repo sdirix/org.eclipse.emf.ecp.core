@@ -7,20 +7,22 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- * jfaltermeier - initial API and implementation
+ * Jonas - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.changebroker.test;
+package org.eclipse.emf.ecp.changebroker.spi;
 
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
-import org.junit.runners.Suite.SuiteClasses;
+import org.eclipse.emf.ecore.EObject;
 
-@RunWith(Suite.class)
-@SuiteClasses({
-	ChangeBroker_Test.class,
-	Strategy_Test.class,
-	ChangeBrokerDeleteObserver_Test.class
-})
-public class AllPlainJUnitTests {
+/**
+ * @author Jonas
+ * @since 1.7
+ *        The Observer gets called after a delete operation has been completed
+ */
+public interface PostDeleteObserver extends EMFObserver {
+
+	/**
+	 * @param objectToBeDeleted The deleted {@link EObject}
+	 */
+	void postDelete(EObject objectToBeDeleted);
 
 }
