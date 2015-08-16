@@ -388,24 +388,6 @@ public final class EMFStoreProvider extends DefaultProvider {
 
 	/** {@inheritDoc} */
 	@Override
-	public void delete(InternalProject project, final Collection<Object> objects) {
-		final ProjectSpace projectSpace = ((ESLocalProjectImpl) getProjectSpace(project)).toInternalAPI();
-		// TODO EMFStore how to delete eObject?
-		new EMFStoreCommand() {
-			@Override
-			protected void doRun() {
-				for (final Object object : objects) {
-					if (EObject.class.isInstance(object)) {
-						projectSpace.getProject().deleteModelElement((EObject) object);
-					}
-				}
-			}
-		}.run(false);
-
-	}
-
-	/** {@inheritDoc} */
-	@Override
 	public void cloneProject(final InternalProject projectToClone, InternalProject targetProject) {
 		final ProjectSpace toClone = ((ESLocalProjectImpl) getProjectSpace(projectToClone)).toInternalAPI();
 		final ProjectSpace target = ((ESLocalProjectImpl) getProjectSpace(targetProject)).toInternalAPI();
@@ -617,6 +599,29 @@ public final class EMFStoreProvider extends DefaultProvider {
 	@Override
 	public boolean isThreadSafe() {
 		return false;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.spi.core.DefaultProvider#doDelete(org.eclipse.emf.ecp.spi.core.InternalProject,
+	 *      java.util.Collection)
+	 */
+	@Override
+	public void doDelete(InternalProject project, final Collection<Object> objects) {
+		final ProjectSpace projectSpace = ((ESLocalProjectImpl) getProjectSpace(project)).toInternalAPI();
+		// TODO EMFStore how to delete eObject?
+		new EMFStoreCommand() {
+			@Override
+			protected void doRun() {
+				for (final Object object : objects) {
+					if (EObject.class.isInstance(object)) {
+						projectSpace.getProject().deleteModelElement((EObject) object);
+					}
+				}
+			}
+		}.run(false);
+
 	}
 
 }

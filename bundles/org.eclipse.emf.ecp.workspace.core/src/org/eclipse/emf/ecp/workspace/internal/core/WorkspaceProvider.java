@@ -217,12 +217,6 @@ public class WorkspaceProvider extends DefaultProvider {
 
 	/** {@inheritDoc} */
 	@Override
-	public void delete(InternalProject project, Collection<Object> objects) {
-		project.getEditingDomain().getCommandStack().execute(DeleteCommand.create(project.getEditingDomain(), objects));
-	}
-
-	/** {@inheritDoc} */
-	@Override
 	public void cloneProject(final InternalProject projectToClone, InternalProject targetProject) {
 		throw new UnsupportedOperationException();
 	}
@@ -337,5 +331,17 @@ public class WorkspaceProvider extends DefaultProvider {
 	@Override
 	public boolean isThreadSafe() {
 		return false;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.spi.core.DefaultProvider#doDelete(org.eclipse.emf.ecp.spi.core.InternalProject,
+	 *      java.util.Collection)
+	 */
+	@Override
+	public void doDelete(InternalProject project, Collection<Object> objects) {
+		project.getEditingDomain().getCommandStack().execute(DeleteCommand.create(project.getEditingDomain(), objects));
+
 	}
 }

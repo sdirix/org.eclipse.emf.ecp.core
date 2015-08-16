@@ -14,6 +14,7 @@ package org.eclipse.emf.ecp.changebroker.emfstore.internal;
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.changebroker.spi.AbstractNotificationProvider;
 import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.emf.ecp.core.ECPProvider;
@@ -63,6 +64,38 @@ public class ECPNotificationProvider extends AbstractNotificationProvider implem
 	public void notify(Notification notification) {
 		notifyAllReceivers(notification);
 
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.spi.core.ProviderChangeListener#postDelete(org.eclipse.emf.ecore.EObject)
+	 */
+	@Override
+	public void postDelete(EObject objectToBeDeleted) {
+		notifyPostDelete(objectToBeDeleted);
+
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.spi.core.ProviderChangeListener#preDelete(org.eclipse.emf.ecore.EObject)
+	 */
+	@Override
+	public void preDelete(EObject objectToBeDeleted) {
+		notifyPreDelete(objectToBeDeleted);
+
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.spi.core.ProviderChangeListener#canDelete(org.eclipse.emf.ecore.EObject)
+	 */
+	@Override
+	public boolean canDelete(EObject objectToBeDeleted) {
+		return notifyCanDelete(objectToBeDeleted);
 	}
 
 }

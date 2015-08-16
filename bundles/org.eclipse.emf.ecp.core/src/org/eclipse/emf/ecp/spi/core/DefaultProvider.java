@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.ecp.spi.core;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
@@ -466,4 +467,71 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 		}
 
 	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.spi.core.InternalProvider#delete(org.eclipse.emf.ecp.spi.core.InternalProject,
+	 *      java.util.Collection)
+	 * @since 1.7
+	 */
+	@Override
+	public void delete(InternalProject project, Collection<Object> objects) {
+		final ArrayList<Object> toBeDeleted = new ArrayList<Object>();
+		for (final Object object : objects) {
+			if (object instanceof EObject) {
+				final EObject eObject = (EObject) object;
+				final boolean canDelete = notifyCanDelete(eObject);
+				if (!canDelete) {
+					continue;
+				}
+				notifyPredelete(eObject);
+
+			}
+			toBeDeleted.add(object);
+		}
+
+		doDelete(project, toBeDeleted);
+		for (final Object object : toBeDeleted) {
+			if (object instanceof EObject) {
+				final EObject eObject = (EObject) object;
+				notifyPostDelete(eObject);
+			}
+		}
+
+	}
+
+	private void notifyPostDelete(EObject toBeDeleted) {
+		for (final ProviderChangeListener listener : changeListeners) {
+			listener.postDelete(toBeDeleted);
+		}
+
+	}
+
+	private void notifyPredelete(EObject toBeDeleted) {
+		for (final ProviderChangeListener listener : changeListeners) {
+			listener.preDelete(toBeDeleted);
+		}
+
+	}
+
+	private boolean notifyCanDelete(EObject toBeDeleted) {
+		boolean canDelete = true;
+		for (final ProviderChangeListener listener : changeListeners) {
+			canDelete = listener.canDelete(toBeDeleted);
+			if (!canDelete) {
+				break;
+			}
+		}
+		return canDelete;
+	}
+
+	/**
+	 * Executes the delete opertation. Is supposed to be implemented by providers.
+	 *
+	 * @param project the project from where to delete
+	 * @param objects the {@link Collection} if {@link Object Objects} to delete
+	 * @since 1.7
+	 */
+	public abstract void doDelete(InternalProject project, Collection<Object> objects);
 }

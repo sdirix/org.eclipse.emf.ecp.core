@@ -12,6 +12,7 @@
 package org.eclipse.emf.ecp.spi.core;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.ecore.EObject;
 
 /**
  * Listener to get informed about changes on project contents by the {@link InternalProvider}.
@@ -28,4 +29,20 @@ public interface ProviderChangeListener {
 	 * @param notification the new notification
 	 */
 	void notify(Notification notification);
+
+	/**
+	 * @param objectToBeDeleted The deleted {@link EObject}
+	 */
+	void postDelete(EObject objectToBeDeleted);
+
+	/**
+	 * @param objectToBeDeleted The deleted {@link EObject}
+	 */
+	void preDelete(EObject objectToBeDeleted);
+
+	/**
+	 * @param objectToBeDeleted The deleted {@link EObject}
+	 * @return if the object can be deleted
+	 */
+	boolean canDelete(EObject objectToBeDeleted);
 }

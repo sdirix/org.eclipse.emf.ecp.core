@@ -16,6 +16,23 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/ecp/changebroker/spi/AbstractNotificationProvider.java" type="org.eclipse.emf.ecp.changebroker.spi.AbstractNotificationProvider">
+        <filter comment="SPI" id="1143996420">
+            <message_arguments>
+                <message_argument value="canDelete(EObject)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI" id="1143996420">
+            <message_arguments>
+                <message_argument value="notifyCanDelete(EObject)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI" id="1143996420">
+            <message_arguments>
+                <message_argument value="preDelete(EObject)"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/ecp/changebroker/spi/ChangeBroker.java" type="org.eclipse.emf.ecp.changebroker.spi.ChangeBroker">
         <filter comment="SPI" id="403804204">
             <message_arguments>

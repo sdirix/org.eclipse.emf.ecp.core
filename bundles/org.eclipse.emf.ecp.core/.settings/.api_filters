@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.emf.ecp.core" version="2">
     <resource path="src/org/eclipse/emf/ecp/spi/core/DefaultProvider.java" type="org.eclipse.emf.ecp.spi.core.DefaultProvider">
+        <filter comment="SPI" id="336695337">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.spi.core.DefaultProvider"/>
+                <message_argument value="doDelete(InternalProject, Collection&lt;Object&gt;)"/>
+            </message_arguments>
+        </filter>
         <filter comment="SPI" id="1143996420">
             <message_arguments>
                 <message_argument value="changeListeners"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI" id="1143996420">
+            <message_arguments>
+                <message_argument value="doDelete(InternalProject, Collection&lt;Object&gt;)"/>
             </message_arguments>
         </filter>
         <filter comment="SPI" id="1143996420">
