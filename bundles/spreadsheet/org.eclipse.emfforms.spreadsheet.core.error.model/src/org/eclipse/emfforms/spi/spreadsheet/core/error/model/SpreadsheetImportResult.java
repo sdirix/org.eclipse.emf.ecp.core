@@ -52,7 +52,7 @@ public interface SpreadsheetImportResult extends EObject {
 	EList<ErrorReport> getErrorReports();
 
 	/**
-	 * Returns the value of the '<em><b>Imported EObjects</b></em>' containment reference list.
+	 * Returns the value of the '<em><b>Imported EObjects</b></em>' reference list.
 	 * The list contents are of type {@link org.eclipse.emf.ecore.EObject}.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -61,9 +61,9 @@ public interface SpreadsheetImportResult extends EObject {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 *
-	 * @return the value of the '<em>Imported EObjects</em>' containment reference list.
+	 * @return the value of the '<em>Imported EObjects</em>' reference list.
 	 * @see org.eclipse.emfforms.spi.spreadsheet.core.error.model.ErrorPackage#getSpreadsheetImportResult_ImportedEObjects()
-	 * @model containment="true"
+	 * @model
 	 * @generated
 	 */
 	EList<EObject> getImportedEObjects();

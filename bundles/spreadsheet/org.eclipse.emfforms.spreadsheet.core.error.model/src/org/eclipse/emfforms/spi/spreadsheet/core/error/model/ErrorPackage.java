@@ -94,7 +94,7 @@ public interface ErrorPackage extends EPackage {
 	int SPREADSHEET_IMPORT_RESULT__ERROR_REPORTS = 0;
 
 	/**
-	 * The feature id for the '<em><b>Imported EObjects</b></em>' containment reference list.
+	 * The feature id for the '<em><b>Imported EObjects</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -393,13 +393,13 @@ public interface ErrorPackage extends EPackage {
 	EReference getSpreadsheetImportResult_ErrorReports();
 
 	/**
-	 * Returns the meta object for the containment reference list '
+	 * Returns the meta object for the reference list '
 	 * {@link org.eclipse.emfforms.spi.spreadsheet.core.error.model.SpreadsheetImportResult#getImportedEObjects
 	 * <em>Imported EObjects</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
-	 * @return the meta object for the containment reference list '<em>Imported EObjects</em>'.
+	 * @return the meta object for the reference list '<em>Imported EObjects</em>'.
 	 * @see org.eclipse.emfforms.spi.spreadsheet.core.error.model.SpreadsheetImportResult#getImportedEObjects()
 	 * @see #getSpreadsheetImportResult()
 	 * @generated
@@ -697,7 +697,7 @@ public interface ErrorPackage extends EPackage {
 		EReference SPREADSHEET_IMPORT_RESULT__ERROR_REPORTS = eINSTANCE.getSpreadsheetImportResult_ErrorReports();
 
 		/**
-		 * The meta object literal for the '<em><b>Imported EObjects</b></em>' containment reference list feature.
+		 * The meta object literal for the '<em><b>Imported EObjects</b></em>' reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 *

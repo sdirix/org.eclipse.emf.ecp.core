@@ -18,7 +18,7 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.EcoreFactory;
+import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IChildCreationExtender;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -62,8 +62,32 @@ public class SpreadsheetImportResultItemProvider extends ItemProviderAdapter imp
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
+			addImportedEObjectsPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
+	}
+
+	/**
+	 * This adds a property descriptor for the Imported EObjects feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	protected void addImportedEObjectsPropertyDescriptor(Object object) {
+		itemPropertyDescriptors
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(),
+				getString("_UI_SpreadsheetImportResult_importedEObjects_feature"), //$NON-NLS-1$
+				getString("_UI_PropertyDescriptor_description", "_UI_SpreadsheetImportResult_importedEObjects_feature", //$NON-NLS-1$ //$NON-NLS-2$
+					"_UI_SpreadsheetImportResult_type"), //$NON-NLS-1$
+				ErrorPackage.Literals.SPREADSHEET_IMPORT_RESULT__IMPORTED_EOBJECTS,
+				true,
+				false,
+				true,
+				null,
+				null,
+				null));
 	}
 
 	/**
@@ -79,7 +103,6 @@ public class SpreadsheetImportResultItemProvider extends ItemProviderAdapter imp
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(ErrorPackage.Literals.SPREADSHEET_IMPORT_RESULT__ERROR_REPORTS);
-			childrenFeatures.add(ErrorPackage.Literals.SPREADSHEET_IMPORT_RESULT__IMPORTED_EOBJECTS);
 		}
 		return childrenFeatures;
 	}
@@ -134,7 +157,6 @@ public class SpreadsheetImportResultItemProvider extends ItemProviderAdapter imp
 
 		switch (notification.getFeatureID(SpreadsheetImportResult.class)) {
 		case ErrorPackage.SPREADSHEET_IMPORT_RESULT__ERROR_REPORTS:
-		case ErrorPackage.SPREADSHEET_IMPORT_RESULT__IMPORTED_EOBJECTS:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 			return;
 		}
@@ -154,9 +176,6 @@ public class SpreadsheetImportResultItemProvider extends ItemProviderAdapter imp
 
 		newChildDescriptors.add(createChildParameter(ErrorPackage.Literals.SPREADSHEET_IMPORT_RESULT__ERROR_REPORTS,
 			ErrorFactory.eINSTANCE.createErrorReport()));
-
-		newChildDescriptors.add(createChildParameter(ErrorPackage.Literals.SPREADSHEET_IMPORT_RESULT__IMPORTED_EOBJECTS,
-			EcoreFactory.eINSTANCE.createEObject()));
 	}
 
 	/**

@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emfforms.spi.spreadsheet.core.error.model.EMFLocation;
 import org.eclipse.emfforms.spi.spreadsheet.core.error.model.ErrorFactory;
@@ -57,7 +58,7 @@ public class SpreadsheetImportResultImpl extends MinimalEObjectImpl.Container im
 	 */
 	protected EList<ErrorReport> errorReports;
 	/**
-	 * The cached value of the '{@link #getImportedEObjects() <em>Imported EObjects</em>}' containment reference list.
+	 * The cached value of the '{@link #getImportedEObjects() <em>Imported EObjects</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -112,7 +113,7 @@ public class SpreadsheetImportResultImpl extends MinimalEObjectImpl.Container im
 	@Override
 	public EList<EObject> getImportedEObjects() {
 		if (importedEObjects == null) {
-			importedEObjects = new EObjectContainmentEList<EObject>(EObject.class, this,
+			importedEObjects = new EObjectResolvingEList<EObject>(EObject.class, this,
 				ErrorPackage.SPREADSHEET_IMPORT_RESULT__IMPORTED_EOBJECTS);
 		}
 		return importedEObjects;
@@ -129,8 +130,6 @@ public class SpreadsheetImportResultImpl extends MinimalEObjectImpl.Container im
 		switch (featureID) {
 		case ErrorPackage.SPREADSHEET_IMPORT_RESULT__ERROR_REPORTS:
 			return ((InternalEList<?>) getErrorReports()).basicRemove(otherEnd, msgs);
-		case ErrorPackage.SPREADSHEET_IMPORT_RESULT__IMPORTED_EOBJECTS:
-			return ((InternalEList<?>) getImportedEObjects()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
