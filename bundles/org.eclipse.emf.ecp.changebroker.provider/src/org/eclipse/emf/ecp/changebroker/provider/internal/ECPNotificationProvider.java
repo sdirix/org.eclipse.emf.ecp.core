@@ -9,7 +9,7 @@
  * Contributors:
  * jfaltermeier - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.changebroker.emfstore.internal;
+package org.eclipse.emf.ecp.changebroker.provider.internal;
 
 import java.util.Collection;
 

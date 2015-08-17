@@ -9,7 +9,7 @@
  * Contributors:
  * jfaltermeier - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.changebroker.emfstore.test;
+package org.eclipse.emf.ecp.changebroker.provider.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -30,7 +30,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
-import org.eclipse.emf.ecp.changebroker.emfstore.internal.ECPNotificationProvider;
+import org.eclipse.emf.ecp.changebroker.provider.internal.ECPNotificationProvider;
 import org.eclipse.emf.ecp.changebroker.spi.ChangeBroker;
 import org.eclipse.emf.ecp.changebroker.spi.ChangeObserver;
 import org.eclipse.emf.ecp.changebroker.spi.NotificationProvider;

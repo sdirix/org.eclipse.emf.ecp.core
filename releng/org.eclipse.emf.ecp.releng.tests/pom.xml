@@ -123,7 +123,7 @@
 		<module>../../tests/org.eclipse.emf.ecp.view.mappingdmr.model.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.table.model.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.changebroker.test</module>
-		<module>../../tests/org.eclipse.emf.ecp.changebroker.emfstore.test</module>
+		<module>../../tests/org.eclipse.emf.ecp.changebroker.provider.test</module>
 		
 		<!-- Migration -->
 		<module>../../tests/org.eclipse.emf.ecp.view.edapt.test</module>

@@ -251,7 +251,7 @@
 		
 		<!-- Change Broker -->
 		<module>../../bundles/org.eclipse.emf.ecp.changebroker</module>
-		<module>../../bundles/org.eclipse.emf.ecp.changebroker.emfstore</module>
+		<module>../../bundles/org.eclipse.emf.ecp.changebroker.provider</module>
 		
 		<!-- Core Services -->
 		<module>../../bundles/org.eclipse.emfforms.common</module>
