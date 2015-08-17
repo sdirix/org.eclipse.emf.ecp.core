@@ -50,7 +50,8 @@ public class SearchModelElementHandler extends AbstractHandler {
 		final InternalProject project = (InternalProject) ECPUtil.getECPProjectManager().getProject(
 			selection.getFirstElement());
 
-		final ESLocalProject projectSpace = EMFStoreProvider.INSTANCE.getProjectSpace(project);
+		final ESLocalProject projectSpace = ((EMFStoreProvider) ECPUtil.getECPProviderRegistry()
+			.getProvider(EMFStoreProvider.NAME)).getProjectSpace(project);
 
 		if (projectSpace == null) {
 			return null;
