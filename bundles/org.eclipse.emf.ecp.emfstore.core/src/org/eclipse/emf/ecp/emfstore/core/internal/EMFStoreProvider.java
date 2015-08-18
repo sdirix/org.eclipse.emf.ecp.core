@@ -229,31 +229,14 @@ public final class EMFStoreProvider extends DefaultProvider {
 
 	}
 
-	/**
-	 * @param context
-	 */
 	private void handleCreate(final ECPContainer context) {
 		if (context instanceof InternalRepository) {
-			final ESServer serverInfo = getServerInfo((InternalRepository) context);
-			// TODO autologin?
-			// if (serverInfo.getLastUsersession() != null && !serverInfo.getLastUsersession().isLoggedIn()) {
-			// try {
-			// serverInfo.login(serverInfo.getLastUsersession().getUsername(), serverInfo.getLastUsersession()
-			// .getPassword());
-			// } catch (AccessControlException ex) {
-			// Activator.log(ex);
-			// } catch (ESException ex) {
-			// Activator.log(ex);
-			// }
-			// }
+			getServerInfo((InternalRepository) context);
 		} else if (context instanceof InternalProject) {
 			getProjectSpace((InternalProject) context);
 		}
 	}
 
-	/**
-	 * @param context
-	 */
 	private void handelDispose(ECPContainer context) {
 		if (context instanceof InternalProject) {
 			final ESLocalProject projectSpace = getProjectSpace((InternalProject) context);
@@ -272,9 +255,6 @@ public final class EMFStoreProvider extends DefaultProvider {
 
 	}
 
-	/**
-	 * @param context
-	 */
 	private void handleInit(final ECPContainer context) {
 		if (context instanceof InternalProject) {
 			final ESLocalProject localProject = getProjectSpace((InternalProject) context, true);
