@@ -51,8 +51,9 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 /**
- * @author Eugen
- * @noreference This class is not intended to be referenced by clients.
+ * The DefaultReferenceService provides a sample implementation for the ReferenceService.
+ * 
+ * @author Eugen Neufeld
  * @noextend This class is not intended to be subclassed by clients.
  * @since 1.4
  *
@@ -196,9 +197,9 @@ public class DefaultReferenceService implements ReferenceService {
 	 */
 	@Override
 	public void addExistingModelElements(EObject eObject, EReference eReference) {
-		final Iterator<EObject> allElements =
-			ItemPropertyDescriptor.getReachableObjectsOfType(eObject, eReference.getEType())
-				.iterator();
+		final Iterator<EObject> allElements = ItemPropertyDescriptor
+			.getReachableObjectsOfType(eObject, eReference.getEType())
+			.iterator();
 
 		final Set<EObject> elements = new LinkedHashSet<EObject>();
 		while (allElements.hasNext()) {
