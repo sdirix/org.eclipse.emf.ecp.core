@@ -18,7 +18,6 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IChildCreationExtender;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -30,30 +29,39 @@ import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 import org.eclipse.emfforms.spi.spreadsheet.core.error.model.ErrorFactory;
 import org.eclipse.emfforms.spi.spreadsheet.core.error.model.ErrorPackage;
-import org.eclipse.emfforms.spi.spreadsheet.core.error.model.SpreadsheetImportResult;
+import org.eclipse.emfforms.spi.spreadsheet.core.error.model.SettingToSheetMapping;
 
 /**
  * This is the item provider adapter for a
- * {@link org.eclipse.emfforms.spi.spreadsheet.core.error.model.SpreadsheetImportResult} object.
- * <!-- begin-user-doc --> <!-- end-user-doc -->
+ * {@link org.eclipse.emfforms.spi.spreadsheet.core.error.model.SettingToSheetMapping} object.
+ * <!-- begin-user-doc -->
+ * <!-- end-user-doc -->
  *
  * @generated
  */
-public class SpreadsheetImportResultItemProvider extends ItemProviderAdapter implements IEditingDomainItemProvider,
-	IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
+public class SettingToSheetMappingItemProvider
+	extends ItemProviderAdapter
+	implements
+	IEditingDomainItemProvider,
+	IStructuredItemContentProvider,
+	ITreeItemContentProvider,
+	IItemLabelProvider,
+	IItemPropertySource {
 	/**
-	 * This constructs an instance from a factory and a notifier. <!--
-	 * begin-user-doc --> <!-- end-user-doc -->
+	 * This constructs an instance from a factory and a notifier.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 *
 	 * @generated
 	 */
-	public SpreadsheetImportResultItemProvider(AdapterFactory adapterFactory) {
+	public SettingToSheetMappingItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
 	/**
-	 * This returns the property descriptors for the adapted class. <!--
-	 * begin-user-doc --> <!-- end-user-doc -->
+	 * This returns the property descriptors for the adapted class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 *
 	 * @generated
 	 */
@@ -62,63 +70,16 @@ public class SpreadsheetImportResultItemProvider extends ItemProviderAdapter imp
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addImportedEObjectsPropertyDescriptor(object);
-			addSettingToSheetMapPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
-	}
-
-	/**
-	 * This adds a property descriptor for the Imported EObjects feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @generated
-	 */
-	protected void addImportedEObjectsPropertyDescriptor(Object object) {
-		itemPropertyDescriptors
-			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-				getResourceLocator(),
-				getString("_UI_SpreadsheetImportResult_importedEObjects_feature"), //$NON-NLS-1$
-				getString("_UI_PropertyDescriptor_description", "_UI_SpreadsheetImportResult_importedEObjects_feature", //$NON-NLS-1$ //$NON-NLS-2$
-					"_UI_SpreadsheetImportResult_type"), //$NON-NLS-1$
-				ErrorPackage.Literals.SPREADSHEET_IMPORT_RESULT__IMPORTED_EOBJECTS,
-				true,
-				false,
-				true,
-				null,
-				null,
-				null));
-	}
-
-	/**
-	 * This adds a property descriptor for the Setting To Sheet Map feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @generated
-	 */
-	protected void addSettingToSheetMapPropertyDescriptor(Object object) {
-		itemPropertyDescriptors
-			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-				getResourceLocator(),
-				getString("_UI_SpreadsheetImportResult_settingToSheetMap_feature"), //$NON-NLS-1$
-				getString("_UI_PropertyDescriptor_description", "_UI_SpreadsheetImportResult_settingToSheetMap_feature", //$NON-NLS-1$ //$NON-NLS-2$
-					"_UI_SpreadsheetImportResult_type"), //$NON-NLS-1$
-				ErrorPackage.Literals.SPREADSHEET_IMPORT_RESULT__SETTING_TO_SHEET_MAP,
-				true,
-				false,
-				true,
-				null,
-				null,
-				null));
 	}
 
 	/**
 	 * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
 	 * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
 	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 *
 	 * @generated
 	 */
@@ -126,13 +87,15 @@ public class SpreadsheetImportResultItemProvider extends ItemProviderAdapter imp
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(ErrorPackage.Literals.SPREADSHEET_IMPORT_RESULT__ERROR_REPORTS);
+			childrenFeatures.add(ErrorPackage.Literals.SETTING_TO_SHEET_MAPPING__SHEET_LOCATION);
+			childrenFeatures.add(ErrorPackage.Literals.SETTING_TO_SHEET_MAPPING__SETTING_LOCATION);
 		}
 		return childrenFeatures;
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 *
 	 * @generated
 	 */
@@ -145,33 +108,34 @@ public class SpreadsheetImportResultItemProvider extends ItemProviderAdapter imp
 	}
 
 	/**
-	 * This returns ErrorReports.gif. <!-- begin-user-doc --> <!-- end-user-doc
-	 * -->
+	 * This returns SettingToSheetMapping.gif.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 *
 	 * @generated
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/SpreadsheetImportResult")); //$NON-NLS-1$
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/SettingToSheetMapping")); //$NON-NLS-1$
 	}
 
 	/**
 	 * This returns the label text for the adapted class.
-	 * <!-- begin-user-doc
-	 * --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 *
 	 * @generated
 	 */
 	@Override
 	public String getText(Object object) {
-		return getString("_UI_SpreadsheetImportResult_type"); //$NON-NLS-1$
+		return getString("_UI_SettingToSheetMapping_type"); //$NON-NLS-1$
 	}
 
 	/**
 	 * This handles model notifications by calling {@link #updateChildren} to update any cached
 	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
-	 * <!-- begin-user-doc --> <!--
-	 * end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 *
 	 * @generated
 	 */
@@ -179,8 +143,9 @@ public class SpreadsheetImportResultItemProvider extends ItemProviderAdapter imp
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(SpreadsheetImportResult.class)) {
-		case ErrorPackage.SPREADSHEET_IMPORT_RESULT__ERROR_REPORTS:
+		switch (notification.getFeatureID(SettingToSheetMapping.class)) {
+		case ErrorPackage.SETTING_TO_SHEET_MAPPING__SHEET_LOCATION:
+		case ErrorPackage.SETTING_TO_SHEET_MAPPING__SETTING_LOCATION:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 			return;
 		}
@@ -188,9 +153,10 @@ public class SpreadsheetImportResultItemProvider extends ItemProviderAdapter imp
 	}
 
 	/**
-	 * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s
-	 * describing the children that can be created under this object. <!--
-	 * begin-user-doc --> <!-- end-user-doc -->
+	 * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children
+	 * that can be created under this object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 *
 	 * @generated
 	 */
@@ -198,13 +164,17 @@ public class SpreadsheetImportResultItemProvider extends ItemProviderAdapter imp
 	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
-		newChildDescriptors.add(createChildParameter(ErrorPackage.Literals.SPREADSHEET_IMPORT_RESULT__ERROR_REPORTS,
-			ErrorFactory.eINSTANCE.createErrorReport()));
+		newChildDescriptors.add(createChildParameter(ErrorPackage.Literals.SETTING_TO_SHEET_MAPPING__SHEET_LOCATION,
+			ErrorFactory.eINSTANCE.createSheetLocation()));
+
+		newChildDescriptors.add(createChildParameter(ErrorPackage.Literals.SETTING_TO_SHEET_MAPPING__SETTING_LOCATION,
+			ErrorFactory.eINSTANCE.createSettingLocation()));
 	}
 
 	/**
-	 * Return the resource locator for this item provider's resources. <!--
-	 * begin-user-doc --> <!-- end-user-doc -->
+	 * Return the resource locator for this item provider's resources.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 *
 	 * @generated
 	 */

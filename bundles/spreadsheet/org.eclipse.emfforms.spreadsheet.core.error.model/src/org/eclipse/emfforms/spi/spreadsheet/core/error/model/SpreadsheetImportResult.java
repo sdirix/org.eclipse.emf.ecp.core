@@ -13,6 +13,7 @@ package org.eclipse.emfforms.spi.spreadsheet.core.error.model;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 
 /**
  * <!-- begin-user-doc -->
@@ -27,6 +28,8 @@ import org.eclipse.emf.ecore.EObject;
  * <em>Error Reports</em>}</li>
  * <li>{@link org.eclipse.emfforms.spi.spreadsheet.core.error.model.SpreadsheetImportResult#getImportedEObjects
  * <em>Imported EObjects</em>}</li>
+ * <li>{@link org.eclipse.emfforms.spi.spreadsheet.core.error.model.SpreadsheetImportResult#getSettingToSheetMap
+ * <em>Setting To Sheet Map</em>}</li>
  * </ul>
  *
  * @see org.eclipse.emfforms.spi.spreadsheet.core.error.model.ErrorPackage#getSpreadsheetImportResult()
@@ -69,6 +72,24 @@ public interface SpreadsheetImportResult extends EObject {
 	EList<EObject> getImportedEObjects();
 
 	/**
+	 * Returns the value of the '<em><b>Setting To Sheet Map</b></em>' reference list.
+	 * The list contents are of type {@link org.eclipse.emfforms.spi.spreadsheet.core.error.model.SettingToSheetMapping}
+	 * .
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Setting To Sheet Map</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the value of the '<em>Setting To Sheet Map</em>' reference list.
+	 * @see org.eclipse.emfforms.spi.spreadsheet.core.error.model.ErrorPackage#getSpreadsheetImportResult_SettingToSheetMap()
+	 * @model
+	 * @generated
+	 */
+	EList<SettingToSheetMapping> getSettingToSheetMap();
+
+	/**
 	 * Reports a new {@link ErrorReport error}.
 	 *
 	 * @param severity the {@link Severity severity}
@@ -103,5 +124,14 @@ public interface SpreadsheetImportResult extends EObject {
 	 * @param sheetLocation the information to identify the affected cell in the spreadsheet
 	 */
 	void reportError(Severity severity, String message, EMFLocation emfLocation, SheetLocation sheetLocation);
+
+	/**
+	 * Retrieves the getSheetLocation which corresponds to the provided EStructuralFeature. If such
+	 * a feature cannot be found at all, then the information in the sheetlocation shows this erroneous location.
+	 *
+	 * @param structuralFeature The {@link EStructuralFeature} to return the {@link SheetLocation} for
+	 * @return The {@link SheetLocation}
+	 */
+	SheetLocation getSheetLocation(EStructuralFeature structuralFeature);
 
 } // ErrorReports

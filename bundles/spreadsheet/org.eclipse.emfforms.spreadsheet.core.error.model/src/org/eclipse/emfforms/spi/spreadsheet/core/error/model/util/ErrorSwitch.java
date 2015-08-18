@@ -19,6 +19,7 @@ import org.eclipse.emfforms.spi.spreadsheet.core.error.model.EMFLocation;
 import org.eclipse.emfforms.spi.spreadsheet.core.error.model.ErrorPackage;
 import org.eclipse.emfforms.spi.spreadsheet.core.error.model.ErrorReport;
 import org.eclipse.emfforms.spi.spreadsheet.core.error.model.SettingLocation;
+import org.eclipse.emfforms.spi.spreadsheet.core.error.model.SettingToSheetMapping;
 import org.eclipse.emfforms.spi.spreadsheet.core.error.model.SheetLocation;
 import org.eclipse.emfforms.spi.spreadsheet.core.error.model.SpreadsheetImportResult;
 
@@ -133,6 +134,14 @@ public class ErrorSwitch<T> extends Switch<T> {
 			}
 			return result;
 		}
+		case ErrorPackage.SETTING_TO_SHEET_MAPPING: {
+			final SettingToSheetMapping settingToSheetMapping = (SettingToSheetMapping) theEObject;
+			T result = caseSettingToSheetMapping(settingToSheetMapping);
+			if (result == null) {
+				result = defaultCase(theEObject);
+			}
+			return result;
+		}
 		default:
 			return defaultCase(theEObject);
 		}
@@ -215,6 +224,22 @@ public class ErrorSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseDMRLocation(DMRLocation object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Setting To Sheet Mapping</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 *
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Setting To Sheet Mapping</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseSettingToSheetMapping(SettingToSheetMapping object) {
 		return null;
 	}
 

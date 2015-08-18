@@ -25,6 +25,8 @@ import org.eclipse.emf.ecore.EObject;
  * <li>{@link org.eclipse.emfforms.spi.spreadsheet.core.error.model.SheetLocation#getSheet <em>Sheet</em>}</li>
  * <li>{@link org.eclipse.emfforms.spi.spreadsheet.core.error.model.SheetLocation#getColumn <em>Column</em>}</li>
  * <li>{@link org.eclipse.emfforms.spi.spreadsheet.core.error.model.SheetLocation#getRow <em>Row</em>}</li>
+ * <li>{@link org.eclipse.emfforms.spi.spreadsheet.core.error.model.SheetLocation#getColumnName <em>Column Name</em>}
+ * </li>
  * </ul>
  *
  * @see org.eclipse.emfforms.spi.spreadsheet.core.error.model.ErrorPackage#getSheetLocation()
@@ -118,5 +120,34 @@ public interface SheetLocation extends EObject {
 	 * @generated
 	 */
 	void setRow(int value);
+
+	/**
+	 * Returns the value of the '<em><b>Column Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Column Name</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the value of the '<em>Column Name</em>' attribute.
+	 * @see #setColumnName(String)
+	 * @see org.eclipse.emfforms.spi.spreadsheet.core.error.model.ErrorPackage#getSheetLocation_ColumnName()
+	 * @model required="true"
+	 * @generated
+	 */
+	String getColumnName();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.emfforms.spi.spreadsheet.core.error.model.SheetLocation#getColumnName
+	 * <em>Column Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @param value the new value of the '<em>Column Name</em>' attribute.
+	 * @see #getColumnName()
+	 * @generated
+	 */
+	void setColumnName(String value);
 
 } // ExcelLocation

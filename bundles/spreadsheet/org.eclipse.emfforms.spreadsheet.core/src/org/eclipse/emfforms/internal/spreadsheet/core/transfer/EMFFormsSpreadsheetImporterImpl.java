@@ -106,28 +106,25 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 			final Cell cell = dmrRow.getCell(columnId);
 			if (cell == null) {
 				errorReports.reportError(
-					Severity.ERROR,
-					"The label cell containing the domain model reference comment has been deleted.", //$NON-NLS-1$
+					Severity.ERROR, "The label cell containing the domain model reference comment has been deleted.", //$NON-NLS-1$
 					ErrorFactory.eINSTANCE.createEMFLocation(eObject),
-					ErrorFactory.eINSTANCE.createSheetLocation(sheetname, columnId, 0));
+					ErrorFactory.eINSTANCE.createSheetLocation(sheetname, columnId, 0, "NO CELL")); //$NON-NLS-1$
 				continue;
 			}
 			final Comment cellComment = cell.getCellComment();
 			if (cellComment == null) {
 				errorReports.reportError(
-					Severity.ERROR,
-					"The Domain Model Reference comment has been deleted.", //$NON-NLS-1$
+					Severity.ERROR, "The Domain Model Reference comment has been deleted.", //$NON-NLS-1$
 					ErrorFactory.eINSTANCE.createEMFLocation(eObject),
-					ErrorFactory.eINSTANCE.createSheetLocation(sheetname, columnId, 0));
+					ErrorFactory.eINSTANCE.createSheetLocation(sheetname, columnId, 0, cell.getStringCellValue()));
 				continue;
 			}
 			final String serializedDMR = cellComment.getString().getString();
 			if (serializedDMR == null || serializedDMR.isEmpty()) {
 				errorReports.reportError(
-					Severity.ERROR,
-					"The Domain Model Reference comment is empty.", //$NON-NLS-1$
+					Severity.ERROR, "The Domain Model Reference comment is empty.", //$NON-NLS-1$
 					ErrorFactory.eINSTANCE.createEMFLocation(eObject),
-					ErrorFactory.eINSTANCE.createSheetLocation(sheetname, columnId, 0));
+					ErrorFactory.eINSTANCE.createSheetLocation(sheetname, columnId, 0, cell.getStringCellValue()));
 				continue;
 			}
 
@@ -137,21 +134,19 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 				dmr = deserializeDMR(serializedDMR);
 			} catch (final IOException ex1) {
 				errorReports.reportError(
-					Severity.ERROR,
-					"The Domain Model Reference could not be deserialized.", //$NON-NLS-1$
+					Severity.ERROR, "The Domain Model Reference could not be deserialized.", //$NON-NLS-1$
 					ErrorFactory.eINSTANCE.createEMFLocation(eObject),
-					ErrorFactory.eINSTANCE.createSheetLocation(sheetname, columnId, 0));
+					ErrorFactory.eINSTANCE.createSheetLocation(sheetname, columnId, 0, cell.getStringCellValue()));
 				continue;
 			}
 
 			/* resolve dmr */
 			if (!resolveDMR(dmr, eObject)) {
 				errorReports.reportError(
-					Severity.ERROR,
-					"The Domain Model Reference could not be resolved.", //$NON-NLS-1$
+					Severity.ERROR, "The Domain Model Reference could not be resolved.", //$NON-NLS-1$
 					ErrorFactory.eINSTANCE.createEMFLocation(eObject,
 						ErrorFactory.eINSTANCE.createDMRLocation(dmr)),
-					ErrorFactory.eINSTANCE.createSheetLocation(sheetname, columnId, 0));
+					ErrorFactory.eINSTANCE.createSheetLocation(sheetname, columnId, 0, cell.getStringCellValue()));
 				continue;
 			}
 
@@ -165,7 +160,7 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 					MessageFormat.format("Databinding could not initiated: {0}.", ex.getMessage()), //$NON-NLS-1$
 					ErrorFactory.eINSTANCE.createEMFLocation(eObject,
 						ErrorFactory.eINSTANCE.createDMRLocation(dmr)),
-					ErrorFactory.eINSTANCE.createSheetLocation(sheetname, columnId, 0));
+					ErrorFactory.eINSTANCE.createSheetLocation(sheetname, columnId, 0, cell.getStringCellValue()));
 				continue;
 			}
 
@@ -175,11 +170,10 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 				converter = getValueConverter(dmr, eObject);
 			} catch (final EMFFormsConverterException ex) {
 				errorReports.reportError(
-					Severity.ERROR,
-					"No value converter found.", //$NON-NLS-1$
+					Severity.ERROR, "No value converter found.", //$NON-NLS-1$
 					ErrorFactory.eINSTANCE.createEMFLocation(eObject,
 						ErrorFactory.eINSTANCE.createDMRLocation(dmr)),
-					ErrorFactory.eINSTANCE.createSheetLocation(sheetname, columnId, 0));
+					ErrorFactory.eINSTANCE.createSheetLocation(sheetname, columnId, 0, cell.getStringCellValue()));
 				continue;
 			}
 
@@ -210,7 +204,8 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 					ErrorFactory.eINSTANCE.createEMFLocation(eObject,
 						createSettingLocation(observableValue, feature),
 						ErrorFactory.eINSTANCE.createDMRLocation(dmr)),
-					ErrorFactory.eINSTANCE.createSheetLocation(sheetname, columnId, eObjectRow.getRowNum()));
+					ErrorFactory.eINSTANCE.createSheetLocation(sheetname, columnId, eObjectRow.getRowNum(),
+						cell.getStringCellValue()));
 				continue;
 			}
 
@@ -223,15 +218,23 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 						ErrorFactory.eINSTANCE.createEMFLocation(eObject,
 							createSettingLocation(observableValue, feature),
 							ErrorFactory.eINSTANCE.createDMRLocation(dmr)),
-						ErrorFactory.eINSTANCE.createSheetLocation(sheetname, columnId, eObjectRow.getRowNum()));
+						ErrorFactory.eINSTANCE.createSheetLocation(sheetname, columnId, eObjectRow.getRowNum(),
+							cell.getStringCellValue()));
 					continue;
 				}
 			}
 
 			/* set value */
 			observableValue.setValue(convertedValue);
+
+			errorReports.getSettingToSheetMap()
+				.add(ErrorFactory.eINSTANCE.createSettingToSheetMapping(
+					createSettingLocation(observableValue, feature),
+					ErrorFactory.eINSTANCE.createSheetLocation(sheetname, columnId, eObjectRow.getRowNum(),
+						cell.getStringCellValue())));
 		}
 	}
+
 	// END COMPLEX CODE
 
 	/**
@@ -314,7 +317,7 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 					Severity.ERROR,
 					String.format("The first column must always contain the EObject IDs. Expected %1$s but was %2$s.", //$NON-NLS-1$
 						EMFFormsIdProvider.ID_COLUMN, labelRow.getCell(0).getStringCellValue()),
-					ErrorFactory.eINSTANCE.createSheetLocation(workbook.getSheetName(sheetId), 0, 0));
+					ErrorFactory.eINSTANCE.createSheetLocation(workbook.getSheetName(sheetId), 0, 0, "NO CELL")); //$NON-NLS-1$
 				continue;
 			}
 			for (int rowId = 3; rowId <= sheet.getLastRowNum(); rowId++) {
@@ -323,19 +326,22 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 				if (eObjectId == null || eObjectId.isEmpty()) {
 					/* EObject id deleted */
 					errorReports.reportError(
-						Severity.ERROR,
-						"EObject ID has been deleted.", //$NON-NLS-1$
-						ErrorFactory.eINSTANCE.createSheetLocation(workbook.getSheetName(sheetId), 0, rowId));
+						Severity.ERROR, "EObject ID has been deleted.", //$NON-NLS-1$
+						ErrorFactory.eINSTANCE.createSheetLocation(workbook.getSheetName(sheetId), 0, rowId,
+							EMFFormsIdProvider.ID_COLUMN));
 					continue;
 				}
 				if (!result.containsKey(eObjectId)) {
 					result.put(eObjectId, new LinkedHashMap<Integer, Integer>());
-				} else {
+				}
+				// each sheetid should only be mapped once to each eobjectid
+				if (result.get(eObjectId).containsKey(sheetId)) {
 					/* duplicate EObject ID */
 					errorReports.reportError(
 						Severity.ERROR,
 						"Duplicate EObject ID has been found. IDs need to be unique.", //$NON-NLS-1$
-						ErrorFactory.eINSTANCE.createSheetLocation(workbook.getSheetName(sheetId), 0, rowId));
+						ErrorFactory.eINSTANCE.createSheetLocation(workbook.getSheetName(sheetId), 0, rowId,
+							EMFFormsIdProvider.ID_COLUMN));
 					continue;
 				}
 				result.get(eObjectId).put(sheetId, rowId);

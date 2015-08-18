@@ -131,8 +131,29 @@ public interface ErrorFactory extends EFactory {
 	DMRLocation createDMRLocation();
 
 	/**
+	 * Returns a new object of class '<em>Setting To Sheet Mapping</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @return a new object of class '<em>Setting To Sheet Mapping</em>'.
+	 * @generated
+	 */
+	SettingToSheetMapping createSettingToSheetMapping();
+
+	/**
+	 * Creates a SettingToSheetMapping based on the combination of the {@link SettingLocation} and the
+	 * {@link SheetLocation}.
+	 *
+	 * @param settingLocation The {@link SettingLocation}
+	 * @param sheetLocation The {@link SheetLocation}
+	 *
+	 * @return the created {@link SettingToSheetMapping}
+	 */
+	SettingToSheetMapping createSettingToSheetMapping(SettingLocation settingLocation, SheetLocation sheetLocation);
+
+	/**
 	 * Creates a new {@link DMRLocation}.
-	 * 
+	 *
 	 * @param dmr the domain model reference
 	 * @return the location
 	 */
@@ -154,9 +175,10 @@ public interface ErrorFactory extends EFactory {
 	 * @param sheet the sheet id
 	 * @param column the column id
 	 * @param row the row id
+	 * @param columnName the column name
 	 * @return the {@link SheetLocation location}
 	 */
-	SheetLocation createSheetLocation(String sheet, int column, int row);
+	SheetLocation createSheetLocation(String sheet, int column, int row, String columnName);
 
 	/**
 	 * Returns the package supported by this factory.

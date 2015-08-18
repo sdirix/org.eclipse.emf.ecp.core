@@ -20,6 +20,7 @@ import org.eclipse.emfforms.spi.spreadsheet.core.error.model.EMFLocation;
 import org.eclipse.emfforms.spi.spreadsheet.core.error.model.ErrorPackage;
 import org.eclipse.emfforms.spi.spreadsheet.core.error.model.ErrorReport;
 import org.eclipse.emfforms.spi.spreadsheet.core.error.model.SettingLocation;
+import org.eclipse.emfforms.spi.spreadsheet.core.error.model.SettingToSheetMapping;
 import org.eclipse.emfforms.spi.spreadsheet.core.error.model.SheetLocation;
 import org.eclipse.emfforms.spi.spreadsheet.core.error.model.SpreadsheetImportResult;
 
@@ -112,6 +113,11 @@ public class ErrorAdapterFactory extends AdapterFactoryImpl {
 		@Override
 		public Adapter caseDMRLocation(DMRLocation object) {
 			return createDMRLocationAdapter();
+		}
+
+		@Override
+		public Adapter caseSettingToSheetMapping(SettingToSheetMapping object) {
+			return createSettingToSheetMappingAdapter();
 		}
 
 		@Override
@@ -212,6 +218,23 @@ public class ErrorAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createDMRLocationAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '
+	 * {@link org.eclipse.emfforms.spi.spreadsheet.core.error.model.SettingToSheetMapping
+	 * <em>Setting To Sheet Mapping</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the new adapter.
+	 * @see org.eclipse.emfforms.spi.spreadsheet.core.error.model.SettingToSheetMapping
+	 * @generated
+	 */
+	public Adapter createSettingToSheetMappingAdapter() {
 		return null;
 	}
 

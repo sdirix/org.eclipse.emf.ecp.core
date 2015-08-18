@@ -104,6 +104,16 @@ public interface ErrorPackage extends EPackage {
 	int SPREADSHEET_IMPORT_RESULT__IMPORTED_EOBJECTS = 1;
 
 	/**
+	 * The feature id for the '<em><b>Setting To Sheet Map</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int SPREADSHEET_IMPORT_RESULT__SETTING_TO_SHEET_MAP = 2;
+
+	/**
 	 * The number of structural features of the '<em>Spreadsheet Import Result</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -111,7 +121,7 @@ public interface ErrorPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SPREADSHEET_IMPORT_RESULT_FEATURE_COUNT = 2;
+	int SPREADSHEET_IMPORT_RESULT_FEATURE_COUNT = 3;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emfforms.spi.spreadsheet.core.error.model.impl.ErrorReportImpl
@@ -254,6 +264,16 @@ public interface ErrorPackage extends EPackage {
 	int SHEET_LOCATION__ROW = 2;
 
 	/**
+	 * The feature id for the '<em><b>Column Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int SHEET_LOCATION__COLUMN_NAME = 3;
+
+	/**
 	 * The number of structural features of the '<em>Sheet Location</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -261,7 +281,7 @@ public interface ErrorPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SHEET_LOCATION_FEATURE_COUNT = 3;
+	int SHEET_LOCATION_FEATURE_COUNT = 4;
 
 	/**
 	 * The feature id for the '<em><b>Root</b></em>' reference.
@@ -354,6 +374,49 @@ public interface ErrorPackage extends EPackage {
 	int DMR_LOCATION_FEATURE_COUNT = 1;
 
 	/**
+	 * The meta object id for the '
+	 * {@link org.eclipse.emfforms.spi.spreadsheet.core.error.model.impl.SettingToSheetMappingImpl
+	 * <em>Setting To Sheet Mapping</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @see org.eclipse.emfforms.spi.spreadsheet.core.error.model.impl.SettingToSheetMappingImpl
+	 * @see org.eclipse.emfforms.spi.spreadsheet.core.error.model.impl.ErrorPackageImpl#getSettingToSheetMapping()
+	 * @generated
+	 */
+	int SETTING_TO_SHEET_MAPPING = 6;
+
+	/**
+	 * The feature id for the '<em><b>Sheet Location</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int SETTING_TO_SHEET_MAPPING__SHEET_LOCATION = 0;
+
+	/**
+	 * The feature id for the '<em><b>Setting Location</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int SETTING_TO_SHEET_MAPPING__SETTING_LOCATION = 1;
+
+	/**
+	 * The number of structural features of the '<em>Setting To Sheet Mapping</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int SETTING_TO_SHEET_MAPPING_FEATURE_COUNT = 2;
+
+	/**
 	 * The meta object id for the '{@link org.eclipse.emfforms.spi.spreadsheet.core.error.model.Severity
 	 * <em>Severity</em>}' enum.
 	 * <!-- begin-user-doc -->
@@ -363,7 +426,7 @@ public interface ErrorPackage extends EPackage {
 	 * @see org.eclipse.emfforms.spi.spreadsheet.core.error.model.impl.ErrorPackageImpl#getSeverity()
 	 * @generated
 	 */
-	int SEVERITY = 6;
+	int SEVERITY = 7;
 
 	/**
 	 * Returns the meta object for class '
@@ -405,6 +468,20 @@ public interface ErrorPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getSpreadsheetImportResult_ImportedEObjects();
+
+	/**
+	 * Returns the meta object for the reference list '
+	 * {@link org.eclipse.emfforms.spi.spreadsheet.core.error.model.SpreadsheetImportResult#getSettingToSheetMap
+	 * <em>Setting To Sheet Map</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the meta object for the reference list '<em>Setting To Sheet Map</em>'.
+	 * @see org.eclipse.emfforms.spi.spreadsheet.core.error.model.SpreadsheetImportResult#getSettingToSheetMap()
+	 * @see #getSpreadsheetImportResult()
+	 * @generated
+	 */
+	EReference getSpreadsheetImportResult_SettingToSheetMap();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emfforms.spi.spreadsheet.core.error.model.ErrorReport
@@ -588,6 +665,47 @@ public interface ErrorPackage extends EPackage {
 	EReference getDMRLocation_DomainModelReference();
 
 	/**
+	 * Returns the meta object for class '
+	 * {@link org.eclipse.emfforms.spi.spreadsheet.core.error.model.SettingToSheetMapping
+	 * <em>Setting To Sheet Mapping</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the meta object for class '<em>Setting To Sheet Mapping</em>'.
+	 * @see org.eclipse.emfforms.spi.spreadsheet.core.error.model.SettingToSheetMapping
+	 * @generated
+	 */
+	EClass getSettingToSheetMapping();
+
+	/**
+	 * Returns the meta object for the containment reference '
+	 * {@link org.eclipse.emfforms.spi.spreadsheet.core.error.model.SettingToSheetMapping#getSheetLocation
+	 * <em>Sheet Location</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the meta object for the containment reference '<em>Sheet Location</em>'.
+	 * @see org.eclipse.emfforms.spi.spreadsheet.core.error.model.SettingToSheetMapping#getSheetLocation()
+	 * @see #getSettingToSheetMapping()
+	 * @generated
+	 */
+	EReference getSettingToSheetMapping_SheetLocation();
+
+	/**
+	 * Returns the meta object for the containment reference '
+	 * {@link org.eclipse.emfforms.spi.spreadsheet.core.error.model.SettingToSheetMapping#getSettingLocation
+	 * <em>Setting Location</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the meta object for the containment reference '<em>Setting Location</em>'.
+	 * @see org.eclipse.emfforms.spi.spreadsheet.core.error.model.SettingToSheetMapping#getSettingLocation()
+	 * @see #getSettingToSheetMapping()
+	 * @generated
+	 */
+	EReference getSettingToSheetMapping_SettingLocation();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.emfforms.spi.spreadsheet.core.error.model.SheetLocation
 	 * <em>Sheet Location</em>}'.
 	 * <!-- begin-user-doc -->
@@ -637,6 +755,19 @@ public interface ErrorPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getSheetLocation_Row();
+
+	/**
+	 * Returns the meta object for the attribute '
+	 * {@link org.eclipse.emfforms.spi.spreadsheet.core.error.model.SheetLocation#getColumnName <em>Column Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the meta object for the attribute '<em>Column Name</em>'.
+	 * @see org.eclipse.emfforms.spi.spreadsheet.core.error.model.SheetLocation#getColumnName()
+	 * @see #getSheetLocation()
+	 * @generated
+	 */
+	EAttribute getSheetLocation_ColumnName();
 
 	/**
 	 * Returns the meta object for enum '{@link org.eclipse.emfforms.spi.spreadsheet.core.error.model.Severity
@@ -705,6 +836,16 @@ public interface ErrorPackage extends EPackage {
 		 */
 		EReference SPREADSHEET_IMPORT_RESULT__IMPORTED_EOBJECTS = eINSTANCE
 			.getSpreadsheetImportResult_ImportedEObjects();
+
+		/**
+		 * The meta object literal for the '<em><b>Setting To Sheet Map</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 *
+		 * @generated
+		 */
+		EReference SPREADSHEET_IMPORT_RESULT__SETTING_TO_SHEET_MAP = eINSTANCE
+			.getSpreadsheetImportResult_SettingToSheetMap();
 
 		/**
 		 * The meta object literal for the '
@@ -849,6 +990,37 @@ public interface ErrorPackage extends EPackage {
 
 		/**
 		 * The meta object literal for the '
+		 * {@link org.eclipse.emfforms.spi.spreadsheet.core.error.model.impl.SettingToSheetMappingImpl
+		 * <em>Setting To Sheet Mapping</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 *
+		 * @see org.eclipse.emfforms.spi.spreadsheet.core.error.model.impl.SettingToSheetMappingImpl
+		 * @see org.eclipse.emfforms.spi.spreadsheet.core.error.model.impl.ErrorPackageImpl#getSettingToSheetMapping()
+		 * @generated
+		 */
+		EClass SETTING_TO_SHEET_MAPPING = eINSTANCE.getSettingToSheetMapping();
+
+		/**
+		 * The meta object literal for the '<em><b>Sheet Location</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 *
+		 * @generated
+		 */
+		EReference SETTING_TO_SHEET_MAPPING__SHEET_LOCATION = eINSTANCE.getSettingToSheetMapping_SheetLocation();
+
+		/**
+		 * The meta object literal for the '<em><b>Setting Location</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 *
+		 * @generated
+		 */
+		EReference SETTING_TO_SHEET_MAPPING__SETTING_LOCATION = eINSTANCE.getSettingToSheetMapping_SettingLocation();
+
+		/**
+		 * The meta object literal for the '
 		 * {@link org.eclipse.emfforms.spi.spreadsheet.core.error.model.impl.SheetLocationImpl <em>Sheet Location</em>}'
 		 * class.
 		 * <!-- begin-user-doc -->
@@ -886,6 +1058,15 @@ public interface ErrorPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute SHEET_LOCATION__ROW = eINSTANCE.getSheetLocation_Row();
+
+		/**
+		 * The meta object literal for the '<em><b>Column Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 *
+		 * @generated
+		 */
+		EAttribute SHEET_LOCATION__COLUMN_NAME = eINSTANCE.getSheetLocation_ColumnName();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emfforms.spi.spreadsheet.core.error.model.Severity

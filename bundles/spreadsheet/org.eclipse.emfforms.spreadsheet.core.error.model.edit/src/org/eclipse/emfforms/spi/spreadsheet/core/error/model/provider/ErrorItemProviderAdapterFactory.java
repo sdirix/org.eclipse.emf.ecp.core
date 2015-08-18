@@ -228,6 +228,33 @@ public class ErrorItemProviderAdapterFactory extends ErrorAdapterFactory
 
 	/**
 	 * This keeps track of the one adapter used for all
+	 * {@link org.eclipse.emfforms.spi.spreadsheet.core.error.model.SettingToSheetMapping} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	protected SettingToSheetMappingItemProvider settingToSheetMappingItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.eclipse.emfforms.spi.spreadsheet.core.error.model.SettingToSheetMapping}
+	 * .
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public Adapter createSettingToSheetMappingAdapter() {
+		if (settingToSheetMappingItemProvider == null) {
+			settingToSheetMappingItemProvider = new SettingToSheetMappingItemProvider(this);
+		}
+
+		return settingToSheetMappingItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all
 	 * {@link org.eclipse.emfforms.spi.spreadsheet.core.error.model.SheetLocation} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -404,6 +431,9 @@ public class ErrorItemProviderAdapterFactory extends ErrorAdapterFactory
 		}
 		if (dmrLocationItemProvider != null) {
 			dmrLocationItemProvider.dispose();
+		}
+		if (settingToSheetMappingItemProvider != null) {
+			settingToSheetMappingItemProvider.dispose();
 		}
 	}
 

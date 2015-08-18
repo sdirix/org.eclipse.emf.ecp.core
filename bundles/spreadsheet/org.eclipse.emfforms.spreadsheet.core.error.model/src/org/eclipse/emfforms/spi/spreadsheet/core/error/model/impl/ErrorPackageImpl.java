@@ -25,6 +25,7 @@ import org.eclipse.emfforms.spi.spreadsheet.core.error.model.ErrorFactory;
 import org.eclipse.emfforms.spi.spreadsheet.core.error.model.ErrorPackage;
 import org.eclipse.emfforms.spi.spreadsheet.core.error.model.ErrorReport;
 import org.eclipse.emfforms.spi.spreadsheet.core.error.model.SettingLocation;
+import org.eclipse.emfforms.spi.spreadsheet.core.error.model.SettingToSheetMapping;
 import org.eclipse.emfforms.spi.spreadsheet.core.error.model.Severity;
 import org.eclipse.emfforms.spi.spreadsheet.core.error.model.SheetLocation;
 import org.eclipse.emfforms.spi.spreadsheet.core.error.model.SpreadsheetImportResult;
@@ -76,6 +77,14 @@ public class ErrorPackageImpl extends EPackageImpl implements ErrorPackage {
 	 * @generated
 	 */
 	private EClass dmrLocationEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	private EClass settingToSheetMappingEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -196,6 +205,17 @@ public class ErrorPackageImpl extends EPackageImpl implements ErrorPackage {
 	@Override
 	public EReference getSpreadsheetImportResult_ImportedEObjects() {
 		return (EReference) spreadsheetImportResultEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EReference getSpreadsheetImportResult_SettingToSheetMap() {
+		return (EReference) spreadsheetImportResultEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -359,6 +379,39 @@ public class ErrorPackageImpl extends EPackageImpl implements ErrorPackage {
 	 * @generated
 	 */
 	@Override
+	public EClass getSettingToSheetMapping() {
+		return settingToSheetMappingEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EReference getSettingToSheetMapping_SheetLocation() {
+		return (EReference) settingToSheetMappingEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EReference getSettingToSheetMapping_SettingLocation() {
+		return (EReference) settingToSheetMappingEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
 	public EClass getSheetLocation() {
 		return sheetLocationEClass;
 	}
@@ -394,6 +447,17 @@ public class ErrorPackageImpl extends EPackageImpl implements ErrorPackage {
 	@Override
 	public EAttribute getSheetLocation_Row() {
 		return (EAttribute) sheetLocationEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EAttribute getSheetLocation_ColumnName() {
+		return (EAttribute) sheetLocationEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -444,6 +508,7 @@ public class ErrorPackageImpl extends EPackageImpl implements ErrorPackage {
 		spreadsheetImportResultEClass = createEClass(SPREADSHEET_IMPORT_RESULT);
 		createEReference(spreadsheetImportResultEClass, SPREADSHEET_IMPORT_RESULT__ERROR_REPORTS);
 		createEReference(spreadsheetImportResultEClass, SPREADSHEET_IMPORT_RESULT__IMPORTED_EOBJECTS);
+		createEReference(spreadsheetImportResultEClass, SPREADSHEET_IMPORT_RESULT__SETTING_TO_SHEET_MAP);
 
 		errorReportEClass = createEClass(ERROR_REPORT);
 		createEAttribute(errorReportEClass, ERROR_REPORT__SEVERITY);
@@ -455,6 +520,7 @@ public class ErrorPackageImpl extends EPackageImpl implements ErrorPackage {
 		createEAttribute(sheetLocationEClass, SHEET_LOCATION__SHEET);
 		createEAttribute(sheetLocationEClass, SHEET_LOCATION__COLUMN);
 		createEAttribute(sheetLocationEClass, SHEET_LOCATION__ROW);
+		createEAttribute(sheetLocationEClass, SHEET_LOCATION__COLUMN_NAME);
 
 		emfLocationEClass = createEClass(EMF_LOCATION);
 		createEReference(emfLocationEClass, EMF_LOCATION__ROOT);
@@ -467,6 +533,10 @@ public class ErrorPackageImpl extends EPackageImpl implements ErrorPackage {
 
 		dmrLocationEClass = createEClass(DMR_LOCATION);
 		createEReference(dmrLocationEClass, DMR_LOCATION__DOMAIN_MODEL_REFERENCE);
+
+		settingToSheetMappingEClass = createEClass(SETTING_TO_SHEET_MAPPING);
+		createEReference(settingToSheetMappingEClass, SETTING_TO_SHEET_MAPPING__SHEET_LOCATION);
+		createEReference(settingToSheetMappingEClass, SETTING_TO_SHEET_MAPPING__SETTING_LOCATION);
 
 		// Create enums
 		severityEEnum = createEEnum(SEVERITY);
@@ -519,6 +589,9 @@ public class ErrorPackageImpl extends EPackageImpl implements ErrorPackage {
 		initEReference(getSpreadsheetImportResult_ImportedEObjects(), theEcorePackage.getEObject(), null,
 			"importedEObjects", null, 0, -1, SpreadsheetImportResult.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
 			!IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getSpreadsheetImportResult_SettingToSheetMap(), getSettingToSheetMapping(), null,
+			"settingToSheetMap", null, 0, -1, SpreadsheetImportResult.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
+			!IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(errorReportEClass, ErrorReport.class, "ErrorReport", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
 			IS_GENERATED_INSTANCE_CLASS);
@@ -541,6 +614,9 @@ public class ErrorPackageImpl extends EPackageImpl implements ErrorPackage {
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getSheetLocation_Row(), ecorePackage.getEInt(), "row", null, 1, 1, SheetLocation.class, //$NON-NLS-1$
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getSheetLocation_ColumnName(), ecorePackage.getEString(), "columnName", null, 1, 1, //$NON-NLS-1$
+			SheetLocation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+			!IS_DERIVED, IS_ORDERED);
 
 		initEClass(emfLocationEClass, EMFLocation.class, "EMFLocation", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
 			IS_GENERATED_INSTANCE_CLASS);
@@ -568,6 +644,15 @@ public class ErrorPackageImpl extends EPackageImpl implements ErrorPackage {
 		initEReference(getDMRLocation_DomainModelReference(), theViewPackage.getDomainModelReference(), null,
 			"domainModelReference", null, 1, 1, DMRLocation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
 			IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(settingToSheetMappingEClass, SettingToSheetMapping.class, "SettingToSheetMapping", !IS_ABSTRACT, //$NON-NLS-1$
+			!IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getSettingToSheetMapping_SheetLocation(), getSheetLocation(), null, "sheetLocation", null, //$NON-NLS-1$
+			1, 1, SettingToSheetMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+			!IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getSettingToSheetMapping_SettingLocation(), getSettingLocation(), null, "settingLocation", //$NON-NLS-1$
+			null, 1, 1, SettingToSheetMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+			!IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(severityEEnum, Severity.class, "Severity"); //$NON-NLS-1$

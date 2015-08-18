@@ -25,6 +25,7 @@ import org.eclipse.emfforms.spi.spreadsheet.core.error.model.ErrorFactory;
 import org.eclipse.emfforms.spi.spreadsheet.core.error.model.ErrorPackage;
 import org.eclipse.emfforms.spi.spreadsheet.core.error.model.ErrorReport;
 import org.eclipse.emfforms.spi.spreadsheet.core.error.model.SettingLocation;
+import org.eclipse.emfforms.spi.spreadsheet.core.error.model.SettingToSheetMapping;
 import org.eclipse.emfforms.spi.spreadsheet.core.error.model.Severity;
 import org.eclipse.emfforms.spi.spreadsheet.core.error.model.SheetLocation;
 import org.eclipse.emfforms.spi.spreadsheet.core.error.model.SpreadsheetImportResult;
@@ -89,6 +90,8 @@ public class ErrorFactoryImpl extends EFactoryImpl implements ErrorFactory {
 			return createSettingLocation();
 		case ErrorPackage.DMR_LOCATION:
 			return createDMRLocation();
+		case ErrorPackage.SETTING_TO_SHEET_MAPPING:
+			return createSettingToSheetMapping();
 		default:
 			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -193,6 +196,18 @@ public class ErrorFactoryImpl extends EFactoryImpl implements ErrorFactory {
 	 * @generated
 	 */
 	@Override
+	public SettingToSheetMapping createSettingToSheetMapping() {
+		final SettingToSheetMappingImpl settingToSheetMapping = new SettingToSheetMappingImpl();
+		return settingToSheetMapping;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
 	public SheetLocation createSheetLocation() {
 		final SheetLocationImpl sheetLocation = new SheetLocationImpl();
 		return sheetLocation;
@@ -286,12 +301,28 @@ public class ErrorFactoryImpl extends EFactoryImpl implements ErrorFactory {
 	}
 
 	@Override
-	public SheetLocation createSheetLocation(String sheet, int column, int row) {
+	public SheetLocation createSheetLocation(String sheet, int column, int row, String columnName) {
 		final SheetLocation location = createSheetLocation();
 		location.setSheet(sheet);
 		location.setColumn(column);
 		location.setRow(row);
+		location.setColumnName(columnName);
 		return location;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emfforms.spi.spreadsheet.core.error.model.ErrorFactory#createSettingToSheetMapping(org.eclipse.emfforms.spi.spreadsheet.core.error.model.SettingLocation,
+	 *      org.eclipse.emfforms.spi.spreadsheet.core.error.model.SheetLocation)
+	 */
+	@Override
+	public SettingToSheetMapping createSettingToSheetMapping(SettingLocation settingLocation,
+		SheetLocation sheetLocation) {
+		final SettingToSheetMapping mapping = createSettingToSheetMapping();
+		mapping.setSettingLocation(settingLocation);
+		mapping.setSheetLocation(sheetLocation);
+		return mapping;
 	}
 
 } // ErrorFactoryImpl

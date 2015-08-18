@@ -17,6 +17,7 @@ import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
@@ -26,6 +27,7 @@ import org.eclipse.emfforms.spi.spreadsheet.core.error.model.EMFLocation;
 import org.eclipse.emfforms.spi.spreadsheet.core.error.model.ErrorFactory;
 import org.eclipse.emfforms.spi.spreadsheet.core.error.model.ErrorPackage;
 import org.eclipse.emfforms.spi.spreadsheet.core.error.model.ErrorReport;
+import org.eclipse.emfforms.spi.spreadsheet.core.error.model.SettingToSheetMapping;
 import org.eclipse.emfforms.spi.spreadsheet.core.error.model.Severity;
 import org.eclipse.emfforms.spi.spreadsheet.core.error.model.SheetLocation;
 import org.eclipse.emfforms.spi.spreadsheet.core.error.model.SpreadsheetImportResult;
@@ -42,6 +44,9 @@ import org.eclipse.emfforms.spi.spreadsheet.core.error.model.SpreadsheetImportRe
  * <em>Error Reports</em>}</li>
  * <li>{@link org.eclipse.emfforms.spi.spreadsheet.core.error.model.impl.SpreadsheetImportResultImpl#getImportedEObjects
  * <em>Imported EObjects</em>}</li>
+ * <li>
+ * {@link org.eclipse.emfforms.spi.spreadsheet.core.error.model.impl.SpreadsheetImportResultImpl#getSettingToSheetMap
+ * <em>Setting To Sheet Map</em>}</li>
  * </ul>
  *
  * @generated
@@ -67,6 +72,17 @@ public class SpreadsheetImportResultImpl extends MinimalEObjectImpl.Container im
 	 * @ordered
 	 */
 	protected EList<EObject> importedEObjects;
+
+	/**
+	 * The cached value of the '{@link #getSettingToSheetMap() <em>Setting To Sheet Map</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @see #getSettingToSheetMap()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<SettingToSheetMapping> settingToSheetMap;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -126,6 +142,21 @@ public class SpreadsheetImportResultImpl extends MinimalEObjectImpl.Container im
 	 * @generated
 	 */
 	@Override
+	public EList<SettingToSheetMapping> getSettingToSheetMap() {
+		if (settingToSheetMap == null) {
+			settingToSheetMap = new EObjectResolvingEList<SettingToSheetMapping>(SettingToSheetMapping.class, this,
+				ErrorPackage.SPREADSHEET_IMPORT_RESULT__SETTING_TO_SHEET_MAP);
+		}
+		return settingToSheetMap;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
 		case ErrorPackage.SPREADSHEET_IMPORT_RESULT__ERROR_REPORTS:
@@ -147,6 +178,8 @@ public class SpreadsheetImportResultImpl extends MinimalEObjectImpl.Container im
 			return getErrorReports();
 		case ErrorPackage.SPREADSHEET_IMPORT_RESULT__IMPORTED_EOBJECTS:
 			return getImportedEObjects();
+		case ErrorPackage.SPREADSHEET_IMPORT_RESULT__SETTING_TO_SHEET_MAP:
+			return getSettingToSheetMap();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -169,6 +202,10 @@ public class SpreadsheetImportResultImpl extends MinimalEObjectImpl.Container im
 			getImportedEObjects().clear();
 			getImportedEObjects().addAll((Collection<? extends EObject>) newValue);
 			return;
+		case ErrorPackage.SPREADSHEET_IMPORT_RESULT__SETTING_TO_SHEET_MAP:
+			getSettingToSheetMap().clear();
+			getSettingToSheetMap().addAll((Collection<? extends SettingToSheetMapping>) newValue);
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -188,6 +225,9 @@ public class SpreadsheetImportResultImpl extends MinimalEObjectImpl.Container im
 		case ErrorPackage.SPREADSHEET_IMPORT_RESULT__IMPORTED_EOBJECTS:
 			getImportedEObjects().clear();
 			return;
+		case ErrorPackage.SPREADSHEET_IMPORT_RESULT__SETTING_TO_SHEET_MAP:
+			getSettingToSheetMap().clear();
+			return;
 		}
 		super.eUnset(featureID);
 	}
@@ -205,6 +245,8 @@ public class SpreadsheetImportResultImpl extends MinimalEObjectImpl.Container im
 			return errorReports != null && !errorReports.isEmpty();
 		case ErrorPackage.SPREADSHEET_IMPORT_RESULT__IMPORTED_EOBJECTS:
 			return importedEObjects != null && !importedEObjects.isEmpty();
+		case ErrorPackage.SPREADSHEET_IMPORT_RESULT__SETTING_TO_SHEET_MAP:
+			return settingToSheetMap != null && !settingToSheetMap.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -232,6 +274,21 @@ public class SpreadsheetImportResultImpl extends MinimalEObjectImpl.Container im
 		report.setEmfLocation(emfLocation);
 		report.setSheetLocation(sheetLocation);
 		getErrorReports().add(report);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emfforms.spi.spreadsheet.core.error.model.SpreadsheetImportResult#getSheetLocation(org.eclipse.emf.ecore.EStructuralFeature)
+	 */
+	@Override
+	public SheetLocation getSheetLocation(EStructuralFeature structuralFeature) {
+		for (final SettingToSheetMapping settingToSheetMapping : getSettingToSheetMap()) {
+			if (structuralFeature != settingToSheetMapping.getSettingLocation().getFeature()) {
+				continue;
+			}
+		}
+		return ErrorFactory.eINSTANCE.createSheetLocation("NO SHEET", -1, -1, structuralFeature.getName()); //$NON-NLS-1$
 	}
 
 } // ErrorReportsImpl

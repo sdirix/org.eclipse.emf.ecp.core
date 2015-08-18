@@ -30,6 +30,8 @@ import org.eclipse.emfforms.spi.spreadsheet.core.error.model.SheetLocation;
  * <li>{@link org.eclipse.emfforms.spi.spreadsheet.core.error.model.impl.SheetLocationImpl#getColumn <em>Column</em>}
  * </li>
  * <li>{@link org.eclipse.emfforms.spi.spreadsheet.core.error.model.impl.SheetLocationImpl#getRow <em>Row</em>}</li>
+ * <li>{@link org.eclipse.emfforms.spi.spreadsheet.core.error.model.impl.SheetLocationImpl#getColumnName
+ * <em>Column Name</em>}</li>
  * </ul>
  *
  * @generated
@@ -100,6 +102,28 @@ public class SheetLocationImpl extends MinimalEObjectImpl.Container implements S
 	 * @ordered
 	 */
 	protected int row = ROW_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getColumnName() <em>Column Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @see #getColumnName()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String COLUMN_NAME_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getColumnName() <em>Column Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @see #getColumnName()
+	 * @generated
+	 * @ordered
+	 */
+	protected String columnName = COLUMN_NAME_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -208,6 +232,33 @@ public class SheetLocationImpl extends MinimalEObjectImpl.Container implements S
 	 * @generated
 	 */
 	@Override
+	public String getColumnName() {
+		return columnName;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public void setColumnName(String newColumnName) {
+		final String oldColumnName = columnName;
+		columnName = newColumnName;
+		if (eNotificationRequired()) {
+			eNotify(new ENotificationImpl(this, Notification.SET, ErrorPackage.SHEET_LOCATION__COLUMN_NAME,
+				oldColumnName, columnName));
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case ErrorPackage.SHEET_LOCATION__SHEET:
@@ -216,6 +267,8 @@ public class SheetLocationImpl extends MinimalEObjectImpl.Container implements S
 			return getColumn();
 		case ErrorPackage.SHEET_LOCATION__ROW:
 			return getRow();
+		case ErrorPackage.SHEET_LOCATION__COLUMN_NAME:
+			return getColumnName();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -237,6 +290,9 @@ public class SheetLocationImpl extends MinimalEObjectImpl.Container implements S
 			return;
 		case ErrorPackage.SHEET_LOCATION__ROW:
 			setRow((Integer) newValue);
+			return;
+		case ErrorPackage.SHEET_LOCATION__COLUMN_NAME:
+			setColumnName((String) newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);
@@ -260,6 +316,9 @@ public class SheetLocationImpl extends MinimalEObjectImpl.Container implements S
 		case ErrorPackage.SHEET_LOCATION__ROW:
 			setRow(ROW_EDEFAULT);
 			return;
+		case ErrorPackage.SHEET_LOCATION__COLUMN_NAME:
+			setColumnName(COLUMN_NAME_EDEFAULT);
+			return;
 		}
 		super.eUnset(featureID);
 	}
@@ -279,6 +338,8 @@ public class SheetLocationImpl extends MinimalEObjectImpl.Container implements S
 			return column != COLUMN_EDEFAULT;
 		case ErrorPackage.SHEET_LOCATION__ROW:
 			return row != ROW_EDEFAULT;
+		case ErrorPackage.SHEET_LOCATION__COLUMN_NAME:
+			return COLUMN_NAME_EDEFAULT == null ? columnName != null : !COLUMN_NAME_EDEFAULT.equals(columnName);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -302,6 +363,8 @@ public class SheetLocationImpl extends MinimalEObjectImpl.Container implements S
 		result.append(column);
 		result.append(", row: "); //$NON-NLS-1$
 		result.append(row);
+		result.append(", columnName: "); //$NON-NLS-1$
+		result.append(columnName);
 		result.append(')');
 		return result.toString();
 	}
