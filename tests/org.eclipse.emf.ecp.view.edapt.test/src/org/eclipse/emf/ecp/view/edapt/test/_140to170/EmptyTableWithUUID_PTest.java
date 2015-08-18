@@ -22,7 +22,7 @@ import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 
 /**
  * Checks whether uuids are preserved during migration
- * 
+ *
  * @author jfaltermeier
  *
  */
@@ -34,7 +34,8 @@ public class EmptyTableWithUUID_PTest extends AbstractMigrationTest {
 	 * @see org.eclipse.emf.ecp.view.edapt.test.AbstractMigrationTest#performTest()
 	 */
 	@Override
-	protected void performTest() throws Exception {
+	// BEGIN SUPRESS CATCH EXCEPTION
+	protected void performTest() throws Exception {// END SUPRESS CATCH EXCEPTION
 		assertFalse(getMigrator().checkMigration(getURI()));
 		getMigrator().performMigration(getURI());
 		final VView view = getMigratedView();

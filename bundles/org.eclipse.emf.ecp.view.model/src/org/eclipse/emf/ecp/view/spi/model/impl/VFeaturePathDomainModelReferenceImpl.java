@@ -184,7 +184,9 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * 
+	 * @return the domain model reference path
+	 *         <!-- end-user-doc -->
 	 *
 	 * @generated NOT
 	 */

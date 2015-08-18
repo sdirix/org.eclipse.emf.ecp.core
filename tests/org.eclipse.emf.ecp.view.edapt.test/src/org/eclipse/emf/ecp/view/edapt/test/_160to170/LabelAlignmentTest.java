@@ -22,7 +22,8 @@ import org.eclipse.emf.ecp.view.spi.model.VView;
 public class LabelAlignmentTest extends AbstractMigrationTest {
 
 	@Override
-	protected void performTest() throws Exception {
+	// BEGIN SUPRESS CATCH EXCEPTION
+	protected void performTest() throws Exception {// END SUPRESS CATCH EXCEPTION
 		assertFalse(getMigrator().checkMigration(getURI()));
 		getMigrator().performMigration(getURI());
 		final VView view = getMigratedView();

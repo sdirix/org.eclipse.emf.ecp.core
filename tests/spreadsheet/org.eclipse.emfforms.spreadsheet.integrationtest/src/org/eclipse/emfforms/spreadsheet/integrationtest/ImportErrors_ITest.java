@@ -125,7 +125,7 @@ public class ImportErrors_ITest {
 		stream = bundle.getEntry("errorSheets/basexls").openStream(); //$NON-NLS-1$
 		final Workbook workbook = new HSSFWorkbook(stream);
 		final Sheet sheet = workbook.getSheetAt(0);
-		sheet.getRow(3).getCell(0).setCellValue("_5XI6cEG2EeW04_MCsEmiSg"); //$NON-NLS-1$
+		sheet.getRow(3).getCell(0).setCellValue("_ePW3sEf_EeWXudo7oSyvzQ"); //$NON-NLS-1$
 
 		/* act */
 		final SpreadsheetImportResult result = EMFFormsSpreadsheetImporter.INSTANCE

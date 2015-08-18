@@ -11,15 +11,17 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.edapt.test._160to170;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertSame;
 
-import org.eclipse.emf.common.util.TreeIterator;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.edapt.test.AbstractMigrationTest;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emf.ecp.view.spi.table.model.VReadOnlyColumnConfiguration;
+import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
+import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 
-public class UUIDIntroductionTest extends AbstractMigrationTest {
+public class ReadOnlyColumnConfigurationTest extends AbstractMigrationTest {
 
 	@Override
 	// BEGIN SUPRESS CATCH EXCEPTION
@@ -27,18 +29,19 @@ public class UUIDIntroductionTest extends AbstractMigrationTest {
 		assertFalse(getMigrator().checkMigration(getURI()));
 		getMigrator().performMigration(getURI());
 		final VView view = getMigratedView();
-		assertEquals(1, view.getChildren().size());
-		assertUUIDPresent(view);
-		final TreeIterator<EObject> contents = view.eAllContents();
-		while (contents.hasNext()) {
-			final EObject next = contents.next();
-			assertUUIDPresent(next);
-		}
+		final VTableControl tableControl = VTableControl.class.cast(view.getChildren().get(0));
+		final VReadOnlyColumnConfiguration columnConfiguration = VReadOnlyColumnConfiguration.class
+			.cast(tableControl.getColumnConfigurations().get(0));
+		final VDomainModelReference reference = columnConfiguration.getColumnDomainReferences().get(0);
+		final VDomainModelReference expectedReference = VTableDomainModelReference.class
+			.cast(tableControl.getDomainModelReference()).getColumnDomainModelReferences()
+			.get(0);
+		assertSame(expectedReference, reference);
 	}
 
 	@Override
 	protected String getPath() {
-		return "160/Player.view";
+		return "160/League.view";
 	}
 
 }
