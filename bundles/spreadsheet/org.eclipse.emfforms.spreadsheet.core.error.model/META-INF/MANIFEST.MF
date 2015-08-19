@@ -14,3 +14,4 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.7.0,4.0.0)",
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
+Import-Package: org.eclipse.emfforms.internal.core.services.label;version="1.7.0"

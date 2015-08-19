@@ -65,6 +65,7 @@ public class SheetLocationItemProvider extends ItemProviderAdapter implements IE
 			addColumnPropertyDescriptor(object);
 			addRowPropertyDescriptor(object);
 			addColumnNamePropertyDescriptor(object);
+			addValidPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -160,6 +161,29 @@ public class SheetLocationItemProvider extends ItemProviderAdapter implements IE
 	}
 
 	/**
+	 * This adds a property descriptor for the Valid feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	protected void addValidPropertyDescriptor(Object object) {
+		itemPropertyDescriptors
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(),
+				getString("_UI_SheetLocation_valid_feature"), //$NON-NLS-1$
+				getString("_UI_PropertyDescriptor_description", "_UI_SheetLocation_valid_feature", //$NON-NLS-1$ //$NON-NLS-2$
+					"_UI_SheetLocation_type"), //$NON-NLS-1$
+				ErrorPackage.Literals.SHEET_LOCATION__VALID,
+				true,
+				false,
+				false,
+				ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
+				null,
+				null));
+	}
+
+	/**
 	 * This returns ExcelLocation.gif. <!-- begin-user-doc --> <!-- end-user-doc
 	 * -->
 	 *
@@ -201,6 +225,7 @@ public class SheetLocationItemProvider extends ItemProviderAdapter implements IE
 		case ErrorPackage.SHEET_LOCATION__COLUMN:
 		case ErrorPackage.SHEET_LOCATION__ROW:
 		case ErrorPackage.SHEET_LOCATION__COLUMN_NAME:
+		case ErrorPackage.SHEET_LOCATION__VALID:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 			return;
 		}

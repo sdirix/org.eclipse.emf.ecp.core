@@ -181,6 +181,14 @@ public interface ErrorFactory extends EFactory {
 	SheetLocation createSheetLocation(String sheet, int column, int row, String columnName);
 
 	/**
+	 * Creates a new object which creates an invalid SheetLocation.
+	 *
+	 * @param columnName the column name
+	 * @return the {@link SheetLocation location}
+	 */
+	SheetLocation createInvalidSheetLocation(String columnName);
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

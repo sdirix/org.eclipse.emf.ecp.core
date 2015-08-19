@@ -11,6 +11,8 @@
  */
 package org.eclipse.emfforms.spi.spreadsheet.core.error.model;
 
+import java.util.Collection;
+
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -126,12 +128,21 @@ public interface SpreadsheetImportResult extends EObject {
 	void reportError(Severity severity, String message, EMFLocation emfLocation, SheetLocation sheetLocation);
 
 	/**
-	 * Retrieves the getSheetLocation which corresponds to the provided EStructuralFeature. If such
+	 * Retrieves the SheetLocations which corresponds to the provided EStructuralFeature. If such
+	 * a feature cannot be found at all, then the information in the sheetlocation shows this erroneous location.
+	 *
+	 * @param structuralFeature The {@link EStructuralFeature} to return the {@link SheetLocation SheetLocations} for
+	 * @return The {@link SheetLocation SheetLocations}
+	 */
+	Collection<SheetLocation> getSheetLocations(EStructuralFeature structuralFeature);
+
+	/**
+	 * Retrieves the SheetLocation which corresponds to the provided Setting. If such
 	 * a feature cannot be found at all, then the information in the sheetlocation shows this erroneous location.
 	 *
 	 * @param structuralFeature The {@link EStructuralFeature} to return the {@link SheetLocation} for
 	 * @return The {@link SheetLocation}
 	 */
-	SheetLocation getSheetLocation(EStructuralFeature structuralFeature);
+	SheetLocation getSheetLocation(EObject eObject, EStructuralFeature structuralFeature);
 
 } // ErrorReports

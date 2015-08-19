@@ -467,6 +467,17 @@ public class ErrorPackageImpl extends EPackageImpl implements ErrorPackage {
 	 * @generated
 	 */
 	@Override
+	public EAttribute getSheetLocation_Valid() {
+		return (EAttribute) sheetLocationEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
 	public EEnum getSeverity() {
 		return severityEEnum;
 	}
@@ -521,6 +532,7 @@ public class ErrorPackageImpl extends EPackageImpl implements ErrorPackage {
 		createEAttribute(sheetLocationEClass, SHEET_LOCATION__COLUMN);
 		createEAttribute(sheetLocationEClass, SHEET_LOCATION__ROW);
 		createEAttribute(sheetLocationEClass, SHEET_LOCATION__COLUMN_NAME);
+		createEAttribute(sheetLocationEClass, SHEET_LOCATION__VALID);
 
 		emfLocationEClass = createEClass(EMF_LOCATION);
 		createEReference(emfLocationEClass, EMF_LOCATION__ROOT);
@@ -617,6 +629,8 @@ public class ErrorPackageImpl extends EPackageImpl implements ErrorPackage {
 		initEAttribute(getSheetLocation_ColumnName(), ecorePackage.getEString(), "columnName", null, 1, 1, //$NON-NLS-1$
 			SheetLocation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
 			!IS_DERIVED, IS_ORDERED);
+		initEAttribute(getSheetLocation_Valid(), ecorePackage.getEBoolean(), "valid", "true", 1, 1, SheetLocation.class, //$NON-NLS-1$ //$NON-NLS-2$
+			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(emfLocationEClass, EMFLocation.class, "EMFLocation", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
 			IS_GENERATED_INSTANCE_CLASS);

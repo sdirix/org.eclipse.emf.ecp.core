@@ -27,6 +27,7 @@ import org.eclipse.emf.ecore.EObject;
  * <li>{@link org.eclipse.emfforms.spi.spreadsheet.core.error.model.SheetLocation#getRow <em>Row</em>}</li>
  * <li>{@link org.eclipse.emfforms.spi.spreadsheet.core.error.model.SheetLocation#getColumnName <em>Column Name</em>}
  * </li>
+ * <li>{@link org.eclipse.emfforms.spi.spreadsheet.core.error.model.SheetLocation#isValid <em>Valid</em>}</li>
  * </ul>
  *
  * @see org.eclipse.emfforms.spi.spreadsheet.core.error.model.ErrorPackage#getSheetLocation()
@@ -149,5 +150,35 @@ public interface SheetLocation extends EObject {
 	 * @generated
 	 */
 	void setColumnName(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Valid</b></em>' attribute.
+	 * The default value is <code>"true"</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Valid</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the value of the '<em>Valid</em>' attribute.
+	 * @see #setValid(boolean)
+	 * @see org.eclipse.emfforms.spi.spreadsheet.core.error.model.ErrorPackage#getSheetLocation_Valid()
+	 * @model default="true" required="true"
+	 * @generated
+	 */
+	boolean isValid();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.emfforms.spi.spreadsheet.core.error.model.SheetLocation#isValid
+	 * <em>Valid</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @param value the new value of the '<em>Valid</em>' attribute.
+	 * @see #isValid()
+	 * @generated
+	 */
+	void setValid(boolean value);
 
 } // ExcelLocation

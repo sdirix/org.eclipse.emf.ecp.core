@@ -70,6 +70,28 @@ public class EMFFormsLabelProviderDefaultImpl implements EMFFormsLabelProvider {
 	}
 
 	/**
+	 * Returns the display name of the {@link EStructuralFeature}.
+	 *
+	 * @param structuralFeature The {@link EStructuralFeature}
+	 * @return The localized feature name
+	 */
+	public String getDisplayName(EStructuralFeature structuralFeature) {
+		final EClass eContainingClass = structuralFeature.getEContainingClass();
+		if (eContainingClass.isAbstract() || eContainingClass.isInterface()) {
+			return getFallbackLabel(structuralFeature);
+		}
+		final EObject tempInstance = EcoreUtil.create(eContainingClass);
+		final IItemPropertyDescriptor itemPropertyDescriptor = emfSpecificService.getIItemPropertyDescriptor(
+			tempInstance, structuralFeature);
+		if (itemPropertyDescriptor == null) {
+			reportMissingPropertyDescriptor(tempInstance, structuralFeature);
+			return getFallbackLabel(structuralFeature);
+		}
+
+		return itemPropertyDescriptor.getDisplayName(tempInstance);
+	}
+
+	/**
 	 * {@inheritDoc}
 	 *
 	 * @see org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider#getDisplayName(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)
@@ -86,19 +108,8 @@ public class EMFFormsLabelProviderDefaultImpl implements EMFFormsLabelProvider {
 			return getConstantObservableValue(ex.getMessage());
 		}
 		final EStructuralFeature structuralFeature = (EStructuralFeature) valueProperty.getValueType();
-		final EClass eContainingClass = structuralFeature.getEContainingClass();
-		if (eContainingClass.isAbstract() || eContainingClass.isInterface()) {
-			return getConstantObservableValue(getFallbackLabel(structuralFeature));
-		}
-		final EObject tempInstance = EcoreUtil.create(eContainingClass);
-		final IItemPropertyDescriptor itemPropertyDescriptor = emfSpecificService.getIItemPropertyDescriptor(
-			tempInstance, structuralFeature);
-		if (itemPropertyDescriptor == null) {
-			reportMissingPropertyDescriptor(tempInstance, structuralFeature);
-			return getConstantObservableValue(getFallbackLabel(structuralFeature));
-		}
 
-		return getConstantObservableValue(itemPropertyDescriptor.getDisplayName(tempInstance));
+		return getConstantObservableValue(getDisplayName(structuralFeature));
 	}
 
 	/**

@@ -15,6 +15,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collection;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -22,9 +23,13 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecp.makeithappen.model.task.TaskFactory;
 import org.eclipse.emf.ecp.makeithappen.model.task.TaskPackage;
 import org.eclipse.emf.ecp.test.common.DefaultRealm;
+import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsIdProvider;
 import org.eclipse.emfforms.spi.spreadsheet.core.error.model.ErrorReport;
+import org.eclipse.emfforms.spi.spreadsheet.core.error.model.SheetLocation;
 import org.eclipse.emfforms.spi.spreadsheet.core.error.model.SpreadsheetImportResult;
 import org.eclipse.emfforms.spi.spreadsheet.core.transfer.EMFFormsSpreadsheetImporter;
 import org.junit.After;
@@ -111,6 +116,24 @@ public class ImportErrors_ITest {
 	}
 
 	@Test
+	public void testDuplicateEObjectIDsOnDifferentSheets() throws IOException {
+		/* setup */
+		stream = bundle.getEntry("errorSheets/basexls").openStream(); //$NON-NLS-1$
+		final Workbook workbook = new HSSFWorkbook(stream);
+		final Sheet sheet2 = workbook.createSheet("Sheet2"); //$NON-NLS-1$
+		sheet2.createRow(0).createCell(0).setCellValue(EMFFormsIdProvider.ID_COLUMN);
+		sheet2.createRow(3).createCell(0).setCellValue("_5XI6cEG2EeW04_MCsEmiSg"); //$NON-NLS-1$
+
+		/* act */
+		final SpreadsheetImportResult result = EMFFormsSpreadsheetImporter.INSTANCE
+			.importSpreadsheet(workbook, eClass);
+		final EList<ErrorReport> errorReports = result.getErrorReports();
+
+		/* assert */
+		assertEquals(0, errorReports.size());
+	}
+
+	@Test
 	public void testDeleteDMRCellComment() throws IOException {
 		/* setup */
 		stream = bundle.getEntry("errorSheets/basexls").openStream(); //$NON-NLS-1$
@@ -184,4 +207,123 @@ public class ImportErrors_ITest {
 		assertEquals(2, errorReports.size());
 	}
 
+	@Test
+	public void testGetSheetLocationsValidFeature() throws IOException {
+		/* setup */
+		stream = bundle.getEntry("errorSheets/basexls").openStream(); //$NON-NLS-1$
+		final Workbook workbook = new HSSFWorkbook(stream);
+
+		/* act */
+		final SpreadsheetImportResult result = EMFFormsSpreadsheetImporter.INSTANCE
+			.importSpreadsheet(workbook, eClass);
+
+		/* assert */
+		final Collection<SheetLocation> lastNameSheetLocations = result
+			.getSheetLocations(TaskPackage.eINSTANCE.getUser_LastName());
+		int row = 3;
+		for (final SheetLocation sheetLocation : lastNameSheetLocations) {
+			assertEquals("root", sheetLocation.getSheet()); //$NON-NLS-1$
+			assertEquals(2, sheetLocation.getColumn());
+			assertEquals("Last Name*", sheetLocation.getColumnName()); //$NON-NLS-1$
+			assertEquals(row++, sheetLocation.getRow());
+		}
+	}
+
+	@Test
+	public void testGetSheetLocationValidSetting() throws IOException {
+		/* setup */
+		stream = bundle.getEntry("errorSheets/basexls").openStream(); //$NON-NLS-1$
+		final Workbook workbook = new HSSFWorkbook(stream);
+
+		/* act */
+		final SpreadsheetImportResult result = EMFFormsSpreadsheetImporter.INSTANCE
+			.importSpreadsheet(workbook, eClass);
+
+		final EObject eObject = result.getImportedEObjects().get(1);
+
+		/* assert */
+		final SheetLocation lastNameSheetLocation = result
+			.getSheetLocation(eObject, TaskPackage.eINSTANCE.getUser_LastName());
+
+		assertEquals("root", lastNameSheetLocation.getSheet()); //$NON-NLS-1$
+		assertEquals(2, lastNameSheetLocation.getColumn());
+		assertEquals("Last Name*", lastNameSheetLocation.getColumnName()); //$NON-NLS-1$
+		assertEquals(4, lastNameSheetLocation.getRow());
+	}
+
+	@Test
+	public void testGetSheetLocationsInvalidFeature() throws IOException {
+		/* setup */
+		stream = bundle.getEntry("errorSheets/basexls").openStream(); //$NON-NLS-1$
+		final Workbook workbook = new HSSFWorkbook(stream);
+		final Sheet sheet = workbook.getSheetAt(0);
+		for (int row = 3; row < 5; row++) {
+			sheet.getRow(row).removeCell(sheet.getRow(row).getCell(11));
+			sheet.getRow(row).removeCell(sheet.getRow(row).getCell(10));
+			sheet.getRow(row).removeCell(sheet.getRow(row).getCell(9));
+		}
+
+		/* act */
+		final SpreadsheetImportResult result = EMFFormsSpreadsheetImporter.INSTANCE
+			.importSpreadsheet(workbook, eClass);
+
+		/* assert */
+		final Collection<SheetLocation> firstNameSheetLocations = result
+			.getSheetLocations(TaskPackage.eINSTANCE.getUser_DateOfBirth());
+		assertEquals(1, firstNameSheetLocations.size());
+		final SheetLocation sheetLocation = firstNameSheetLocations.iterator().next();
+
+		assertEquals("NO SHEET", sheetLocation.getSheet()); //$NON-NLS-1$
+		assertEquals(-1, sheetLocation.getColumn());
+		assertEquals("Date Of Birth", sheetLocation.getColumnName()); //$NON-NLS-1$
+		assertEquals(-1, sheetLocation.getRow());
+	}
+
+	@Test
+	public void testGetSheetLocationInvalidSettingFeature() throws IOException {
+		/* setup */
+		stream = bundle.getEntry("errorSheets/basexls").openStream(); //$NON-NLS-1$
+		final Workbook workbook = new HSSFWorkbook(stream);
+		final Sheet sheet = workbook.getSheetAt(0);
+		for (int row = 3; row < 5; row++) {
+			sheet.getRow(row).removeCell(sheet.getRow(row).getCell(11));
+			sheet.getRow(row).removeCell(sheet.getRow(row).getCell(10));
+			sheet.getRow(row).removeCell(sheet.getRow(row).getCell(9));
+		}
+
+		/* act */
+		final SpreadsheetImportResult result = EMFFormsSpreadsheetImporter.INSTANCE
+			.importSpreadsheet(workbook, eClass);
+		final EObject eObject = result.getImportedEObjects().get(0);
+
+		/* assert */
+		final SheetLocation sheetLocation = result
+			.getSheetLocation(eObject, TaskPackage.eINSTANCE.getUser_DateOfBirth());
+
+		assertEquals("NO SHEET", sheetLocation.getSheet()); //$NON-NLS-1$
+		assertEquals(-1, sheetLocation.getColumn());
+		assertEquals("Date Of Birth", sheetLocation.getColumnName()); //$NON-NLS-1$
+		assertEquals(-1, sheetLocation.getRow());
+	}
+
+	@Test
+	public void testGetSheetLocationInvalidSettingEObject() throws IOException {
+		/* setup */
+		stream = bundle.getEntry("errorSheets/basexls").openStream(); //$NON-NLS-1$
+		final Workbook workbook = new HSSFWorkbook(stream);
+
+		/* act */
+		final SpreadsheetImportResult result = EMFFormsSpreadsheetImporter.INSTANCE
+			.importSpreadsheet(workbook, eClass);
+		final EObject eObject = TaskFactory.eINSTANCE.createUser();
+
+		/* assert */
+		final SheetLocation sheetLocation = result
+			.getSheetLocation(eObject, TaskPackage.eINSTANCE.getUser_FirstName());
+
+		assertEquals("root", sheetLocation.getSheet()); //$NON-NLS-1$
+		assertEquals(1, sheetLocation.getColumn());
+		assertEquals("First Name", sheetLocation.getColumnName()); //$NON-NLS-1$
+		assertEquals(-1, sheetLocation.getRow());
+	}
 }

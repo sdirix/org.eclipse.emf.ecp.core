@@ -12,6 +12,9 @@
 package org.eclipse.emfforms.spi.spreadsheet.core.error.model.impl;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -22,7 +25,9 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
+import org.eclipse.emfforms.internal.core.services.label.EMFFormsLabelProviderImpl;
 import org.eclipse.emfforms.spi.spreadsheet.core.error.model.EMFLocation;
 import org.eclipse.emfforms.spi.spreadsheet.core.error.model.ErrorFactory;
 import org.eclipse.emfforms.spi.spreadsheet.core.error.model.ErrorPackage;
@@ -31,6 +36,10 @@ import org.eclipse.emfforms.spi.spreadsheet.core.error.model.SettingToSheetMappi
 import org.eclipse.emfforms.spi.spreadsheet.core.error.model.Severity;
 import org.eclipse.emfforms.spi.spreadsheet.core.error.model.SheetLocation;
 import org.eclipse.emfforms.spi.spreadsheet.core.error.model.SpreadsheetImportResult;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 
 /**
  * <!-- begin-user-doc -->
@@ -51,6 +60,7 @@ import org.eclipse.emfforms.spi.spreadsheet.core.error.model.SpreadsheetImportRe
  *
  * @generated
  */
+@SuppressWarnings("restriction")
 public class SpreadsheetImportResultImpl extends MinimalEObjectImpl.Container implements SpreadsheetImportResult {
 	/**
 	 * The cached value of the '{@link #getErrorReports() <em>Error Reports</em>}' containment reference list.
@@ -279,16 +289,76 @@ public class SpreadsheetImportResultImpl extends MinimalEObjectImpl.Container im
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emfforms.spi.spreadsheet.core.error.model.SpreadsheetImportResult#getSheetLocation(org.eclipse.emf.ecore.EStructuralFeature)
+	 * @see org.eclipse.emfforms.spi.spreadsheet.core.error.model.SpreadsheetImportResult#getSheetLocations(org.eclipse.emf.ecore.EStructuralFeature)
 	 */
 	@Override
-	public SheetLocation getSheetLocation(EStructuralFeature structuralFeature) {
+	public Collection<SheetLocation> getSheetLocations(EStructuralFeature structuralFeature) {
+		final Set<SheetLocation> result = new LinkedHashSet<SheetLocation>();
 		for (final SettingToSheetMapping settingToSheetMapping : getSettingToSheetMap()) {
 			if (structuralFeature != settingToSheetMapping.getSettingLocation().getFeature()) {
 				continue;
 			}
+			result.add(EcoreUtil.copy(settingToSheetMapping.getSheetLocation()));
 		}
-		return ErrorFactory.eINSTANCE.createSheetLocation("NO SHEET", -1, -1, structuralFeature.getName()); //$NON-NLS-1$
+		if (!result.isEmpty()) {
+			return result;
+		}
+		return Collections
+			.singleton(
+				ErrorFactory.eINSTANCE.createInvalidSheetLocation(getFeatureName(structuralFeature)));
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emfforms.spi.spreadsheet.core.error.model.SpreadsheetImportResult#getSheetLocation(org.eclipse.emf.ecore.EObject,
+	 *      org.eclipse.emf.ecore.EStructuralFeature)
+	 */
+	@Override
+	public SheetLocation getSheetLocation(EObject eObject, EStructuralFeature structuralFeature) {
+		SheetLocation possibleResult = null;
+		for (final SettingToSheetMapping settingToSheetMapping : getSettingToSheetMap()) {
+			if (structuralFeature != settingToSheetMapping.getSettingLocation().getFeature()) {
+				continue;
+			}
+			if (possibleResult == null) {
+				possibleResult = settingToSheetMapping.getSheetLocation();
+			}
+			if (eObject != settingToSheetMapping.getSettingLocation().getEObject()) {
+				continue;
+			}
+			return EcoreUtil.copy(settingToSheetMapping.getSheetLocation());
+		}
+		if (possibleResult != null) {
+			final SheetLocation result = EcoreUtil.copy(possibleResult);
+			result.setRow(-1);
+			return result;
+		}
+
+		return ErrorFactory.eINSTANCE.createInvalidSheetLocation(getFeatureName(structuralFeature));
+	}
+
+	private String getFeatureName(EStructuralFeature structuralFeature) {
+		final Bundle bundle = FrameworkUtil.getBundle(getClass());
+		if (bundle == null) {
+			return structuralFeature.getName();
+		}
+		final BundleContext bundleContext = bundle.getBundleContext();
+		if (bundleContext == null) {
+			return structuralFeature.getName();
+		}
+
+		final ServiceReference<EMFFormsLabelProviderImpl> serviceReference = bundleContext
+			.getServiceReference(EMFFormsLabelProviderImpl.class);
+		if (serviceReference == null) {
+			return structuralFeature.getName();
+		}
+		final EMFFormsLabelProviderImpl labelProvider = bundleContext.getService(serviceReference);
+		if (labelProvider == null) {
+			return structuralFeature.getName();
+		}
+
+		return labelProvider.getDisplayName(structuralFeature);
 	}
 
 } // ErrorReportsImpl

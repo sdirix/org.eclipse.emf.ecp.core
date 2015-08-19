@@ -274,6 +274,16 @@ public interface ErrorPackage extends EPackage {
 	int SHEET_LOCATION__COLUMN_NAME = 3;
 
 	/**
+	 * The feature id for the '<em><b>Valid</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int SHEET_LOCATION__VALID = 4;
+
+	/**
 	 * The number of structural features of the '<em>Sheet Location</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -281,7 +291,7 @@ public interface ErrorPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SHEET_LOCATION_FEATURE_COUNT = 4;
+	int SHEET_LOCATION_FEATURE_COUNT = 5;
 
 	/**
 	 * The feature id for the '<em><b>Root</b></em>' reference.
@@ -770,6 +780,19 @@ public interface ErrorPackage extends EPackage {
 	EAttribute getSheetLocation_ColumnName();
 
 	/**
+	 * Returns the meta object for the attribute '
+	 * {@link org.eclipse.emfforms.spi.spreadsheet.core.error.model.SheetLocation#isValid <em>Valid</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the meta object for the attribute '<em>Valid</em>'.
+	 * @see org.eclipse.emfforms.spi.spreadsheet.core.error.model.SheetLocation#isValid()
+	 * @see #getSheetLocation()
+	 * @generated
+	 */
+	EAttribute getSheetLocation_Valid();
+
+	/**
 	 * Returns the meta object for enum '{@link org.eclipse.emfforms.spi.spreadsheet.core.error.model.Severity
 	 * <em>Severity</em>}'.
 	 * <!-- begin-user-doc -->
@@ -1067,6 +1090,15 @@ public interface ErrorPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute SHEET_LOCATION__COLUMN_NAME = eINSTANCE.getSheetLocation_ColumnName();
+
+		/**
+		 * The meta object literal for the '<em><b>Valid</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 *
+		 * @generated
+		 */
+		EAttribute SHEET_LOCATION__VALID = eINSTANCE.getSheetLocation_Valid();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emfforms.spi.spreadsheet.core.error.model.Severity
