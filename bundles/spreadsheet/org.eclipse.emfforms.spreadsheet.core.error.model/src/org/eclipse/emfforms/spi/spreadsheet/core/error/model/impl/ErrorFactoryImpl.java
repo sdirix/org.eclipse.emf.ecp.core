@@ -327,15 +327,15 @@ public class ErrorFactoryImpl extends EFactoryImpl implements ErrorFactory {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emfforms.spi.spreadsheet.core.error.model.ErrorFactory#createInvalidSheetLocation(java.lang.String)
 	 */
 	@Override
 	public SheetLocation createInvalidSheetLocation(String columnName) {
 		final SheetLocation location = createSheetLocation();
-		location.setSheet("NO SHEET"); //$NON-NLS-1$
-		location.setColumn(-1);
-		location.setRow(-1);
+		location.setSheet(SheetLocation.INVALID_SHEET);
+		location.setColumn(SheetLocation.INVALID_COLUMN);
+		location.setRow(SheetLocation.INVALID_ROW);
 		location.setColumnName(columnName);
 		location.setValid(false);
 		return location;

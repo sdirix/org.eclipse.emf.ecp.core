@@ -12,6 +12,8 @@
 package org.eclipse.emfforms.spreadsheet.integrationtest;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -270,6 +272,7 @@ public class ImportErrors_ITest {
 			assertEquals(2, sheetLocation.getColumn());
 			assertEquals("Last Name*", sheetLocation.getColumnName()); //$NON-NLS-1$
 			assertEquals(row++, sheetLocation.getRow());
+			assertTrue(sheetLocation.isValid());
 		}
 	}
 
@@ -293,6 +296,7 @@ public class ImportErrors_ITest {
 		assertEquals(2, lastNameSheetLocation.getColumn());
 		assertEquals("Last Name*", lastNameSheetLocation.getColumnName()); //$NON-NLS-1$
 		assertEquals(4, lastNameSheetLocation.getRow());
+		assertTrue(lastNameSheetLocation.isValid());
 	}
 
 	@Test
@@ -321,6 +325,7 @@ public class ImportErrors_ITest {
 		assertEquals(-1, sheetLocation.getColumn());
 		assertEquals("Date Of Birth", sheetLocation.getColumnName()); //$NON-NLS-1$
 		assertEquals(-1, sheetLocation.getRow());
+		assertFalse(sheetLocation.isValid());
 	}
 
 	@Test
@@ -348,6 +353,7 @@ public class ImportErrors_ITest {
 		assertEquals(-1, sheetLocation.getColumn());
 		assertEquals("Date Of Birth", sheetLocation.getColumnName()); //$NON-NLS-1$
 		assertEquals(-1, sheetLocation.getRow());
+		assertFalse(sheetLocation.isValid());
 	}
 
 	@Test
@@ -369,5 +375,6 @@ public class ImportErrors_ITest {
 		assertEquals(1, sheetLocation.getColumn());
 		assertEquals("First Name", sheetLocation.getColumnName()); //$NON-NLS-1$
 		assertEquals(-1, sheetLocation.getRow());
+		assertFalse(sheetLocation.isValid());
 	}
 }

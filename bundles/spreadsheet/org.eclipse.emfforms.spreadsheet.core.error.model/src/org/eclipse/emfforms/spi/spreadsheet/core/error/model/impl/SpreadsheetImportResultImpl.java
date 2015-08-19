@@ -331,7 +331,8 @@ public class SpreadsheetImportResultImpl extends MinimalEObjectImpl.Container im
 		}
 		if (possibleResult != null) {
 			final SheetLocation result = EcoreUtil.copy(possibleResult);
-			result.setRow(-1);
+			result.setRow(SheetLocation.INVALID_ROW);
+			result.setValid(false);
 			return result;
 		}
 

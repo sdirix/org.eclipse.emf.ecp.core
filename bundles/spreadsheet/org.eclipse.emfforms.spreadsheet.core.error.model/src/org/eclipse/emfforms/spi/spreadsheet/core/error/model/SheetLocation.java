@@ -35,6 +35,11 @@ import org.eclipse.emf.ecore.EObject;
  * @generated
  */
 public interface SheetLocation extends EObject {
+
+	int INVALID_ROW = -1;
+	int INVALID_COLUMN = -1;
+	String INVALID_SHEET = "NO SHEET"; //$NON-NLS-1$
+
 	/**
 	 * Returns the value of the '<em><b>Sheet</b></em>' attribute.
 	 * <!-- begin-user-doc -->
