@@ -18,8 +18,10 @@ import java.io.InputStream;
 import java.util.Collection;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.util.WorkbookUtil;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
@@ -71,6 +73,23 @@ public class ImportErrors_ITest {
 		final Workbook workbook = new HSSFWorkbook(stream);
 		final Sheet sheet = workbook.getSheetAt(0);
 		sheet.getRow(0).getCell(0).setCellValue("FOO"); //$NON-NLS-1$
+
+		/* act */
+		final SpreadsheetImportResult result = EMFFormsSpreadsheetImporter.INSTANCE
+			.importSpreadsheet(workbook, eClass);
+		final EList<ErrorReport> errorReports = result.getErrorReports();
+
+		/* assert */
+		assertEquals(1, errorReports.size());
+	}
+
+	@Test
+	public void testDeletedEObjectIDCell() throws IOException {
+		/* setup */
+		stream = bundle.getEntry("errorSheets/basexls").openStream(); //$NON-NLS-1$
+		final Workbook workbook = new HSSFWorkbook(stream);
+		final Sheet sheet = workbook.getSheetAt(0);
+		sheet.getRow(3).removeCell(sheet.getRow(3).getCell(0));
 
 		/* act */
 		final SpreadsheetImportResult result = EMFFormsSpreadsheetImporter.INSTANCE
@@ -165,6 +184,31 @@ public class ImportErrors_ITest {
 
 		/* assert */
 		assertEquals(2, errorReports.size());
+	}
+
+	@Test
+	public void testAdditionalInformationSheetIgnored() throws IOException {
+		/* setup */
+		stream = bundle.getEntry("errorSheets/basexls").openStream(); //$NON-NLS-1$
+		final Workbook workbook = new HSSFWorkbook(stream);
+		final Sheet sheet = workbook.createSheet(WorkbookUtil.createSafeSheetName("AdditionalInformation")); //$NON-NLS-1$
+		final Row titleRow = sheet.createRow(0);
+		titleRow.createCell(0).setCellValue(EMFFormsIdProvider.ID_COLUMN);
+		titleRow.createCell(1).setCellValue("MyColumn"); //$NON-NLS-1$
+
+		for (int i = 1; i < 5; i++) {
+			final Row dataRow = sheet.createRow(i);
+			dataRow.createCell(0).setCellValue("_5XI6cEG2EeW04_MCsEmiSg"); //$NON-NLS-1$
+			dataRow.createCell(1).setCellValue("My Value " + i); //$NON-NLS-1$
+		}
+
+		/* act */
+		final SpreadsheetImportResult result = EMFFormsSpreadsheetImporter.INSTANCE
+			.importSpreadsheet(workbook, eClass);
+		final EList<ErrorReport> errorReports = result.getErrorReports();
+
+		/* assert */
+		assertEquals(0, errorReports.size());
 	}
 
 	@Test

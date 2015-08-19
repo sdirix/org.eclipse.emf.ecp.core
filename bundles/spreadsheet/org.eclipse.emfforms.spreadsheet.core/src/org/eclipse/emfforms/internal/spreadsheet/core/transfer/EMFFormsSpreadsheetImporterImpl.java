@@ -24,6 +24,7 @@ import org.apache.poi.ss.usermodel.Comment;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.util.WorkbookUtil;
 import org.eclipse.core.databinding.observable.IObserving;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.common.command.BasicCommandStack;
@@ -60,6 +61,8 @@ import org.osgi.framework.ServiceReference;
  * @author Eugen Neufeld
  */
 public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImporter {
+
+	private static final String ADDITIONAL_INFORMATION = WorkbookUtil.createSafeSheetName("AdditionalInformation"); //$NON-NLS-1$
 
 	@Override
 	public SpreadsheetImportResult importSpreadsheet(Workbook workbook, EClass eClass) {
@@ -310,6 +313,9 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 
 		for (int sheetId = 0; sheetId < workbook.getNumberOfSheets(); sheetId++) {
 			final Sheet sheet = workbook.getSheetAt(sheetId);
+			if (ADDITIONAL_INFORMATION.equals(sheet.getSheetName())) {
+				continue;
+			}
 			final Row labelRow = sheet.getRow(0);
 			if (!EMFFormsIdProvider.ID_COLUMN.equals(labelRow.getCell(0).getStringCellValue())) {
 				/* ID Column is missing. We have to ignore this sheet */
@@ -322,7 +328,7 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 			}
 			for (int rowId = 3; rowId <= sheet.getLastRowNum(); rowId++) {
 				final Row row = sheet.getRow(rowId);
-				final String eObjectId = row.getCell(0).getStringCellValue();
+				final String eObjectId = row.getCell(0, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
 				if (eObjectId == null || eObjectId.isEmpty()) {
 					/* EObject id deleted */
 					errorReports.reportError(
