@@ -4,5 +4,6 @@
    <service>
       <provide interface="org.eclipse.emf.ecp.changebroker.spi.NotificationProvider"/>
    </service>
-   <reference bind="bindManager" cardinality="1..1" interface="org.eclipse.emf.ecp.core.ECPProjectManager" name="ECPProviderRegistry" policy="static"/>
+   <reference bind="bindManager" cardinality="1..1" interface="org.eclipse.emf.ecp.core.ECPProjectManager" name="ECPProjectManager" policy="static"/>
+   <reference bind="bindProviderRegistry" cardinality="1..1" interface="org.eclipse.emf.ecp.core.ECPProviderRegistry" name="ECPProviderRegistry" policy="static"/>
 </scr:component>

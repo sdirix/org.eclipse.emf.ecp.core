@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.changebroker.spi.AbstractNotificationProvider;
 import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.emf.ecp.core.ECPProvider;
+import org.eclipse.emf.ecp.core.ECPProviderRegistry;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.core.util.observer.ECPProvidersChangedObserver;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
@@ -48,7 +49,17 @@ public class ECPNotificationProvider extends AbstractNotificationProvider implem
 			}
 
 		});
+	}
 
+	/**
+	 * Binds the provider registry.
+	 *
+	 * @param registry the registry
+	 */
+	public void bindProviderRegistry(ECPProviderRegistry registry) {
+		for (final ECPProvider ecpProvider : registry.getProviders()) {
+			addObserver((InternalProvider) ecpProvider);
+		}
 	}
 
 	private void addObserver(InternalProvider ecpProvider) {
