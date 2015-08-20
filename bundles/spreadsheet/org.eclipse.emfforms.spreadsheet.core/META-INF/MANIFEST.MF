@@ -33,5 +33,6 @@ Service-Component: OSGI-INF/EMFFormsSpreadsheetFormatDescriptionProviderImpl.xml
  OSGI-INF/org.eclipse.emfforms.internal.spreadsheet.core.EMFFormsIdProviderImpl.xml,
  OSGI-INF/org.eclipse.emfforms.internal.spreadsheet.core.EMFFormsSpreadsheetRendererFactoryImpl.xml
 Bundle-ActivationPolicy: lazy
-Import-Package: org.osgi.framework;version="1.6.0",
+Import-Package: org.eclipse.emfforms.spi.localization;version="1.7.0",
+ org.osgi.framework;version="1.6.0",
  org.osgi.service.component.annotations;version="1.2.0"
