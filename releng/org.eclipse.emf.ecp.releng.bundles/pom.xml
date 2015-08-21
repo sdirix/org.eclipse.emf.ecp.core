@@ -288,6 +288,11 @@
 		<!-- Quick fix -->
 		<module>../../bundles/org.eclipse.emf.ecp.quickfix</module>
 		<module>../../bundles/org.eclipse.emf.ecp.quickfix.ui.e4</module>
+		
+		<!-- Control Grid -->
+		<module>../../bundles/org.eclipse.emfforms.swt.controlgrid</module>
+		<module>../../bundles/org.eclipse.emfforms.view.controlgrid.model</module>
+		<module>../../bundles/org.eclipse.emfforms.view.controlgrid.model.edit</module>
 	</modules>
 
 	<build>
