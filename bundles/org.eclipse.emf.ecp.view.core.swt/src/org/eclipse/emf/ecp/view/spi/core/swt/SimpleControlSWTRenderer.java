@@ -86,10 +86,14 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#getGridDescription(SWTGridDescription)
 	 */
 	@Override
-	public final SWTGridDescription getGridDescription(SWTGridDescription gridDescription) {
+	public SWTGridDescription getGridDescription(SWTGridDescription gridDescription) {
 		if (rendererGridDescription == null) {
 			rendererGridDescription = GridDescriptionFactory.INSTANCE.createSimpleGrid(1,
 				getVElement().getLabelAlignment() == LabelAlignment.NONE ? 2 : 3, this);
+			for (int i = 0; i < rendererGridDescription.getGrid().size() - 1; i++) {
+				final SWTGridCell swtGridCell = rendererGridDescription.getGrid().get(i);
+				swtGridCell.setHorizontalGrab(false);
+			}
 		}
 		return rendererGridDescription;
 	}
