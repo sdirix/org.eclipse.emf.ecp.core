@@ -108,7 +108,9 @@ public class TableValidationInitiator implements GlobalViewModelService {
 			final EObject eObject = eAllContents.next();
 			if (VTableControl.class.isInstance(eObject)) {
 				final VTableControl tableControl = VTableControl.class.cast(eObject);
-
+				if (!isCorrectContainer(tableControl, viewRoot)) {
+					continue;
+				}
 				if (tableControl.getDetailEditing() == DetailEditing.WITH_PANEL) {
 					final VTableDomainModelReference tableDomainModelReference = (VTableDomainModelReference) tableControl
 						.getDomainModelReference();
@@ -148,6 +150,14 @@ public class TableValidationInitiator implements GlobalViewModelService {
 				}
 			}
 		}
+	}
+
+	private boolean isCorrectContainer(VTableControl tableControl, EObject root) {
+		EObject current = tableControl.eContainer();
+		while (!VView.class.isInstance(current) && current != root) {
+			current = current.eContainer();
+		}
+		return current == root;
 	}
 
 	private VView getView(VTableControl tableControl) throws DatabindingFailedException {
