@@ -3,19 +3,21 @@
       id="org.eclipse.emfforms.swt.control.multiattribute.feature"
       label="EMFForms SWT Control for Multi EAttribtues"
       version="1.7.0.qualifier"
-      provider-name="Eclipse Modeling Project"
-      plugin="org.eclipse.emfforms.swt.control.multiattribute">
+      provider-name="%providerName"
+      plugin="org.eclipse.emfforms.swt.control.multiattribute"
+      license-feature="org.eclipse.emf.ecp.license.feature"
+      license-feature-version="1.7.0.qualifier">
 
-   <description url="http://www.example.com/description">
-      [Enter Feature Description here.]
+   <description>
+      %description
    </description>
 
-   <copyright url="http://www.example.com/copyright">
-      [Enter Copyright Description here.]
+   <copyright url="%copyrightURL">
+      %copyright
    </copyright>
 
-   <license url="http://www.example.com/license">
-      [Enter License Description here.]
+   <license url="%licenseURL">
+      %license
    </license>
 
    <plugin
