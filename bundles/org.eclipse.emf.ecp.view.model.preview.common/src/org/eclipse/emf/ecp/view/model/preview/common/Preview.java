@@ -217,10 +217,10 @@ public class Preview {
 		clearViewDiagnostics(view);
 	}
 
-	/**
-	 *
-	 */
 	private void clearViewDiagnostics(VView view) {
+		if (view == null) {
+			return;
+		}
 		final TreeIterator<EObject> eAllContents = view.eAllContents();
 		while (eAllContents.hasNext()) {
 			final EObject next = eAllContents.next();
