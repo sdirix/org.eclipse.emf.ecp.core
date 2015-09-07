@@ -865,35 +865,26 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 						.getInhertitedPropertiesOrEmpty(viewModel);
 					properties.addNonInheritableProperty(DETAIL_KEY, true);
 
-					/* root selected */
-					if (selected.equals(root)) {
+					final boolean rootSelected = selected.equals(root);
+
+					if (rootSelected) {
 						properties.addNonInheritableProperty(ROOT_KEY, true);
-						VView vView = getVElement().getDetailView();
-						if (vView.getChildren().isEmpty()) {
-							vView = ViewProviderHelper.getView((EObject) selected, properties);
-						}
-						final ReferenceService referenceService = getViewModelContext().getService(
-							ReferenceService.class);
-						final ViewModelContext childContext = getViewModelContext()
-							.getChildContext((EObject) selected, getVElement(), vView,
-								new TreeMasterDetailReferenceService(referenceService));
-
-						manipulateViewContext(childContext);
-
-						ECPSWTViewRenderer.INSTANCE.render(childComposite, childContext);
-
 					}
-					/* child selected */
-					else {
-						final VView view = ViewProviderHelper.getView((EObject) selected, properties);
-						final ReferenceService referenceService = getViewModelContext().getService(
-							ReferenceService.class);
-						final ViewModelContext childContext = getViewModelContext().getChildContext((EObject) selected,
-							getVElement(), view, new TreeMasterDetailReferenceService(referenceService));
-
-						manipulateViewContext(childContext);
-						ECPSWTViewRenderer.INSTANCE.render(childComposite, childContext);
+					VView view = null;
+					if (rootSelected) {
+						view = getVElement().getDetailView();
 					}
+					if (view == null || view.getChildren().isEmpty()) {
+						view = ViewProviderHelper.getView((EObject) selected, properties);
+					}
+
+					final ReferenceService referenceService = getViewModelContext().getService(
+						ReferenceService.class);
+					final ViewModelContext childContext = getViewModelContext().getChildContext((EObject) selected,
+						getVElement(), view, new TreeMasterDetailReferenceService(referenceService));
+
+					manipulateViewContext(childContext);
+					ECPSWTViewRenderer.INSTANCE.render(childComposite, childContext);
 
 					relayoutDetail();
 				} catch (final ECPRendererException e) {
