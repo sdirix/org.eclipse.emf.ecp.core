@@ -300,6 +300,12 @@
 		<module>../../bundles/org.eclipse.emfforms.editor.ecore</module>
 		<module>../../bundles/org.eclipse.emfforms.editor.genmodel</module>
 		<module>../../bundles/org.eclipse.emfforms.editor.viewmodel</module>
+		
+		<!-- EMF2Web -->
+		<module>../../bundles/org.eclipse.emf.ecp.emf2web</module>
+		<module>../../bundles/org.eclipse.emf.ecp.emf2web.json</module>
+		<module>../../bundles/org.eclipse.emf.ecp.emf2web.ui</module>
+		<module>../../bundles/org.eclipse.emf.ecp.emf2web.ui.json</module>
 
 	</modules>
 
@@ -318,8 +324,27 @@
 					</execution>
 				</executions>
 			</plugin>
+			
+			
+			<plugin>
+				<groupId>org.eclipse.xtend</groupId>
+				<artifactId>xtend-maven-plugin</artifactId>
+				<version>2.7.3</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+						<!-- optionally you can configure a different target folder -->
+						<configuration>
+							<outputDirectory>${basedir}/xtend-gen</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
+	
 	<profiles>
 		<!-- 2. -->
 		<profile>
