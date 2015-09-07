@@ -190,8 +190,9 @@ public class ViewEditorPart extends EditorPart implements
 	 *
 	 * @param migrate whether the view model should be migrated (if actually needed) <b>before</b> attempting to load it
 	 * @throws IOException if the view model resource failed to load
+	 * @throws PartInitException
 	 */
-	private void loadView(boolean migrate) throws IOException {
+	private void loadView(boolean migrate) throws IOException, PartInitException {
 		final FileEditorInput fei = (FileEditorInput) getEditorInput();
 
 		final ResourceSet resourceSet = createResourceSet();
@@ -206,6 +207,9 @@ public class ViewEditorPart extends EditorPart implements
 			.put(XMLResource.OPTION_RECORD_UNKNOWN_FEATURE, Boolean.TRUE);
 		resource = resourceSet.createResource(resourceURI);
 		resource.load(loadOptions);
+		if (resource.getContents().size() == 0 || !VView.class.isInstance(resource.getContents().get(0))) {
+			throw new PartInitException(Messages.ViewEditorPart_InvalidVView);
+		}
 		// resolve all proxies
 		int rsSize = resourceSet.getResources().size();
 		EcoreUtil.resolveAll(resourceSet);
@@ -505,6 +509,10 @@ public class ViewEditorPart extends EditorPart implements
 			} catch (final IOException e) {
 				Activator.getDefault().getLog()
 					.log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
+			} catch (final PartInitException e) {
+				Activator.getDefault().getLog()
+					.log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
+				return;
 			}
 			final VView view = getView();
 
