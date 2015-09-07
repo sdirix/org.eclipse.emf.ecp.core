@@ -44,7 +44,6 @@ import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.spi.core.ProviderChangeListener;
 import org.eclipse.emf.ecp.workspace.internal.core.WorkspaceProvider;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
@@ -172,7 +171,6 @@ public class ChangeBroker_ITest {
 	private Notification receivedNotification;
 	private ChangeBroker broker;
 
-	@Ignore
 	@Test
 	public void testWorkspaceProviderIntegration() throws ECPProjectWithNameExistsException {
 		final ECPProvider provider = ECPUtil.getECPProviderRegistry().getProvider(WorkspaceProvider.NAME);
