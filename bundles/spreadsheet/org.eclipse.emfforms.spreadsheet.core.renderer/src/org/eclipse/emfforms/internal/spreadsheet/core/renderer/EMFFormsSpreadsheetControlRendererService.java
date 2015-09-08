@@ -16,7 +16,7 @@ import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emfforms.spi.common.report.ReportService;
-import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsAbstractSpreadsheetRenderer;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsIdProvider;
@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 public class EMFFormsSpreadsheetControlRendererService implements
 	EMFFormsSpreadsheetRendererService<VControl> {
 
-	private EMFFormsDatabinding emfformsDatabinding;
+	private EMFFormsDatabindingEMF emfformsDatabinding;
 	private EMFFormsLabelProvider emfformsLabelProvider;
 	private ReportService reportService;
 	private VTViewTemplateProvider vtViewTemplateProvider;
@@ -69,7 +69,7 @@ public class EMFFormsSpreadsheetControlRendererService implements
 	 * @param emfformsDatabinding The EMFFormsDatabinding to use
 	 */
 	@Reference
-	public void setEmfformsDatabinding(EMFFormsDatabinding emfformsDatabinding) {
+	public void setEmfformsDatabinding(EMFFormsDatabindingEMF emfformsDatabinding) {
 		this.emfformsDatabinding = emfformsDatabinding;
 	}
 

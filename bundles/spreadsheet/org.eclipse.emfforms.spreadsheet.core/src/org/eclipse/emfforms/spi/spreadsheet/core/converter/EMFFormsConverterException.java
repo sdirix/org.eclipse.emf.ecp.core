@@ -8,12 +8,12 @@
  *
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
+ * Eugen Neufeld - added constructor with Throwable, changed description
  ******************************************************************************/
 package org.eclipse.emfforms.spi.spreadsheet.core.converter;
 
 /**
- * Exception thrown by the {@link EMFFormsSpreadsheetValueConverterRegistry} to indicate no converter is registered for
- * given arguments.
+ * Exception thrown when the value conversion fails.
  *
  * @author Johannes Faltermeier
  *
@@ -29,5 +29,14 @@ public class EMFFormsConverterException extends Exception {
 	 */
 	public EMFFormsConverterException(String message) {
 		super(message);
+	}
+
+	/**
+	 * Constructs a new {@link EMFFormsConverterException}.
+	 *
+	 * @param throwable The Throwable that caused this exception
+	 */
+	public EMFFormsConverterException(Throwable throwable) {
+		super(throwable);
 	}
 }

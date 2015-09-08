@@ -11,7 +11,10 @@
  ******************************************************************************/
 package org.eclipse.emfforms.spi.spreadsheet.core.converter;
 
+import org.apache.poi.ss.usermodel.Cell;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 
 /**
@@ -40,27 +43,25 @@ public interface EMFFormsSpreadsheetValueConverter {
 	double isApplicable(EObject domainObject, VDomainModelReference dmr);
 
 	/**
-	 * Converts the given value to its string representation.
+	 * Write the value to the {@link Cell} using the {@link EStructuralFeature} as meta information about the value.
 	 *
-	 * @param value the value
-	 * @param domainObject the domain object
-	 * @param dmr the {@link VDomainModelReference domain model reference}
-	 * @return the string representation
-	 * @throws EMFFormsConverterException in case the value could not be converted
+	 * @param cell The Cell to write to
+	 * @param value The value to write
+	 * @param eStructuralFeature The {@link EStructuralFeature} describing the meta information of the value
+	 * @param viewModelContext The {@link ViewModelContext} to use
+	 * @throws EMFFormsConverterException Whenever the eStructuralFeature and the value don't match
 	 */
-	String convertValueToString(Object value, EObject domainObject, VDomainModelReference dmr)
+	void setCellValue(Cell cell, Object value, EStructuralFeature eStructuralFeature, ViewModelContext viewModelContext)
 		throws EMFFormsConverterException;
 
 	/**
-	 * Converts the given string representation to its value.
+	 * Read the value of the {@link Cell} using the {@link EStructuralFeature} as meta information about the value.
 	 *
-	 * @param string the string representation
-	 * @param domainObject the domain object
-	 * @param dmr the {@link VDomainModelReference domain model reference}
-	 * @return the value
-	 * @throws EMFFormsConverterException in case the value could not be converted
+	 * @param cell The Cell to read from
+	 * @param eStructuralFeature The {@link EStructuralFeature} describing the meta information of the value
+	 * @return The Object of de-serialized from the cell
+	 * @throws EMFFormsConverterException Whenever the eStructuralFeature and the cell value don't match
 	 */
-	Object convertStringToValue(String string, EObject domainObject, VDomainModelReference dmr)
-		throws EMFFormsConverterException;
+	Object getCellValue(Cell cell, EStructuralFeature eStructuralFeature) throws EMFFormsConverterException;
 
 }

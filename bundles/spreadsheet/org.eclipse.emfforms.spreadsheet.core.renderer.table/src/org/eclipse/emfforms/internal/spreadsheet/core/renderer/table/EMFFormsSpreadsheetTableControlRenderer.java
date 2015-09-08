@@ -15,7 +15,6 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference;
@@ -36,7 +35,7 @@ import org.eclipse.emfforms.internal.spreadsheet.core.EMFFormsSpreadsheetViewMod
 import org.eclipse.emfforms.internal.spreadsheet.core.renderer.EMFFormsSpreadsheetControlRenderer;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
-import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsAbstractSpreadsheetRenderer;
@@ -57,7 +56,7 @@ import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsSpreadsheetVa
 @SuppressWarnings("restriction")
 public class EMFFormsSpreadsheetTableControlRenderer extends EMFFormsAbstractSpreadsheetRenderer<VTableControl> {
 
-	private final EMFFormsDatabinding emfformsDatabinding;
+	private final EMFFormsDatabindingEMF emfformsDatabinding;
 	private final EMFFormsLabelProvider emfformsLabelProvider;
 	private final ReportService reportService;
 	private final EMFFormsSpreadsheetRendererFactory rendererFactory;
@@ -69,7 +68,7 @@ public class EMFFormsSpreadsheetTableControlRenderer extends EMFFormsAbstractSpr
 	/**
 	 * Default constructor.
 	 *
-	 * @param emfformsDatabinding The EMFFormsDatabinding to use
+	 * @param emfformsDatabinding The EMFFormsDatabindingEMF to use
 	 * @param emfformsLabelProvider The EMFFormsLabelProvider to use
 	 * @param reportService The {@link ReportService}
 	 * @param rendererFactory The EMFFormsSpreadsheetRendererFactory to use
@@ -80,7 +79,7 @@ public class EMFFormsSpreadsheetTableControlRenderer extends EMFFormsAbstractSpr
 	 */
 	// BEGIN COMPLEX CODE
 	public EMFFormsSpreadsheetTableControlRenderer(
-		EMFFormsDatabinding emfformsDatabinding,
+		EMFFormsDatabindingEMF emfformsDatabinding,
 		EMFFormsLabelProvider emfformsLabelProvider,
 		ReportService reportService,
 		EMFFormsSpreadsheetRendererFactory rendererFactory,
@@ -138,10 +137,9 @@ public class EMFFormsSpreadsheetTableControlRenderer extends EMFFormsAbstractSpr
 					.getValue();
 				if (prefixName == null || prefixName.length() == 0) {
 					try {
-						prefixName = EStructuralFeature.class.cast(
-							emfformsDatabinding.getValueProperty(
-								tableDomainModelReference.getDomainModelReference(),
-								viewModelContext.getDomainModel()).getValueType())
+						prefixName = emfformsDatabinding.getValueProperty(
+							tableDomainModelReference.getDomainModelReference(),
+							viewModelContext.getDomainModel()).getStructuralFeature()
 							.getName();
 					} catch (final DatabindingFailedException ex) {
 						reportService

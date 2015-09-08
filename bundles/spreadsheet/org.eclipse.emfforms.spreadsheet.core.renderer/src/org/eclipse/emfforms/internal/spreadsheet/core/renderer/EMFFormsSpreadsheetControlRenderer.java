@@ -25,7 +25,6 @@ import org.apache.poi.ss.usermodel.Drawing;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.eclipse.core.databinding.observable.IObserving;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -46,7 +45,7 @@ import org.eclipse.emf.ecp.view.template.style.mandatory.model.VTMandatoryFactor
 import org.eclipse.emf.ecp.view.template.style.mandatory.model.VTMandatoryStyleProperty;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
-import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsAbstractSpreadsheetRenderer;
@@ -67,7 +66,7 @@ import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsSpreadsheetVa
  */
 public class EMFFormsSpreadsheetControlRenderer extends EMFFormsAbstractSpreadsheetRenderer<VControl> {
 
-	private final EMFFormsDatabinding emfformsDatabinding;
+	private final EMFFormsDatabindingEMF emfformsDatabinding;
 	private final EMFFormsLabelProvider emfformsLabelProvider;
 	private final ReportService reportService;
 	private final VTViewTemplateProvider vtViewTemplateProvider;
@@ -87,7 +86,7 @@ public class EMFFormsSpreadsheetControlRenderer extends EMFFormsAbstractSpreadsh
 	 * @param formatDescriptionProvider The {@link EMFFormsSpreadsheetFormatDescriptionProvider}
 	 */
 	public EMFFormsSpreadsheetControlRenderer(
-		EMFFormsDatabinding emfformsDatabinding,
+		EMFFormsDatabindingEMF emfformsDatabinding,
 		EMFFormsLabelProvider emfformsLabelProvider,
 		ReportService reportService,
 		VTViewTemplateProvider vtViewTemplateProvider,
@@ -162,8 +161,8 @@ public class EMFFormsSpreadsheetControlRenderer extends EMFFormsAbstractSpreadsh
 			}
 
 			if (labelCell.getCellComment() == null) {
-				final EStructuralFeature structuralFeature = (EStructuralFeature) emfformsDatabinding.getValueProperty(
-					dmrToResolve, viewModelContext.getDomainModel()).getValueType();
+				final EStructuralFeature structuralFeature = emfformsDatabinding.getValueProperty(
+					dmrToResolve, viewModelContext.getDomainModel()).getStructuralFeature();
 
 				writeLabel(vElement, viewModelContext, labelCell, exportTableParent, dmrToResolve, structuralFeature);
 
@@ -206,8 +205,8 @@ public class EMFFormsSpreadsheetControlRenderer extends EMFFormsAbstractSpreadsh
 		resolveDMR(viewModelContext, dmrToResolve);
 		final IObservableValue observableValue = emfformsDatabinding
 			.getObservableValue(dmrToResolve, viewModelContext.getDomainModel());
-		final EObject eObject = EObject.class.cast(IObserving.class.cast(observableValue).getObserved());
-		final EStructuralFeature feature = EStructuralFeature.class.cast(observableValue.getValueType());
+		final EObject eObject = emfformsDatabinding.extractObserved(observableValue);
+		final EStructuralFeature feature = emfformsDatabinding.extractFeature(observableValue);
 		/* only create new cells for non-unsettable features and unsettable feature which are set */
 		/*
 		 * if the eObject is null, this means that the dmr could not be resolved correctly. in this case we want
@@ -217,11 +216,11 @@ public class EMFFormsSpreadsheetControlRenderer extends EMFFormsAbstractSpreadsh
 			final Object value = observableValue.getValue();
 			final EMFFormsSpreadsheetValueConverter converter = converterRegistry
 				.getConverter(viewModelContext.getDomainModel(), dmrToResolve);
-			final String cellValue = converter.convertValueToString(value,
-				viewModelContext.getDomainModel(), dmrToResolve);
+
 			final Cell valueCell = valueRow.getCell(renderTarget.getColumn() + 1,
 				Row.CREATE_NULL_AS_BLANK);
-			valueCell.setCellValue(cellValue);
+			converter.setCellValue(valueCell, value, feature, viewModelContext);
+
 		}
 		observableValue.dispose();
 	}

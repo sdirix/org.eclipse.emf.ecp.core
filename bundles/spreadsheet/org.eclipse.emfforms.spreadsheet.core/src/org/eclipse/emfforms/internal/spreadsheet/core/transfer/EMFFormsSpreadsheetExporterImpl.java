@@ -16,6 +16,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.BuiltinFormats;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
@@ -36,6 +37,7 @@ import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsNoRendererException;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetRenderTarget;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetRendererFactory;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetReport;
+import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsCellStyleConstants;
 import org.eclipse.emfforms.spi.spreadsheet.core.transfer.EMFFormsSpreadsheetExporter;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
@@ -105,6 +107,10 @@ public class EMFFormsSpreadsheetExporterImpl implements EMFFormsSpreadsheetExpor
 		final CellStyle cellStyle2 = workbook.createCellStyle();
 		cellStyle2.setLocked(true);
 		cellStyle2.setWrapText(true);
+		final CellStyle cellStyle3 = workbook.createCellStyle();
+		cellStyle3.setDataFormat((short) BuiltinFormats.getBuiltinFormat("text")); //$NON-NLS-1$
+		final CellStyle cellStyle4 = workbook.createCellStyle();
+		cellStyle4.setDataFormat((short) BuiltinFormats.getBuiltinFormat("m/d/yy")); //$NON-NLS-1$
 
 		if (domainObjects == null) {
 			try {
@@ -133,6 +139,10 @@ public class EMFFormsSpreadsheetExporterImpl implements EMFFormsSpreadsheetExpor
 				try {
 					final ViewModelContext viewModelContext = new EMFFormsSpreadsheetViewModelContext(viewModel,
 						domainObject);
+					viewModelContext.putContextValue(EMFFormsCellStyleConstants.LOCKED, cellStyle);
+					viewModelContext.putContextValue(EMFFormsCellStyleConstants.LOCKED_AND_WRAPPED, cellStyle2);
+					viewModelContext.putContextValue(EMFFormsCellStyleConstants.TEXT, cellStyle3);
+					viewModelContext.putContextValue(EMFFormsCellStyleConstants.DATE, cellStyle4);
 					final EMFFormsAbstractSpreadsheetRenderer<VElement> renderer = emfFormsSpreadsheetRendererFactory
 						.getRendererInstance(
 							viewModelContext.getViewModel(), viewModelContext);
