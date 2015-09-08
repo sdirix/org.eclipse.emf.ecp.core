@@ -13,6 +13,7 @@ package org.eclipse.emf.ecp.view.model.provider.xmi;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -32,10 +33,12 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.internal.view.model.provider.xmi.Activator;
 import org.eclipse.emf.ecp.view.spi.model.LocalizationAdapter;
 import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.model.VViewModelProperties;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.model.util.VViewResourceFactoryImpl;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
+import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 
 /**
@@ -88,13 +91,24 @@ public final class ViewModelFileExtensionsManager {
 			}
 			final ExtensionDescription extensionDescription = extensionURIS.get(uri);
 
-			if (!map.containsKey(view.getRootEClass())) {
-				map.put(view.getRootEClass(), new LinkedHashMap<VView, ExtensionDescription>());
-			}
-
-			map.get(view.getRootEClass()).put(view, extensionDescription);
+			registerView(view, extensionDescription);
 		}
 
+	}
+
+	/**
+	 * This registers a view.
+	 *
+	 * @param view The View to register
+	 * @param extensionDescription Additional information like the filters used when identifying the correct view for
+	 *            the request
+	 */
+	void registerView(final VView view, final ExtensionDescription extensionDescription) {
+		if (!map.containsKey(view.getRootEClass())) {
+			map.put(view.getRootEClass(), new LinkedHashMap<VView, ExtensionDescription>());
+		}
+
+		map.get(view.getRootEClass()).put(view, extensionDescription);
 	}
 
 	/**
@@ -174,7 +188,7 @@ public final class ViewModelFileExtensionsManager {
 	 * @return if there is a xmi file registered containing a view model for the given type
 	 */
 	public boolean hasViewModelFor(EObject eObject, VViewModelProperties properties) {
-		return map.containsKey(eObject.eClass());
+		return !findBestFittingViews(eObject, properties).isEmpty();
 	}
 
 	/**
@@ -183,46 +197,25 @@ public final class ViewModelFileExtensionsManager {
 	 * @return a view model for the given eObject
 	 */
 	public VView createView(EObject eObject, VViewModelProperties properties) {
-		final Map<VView, ExtensionDescription> viewMap = map.get(eObject.eClass());
-		if (properties == null) {
-			return viewMap.keySet().iterator().next();
-		}
-		final List<VView> bestFitting = new ArrayList<VView>();
-		int maxNumberFittingKeyValues = -1;
-		for (final VView view : viewMap.keySet()) {
-			final Map<String, String> viewFilter = viewMap.get(view).getKeyValuPairs();
-			int currentFittingKeyValues = 0;
-			for (final String viewFilterKey : viewFilter.keySet()) {
-				if (properties.containsKey(viewFilterKey)) {
-					final Object contextValue = properties.get(viewFilterKey);
-					final String viewFilterValue = viewFilter.get(viewFilterKey);
-					if (contextValue.toString().equalsIgnoreCase(viewFilterValue)) {
-						currentFittingKeyValues++;
-					} else {
-						currentFittingKeyValues = -1;
-						break;
-					}
-				} else {
-					currentFittingKeyValues = -1;
-					break;
-				}
-			}
-			if (currentFittingKeyValues > maxNumberFittingKeyValues) {
-				maxNumberFittingKeyValues = currentFittingKeyValues;
-				bestFitting.clear();
-				bestFitting.add(view);
-			} else if (currentFittingKeyValues == maxNumberFittingKeyValues) {
-				bestFitting.add(view);
-			}
-		}
+		final List<VView> bestFitting = findBestFittingViews(eObject, properties);
 
 		if (bestFitting.isEmpty()) {
+			final ReportService reportService = Activator.getReportService();
+			if (reportService != null) {
+				reportService.report(new AbstractReport(
+					"No view models have been found for the given View Model Loading Properties. This should have not been called!", //$NON-NLS-1$
+					IStatus.ERROR));
+			}
 			return null;
 		}
 
 		if (bestFitting.size() != 1) {
-			Activator.getReportService().report(new AbstractReport(
-				"Multiple view models have been found for the given View Model Loading Properties.", IStatus.WARNING)); //$NON-NLS-1$
+			final ReportService reportService = Activator.getReportService();
+			if (reportService != null) {
+				reportService.report(new AbstractReport(
+					"Multiple view models have been found for the given View Model Loading Properties.", //$NON-NLS-1$
+					IStatus.WARNING));
+			}
 		}
 
 		final VView fittingView = bestFitting.get(0);
@@ -241,6 +234,51 @@ public final class ViewModelFileExtensionsManager {
 		return copiedView;
 	}
 
+	private static final int FILTER_NOT_MATCHED = Integer.MIN_VALUE;
+
+	private List<VView> findBestFittingViews(EObject eObject, final VViewModelProperties properties) {
+		final Map<VView, ExtensionDescription> viewMap = map.get(eObject.eClass());
+		if (viewMap == null) {
+			return Collections.emptyList();
+		}
+		final List<VView> bestFitting = new ArrayList<VView>();
+		int maxNumberFittingKeyValues = -1;
+		VViewModelProperties propertiesToCheck = properties;
+		if (propertiesToCheck == null) {
+			propertiesToCheck = VViewFactory.eINSTANCE.createViewModelLoadingProperties();
+		}
+		for (final VView view : viewMap.keySet()) {
+			final Map<String, String> viewFilter = viewMap.get(view).getKeyValuPairs();
+			int currentFittingKeyValues = 0;
+			for (final String viewFilterKey : viewFilter.keySet()) {
+				if (propertiesToCheck.containsKey(viewFilterKey)) {
+					final Object contextValue = propertiesToCheck.get(viewFilterKey);
+					final String viewFilterValue = viewFilter.get(viewFilterKey);
+					if (contextValue.toString().equalsIgnoreCase(viewFilterValue)) {
+						currentFittingKeyValues++;
+					} else {
+						currentFittingKeyValues = FILTER_NOT_MATCHED;
+						break;
+					}
+				} else {
+					currentFittingKeyValues = FILTER_NOT_MATCHED;
+					break;
+				}
+			}
+			if (currentFittingKeyValues == FILTER_NOT_MATCHED) {
+				continue;
+			}
+			if (currentFittingKeyValues > maxNumberFittingKeyValues) {
+				maxNumberFittingKeyValues = currentFittingKeyValues;
+				bestFitting.clear();
+				bestFitting.add(view);
+			} else if (currentFittingKeyValues == maxNumberFittingKeyValues) {
+				bestFitting.add(view);
+			}
+		}
+		return bestFitting;
+	}
+
 	/**
 	 *
 	 * Inner class to hold the relevant data of the extension point.
@@ -252,7 +290,13 @@ public final class ViewModelFileExtensionsManager {
 		private final Map<String, String> keyValuPairs;
 		private final String bundleId;
 
-		private ExtensionDescription(Map<String, String> keyValuPairs, String bundleId) {
+		/**
+		 * Constructs an ExtensionDescription.
+		 *
+		 * @param keyValuPairs The Filter
+		 * @param bundleId The Bundle that contributed the view model
+		 */
+		ExtensionDescription(Map<String, String> keyValuPairs, String bundleId) {
 			this.keyValuPairs = keyValuPairs;
 			this.bundleId = bundleId;
 		}
