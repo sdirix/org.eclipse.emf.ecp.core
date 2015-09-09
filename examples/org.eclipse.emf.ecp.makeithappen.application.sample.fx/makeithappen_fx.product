@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="MakeItHappen Sample FX Product" uid="org.eclipse.emf.ecp.makeithappen.sample.product.fx" id="org.eclipse.emf.ecp.makeithappen.application.sample.fx.product" application="org.eclipse.emf.ecp.makeithappen.application.sample.fx.application" version="1.4.0" useFeatures="false" includeLaunchers="true">
+<product name="MakeItHappen Sample FX Product" uid="org.eclipse.emf.ecp.makeithappen.sample.product.fx" id="org.eclipse.emf.ecp.makeithappen.application.sample.fx.product" application="org.eclipse.emf.ecp.makeithappen.application.sample.fx.application" version="1.7.0" useFeatures="false" includeLaunchers="true">
 
    <configIni use="default">
    </configIni>
@@ -29,6 +29,7 @@
    </vm>
 
    <plugins>
+      <plugin id="com.google.guava"/>
       <plugin id="com.ibm.icu.base"/>
       <plugin id="javax.annotation.jre"/>
       <plugin id="javax.inject"/>

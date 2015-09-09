@@ -3,6 +3,7 @@
       id="org.eclipse.emfforms.spreadsheet.feature"
       label="EMFForms Spreadsheet Feature"
       version="1.0.0.qualifier"
+      provider-name="%providerName"
       plugin="org.eclipse.emfforms.spreadsheet.core"
       image="eclipse_update_120.jpg"
       license-feature="org.eclipse.emf.ecp.license.feature"

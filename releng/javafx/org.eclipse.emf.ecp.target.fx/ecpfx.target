@@ -3,7 +3,7 @@
 <locations>
 <location includeAllPlatforms="true" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.fx.target.feature.feature.group" version="0.0.0"/>
-<repository location="http://download.eclipse.org/efxclipse/runtime-released/2.0.0/site"/>
+<repository location="http://download.eclipse.org/efxclipse/runtime-released/2.1.0/site"/>
 </location>
 <location includeAllPlatforms="true" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.jdt.feature.group" version="0.0.0"/>
@@ -19,7 +19,7 @@
 <unit id="org.eclipse.emf.emfstore.client.ui.feature.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.emf.emfstore.common.feature.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.emf.emfstore.client.feature.feature.group" version="0.0.0"/>
-<repository location="http://download.eclipse.org/emf-store/releases_14"/>
+<repository location="http://download.eclipse.org/emf-store/releases_16"/>
 </location>
 </locations>
 </target>
