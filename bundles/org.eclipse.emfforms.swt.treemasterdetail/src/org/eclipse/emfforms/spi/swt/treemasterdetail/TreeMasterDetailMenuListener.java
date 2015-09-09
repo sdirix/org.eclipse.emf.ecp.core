@@ -102,6 +102,7 @@ public class TreeMasterDetailMenuListener implements IMenuListener {
 
 				for (final MasterDetailAction menuAction : rightClickActions) {
 					if (menuAction.shouldShow(eSelectedObject)) {
+						menuAction.setTreeViewer(treeViewer);
 						final Action newAction = new Action() {
 							@Override
 							public void run() {
