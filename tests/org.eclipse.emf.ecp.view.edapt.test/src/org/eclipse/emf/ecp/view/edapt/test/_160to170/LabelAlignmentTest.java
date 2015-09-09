@@ -28,7 +28,7 @@ public class LabelAlignmentTest extends AbstractMigrationTest {
 		getMigrator().performMigration(getURI());
 		final VView view = getMigratedView();
 		assertEquals(2, view.getChildren().size());
-		assertEquals(LabelAlignment.DEFAULT, VControl.class.cast(view.getChildren().get(0)).getLabelAlignment());
+		assertEquals(LabelAlignment.LEFT, VControl.class.cast(view.getChildren().get(0)).getLabelAlignment());
 		assertEquals(LabelAlignment.NONE, VControl.class.cast(view.getChildren().get(1)).getLabelAlignment());
 	}
 

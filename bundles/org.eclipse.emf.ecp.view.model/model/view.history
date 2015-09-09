@@ -549,6 +549,7 @@
         featureName="value" dataValue="-1" oldDataValue="0"/>
     <changes xsi:type="history:Set" element="view.ecore#//Control/labelAlignment"
         featureName="defaultValueLiteral" dataValue="Default" oldDataValue="Left"/>
+    <changes xsi:type="history:MigrationChange" migration="org.eclipse.emf.ecp.internal.view.model.edapt._160to170.LabelAlignmentMigration"/>
     <changes xsi:type="history:Set" element="view.ecore#/" featureName="nsURI" dataValue="http://org/eclipse/emf/ecp/view/model/170"
         oldDataValue="http://org/eclipse/emf/ecp/view/model"/>
   </releases>

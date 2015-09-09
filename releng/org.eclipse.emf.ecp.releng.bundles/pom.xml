@@ -57,6 +57,7 @@
 
 		<module>../../bundles/org.eclipse.emf.ecp.view.model</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.model.edit</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.model.edapt</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.model.common</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.core.swt</module>
 		<module>../../bundles/org.eclipse.emf.ecp.ui.view</module>
