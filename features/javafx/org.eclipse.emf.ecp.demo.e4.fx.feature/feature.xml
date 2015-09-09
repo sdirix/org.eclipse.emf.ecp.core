@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.eclipse.emf.ecp.demo.e4.fx.feature"
-      label="EMF Forms FX Demo Feature"
+      label="EMFForms FX Demo Feature"
       version="1.7.0.qualifier"
       provider-name="Eclipse Modeling Project">
 
