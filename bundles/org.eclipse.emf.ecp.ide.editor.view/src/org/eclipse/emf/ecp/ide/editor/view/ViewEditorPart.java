@@ -13,6 +13,7 @@ package org.eclipse.emf.ecp.ide.editor.view;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.text.MessageFormat;
 import java.util.EventObject;
 import java.util.HashMap;
 import java.util.Map;
@@ -141,7 +142,8 @@ public class ViewEditorPart extends EditorPart implements
 			// BEGIN SUPRESS CATCH EXCEPTION
 		} catch (final Exception e) {
 			Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
-			throw new PartInitException(Messages.ViewEditorPart_ViewCannotBeDisplayed, e);
+			throw new PartInitException(
+				MessageFormat.format(Messages.ViewEditorPart_ViewCannotBeDisplayed, e.getLocalizedMessage()), e);
 		} // END SUPRESS CATCH EXCEPTION
 
 		basicCommandStack.addCommandStackListener(new CommandStackListener() {
