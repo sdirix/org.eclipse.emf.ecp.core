@@ -11,7 +11,12 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.model.provider.xmi;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -28,9 +33,13 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIConverter;
+import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.internal.view.model.provider.xmi.Activator;
+import org.eclipse.emf.ecp.view.migrator.ViewModelMigrationException;
+import org.eclipse.emf.ecp.view.migrator.ViewModelMigrator;
+import org.eclipse.emf.ecp.view.migrator.ViewModelMigratorUtil;
 import org.eclipse.emf.ecp.view.spi.model.LocalizationAdapter;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
@@ -57,6 +66,7 @@ public final class ViewModelFileExtensionsManager {
 	private static final String FILEPATH_ATTRIBUTE = "filePath"; //$NON-NLS-1$
 
 	private final Map<EClass, Map<VView, ExtensionDescription>> map = new LinkedHashMap<EClass, Map<VView, ExtensionDescription>>();
+	private static File viewModelFolder;
 
 	private ViewModelFileExtensionsManager() {
 	}
@@ -118,6 +128,12 @@ public final class ViewModelFileExtensionsManager {
 	 * @return the loaded resource
 	 */
 	public static Resource loadResource(URI uri) {
+
+		final ViewModelMigrator viewModelMigrator = ViewModelMigratorUtil.getViewModelMigrator();
+		if (viewModelMigrator != null) {
+			uri = migrateViewModelIfNecesarry(viewModelMigrator, uri);
+		}
+
 		final ResourceSet resourceSet = new ResourceSetImpl();
 		final Map<String, Object> extensionToFactoryMap = resourceSet
 			.getResourceFactoryRegistry().getExtensionToFactoryMap();
@@ -132,9 +148,91 @@ public final class ViewModelFileExtensionsManager {
 		try {
 			resource.load(loadOptions);
 		} catch (final IOException exception) {
-			Activator.getReportService().report(new AbstractReport(exception));
+			final ReportService reportService = Activator.getReportService();
+			if (reportService != null) {
+				reportService.report(new AbstractReport(exception,
+					"Loading view model failed. Maybe a migration is needed. Please take a look at the migration guide at: http://www.eclipse.org/ecp/emfforms/documentation.html")); //$NON-NLS-1$
+			}
 		}
 		return resource;
+	}
+
+	private static URI migrateViewModelIfNecesarry(ViewModelMigrator viewModelMigrator, URI uri) {
+		final ReportService reportService = Activator.getReportService();
+		try {
+			/* copy file from jar to disk */
+			final File dest = getFileDestination();
+			if (dest == null) {
+				return uri;
+			}
+			final URIConverter uriConverter = new ExtensibleURIConverterImpl();
+			final InputStream inputStream = uriConverter.createInputStream(uri);
+			copy(inputStream, dest);
+			uri = URI.createFileURI(dest.getAbsolutePath());
+
+			/*
+			 * parse file and check if migration is needed. Because of limitations in edapt, the passed uri cannot be a
+			 * platform plugin uri. I opened a BR.
+			 * Otherwise we could delay the file copy process until we know that a migration is actually needed.
+			 */
+			if (viewModelMigrator.checkMigration(uri)) {
+				return uri;
+			}
+			if (reportService != null) {
+				reportService.report(new AbstractReport(
+					MessageFormat.format(
+						"The view model at {0} needs migration. Please take a look at the migration guide at: http://www.eclipse.org/ecp/emfforms/documentation.html", //$NON-NLS-1$
+						uri.toString()),
+					IStatus.WARNING));
+			}
+
+			viewModelMigrator.performMigration(uri);
+			return uri;
+
+		} catch (final IOException ex) {
+			if (reportService != null) {
+				reportService.report(new AbstractReport(ex,
+					MessageFormat.format("The migration of view model at {0} failed.", uri.toString()))); //$NON-NLS-1$
+			}
+		} catch (final ViewModelMigrationException ex) {
+			if (reportService != null) {
+				reportService.report(new AbstractReport(ex,
+					MessageFormat.format("The migration of view model at {0} failed.", uri.toString()))); //$NON-NLS-1$
+			}
+		}
+		return uri;
+	}
+
+	/**
+	 * Returns a new file where a view model may be exported to.
+	 *
+	 * @return the file location
+	 */
+	private static synchronized File getFileDestination() {
+		if (viewModelFolder == null) {
+			final File stateLocation = Activator.getInstance().getStateLocation().toFile();
+			viewModelFolder = new File(stateLocation, "views"); //$NON-NLS-1$
+			if (!viewModelFolder.exists()) {
+				viewModelFolder.mkdir();
+			}
+			for (final File file : viewModelFolder.listFiles()) {
+				file.delete();
+			}
+		}
+		final File file = new File(viewModelFolder, System.currentTimeMillis() + ".view"); //$NON-NLS-1$
+		file.deleteOnExit();
+		return file;
+	}
+
+	private static void copy(InputStream in, File file) throws IOException {
+		final OutputStream out = new FileOutputStream(file);
+		final byte[] buf = new byte[1024];
+		int len;
+		while ((len = in.read(buf)) > 0) {
+			out.write(buf, 0, len);
+		}
+		out.close();
+		in.close();
 	}
 
 	/**

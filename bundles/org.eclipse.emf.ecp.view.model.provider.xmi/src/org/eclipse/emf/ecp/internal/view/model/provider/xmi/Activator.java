@@ -82,4 +82,13 @@ public class Activator extends Plugin {
 		}
 		return bundleContext.getService(reportServiceReference);
 	}
+
+	/**
+	 * Returns the instance of this Activator.
+	 *
+	 * @return the saved instance
+	 */
+	public static Activator getInstance() {
+		return activator;
+	}
 }

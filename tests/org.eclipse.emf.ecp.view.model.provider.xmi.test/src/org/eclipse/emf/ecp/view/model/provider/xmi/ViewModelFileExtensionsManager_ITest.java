@@ -39,7 +39,7 @@ import org.junit.Test;
  * @author Jonas
  *
  */
-public class ViewModelFileExtensionsManager_PTest {
+public class ViewModelFileExtensionsManager_ITest {
 
 	// private static final String FILEPATH = "viewmodel.view";
 	// private static final String FILEPATH2 = "viewmodel2.view";

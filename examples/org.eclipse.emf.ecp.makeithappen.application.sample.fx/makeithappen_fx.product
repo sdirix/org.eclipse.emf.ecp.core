@@ -84,6 +84,7 @@
       <plugin id="org.eclipse.emf.ecp.view.horizontal.model.edit"/>
       <plugin id="org.eclipse.emf.ecp.view.label.fx"/>
       <plugin id="org.eclipse.emf.ecp.view.label.model"/>
+      <plugin id="org.eclipse.emf.ecp.view.migrator"/>
       <plugin id="org.eclipse.emf.ecp.view.model"/>
       <plugin id="org.eclipse.emf.ecp.view.model.common"/>
       <plugin id="org.eclipse.emf.ecp.view.model.edit"/>

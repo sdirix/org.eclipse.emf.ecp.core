@@ -95,6 +95,7 @@
       <plugin id="org.eclipse.emf.ecp.view.label.model"/>
       <plugin id="org.eclipse.emf.ecp.view.label.model.edit"/>
       <plugin id="org.eclipse.emf.ecp.view.label.ui.swt"/>
+      <plugin id="org.eclipse.emf.ecp.view.migrator"/>
       <plugin id="org.eclipse.emf.ecp.view.model"/>
       <plugin id="org.eclipse.emf.ecp.view.model.common"/>
       <plugin id="org.eclipse.emf.ecp.view.model.edit"/>
