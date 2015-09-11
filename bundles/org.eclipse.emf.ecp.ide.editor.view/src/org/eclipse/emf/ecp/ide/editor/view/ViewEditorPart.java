@@ -133,6 +133,16 @@ public class ViewEditorPart extends EditorPart implements
 		try {
 			basicCommandStack = new BasicCommandStack();
 			loadView(false);
+		} // BEGIN SUPRESS CATCH EXCEPTION
+		catch (final Exception e) {// END SUPRESS CATCH EXCEPTION
+			/*
+			 * ignore all exceptions during first loading of view. The view might actually be an outdated view, so the
+			 * second call will migrate the view. if the migration step fails or is not possible at all, we will fail in
+			 * the later call.
+			 */
+		}
+
+		try {
 			registerEcore();
 			// reload view resource after EClass' package resource was loaded into the package registry
 			loadView(true);
