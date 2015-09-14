@@ -155,11 +155,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 
 		createLabelProvider();
 
-		final Composite controlComposite = new Composite(composite, SWT.NONE);
-		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL)
-			.hint(1, 300)
-			.applyTo(controlComposite);
-		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(controlComposite);
+		final Composite controlComposite = createControlComposite(composite);
 		try {
 			createContent(controlComposite);
 		} catch (final DatabindingFailedException ex) {
@@ -168,6 +164,31 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 		}
 
 		return composite;
+	}
+
+	/**
+	 * Creates the composite which will be the parent for the table.
+	 *
+	 * @param composite
+	 *            the parent composite
+	 * @return the table composite
+	 */
+	protected Composite createControlComposite(final Composite composite) {
+		final Composite controlComposite = new Composite(composite, SWT.NONE);
+		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL)
+			.hint(1, 300)
+			.applyTo(controlComposite);
+		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(controlComposite);
+		return controlComposite;
+	}
+
+	/**
+	 * Gives access to the tableViewer used to display the attributes.
+	 *
+	 * @return the viewer
+	 */
+	protected TableViewer getTableViewer() {
+		return tableViewer;
 	}
 
 	/**
