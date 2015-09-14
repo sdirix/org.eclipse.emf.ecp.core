@@ -170,6 +170,16 @@ public class IndexdmrValidator extends EObjectValidator {
 		return result;
 	}
 
+	@Override
+	protected boolean validate_MultiplicityConforms(EObject eObject, EStructuralFeature eStructuralFeature,
+		DiagnosticChain diagnostics, Map<Object, Object> context) {
+		if (eStructuralFeature == VViewPackage.eINSTANCE.getFeaturePathDomainModelReference_DomainModelEFeature()) {
+			/* we only extend feature path dmr for legacy reasons. the efeature bound can be ignored */
+			return true;
+		}
+		return super.validate_MultiplicityConforms(eObject, eStructuralFeature, diagnostics, context);
+	}
+
 	/**
 	 * Validates the resolveable constraint of '<em>Index Domain Model Reference</em>'.
 	 * <!-- begin-user-doc -->
