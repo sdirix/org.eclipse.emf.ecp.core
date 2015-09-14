@@ -22,8 +22,11 @@ import static org.mockito.Mockito.when;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -41,7 +44,7 @@ import org.junit.Test;
  */
 public class ViewModelFileExtensionsManager_ITest {
 
-	// private static final String FILEPATH = "viewmodel.view";
+	private static final String FILEPATH = "viewmodel.view";
 	// private static final String FILEPATH2 = "viewmodel2.view";
 
 	private static final String VIEWNAME = "the view name";
@@ -66,6 +69,21 @@ public class ViewModelFileExtensionsManager_ITest {
 	// return URI.createPlatformPluginURI("org.eclipse.emf.ecp.view.model.provider.xmi"
 	// + "/" + filepath, false);
 	// }
+
+	@Test
+	public void testGetExtensionURIs() {
+		final Map<URI, List<ExtensionDescription>> extensionURIS = ViewModelFileExtensionsManager.getExtensionURIS();
+		assertEquals(1, extensionURIS.size());
+		final Set<URI> keySet = extensionURIS.keySet();
+		assertTrue(keySet.contains(uri(FILEPATH)));
+
+		assertEquals(2, extensionURIS.get(uri(FILEPATH)).size());
+	}
+
+	private static URI uri(String filepath) {
+		return URI.createPlatformPluginURI("org.eclipse.emf.ecp.view.model.provider.xmi"
+			+ "/" + filepath, false);
+	}
 
 	@Test
 	public void testHasViewModelForNoFilterNullProperties() {

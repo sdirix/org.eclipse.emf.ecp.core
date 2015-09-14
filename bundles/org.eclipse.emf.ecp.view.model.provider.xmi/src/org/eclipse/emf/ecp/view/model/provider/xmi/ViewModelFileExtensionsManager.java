@@ -85,23 +85,31 @@ public final class ViewModelFileExtensionsManager {
 	}
 
 	private void init() {
-		final Map<URI, ExtensionDescription> extensionURIS = getExtensionURIS();
+		final Map<URI, List<ExtensionDescription>> extensionURIS = getExtensionURIS();
 		for (final URI uri : extensionURIS.keySet()) {
 			final Resource resource = loadResource(uri);
 			final EObject eObject = resource.getContents().get(0);
 			if (!(eObject instanceof VView)) {
-				// TODO:log
+				final ReportService reportService = Activator.getReportService();
+				if (reportService != null) {
+					reportService.report(new AbstractReport(String.format(
+						"The registered file '%1$s' doesn't point to a serialized view model.", uri.toString()))); //$NON-NLS-1$
+				}
 				continue;
 			}
 			final VView view = (VView) eObject;
 
 			if (view.getRootEClass() == null) {
-				// TODO:log
+				final ReportService reportService = Activator.getReportService();
+				if (reportService != null) {
+					reportService.report(new AbstractReport(String
+						.format("The registered view in file '%1$s' doesn't have a set root eclass.", uri.toString()))); //$NON-NLS-1$
+				}
 				continue;
 			}
-			final ExtensionDescription extensionDescription = extensionURIS.get(uri);
-
-			registerView(view, extensionDescription);
+			for (final ExtensionDescription extensionDescription : extensionURIS.get(uri)) {
+				registerView(view, extensionDescription);
+			}
 		}
 
 	}
@@ -246,8 +254,8 @@ public final class ViewModelFileExtensionsManager {
 	 *
 	 * @return a list of uris of all xmi files registered
 	 */
-	public static Map<URI, ExtensionDescription> getExtensionURIS() {
-		final Map<URI, ExtensionDescription> ret = new LinkedHashMap<URI, ExtensionDescription>();
+	public static Map<URI, List<ExtensionDescription>> getExtensionURIS() {
+		final Map<URI, List<ExtensionDescription>> ret = new LinkedHashMap<URI, List<ExtensionDescription>>();
 		final IConfigurationElement[] files = Platform.getExtensionRegistry().getConfigurationElementsFor(
 			FILE_EXTENSION);
 		final URIConverter converter = new ResourceSetImpl().getURIConverter();
@@ -267,15 +275,22 @@ public final class ViewModelFileExtensionsManager {
 			final String bundleName = file.getContributor().getName();
 			final String path = bundleName + '/' + filePath;
 			uri = URI.createPlatformPluginURI(path, false);
-			if (converter.exists(uri, null)) {
-				ret.put(uri, new ExtensionDescription(keyValuePairs, bundleId));
-			} else {
+			if (!converter.exists(uri, null)) {
 				uri = URI.createPlatformResourceURI(filePath, false);
-				if (converter.exists(uri, null)) {
-					ret.put(uri, new ExtensionDescription(keyValuePairs, bundleId));
+				if (!converter.exists(uri, null)) {
+					final ReportService reportService = Activator.getReportService();
+					if (reportService != null) {
+						reportService.report(new AbstractReport(
+							String.format("The provided uri '%1$s' doesn't point to an existing file.", uri.toString()), //$NON-NLS-1$
+							IStatus.ERROR));
+						continue;
+					}
 				}
 			}
-
+			if (!ret.containsKey(uri)) {
+				ret.put(uri, new ArrayList<ViewModelFileExtensionsManager.ExtensionDescription>());
+			}
+			ret.get(uri).add(new ExtensionDescription(keyValuePairs, bundleId));
 		}
 		return ret;
 	}
