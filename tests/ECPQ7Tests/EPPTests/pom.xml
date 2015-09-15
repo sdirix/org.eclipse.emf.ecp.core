@@ -37,6 +37,9 @@
 						<configuration>
 								<runner>
 									<version>${rcptt-runner-version}</version>
+									<vmArgs>
+										  <vmArg>-connectTimeout 600</vmArg>
+									</vmArgs>
 								</runner>
 							<aut>
 								
