@@ -36,6 +36,8 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.common.spi.UniqueSetting;
 import org.eclipse.emf.ecp.view.spi.context.EMFFormsLegacyServicesManager;
 import org.eclipse.emf.ecp.view.spi.context.GlobalViewModelService;
+import org.eclipse.emf.ecp.view.spi.context.SettingToControlMapper;
+import org.eclipse.emf.ecp.view.spi.context.SettingToControlMapperFactory;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextDisposeListener;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
@@ -231,6 +233,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 				} catch (final EMFFormsExpandingFailedException ex) {
 					Activator.getInstance().getReportService().report(new AbstractReport(ex));
 				} finally {
+					// FIXME remove
 					domainModelReference.init(domainModelRoot);
 				}
 			}
@@ -245,9 +248,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 		addResourceIfNecessary();
 
 		resolveDomainReferences(getViewModel(), getDomainModel());
-
-		settingToControlMapper = new SettingToControlMapper();
-		settingToControlMapper.instantiate(this);
+		loadImmediateServices();
 
 		viewModelContentAdapter = new ViewModelContentAdapter();
 
@@ -259,7 +260,6 @@ public class ViewModelContextImpl implements ViewModelContext {
 			domainModelContentAdapter = new DomainModelContentAdapter();
 			domainObject.eAdapters().add(domainModelContentAdapter);
 		}
-		loadImmediateServices();
 
 		for (final ViewModelService viewService : viewServices) {
 			if (!GlobalViewModelService.class.isInstance(viewService) || parentContext == null) {
@@ -271,6 +271,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 
 	private void loadImmediateServices() {
 		final Bundle bundle = FrameworkUtil.getBundle(getClass());
+
 		if (bundle != null) {
 			final BundleContext bundleContext = bundle.getBundleContext();
 			final ServiceReference<EMFFormsLegacyServicesManager> serviceReferenceLegacy = bundleContext
@@ -283,6 +284,10 @@ public class ViewModelContextImpl implements ViewModelContext {
 			}
 
 			servicesManager = getService(EMFFormsViewServiceManager.class);
+			final SettingToControlMapperFactory settingToControlMapperFactory = getService(
+				SettingToControlMapperFactory.class);
+			settingToControlMapper = settingToControlMapperFactory.createSettingToControlMapper(this);
+
 			if (parentContext == null) {
 				for (final Class<?> globalImmediateService : servicesManager.getAllGlobalImmediateServiceTypes()) {
 					final Optional<?> service = servicesManager.createGlobalImmediateService(globalImmediateService);
@@ -657,13 +662,13 @@ public class ViewModelContextImpl implements ViewModelContext {
 			if (VElement.class.isInstance(notifier)) {
 				resolveDomainReferences((VElement) notifier, getDomainModel());
 			}
-			if (VControl.class.isInstance(notifier)) {
+			if (VControl.class.isInstance(notifier) && settingToControlMapper != null) {
 				settingToControlMapper.vControlAdded((VControl) notifier);
 			}
 			if (VDomainModelReference.class.isInstance(notifier)) {
 				final VControl control = findControl(VDomainModelReference.class.cast(notifier));
-				if (control != null) {
-					settingToControlMapper.updateControlMapping(control);
+				if (control != null && settingToControlMapper != null) {
+					settingToControlMapper.vControlAdded(control);
 				}
 
 			}

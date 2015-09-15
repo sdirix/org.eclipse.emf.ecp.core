@@ -11,7 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.context;
 
-import java.util.Iterator;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
@@ -20,22 +20,27 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.common.spi.UniqueSetting;
+import org.eclipse.emf.ecp.view.spi.context.SettingToControlMapper;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
 import org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emfforms.spi.common.report.AbstractReport;
+import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.core.services.mappingprovider.EMFFormsMappingProvider;
 
 /**
- * Helper class for the {@link ViewModelContextImpl} to manage the setting to control mappings.
+ * Implementation of {@link SettingToControlMapper}.
  *
  * @author Lucas Koehler
  *
  */
-// FIXME remove asap
 @SuppressWarnings("deprecation")
-public class SettingToControlMapper implements ViewModelService {
+public class SettingToControlMapperImpl implements SettingToControlMapper {
 	private ViewModelContext viewModelContext;
+
+	private final Set<EMFFormsMappingProvider> mappingProviders = new LinkedHashSet<EMFFormsMappingProvider>();
+	private final ReportService reportService;
 
 	/**
 	 * A mapping between settings and controls.
@@ -49,7 +54,7 @@ public class SettingToControlMapper implements ViewModelService {
 
 	// private final Map<EObject, Set<SettingToControlMapper>> childMappers = new LinkedHashMap<EObject,
 	// Set<SettingToControlMapper>>();
-
+	//
 	// /**
 	// * A mapping between setting to control mappers and their using elements.
 	// */
@@ -57,22 +62,30 @@ public class SettingToControlMapper implements ViewModelService {
 	// VElement>();
 
 	/**
-	 * Returns all controls which are associated with the provided {@link Setting}. The {@link Setting} is converted to
-	 * a {@link UniqueSetting}.
+	 * Creates a new instance of {@link SettingToControlMapperImpl}.
+	 * <br />
+	 * <strong>Note:</strong> {@link #instantiate(ViewModelContext)} has to be called before this instance can be used.
 	 *
-	 * @param setting the {@link Setting} to search controls for
-	 * @return the Set of all controls associated with the provided setting or null if no controls can be found
+	 * @param reportService The {@link ReportService}
+	 * @param mappingProviders The {@link EMFFormsMappingProvider mapping providers}
 	 */
+	public SettingToControlMapperImpl(ReportService reportService, Set<EMFFormsMappingProvider> mappingProviders) {
+		this.reportService = reportService;
+		this.mappingProviders.addAll(mappingProviders);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public Set<VControl> getControlsFor(Setting setting) {
 		return settingToControlMap.get(UniqueSetting.createSetting(setting));
 	}
 
 	/**
-	 * Returns all controls which are associated with the provided {@link UniqueSetting}.
-	 *
-	 * @param setting the {@link UniqueSetting} to search controls for
-	 * @return the Set of all controls associated with the provided setting or null if no controls can be found
+	 * {@inheritDoc}
 	 */
+	@Override
 	public Set<VElement> getControlsFor(UniqueSetting setting) {
 		final Set<VElement> elements = new LinkedHashSet<VElement>();
 		final Set<VControl> currentControls = settingToControlMap.get(setting);
@@ -89,10 +102,9 @@ public class SettingToControlMapper implements ViewModelService {
 	}
 
 	/**
-	 * Updates the setting to control mapping for the given {@link VControl}.
-	 *
-	 * @param vControl The {@link VControl}
+	 * {@inheritDoc}
 	 */
+	@Override
 	public void updateControlMapping(VControl vControl) {
 		if (vControl == null) {
 			return;
@@ -101,41 +113,33 @@ public class SettingToControlMapper implements ViewModelService {
 		for (final UniqueSetting setting : settingToControlMap.keySet()) {
 			settingToControlMap.get(setting).remove(vControl);
 		}
-		if (vControl.getDomainModelReference() == null) {
-			return;
-		}
-		final Iterator<Setting> iterator = vControl.getDomainModelReference().getIterator();
-		while (iterator.hasNext()) {
-			final Setting setting = iterator.next();
-			if (setting == null) {
-				continue;
+		// update mapping
+		final Map<UniqueSetting, Set<VControl>> map = getSettingsToControlMapFor(vControl,
+			viewModelContext.getDomainModel());
+		for (final UniqueSetting setting : map.keySet()) {
+			if (!settingToControlMap.containsKey(setting)) {
+				settingToControlMap.put(setting, new LinkedHashSet<VControl>());
 			}
-			final UniqueSetting uniqueSetting = UniqueSetting.createSetting(setting);
-			if (!settingToControlMap.containsKey(uniqueSetting)) {
-				settingToControlMap.put(uniqueSetting, new LinkedHashSet<VControl>());
-			}
-			settingToControlMap.get(uniqueSetting).add(vControl);
+			settingToControlMap.get(setting).addAll(map.get(setting));
 		}
 	}
 
 	/**
-	 * Removes a {@link VControl} from the setting to control mapping.
-	 *
-	 * @param vControl The {@link VControl} to remove
+	 * {@inheritDoc}
 	 */
+	@Override
 	public void vControlRemoved(VControl vControl) {
 		if (vControl.getDomainModelReference() == null) {
 			return;
 		}
 
-		final Iterator<Setting> iterator = vControl.getDomainModelReference().getIterator();
-		while (iterator.hasNext()) {
-			final Setting next = iterator.next();
-			final UniqueSetting uniqueSetting = UniqueSetting.createSetting(next);
-			if (settingToControlMap.containsKey(uniqueSetting)) {
-				settingToControlMap.get(uniqueSetting).remove(vControl);
-				if (settingToControlMap.get(uniqueSetting).size() == 0) {
-					settingToControlMap.remove(uniqueSetting);
+		final Map<UniqueSetting, Set<VControl>> map = getSettingsToControlMapFor(vControl,
+			viewModelContext.getDomainModel());
+		for (final UniqueSetting setting : map.keySet()) {
+			if (settingToControlMap.containsKey(setting)) {
+				settingToControlMap.get(setting).removeAll(map.get(setting));
+				if (settingToControlMap.get(setting).size() == 0) {
+					settingToControlMap.remove(setting);
 				}
 			}
 		}
@@ -146,23 +150,29 @@ public class SettingToControlMapper implements ViewModelService {
 	}
 
 	/**
-	 * Adds a {@link VControl} to the setting to control mapping.
-	 *
-	 * @param vControl The {@link VControl} to add
+	 * {@inheritDoc}
 	 */
+	@Override
 	public void vControlAdded(VControl vControl) {
 		if (vControl.getDomainModelReference() == null) {
 			return;
 		}
 
 		checkAndUpdateSettingToControlMapping(vControl);
+		// final Map<UniqueSetting, Set<VControl>> map = getSettingsToControlMapFor(vControl,
+		// viewModelContext.getDomainModel());
+		// for (final UniqueSetting setting : map.keySet()) {
+		// if (!settingToControlMap.containsKey(setting)) {
+		// settingToControlMap.put(setting, new LinkedHashSet<VControl>());
+		// }
+		// settingToControlMap.get(setting).addAll(map.get(setting));
+		// }
 	}
 
 	/**
-	 * Checks and updates the mapping for the given {@link EObject}.
-	 *
-	 * @param eObject The {@link EObject}
+	 * {@inheritDoc}
 	 */
+	@Override
 	public void checkAndUpdateSettingToControlMapping(EObject eObject) {
 		if (VControl.class.isInstance(eObject)) {
 			final VControl vControl = (VControl) eObject;
@@ -179,8 +189,10 @@ public class SettingToControlMapper implements ViewModelService {
 					updateControlMapping(vControl);
 				}
 			};
-			controlChangeListener.put(vControl, changeListener);
-
+			final DomainModelReferenceChangeListener oldListener = controlChangeListener.put(vControl, changeListener);
+			if (oldListener != null) {
+				vControl.getDomainModelReference().getChangeListener().remove(oldListener);
+			}
 			vControl.getDomainModelReference().getChangeListener().add(changeListener);
 			viewModelContext.registerDomainChangeListener(vControl.getDomainModelReference());
 		}
@@ -196,15 +208,29 @@ public class SettingToControlMapper implements ViewModelService {
 		viewModelContext = context;
 	}
 
+	private Map<UniqueSetting, Set<VControl>> getSettingsToControlMapFor(VControl vControl, EObject domainObject) {
+		EMFFormsMappingProvider bestMappingProvider = null;
+		double bestScore = EMFFormsMappingProvider.NOT_APPLICABLE;
+
+		for (final EMFFormsMappingProvider mappingProvider : mappingProviders) {
+			if (mappingProvider.isApplicable(vControl, domainObject) > bestScore) {
+				bestMappingProvider = mappingProvider;
+				bestScore = mappingProvider.isApplicable(vControl, domainObject);
+			}
+		}
+		if (bestMappingProvider == null) {
+			reportService.report(new AbstractReport("Warning: No applicable EMFFormsMappingProvider was found.")); //$NON-NLS-1$
+			return Collections.emptyMap();
+		}
+		return bestMappingProvider.getMappingFor(vControl, domainObject);
+	}
+
 	// /**
-	// * Adds a child {@link SettingToControlMapper} to this mapper.
-	// *
-	// * @param vElement The {@link VElement} that uses the new mapper
-	// * @param eObject the domain object of the {@link ViewModelContext}
-	// * @param childContext The {@link ViewModelContext} of the new child mapper
+	// * {@inheritDoc}
 	// */
+	// @Override
 	// public void addChildMapper(VElement vElement, EObject eObject, ViewModelContext childContext) {
-	// final SettingToControlMapper mapper = new SettingToControlMapper();
+	// final SettingToControlMapper mapper = new SettingToControlMapperImpl(reportService, mappingProviders);
 	// mapper.instantiate(childContext);
 	// if (!childMappers.containsKey(eObject)) {
 	// childMappers.put(eObject, new LinkedHashSet<SettingToControlMapper>());
@@ -212,12 +238,11 @@ public class SettingToControlMapper implements ViewModelService {
 	// childMappers.get(eObject).add(mapper);
 	// childMapperUsers.put(mapper, vElement);
 	// }
-
+	//
 	// /**
-	// * Removes a child {@link SettingToControlMapper} from this mapper.
-	// *
-	// * @param eObject Remove all child mappers for this domain object
+	// * {@inheritDoc}
 	// */
+	// @Override
 	// public void removeChildMapper(EObject eObject) {
 	// final Set<SettingToControlMapper> removedMappers = childMappers.remove(eObject);
 	// if (removedMappers != null) {

@@ -268,6 +268,8 @@
 		<module>../../bundles/org.eclipse.emfforms.core.services.domainexpander.table</module>
 		<module>../../bundles/org.eclipse.emfforms.core.services.emfspecificservice</module>
 		<module>../../bundles/org.eclipse.emfforms.core.services.editsupport</module>
+		<module>../../bundles/org.eclipse.emfforms.core.services.mappingprovider.default</module>
+		<module>../../bundles/org.eclipse.emfforms.core.services.mappingprovider.table</module>
 		<module>../../bundles/org.eclipse.emfforms.swt.core</module>
 		<module>../../bundles/org.eclipse.emfforms.swt.core.di</module>
 		<module>../../bundles/org.eclipse.emfforms.swt.core.di.extension</module>

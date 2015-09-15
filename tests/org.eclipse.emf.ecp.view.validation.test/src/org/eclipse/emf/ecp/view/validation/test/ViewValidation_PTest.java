@@ -58,6 +58,7 @@ import org.junit.Test;
  * @author Eugen Neufeld
  * @author emueller
  */
+
 public class ViewValidation_PTest extends CommonValidationTest {
 
 	private DefaultRealm defaultRealm;
@@ -605,12 +606,14 @@ public class ViewValidation_PTest extends CommonValidationTest {
 		final Library lib = TestFactory.eINSTANCE.createLibrary();
 		lib.setName("bla");
 
+		final VView view = VViewFactory.eINSTANCE.createView();
 		final VTableControl control = VTableFactory.eINSTANCE.createTableControl();
+		view.getChildren().add(control);
 		control
 			.setDomainModelReference(
 				getVTableDomainModelReference(TestPackage.eINSTANCE.getLibrary_Writers()));
 
-		ViewModelContextFactory.INSTANCE.createViewModelContext(control, lib);
+		ViewModelContextFactory.INSTANCE.createViewModelContext(view, lib);
 
 		assertEquals("Severity of table must be error", Diagnostic.ERROR, control.getDiagnostic().getHighestSeverity());
 	}
@@ -622,7 +625,9 @@ public class ViewValidation_PTest extends CommonValidationTest {
 		final Writer writer = TestFactory.eINSTANCE.createWriter();
 		lib.getWriters().add(writer);
 
+		final VView view = VViewFactory.eINSTANCE.createView();
 		final VTableControl control = VTableFactory.eINSTANCE.createTableControl();
+		view.getChildren().add(control);
 		control
 			.setDomainModelReference(
 				getVTableDomainModelReference(TestPackage.eINSTANCE.getLibrary_Writers()));
@@ -631,7 +636,7 @@ public class ViewValidation_PTest extends CommonValidationTest {
 		VTableDomainModelReference.class.cast(control.getDomainModelReference()).getColumnDomainModelReferences()
 			.add(tc);
 
-		ViewModelContextFactory.INSTANCE.createViewModelContext(control, lib);
+		ViewModelContextFactory.INSTANCE.createViewModelContext(view, lib);
 
 		assertEquals("Severity of table must be error", Diagnostic.ERROR, control.getDiagnostic().getHighestSeverity());
 	}

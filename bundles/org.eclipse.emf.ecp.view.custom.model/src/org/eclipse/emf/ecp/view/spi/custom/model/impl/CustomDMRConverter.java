@@ -106,6 +106,10 @@ public class CustomDMRConverter implements DomainModelReferenceConverterEMF {
 
 		final VCustomDomainModelReference tableDomainModelReference = VCustomDomainModelReference.class
 			.cast(domainModelReference);
+		if (!tableDomainModelReference.getDomainModelReferences().isEmpty()) {
+			return emfFormsDatabinding
+				.getValueProperty(tableDomainModelReference.getDomainModelReferences().iterator().next(), object);
+		}
 		final ECPHardcodedReferences customControl = loadObject(tableDomainModelReference.getBundleName(),
 			tableDomainModelReference.getClassName());
 		if (customControl == null) {
