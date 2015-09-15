@@ -212,7 +212,8 @@ public abstract class AbstractControlRendererFX extends RendererFX<VControl> {
 			throw new NoPropertyDescriptorFoundExeption(setting.getEObject(), setting.getEStructuralFeature());
 		}
 
-		if (getVElement().getLabelAlignment() == LabelAlignment.LEFT) {
+		if (getVElement().getLabelAlignment() == LabelAlignment.LEFT
+			|| getVElement().getLabelAlignment() == LabelAlignment.DEFAULT) {
 			label = new Label();
 			label.setText(itemPropertyDescriptor.getDisplayName(setting
 				.getEObject()));

@@ -32,3 +32,4 @@ Require-Bundle: org.eclipse.fx.ui.workbench.fx,
  org.eclipse.emf.emfstore.fx.util
 Import-Package: javax.annotation;version="1.0.0",
  javax.inject;version="1.0.0"
+Bundle-Vendor: Eclipse Modeling Project

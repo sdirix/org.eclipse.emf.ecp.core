@@ -32,6 +32,7 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.AbstractControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.provider.ECPTooltipModifierHelper;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
@@ -68,6 +69,8 @@ import org.eclipse.jface.viewers.ColumnViewerEditorDeactivationEvent;
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.EditingSupport;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.TableViewerEditor;
@@ -81,6 +84,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
@@ -111,6 +115,7 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 	private Button addButton;
 
 	private final EMFDataBindingContext viewModelDBC;
+	private Label validationIcon;
 
 	/**
 	 * Default constructor.
@@ -239,7 +244,8 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(titleComposite);
 		GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(false).applyTo(titleComposite);
 		createLabelProvider();
-		final Label validationIcon = createValidationIcon(titleComposite);
+
+		validationIcon = createValidationIcon(titleComposite);
 		GridDataFactory.fillDefaults().hint(16, 17).grab(false, false).applyTo(validationIcon);
 
 		Button addButton = null;
@@ -263,6 +269,13 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 
 		initAddButton(addButton, list);
 		initRemoveButton(removeButton, list);
+
+		getTableViewer().addSelectionChangedListener(new ISelectionChangedListener() {
+			@Override
+			public void selectionChanged(SelectionChangedEvent event) {
+				MultiAttributeSWTRenderer.this.removeButton.setEnabled(!event.getSelection().isEmpty());
+			}
+		});
 
 		return composite;
 	}
@@ -377,6 +390,28 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 
 	private CellEditor createCellEditor(final EObject tempInstance, final EAttribute attribute, Table table) {
 		return CellEditorFactory.INSTANCE.createCellEditor(attribute, tempInstance, table, getViewModelContext());
+	}
+
+	@Override
+	protected void applyValidation() {
+		Display.getDefault().asyncExec(new Runnable() {
+
+			@Override
+			public void run() {
+				if (validationIcon == null) {
+					return;
+				}
+				if (validationIcon.isDisposed()) {
+					return;
+				}
+				if (getVElement().getDiagnostic() == null) {
+					return;
+				}
+				validationIcon.setImage(getValidationIcon(getVElement().getDiagnostic().getHighestSeverity()));
+				validationIcon.setToolTipText(ECPTooltipModifierHelper.modifyString(getVElement().getDiagnostic()
+					.getMessage(), null));
+			}
+		});
 	}
 
 	/**

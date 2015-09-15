@@ -7,10 +7,10 @@
             filePath="viewmodel.view">
       </file>
       <file
-            filePath="viewmodel2.view">
+            filePath="viewmodel.view">
          <filter
-               key="key"
-               value="value">
+               key="a"
+               value="x">
          </filter>
       </file>
    </extension>

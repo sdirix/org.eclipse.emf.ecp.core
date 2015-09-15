@@ -11,6 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emfforms.internal.spreadsheet.core.renderer.table;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
@@ -19,6 +20,7 @@ import java.util.Collection;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 
+import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -63,18 +65,52 @@ public class EMFFormsSpreadsheetTableControlRenderer_ITest {
 			new org.eclipse.emfforms.internal.spreadsheet.core.transfer.EMFFormsSpreadsheetExporterImpl.ViewProvider() {
 				@Override
 				public VView getViewModel(EObject viewEobject, VViewModelProperties properties) {
-					return getView();
+					return getView(DetailEditing.NONE);
 				}
 			});
 		final EObject domainModel = getDomainModel();
 		final EObject domainModel2 = getDomainModel();
 		final Workbook workbook = viewRenderer.render(Arrays.asList(domainModel, domainModel2), null, null, null);
 
+		final Sheet sheet = workbook.getSheet("root"); //$NON-NLS-1$
+		assertEquals(4, sheet.getLastRowNum()); // the rows 0,1,2 are fix and then 3,4 are added
+		assertEquals(22, sheet.getRow(0).getLastCellNum());// there are 22 rows, (21 from the view model + 1 for the id)
 		// read data
 
 		final EMFFormsSpreadsheetImporter spreadsheetImport = EMFFormsSpreadsheetImporter.INSTANCE;
 		final Collection<EObject> domainModels = spreadsheetImport.importSpreadsheet(workbook,
 			TaskPackage.eINSTANCE.getTask()).getImportedEObjects();
+		assertEquals(2, domainModels.size());
+		for (final EObject model : domainModels) {
+			assertTrue(EcoreUtil.equals(model, domainModel));
+		}
+	}
+
+	@Test
+	public void testWithDialogDetail() throws DatatypeConfigurationException, DatabindingFailedException, IOException {
+		// write data
+		@SuppressWarnings("restriction")
+		final EMFFormsSpreadsheetExporter viewRenderer = new org.eclipse.emfforms.internal.spreadsheet.core.transfer.EMFFormsSpreadsheetExporterImpl(
+			new org.eclipse.emfforms.internal.spreadsheet.core.transfer.EMFFormsSpreadsheetExporterImpl.ViewProvider() {
+				@Override
+				public VView getViewModel(EObject viewEobject, VViewModelProperties properties) {
+					return getView(DetailEditing.WITH_DIALOG);
+				}
+			});
+		final EObject domainModel = getDomainModel();
+		final EObject domainModel2 = getDomainModel();
+		final Workbook workbook = viewRenderer.render(Arrays.asList(domainModel, domainModel2), null, null, null);
+
+		final Sheet sheet = workbook.getSheet("root"); //$NON-NLS-1$
+		assertEquals(4, sheet.getLastRowNum()); // the rows 0,1,2 are fix and then 3,4 are added
+		assertEquals(22, sheet.getRow(0).getLastCellNum());// there are 22 rows
+		// read data
+
+		final EMFFormsSpreadsheetImporter spreadsheetImport = EMFFormsSpreadsheetImporter.INSTANCE;
+		final Collection<EObject> domainModels = spreadsheetImport.importSpreadsheet(workbook,
+			TaskPackage.eINSTANCE.getTask()).getImportedEObjects();
+
+		assertEquals(2, domainModels.size());
 
 		for (final EObject model : domainModels) {
 			assertTrue(EcoreUtil.equals(model, domainModel));
@@ -98,10 +134,11 @@ public class EMFFormsSpreadsheetTableControlRenderer_ITest {
 		return task;
 	}
 
-	private VView getView() {
+	private VView getView(DetailEditing detailEditing) {
 		final VView view = VViewFactory.eINSTANCE.createView();
 		view.setRootEClass(TaskPackage.eINSTANCE.getTask());
 		final VTableControl table = VTableFactory.eINSTANCE.createTableControl();
+		table.setDetailEditing(detailEditing);
 		view.getChildren().add(table);
 
 		final VTableDomainModelReference tDMR = VTableFactory.eINSTANCE.createTableDomainModelReference();

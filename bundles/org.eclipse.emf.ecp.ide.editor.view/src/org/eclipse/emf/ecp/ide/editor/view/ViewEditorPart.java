@@ -13,6 +13,7 @@ package org.eclipse.emf.ecp.ide.editor.view;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.text.MessageFormat;
 import java.util.EventObject;
 import java.util.HashMap;
 import java.util.Map;
@@ -132,6 +133,16 @@ public class ViewEditorPart extends EditorPart implements
 		try {
 			basicCommandStack = new BasicCommandStack();
 			loadView(false);
+		} // BEGIN SUPRESS CATCH EXCEPTION
+		catch (final Exception e) {// END SUPRESS CATCH EXCEPTION
+			/*
+			 * ignore all exceptions during first loading of view. The view might actually be an outdated view, so the
+			 * second call will migrate the view. if the migration step fails or is not possible at all, we will fail in
+			 * the later call.
+			 */
+		}
+
+		try {
 			registerEcore();
 			// reload view resource after EClass' package resource was loaded into the package registry
 			loadView(true);
@@ -141,7 +152,8 @@ public class ViewEditorPart extends EditorPart implements
 			// BEGIN SUPRESS CATCH EXCEPTION
 		} catch (final Exception e) {
 			Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
-			throw new PartInitException(Messages.ViewEditorPart_ViewCannotBeDisplayed, e);
+			throw new PartInitException(
+				MessageFormat.format(Messages.ViewEditorPart_ViewCannotBeDisplayed, e.getLocalizedMessage()), e);
 		} // END SUPRESS CATCH EXCEPTION
 
 		basicCommandStack.addCommandStackListener(new CommandStackListener() {
@@ -190,8 +202,9 @@ public class ViewEditorPart extends EditorPart implements
 	 *
 	 * @param migrate whether the view model should be migrated (if actually needed) <b>before</b> attempting to load it
 	 * @throws IOException if the view model resource failed to load
+	 * @throws PartInitException
 	 */
-	private void loadView(boolean migrate) throws IOException {
+	private void loadView(boolean migrate) throws IOException, PartInitException {
 		final FileEditorInput fei = (FileEditorInput) getEditorInput();
 
 		final ResourceSet resourceSet = createResourceSet();
@@ -206,6 +219,9 @@ public class ViewEditorPart extends EditorPart implements
 			.put(XMLResource.OPTION_RECORD_UNKNOWN_FEATURE, Boolean.TRUE);
 		resource = resourceSet.createResource(resourceURI);
 		resource.load(loadOptions);
+		if (resource.getContents().size() == 0 || !VView.class.isInstance(resource.getContents().get(0))) {
+			throw new PartInitException(Messages.ViewEditorPart_InvalidVView);
+		}
 		// resolve all proxies
 		int rsSize = resourceSet.getResources().size();
 		EcoreUtil.resolveAll(resourceSet);
@@ -505,6 +521,10 @@ public class ViewEditorPart extends EditorPart implements
 			} catch (final IOException e) {
 				Activator.getDefault().getLog()
 					.log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
+			} catch (final PartInitException e) {
+				Activator.getDefault().getLog()
+					.log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
+				return;
 			}
 			final VView view = getView();
 

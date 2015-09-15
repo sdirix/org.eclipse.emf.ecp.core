@@ -8,11 +8,11 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   
-  <artifactId>q7tests-kepler</artifactId>
+  <artifactId>q7tests-current</artifactId>
   <packaging>rcpttTest</packaging>
 
-  <properties>
-    <eclipse-name>kepler</eclipse-name>
-	<eclipse-sr>SR2</eclipse-sr>
+	<properties>
+    <eclipse-name>mars</eclipse-name>
+	<eclipse-sr>R</eclipse-sr>
   </properties>
 </project>

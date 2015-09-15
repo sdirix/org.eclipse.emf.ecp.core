@@ -17,13 +17,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetReport;
+import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsCellStyleConstants;
 import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsConverterException;
 import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsSpreadsheetValueConverter;
 import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsSpreadsheetValueConverterHelper;
@@ -83,10 +87,19 @@ public class EMFFormsSpreadsheetMultiReferenceConverter implements EMFFormsSprea
 	}
 
 	@SuppressWarnings("unchecked")
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsSpreadsheetValueConverter#setCellValue(org.apache.poi.ss.usermodel.Cell,
+	 *      java.lang.Object, org.eclipse.emf.ecore.EStructuralFeature,
+	 *      org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
+	 */
 	@Override
-	public String convertValueToString(Object values, EObject domainObject, VDomainModelReference dmr) {
+	public void setCellValue(Cell cell, Object values, EStructuralFeature eStructuralFeature,
+		ViewModelContext viewModelContext)
+			throws EMFFormsConverterException {
 		if (values == null) {
-			return ""; //$NON-NLS-1$
+			return;
 		}
 		try {
 			final StringBuilder result = new StringBuilder();
@@ -96,16 +109,23 @@ public class EMFFormsSpreadsheetMultiReferenceConverter implements EMFFormsSprea
 				}
 				result.append(XMIStringConverterHelper.getSerializedEObject(value));
 			}
-			return result.toString();
+			cell.setCellValue(result.toString());
+			cell.setCellStyle((CellStyle) viewModelContext.getContextValue(EMFFormsCellStyleConstants.TEXT));
 		} catch (final IOException ex) {
 			reportService.report(new EMFFormsSpreadsheetReport(ex, EMFFormsSpreadsheetReport.ERROR));
 		}
-		return ""; //$NON-NLS-1$
+		return;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsSpreadsheetValueConverter#getCellValue(org.apache.poi.ss.usermodel.Cell,
+	 *      org.eclipse.emf.ecore.EStructuralFeature)
+	 */
 	@Override
-	public Object convertStringToValue(String string, EObject domainObject, VDomainModelReference dmr)
-		throws EMFFormsConverterException {
+	public Object getCellValue(Cell cell, EStructuralFeature eStructuralFeature) throws EMFFormsConverterException {
+		final String string = cell.getStringCellValue();
 		if (string == null || string.length() == 0) {
 			return Collections.emptyList();
 		}

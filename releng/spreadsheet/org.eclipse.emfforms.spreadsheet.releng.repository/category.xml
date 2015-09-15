@@ -3,7 +3,7 @@
    <feature id="org.eclipse.emfforms.spreadsheet.feature.source" version="0.0.0">
       <category name="org.eclipse.emfforms.spreadsheet"/>
    </feature>
-   <category-def name="org.eclipse.emfforms.spreadsheet" label="Spreadsheet Import Export for EMFForms">
+   <category-def name="org.eclipse.emfforms.spreadsheet" label="EMFForms Spreadsheet Rendering">
       <description>
          Contains the EMFForms Support for import and export of Spreadsheerts.
       </description>

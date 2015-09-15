@@ -17,16 +17,26 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.BuiltinFormats;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.makeithappen.model.task.Task;
 import org.eclipse.emf.ecp.makeithappen.model.task.TaskFactory;
 import org.eclipse.emf.ecp.makeithappen.model.task.TaskPackage;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsCellStyleConstants;
 import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsConverterException;
 import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsSpreadsheetValueConverter;
 import org.junit.Before;
@@ -43,6 +53,8 @@ public class EMFFormsSpreadsheetSingleReferenceConverter_Test {
 	private EMFFormsSpreadsheetSingleReferenceConverter converter;
 	private EObject domainObject;
 	private VDomainModelReference dmr;
+	private Cell cell;
+	private ViewModelContext viewModelContext;
 
 	@Before
 	public void before() {
@@ -51,6 +63,19 @@ public class EMFFormsSpreadsheetSingleReferenceConverter_Test {
 		databinding = mock(EMFFormsDatabinding.class);
 		domainObject = mock(EObject.class);
 		dmr = mock(VDomainModelReference.class);
+
+		final Workbook wb = new HSSFWorkbook();
+		final CellStyle cellStyle = wb.createCellStyle();
+		cellStyle.setDataFormat((short) BuiltinFormats.getBuiltinFormat("text")); //$NON-NLS-1$
+
+		final Sheet sheet = wb.createSheet("test"); //$NON-NLS-1$
+
+		// Create a row and put some cells in it. Rows are 0 based.
+		final Row row = sheet.createRow((short) 0);
+		cell = row.createCell(0);
+
+		viewModelContext = mock(ViewModelContext.class);
+		when(viewModelContext.getContextValue(EMFFormsCellStyleConstants.TEXT)).thenReturn(cellStyle);
 	}
 
 	@Test
@@ -96,27 +121,20 @@ public class EMFFormsSpreadsheetSingleReferenceConverter_Test {
 	}
 
 	@Test
-	public void testToString() throws DatabindingFailedException {
-		final IValueProperty property = mock(IValueProperty.class);
-		when(property.getValueType()).thenReturn(TaskPackage.eINSTANCE.getTask_Assignee());
-		when(databinding.getValueProperty(any(VDomainModelReference.class), any(EObject.class)))
-			.thenReturn(property);
-		converter.setDatabinding(databinding);
-		converter.setReportService(reportService);
-		assertEquals(EXPECTED, converter.convertValueToString(task("1"), domainObject, dmr)); //$NON-NLS-1$
+	public void testToString() throws DatabindingFailedException, EMFFormsConverterException {
+		final EObject cellValue = task("1"); //$NON-NLS-1$
+		final EStructuralFeature eStructuralFeature = TaskPackage.eINSTANCE.getTask_Assignee();
+		converter.setCellValue(cell, cellValue, eStructuralFeature, viewModelContext);
+		assertEquals(EXPECTED, cell.getStringCellValue());
 	}
 
 	@Test
 	public void testFromString() throws DatabindingFailedException, EMFFormsConverterException {
-		final IValueProperty property = mock(IValueProperty.class);
-		when(property.getValueType()).thenReturn(TaskPackage.eINSTANCE.getTask_Assignee());
-		when(databinding.getValueProperty(any(VDomainModelReference.class), any(EObject.class)))
-			.thenReturn(property);
-		converter.setDatabinding(databinding);
-		converter.setReportService(reportService);
-		assertTrue(
-			EcoreUtil.equals(task("1"), //$NON-NLS-1$
-				Task.class.cast(converter.convertStringToValue(EXPECTED, domainObject, dmr))));
+		final EObject cellValue = task("1"); //$NON-NLS-1$
+		cell.setCellValue(EXPECTED);
+		final EStructuralFeature eStructuralFeature = TaskPackage.eINSTANCE.getTask_Assignee();
+		final Object value = converter.getCellValue(cell, eStructuralFeature);
+		assertTrue(EcoreUtil.equals(cellValue, (EObject) value));
 	}
 
 	private static Task task(String desc) {

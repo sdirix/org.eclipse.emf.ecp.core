@@ -201,14 +201,13 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 			/* convert value */
 			Object convertedValue;
 			try {
-				final String value = rowCell.getStringCellValue();
-				convertedValue = converter.convertStringToValue(value, eObject, dmr);
+				convertedValue = converter.getCellValue(rowCell, feature);
 			} catch (final EMFFormsConverterException ex) {
 				errorReports.reportError(
 					Severity.ERROR,
-					LocalizationServiceHelper.getString(getClass(),
-						MessageFormat.format("ImportError_ValueConversionFailed", ex.getMessage())), //$NON-NLS-1$
-					ErrorFactory.eINSTANCE.createEMFLocation(eObject,
+					MessageFormat.format(
+						LocalizationServiceHelper.getString(getClass(), "ImportError_ValueConversionFailed"), //$NON-NLS-1$
+						ex.getMessage()), ErrorFactory.eINSTANCE.createEMFLocation(eObject,
 						createSettingLocation(observableValue, feature),
 						ErrorFactory.eINSTANCE.createDMRLocation(dmr)),
 					ErrorFactory.eINSTANCE.createSheetLocation(sheetname, columnId, eObjectRow.getRowNum(),

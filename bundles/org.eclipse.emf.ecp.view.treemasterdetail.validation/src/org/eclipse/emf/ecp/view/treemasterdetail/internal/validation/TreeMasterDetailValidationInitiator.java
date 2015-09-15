@@ -66,7 +66,7 @@ public class TreeMasterDetailValidationInitiator implements
 			if (notification.getRawNotification().isTouch() || mapping.isEmpty()) {
 				return;
 			}
-			for (final TreeContextMapping treeContextEntry : mapping.keySet()) {
+			for (final TreeContextMapping treeContextEntry : new LinkedHashSet<TreeContextMapping>(mapping.keySet())) {
 				if (!mapping.get(treeContextEntry).contains(manipulateSelection(notification.getNotifier()))) {
 					return;
 				}

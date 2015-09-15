@@ -15,7 +15,6 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference;
@@ -32,11 +31,10 @@ import org.eclipse.emf.ecp.view.spi.table.model.DetailEditing;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
-import org.eclipse.emfforms.internal.spreadsheet.core.EMFFormsSpreadsheetViewModelContext;
 import org.eclipse.emfforms.internal.spreadsheet.core.renderer.EMFFormsSpreadsheetControlRenderer;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
-import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsAbstractSpreadsheetRenderer;
@@ -57,7 +55,7 @@ import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsSpreadsheetVa
 @SuppressWarnings("restriction")
 public class EMFFormsSpreadsheetTableControlRenderer extends EMFFormsAbstractSpreadsheetRenderer<VTableControl> {
 
-	private final EMFFormsDatabinding emfformsDatabinding;
+	private final EMFFormsDatabindingEMF emfformsDatabinding;
 	private final EMFFormsLabelProvider emfformsLabelProvider;
 	private final ReportService reportService;
 	private final EMFFormsSpreadsheetRendererFactory rendererFactory;
@@ -69,7 +67,7 @@ public class EMFFormsSpreadsheetTableControlRenderer extends EMFFormsAbstractSpr
 	/**
 	 * Default constructor.
 	 *
-	 * @param emfformsDatabinding The EMFFormsDatabinding to use
+	 * @param emfformsDatabinding The EMFFormsDatabindingEMF to use
 	 * @param emfformsLabelProvider The EMFFormsLabelProvider to use
 	 * @param reportService The {@link ReportService}
 	 * @param rendererFactory The EMFFormsSpreadsheetRendererFactory to use
@@ -80,7 +78,7 @@ public class EMFFormsSpreadsheetTableControlRenderer extends EMFFormsAbstractSpr
 	 */
 	// BEGIN COMPLEX CODE
 	public EMFFormsSpreadsheetTableControlRenderer(
-		EMFFormsDatabinding emfformsDatabinding,
+		EMFFormsDatabindingEMF emfformsDatabinding,
 		EMFFormsLabelProvider emfformsLabelProvider,
 		ReportService reportService,
 		EMFFormsSpreadsheetRendererFactory rendererFactory,
@@ -132,16 +130,15 @@ public class EMFFormsSpreadsheetTableControlRenderer extends EMFFormsAbstractSpr
 			final VTableDomainModelReference tableDomainModelReference = (VTableDomainModelReference) vElement
 				.getDomainModelReference();
 
-			for (int i = 0; i < Math.max(observableList.size(), 3); i++) {
+			for (int i = 0; i < 3; i++) {
 				String prefixName = (String) emfformsLabelProvider.getDisplayName(
 					tableDomainModelReference.getDomainModelReference())
 					.getValue();
 				if (prefixName == null || prefixName.length() == 0) {
 					try {
-						prefixName = EStructuralFeature.class.cast(
-							emfformsDatabinding.getValueProperty(
-								tableDomainModelReference.getDomainModelReference(),
-								viewModelContext.getDomainModel()).getValueType())
+						prefixName = emfformsDatabinding.getValueProperty(
+							tableDomainModelReference.getDomainModelReference(),
+							viewModelContext.getDomainModel()).getStructuralFeature()
 							.getName();
 					} catch (final DatabindingFailedException ex) {
 						reportService
@@ -171,9 +168,8 @@ public class EMFFormsSpreadsheetTableControlRenderer extends EMFFormsAbstractSpr
 					final VControl vControl = VViewFactory.eINSTANCE.createControl();
 
 					vControl.setDomainModelReference(EcoreUtil.copy(domainModelReference));
-					final ViewModelContext subViewModelContext = new EMFFormsSpreadsheetViewModelContext(
-						(VView) viewModelContext.getViewModel(),
-						viewModelContext.getDomainModel());
+					final ViewModelContext subViewModelContext = viewModelContext.getChildContext(
+						viewModelContext.getDomainModel(), vElement, (VView) viewModelContext.getViewModel());
 					subViewModelContext.putContextValue(EMFFormsExportTableParent.EXPORT_TABLE_PARENT, tableParent);
 
 					numColumns += controlRenderer.render(workbook, vControl, subViewModelContext,
@@ -186,9 +182,12 @@ public class EMFFormsSpreadsheetTableControlRenderer extends EMFFormsAbstractSpr
 				if (vElement.getDetailEditing() != DetailEditing.NONE) {
 					final EObject tableEntry = getTableEntry(observableList, i);
 					final VView viewModel = getView(vElement, tableEntry, viewModelContext);
+					if (viewModel == null) {
+						continue;
+					}
 
-					final ViewModelContext subViewModelContext = new EMFFormsSpreadsheetViewModelContext(viewModel,
-						viewModelContext.getDomainModel());
+					final ViewModelContext subViewModelContext = viewModelContext.getChildContext(
+						viewModelContext.getDomainModel(), vElement, viewModel);
 
 					subViewModelContext.putContextValue(EMFFormsExportTableParent.EXPORT_TABLE_PARENT, tableParent);
 					try {
@@ -229,7 +228,7 @@ public class EMFFormsSpreadsheetTableControlRenderer extends EMFFormsAbstractSpr
 	private VView getView(VTableControl tableControl, EObject domainObject, ViewModelContext viewModelContext)
 		throws DatabindingFailedException {
 		VView detailView = tableControl.getDetailView();
-		if (detailView == null) {
+		if (detailView == null && tableControl.getDetailEditing() != DetailEditing.WITH_DIALOG) {
 			final VElement viewModel = viewModelContext.getViewModel();
 			final VViewModelProperties properties = ViewModelPropertiesHelper.getInhertitedPropertiesOrEmpty(viewModel);
 			detailView = ViewProviderHelper.getView(domainObject, properties);

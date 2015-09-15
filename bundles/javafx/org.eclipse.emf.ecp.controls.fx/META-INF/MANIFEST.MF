@@ -22,3 +22,4 @@ Export-Package: org.eclipse.emf.ecp.controls.fx.util;x-internal:=true,
  org.eclipse.emf.ecp.controls.internal.fx;x-internal:=true,
  org.eclipse.emf.ecp.controls.renderer.fx
 Import-Package: com.ibm.icu.text;version="50.0.0"
+Bundle-Vendor: Eclipse Modeling Project

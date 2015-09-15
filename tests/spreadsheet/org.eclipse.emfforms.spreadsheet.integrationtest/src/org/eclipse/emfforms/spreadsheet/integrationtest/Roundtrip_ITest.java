@@ -21,6 +21,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
@@ -35,6 +36,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.xml.type.internal.XMLCalendar;
 import org.eclipse.emf.ecp.makeithappen.model.task.Nationality;
 import org.eclipse.emf.ecp.makeithappen.model.task.TaskFactory;
 import org.eclipse.emf.ecp.makeithappen.model.task.TaskPackage;
@@ -130,6 +132,8 @@ public class Roundtrip_ITest {
 		user.setWeight(1.1);
 		user.setHeigth(1);
 		user.setNationality(Nationality.ITALIAN);
+		user.setTimeOfRegistration(Calendar.getInstance().getTime());
+		user.setDateOfBirth(new XMLCalendar(Calendar.getInstance().getTime(), XMLCalendar.DATE));
 		return user;
 	}
 

@@ -27,6 +27,8 @@ import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.util.RootObject;
+import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.resource.FontDescriptor;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
@@ -130,8 +132,12 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 		verticalSash = createSash(this, buildBehaviour);
 
 		// Create the Tree
-		treeViewer = buildBehaviour.createTree(this);
-		addTreeViewerLayoutData(treeViewer, verticalSash);
+		final Composite treeComposite = new Composite(this, SWT.NONE);
+		addTreeViewerLayoutData(treeComposite, verticalSash);
+		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(treeComposite);
+
+		treeViewer = buildBehaviour.createTree(treeComposite);
+		GridDataFactory.fillDefaults().grab(true, true).applyTo(treeViewer.getControl());
 		treeViewer.addSelectionChangedListener(new ISelectionChangedListener() {
 
 			@Override
@@ -177,13 +183,13 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 		detailComposite.setLayoutData(detailFormData);
 	}
 
-	private void addTreeViewerLayoutData(TreeViewer treeViewer, Sash verticalSash) {
+	private void addTreeViewerLayoutData(Composite treeComposite, Sash verticalSash) {
 		final FormData treeFormData = new FormData();
 		treeFormData.bottom = new FormAttachment(100, -5);
 		treeFormData.left = new FormAttachment(0, 5);
 		treeFormData.right = new FormAttachment(verticalSash, -2);
 		treeFormData.top = new FormAttachment(0, 5);
-		treeViewer.getControl().setLayoutData(treeFormData);
+		treeComposite.setLayoutData(treeFormData);
 	}
 
 	private Sash createSash(final Composite parent, TreeWidthProvider buildBehaviour) {

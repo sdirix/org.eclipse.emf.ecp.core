@@ -15,8 +15,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
@@ -26,6 +24,7 @@ import java.util.Map;
 import javax.xml.datatype.DatatypeConfigurationException;
 
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -155,23 +154,24 @@ public class EMFFormsSpreadsheetExporterImpl_ITest {
 				assertEquals(user.getGender().toString(), cell.getStringCellValue());
 				break;
 			case 3:
-				assertEquals(Boolean.toString(user.isActive()), cell.getStringCellValue());
+				assertEquals(user.isActive(), cell.getBooleanCellValue());
 				break;
 			case 4:
-				final DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ"); //$NON-NLS-1$
-				assertEquals(df.format(user.getTimeOfRegistration()), cell.getStringCellValue());
+				assertEquals(user.getTimeOfRegistration(), cell.getDateCellValue());
 				break;
 			case 5:
-				assertEquals(Double.toString(user.getWeight()), cell.getStringCellValue());
+				assertEquals(user.getWeight(), cell.getNumericCellValue(), 0);
 				break;
 			case 6:
-				assertEquals(Integer.toString(user.getHeigth()), cell.getStringCellValue());
+				assertEquals(user.getHeigth(), Double.valueOf(cell.getNumericCellValue()).intValue());
 				break;
 			case 7:
 				assertEquals(user.getNationality().toString(), cell.getStringCellValue());
 				break;
 			case 8:
-				assertEquals(user.getDateOfBirth().toString(), cell.getStringCellValue());
+				assertEquals(
+					user.getDateOfBirth().toGregorianCalendar().getTime(),
+					DateUtil.getJavaCalendarUTC(cell.getNumericCellValue(), false).getTime());
 				break;
 			case 9:
 				assertEquals(user.getEmail(), cell.getStringCellValue());

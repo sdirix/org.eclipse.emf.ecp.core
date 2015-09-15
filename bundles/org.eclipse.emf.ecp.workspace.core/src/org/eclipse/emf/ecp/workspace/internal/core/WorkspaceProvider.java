@@ -29,10 +29,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.common.command.BasicCommandStack;
+import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CommandStack;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
-import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.common.util.WrappedException;
@@ -50,6 +50,7 @@ import org.eclipse.emf.ecp.spi.core.DefaultProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
 import org.eclipse.emf.ecp.spi.core.util.InternalChildrenList;
+import org.eclipse.emf.edit.command.ChangeCommand;
 import org.eclipse.emf.edit.command.DeleteCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -173,9 +174,13 @@ public class WorkspaceProvider extends DefaultProvider {
 	/** {@inheritDoc} */
 	@Override
 	public EList<? extends Object> getElements(InternalProject project) {
+		boolean demandLoad = true;
+		if (project.getProperties().getValue(PROP_ROOT_URI).equals(VIRTUAL_ROOT_URI)) {
+			demandLoad = false;
+		}
 		final ResourceSet resourceSet = project.getEditingDomain().getResourceSet();
-		return ECollections.unmodifiableEList(resourceSet.getResource(
-			URI.createURI(project.getProperties().getValue(PROP_ROOT_URI)), true).getContents());
+		return resourceSet.getResource(
+			URI.createURI(project.getProperties().getValue(PROP_ROOT_URI)), demandLoad).getContents();
 		// TODO: implement WorkspaceProvider.addRootElement(project, rootElement)
 	}
 
@@ -340,8 +345,36 @@ public class WorkspaceProvider extends DefaultProvider {
 	 *      java.util.Collection)
 	 */
 	@Override
-	public void doDelete(InternalProject project, Collection<Object> objects) {
-		project.getEditingDomain().getCommandStack().execute(DeleteCommand.create(project.getEditingDomain(), objects));
+	public void doDelete(InternalProject project, final Collection<Object> objects) {
+		final Command deleteCommand = DeleteCommand.create(project.getEditingDomain(), objects);
+		if (deleteCommand.canExecute()) {
+			project.getEditingDomain().getCommandStack().execute(deleteCommand);
+			return;
+		}
+
+		/*
+		 * the default DeleteCommand cannot be executed for whatever reason.
+		 * Wrap an EcoreUtil.delete in a change command for undo support.
+		 */
+		final Command changeCommand = new ChangeCommand(project.getEditingDomain().getResourceSet()) {
+			@Override
+			protected void doExecute() {
+				for (final Object object : objects) {
+					final Object unwrap = AdapterFactoryEditingDomain.unwrap(object);
+					if (!EObject.class.isInstance(unwrap)) {
+						continue;
+					}
+					EcoreUtil.delete(EObject.class.cast(unwrap), true);
+				}
+			}
+		};
+		if (changeCommand.canExecute()) {
+			project.getEditingDomain().getCommandStack().execute(changeCommand);
+			return;
+		}
+
+		// unexpected
+		throw new IllegalStateException("Delete was not successful."); //$NON-NLS-1$
 
 	}
 }
