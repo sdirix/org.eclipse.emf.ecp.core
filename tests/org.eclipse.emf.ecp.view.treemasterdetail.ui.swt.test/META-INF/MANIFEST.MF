@@ -13,5 +13,6 @@ Require-Bundle: org.eclipse.emf.emfstore.examplemodel;bundle-version="[1.4.0,2.0
  org.eclipse.emf.ecp.view.treemasterdetail.model;bundle-version="[1.8.0,1.9.0)",
  org.junit;bundle-version="[4.0.0,5.0.0)",
  org.eclipse.emf.ecp.ui.view.swt;bundle-version="[1.8.0,1.9.0)",
- org.eclipse.emf.ecp.view.context;bundle-version="[1.8.0,1.9.0)"
+ org.eclipse.emf.ecp.view.context;bundle-version="[1.8.0,1.9.0)",
+ org.eclipse.emfforms.core.services.domainexpander.default;bundle-version="[1.8.0,1.9.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
