@@ -34,6 +34,10 @@ public class Messages extends NLS {
 	public static String NewWorkspaceProjectComposite_SELECT_XMI;
 	public static String NewXMIFileWizard_NewXMIFile;
 
+	public static String NewXMIFileWizardPage_CreateNewProject;
+	public static String NewXMIFileWizardPage_CreateNewXMIFile;
+	public static String NewXMIFileWizardPage_SelectRootContainer;
+
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);
