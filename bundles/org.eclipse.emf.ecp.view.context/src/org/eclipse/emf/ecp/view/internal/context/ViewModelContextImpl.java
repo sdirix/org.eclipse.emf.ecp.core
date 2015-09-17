@@ -177,11 +177,13 @@ public class ViewModelContextImpl implements ViewModelContext {
 	}
 
 	/**
-	 * Instantiates a new view model context impl.
+	 * Instantiates a new view model context impl with a parent context.
 	 *
 	 * @param view the view
 	 * @param domainObject the domain object
 	 * @param modelServices an array of services to use in the {@link ViewModelContext}
+	 * @param parent The parent {@link ViewModelContext}
+	 * @param parentVElement The parent {@link VElement}
 	 */
 	public ViewModelContextImpl(VElement view, EObject domainObject, ViewModelContext parent,
 		VElement parentVElement,
