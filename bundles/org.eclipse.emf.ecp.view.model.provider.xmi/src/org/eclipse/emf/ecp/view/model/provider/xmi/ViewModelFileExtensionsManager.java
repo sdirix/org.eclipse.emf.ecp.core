@@ -21,8 +21,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IStatus;
@@ -65,7 +68,7 @@ public final class ViewModelFileExtensionsManager {
 	private static final String FILE_EXTENSION = "org.eclipse.emf.ecp.view.model.provider.xmi.file"; //$NON-NLS-1$
 	private static final String FILEPATH_ATTRIBUTE = "filePath"; //$NON-NLS-1$
 
-	private final Map<EClass, Map<VView, ExtensionDescription>> map = new LinkedHashMap<EClass, Map<VView, ExtensionDescription>>();
+	private final Map<EClass, Map<VView, Set<ExtensionDescription>>> map = new LinkedHashMap<EClass, Map<VView, Set<ExtensionDescription>>>();
 	private static File viewModelFolder;
 
 	private ViewModelFileExtensionsManager() {
@@ -123,10 +126,13 @@ public final class ViewModelFileExtensionsManager {
 	 */
 	void registerView(final VView view, final ExtensionDescription extensionDescription) {
 		if (!map.containsKey(view.getRootEClass())) {
-			map.put(view.getRootEClass(), new LinkedHashMap<VView, ExtensionDescription>());
+			map.put(view.getRootEClass(), new LinkedHashMap<VView, Set<ExtensionDescription>>());
 		}
-
-		map.get(view.getRootEClass()).put(view, extensionDescription);
+		final Map<VView, Set<ExtensionDescription>> viewDescriptionMap = map.get(view.getRootEClass());
+		if (!viewDescriptionMap.containsKey(view)) {
+			viewDescriptionMap.put(view, new LinkedHashSet<ViewModelFileExtensionsManager.ExtensionDescription>());
+		}
+		viewDescriptionMap.get(view).add(extensionDescription);
 	}
 
 	/**
@@ -310,7 +316,7 @@ public final class ViewModelFileExtensionsManager {
 	 * @return a view model for the given eObject
 	 */
 	public VView createView(EObject eObject, VViewModelProperties properties) {
-		final List<VView> bestFitting = findBestFittingViews(eObject, properties);
+		final Map<VView, ExtensionDescription> bestFitting = findBestFittingViews(eObject, properties);
 
 		if (bestFitting.isEmpty()) {
 			final ReportService reportService = Activator.getReportService();
@@ -331,10 +337,10 @@ public final class ViewModelFileExtensionsManager {
 			}
 		}
 
-		final VView fittingView = bestFitting.get(0);
+		final Entry<VView, ExtensionDescription> entry = bestFitting.entrySet().iterator().next();
 
-		final VView copiedView = EcoreUtil.copy(fittingView);
-		final String bundleId = map.get(fittingView.getRootEClass()).get(fittingView).getBundleId();
+		final VView copiedView = EcoreUtil.copy(entry.getKey());
+		final String bundleId = entry.getValue().getBundleId();
 		copiedView.eAdapters().add(new LocalizationAdapter() {
 
 			@Override
@@ -349,44 +355,47 @@ public final class ViewModelFileExtensionsManager {
 
 	private static final int FILTER_NOT_MATCHED = Integer.MIN_VALUE;
 
-	private List<VView> findBestFittingViews(EObject eObject, final VViewModelProperties properties) {
-		final Map<VView, ExtensionDescription> viewMap = map.get(eObject.eClass());
+	private Map<VView, ExtensionDescription> findBestFittingViews(EObject eObject,
+		final VViewModelProperties properties) {
+		final Map<VView, Set<ExtensionDescription>> viewMap = map.get(eObject.eClass());
 		if (viewMap == null) {
-			return Collections.emptyList();
+			return Collections.emptyMap();
 		}
-		final List<VView> bestFitting = new ArrayList<VView>();
+		final Map<VView, ExtensionDescription> bestFitting = new LinkedHashMap<VView, ViewModelFileExtensionsManager.ExtensionDescription>();
 		int maxNumberFittingKeyValues = -1;
 		VViewModelProperties propertiesToCheck = properties;
 		if (propertiesToCheck == null) {
 			propertiesToCheck = VViewFactory.eINSTANCE.createViewModelLoadingProperties();
 		}
 		for (final VView view : viewMap.keySet()) {
-			final Map<String, String> viewFilter = viewMap.get(view).getKeyValuPairs();
-			int currentFittingKeyValues = 0;
-			for (final String viewFilterKey : viewFilter.keySet()) {
-				if (propertiesToCheck.containsKey(viewFilterKey)) {
-					final Object contextValue = propertiesToCheck.get(viewFilterKey);
-					final String viewFilterValue = viewFilter.get(viewFilterKey);
-					if (contextValue.toString().equalsIgnoreCase(viewFilterValue)) {
-						currentFittingKeyValues++;
+			for (final ExtensionDescription description : viewMap.get(view)) {
+				int currentFittingKeyValues = 0;
+				final Map<String, String> viewFilter = description.getKeyValuPairs();
+				for (final String viewFilterKey : viewFilter.keySet()) {
+					if (propertiesToCheck.containsKey(viewFilterKey)) {
+						final Object contextValue = propertiesToCheck.get(viewFilterKey);
+						final String viewFilterValue = viewFilter.get(viewFilterKey);
+						if (contextValue.toString().equalsIgnoreCase(viewFilterValue)) {
+							currentFittingKeyValues++;
+						} else {
+							currentFittingKeyValues = FILTER_NOT_MATCHED;
+							break;
+						}
 					} else {
 						currentFittingKeyValues = FILTER_NOT_MATCHED;
 						break;
 					}
-				} else {
-					currentFittingKeyValues = FILTER_NOT_MATCHED;
-					break;
 				}
-			}
-			if (currentFittingKeyValues == FILTER_NOT_MATCHED) {
-				continue;
-			}
-			if (currentFittingKeyValues > maxNumberFittingKeyValues) {
-				maxNumberFittingKeyValues = currentFittingKeyValues;
-				bestFitting.clear();
-				bestFitting.add(view);
-			} else if (currentFittingKeyValues == maxNumberFittingKeyValues) {
-				bestFitting.add(view);
+				if (currentFittingKeyValues == FILTER_NOT_MATCHED) {
+					continue;
+				}
+				if (currentFittingKeyValues > maxNumberFittingKeyValues) {
+					maxNumberFittingKeyValues = currentFittingKeyValues;
+					bestFitting.clear();
+					bestFitting.put(view, description);
+				} else if (currentFittingKeyValues == maxNumberFittingKeyValues) {
+					bestFitting.put(view, description);
+				}
 			}
 		}
 		return bestFitting;
@@ -431,6 +440,45 @@ public final class ViewModelFileExtensionsManager {
 		String getBundleId() {
 			return bundleId;
 		}
+
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + (bundleId == null ? 0 : bundleId.hashCode());
+			result = prime * result + (keyValuPairs == null ? 0 : keyValuPairs.hashCode());
+			return result;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj) {
+				return true;
+			}
+			if (obj == null) {
+				return false;
+			}
+			if (getClass() != obj.getClass()) {
+				return false;
+			}
+			final ExtensionDescription other = (ExtensionDescription) obj;
+			if (bundleId == null) {
+				if (other.bundleId != null) {
+					return false;
+				}
+			} else if (!bundleId.equals(other.bundleId)) {
+				return false;
+			}
+			if (keyValuPairs == null) {
+				if (other.keyValuPairs != null) {
+					return false;
+				}
+			} else if (!keyValuPairs.equals(other.keyValuPairs)) {
+				return false;
+			}
+			return true;
+		}
+
 	}
 
 }
