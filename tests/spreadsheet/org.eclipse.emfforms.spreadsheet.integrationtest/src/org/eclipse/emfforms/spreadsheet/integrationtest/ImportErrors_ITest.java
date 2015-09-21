@@ -20,6 +20,10 @@ import java.io.InputStream;
 import java.util.Collection;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.ClientAnchor;
+import org.apache.poi.ss.usermodel.Comment;
+import org.apache.poi.ss.usermodel.CreationHelper;
+import org.apache.poi.ss.usermodel.Drawing;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -65,7 +69,9 @@ public class ImportErrors_ITest {
 	@After
 	public void tearDown() throws IOException {
 		realm.dispose();
-		stream.close();
+		if (stream != null) {
+			stream.close();
+		}
 	}
 
 	@Test
@@ -376,5 +382,73 @@ public class ImportErrors_ITest {
 		assertEquals("First Name", sheetLocation.getColumnName()); //$NON-NLS-1$
 		assertEquals(-1, sheetLocation.getRow());
 		assertFalse(sheetLocation.isValid());
+	}
+
+	@Test
+	public void testSheetEmpty() throws IOException {
+		/* setup */
+		final Workbook workbook = new HSSFWorkbook();
+		workbook.createSheet("root"); //$NON-NLS-1$
+
+		/* act */
+		final SpreadsheetImportResult result = EMFFormsSpreadsheetImporter.INSTANCE
+			.importSpreadsheet(workbook, eClass);
+		assertEquals(1, result.getErrorReports().size());
+	}
+
+	@Test
+	public void testNoLabelRow() throws IOException {
+		/* setup */
+		final Workbook workbook = new HSSFWorkbook();
+		final Sheet sheet = workbook.createSheet("root"); //$NON-NLS-1$
+		final Row rowDescription = sheet.createRow(0);
+		rowDescription.createCell(1).setCellValue("My feature description"); //$NON-NLS-1$
+
+		final Row rowMeta = sheet.createRow(1);
+		rowMeta.createCell(1).setCellValue("Enter Numbers"); //$NON-NLS-1$
+
+		final Row rowData = sheet.createRow(2);
+		rowData.createCell(0).setCellValue("aaa"); //$NON-NLS-1$
+		rowData.createCell(1).setCellValue("My Feature Value"); //$NON-NLS-1$
+		/* act */
+		final SpreadsheetImportResult result = EMFFormsSpreadsheetImporter.INSTANCE
+			.importSpreadsheet(workbook, eClass);
+		assertEquals(1, result.getErrorReports().size());
+	}
+
+	@Test
+	public void testNoObjectIdColumn() throws IOException {
+		/* setup */
+		final Workbook workbook = new HSSFWorkbook();
+		final Sheet sheet = workbook.createSheet("root"); //$NON-NLS-1$
+		final Row rowLabel = sheet.createRow(0);
+		rowLabel.createCell(0).setCellValue("My feature"); //$NON-NLS-1$
+
+		final CreationHelper factory = workbook.getCreationHelper();
+
+		// When the comment box is visible, have it show in a 1x3 space
+		final ClientAnchor anchor = factory.createClientAnchor();
+		anchor.setCol1(0);
+		anchor.setCol2(1);
+		anchor.setRow1(0);
+		anchor.setRow2(1);
+
+		final Drawing drawing = sheet.createDrawingPatriarch();
+		final Comment comment = drawing.createCellComment(anchor);
+		comment.setString(factory.createRichTextString(
+			"<?xml version=\"1.0\" encoding=\"UTF-8\"?><org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference xmi:version=\"2.0\" xmlns:xmi=\"http://www.omg.org/XMI\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:ecore=\"http://www.eclipse.org/emf/2002/Ecore\" xmlns:org.eclipse.emf.ecp.view.model=\"http://org/eclipse/emf/ecp/view/model/170\"><domainModelEFeature xsi:type=\"ecore:EAttribute\" href=\"http://eclipse/org/emf/ecp/makeithappen/model/task#//User/lastName\"/></org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference>")); //$NON-NLS-1$
+
+		final Row rowDescription = sheet.createRow(1);
+		rowDescription.createCell(0).setCellValue("My feature description"); //$NON-NLS-1$
+
+		final Row rowMeta = sheet.createRow(2);
+		rowMeta.createCell(0).setCellValue("Enter Numbers"); //$NON-NLS-1$
+
+		final Row rowData = sheet.createRow(3);
+		rowData.createCell(0).setCellValue("My Feature Value"); //$NON-NLS-1$
+		/* act */
+		final SpreadsheetImportResult result = EMFFormsSpreadsheetImporter.INSTANCE
+			.importSpreadsheet(workbook, eClass);
+		assertEquals(1, result.getErrorReports().size());
 	}
 }

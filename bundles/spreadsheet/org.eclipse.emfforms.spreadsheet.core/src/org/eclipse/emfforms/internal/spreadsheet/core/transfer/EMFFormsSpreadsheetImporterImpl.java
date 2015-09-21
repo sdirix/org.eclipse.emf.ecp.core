@@ -207,7 +207,8 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 					Severity.ERROR,
 					MessageFormat.format(
 						LocalizationServiceHelper.getString(getClass(), "ImportError_ValueConversionFailed"), //$NON-NLS-1$
-						ex.getMessage()), ErrorFactory.eINSTANCE.createEMFLocation(eObject,
+						ex.getMessage()),
+					ErrorFactory.eINSTANCE.createEMFLocation(eObject,
 						createSettingLocation(observableValue, feature),
 						ErrorFactory.eINSTANCE.createDMRLocation(dmr)),
 					ErrorFactory.eINSTANCE.createSheetLocation(sheetname, columnId, eObjectRow.getRowNum(),
@@ -320,12 +321,21 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 				continue;
 			}
 			final Row labelRow = sheet.getRow(0);
-			if (!EMFFormsIdProvider.ID_COLUMN.equals(labelRow.getCell(0).getStringCellValue())) {
+			if (labelRow == null) {
+				errorReports.reportError(
+					Severity.ERROR, MessageFormat.format(
+						LocalizationServiceHelper.getString(getClass(), "ImportError_SheetEmpty"), //$NON-NLS-1$
+						sheet.getSheetName()),
+					ErrorFactory.eINSTANCE.createSheetLocation(workbook.getSheetName(sheetId), 0, 0, "NO CELL")); //$NON-NLS-1$
+				continue;
+			}
+			if (!EMFFormsIdProvider.ID_COLUMN
+				.equals(labelRow.getCell(0, Row.CREATE_NULL_AS_BLANK).getStringCellValue())) {
 				/* ID Column is missing. We have to ignore this sheet */
 				errorReports.reportError(
-					Severity.ERROR,
-					LocalizationServiceHelper.getString(getClass(), String.format("ImportError_FirstColumnWrong", //$NON-NLS-1$
-						EMFFormsIdProvider.ID_COLUMN, labelRow.getCell(0).getStringCellValue())),
+					Severity.ERROR, MessageFormat.format(
+						LocalizationServiceHelper.getString(getClass(), "ImportError_FirstColumnWrong"), //$NON-NLS-1$
+						EMFFormsIdProvider.ID_COLUMN, labelRow.getCell(0).getStringCellValue()),
 					ErrorFactory.eINSTANCE.createSheetLocation(workbook.getSheetName(sheetId), 0, 0, "NO CELL")); //$NON-NLS-1$
 				continue;
 			}
