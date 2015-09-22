@@ -176,10 +176,19 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	protected Composite createControlComposite(final Composite composite) {
 		final Composite controlComposite = new Composite(composite, SWT.NONE);
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL)
-			.hint(1, 300)
+			.hint(1, getTableHeightHint())
 			.applyTo(controlComposite);
 		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(controlComposite);
 		return controlComposite;
+	}
+
+	/**
+	 * Returns the height for the table that will be created.
+	 *
+	 * @return the height hint
+	 */
+	protected int getTableHeightHint() {
+		return 300;
 	}
 
 	/**
@@ -255,7 +264,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 		final Button btnAddExisting = new Button(buttonComposite, SWT.PUSH);
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(btnAddExisting);
 		btnAddExisting.setImage(getImage("icons/link.png")); //$NON-NLS-1$
-		btnAddExisting.setToolTipText(LocalizationServiceHelper.getString(getClass(),
+		btnAddExisting.setToolTipText(LocalizationServiceHelper.getString(MultiReferenceSWTRenderer.class,
 			MessageKeys.MultiReferenceSWTRenderer_addExistingTooltip));
 		btnAddExisting.addSelectionListener(new SelectionAdapter() {
 
@@ -275,7 +284,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 		final Button btnAddNew = new Button(buttonComposite, SWT.PUSH);
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(btnAddNew);
 		btnAddNew.setImage(getImage("icons/link_add.png")); //$NON-NLS-1$
-		btnAddNew.setToolTipText(LocalizationServiceHelper.getString(getClass(),
+		btnAddNew.setToolTipText(LocalizationServiceHelper.getString(MultiReferenceSWTRenderer.class,
 			MessageKeys.MultiReferenceSWTRenderer_addNewTooltip));
 		btnAddNew.addSelectionListener(new SelectionAdapter() {
 
@@ -295,7 +304,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 		final Button btnDelete = new Button(buttonComposite, SWT.PUSH);
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(btnDelete);
 		btnDelete.setImage(getImage("icons/unset_reference.png")); //$NON-NLS-1$
-		btnDelete.setToolTipText(LocalizationServiceHelper.getString(getClass(),
+		btnDelete.setToolTipText(LocalizationServiceHelper.getString(MultiReferenceSWTRenderer.class,
 			MessageKeys.MultiReferenceSWTRenderer_deleteTooltip));
 		btnDelete.addSelectionListener(new SelectionAdapter() {
 
@@ -319,8 +328,15 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 
 	}
 
-	private Image getImage(String path) {
-		return imageRegistryService.getImage(FrameworkUtil.getBundle(getClass()), path);
+	/**
+	 * Returns an {@link Image} from the image registry.
+	 *
+	 * @param path
+	 *            the path to the image
+	 * @return the image
+	 */
+	protected Image getImage(String path) {
+		return imageRegistryService.getImage(FrameworkUtil.getBundle(MultiReferenceSWTRenderer.class), path);
 	}
 
 	private void createContent(Composite composite) throws DatabindingFailedException {
