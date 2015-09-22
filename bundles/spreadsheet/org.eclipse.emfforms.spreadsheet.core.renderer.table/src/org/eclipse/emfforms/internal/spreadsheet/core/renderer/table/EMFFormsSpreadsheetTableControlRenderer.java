@@ -169,7 +169,7 @@ public class EMFFormsSpreadsheetTableControlRenderer extends EMFFormsAbstractSpr
 
 					vControl.setDomainModelReference(EcoreUtil.copy(domainModelReference));
 					final ViewModelContext subViewModelContext = viewModelContext.getChildContext(
-						viewModelContext.getDomainModel(), vElement, (VView) viewModelContext.getViewModel());
+						viewModelContext.getDomainModel(), vElement, null);
 					subViewModelContext.putContextValue(EMFFormsExportTableParent.EXPORT_TABLE_PARENT, tableParent);
 
 					numColumns += controlRenderer.render(workbook, vControl, subViewModelContext,

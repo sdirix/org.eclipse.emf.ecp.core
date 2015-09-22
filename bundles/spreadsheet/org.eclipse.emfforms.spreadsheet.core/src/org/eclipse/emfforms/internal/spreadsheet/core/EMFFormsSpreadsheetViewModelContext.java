@@ -40,7 +40,8 @@ public class EMFFormsSpreadsheetViewModelContext implements ViewModelContext {
 	private final VView view;
 	private final EObject domainModel;
 	private final Map<String, Object> contextValues = new LinkedHashMap<String, Object>();
-	private ViewModelContext parentContext;
+	private final ViewModelContext parentContext;
+	private LocalizationViewModelService vms;
 
 	/**
 	 * Default Constructor.
@@ -50,11 +51,7 @@ public class EMFFormsSpreadsheetViewModelContext implements ViewModelContext {
 	 */
 
 	public EMFFormsSpreadsheetViewModelContext(VView view, EObject domainModel) {
-		this.view = view;
-		this.domainModel = domainModel;
-
-		final LocalizationViewModelService vms = new LocalizationViewModelService();
-		vms.instantiate(this);
+		this(view, domainModel, null);
 	}
 
 	/**
@@ -65,8 +62,15 @@ public class EMFFormsSpreadsheetViewModelContext implements ViewModelContext {
 	 * @param parentContext The parent {@link ViewModelContext}
 	 */
 	public EMFFormsSpreadsheetViewModelContext(VView view, EObject domainModel, ViewModelContext parentContext) {
-		this(view, domainModel);
+		this.view = view;
+		this.domainModel = domainModel;
 		this.parentContext = parentContext;
+
+		// we need this only on the root context
+		if (parentContext == null) {
+			vms = new LocalizationViewModelService();
+			vms.instantiate(this);
+		}
 	}
 
 	/**
@@ -136,7 +140,10 @@ public class EMFFormsSpreadsheetViewModelContext implements ViewModelContext {
 	 */
 	@Override
 	public void dispose() {
-		// intentionally left empty
+		if (vms != null) {
+			vms.dispose();
+		}
+		contextValues.clear();
 	}
 
 	/**

@@ -120,6 +120,7 @@ public class EMFFormsSpreadsheetExporterImpl implements EMFFormsSpreadsheetExpor
 						viewModelContext.getViewModel(), viewModelContext);
 				renderer.render(workbook, viewModelContext.getViewModel(), viewModelContext,
 					new EMFFormsSpreadsheetRenderTarget("root", 0, 0)); //$NON-NLS-1$
+				viewModelContext.dispose();
 			} catch (final EMFFormsNoRendererException ex) {
 				reportService.report(new EMFFormsSpreadsheetReport(ex, EMFFormsSpreadsheetReport.ERROR));
 			}
@@ -149,6 +150,7 @@ public class EMFFormsSpreadsheetExporterImpl implements EMFFormsSpreadsheetExpor
 					renderer.render(workbook, viewModelContext.getViewModel(), viewModelContext,
 						new EMFFormsSpreadsheetRenderTarget("root", //$NON-NLS-1$
 							i++, 0));
+					viewModelContext.dispose();
 				} catch (final EMFFormsNoRendererException ex) {
 					reportService.report(new EMFFormsSpreadsheetReport(ex, EMFFormsSpreadsheetReport.ERROR));
 				}

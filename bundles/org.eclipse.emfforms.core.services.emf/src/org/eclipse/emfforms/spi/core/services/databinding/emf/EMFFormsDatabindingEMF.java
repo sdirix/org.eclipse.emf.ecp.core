@@ -17,13 +17,14 @@ import org.eclipse.emf.databinding.IEMFListProperty;
 import org.eclipse.emf.databinding.IEMFValueProperty;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 
 /**
  * EMF specific interface of the EMFFormsDatabinding.
- * 
+ *
  * @author Eugen Neufeld
  * @since 1.7
  */
@@ -108,4 +109,16 @@ public interface EMFFormsDatabindingEMF extends EMFFormsDatabinding {
 	 *             {@link org.eclipse.emf.databinding.IEMFObservable IEMFObservable}
 	 */
 	EObject extractObserved(IObservableList observableList) throws DatabindingFailedException;
+
+	/**
+	 * Retrieve the Setting which is described by the provided {@link VDomainModelReference} and the provided
+	 * {@link EObject}.
+	 *
+	 * @param domainModelReference The {@link VDomainModelReference} to use to retrieve the setting
+	 * @param object The {@link EObject} to use to retrieve the setting
+	 * @return The Setting being described by the {@link VDomainModelReference}
+	 * @throws DatabindingFailedException if the databinding could not be executed successfully.
+	 * @since 1.8
+	 */
+	Setting getSetting(VDomainModelReference domainModelReference, EObject object) throws DatabindingFailedException;
 }

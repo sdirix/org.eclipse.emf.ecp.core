@@ -11,9 +11,14 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.table.model;
 
+import org.eclipse.core.databinding.observable.IObserving;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.databinding.IEMFListProperty;
 import org.eclipse.emf.databinding.IEMFValueProperty;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
@@ -124,6 +129,22 @@ public class TableDMRConverter implements DomainModelReferenceConverterEMF {
 				"The field domainModelReference of the given VTableDomainModelReference must not be null."); //$NON-NLS-1$
 		}
 		return emfFormsDatabinding.getListProperty(tableDomainModelReference.getDomainModelReference(), object);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emfforms.spi.core.services.databinding.emf.DomainModelReferenceConverterEMF#getSetting(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference,
+	 *      org.eclipse.emf.ecore.EObject)
+	 */
+	@Override
+	public Setting getSetting(VDomainModelReference domainModelReference, EObject object)
+		throws DatabindingFailedException {
+		final IEMFValueProperty valueProperty = convertToValueProperty(domainModelReference, object);
+		final IObservableValue observableValue = valueProperty.observe(object);
+		final EObject eObject = (EObject) IObserving.class.cast(observableValue).getObserved();
+		final EStructuralFeature eStructuralFeature = valueProperty.getStructuralFeature();
+		return InternalEObject.class.cast(eObject).eSetting(eStructuralFeature);
 	}
 
 }
