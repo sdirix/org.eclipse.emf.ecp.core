@@ -17,6 +17,7 @@ import org.eclipse.emf.ecp.common.spi.ChildrenDescriptorCollector;
 import org.eclipse.emf.edit.command.CommandParameter;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfforms.internal.editor.ecore.helpers.EcoreHelpers;
+import org.eclipse.emfforms.internal.swt.treemasterdetail.defaultprovider.DefaultDeleteActionBuilder;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.TreeMasterDetailMenuListener;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.util.CreateElementCallback;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.util.MasterDetailAction;
@@ -45,7 +46,7 @@ public class EcoreEditorMenuListener extends TreeMasterDetailMenuListener {
 		TreeViewer treeViewer, EditingDomain editingDomain, Collection<MasterDetailAction> rightClickActions,
 		CreateElementCallback createElementCallback) {
 		super(childrenDescriptorCollector, menuMgr, treeViewer, editingDomain, rightClickActions,
-			createElementCallback);
+			createElementCallback, new DefaultDeleteActionBuilder());
 	}
 
 	@Override

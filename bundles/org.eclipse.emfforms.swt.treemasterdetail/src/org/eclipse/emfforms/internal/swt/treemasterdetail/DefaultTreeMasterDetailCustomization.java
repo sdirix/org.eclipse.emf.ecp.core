@@ -12,6 +12,8 @@
  ******************************************************************************/
 package org.eclipse.emfforms.internal.swt.treemasterdetail;
 
+import java.util.Collection;
+
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
@@ -30,6 +32,7 @@ import org.eclipse.emfforms.internal.swt.treemasterdetail.defaultprovider.Defaul
 import org.eclipse.emfforms.internal.swt.treemasterdetail.defaultprovider.DefaultViewerFilterProvider;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.ContentProviderProvider;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.DNDProvider;
+import org.eclipse.emfforms.spi.swt.treemasterdetail.DeleteActionBuilder;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.DetailCompositeBuilder;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.InitialSelectionProvider;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.LabelProviderProvider;
@@ -39,6 +42,8 @@ import org.eclipse.emfforms.spi.swt.treemasterdetail.TreeViewerBuilder;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.TreeWidthProvider;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.ViewModelServiceProvider;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.ViewerFilterProvider;
+import org.eclipse.emfforms.spi.swt.treemasterdetail.util.CreateElementCallback;
+import org.eclipse.emfforms.spi.swt.treemasterdetail.util.MasterDetailAction;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.util.RootObject;
 import org.eclipse.jface.viewers.IBaseLabelProvider;
 import org.eclipse.jface.viewers.IContentProvider;
@@ -89,7 +94,7 @@ public class DefaultTreeMasterDetailCustomization implements TreeMasterDetailSWT
 
 	/**
 	 * Gives access to the composed adapter factory.
-	 * 
+	 *
 	 * @return the adapter factory
 	 */
 	protected ComposedAdapterFactory getComposedAdapterFactory() {
@@ -103,7 +108,7 @@ public class DefaultTreeMasterDetailCustomization implements TreeMasterDetailSWT
 
 	/**
 	 * Returns the {@link AdapterFactoryContentProvider}.
-	 * 
+	 *
 	 * @return the content provider
 	 */
 	protected AdapterFactoryContentProvider getAdapterFactoryContentProvider() {
@@ -264,6 +269,45 @@ public class DefaultTreeMasterDetailCustomization implements TreeMasterDetailSWT
 	 */
 	public void setMenu(MenuProvider menu) {
 		this.menu = menu;
+	}
+
+	/**
+	 * Sets the right click actions of the menu.
+	 *
+	 * @param rightClickActions the actions
+	 */
+	public void customizeMenu(Collection<MasterDetailAction> rightClickActions) {
+		if (!DefaultMenuProvider.class.isInstance(menu)) {
+			menu = new DefaultMenuProvider();
+		}
+		final DefaultMenuProvider defaultMenuProvider = DefaultMenuProvider.class.cast(menu);
+		defaultMenuProvider.setRightClickAction(rightClickActions);
+	}
+
+	/**
+	 * Sets the {@link CreateElementCallback}.
+	 *
+	 * @param createElementCallback the callback
+	 */
+	public void customizeMenu(CreateElementCallback createElementCallback) {
+		if (!DefaultMenuProvider.class.isInstance(menu)) {
+			menu = new DefaultMenuProvider();
+		}
+		final DefaultMenuProvider defaultMenuProvider = DefaultMenuProvider.class.cast(menu);
+		defaultMenuProvider.setCreateElementCallback(createElementCallback);
+	}
+
+	/**
+	 * Sets the delete action.
+	 * 
+	 * @param deleteActionBuilder the builder
+	 */
+	public void customizeMenu(DeleteActionBuilder deleteActionBuilder) {
+		if (!DefaultMenuProvider.class.isInstance(menu)) {
+			menu = new DefaultMenuProvider();
+		}
+		final DefaultMenuProvider defaultMenuProvider = DefaultMenuProvider.class.cast(menu);
+		defaultMenuProvider.setDeleteAction(deleteActionBuilder);
 	}
 
 	/**

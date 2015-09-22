@@ -15,7 +15,6 @@ package org.eclipse.emfforms.spi.editor;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.EventObject;
 import java.util.LinkedList;
 import java.util.List;
@@ -50,7 +49,6 @@ import org.eclipse.emfforms.spi.editor.helpers.ResourceSetHelpers;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.TreeMasterDetailComposite;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.TreeMasterDetailSWTFactory;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.util.CreateElementCallback;
-import org.eclipse.emfforms.spi.swt.treemasterdetail.util.MasterDetailAction;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
@@ -301,7 +299,8 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider 
 		Object editorInput, CreateElementCallback createElementCallback) {
 		final TreeMasterDetailComposite treeMasterDetail = TreeMasterDetailSWTFactory
 			.fillDefaults(composite, SWT.NONE, editorInput)
-			.customizeMenu(Collections.<MasterDetailAction> emptyList(), createElementCallback).create();
+			.customizeCildCreation(createElementCallback)
+			.create();
 		return treeMasterDetail;
 	}
 
