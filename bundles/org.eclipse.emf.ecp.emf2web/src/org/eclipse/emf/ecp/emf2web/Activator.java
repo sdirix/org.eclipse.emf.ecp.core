@@ -20,11 +20,13 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 
 /**
- * The activator class controls the plug-in life cycle
+ * The activator class controls the plug-in life cycle.
  */
 public class Activator extends AbstractUIPlugin {
 
-	// The plug-in ID
+	/**
+	 * The plug-in ID.
+	 */
 	public static final String PLUGIN_ID = "org.eclipse.emf.ecp.emf2web"; //$NON-NLS-1$
 
 	// The shared instance
@@ -38,7 +40,7 @@ public class Activator extends AbstractUIPlugin {
 	private ServiceReference<EMFFormsDatabinding> databindingServiceReference;
 
 	/**
-	 * The constructor
+	 * The constructor.
 	 */
 	public Activator() {
 	}
@@ -65,9 +67,9 @@ public class Activator extends AbstractUIPlugin {
 	}
 
 	/**
-	 * Returns the shared instance
+	 * Returns the shared instance.
 	 *
-	 * @return the shared instance
+	 * @return the shared instance.
 	 */
 	public static Activator getDefault() {
 		return plugin;
@@ -75,10 +77,10 @@ public class Activator extends AbstractUIPlugin {
 
 	/**
 	 * Returns an image descriptor for the image file at the given
-	 * plug-in relative path
+	 * plug-in relative path.
 	 *
-	 * @param path the path
-	 * @return the image descriptor
+	 * @param path the path.
+	 * @return the image descriptor.
 	 */
 	public static ImageDescriptor getImageDescriptor(String path) {
 		return imageDescriptorFromPlugin(PLUGIN_ID, path);

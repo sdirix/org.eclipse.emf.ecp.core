@@ -28,7 +28,7 @@ public interface ReferenceHelper {
 	 * @return
 	 * 		The string representation of the given {@code reference}.
 	 */
-	public String getStringRepresentation(VDomainModelReference reference);
+	String getStringRepresentation(VDomainModelReference reference);
 
 	/**
 	 * Determines a label for the given {@code reference}.
@@ -38,5 +38,5 @@ public interface ReferenceHelper {
 	 * @return
 	 * 		The label for the given {@code reference}.
 	 */
-	public String getLabel(VDomainModelReference reference);
+	String getLabel(VDomainModelReference reference);
 }

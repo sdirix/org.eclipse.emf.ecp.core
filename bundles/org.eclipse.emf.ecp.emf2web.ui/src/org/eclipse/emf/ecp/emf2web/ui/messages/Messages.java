@@ -9,24 +9,29 @@
  * Contributors:
  * Stefan Dirix - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.emf2web.generator;
+package org.eclipse.emf.ecp.emf2web.ui.messages;
 
-import org.eclipse.emf.ecore.EObject;
+import java.util.MissingResourceException;
+import java.util.ResourceBundle;
 
 /**
- * A generator for a string representation for the given schema.
- *
  * @author Stefan Dirix
+ * @generated
  *
  */
-public interface Generator {
-	/**
-	 * Generate another representation of the given {@link EObject} as a string.
-	 *
-	 * @param object
-	 *            The {@link EObject} which shall serve as a template for the generated string.
-	 * @return
-	 * 		The string representation of the given {@code object}.
-	 */
-	String generate(EObject object);
+public class Messages {
+	private static final String BUNDLE_NAME = "org.eclipse.emf.ecp.emf2web.ui.messages.messages"; //$NON-NLS-1$
+
+	private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME);
+
+	private Messages() {
+	}
+
+	public static String getString(String key) {
+		try {
+			return RESOURCE_BUNDLE.getString(key);
+		} catch (final MissingResourceException e) {
+			return '!' + key + '!';
+		}
+	}
 }

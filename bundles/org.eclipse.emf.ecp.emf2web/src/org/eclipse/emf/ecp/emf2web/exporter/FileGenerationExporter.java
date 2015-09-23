@@ -31,6 +31,8 @@ import org.eclipse.emf.ecp.emf2web.controller.GenerationInfo;
 import org.eclipse.emf.ecp.emf2web.internal.messages.Messages;
 
 /**
+ * Exporter for saving the generated content to file.
+ *
  * @author Stefan Dirix
  *
  */
@@ -43,19 +45,45 @@ public class FileGenerationExporter implements GenerationExporter {
 		}
 	}
 
+	/**
+	 * Export the given {@link GenerationInfo}.
+	 *
+	 * @param generationInfo
+	 *            The {@link GenerationInfo} to export.
+	 * @throws IOException
+	 *             If something went wrong during export.
+	 */
 	protected void export(GenerationInfo generationInfo) throws IOException {
 		final String exportString = wrapGeneration(generationInfo);
 		final URI location = generationInfo.getLocation();
 		export(exportString, location);
 	}
 
+	/**
+	 * Wraps the generated content if needed.
+	 *
+	 * @param generationInfo
+	 *            The {@link GenerationInfo} containing the information.
+	 * @return
+	 * 		The (maybe wrapped) generated content.
+	 */
 	protected String wrapGeneration(GenerationInfo generationInfo) {
-		if (generationInfo.getWrapper() == null || generationInfo.isWrap() == false) {
+		if (generationInfo.getWrapper() == null || !generationInfo.isWrap()) {
 			return generationInfo.getGeneratedString();
 		}
 		return generationInfo.getWrapper().wrap(generationInfo.getGeneratedString(), generationInfo.getType());
 	}
 
+	/**
+	 * Exports the given string to the given {@code location}.
+	 *
+	 * @param exportString
+	 *            The string to export.
+	 * @param location
+	 *            The {@link URI} depicting the location to export to.
+	 * @throws IOException
+	 *             If something went wrong during export.
+	 */
 	protected void export(String exportString, URI location) throws IOException {
 		if (location.isPlatform()) {
 			final IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();

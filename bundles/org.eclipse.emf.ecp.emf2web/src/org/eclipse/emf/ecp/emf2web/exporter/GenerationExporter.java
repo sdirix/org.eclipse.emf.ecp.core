@@ -17,10 +17,20 @@ import java.util.Collection;
 import org.eclipse.emf.ecp.emf2web.controller.GenerationInfo;
 
 /**
+ * Exporter responsible to export generated content.
+ *
  * @author Stefan Dirix
  *
  */
 public interface GenerationExporter {
 
-	public void export(Collection<? extends GenerationInfo> generationInfos) throws IOException;
+	/**
+	 * Export the given {@link GenerationInfo}s' content.
+	 *
+	 * @param generationInfos
+	 *            A collection of {@link GenerationInfo}s which shall be exported.
+	 * @throws IOException
+	 *             If something went wrong during export.
+	 */
+	void export(Collection<? extends GenerationInfo> generationInfos) throws IOException;
 }

@@ -12,13 +12,37 @@
 package org.eclipse.emf.ecp.emf2web.exporter;
 
 /**
+ * A wrapper for the pure generated schemas.
+ *
  * @author Stefan Dirix
  *
  */
 public interface SchemaWrapper {
-	public String wrap(String toWrap, String type);
+	/**
+	 * Wraps the given string depending on the given type.
+	 *
+	 * @param toWrap
+	 *            The content which shall be wrapped.
+	 * @param type
+	 *            The type which depicts how the wrap should look like.
+	 * @return
+	 * 		The wrapped {@code toWrap}.
+	 */
+	String wrap(String toWrap, String type);
 
-	public String getName();
+	/**
+	 * Depicts a proposal for the name of the wrapped content.
+	 *
+	 * @return
+	 * 		A name for the wrapped content.
+	 */
+	String getName();
 
-	public String getFileExtension();
+	/**
+	 * Depicts a proposal for an file extension for the wrapped content.
+	 *
+	 * @return
+	 * 		A file extension for the wrapped content.
+	 */
+	String getFileExtension();
 }

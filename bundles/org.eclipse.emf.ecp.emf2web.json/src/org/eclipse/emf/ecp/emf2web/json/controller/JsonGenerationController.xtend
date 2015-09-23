@@ -14,19 +14,19 @@ package org.eclipse.emf.ecp.emf2web.json.controller
 import java.util.Collection
 import java.util.LinkedList
 import java.util.List
-import org.eclipse.emf.ecp.emf2web.controller.AbstractGenerationController
 import org.eclipse.emf.ecp.emf2web.controller.GenerationInfo
 import org.eclipse.emf.ecp.emf2web.json.generator.EcoreJsonGenerator
 import org.eclipse.emf.ecp.emf2web.json.generator.FormsJsonGenerator
 import org.eclipse.emf.ecp.emf2web.json.util.ReferenceHelperImpl
 import org.eclipse.emf.ecp.view.spi.model.VView
 import org.eclipse.emf.ecp.emf2web.json.generator.seed.SeedWrapper
+import org.eclipse.emf.ecp.emf2web.controller.GenerationController
 
 /**
  * @author Stefan Dirix <sdirix@eclipsesource.com>
  *
  */
-class JsonGenerationController extends AbstractGenerationController {
+class JsonGenerationController implements GenerationController {
 	
 	override List<GenerationInfo> generate(Collection<? extends VView> views) {
 		val result = new LinkedList<GenerationInfo>

@@ -7,5 +7,4 @@
   <fileset name="Java Files" enabled="true" check-config-name="ESMCheckstyle" local="true">
     <file-match-pattern match-pattern=".java" include-pattern="true"/>
   </fileset>
-  <filter name="DerivedFiles" enabled="true"/>
 </fileset-config>

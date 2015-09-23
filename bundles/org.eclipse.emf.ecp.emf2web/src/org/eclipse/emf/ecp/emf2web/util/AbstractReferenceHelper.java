@@ -28,6 +28,8 @@ import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedRepor
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 
 /**
+ * An abstract implementation of {@link ReferenceHelper} using {@link EMFFormsDatabinding}.
+ *
  * @author Stefan Dirix
  *
  */
@@ -37,6 +39,9 @@ public abstract class AbstractReferenceHelper implements ReferenceHelper {
 	private final ComposedAdapterFactory composedAdapterFactory;
 	private final AdapterFactoryItemDelegator adapterFactoryItemDelegator;
 
+	/**
+	 * Constructor.
+	 */
 	public AbstractReferenceHelper() {
 		composedAdapterFactory = new ComposedAdapterFactory(
 			new AdapterFactory[] {
@@ -50,6 +55,14 @@ public abstract class AbstractReferenceHelper implements ReferenceHelper {
 		dataBinding = Activator.getDefault().getEMFFormsDatabinding();
 	}
 
+	/**
+	 * Returns the {@link EStructuralFeature} for the given {@link VDomainModelReference}.
+	 *
+	 * @param reference
+	 *            The {@link VDomainModelReference} for which the {@link EStructuralFeature} is to be determined.
+	 * @return
+	 * 		The determined {@link EStructuralFeature}.
+	 */
 	protected EStructuralFeature getEStructuralFeature(VDomainModelReference reference) {
 		try {
 			final IValueProperty valueProperty = dataBinding.getValueProperty(reference, null);
@@ -64,7 +77,10 @@ public abstract class AbstractReferenceHelper implements ReferenceHelper {
 	}
 
 	/**
-	 * Handle Databinding Exceptions by reporting them to the ECP ReportService.
+	 * Handle {@link DatabindingFailedException}s by reporting them to the ECP ReportService.
+	 *
+	 * @param exception
+	 *            The handled {@link DatabindingFailedException}.
 	 */
 	protected void handleDatabindingFailedException(DatabindingFailedException exception) {
 		Activator.getDefault().getReportService().report(new DatabindingFailedReport(exception));
