@@ -154,7 +154,7 @@ public class AttributeValueControlSWTRenderer extends SimpleControlSWTControlSWT
 				final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
 				observableValue.dispose();
 
-				final Object result = ValueSelectionHelper.getValueSelectionDialog(parent.getShell(),
+				final Object result = ValueSelectionHelper.openValueSelectionDialog(parent.getShell(),
 					VTViewModelElementSelector.class.cast(eObject).getAttribute());
 				final EditingDomain editingDomain = getEditingDomain(eObject);
 				final Command command = SetCommand.create(editingDomain, eObject, structuralFeature, result);
