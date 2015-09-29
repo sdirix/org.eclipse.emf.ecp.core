@@ -115,6 +115,11 @@ public class EMFFormsSpreadsheetExporterImpl implements EMFFormsSpreadsheetExpor
 		if (domainObjects == null) {
 			try {
 				final ViewModelContext viewModelContext = new EMFFormsSpreadsheetViewModelContext(viewModel, null);
+				viewModelContext.putContextValue(EMFFormsCellStyleConstants.LOCKED, cellStyle);
+				viewModelContext.putContextValue(EMFFormsCellStyleConstants.LOCKED_AND_WRAPPED, cellStyle2);
+				viewModelContext.putContextValue(EMFFormsCellStyleConstants.TEXT, cellStyle3);
+				viewModelContext.putContextValue(EMFFormsCellStyleConstants.DATE, cellStyle4);
+
 				final EMFFormsAbstractSpreadsheetRenderer<VElement> renderer = emfFormsSpreadsheetRendererFactory
 					.getRendererInstance(
 						viewModelContext.getViewModel(), viewModelContext);

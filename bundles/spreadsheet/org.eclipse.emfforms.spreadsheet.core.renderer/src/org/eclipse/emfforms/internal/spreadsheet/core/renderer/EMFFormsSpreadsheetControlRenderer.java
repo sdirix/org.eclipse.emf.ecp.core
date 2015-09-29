@@ -59,6 +59,7 @@ import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsIdProvider;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetFormatDescriptionProvider;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetRenderTarget;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetReport;
+import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsCellStyleConstants;
 import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsConverterException;
 import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsSpreadsheetValueConverter;
 import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsSpreadsheetValueConverterRegistry;
@@ -135,8 +136,9 @@ public class EMFFormsSpreadsheetControlRenderer extends EMFFormsAbstractSpreadsh
 			formatRow = sheet.createRow(2);
 		}
 
-		final CellStyle readOnly = workbook.getCellStyleAt((short) (workbook.getNumCellStyles() - 2));
-		final CellStyle readOnlyWrap = workbook.getCellStyleAt((short) (workbook.getNumCellStyles() - 1));
+		final CellStyle readOnly = (CellStyle) viewModelContext.getContextValue(EMFFormsCellStyleConstants.LOCKED);
+		final CellStyle readOnlyWrap = (CellStyle) viewModelContext
+			.getContextValue(EMFFormsCellStyleConstants.LOCKED_AND_WRAPPED);
 
 		final Cell idCell = labelRow.getCell(0, Row.CREATE_NULL_AS_BLANK);
 		idCell.setCellValue(EMFFormsIdProvider.ID_COLUMN);
