@@ -155,6 +155,8 @@
 		<module>../../tests/org.eclipse.emf.ecp.view.template.service.test</module>
 		
 		<module>../../tests/org.eclipse.emf.ecp.quickfix.test</module>
+		
+		<module>../../tests/org.eclipse.emf.ecp.view.compoundcontrol.swt.test</module>
 	</modules>
 	
 	<build>

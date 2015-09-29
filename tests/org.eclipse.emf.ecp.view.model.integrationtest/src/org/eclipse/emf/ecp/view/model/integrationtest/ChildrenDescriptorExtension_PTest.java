@@ -279,7 +279,7 @@ public class ChildrenDescriptorExtension_PTest {
 	public void testCompoundControlDescriptors() {
 		final int size = getChildrenSize(VCompoundcontrolPackage.eINSTANCE.getCompoundControl());
 		// +1 because of vcontrol TODO table and custom control is missing
-		assertEquals(ATTACHMENT_CHILD_COUNT + 1, size);
+		assertEquals(ATTACHMENT_CHILD_COUNT + DOMAINMODELREFERENCE_COUNT + 1, size);
 	}
 
 	@Test

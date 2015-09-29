@@ -222,6 +222,7 @@
 		<module>../../bundles/org.eclipse.emf.ecp.view.compoundcontrol.model</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.compoundcontrol.model.edit</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.compoundcontrol.swt</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.compoundcontrol.tooling</module>
 		
 		<!--  Section -->
 		<module>../../bundles/org.eclipse.emf.ecp.view.section.model</module>
