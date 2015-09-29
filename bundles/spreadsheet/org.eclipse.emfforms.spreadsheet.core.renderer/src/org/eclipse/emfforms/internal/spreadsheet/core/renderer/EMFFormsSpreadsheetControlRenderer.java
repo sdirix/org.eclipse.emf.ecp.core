@@ -14,7 +14,6 @@ package org.eclipse.emfforms.internal.spreadsheet.core.renderer;
 
 import java.io.IOException;
 import java.io.StringWriter;
-import java.util.Collections;
 import java.util.Set;
 
 import org.apache.poi.ss.usermodel.Cell;
@@ -35,10 +34,6 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIConverter.WriteableOutputStream;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecore.xmi.XMLResource;
-import org.eclipse.emf.ecore.xmi.XMLSave;
-import org.eclipse.emf.ecore.xmi.impl.XMLHelperImpl;
-import org.eclipse.emf.ecore.xmi.impl.XMLSaveImpl;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
@@ -331,8 +326,7 @@ public class EMFFormsSpreadsheetControlRenderer extends EMFFormsAbstractSpreadsh
 		resource.getContents().add(EcoreUtil.copy(domainModelReference));
 		final StringWriter sw = new StringWriter();
 		final WriteableOutputStream os = new WriteableOutputStream(sw, "UTF-8"); //$NON-NLS-1$
-		final XMLSave xmlSave = new XMLSaveImpl(new XMLHelperImpl());
-		xmlSave.save((XMLResource) resource, os, Collections.emptyMap());
+		resource.save(os, null);
 		final String value = sw.getBuffer().toString();
 		return value;
 	}
