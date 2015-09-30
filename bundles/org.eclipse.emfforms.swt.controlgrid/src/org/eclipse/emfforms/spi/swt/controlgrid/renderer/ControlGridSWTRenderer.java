@@ -51,6 +51,8 @@ import org.eclipse.swt.widgets.Label;
  */
 public class ControlGridSWTRenderer extends AbstractSWTRenderer<VControlGrid> {
 
+	private static final int SPACING = 20;
+
 	private SWTGridDescription rendererGridDescription;
 
 	private final EMFFormsRendererFactory rendererFactory;
@@ -105,20 +107,20 @@ public class ControlGridSWTRenderer extends AbstractSWTRenderer<VControlGrid> {
 			renderers.values());
 
 		final Map<SWTGridDescription, Integer> gridDescriptionToRequiredRendererColumnsMap = getRequiredColumnSizesOfRenderers(
-			gridDescriptions);
+			gridDescriptions.values());
 
 		final int actualSWTColumnCountAvailableForEachRenderer = getColumnsPerRenderer(
-			gridDescriptionToRequiredRendererColumnsMap);
+			gridDescriptionToRequiredRendererColumnsMap.values());
 
 		final Set<Integer> columnsAsPerControlGrid = getColumnCountsFromRows();
 
 		final int swtColumnsAsPerControlGrid = computeColumnCountSoThatAllRowsCanBeRendered(columnsAsPerControlGrid);
 
-		final int layoutColumns = swtColumnsAsPerControlGrid * actualSWTColumnCountAvailableForEachRenderer;
+		final int layoutColumns = computeColumnsForSWTLayout(actualSWTColumnCountAvailableForEachRenderer,
+			swtColumnsAsPerControlGrid);
 
 		/* create composite with columns */
-		final Composite composite = new Composite(parent, SWT.NONE);
-		GridLayoutFactory.fillDefaults().numColumns(layoutColumns).equalWidth(false).applyTo(composite);
+		final Composite composite = createControlGridComposite(parent, layoutColumns);
 
 		/* render the rows */
 		for (final VControlGridRow row : getVElement().getRows()) {
@@ -126,7 +128,8 @@ public class ControlGridSWTRenderer extends AbstractSWTRenderer<VControlGrid> {
 				renderEmptyColumn(composite, layoutColumns);
 				continue;
 			}
-			final int swtColumnsAvailableForRowElement = layoutColumns / row.getCells().size();
+			/* -1 because of spacing label */
+			final int swtColumnsAvailableForRowElement = layoutColumns / row.getCells().size() - 1;
 			for (final VControlGridCell vCell : row.getCells()) {
 				/* render placeholder/controls with no renderer */
 				if (!renderers.containsKey(vCell)) {
@@ -165,6 +168,12 @@ public class ControlGridSWTRenderer extends AbstractSWTRenderer<VControlGrid> {
 						cellsWithoutHorizontalGrab, cellsWithHorizontalGrab, spanForSpanningCells,
 						spanForLastSpanningCell);
 				}
+
+				/* render spacing label */
+				final Label spacing = new Label(composite, SWT.NONE);
+				final int xHint = row.getCells().get(row.getCells().size() - 1) != vCell ? getHorizontalSpacing() : 1;
+				GridDataFactory.fillDefaults().hint(xHint, SWT.DEFAULT).applyTo(spacing);
+
 			}
 		}
 
@@ -176,6 +185,42 @@ public class ControlGridSWTRenderer extends AbstractSWTRenderer<VControlGrid> {
 		composite.layout(true, true);
 
 		return composite;
+	}
+
+	/**
+	 * Multiplies the two column counts giving a required number for columns to use in the SWT composite.
+	 *
+	 * @param actualSWTColumnCountAvailableForEachRenderer count1
+	 * @param swtColumnsAsPerControlGrid count2
+	 * @return the column count
+	 */
+	int computeColumnsForSWTLayout(final int actualSWTColumnCountAvailableForEachRenderer,
+		final int swtColumnsAsPerControlGrid) {
+		final int layoutColumns = swtColumnsAsPerControlGrid * actualSWTColumnCountAvailableForEachRenderer;
+		return layoutColumns;
+	}
+
+	/**
+	 * Creates a composite with the given number of columns.
+	 * 
+	 * @param parent the parent
+	 * @param layoutColumns the columns
+	 * @return the new composite
+	 */
+	Composite createControlGridComposite(Composite parent, final int layoutColumns) {
+		final Composite composite = new Composite(parent, SWT.NONE);
+		GridLayoutFactory.fillDefaults().numColumns(layoutColumns).equalWidth(false).applyTo(composite);
+		return composite;
+	}
+
+	/**
+	 * Returns the hint for the horizontal spacing.
+	 *
+	 * @return the spacing
+	 * @since 1.8
+	 */
+	protected int getHorizontalSpacing() {
+		return SPACING;
 	}
 
 	private void applyLayout(final Composite composite, final int swtColumnsAvailableForRowElement,
@@ -238,7 +283,13 @@ public class ControlGridSWTRenderer extends AbstractSWTRenderer<VControlGrid> {
 			.applyTo(label);
 	}
 
-	private int computeColumnCountSoThatAllRowsCanBeRendered(final Set<Integer> columnsAsPerControlGrid) {
+	/**
+	 * Computes the lcm of all column counts.
+	 *
+	 * @param columnsAsPerControlGrid the counts
+	 * @return the lcm
+	 */
+	/* package */ int computeColumnCountSoThatAllRowsCanBeRendered(final Collection<Integer> columnsAsPerControlGrid) {
 		int swtColumnsAsPerControlGrid = 1;
 		for (final Integer integer : columnsAsPerControlGrid) {
 			if (integer == 0) {
@@ -249,7 +300,12 @@ public class ControlGridSWTRenderer extends AbstractSWTRenderer<VControlGrid> {
 		return swtColumnsAsPerControlGrid;
 	}
 
-	private Set<Integer> getColumnCountsFromRows() {
+	/**
+	 * Counts the columns as requested by the control grid.
+	 *
+	 * @return a set of all wanted columns
+	 */
+	/* package */ Set<Integer> getColumnCountsFromRows() {
 		final Set<Integer> columnsAsPerControlGrid = new LinkedHashSet<Integer>();
 		for (final VControlGridRow row : getVElement().getRows()) {
 			columnsAsPerControlGrid.add(row.getCells().size());
@@ -257,25 +313,45 @@ public class ControlGridSWTRenderer extends AbstractSWTRenderer<VControlGrid> {
 		return columnsAsPerControlGrid;
 	}
 
-	private int getColumnsPerRenderer(final Map<SWTGridDescription, Integer> requiredColumnSizesOfRenderers) {
+	/**
+	 * Will compute the lcm of the given integers.
+	 *
+	 * @param collection the ints
+	 * @return the lcm
+	 */
+	/* package */ int getColumnsPerRenderer(final Collection<Integer> collection) {
 		int columnsPerRenderer = 1;
-		for (final Integer integer : requiredColumnSizesOfRenderers.values()) {
+		for (final Integer integer : collection) {
 			columnsPerRenderer = lcm(columnsPerRenderer, integer);
 		}
 		return columnsPerRenderer;
 	}
 
-	private Map<SWTGridDescription, Integer> getRequiredColumnSizesOfRenderers(
-		final Map<AbstractSWTRenderer<VElement>, SWTGridDescription> gridDescriptions) {
+	/**
+	 * Returns a map from griddescription to required column size. This will be 1 more than specified by the description
+	 * itself, since we will render an additional label after each control to allow adding spacing.
+	 *
+	 * @param collection the descriptions
+	 * @return the map
+	 */
+	/* package */ Map<SWTGridDescription, Integer> getRequiredColumnSizesOfRenderers(
+		final Collection<SWTGridDescription> collection) {
 		final Map<SWTGridDescription, Integer> requiredColumnSizesOfRenderers = new LinkedHashMap<SWTGridDescription, Integer>();
-		for (final SWTGridDescription description : gridDescriptions.values()) {
-			requiredColumnSizesOfRenderers.put(description, description.getColumns());
+		for (final SWTGridDescription description : collection) {
+			// +1 because we will renderer an empty spacing label after each control
+			requiredColumnSizesOfRenderers.put(description, description.getColumns() + 1);
 		}
 		return requiredColumnSizesOfRenderers;
 
 	}
 
-	private Map<VControlGridCell, AbstractSWTRenderer<VElement>> getChildRenderers() {
+	/**
+	 * Returns a Map from cell to renderer. If a cell is empty or a renderer could not be created, there will be no
+	 * entry.
+	 *
+	 * @return the map
+	 */
+	/* package */ Map<VControlGridCell, AbstractSWTRenderer<VElement>> getChildRenderers() {
 		final Map<VControlGridCell, AbstractSWTRenderer<VElement>> renderers = new LinkedHashMap<VControlGridCell, AbstractSWTRenderer<VElement>>();
 		for (final VControlGridRow row : getVElement().getRows()) {
 			for (final VControlGridCell cell : row.getCells()) {
@@ -297,7 +373,13 @@ public class ControlGridSWTRenderer extends AbstractSWTRenderer<VControlGrid> {
 		return renderers;
 	}
 
-	private Map<AbstractSWTRenderer<VElement>, SWTGridDescription> getGridDescriptions(
+	/**
+	 * Returns a map from renderer to its grid description.
+	 *
+	 * @param renderers the renderers
+	 * @return the map
+	 */
+	/* package */ Map<AbstractSWTRenderer<VElement>, SWTGridDescription> getGridDescriptions(
 		final Collection<AbstractSWTRenderer<VElement>> renderers) {
 		final Map<AbstractSWTRenderer<VElement>, SWTGridDescription> gridDescriptions = new LinkedHashMap<AbstractSWTRenderer<VElement>, SWTGridDescription>();
 		for (final AbstractSWTRenderer<VElement> renderer : renderers) {
