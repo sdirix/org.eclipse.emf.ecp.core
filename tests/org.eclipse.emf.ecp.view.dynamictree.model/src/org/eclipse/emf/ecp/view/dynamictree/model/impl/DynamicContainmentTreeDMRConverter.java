@@ -214,7 +214,7 @@ public class DynamicContainmentTreeDMRConverter implements DomainModelReferenceC
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emfforms.spi.core.services.databinding.emf.DomainModelReferenceConverterEMF#getSetting(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference,
 	 *      org.eclipse.emf.ecore.EObject)
 	 */
@@ -224,6 +224,9 @@ public class DynamicContainmentTreeDMRConverter implements DomainModelReferenceC
 		final IEMFValueProperty valueProperty = convertToValueProperty(domainModelReference, object);
 		final IObservableValue observableValue = valueProperty.observe(object);
 		final EObject eObject = (EObject) IObserving.class.cast(observableValue).getObserved();
+		if (eObject == null) {
+			throw new DatabindingFailedException("The observed elements is empty. Probably the list is empty!");
+		}
 		final EStructuralFeature eStructuralFeature = valueProperty.getStructuralFeature();
 		return InternalEObject.class.cast(eObject).eSetting(eStructuralFeature);
 	}

@@ -15,10 +15,8 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.core.databinding.observable.IObserving;
-import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.common.spi.UniqueSetting;
 import org.eclipse.emf.ecp.common.spi.asserts.Assert;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
@@ -26,7 +24,7 @@ import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
-import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
 import org.eclipse.emfforms.spi.core.services.mappingprovider.EMFFormsMappingProvider;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -40,16 +38,16 @@ import org.osgi.service.component.annotations.Reference;
 @Component(name = "EMFFormsMappingProviderDefaultHeuristic")
 public class EMFFormsMappingProviderDefaultHeuristic implements EMFFormsMappingProvider {
 
-	private EMFFormsDatabinding emfFormsDatabinding;
+	private EMFFormsDatabindingEMF emfFormsDatabinding;
 	private ReportService reportService;
 
 	/**
-	 * Sets the {@link EMFFormsDatabinding} service.
+	 * Sets the {@link EMFFormsDatabindingEMF} service.
 	 *
 	 * @param emfFormsDatabinding The databinding service
 	 */
 	@Reference
-	protected void setEMFFormsDatabinding(EMFFormsDatabinding emfFormsDatabinding) {
+	protected void setEMFFormsDatabinding(EMFFormsDatabindingEMF emfFormsDatabinding) {
 		this.emfFormsDatabinding = emfFormsDatabinding;
 	}
 
@@ -74,19 +72,15 @@ public class EMFFormsMappingProviderDefaultHeuristic implements EMFFormsMappingP
 		Assert.create(vControl).notNull();
 		Assert.create(domainObject).notNull();
 
-		IObservableValue observableValue;
+		Setting setting;
 		try {
-			observableValue = emfFormsDatabinding.getObservableValue(vControl.getDomainModelReference(), domainObject);
+			setting = emfFormsDatabinding.getSetting(vControl.getDomainModelReference(), domainObject);
 		} catch (final DatabindingFailedException ex) {
 			reportService.report(new DatabindingFailedReport(ex));
 			return Collections.<UniqueSetting, Set<VControl>> emptyMap();
 		}
 
-		final IObserving observing = (IObserving) observableValue;
-		final EObject eObject = (EObject) observing.getObserved();
-		final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
-		observableValue.dispose();
-		final UniqueSetting uniqueSetting = UniqueSetting.createSetting(eObject, structuralFeature);
+		final UniqueSetting uniqueSetting = UniqueSetting.createSetting(setting);
 
 		return Collections.singletonMap(uniqueSetting, Collections.singleton(vControl));
 	}

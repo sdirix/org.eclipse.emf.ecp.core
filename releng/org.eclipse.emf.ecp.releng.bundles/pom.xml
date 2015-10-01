@@ -270,6 +270,9 @@
 		<module>../../bundles/org.eclipse.emfforms.core.services.editsupport</module>
 		<module>../../bundles/org.eclipse.emfforms.core.services.mappingprovider.default</module>
 		<module>../../bundles/org.eclipse.emfforms.core.services.mappingprovider.table</module>
+		<module>../../bundles/org.eclipse.emfforms.core.services.structuralchange</module>
+		<module>../../bundles/org.eclipse.emfforms.core.services.structuralchange.default</module>
+		<module>../../bundles/org.eclipse.emfforms.core.services.structuralchange.table</module>
 		<module>../../bundles/org.eclipse.emfforms.swt.core</module>
 		<module>../../bundles/org.eclipse.emfforms.swt.core.di</module>
 		<module>../../bundles/org.eclipse.emfforms.swt.core.di.extension</module>

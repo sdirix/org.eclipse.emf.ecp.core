@@ -273,6 +273,10 @@ public class IndexDomainModelReferenceConverter implements DomainModelReferenceC
 			final Setting setting = emfFormsDatabinding.getSetting(indexDMR.getPrefixDMR(), object);
 			eList = (EList<EObject>) setting.get(true);
 		}
+		if (eList.isEmpty()) {
+			throw new DatabindingFailedException(
+				"The list used by the index dmr mustr must not be empty."); //$NON-NLS-1$
+		}
 		final EObject eObject = eList.get(indexDMR.getIndex());
 		return emfFormsDatabinding.getSetting(indexDMR.getTargetDMR(), eObject);
 	}

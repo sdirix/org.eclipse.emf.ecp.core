@@ -13,10 +13,10 @@ package org.eclipse.emfforms.internal.core.services.mappingprovider.table;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.common.spi.UniqueSetting;
@@ -72,6 +72,7 @@ public class EMFFormsMappingProviderTable implements EMFFormsMappingProvider {
 	 * @see org.eclipse.emfforms.spi.core.services.mappingprovider.EMFFormsMappingProvider#getMappingFor(org.eclipse.emf.ecp.view.spi.model.VControl,
 	 *      org.eclipse.emf.ecore.EObject)
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public Map<UniqueSetting, Set<VControl>> getMappingFor(VControl vControl, EObject domainObject) {
 		Assert.create(vControl).notNull();
@@ -79,12 +80,9 @@ public class EMFFormsMappingProviderTable implements EMFFormsMappingProvider {
 
 		final VTableControl tableControl = (VTableControl) vControl;
 		final VTableDomainModelReference tableDMR = (VTableDomainModelReference) tableControl.getDomainModelReference();
-		final IObservableList observableList;
 		Setting tableSetting;
 		try {
 			tableSetting = emfFormsDatabinding.getSetting(tableControl.getDomainModelReference(), domainObject);
-			observableList = emfFormsDatabinding.getObservableList(tableControl.getDomainModelReference(),
-				domainObject);
 		} catch (final DatabindingFailedException ex) {
 			reportService.report(new DatabindingFailedReport(ex));
 			return Collections.<UniqueSetting, Set<VControl>> emptyMap();
@@ -92,8 +90,7 @@ public class EMFFormsMappingProviderTable implements EMFFormsMappingProvider {
 
 		final LinkedHashMap<UniqueSetting, Set<VControl>> settingsMap = new LinkedHashMap<UniqueSetting, Set<VControl>>();
 		settingsMap.put(UniqueSetting.createSetting(tableSetting), Collections.<VControl> singleton(tableControl));
-		for (final Object object : observableList) {
-			final EObject eObject = EObject.class.cast(object);
+		for (final EObject eObject : (List<EObject>) tableSetting.get(true)) {
 			for (final VDomainModelReference domainModelReference : tableDMR.getColumnDomainModelReferences()) {
 				try {
 					final Setting columnSetting = emfFormsDatabinding.getSetting(domainModelReference, eObject);

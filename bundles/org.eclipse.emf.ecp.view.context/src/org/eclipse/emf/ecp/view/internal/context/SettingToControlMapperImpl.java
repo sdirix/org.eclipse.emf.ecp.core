@@ -22,7 +22,6 @@ import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.common.spi.UniqueSetting;
 import org.eclipse.emf.ecp.view.spi.context.SettingToControlMapper;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
@@ -35,9 +34,9 @@ import org.eclipse.emfforms.spi.core.services.mappingprovider.EMFFormsMappingPro
  * @author Lucas Koehler
  *
  */
-@SuppressWarnings("deprecation")
 public class SettingToControlMapperImpl implements SettingToControlMapper {
 	private ViewModelContext viewModelContext;
+	private ViewModelListener viewModelListener;
 
 	private final Set<EMFFormsMappingProvider> mappingProviders = new LinkedHashSet<EMFFormsMappingProvider>();
 	private final ReportService reportService;
@@ -50,7 +49,8 @@ public class SettingToControlMapperImpl implements SettingToControlMapper {
 	/**
 	 * A mapping between controls and their domain model reference change listeners.
 	 */
-	private final Map<VControl, DomainModelReferenceChangeListener> controlChangeListener = new LinkedHashMap<VControl, DomainModelReferenceChangeListener>();
+	// private final Map<VControl, DomainModelReferenceChangeListener> controlChangeListener = new
+	// LinkedHashMap<VControl, DomainModelReferenceChangeListener>();
 
 	// private final Map<EObject, Set<SettingToControlMapper>> childMappers = new LinkedHashMap<EObject,
 	// Set<SettingToControlMapper>>();
@@ -144,9 +144,7 @@ public class SettingToControlMapperImpl implements SettingToControlMapper {
 			}
 		}
 
-		vControl.getDomainModelReference().getChangeListener().remove(controlChangeListener.get(vControl));
-		controlChangeListener.remove(vControl);
-		viewModelContext.unregisterDomainChangeListener(vControl.getDomainModelReference());
+		viewModelListener.removeVControl(vControl);
 	}
 
 	/**
@@ -167,6 +165,8 @@ public class SettingToControlMapperImpl implements SettingToControlMapper {
 		// }
 		// settingToControlMap.get(setting).addAll(map.get(setting));
 		// }
+
+		viewModelListener.addVControl(vControl);
 	}
 
 	/**
@@ -181,20 +181,6 @@ public class SettingToControlMapperImpl implements SettingToControlMapper {
 			}
 
 			updateControlMapping(vControl);
-
-			final DomainModelReferenceChangeListener changeListener = new DomainModelReferenceChangeListener() {
-
-				@Override
-				public void notifyChange() {
-					updateControlMapping(vControl);
-				}
-			};
-			final DomainModelReferenceChangeListener oldListener = controlChangeListener.put(vControl, changeListener);
-			if (oldListener != null) {
-				vControl.getDomainModelReference().getChangeListener().remove(oldListener);
-			}
-			vControl.getDomainModelReference().getChangeListener().add(changeListener);
-			viewModelContext.registerDomainChangeListener(vControl.getDomainModelReference());
 		}
 	}
 
@@ -206,6 +192,7 @@ public class SettingToControlMapperImpl implements SettingToControlMapper {
 	@Override
 	public void instantiate(ViewModelContext context) {
 		viewModelContext = context;
+		viewModelListener = new ViewModelListener(context, this);
 	}
 
 	private Map<UniqueSetting, Set<VControl>> getSettingsToControlMapFor(VControl vControl, EObject domainObject) {
@@ -213,9 +200,10 @@ public class SettingToControlMapperImpl implements SettingToControlMapper {
 		double bestScore = EMFFormsMappingProvider.NOT_APPLICABLE;
 
 		for (final EMFFormsMappingProvider mappingProvider : mappingProviders) {
-			if (mappingProvider.isApplicable(vControl, domainObject) > bestScore) {
+			final double score = mappingProvider.isApplicable(vControl, domainObject);
+			if (score > bestScore) {
 				bestMappingProvider = mappingProvider;
-				bestScore = mappingProvider.isApplicable(vControl, domainObject);
+				bestScore = score;
 			}
 		}
 		if (bestMappingProvider == null) {
@@ -261,16 +249,10 @@ public class SettingToControlMapperImpl implements SettingToControlMapper {
 	public void dispose() {
 		settingToControlMap.clear();
 
-		for (final VControl vControl : controlChangeListener.keySet()) {
-			if (vControl.getDomainModelReference() != null) {
-				vControl.getDomainModelReference().getChangeListener().remove(controlChangeListener.get(vControl));
-			}
-			viewModelContext.unregisterDomainChangeListener(vControl.getDomainModelReference());
-		}
-		controlChangeListener.clear();
-
 		// childMappers.clear();
 		// childMapperUsers.clear();
+		viewModelListener.dispose();
+		// TODO is more disposing needed?
 
 		viewModelContext = null;
 	}
