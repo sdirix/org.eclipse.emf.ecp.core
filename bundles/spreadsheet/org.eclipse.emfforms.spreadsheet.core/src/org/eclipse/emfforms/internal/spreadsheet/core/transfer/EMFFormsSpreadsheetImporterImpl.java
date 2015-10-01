@@ -341,6 +341,13 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 			}
 			for (int rowId = 3; rowId <= sheet.getLastRowNum(); rowId++) {
 				final Row row = sheet.getRow(rowId);
+				if (row == null) {
+					errorReports.reportError(
+						Severity.INFO, LocalizationServiceHelper.getString(getClass(), "ImportError_EmptyRow"), //$NON-NLS-1$
+						ErrorFactory.eINSTANCE.createSheetLocation(workbook.getSheetName(sheetId), 0, rowId,
+							EMFFormsIdProvider.ID_COLUMN));
+					continue;
+				}
 				final String eObjectId = row.getCell(0, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
 				if (eObjectId == null || eObjectId.isEmpty()) {
 					/* EObject id deleted */
