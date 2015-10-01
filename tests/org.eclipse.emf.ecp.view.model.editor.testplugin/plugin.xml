@@ -4,9 +4,6 @@
    <extension
          point="org.eclipse.emf.ecp.view.model.provider.xmi.file">
       <file
-            filePath="Project/View.view">
-      </file>
-      <file
             filePath="TableControl.view">
       </file>
       <file
