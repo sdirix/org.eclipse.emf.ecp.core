@@ -393,11 +393,10 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 			@Override
 			public void notifyChange(ModelChangeNotification notification) {
 				// expand the tree if elements are added to the tree and the root isn't already expanded
-				if (notification.getNotifier().equals(((RootObject) treeViewer.getInput()).getRoot())
-					&& !treeViewer.getExpandedState(((RootObject) treeViewer.getInput()).getRoot())
-					&& (notification.getRawNotification().getEventType() == Notification.ADD
-						|| notification.getRawNotification().getEventType() == Notification.ADD_MANY)) {
-					treeViewer.expandToLevel(2);
+				if (notification.getRawNotification().getEventType() == Notification.ADD
+					|| notification.getRawNotification().getEventType() == Notification.ADD_MANY) {
+					final EObject notifier = notification.getNotifier();
+					treeViewer.expandToLevel(notifier, 1);
 				}
 			}
 		};
