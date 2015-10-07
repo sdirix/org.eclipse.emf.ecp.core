@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -106,6 +106,12 @@ public final class EcoreHelper {
 			}
 			final EObject eObject = physicalResource.getContents().get(0);
 			EcoreUtil.resolveAll(eObject);
+			if (!EPackage.class.isInstance(eObject)) {
+				Activator.log(
+					IStatus.ERROR,
+					String.format("The EObject is not contained in an EPackage: %1$s", eObject)); //$NON-NLS-1$
+				return;
+			}
 			final EPackage ePackage = EPackage.class.cast(eObject);
 
 			if (isContainedInPackageRegistry(ePackage.getNsURI())) {
