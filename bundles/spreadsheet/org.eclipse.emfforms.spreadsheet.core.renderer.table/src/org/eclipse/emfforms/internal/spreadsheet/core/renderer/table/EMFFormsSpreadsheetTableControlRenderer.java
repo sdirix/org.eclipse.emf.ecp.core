@@ -12,9 +12,10 @@
 package org.eclipse.emfforms.internal.spreadsheet.core.renderer.table;
 
 import org.apache.poi.ss.usermodel.Workbook;
-import org.eclipse.core.databinding.observable.list.IObservableList;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference;
@@ -123,10 +124,13 @@ public class EMFFormsSpreadsheetTableControlRenderer extends EMFFormsAbstractSpr
 
 				dmrToResolve = exportTableParent.getIndexDMRToResolve();
 			}
+			// TODO remove asap
+			dmrToResolve.init(viewModelContext.getDomainModel());
 
-			final IObservableList observableList = emfformsDatabinding.getObservableList(
+			final Setting tableSetting = emfformsDatabinding.getSetting(
 				dmrToResolve, viewModelContext.getDomainModel());
-
+			@SuppressWarnings("unchecked")
+			final EList<EObject> tableEntries = (EList<EObject>) tableSetting.get(true);
 			final VTableDomainModelReference tableDomainModelReference = (VTableDomainModelReference) vElement
 				.getDomainModelReference();
 
@@ -135,15 +139,8 @@ public class EMFFormsSpreadsheetTableControlRenderer extends EMFFormsAbstractSpr
 					tableDomainModelReference.getDomainModelReference())
 					.getValue();
 				if (prefixName == null || prefixName.length() == 0) {
-					try {
-						prefixName = emfformsDatabinding.getValueProperty(
-							tableDomainModelReference.getDomainModelReference(),
-							viewModelContext.getDomainModel()).getStructuralFeature()
-							.getName();
-					} catch (final DatabindingFailedException ex) {
-						reportService
-							.report(new EMFFormsSpreadsheetReport(ex, EMFFormsSpreadsheetReport.ERROR));
-					}
+					prefixName = tableSetting.getEStructuralFeature()
+						.getName();
 				}
 
 				final VIndexDomainModelReference indexDMR = VIndexdmrFactory.eINSTANCE
@@ -180,7 +177,8 @@ public class EMFFormsSpreadsheetTableControlRenderer extends EMFFormsAbstractSpr
 				}
 
 				if (vElement.getDetailEditing() != DetailEditing.NONE) {
-					final EObject tableEntry = getTableEntry(observableList, i);
+					final EObject tableEntry = getTableEntry(tableEntries, i,
+						(EReference) tableSetting.getEStructuralFeature());
 					final VView viewModel = getView(vElement, tableEntry, viewModelContext);
 					if (viewModel == null) {
 						continue;
@@ -214,12 +212,12 @@ public class EMFFormsSpreadsheetTableControlRenderer extends EMFFormsAbstractSpr
 		return numColumns;
 	}
 
-	private EObject getTableEntry(final IObservableList observableList, int currentColumn) {
+	private EObject getTableEntry(EList<EObject> tableEntries, int currentColumn, EReference tableEntryReference) {
 		EObject tableEntry;
-		if (observableList.size() > currentColumn) {
-			tableEntry = (EObject) observableList.get(currentColumn);
+		if (tableEntries.size() > currentColumn) {
+			tableEntry = tableEntries.get(currentColumn);
 		} else {
-			tableEntry = EcoreUtil.create(EReference.class.cast(observableList.getElementType())
+			tableEntry = EcoreUtil.create(tableEntryReference
 				.getEReferenceType());
 		}
 		return tableEntry;
