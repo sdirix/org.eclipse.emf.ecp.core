@@ -147,21 +147,37 @@ public class SpreadsheetImportResultImpl extends MinimalEObjectImpl.Container im
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * 
+	 * @return The List of SettingToSheetMapping.
+	 *         <!-- end-user-doc -->
 	 *
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public EList<SettingToSheetMapping> getSettingToSheetMap() {
 		if (settingToSheetMap == null) {
 			settingToSheetMap = new EObjectResolvingEList<SettingToSheetMapping>(SettingToSheetMapping.class, this,
-				ErrorPackage.SPREADSHEET_IMPORT_RESULT__SETTING_TO_SHEET_MAP);
+				ErrorPackage.SPREADSHEET_IMPORT_RESULT__SETTING_TO_SHEET_MAP) {
+
+				private static final long serialVersionUID = 8911738816135102554L;
+
+				/**
+				 * {@inheritDoc}
+				 *
+				 * @see org.eclipse.emf.ecore.util.EObjectEList#isUnique()
+				 */
+				@Override
+				protected boolean isUnique() {
+					return false;
+				}
+
+			};
 		}
 		return settingToSheetMap;
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->.
 	 * <!-- end-user-doc -->
 	 *
 	 * @generated

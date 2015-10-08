@@ -174,7 +174,7 @@ public class ImportErrors_ITest {
 		final EList<ErrorReport> errorReports = result.getErrorReports();
 
 		/* assert */
-		assertEquals(2, errorReports.size());
+		assertEquals(1, errorReports.size());
 	}
 
 	@Test
@@ -191,7 +191,7 @@ public class ImportErrors_ITest {
 		final EList<ErrorReport> errorReports = result.getErrorReports();
 
 		/* assert */
-		assertEquals(2, errorReports.size());
+		assertEquals(1, errorReports.size());
 	}
 
 	@Test
@@ -233,7 +233,7 @@ public class ImportErrors_ITest {
 		final EList<ErrorReport> errorReports = result.getErrorReports();
 
 		/* assert */
-		assertEquals(2, errorReports.size());
+		assertEquals(1, errorReports.size());
 	}
 
 	@Test
@@ -256,7 +256,7 @@ public class ImportErrors_ITest {
 		final EList<ErrorReport> errorReports = result.getErrorReports();
 
 		/* assert */
-		assertEquals(2, errorReports.size());
+		assertEquals(1, errorReports.size());
 	}
 
 	@Test

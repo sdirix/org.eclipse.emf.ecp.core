@@ -35,7 +35,6 @@ import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.eclipse.emf.databinding.IEMFValueProperty;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
@@ -44,6 +43,7 @@ import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.xml.type.internal.XMLCalendar;
@@ -103,7 +103,7 @@ public class EMFFormsSpreadsheetSingleAttributeConverter_Test {
 
 	@Test
 	public void testApplicableNoFeature() throws DatabindingFailedException {
-		when(databinding.getValueProperty(any(VDomainModelReference.class), any(EObject.class)))
+		when(databinding.getSetting(any(VDomainModelReference.class), any(EObject.class)))
 			.thenThrow(new DatabindingFailedException("")); //$NON-NLS-1$
 		converter.setDatabinding(databinding);
 		converter.setReportService(reportService);
@@ -112,10 +112,10 @@ public class EMFFormsSpreadsheetSingleAttributeConverter_Test {
 
 	@Test
 	public void testApplicableNoEAttribute() throws DatabindingFailedException {
-		final IEMFValueProperty property = mock(IEMFValueProperty.class);
-		when(property.getValueType()).thenReturn(TaskPackage.eINSTANCE.getUser_Tasks());
-		when(databinding.getValueProperty(any(VDomainModelReference.class), any(EObject.class)))
-			.thenReturn(property);
+		final Setting setting = mock(Setting.class);
+		when(setting.getEStructuralFeature()).thenReturn(TaskPackage.eINSTANCE.getUser_Tasks());
+		when(databinding.getSetting(any(VDomainModelReference.class), any(EObject.class)))
+			.thenReturn(setting);
 		converter.setDatabinding(databinding);
 		converter.setReportService(reportService);
 		assertEquals(EMFFormsSpreadsheetValueConverter.NOT_APPLICABLE, converter.isApplicable(domainObject, dmr), 0d);
@@ -123,10 +123,10 @@ public class EMFFormsSpreadsheetSingleAttributeConverter_Test {
 
 	@Test
 	public void testApplicableMultiEAttribute() throws DatabindingFailedException {
-		final IEMFValueProperty property = mock(IEMFValueProperty.class);
-		when(property.getValueType()).thenReturn(BowlingPackage.eINSTANCE.getPlayer_EMails());
-		when(databinding.getValueProperty(any(VDomainModelReference.class), any(EObject.class)))
-			.thenReturn(property);
+		final Setting setting = mock(Setting.class);
+		when(setting.getEStructuralFeature()).thenReturn(BowlingPackage.eINSTANCE.getPlayer_EMails());
+		when(databinding.getSetting(any(VDomainModelReference.class), any(EObject.class)))
+			.thenReturn(setting);
 		converter.setDatabinding(databinding);
 		converter.setReportService(reportService);
 		assertEquals(EMFFormsSpreadsheetValueConverter.NOT_APPLICABLE, converter.isApplicable(domainObject, dmr), 0d);
@@ -134,10 +134,10 @@ public class EMFFormsSpreadsheetSingleAttributeConverter_Test {
 
 	@Test
 	public void testApplicableSingleEAttribute() throws DatabindingFailedException {
-		final IEMFValueProperty property = mock(IEMFValueProperty.class);
-		when(property.getValueType()).thenReturn(TaskPackage.eINSTANCE.getUser_Active());
-		when(databinding.getValueProperty(any(VDomainModelReference.class), any(EObject.class)))
-			.thenReturn(property);
+		final Setting setting = mock(Setting.class);
+		when(setting.getEStructuralFeature()).thenReturn(TaskPackage.eINSTANCE.getUser_Active());
+		when(databinding.getSetting(any(VDomainModelReference.class), any(EObject.class)))
+			.thenReturn(setting);
 		converter.setDatabinding(databinding);
 		converter.setReportService(reportService);
 		assertEquals(0d, converter.isApplicable(domainObject, dmr), 0d);
