@@ -43,7 +43,7 @@ import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
 import org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
-import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
@@ -267,7 +267,7 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 
 			final EObject rootObject = getViewModelContext().getDomainModel();
 			try {
-				final IObservableValue textObservable = SWTObservables.observeText(label);
+				final IObservableValue textObservable = WidgetProperties.text().observe(label);
 				final IObservableValue displayNameObservable = labelProvider.getDisplayName(domainModelReference,
 					rootObject);
 				viewModelDBC.bindValue(textObservable, displayNameObservable, null, new UpdateValueStrategy() {
@@ -290,7 +290,7 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 					}
 
 				});
-				final IObservableValue tooltipObservable = SWTObservables.observeTooltipText(label);
+				final IObservableValue tooltipObservable = WidgetProperties.tooltipText().observe(label);
 				final IObservableValue descriptionObservable = labelProvider.getDescription(domainModelReference,
 					rootObject);
 				viewModelDBC.bindValue(tooltipObservable, descriptionObservable);
