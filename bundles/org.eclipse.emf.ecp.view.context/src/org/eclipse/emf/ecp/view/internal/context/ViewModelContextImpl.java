@@ -275,11 +275,16 @@ public class ViewModelContextImpl implements ViewModelContext {
 	}
 
 	private void updateControlMapping(VControl vControl) {
+		if (vControl == null) {
+			return;
+		}
 		// delete old mapping
 		for (final UniqueSetting setting : settingToControlMap.keySet()) {
 			settingToControlMap.get(setting).remove(vControl);
 		}
-
+		if (vControl.getDomainModelReference() == null) {
+			return;
+		}
 		final Iterator<Setting> iterator = vControl.getDomainModelReference().getIterator();
 		while (iterator.hasNext()) {
 			final Setting setting = iterator.next();
