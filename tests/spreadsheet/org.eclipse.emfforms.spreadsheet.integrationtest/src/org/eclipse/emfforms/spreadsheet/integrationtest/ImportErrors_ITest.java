@@ -17,7 +17,6 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Collection;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.ClientAnchor;
@@ -260,29 +259,6 @@ public class ImportErrors_ITest {
 	}
 
 	@Test
-	public void testGetSheetLocationsValidFeature() throws IOException {
-		/* setup */
-		stream = bundle.getEntry("errorSheets/basexls").openStream(); //$NON-NLS-1$
-		final Workbook workbook = new HSSFWorkbook(stream);
-
-		/* act */
-		final SpreadsheetImportResult result = EMFFormsSpreadsheetImporter.INSTANCE
-			.importSpreadsheet(workbook, eClass);
-
-		/* assert */
-		final Collection<SheetLocation> lastNameSheetLocations = result
-			.getSheetLocations(TaskPackage.eINSTANCE.getUser_LastName());
-		int row = 3;
-		for (final SheetLocation sheetLocation : lastNameSheetLocations) {
-			assertEquals("root", sheetLocation.getSheet()); //$NON-NLS-1$
-			assertEquals(2, sheetLocation.getColumn());
-			assertEquals("Last Name*", sheetLocation.getColumnName()); //$NON-NLS-1$
-			assertEquals(row++, sheetLocation.getRow());
-			assertTrue(sheetLocation.isValid());
-		}
-	}
-
-	@Test
 	public void testGetSheetLocationValidSetting() throws IOException {
 		/* setup */
 		stream = bundle.getEntry("errorSheets/basexls").openStream(); //$NON-NLS-1$
@@ -303,35 +279,6 @@ public class ImportErrors_ITest {
 		assertEquals("Last Name*", lastNameSheetLocation.getColumnName()); //$NON-NLS-1$
 		assertEquals(4, lastNameSheetLocation.getRow());
 		assertTrue(lastNameSheetLocation.isValid());
-	}
-
-	@Test
-	public void testGetSheetLocationsInvalidFeature() throws IOException {
-		/* setup */
-		stream = bundle.getEntry("errorSheets/basexls").openStream(); //$NON-NLS-1$
-		final Workbook workbook = new HSSFWorkbook(stream);
-		final Sheet sheet = workbook.getSheetAt(0);
-		for (int row = 3; row < 5; row++) {
-			sheet.getRow(row).removeCell(sheet.getRow(row).getCell(11));
-			sheet.getRow(row).removeCell(sheet.getRow(row).getCell(10));
-			sheet.getRow(row).removeCell(sheet.getRow(row).getCell(9));
-		}
-
-		/* act */
-		final SpreadsheetImportResult result = EMFFormsSpreadsheetImporter.INSTANCE
-			.importSpreadsheet(workbook, eClass);
-
-		/* assert */
-		final Collection<SheetLocation> firstNameSheetLocations = result
-			.getSheetLocations(TaskPackage.eINSTANCE.getUser_DateOfBirth());
-		assertEquals(1, firstNameSheetLocations.size());
-		final SheetLocation sheetLocation = firstNameSheetLocations.iterator().next();
-
-		assertEquals("NO SHEET", sheetLocation.getSheet()); //$NON-NLS-1$
-		assertEquals(-1, sheetLocation.getColumn());
-		assertEquals("Date Of Birth", sheetLocation.getColumnName()); //$NON-NLS-1$
-		assertEquals(-1, sheetLocation.getRow());
-		assertFalse(sheetLocation.isValid());
 	}
 
 	@Test

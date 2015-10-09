@@ -12,9 +12,6 @@
 package org.eclipse.emfforms.spi.spreadsheet.core.error.model.impl;
 
 import java.util.Collection;
-import java.util.Collections;
-import java.util.LinkedHashSet;
-import java.util.Set;
 
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -147,7 +144,7 @@ public class SpreadsheetImportResultImpl extends MinimalEObjectImpl.Container im
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @return The List of SettingToSheetMapping.
 	 *         <!-- end-user-doc -->
 	 *
@@ -300,28 +297,6 @@ public class SpreadsheetImportResultImpl extends MinimalEObjectImpl.Container im
 		report.setEmfLocation(emfLocation);
 		report.setSheetLocation(sheetLocation);
 		getErrorReports().add(report);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emfforms.spi.spreadsheet.core.error.model.SpreadsheetImportResult#getSheetLocations(org.eclipse.emf.ecore.EStructuralFeature)
-	 */
-	@Override
-	public Collection<SheetLocation> getSheetLocations(EStructuralFeature structuralFeature) {
-		final Set<SheetLocation> result = new LinkedHashSet<SheetLocation>();
-		for (final SettingToSheetMapping settingToSheetMapping : getSettingToSheetMap()) {
-			if (structuralFeature != settingToSheetMapping.getSettingLocation().getFeature()) {
-				continue;
-			}
-			result.add(EcoreUtil.copy(settingToSheetMapping.getSheetLocation()));
-		}
-		if (!result.isEmpty()) {
-			return result;
-		}
-		return Collections
-			.singleton(
-				ErrorFactory.eINSTANCE.createInvalidSheetLocation(getFeatureName(structuralFeature)));
 	}
 
 	/**
