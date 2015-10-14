@@ -283,13 +283,6 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 	 */
 	class EMFUpdateConvertValueStrategy extends EMFUpdateValueStrategy {
 
-		/**
-		 * Constructor.
-		 */
-		public EMFUpdateConvertValueStrategy() {
-			super();
-		}
-
 		/*
 		 * (non-Javadoc)
 		 * @see org.eclipse.core.databinding.UpdateValueStrategy#convert(java.lang.Object)
