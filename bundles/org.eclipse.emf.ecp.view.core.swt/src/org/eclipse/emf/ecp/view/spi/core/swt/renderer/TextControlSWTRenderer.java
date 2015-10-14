@@ -46,7 +46,7 @@ import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
 import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
-import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
@@ -149,7 +149,7 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 	 */
 	protected Binding bindValue(Control text, IObservableValue modelValue, DataBindingContext dataBindingContext,
 		UpdateValueStrategy targetToModel, UpdateValueStrategy modelToTarget) {
-		final IObservableValue value = SWTObservables.observeText(text, SWT.FocusOut);
+		final IObservableValue value = WidgetProperties.text(SWT.FocusOut).observe(text);
 		final Binding binding = dataBindingContext.bindValue(value, modelValue, targetToModel, modelToTarget);
 		return binding;
 	}
@@ -166,7 +166,7 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 	 */
 	protected Binding createTooltipBinding(Control text, IObservableValue modelValue,
 		DataBindingContext dataBindingContext, UpdateValueStrategy targetToModel, UpdateValueStrategy modelToTarget) {
-		final IObservableValue toolTip = SWTObservables.observeTooltipText(text);
+		final IObservableValue toolTip = WidgetProperties.tooltipText().observe(text);
 		return dataBindingContext.bindValue(toolTip, modelValue, targetToModel, modelToTarget);
 	}
 
