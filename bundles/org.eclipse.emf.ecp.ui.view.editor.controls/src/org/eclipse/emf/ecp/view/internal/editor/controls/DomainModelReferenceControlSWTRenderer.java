@@ -11,6 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.editor.controls;
 
+import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.HashSet;
 
@@ -28,6 +29,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.impl.EReferenceImpl;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.edit.internal.swt.SWTImageHelper;
 import org.eclipse.emf.ecp.edit.spi.swt.reference.DeleteReferenceAction;
@@ -44,6 +46,7 @@ import org.eclipse.emf.ecp.view.spi.label.model.VLabel;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.util.VViewResourceImpl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.edit.command.SetCommand;
@@ -58,6 +61,7 @@ import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.jface.action.Action;
+import org.eclipse.jface.databinding.swt.ISWTObservableValue;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -144,7 +148,7 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 	@Override
 	protected Binding[] createBindings(Control control) throws DatabindingFailedException {
 
-		final Binding[] bindings = new Binding[2];
+		final Binding[] bindings = new Binding[3];
 		final IObservableValue value = WidgetProperties.text().observe(setLabel);
 
 		bindings[0] = getDataBindingContext().bindValue(value, getModelValue(), new UpdateValueStrategy() {
@@ -175,6 +179,26 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 				}
 			});
 
+		final ISWTObservableValue setLabelTooltip = WidgetProperties.tooltipText().observe(setLabel);
+		bindings[2] = getDataBindingContext().bindValue(
+			setLabelTooltip,
+			getModelValue(),
+			new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER),
+			new UpdateValueStrategy() {
+				@Override
+				public Object convert(Object value) {
+					if (!EObject.class.isInstance(value)) {
+						return ""; //$NON-NLS-1$
+					}
+					final EObject eObject = EObject.class.cast(value);
+					final Resource resource = eObject.eResource();
+					if (!VViewResourceImpl.class.isInstance(resource)) {
+						return ""; //$NON-NLS-1$
+					}
+					final String id = VViewResourceImpl.class.cast(resource).getID(eObject);
+					return MessageFormat.format("UUID: {0}", id); //$NON-NLS-1$
+				}
+			});
 		return bindings;
 	}
 
