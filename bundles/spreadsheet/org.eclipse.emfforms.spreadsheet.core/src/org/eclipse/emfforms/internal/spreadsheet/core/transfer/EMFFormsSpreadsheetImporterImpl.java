@@ -36,6 +36,9 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIConverter.ReadableInputStream;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecp.spi.view.migrator.string.StringViewModelMigrator;
+import org.eclipse.emf.ecp.view.migrator.ViewModelMigrationException;
+import org.eclipse.emf.ecp.view.migrator.ViewModelMigratorUtil;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -414,11 +417,27 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 	}
 
 	private VDomainModelReference deserializeDMR(String serializedDMR) throws IOException {
+		if (ViewModelMigratorUtil.getStringViewModelMigrator() != null) {
+			try {
+				serializedDMR = migrateIfNeeded(serializedDMR);
+			} catch (final ViewModelMigrationException ex) {
+				throw new IOException(ex);
+			}
+		}
 		final ResourceSet rs = new ResourceSetImpl();
 		final Resource resource = rs.createResource(URI.createURI("VIRTAUAL_URI")); //$NON-NLS-1$
 
 		final ReadableInputStream is = new ReadableInputStream(serializedDMR, "UTF-8"); //$NON-NLS-1$
 		resource.load(is, null);
 		return (VDomainModelReference) resource.getContents().get(0);
+	}
+
+	private String migrateIfNeeded(String serializedDMR) throws ViewModelMigrationException {
+		final StringViewModelMigrator migrator = ViewModelMigratorUtil.getStringViewModelMigrator();
+		if (migrator.checkMigration(serializedDMR)) {
+			return serializedDMR;
+		}
+		return migrator.performMigration(serializedDMR);
+
 	}
 }

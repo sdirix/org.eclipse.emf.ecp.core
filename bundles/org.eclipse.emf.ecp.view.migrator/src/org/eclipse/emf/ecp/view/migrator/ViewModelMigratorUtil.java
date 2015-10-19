@@ -16,7 +16,13 @@ import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.InvalidRegistryObjectException;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.ecp.spi.view.migrator.string.StringViewModelMigrator;
+import org.eclipse.emfforms.spi.common.report.AbstractReport;
+import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 
 /**
  * @author Lucas Koehler
@@ -28,17 +34,13 @@ public final class ViewModelMigratorUtil {
 	private static final String MIGRATOR_CLASS = "class"; //$NON-NLS-1$
 	private static final String MIGRATOR_PRIORITY = "priority"; //$NON-NLS-1$
 
+	private static ViewModelMigrator migrator;
+
 	private ViewModelMigratorUtil() {
 
 	}
 
-	/**
-	 *
-	 * @return the view model migrator with the highest priority, <code>null</code> if no migrator was registered to the
-	 *         extension point.
-	 */
-	public static ViewModelMigrator getViewModelMigrator() {
-
+	private static void readExtensionPoint() {
 		final IExtensionPoint extensionPoint = Platform.getExtensionRegistry()
 			.getExtensionPoint(MIGRATOR_EXTENSION);
 		int topPriority = 0;
@@ -52,27 +54,49 @@ public final class ViewModelMigratorUtil {
 					if (priority > topPriority) {
 						final Class<ViewModelMigrator> migratorClass = loadClass(configurationElement
 							.getContributor().getName(), configurationElement
-							.getAttribute(MIGRATOR_CLASS));
+								.getAttribute(MIGRATOR_CLASS));
 						topClass = migratorClass;
 						topPriority = priority;
 					}
 				} catch (final ClassNotFoundException ex) {
-					ex.printStackTrace();
+					log(ex);
 				} catch (final InvalidRegistryObjectException ex) {
-					ex.printStackTrace();
+					log(ex);
 				}
 			}
 		}
 		if (topClass != null) {
 			try {
-				return topClass.newInstance();
+				migrator = topClass.newInstance();
 			} catch (final InstantiationException ex) {
-				ex.printStackTrace();
+				log(ex);
 			} catch (final IllegalAccessException ex) {
-				ex.printStackTrace();
+				log(ex);
 			}
 		}
-		return null;
+	}
+
+	/**
+	 *
+	 * @return the view model migrator with the highest priority, <code>null</code> if no migrator was registered to the
+	 *         extension point.
+	 */
+	public static ViewModelMigrator getViewModelMigrator() {
+		if (migrator == null) {
+			readExtensionPoint();
+		}
+		return migrator;
+	}
+
+	/**
+	 *
+	 * @return the view model migrator with the highest priority if it also supports migrating string based view models.
+	 */
+	public static StringViewModelMigrator getStringViewModelMigrator() {
+		if (!StringViewModelMigrator.class.isInstance(getViewModelMigrator())) {
+			return null;
+		}
+		return StringViewModelMigrator.class.cast(getViewModelMigrator());
 	}
 
 	@SuppressWarnings("unchecked")
@@ -83,6 +107,22 @@ public final class ViewModelMigratorUtil {
 			throw new ClassNotFoundException(clazz + bundleName);
 		}
 		return (Class<T>) bundle.loadClass(clazz);
+	}
 
+	private static void log(Throwable throwable) {
+		final ReportService reportService = getReportService();
+		if (reportService == null) {
+			return;
+		}
+		reportService.report(new AbstractReport(throwable));
+	}
+
+	private static ReportService getReportService() {
+		final Bundle bundle = FrameworkUtil.getBundle(ViewModelMigratorUtil.class);
+		final BundleContext bundleContext = bundle.getBundleContext();
+		final ServiceReference<ReportService> serviceReference = bundleContext.getServiceReference(ReportService.class);
+		final ReportService reportService = bundleContext.getService(serviceReference);
+		bundleContext.ungetService(serviceReference);
+		return reportService;
 	}
 }

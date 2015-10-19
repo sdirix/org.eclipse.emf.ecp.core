@@ -23,6 +23,7 @@ import org.apache.poi.ss.usermodel.ClientAnchor;
 import org.apache.poi.ss.usermodel.Comment;
 import org.apache.poi.ss.usermodel.CreationHelper;
 import org.apache.poi.ss.usermodel.Drawing;
+import org.apache.poi.ss.usermodel.RichTextString;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -242,7 +243,7 @@ public class ImportErrors_ITest {
 		final Workbook workbook = new HSSFWorkbook(stream);
 		final Sheet sheet = workbook.getSheetAt(0);
 		final String dmrForTaskName = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + //$NON-NLS-1$
-			"<org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference xmi:version=\"2.0\" xmlns:xmi=\"http://www.omg.org/XMI\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:ecore=\"http://www.eclipse.org/emf/2002/Ecore\" xmlns:org.eclipse.emf.ecp.view.model=\"http://org/eclipse/emf/ecp/view/model\">\n" //$NON-NLS-1$
+			"<org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference xmi:version=\"2.0\" xmlns:xmi=\"http://www.omg.org/XMI\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:ecore=\"http://www.eclipse.org/emf/2002/Ecore\" xmlns:org.eclipse.emf.ecp.view.model=\"http://org/eclipse/emf/ecp/view/model/170/\">\n" //$NON-NLS-1$
 			+ "<domainModelEFeature xsi:type=\"ecore:EAttribute\" href=\"http://eclipse/org/emf/ecp/makeithappen/model/task#//User/firstName\"/>\n" //$NON-NLS-1$
 			+ "<domainModelEReferencePath href=\"http://eclipse/org/emf/ecp/makeithappen/model/task#//Task/assignee\"/>\n" //$NON-NLS-1$
 			+ "</org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference>\n" + ""; //$NON-NLS-1$ //$NON-NLS-2$
@@ -397,5 +398,28 @@ public class ImportErrors_ITest {
 		final SpreadsheetImportResult result = EMFFormsSpreadsheetImporter.INSTANCE
 			.importSpreadsheet(workbook, eClass);
 		assertEquals(1, result.getErrorReports().size());
+	}
+
+	@Test
+	public void testDMRThatNeedsMigration() throws IOException {
+		/* setup */
+		stream = bundle.getEntry("errorSheets/basexls").openStream(); //$NON-NLS-1$
+		final Workbook workbook = new HSSFWorkbook(stream);
+
+		final CreationHelper factory = workbook.getCreationHelper();
+		final Sheet sheet = workbook.getSheetAt(0);
+		final RichTextString dmr = factory.createRichTextString(
+			"<?xml version=\"1.0\" encoding=\"UTF-8\"?><org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference xmi:version=\"2.0\" xmlns:xmi=\"http://www.omg.org/XMI\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:ecore=\"http://www.eclipse.org/emf/2002/Ecore\" xmlns:org.eclipse.emf.ecp.view.model=\"http://org/eclipse/emf/ecp/view/model\"><domainModelEFeature xsi:type=\"ecore:EAttribute\" href=\"http://eclipse/org/emf/ecp/makeithappen/model/task#//User/lastName\"/></org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference>"); //$NON-NLS-1$
+
+		sheet.getRow(0).getCell(1).getCellComment()
+			.setString(dmr);
+
+		/* act */
+		final SpreadsheetImportResult result = EMFFormsSpreadsheetImporter.INSTANCE
+			.importSpreadsheet(workbook, eClass);
+		final EList<ErrorReport> errorReports = result.getErrorReports();
+
+		/* assert */
+		assertEquals(0, errorReports.size());
 	}
 }

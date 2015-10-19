@@ -13,8 +13,12 @@
 package org.eclipse.emf.ecp.view.edapt;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.Reader;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -23,6 +27,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.Set;
 
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -37,6 +42,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.ExtendedMetaData;
+import org.eclipse.emf.ecp.spi.view.migrator.string.StringViewModelMigrator;
 import org.eclipse.emf.ecp.view.migrator.ViewModelMigrationException;
 import org.eclipse.emf.ecp.view.migrator.ViewModelMigrator;
 import org.eclipse.emf.ecp.view.spi.model.util.VViewResourceFactoryImpl;
@@ -65,21 +71,21 @@ import org.xml.sax.helpers.XMLReaderFactory;
  * @author jfaltermeier
  *
  */
-public class EdaptViewModelMigrator implements ViewModelMigrator {
+public class EdaptViewModelMigrator implements ViewModelMigrator, StringViewModelMigrator {
 
 	private static final String ECORE_NS_URI = "http://www.eclipse.org/emf/2002/Ecore"; //$NON-NLS-1$
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.view.migrator.ViewModelMigrator#checkMigration(org.eclipse.emf.common.util.URI)
-	 */
+	@Override
+	public boolean checkMigration(String serializedViewModel) {
+		return checkMigration(getNamespaceURIs(serializedViewModel));
+	}
+
 	@Override
 	public boolean checkMigration(final URI resourceURI) {
-		// 1. get all namespace uris from the root element of the resource
-		final List<String> nsUris = getNamespaceURIs(resourceURI);
+		return checkMigration(getNamespaceURIs(resourceURI));
+	}
 
-		// 2. get the release for every NS that has a migrator registered AND check if every release is the latest one.
+	private boolean checkMigration(final List<String> nsUris) {
 		boolean allReleasesAreLatest = true;
 		final List<Release> releases = new ArrayList<Release>();
 		for (final String nsUri : nsUris) {
@@ -99,11 +105,36 @@ public class EdaptViewModelMigrator implements ViewModelMigrator {
 		return allReleasesAreLatest;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.view.migrator.ViewModelMigrator#performMigration(org.eclipse.emf.common.util.URI)
-	 */
+	@Override
+	public String performMigration(String serializedViewModel) throws ViewModelMigrationException {
+		PrintWriter printWriter = null;
+		File tempViewModelFile = null;
+		Scanner scanner = null;
+		try {
+			tempViewModelFile = File.createTempFile("view", ".view"); //$NON-NLS-1$//$NON-NLS-2$
+			tempViewModelFile.deleteOnExit();
+			printWriter = new PrintWriter(tempViewModelFile);
+			printWriter.print(serializedViewModel);
+			printWriter.flush();
+			printWriter.close();
+			performMigration(URI.createFileURI(tempViewModelFile.getAbsolutePath()));
+			scanner = new Scanner(tempViewModelFile, "UTF-8"); //$NON-NLS-1$
+			return scanner.useDelimiter("\\A").next(); //$NON-NLS-1$
+		} catch (final IOException ex) {
+			throw new ViewModelMigrationException(ex);
+		} finally {
+			if (printWriter != null) {
+				printWriter.close();
+			}
+			if (scanner != null) {
+				scanner.close();
+			}
+			if (tempViewModelFile != null) {
+				tempViewModelFile.delete();
+			}
+		}
+	}
+
 	@Override
 	public void performMigration(final URI resourceURI) throws ViewModelMigrationException {
 		final History history = HistoryFactory.eINSTANCE.createHistory();
@@ -320,20 +351,22 @@ public class EdaptViewModelMigrator implements ViewModelMigrator {
 		final Set<String> nsURIsWithHistory = new LinkedHashSet<String>();
 		final Set<String> nsURIsWithGeneratedHistory = new LinkedHashSet<String>();
 
-		String rootPackageNsUri = getRootPackageURI(resourceURI);
 		final PackageDependencyGraph domainModelPackageGraph = new PackageDependencyGraph();
 		domainModelPackageGraph.addPackage(ECORE_NS_URI);
-		final Migrator rootMigrator = MigratorRegistry.getInstance().getMigrator(rootPackageNsUri);
-		if (rootMigrator != null) {
-			for (final String migratorNSURI : rootMigrator.getNsURIs()) {
-				if (Registry.INSTANCE.containsKey(migratorNSURI)) {
-					nsURIsWithHistory.add(rootPackageNsUri);
-					rootPackageNsUri = migratorNSURI;
-					break;
+		final Set<String> rootPackageURIs = getRootPackageURI(resourceURI);
+		for (String rootPackageNsUri : rootPackageURIs) {
+			final Migrator rootMigrator = MigratorRegistry.getInstance().getMigrator(rootPackageNsUri);
+			if (rootMigrator != null) {
+				for (final String migratorNSURI : rootMigrator.getNsURIs()) {
+					if (Registry.INSTANCE.containsKey(migratorNSURI)) {
+						nsURIsWithHistory.add(rootPackageNsUri);
+						rootPackageNsUri = migratorNSURI;
+						break;
+					}
 				}
 			}
+			domainModelPackageGraph.addPackage(rootPackageNsUri);
 		}
-		domainModelPackageGraph.addPackage(rootPackageNsUri);
 
 		final List<EPackage> rootPackages = new ArrayList<EPackage>();
 		final Iterator<Set<String>> packageIterator = domainModelPackageGraph.getIerator();
@@ -374,6 +407,12 @@ public class EdaptViewModelMigrator implements ViewModelMigrator {
 		return nsRelease;
 	}
 
+	private List<String> getNamespaceURIs(String serializedViewModel) {
+		final NameSpaceHandler handler = new NameSpaceHandler();
+		executeContentHandler(serializedViewModel, handler);
+		return handler.getNsURIs();
+	}
+
 	/**
 	 * @return the namespaces of all models used in the given resource.
 	 */
@@ -390,40 +429,46 @@ public class EdaptViewModelMigrator implements ViewModelMigrator {
 	/**
 	 * @return the namespaces of all models used in the given resource.
 	 */
-	private String getRootPackageURI(URI resourceURI) {
+	private Set<String> getRootPackageURI(URI resourceURI) {
 		@SuppressWarnings("restriction")
 		final File file = org.eclipse.emf.edapt.internal.common.URIUtils.getJavaFile(resourceURI);
 		// read root package namespace uri with SAX
 		final RootPackageHandler handler = new RootPackageHandler();
 		executeContentHandler(file, handler);
-
-		return handler.getRootPackageURI();
+		if (handler.foundRootEClass()) {
+			return Collections.singleton(handler.getRootPackageURI());
+		}
+		final RootPackageCalculationHandler calcHandler = new RootPackageCalculationHandler();
+		executeContentHandler(file, calcHandler);
+		return calcHandler.getUsedPackages();
 	}
 
-	/**
-	 * @param file
-	 * @param contentHandler
-	 */
-	private void executeContentHandler(File file, final DefaultHandler contentHandler) {
-		FileReader fileReader = null;
+	private static void executeContentHandler(String serializedViewModel, final DefaultHandler contentHandler) {
+		executeContentHandler(new StringReader(serializedViewModel), contentHandler);
+	}
+
+	private static void executeContentHandler(File file, final DefaultHandler contentHandler) {
 		try {
-			final XMLReader reader = XMLReaderFactory.createXMLReader();
-			reader.setContentHandler(contentHandler);
+			executeContentHandler(new FileReader(file), contentHandler);
+		} catch (final FileNotFoundException ex) {
+		}
+	}
 
-			fileReader = new FileReader(file);
-
-			reader.parse(new InputSource(fileReader));
+	private static void executeContentHandler(Reader modelReader, final DefaultHandler contentHandler) {
+		try {
+			final XMLReader xmlReader = XMLReaderFactory.createXMLReader();
+			xmlReader.setContentHandler(contentHandler);
+			xmlReader.parse(new InputSource(modelReader));
 		} catch (final SAXException e) {
 			// do nothing
 		} catch (final IOException ex) {
 			ex.printStackTrace();
 		} finally {
 			try {
-				if (fileReader != null) {
-					fileReader.close();
+				if (modelReader != null) {
+					modelReader.close();
 				}
 			} catch (final IOException e) {
-				e.printStackTrace();
 			}
 		}
 	}
@@ -490,6 +535,7 @@ public class EdaptViewModelMigrator implements ViewModelMigrator {
 
 		/** The root package's namespace URI. */
 		private String rootPackageURI = ""; //$NON-NLS-1$
+		private boolean rootEClassFound;
 
 		/**
 		 * {@inheritDoc}
@@ -504,13 +550,55 @@ public class EdaptViewModelMigrator implements ViewModelMigrator {
 			if (localName.equals("rootEClass")) { //$NON-NLS-1$
 				final String rawUri = attributes.getValue("href"); //$NON-NLS-1$
 				rootPackageURI = rawUri.split("#")[0]; //$NON-NLS-1$
+				rootEClassFound = true;
 				throw new SAXException();
 			}
+		}
+
+		/**
+		 * Whether an element with the rootEClass attribute has been found.
+		 *
+		 * @return <code>true</code> if found, <code>false</code> otherwise
+		 */
+		public boolean foundRootEClass() {
+			return rootEClassFound;
 		}
 
 		/** Returns the root package's namespace URI. */
 		public String getRootPackageURI() {
 			return rootPackageURI;
+		}
+	}
+
+	/**
+	 * Content handler for finding all used NS-URIs in a view model.
+	 *
+	 * @author jfaltermeier
+	 *
+	 */
+	private static class RootPackageCalculationHandler extends DefaultHandler {
+
+		/** The root package's namespace URI. */
+		private final Set<String> packages = new LinkedHashSet<String>();
+
+		@Override
+		public void startElement(String uri, String localName, String qName, Attributes attributes)
+			throws SAXException {
+			super.startElement(uri, localName, qName, attributes);
+			final String href = attributes.getValue("href"); //$NON-NLS-1$
+			final String type = attributes.getValue("xsi:type"); //$NON-NLS-1$
+			if (href == null || type == null) {
+				return;
+			}
+			if (!type.endsWith("EAttribute") && !type.endsWith("EReference")) { //$NON-NLS-1$ //$NON-NLS-2$
+				return;
+			}
+			packages.add(href.split("#")[0]); //$NON-NLS-1$
+		}
+
+		/** Returns the root package's namespace URI. */
+		public Set<String> getUsedPackages() {
+			return packages;
 		}
 	}
 
@@ -524,7 +612,13 @@ public class EdaptViewModelMigrator implements ViewModelMigrator {
 		private final Set<String> nsURIsWithHistory;
 		private final Set<String> nsURIsWithGeneratedHistory;
 
-		public NSURIMapping(Set<String> nsURIsWithHistory, Set<String> nsURIsWithGeneratedHistory) {
+		/**
+		 * Default constructor.
+		 *
+		 * @param nsURIsWithHistory ns uris of models with a history available at the extension point
+		 * @param nsURIsWithGeneratedHistory ns uris of models for which we generated a history
+		 */
+		NSURIMapping(Set<String> nsURIsWithHistory, Set<String> nsURIsWithGeneratedHistory) {
 			this.nsURIsWithHistory = nsURIsWithHistory;
 			this.nsURIsWithGeneratedHistory = nsURIsWithGeneratedHistory;
 		}
@@ -537,4 +631,5 @@ public class EdaptViewModelMigrator implements ViewModelMigrator {
 			return nsURIsWithGeneratedHistory;
 		}
 	}
+
 }
