@@ -46,7 +46,7 @@ import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.localization.EMFFormsLocalizationService;
 import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
-import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.dialogs.IDialogLabelKeys;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -149,7 +149,7 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 			}
 			calendar.setDate(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
 
-			final IObservableValue dateObserver = SWTObservables.observeSelection(calendar);
+			final IObservableValue dateObserver = WidgetProperties.selection().observe(calendar);
 			final Binding binding = dataBindingContext.bindValue(dateObserver, modelValue,
 				new DateTargetToModelUpdateStrategy(eStructuralFeature, modelValue,
 					dataBindingContext, text),
@@ -332,7 +332,7 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 			getViewModelContext(),
 			getDataBindingContext(), structuralFeature));
 
-		final IObservableValue value = SWTObservables.observeText(text, SWT.FocusOut);
+		final IObservableValue value = WidgetProperties.text(SWT.FocusOut).observe(text);
 
 		final DateTargetToModelUpdateStrategy targetToModelUpdateStrategy = new DateTargetToModelUpdateStrategy(
 			structuralFeature, getModelValue(), getDataBindingContext(),
