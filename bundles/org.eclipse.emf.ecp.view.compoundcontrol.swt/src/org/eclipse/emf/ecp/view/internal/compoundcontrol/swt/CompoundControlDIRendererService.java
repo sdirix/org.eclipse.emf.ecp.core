@@ -34,7 +34,7 @@ public class CompoundControlDIRendererService implements EMFFormsDIRendererServi
 		if (!VCompoundControl.class.isInstance(vElement)) {
 			return NOT_APPLICABLE;
 		}
-		return 1d;
+		return 3d;
 	}
 
 	@Override
