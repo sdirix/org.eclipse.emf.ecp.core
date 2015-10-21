@@ -11,21 +11,36 @@
  ******************************************************************************/
 package org.eclipse.emfforms.internal.editor.genmodel.toolbaractions;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.jar.Attributes;
+import java.util.jar.Manifest;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.codegen.ecore.generator.Generator;
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
 import org.eclipse.emf.codegen.ecore.genmodel.generator.GenBaseGeneratorAdapter;
 import org.eclipse.emf.codegen.ecore.genmodel.util.GenModelUtil;
 import org.eclipse.emf.common.util.BasicMonitor;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecp.view.spi.model.reporting.StatusReport;
 import org.eclipse.emfforms.internal.editor.genmodel.Activator;
+import org.eclipse.emfforms.internal.editor.genmodel.util.PluginXmlUtil;
 import org.eclipse.emfforms.spi.editor.IToolbarAction;
+import org.eclipse.emfforms.spi.editor.helpers.ResourceUtil;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.ActionContributionItem;
 import org.eclipse.jface.action.IMenuCreator;
@@ -81,6 +96,16 @@ public class GenerateJavaCodeAction implements IToolbarAction {
 		private final Object[] types;
 		private final Object currentObject;
 
+		public static final String FILE_NAME_PLUGIN_XML = "plugin.xml";
+		public static final String FILE_NAME_META_INF = "META-INF";
+		public static final String FILE_NAME_MANIFEST_MF = "MANIFEST.MF";
+		public static final String REQUIRE_BUNDLE_HEADER = "Require-Bundle";
+		public static final String EDITOR_BUNDLE_NAME = "org.eclipse.emfforms.editor";
+		public static final String EDITOR_BUNDLE_VERSION = "1.8.0";
+		public static final String EMFFORMS_EDITOR_CLASS_NAME = "org.eclipse.emfforms.spi.editor.GenericEditor";
+		public static final String EMFFORMS_EDITOR_NAME = "EMFForms Editor";
+		public static final String EMFFORMS_EDITOR_ID = "emfformseditor";
+
 		public CreateJavaCodeAction(String text, Object[] types, Object currentObject) {
 			super(text);
 			this.types = types;
@@ -112,25 +137,7 @@ public class GenerateJavaCodeAction implements IToolbarAction {
 		 */
 		@Override
 		public void run() {
-			final IRunnableWithProgress generateCodeRunnable = new IRunnableWithProgress() {
-
-				@Override
-				public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
-					monitor.beginTask("Generating Code", IProgressMonitor.UNKNOWN);
-					final ResourceSet resourceSet = (ResourceSet) currentObject;
-					final GenModel genmodel = (GenModel) resourceSet.getResources().get(0).getContents().get(0);
-
-					genmodel.reconcile();
-					genmodel.setCanGenerate(true);
-
-					final Generator generator = GenModelUtil.createGenerator(genmodel);
-
-					for (final Object type : types) {
-						generator.generate(genmodel, type,
-							new BasicMonitor.EclipseSubProgress(monitor, 1));
-					}
-				}
-			};
+			final IRunnableWithProgress generateCodeRunnable = new GenerateJavaCodeRunnable();
 
 			try {
 				new ProgressMonitorDialog(Display.getCurrent().getActiveShell()).run(true, false, generateCodeRunnable);
@@ -140,6 +147,134 @@ public class GenerateJavaCodeAction implements IToolbarAction {
 			} catch (final InterruptedException ex) {
 				Activator.getDefault().getReportService().report(
 					new StatusReport(new Status(IStatus.ERROR, Activator.PLUGIN_ID, ex.getMessage(), ex)));
+			}
+		}
+
+		/**
+		 * {@link IRunnableWithProgress} to execute code generation.
+		 */
+		public class GenerateJavaCodeRunnable implements IRunnableWithProgress {
+			@Override
+			public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
+				monitor.beginTask("Generating Code", IProgressMonitor.UNKNOWN);
+				final ResourceSet resourceSet = (ResourceSet) currentObject;
+				final GenModel genmodel = (GenModel) resourceSet.getResources().get(0).getContents().get(0);
+
+				genmodel.reconcile();
+				genmodel.setCanGenerate(true);
+
+				final Generator generator = GenModelUtil
+					.createGenerator(genmodel);
+
+				final Set<URI> knownUris = new HashSet<URI>();
+
+				for (final Object type : types) {
+					generate(monitor, genmodel, generator, knownUris, type);
+				}
+			}
+
+			private void generate(IProgressMonitor monitor, final GenModel genmodel, final Generator generator,
+				final Set<URI> knownUris, final Object type) {
+				generator.generate(genmodel, type,
+					new BasicMonitor.EclipseSubProgress(monitor, 1));
+
+				final Set<URI> uris = new HashSet<URI>(generator.getGeneratedOutputs());
+				uris.removeAll(knownUris);
+				knownUris.addAll(uris);
+
+				if (GenBaseGeneratorAdapter.EDITOR_PROJECT_TYPE.equals(type)) {
+					handleGeneratedEditorProject(uris, genmodel);
+				}
+			}
+
+			/**
+			 * Handles the case that an editor project was generated. Takes a set of generated URIs to find the
+			 * plugin.xml file to edit.
+			 *
+			 * @param uris a set of generated URIs
+			 * @param genmodel
+			 */
+			private void handleGeneratedEditorProject(Set<URI> uris, GenModel genmodel) {
+				URI pluginXml = null;
+				URI manifestMf = null;
+				for (final URI uri : uris) {
+					if (isPluginXml(uri)) {
+						pluginXml = uri;
+					}
+					else if (isManifestMf(uri)) {
+						manifestMf = uri;
+					}
+				}
+
+				if (pluginXml != null && manifestMf != null) {
+					injectPluginXml(pluginXml, genmodel);
+					injectManifestMf(manifestMf);
+				}
+			}
+
+			private boolean isPluginXml(URI uri) {
+				if (uri.segmentCount() != 2) {
+					return false;
+				}
+
+				final String lastSegment = uri.lastSegment();
+				return FILE_NAME_PLUGIN_XML.equals(lastSegment);
+			}
+
+			private boolean isManifestMf(URI uri) {
+				if (uri.segmentCount() != 3) {
+					return false;
+				}
+
+				final String secondSegment = uri.segment(1);
+				final String lastSegment = uri.lastSegment();
+				return FILE_NAME_META_INF.equals(secondSegment) && FILE_NAME_MANIFEST_MF.equals(lastSegment);
+			}
+
+			private void injectManifestMf(URI manifestMf) {
+				final IResource resource = ResourceUtil.getResourceFromURI(manifestMf);
+				final IFile file = (IFile) resource;
+
+				InputStream original;
+				try {
+					original = file.getContents();
+					final Manifest originalManifest = new Manifest(original);
+					final Attributes attributes = originalManifest.getMainAttributes();
+					String newValue = attributes.getValue(REQUIRE_BUNDLE_HEADER);
+					if (newValue == null) {
+						newValue = "";
+					} else {
+						newValue += ",";
+					}
+					newValue += EDITOR_BUNDLE_NAME;
+					if (EDITOR_BUNDLE_VERSION != null) {
+						newValue += ";bundle-version=\"" + EDITOR_BUNDLE_VERSION + "\"";
+					}
+					attributes.putValue(REQUIRE_BUNDLE_HEADER, newValue);
+					final ByteArrayOutputStream bos = new ByteArrayOutputStream();
+					originalManifest.write(bos);
+					file.setContents(new ByteArrayInputStream(bos.toByteArray()), false, true,
+						new NullProgressMonitor());
+				} catch (final CoreException ex) {
+					Activator.getDefault().getReportService().report(
+						new StatusReport(new Status(IStatus.ERROR, Activator.PLUGIN_ID, ex.getMessage(), ex)));
+				} catch (final IOException ex) {
+					Activator.getDefault().getReportService().report(
+						new StatusReport(new Status(IStatus.ERROR, Activator.PLUGIN_ID, ex.getMessage(), ex)));
+				}
+			}
+
+			private void injectPluginXml(URI pluginXml, GenModel genmodel) {
+				final IResource resource = ResourceUtil.getResourceFromURI(pluginXml);
+				// TODO: icon is hardcoded
+				PluginXmlUtil.addEditorExtensionPoint((IFile) resource, EMFFORMS_EDITOR_CLASS_NAME, false,
+					getFileExtension(genmodel),
+					"icons/full/obj16/MypackageModelFile.gif",
+					EMFFORMS_EDITOR_ID, EMFFORMS_EDITOR_NAME);
+			}
+
+			private String getFileExtension(GenModel genmodel) {
+				return genmodel.getGenPackages().get(0).getFileExtensions();
 			}
 		}
 
