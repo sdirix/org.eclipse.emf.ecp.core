@@ -39,6 +39,7 @@ import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
@@ -202,7 +203,7 @@ public class ControlGridSWTRenderer extends AbstractSWTRenderer<VControlGrid> {
 
 	/**
 	 * Creates a composite with the given number of columns.
-	 * 
+	 *
 	 * @param parent the parent
 	 * @param layoutColumns the columns
 	 * @return the new composite
@@ -231,16 +232,12 @@ public class ControlGridSWTRenderer extends AbstractSWTRenderer<VControlGrid> {
 		int withoutHorizontalGrabLeft = cellsWithoutHorizontalGrab;
 		for (final SWTGridCell swtGridCell : swtGridDescription.getGrid()) {
 			final Control control = swtGridCell.getRenderer().render(swtGridCell, composite);
+			GridData gridData;
 			if (swtGridCell.isHorizontalGrab()) {
 				final int hSpan = withHorizontalGrabLeft == 1 ? spanForLastSpanningCell
 					: spanForSpanningCells;
 				withHorizontalGrabLeft--;
-				GridDataFactory
-					.fillDefaults()
-					.span(hSpan, 1)
-					.grab(true, false)
-					.align(SWT.FILL, SWT.CENTER)
-					.applyTo(control);
+				gridData = createGridDataForControlWithHorizontalGrab(swtGridDescription, swtGridCell, control, hSpan);
 			} else if (cellsWithHorizontalGrab == 0 && withoutHorizontalGrabLeft == 1) {
 				/*
 				 * if we have no spanning cells: renderer the last non spanning cell with span to take up the
@@ -248,33 +245,67 @@ public class ControlGridSWTRenderer extends AbstractSWTRenderer<VControlGrid> {
 				 */
 				withoutHorizontalGrabLeft--;
 				final int hSpan = swtColumnsAvailableForRowElement - cellsWithoutHorizontalGrab + 1;
-				GridDataFactory
-					.fillDefaults()
-					.span(hSpan, 1)
-					.grab(true, false)
-					.align(SWT.FILL, SWT.CENTER)
-					.applyTo(control);
+				gridData = createGridDataForControlWithHorizontalGrab(swtGridDescription, swtGridCell, control, hSpan);
 			} else {
 				withoutHorizontalGrabLeft--;
 				// XXX minSize is not working... preferred way of solving this would be the next line only
 				// GridDataFactory.fillDefaults().span(1, 1).grab(false, false).align(SWT.BEGINNING,
 				// SWT.CENTER).minSize(16,SWT.DEFAULT).applyTo(control);
-				GridDataFactory gridDataFactory = GridDataFactory
-					.fillDefaults()
-					.span(1, 1)
-					.grab(false, false)
-					.align(SWT.FILL, SWT.CENTER);
-				if (swtGridDescription.getColumns() == 3 && swtGridCell.getColumn() == 1
-					|| swtGridDescription.getColumns() == 2 && swtGridCell.getColumn() == 0
-						&& !"org_eclipse_emf_ecp_control_label" //$NON-NLS-1$
-							.equals(control.getData("org.eclipse.rap.rwt.customVariant"))) { //$NON-NLS-1$
-					// XXX hacky way to make validation labels visible because as stated above min size is
-					// not working
-					gridDataFactory = gridDataFactory.hint(16, SWT.DEFAULT);
-				}
-				gridDataFactory.applyTo(control);
+				gridData = createGridDataForControlWithoutHorizontalGrab(swtGridDescription, swtGridCell, control);
 			}
+			control.setLayoutData(gridData);
 		}
+	}
+
+	/**
+	 * Creates the {@link GridData} which will be set on control which will take a span of 1 column an have no
+	 * horizontal grab.
+	 *
+	 * @param swtGridDescription the {@link SWTGridDescription}
+	 * @param swtGridCell the current {@link SWTGridCell} of the description
+	 * @param control the {@link Control}
+	 * @return the layout data
+	 */
+	protected GridData createGridDataForControlWithoutHorizontalGrab(final SWTGridDescription swtGridDescription,
+		final SWTGridCell swtGridCell, final Control control) {
+		GridData gridData;
+		GridDataFactory gridDataFactory = GridDataFactory
+			.fillDefaults()
+			.span(1, 1)
+			.grab(false, false)
+			.align(SWT.FILL, SWT.CENTER);
+		if (swtGridDescription.getColumns() == 3 && swtGridCell.getColumn() == 1
+			|| swtGridDescription.getColumns() == 2 && swtGridCell.getColumn() == 0
+				&& !"org_eclipse_emf_ecp_control_label" //$NON-NLS-1$
+					.equals(control.getData("org.eclipse.rap.rwt.customVariant"))) { //$NON-NLS-1$
+			// XXX hacky way to make validation labels visible because as stated above min size is
+			// not working
+			gridDataFactory = gridDataFactory.hint(16, SWT.DEFAULT);
+		}
+		gridData = gridDataFactory.create();
+		return gridData;
+	}
+
+	/**
+	 * Creates the {@link GridData} which will be set on control which will take up horizontal space an will span over
+	 * the given amount of columns.
+	 *
+	 * @param swtGridDescription the {@link SWTGridDescription}
+	 * @param swtGridCell the current {@link SWTGridCell} of the description
+	 * @param control the {@link Control}
+	 * @param hSpan the horizontal span
+	 * @return the layout data
+	 */
+	protected GridData createGridDataForControlWithHorizontalGrab(final SWTGridDescription swtGridDescription,
+		final SWTGridCell swtGridCell, final Control control, final int hSpan) {
+		GridData gridData;
+		gridData = GridDataFactory
+			.fillDefaults()
+			.span(hSpan, 1)
+			.grab(true, false)
+			.align(SWT.FILL, SWT.CENTER)
+			.create();
+		return gridData;
 	}
 
 	private void renderEmptyColumn(final Composite composite, final int swtColumnsAvailableForRowElement) {
