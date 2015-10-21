@@ -3,6 +3,7 @@
 
 <product name="MakeItHappen Sample e4 Product" uid="org.eclipse.emf.ecp.makeithappen.sample.product.e4" id="org.eclipse.emf.ecp.makeithappen.application.sample.e4.product" application="org.eclipse.e4.ui.workbench.swt.E4Application" version="1.7.0" useFeatures="false" includeLaunchers="true">
 
+
    <configIni use="default">
    </configIni>
 
@@ -13,7 +14,7 @@
       </vmArgsMac>
    </launcherArgs>
 
-   <windowImages i16="/org.eclipse.emf.ecp.makeithappen.application.sample.e4/icons/bricks.png"/>
+   <windowImages i256="/org.eclipse.emf.ecp.makeithappen.application.sample.e4/icons/logo_256.png"/>
 
    <launcher>
       <solaris/>
@@ -21,6 +22,7 @@
          <bmp/>
       </win>
    </launcher>
+
 
    <vm>
    </vm>
@@ -170,5 +172,12 @@
       <plugin id="org.w3c.dom.svg"/>
    </plugins>
 
+
+   <preferencesInfo>
+      <targetfile overwrite="false"/>
+   </preferencesInfo>
+
+   <cssInfo>
+   </cssInfo>
 
 </product>

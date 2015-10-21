@@ -3,6 +3,7 @@
 
 <product name="MakeItHappen Sample e3 Product" uid="org.eclipse.emf.ecp.makeithappen.sample.product.e3" id="org.eclipse.emf.ecp.makeithappen.application.sample.e3.product" application="org.eclipse.emf.ecp.makeithappen.application.sample.e3.application" version="1.7.0" useFeatures="false" includeLaunchers="true">
 
+
    <configIni use="default">
    </configIni>
 
@@ -13,7 +14,8 @@
       </vmArgsMac>
    </launcherArgs>
 
-   <windowImages i16="/org.eclipse.emf.ecp.makeithappen.application.sample.e3/icons/bricks.png"/>
+   <windowImages i256="/org.eclipse.emf.ecp.makeithappen.application.sample.e3/icons/logo_256.png"/>
+
 
    <launcher>
       <solaris/>
@@ -21,6 +23,7 @@
          <bmp/>
       </win>
    </launcher>
+
 
    <vm>
       <windows include="false">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7</windows>
