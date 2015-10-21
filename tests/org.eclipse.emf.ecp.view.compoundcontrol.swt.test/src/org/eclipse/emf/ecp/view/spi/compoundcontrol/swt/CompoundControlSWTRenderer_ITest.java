@@ -30,6 +30,7 @@ import org.eclipse.emf.ecp.test.common.DefaultRealm;
 import org.eclipse.emf.ecp.view.spi.compoundcontrol.model.VCompoundControl;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
+import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
@@ -208,8 +209,8 @@ public class CompoundControlSWTRenderer_ITest {
 			any(SWTGridDescription.class), any(SWTGridDescription.class),
 			any(SWTGridDescription.class), any(VElement.class), any(EObject.class), any(Control.class));
 
-		doReturn(GridDataFactory.fillDefaults().create()).when(renderer).getSpanningLayoutData(any(Integer.class),
-			any(Integer.class));
+		doReturn(GridDataFactory.fillDefaults().create()).when(renderer).getSpanningLayoutData(
+			any(VContainedElement.class), any(Integer.class), any(Integer.class));
 
 		/* act */
 		final Control controls = renderer.createControls(shell);
@@ -280,7 +281,7 @@ public class CompoundControlSWTRenderer_ITest {
 
 		private SWTGridDescription rendererGridDescription;
 
-		public DummyRenderer(VControl vElement, ViewModelContext viewContext, ReportService reportService) {
+		DummyRenderer(VControl vElement, ViewModelContext viewContext, ReportService reportService) {
 			super(vElement, viewContext, reportService);
 		}
 

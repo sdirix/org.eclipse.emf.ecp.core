@@ -216,13 +216,13 @@ public class CompoundControlSWTRenderer extends AbstractSWTRenderer<VCompoundCon
 			elementRendererMap.put(child, renderer);
 		}
 
-		columnComposite.setLayout(getColumnLayout(elementRendererMap.size(), true));
+		columnComposite.setLayout(getColumnLayout(elementRendererMap.size(), false));
 		for (final VContainedElement child : elementRendererMap.keySet()) {
 			final AbstractSWTRenderer<VElement> renderer = elementRendererMap.get(child);
 			final Composite column = new Composite(columnComposite, SWT.NONE);
 			column.setBackground(parent.getBackground());
 
-			column.setLayoutData(getSpanningLayoutData(1, 1));
+			column.setLayoutData(getSpanningLayoutData(child, 1, 1));
 
 			final SWTGridDescription gridDescription = renderer.getGridDescription(GridDescriptionFactory.INSTANCE
 				.createEmptyGridDescription());
@@ -267,11 +267,12 @@ public class CompoundControlSWTRenderer extends AbstractSWTRenderer<VCompoundCon
 	/**
 	 * For testing purposes.
 	 *
+	 * @param child the element for which the spanning layout is requested
 	 * @param spanX spanX
 	 * @param spanY spanY
 	 * @return SpanningLayoutData
 	 */
-	protected Object getSpanningLayoutData(int spanX, int spanY) {
+	protected Object getSpanningLayoutData(VContainedElement child, int spanX, int spanY) {
 		return LayoutProviderHelper.getSpanningLayoutData(spanX, spanY);
 	}
 
