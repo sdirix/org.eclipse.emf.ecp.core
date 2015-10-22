@@ -436,18 +436,24 @@ public class ControlGridSWTRenderer_ITest {
 		final Composite composite = Composite.class.cast(control);
 		assertEquals(4, composite.getChildren().length);
 
-		assertTrue(Label.class.isInstance(composite.getChildren()[0]));
-		final Label controlLabel1 = Label.class.cast(composite.getChildren()[0]);
+		assertTrue(Composite.class.isInstance(composite.getChildren()[0]));
+		assertGridData(Composite.class.cast(composite.getChildren()[0]), 1, false);
+		assertTrue(Label.class.isInstance(Composite.class.cast(composite.getChildren()[0]).getChildren()[0]));
+		final Label controlLabel1 = Label.class.cast(Composite.class.cast(composite.getChildren()[0]).getChildren()[0]);
 		assertLabelText(controlLabel1, 0);
 		assertGridData(controlLabel1, 1, false);
 
-		assertTrue(Label.class.isInstance(composite.getChildren()[1]));
-		final Label controlLabel2 = Label.class.cast(composite.getChildren()[1]);
+		assertTrue(Composite.class.isInstance(composite.getChildren()[1]));
+		assertGridData(Composite.class.cast(composite.getChildren()[1]), 1, false);
+		assertTrue(Label.class.isInstance(Composite.class.cast(composite.getChildren()[1]).getChildren()[0]));
+		final Label controlLabel2 = Label.class.cast(Composite.class.cast(composite.getChildren()[1]).getChildren()[0]);
 		assertLabelText(controlLabel2, 1);
 		assertGridData(controlLabel2, 1, false);
 
-		assertTrue(Label.class.isInstance(composite.getChildren()[2]));
-		final Label controlLabel3 = Label.class.cast(composite.getChildren()[2]);
+		assertTrue(Composite.class.isInstance(composite.getChildren()[2]));
+		assertGridData(Composite.class.cast(composite.getChildren()[2]), 1, true);
+		assertTrue(Label.class.isInstance(Composite.class.cast(composite.getChildren()[2]).getChildren()[0]));
+		final Label controlLabel3 = Label.class.cast(Composite.class.cast(composite.getChildren()[2]).getChildren()[0]);
 		assertLabelText(controlLabel3, 2);
 		assertGridData(controlLabel3, 1, true);
 
@@ -511,18 +517,24 @@ public class ControlGridSWTRenderer_ITest {
 		assertEquals(9, composite.getChildren().length);
 
 		/* control 1 */
-		assertTrue(Label.class.isInstance(composite.getChildren()[0]));
-		final Label controlLabel1 = Label.class.cast(composite.getChildren()[0]);
+		assertTrue(Composite.class.isInstance(composite.getChildren()[0]));
+		assertGridData(Composite.class.cast(composite.getChildren()[0]), 1, false);
+		assertTrue(Label.class.isInstance(Composite.class.cast(composite.getChildren()[0]).getChildren()[0]));
+		final Label controlLabel1 = Label.class.cast(Composite.class.cast(composite.getChildren()[0]).getChildren()[0]);
 		assertLabelText(controlLabel1, 0);
 		assertGridData(controlLabel1, 1, false);
 
-		assertTrue(Label.class.isInstance(composite.getChildren()[1]));
-		final Label controlLabel2 = Label.class.cast(composite.getChildren()[1]);
+		assertTrue(Composite.class.isInstance(composite.getChildren()[1]));
+		assertGridData(Composite.class.cast(composite.getChildren()[1]), 20 - 1 - 1 - 1, true);// 20-3times non spanning
+		assertTrue(Label.class.isInstance(Composite.class.cast(composite.getChildren()[1]).getChildren()[0]));
+		final Label controlLabel2 = Label.class.cast(Composite.class.cast(composite.getChildren()[1]).getChildren()[0]);
 		assertLabelText(controlLabel2, 1);
-		assertGridData(controlLabel2, 20 - 1 - 1 - 1, true);// 20-3times non spanning
+		assertGridData(controlLabel2, 1, true);
 
-		assertTrue(Label.class.isInstance(composite.getChildren()[2]));
-		final Label controlLabel3 = Label.class.cast(composite.getChildren()[2]);
+		assertTrue(Composite.class.isInstance(composite.getChildren()[2]));
+		assertGridData(Composite.class.cast(composite.getChildren()[2]), 1, false);
+		assertTrue(Label.class.isInstance(Composite.class.cast(composite.getChildren()[2]).getChildren()[0]));
+		final Label controlLabel3 = Label.class.cast(Composite.class.cast(composite.getChildren()[2]).getChildren()[0]);
 		assertLabelText(controlLabel3, 2);
 		assertGridData(controlLabel3, 1, false);
 
@@ -532,23 +544,32 @@ public class ControlGridSWTRenderer_ITest {
 		assertGridData(spacing, 1, false);
 
 		/* control 2 */
-		assertTrue(Label.class.isInstance(composite.getChildren()[4]));
-		final Label controlLabel4 = Label.class.cast(composite.getChildren()[4]);
+		assertTrue(Composite.class.isInstance(composite.getChildren()[4]));
+		assertGridData(Composite.class.cast(composite.getChildren()[4]), 1, false);
+		assertTrue(Label.class.isInstance(Composite.class.cast(composite.getChildren()[4]).getChildren()[0]));
+		final Label controlLabel4 = Label.class.cast(Composite.class.cast(composite.getChildren()[4]).getChildren()[0]);
 		assertLabelText(controlLabel4, 0);
 		assertGridData(controlLabel4, 1, false);
 
-		assertTrue(Label.class.isInstance(composite.getChildren()[5]));
-		final Label controlLabel5 = Label.class.cast(composite.getChildren()[5]);
+		assertTrue(Composite.class.isInstance(composite.getChildren()[5]));
+		assertGridData(Composite.class.cast(composite.getChildren()[5]), 1, false);
+		assertTrue(Label.class.isInstance(Composite.class.cast(composite.getChildren()[5]).getChildren()[0]));
+		final Label controlLabel5 = Label.class.cast(Composite.class.cast(composite.getChildren()[5]).getChildren()[0]);
 		assertLabelText(controlLabel5, 1);
 		assertGridData(controlLabel5, 1, false);
 
-		assertTrue(Label.class.isInstance(composite.getChildren()[6]));
-		final Label controlLabel6 = Label.class.cast(composite.getChildren()[6]);
+		assertTrue(Composite.class.isInstance(composite.getChildren()[6]));
+		assertGridData(Composite.class.cast(composite.getChildren()[6]), 20 - 1 - 1 - 1 - 1, true);// 20-4 times non
+																									// spanning
+		assertTrue(Label.class.isInstance(Composite.class.cast(composite.getChildren()[6]).getChildren()[0]));
+		final Label controlLabel6 = Label.class.cast(Composite.class.cast(composite.getChildren()[6]).getChildren()[0]);
 		assertLabelText(controlLabel6, 2);
-		assertGridData(controlLabel6, 20 - 1 - 1 - 1 - 1, true);// 20-4 times non spanning
+		assertGridData(controlLabel6, 1, true);
 
-		assertTrue(Label.class.isInstance(composite.getChildren()[7]));
-		final Label controlLabel7 = Label.class.cast(composite.getChildren()[7]);
+		assertTrue(Composite.class.isInstance(composite.getChildren()[7]));
+		assertGridData(Composite.class.cast(composite.getChildren()[7]), 1, false);
+		assertTrue(Label.class.isInstance(Composite.class.cast(composite.getChildren()[7]).getChildren()[0]));
+		final Label controlLabel7 = Label.class.cast(Composite.class.cast(composite.getChildren()[7]).getChildren()[0]);
 		assertLabelText(controlLabel7, 3);
 		assertGridData(controlLabel7, 1, false);
 
@@ -673,15 +694,15 @@ public class ControlGridSWTRenderer_ITest {
 		assertGridLayout(composite, 4 * 6);
 
 		/* Row1 Control1 */
-		final Label control111 = Label.class.cast(composite.getChildren()[0]);
+		final Composite control111 = Composite.class.cast(composite.getChildren()[0]);
 		assertLabelText(control111, 0);
 		assertGridData(control111, 1, false);
 
-		final Label control112 = Label.class.cast(composite.getChildren()[1]);
+		final Composite control112 = Composite.class.cast(composite.getChildren()[1]);
 		assertLabelText(control112, 1);
 		assertGridData(control112, 1, false);
 
-		final Label control113 = Label.class.cast(composite.getChildren()[2]);
+		final Composite control113 = Composite.class.cast(composite.getChildren()[2]);
 		assertLabelText(control113, 2);
 		assertGridData(control113, (4 * 6 - 3 * 3) / 3, true); // columns - 3*3 (1-spanning) devided by 3 (# controls)
 
@@ -690,15 +711,15 @@ public class ControlGridSWTRenderer_ITest {
 		assertGridData(control11s, 1, false);
 
 		/* Row1 Control2 */
-		final Label control121 = Label.class.cast(composite.getChildren()[4]);
+		final Composite control121 = Composite.class.cast(composite.getChildren()[4]);
 		assertLabelText(control121, 0);
 		assertGridData(control121, 1, false);
 
-		final Label control122 = Label.class.cast(composite.getChildren()[5]);
+		final Composite control122 = Composite.class.cast(composite.getChildren()[5]);
 		assertLabelText(control122, 1);
 		assertGridData(control122, 1, false);
 
-		final Label control123 = Label.class.cast(composite.getChildren()[6]);
+		final Composite control123 = Composite.class.cast(composite.getChildren()[6]);
 		assertLabelText(control123, 2);
 		assertGridData(control123, (4 * 6 - 3 * 3) / 3, true); // columns - 3*3 (1-spanning) devided by 3 (# controls)
 
@@ -707,15 +728,15 @@ public class ControlGridSWTRenderer_ITest {
 		assertGridData(control12s, 1, false);
 
 		/* Row1 Control3 */
-		final Label control131 = Label.class.cast(composite.getChildren()[8]);
+		final Composite control131 = Composite.class.cast(composite.getChildren()[8]);
 		assertLabelText(control131, 0);
 		assertGridData(control131, 1, false);
 
-		final Label control132 = Label.class.cast(composite.getChildren()[9]);
+		final Composite control132 = Composite.class.cast(composite.getChildren()[9]);
 		assertLabelText(control132, 1);
 		assertGridData(control132, 1, false);
 
-		final Label control133 = Label.class.cast(composite.getChildren()[10]);
+		final Composite control133 = Composite.class.cast(composite.getChildren()[10]);
 		assertLabelText(control133, 2);
 		assertGridData(control133, (4 * 6 - 3 * 3) / 3, true); // columns - 3*3 (1-spanning) devided by 3 (# controls)
 
@@ -724,15 +745,15 @@ public class ControlGridSWTRenderer_ITest {
 		assertGridData(control13s, 1, false);
 
 		/* Row2 Control1 */
-		final Label control211 = Label.class.cast(composite.getChildren()[12]);
+		final Composite control211 = Composite.class.cast(composite.getChildren()[12]);
 		assertLabelText(control211, 0);
 		assertGridData(control211, 1, false);
 
-		final Label control212 = Label.class.cast(composite.getChildren()[13]);
+		final Composite control212 = Composite.class.cast(composite.getChildren()[13]);
 		assertLabelText(control212, 1);
 		assertGridData(control212, 1, false);
 
-		final Label control213 = Label.class.cast(composite.getChildren()[14]);
+		final Composite control213 = Composite.class.cast(composite.getChildren()[14]);
 		assertLabelText(control213, 2);
 		assertGridData(control213, (4 * 6 - 3 * 3) / 3, true); // columns - 3*3 (1-spanning) devided by 3 (# controls)
 
@@ -751,15 +772,15 @@ public class ControlGridSWTRenderer_ITest {
 		assertGridData(empty22s, 1, false);
 
 		/* Row2 Control3 */
-		final Label control231 = Label.class.cast(composite.getChildren()[18]);
+		final Composite control231 = Composite.class.cast(composite.getChildren()[18]);
 		assertLabelText(control231, 0);
 		assertGridData(control231, 1, false);
 
-		final Label control232 = Label.class.cast(composite.getChildren()[19]);
+		final Composite control232 = Composite.class.cast(composite.getChildren()[19]);
 		assertLabelText(control232, 1);
 		assertGridData(control232, 1, false);
 
-		final Label control233 = Label.class.cast(composite.getChildren()[20]);
+		final Composite control233 = Composite.class.cast(composite.getChildren()[20]);
 		assertLabelText(control233, 2);
 		assertGridData(control233, (4 * 6 - 3 * 3) / 3, true); // columns - 3*3 (1-spanning) devided by 3 (# controls)
 
@@ -773,15 +794,15 @@ public class ControlGridSWTRenderer_ITest {
 		assertGridData(emptyRow3, 4 * 6, false);// full width
 
 		/* Row4 Control1 */
-		final Label control411 = Label.class.cast(composite.getChildren()[23]);
+		final Composite control411 = Composite.class.cast(composite.getChildren()[23]);
 		assertLabelText(control411, 0);
 		assertGridData(control411, 1, false);
 
-		final Label control412 = Label.class.cast(composite.getChildren()[24]);
+		final Composite control412 = Composite.class.cast(composite.getChildren()[24]);
 		assertLabelText(control412, 1);
 		assertGridData(control412, 1, false);
 
-		final Label control413 = Label.class.cast(composite.getChildren()[25]);
+		final Composite control413 = Composite.class.cast(composite.getChildren()[25]);
 		assertLabelText(control413, 2);
 		assertGridData(control413, (4 * 6 - 2 * 3) / 2, true); // columns - 2*3 (1-spanning) devided by 2 (# controls)
 
@@ -790,15 +811,15 @@ public class ControlGridSWTRenderer_ITest {
 		assertGridData(control41s, 1, false);
 
 		/* Row4 Control2 */
-		final Label control421 = Label.class.cast(composite.getChildren()[27]);
+		final Composite control421 = Composite.class.cast(composite.getChildren()[27]);
 		assertLabelText(control421, 0);
 		assertGridData(control421, 1, false);
 
-		final Label control422 = Label.class.cast(composite.getChildren()[28]);
+		final Composite control422 = Composite.class.cast(composite.getChildren()[28]);
 		assertLabelText(control422, 1);
 		assertGridData(control422, 1, false);
 
-		final Label control423 = Label.class.cast(composite.getChildren()[29]);
+		final Composite control423 = Composite.class.cast(composite.getChildren()[29]);
 		assertLabelText(control423, 2);
 		assertGridData(control423, (4 * 6 - 2 * 3) / 2, true); // columns - 2*3 (1-spanning) devided by 2 (# controls)
 
@@ -828,6 +849,12 @@ public class ControlGridSWTRenderer_ITest {
 		assertEquals(String.valueOf(text), label.getText());
 	}
 
+	private static void assertLabelText(Composite composite, int text) {
+		assertEquals(1, composite.getChildren().length);
+		assertLabelText(Label.class.cast(composite.getChildren()[0]), text);
+
+	}
+
 	private static void assertGridData(Control control, int hSpan, boolean horizontalGrab) {
 		assertTrue(GridData.class.isInstance(control.getLayoutData()));
 		final GridData gridData = GridData.class.cast(control.getLayoutData());
@@ -850,7 +877,7 @@ public class ControlGridSWTRenderer_ITest {
 
 		private final SWTGridDescription rendererGridDescription;
 
-		public DummyRenderer(VControl vElement, ViewModelContext viewContext, ReportService reportService,
+		DummyRenderer(VControl vElement, ViewModelContext viewContext, ReportService reportService,
 			SWTGridDescription rendererGridDescription) {
 			super(vElement, viewContext, reportService);
 			this.rendererGridDescription = rendererGridDescription;

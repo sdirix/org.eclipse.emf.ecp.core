@@ -231,13 +231,21 @@ public class ControlGridSWTRenderer extends AbstractSWTRenderer<VControlGrid> {
 		int withHorizontalGrabLeft = cellsWithHorizontalGrab;
 		int withoutHorizontalGrabLeft = cellsWithoutHorizontalGrab;
 		for (final SWTGridCell swtGridCell : swtGridDescription.getGrid()) {
-			final Control control = swtGridCell.getRenderer().render(swtGridCell, composite);
+			/*
+			 * Create a wrapper composite, so that the child renderer may take as little space as it wants inside the
+			 * wrapper
+			 */
+			final Composite wrapperComposite = new Composite(composite, SWT.NONE);
+			GridLayoutFactory.fillDefaults().numColumns(1).equalWidth(true).applyTo(wrapperComposite);
+			final Control control = swtGridCell.getRenderer().render(swtGridCell, wrapperComposite);
+
 			GridData gridData;
 			if (swtGridCell.isHorizontalGrab()) {
 				final int hSpan = withHorizontalGrabLeft == 1 ? spanForLastSpanningCell
 					: spanForSpanningCells;
 				withHorizontalGrabLeft--;
-				gridData = createGridDataForControlWithHorizontalGrab(swtGridDescription, swtGridCell, control, hSpan);
+				gridData = createGridDataForControlWithHorizontalGrab(swtGridDescription, swtGridCell, control,
+					hSpan);
 			} else if (cellsWithHorizontalGrab == 0 && withoutHorizontalGrabLeft == 1) {
 				/*
 				 * if we have no spanning cells: renderer the last non spanning cell with span to take up the
@@ -245,15 +253,19 @@ public class ControlGridSWTRenderer extends AbstractSWTRenderer<VControlGrid> {
 				 */
 				withoutHorizontalGrabLeft--;
 				final int hSpan = swtColumnsAvailableForRowElement - cellsWithoutHorizontalGrab + 1;
-				gridData = createGridDataForControlWithHorizontalGrab(swtGridDescription, swtGridCell, control, hSpan);
+				gridData = createGridDataForControlWithHorizontalGrab(swtGridDescription, swtGridCell, control,
+					hSpan);
 			} else {
 				withoutHorizontalGrabLeft--;
 				// XXX minSize is not working... preferred way of solving this would be the next line only
 				// GridDataFactory.fillDefaults().span(1, 1).grab(false, false).align(SWT.BEGINNING,
 				// SWT.CENTER).minSize(16,SWT.DEFAULT).applyTo(control);
-				gridData = createGridDataForControlWithoutHorizontalGrab(swtGridDescription, swtGridCell, control);
+				gridData = createGridDataForControlWithoutHorizontalGrab(swtGridDescription, swtGridCell,
+					control);
 			}
-			control.setLayoutData(gridData);
+			wrapperComposite.setLayoutData(gridData);
+
+			GridDataFactory.createFrom(gridData).span(1, 1).applyTo(control);
 		}
 	}
 
