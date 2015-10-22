@@ -12,11 +12,12 @@
 package org.eclipse.emfforms.spi.swt.treemasterdetail;
 
 /**
- * The TreeMasterDetailSWTCustomization is used to influence the way a TreeMasterDetail is rendered and how it behaves.
+ * The TreeViewerCustomization is used to influence the way a {@link org.eclipse.jface.viewers.TreeViewer TreeViewer} is
+ * rendered and how it behaves.
  *
  * @author Johannes Faltermeier
  *
  */
-public interface TreeMasterDetailSWTCustomization
-	extends DetailCompositeBuilder, TreeWidthProvider, ViewModelServiceProvider, TreeViewerCustomization {
+public interface TreeViewerCustomization extends TreeViewerBuilder, ContentProviderProvider, DNDProvider,
+	InitialSelectionProvider, LabelProviderProvider, ViewerFilterProvider, MenuProvider {
 }

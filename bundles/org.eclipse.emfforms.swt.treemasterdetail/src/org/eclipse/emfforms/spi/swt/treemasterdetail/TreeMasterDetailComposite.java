@@ -27,7 +27,6 @@ import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.util.RootObject;
-import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.resource.FontDescriptor;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -135,9 +134,12 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 		final Composite treeComposite = new Composite(this, SWT.NONE);
 		addTreeViewerLayoutData(treeComposite, verticalSash);
 		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(treeComposite);
+		treeViewer = TreeViewerSWTFactory.createTreeMasterDetail(treeComposite, input, customization);
 
-		treeViewer = buildBehaviour.createTree(treeComposite);
-		GridDataFactory.fillDefaults().grab(true, true).applyTo(treeViewer.getControl());
+		// Create detail composite
+		detailComposite = buildBehaviour.createDetailComposite(this);
+		addDetailCompositeLayoutData(detailComposite, verticalSash);
+
 		treeViewer.addSelectionChangedListener(new ISelectionChangedListener() {
 
 			@Override
@@ -145,29 +147,6 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 				updateDetailPanel();
 			}
 		});
-
-		if (buildBehaviour.hasDND()) {
-			treeViewer.addDragSupport(buildBehaviour.getDragOperations(), buildBehaviour.getDragTransferTypes(),
-				buildBehaviour.getDragListener(treeViewer));
-			treeViewer.addDropSupport(buildBehaviour.getDropOperations(), buildBehaviour.getDropTransferTypes(),
-				buildBehaviour.getDropListener(editingDomain, treeViewer));
-		}
-
-		// Create detail composite
-		detailComposite = buildBehaviour.createDetailComposite(this);
-		addDetailCompositeLayoutData(detailComposite, verticalSash);
-
-		// Set the Label and Content providers, set the input and select the default
-		treeViewer.setContentProvider(buildBehaviour.getContentProvider());
-		treeViewer.setLabelProvider(buildBehaviour.getLabelProvider());
-		treeViewer.setFilters(buildBehaviour.getViewerFilters());
-		treeViewer.getControl().setMenu(buildBehaviour.getMenu(treeViewer, editingDomain));
-		treeViewer.setInput(input);
-		// Scan the input for the first EObject and select it
-		final EObject initialSelection = buildBehaviour.getInitialSelection(input);
-		if (initialSelection != null) {
-			treeViewer.setSelection(new StructuredSelection(initialSelection), true);
-		}
 
 		updateDetailPanel();
 
