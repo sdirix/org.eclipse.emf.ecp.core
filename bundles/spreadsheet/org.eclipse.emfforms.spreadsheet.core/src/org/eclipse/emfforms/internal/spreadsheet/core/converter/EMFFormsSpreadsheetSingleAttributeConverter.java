@@ -117,14 +117,15 @@ public class EMFFormsSpreadsheetSingleAttributeConverter implements EMFFormsSpre
 		} else if (isByte(attributeType.getInstanceClass()) ||
 			isShort(attributeType.getInstanceClass()) ||
 			isInteger(attributeType.getInstanceClass()) ||
-			isLong(attributeType.getInstanceClass()) ||
-			isFloat(attributeType.getInstanceClass()) ||
-			isDouble(attributeType.getInstanceClass())) {
+			isLong(attributeType.getInstanceClass())) {
 			cell.setCellValue(Number.class.cast(value).doubleValue());
+		} else if (isFloat(attributeType.getInstanceClass()) ||
+			isDouble(attributeType.getInstanceClass())) {
+			writeFloatDouble(cell, value, viewModelContext, eAttribute);
 		} else if (isBigInteger(attributeType.getInstanceClass())) {
 			writeBigInteger(cell, value, viewModelContext);
 		} else if (isBigDecimal(attributeType.getInstanceClass())) {
-			writeBigDecimal(cell, value, viewModelContext);
+			writeBigDecimal(cell, value, viewModelContext, eAttribute);
 		} else if (isDate(attributeType.getInstanceClass())) {
 			cell.setCellValue(DateUtil.getExcelDate(Date.class.cast(value)));
 			cell.setCellStyle((CellStyle) viewModelContext.getContextValue(EMFFormsCellStyleConstants.DATE));
@@ -139,7 +140,16 @@ public class EMFFormsSpreadsheetSingleAttributeConverter implements EMFFormsSpre
 		}
 	}
 
-	private void writeBigDecimal(Cell cell, Object value, ViewModelContext viewModelContext) {
+	private void writeFloatDouble(Cell cell, Object value, ViewModelContext viewModelContext,
+		final EAttribute eAttribute) {
+		cell.setCellValue(Number.class.cast(value).doubleValue());
+		final String format = NumberFormatHelper.getNumberFormat(eAttribute);
+		if (format != null) {
+			cell.setCellStyle((CellStyle) viewModelContext.getContextValue(format));
+		}
+	}
+
+	private void writeBigDecimal(Cell cell, Object value, ViewModelContext viewModelContext, EAttribute eAttribute) {
 		final BigDecimal bigDecimal = BigDecimal.class.cast(value);
 		if (bigDecimal.compareTo(BigDecimal.valueOf(Double.MAX_VALUE)) > 0
 			|| bigDecimal.compareTo(BigDecimal.valueOf(Double.MIN_VALUE)) < 0) {
@@ -147,6 +157,10 @@ public class EMFFormsSpreadsheetSingleAttributeConverter implements EMFFormsSpre
 			cell.setCellStyle((CellStyle) viewModelContext.getContextValue(EMFFormsCellStyleConstants.TEXT));
 		} else {
 			cell.setCellValue(bigDecimal.doubleValue());
+			final String format = NumberFormatHelper.getNumberFormat(eAttribute);
+			if (format != null) {
+				cell.setCellStyle((CellStyle) viewModelContext.getContextValue(format));
+			}
 		}
 	}
 
