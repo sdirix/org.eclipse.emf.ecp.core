@@ -23,6 +23,8 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.internal.core.swt.Activator;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
+import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
+import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.provider.ECPTooltipModifierHelper;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
@@ -58,6 +60,52 @@ import org.eclipse.swt.widgets.Label;
  *
  */
 public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRenderer<VControl> {
+
+	/**
+	 * {@link ModelChangeListener} which will sync the top-control to the unset state.
+	 *
+	 * @author Johannes Faltermeier
+	 *
+	 */
+	private static final class UnsetModelChangeListener implements ModelChangeListener {
+		private final EObject eObject;
+		private final Button unsetButton;
+		private final EStructuralFeature structuralFeature;
+		private final Control createUnsetLabel;
+		private final Composite controlComposite;
+		private final StackLayout sl;
+		private final Control baseControl;
+
+		private UnsetModelChangeListener(EObject eObject, Button unsetButton, EStructuralFeature structuralFeature,
+			Control createUnsetLabel, Composite controlComposite, StackLayout sl, Control baseControl) {
+			this.eObject = eObject;
+			this.unsetButton = unsetButton;
+			this.structuralFeature = structuralFeature;
+			this.createUnsetLabel = createUnsetLabel;
+			this.controlComposite = controlComposite;
+			this.sl = sl;
+			this.baseControl = baseControl;
+		}
+
+		@Override
+		public void notifyChange(ModelChangeNotification notification) {
+			if (eObject.eIsSet(structuralFeature)) {
+				if (sl.topControl == baseControl) {
+					return;
+				}
+				sl.topControl = baseControl;
+				unsetButton.setImage(Activator.getImage(ICONS_UNSET_FEATURE));
+				controlComposite.layout(true);
+			} else {
+				if (sl.topControl == createUnsetLabel) {
+					return;
+				}
+				sl.topControl = createUnsetLabel;
+				unsetButton.setImage(Activator.getImage(ICONS_SET_FEATURE));
+				controlComposite.layout(true);
+			}
+		}
+	}
 
 	/**
 	 * @author Jonas
@@ -146,6 +194,7 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 	}
 
 	private SWTGridDescription rendererGridDescription;
+	private UnsetModelChangeListener unsetModelChangeListener;
 
 	/**
 	 * {@inheritDoc}
@@ -245,7 +294,8 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 		final Control createUnsetLabel = createUnsetLabel(controlComposite);
 		final Button unsetButton = new Button(composite, SWT.PUSH);
 		GridDataFactory.fillDefaults().align(SWT.CENTER, SWT.CENTER).grab(false, false).applyTo(unsetButton);
-		unsetButton.addSelectionListener(new UnsetSelectionAdapter(sl, unsetButton, createUnsetLabel, baseControl, controlComposite));
+		unsetButton.addSelectionListener(
+			new UnsetSelectionAdapter(sl, unsetButton, createUnsetLabel, baseControl, controlComposite));
 
 		final EStructuralFeature structuralFeature = (EStructuralFeature) getModelValue().getValueType();
 		final EObject eObject = (EObject) ((IObserving) getModelValue()).getObserved();
@@ -256,7 +306,10 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 			sl.topControl = createUnsetLabel;
 			unsetButton.setImage(Activator.getImage(ICONS_SET_FEATURE));
 		}
-
+		/* There is no UNSET databinding trigger available */
+		unsetModelChangeListener = new UnsetModelChangeListener(eObject, unsetButton,
+			structuralFeature, createUnsetLabel, controlComposite, sl, baseControl);
+		getViewModelContext().registerDomainChangeListener(unsetModelChangeListener);
 		return composite;
 	}
 
@@ -373,6 +426,10 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 	@Override
 	protected void dispose() {
 		rendererGridDescription = null;
+		if (unsetModelChangeListener != null) {
+			getViewModelContext().unregisterDomainChangeListener(unsetModelChangeListener);
+			unsetModelChangeListener = null;
+		}
 		super.dispose();
 	}
 }
