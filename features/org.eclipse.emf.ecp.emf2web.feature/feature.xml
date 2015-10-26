@@ -3,7 +3,7 @@
       id="org.eclipse.emf.ecp.emf2web.feature"
       label="EMF2Web Feature"
       version="1.0.0.qualifier"
-      provider-name="%providerName"
+      provider-name="Eclipse Modeling Project"
       license-feature="org.eclipse.emf.ecp.license.feature"
       license-feature-version="1.8.0.qualifier">
 
