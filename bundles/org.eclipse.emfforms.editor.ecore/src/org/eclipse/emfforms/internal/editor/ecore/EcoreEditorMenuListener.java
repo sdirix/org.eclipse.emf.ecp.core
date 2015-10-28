@@ -19,8 +19,8 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfforms.internal.editor.ecore.helpers.EcoreHelpers;
 import org.eclipse.emfforms.internal.swt.treemasterdetail.defaultprovider.DefaultDeleteActionBuilder;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.TreeMasterDetailMenuListener;
+import org.eclipse.emfforms.spi.swt.treemasterdetail.actions.MasterDetailAction;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.util.CreateElementCallback;
-import org.eclipse.emfforms.spi.swt.treemasterdetail.util.MasterDetailAction;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.viewers.TreeViewer;
 

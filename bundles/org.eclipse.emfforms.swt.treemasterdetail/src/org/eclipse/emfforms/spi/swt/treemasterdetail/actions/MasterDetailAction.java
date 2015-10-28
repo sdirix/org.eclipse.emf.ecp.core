@@ -9,7 +9,7 @@
  * Contributors:
  * Alexandra Buzila - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emfforms.spi.swt.treemasterdetail.util;
+package org.eclipse.emfforms.spi.swt.treemasterdetail.actions;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.emf.ecore.EObject;

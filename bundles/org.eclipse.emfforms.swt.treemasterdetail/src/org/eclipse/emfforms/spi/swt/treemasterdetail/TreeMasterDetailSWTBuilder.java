@@ -14,8 +14,8 @@ package org.eclipse.emfforms.spi.swt.treemasterdetail;
 import java.util.Collection;
 
 import org.eclipse.emfforms.internal.swt.treemasterdetail.DefaultTreeMasterDetailCustomization;
+import org.eclipse.emfforms.spi.swt.treemasterdetail.actions.MasterDetailAction;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.util.CreateElementCallback;
-import org.eclipse.emfforms.spi.swt.treemasterdetail.util.MasterDetailAction;
 import org.eclipse.jface.viewers.IBaseLabelProvider;
 import org.eclipse.jface.viewers.IContentProvider;
 import org.eclipse.jface.viewers.ViewerFilter;
