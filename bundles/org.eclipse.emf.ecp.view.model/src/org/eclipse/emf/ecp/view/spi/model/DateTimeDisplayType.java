@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -19,153 +19,120 @@ import org.eclipse.emf.common.util.Enumerator;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the literals of the enumeration '<em><b>Label Alignment</b></em>',
+ * A representation of the literals of the enumeration '<em><b>Date Time Display Type</b></em>',
  * and utility methods for working with them.
+ * <!-- end-user-doc -->
  *
- * @since 1.2
- *        <!-- end-user-doc -->
- * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getLabelAlignment()
+ * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getDateTimeDisplayType()
  * @model
  * @generated
  */
-public enum LabelAlignment implements Enumerator {
+public enum DateTimeDisplayType implements Enumerator {
 	/**
-	 * The '<em><b>Default</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 *
-	 * @since 1.7
-	 *        <!-- end-user-doc -->
-	 * @see #DEFAULT_VALUE
-	 * @generated
-	 * @ordered
-	 */
-	DEFAULT(-1, "Default", "Default"), //$NON-NLS-1$ //$NON-NLS-2$
-
-	/**
-	 * The '<em><b>Left</b></em>' literal object.
+	 * The '<em><b>Time And Date</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
-	 * @see #LEFT_VALUE
+	 * @see #TIME_AND_DATE_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	LEFT(0, "Left", "Left"), //$NON-NLS-1$//$NON-NLS-2$
+	TIME_AND_DATE(0, "TimeAndDate", "TimeAndDate"), //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
-	 * The '<em><b>Top</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 *
-	 * @since 1.7
-	 *        <!-- end-user-doc -->
-	 * @see #TOP_VALUE
-	 * @generated
-	 * @ordered
-	 */
-	TOP(2, "Top", "Top"), //$NON-NLS-1$ //$NON-NLS-2$
-
-	/**
-	 * The '<em><b>None</b></em>' literal object.
+	 * The '<em><b>Time Only</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
-	 * @see #NONE_VALUE
+	 * @see #TIME_ONLY_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	NONE(1, "None", "None"); //$NON-NLS-1$ //$NON-NLS-2$
+	TIME_ONLY(1, "TimeOnly", "TimeOnly"), //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
-	 * The '<em><b>Default</b></em>' literal value.
+	 * The '<em><b>Date Only</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @see #DATE_ONLY_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	DATE_ONLY(2, "DateOnly", "DateOnly"); //$NON-NLS-1$ //$NON-NLS-2$
+
+	/**
+	 * The '<em><b>Time And Date</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>Default</b></em>' literal object isn't clear,
+	 * If the meaning of '<em><b>Time And Date</b></em>' literal object isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
-	 *
-	 * @since 1.7
-	 *        <!-- end-user-doc -->
-	 * @see #DEFAULT
-	 * @model name="Default"
-	 * @generated
-	 * @ordered
-	 */
-	public static final int DEFAULT_VALUE = -1;
-
-	/**
-	 * The '<em><b>Left</b></em>' literal value.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of '<em><b>Left</b></em>' literal object isn't clear, there really should be more of a description
-	 * here...
-	 * </p>
 	 * <!-- end-user-doc -->
 	 *
-	 * @see #LEFT
-	 * @model name="Left"
+	 * @see #TIME_AND_DATE
+	 * @model name="TimeAndDate"
 	 * @generated
 	 * @ordered
 	 */
-	public static final int LEFT_VALUE = 0;
+	public static final int TIME_AND_DATE_VALUE = 0;
 
 	/**
-	 * The '<em><b>Top</b></em>' literal value.
+	 * The '<em><b>Time Only</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>Top</b></em>' literal object isn't clear,
+	 * If the meaning of '<em><b>Time Only</b></em>' literal object isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
+	 * <!-- end-user-doc -->
 	 *
-	 * @since 1.7
-	 *        <!-- end-user-doc -->
-	 * @see #TOP
-	 * @model name="Top"
+	 * @see #TIME_ONLY
+	 * @model name="TimeOnly"
 	 * @generated
 	 * @ordered
 	 */
-	public static final int TOP_VALUE = 2;
+	public static final int TIME_ONLY_VALUE = 1;
 
 	/**
-	 * The '<em><b>None</b></em>' literal value.
+	 * The '<em><b>Date Only</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>None</b></em>' literal object isn't clear, there really should be more of a description
-	 * here...
+	 * If the meaning of '<em><b>Date Only</b></em>' literal object isn't clear,
+	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 *
-	 * @see #NONE
-	 * @model name="None"
+	 * @see #DATE_ONLY
+	 * @model name="DateOnly"
 	 * @generated
 	 * @ordered
 	 */
-	public static final int NONE_VALUE = 1;
+	public static final int DATE_ONLY_VALUE = 2;
 
 	/**
-	 * An array of all the '<em><b>Label Alignment</b></em>' enumerators.
+	 * An array of all the '<em><b>Date Time Display Type</b></em>' enumerators.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
 	 * @generated
 	 */
-	private static final LabelAlignment[] VALUES_ARRAY = new LabelAlignment[] {
-		DEFAULT,
-		LEFT,
-		TOP,
-		NONE,
+	private static final DateTimeDisplayType[] VALUES_ARRAY = new DateTimeDisplayType[] {
+		TIME_AND_DATE,
+		TIME_ONLY,
+		DATE_ONLY,
 	};
 
 	/**
-	 * A public read-only list of all the '<em><b>Label Alignment</b></em>' enumerators.
+	 * A public read-only list of all the '<em><b>Date Time Display Type</b></em>' enumerators.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
 	 * @generated
 	 */
-	public static final List<LabelAlignment> VALUES = Collections.unmodifiableList(Arrays.asList(VALUES_ARRAY));
+	public static final List<DateTimeDisplayType> VALUES = Collections.unmodifiableList(Arrays.asList(VALUES_ARRAY));
 
 	/**
-	 * Returns the '<em><b>Label Alignment</b></em>' literal with the specified literal value.
+	 * Returns the '<em><b>Date Time Display Type</b></em>' literal with the specified literal value.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -173,9 +140,9 @@ public enum LabelAlignment implements Enumerator {
 	 * @return the matching enumerator or <code>null</code>.
 	 * @generated
 	 */
-	public static LabelAlignment get(String literal) {
+	public static DateTimeDisplayType get(String literal) {
 		for (int i = 0; i < VALUES_ARRAY.length; ++i) {
-			final LabelAlignment result = VALUES_ARRAY[i];
+			final DateTimeDisplayType result = VALUES_ARRAY[i];
 			if (result.toString().equals(literal)) {
 				return result;
 			}
@@ -184,7 +151,7 @@ public enum LabelAlignment implements Enumerator {
 	}
 
 	/**
-	 * Returns the '<em><b>Label Alignment</b></em>' literal with the specified name.
+	 * Returns the '<em><b>Date Time Display Type</b></em>' literal with the specified name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -192,9 +159,9 @@ public enum LabelAlignment implements Enumerator {
 	 * @return the matching enumerator or <code>null</code>.
 	 * @generated
 	 */
-	public static LabelAlignment getByName(String name) {
+	public static DateTimeDisplayType getByName(String name) {
 		for (int i = 0; i < VALUES_ARRAY.length; ++i) {
-			final LabelAlignment result = VALUES_ARRAY[i];
+			final DateTimeDisplayType result = VALUES_ARRAY[i];
 			if (result.getName().equals(name)) {
 				return result;
 			}
@@ -203,7 +170,7 @@ public enum LabelAlignment implements Enumerator {
 	}
 
 	/**
-	 * Returns the '<em><b>Label Alignment</b></em>' literal with the specified integer value.
+	 * Returns the '<em><b>Date Time Display Type</b></em>' literal with the specified integer value.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -211,16 +178,14 @@ public enum LabelAlignment implements Enumerator {
 	 * @return the matching enumerator or <code>null</code>.
 	 * @generated
 	 */
-	public static LabelAlignment get(int value) {
+	public static DateTimeDisplayType get(int value) {
 		switch (value) {
-		case DEFAULT_VALUE:
-			return DEFAULT;
-		case LEFT_VALUE:
-			return LEFT;
-		case TOP_VALUE:
-			return TOP;
-		case NONE_VALUE:
-			return NONE;
+		case TIME_AND_DATE_VALUE:
+			return TIME_AND_DATE;
+		case TIME_ONLY_VALUE:
+			return TIME_ONLY;
+		case DATE_ONLY_VALUE:
+			return DATE_ONLY;
 		}
 		return null;
 	}
@@ -256,7 +221,7 @@ public enum LabelAlignment implements Enumerator {
 	 *
 	 * @generated
 	 */
-	private LabelAlignment(int value, String name, String literal) {
+	private DateTimeDisplayType(int value, String name, String literal) {
 		this.value = value;
 		this.name = name;
 		this.literal = literal;
@@ -307,4 +272,4 @@ public enum LabelAlignment implements Enumerator {
 		return literal;
 	}
 
-} // LabelAlignment
+} // DateTimeDisplayType

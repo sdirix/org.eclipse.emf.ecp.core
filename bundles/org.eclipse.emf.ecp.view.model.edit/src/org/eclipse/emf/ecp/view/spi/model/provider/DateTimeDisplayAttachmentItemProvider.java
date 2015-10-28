@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -16,23 +16,22 @@ import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.view.spi.model.VContainedContainer;
-import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
+import org.eclipse.emf.ecp.view.spi.model.DateTimeDisplayType;
+import org.eclipse.emf.ecp.view.spi.model.VDateTimeDisplayAttachment;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
+import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
- * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.spi.model.VContainedContainer} object.
+ * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.spi.model.VDateTimeDisplayAttachment} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  *
  * @generated
- * @since 1.4
  */
-public class ContainedContainerItemProvider
-	extends ContainedElementItemProvider {
+public class DateTimeDisplayAttachmentItemProvider extends AttachmentItemProvider {
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
@@ -40,7 +39,7 @@ public class ContainedContainerItemProvider
 	 *
 	 * @generated
 	 */
-	public ContainedContainerItemProvider(AdapterFactory adapterFactory) {
+	public DateTimeDisplayAttachmentItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -56,40 +55,44 @@ public class ContainedContainerItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
+			addDisplayTypePropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
 
 	/**
-	 * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
-	 * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
-	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
+	 * This adds a property descriptor for the Display Type feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
 	 * @generated
 	 */
-	@Override
-	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
-		if (childrenFeatures == null) {
-			super.getChildrenFeatures(object);
-			childrenFeatures.add(VViewPackage.Literals.CONTAINER__CHILDREN);
-		}
-		return childrenFeatures;
+	protected void addDisplayTypePropertyDescriptor(Object object) {
+		itemPropertyDescriptors
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(),
+				getString("_UI_DateTimeDisplayAttachment_displayType_feature"), //$NON-NLS-1$
+				getString("_UI_PropertyDescriptor_description", "_UI_DateTimeDisplayAttachment_displayType_feature", //$NON-NLS-1$ //$NON-NLS-2$
+					"_UI_DateTimeDisplayAttachment_type"), //$NON-NLS-1$
+				VViewPackage.Literals.DATE_TIME_DISPLAY_ATTACHMENT__DISPLAY_TYPE,
+				true,
+				false,
+				false,
+				ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				null,
+				null));
 	}
 
 	/**
+	 * This returns DateTimeDisplayAttachment.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
 	 * @generated
 	 */
 	@Override
-	protected EStructuralFeature getChildFeature(Object object, Object child) {
-		// Check the type of the specified child object and return the proper feature to use for
-		// adding (see {@link AddCommand}) it as a child.
-
-		return super.getChildFeature(object, child);
+	public Object getImage(Object object) {
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/DateTimeDisplayAttachment")); //$NON-NLS-1$
 	}
 
 	/**
@@ -101,9 +104,10 @@ public class ContainedContainerItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		final String label = ((VContainedContainer) object).getName();
-		return label == null || label.length() == 0 ? getString("_UI_ContainedContainer_type") //$NON-NLS-1$
-			: getString("_UI_ContainedContainer_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
+		final DateTimeDisplayType labelValue = ((VDateTimeDisplayAttachment) object).getDisplayType();
+		final String label = labelValue == null ? null : labelValue.toString();
+		return label == null || label.length() == 0 ? getString("_UI_DateTimeDisplayAttachment_type") //$NON-NLS-1$
+			: getString("_UI_DateTimeDisplayAttachment_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**
@@ -118,9 +122,9 @@ public class ContainedContainerItemProvider
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(VContainedContainer.class)) {
-		case VViewPackage.CONTAINED_CONTAINER__CHILDREN:
-			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
+		switch (notification.getFeatureID(VDateTimeDisplayAttachment.class)) {
+		case VViewPackage.DATE_TIME_DISPLAY_ATTACHMENT__DISPLAY_TYPE:
+			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 			return;
 		}
 		super.notifyChanged(notification);
@@ -137,9 +141,6 @@ public class ContainedContainerItemProvider
 	@Override
 	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
-
-		newChildDescriptors.add(createChildParameter(VViewPackage.Literals.CONTAINER__CHILDREN,
-			VViewFactory.eINSTANCE.createControl()));
 	}
 
 }

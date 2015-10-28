@@ -32,6 +32,9 @@ public interface MessageKeys {
 	String DateTimeControlSWTRenderer_CleanDate = "DateTimeControlSWTRenderer_CleanDate"; //$NON-NLS-1$
 	String DateTimeControlSWTRenderer_SelectData = "DateTimeControlSWTRenderer_SelectData"; //$NON-NLS-1$
 	String DateTimeControl_NoDateSetClickToSetDate = "DateTimeControl_NoDateSetClickToSetDate"; //$NON-NLS-1$
+	String DateTimeControlSWTRenderer_CleanTime = "DateTimeControlSWTRenderer_CleanTime"; //$NON-NLS-1$
+	String DateTimeControlSWTRenderer_SelectTime = "DateTimeControlSWTRenderer_SelectTime"; //$NON-NLS-1$
+	String DateTimeControl_NoTimeSetClickToSetTime = "DateTimeControl_NoTimeSetClickToSetTime"; //$NON-NLS-1$
 
 	String EEnumControl_NoValueSetClickToSetValue = "EEnumControl_NoValueSetClickToSetValue"; //$NON-NLS-1$
 
