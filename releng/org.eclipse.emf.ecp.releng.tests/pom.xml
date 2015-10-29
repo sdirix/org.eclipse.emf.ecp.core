@@ -144,6 +144,7 @@
 		<module>../../tests/org.eclipse.emfforms.common.tests</module>
 		<module>../../tests/org.eclipse.emfforms.core.services.emf.tests</module>
 		<module>../../tests/org.eclipse.emfforms.core.services.tests</module>
+		<module>../../tests/org.eclipse.emfforms.core.services.legacy.tests</module>
 		
 		<!-- Localization Bundle -->
 		<module>../../tests/org.eclipse.emfforms.localization.tests</module>

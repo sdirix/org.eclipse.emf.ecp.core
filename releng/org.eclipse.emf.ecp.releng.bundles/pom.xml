@@ -272,6 +272,7 @@
 		<module>../../bundles/org.eclipse.emfforms.core.services</module>
 		<module>../../bundles/org.eclipse.emfforms.core.services.emf</module>
 		<module>../../bundles/org.eclipse.emfforms.core.services.locale.default</module>
+		<module>../../bundles/org.eclipse.emfforms.core.services.legacy</module>
 		
 		<!-- Localization Services -->
 		<module>../../bundles/org.eclipse.emfforms.localization</module>
