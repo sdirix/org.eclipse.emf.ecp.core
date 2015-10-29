@@ -63,7 +63,9 @@ class TypeMapper {
 	}
 
 	def static isDateType(EClassifier eType) {
-		EcorePackage.eINSTANCE.EDate.isInstance(eType) || eType.instanceTypeName?.equals("javax.xml.datatype.XMLGregorianCalendar")
+		EcorePackage.eINSTANCE.EDate.isInstance(eType) 
+		|| eType.instanceTypeName?.equals("javax.xml.datatype.XMLGregorianCalendar")
+		|| eType.instanceTypeName?.equals("java.util.Date")
 	}
 	
 	def static isEnumType(EClassifier eType) {

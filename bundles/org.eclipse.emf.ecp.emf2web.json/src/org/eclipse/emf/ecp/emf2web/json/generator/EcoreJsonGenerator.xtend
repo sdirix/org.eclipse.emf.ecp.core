@@ -102,8 +102,12 @@ class EcoreJsonGenerator extends JsonGenerator {
 
 	private def dispatch JsonElement createJsonSchemaElement(EReference reference) {
 		val jsonObject = new JsonObject
-		jsonObject.withType("array")
-		jsonObject.with("items", createJsonSchemaElement(reference.EReferenceType))
+		if (reference.upperBound > 1) {
+			jsonObject.withType("array")
+			jsonObject.with("items", createJsonSchemaElement(reference.EReferenceType))	
+		} else {
+			createJsonElement(reference.EReferenceType)
+		}  	
 	}
 
 	private def dispatch JsonElement createJsonSchemaElement(EObject eObject) {

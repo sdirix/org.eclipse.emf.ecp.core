@@ -21,6 +21,10 @@ import org.eclipse.emf.ecp.view.spi.model.VContainer
 import org.eclipse.emf.ecp.view.spi.model.VControl
 import org.eclipse.emf.ecp.view.spi.model.VElement
 import org.eclipse.emf.ecp.view.spi.model.VView
+import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationElement
+import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorization
+import org.eclipse.emf.ecp.view.spi.categorization.model.VCategory
+import org.eclipse.emf.ecp.view.spi.label.model.VLabel
 
 /** 
  * The class which handles the conversion from ecore files to qbForm files.
@@ -31,6 +35,8 @@ class FormsJsonGenerator extends JsonGenerator {
 	private static final val TYPE = "type"
 	private static final val ELEMENTS = "elements"
 	private static final val CONTROL = "Control"
+	private static final val CATEGORIZATION = "Categorization"
+	private static final val CATEGORY = "Category"
 	private static final val SCOPE = "scope"
 	private static final val REF = "$ref"
 	private static final val LABEL = "label"
@@ -47,7 +53,38 @@ class FormsJsonGenerator extends JsonGenerator {
 	
 	private def dispatch JsonElement createJsonFormsElement(EObject object){
 		throw new UnsupportedOperationException(
-			"Cannot create a Json Forms element for EObjects that are not instanceof VView, VControl or VContainer.")
+			"Cannot create a JSON Forms element for EObjects that are not instanceof VView, VControl or VContainer.")
+	}
+	
+	private def dispatch JsonElement createJsonFormsElement(VLabel label) {
+		val jsonObj = new JsonObject()
+		jsonObj.withType("Label")
+		jsonObj.with("text", label.name)
+	}
+	
+	private def dispatch JsonElement createJsonFormsElement(VCategorizationElement categorizationElement) {
+		new JsonObject()
+			.withType(CATEGORIZATION)
+    		.withElements(categorizationElement.categorizations)
+	}
+	
+	private def dispatch JsonElement createJsonFormsElement(VCategorization categorization) {
+		new JsonObject()
+			.withType(CATEGORIZATION)
+			.withElements(categorization.categorizations)
+	}
+	
+	private def dispatch JsonElement createJsonFormsElement(VCategory category) {
+		val jsonObj = new JsonObject
+		jsonObj.withType(CATEGORY)
+		jsonObj.withLabel(category.name)
+			
+	    // FIXME: shortcut the elements of any container into the category
+		val contained = category.composite
+		switch contained {
+			VContainer : jsonObj.withElements(contained.children)
+			default: throw new UnsupportedOperationException("Category must contain a VContainer element")
+		}			
 	}
 	
 	private def dispatch JsonElement createJsonFormsElement(VView view){

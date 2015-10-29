@@ -14,6 +14,7 @@ import org.junit.Test
 import static org.junit.Assert.*
 import org.eclipse.emf.ecp.emf2web.json.generator.FormsJsonGenerator
 import org.eclipse.emf.ecp.emf2web.util.ReferenceHelper
+import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationFactory
 
 class FormsJsonExporterTest {
 	private FormsJsonGenerator exporter;
@@ -59,6 +60,74 @@ class FormsJsonExporterTest {
 
 		val result = exporter.createJsonElement(view)
 		assertEquals(viewWithAllContentsModel(), result)
+	}
+	
+	@Test
+	def testCategorization() {
+		val view = VViewFactory.eINSTANCE.createView
+		val categorizationElement = VCategorizationFactory.eINSTANCE.createCategorizationElement
+		val firstVerticalLayout = VVerticalFactory.eINSTANCE.createVerticalLayout
+		val secondVerticalLayout = VVerticalFactory.eINSTANCE.createVerticalLayout
+		val firstCategory = VCategorizationFactory.eINSTANCE.createCategory
+		val secondCategory = VCategorizationFactory.eINSTANCE.createCategory
+		
+		firstCategory.name = "First"
+		secondCategory.name = "Second"
+		
+		val firstControl = VViewFactory.eINSTANCE.createControl
+		val secondControl = VViewFactory.eINSTANCE.createControl
+		
+		firstControl.setDomainModelReference(mockFeature)
+		secondControl.setDomainModelReference(mockFeature)
+		
+		firstVerticalLayout.children.add(firstControl)
+		secondVerticalLayout.children.add(secondControl)
+		
+		firstCategory.composite = firstVerticalLayout
+		secondCategory.composite = secondVerticalLayout
+		
+		categorizationElement.categorizations.add(firstCategory)
+		categorizationElement.categorizations.add(secondCategory)
+		
+		view.children.add(categorizationElement)
+		
+		val result = exporter.createJsonElement(view)
+		assertEquals(viewWithTwoCategories, result)
+	}
+	
+	def JsonElement viewWithTwoCategories() {
+		'''
+		{
+		  "type": "Categorization",
+		  "elements": [
+		    {
+		      "type": "Category",
+		      "label": "First",
+		      "elements": [{
+		      	  "type": "Control",
+		      	  "label": "«testName»",
+		      	  "scope": {
+			  		  "$ref": "«testReference»"
+			  	  }
+			  	}
+		      ]
+		    },
+		    {
+		      "type": "Category",
+		      "label": "Second",
+		      "elements": [{
+		      	  "type": "Control",
+		      	  "label": "«testName»",
+		      	  "scope": {
+			  		  "$ref": "«testReference»"
+			  	  }
+			  	}
+		      ]
+		    }		  
+		  ]
+		}
+		'''
+		.toJsonElement
 	}
 	
 	def JsonElement viewWithAllContentsModel() {
