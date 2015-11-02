@@ -62,7 +62,7 @@ public final class NumberFormatHelper {
 		if (numTotalDigits > 0 && numFractionDigits > 0) {
 
 			final StringBuilder sb = new StringBuilder();
-			sb.append("#"); //$NON-NLS-1$
+			sb.append("0"); //$NON-NLS-1$
 			sb.append("."); //$NON-NLS-1$
 			for (int i = 0; i < numFractionDigits; i++) {
 				sb.append("0"); //$NON-NLS-1$
