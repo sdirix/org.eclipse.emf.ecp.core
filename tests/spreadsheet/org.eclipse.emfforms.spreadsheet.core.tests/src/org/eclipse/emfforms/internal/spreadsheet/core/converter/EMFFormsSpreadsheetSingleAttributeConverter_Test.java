@@ -25,6 +25,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
+import javax.xml.datatype.DatatypeConstants;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -571,6 +572,12 @@ public class EMFFormsSpreadsheetSingleAttributeConverter_Test {
 	public void testGetCellValueXmlDate() throws EMFFormsConverterException {
 		final XMLGregorianCalendar cellValue = new XMLCalendar(
 			Calendar.getInstance(UTC_TIMEZONE).getTime(), XMLCalendar.DATE);
+		cellValue.setTimezone(DatatypeConstants.FIELD_UNDEFINED);
+		cellValue.setHour(DatatypeConstants.FIELD_UNDEFINED);
+		cellValue.setMinute(DatatypeConstants.FIELD_UNDEFINED);
+		cellValue.setSecond(DatatypeConstants.FIELD_UNDEFINED);
+		cellValue.setMillisecond(DatatypeConstants.FIELD_UNDEFINED);
+
 		cell.setCellValue(
 			DateUtil.getExcelDate(cellValue.toGregorianCalendar(UTC_TIMEZONE, null, null), false));
 		final EDataType dataType = EcoreFactory.eINSTANCE.createEDataType();

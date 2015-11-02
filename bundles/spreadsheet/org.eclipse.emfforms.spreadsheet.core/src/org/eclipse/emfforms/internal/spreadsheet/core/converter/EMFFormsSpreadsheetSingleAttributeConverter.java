@@ -17,6 +17,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
+import javax.xml.datatype.DatatypeConstants;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.apache.poi.ss.usermodel.Cell;
@@ -236,7 +237,13 @@ public class EMFFormsSpreadsheetSingleAttributeConverter implements EMFFormsSpre
 			if (targetCal == null) {
 				return null;
 			}
-			return new XMLCalendar(targetCal.getTime(), XMLCalendar.DATE);
+			final XMLGregorianCalendar cal = new XMLCalendar(targetCal.getTime(), XMLCalendar.DATE);
+			cal.setTimezone(DatatypeConstants.FIELD_UNDEFINED);
+			cal.setHour(DatatypeConstants.FIELD_UNDEFINED);
+			cal.setMinute(DatatypeConstants.FIELD_UNDEFINED);
+			cal.setSecond(DatatypeConstants.FIELD_UNDEFINED);
+			cal.setMillisecond(DatatypeConstants.FIELD_UNDEFINED);
+			return cal;
 		} else {
 			return EcoreUtil.createFromString(attributeType, cell.getStringCellValue());
 		}

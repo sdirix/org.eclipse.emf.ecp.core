@@ -23,6 +23,7 @@ import java.util.Date;
 import java.util.Iterator;
 
 import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeConstants;
 
 import org.apache.poi.ss.usermodel.Workbook;
 import org.eclipse.emf.common.util.EList;
@@ -101,7 +102,13 @@ public class EMFFormsSpreadsheetImportImpl_ITest {
 		user.setNationality(Nationality.US);
 		user.setTimeOfRegistration(new Date());
 		user.setWeight(1.45);
-		user.setDateOfBirth(new XMLCalendar(new Date(), XMLCalendar.DATE));
+		final XMLCalendar cal = new XMLCalendar(new Date(), XMLCalendar.DATE);
+		cal.setTimezone(DatatypeConstants.FIELD_UNDEFINED);
+		cal.setHour(DatatypeConstants.FIELD_UNDEFINED);
+		cal.setMinute(DatatypeConstants.FIELD_UNDEFINED);
+		cal.setSecond(DatatypeConstants.FIELD_UNDEFINED);
+		cal.setMillisecond(DatatypeConstants.FIELD_UNDEFINED);
+		user.setDateOfBirth(cal);
 		return user;
 	}
 
