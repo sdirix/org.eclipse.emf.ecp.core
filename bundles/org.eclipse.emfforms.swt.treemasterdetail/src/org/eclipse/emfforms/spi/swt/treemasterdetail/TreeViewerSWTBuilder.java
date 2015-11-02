@@ -34,6 +34,7 @@ import org.eclipse.swt.widgets.Composite;
  * aspects of a {@link org.eclipse.jface.viewers.TreeViewer TreeViewer}.
  *
  * @author Johannes Faltermeier
+ * @since 1.8
  *
  */
 public class TreeViewerSWTBuilder {

@@ -134,7 +134,7 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 		final Composite treeComposite = new Composite(this, SWT.NONE);
 		addTreeViewerLayoutData(treeComposite, verticalSash);
 		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(treeComposite);
-		treeViewer = TreeViewerSWTFactory.createTreeMasterDetail(treeComposite, input, customization);
+		treeViewer = TreeViewerSWTFactory.createTreeViewer(treeComposite, input, customization);
 
 		// Create detail composite
 		detailComposite = buildBehaviour.createDetailComposite(this);

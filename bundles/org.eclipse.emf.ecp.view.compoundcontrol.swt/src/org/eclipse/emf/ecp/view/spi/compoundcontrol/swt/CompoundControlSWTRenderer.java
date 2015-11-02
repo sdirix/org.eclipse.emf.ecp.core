@@ -156,6 +156,7 @@ public class CompoundControlSWTRenderer extends AbstractSWTRenderer<VCompoundCon
 	 *
 	 * @param parent the parent composite
 	 * @return the label
+	 * @since 1.8
 	 */
 	protected Control createLabel(Composite parent) {
 		final EList<VControl> controls = getVElement().getControls();
@@ -197,6 +198,7 @@ public class CompoundControlSWTRenderer extends AbstractSWTRenderer<VCompoundCon
 	 *
 	 * @param parent the parent composite
 	 * @return the controls
+	 * @since 1.8
 	 */
 	protected Control createControls(Composite parent) {
 		final Composite columnComposite = new Composite(parent, SWT.NONE);
@@ -259,6 +261,7 @@ public class CompoundControlSWTRenderer extends AbstractSWTRenderer<VCompoundCon
 	 * @param numColumns numColumns
 	 * @param equalWidth equalWidth
 	 * @return ColumnLayout
+	 * @since 1.8
 	 */
 	protected Layout getColumnLayout(int numColumns, boolean equalWidth) {
 		return LayoutProviderHelper.getColumnLayout(numColumns, equalWidth);
@@ -271,6 +274,7 @@ public class CompoundControlSWTRenderer extends AbstractSWTRenderer<VCompoundCon
 	 * @param spanX spanX
 	 * @param spanY spanY
 	 * @return SpanningLayoutData
+	 * @since 1.8
 	 */
 	protected Object getSpanningLayoutData(VContainedElement child, int spanX, int spanY) {
 		return LayoutProviderHelper.getSpanningLayoutData(spanX, spanY);
@@ -287,6 +291,7 @@ public class CompoundControlSWTRenderer extends AbstractSWTRenderer<VCompoundCon
 	 * @param domainModel domainModel
 	 * @param control control
 	 * @return LayoutData
+	 * @since 1.8
 	 */
 	protected Object getLayoutData(SWTGridCell gridCell, SWTGridDescription controlGridDescription,
 		SWTGridDescription currentRowGridDescription, SWTGridDescription fullGridDescription, VElement vElement,

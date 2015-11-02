@@ -75,6 +75,12 @@ public class EdaptViewModelMigrator implements ViewModelMigrator, StringViewMode
 
 	private static final String ECORE_NS_URI = "http://www.eclipse.org/emf/2002/Ecore"; //$NON-NLS-1$
 
+	/**
+	 *
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.spi.view.migrator.string.StringViewModelMigrator#checkMigration(java.lang.String)
+	 */
 	@Override
 	public boolean checkMigration(String serializedViewModel) {
 		return checkMigration(getNamespaceURIs(serializedViewModel));
@@ -105,6 +111,12 @@ public class EdaptViewModelMigrator implements ViewModelMigrator, StringViewMode
 		return allReleasesAreLatest;
 	}
 
+	/**
+	 * 
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.spi.view.migrator.string.StringViewModelMigrator#performMigration(java.lang.String)
+	 */
 	@Override
 	public String performMigration(String serializedViewModel) throws ViewModelMigrationException {
 		PrintWriter printWriter = null;

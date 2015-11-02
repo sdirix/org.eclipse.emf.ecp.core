@@ -95,7 +95,9 @@ public interface VCompoundcontrolPackage extends EPackage {
 	/**
 	 * The feature id for the '<em><b>Label</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 *
+	 * @since 1.8
+	 *        <!-- end-user-doc -->
 	 *
 	 * @generated
 	 * @ordered
@@ -155,7 +157,9 @@ public interface VCompoundcontrolPackage extends EPackage {
 	/**
 	 * The feature id for the '<em><b>Label Alignment</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.8
+	 *        <!-- end-user-doc -->
 	 *
 	 * @generated
 	 * @ordered
@@ -165,7 +169,9 @@ public interface VCompoundcontrolPackage extends EPackage {
 	/**
 	 * The feature id for the '<em><b>Domain Model Reference</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 *
+	 * @since 1.8
+	 *        <!-- end-user-doc -->
 	 *
 	 * @generated
 	 * @ordered

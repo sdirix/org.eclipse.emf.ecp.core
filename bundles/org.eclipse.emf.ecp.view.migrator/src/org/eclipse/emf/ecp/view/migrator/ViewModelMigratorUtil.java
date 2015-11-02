@@ -91,6 +91,7 @@ public final class ViewModelMigratorUtil {
 	/**
 	 *
 	 * @return the view model migrator with the highest priority if it also supports migrating string based view models.
+	 * @since 1.8
 	 */
 	public static StringViewModelMigrator getStringViewModelMigrator() {
 		if (!StringViewModelMigrator.class.isInstance(getViewModelMigrator())) {

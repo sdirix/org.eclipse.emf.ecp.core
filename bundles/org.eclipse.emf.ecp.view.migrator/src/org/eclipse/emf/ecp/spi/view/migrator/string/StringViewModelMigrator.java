@@ -17,6 +17,7 @@ import org.eclipse.emf.ecp.view.migrator.ViewModelMigrationException;
  * A String View Model Migrator may migrate view models which are available in memory as a string representation.
  *
  * @author Johannes Faltermeier
+ * @since 1.8
  *
  */
 public interface StringViewModelMigrator {

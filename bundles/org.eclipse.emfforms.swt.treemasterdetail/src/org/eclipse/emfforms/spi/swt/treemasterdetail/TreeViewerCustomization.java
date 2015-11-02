@@ -16,6 +16,7 @@ package org.eclipse.emfforms.spi.swt.treemasterdetail;
  * rendered and how it behaves.
  *
  * @author Johannes Faltermeier
+ * @since 1.8
  *
  */
 public interface TreeViewerCustomization extends TreeViewerBuilder, ContentProviderProvider, DNDProvider,

@@ -19,6 +19,7 @@ import org.eclipse.swt.widgets.Composite;
  * This factory allows to create {@link TreeViewer TreeViewers}.
  *
  * @author Johannes Faltermeier
+ * @since 1.8
  *
  */
 public final class TreeViewerSWTFactory {
@@ -46,7 +47,7 @@ public final class TreeViewerSWTFactory {
 	 * @param input the input object
 	 * @return the tree viewer
 	 */
-	public static TreeViewer createTreeMasterDetail(Composite parent, Object input) {
+	public static TreeViewer createTreeViewer(Composite parent, Object input) {
 		return TreeViewerSWTBuilder.create(new DefaultTreeViewerCustomization(), parent,
 			TreeViewerSWTBuilder.getEditingDomain(input), input);
 	}
@@ -61,7 +62,7 @@ public final class TreeViewerSWTFactory {
 	 * @param buildBehaviour the custom behavior
 	 * @return the tree viewer
 	 */
-	public static TreeViewer createTreeMasterDetail(Composite parent, Object input,
+	public static TreeViewer createTreeViewer(Composite parent, Object input,
 		TreeViewerCustomization buildBehaviour) {
 		return TreeViewerSWTBuilder.create(buildBehaviour, parent, TreeViewerSWTBuilder.getEditingDomain(input), input);
 	}

@@ -277,6 +277,7 @@ public class ControlGridSWTRenderer extends AbstractSWTRenderer<VControlGrid> {
 	 * @param swtGridCell the current {@link SWTGridCell} of the description
 	 * @param control the {@link Control}
 	 * @return the layout data
+	 * @since 1.8
 	 */
 	protected GridData createGridDataForControlWithoutHorizontalGrab(final SWTGridDescription swtGridDescription,
 		final SWTGridCell swtGridCell, final Control control) {
@@ -307,6 +308,7 @@ public class ControlGridSWTRenderer extends AbstractSWTRenderer<VControlGrid> {
 	 * @param control the {@link Control}
 	 * @param hSpan the horizontal span
 	 * @return the layout data
+	 * @since 1.8
 	 */
 	protected GridData createGridDataForControlWithHorizontalGrab(final SWTGridDescription swtGridDescription,
 		final SWTGridCell swtGridCell, final Control control, final int hSpan) {
