@@ -175,6 +175,11 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 
 			if (rowCell == null) {
 				/* no error -> unsettable feature */
+				errorReports.getSettingToSheetMap()
+					.add(ErrorFactory.eINSTANCE.createSettingToSheetMapping(
+						createSettingLocation(setting),
+						ErrorFactory.eINSTANCE.createSheetLocation(sheetname, columnId, eObjectRow.getRowNum(),
+							cell.getStringCellValue())));
 				continue;
 			}
 
