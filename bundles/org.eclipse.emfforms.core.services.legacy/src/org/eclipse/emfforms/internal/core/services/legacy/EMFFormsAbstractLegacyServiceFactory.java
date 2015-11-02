@@ -12,34 +12,32 @@
 package org.eclipse.emfforms.internal.core.services.legacy;
 
 import org.eclipse.emf.ecp.view.spi.context.GlobalViewModelService;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
-import org.eclipse.emfforms.spi.core.services.scoped.EMFFormsScopedServicePolicy;
-import org.eclipse.emfforms.spi.core.services.scoped.EMFFormsScopedServiceProvider;
-import org.eclipse.emfforms.spi.core.services.scoped.EMFFormsScopedServiceScope;
+import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewServiceFactory;
 
 /**
- * An {@link EMFFormsScopedServiceProvider} for {@link GlobalViewModelService}.
+ * An abstract implementation for the {@link EMFFormsViewServiceFactory}.
  *
- * @param <T> The actual type of the {@link GlobalViewModelService}
+ * @param <T> The actual type of the service
  * @author Eugen Neufeld
  *
  */
-public class EMFFormsLegacyGlobalServiceProvider<T extends GlobalViewModelService>
-	implements EMFFormsScopedServiceProvider<T> {
+public abstract class EMFFormsAbstractLegacyServiceFactory<T> implements EMFFormsViewServiceFactory<T> {
 
 	private final Class<T> type;
 	private final double priority;
 	private final ReportService reportService;
 
 	/**
-	 * Default constructor used to create an {@link EMFFormsLegacyGlobalServiceProvider}.
+	 * Default constructor used to create an {@link EMFFormsLegacyGlobalServiceFactory}.
 	 *
 	 * @param type The type of the service to wrap
 	 * @param priority The priority of the wrapped service
 	 * @param reportService The {@link ReportService} to use for logging
 	 */
-	public EMFFormsLegacyGlobalServiceProvider(Class<T> type, double priority, ReportService reportService) {
+	public EMFFormsAbstractLegacyServiceFactory(Class<T> type, double priority, ReportService reportService) {
 		this.type = type;
 		this.priority = priority;
 		this.reportService = reportService;
@@ -48,27 +46,7 @@ public class EMFFormsLegacyGlobalServiceProvider<T extends GlobalViewModelServic
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emfforms.spi.core.services.scoped.EMFFormsScopedServiceProvider#getPolicy()
-	 */
-	@Override
-	public EMFFormsScopedServicePolicy getPolicy() {
-		return EMFFormsScopedServicePolicy.IMMEDIATE;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emfforms.spi.core.services.scoped.EMFFormsScopedServiceProvider#getScope()
-	 */
-	@Override
-	public EMFFormsScopedServiceScope getScope() {
-		return EMFFormsScopedServiceScope.GLOBAL;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emfforms.spi.core.services.scoped.EMFFormsScopedServiceProvider#getPriority()
+	 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsViewServiceFactory#getPriority()
 	 */
 	@Override
 	public double getPriority() {
@@ -78,20 +56,27 @@ public class EMFFormsLegacyGlobalServiceProvider<T extends GlobalViewModelServic
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emfforms.spi.core.services.scoped.EMFFormsScopedServiceProvider#getType()
+	 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsViewServiceFactory#getType()
 	 */
+	// needed as we want to return the interface if it is not to generic
+	@SuppressWarnings("unchecked")
 	@Override
 	public Class<T> getType() {
+		final Class<?> superTypeInterface = type.getInterfaces()[0];
+		if (!GlobalViewModelService.class.equals(superTypeInterface)
+			&& !ViewModelService.class.equals(superTypeInterface)) {
+			return (Class<T>) superTypeInterface;
+		}
 		return type;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emfforms.spi.core.services.scoped.EMFFormsScopedServiceProvider#provideService()
+	 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsViewServiceFactory#createService()
 	 */
 	@Override
-	public T provideService() {
+	public T createService() {
 		try {
 			return type.newInstance();
 		} catch (final InstantiationException ex) {
@@ -103,7 +88,7 @@ public class EMFFormsLegacyGlobalServiceProvider<T extends GlobalViewModelServic
 		} catch (final SecurityException ex) {
 			reportService.report(new AbstractReport(ex));
 		}
-		return null;
+		throw new IllegalStateException("Class could not be instantiated. Please check your log!"); //$NON-NLS-1$
 	}
 
 }

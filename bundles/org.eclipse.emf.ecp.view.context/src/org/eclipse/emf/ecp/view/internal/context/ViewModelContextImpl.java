@@ -22,10 +22,6 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.IExtensionRegistry;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
@@ -38,6 +34,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.common.spi.UniqueSetting;
+import org.eclipse.emf.ecp.view.spi.context.EMFFormsLegacyServicesManager;
 import org.eclipse.emf.ecp.view.spi.context.GlobalViewModelService;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextDisposeListener;
@@ -54,6 +51,14 @@ import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.util.ViewModelUtil;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emfforms.common.Optional;
+import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewServiceManager;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceEvent;
+import org.osgi.framework.ServiceListener;
+import org.osgi.framework.ServiceReference;
 
 /**
  * The Class ViewModelContextImpl.
@@ -128,6 +133,11 @@ public class ViewModelContextImpl implements ViewModelContext {
 	private ViewModelContext parentContext;
 
 	private final Set<ViewModelContextDisposeListener> disposeListeners = new LinkedHashSet<ViewModelContextDisposeListener>();
+
+	// TODO replace with eclipse context?!
+	private final Map<Class<?>, Object> serviceMap = new LinkedHashMap<Class<?>, Object>();
+
+	private final Map<ServiceReference<?>, Class<?>> usedOSGiServices = new LinkedHashMap<ServiceReference<?>, Class<?>>();
 
 	/**
 	 * Instantiates a new view model context impl.
@@ -215,13 +225,75 @@ public class ViewModelContextImpl implements ViewModelContext {
 			domainModelContentAdapter = new DomainModelContentAdapter();
 			domainObject.eAdapters().add(domainModelContentAdapter);
 		}
-
-		readAbstractViewServices();
+		loadImmediateServices();
 
 		for (final ViewModelService viewService : viewServices) {
 			if (!GlobalViewModelService.class.isInstance(viewService) || parentContext == null) {
 				viewService.instantiate(this);
 			}
+		}
+
+	}
+
+	private void loadImmediateServices() {
+		final Bundle bundle = FrameworkUtil.getBundle(getClass());
+		if (bundle != null) {
+			final BundleContext bundleContext = bundle.getBundleContext();
+			final ServiceReference<EMFFormsLegacyServicesManager> serviceReferenceLegacy = bundleContext
+				.getServiceReference(EMFFormsLegacyServicesManager.class);
+			if (serviceReferenceLegacy != null) {
+				final EMFFormsLegacyServicesManager legacyServicesFactory = bundleContext
+					.getService(serviceReferenceLegacy);
+				legacyServicesFactory.instantiate();
+				bundleContext.ungetService(serviceReferenceLegacy);
+			}
+
+			final ServiceReference<EMFFormsViewServiceManager> serviceReference = bundleContext
+				.getServiceReference(EMFFormsViewServiceManager.class);
+			servicesManager = bundleContext.getService(serviceReference);
+			if (parentContext == null) {
+				for (final Class<?> globalImmediateService : servicesManager.getAllGlobalImmediateServiceTypes()) {
+					final Optional<?> service = servicesManager.createGlobalImmediateService(globalImmediateService);
+					if (!service.isPresent()) {
+						// error case?
+						continue;
+					}
+					final Object serviceObject = service.get();
+					serviceMap.put(globalImmediateService, serviceObject);
+
+					// legacy
+					if (ViewModelService.class.isInstance(serviceObject)) {
+						viewServices.add(ViewModelService.class.cast(serviceObject));
+					}
+				}
+			}
+			for (final Class<?> localImmediateService : servicesManager.getAllLocalImmediateServiceTypes()) {
+				final Optional<?> service = servicesManager.createLocalImmediateService(localImmediateService);
+				if (!service.isPresent()) {
+					// error case?
+					continue;
+				}
+				final Object serviceObject = service.get();
+				serviceMap.put(localImmediateService, service.get());
+
+				// legacy
+				if (ViewModelService.class.isInstance(serviceObject)) {
+					viewServices.add(ViewModelService.class.cast(serviceObject));
+				}
+			}
+
+			bundleContext.addServiceListener(new ServiceListener() {
+
+				@Override
+				public void serviceChanged(ServiceEvent event) {
+					if (event.getType() == ServiceEvent.UNREGISTERING &&
+						usedOSGiServices.containsKey(event.getServiceReference())) {
+						final Class<?> remove = usedOSGiServices.remove(event.getServiceReference());
+						serviceMap.remove(remove);
+					}
+				}
+			});
+
 		}
 	}
 
@@ -368,31 +440,6 @@ public class ViewModelContextImpl implements ViewModelContext {
 	}
 
 	/**
-	 * Read abstract view services.
-	 */
-	private void readAbstractViewServices() {
-
-		final IExtensionRegistry extensionRegistry = Platform.getExtensionRegistry();
-		if (extensionRegistry == null) {
-			return;
-		}
-		final IConfigurationElement[] controls = extensionRegistry
-			.getConfigurationElementsFor("org.eclipse.emf.ecp.view.context.viewServices"); //$NON-NLS-1$
-		for (final IConfigurationElement e : controls) {
-			try {
-
-				final ViewModelService viewService = (ViewModelService) e.createExecutableExtension("class"); //$NON-NLS-1$
-				if (!GlobalViewModelService.class.isInstance(viewService) || parentContext == null) {
-					viewServices.add(viewService);
-				}
-
-			} catch (final CoreException e1) {
-				Activator.log(e1);
-			}
-		}
-	}
-
-	/**
 	 * {@inheritDoc}
 	 *
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getViewModel()
@@ -457,11 +504,24 @@ public class ViewModelContextImpl implements ViewModelContext {
 		}
 		childContextUsers.clear();
 		childContexts.clear();
+
+		releaseOSGiServices();
+
 		isDisposing = false;
 		isDisposed = true;
 
 		for (final ViewModelContextDisposeListener listener : disposeListeners) {
 			listener.contextDisposed(this);
+		}
+	}
+
+	private void releaseOSGiServices() {
+		final Bundle bundle = FrameworkUtil.getBundle(getClass());
+		if (bundle != null) {
+			final BundleContext bundleContext = bundle.getBundleContext();
+			for (final ServiceReference<?> serviceReference : usedOSGiServices.keySet()) {
+				bundleContext.ungetService(serviceReference);
+			}
 		}
 	}
 
@@ -556,13 +616,45 @@ public class ViewModelContextImpl implements ViewModelContext {
 	@Override
 	@SuppressWarnings("unchecked")
 	public <T> T getService(Class<T> serviceType) {
+		// legacy stuff
 		for (final ViewModelService service : viewServices) {
 			if (serviceType.isInstance(service)) {
 				return (T) service;
 			}
 		}
+
+		if (serviceMap.containsKey(serviceType)) {
+			return (T) serviceMap.get(serviceType);
+		} else if (servicesManager != null) {
+			final Optional<T> lazyService = servicesManager.createLocalLazyService(serviceType);
+			if (lazyService.isPresent()) {
+				final T t = lazyService.get();
+				serviceMap.put(serviceType, t);
+				return t;
+			}
+		}
+		if (servicesManager != null && parentContext == null) {
+			final Optional<T> lazyService = servicesManager.createGlobalLazyService(serviceType);
+			if (lazyService.isPresent()) {
+				final T t = lazyService.get();
+				serviceMap.put(serviceType, t);
+				return t;
+			}
+		}
 		if (parentContext != null) {
 			return parentContext.getService(serviceType);
+		}
+
+		final Bundle bundle = FrameworkUtil.getBundle(getClass());
+		if (bundle != null) {
+			final BundleContext bundleContext = bundle.getBundleContext();
+			final ServiceReference<T> serviceReference = bundleContext.getServiceReference(serviceType);
+			if (serviceReference != null) {
+				usedOSGiServices.put(serviceReference, serviceType);
+				final T service = bundleContext.getService(serviceReference);
+				serviceMap.put(serviceType, service);
+				return service;
+			}
 		}
 
 		Activator.getInstance()
@@ -716,6 +808,8 @@ public class ViewModelContextImpl implements ViewModelContext {
 	}
 
 	private final Set<Object> users = new LinkedHashSet<Object>();
+
+	private EMFFormsViewServiceManager servicesManager;
 
 	/**
 	 * Inner method for registering context users (not {@link ViewModelService}).

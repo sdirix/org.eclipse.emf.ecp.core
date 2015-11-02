@@ -13,9 +13,9 @@ package org.eclipse.emfforms.internal.core.services.legacy;
 
 import static org.junit.Assert.assertTrue;
 
-import org.eclipse.emf.ecp.view.spi.context.EMFFormsLegacyServicesFactory;
+import org.eclipse.emf.ecp.view.spi.context.EMFFormsLegacyServicesManager;
 import org.eclipse.emfforms.common.Optional;
-import org.eclipse.emfforms.spi.core.services.scoped.EMFFormsScopedServicesFactory;
+import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewServiceManager;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -27,10 +27,10 @@ import org.osgi.framework.ServiceReference;
 public class EMFFormsLegacyServicesFactory_ITest {
 
 	private static BundleContext bundleContext;
-	private ServiceReference<EMFFormsLegacyServicesFactory> serviceReference;
+	private ServiceReference<EMFFormsLegacyServicesManager> serviceReference;
 
-	private EMFFormsScopedServicesFactory serviceFactory;
-	private ServiceReference<EMFFormsScopedServicesFactory> serviceFactoryReference;
+	private EMFFormsViewServiceManager serviceFactory;
+	private ServiceReference<EMFFormsViewServiceManager> serviceFactoryReference;
 
 	@BeforeClass
 	public static void setUpBeforeClass() {
@@ -40,10 +40,11 @@ public class EMFFormsLegacyServicesFactory_ITest {
 
 	@Before
 	public void setUp() {
-		serviceReference = bundleContext.getServiceReference(EMFFormsLegacyServicesFactory.class);
-		bundleContext.getService(serviceReference);
+		serviceReference = bundleContext.getServiceReference(EMFFormsLegacyServicesManager.class);
+		final EMFFormsLegacyServicesManager legacyService = bundleContext.getService(serviceReference);
+		legacyService.instantiate();
 
-		serviceFactoryReference = bundleContext.getServiceReference(EMFFormsScopedServicesFactory.class);
+		serviceFactoryReference = bundleContext.getServiceReference(EMFFormsViewServiceManager.class);
 		serviceFactory = bundleContext.getService(serviceFactoryReference);
 	}
 
@@ -56,12 +57,20 @@ public class EMFFormsLegacyServicesFactory_ITest {
 	@Test
 	public void testExtensionPointParsing() {
 		final Optional<TestGlobalViewModelService> globalImmediateService = serviceFactory
-			.getGlobalImmediateService(TestGlobalViewModelService.class);
+			.createGlobalImmediateService(TestGlobalViewModelService.class);
 		assertTrue(globalImmediateService.isPresent());
 
 		final Optional<TestLocalViewModelService> localImmediateService = serviceFactory
-			.getLocalImmediateService(TestLocalViewModelService.class);
+			.createLocalImmediateService(TestLocalViewModelService.class);
 		assertTrue(localImmediateService.isPresent());
+
+		final Optional<ITestGlobalViewModelService> globalImmediateService2 = serviceFactory
+			.createGlobalImmediateService(ITestGlobalViewModelService.class);
+		assertTrue(globalImmediateService2.isPresent());
+
+		final Optional<ITestViewModelService> localImmediateService2 = serviceFactory
+			.createLocalImmediateService(ITestViewModelService.class);
+		assertTrue(localImmediateService2.isPresent());
 	}
 
 }

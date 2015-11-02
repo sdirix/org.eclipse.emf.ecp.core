@@ -9,21 +9,10 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emfforms.spi.core.services.scoped;
+package org.eclipse.emfforms.internal.core.services.legacy;
 
-/**
- * This describes when the service will be activated, aka policy.
- * 
- * @author Eugen Neufeld
- * @since 1.8
- */
-public enum EMFFormsScopedServicePolicy {
-	/**
-	 * The service will be activated on request.
-	 */
-	LAZY,
-	/**
-	 * The service will be activated immediately.
-	 */
-	IMMEDIATE
+import org.eclipse.emf.ecp.view.spi.context.GlobalViewModelService;
+
+public interface ITestGlobalViewModelService extends GlobalViewModelService {
+
 }

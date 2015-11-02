@@ -22,10 +22,10 @@ import java.util.Dictionary;
 import java.util.Hashtable;
 
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
-import org.eclipse.emfforms.spi.core.services.scoped.EMFFormsScopedServicePolicy;
-import org.eclipse.emfforms.spi.core.services.scoped.EMFFormsScopedServiceProvider;
-import org.eclipse.emfforms.spi.core.services.scoped.EMFFormsScopedServiceScope;
-import org.eclipse.emfforms.spi.core.services.scoped.EMFFormsScopedServicesFactory;
+import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewServiceFactory;
+import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewServiceManager;
+import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewServicePolicy;
+import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewServiceScope;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -37,9 +37,9 @@ import org.osgi.framework.ServiceReference;
 public class EMFFormsScopedServicesFactoryImpl_ITest {
 
 	private static BundleContext bundleContext;
-	private EMFFormsScopedServicesFactory service;
-	private ServiceReference<EMFFormsScopedServicesFactory> serviceReference;
-	private EMFFormsScopedServiceProvider<?> scopedServiceProvider;
+	private EMFFormsViewServiceManager service;
+	private ServiceReference<EMFFormsViewServiceManager> serviceReference;
+	private EMFFormsViewServiceFactory<?> scopedServiceProvider;
 
 	@BeforeClass
 	public static void setUpBeforeClass() {
@@ -51,15 +51,15 @@ public class EMFFormsScopedServicesFactoryImpl_ITest {
 	public void setUp() throws DatabindingFailedException {
 		final Dictionary<String, Object> dictionary = new Hashtable<String, Object>();
 		dictionary.put("service.ranking", 50); //$NON-NLS-1$
-		scopedServiceProvider = mock(EMFFormsScopedServiceProvider.class);
+		scopedServiceProvider = mock(EMFFormsViewServiceFactory.class);
 		doReturn(Object.class).when(scopedServiceProvider).getType();
-		doReturn(mock(Object.class)).when(scopedServiceProvider).provideService();
-		when(scopedServiceProvider.getPolicy()).thenReturn(EMFFormsScopedServicePolicy.LAZY);
-		when(scopedServiceProvider.getScope()).thenReturn(EMFFormsScopedServiceScope.LOCAL);
+		doReturn(mock(Object.class)).when(scopedServiceProvider).createService();
+		when(scopedServiceProvider.getPolicy()).thenReturn(EMFFormsViewServicePolicy.LAZY);
+		when(scopedServiceProvider.getScope()).thenReturn(EMFFormsViewServiceScope.LOCAL);
 		when(scopedServiceProvider.getPriority()).thenReturn(1d);
 
-		bundleContext.registerService(EMFFormsScopedServiceProvider.class, scopedServiceProvider, dictionary);
-		serviceReference = bundleContext.getServiceReference(EMFFormsScopedServicesFactory.class);
+		bundleContext.registerService(EMFFormsViewServiceFactory.class, scopedServiceProvider, dictionary);
+		serviceReference = bundleContext.getServiceReference(EMFFormsViewServiceManager.class);
 		service = bundleContext.getService(serviceReference);
 	}
 
@@ -70,7 +70,7 @@ public class EMFFormsScopedServicesFactoryImpl_ITest {
 
 	@Test
 	public void testServiceType() throws DatabindingFailedException {
-		assertTrue(EMFFormsScopedServicesFactoryImpl.class.isInstance(service));
+		assertTrue(EMFFormsViewServiceManagerImpl.class.isInstance(service));
 		verify(scopedServiceProvider, atLeastOnce()).getPolicy();
 		verify(scopedServiceProvider, atLeastOnce()).getScope();
 		verify(scopedServiceProvider, atLeastOnce()).getPriority();

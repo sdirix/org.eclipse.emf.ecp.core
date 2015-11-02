@@ -9,10 +9,10 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emfforms.spi.core.services.scoped;
+package org.eclipse.emfforms.spi.core.services.view;
 
 /**
- * An {@link EMFFormsScopedServiceProvider} defines where and how the service will be available. It also creates the
+ * An {@link EMFFormsViewServiceFactory} defines where and how the service will be available. It also creates the
  * concrete service instance on demand.
  *
  * @param <T> The type of the provided service
@@ -20,21 +20,21 @@ package org.eclipse.emfforms.spi.core.services.scoped;
  * @author Eugen Neufeld
  * @since 1.8
  */
-public interface EMFFormsScopedServiceProvider<T> {
+public interface EMFFormsViewServiceFactory<T> {
 
 	/**
 	 * Defines when the service should be activated.
 	 *
-	 * @return The {@link EMFFormsScopedServicePolicy} describing when the service should be activated
+	 * @return The {@link EMFFormsViewServicePolicy} describing when the service should be activated
 	 */
-	EMFFormsScopedServicePolicy getPolicy();
+	EMFFormsViewServicePolicy getPolicy();
 
 	/**
 	 * Defines where the service should be activated.
 	 *
-	 * @return The {@link EMFFormsScopedServiceScope} describing where the service should be activated
+	 * @return The {@link EMFFormsViewServiceScope} describing where the service should be activated
 	 */
-	EMFFormsScopedServiceScope getScope();
+	EMFFormsViewServiceScope getScope();
 
 	/**
 	 * The priority of the service. A service with a higher priority is more likely to be used if more than one service
@@ -56,6 +56,6 @@ public interface EMFFormsScopedServiceProvider<T> {
 	 *
 	 * @return A new instance of the provided service
 	 */
-	T provideService();
+	T createService();
 
 }

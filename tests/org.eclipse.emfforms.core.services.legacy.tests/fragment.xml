@@ -9,6 +9,12 @@
       <viewService
             class="org.eclipse.emfforms.internal.core.services.legacy.TestGlobalViewModelService">
       </viewService>
+      <viewService
+            class="org.eclipse.emfforms.internal.core.services.legacy.TestGlobalViewModelService2">
+      </viewService>
+      <viewService
+            class="org.eclipse.emfforms.internal.core.services.legacy.TestLocalViewModelService2">
+      </viewService>
    </extension>
 
 </fragment>

@@ -14,7 +14,7 @@ package org.eclipse.emf.ecp.view.spi.context;
 /**
  * Requesting an instance of this will read in {@link org.eclipse.emf.ecp.view.spi.context.ViewModelService
  * ViewModelServices} registered using an extension point and provide
- * them as {@link org.eclipse.emfforms.spi.core.services.scoped.EMFFormsScopedServiceProvider
+ * them as {@link org.eclipse.emfforms.spi.core.services.view.EMFFormsViewServiceFactory
  * EMFFormsScopedServiceProviders}.
  * There are no methods defined as this only is a marker so that the service doesn't start by itself.
  *
@@ -22,6 +22,10 @@ package org.eclipse.emf.ecp.view.spi.context;
  * @since 1.8
  *
  */
-public interface EMFFormsLegacyServicesFactory {
+public interface EMFFormsLegacyServicesManager {
 
+	/**
+	 * Instantiates the ViewModelServices.
+	 */
+	void instantiate();
 }

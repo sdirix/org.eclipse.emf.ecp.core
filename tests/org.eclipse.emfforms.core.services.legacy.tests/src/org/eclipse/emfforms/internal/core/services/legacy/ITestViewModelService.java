@@ -9,22 +9,10 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emfforms.spi.core.services.scoped;
+package org.eclipse.emfforms.internal.core.services.legacy;
 
-/**
- * This describes in which context the service will be available, aka scope.
- *
- * @author Eugen Neufeld
- * @since 1.8
- */
-public enum EMFFormsScopedServiceScope {
-	/**
-	 * The service will be only available to the current context and its children. This also means that there might be
-	 * multiple instances of the same service.
-	 */
-	LOCAL,
-	/**
-	 * The service will be available only once on the top context. There will be only one instance.
-	 */
-	GLOBAL
+import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
+
+public interface ITestViewModelService extends ViewModelService {
+
 }

@@ -18,12 +18,12 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.emf.ecp.view.spi.context.EMFFormsLegacyServicesFactory;
+import org.eclipse.emf.ecp.view.spi.context.EMFFormsLegacyServicesManager;
 import org.eclipse.emf.ecp.view.spi.context.GlobalViewModelService;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
-import org.eclipse.emfforms.spi.core.services.scoped.EMFFormsScopedServiceProvider;
+import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewServiceFactory;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
@@ -34,18 +34,19 @@ import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
 
 /**
- * This implements the {@link EMFFormsLegacyServicesFactory} which allows to use {@link ViewModelService} registered
+ * This implements the {@link EMFFormsLegacyServicesManager} which allows to use {@link ViewModelService} registered
  * using an extension point with the new osgi based architecture.
  *
  * @author Eugen Neufeld
  *
  */
+@SuppressWarnings("rawtypes")
 @Component
-public class EMFFormsLegacyServicesFactoryImpl implements EMFFormsLegacyServicesFactory {
+public class EMFFormsLegacyServicesManagerImpl implements EMFFormsLegacyServicesManager {
 
 	private ReportService reportService;
-	@SuppressWarnings("rawtypes")
-	private final Set<ServiceRegistration<EMFFormsScopedServiceProvider>> registrations = new LinkedHashSet<ServiceRegistration<EMFFormsScopedServiceProvider>>();
+	private final Set<ServiceRegistration<EMFFormsViewServiceFactory>> registrations = new LinkedHashSet<ServiceRegistration<EMFFormsViewServiceFactory>>();
+	private BundleContext bundleContext;
 
 	/**
 	 * Called by OSGi to set the {@link ReportService}.
@@ -73,13 +74,7 @@ public class EMFFormsLegacyServicesFactoryImpl implements EMFFormsLegacyServices
 	 */
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		final Set<EMFFormsScopedServiceProvider<? extends ViewModelService>> legacyServiceProviders = parseExtensions();
-		for (final EMFFormsScopedServiceProvider<? extends ViewModelService> provider : legacyServiceProviders) {
-			@SuppressWarnings("rawtypes")
-			final ServiceRegistration<EMFFormsScopedServiceProvider> registerService = bundleContext
-				.registerService(EMFFormsScopedServiceProvider.class, provider, null);
-			registrations.add(registerService);
-		}
+		this.bundleContext = bundleContext;
 	}
 
 	/**
@@ -87,16 +82,15 @@ public class EMFFormsLegacyServicesFactoryImpl implements EMFFormsLegacyServices
 	 */
 	@Deactivate
 	protected void deactivate() {
-		for (@SuppressWarnings("rawtypes")
-		final ServiceRegistration<EMFFormsScopedServiceProvider> registration : registrations) {
+		for (final ServiceRegistration<EMFFormsViewServiceFactory> registration : registrations) {
 			registration.unregister();
 		}
 		registrations.clear();
 	}
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	private Set<EMFFormsScopedServiceProvider<? extends ViewModelService>> parseExtensions() {
-		final Set<EMFFormsScopedServiceProvider<? extends ViewModelService>> legacyServiceProviders = new LinkedHashSet<EMFFormsScopedServiceProvider<? extends ViewModelService>>();
+	@SuppressWarnings("unchecked")
+	private Set<EMFFormsViewServiceFactory<? extends ViewModelService>> parseExtensions() {
+		final Set<EMFFormsViewServiceFactory<? extends ViewModelService>> legacyServiceProviders = new LinkedHashSet<EMFFormsViewServiceFactory<? extends ViewModelService>>();
 		final IExtensionRegistry extensionRegistry = Platform.getExtensionRegistry();
 		if (extensionRegistry == null) {
 			return legacyServiceProviders;
@@ -107,10 +101,10 @@ public class EMFFormsLegacyServicesFactoryImpl implements EMFFormsLegacyServices
 			try {
 				final ViewModelService viewService = (ViewModelService) e.createExecutableExtension("class"); //$NON-NLS-1$
 				if (GlobalViewModelService.class.isInstance(viewService)) {
-					legacyServiceProviders.add(new EMFFormsLegacyGlobalServiceProvider(viewService.getClass(),
+					legacyServiceProviders.add(new EMFFormsLegacyGlobalServiceFactory(viewService.getClass(),
 						viewService.getPriority(), reportService));
 				} else {
-					legacyServiceProviders.add(new EMFFormsLegacyLocalServiceProvider(viewService.getClass(),
+					legacyServiceProviders.add(new EMFFormsLegacyLocalServiceFactory(viewService.getClass(),
 						viewService.getPriority(), reportService));
 				}
 			} catch (final CoreException e1) {
@@ -118,5 +112,20 @@ public class EMFFormsLegacyServicesFactoryImpl implements EMFFormsLegacyServices
 			}
 		}
 		return legacyServiceProviders;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.context.EMFFormsLegacyServicesManager#instantiate()
+	 */
+	@Override
+	public void instantiate() {
+		final Set<EMFFormsViewServiceFactory<? extends ViewModelService>> legacyServiceProviders = parseExtensions();
+		for (final EMFFormsViewServiceFactory<? extends ViewModelService> provider : legacyServiceProviders) {
+			final ServiceRegistration<EMFFormsViewServiceFactory> registerService = bundleContext
+				.registerService(EMFFormsViewServiceFactory.class, provider, null);
+			registrations.add(registerService);
+		}
 	}
 }
