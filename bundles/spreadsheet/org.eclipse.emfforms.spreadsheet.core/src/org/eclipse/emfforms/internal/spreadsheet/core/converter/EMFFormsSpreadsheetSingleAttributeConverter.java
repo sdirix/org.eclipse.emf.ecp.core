@@ -224,10 +224,10 @@ public class EMFFormsSpreadsheetSingleAttributeConverter implements EMFFormsSpre
 			return new BigInteger(cell.getStringCellValue());
 		} else if (isBigDecimal(attributeType.getInstanceClass())) {
 			if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
-				return BigDecimal.valueOf(cell.getNumericCellValue());
+				return BigDecimal.valueOf(cell.getNumericCellValue()).stripTrailingZeros();
 			}
 			final String value = cell.getStringCellValue();
-			return new BigDecimal(value);
+			return new BigDecimal(value).stripTrailingZeros();
 		} else if (isBoolean(attributeType.getInstanceClass())) {
 			return cell.getBooleanCellValue();
 		} else if (isDate(attributeType.getInstanceClass())) {
