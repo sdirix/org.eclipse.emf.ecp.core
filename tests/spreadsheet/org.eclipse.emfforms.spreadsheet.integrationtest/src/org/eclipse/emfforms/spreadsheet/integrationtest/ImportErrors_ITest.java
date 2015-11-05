@@ -303,11 +303,11 @@ public class ImportErrors_ITest {
 		final SheetLocation sheetLocation = result
 			.getSheetLocation(eObject, TaskPackage.eINSTANCE.getUser_DateOfBirth());
 
-		assertEquals("NO SHEET", sheetLocation.getSheet()); //$NON-NLS-1$
-		assertEquals(-1, sheetLocation.getColumn());
+		assertEquals("root", sheetLocation.getSheet()); //$NON-NLS-1$
+		assertEquals(9, sheetLocation.getColumn());
 		assertEquals("Date Of Birth", sheetLocation.getColumnName()); //$NON-NLS-1$
-		assertEquals(-1, sheetLocation.getRow());
-		assertFalse(sheetLocation.isValid());
+		assertEquals(3, sheetLocation.getRow());
+		assertTrue(sheetLocation.isValid());
 	}
 
 	@Test

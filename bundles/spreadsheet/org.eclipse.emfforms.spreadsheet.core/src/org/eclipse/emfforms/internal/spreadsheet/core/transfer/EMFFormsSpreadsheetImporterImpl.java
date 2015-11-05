@@ -110,7 +110,7 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 		SpreadsheetImportResult errorReports, String sheetname, int sheetId,
 		Map<String, VDomainModelReference> sheetColumnToDMRMap,
 		Map<VDomainModelReference, EMFFormsSpreadsheetValueConverter> converterMap) {
-		for (int columnId = 1; columnId < eObjectRow.getLastCellNum(); columnId++) {
+		for (int columnId = 1; columnId < dmrRow.getLastCellNum(); columnId++) {
 			final String sheetColId = sheetId + "_" + columnId; //$NON-NLS-1$
 			final Cell cell = dmrRow.getCell(columnId);
 			if (!sheetColumnToDMRMap.containsKey(sheetColId)) {
