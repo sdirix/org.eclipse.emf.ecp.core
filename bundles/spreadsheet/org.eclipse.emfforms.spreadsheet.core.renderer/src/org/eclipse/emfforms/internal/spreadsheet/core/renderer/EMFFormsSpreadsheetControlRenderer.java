@@ -141,7 +141,7 @@ public class EMFFormsSpreadsheetControlRenderer extends EMFFormsAbstractSpreadsh
 
 		final Cell labelCell = labelRow.getCell(renderTarget.getColumn() + 1,
 			Row.CREATE_NULL_AS_BLANK);
-		labelCell.setCellStyle(readOnly);
+		labelCell.setCellStyle(readOnlyWrap);
 
 		final Cell descriptionCell = descriptionRow.getCell(renderTarget.getColumn() + 1,
 			Row.CREATE_NULL_AS_BLANK);
