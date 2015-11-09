@@ -135,13 +135,7 @@ public class EMFFormsSpreadsheetTableControlRenderer extends EMFFormsAbstractSpr
 				.getDomainModelReference();
 
 			for (int i = 0; i < 3; i++) {
-				String prefixName = (String) emfformsLabelProvider.getDisplayName(
-					tableDomainModelReference.getDomainModelReference())
-					.getValue();
-				if (prefixName == null || prefixName.length() == 0) {
-					prefixName = tableSetting.getEStructuralFeature()
-						.getName();
-				}
+				final String prefixName = getPrefixName(tableSetting, tableDomainModelReference, i);
 
 				final VIndexDomainModelReference indexDMR = VIndexdmrFactory.eINSTANCE
 					.createIndexDomainModelReference();
@@ -210,6 +204,19 @@ public class EMFFormsSpreadsheetTableControlRenderer extends EMFFormsAbstractSpr
 			reportService.report(new EMFFormsSpreadsheetReport(ex, EMFFormsSpreadsheetReport.ERROR));
 		}
 		return numColumns;
+	}
+
+	private String getPrefixName(final Setting tableSetting, final VTableDomainModelReference tableDomainModelReference,
+		int index) throws NoLabelFoundException {
+		String prefixName = (String) emfformsLabelProvider.getDisplayName(
+			tableDomainModelReference.getDomainModelReference())
+			.getValue();
+		if (prefixName == null || prefixName.length() == 0) {
+			prefixName = tableSetting.getEStructuralFeature()
+				.getName();
+		}
+		prefixName += "_" + index; //$NON-NLS-1$
+		return prefixName;
 	}
 
 	private EObject getTableEntry(EList<EObject> tableEntries, int currentColumn, EReference tableEntryReference) {
