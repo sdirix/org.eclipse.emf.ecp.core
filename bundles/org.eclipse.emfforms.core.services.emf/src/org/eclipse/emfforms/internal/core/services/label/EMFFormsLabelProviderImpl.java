@@ -36,9 +36,6 @@ import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
 import org.eclipse.emfforms.spi.localization.EMFFormsLocalizationService;
 import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.InvalidSyntaxException;
-import org.osgi.framework.ServiceReference;
 
 /**
  * Implementation of {@link EMFFormsLabelProvider}. It provides a label service that delivers the display name and
@@ -141,7 +138,6 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 	private final Map<WritableValue, BundleKeyWrapper> displayKeyObservableMap = new WeakHashMap<WritableValue, BundleKeyWrapper>();
 	private final Map<WritableValue, DescriptionKey> descriptionKeyObservableMap = new WeakHashMap<WritableValue, DescriptionKey>();
 	private EMFFormsLocaleProvider localeProvider;
-	private ServiceReference<EMFFormsLabelProviderDefaultImpl> defaultLabelProviderReference;
 	private EMFFormsLabelProviderDefaultImpl labelProviderDefault;
 
 	/**
@@ -191,24 +187,12 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 	}
 
 	/**
-	 * Called by the Framework during startup to retrieve a fallback label provider.
+	 * Sets the default {@link EMFFormsLabelProviderDefaultImpl}.
 	 *
-	 * @param bundleContext The {@link BundleContext} to use
-	 * @throws InvalidSyntaxException thrown if the filter string is incorrect
+	 * @param labelProviderDefault the labelProviderDefault to set
 	 */
-	protected void activate(BundleContext bundleContext) throws InvalidSyntaxException {
-		defaultLabelProviderReference = bundleContext
-			.getServiceReferences(EMFFormsLabelProviderDefaultImpl.class, null).iterator().next();
-		labelProviderDefault = bundleContext.getService(defaultLabelProviderReference);
-	}
-
-	/**
-	 * Called by the framework during tear down. Ungets the fallback label provider.
-	 *
-	 * @param bundleContext The {@link BundleContext} to use
-	 */
-	protected void deactivate(BundleContext bundleContext) {
-		bundleContext.ungetService(defaultLabelProviderReference);
+	protected void setLabelProviderDefault(EMFFormsLabelProviderDefaultImpl labelProviderDefault) {
+		this.labelProviderDefault = labelProviderDefault;
 	}
 
 	private BundleKeyResultWrapper getDisplayBundleKeyResultWrapper(EStructuralFeature structuralFeature)
