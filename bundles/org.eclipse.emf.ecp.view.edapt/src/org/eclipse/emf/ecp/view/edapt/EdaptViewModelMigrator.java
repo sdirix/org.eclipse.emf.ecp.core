@@ -80,6 +80,7 @@ public class EdaptViewModelMigrator implements ViewModelMigrator, StringViewMode
 	 * {@inheritDoc}
 	 *
 	 * @see org.eclipse.emf.ecp.spi.view.migrator.string.StringViewModelMigrator#checkMigration(java.lang.String)
+	 * @since 1.8
 	 */
 	@Override
 	public boolean checkMigration(String serializedViewModel) {
@@ -112,10 +113,11 @@ public class EdaptViewModelMigrator implements ViewModelMigrator, StringViewMode
 	}
 
 	/**
-	 * 
+	 *
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.spi.view.migrator.string.StringViewModelMigrator#performMigration(java.lang.String)
+	 * @since 1.8
 	 */
 	@Override
 	public String performMigration(String serializedViewModel) throws ViewModelMigrationException {

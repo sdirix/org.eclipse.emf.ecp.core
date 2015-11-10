@@ -47,7 +47,7 @@ public class PackageDependencyGraph {
 
 	/**
 	 * For testing purposes.
-	 * 
+	 *
 	 * @return a map of all registered nodes
 	 */
 	Map<String, PackageTreeNode> getNsURIToNodeMap() {
@@ -158,7 +158,7 @@ public class PackageDependencyGraph {
 		 *
 		 * @param nsURI the uri
 		 */
-		public PackageTreeNode(String nsURI) {
+		PackageTreeNode(String nsURI) {
 			this.nsURI = nsURI;
 			parents = new LinkedHashSet<PackageTreeNode>();
 			children = new LinkedHashSet<PackageTreeNode>();
