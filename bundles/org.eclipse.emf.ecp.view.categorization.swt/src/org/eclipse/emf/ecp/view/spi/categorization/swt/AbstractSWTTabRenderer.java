@@ -33,7 +33,7 @@ import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
 import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
-import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
@@ -90,7 +90,7 @@ public abstract class AbstractSWTTabRenderer<VELEMENT extends VElement> extends 
 			final IObservableValue modelValue = EMFEditObservables.observeValue(
 				AdapterFactoryEditingDomain.getEditingDomainFor(categorization), categorization,
 				VViewPackage.eINSTANCE.getElement_Label());
-			final IObservableValue targetValue = SWTObservables.observeText(item);
+			final IObservableValue targetValue = WidgetProperties.text().observe(item);
 			dataBindingContext.bindValue(targetValue, modelValue);
 
 			AbstractSWTRenderer<VElement> renderer;
