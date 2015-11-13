@@ -65,6 +65,7 @@ import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
 import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -198,7 +199,7 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 				getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
 			final IObservableValue tooltip = emfFormsLabelProvider.getDescription(
 				getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
-			viewModelDBC.bindValue(SWTObservables.observeText(tableColumn), labelText);
+			viewModelDBC.bindValue(WidgetProperties.text().observe(tableColumn), labelText);
 			viewModelDBC.bindValue(SWTObservables.observeTooltipText(tableColumn), tooltip);
 		} catch (final NoLabelFoundException e) {
 			// FIXME Expectations?

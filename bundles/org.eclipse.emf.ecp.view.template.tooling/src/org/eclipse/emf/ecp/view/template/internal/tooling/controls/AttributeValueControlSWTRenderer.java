@@ -33,7 +33,7 @@ import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedExcep
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
-import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
@@ -96,7 +96,7 @@ public class AttributeValueControlSWTRenderer extends SimpleControlSWTControlSWT
 	@Override
 	protected Binding[] createBindings(Control control) throws DatabindingFailedException {
 		final Label label = (Label) Composite.class.cast(control).getChildren()[0];
-		final Binding binding = getDataBindingContext().bindValue(SWTObservables.observeText(label),
+		final Binding binding = getDataBindingContext().bindValue(WidgetProperties.text().observe(label),
 			getModelValue(), new UpdateValueStrategy(), new UpdateValueStrategy() {
 
 				/**
@@ -134,7 +134,7 @@ public class AttributeValueControlSWTRenderer extends SimpleControlSWTControlSWT
 		button.addSelectionListener(new SelectionAdapter() {
 			/**
 			 * {@inheritDoc}
-			 * 
+			 *
 			 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
 			 */
 			@Override

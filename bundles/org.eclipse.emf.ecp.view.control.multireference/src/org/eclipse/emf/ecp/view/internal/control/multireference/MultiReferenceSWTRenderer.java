@@ -53,6 +53,7 @@ import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
 import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -375,7 +376,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 			.setStyle(SWT.NONE)
 			.build(tableViewer);
 
-		final IObservableValue textObservableValue = SWTObservables.observeText(column.getColumn());
+		final IObservableValue textObservableValue = WidgetProperties.text().observe(column.getColumn());
 		final IObservableValue tooltipObservableValue = SWTObservables.observeTooltipText(column.getColumn());
 		try {
 			viewModelDBC.bindValue(textObservableValue,

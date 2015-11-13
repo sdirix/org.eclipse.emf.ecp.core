@@ -87,6 +87,7 @@ import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
 import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.databinding.viewers.ObservableMapCellLabelProvider;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -247,7 +248,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			final IObservableValue labelText = labelService.getDisplayName(dmrToCheck,
 				getViewModelContext().getDomainModel());
 
-			viewModelDBC.bindValue(SWTObservables.observeText(label), labelText);
+			viewModelDBC.bindValue(WidgetProperties.text().observe(label), labelText);
 
 			final IObservableValue labelTooltipText = labelService.getDescription(dmrToCheck, getViewModelContext()
 				.getDomainModel());
@@ -491,7 +492,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 			try {
 				final IObservableValue text = labelService.getDisplayName(dmr);
-				viewModelDBC.bindValue(SWTObservables.observeText(column.getColumn()), text);
+				viewModelDBC.bindValue(WidgetProperties.text().observe(column.getColumn()), text);
 				final IObservableValue tooltipText = labelService.getDescription(dmr);
 				viewModelDBC.bindValue(SWTObservables.observeTooltipText(column.getColumn()), tooltipText);
 			} catch (final NoLabelFoundException ex) {

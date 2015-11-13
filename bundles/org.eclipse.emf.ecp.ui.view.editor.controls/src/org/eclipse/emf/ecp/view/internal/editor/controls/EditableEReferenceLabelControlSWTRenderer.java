@@ -26,6 +26,7 @@ import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedExcep
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
 import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.dialogs.IDialogLabelKeys;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -76,7 +77,7 @@ public abstract class EditableEReferenceLabelControlSWTRenderer extends EReferen
 			final IObservableValue tooltip = labelProvider.getDescription(getVElement().getDomainModelReference(),
 				getViewModelContext().getDomainModel());
 
-			viewModelDBC.bindValue(SWTObservables.observeText(selectClass), labelText, null, new UpdateValueStrategy() {
+			viewModelDBC.bindValue(WidgetProperties.text().observe(selectClass), labelText, null, new UpdateValueStrategy() {
 
 				/**
 				 * {@inheritDoc}

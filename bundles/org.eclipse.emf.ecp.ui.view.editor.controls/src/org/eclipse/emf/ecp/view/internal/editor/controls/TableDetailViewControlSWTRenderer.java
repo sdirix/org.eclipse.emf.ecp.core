@@ -46,6 +46,7 @@ import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -180,7 +181,7 @@ public class TableDetailViewControlSWTRenderer extends SimpleControlSWTControlSW
 	@Override
 	protected Binding[] createBindings(Control control) throws DatabindingFailedException {
 		final Binding[] bindings = new Binding[3];
-		final IObservableValue value = SWTObservables.observeText(label);
+		final IObservableValue value = WidgetProperties.text().observe(label);
 
 		bindings[0] = getDataBindingContext().bindValue(value, getModelValue(), new UpdateValueStrategy() {
 
