@@ -21,6 +21,7 @@ import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
+import org.eclipse.emfforms.spi.swt.core.layout.EMFFormsSWTLayoutUtil;
 import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
@@ -108,7 +109,7 @@ public class CollapsableGroupSWTRenderer extends ContainerSWTRenderer<VGroup> {
 				item0.setHeight(item0.getHeaderHeight());
 				final Object layoutData = bar.getLayoutData();
 				updateLayoutData(layoutData, item0.getHeaderHeight() + 2 * MARGIN);
-				parent.layout(true, true);
+				EMFFormsSWTLayoutUtil.adjustParentSize(bar);
 				getVElement().setCollapsed(true);
 				postCollapsed();
 			}
@@ -119,7 +120,7 @@ public class CollapsableGroupSWTRenderer extends ContainerSWTRenderer<VGroup> {
 				final Object layoutData = bar.getLayoutData();
 				updateLayoutData(layoutData, computeHeight(composite) + item0.getHeaderHeight()
 					+ 2 * MARGIN);
-				parent.layout(true, true);
+				EMFFormsSWTLayoutUtil.adjustParentSize(bar);
 				getVElement().setCollapsed(false);
 				postExpanded();
 			}
