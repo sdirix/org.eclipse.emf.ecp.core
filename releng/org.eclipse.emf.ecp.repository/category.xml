@@ -114,9 +114,6 @@
    <feature id="org.eclipse.emf.ecp.view.compoundcontrol.feature.source" version="0.0.0">
       <category name="org.eclipse.emf.ecp.view"/>
    </feature>
-   <feature id="org.eclipse.emf.ecp.view.validation.bean.feature.source" version="0.0.0">
-      <category name="org.eclipse.emf.ecp.emfforms"/>
-   </feature>
    <feature id="org.eclipse.emf.ecp.view.section.feature.source" version="0.0.0">
       <category name="org.eclipse.emf.ecp.emfforms"/>
    </feature>
