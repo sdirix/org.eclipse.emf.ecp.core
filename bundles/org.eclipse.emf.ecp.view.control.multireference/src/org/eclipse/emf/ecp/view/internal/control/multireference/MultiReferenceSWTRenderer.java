@@ -52,7 +52,6 @@ import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
-import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -377,7 +376,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 			.build(tableViewer);
 
 		final IObservableValue textObservableValue = WidgetProperties.text().observe(column.getColumn());
-		final IObservableValue tooltipObservableValue = SWTObservables.observeTooltipText(column.getColumn());
+		final IObservableValue tooltipObservableValue = WidgetProperties.tooltipText().observe(column.getColumn());
 		try {
 			viewModelDBC.bindValue(textObservableValue,
 				labelService.getDisplayName(getVElement().getDomainModelReference(), getViewModelContext()

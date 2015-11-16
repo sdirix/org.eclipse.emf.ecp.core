@@ -67,7 +67,6 @@ import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
-import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.databinding.viewers.ViewerSupport;
 import org.eclipse.jface.viewers.StructuredViewer;
@@ -383,7 +382,7 @@ public abstract class ECPAbstractCustomControlSWT {
 
 					});
 				viewModelDBC.bindValue(
-					SWTObservables.observeTooltipText(label),
+					WidgetProperties.tooltipText().observe(label),
 					Activator
 						.getDefault()
 						.getEMFFormsLabelProvider()

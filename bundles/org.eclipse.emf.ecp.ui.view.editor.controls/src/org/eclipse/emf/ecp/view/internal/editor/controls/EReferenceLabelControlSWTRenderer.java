@@ -118,7 +118,7 @@ public class EReferenceLabelControlSWTRenderer extends SimpleControlSWTControlSW
 				return getText(value);
 			}
 		});
-		final IObservableValue tooltipValue = SWTObservables.observeTooltipText(label);
+		final IObservableValue tooltipValue = WidgetProperties.tooltipText().observe(label);
 		bindings[1] = getDataBindingContext().bindValue(tooltipValue, getModelValue(),
 			new UpdateValueStrategy() {
 
