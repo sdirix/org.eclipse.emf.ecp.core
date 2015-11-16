@@ -54,6 +54,7 @@ import org.eclipse.emf.ecp.view.internal.table.swt.TableConfigurationHelper;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.AbstractControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.DiagnosticMessageExtractor;
+import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.reporting.StatusReport;
@@ -86,7 +87,6 @@ import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
-import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.databinding.viewers.ObservableMapCellLabelProvider;
@@ -242,22 +242,23 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 		final Label label = new Label(titleComposite, SWT.NONE);
 		label.setBackground(parent.getBackground());
+		if (getVElement().getLabelAlignment() != LabelAlignment.NONE) {
+			final EMFFormsLabelProvider labelService = getEMFFormsLabelProvider();
+			try {
+				final IObservableValue labelText = labelService.getDisplayName(dmrToCheck,
+					getViewModelContext().getDomainModel());
 
-		final EMFFormsLabelProvider labelService = getEMFFormsLabelProvider();
-		try {
-			final IObservableValue labelText = labelService.getDisplayName(dmrToCheck,
-				getViewModelContext().getDomainModel());
+				viewModelDBC.bindValue(WidgetProperties.text().observe(label), labelText);
 
-			viewModelDBC.bindValue(WidgetProperties.text().observe(label), labelText);
-
-			final IObservableValue labelTooltipText = labelService.getDescription(dmrToCheck, getViewModelContext()
-				.getDomainModel());
-			viewModelDBC.bindValue(SWTObservables.observeTooltipText(label), labelTooltipText);
-		} catch (final NoLabelFoundException e) {
-			// FIXME Expectation?
-			getReportService().report(new RenderingFailedReport(e));
-			label.setText(e.getMessage());
-			label.setToolTipText(e.toString());
+				final IObservableValue labelTooltipText = labelService.getDescription(dmrToCheck, getViewModelContext()
+					.getDomainModel());
+				viewModelDBC.bindValue(WidgetProperties.tooltipText().observe(label), labelTooltipText);
+			} catch (final NoLabelFoundException e) {
+				// FIXME Expectation?
+				getReportService().report(new RenderingFailedReport(e));
+				label.setText(e.getMessage());
+				label.setToolTipText(e.toString());
+			}
 		}
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING).grab(true, false).applyTo(label);
 
@@ -494,7 +495,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 				final IObservableValue text = labelService.getDisplayName(dmr);
 				viewModelDBC.bindValue(WidgetProperties.text().observe(column.getColumn()), text);
 				final IObservableValue tooltipText = labelService.getDescription(dmr);
-				viewModelDBC.bindValue(SWTObservables.observeTooltipText(column.getColumn()), tooltipText);
+				viewModelDBC.bindValue(WidgetProperties.tooltipText().observe(column.getColumn()), tooltipText);
 			} catch (final NoLabelFoundException ex) {
 				getReportService().report(new RenderingFailedReport(ex));
 				// FIXME Expectation?
@@ -1321,7 +1322,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			if (ECPCellEditor.class.isInstance(cellEditor)) {
 				return ((ECPCellEditor) cellEditor).getValueProperty().observe(cellEditor);
 			}
-			return SWTObservables.observeText(cellEditor.getControl(), SWT.FocusOut);
+			return WidgetProperties.text(SWT.FocusOut).observe(cellEditor.getControl());
 		}
 
 		@Override
