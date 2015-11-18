@@ -120,12 +120,14 @@ public final class EcoreHelper {
 						IStatus.INFO,
 						String.format(
 							"Tooling Registered Packages don't contain package with URI %1$s.", ePackage.getNsURI())); //$NON-NLS-1$
+					registerSubpackages(ePackage);
 					continue;
 				}
 				final EPackage registeredPackage = EPackage.Registry.INSTANCE.getEPackage(ePackage.getNsURI());
 				if (EcoreUtil.equals(ePackage, registeredPackage)) {
 					Activator.log(IStatus.INFO,
 						String.format("Another package with same URI is already registered: %1$s.", registeredPackage)); //$NON-NLS-1$
+					registerSubpackages(ePackage);
 					continue;
 				}
 			}
@@ -153,6 +155,9 @@ public final class EcoreHelper {
 	 */
 	private static void registerSubpackages(EPackage ePackage) {
 		for (final EPackage subpackage : ePackage.getESubpackages()) {
+			if (EPackage.Registry.INSTANCE.containsKey(subpackage.getNsURI())) {
+				continue;
+			}
 			EPackage.Registry.INSTANCE.put(subpackage.getNsURI(), subpackage);
 			Activator.log(IStatus.INFO,
 				String.format("Register subpackage %1$s of package %2$s.", subpackage.getNsURI(), ePackage.getNsURI())); //$NON-NLS-1$
@@ -196,7 +201,8 @@ public final class EcoreHelper {
 					IStatus.INFO,
 					String
 						.format(
-							"Resolved ecorePath %1$s to workspace path %2$s.", ecorePath, physicalResource.getURI().toString())); //$NON-NLS-1$
+							"Resolved ecorePath %1$s to workspace path %2$s.", ecorePath, //$NON-NLS-1$
+							physicalResource.getURI().toString()));
 		}
 		return uri;
 	}
