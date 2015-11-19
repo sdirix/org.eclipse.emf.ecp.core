@@ -58,6 +58,11 @@
       <feature id="org.eclipse.emf.ecp.demo.e3.feature"/>
       <feature id="org.eclipse.emf.ecp.view.model.controls.feature"/>
       <feature id="org.eclipse.emf.ecp.test.model.feature"/>
+      <feature id="org.eclipse.emf.emfstore.client.feature"/>
+      <feature id="org.eclipse.emf.emfstore.client.ui.feature"/>
+      <feature id="org.eclipse.emf.emfstore.common.feature"/>
+      <feature id="org.eclipse.emf.emfstore.ecore.feature"/>
+      <feature id="org.eclipse.emf.emfstore.server.feature"/>
    </features>
 
    <configurations>
