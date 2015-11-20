@@ -50,6 +50,7 @@ import org.osgi.service.component.annotations.ReferenceCardinality;
 @Component(name = "EMFFormsSpreadsheetSingleAttributeConverter")
 public class EMFFormsSpreadsheetSingleAttributeConverter implements EMFFormsSpreadsheetValueConverter {
 
+	private static final int DOUBLE_PRECISION = 16;
 	private EMFFormsDatabindingEMF databinding;
 	private ReportService reportService;
 
@@ -152,8 +153,8 @@ public class EMFFormsSpreadsheetSingleAttributeConverter implements EMFFormsSpre
 
 	private void writeBigDecimal(Cell cell, Object value, ViewModelContext viewModelContext, EAttribute eAttribute) {
 		final BigDecimal bigDecimal = BigDecimal.class.cast(value);
-		if (bigDecimal.compareTo(BigDecimal.valueOf(Double.MAX_VALUE)) > 0
-			|| bigDecimal.compareTo(BigDecimal.valueOf(Double.MIN_VALUE)) < 0) {
+		if (Double.isInfinite(bigDecimal.doubleValue())
+			|| bigDecimal.precision() > DOUBLE_PRECISION) {
 			cell.setCellValue(bigDecimal.toString());
 			cell.setCellStyle((CellStyle) viewModelContext.getContextValue(EMFFormsCellStyleConstants.TEXT));
 		} else {

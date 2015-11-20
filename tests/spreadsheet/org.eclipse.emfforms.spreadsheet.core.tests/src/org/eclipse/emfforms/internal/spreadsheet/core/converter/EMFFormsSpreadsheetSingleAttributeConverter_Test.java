@@ -495,7 +495,18 @@ public class EMFFormsSpreadsheetSingleAttributeConverter_Test {
 
 	@Test
 	public void testGetCellValueBigDecimalString() throws EMFFormsConverterException {
-		final BigDecimal cellValue = new BigDecimal("123456789123456789123456789123456789.123456789123456789"); //$NON-NLS-1$
+		final BigDecimal cellValue = new BigDecimal(Double.MAX_VALUE).add(BigDecimal.ONE);
+		cell.setCellValue(cellValue.toString());
+		final EAttribute eAttribute = EcoreFactory.eINSTANCE.createEAttribute();
+		eAttribute.setEType(EcorePackage.eINSTANCE.getEBigDecimal());
+		final Object value = converter.getCellValue(cell, eAttribute);
+		final BigDecimal result = (BigDecimal) value;
+		assertEquals(cellValue, result);
+	}
+
+	@Test
+	public void testGetCellValueBigDecimalPrecisionString() throws EMFFormsConverterException {
+		final BigDecimal cellValue = new BigDecimal("12.123456789123456789"); //$NON-NLS-1$
 		cell.setCellValue(cellValue.toString());
 		final EAttribute eAttribute = EcoreFactory.eINSTANCE.createEAttribute();
 		eAttribute.setEType(EcorePackage.eINSTANCE.getEBigDecimal());
@@ -507,6 +518,17 @@ public class EMFFormsSpreadsheetSingleAttributeConverter_Test {
 	@Test
 	public void testGetCellValueBigDecimalDouble() throws EMFFormsConverterException {
 		final BigDecimal cellValue = new BigDecimal("123456.789"); //$NON-NLS-1$
+		cell.setCellValue(cellValue.doubleValue());
+		final EAttribute eAttribute = EcoreFactory.eINSTANCE.createEAttribute();
+		eAttribute.setEType(EcorePackage.eINSTANCE.getEBigDecimal());
+		final Object value = converter.getCellValue(cell, eAttribute);
+		final BigDecimal result = (BigDecimal) value;
+		assertEquals(cellValue, result);
+	}
+
+	@Test
+	public void testGetCellValueBigDecimalNegativeDouble() throws EMFFormsConverterException {
+		final BigDecimal cellValue = new BigDecimal("-123456.789"); //$NON-NLS-1$
 		cell.setCellValue(cellValue.doubleValue());
 		final EAttribute eAttribute = EcoreFactory.eINSTANCE.createEAttribute();
 		eAttribute.setEType(EcorePackage.eINSTANCE.getEBigDecimal());
@@ -792,11 +814,20 @@ public class EMFFormsSpreadsheetSingleAttributeConverter_Test {
 
 	@Test
 	public void testSetCellValueBigDecimal() throws EMFFormsConverterException {
-		final BigDecimal cellValue = new BigDecimal("123456789123456789123456789.123456789123456789123456789"); //$NON-NLS-1$
+		final BigDecimal cellValue = new BigDecimal("1234.123456"); //$NON-NLS-1$
 		final EAttribute eAttribute = EcoreFactory.eINSTANCE.createEAttribute();
 		eAttribute.setEType(EcorePackage.eINSTANCE.getEBigDecimal());
 		converter.setCellValue(cell, cellValue, eAttribute, viewModelContext);
 		assertEquals(cellValue.doubleValue(), cell.getNumericCellValue(), 0);
+	}
+
+	@Test
+	public void testSetCellValueBigDecimalPrecision() throws EMFFormsConverterException {
+		final BigDecimal cellValue = new BigDecimal("123456789123456789123456789.123456789123456789123456789"); //$NON-NLS-1$
+		final EAttribute eAttribute = EcoreFactory.eINSTANCE.createEAttribute();
+		eAttribute.setEType(EcorePackage.eINSTANCE.getEBigDecimal());
+		converter.setCellValue(cell, cellValue, eAttribute, viewModelContext);
+		assertEquals(cellValue.toString(), cell.getStringCellValue());
 	}
 
 	@Test
