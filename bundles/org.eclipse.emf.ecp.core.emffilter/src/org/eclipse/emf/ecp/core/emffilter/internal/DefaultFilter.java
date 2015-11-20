@@ -204,6 +204,9 @@ public class DefaultFilter implements ECPFilterProvider {
 		packages.add("http://eclipse.org/rcptt/reporting/core"); //$NON-NLS-1$
 		packages.add("http://eclipse.org/rcptt/verifications/time"); //$NON-NLS-1$
 		packages.add("http://eclipse.org/rcptt/verifications/tree"); //$NON-NLS-1$
+
+		packages.add("http://eclipse.org/rcptt/tesla/nebula"); //$NON-NLS-1$
+		packages.add("http://eclipse.org/rcptt/tesla/nebula/ecl"); //$NON-NLS-1$
 	}
 
 	private void addGraphitiModels(Set<String> packages) {

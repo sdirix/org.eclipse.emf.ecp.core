@@ -9,6 +9,10 @@
       <file
             filePath="TableDomainModelReference.view">
       </file>
+      <!-- This is needed for RCPTT Tests -->
+      <file
+            filePath="Project/View.view">
+      </file>
    </extension>
 
 </plugin>
