@@ -3,12 +3,6 @@
 <plugin>
    <extension
          point="org.eclipse.emf.ecp.view.model.provider.xmi.file">
-      <file
-            filePath="TableControl.view">
-      </file>
-      <file
-            filePath="TableDomainModelReference.view">
-      </file>
       <!-- This is needed for RCPTT Tests -->
       <file
             filePath="Project/View.view">
