@@ -6,8 +6,8 @@ Element-Type: testcase
 Element-Version: 3.0
 External-Reference: 
 Id: _2Ozl0HlSEeOByOq_5szdNw
-Runtime-Version: 2.0.1.201508250612
-Save-Time: 10/5/15 1:00 PM
+Runtime-Version: 1.5.4.201412181238
+Save-Time: 11/21/15 12:35 AM
 Testcase-Type: ecl
 
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
@@ -21,9 +21,9 @@ with [get-view "Model Explorer" | get-tree] {
     select "Project/View/Control dateOfBirth/Enable Rule false" | get-menu "Or Condition" | click
     select "Project/View/Control dateOfBirth/Enable Rule false/Or Condition" | get-menu "Leaf Condition" | click
     select "Project/View/Control dateOfBirth/Enable Rule false/Or Condition/Leaf Condition" 
-        | get-menu "Feature Path Domain Model Reference" | click
+        | get-menu "Feature Path Domain Model Reference (Default)" | click
 }
-get-editor "Feature Path Domain Model Reference" | get-button "Link Domain Model EFeature" | click
+get-editor "Feature Path Domain Model Refe[...]" | get-button "Link Domain Model EFeature" | click
 with [get-window "Select a EStructuralFeature"] {
     get-tree | select "name : EString"
     get-button OK | click
@@ -44,9 +44,9 @@ get-editor View | close
 with [get-view "Model Explorer" | get-tree] {
     select "Project/View/Control dateOfBirth/Enable Rule false/Or Condition" | get-menu "Leaf Condition" | click
     select "Project/View/Control dateOfBirth/Enable Rule false/Or Condition/Leaf Condition" 
-        | get-menu "Feature Path Domain Model Reference" | click
+        | get-menu "Feature Path Domain Model Reference (Default)" | click
 }
-get-editor "Feature Path Domain Model Reference" | get-button "Link Domain Model EFeature" | click
+get-editor "Feature Path Domain Model Refe[...]" | get-button "Link Domain Model EFeature" | click
 with [get-window "Select a EStructuralFeature"] {
     get-tree | select "isProfessional : EBoolean"
     get-button OK | click

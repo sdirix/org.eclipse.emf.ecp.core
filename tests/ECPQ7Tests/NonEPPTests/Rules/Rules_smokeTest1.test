@@ -6,8 +6,8 @@ Element-Type: testcase
 Element-Version: 3.0
 External-Reference: 
 Id: _PyfLgGtLEeWukfCGOpNfzw
-Runtime-Version: 2.0.1.201508250612
-Save-Time: 10/5/15 1:00 PM
+Runtime-Version: 1.5.4.201412181238
+Save-Time: 11/21/15 12:30 AM
 Testcase-Type: ecl
 
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
@@ -22,15 +22,19 @@ try {
 	    select "Project/View/Control dateOfBirth/Enable Rule false/Or Condition" | get-menu "And Condition" | click
 	    select "Project/View/Control dateOfBirth/Enable Rule false/Or Condition/And Condition" | get-menu "Leaf Condition" 
 	        | click
-	    select "Project/View/Control dateOfBirth/Enable Rule false/Or Condition/And Condition/Leaf Condition" 
-	        | get-menu "Feature Path Domain Model Reference" | click
 	}
-	get-editor "Feature Path Domain Model Reference" | get-button "Link Domain Model EFeature" | click
+	with [get-editor View] {
+	    with [get-tree] {
+	        select "View/Control dateOfBirth/Enable Rule false/Or Condition/And Condition/Leaf Condition" 
+	            | get-menu "Feature Path Domain Model Reference (Default)" | click
+	        select "View/Control dateOfBirth/Enable Rule false/Or Condition/And Condition/Leaf Condition/Feature Path Domain Model Reference (Default)"
+	    }
+	    get-button "Link Domain Model EFeature" | click
+	}
 	with [get-window "Select a EStructuralFeature"] {
 	    get-tree | select "name : EString"
 	    get-button OK | click
 	}
-	get-editor "name" | close
 	get-editor "Leaf Condition" | get-button "Select Object" | click
 	with [get-window "Insert the value"] {
 	    get-editbox 
@@ -48,14 +52,13 @@ try {
 	    select "Project/View/Control dateOfBirth/Enable Rule false/Or Condition/And Condition" | get-menu "Leaf Condition" 
 	        | click
 	    select "Project/View/Control dateOfBirth/Enable Rule false/Or Condition/And Condition/Leaf Condition" 
-	        | get-menu "Feature Path Domain Model Reference" | click
+    		| get-menu "Feature Path Domain Model Reference (Default)" | click
 	}
-	get-editor "Feature Path Domain Model Reference" | get-button "Link Domain Model EFeature" | click
+	get-editor "Feature Path Domain Model Refe[...]" | get-button "Link Domain Model EFeature" | click
 	with [get-window "Select a EStructuralFeature"] {
 	    get-tree | select "isProfessional : EBoolean"
 	    get-button OK | click
 	}
-	get-editor "isProfessional" | close
 	get-editor "Leaf Condition" | get-button "Select Object" | click
 	with [get-window "Insert the value"] {
 	    get-editbox 
@@ -69,9 +72,9 @@ try {
 	    select [get-item "Project/View/Control dateOfBirth/Enable Rule false/Or Condition" | get-item "And Condition" 
 	        -index 1] | get-menu "Leaf Condition" | click
 	    select [get-item "Project/View/Control dateOfBirth/Enable Rule false/Or Condition" | get-item "And Condition" 
-	        -index 1 | get-item "Leaf Condition"] | get-menu "Feature Path Domain Model Reference" | click
+	        -index 1 | get-item "Leaf Condition"] | get-menu "Feature Path Domain Model Reference (Default)" | click
 	}
-	get-editor "Feature Path Domain Model Reference" | get-button "Link Domain Model EFeature" | click
+	get-editor "Feature Path Domain Model Refe[...]" | get-button "Link Domain Model EFeature" | click
 	with [get-window "Select a EStructuralFeature"] {
 	    get-tree | select "height : EDouble"
 	    get-button OK | click
@@ -91,10 +94,13 @@ try {
 	    select [get-item "Project/View/Control dateOfBirth/Enable Rule false/Or Condition" | get-item "And Condition" 
 	        -index 1] | get-menu "Leaf Condition" | click
 	    select [get-item "Project/View/Control dateOfBirth/Enable Rule false/Or Condition" | get-item "And Condition" 
-	        -index 1 | get-item "Leaf Condition"] | get-menu "Feature Path Domain Model Reference" | click
+	        -index 1 | get-item "Leaf Condition"] | get-menu "Feature Path Domain Model Reference (Default)" | click
 	}
-	get-editor "Feature Path Domain Model Reference" | get-button "Link Domain Model EFeature" | click
-	get-window "Select a EStructuralFeature" | get-tree | select "numberOfVictories : EInt" | double-click
+	get-editor "Feature Path Domain Model Refe[...]" | get-button "Link Domain Model EFeature" | click
+	with [get-window "Select a EStructuralFeature"] {
+	    get-tree | select "numberOfVictories : EInt"
+	    get-button OK | click
+	}
 	get-editor "numberOfVictories" | close
 	get-editor "Leaf Condition" | get-button "Select Object" | click
 	with [get-window "Insert the value"] {
