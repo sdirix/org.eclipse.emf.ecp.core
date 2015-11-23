@@ -419,8 +419,12 @@ public class ViewEditorPart extends EditorPart implements
 	@Override
 	public void dispose() {
 		final VView view = getView();
-		Activator.getViewModelRegistry().unregisterViewModelEditor(view, this);
-		getSite().getPage().removePartListener(partListener);
+		if (view != null) {
+			Activator.getViewModelRegistry().unregisterViewModelEditor(view, this);
+		}
+		if (partListener != null) {
+			getSite().getPage().removePartListener(partListener);
+		}
 		super.dispose();
 	}
 
@@ -428,11 +432,20 @@ public class ViewEditorPart extends EditorPart implements
 	 * @return the VView object
 	 */
 	public VView getView() {
+		if (resource == null || resource.getContents().isEmpty()) {
+			return null;
+		}
 		final EObject eObject = resource.getContents().get(0);
+		if (!VView.class.isInstance(eObject)) {
+			return null;
+		}
 		return (VView) eObject;
 	}
 
 	private String getEcorePath() {
+		if (resource == null || resource.getContents().isEmpty()) {
+			return null;
+		}
 		final EObject eObject = resource.getContents().get(0);
 		if (VView.class.isInstance(eObject)) {
 			return VView.class.cast(eObject).getEcorePath();
@@ -467,7 +480,7 @@ public class ViewEditorPart extends EditorPart implements
 		 * @param migrator the migrator
 		 * @param resourceURI the resource uri to check
 		 */
-		public CheckMigrationRunnable(ViewModelMigrator migrator, URI resourceURI) {
+		CheckMigrationRunnable(ViewModelMigrator migrator, URI resourceURI) {
 			this.migrator = migrator;
 			this.resourceURI = resourceURI;
 		}
