@@ -964,6 +964,9 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 		@Override
 		public Image getImage(Object object) {
 			final Image image = super.getImage(object);
+			if (!EObject.class.isInstance(object)) {
+				return image;
+			}
 			return getValidationOverlay(image, (EObject) object);
 		}
 
