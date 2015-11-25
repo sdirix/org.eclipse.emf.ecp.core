@@ -200,7 +200,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 			if (treeViewer.getSelection() instanceof IStructuredSelection) {
 				final IStructuredSelection selection = (IStructuredSelection) treeViewer.getSelection();
 
-				if (selection.size() == 1) {
+				if (selection.size() == 1 && EObject.class.isInstance(selection.getFirstElement())) {
 					final EObject eObject = (EObject) selection.getFirstElement();
 					final EditingDomain domain = AdapterFactoryEditingDomain.getEditingDomainFor(eObject);
 					if (domain == null) {
