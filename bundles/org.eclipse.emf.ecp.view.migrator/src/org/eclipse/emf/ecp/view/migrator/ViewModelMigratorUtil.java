@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -77,9 +77,9 @@ public final class ViewModelMigratorUtil {
 	}
 
 	/**
-	 *
 	 * @return the view model migrator with the highest priority, <code>null</code> if no migrator was registered to the
 	 *         extension point.
+	 * @since 1.8.0
 	 */
 	public static ViewModelMigrator getViewModelMigrator() {
 		if (migrator == null) {
@@ -100,6 +100,14 @@ public final class ViewModelMigratorUtil {
 		return StringViewModelMigrator.class.cast(getViewModelMigrator());
 	}
 
+	/**
+	 * @return the view model workspace migrator
+	 * @since 1.8
+	 */
+	public static ViewModelWorkspaceMigrator getViewModelWorkspaceMigrator() {
+		return getService(ViewModelWorkspaceMigrator.class);
+	}
+
 	@SuppressWarnings("unchecked")
 	private static <T> Class<T> loadClass(String bundleName, String clazz)
 		throws ClassNotFoundException {
@@ -111,19 +119,22 @@ public final class ViewModelMigratorUtil {
 	}
 
 	private static void log(Throwable throwable) {
-		final ReportService reportService = getReportService();
+		final ReportService reportService = getService(ReportService.class);
 		if (reportService == null) {
 			return;
 		}
 		reportService.report(new AbstractReport(throwable));
 	}
 
-	private static ReportService getReportService() {
+	private static <T> T getService(Class<T> serviceClass) {
 		final Bundle bundle = FrameworkUtil.getBundle(ViewModelMigratorUtil.class);
 		final BundleContext bundleContext = bundle.getBundleContext();
-		final ServiceReference<ReportService> serviceReference = bundleContext.getServiceReference(ReportService.class);
-		final ReportService reportService = bundleContext.getService(serviceReference);
+		final ServiceReference<T> serviceReference = bundleContext.getServiceReference(serviceClass);
+		if (serviceReference == null) {
+			return null;
+		}
+		final T service = bundleContext.getService(serviceReference);
 		bundleContext.ungetService(serviceReference);
-		return reportService;
+		return service;
 	}
 }

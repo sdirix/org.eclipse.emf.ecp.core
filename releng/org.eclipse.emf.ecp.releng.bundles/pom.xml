@@ -246,6 +246,7 @@
 		<!-- Migration -->
 		<module>../../bundles/org.eclipse.emf.ecp.view.migrator</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.edapt</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.workspace.migrator</module>
 
 		<!-- Initial Validation -->
 		<module>../../bundles/org.eclipse.emf.ecp.view.table.validation</module>
