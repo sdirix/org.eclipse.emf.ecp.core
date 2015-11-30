@@ -11,12 +11,14 @@ import org.junit.Test
 
 import static org.junit.Assert.*
 import org.eclipse.emf.ecp.emf2web.json.generator.EcoreJsonGenerator
+import org.eclipse.emf.ecore.EClassifier
 
 class EcoreJsonExporterTest {
 	static final val ECORE_PACKAGE = EcorePackage.eINSTANCE
 	static final val ECORE_FACTORY = EcoreFactory.eINSTANCE
 	static final val TEST_ECLASS_NAME = "TestEClass";
 	static final val TEST_EATTRIBUTE_NAME = "testAttribute";
+    static final val TEST_EREFERENCE_NAME = "testReference";
 
 	final val List<String> testEnumValues = new ArrayList<String>(Arrays.asList("1A", "2B"))
 
@@ -39,23 +41,82 @@ class EcoreJsonExporterTest {
 	}
 
 	@Test
-	def void testBuildClassWithReference() {
+	def void createJsonSchemaElementFromEClassWithOptionalSingleReference() {
 		val eClass = ECORE_FACTORY.createEClass
 		eClass.name = EcoreJsonExporterTest.TEST_ECLASS_NAME
+		
+		val refClass = ECORE_FACTORY.createEClass
+		refClass.name = EcoreJsonExporterTest.TEST_ECLASS_NAME + "2"
 
-		val eReference = createReference()
-		eReference.EType = null // TODO
+		val eReference = eReference(-1, -1, refClass)
 		eClass.getEStructuralFeatures.add(eReference)
 
-	// TODO
-	//assertEquals(testEnum, result);
+		val result = exporter.createJsonElement(eClass)
+		assertEquals(eClassWithOptionalSingleReferencedEClassJsonElement, result)
 	}
+	
+	@Test
+	def void createJsonSchemaElementFromEClassWithMandatorySingleReference() {
+		val eClass = ECORE_FACTORY.createEClass
+		eClass.name = EcoreJsonExporterTest.TEST_ECLASS_NAME
+		
+		val refClass = ECORE_FACTORY.createEClass
+		refClass.name = EcoreJsonExporterTest.TEST_ECLASS_NAME + "2"
 
-	def createReference() {
-		val eReference = ECORE_FACTORY.createEReference
-		eReference.name = EcoreJsonExporterTest.TEST_ECLASS_NAME + "Ref"
-		eReference.containment = true
-		eReference
+		val eReference = eReference(1, 1, refClass)
+		eClass.getEStructuralFeatures.add(eReference)
+
+		val result = exporter.createJsonElement(eClass)
+		assertEquals(eClassWithMandatorySingleReferencedEClassJsonElement, result)
+	}
+	
+	@Test
+	def void createJsonSchemaElementFromEClassWithOptionalMultiReference() {
+		val eClass = ECORE_FACTORY.createEClass
+		eClass.name = EcoreJsonExporterTest.TEST_ECLASS_NAME
+		
+		val refClass = ECORE_FACTORY.createEClass
+		refClass.name = EcoreJsonExporterTest.TEST_ECLASS_NAME + "2"
+
+		val eReference = eReference(-1, 10, refClass)
+		eClass.getEStructuralFeatures.add(eReference)
+
+		val result = exporter.createJsonElement(eClass)
+		assertEquals(eClassWithOptionalMultiReferencedEClassJsonElement, result)
+	}
+	
+	@Test
+	def void createJsonSchemaElementFromEClassWithMandatoryMultiReference() {
+		val eClass = ECORE_FACTORY.createEClass
+		eClass.name = EcoreJsonExporterTest.TEST_ECLASS_NAME
+		
+		val refClass = ECORE_FACTORY.createEClass
+		refClass.name = EcoreJsonExporterTest.TEST_ECLASS_NAME + "2"
+
+		val eReference = eReference(1, 10, refClass)
+		eClass.getEStructuralFeatures.add(eReference)
+
+		val result = exporter.createJsonElement(eClass)
+		assertEquals(eClassWithMandatoryMultiReferencedEClassJsonElement, result)
+	}
+	
+	@Test
+	def void createJsonSchemaElementFromEClassWithCircleReference() {
+		val eClass = ECORE_FACTORY.createEClass
+		eClass.name = EcoreJsonExporterTest.TEST_ECLASS_NAME
+		
+		val refClass = ECORE_FACTORY.createEClass
+		refClass.name = EcoreJsonExporterTest.TEST_ECLASS_NAME + "2"
+
+		val eReference = eReference(-1, -1, refClass)
+		eClass.getEStructuralFeatures.add(eReference)
+		
+		val eReference2 = eReference(-1, -1, eClass)
+		refClass.getEStructuralFeatures.add(eReference2)
+
+		val result = exporter.createJsonElement(eClass)
+		// eReference2 should not exist in output
+		assertEquals(eClassWithOptionalSingleReferencedEClassJsonElement, result)
 	}
 
 	/*
@@ -100,6 +161,15 @@ class EcoreJsonExporterTest {
 		eAttribute.EType = ECORE_PACKAGE.getEString
 		eAttribute
 	}
+	
+	private def eReference(int lower, int upper, EClassifier type) {
+		val eReference = ECORE_FACTORY.createEReference
+		eReference.name = TEST_EREFERENCE_NAME
+		eReference.lowerBound = lower
+		eReference.upperBound = upper
+		eReference.EType = type
+		eReference
+	}
 
 	private def emptyEClassJsonElement() {
 		'''
@@ -134,6 +204,82 @@ class EcoreJsonExporterTest {
 			  "additionalProperties": false,
 			  "required": [
 			    "«TEST_EATTRIBUTE_NAME»"
+			  ]
+			}
+		'''.toJsonElement
+	}
+	
+	private def eClassWithOptionalSingleReferencedEClassJsonElement() {
+		'''
+			{
+			  "type": "object",
+			  "properties": {
+			  	"«TEST_EREFERENCE_NAME»": {
+			  		"type": "object",
+			  		"properties": {},
+			  		"additionalProperties": false
+			  	}
+			  },
+			  "additionalProperties": false
+			}
+		'''.toJsonElement
+	}
+	
+	private def eClassWithMandatorySingleReferencedEClassJsonElement() {
+		'''
+			{
+			  "type": "object",
+			  "properties": {
+			  	"«TEST_EREFERENCE_NAME»": {
+			  		"type": "object",
+			  		"properties": {},
+			  		"additionalProperties": false
+			  	}
+			  },
+			  "additionalProperties": false,
+			  "required": [
+			    "«TEST_EREFERENCE_NAME»"
+			  ]
+			}
+		'''.toJsonElement
+	}
+	
+	private def eClassWithOptionalMultiReferencedEClassJsonElement() {
+		'''
+			{
+			  "type": "object",
+			  "properties": {
+			  	"«TEST_EREFERENCE_NAME»": {
+			  		"type": "array",
+			  		"items":{
+			  			"type": "object",
+				  		"properties": {},
+				  		"additionalProperties": false
+			  		}
+			  	}
+			  },
+			  "additionalProperties": false
+			}
+		'''.toJsonElement
+	}
+	
+	private def eClassWithMandatoryMultiReferencedEClassJsonElement() {
+		'''
+			{
+			  "type": "object",
+			  "properties": {
+			  	"«TEST_EREFERENCE_NAME»": {
+			  		"type": "array",
+			  		"items":{
+			  			"type": "object",
+				  		"properties": {},
+				  		"additionalProperties": false
+			  		}
+			  	}
+			  },
+			  "additionalProperties": false,
+			  "required": [
+			    "«TEST_EREFERENCE_NAME»"
 			  ]
 			}
 		'''.toJsonElement

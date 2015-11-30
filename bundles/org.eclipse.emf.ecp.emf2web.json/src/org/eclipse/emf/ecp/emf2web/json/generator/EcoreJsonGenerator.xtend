@@ -106,7 +106,7 @@ class EcoreJsonGenerator extends JsonGenerator {
 			jsonObject.withType("array")
 			jsonObject.with("items", createJsonSchemaElement(reference.EReferenceType))	
 		} else {
-			createJsonElement(reference.EReferenceType)
+			createJsonSchemaElement(reference.EReferenceType)
 		}  	
 	}
 
