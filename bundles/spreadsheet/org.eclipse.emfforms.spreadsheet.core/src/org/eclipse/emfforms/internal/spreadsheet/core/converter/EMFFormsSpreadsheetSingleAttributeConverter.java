@@ -199,9 +199,15 @@ public class EMFFormsSpreadsheetSingleAttributeConverter implements EMFFormsSpre
 		try {
 			return readCellValue(cell, attributeType);
 		} catch (final IllegalStateException e) {
-			throw new EMFFormsConverterException(e);
+			throw new EMFFormsConverterException(
+				String.format("Cell value of column %1$s in row %2$s on sheet %3$s must be a string.", //$NON-NLS-1$
+					cell.getColumnIndex() + 1, cell.getRowIndex() + 1, cell.getSheet().getSheetName()),
+				e);
 		} catch (final NumberFormatException e) {
-			throw new EMFFormsConverterException(e);
+			throw new EMFFormsConverterException(
+				String.format("Cell value of column %1$s in row %2$s on sheet %3$s is not a valid number.", //$NON-NLS-1$
+					cell.getColumnIndex() + 1, cell.getRowIndex() + 1, cell.getSheet().getSheetName()),
+				e);
 		}
 	}
 

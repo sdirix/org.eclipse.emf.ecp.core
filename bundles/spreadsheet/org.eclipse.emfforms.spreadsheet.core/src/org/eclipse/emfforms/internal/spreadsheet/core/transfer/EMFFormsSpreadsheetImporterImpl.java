@@ -128,7 +128,7 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 					Severity.ERROR, LocalizationServiceHelper.getString(getClass(), "ImportError_DMRResolvementFailed"), //$NON-NLS-1$
 					ErrorFactory.eINSTANCE.createEMFLocation(eObject,
 						ErrorFactory.eINSTANCE.createDMRLocation(dmr)),
-					ErrorFactory.eINSTANCE.createSheetLocation(sheetname, columnId, 0, cell.getStringCellValue()));
+					ErrorFactory.eINSTANCE.createSheetLocation(sheetname, columnId, 0, getStringCellValue(cell)));
 				continue;
 			}
 
@@ -143,7 +143,7 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 						MessageFormat.format("ImportError_DatabindingFailed", ex.getMessage())), //$NON-NLS-1$
 					ErrorFactory.eINSTANCE.createEMFLocation(eObject,
 						ErrorFactory.eINSTANCE.createDMRLocation(dmr)),
-					ErrorFactory.eINSTANCE.createSheetLocation(sheetname, columnId, 0, cell.getStringCellValue()));
+					ErrorFactory.eINSTANCE.createSheetLocation(sheetname, columnId, 0, getStringCellValue(cell)));
 				continue;
 			}
 
@@ -157,7 +157,7 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 						Severity.ERROR, LocalizationServiceHelper.getString(getClass(), "ImportError_NoValueConverter"), //$NON-NLS-1$
 						ErrorFactory.eINSTANCE.createEMFLocation(eObject,
 							ErrorFactory.eINSTANCE.createDMRLocation(dmr)),
-						ErrorFactory.eINSTANCE.createSheetLocation(sheetname, columnId, 0, cell.getStringCellValue()));
+						ErrorFactory.eINSTANCE.createSheetLocation(sheetname, columnId, 0, getStringCellValue(cell)));
 					continue;
 				}
 			}
@@ -179,7 +179,7 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 					.add(ErrorFactory.eINSTANCE.createSettingToSheetMapping(
 						createSettingLocation(setting),
 						ErrorFactory.eINSTANCE.createSheetLocation(sheetname, columnId, eObjectRow.getRowNum(),
-							cell.getStringCellValue())));
+							getStringCellValue(cell))));
 				continue;
 			}
 
@@ -197,7 +197,7 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 						createSettingLocation(setting),
 						ErrorFactory.eINSTANCE.createDMRLocation(dmr)),
 					ErrorFactory.eINSTANCE.createSheetLocation(sheetname, columnId, eObjectRow.getRowNum(),
-						cell.getStringCellValue()));
+						getStringCellValue(cell)));
 				continue;
 			}
 
@@ -211,7 +211,7 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 							createSettingLocation(setting),
 							ErrorFactory.eINSTANCE.createDMRLocation(dmr)),
 						ErrorFactory.eINSTANCE.createSheetLocation(sheetname, columnId, eObjectRow.getRowNum(),
-							cell.getStringCellValue()));
+							getStringCellValue(cell)));
 					continue;
 				}
 			}
@@ -223,7 +223,7 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 				.add(ErrorFactory.eINSTANCE.createSettingToSheetMapping(
 					createSettingLocation(setting),
 					ErrorFactory.eINSTANCE.createSheetLocation(sheetname, columnId, eObjectRow.getRowNum(),
-						cell.getStringCellValue())));
+						getStringCellValue(cell))));
 		}
 	}
 
@@ -242,7 +242,7 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 			errorReports.reportError(
 				Severity.ERROR, LocalizationServiceHelper.getString(getClass(), "ImportError_CommentDeleted"), //$NON-NLS-1$
 				ErrorFactory.eINSTANCE.createEMFLocation(eObject),
-				ErrorFactory.eINSTANCE.createSheetLocation(sheetname, columnId, 0, cell.getStringCellValue()));
+				ErrorFactory.eINSTANCE.createSheetLocation(sheetname, columnId, 0, getStringCellValue(cell)));
 			return null;
 		}
 		final String serializedDMR = cellComment.getString().getString();
@@ -250,7 +250,7 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 			errorReports.reportError(
 				Severity.ERROR, LocalizationServiceHelper.getString(getClass(), "ImportError_CommentEmpty"), //$NON-NLS-1$
 				ErrorFactory.eINSTANCE.createEMFLocation(eObject),
-				ErrorFactory.eINSTANCE.createSheetLocation(sheetname, columnId, 0, cell.getStringCellValue()));
+				ErrorFactory.eINSTANCE.createSheetLocation(sheetname, columnId, 0, getStringCellValue(cell)));
 			return null;
 		}
 
@@ -263,7 +263,7 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 				Severity.ERROR,
 				LocalizationServiceHelper.getString(getClass(), "ImportError_DMRDeserializationFailed"), //$NON-NLS-1$
 				ErrorFactory.eINSTANCE.createEMFLocation(eObject),
-				ErrorFactory.eINSTANCE.createSheetLocation(sheetname, columnId, 0, cell.getStringCellValue()));
+				ErrorFactory.eINSTANCE.createSheetLocation(sheetname, columnId, 0, getStringCellValue(cell)));
 			return null;
 		}
 
@@ -355,13 +355,14 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 					ErrorFactory.eINSTANCE.createSheetLocation(workbook.getSheetName(sheetId), 0, 0, "NO CELL")); //$NON-NLS-1$
 				continue;
 			}
-			if (!EMFFormsIdProvider.ID_COLUMN
-				.equals(labelRow.getCell(0, Row.CREATE_NULL_AS_BLANK).getStringCellValue())) {
+			final Cell idColumnLabelCell = labelRow.getCell(0, Row.CREATE_NULL_AS_BLANK);
+			final String idColumnLabel = getStringCellValue(idColumnLabelCell);
+			if (!EMFFormsIdProvider.ID_COLUMN.equals(idColumnLabel)) {
 				/* ID Column is missing. We have to ignore this sheet */
 				errorReports.reportError(
 					Severity.ERROR, MessageFormat.format(
 						LocalizationServiceHelper.getString(getClass(), "ImportError_FirstColumnWrong"), //$NON-NLS-1$
-						EMFFormsIdProvider.ID_COLUMN, labelRow.getCell(0).getStringCellValue()),
+						EMFFormsIdProvider.ID_COLUMN, idColumnLabel),
 					ErrorFactory.eINSTANCE.createSheetLocation(workbook.getSheetName(sheetId), 0, 0, "NO CELL")); //$NON-NLS-1$
 				continue;
 			}
@@ -374,7 +375,7 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 							EMFFormsIdProvider.ID_COLUMN));
 					continue;
 				}
-				final String eObjectId = row.getCell(0, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
+				final String eObjectId = getStringCellValue(row.getCell(0, Row.CREATE_NULL_AS_BLANK));
 				if (eObjectId == null || eObjectId.isEmpty()) {
 					/* EObject id deleted */
 					errorReports.reportError(
@@ -443,6 +444,16 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 			return serializedDMR;
 		}
 		return migrator.performMigration(serializedDMR);
+	}
 
+	private String getStringCellValue(Cell cell) {
+		try {
+			return cell.getStringCellValue();
+		} catch (final IllegalArgumentException ex) {
+			throw new IllegalStateException(
+				String.format("Cell value of column %1$s in row %2$s on sheet %3$s must be a string.", //$NON-NLS-1$
+					cell.getColumnIndex() + 1, cell.getRowIndex() + 1, cell.getSheet().getSheetName()),
+				ex);
+		}
 	}
 }

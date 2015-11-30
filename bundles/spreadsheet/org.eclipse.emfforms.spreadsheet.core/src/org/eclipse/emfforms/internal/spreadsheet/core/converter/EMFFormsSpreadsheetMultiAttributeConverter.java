@@ -146,7 +146,16 @@ public class EMFFormsSpreadsheetMultiAttributeConverter implements EMFFormsSprea
 	 */
 	@Override
 	public Object getCellValue(Cell cell, EStructuralFeature eStructuralFeature) throws EMFFormsConverterException {
-		String string = cell.getStringCellValue();
+		String string;
+		try {
+			string = cell.getStringCellValue();
+		} catch (final IllegalStateException e) {
+			throw new EMFFormsConverterException(
+				String.format("Cell value of column %1$s in row %2$s on sheet %3$s must be a string.", //$NON-NLS-1$
+					cell.getColumnIndex() + 1, cell.getRowIndex() + 1, cell.getSheet().getSheetName()),
+				e);
+		}
+
 		if (string == null || string.length() == 0) {
 			return Collections.emptyList();
 		}
