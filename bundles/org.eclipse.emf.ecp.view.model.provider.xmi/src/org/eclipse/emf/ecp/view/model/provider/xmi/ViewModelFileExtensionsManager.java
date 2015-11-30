@@ -79,7 +79,7 @@ public final class ViewModelFileExtensionsManager {
 	/**
 	 * @return the iNSTANCE
 	 */
-	public static ViewModelFileExtensionsManager getInstance() {
+	public static synchronized ViewModelFileExtensionsManager getInstance() {
 		if (instance == null) {
 			instance = new ViewModelFileExtensionsManager();
 			instance.init();
