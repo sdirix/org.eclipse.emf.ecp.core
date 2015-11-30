@@ -15,9 +15,12 @@ import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Comment;
@@ -36,11 +39,13 @@ import org.eclipse.emf.ecore.resource.URIConverter.ReadableInputStream;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.spi.view.migrator.string.StringViewModelMigrator;
+import org.eclipse.emf.ecp.spi.view.migrator.string.StringViewModelMigratorUtil;
 import org.eclipse.emf.ecp.view.migrator.ViewModelMigrationException;
 import org.eclipse.emf.ecp.view.migrator.ViewModelMigratorUtil;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emfforms.internal.spreadsheet.core.transfer.EMFFormsSpreadsheetImporterImpl.MigrationInformation.State;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
 import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
@@ -74,6 +79,7 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 	private SpreadsheetImportResult readData(Workbook workbook, EClass eClass) {
 		final SpreadsheetImportResult result = ErrorFactory.eINSTANCE.createSpreadsheetImportResult();
 		final ResourceSet rs = new ResourceSetImpl();
+		final MigrationInformation information = new MigrationInformation();
 		final AdapterFactoryEditingDomain domain = new AdapterFactoryEditingDomain(
 			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE),
 			new BasicCommandStack(), rs);
@@ -93,7 +99,7 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 				final Row labelRow = sheet.getRow(0);
 				final Row row = sheet.getRow(sheetIdToRowId.get(sheetId));
 				extractRowInformation(labelRow, row, eObject, result, sheet.getSheetName(), sheetId,
-					sheetColumnToDMRMap, converter);
+					sheetColumnToDMRMap, converter, information);
 			}
 			importedEObjects.add(eObject);
 		}
@@ -108,13 +114,14 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 	private void extractRowInformation(final Row dmrRow, final Row eObjectRow, final EObject eObject,
 		SpreadsheetImportResult errorReports, String sheetname, int sheetId,
 		Map<String, VDomainModelReference> sheetColumnToDMRMap,
-		Map<VDomainModelReference, EMFFormsSpreadsheetValueConverter> converterMap) {
+		Map<VDomainModelReference, EMFFormsSpreadsheetValueConverter> converterMap,
+		MigrationInformation information) {
 		for (int columnId = 1; columnId < dmrRow.getLastCellNum(); columnId++) {
 			final String sheetColId = sheetId + "_" + columnId; //$NON-NLS-1$
 			final Cell cell = dmrRow.getCell(columnId);
 			if (!sheetColumnToDMRMap.containsKey(sheetColId)) {
 				final VDomainModelReference dmr = getDomainModelReference(cell, errorReports, eObject, sheetname,
-					columnId);
+					columnId, information);
 				sheetColumnToDMRMap.put(sheetColId, dmr);
 			}
 			final VDomainModelReference dmr = sheetColumnToDMRMap.get(sheetColId);
@@ -227,7 +234,7 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 	}
 
 	private VDomainModelReference getDomainModelReference(Cell cell, SpreadsheetImportResult errorReports,
-		EObject eObject, String sheetname, int columnId) {
+		EObject eObject, String sheetname, int columnId, MigrationInformation information) {
 		/* get dmr comment */
 		if (cell == null) {
 			errorReports.reportError(
@@ -256,7 +263,7 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 		/* deserialize dmr */
 
 		try {
-			return deserializeDMR(serializedDMR);
+			return deserializeDMR(serializedDMR, information);
 		} catch (final IOException ex1) {
 			errorReports.reportError(
 				Severity.ERROR,
@@ -423,10 +430,11 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 		return emfFormsDatabinding.getConverter(eObject, dmr);
 	}
 
-	private VDomainModelReference deserializeDMR(String serializedDMR) throws IOException {
+	private VDomainModelReference deserializeDMR(String serializedDMR, MigrationInformation information)
+		throws IOException {
 		if (ViewModelMigratorUtil.getStringViewModelMigrator() != null) {
 			try {
-				serializedDMR = migrateIfNeeded(serializedDMR);
+				serializedDMR = migrateIfNeeded(serializedDMR, information);
 			} catch (final ViewModelMigrationException ex) {
 				throw new IOException(ex);
 			}
@@ -439,11 +447,26 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 		return (VDomainModelReference) resource.getContents().get(0);
 	}
 
-	private String migrateIfNeeded(String serializedDMR) throws ViewModelMigrationException {
-		final StringViewModelMigrator migrator = ViewModelMigratorUtil.getStringViewModelMigrator();
-		if (migrator.checkMigration(serializedDMR)) {
+	private String migrateIfNeeded(String serializedDMR, MigrationInformation information)
+		throws ViewModelMigrationException {
+		final List<String> namespaceURIs = StringViewModelMigratorUtil.getNamespaceURIs(serializedDMR);
+
+		final MigrationInformation.State migrationState = information.isMigrationNeeded(namespaceURIs);
+
+		if (migrationState == State.ok) {
 			return serializedDMR;
 		}
+
+		final StringViewModelMigrator migrator = ViewModelMigratorUtil.getStringViewModelMigrator();
+
+		if (migrationState == State.unknown) {
+			if (migrator.checkMigration(serializedDMR)) {
+				information.noMigrationNeeded(namespaceURIs);
+				return serializedDMR;
+			}
+			information.migrationNeeded(namespaceURIs);
+		}
+
 		return migrator.performMigration(serializedDMR);
 	}
 
@@ -456,5 +479,77 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 					cell.getColumnIndex() + 1, cell.getRowIndex() + 1, cell.getSheet().getSheetName()),
 				ex);
 		}
+	}
+
+	/**
+	 * Helper class which caches the required information of the migration state for the used NS-URIs.
+	 *
+	 * @author Johannes Faltermeier
+	 *
+	 */
+	static class MigrationInformation {
+		private final Set<Set<String>> migrationNeeded = new LinkedHashSet<Set<String>>();
+		private final Set<Set<String>> noMigrationNeeded = new LinkedHashSet<Set<String>>();
+
+		/**
+		 * Whether a migration is needed for the given uris.
+		 *
+		 * @param namespaceURIs the uris
+		 * @return the state
+		 */
+		State isMigrationNeeded(List<String> namespaceURIs) {
+			final Set<String> set = new LinkedHashSet<String>(namespaceURIs);
+			if (noMigrationNeeded.contains(set)) {
+				return State.ok;
+			}
+			if (migrationNeeded.contains(set)) {
+				return State.migrate;
+			}
+			return State.unknown;
+		}
+
+		/**
+		 * Updates the cached migration information.
+		 *
+		 * @param namespaceURIs the given set of nsuris for which a migration is required
+		 */
+		void migrationNeeded(List<String> namespaceURIs) {
+			final Set<String> set = Collections.unmodifiableSet(new LinkedHashSet<String>(namespaceURIs));
+			migrationNeeded.add(set);
+		}
+
+		/**
+		 * Updates the cached migration information.
+		 *
+		 * @param namespaceURIs the given set of nsuris for which no migration is required
+		 */
+		void noMigrationNeeded(List<String> namespaceURIs) {
+			final Set<String> set = Collections.unmodifiableSet(new LinkedHashSet<String>(namespaceURIs));
+			noMigrationNeeded.add(set);
+		}
+
+		/**
+		 * Migration state.
+		 *
+		 * @author Johannes Faltermeier
+		 *
+		 */
+		enum State {
+			/**
+			 * Based on the cached information a migration is needed.
+			 */
+			migrate,
+
+			/**
+			 * Based on the cached information no migration is needed.
+			 */
+			ok,
+
+			/**
+			 * No cached information about the migration state.
+			 */
+			unknown
+		}
+
 	}
 }

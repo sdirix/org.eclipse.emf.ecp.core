@@ -17,8 +17,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.Reader;
-import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -41,8 +39,10 @@ import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.emf.ecore.util.ExtendedMetaData;
+import org.eclipse.emf.ecp.spi.view.migrator.NameSpaceHandler;
+import org.eclipse.emf.ecp.spi.view.migrator.SAXUtil;
 import org.eclipse.emf.ecp.spi.view.migrator.string.StringViewModelMigrator;
+import org.eclipse.emf.ecp.spi.view.migrator.string.StringViewModelMigratorUtil;
 import org.eclipse.emf.ecp.view.migrator.ViewModelMigrationException;
 import org.eclipse.emf.ecp.view.migrator.ViewModelMigrator;
 import org.eclipse.emf.ecp.view.spi.model.util.VViewResourceFactoryImpl;
@@ -58,11 +58,8 @@ import org.eclipse.emf.edapt.spi.history.Release;
 import org.eclipse.emf.edapt.spi.migration.MigrationPlugin;
 import org.osgi.framework.Bundle;
 import org.xml.sax.Attributes;
-import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
-import org.xml.sax.helpers.XMLReaderFactory;
 
 /**
  * A {@link ViewModelMigrator} using edapt.
@@ -84,7 +81,7 @@ public class EdaptViewModelMigrator implements ViewModelMigrator, StringViewMode
 	 */
 	@Override
 	public boolean checkMigration(String serializedViewModel) {
-		return checkMigration(getNamespaceURIs(serializedViewModel));
+		return checkMigration(StringViewModelMigratorUtil.getNamespaceURIs(serializedViewModel));
 	}
 
 	@Override
@@ -421,12 +418,6 @@ public class EdaptViewModelMigrator implements ViewModelMigrator, StringViewMode
 		return nsRelease;
 	}
 
-	private List<String> getNamespaceURIs(String serializedViewModel) {
-		final NameSpaceHandler handler = new NameSpaceHandler();
-		executeContentHandler(serializedViewModel, handler);
-		return handler.getNsURIs();
-	}
-
 	/**
 	 * @return the namespaces of all models used in the given resource.
 	 */
@@ -457,33 +448,10 @@ public class EdaptViewModelMigrator implements ViewModelMigrator, StringViewMode
 		return calcHandler.getUsedPackages();
 	}
 
-	private static void executeContentHandler(String serializedViewModel, final DefaultHandler contentHandler) {
-		executeContentHandler(new StringReader(serializedViewModel), contentHandler);
-	}
-
 	private static void executeContentHandler(File file, final DefaultHandler contentHandler) {
 		try {
-			executeContentHandler(new FileReader(file), contentHandler);
+			SAXUtil.executeContentHandler(new FileReader(file), contentHandler);
 		} catch (final FileNotFoundException ex) {
-		}
-	}
-
-	private static void executeContentHandler(Reader modelReader, final DefaultHandler contentHandler) {
-		try {
-			final XMLReader xmlReader = XMLReaderFactory.createXMLReader();
-			xmlReader.setContentHandler(contentHandler);
-			xmlReader.parse(new InputSource(modelReader));
-		} catch (final SAXException e) {
-			// do nothing
-		} catch (final IOException ex) {
-			ex.printStackTrace();
-		} finally {
-			try {
-				if (modelReader != null) {
-					modelReader.close();
-				}
-			} catch (final IOException e) {
-			}
 		}
 	}
 
@@ -515,32 +483,6 @@ public class EdaptViewModelMigrator implements ViewModelMigrator, StringViewMode
 				new org.eclipse.emf.edapt.internal.migration.execution.internal.BundleClassLoader(bundle));
 		} catch (final MigrationException e) {
 			org.eclipse.emf.edapt.internal.common.LoggingUtils.logError(MigrationPlugin.getPlugin(), e);
-		}
-	}
-
-	/** Content handler for extraction of namespace URIs from a view model using SAX. */
-	private static class NameSpaceHandler extends DefaultHandler {
-
-		/** Namespace URIs. */
-		private final List<String> namespaceURIs = new ArrayList<String>();
-
-		/**
-		 * {@inheritDoc}
-		 *
-		 * @see org.xml.sax.helpers.DefaultHandler#startPrefixMapping(java.lang.String, java.lang.String)
-		 */
-		@Override
-		public void startPrefixMapping(String prefix, String uri) throws SAXException {
-			super.startPrefixMapping(prefix, uri);
-			if (!uri.equals(ExtendedMetaData.XMI_URI) && !uri.equals(ExtendedMetaData.XML_SCHEMA_URI)
-				&& !uri.equals(ExtendedMetaData.XSI_URI)) {
-				namespaceURIs.add(uri);
-			}
-		}
-
-		/** Returns the namespace URIs. */
-		public List<String> getNsURIs() {
-			return namespaceURIs;
 		}
 	}
 
