@@ -82,7 +82,7 @@ public class EMFFormsSpreadsheetImportImpl_ITest {
 		final User user = getDomainModel();
 		final User user2 = getDomainModel();
 
-		final Workbook workbook = viewRenderer.render(Arrays.asList(user, user2), null, null, null);
+		final Workbook workbook = viewRenderer.render(Arrays.asList(user, user2), null, null);
 
 		final EMFFormsSpreadsheetImporter spreadsheetImport = EMFFormsSpreadsheetImporter.INSTANCE;
 		final SpreadsheetImportResult importResult = spreadsheetImport.importSpreadsheet(workbook,
@@ -155,7 +155,7 @@ public class EMFFormsSpreadsheetImportImpl_ITest {
 			}
 		});
 
-		final Workbook workbook = viewRenderer.render(Collections.singleton(domainModel), null, null, null);
+		final Workbook workbook = viewRenderer.render(Collections.singleton(domainModel), null, null);
 
 		final EMFFormsSpreadsheetImporter spreadsheetImport = EMFFormsSpreadsheetImporter.INSTANCE;
 		final Collection<EObject> fans = spreadsheetImport.importSpreadsheet(workbook,
@@ -198,7 +198,7 @@ public class EMFFormsSpreadsheetImportImpl_ITest {
 			}
 		});
 
-		final Workbook workbook = viewRenderer.render(Collections.singleton(domainModel), null, null, null);
+		final Workbook workbook = viewRenderer.render(Collections.singleton(domainModel), null, null);
 
 		final EMFFormsSpreadsheetImporter spreadsheetImport = EMFFormsSpreadsheetImporter.INSTANCE;
 		final Collection<EObject> fans = spreadsheetImport.importSpreadsheet(workbook,
@@ -243,7 +243,7 @@ public class EMFFormsSpreadsheetImportImpl_ITest {
 			}
 		});
 
-		final Workbook workbook = viewRenderer.render(Collections.singleton(domainModel), null, null, null);
+		final Workbook workbook = viewRenderer.render(Collections.singleton(domainModel), null, null);
 
 		final EMFFormsSpreadsheetImporter spreadsheetImport = EMFFormsSpreadsheetImporter.INSTANCE;
 		final Collection<EObject> fans = spreadsheetImport.importSpreadsheet(workbook,
