@@ -24,7 +24,6 @@ import org.apache.poi.ss.usermodel.Comment;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.util.WorkbookUtil;
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
@@ -65,7 +64,7 @@ import org.osgi.framework.ServiceReference;
  */
 public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImporter {
 
-	private static final String ADDITIONAL_INFORMATION = WorkbookUtil.createSafeSheetName("AdditionalInformation"); //$NON-NLS-1$
+	private static final String IGNORE_SHEET = "Ignore Sheet"; //$NON-NLS-1$
 
 	@Override
 	public SpreadsheetImportResult importSpreadsheet(Workbook workbook, EClass eClass) {
@@ -343,9 +342,6 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 
 		for (int sheetId = 0; sheetId < workbook.getNumberOfSheets(); sheetId++) {
 			final Sheet sheet = workbook.getSheetAt(sheetId);
-			if (ADDITIONAL_INFORMATION.equals(sheet.getSheetName())) {
-				continue;
-			}
 			final Row labelRow = sheet.getRow(0);
 			if (labelRow == null) {
 				errorReports.reportError(
@@ -356,6 +352,11 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 				continue;
 			}
 			final Cell idColumnLabelCell = labelRow.getCell(0, Row.CREATE_NULL_AS_BLANK);
+			final Comment cellComment = idColumnLabelCell.getCellComment();
+			if (cellComment != null && cellComment.getString() != null
+				&& IGNORE_SHEET.equals(cellComment.getString().getString())) {
+				continue;
+			}
 			final String idColumnLabel = getStringCellValue(idColumnLabelCell);
 			if (!EMFFormsIdProvider.ID_COLUMN.equals(idColumnLabel)) {
 				/* ID Column is missing. We have to ignore this sheet */

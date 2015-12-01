@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.ClientAnchor;
 import org.apache.poi.ss.usermodel.Comment;
 import org.apache.poi.ss.usermodel.CreationHelper;
@@ -199,9 +200,11 @@ public class ImportErrors_ITest {
 		/* setup */
 		stream = bundle.getEntry("errorSheets/basexls").openStream(); //$NON-NLS-1$
 		final Workbook workbook = new HSSFWorkbook(stream);
-		final Sheet sheet = workbook.createSheet(WorkbookUtil.createSafeSheetName("AdditionalInformation")); //$NON-NLS-1$
+		final Sheet sheet = workbook.createSheet(WorkbookUtil.createSafeSheetName("My Sheet")); //$NON-NLS-1$
 		final Row titleRow = sheet.createRow(0);
-		titleRow.createCell(0).setCellValue(EMFFormsIdProvider.ID_COLUMN);
+		final Cell idLabelCell = titleRow.createCell(0);
+		idLabelCell.setCellValue(EMFFormsIdProvider.ID_COLUMN);
+		idLabelCell.setCellComment(createComment(workbook, sheet, 0, 0));
 		titleRow.createCell(1).setCellValue("MyColumn"); //$NON-NLS-1$
 
 		for (int i = 1; i < 5; i++) {
@@ -217,6 +220,26 @@ public class ImportErrors_ITest {
 
 		/* assert */
 		assertEquals(0, errorReports.size());
+	}
+
+	private Comment createComment(Workbook workbook, Sheet sheet, int row,
+		int column) throws IOException {
+		final CreationHelper factory = workbook.getCreationHelper();
+
+		// When the comment box is visible, have it show in a 1x3 space
+		final ClientAnchor anchor = factory.createClientAnchor();
+		anchor.setCol1(column);
+		anchor.setCol2(column + 1);
+		anchor.setRow1(row);
+		anchor.setRow2(row + 1);
+
+		final Drawing drawing = sheet.createDrawingPatriarch();
+		final Comment comment = drawing.createCellComment(anchor);
+
+		comment.setAuthor("EMFForms Spreadsheet Renderer"); //$NON-NLS-1$
+		comment.setVisible(false);
+		comment.setString(factory.createRichTextString("Ignore Sheet")); //$NON-NLS-1$
+		return comment;
 	}
 
 	@Test
