@@ -44,7 +44,7 @@ public final class ViewModelWorkspaceMigratorService implements ViewModelWorkspa
 		}
 		final List<URI> viewModelURIs = getViewModelURIsInWorkspace();
 		for (final URI viewModel : viewModelURIs) {
-			if (viewModelMigrator.checkMigration(viewModel)) {
+			if (!viewModelMigrator.checkMigration(viewModel)) {
 				urisToMigrate.add(viewModel);
 			}
 		}
