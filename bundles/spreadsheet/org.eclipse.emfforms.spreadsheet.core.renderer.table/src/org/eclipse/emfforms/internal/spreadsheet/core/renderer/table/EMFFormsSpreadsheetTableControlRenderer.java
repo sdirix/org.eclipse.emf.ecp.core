@@ -134,7 +134,7 @@ public class EMFFormsSpreadsheetTableControlRenderer extends EMFFormsAbstractSpr
 			final VTableDomainModelReference tableDomainModelReference = (VTableDomainModelReference) vElement
 				.getDomainModelReference();
 
-			for (int i = 0; i < 3; i++) {
+			for (int i = 0; i < getNumberOfExportElements(vElement, tableSetting); i++) {
 				final String prefixName = getPrefixName(tableSetting, tableDomainModelReference, i);
 
 				final VIndexDomainModelReference indexDMR = VIndexdmrFactory.eINSTANCE
@@ -204,6 +204,17 @@ public class EMFFormsSpreadsheetTableControlRenderer extends EMFFormsAbstractSpr
 			reportService.report(new EMFFormsSpreadsheetReport(ex, EMFFormsSpreadsheetReport.ERROR));
 		}
 		return numColumns;
+	}
+
+	/**
+	 * Returns the number of entries that should be exported.
+	 * 
+	 * @param tableControl The VTableControl being exported
+	 * @param tableSetting The Setting of the table being exported
+	 * @return The number of entries to export
+	 */
+	protected int getNumberOfExportElements(VTableControl tableControl, Setting tableSetting) {
+		return 3;
 	}
 
 	private String getPrefixName(final Setting tableSetting, final VTableDomainModelReference tableDomainModelReference,
