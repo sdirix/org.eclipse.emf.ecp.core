@@ -32,7 +32,6 @@ import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedExcep
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
-import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -138,7 +137,7 @@ public class EReferenceLabelControlSWTRenderer extends SimpleControlSWTControlSW
 				}
 			});
 
-		final IObservableValue imageValue = SWTObservables.observeImage(imageLabel);
+		final IObservableValue imageValue = WidgetProperties.image().observe(imageLabel);
 		bindings[2] = getDataBindingContext().bindValue(imageValue, getModelValue(), new UpdateValueStrategy() {
 
 			@Override
