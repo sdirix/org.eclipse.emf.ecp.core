@@ -11,8 +11,6 @@
  ******************************************************************************/
 package org.eclipse.emfforms.internal.core.services.legacy;
 
-import java.lang.reflect.InvocationTargetException;
-
 import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
@@ -23,23 +21,27 @@ import org.eclipse.emfforms.spi.core.services.scoped.EMFFormsScopedServiceScope;
 /**
  * An {@link EMFFormsScopedServiceProvider} for {@link ViewModelService}.
  *
+ * @param <T> The actual type of the {@link ViewModelService}
  * @author Eugen Neufeld
  *
  */
-public class EMFFormsLegacyLocalServiceProvider implements EMFFormsScopedServiceProvider {
+public class EMFFormsLegacyLocalServiceProvider<T extends ViewModelService>
+	implements EMFFormsScopedServiceProvider<T> {
 
-	private final ViewModelService viewModelService;
+	private final Class<T> type;
+	private final double priority;
 	private final ReportService reportService;
 
 	/**
 	 * Default constructor used to create an {@link EMFFormsLegacyLocalServiceProvider}.
 	 *
-	 * @param viewModelService The ViewModelService to wrap
+	 * @param type The type of the service to wrap
+	 * @param priority The priority of the wrapped service
 	 * @param reportService The {@link ReportService} to use for logging
 	 */
-	public EMFFormsLegacyLocalServiceProvider(ViewModelService viewModelService,
-		ReportService reportService) {
-		this.viewModelService = viewModelService;
+	public EMFFormsLegacyLocalServiceProvider(Class<T> type, double priority, ReportService reportService) {
+		this.type = type;
+		this.priority = priority;
 		this.reportService = reportService;
 	}
 
@@ -70,7 +72,7 @@ public class EMFFormsLegacyLocalServiceProvider implements EMFFormsScopedService
 	 */
 	@Override
 	public double getPriority() {
-		return viewModelService.getPriority();
+		return priority;
 	}
 
 	/**
@@ -79,8 +81,8 @@ public class EMFFormsLegacyLocalServiceProvider implements EMFFormsScopedService
 	 * @see org.eclipse.emfforms.spi.core.services.scoped.EMFFormsScopedServiceProvider#getType()
 	 */
 	@Override
-	public Class<?> getType() {
-		return viewModelService.getClass();
+	public Class<T> getType() {
+		return type;
 	}
 
 	/**
@@ -89,18 +91,14 @@ public class EMFFormsLegacyLocalServiceProvider implements EMFFormsScopedService
 	 * @see org.eclipse.emfforms.spi.core.services.scoped.EMFFormsScopedServiceProvider#provideService()
 	 */
 	@Override
-	public Object provideService() {
+	public T provideService() {
 		try {
-			return viewModelService.getClass().getConstructor().newInstance();
+			return type.newInstance();
 		} catch (final InstantiationException ex) {
 			reportService.report(new AbstractReport(ex));
 		} catch (final IllegalAccessException ex) {
 			reportService.report(new AbstractReport(ex));
 		} catch (final IllegalArgumentException ex) {
-			reportService.report(new AbstractReport(ex));
-		} catch (final InvocationTargetException ex) {
-			reportService.report(new AbstractReport(ex));
-		} catch (final NoSuchMethodException ex) {
 			reportService.report(new AbstractReport(ex));
 		} catch (final SecurityException ex) {
 			reportService.report(new AbstractReport(ex));

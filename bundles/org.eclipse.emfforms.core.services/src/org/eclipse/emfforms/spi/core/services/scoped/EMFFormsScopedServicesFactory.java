@@ -18,6 +18,8 @@ import org.eclipse.emfforms.common.Optional;
  *
  * @author Eugen Neufeld
  * @since 1.8
+ * @noextend This interface is not intended to be extended by clients.
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface EMFFormsScopedServicesFactory {
 

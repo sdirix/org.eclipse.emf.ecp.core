@@ -36,9 +36,9 @@ public class EMFFormsScopedServicesFactoryImpl_Test {
 
 	@Test
 	public void testAddedToLocalLazy() {
-		final EMFFormsScopedServiceProvider scopedServiceProvider = mock(EMFFormsScopedServiceProvider.class);
+		final EMFFormsScopedServiceProvider<?> scopedServiceProvider = mock(EMFFormsScopedServiceProvider.class);
 		doReturn(Object.class).when(scopedServiceProvider).getType();
-		when(scopedServiceProvider.provideService()).thenReturn(mock(Object.class));
+		doReturn(mock(Object.class)).when(scopedServiceProvider).provideService();
 		when(scopedServiceProvider.getPolicy()).thenReturn(EMFFormsScopedServicePolicy.LAZY);
 		when(scopedServiceProvider.getScope()).thenReturn(EMFFormsScopedServiceScope.LOCAL);
 		when(scopedServiceProvider.getPriority()).thenReturn(1d);
@@ -51,9 +51,9 @@ public class EMFFormsScopedServicesFactoryImpl_Test {
 
 	@Test
 	public void testAddedToGlobalImmediate() {
-		final EMFFormsScopedServiceProvider scopedServiceProvider = mock(EMFFormsScopedServiceProvider.class);
+		final EMFFormsScopedServiceProvider<?> scopedServiceProvider = mock(EMFFormsScopedServiceProvider.class);
 		doReturn(Object.class).when(scopedServiceProvider).getType();
-		when(scopedServiceProvider.provideService()).thenReturn(mock(Object.class));
+		doReturn(mock(Object.class)).when(scopedServiceProvider).provideService();
 		when(scopedServiceProvider.getPolicy()).thenReturn(EMFFormsScopedServicePolicy.IMMEDIATE);
 		when(scopedServiceProvider.getScope()).thenReturn(EMFFormsScopedServiceScope.GLOBAL);
 		when(scopedServiceProvider.getPriority()).thenReturn(1d);
@@ -66,9 +66,9 @@ public class EMFFormsScopedServicesFactoryImpl_Test {
 
 	@Test
 	public void testAddedToGlobalLazy() {
-		final EMFFormsScopedServiceProvider scopedServiceProvider = mock(EMFFormsScopedServiceProvider.class);
+		final EMFFormsScopedServiceProvider<?> scopedServiceProvider = mock(EMFFormsScopedServiceProvider.class);
 		doReturn(Object.class).when(scopedServiceProvider).getType();
-		when(scopedServiceProvider.provideService()).thenReturn(mock(Object.class));
+		doReturn(Object.class).when(scopedServiceProvider).provideService();
 		when(scopedServiceProvider.getPolicy()).thenReturn(EMFFormsScopedServicePolicy.LAZY);
 		when(scopedServiceProvider.getScope()).thenReturn(EMFFormsScopedServiceScope.GLOBAL);
 		when(scopedServiceProvider.getPriority()).thenReturn(1d);
@@ -81,9 +81,9 @@ public class EMFFormsScopedServicesFactoryImpl_Test {
 
 	@Test
 	public void testAddedToLocalImmediate() {
-		final EMFFormsScopedServiceProvider scopedServiceProvider = mock(EMFFormsScopedServiceProvider.class);
+		final EMFFormsScopedServiceProvider<?> scopedServiceProvider = mock(EMFFormsScopedServiceProvider.class);
 		doReturn(Object.class).when(scopedServiceProvider).getType();
-		when(scopedServiceProvider.provideService()).thenReturn(mock(Object.class));
+		doReturn(Object.class).when(scopedServiceProvider).provideService();
 		when(scopedServiceProvider.getPolicy()).thenReturn(EMFFormsScopedServicePolicy.IMMEDIATE);
 		when(scopedServiceProvider.getScope()).thenReturn(EMFFormsScopedServiceScope.LOCAL);
 		when(scopedServiceProvider.getPriority()).thenReturn(1d);
@@ -96,9 +96,9 @@ public class EMFFormsScopedServicesFactoryImpl_Test {
 
 	@Test
 	public void testRemoveFromLocalLazy() {
-		final EMFFormsScopedServiceProvider scopedServiceProvider = mock(EMFFormsScopedServiceProvider.class);
+		final EMFFormsScopedServiceProvider<?> scopedServiceProvider = mock(EMFFormsScopedServiceProvider.class);
 		doReturn(Object.class).when(scopedServiceProvider).getType();
-		when(scopedServiceProvider.provideService()).thenReturn(mock(Object.class));
+		doReturn(Object.class).when(scopedServiceProvider).provideService();
 		when(scopedServiceProvider.getPolicy()).thenReturn(EMFFormsScopedServicePolicy.LAZY);
 		when(scopedServiceProvider.getScope()).thenReturn(EMFFormsScopedServiceScope.LOCAL);
 		when(scopedServiceProvider.getPriority()).thenReturn(1d);
@@ -112,9 +112,9 @@ public class EMFFormsScopedServicesFactoryImpl_Test {
 
 	@Test
 	public void testRemoveFromGlobalImmediate() {
-		final EMFFormsScopedServiceProvider scopedServiceProvider = mock(EMFFormsScopedServiceProvider.class);
+		final EMFFormsScopedServiceProvider<?> scopedServiceProvider = mock(EMFFormsScopedServiceProvider.class);
 		doReturn(Object.class).when(scopedServiceProvider).getType();
-		when(scopedServiceProvider.provideService()).thenReturn(mock(Object.class));
+		doReturn(Object.class).when(scopedServiceProvider).provideService();
 		when(scopedServiceProvider.getPolicy()).thenReturn(EMFFormsScopedServicePolicy.IMMEDIATE);
 		when(scopedServiceProvider.getScope()).thenReturn(EMFFormsScopedServiceScope.GLOBAL);
 		when(scopedServiceProvider.getPriority()).thenReturn(1d);
@@ -128,9 +128,9 @@ public class EMFFormsScopedServicesFactoryImpl_Test {
 
 	@Test
 	public void testRemoveFromGlobalLazy() {
-		final EMFFormsScopedServiceProvider scopedServiceProvider = mock(EMFFormsScopedServiceProvider.class);
+		final EMFFormsScopedServiceProvider<?> scopedServiceProvider = mock(EMFFormsScopedServiceProvider.class);
 		doReturn(Object.class).when(scopedServiceProvider).getType();
-		when(scopedServiceProvider.provideService()).thenReturn(mock(Object.class));
+		doReturn(Object.class).when(scopedServiceProvider).provideService();
 		when(scopedServiceProvider.getPolicy()).thenReturn(EMFFormsScopedServicePolicy.LAZY);
 		when(scopedServiceProvider.getScope()).thenReturn(EMFFormsScopedServiceScope.GLOBAL);
 		when(scopedServiceProvider.getPriority()).thenReturn(1d);
@@ -144,9 +144,9 @@ public class EMFFormsScopedServicesFactoryImpl_Test {
 
 	@Test
 	public void testRemoveFromLocalImmediate() {
-		final EMFFormsScopedServiceProvider scopedServiceProvider = mock(EMFFormsScopedServiceProvider.class);
+		final EMFFormsScopedServiceProvider<?> scopedServiceProvider = mock(EMFFormsScopedServiceProvider.class);
 		doReturn(Object.class).when(scopedServiceProvider).getType();
-		when(scopedServiceProvider.provideService()).thenReturn(mock(Object.class));
+		doReturn(Object.class).when(scopedServiceProvider).provideService();
 		when(scopedServiceProvider.getPolicy()).thenReturn(EMFFormsScopedServicePolicy.IMMEDIATE);
 		when(scopedServiceProvider.getScope()).thenReturn(EMFFormsScopedServiceScope.LOCAL);
 		when(scopedServiceProvider.getPriority()).thenReturn(1d);
@@ -160,19 +160,19 @@ public class EMFFormsScopedServicesFactoryImpl_Test {
 
 	@Test
 	public void testAddedToLocalLazyPriorityFirstLowThenHigh() {
-		final EMFFormsScopedServiceProvider scopedServiceProvider1 = mock(EMFFormsScopedServiceProvider.class);
+		final EMFFormsScopedServiceProvider<?> scopedServiceProvider1 = mock(EMFFormsScopedServiceProvider.class);
 		doReturn(Object.class).when(scopedServiceProvider1).getType();
 		final Object mock1 = mock(Object.class);
-		when(scopedServiceProvider1.provideService()).thenReturn(mock1);
+		doReturn(mock1).when(scopedServiceProvider1).provideService();
 		when(scopedServiceProvider1.getPolicy()).thenReturn(EMFFormsScopedServicePolicy.LAZY);
 		when(scopedServiceProvider1.getScope()).thenReturn(EMFFormsScopedServiceScope.LOCAL);
 		when(scopedServiceProvider1.getPriority()).thenReturn(1d);
 		emfFormsScopedServicesFactory.addEMFFormsScopedServiceProvider(scopedServiceProvider1);
 
-		final EMFFormsScopedServiceProvider scopedServiceProvider2 = mock(EMFFormsScopedServiceProvider.class);
+		final EMFFormsScopedServiceProvider<?> scopedServiceProvider2 = mock(EMFFormsScopedServiceProvider.class);
 		doReturn(Object.class).when(scopedServiceProvider2).getType();
 		final Object mock2 = mock(Object.class);
-		when(scopedServiceProvider2.provideService()).thenReturn(mock2);
+		doReturn(mock2).when(scopedServiceProvider2).provideService();
 		when(scopedServiceProvider2.getPolicy()).thenReturn(EMFFormsScopedServicePolicy.LAZY);
 		when(scopedServiceProvider2.getScope()).thenReturn(EMFFormsScopedServiceScope.LOCAL);
 		when(scopedServiceProvider2.getPriority()).thenReturn(2d);
@@ -184,19 +184,19 @@ public class EMFFormsScopedServicesFactoryImpl_Test {
 	@Test
 	public void testAddedToLocalLazyPriorityFirstHighThenLow() {
 
-		final EMFFormsScopedServiceProvider scopedServiceProvider2 = mock(EMFFormsScopedServiceProvider.class);
+		final EMFFormsScopedServiceProvider<?> scopedServiceProvider2 = mock(EMFFormsScopedServiceProvider.class);
 		doReturn(Object.class).when(scopedServiceProvider2).getType();
 		final Optional<Object> mock2 = Optional.of(mock(Object.class));
-		when(scopedServiceProvider2.provideService()).thenReturn(mock2);
+		doReturn(mock2).when(scopedServiceProvider2).provideService();
 		when(scopedServiceProvider2.getPolicy()).thenReturn(EMFFormsScopedServicePolicy.LAZY);
 		when(scopedServiceProvider2.getScope()).thenReturn(EMFFormsScopedServiceScope.LOCAL);
 		when(scopedServiceProvider2.getPriority()).thenReturn(2d);
 		emfFormsScopedServicesFactory.addEMFFormsScopedServiceProvider(scopedServiceProvider2);
 
-		final EMFFormsScopedServiceProvider scopedServiceProvider1 = mock(EMFFormsScopedServiceProvider.class);
+		final EMFFormsScopedServiceProvider<?> scopedServiceProvider1 = mock(EMFFormsScopedServiceProvider.class);
 		doReturn(Object.class).when(scopedServiceProvider1).getType();
 		final Optional<Object> mock1 = Optional.of(mock(Object.class));
-		when(scopedServiceProvider1.provideService()).thenReturn(mock1);
+		doReturn(mock1).when(scopedServiceProvider1).provideService();
 		when(scopedServiceProvider1.getPolicy()).thenReturn(EMFFormsScopedServicePolicy.LAZY);
 		when(scopedServiceProvider1.getScope()).thenReturn(EMFFormsScopedServiceScope.LOCAL);
 		when(scopedServiceProvider1.getPriority()).thenReturn(1d);

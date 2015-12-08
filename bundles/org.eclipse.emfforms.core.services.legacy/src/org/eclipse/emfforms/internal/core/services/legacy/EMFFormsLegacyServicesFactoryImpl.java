@@ -44,6 +44,7 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 public class EMFFormsLegacyServicesFactoryImpl implements EMFFormsLegacyServicesFactory {
 
 	private ReportService reportService;
+	@SuppressWarnings("rawtypes")
 	private final Set<ServiceRegistration<EMFFormsScopedServiceProvider>> registrations = new LinkedHashSet<ServiceRegistration<EMFFormsScopedServiceProvider>>();
 
 	/**
@@ -67,13 +68,14 @@ public class EMFFormsLegacyServicesFactoryImpl implements EMFFormsLegacyServices
 
 	/**
 	 * Called by OSGi when the component is ready to be activated.
-	 * 
+	 *
 	 * @param bundleContext The {@link BundleContext}
 	 */
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		final Set<EMFFormsScopedServiceProvider> legacyServiceProviders = parseExtensions();
-		for (final EMFFormsScopedServiceProvider provider : legacyServiceProviders) {
+		final Set<EMFFormsScopedServiceProvider<? extends ViewModelService>> legacyServiceProviders = parseExtensions();
+		for (final EMFFormsScopedServiceProvider<? extends ViewModelService> provider : legacyServiceProviders) {
+			@SuppressWarnings("rawtypes")
 			final ServiceRegistration<EMFFormsScopedServiceProvider> registerService = bundleContext
 				.registerService(EMFFormsScopedServiceProvider.class, provider, null);
 			registrations.add(registerService);
@@ -85,14 +87,16 @@ public class EMFFormsLegacyServicesFactoryImpl implements EMFFormsLegacyServices
 	 */
 	@Deactivate
 	protected void deactivate() {
-		for (final ServiceRegistration<EMFFormsScopedServiceProvider> registration : registrations) {
+		for (@SuppressWarnings("rawtypes")
+		final ServiceRegistration<EMFFormsScopedServiceProvider> registration : registrations) {
 			registration.unregister();
 		}
 		registrations.clear();
 	}
 
-	private Set<EMFFormsScopedServiceProvider> parseExtensions() {
-		final Set<EMFFormsScopedServiceProvider> legacyServiceProviders = new LinkedHashSet<EMFFormsScopedServiceProvider>();
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	private Set<EMFFormsScopedServiceProvider<? extends ViewModelService>> parseExtensions() {
+		final Set<EMFFormsScopedServiceProvider<? extends ViewModelService>> legacyServiceProviders = new LinkedHashSet<EMFFormsScopedServiceProvider<? extends ViewModelService>>();
 		final IExtensionRegistry extensionRegistry = Platform.getExtensionRegistry();
 		if (extensionRegistry == null) {
 			return legacyServiceProviders;
@@ -101,15 +105,14 @@ public class EMFFormsLegacyServicesFactoryImpl implements EMFFormsLegacyServices
 			.getConfigurationElementsFor("org.eclipse.emf.ecp.view.context.viewServices"); //$NON-NLS-1$
 		for (final IConfigurationElement e : controls) {
 			try {
-
 				final ViewModelService viewService = (ViewModelService) e.createExecutableExtension("class"); //$NON-NLS-1$
 				if (GlobalViewModelService.class.isInstance(viewService)) {
-					legacyServiceProviders.add(new EMFFormsLegacyGlobalServiceProvider(
-						GlobalViewModelService.class.cast(viewService), reportService));
+					legacyServiceProviders.add(new EMFFormsLegacyGlobalServiceProvider(viewService.getClass(),
+						viewService.getPriority(), reportService));
 				} else {
-					legacyServiceProviders.add(new EMFFormsLegacyLocalServiceProvider(viewService, reportService));
+					legacyServiceProviders.add(new EMFFormsLegacyLocalServiceProvider(viewService.getClass(),
+						viewService.getPriority(), reportService));
 				}
-
 			} catch (final CoreException e1) {
 				reportService.report(new AbstractReport(e1));
 			}

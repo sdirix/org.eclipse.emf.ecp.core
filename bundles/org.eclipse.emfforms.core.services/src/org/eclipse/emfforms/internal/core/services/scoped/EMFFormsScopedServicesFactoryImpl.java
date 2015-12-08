@@ -33,10 +33,10 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 @Component
 public class EMFFormsScopedServicesFactoryImpl implements EMFFormsScopedServicesFactory {
 
-	private final Map<Class<?>, EMFFormsScopedServiceProvider> localImmediateMap = new LinkedHashMap<Class<?>, EMFFormsScopedServiceProvider>();
-	private final Map<Class<?>, EMFFormsScopedServiceProvider> localLazyMap = new LinkedHashMap<Class<?>, EMFFormsScopedServiceProvider>();
-	private final Map<Class<?>, EMFFormsScopedServiceProvider> globalImmediateMap = new LinkedHashMap<Class<?>, EMFFormsScopedServiceProvider>();
-	private final Map<Class<?>, EMFFormsScopedServiceProvider> globalLazyMap = new LinkedHashMap<Class<?>, EMFFormsScopedServiceProvider>();
+	private final Map<Class<?>, EMFFormsScopedServiceProvider<?>> localImmediateMap = new LinkedHashMap<Class<?>, EMFFormsScopedServiceProvider<?>>();
+	private final Map<Class<?>, EMFFormsScopedServiceProvider<?>> localLazyMap = new LinkedHashMap<Class<?>, EMFFormsScopedServiceProvider<?>>();
+	private final Map<Class<?>, EMFFormsScopedServiceProvider<?>> globalImmediateMap = new LinkedHashMap<Class<?>, EMFFormsScopedServiceProvider<?>>();
+	private final Map<Class<?>, EMFFormsScopedServiceProvider<?>> globalLazyMap = new LinkedHashMap<Class<?>, EMFFormsScopedServiceProvider<?>>();
 
 	/**
 	 * Called by OSGi whenever a new provider is available.
@@ -44,8 +44,8 @@ public class EMFFormsScopedServicesFactoryImpl implements EMFFormsScopedServices
 	 * @param provider The newly available provider
 	 */
 	@Reference(cardinality = ReferenceCardinality.MULTIPLE, policy = ReferencePolicy.DYNAMIC)
-	protected void addEMFFormsScopedServiceProvider(EMFFormsScopedServiceProvider provider) {
-		final Map<Class<?>, EMFFormsScopedServiceProvider> serviceProviderMap = getServiceProviderMap(provider);
+	protected void addEMFFormsScopedServiceProvider(EMFFormsScopedServiceProvider<?> provider) {
+		final Map<Class<?>, EMFFormsScopedServiceProvider<?>> serviceProviderMap = getServiceProviderMap(provider);
 		double currentPrio = Double.NEGATIVE_INFINITY;
 
 		if (serviceProviderMap.containsKey(provider.getType())) {
@@ -62,11 +62,12 @@ public class EMFFormsScopedServicesFactoryImpl implements EMFFormsScopedServices
 	 *
 	 * @param provider The removed provider
 	 */
-	protected void removeEMFFormsScopedServiceProvider(EMFFormsScopedServiceProvider provider) {
+	protected void removeEMFFormsScopedServiceProvider(EMFFormsScopedServiceProvider<?> provider) {
 		getServiceProviderMap(provider).remove(provider.getType());
 	}
 
-	private Map<Class<?>, EMFFormsScopedServiceProvider> getServiceProviderMap(EMFFormsScopedServiceProvider provider) {
+	private Map<Class<?>, EMFFormsScopedServiceProvider<?>> getServiceProviderMap(
+		EMFFormsScopedServiceProvider<?> provider) {
 		if (provider.getPolicy() == EMFFormsScopedServicePolicy.IMMEDIATE
 			&& provider.getScope() == EMFFormsScopedServiceScope.GLOBAL) {
 			return globalImmediateMap;
@@ -92,7 +93,7 @@ public class EMFFormsScopedServicesFactoryImpl implements EMFFormsScopedServices
 	@SuppressWarnings("unchecked")
 	@Override
 	public <T> Optional<T> getLocalImmediateService(Class<T> type) {
-		final EMFFormsScopedServiceProvider serviceProvider = localImmediateMap.get(type);
+		final EMFFormsScopedServiceProvider<?> serviceProvider = localImmediateMap.get(type);
 		if (serviceProvider != null) {
 			return (Optional<T>) Optional.of(serviceProvider.provideService());
 		}
@@ -107,7 +108,7 @@ public class EMFFormsScopedServicesFactoryImpl implements EMFFormsScopedServices
 	@SuppressWarnings("unchecked")
 	@Override
 	public <T> Optional<T> getLocalLazyService(Class<T> type) {
-		final EMFFormsScopedServiceProvider serviceProvider = localLazyMap.get(type);
+		final EMFFormsScopedServiceProvider<?> serviceProvider = localLazyMap.get(type);
 		if (serviceProvider != null) {
 			return (Optional<T>) Optional.of(serviceProvider.provideService());
 		}
@@ -122,7 +123,7 @@ public class EMFFormsScopedServicesFactoryImpl implements EMFFormsScopedServices
 	@SuppressWarnings("unchecked")
 	@Override
 	public <T> Optional<T> getGlobalImmediateService(Class<T> type) {
-		final EMFFormsScopedServiceProvider serviceProvider = globalImmediateMap.get(type);
+		final EMFFormsScopedServiceProvider<?> serviceProvider = globalImmediateMap.get(type);
 		if (serviceProvider != null) {
 			return (Optional<T>) Optional.of(serviceProvider.provideService());
 		}
@@ -137,7 +138,7 @@ public class EMFFormsScopedServicesFactoryImpl implements EMFFormsScopedServices
 	@SuppressWarnings("unchecked")
 	@Override
 	public <T> Optional<T> getGlobalLazyService(Class<T> type) {
-		final EMFFormsScopedServiceProvider serviceProvider = globalLazyMap.get(type);
+		final EMFFormsScopedServiceProvider<?> serviceProvider = globalLazyMap.get(type);
 		if (serviceProvider != null) {
 			return (Optional<T>) Optional.of(serviceProvider.provideService());
 		}

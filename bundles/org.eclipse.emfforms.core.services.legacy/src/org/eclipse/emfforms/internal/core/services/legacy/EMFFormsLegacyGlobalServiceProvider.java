@@ -11,8 +11,6 @@
  ******************************************************************************/
 package org.eclipse.emfforms.internal.core.services.legacy;
 
-import java.lang.reflect.InvocationTargetException;
-
 import org.eclipse.emf.ecp.view.spi.context.GlobalViewModelService;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
@@ -23,23 +21,27 @@ import org.eclipse.emfforms.spi.core.services.scoped.EMFFormsScopedServiceScope;
 /**
  * An {@link EMFFormsScopedServiceProvider} for {@link GlobalViewModelService}.
  *
+ * @param <T> The actual type of the {@link GlobalViewModelService}
  * @author Eugen Neufeld
  *
  */
-public class EMFFormsLegacyGlobalServiceProvider implements EMFFormsScopedServiceProvider {
+public class EMFFormsLegacyGlobalServiceProvider<T extends GlobalViewModelService>
+	implements EMFFormsScopedServiceProvider<T> {
 
-	private final GlobalViewModelService globalViewModelService;
+	private final Class<T> type;
+	private final double priority;
 	private final ReportService reportService;
 
 	/**
 	 * Default constructor used to create an {@link EMFFormsLegacyGlobalServiceProvider}.
-	 * 
-	 * @param globalViewModelService The GlobalViewModelService to wrap
+	 *
+	 * @param type The type of the service to wrap
+	 * @param priority The priority of the wrapped service
 	 * @param reportService The {@link ReportService} to use for logging
 	 */
-	public EMFFormsLegacyGlobalServiceProvider(GlobalViewModelService globalViewModelService,
-		ReportService reportService) {
-		this.globalViewModelService = globalViewModelService;
+	public EMFFormsLegacyGlobalServiceProvider(Class<T> type, double priority, ReportService reportService) {
+		this.type = type;
+		this.priority = priority;
 		this.reportService = reportService;
 	}
 
@@ -70,7 +72,7 @@ public class EMFFormsLegacyGlobalServiceProvider implements EMFFormsScopedServic
 	 */
 	@Override
 	public double getPriority() {
-		return globalViewModelService.getPriority();
+		return priority;
 	}
 
 	/**
@@ -79,8 +81,8 @@ public class EMFFormsLegacyGlobalServiceProvider implements EMFFormsScopedServic
 	 * @see org.eclipse.emfforms.spi.core.services.scoped.EMFFormsScopedServiceProvider#getType()
 	 */
 	@Override
-	public Class<?> getType() {
-		return globalViewModelService.getClass();
+	public Class<T> getType() {
+		return type;
 	}
 
 	/**
@@ -89,18 +91,14 @@ public class EMFFormsLegacyGlobalServiceProvider implements EMFFormsScopedServic
 	 * @see org.eclipse.emfforms.spi.core.services.scoped.EMFFormsScopedServiceProvider#provideService()
 	 */
 	@Override
-	public Object provideService() {
+	public T provideService() {
 		try {
-			return globalViewModelService.getClass().getConstructor().newInstance();
+			return type.newInstance();
 		} catch (final InstantiationException ex) {
 			reportService.report(new AbstractReport(ex));
 		} catch (final IllegalAccessException ex) {
 			reportService.report(new AbstractReport(ex));
 		} catch (final IllegalArgumentException ex) {
-			reportService.report(new AbstractReport(ex));
-		} catch (final InvocationTargetException ex) {
-			reportService.report(new AbstractReport(ex));
-		} catch (final NoSuchMethodException ex) {
 			reportService.report(new AbstractReport(ex));
 		} catch (final SecurityException ex) {
 			reportService.report(new AbstractReport(ex));

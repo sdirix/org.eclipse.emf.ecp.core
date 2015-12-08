@@ -15,10 +15,12 @@ package org.eclipse.emfforms.spi.core.services.scoped;
  * An {@link EMFFormsScopedServiceProvider} defines where and how the service will be available. It also creates the
  * concrete service instance on demand.
  *
+ * @param <T> The type of the provided service
+ *
  * @author Eugen Neufeld
  * @since 1.8
  */
-public interface EMFFormsScopedServiceProvider {
+public interface EMFFormsScopedServiceProvider<T> {
 
 	/**
 	 * Defines when the service should be activated.
@@ -47,13 +49,13 @@ public interface EMFFormsScopedServiceProvider {
 	 *
 	 * @return The Class of the actual service
 	 */
-	Class<?> getType();
+	Class<T> getType();
 
 	/**
-	 * Create a new instance of the provided service.
+	 * Creates a new instance of the provided service.
 	 *
 	 * @return A new instance of the provided service
 	 */
-	Object provideService();
+	T provideService();
 
 }

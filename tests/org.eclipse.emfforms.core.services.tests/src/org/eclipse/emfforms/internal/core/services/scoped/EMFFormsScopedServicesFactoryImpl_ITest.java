@@ -39,7 +39,7 @@ public class EMFFormsScopedServicesFactoryImpl_ITest {
 	private static BundleContext bundleContext;
 	private EMFFormsScopedServicesFactory service;
 	private ServiceReference<EMFFormsScopedServicesFactory> serviceReference;
-	private EMFFormsScopedServiceProvider scopedServiceProvider;
+	private EMFFormsScopedServiceProvider<?> scopedServiceProvider;
 
 	@BeforeClass
 	public static void setUpBeforeClass() {
@@ -53,7 +53,7 @@ public class EMFFormsScopedServicesFactoryImpl_ITest {
 		dictionary.put("service.ranking", 50); //$NON-NLS-1$
 		scopedServiceProvider = mock(EMFFormsScopedServiceProvider.class);
 		doReturn(Object.class).when(scopedServiceProvider).getType();
-		when(scopedServiceProvider.provideService()).thenReturn(mock(Object.class));
+		doReturn(mock(Object.class)).when(scopedServiceProvider).provideService();
 		when(scopedServiceProvider.getPolicy()).thenReturn(EMFFormsScopedServicePolicy.LAZY);
 		when(scopedServiceProvider.getScope()).thenReturn(EMFFormsScopedServiceScope.LOCAL);
 		when(scopedServiceProvider.getPriority()).thenReturn(1d);
