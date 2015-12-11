@@ -163,6 +163,7 @@
 		<module>../../bundles/org.eclipse.emf.ecp.view.table.columnservice</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.table.edapt</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.table.celleditor.rcp</module>
+		<module>../../bundles/org.eclipse.emfforms.swt.table</module>
 		
 		<!--  Stack Feature -->
 		<module>../../bundles/org.eclipse.emf.ecp.view.stack.model</module>
