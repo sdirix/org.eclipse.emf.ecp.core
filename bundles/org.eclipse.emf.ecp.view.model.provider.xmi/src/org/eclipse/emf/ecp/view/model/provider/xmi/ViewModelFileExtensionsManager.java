@@ -18,7 +18,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.MessageFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -357,10 +356,17 @@ public final class ViewModelFileExtensionsManager {
 
 	private Map<VView, ExtensionDescription> findBestFittingViews(EObject eObject,
 		final VViewModelProperties properties) {
-		final Map<VView, Set<ExtensionDescription>> viewMap = map.get(eObject.eClass());
-		if (viewMap == null) {
-			return Collections.emptyMap();
+		final Map<VView, Set<ExtensionDescription>> viewMap = new LinkedHashMap<VView, Set<ExtensionDescription>>();
+		final Set<EClass> allEClass = new LinkedHashSet<EClass>();
+		allEClass.add(eObject.eClass());
+		allEClass.addAll(eObject.eClass().getEAllSuperTypes());
+		for (final EClass eClass : allEClass) {
+			final Map<VView, Set<ExtensionDescription>> classMap = map.get(eClass);
+			if (classMap != null) {
+				viewMap.putAll(classMap);
+			}
 		}
+
 		final Map<VView, ExtensionDescription> bestFitting = new LinkedHashMap<VView, ViewModelFileExtensionsManager.ExtensionDescription>();
 		int maxNumberFittingKeyValues = -1;
 		VViewModelProperties propertiesToCheck = properties;
