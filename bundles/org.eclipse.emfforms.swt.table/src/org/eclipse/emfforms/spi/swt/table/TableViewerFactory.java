@@ -38,8 +38,8 @@ public final class TableViewerFactory {
 	 */
 	public static TableViewerSWTBuilder fillDefaults(Composite composite, int swtStyleBits, Object input) {
 		return new TableViewerSWTBuilder(composite, swtStyleBits, input,
-			Observables.constantObservableValue("", String.class),
-			Observables.constantObservableValue("", String.class));
+			Observables.constantObservableValue("", String.class), //$NON-NLS-1$
+			Observables.constantObservableValue("", String.class)); //$NON-NLS-1$
 	}
 
 	/**

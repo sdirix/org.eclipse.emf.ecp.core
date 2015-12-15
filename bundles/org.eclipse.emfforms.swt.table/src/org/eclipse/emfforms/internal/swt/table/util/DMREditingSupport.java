@@ -62,7 +62,7 @@ public class DMREditingSupport extends EditingSupport {
 		this.cellEditor = cellEditor;
 		this.valueProperty = valueProperty;
 		if (valueProperty == null) {
-			throw new IllegalArgumentException("ValueProperty may not be null");
+			throw new IllegalArgumentException("ValueProperty may not be null"); //$NON-NLS-1$
 		}
 	}
 

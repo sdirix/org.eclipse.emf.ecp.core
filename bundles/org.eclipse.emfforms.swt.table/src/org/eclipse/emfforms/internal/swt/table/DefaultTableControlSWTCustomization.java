@@ -125,6 +125,8 @@ public class DefaultTableControlSWTCustomization implements TableViewerSWTCustom
 	}
 
 	/**
+	 * Allows the exchange the default {@link TableViewerCompositeBuilder}.
+	 *
 	 * @param builder the {@link TableViewerCompositeBuilder}
 	 */
 	public void setTableViewerCompositeBuilder(TableViewerCompositeBuilder builder) {
@@ -132,6 +134,8 @@ public class DefaultTableControlSWTCustomization implements TableViewerSWTCustom
 	}
 
 	/**
+	 * Allows the exchange the default {@link TableViewerCreator}.
+	 *
 	 * @param creator the {@link TableViewerCreator}
 	 */
 	public void setTableViewerCreator(TableViewerCreator creator) {
@@ -139,6 +143,8 @@ public class DefaultTableControlSWTCustomization implements TableViewerSWTCustom
 	}
 
 	/**
+	 * Allows the exchange the default {@link ViewerComparator}.
+	 *
 	 * @param comparator the {@link ViewerComparator}
 	 */
 	public void setViewerComparator(ViewerComparator comparator) {
@@ -146,6 +152,8 @@ public class DefaultTableControlSWTCustomization implements TableViewerSWTCustom
 	}
 
 	/**
+	 * Allows the exchange the default {@link IContentProvider}.
+	 *
 	 * @param provider the {@link IContentProvider}
 	 */
 	public void setContentProvider(IContentProvider provider) {
@@ -154,6 +162,8 @@ public class DefaultTableControlSWTCustomization implements TableViewerSWTCustom
 	}
 
 	/**
+	 * Allows the exchange the default {@link ButtonBarBuilder}.
+	 *
 	 * @param builder the {@link ButtonBarBuilder}
 	 */
 	public void setButtonBarBuilder(ButtonBarBuilder builder) {
@@ -161,6 +171,8 @@ public class DefaultTableControlSWTCustomization implements TableViewerSWTCustom
 	}
 
 	/**
+	 * Adds a column to the table.
+	 *
 	 * @param columnDescription the
 	 *            {@link org.eclipse.emfforms.spi.swt.table.TableViewerSWTCustomization.ColumnDescription
 	 *            ColumnDescription}
@@ -170,16 +182,20 @@ public class DefaultTableControlSWTCustomization implements TableViewerSWTCustom
 	}
 
 	/**
+	 * Allows the exchange the default {@link NewElementCreator}. This may only be used if the
+	 * {@link #setButtonBarBuilder(ButtonBarBuilder) button bar builder} was not exchanged.
+	 *
 	 * @param creator the {@link NewElementCreator}
 	 */
 	public void setNewElementCreator(NewElementCreator<Object, Button> creator) {
 		if (!DefaultButtonBarBuilder.class.isInstance(buttonBarBuilder)) {
-			throw new IllegalArgumentException("Can only be used with the DefaultButtonBarBuilder");
+			throw new IllegalArgumentException("Can only be used with the DefaultButtonBarBuilder"); //$NON-NLS-1$
 		}
 		DefaultButtonBarBuilder.class.cast(buttonBarBuilder).setCreator(creator);
 	}
 
 	/**
+	 * Allows the exchange the default {@link DNDProvider}.
 	 *
 	 * @param provider the {@link DNDProvider}
 	 */

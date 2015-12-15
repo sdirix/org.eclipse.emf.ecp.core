@@ -87,11 +87,11 @@ public class DMRCellLabelProvider extends CellLabelProvider {
 			final Object value = observableValue.getValue();
 			observableValue.dispose();
 			if (value == null) {
-				cell.setText("");
+				cell.setText(""); //$NON-NLS-1$
 			}
 			cell.setText(String.valueOf(value));
 		} catch (final DatabindingFailedException ex) {
-			cell.setText("");
+			cell.setText(""); //$NON-NLS-1$
 		}
 	}
 

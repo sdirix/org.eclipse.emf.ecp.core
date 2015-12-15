@@ -34,17 +34,21 @@ public interface TableViewerSWTCustomization
 	extends TableViewerCompositeBuilder, TableViewerCreator, ButtonBarBuilder, DNDProvider {
 
 	/**
-	 * @return the {@link ViewerComparator} which will be set on the viewr, if present
+	 * Returns the comparator to use.
+	 *
+	 * @return the {@link ViewerComparator} which will be set on the viewer, if present
 	 */
 	Optional<ViewerComparator> getComparator();
 
 	/**
+	 * Returns the content provider to use.
 	 *
 	 * @return the {@link IContentProvider} which will be set on the viewer
 	 */
 	IContentProvider createContentProvider();
 
 	/**
+	 * Returns the column descriptions which will be used to create actual columns.
 	 *
 	 * @return the {@link ColumnDescription ColumnDescriptions}
 	 */
@@ -59,61 +63,72 @@ public interface TableViewerSWTCustomization
 	interface ColumnDescription {
 
 		/**
+		 * <code>true</code> if resizeable, <code>false</code> otherwise.
 		 *
 		 * @return whether the column is resizeable
 		 */
 		boolean isResizeable();
 
 		/**
+		 * <code>true</code> if moveable, <code>false</code> otherwise.
 		 *
 		 * @return whether the column is moveable
 		 */
 		boolean isMoveable();
 
 		/**
+		 * The SWT style bits which will be used to create the column.
 		 *
 		 * @return the SWT style bits for the column
 		 */
 		int getStyleBits();
 
 		/**
+		 * The weight of the column.
 		 *
 		 * @return the weight of the column
 		 */
 		int getWeight();
 
 		/**
+		 * The minimal width of the column.
 		 *
-		 * @return the mind width of the column in pixels
+		 * @return the min width of the column in pixels
 		 */
 		int getMinWidth();
 
 		/**
+		 * The header text for the column.
 		 *
 		 * @return the column header text
 		 */
 		IObservableValue getColumnText();
 
 		/**
+		 * The column header tooltip text.
 		 *
 		 * @return the column header tooltip
 		 */
 		IObservableValue getColumnTooltip();
 
 		/**
+		 * The cell label provider which will be set on the column.
 		 *
 		 * @return the label provider
 		 */
 		CellLabelProvider createLabelProvider();
 
 		/**
+		 * Called to setup the {@link EditingSupport} for the viewer.
+		 * 
 		 * @param columnViewer the {@link TableViewer}
 		 * @return the editing support for the column, if present
 		 */
 		Optional<EditingSupport> createEditingSupport(TableViewer columnViewer);
 
 		/**
-		 *
+		 * The image of the column.
+		 * 
 		 * @return the column image, if present
 		 */
 		Optional<Image> getColumnImage();

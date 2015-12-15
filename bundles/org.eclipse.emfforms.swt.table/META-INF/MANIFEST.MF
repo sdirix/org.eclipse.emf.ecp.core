@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Table
-Bundle-SymbolicName: org.eclipse.emfforms.swt.table;singleton:=true
+Bundle-SymbolicName: org.eclipse.emfforms.swt.table
 Bundle-Version: 1.8.0.qualifier
 Bundle-Vendor: Eclipse Modeling Project
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
@@ -28,6 +28,7 @@ Require-Bundle: org.eclipse.emf.ecp.edit.swt;bundle-version="[1.8.0,1.9.0)",
  org.eclipse.emfforms.core.services;bundle-version="[1.8.0,1.9.0)",
  org.eclipse.core.commands;bundle-version="[3.5.0,4.0.0)"
 Export-Package: org.eclipse.emfforms.internal.swt.table;version="1.8.0";x-internal:=true,
+ org.eclipse.emfforms.internal.swt.table.messages;version="1.8.0";x-internal:=true,
  org.eclipse.emfforms.internal.swt.table.util;version="1.8.0";x-internal:=true,
  org.eclipse.emfforms.spi.swt.table;version="1.8.0",
  org.eclipse.emfforms.spi.swt.table.util;version="1.8.0"
