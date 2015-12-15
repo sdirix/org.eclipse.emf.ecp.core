@@ -139,6 +139,8 @@ public class ViewModelContextImpl implements ViewModelContext {
 
 	private final Map<ServiceReference<?>, Class<?>> usedOSGiServices = new LinkedHashMap<ServiceReference<?>, Class<?>>();
 
+	private ServiceListener serviceListener;
+
 	/**
 	 * Instantiates a new view model context impl.
 	 *
@@ -282,7 +284,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 				}
 			}
 
-			bundleContext.addServiceListener(new ServiceListener() {
+			serviceListener = new ServiceListener() {
 
 				@Override
 				public void serviceChanged(ServiceEvent event) {
@@ -292,7 +294,8 @@ public class ViewModelContextImpl implements ViewModelContext {
 						serviceMap.remove(remove);
 					}
 				}
-			});
+			};
+			bundleContext.addServiceListener(serviceListener);
 
 		}
 	}
@@ -506,6 +509,13 @@ public class ViewModelContextImpl implements ViewModelContext {
 		childContexts.clear();
 
 		releaseOSGiServices();
+
+		final Bundle bundle = FrameworkUtil.getBundle(getClass());
+		if (bundle != null) {
+			final BundleContext bundleContext = bundle.getBundleContext();
+			bundleContext.removeServiceListener(serviceListener);
+			serviceListener = null;
+		}
 
 		isDisposing = false;
 		isDisposed = true;
