@@ -20,6 +20,7 @@ import java.util.List;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecp.test.common.DefaultRealm;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
@@ -36,6 +37,7 @@ import org.eclipse.emf.ecp.view.validation.test.model.Library;
 import org.eclipse.emf.ecp.view.validation.test.model.TestFactory;
 import org.eclipse.emf.ecp.view.validation.test.model.TestPackage;
 import org.eclipse.emf.ecp.view.validation.test.model.Writer;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -48,6 +50,7 @@ import org.junit.runners.Parameterized.Parameters;
  */
 @RunWith(Parameterized.class)
 public class ValidationPerformance_Test {
+	private DefaultRealm defaultRealm;
 
 	private Library domain;
 	private VView view;
@@ -102,9 +105,15 @@ public class ValidationPerformance_Test {
 
 	@Before
 	public void before() {
+		defaultRealm = new DefaultRealm();
 		System.out.println();
 		domain = createLibrary();
 		view = createView();
+	}
+
+	@After
+	public void tearDown() {
+		defaultRealm.dispose();
 	}
 
 	private long now() {

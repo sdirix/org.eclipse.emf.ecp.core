@@ -265,6 +265,7 @@
 		<module>../../bundles/org.eclipse.emfforms.core.services.domainexpander.default</module>
 		<module>../../bundles/org.eclipse.emfforms.core.services.domainexpander.index</module>
 		<module>../../bundles/org.eclipse.emfforms.core.services.domainexpander.mapping</module>
+		<module>../../bundles/org.eclipse.emfforms.core.services.domainexpander.table</module>
 		<module>../../bundles/org.eclipse.emfforms.core.services.emfspecificservice</module>
 		<module>../../bundles/org.eclipse.emfforms.core.services.editsupport</module>
 		<module>../../bundles/org.eclipse.emfforms.swt.core</module>

@@ -25,6 +25,7 @@ import java.util.concurrent.TimeUnit;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecp.test.common.DefaultRealm;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
@@ -48,6 +49,8 @@ import org.eclipse.emf.ecp.view.validation.test.model.PowerBlock;
 import org.eclipse.emf.ecp.view.validation.test.model.TestFactory;
 import org.eclipse.emf.ecp.view.validation.test.model.TestPackage;
 import org.eclipse.emf.ecp.view.validation.test.model.Writer;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -56,6 +59,18 @@ import org.junit.Test;
  * @author emueller
  */
 public class ViewValidation_PTest extends CommonValidationTest {
+
+	private DefaultRealm defaultRealm;
+
+	@Before
+	public void setup() {
+		defaultRealm = new DefaultRealm();
+	}
+
+	@After
+	public void tearDown() {
+		defaultRealm.dispose();
+	}
 
 	@Test
 	public void testValidationMissingElementOnInit() {
@@ -416,7 +431,7 @@ public class ViewValidation_PTest extends CommonValidationTest {
 		final VTableControl control = VTableFactory.eINSTANCE.createTableControl();
 		control
 			.setDomainModelReference(
-			getVTableDomainModelReference(TestPackage.eINSTANCE.getLibrary_Writers()));
+				getVTableDomainModelReference(TestPackage.eINSTANCE.getLibrary_Writers()));
 		final VFeaturePathDomainModelReference tc = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
 		tc.setDomainModelEFeature(TestPackage.eINSTANCE.getWriter_FirstName());
 		VTableDomainModelReference.class.cast(control.getDomainModelReference()).getColumnDomainModelReferences()
@@ -425,7 +440,7 @@ public class ViewValidation_PTest extends CommonValidationTest {
 		final VTableControl control2 = VTableFactory.eINSTANCE.createTableControl();
 		control2
 			.setDomainModelReference(
-			getVTableDomainModelReference(TestPackage.eINSTANCE.getLibrary_Writers()));
+				getVTableDomainModelReference(TestPackage.eINSTANCE.getLibrary_Writers()));
 		final VFeaturePathDomainModelReference tc2 = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
 		tc2.setDomainModelEFeature(TestPackage.eINSTANCE.getWriter_LastName());
 		VTableDomainModelReference.class.cast(control2.getDomainModelReference()).getColumnDomainModelReferences()
@@ -593,7 +608,7 @@ public class ViewValidation_PTest extends CommonValidationTest {
 		final VTableControl control = VTableFactory.eINSTANCE.createTableControl();
 		control
 			.setDomainModelReference(
-			getVTableDomainModelReference(TestPackage.eINSTANCE.getLibrary_Writers()));
+				getVTableDomainModelReference(TestPackage.eINSTANCE.getLibrary_Writers()));
 
 		ViewModelContextFactory.INSTANCE.createViewModelContext(control, lib);
 
@@ -610,7 +625,7 @@ public class ViewValidation_PTest extends CommonValidationTest {
 		final VTableControl control = VTableFactory.eINSTANCE.createTableControl();
 		control
 			.setDomainModelReference(
-			getVTableDomainModelReference(TestPackage.eINSTANCE.getLibrary_Writers()));
+				getVTableDomainModelReference(TestPackage.eINSTANCE.getLibrary_Writers()));
 		final VFeaturePathDomainModelReference tc = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
 		tc.setDomainModelEFeature(TestPackage.eINSTANCE.getWriter_FirstName());
 		VTableDomainModelReference.class.cast(control.getDomainModelReference()).getColumnDomainModelReferences()
@@ -634,7 +649,7 @@ public class ViewValidation_PTest extends CommonValidationTest {
 		final VTableControl control = VTableFactory.eINSTANCE.createTableControl();
 		control
 			.setDomainModelReference(
-			getVTableDomainModelReference(TestPackage.eINSTANCE.getLibrary_Writers()));
+				getVTableDomainModelReference(TestPackage.eINSTANCE.getLibrary_Writers()));
 		final VFeaturePathDomainModelReference tc = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
 		tc.setDomainModelEFeature(TestPackage.eINSTANCE.getWriter_FirstName());
 		VTableDomainModelReference.class.cast(control.getDomainModelReference()).getColumnDomainModelReferences()
@@ -655,7 +670,7 @@ public class ViewValidation_PTest extends CommonValidationTest {
 		final VTableControl control = VTableFactory.eINSTANCE.createTableControl();
 		control
 			.setDomainModelReference(
-			getVTableDomainModelReference(TestPackage.eINSTANCE.getLibrary_Writers()));
+				getVTableDomainModelReference(TestPackage.eINSTANCE.getLibrary_Writers()));
 		final VFeaturePathDomainModelReference tc = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
 		tc.setDomainModelEFeature(TestPackage.eINSTANCE.getWriter_FirstName());
 		VTableDomainModelReference.class.cast(control.getDomainModelReference()).getColumnDomainModelReferences()
@@ -680,7 +695,7 @@ public class ViewValidation_PTest extends CommonValidationTest {
 		final VTableControl control = VTableFactory.eINSTANCE.createTableControl();
 		control
 			.setDomainModelReference(
-			getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getLibrary_Writers()));
+				getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getLibrary_Writers()));
 		final VFeaturePathDomainModelReference tc = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
 		tc.setDomainModelEFeature(TestPackage.eINSTANCE.getWriter_FirstName());
 		VTableDomainModelReference.class.cast(control.getDomainModelReference()).getColumnDomainModelReferences()
@@ -702,16 +717,19 @@ public class ViewValidation_PTest extends CommonValidationTest {
 		lib.getWriters().add(writer);
 		writer.setFirstName("bla");
 
+		final VView view = VViewFactory.eINSTANCE.createView();
+
 		final VTableControl control = VTableFactory.eINSTANCE.createTableControl();
+		view.getChildren().add(control);
 		control
 			.setDomainModelReference(
-			getVTableDomainModelReference(TestPackage.eINSTANCE.getLibrary_Writers()));
+				getVTableDomainModelReference(TestPackage.eINSTANCE.getLibrary_Writers()));
 		final VFeaturePathDomainModelReference tc = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
 		tc.setDomainModelEFeature(TestPackage.eINSTANCE.getWriter_FirstName());
 		VTableDomainModelReference.class.cast(control.getDomainModelReference()).getColumnDomainModelReferences()
 			.add(tc);
 
-		ViewModelContextFactory.INSTANCE.createViewModelContext(control, lib);
+		ViewModelContextFactory.INSTANCE.createViewModelContext(view, lib);
 		assertEquals("Severity of table must be OK", Diagnostic.OK, control.getDiagnostic().getHighestSeverity());
 
 		final Writer writer2 = TestFactory.eINSTANCE.createWriter();
@@ -729,7 +747,7 @@ public class ViewValidation_PTest extends CommonValidationTest {
 		final VTableControl control = VTableFactory.eINSTANCE.createTableControl();
 		control
 			.setDomainModelReference(
-			getVTableDomainModelReference(TestPackage.eINSTANCE.getLibrary_Writers()));
+				getVTableDomainModelReference(TestPackage.eINSTANCE.getLibrary_Writers()));
 		final VFeaturePathDomainModelReference tc = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
 		tc.setDomainModelEFeature(TestPackage.eINSTANCE.getWriter_FirstName());
 		VTableDomainModelReference.class.cast(control.getDomainModelReference()).getColumnDomainModelReferences()
@@ -752,16 +770,19 @@ public class ViewValidation_PTest extends CommonValidationTest {
 		writer.setFirstName("H");
 		lib.getWriters().add(writer);
 
+		final VView view = VViewFactory.eINSTANCE.createView();
+
 		final VTableControl control = VTableFactory.eINSTANCE.createTableControl();
+		view.getChildren().add(control);
 		control
 			.setDomainModelReference(
-			getVTableDomainModelReference(TestPackage.eINSTANCE.getLibrary_Writers()));
+				getVTableDomainModelReference(TestPackage.eINSTANCE.getLibrary_Writers()));
 		final VFeaturePathDomainModelReference tc = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
 		tc.setDomainModelEFeature(TestPackage.eINSTANCE.getWriter_FirstName());
 		VTableDomainModelReference.class.cast(control.getDomainModelReference()).getColumnDomainModelReferences()
 			.add(tc);
 
-		ViewModelContextFactory.INSTANCE.createViewModelContext(control, lib);
+		ViewModelContextFactory.INSTANCE.createViewModelContext(view, lib);
 
 		assertEquals("Severity of table must be warning", Diagnostic.WARNING, control.getDiagnostic()
 			.getHighestSeverity());
@@ -982,7 +1003,8 @@ public class ViewValidation_PTest extends CommonValidationTest {
 		view.getChildren().add(control2);
 		ViewModelContextFactory.INSTANCE.createViewModelContext(view, lib);
 
-		assertEquals("Severity of table must be error", Diagnostic.ERROR, control1.getDiagnostic().getHighestSeverity());
+		assertEquals("Severity of table must be error", Diagnostic.ERROR,
+			control1.getDiagnostic().getHighestSeverity());
 		assertEquals("Severity of table must be ok", Diagnostic.OK, control2.getDiagnostic().getHighestSeverity());
 
 		lib.getWriters().remove(writer);
@@ -1040,7 +1062,8 @@ public class ViewValidation_PTest extends CommonValidationTest {
 		view.getChildren().add(control1);
 		ViewModelContextFactory.INSTANCE.createViewModelContext(view, container);
 
-		assertEquals("Severity of table must be error", Diagnostic.ERROR, control1.getDiagnostic().getHighestSeverity());
+		assertEquals("Severity of table must be error", Diagnostic.ERROR,
+			control1.getDiagnostic().getHighestSeverity());
 		// ok for container, 2x error for contents
 		// assertEquals("There must be 3 diagnostics", 3, control1.getDiagnostic().getDiagnostics().size());
 	}
@@ -1072,7 +1095,8 @@ public class ViewValidation_PTest extends CommonValidationTest {
 
 		content1.setUniqueAttribute("b");
 
-		assertEquals("Severity of table must be error", Diagnostic.ERROR, control1.getDiagnostic().getHighestSeverity());
+		assertEquals("Severity of table must be error", Diagnostic.ERROR,
+			control1.getDiagnostic().getHighestSeverity());
 	}
 
 	@Test
@@ -1102,7 +1126,8 @@ public class ViewValidation_PTest extends CommonValidationTest {
 
 		content2.setUniqueAttribute("a");
 
-		assertEquals("Severity of table must be error", Diagnostic.ERROR, control1.getDiagnostic().getHighestSeverity());
+		assertEquals("Severity of table must be error", Diagnostic.ERROR,
+			control1.getDiagnostic().getHighestSeverity());
 	}
 
 	@Test
@@ -1127,7 +1152,8 @@ public class ViewValidation_PTest extends CommonValidationTest {
 		view.getChildren().add(control1);
 		ViewModelContextFactory.INSTANCE.createViewModelContext(view, container);
 
-		assertEquals("Severity of table must be error", Diagnostic.ERROR, control1.getDiagnostic().getHighestSeverity());
+		assertEquals("Severity of table must be error", Diagnostic.ERROR,
+			control1.getDiagnostic().getHighestSeverity());
 		// ok for container, 2x error for contents
 		// assertEquals("There must be 3 diagnostics", 3, control1.getDiagnostic().getDiagnostics().size());
 
@@ -1159,7 +1185,8 @@ public class ViewValidation_PTest extends CommonValidationTest {
 		view.getChildren().add(control1);
 		ViewModelContextFactory.INSTANCE.createViewModelContext(view, container);
 
-		assertEquals("Severity of table must be error", Diagnostic.ERROR, control1.getDiagnostic().getHighestSeverity());
+		assertEquals("Severity of table must be error", Diagnostic.ERROR,
+			control1.getDiagnostic().getHighestSeverity());
 		// ok for container, 2x error for contents
 		// assertEquals("There must be 3 diagnostics", 3, control1.getDiagnostic().getDiagnostics().size());
 
@@ -1198,7 +1225,8 @@ public class ViewValidation_PTest extends CommonValidationTest {
 		view.getChildren().add(control1);
 		ViewModelContextFactory.INSTANCE.createViewModelContext(view, container);
 
-		assertEquals("Severity of table must be error", Diagnostic.ERROR, control1.getDiagnostic().getHighestSeverity());
+		assertEquals("Severity of table must be error", Diagnostic.ERROR,
+			control1.getDiagnostic().getHighestSeverity());
 		// ok for container, 4x error for contents
 		// assertEquals("There must be 5 diagnostics", 5, control1.getDiagnostic().getDiagnostics().size());
 	}
@@ -1232,13 +1260,15 @@ public class ViewValidation_PTest extends CommonValidationTest {
 		view.getChildren().add(control1);
 		ViewModelContextFactory.INSTANCE.createViewModelContext(view, container);
 
-		assertEquals("Severity of table must be error", Diagnostic.ERROR, control1.getDiagnostic().getHighestSeverity());
+		assertEquals("Severity of table must be error", Diagnostic.ERROR,
+			control1.getDiagnostic().getHighestSeverity());
 		// ok for container, 4x error for contents
 		// assertEquals("There must be 5 diagnostics", 5, control1.getDiagnostic().getDiagnostics().size());
 
 		content3.setUniqueAttribute("a");
 
-		assertEquals("Severity of table must be error", Diagnostic.ERROR, control1.getDiagnostic().getHighestSeverity());
+		assertEquals("Severity of table must be error", Diagnostic.ERROR,
+			control1.getDiagnostic().getHighestSeverity());
 		// ok for container, 1x ok , 3x error for contents
 		// assertEquals("There must be 5 diagnostics", 5, control1.getDiagnostic().getDiagnostics().size());
 	}
@@ -1272,13 +1302,15 @@ public class ViewValidation_PTest extends CommonValidationTest {
 		view.getChildren().add(control1);
 		ViewModelContextFactory.INSTANCE.createViewModelContext(view, container);
 
-		assertEquals("Severity of table must be error", Diagnostic.ERROR, control1.getDiagnostic().getHighestSeverity());
+		assertEquals("Severity of table must be error", Diagnostic.ERROR,
+			control1.getDiagnostic().getHighestSeverity());
 		// ok for container, 4x error for contents
 		// assertEquals("There must be 5 diagnostics", 5, control1.getDiagnostic().getDiagnostics().size());
 
 		content3.setUniqueAttribute("c");
 
-		assertEquals("Severity of table must be error", Diagnostic.ERROR, control1.getDiagnostic().getHighestSeverity());
+		assertEquals("Severity of table must be error", Diagnostic.ERROR,
+			control1.getDiagnostic().getHighestSeverity());
 		// ok for container,2x ok, 2x error for contents
 		// assertEquals("There must be 4 diagnostics", 4, control1.getDiagnostic().getDiagnostics().size());
 	}
@@ -1307,7 +1339,8 @@ public class ViewValidation_PTest extends CommonValidationTest {
 		view.getChildren().add(control1);
 		ViewModelContextFactory.INSTANCE.createViewModelContext(view, lib);
 
-		assertEquals("Severity of table must be error", Diagnostic.ERROR, control1.getDiagnostic().getHighestSeverity());
+		assertEquals("Severity of table must be error", Diagnostic.ERROR,
+			control1.getDiagnostic().getHighestSeverity());
 		assertEquals("Severity of table must be error", Diagnostic.ERROR, view.getDiagnostic().getHighestSeverity());
 
 		writer.setFirstName("asdf");
@@ -1332,7 +1365,7 @@ public class ViewValidation_PTest extends CommonValidationTest {
 		final VTableControl control = VTableFactory.eINSTANCE.createTableControl();
 		control
 			.setDomainModelReference(
-			getVTableDomainModelReference(TestPackage.eINSTANCE.getLibrary_Writers()));
+				getVTableDomainModelReference(TestPackage.eINSTANCE.getLibrary_Writers()));
 		final VFeaturePathDomainModelReference tc = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
 		tc.setDomainModelEFeature(TestPackage.eINSTANCE.getWriter_FirstName());
 		VTableDomainModelReference.class.cast(control.getDomainModelReference()).getColumnDomainModelReferences()
@@ -1473,7 +1506,7 @@ public class ViewValidation_PTest extends CommonValidationTest {
 		final VControl control = VViewFactory.eINSTANCE.createControl();
 		control
 			.setDomainModelReference(
-			getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getWriter_FirstName()));
+				getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getWriter_FirstName()));
 		final ViewModelContext vmc = ViewModelContextFactory.INSTANCE.createViewModelContext(control, writer);
 
 		final Set<Diagnostic> result = new LinkedHashSet<Diagnostic>();
@@ -1498,7 +1531,7 @@ public class ViewValidation_PTest extends CommonValidationTest {
 		final VControl control = VViewFactory.eINSTANCE.createControl();
 		control
 			.setDomainModelReference(
-			getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getWriter_FirstName()));
+				getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getWriter_FirstName()));
 
 		final ViewModelContext vmc = ViewModelContextFactory.INSTANCE.createViewModelContext(control, writer);
 
