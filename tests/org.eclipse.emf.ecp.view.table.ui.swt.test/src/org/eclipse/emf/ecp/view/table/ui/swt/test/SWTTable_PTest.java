@@ -13,7 +13,6 @@
 package org.eclipse.emf.ecp.view.table.ui.swt.test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -67,6 +66,7 @@ import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
@@ -130,8 +130,9 @@ public class SWTTable_PTest {
 		final TableControlHandle handle = createUninitializedTableWithoutColumns();
 		//
 		final Control render = SWTViewTestHelper.render(handle.getTableControl(), domainElement, shell);
-		assertNull(render);
-
+		assertTrue(Label.class.isInstance(render));// Error label with error text
+		assertEquals("The field domainModelEFeature of the given VFeaturePathDomainModelReference must not be null.",
+			Label.class.cast(render).getText());
 	}
 
 	@Test
@@ -342,7 +343,8 @@ public class SWTTable_PTest {
 		final AbstractSWTRenderer<VElement> tableRenderer = rendererFactory.getRendererInstance(
 			handle.getTableControl(),
 			new ViewModelContextWithoutServices(handle.getTableControl()));
-		final Control control = tableRenderer.render(new SWTGridCell(0, 0, tableRenderer), shell);
+		final Control render = tableRenderer.render(new SWTGridCell(0, 0, tableRenderer), shell);
+		final Control control = Composite.class.cast(render).getChildren()[0];
 		if (control == null) {
 			fail("No control was rendered");
 		}
@@ -480,6 +482,7 @@ public class SWTTable_PTest {
 
 	private Control getTable(Control render) {
 		Composite composite = (Composite) render;
+		composite = (Composite) composite.getChildren()[0];
 		composite = (Composite) composite.getChildren()[1];
 		// composite = (Composite) composite.getChildren()[0];
 		// composite = (Composite) composite.getChildren()[0];
