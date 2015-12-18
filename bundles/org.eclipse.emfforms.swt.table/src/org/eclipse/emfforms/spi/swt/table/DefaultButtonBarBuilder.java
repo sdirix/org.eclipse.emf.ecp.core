@@ -16,7 +16,8 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import org.eclipse.emfforms.internal.swt.table.messages.Messages;
+import org.eclipse.emfforms.internal.swt.table.messages.MessageKeys;
+import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
@@ -68,7 +69,8 @@ public final class DefaultButtonBarBuilder implements ButtonBarBuilder {
 	 */
 	protected void createRemoveButton(Composite buttonComposite, final TableViewer viewer) {
 		final Button removeButton = new Button(buttonComposite, SWT.PUSH);
-		removeButton.setText(Messages.getString("DefaultButtonBarBuilder.RemoveButtonText")); //$NON-NLS-1$
+		removeButton.setText(LocalizationServiceHelper.getString(DefaultButtonBarBuilder.class,
+			MessageKeys.DefaultButtonBarBuilder_RemoveButtonText));
 		removeButton.addSelectionListener(new SelectionAdapter() {
 
 			@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -104,7 +106,8 @@ public final class DefaultButtonBarBuilder implements ButtonBarBuilder {
 	 */
 	protected void createAddButton(Composite buttonComposite, final TableViewer viewer) {
 		final Button addButton = new Button(buttonComposite, SWT.PUSH);
-		addButton.setText(Messages.getString("DefaultButtonBarBuilder.AddButtonText")); //$NON-NLS-1$
+		addButton.setText(LocalizationServiceHelper.getString(DefaultButtonBarBuilder.class,
+			MessageKeys.DefaultButtonBarBuilder_AddButtonText));
 		addButton.addSelectionListener(new SelectionAdapter() {
 			@SuppressWarnings({ "rawtypes", "unchecked" })
 			@Override
@@ -122,7 +125,8 @@ public final class DefaultButtonBarBuilder implements ButtonBarBuilder {
 		});
 		if (creator == null) {
 			addButton.setEnabled(false);
-			addButton.setToolTipText(Messages.getString("DefaultButtonBarBuilder.AddButtonTooltipNoCreator")); //$NON-NLS-1$
+			addButton.setToolTipText(LocalizationServiceHelper.getString(DefaultButtonBarBuilder.class,
+				MessageKeys.DefaultButtonBarBuilder_AddButtonTooltipNoCreator));
 		}
 	}
 

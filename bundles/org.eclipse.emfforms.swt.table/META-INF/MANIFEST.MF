@@ -5,7 +5,8 @@ Bundle-SymbolicName: org.eclipse.emfforms.swt.table
 Bundle-Version: 1.8.0.qualifier
 Bundle-Vendor: Eclipse Modeling Project
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Import-Package: org.eclipse.jface.databinding.swt;version="0.0.0",
+Import-Package: org.eclipse.emfforms.spi.localization;version="1.8.0",
+ org.eclipse.jface.databinding.swt;version="0.0.0",
  org.eclipse.jface.databinding.viewers;version="0.0.0",
  org.eclipse.jface.dialogs;version="0.0.0",
  org.eclipse.jface.layout;version="0.0.0",

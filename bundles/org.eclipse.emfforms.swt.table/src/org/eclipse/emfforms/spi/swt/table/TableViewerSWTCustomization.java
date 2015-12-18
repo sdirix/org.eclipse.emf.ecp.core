@@ -114,13 +114,14 @@ public interface TableViewerSWTCustomization
 		/**
 		 * The cell label provider which will be set on the column.
 		 *
+		 * @param columnViewer the column viewer
 		 * @return the label provider
 		 */
-		CellLabelProvider createLabelProvider();
+		CellLabelProvider createLabelProvider(TableViewer columnViewer);
 
 		/**
 		 * Called to setup the {@link EditingSupport} for the viewer.
-		 * 
+		 *
 		 * @param columnViewer the {@link TableViewer}
 		 * @return the editing support for the column, if present
 		 */
@@ -128,7 +129,7 @@ public interface TableViewerSWTCustomization
 
 		/**
 		 * The image of the column.
-		 * 
+		 *
 		 * @return the column image, if present
 		 */
 		Optional<Image> getColumnImage();

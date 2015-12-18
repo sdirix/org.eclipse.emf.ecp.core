@@ -56,7 +56,7 @@ public class DefaultTableViewerCompositeBuilder implements TableViewerCompositeB
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING).grab(true, false).applyTo(titleLabel);
 
 		/* Validation icon label */
-		createValidationLabel(topComposite);
+		validationLabel = createValidationLabel(topComposite);
 
 		/* Button composite */
 		buttonComposite = new Composite(topComposite, SWT.NONE);
@@ -64,21 +64,34 @@ public class DefaultTableViewerCompositeBuilder implements TableViewerCompositeB
 		GridDataFactory.fillDefaults().align(SWT.END, SWT.BEGINNING).grab(true, false).applyTo(buttonComposite);
 
 		/* Bottom composite */
-		viewerComposite = new Composite(composite, SWT.NONE);
+		viewerComposite = createViewerComposite(composite);
+	}
+
+	/**
+	 * Called to create the composite for the table viewer.
+	 *
+	 * @param composite the parent
+	 * @return the composite
+	 */
+	protected Composite createViewerComposite(final Composite composite) {
+		final Composite viewerComposite = new Composite(composite, SWT.NONE);
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).hint(1, 200)
 			.applyTo(viewerComposite);
 		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(viewerComposite);
+		return viewerComposite;
 	}
 
 	/**
 	 * Called to create the validation label.
-	 * 
+	 *
 	 * @param topComposite the parent
+	 * @return the label
 	 */
-	protected void createValidationLabel(final Composite topComposite) {
-		validationLabel = new Label(topComposite, SWT.NONE);
+	protected Label createValidationLabel(final Composite topComposite) {
+		final Label validationLabel = new Label(topComposite, SWT.NONE);
 		validationLabel.setBackground(topComposite.getBackground());
 		GridDataFactory.fillDefaults().hint(16, 17).grab(false, false).applyTo(validationLabel);
+		return validationLabel;
 	}
 
 	@Override

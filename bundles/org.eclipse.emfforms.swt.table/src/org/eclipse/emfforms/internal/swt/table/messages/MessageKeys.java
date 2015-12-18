@@ -11,26 +11,17 @@
  ******************************************************************************/
 package org.eclipse.emfforms.internal.swt.table.messages;
 
-import java.util.MissingResourceException;
-import java.util.ResourceBundle;
-
 /**
  * @generated
  *
  */
-public class Messages {
-	private static final String BUNDLE_NAME = "org.eclipse.emfforms.internal.swt.table.messages.messages"; //$NON-NLS-1$
+public final class MessageKeys {
 
-	private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME);
-
-	private Messages() {
+	private MessageKeys() {
 	}
 
-	public static String getString(String key) {
-		try {
-			return RESOURCE_BUNDLE.getString(key);
-		} catch (final MissingResourceException e) {
-			return '!' + key + '!';
-		}
-	}
+	public static final String DefaultButtonBarBuilder_AddButtonText = "DefaultButtonBarBuilder_AddButtonText"; //$NON-NLS-1$
+	public static final String DefaultButtonBarBuilder_AddButtonTooltipNoCreator = "DefaultButtonBarBuilder_AddButtonTooltipNoCreator"; //$NON-NLS-1$
+	public static final String DefaultButtonBarBuilder_RemoveButtonText = "DefaultButtonBarBuilder_RemoveButtonText"; //$NON-NLS-1$
+
 }

@@ -15,6 +15,7 @@ package org.eclipse.emfforms.spi.swt.table;
 import org.eclipse.core.databinding.observable.Observables;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emfforms.internal.swt.table.DefaultTableControlSWTCustomization;
+import org.eclipse.emfforms.internal.swt.table.util.StaticCellLabelProviderFactory;
 import org.eclipse.jface.viewers.CellLabelProvider;
 import org.eclipse.jface.viewers.IContentProvider;
 import org.eclipse.jface.viewers.ViewerComparator;
@@ -181,7 +182,7 @@ public final class TableViewerSWTBuilder {
 		int minWidth,
 		IObservableValue columnText,
 		IObservableValue tooltipText,
-		CellLabelProvider labelProvider,
+		CellLabelProviderFactory labelProvider,
 		EditingSupportCreator editingSupport,
 		Image image) {
 		// END COMPLEX CODE
@@ -196,6 +197,51 @@ public final class TableViewerSWTBuilder {
 				columnText,
 				tooltipText,
 				labelProvider,
+				editingSupport,
+				image));
+
+		return this;
+	}
+
+	// BEGIN COMPLEX CODE
+	/**
+	 * Adds a column.
+	 *
+	 * @param resizeable whether the column is resizeable or not
+	 * @param moveable whether the column is moveable or not
+	 * @param styleBits the style bits for the column
+	 * @param weight the weight of the column
+	 * @param minWidth the min width in pixels
+	 * @param columnText the column text
+	 * @param tooltipText the tooltip text
+	 * @param labelProvider the label provider
+	 * @param editingSupport the editing support
+	 * @param image the column image
+	 * @return self
+	 */
+	public TableViewerSWTBuilder addColumn(
+		boolean resizeable,
+		boolean moveable,
+		int styleBits,
+		int weight,
+		int minWidth,
+		IObservableValue columnText,
+		IObservableValue tooltipText,
+		CellLabelProvider labelProvider,
+		EditingSupportCreator editingSupport,
+		Image image) {
+		// END COMPLEX CODE
+
+		customization.addColumn(
+			new ColumnDescriptionImpl(
+				resizeable,
+				moveable,
+				styleBits,
+				weight,
+				minWidth,
+				columnText,
+				tooltipText,
+				new StaticCellLabelProviderFactory(labelProvider),
 				editingSupport,
 				image));
 
@@ -240,7 +286,7 @@ public final class TableViewerSWTBuilder {
 				minWidth,
 				Observables.constantObservableValue(columnText, String.class),
 				Observables.constantObservableValue(tooltipText, String.class),
-				labelProvider,
+				new StaticCellLabelProviderFactory(labelProvider),
 				editingSupport,
 				image));
 
@@ -283,7 +329,7 @@ public final class TableViewerSWTBuilder {
 				minWidth,
 				columnText,
 				tooltipText,
-				labelProvider,
+				new StaticCellLabelProviderFactory(labelProvider),
 				editingSupport,
 				null));
 
@@ -326,7 +372,7 @@ public final class TableViewerSWTBuilder {
 				minWidth,
 				Observables.constantObservableValue(columnText, String.class),
 				Observables.constantObservableValue(tooltipText, String.class),
-				labelProvider,
+				new StaticCellLabelProviderFactory(labelProvider),
 				editingSupport,
 				null));
 
@@ -358,7 +404,7 @@ public final class TableViewerSWTBuilder {
 				0,
 				columnText,
 				tooltipText,
-				labelProvider,
+				new StaticCellLabelProviderFactory(labelProvider),
 				editingSupport,
 				null));
 
@@ -390,7 +436,7 @@ public final class TableViewerSWTBuilder {
 				0,
 				Observables.constantObservableValue(columnText, String.class),
 				Observables.constantObservableValue(tooltipText, String.class),
-				labelProvider,
+				new StaticCellLabelProviderFactory(labelProvider),
 				editingSupport,
 				null));
 
@@ -431,7 +477,7 @@ public final class TableViewerSWTBuilder {
 				minWidth,
 				columnText,
 				tooltipText,
-				labelProvider,
+				new StaticCellLabelProviderFactory(labelProvider),
 				null,
 				null));
 
@@ -472,7 +518,7 @@ public final class TableViewerSWTBuilder {
 				minWidth,
 				Observables.constantObservableValue(columnText, String.class),
 				Observables.constantObservableValue(tooltipText, String.class),
-				labelProvider,
+				new StaticCellLabelProviderFactory(labelProvider),
 				null,
 				null));
 
@@ -502,7 +548,7 @@ public final class TableViewerSWTBuilder {
 				0,
 				columnText,
 				tooltipText,
-				labelProvider,
+				new StaticCellLabelProviderFactory(labelProvider),
 				null,
 				null));
 
@@ -532,7 +578,7 @@ public final class TableViewerSWTBuilder {
 				0,
 				Observables.constantObservableValue(columnText, String.class),
 				Observables.constantObservableValue(tooltipText, String.class),
-				labelProvider,
+				new StaticCellLabelProviderFactory(labelProvider),
 				null,
 				null));
 

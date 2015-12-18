@@ -34,7 +34,7 @@ public class ColumnDescriptionImpl implements ColumnDescription {
 	private final int minWidth;
 	private final IObservableValue columnText;
 	private final IObservableValue tooltipText;
-	private final CellLabelProvider labelProvider;
+	private final CellLabelProviderFactory labelProvider;
 	private final Optional<EditingSupportCreator> editingSupport;
 	private final Optional<Image> image;
 
@@ -60,7 +60,7 @@ public class ColumnDescriptionImpl implements ColumnDescription {
 		int minWidth,
 		IObservableValue columnText,
 		IObservableValue tooltipText,
-		CellLabelProvider labelProvider,
+		CellLabelProviderFactory labelProvider,
 		EditingSupportCreator editingSupport,
 		Image image) {
 		// END COMPLEX CODE
@@ -112,8 +112,8 @@ public class ColumnDescriptionImpl implements ColumnDescription {
 	}
 
 	@Override
-	public CellLabelProvider createLabelProvider() {
-		return labelProvider;
+	public CellLabelProvider createLabelProvider(TableViewer columnViewer) {
+		return labelProvider.createCellLabelProvider(columnViewer);
 	}
 
 	@Override

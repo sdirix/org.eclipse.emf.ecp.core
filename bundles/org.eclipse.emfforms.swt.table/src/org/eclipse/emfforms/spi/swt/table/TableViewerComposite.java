@@ -159,7 +159,7 @@ public class TableViewerComposite extends Composite {
 			emfDataBindingContext.bindValue(WidgetProperties.tooltipText().observe(column.getColumn()), tooltipText);
 
 			/* set label provider */
-			column.setLabelProvider(columnDescription.createLabelProvider());
+			column.setLabelProvider(columnDescription.createLabelProvider(tableViewer));
 
 			/* set editing support */
 			final Optional<EditingSupport> editingSupport = columnDescription.createEditingSupport(tableViewer);
