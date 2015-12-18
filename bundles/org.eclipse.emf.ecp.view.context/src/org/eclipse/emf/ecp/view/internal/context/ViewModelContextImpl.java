@@ -221,21 +221,26 @@ public class ViewModelContextImpl implements ViewModelContext {
 		if (domainExpander == null) {
 			return;
 		}
+		expandAndInitDMR(domainModelRoot, domainExpander, resolvable);
 		// Iterate over all domain model references of the given EObject.
 		final TreeIterator<EObject> eAllContents = resolvable.eAllContents();
 		while (eAllContents.hasNext()) {
 			final EObject eObject = eAllContents.next();
-			if (VDomainModelReference.class.isInstance(eObject)
-				&& !VDomainModelReference.class.isInstance(eObject.eContainer())) {
-				final VDomainModelReference domainModelReference = VDomainModelReference.class.cast(eObject);
-				try {
-					domainExpander.prepareDomainObject(domainModelReference, domainModelRoot);
-				} catch (final EMFFormsExpandingFailedException ex) {
-					Activator.getInstance().getReportService().report(new AbstractReport(ex));
-				} finally {
-					// FIXME remove
-					domainModelReference.init(domainModelRoot);
-				}
+			expandAndInitDMR(domainModelRoot, domainExpander, eObject);
+		}
+	}
+
+	private void expandAndInitDMR(EObject domainModelRoot, final EMFFormsDomainExpander domainExpander,
+		final EObject eObject) {
+		if (VDomainModelReference.class.isInstance(eObject)
+			&& !VDomainModelReference.class.isInstance(eObject.eContainer())) {
+			final VDomainModelReference domainModelReference = VDomainModelReference.class.cast(eObject);
+			// FIXME remove
+			domainModelReference.init(domainModelRoot);
+			try {
+				domainExpander.prepareDomainObject(domainModelReference, domainModelRoot);
+			} catch (final EMFFormsExpandingFailedException ex) {
+				Activator.getInstance().getReportService().report(new AbstractReport(ex));
 			}
 		}
 	}
@@ -659,15 +664,17 @@ public class ViewModelContextImpl implements ViewModelContext {
 			if (isDisposing || isDisposed) {
 				return;
 			}
-			if (VElement.class.isInstance(notifier)) {
-				resolveDomainReferences((VElement) notifier, getDomainModel());
-			}
+			// if (VElement.class.isInstance(notifier)) {
+			// resolveDomainReferences((VElement) notifier, getDomainModel());
+			// }
 			// not needed because we do this already in the DMR
 			// if (VControl.class.isInstance(notifier) && settingToControlMapper != null) {
 			// settingToControlMapper.vControlAdded((VControl) notifier);
 			// }
 			if (VDomainModelReference.class.isInstance(notifier)) {
-				final VControl control = findControl(VDomainModelReference.class.cast(notifier));
+				final VDomainModelReference domainModelReference = VDomainModelReference.class.cast(notifier);
+				resolveDomainReferences(domainModelReference, getDomainModel());
+				final VControl control = findControl(domainModelReference);
 				if (control != null && settingToControlMapper != null) {
 					settingToControlMapper.vControlAdded(control);
 				}
