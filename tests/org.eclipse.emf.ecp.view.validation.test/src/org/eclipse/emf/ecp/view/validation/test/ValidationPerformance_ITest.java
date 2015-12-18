@@ -49,7 +49,7 @@ import org.junit.runners.Parameterized.Parameters;
  *
  */
 @RunWith(Parameterized.class)
-public class ValidationPerformance_Test {
+public class ValidationPerformance_ITest {
 	private DefaultRealm defaultRealm;
 
 	private Library domain;
@@ -63,7 +63,7 @@ public class ValidationPerformance_Test {
 	private final long timeGateAdd;
 	private int loops = 100;
 
-	public ValidationPerformance_Test(int domainObjectCountFactor, int viewModelCountFactor, long timeGateStartup,
+	public ValidationPerformance_ITest(int domainObjectCountFactor, int viewModelCountFactor, long timeGateStartup,
 		long timeGateAdd) {
 		this.domainObjectCountFactor = domainObjectCountFactor;
 		this.viewModelCountFactor = viewModelCountFactor;
