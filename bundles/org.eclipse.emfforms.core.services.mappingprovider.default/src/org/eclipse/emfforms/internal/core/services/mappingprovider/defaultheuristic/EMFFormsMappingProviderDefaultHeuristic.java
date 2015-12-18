@@ -85,6 +85,7 @@ public class EMFFormsMappingProviderDefaultHeuristic implements EMFFormsMappingP
 		final IObserving observing = (IObserving) observableValue;
 		final EObject eObject = (EObject) observing.getObserved();
 		final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
+		observableValue.dispose();
 		final UniqueSetting uniqueSetting = UniqueSetting.createSetting(eObject, structuralFeature);
 
 		return Collections.singletonMap(uniqueSetting, Collections.singleton(vControl));

@@ -662,9 +662,10 @@ public class ViewModelContextImpl implements ViewModelContext {
 			if (VElement.class.isInstance(notifier)) {
 				resolveDomainReferences((VElement) notifier, getDomainModel());
 			}
-			if (VControl.class.isInstance(notifier) && settingToControlMapper != null) {
-				settingToControlMapper.vControlAdded((VControl) notifier);
-			}
+			// not needed because we do this already in the DMR
+			// if (VControl.class.isInstance(notifier) && settingToControlMapper != null) {
+			// settingToControlMapper.vControlAdded((VControl) notifier);
+			// }
 			if (VDomainModelReference.class.isInstance(notifier)) {
 				final VControl control = findControl(VDomainModelReference.class.cast(notifier));
 				if (control != null && settingToControlMapper != null) {
