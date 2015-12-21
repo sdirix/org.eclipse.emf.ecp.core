@@ -24,6 +24,7 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Set;
 
+import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -33,6 +34,8 @@ import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecp.common.spi.UniqueSetting;
+import org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditorComparator;
+import org.eclipse.emf.ecp.edit.spi.swt.table.StringCellEditor;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextDisposeListener;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
@@ -52,15 +55,21 @@ import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableFactory;
 import org.eclipse.emf.ecp.view.spi.table.swt.TableControlSWTRenderer;
+import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
+import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.DatabindingClassRunner;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.SWTTestUtil;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.SWTViewTestHelper;
-import org.eclipse.emfforms.internal.swt.core.di.EMFFormsContextProviderImpl;
+import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
+import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
+import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsNoRendererException;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
 import org.eclipse.emfforms.spi.swt.core.di.EMFFormsContextProvider;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
+import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.custom.ScrolledComposite;
@@ -441,6 +450,93 @@ public class SWTTable_PTest {
 		assertTableItemOrder(table, class1, class2, class3);
 	}
 
+	@Test
+	public void testTableSortingWithCellEditor() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption,
+		EMFFormsNoRendererException {
+		// domain
+		((EClass) domainElement).getESuperTypes().clear();
+		final EClass class1 = createEClass("a", "b");
+		final EClass class2 = createEClass("b", "c");
+		final EClass class3 = createEClass("c", "a");
+		((EClass) domainElement).getESuperTypes().add(class1);
+		((EClass) domainElement).getESuperTypes().add(class2);
+		((EClass) domainElement).getESuperTypes().add(class3);
+
+		// table control
+		final VTableControl tableControl = createTableControl();
+		final VTableDomainModelReference tableDMR = (VTableDomainModelReference) tableControl.getDomainModelReference();
+		tableDMR.setDomainModelEFeature(EcorePackage.eINSTANCE.getEClass_ESuperTypes());
+		tableDMR.getColumnDomainModelReferences().add(createDMR(EcorePackage.eINSTANCE.getENamedElement_Name()));
+		tableDMR.getColumnDomainModelReferences().add(
+			createDMR(EcorePackage.eINSTANCE.getEClassifier_InstanceClassName()));
+
+		// render
+		final TableControlSWTRenderer tableRenderer = createRendererInstanceWithCustomCellEditor(tableControl);
+		final Control control = tableRenderer.render(new SWTGridCell(0, 0, tableRenderer), shell);
+		if (control == null) {
+			fail("No control was rendered");
+		}
+		final Table table = SWTTestUtil.findControl(control, 0, Table.class);
+		assertTableItemOrder(table, class1, class2, class3);
+
+		// column 0 is validation column
+
+		// select column 1
+		// up
+		SWTTestUtil.selectWidget(table.getColumns()[1]);
+		SWTTestUtil.waitForUIThread();
+		assertTableItemOrder(table, class3, class2, class1);
+		// down
+		SWTTestUtil.selectWidget(table.getColumns()[1]);
+		SWTTestUtil.waitForUIThread();
+		assertTableItemOrder(table, class1, class2, class3);
+		// none
+		SWTTestUtil.selectWidget(table.getColumns()[1]);
+		SWTTestUtil.waitForUIThread();
+		assertTableItemOrder(table, class1, class2, class3);
+
+		// select column 2
+		// up
+		SWTTestUtil.selectWidget(table.getColumns()[2]);
+		SWTTestUtil.waitForUIThread();
+		assertTableItemOrder(table, class3, class1, class2);
+		// down
+		SWTTestUtil.selectWidget(table.getColumns()[2]);
+		SWTTestUtil.waitForUIThread();
+		assertTableItemOrder(table, class2, class1, class3);
+		// none
+		SWTTestUtil.selectWidget(table.getColumns()[2]);
+		SWTTestUtil.waitForUIThread();
+		assertTableItemOrder(table, class1, class2, class3);
+	}
+
+	private TableControlSWTRenderer createRendererInstanceWithCustomCellEditor(final VTableControl tableControl)
+		throws EMFFormsNoRendererException {
+		final ViewModelContextWithoutServices viewModelContext = new ViewModelContextWithoutServices(tableControl);
+		final EMFFormsContextProvider contextProvider = viewModelContext.getService(EMFFormsContextProvider.class);
+		final IEclipseContext eclipseContext = contextProvider.getContext();
+		final TableControlSWTRenderer tableControlSWTRenderer = new TableControlSWTRenderer(
+			tableControl,
+			viewModelContext,
+			eclipseContext.get(ReportService.class),
+			eclipseContext.get(EMFFormsDatabindingEMF.class),
+			eclipseContext.get(EMFFormsLabelProvider.class),
+			eclipseContext.get(VTViewTemplateProvider.class),
+			eclipseContext.get(ImageRegistryService.class),
+			eclipseContext.get(EMFFormsEditSupport.class)) {
+
+			@Override
+			protected CellEditor createCellEditor(EObject tempInstance, EStructuralFeature feature, Table table) {
+				if (feature == EcorePackage.eINSTANCE.getENamedElement_Name()) {
+					return new CompareCellEditor(table);
+				}
+				return super.createCellEditor(tempInstance, feature, table);
+			}
+		};
+		tableControlSWTRenderer.init();
+		return tableControlSWTRenderer;
+	}
+
 	private static void assertTableItemOrder(Table table, Object... objects) {
 		assertEquals(objects.length, table.getItemCount());
 		final TableItem[] items = table.getItems();
@@ -561,9 +657,10 @@ public class SWTTable_PTest {
 		private final VElement view;
 		private final EMFFormsContextProvider contextProvider;
 
-		public ViewModelContextWithoutServices(VElement view) {
+		@SuppressWarnings("restriction")
+		ViewModelContextWithoutServices(VElement view) {
 			this.view = view;
-			contextProvider = new EMFFormsContextProviderImpl();
+			contextProvider = new org.eclipse.emfforms.internal.swt.core.di.EMFFormsContextProviderImpl();
 			ViewModelUtil.resolveDomainReferences(getViewModel(), getDomainModel());
 		}
 
@@ -764,7 +861,7 @@ public class SWTTable_PTest {
 
 		private final PrintStream printStream;
 
-		public PrintStreamWrapper(PrintStream printStream) {
+		PrintStreamWrapper(PrintStream printStream) {
 			super(new ByteArrayOutputStream());
 			this.printStream = printStream;
 		}
@@ -779,6 +876,34 @@ public class SWTTable_PTest {
 			log = log.concat("\n" + s);
 			printStream.print(s + "\n");
 		}
+	}
+
+	private static class CompareCellEditor extends StringCellEditor implements ECPCellEditorComparator {
+
+		CompareCellEditor(Table table) {
+			super(table);
+		}
+
+		@Override
+		public int compare(Object e1, Object e2, int direction) {
+			final String value1 = String.class.cast(e1);
+			final String value2 = String.class.cast(e2);
+			int result;
+			if (value1 == null) {
+				result = 1;
+			} else if (value2 == null) {
+				result = -1;
+			} else {
+				result = value1.toString().compareTo(value2.toString()) * -1;// we flip the oder in our custom
+																				// comparator
+			}
+			// If descending order, flip the direction
+			if (direction == 2) {
+				result = -result;
+			}
+			return result;
+		}
+
 	}
 
 }

@@ -18,7 +18,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.inject.Inject;
@@ -46,6 +48,7 @@ import org.eclipse.emf.ecp.edit.internal.swt.util.CellEditorFactory;
 import org.eclipse.emf.ecp.edit.spi.DeleteService;
 import org.eclipse.emf.ecp.edit.spi.EMFDeleteServiceImpl;
 import org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor;
+import org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditorComparator;
 import org.eclipse.emf.ecp.edit.spi.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.ecp.view.internal.table.swt.CellReadOnlyTesterHelper;
 import org.eclipse.emf.ecp.view.internal.table.swt.MessageKeys;
@@ -146,6 +149,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 	private static final String ICON_ADD = "icons/add.png"; //$NON-NLS-1$
 	private static final String ICON_DELETE = "icons/delete.png"; //$NON-NLS-1$
+
+	private final Map<Integer, ECPCellEditorComparator> columnIndexToComparatorMap = new LinkedHashMap<Integer, ECPCellEditorComparator>();
 
 	private final ImageRegistryService imageRegistryService;
 	private final EMFDataBindingContext viewModelDBC;
@@ -280,8 +285,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 					final IObservableMap observableMap = valueProperty.observeDetail(cp.getKnownElements());
 
 					final TableControlEditingSupportAndLabelProvider labelProvider = new TableControlEditingSupportAndLabelProvider(
-						tempInstance, eStructuralFeature, dmr,
-						valueProperty, observableMap);
+						tempInstance, eStructuralFeature, dmr, valueProperty, observableMap,
+						tableDomainModelReference.getColumnDomainModelReferences().indexOf(dmr));
 					final EditingSupportCreator editingSupportCreator = TableConfigurationHelper
 						.isReadOnly(getVElement(), dmr) ? null : labelProvider;
 
@@ -331,9 +336,6 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		}
 	}
 
-	/**
-	 * @param tableViewerComposite
-	 */
 	private void setupValidation(final TableViewerComposite tableViewerComposite) {
 		if (tableViewerComposite.getValidationControls().isPresent()) {
 			final List<Control> validationControls = tableViewerComposite.getValidationControls().get();
@@ -343,11 +345,6 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		}
 	}
 
-	/**
-	 * @param comparator
-	 * @param regularColumnsStartIndex
-	 * @param tableViewerComposite
-	 */
 	private void setupSorting(final ECPTableViewerComparator comparator, int regularColumnsStartIndex,
 		final TableViewerComposite tableViewerComposite) {
 		for (int i = regularColumnsStartIndex; i < tableViewerComposite.getTableViewer().getTable()
@@ -626,7 +623,16 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		return new Color(Display.getDefault(), red, green, blue);
 	}
 
-	private CellEditor createCellEditor(final EObject tempInstance, final EStructuralFeature feature, Table table) {
+	/**
+	 * This is called in order to setup the editing support for a table column.
+	 *
+	 * @param tempInstance the temporary input instance of the table
+	 * @param feature the feature of the column
+	 * @param table the table/parent
+	 * @return the cell editor
+	 * @since 1.8
+	 */
+	protected CellEditor createCellEditor(final EObject tempInstance, final EStructuralFeature feature, Table table) {
 		return CellEditorFactory.INSTANCE.getCellEditor(feature,
 			tempInstance, table, getViewModelContext());
 	}
@@ -896,6 +902,10 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			value2 = null;
 		}
 
+		if (columnIndexToComparatorMap.containsKey(propertyIndex)) {
+			return columnIndexToComparatorMap.get(propertyIndex).compare(value1, value2, direction);
+		}
+
 		if (value1 == null) {
 			rc = 1;
 		} else if (value2 == null) {
@@ -982,15 +992,17 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		private ECPTableEditingSupport observableSupport;
 
 		private boolean initialized;
+		private final int indexOfColumn;
 
 		private TableControlEditingSupportAndLabelProvider(InternalEObject tempInstance,
 			EStructuralFeature eStructuralFeature, VDomainModelReference dmr,
-			IValueProperty valueProperty, IObservableMap observableMap) {
+			IValueProperty valueProperty, IObservableMap observableMap, int indexOfColumn) {
 			this.tempInstance = tempInstance;
 			this.eStructuralFeature = eStructuralFeature;
 			this.dmr = dmr;
 			this.valueProperty = valueProperty;
 			this.observableMap = observableMap;
+			this.indexOfColumn = indexOfColumn;
 		}
 
 		@Override
@@ -1004,6 +1016,9 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		private void init(TableViewer tableViewer) {
 			cellEditor = createCellEditor(tempInstance, eStructuralFeature,
 				tableViewer.getTable());
+			if (ECPCellEditorComparator.class.isInstance(cellEditor)) {
+				columnIndexToComparatorMap.put(indexOfColumn, ECPCellEditorComparator.class.cast(cellEditor));
+			}
 			observableSupport = new ECPTableEditingSupport(tableViewer, cellEditor,
 				getVElement(), dmr, valueProperty);
 			initialized = true;
