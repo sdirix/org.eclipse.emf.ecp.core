@@ -17,7 +17,7 @@ public class TestGlobalViewModelService2 implements ITestGlobalViewModelService 
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.context.GlobalViewModelService#childViewModelContextAdded(org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
 	@Override
@@ -27,17 +27,17 @@ public class TestGlobalViewModelService2 implements ITestGlobalViewModelService 
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#instantiate(org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
 	@Override
 	public void instantiate(ViewModelContext context) {
-		// intentionally left empty
+		context.putContextValue(getClass().getSimpleName(), getClass());
 	}
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#dispose()
 	 */
 	@Override
@@ -47,7 +47,7 @@ public class TestGlobalViewModelService2 implements ITestGlobalViewModelService 
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#getPriority()
 	 */
 	@Override

@@ -12,7 +12,6 @@
 package org.eclipse.emfforms.internal.core.services.mappingprovider.defaultheuristic;
 
 import java.util.Collections;
-import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
@@ -68,7 +67,7 @@ public class EMFFormsMappingProviderDefaultHeuristic implements EMFFormsMappingP
 	 *      org.eclipse.emf.ecore.EObject)
 	 */
 	@Override
-	public Map<UniqueSetting, Set<VControl>> getMappingFor(VControl vControl, EObject domainObject) {
+	public Set<UniqueSetting> getMappingFor(VControl vControl, EObject domainObject) {
 		Assert.create(vControl).notNull();
 		Assert.create(domainObject).notNull();
 
@@ -77,12 +76,12 @@ public class EMFFormsMappingProviderDefaultHeuristic implements EMFFormsMappingP
 			setting = emfFormsDatabinding.getSetting(vControl.getDomainModelReference(), domainObject);
 		} catch (final DatabindingFailedException ex) {
 			reportService.report(new DatabindingFailedReport(ex));
-			return Collections.<UniqueSetting, Set<VControl>> emptyMap();
+			return Collections.<UniqueSetting> emptySet();
 		}
 
 		final UniqueSetting uniqueSetting = UniqueSetting.createSetting(setting);
 
-		return Collections.singletonMap(uniqueSetting, Collections.singleton(vControl));
+		return Collections.singleton(uniqueSetting);
 	}
 
 	/**

@@ -9,7 +9,7 @@
  * Contributors:
  * Lucas Koehler - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.spi.context;
+package org.eclipse.emfforms.spi.core.services.controlmapper;
 
 import java.util.Set;
 
@@ -27,7 +27,7 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
  *
  */
 // TODO move to another bundle
-public interface SettingToControlMapper extends ViewModelService {
+public interface EMFFormsSettingToControlMapper {
 
 	/**
 	 * Returns all controls which are associated with the provided {@link Setting}. The {@link Setting} is converted to
@@ -74,19 +74,4 @@ public interface SettingToControlMapper extends ViewModelService {
 	 */
 	void checkAndUpdateSettingToControlMapping(EObject eObject);
 
-	// /**
-	// * Adds a child {@link SettingToControlMapper} to this mapper.
-	// *
-	// * @param vElement The {@link VElement} that uses the new mapper
-	// * @param eObject the domain object of the {@link ViewModelContext}
-	// * @param childContext The {@link ViewModelContext} of the new child mapper
-	// */
-	// void addChildMapper(VElement vElement, EObject eObject, ViewModelContext childContext);
-	//
-	// /**
-	// * Removes a child {@link SettingToControlMapper} from this mapper.
-	// *
-	// * @param eObject Remove all child mappers for this domain object
-	// */
-	// void removeChildMapper(EObject eObject);
 }

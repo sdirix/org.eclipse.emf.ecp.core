@@ -54,8 +54,9 @@ public interface EMFFormsViewServiceFactory<T> {
 	/**
 	 * Creates a new instance of the provided service.
 	 *
+	 * @param emfFormsViewContext The {@link EMFFormsViewContext} to use during the creation of the service
 	 * @return A new instance of the provided service
 	 */
-	T createService();
+	T createService(EMFFormsViewContext emfFormsViewContext);
 
 }

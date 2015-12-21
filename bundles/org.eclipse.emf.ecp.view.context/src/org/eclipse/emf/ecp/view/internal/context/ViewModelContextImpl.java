@@ -36,8 +36,6 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.common.spi.UniqueSetting;
 import org.eclipse.emf.ecp.view.spi.context.EMFFormsLegacyServicesManager;
 import org.eclipse.emf.ecp.view.spi.context.GlobalViewModelService;
-import org.eclipse.emf.ecp.view.spi.context.SettingToControlMapper;
-import org.eclipse.emf.ecp.view.spi.context.SettingToControlMapperFactory;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextDisposeListener;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
@@ -54,8 +52,10 @@ import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emfforms.common.Optional;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.core.services.controlmapper.EMFFormsSettingToControlMapper;
 import org.eclipse.emfforms.spi.core.services.domainexpander.EMFFormsDomainExpander;
 import org.eclipse.emfforms.spi.core.services.domainexpander.EMFFormsExpandingFailedException;
+import org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener;
 import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewServiceManager;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -93,8 +93,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 	/** The view model content adapter. */
 	private EContentAdapter viewModelContentAdapter;
 
-	/** Maps settings to controls and provides utility functions. **/
-	private SettingToControlMapper settingToControlMapper;
+	private final Set<EMFFormsContextListener> contextListeners = new LinkedHashSet<EMFFormsContextListener>();
 
 	/** The view services. */
 	private final SortedSet<ViewModelService> viewServices = new TreeSet<ViewModelService>(
@@ -257,21 +256,19 @@ public class ViewModelContextImpl implements ViewModelContext {
 
 		viewModelContentAdapter = new ViewModelContentAdapter();
 
-		// settingToControlMapper.checkAndUpdateSettingToControlMapping(view);
-
-		view.eAdapters().add(viewModelContentAdapter);
-
 		if (parentContext == null) {
 			domainModelContentAdapter = new DomainModelContentAdapter();
 			domainObject.eAdapters().add(domainModelContentAdapter);
 		}
+		view.eAdapters().add(viewModelContentAdapter);
 
 		for (final ViewModelService viewService : viewServices) {
-			if (!GlobalViewModelService.class.isInstance(viewService) || parentContext == null) {
-				viewService.instantiate(this);
-			}
+			viewService.instantiate(this);
 		}
 
+		for (final EMFFormsContextListener contextListener : contextListeners) {
+			contextListener.contextInitialised();
+		}
 	}
 
 	private void loadImmediateServices() {
@@ -289,13 +286,21 @@ public class ViewModelContextImpl implements ViewModelContext {
 			}
 
 			servicesManager = getService(EMFFormsViewServiceManager.class);
-			final SettingToControlMapperFactory settingToControlMapperFactory = getService(
-				SettingToControlMapperFactory.class);
-			settingToControlMapper = settingToControlMapperFactory.createSettingToControlMapper(this);
+
+			for (final Class<?> localImmediateService : servicesManager.getAllLocalImmediateServiceTypes()) {
+				final Optional<?> service = servicesManager.createLocalImmediateService(localImmediateService, this);
+				if (!service.isPresent()) {
+					// error case?
+					continue;
+				}
+				serviceMap.put(localImmediateService, service.get());
+
+			}
 
 			if (parentContext == null) {
 				for (final Class<?> globalImmediateService : servicesManager.getAllGlobalImmediateServiceTypes()) {
-					final Optional<?> service = servicesManager.createGlobalImmediateService(globalImmediateService);
+					final Optional<?> service = servicesManager.createGlobalImmediateService(globalImmediateService,
+						this);
 					if (!service.isPresent()) {
 						// error case?
 						continue;
@@ -303,24 +308,6 @@ public class ViewModelContextImpl implements ViewModelContext {
 					final Object serviceObject = service.get();
 					serviceMap.put(globalImmediateService, serviceObject);
 
-					// legacy
-					if (ViewModelService.class.isInstance(serviceObject)) {
-						viewServices.add(ViewModelService.class.cast(serviceObject));
-					}
-				}
-			}
-			for (final Class<?> localImmediateService : servicesManager.getAllLocalImmediateServiceTypes()) {
-				final Optional<?> service = servicesManager.createLocalImmediateService(localImmediateService);
-				if (!service.isPresent()) {
-					// error case?
-					continue;
-				}
-				final Object serviceObject = service.get();
-				serviceMap.put(localImmediateService, service.get());
-
-				// legacy
-				if (ViewModelService.class.isInstance(serviceObject)) {
-					viewServices.add(ViewModelService.class.cast(serviceObject));
 				}
 			}
 
@@ -360,45 +347,24 @@ public class ViewModelContextImpl implements ViewModelContext {
 	 * {@inheritDoc}
 	 *
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getControlsFor(org.eclipse.emf.ecore.EStructuralFeature.Setting)
+	 * @deprecated
 	 */
+	@Deprecated
 	@Override
 	public Set<VControl> getControlsFor(Setting setting) {
-		return settingToControlMapper.getControlsFor(setting);
+		return getService(EMFFormsSettingToControlMapper.class).getControlsFor(setting);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getControlsFor(org.eclipse.emf.ecp.common.spi.UniqueSetting)
-	 *
+	 * @deprecated
 	 */
+	@Deprecated
 	@Override
 	public Set<VElement> getControlsFor(UniqueSetting setting) {
-		final Set<VElement> elements = new LinkedHashSet<VElement>();
-		final Set<VElement> currentControls = settingToControlMapper.getControlsFor(setting);
-		if (currentControls != null) {
-			for (final VElement control : currentControls) {
-				if (!control.isEnabled() || !control.isVisible() || control.isReadonly()) {
-					continue;
-				}
-				elements.add(control);
-			}
-		}
-		for (final ViewModelContext childContext : childContextUsers.keySet()) {
-			final Set<VElement> childControls = childContext.getControlsFor(setting);
-			boolean validControls = false;
-			if (childControls == null) {
-				continue;
-			}
-			for (final VElement element : childControls) {
-				validControls |= element.isVisible() && !element.isReadonly() && element.isEnabled();
-			}
-			if (validControls) {
-				elements.add(childContextUsers.get(childContext));
-				elements.addAll(childControls);
-			}
-		}
-		return elements;
+		return getService(EMFFormsSettingToControlMapper.class).getControlsFor(setting);
 	}
 
 	/**
@@ -436,6 +402,9 @@ public class ViewModelContextImpl implements ViewModelContext {
 			return;
 		}
 		isDisposing = true;
+		for (final ViewModelContextDisposeListener listener : disposeListeners) {
+			listener.contextDisposed(this);
+		}
 		if (resource != null) {
 			resource.getContents().remove(domainObject);
 		}
@@ -450,7 +419,10 @@ public class ViewModelContextImpl implements ViewModelContext {
 			viewService.dispose();
 		}
 		viewServices.clear();
-		settingToControlMapper.dispose();
+
+		for (final EMFFormsContextListener contextListener : contextListeners) {
+			contextListener.contextDispose();
+		}
 
 		final Set<ViewModelContext> toDispose = new LinkedHashSet<ViewModelContext>(childContextUsers.keySet());
 		for (final ViewModelContext vmc : toDispose) {
@@ -472,9 +444,6 @@ public class ViewModelContextImpl implements ViewModelContext {
 		isDisposing = false;
 		isDisposed = true;
 
-		for (final ViewModelContextDisposeListener listener : disposeListeners) {
-			listener.contextDisposed(this);
-		}
 	}
 
 	private void releaseOSGiServices() {
@@ -589,7 +558,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 		if (serviceMap.containsKey(serviceType)) {
 			return (T) serviceMap.get(serviceType);
 		} else if (servicesManager != null) {
-			final Optional<T> lazyService = servicesManager.createLocalLazyService(serviceType);
+			final Optional<T> lazyService = servicesManager.createLocalLazyService(serviceType, this);
 			if (lazyService.isPresent()) {
 				final T t = lazyService.get();
 				serviceMap.put(serviceType, t);
@@ -597,7 +566,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 			}
 		}
 		if (servicesManager != null && parentContext == null) {
-			final Optional<T> lazyService = servicesManager.createGlobalLazyService(serviceType);
+			final Optional<T> lazyService = servicesManager.createGlobalLazyService(serviceType, this);
 			if (lazyService.isPresent()) {
 				final T t = lazyService.get();
 				serviceMap.put(serviceType, t);
@@ -664,39 +633,11 @@ public class ViewModelContextImpl implements ViewModelContext {
 			if (isDisposing || isDisposed) {
 				return;
 			}
-			// if (VElement.class.isInstance(notifier)) {
-			// resolveDomainReferences((VElement) notifier, getDomainModel());
-			// }
-			// not needed because we do this already in the DMR
-			// if (VControl.class.isInstance(notifier) && settingToControlMapper != null) {
-			// settingToControlMapper.vControlAdded((VControl) notifier);
-			// }
-			if (VDomainModelReference.class.isInstance(notifier)) {
-				final VDomainModelReference domainModelReference = VDomainModelReference.class.cast(notifier);
-				resolveDomainReferences(domainModelReference, getDomainModel());
-				final VControl control = findControl(domainModelReference);
-				if (control != null && settingToControlMapper != null) {
-					settingToControlMapper.vControlAdded(control);
-				}
-
-			}
 			for (final ModelChangeListener modelChangeListener : viewModelChangeListener) {
 				if (ModelChangeAddRemoveListener.class.isInstance(modelChangeListener)) {
 					ModelChangeAddRemoveListener.class.cast(modelChangeListener).notifyAdd(notifier);
 				}
 			}
-		}
-
-		/**
-		 * @param cast
-		 * @return
-		 */
-		private VControl findControl(VDomainModelReference dmr) {
-			EObject parent = dmr.eContainer();
-			while (!VControl.class.isInstance(parent) && parent != null) {
-				parent = parent.eContainer();
-			}
-			return (VControl) parent;
 		}
 
 		@Override
@@ -708,9 +649,6 @@ public class ViewModelContextImpl implements ViewModelContext {
 			}
 			if (VElement.class.isInstance(notifier)) {
 				VElement.class.cast(notifier).setDiagnostic(null);
-			}
-			if (VControl.class.isInstance(notifier)) {
-				settingToControlMapper.vControlRemoved((VControl) notifier);
 			}
 			for (final ModelChangeListener modelChangeListener : viewModelChangeListener) {
 				if (ModelChangeAddRemoveListener.class.isInstance(modelChangeListener)) {
@@ -748,9 +686,6 @@ public class ViewModelContextImpl implements ViewModelContext {
 			if (isDisposing) {
 				return;
 			}
-			// if (EObject.class.isInstance(notifier)) {
-			// eObjectAdded((EObject) notifier);
-			// }
 			for (final ModelChangeListener modelChangeListener : domainModelChangeListener) {
 				if (ModelChangeAddRemoveListener.class.isInstance(modelChangeListener)) {
 					ModelChangeAddRemoveListener.class.cast(modelChangeListener).notifyAdd(notifier);
@@ -765,9 +700,6 @@ public class ViewModelContextImpl implements ViewModelContext {
 			if (isDisposing) {
 				return;
 			}
-			// if (EObject.class.isInstance(notifier)) {
-			// eObjectRemoved((EObject) notifier);
-			// }
 			for (final ModelChangeListener modelChangeListener : domainModelChangeListener) {
 				if (ModelChangeAddRemoveListener.class.isInstance(modelChangeListener)) {
 					ModelChangeAddRemoveListener.class.cast(modelChangeListener).notifyRemove(notifier);
@@ -836,30 +768,32 @@ public class ViewModelContextImpl implements ViewModelContext {
 
 	private void addChildContext(VElement vElement, EObject eObject, ViewModelContext childContext) {
 
-		// settingToControlMapper.addChildMapper(vElement, eObject, childContext);
-
 		if (!childContexts.containsKey(eObject)) {
 			childContexts.put(eObject, new LinkedHashSet<ViewModelContext>());
 		}
 		childContexts.get(eObject).add(childContext);
 		childContextUsers.put(childContext, vElement);
 
+		for (final EMFFormsContextListener contextListener : contextListeners) {
+			contextListener.childContextAdded(vElement, childContext);
+		}
 		// notify all global View model services
 		for (final ViewModelService viewModelService : viewServices) {
 			if (GlobalViewModelService.class.isInstance(viewModelService)) {
 				GlobalViewModelService.class.cast(viewModelService).childViewModelContextAdded(childContext);
 			}
 		}
+
 	}
 
 	private void removeChildContext(EObject eObject) {
-		// settingToControlMapper.removeChildMapper(eObject);
 		final Set<ViewModelContext> removedContexts = childContexts.remove(eObject);
 		if (removedContexts != null) {
 			for (final ViewModelContext removedContext : removedContexts) {
 				childContextUsers.remove(removedContext);
 			}
 		}
+
 	}
 
 	@Override
@@ -881,6 +815,9 @@ public class ViewModelContextImpl implements ViewModelContext {
 			@Override
 			public void contextDisposed(ViewModelContext viewModelContext) {
 				removeChildContext(eObject);
+				for (final EMFFormsContextListener contextListener : contextListeners) {
+					contextListener.childContextDisposed(childContext);
+				}
 			}
 		});
 		addChildContext(parent, eObject, childContext);
@@ -895,5 +832,15 @@ public class ViewModelContextImpl implements ViewModelContext {
 	@Override
 	public void registerDisposeListener(ViewModelContextDisposeListener listener) {
 		disposeListeners.add(listener);
+	}
+
+	@Override
+	public void registerEMFFormsContextListener(EMFFormsContextListener contextListener) {
+		contextListeners.add(contextListener);
+	}
+
+	@Override
+	public void unregisterEMFFormsContextListener(EMFFormsContextListener contextListener) {
+		contextListeners.remove(contextListener);
 	}
 }

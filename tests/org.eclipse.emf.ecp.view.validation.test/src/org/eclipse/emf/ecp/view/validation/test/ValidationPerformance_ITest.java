@@ -84,8 +84,9 @@ public class ValidationPerformance_ITest {
 		data.add(createParameters(11, 5, 300, 700));// 5
 
 		data.add(createParameters(4, 10, 100, 400));// 6
-		data.add(createParameters(8, 10, 200, 800));// 7
-		data.add(createParameters(11, 10, 500, 1500));// 8
+		data.add(createParameters(8, 10, 500, 800));// 7
+		data.add(createParameters(11, 10, 1000, 1500));// 8
+
 		return data;
 	}
 

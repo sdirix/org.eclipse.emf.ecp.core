@@ -14,6 +14,7 @@ package org.eclipse.emf.ecp.view.internal.context;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
@@ -32,6 +33,7 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext;
 import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewServiceFactory;
 import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewServicePolicy;
 import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewServiceScope;
@@ -79,7 +81,7 @@ public class ViewModelContextImpl_ITest {
 		scopedServiceProvider = mock(EMFFormsViewServiceFactory.class);
 		doReturn(Object.class).when(scopedServiceProvider).getType();
 		final Object mockedService = mock(Object.class);
-		doReturn(mockedService).when(scopedServiceProvider).createService();
+		doReturn(mockedService).when(scopedServiceProvider).createService(any(EMFFormsViewContext.class));
 		when(scopedServiceProvider.getPolicy()).thenReturn(EMFFormsViewServicePolicy.IMMEDIATE);
 		when(scopedServiceProvider.getScope()).thenReturn(EMFFormsViewServiceScope.GLOBAL);
 		when(scopedServiceProvider.getPriority()).thenReturn(1d);
@@ -89,7 +91,7 @@ public class ViewModelContextImpl_ITest {
 
 		final ViewModelContext vmc = spy(new ViewModelContextImpl(VViewFactory.eINSTANCE.createView(),
 			EcoreFactory.eINSTANCE.createEObject()));
-		verify(scopedServiceProvider).createService();
+		verify(scopedServiceProvider).createService(any(EMFFormsViewContext.class));
 		final Object object = vmc.getService(Object.class);
 		assertNotNull(object);
 		assertSame(mockedService, object);
@@ -99,7 +101,7 @@ public class ViewModelContextImpl_ITest {
 		assertSame(mockedService, object2);
 
 		final InOrder inOrder = inOrder(vmc, scopedServiceProvider);
-		inOrder.verify(scopedServiceProvider).createService();
+		inOrder.verify(scopedServiceProvider).createService(any(EMFFormsViewContext.class));
 		inOrder.verify(vmc, times(2)).getService(Object.class);
 	}
 
@@ -110,7 +112,7 @@ public class ViewModelContextImpl_ITest {
 		scopedServiceProvider = mock(EMFFormsViewServiceFactory.class);
 		doReturn(Object.class).when(scopedServiceProvider).getType();
 		final Object mockedService = mock(Object.class);
-		doReturn(mockedService).when(scopedServiceProvider).createService();
+		doReturn(mockedService).when(scopedServiceProvider).createService(any(EMFFormsViewContext.class));
 		when(scopedServiceProvider.getPolicy()).thenReturn(EMFFormsViewServicePolicy.IMMEDIATE);
 		when(scopedServiceProvider.getScope()).thenReturn(EMFFormsViewServiceScope.GLOBAL);
 		when(scopedServiceProvider.getPriority()).thenReturn(1d);
@@ -128,7 +130,7 @@ public class ViewModelContextImpl_ITest {
 		assertSame(mockedService, object);
 
 		final InOrder inOrder = inOrder(vmc, scopedServiceProvider, vmcChild);
-		inOrder.verify(scopedServiceProvider, times(1)).createService();
+		inOrder.verify(scopedServiceProvider, times(1)).createService(any(EMFFormsViewContext.class));
 		inOrder.verify(vmcChild, times(1)).getService(Object.class);
 		inOrder.verify(vmc, times(1)).getService(Object.class);
 	}
@@ -140,7 +142,7 @@ public class ViewModelContextImpl_ITest {
 		scopedServiceProvider = mock(EMFFormsViewServiceFactory.class);
 		doReturn(Object.class).when(scopedServiceProvider).getType();
 		final Object mockedService = mock(Object.class);
-		doReturn(mockedService).when(scopedServiceProvider).createService();
+		doReturn(mockedService).when(scopedServiceProvider).createService(any(EMFFormsViewContext.class));
 		when(scopedServiceProvider.getPolicy()).thenReturn(EMFFormsViewServicePolicy.IMMEDIATE);
 		when(scopedServiceProvider.getScope()).thenReturn(EMFFormsViewServiceScope.LOCAL);
 		when(scopedServiceProvider.getPriority()).thenReturn(1d);
@@ -150,7 +152,7 @@ public class ViewModelContextImpl_ITest {
 
 		final ViewModelContext vmc = spy(new ViewModelContextImpl(VViewFactory.eINSTANCE.createView(),
 			EcoreFactory.eINSTANCE.createEObject()));
-		verify(scopedServiceProvider).createService();
+		verify(scopedServiceProvider).createService(any(EMFFormsViewContext.class));
 		final Object object = vmc.getService(Object.class);
 		assertNotNull(object);
 		assertSame(mockedService, object);
@@ -160,7 +162,7 @@ public class ViewModelContextImpl_ITest {
 		assertSame(mockedService, object2);
 
 		final InOrder inOrder = inOrder(vmc, scopedServiceProvider);
-		inOrder.verify(scopedServiceProvider).createService();
+		inOrder.verify(scopedServiceProvider).createService(any(EMFFormsViewContext.class));
 		inOrder.verify(vmc, times(2)).getService(Object.class);
 	}
 
@@ -172,7 +174,8 @@ public class ViewModelContextImpl_ITest {
 		doReturn(Object.class).when(scopedServiceProvider).getType();
 		final Object mockedService = mock(Object.class);
 		final Object mockedService2 = mock(Object.class);
-		doReturn(mockedService).doReturn(mockedService2).when(scopedServiceProvider).createService();
+		doReturn(mockedService).doReturn(mockedService2).when(scopedServiceProvider)
+			.createService(any(EMFFormsViewContext.class));
 		when(scopedServiceProvider.getPolicy()).thenReturn(EMFFormsViewServicePolicy.IMMEDIATE);
 		when(scopedServiceProvider.getScope()).thenReturn(EMFFormsViewServiceScope.LOCAL);
 		when(scopedServiceProvider.getPriority()).thenReturn(1d);
@@ -191,8 +194,8 @@ public class ViewModelContextImpl_ITest {
 		assertSame(mockedService, object);
 
 		final InOrder inOrder = inOrder(vmc, scopedServiceProvider, vmcChild);
-		inOrder.verify(scopedServiceProvider, times(1)).createService();
-		inOrder.verify(scopedServiceProvider, times(1)).createService();
+		inOrder.verify(scopedServiceProvider, times(1)).createService(any(EMFFormsViewContext.class));
+		inOrder.verify(scopedServiceProvider, times(1)).createService(any(EMFFormsViewContext.class));
 		inOrder.verify(vmcChild, times(1)).getService(Object.class);
 		inOrder.verify(vmc, times(1)).getService(Object.class);
 	}
@@ -204,7 +207,7 @@ public class ViewModelContextImpl_ITest {
 		scopedServiceProvider = mock(EMFFormsViewServiceFactory.class);
 		doReturn(Object.class).when(scopedServiceProvider).getType();
 		final Object mockedService = mock(Object.class);
-		doReturn(mockedService).when(scopedServiceProvider).createService();
+		doReturn(mockedService).when(scopedServiceProvider).createService(any(EMFFormsViewContext.class));
 		when(scopedServiceProvider.getPolicy()).thenReturn(EMFFormsViewServicePolicy.LAZY);
 		when(scopedServiceProvider.getScope()).thenReturn(EMFFormsViewServiceScope.LOCAL);
 		when(scopedServiceProvider.getPriority()).thenReturn(1d);
@@ -224,7 +227,7 @@ public class ViewModelContextImpl_ITest {
 
 		final InOrder inOrder = inOrder(vmc, scopedServiceProvider);
 		inOrder.verify(vmc, times(1)).getService(Object.class);
-		inOrder.verify(scopedServiceProvider, times(1)).createService();
+		inOrder.verify(scopedServiceProvider, times(1)).createService(any(EMFFormsViewContext.class));
 		inOrder.verify(vmc, times(1)).getService(Object.class);
 	}
 
@@ -236,7 +239,8 @@ public class ViewModelContextImpl_ITest {
 		doReturn(Object.class).when(scopedServiceProvider).getType();
 		final Object mockedService = mock(Object.class);
 		final Object mockedService2 = mock(Object.class);
-		doReturn(mockedService).doReturn(mockedService2).when(scopedServiceProvider).createService();
+		doReturn(mockedService).doReturn(mockedService2).when(scopedServiceProvider)
+			.createService(any(EMFFormsViewContext.class));
 		when(scopedServiceProvider.getPolicy()).thenReturn(EMFFormsViewServicePolicy.LAZY);
 		when(scopedServiceProvider.getScope()).thenReturn(EMFFormsViewServiceScope.LOCAL);
 		when(scopedServiceProvider.getPriority()).thenReturn(1d);
@@ -256,9 +260,9 @@ public class ViewModelContextImpl_ITest {
 
 		final InOrder inOrder = inOrder(vmc, scopedServiceProvider, vmcChild);
 		inOrder.verify(vmcChild, times(1)).getService(Object.class);
-		inOrder.verify(scopedServiceProvider, times(1)).createService();
+		inOrder.verify(scopedServiceProvider, times(1)).createService(any(EMFFormsViewContext.class));
 		inOrder.verify(vmc, times(1)).getService(Object.class);
-		inOrder.verify(scopedServiceProvider, times(1)).createService();
+		inOrder.verify(scopedServiceProvider, times(1)).createService(any(EMFFormsViewContext.class));
 	}
 
 	@Test
@@ -268,7 +272,7 @@ public class ViewModelContextImpl_ITest {
 		scopedServiceProvider = mock(EMFFormsViewServiceFactory.class);
 		doReturn(Object.class).when(scopedServiceProvider).getType();
 		final Object mockedService = mock(Object.class);
-		doReturn(mockedService).when(scopedServiceProvider).createService();
+		doReturn(mockedService).when(scopedServiceProvider).createService(any(EMFFormsViewContext.class));
 		when(scopedServiceProvider.getPolicy()).thenReturn(EMFFormsViewServicePolicy.LAZY);
 		when(scopedServiceProvider.getScope()).thenReturn(EMFFormsViewServiceScope.GLOBAL);
 		when(scopedServiceProvider.getPriority()).thenReturn(1d);
@@ -288,7 +292,7 @@ public class ViewModelContextImpl_ITest {
 
 		final InOrder inOrder = inOrder(vmc, scopedServiceProvider);
 		inOrder.verify(vmc, times(1)).getService(Object.class);
-		inOrder.verify(scopedServiceProvider, times(1)).createService();
+		inOrder.verify(scopedServiceProvider, times(1)).createService(any(EMFFormsViewContext.class));
 		inOrder.verify(vmc, times(1)).getService(Object.class);
 	}
 
@@ -299,7 +303,7 @@ public class ViewModelContextImpl_ITest {
 		scopedServiceProvider = mock(EMFFormsViewServiceFactory.class);
 		doReturn(Object.class).when(scopedServiceProvider).getType();
 		final Object mockedService = mock(Object.class);
-		doReturn(mockedService).when(scopedServiceProvider).createService();
+		doReturn(mockedService).when(scopedServiceProvider).createService(any(EMFFormsViewContext.class));
 		when(scopedServiceProvider.getPolicy()).thenReturn(EMFFormsViewServicePolicy.LAZY);
 		when(scopedServiceProvider.getScope()).thenReturn(EMFFormsViewServiceScope.GLOBAL);
 		when(scopedServiceProvider.getPriority()).thenReturn(1d);
@@ -321,7 +325,7 @@ public class ViewModelContextImpl_ITest {
 		final InOrder inOrder = inOrder(vmc, scopedServiceProvider, vmcChild);
 		inOrder.verify(vmcChild, times(1)).getService(Object.class);
 		inOrder.verify(vmc, times(1)).getService(Object.class);
-		inOrder.verify(scopedServiceProvider, times(1)).createService();
+		inOrder.verify(scopedServiceProvider, times(1)).createService(any(EMFFormsViewContext.class));
 		inOrder.verify(vmc, times(1)).getService(Object.class);
 	}
 
@@ -357,7 +361,7 @@ public class ViewModelContextImpl_ITest {
 		when(scopedServiceProvider.getScope()).thenReturn(EMFFormsViewServiceScope.GLOBAL);
 		when(scopedServiceProvider.getPriority()).thenReturn(1d);
 		final Object mockedService = mock(Object.class);
-		doReturn(mockedService).when(scopedServiceProvider).createService();
+		doReturn(mockedService).when(scopedServiceProvider).createService(any(EMFFormsViewContext.class));
 		doReturn(Object.class).when(scopedServiceProvider).getType();
 		Mockito.doAnswer(new Answer<Void>() {
 
@@ -464,7 +468,7 @@ public class ViewModelContextImpl_ITest {
 		final EMFFormsViewServiceFactory<?> scopedServiceProviderLI = mock(EMFFormsViewServiceFactory.class);
 		doReturn(ViewModelService.class).when(scopedServiceProviderLI).getType();
 		final Object mockedServiceLI = mock(ViewModelService.class);
-		doReturn(mockedServiceLI).when(scopedServiceProviderLI).createService();
+		doReturn(mockedServiceLI).when(scopedServiceProviderLI).createService(any(EMFFormsViewContext.class));
 		when(scopedServiceProviderLI.getPolicy()).thenReturn(EMFFormsViewServicePolicy.IMMEDIATE);
 		when(scopedServiceProviderLI.getScope()).thenReturn(EMFFormsViewServiceScope.LOCAL);
 		when(scopedServiceProviderLI.getPriority()).thenReturn(1d);
@@ -488,7 +492,7 @@ public class ViewModelContextImpl_ITest {
 		final EMFFormsViewServiceFactory<?> scopedServiceProviderLI = mock(EMFFormsViewServiceFactory.class);
 		doReturn(ViewModelService.class).when(scopedServiceProviderLI).getType();
 		final Object mockedServiceLI = mock(ViewModelService.class);
-		doReturn(mockedServiceLI).when(scopedServiceProviderLI).createService();
+		doReturn(mockedServiceLI).when(scopedServiceProviderLI).createService(any(EMFFormsViewContext.class));
 		when(scopedServiceProviderLI.getPolicy()).thenReturn(EMFFormsViewServicePolicy.IMMEDIATE);
 		when(scopedServiceProviderLI.getScope()).thenReturn(EMFFormsViewServiceScope.LOCAL);
 		when(scopedServiceProviderLI.getPriority()).thenReturn(1d);
@@ -517,7 +521,7 @@ public class ViewModelContextImpl_ITest {
 		final EMFFormsViewServiceFactory<?> scopedServiceProviderLI = mock(EMFFormsViewServiceFactory.class);
 		doReturn(Object.class).when(scopedServiceProviderLI).getType();
 		final Object mockedServiceLI = mock(Object.class);
-		doReturn(mockedServiceLI).when(scopedServiceProviderLI).createService();
+		doReturn(mockedServiceLI).when(scopedServiceProviderLI).createService(any(EMFFormsViewContext.class));
 		when(scopedServiceProviderLI.getPolicy()).thenReturn(EMFFormsViewServicePolicy.IMMEDIATE);
 		when(scopedServiceProviderLI.getScope()).thenReturn(EMFFormsViewServiceScope.LOCAL);
 		when(scopedServiceProviderLI.getPriority()).thenReturn(1d);
@@ -527,7 +531,7 @@ public class ViewModelContextImpl_ITest {
 		final EMFFormsViewServiceFactory<?> scopedServiceProviderLL = mock(EMFFormsViewServiceFactory.class);
 		doReturn(Object.class).when(scopedServiceProviderLL).getType();
 		final Object mockedServiceLL = mock(Object.class);
-		doReturn(mockedServiceLL).when(scopedServiceProviderLL).createService();
+		doReturn(mockedServiceLL).when(scopedServiceProviderLL).createService(any(EMFFormsViewContext.class));
 		when(scopedServiceProviderLL.getPolicy()).thenReturn(EMFFormsViewServicePolicy.LAZY);
 		when(scopedServiceProviderLL.getScope()).thenReturn(EMFFormsViewServiceScope.LOCAL);
 		when(scopedServiceProviderLL.getPriority()).thenReturn(1d);
@@ -551,7 +555,7 @@ public class ViewModelContextImpl_ITest {
 		final EMFFormsViewServiceFactory<?> scopedServiceProviderLI = mock(EMFFormsViewServiceFactory.class);
 		doReturn(Object.class).when(scopedServiceProviderLI).getType();
 		final Object mockedServiceLI = mock(Object.class);
-		doReturn(mockedServiceLI).when(scopedServiceProviderLI).createService();
+		doReturn(mockedServiceLI).when(scopedServiceProviderLI).createService(any(EMFFormsViewContext.class));
 		when(scopedServiceProviderLI.getPolicy()).thenReturn(EMFFormsViewServicePolicy.IMMEDIATE);
 		when(scopedServiceProviderLI.getScope()).thenReturn(EMFFormsViewServiceScope.LOCAL);
 		when(scopedServiceProviderLI.getPriority()).thenReturn(1d);
@@ -561,7 +565,7 @@ public class ViewModelContextImpl_ITest {
 		final EMFFormsViewServiceFactory<?> scopedServiceProviderLL = mock(EMFFormsViewServiceFactory.class);
 		doReturn(Object.class).when(scopedServiceProviderLL).getType();
 		final Object mockedServiceLL = mock(Object.class);
-		doReturn(mockedServiceLL).when(scopedServiceProviderLL).createService();
+		doReturn(mockedServiceLL).when(scopedServiceProviderLL).createService(any(EMFFormsViewContext.class));
 		when(scopedServiceProviderLL.getPolicy()).thenReturn(EMFFormsViewServicePolicy.LAZY);
 		when(scopedServiceProviderLL.getScope()).thenReturn(EMFFormsViewServiceScope.LOCAL);
 		when(scopedServiceProviderLL.getPriority()).thenReturn(1d);
@@ -589,7 +593,7 @@ public class ViewModelContextImpl_ITest {
 		final EMFFormsViewServiceFactory<?> scopedServiceProviderLL = mock(EMFFormsViewServiceFactory.class);
 		doReturn(Object.class).when(scopedServiceProviderLL).getType();
 		final Object mockedServiceLL = mock(Object.class);
-		doReturn(mockedServiceLL).when(scopedServiceProviderLL).createService();
+		doReturn(mockedServiceLL).when(scopedServiceProviderLL).createService(any(EMFFormsViewContext.class));
 		when(scopedServiceProviderLL.getPolicy()).thenReturn(EMFFormsViewServicePolicy.LAZY);
 		when(scopedServiceProviderLL.getScope()).thenReturn(EMFFormsViewServiceScope.LOCAL);
 		when(scopedServiceProviderLL.getPriority()).thenReturn(1d);
@@ -599,7 +603,7 @@ public class ViewModelContextImpl_ITest {
 		final EMFFormsViewServiceFactory<?> scopedServiceProviderGI = mock(EMFFormsViewServiceFactory.class);
 		doReturn(Object.class).when(scopedServiceProviderGI).getType();
 		final Object mockedServiceGI = mock(Object.class);
-		doReturn(mockedServiceGI).when(scopedServiceProviderGI).createService();
+		doReturn(mockedServiceGI).when(scopedServiceProviderGI).createService(any(EMFFormsViewContext.class));
 		when(scopedServiceProviderGI.getPolicy()).thenReturn(EMFFormsViewServicePolicy.IMMEDIATE);
 		when(scopedServiceProviderGI.getScope()).thenReturn(EMFFormsViewServiceScope.GLOBAL);
 		when(scopedServiceProviderGI.getPriority()).thenReturn(1d);
@@ -623,7 +627,7 @@ public class ViewModelContextImpl_ITest {
 		final EMFFormsViewServiceFactory<?> scopedServiceProviderLL = mock(EMFFormsViewServiceFactory.class);
 		doReturn(Object.class).when(scopedServiceProviderLL).getType();
 		final Object mockedServiceLL = mock(Object.class);
-		doReturn(mockedServiceLL).when(scopedServiceProviderLL).createService();
+		doReturn(mockedServiceLL).when(scopedServiceProviderLL).createService(any(EMFFormsViewContext.class));
 		when(scopedServiceProviderLL.getPolicy()).thenReturn(EMFFormsViewServicePolicy.LAZY);
 		when(scopedServiceProviderLL.getScope()).thenReturn(EMFFormsViewServiceScope.LOCAL);
 		when(scopedServiceProviderLL.getPriority()).thenReturn(1d);
@@ -633,7 +637,7 @@ public class ViewModelContextImpl_ITest {
 		final EMFFormsViewServiceFactory<?> scopedServiceProviderGI = mock(EMFFormsViewServiceFactory.class);
 		doReturn(Object.class).when(scopedServiceProviderGI).getType();
 		final Object mockedServiceGI = mock(Object.class);
-		doReturn(mockedServiceGI).when(scopedServiceProviderGI).createService();
+		doReturn(mockedServiceGI).when(scopedServiceProviderGI).createService(any(EMFFormsViewContext.class));
 		when(scopedServiceProviderGI.getPolicy()).thenReturn(EMFFormsViewServicePolicy.IMMEDIATE);
 		when(scopedServiceProviderGI.getScope()).thenReturn(EMFFormsViewServiceScope.GLOBAL);
 		when(scopedServiceProviderGI.getPriority()).thenReturn(1d);
@@ -661,7 +665,7 @@ public class ViewModelContextImpl_ITest {
 		final EMFFormsViewServiceFactory<?> scopedServiceProviderGI = mock(EMFFormsViewServiceFactory.class);
 		doReturn(Object.class).when(scopedServiceProviderGI).getType();
 		final Object mockedServiceGI = mock(Object.class);
-		doReturn(mockedServiceGI).when(scopedServiceProviderGI).createService();
+		doReturn(mockedServiceGI).when(scopedServiceProviderGI).createService(any(EMFFormsViewContext.class));
 		when(scopedServiceProviderGI.getPolicy()).thenReturn(EMFFormsViewServicePolicy.IMMEDIATE);
 		when(scopedServiceProviderGI.getScope()).thenReturn(EMFFormsViewServiceScope.GLOBAL);
 		when(scopedServiceProviderGI.getPriority()).thenReturn(1d);
@@ -671,7 +675,7 @@ public class ViewModelContextImpl_ITest {
 		final EMFFormsViewServiceFactory<?> scopedServiceProviderGL = mock(EMFFormsViewServiceFactory.class);
 		doReturn(Object.class).when(scopedServiceProviderGL).getType();
 		final Object mockedServiceGL = mock(Object.class);
-		doReturn(mockedServiceGL).when(scopedServiceProviderGL).createService();
+		doReturn(mockedServiceGL).when(scopedServiceProviderGL).createService(any(EMFFormsViewContext.class));
 		when(scopedServiceProviderGL.getPolicy()).thenReturn(EMFFormsViewServicePolicy.LAZY);
 		when(scopedServiceProviderGL.getScope()).thenReturn(EMFFormsViewServiceScope.GLOBAL);
 		when(scopedServiceProviderGL.getPriority()).thenReturn(1d);
@@ -695,7 +699,7 @@ public class ViewModelContextImpl_ITest {
 		final EMFFormsViewServiceFactory<?> scopedServiceProviderGI = mock(EMFFormsViewServiceFactory.class);
 		doReturn(Object.class).when(scopedServiceProviderGI).getType();
 		final Object mockedServiceGI = mock(Object.class);
-		doReturn(mockedServiceGI).when(scopedServiceProviderGI).createService();
+		doReturn(mockedServiceGI).when(scopedServiceProviderGI).createService(any(EMFFormsViewContext.class));
 		when(scopedServiceProviderGI.getPolicy()).thenReturn(EMFFormsViewServicePolicy.IMMEDIATE);
 		when(scopedServiceProviderGI.getScope()).thenReturn(EMFFormsViewServiceScope.GLOBAL);
 		when(scopedServiceProviderGI.getPriority()).thenReturn(1d);
@@ -705,7 +709,7 @@ public class ViewModelContextImpl_ITest {
 		final EMFFormsViewServiceFactory<?> scopedServiceProviderGL = mock(EMFFormsViewServiceFactory.class);
 		doReturn(Object.class).when(scopedServiceProviderGL).getType();
 		final Object mockedServiceGL = mock(Object.class);
-		doReturn(mockedServiceGL).when(scopedServiceProviderGL).createService();
+		doReturn(mockedServiceGL).when(scopedServiceProviderGL).createService(any(EMFFormsViewContext.class));
 		when(scopedServiceProviderGL.getPolicy()).thenReturn(EMFFormsViewServicePolicy.LAZY);
 		when(scopedServiceProviderGL.getScope()).thenReturn(EMFFormsViewServiceScope.GLOBAL);
 		when(scopedServiceProviderGL.getPriority()).thenReturn(1d);

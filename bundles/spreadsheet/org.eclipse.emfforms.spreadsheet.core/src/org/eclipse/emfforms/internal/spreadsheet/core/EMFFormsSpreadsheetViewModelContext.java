@@ -26,6 +26,7 @@ import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emfforms.internal.view.model.localization.LocalizationViewModelService;
+import org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener;
 
 /**
  * Spreadsheet specific implementation of the {@link ViewModelContext}.
@@ -170,7 +171,9 @@ public class EMFFormsSpreadsheetViewModelContext implements ViewModelContext {
 	 * {@inheritDoc}
 	 *
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getControlsFor(org.eclipse.emf.ecore.EStructuralFeature.Setting)
+	 * @deprecated
 	 */
+	@Deprecated
 	@Override
 	public Set<VControl> getControlsFor(Setting setting) {
 		return null;
@@ -180,7 +183,9 @@ public class EMFFormsSpreadsheetViewModelContext implements ViewModelContext {
 	 * {@inheritDoc}
 	 *
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getControlsFor(org.eclipse.emf.ecp.common.spi.UniqueSetting)
+	 * @deprecated
 	 */
+	@Deprecated
 	@Override
 	public Set<VElement> getControlsFor(UniqueSetting setting) {
 		return null;
@@ -253,6 +258,24 @@ public class EMFFormsSpreadsheetViewModelContext implements ViewModelContext {
 	@Override
 	public void removeContextUser(Object user) {
 		// intentionally left empty
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext#registerEMFFormsContextListener(org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener)
+	 */
+	@Override
+	public void registerEMFFormsContextListener(EMFFormsContextListener contextListener) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext#unregisterEMFFormsContextListener(org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener)
+	 */
+	@Override
+	public void unregisterEMFFormsContextListener(EMFFormsContextListener contextListener) {
 	}
 
 }

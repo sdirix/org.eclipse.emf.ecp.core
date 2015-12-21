@@ -9,7 +9,7 @@
  * Contributors:
  * Lucas Koehler - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.internal.context;
+package org.eclipse.emfforms.internal.core.services.controlmapper;
 
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -18,21 +18,21 @@ import java.util.Set;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.view.spi.context.SettingToControlMapper;
-import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emfforms.spi.core.services.controlmapper.EMFFormsSettingToControlMapper;
 import org.eclipse.emfforms.spi.core.services.structuralchange.EMFFormsStructuralChangeTester;
+import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
 
 /**
- * A {@link ModelChangeListener} that listens to the view model of a {@link ViewModelContext} and updates a
- * {@link SettingToControlMapper} whenever the view model was changed in a way that is important to its
+ * A {@link ModelChangeListener} that listens to the view model of a {@link EMFFormsViewContext} and updates a
+ * {@link EMFFormsSettingToControlMapper} whenever the view model was changed in a way that is important to its
  * {@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReference VDomainModelReferences}.
  *
  * @author Lucas Koehler
@@ -46,8 +46,8 @@ public class ViewModelListener implements ModelChangeListener {
 	// private final ServiceReference<EMFFormsDomainExpander> domainExpanderServiceReference;
 	private final EMFFormsStructuralChangeTester structuralChangeTester;
 	private final ServiceReference<EMFFormsStructuralChangeTester> structuralChangeTesterServiceReference;
-	private final ViewModelContext viewModelContext;
-	private final SettingToControlMapper settingToControlMapper;
+	private final EMFFormsViewContext viewModelContext;
+	private final EMFFormsSettingToControlMapper settingToControlMapper;
 	private final Set<VControl> vControls = new LinkedHashSet<VControl>();
 	// private final ServiceReference<ReportService> reportServiceReference;
 	// private final ReportService reportService;
@@ -55,10 +55,10 @@ public class ViewModelListener implements ModelChangeListener {
 	/**
 	 * Creates a new instance of {@link ViewModelListener}.
 	 *
-	 * @param context The {@link ViewModelContext} this {@link ViewModelListener} listens to
-	 * @param mapper The {@link SettingToControlMapper} to keep updated
+	 * @param context The {@link EMFFormsViewContext} this {@link ViewModelListener} listens to
+	 * @param mapper The {@link EMFFormsSettingToControlMapper} to keep updated
 	 */
-	public ViewModelListener(ViewModelContext context, SettingToControlMapper mapper) {
+	public ViewModelListener(EMFFormsViewContext context, EMFFormsSettingToControlMapper mapper) {
 		isDisposed = false;
 		viewModelContext = context;
 		settingToControlMapper = mapper;
@@ -177,4 +177,5 @@ public class ViewModelListener implements ModelChangeListener {
 	public boolean isDisposed() {
 		return isDisposed;
 	}
+
 }

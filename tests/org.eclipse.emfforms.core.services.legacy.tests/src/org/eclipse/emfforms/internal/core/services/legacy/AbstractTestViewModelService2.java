@@ -17,7 +17,8 @@ public abstract class AbstractTestViewModelService2 implements ITestViewModelSer
 
 	@Override
 	public void instantiate(ViewModelContext context) {
-		// no op
+		// used for verification
+		context.putContextValue(getClass().getSimpleName(), getClass());
 	}
 
 	@Override

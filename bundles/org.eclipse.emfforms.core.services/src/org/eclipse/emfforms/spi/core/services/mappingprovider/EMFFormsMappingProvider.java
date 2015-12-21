@@ -11,7 +11,6 @@
  ******************************************************************************/
 package org.eclipse.emfforms.spi.core.services.mappingprovider;
 
-import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
@@ -41,7 +40,7 @@ public interface EMFFormsMappingProvider {
 	 * @param domainObject The {@link EObject domain object}
 	 * @return The mapping from the {@link UniqueSetting UniqueSettings} to their sets of {@link VControl VControls}
 	 */
-	Map<UniqueSetting, Set<VControl>> getMappingFor(VControl vControl, EObject domainObject);
+	Set<UniqueSetting> getMappingFor(VControl vControl, EObject domainObject);
 
 	/**
 	 * Returns a double indicating if and how well this {@link EMFFormsMappingProvider} is applicable for the given

@@ -18,6 +18,7 @@ import org.eclipse.emf.databinding.IEMFValueProperty;
 import org.eclipse.emf.databinding.edit.EMFEditProperties;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
@@ -144,8 +145,12 @@ public class FeaturePathDomainModelReferenceConverter implements DomainModelRefe
 				throw new DatabindingFailedException("The path is not fully resolved."); //$NON-NLS-1$
 			}
 		}
-
-		return InternalEObject.class.cast(currentObject).eSetting(featurePathReference.getDomainModelEFeature());
+		final EStructuralFeature structuralFeature = featurePathReference.getDomainModelEFeature();
+		if (currentObject.eClass().getEAllStructuralFeatures().contains(structuralFeature)) {
+			return InternalEObject.class.cast(currentObject).eSetting(structuralFeature);
+		}
+		throw new DatabindingFailedException(String.format("The resolved Object %1$s doesn't contain the feature %2$s.", //$NON-NLS-1$
+			currentObject.eClass().getName(), structuralFeature.getName()));
 	}
 
 }

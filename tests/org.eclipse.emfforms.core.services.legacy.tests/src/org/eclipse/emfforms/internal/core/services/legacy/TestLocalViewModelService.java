@@ -22,7 +22,7 @@ public class TestLocalViewModelService implements ViewModelService {
 
 	@Override
 	public void instantiate(ViewModelContext context) {
-		// intentionally left empty
+		context.putContextValue(getClass().getSimpleName(), getClass());
 	}
 
 	@Override

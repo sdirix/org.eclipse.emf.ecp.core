@@ -21,7 +21,7 @@ public class TestLocalViewModelService2 implements ITestViewModelService {
 
 	@Override
 	public void instantiate(ViewModelContext context) {
-		// intentionally left empty
+		context.putContextValue(getClass().getSimpleName(), getClass());
 	}
 
 	@Override

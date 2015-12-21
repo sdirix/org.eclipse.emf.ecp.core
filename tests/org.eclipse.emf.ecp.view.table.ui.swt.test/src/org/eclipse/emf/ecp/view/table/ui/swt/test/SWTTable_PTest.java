@@ -64,6 +64,7 @@ import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
 import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
+import org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener;
 import org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsNoRendererException;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
@@ -769,7 +770,9 @@ public class SWTTable_PTest {
 		 * {@inheritDoc}
 		 *
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getControlsFor(org.eclipse.emf.ecore.EStructuralFeature.Setting)
+		 * @deprecated
 		 */
+		@Deprecated
 		@Override
 		public Set<VControl> getControlsFor(Setting setting) {
 			return null;
@@ -779,7 +782,9 @@ public class SWTTable_PTest {
 		 * {@inheritDoc}
 		 *
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getControlsFor(org.eclipse.emf.ecp.common.spi.UniqueSetting)
+		 * @deprecated
 		 */
+		@Deprecated
 		@Override
 		public Set<VElement> getControlsFor(UniqueSetting setting) {
 			return null;
@@ -853,6 +858,24 @@ public class SWTTable_PTest {
 			final ViewModelContextWithoutServices vmcws = new ViewModelContextWithoutServices(vView);
 
 			return vmcws;
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext#registerEMFFormsContextListener(org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener)
+		 */
+		@Override
+		public void registerEMFFormsContextListener(EMFFormsContextListener contextListener) {
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext#unregisterEMFFormsContextListener(org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener)
+		 */
+		@Override
+		public void unregisterEMFFormsContextListener(EMFFormsContextListener contextListener) {
 		}
 
 	}

@@ -31,9 +31,10 @@ public interface EMFFormsViewServiceManager {
 	 *
 	 * @param <T> The type parameter of the service
 	 * @param type The Type of the requested service
+	 * @param emfFormsViewContext The {@link EMFFormsViewContext} to use
 	 * @return An optional instance of the requested service registered for this scope.
 	 */
-	<T> Optional<T> createLocalImmediateService(Class<T> type);
+	<T> Optional<T> createLocalImmediateService(Class<T> type, EMFFormsViewContext emfFormsViewContext);
 
 	/**
 	 * Return a local service which should be activated on request. If no service of the requested type is available
@@ -41,9 +42,10 @@ public interface EMFFormsViewServiceManager {
 	 *
 	 * @param <T> The type parameter of the service
 	 * @param type The Type of the requested service
+	 * @param emfFormsViewContext The {@link EMFFormsViewContext} to use
 	 * @return An optional instance of the requested service registered for this scope.
 	 */
-	<T> Optional<T> createLocalLazyService(Class<T> type);
+	<T> Optional<T> createLocalLazyService(Class<T> type, EMFFormsViewContext emfFormsViewContext);
 
 	/**
 	 * Return a global service which should be activated immediately. If no service of the requested type is available
@@ -51,9 +53,10 @@ public interface EMFFormsViewServiceManager {
 	 *
 	 * @param <T> The type parameter of the service
 	 * @param type The Type of the requested service
+	 * @param emfFormsViewContext The {@link EMFFormsViewContext} to use
 	 * @return An optional instance of the requested service registered for this scope.
 	 */
-	<T> Optional<T> createGlobalImmediateService(Class<T> type);
+	<T> Optional<T> createGlobalImmediateService(Class<T> type, EMFFormsViewContext emfFormsViewContext);
 
 	/**
 	 * Return a global service which should be activated on request. If no service of the requested type is available
@@ -61,19 +64,20 @@ public interface EMFFormsViewServiceManager {
 	 *
 	 * @param <T> The type parameter of the service
 	 * @param type The Type of the requested service
+	 * @param emfFormsViewContext The {@link EMFFormsViewContext} to use
 	 * @return An optional instance of the requested service registered for this scope.
 	 */
-	<T> Optional<T> createGlobalLazyService(Class<T> type);
+	<T> Optional<T> createGlobalLazyService(Class<T> type, EMFFormsViewContext emfFormsViewContext);
 
 	/**
-	 * Returns all registered services which are global immediate.
+	 * Returns all registered services which are global immediate ordered by the priority.
 	 *
 	 * @return The Set of all services which are global immediate. This set cannot be null
 	 */
 	Set<Class<?>> getAllGlobalImmediateServiceTypes();
 
 	/**
-	 * Returns all registered services which are local immediate.
+	 * Returns all registered services which are local immediate ordered by the priority.
 	 *
 	 * @return The Set of all services which are local immediate. This set cannot be null
 	 */

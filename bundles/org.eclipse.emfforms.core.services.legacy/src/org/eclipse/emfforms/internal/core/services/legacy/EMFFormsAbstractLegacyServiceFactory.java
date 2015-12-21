@@ -12,9 +12,13 @@
 package org.eclipse.emfforms.internal.core.services.legacy;
 
 import org.eclipse.emf.ecp.view.spi.context.GlobalViewModelService;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
+import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener;
+import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext;
 import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewServiceFactory;
 
 /**
@@ -24,7 +28,8 @@ import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewServiceFactory;
  * @author Eugen Neufeld
  *
  */
-public abstract class EMFFormsAbstractLegacyServiceFactory<T> implements EMFFormsViewServiceFactory<T> {
+public abstract class EMFFormsAbstractLegacyServiceFactory<T extends ViewModelService>
+	implements EMFFormsViewServiceFactory<T> {
 
 	private final Class<T> type;
 	private final double priority;
@@ -66,10 +71,13 @@ public abstract class EMFFormsAbstractLegacyServiceFactory<T> implements EMFForm
 		while (typeToCheck.getInterfaces().length == 0) {
 			typeToCheck = (Class<T>) typeToCheck.getSuperclass();
 		}
-		final Class<?> superTypeInterface = typeToCheck.getInterfaces()[0];
-		if (!GlobalViewModelService.class.equals(superTypeInterface)
-			&& !ViewModelService.class.equals(superTypeInterface)) {
-			return (Class<T>) superTypeInterface;
+		for (final Class<?> superTypeInterface : typeToCheck.getInterfaces()) {
+			// FIXME : what is a nice way to do this?
+			if (!GlobalViewModelService.class.equals(superTypeInterface)
+				&& !ViewModelService.class.equals(superTypeInterface)
+				&& !EMFFormsContextListener.class.equals(superTypeInterface)) {
+				return (Class<T>) superTypeInterface;
+			}
 		}
 		return type;
 	}
@@ -77,12 +85,39 @@ public abstract class EMFFormsAbstractLegacyServiceFactory<T> implements EMFForm
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsViewServiceFactory#createService()
+	 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsViewServiceFactory#createService(EMFFormsViewContext)
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
-	public T createService() {
+	public T createService(EMFFormsViewContext emfFormsViewContext) {
 		try {
-			return type.newInstance();
+			final ViewModelService vms = type.newInstance();
+			if (ViewModelContext.class.isInstance(emfFormsViewContext)) {
+				vms.instantiate(ViewModelContext.class.cast(emfFormsViewContext));
+				emfFormsViewContext.registerEMFFormsContextListener(new EMFFormsContextListener() {
+
+					@Override
+					public void contextInitialised() {
+						// do nothing
+					}
+
+					@Override
+					public void contextDispose() {
+						vms.dispose();
+					}
+
+					@Override
+					public void childContextDisposed(EMFFormsViewContext childContext) {
+						// do nothing
+					}
+
+					@Override
+					public void childContextAdded(VElement parentElement, EMFFormsViewContext childContext) {
+						// do nothing
+					}
+				});
+			}
+			return (T) vms;
 		} catch (final InstantiationException ex) {
 			reportService.report(new AbstractReport(ex));
 		} catch (final IllegalAccessException ex) {

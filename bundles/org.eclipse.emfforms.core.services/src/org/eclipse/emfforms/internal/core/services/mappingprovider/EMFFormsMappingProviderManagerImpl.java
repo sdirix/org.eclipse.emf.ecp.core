@@ -7,44 +7,35 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- * Lucas Koehler - initial API and implementation
+ * Eugen - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.internal.context;
+package org.eclipse.emfforms.internal.core.services.mappingprovider;
 
+import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import org.eclipse.emf.ecp.view.spi.context.SettingToControlMapper;
-import org.eclipse.emf.ecp.view.spi.context.SettingToControlMapperFactory;
-import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecp.common.spi.UniqueSetting;
+import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.mappingprovider.EMFFormsMappingProvider;
+import org.eclipse.emfforms.spi.core.services.mappingprovider.EMFFormsMappingProviderManager;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
 
 /**
- * Implementation of {@link SettingToControlMapperFactory} as an OSGI service.
- *
- * @author Lucas Koehler
+ * @author Eugen
  *
  */
-@Component(name = "SettingToControlMapFactoryImpl")
-public class SettingToControlMapFactoryImpl implements SettingToControlMapperFactory {
+@Component
+public class EMFFormsMappingProviderManagerImpl implements EMFFormsMappingProviderManager {
 
 	private final Set<EMFFormsMappingProvider> mappingProviders = new LinkedHashSet<EMFFormsMappingProvider>();
 	private ReportService reportService;
-
-	/**
-	 * Sets the {@link ReportService}.
-	 *
-	 * @param reportService The {@link ReportService}
-	 */
-	@Reference
-	protected void setReportService(ReportService reportService) {
-		this.reportService = reportService;
-	}
 
 	/**
 	 * Called by the framework to add an {@link EMFFormsMappingProvider}.
@@ -67,15 +58,37 @@ public class SettingToControlMapFactoryImpl implements SettingToControlMapperFac
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Sets the {@link ReportService}.
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.context.SettingToControlMapperFactory#createSettingToControlMapper(org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
+	 * @param reportService The {@link ReportService}
 	 */
-	@Override
-	public SettingToControlMapper createSettingToControlMapper(ViewModelContext viewModelContext) {
-		final SettingToControlMapper mapper = new SettingToControlMapperImpl(reportService, mappingProviders);
-		mapper.instantiate(viewModelContext);
-		return mapper;
+	@Reference
+	protected void setReportService(ReportService reportService) {
+		this.reportService = reportService;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emfforms.spi.core.services.mappingprovider.EMFFormsMappingProviderManager#getAllSettingsFor(org.eclipse.emf.ecp.view.spi.model.VControl,
+	 *      org.eclipse.emf.ecore.EObject)
+	 */
+	@Override
+	public Set<UniqueSetting> getAllSettingsFor(VControl vControl, EObject domainObject) {
+		EMFFormsMappingProvider bestMappingProvider = null;
+		double bestScore = EMFFormsMappingProvider.NOT_APPLICABLE;
+
+		for (final EMFFormsMappingProvider mappingProvider : mappingProviders) {
+			final double score = mappingProvider.isApplicable(vControl, domainObject);
+			if (score > bestScore) {
+				bestMappingProvider = mappingProvider;
+				bestScore = score;
+			}
+		}
+		if (bestMappingProvider == null) {
+			reportService.report(new AbstractReport("Warning: No applicable EMFFormsMappingProvider was found.")); //$NON-NLS-1$
+			return Collections.emptySet();
+		}
+		return bestMappingProvider.getMappingFor(vControl, domainObject);
+	}
 }

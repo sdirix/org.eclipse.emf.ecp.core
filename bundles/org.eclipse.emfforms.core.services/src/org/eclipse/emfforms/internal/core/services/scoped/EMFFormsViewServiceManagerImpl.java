@@ -11,11 +11,17 @@
  ******************************************************************************/
 package org.eclipse.emfforms.internal.core.services.scoped;
 
+import java.util.Collection;
+import java.util.Comparator;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import org.eclipse.emfforms.common.Optional;
+import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext;
 import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewServiceFactory;
 import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewServiceManager;
 import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewServicePolicy;
@@ -86,17 +92,12 @@ public class EMFFormsViewServiceManagerImpl implements EMFFormsViewServiceManage
 			"This should never be reached as we check for all possible cases before.s Only when there is one more combination of policy and scope that we missed this can happen!"); //$NON-NLS-1$
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsViewServiceManager#createLocalImmediateService(java.lang.Class)
-	 */
 	@SuppressWarnings("unchecked")
-	@Override
-	public <T> Optional<T> createLocalImmediateService(Class<T> type) {
-		final EMFFormsViewServiceFactory<?> serviceProvider = localImmediateMap.get(type);
+	private <T> Optional<T> getServiceOptional(Class<T> type,
+		Map<Class<?>, EMFFormsViewServiceFactory<?>> classFactoryMap, EMFFormsViewContext emfFormsViewContext) {
+		final EMFFormsViewServiceFactory<?> serviceProvider = classFactoryMap.get(type);
 		if (serviceProvider != null) {
-			return (Optional<T>) Optional.of(serviceProvider.createService());
+			return (Optional<T>) Optional.of(serviceProvider.createService(emfFormsViewContext));
 		}
 		return Optional.empty();
 	}
@@ -104,46 +105,64 @@ public class EMFFormsViewServiceManagerImpl implements EMFFormsViewServiceManage
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsViewServiceManager#createLocalLazyService(java.lang.Class)
+	 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsViewServiceManager#createLocalImmediateService(java.lang.Class,EMFFormsViewContext)
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
-	public <T> Optional<T> createLocalLazyService(Class<T> type) {
-		final EMFFormsViewServiceFactory<?> serviceProvider = localLazyMap.get(type);
-		if (serviceProvider != null) {
-			return (Optional<T>) Optional.of(serviceProvider.createService());
-		}
-		return Optional.empty();
+	public <T> Optional<T> createLocalImmediateService(Class<T> type, EMFFormsViewContext emfFormsViewContext) {
+		return getServiceOptional(type, localImmediateMap, emfFormsViewContext);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsViewServiceManager#createGlobalImmediateService(java.lang.Class)
+	 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsViewServiceManager#createLocalLazyService(java.lang.Class,EMFFormsViewContext)
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
-	public <T> Optional<T> createGlobalImmediateService(Class<T> type) {
-		final EMFFormsViewServiceFactory<?> serviceProvider = globalImmediateMap.get(type);
-		if (serviceProvider != null) {
-			return (Optional<T>) Optional.of(serviceProvider.createService());
-		}
-		return Optional.empty();
+	public <T> Optional<T> createLocalLazyService(Class<T> type, EMFFormsViewContext emfFormsViewContext) {
+		return getServiceOptional(type, localLazyMap, emfFormsViewContext);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsViewServiceManager#createGlobalLazyService(java.lang.Class)
+	 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsViewServiceManager#createGlobalImmediateService(java.lang.Class,EMFFormsViewContext)
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
-	public <T> Optional<T> createGlobalLazyService(Class<T> type) {
-		final EMFFormsViewServiceFactory<?> serviceProvider = globalLazyMap.get(type);
-		if (serviceProvider != null) {
-			return (Optional<T>) Optional.of(serviceProvider.createService());
+	public <T> Optional<T> createGlobalImmediateService(Class<T> type, EMFFormsViewContext emfFormsViewContext) {
+		return getServiceOptional(type, globalImmediateMap, emfFormsViewContext);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsViewServiceManager#createGlobalLazyService(java.lang.Class,EMFFormsViewContext)
+	 */
+	@Override
+	public <T> Optional<T> createGlobalLazyService(Class<T> type, EMFFormsViewContext emfFormsViewContext) {
+		return getServiceOptional(type, globalLazyMap, emfFormsViewContext);
+	}
+
+	private Set<Class<?>> getAllTypes(Collection<EMFFormsViewServiceFactory<?>> factorySet) {
+		final SortedSet<EMFFormsViewServiceFactory<?>> sortedFactories = new TreeSet<EMFFormsViewServiceFactory<?>>(
+			new Comparator<EMFFormsViewServiceFactory<?>>() {
+
+				@Override
+				public int compare(EMFFormsViewServiceFactory<?> factory0, EMFFormsViewServiceFactory<?> factory1) {
+					final int result = Double.compare(factory0.getPriority(), factory1.getPriority());
+					if (result == 0) {
+						return 1;
+					}
+					return result;
+				}
+			});
+		for (final EMFFormsViewServiceFactory<?> factory : factorySet) {
+			sortedFactories.add(factory);
 		}
-		return Optional.empty();
+		final Set<Class<?>> result = new LinkedHashSet<Class<?>>();
+		for (final EMFFormsViewServiceFactory<?> factory : sortedFactories) {
+			result.add(factory.getType());
+		}
+		return result;
 	}
 
 	/**
@@ -153,17 +172,19 @@ public class EMFFormsViewServiceManagerImpl implements EMFFormsViewServiceManage
 	 */
 	@Override
 	public Set<Class<?>> getAllGlobalImmediateServiceTypes() {
-		return globalImmediateMap.keySet();
+		// return globalImmediateMap.keySet();
+		return getAllTypes(globalImmediateMap.values());
 	}
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsViewServiceManager#getAllLocalImmediateServiceTypes()
 	 */
 	@Override
 	public Set<Class<?>> getAllLocalImmediateServiceTypes() {
-		return localImmediateMap.keySet();
+		// return localImmediateMap.keySet();
+		return getAllTypes(localImmediateMap.values());
 	}
 
 }
