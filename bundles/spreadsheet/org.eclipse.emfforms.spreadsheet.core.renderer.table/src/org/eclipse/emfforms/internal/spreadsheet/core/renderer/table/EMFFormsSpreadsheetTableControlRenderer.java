@@ -208,7 +208,7 @@ public class EMFFormsSpreadsheetTableControlRenderer extends EMFFormsAbstractSpr
 
 	/**
 	 * Returns the number of entries that should be exported.
-	 * 
+	 *
 	 * @param tableControl The VTableControl being exported
 	 * @param tableSetting The Setting of the table being exported
 	 * @return The number of entries to export
@@ -226,8 +226,7 @@ public class EMFFormsSpreadsheetTableControlRenderer extends EMFFormsAbstractSpr
 			prefixName = tableSetting.getEStructuralFeature()
 				.getName();
 		}
-		prefixName += "_" + index; //$NON-NLS-1$
-		return prefixName;
+		return index + 1 + "_" + prefixName; //$NON-NLS-1$
 	}
 
 	private EObject getTableEntry(EList<EObject> tableEntries, int currentColumn, EReference tableEntryReference) {
