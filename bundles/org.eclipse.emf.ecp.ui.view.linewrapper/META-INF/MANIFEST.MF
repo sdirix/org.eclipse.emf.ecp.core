@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: ECP String Modifier with Line Wrapping
-Bundle-SymbolicName: org.eclipse.emf.ecp.ui.view.linewrapper
+Bundle-SymbolicName: org.eclipse.emf.ecp.ui.view.linewrapper;singleton:=true
 Bundle-Version: 1.8.0.qualifier
 Bundle-Vendor: Eclipse Modeling Project
 Export-Package: org.eclipse.emf.ecp.internal.ui.view.linewrapper;version="1.8.0";x-internal:=true
