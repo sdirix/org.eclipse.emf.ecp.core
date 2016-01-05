@@ -211,11 +211,20 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider 
 
 		// Activate our context, so that our key-bindings are more important than
 		// the default ones!
-		site.getService(IContextService.class).activateContext("org.eclipse.emfforms.editor.context");
+		site.getService(IContextService.class).activateContext(getContextId());
 
 		site.getPage().addPartListener(partListener);
 
 		ResourcesPlugin.getWorkspace().addResourceChangeListener(resourceChangeListener);
+	}
+
+	/**
+	 * Returns the context id set for this editor.
+	 * 
+	 * @return the context id
+	 */
+	protected String getContextId() {
+		return "org.eclipse.emfforms.editor.context";
 	}
 
 	/*

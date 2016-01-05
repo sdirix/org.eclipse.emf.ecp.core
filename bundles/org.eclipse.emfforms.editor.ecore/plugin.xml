@@ -95,4 +95,63 @@
 <file filePath="simple_viewmodels/EPackage.view"/>
 
 </extension>
+<extension
+      point="org.eclipse.ui.contexts">
+   <context
+         id="org.eclipse.emfforms.editor.ecore.context"
+         name="Ecore Editor"
+         parentId="org.eclipse.ui.contexts.window">
+   </context>
+</extension>
+ <extension
+         point="org.eclipse.ui.commands">
+      <command
+            id="org.eclipse.emfforms.editor.ecore.new"
+            name="New Child Element">
+      </command>
+      <command
+            id="org.eclipse.emfforms.editor.ecore.new.sibling"
+            name="New Sibling">
+      </command>
+      <command
+            id="org.eclipse.emfforms.editor.ecore.delete"
+            name="Delete Element">
+      </command>
+   </extension>
+ <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="org.eclipse.emfforms.internal.editor.ecore.EcoreShortcutHandler"
+            commandId="org.eclipse.emfforms.editor.ecore.delete">
+      </handler>
+      <handler
+            class="org.eclipse.emfforms.internal.editor.ecore.EcoreShortcutHandler"
+            commandId="org.eclipse.emfforms.editor.ecore.new">
+      </handler>
+      <handler
+            class="org.eclipse.emfforms.internal.editor.ecore.EcoreShortcutHandler"
+            commandId="org.eclipse.emfforms.editor.ecore.new.sibling">
+      </handler>      
+   </extension>
+   <extension
+         point="org.eclipse.ui.bindings">
+      <key
+            commandId="org.eclipse.emfforms.editor.ecore.new"
+            contextId="org.eclipse.emfforms.editor.ecore.context"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="Ctrl+N">
+      </key>
+      <key
+            commandId="org.eclipse.emfforms.editor.ecore.new.sibling"
+            contextId="org.eclipse.emfforms.editor.ecore.context"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="Ctrl+Shift+N">
+      </key>
+      <key
+            commandId="org.eclipse.emfforms.editor.ecore.delete"
+            contextId="org.eclipse.emfforms.editor.ecore.context"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="DEL">
+      </key>
+   </extension>
 </plugin>

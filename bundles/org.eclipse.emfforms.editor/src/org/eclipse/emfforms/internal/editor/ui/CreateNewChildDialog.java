@@ -21,6 +21,7 @@ import org.eclipse.emf.edit.command.CommandParameter;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfforms.spi.editor.InitializeChildCallback;
+import org.eclipse.emfforms.spi.swt.treemasterdetail.util.CreateChildAction;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.viewers.ArrayContentProvider;
@@ -69,6 +70,15 @@ public class CreateNewChildDialog extends Dialog {
 		this.title = title;
 		this.parent = parent;
 		this.selectionProvider = selectionProvider;
+	}
+
+	/**
+	 * Returns the selection provider.
+	 *
+	 * @return the selection provider
+	 */
+	protected final ISelectionProvider getSelectionProvider() {
+		return selectionProvider;
 	}
 
 	/*
@@ -189,9 +199,8 @@ public class CreateNewChildDialog extends Dialog {
 	 * @param eObject the e object
 	 * @return the list
 	 */
-	private List<Action> getNewChildActions(Collection<?> descriptors,
+	protected List<Action> getNewChildActions(Collection<?> descriptors,
 		final EditingDomain domain, final EObject eObject) {
-
 		final List<Action> result = new ArrayList<Action>();
 
 		for (final Object descriptor : descriptors) {
@@ -203,12 +212,6 @@ public class CreateNewChildDialog extends Dialog {
 			if (cp.getEReference() == null) {
 				continue;
 			}
-			// TODO is this required? Should only be available in ecore editor
-			// if (org.eclipse.emfforms.internal.swt.treemasterdetail.helpers.EcoreHelpers
-			// .isGenericFeature(cp.getFeature())) {
-			// // This ensures, that we won't show any generic features anymore
-			// continue;
-			// }
 			if (!cp.getEReference().isMany()
 				&& eObject.eIsSet(cp.getEStructuralFeature())) {
 				continue;
@@ -218,8 +221,7 @@ public class CreateNewChildDialog extends Dialog {
 					.eGet(cp.getEReference())).size()) {
 				continue;
 			}
-
-			result.add(new CreateChildActionWithAccelerator(eObject, domain, selectionProvider, cp,
+			result.add(new CreateChildAction(eObject, domain, getSelectionProvider(), cp,
 				new InitializeChildCallback()));
 		}
 		return result;

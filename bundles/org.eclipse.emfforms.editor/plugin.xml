@@ -67,7 +67,7 @@
       <context
             id="org.eclipse.emfforms.editor.context"
 			parentId="org.eclipse.ui.contexts.window"
-            name="Ecore Editor">
+            name="Generic Editor">
       </context>
    </extension>
 </plugin>

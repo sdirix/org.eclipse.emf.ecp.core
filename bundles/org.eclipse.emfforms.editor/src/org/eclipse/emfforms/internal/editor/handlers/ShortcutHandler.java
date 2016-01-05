@@ -64,13 +64,13 @@ public class ShortcutHandler extends AbstractHandler {
 			final EditingDomain editingDomain = AdapterFactoryEditingDomain
 				.getEditingDomainFor(currentSelection);
 
-			if ("org.eclipse.emfforms.editor.delete".equals(commandName)) {
+			if (getDeleteCmdName().equals(commandName)) {
 				editingDomain.getCommandStack().execute(
 					RemoveCommand.create(editingDomain, currentSelection));
-			} else if ("org.eclipse.emfforms.editor.new".equals(commandName)) {
+			} else if (getNewChildCmdName().equals(commandName)) {
 				createNewElementDialog(editingDomain, eEditor.getEditorSite().getSelectionProvider(), currentSelection,
 					"Create Child").open();
-			} else if ("org.eclipse.emfforms.editor.new.sibling".equals(commandName)) {
+			} else if (getNewSiblingCmdName().equals(commandName)) {
 				// Get Parent of current Selection and show the dialog for it
 				final EObject parent = currentSelection.eContainer();
 				final EditingDomain parentEditingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(parent);
@@ -83,16 +83,37 @@ public class ShortcutHandler extends AbstractHandler {
 	}
 
 	/**
+	 * @return the cmd name for new siblings
+	 */
+	protected String getNewSiblingCmdName() {
+		return "org.eclipse.emfforms.editor.new.sibling";
+	}
+
+	/**
+	 * @return the cmd name for new children
+	 */
+	protected String getNewChildCmdName() {
+		return "org.eclipse.emfforms.editor.new";
+	}
+
+	/**
+	 * @return the cmd name for deletions
+	 */
+	protected String getDeleteCmdName() {
+		return "org.eclipse.emfforms.editor.delete";
+	}
+
+	/**
 	 * Creates the new element dialog.
 	 *
 	 * @param editingDomain the editing domain
+	 * @param selectionProvider the selection
 	 * @param selection the selection
 	 * @param title the title
 	 * @return the dialog
 	 */
-	private Dialog createNewElementDialog(final EditingDomain editingDomain,
-		final ISelectionProvider selectionProvider,
-		final EObject selection, final String title) {
+	protected Dialog createNewElementDialog(final EditingDomain editingDomain,
+		final ISelectionProvider selectionProvider, final EObject selection, final String title) {
 
 		return new CreateNewChildDialog(Display.getCurrent().getActiveShell(), title, selection,
 			selectionProvider);

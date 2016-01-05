@@ -10,7 +10,7 @@
  * Clemens Elflein - initial API and implementation
  ******************************************************************************/
 
-package org.eclipse.emfforms.internal.editor.ui;
+package org.eclipse.emfforms.internal.editor.ecore;
 
 import java.util.LinkedHashMap;
 
