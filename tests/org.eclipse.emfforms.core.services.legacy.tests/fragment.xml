@@ -15,6 +15,9 @@
       <viewService
             class="org.eclipse.emfforms.internal.core.services.legacy.TestLocalViewModelService2">
       </viewService>
+      <viewService
+            class="org.eclipse.emfforms.internal.core.services.legacy.TestViewModelService2">
+      </viewService>
    </extension>
 
 </fragment>

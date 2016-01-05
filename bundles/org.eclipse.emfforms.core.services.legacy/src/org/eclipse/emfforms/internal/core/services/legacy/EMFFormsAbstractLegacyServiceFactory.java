@@ -62,7 +62,11 @@ public abstract class EMFFormsAbstractLegacyServiceFactory<T> implements EMFForm
 	@SuppressWarnings("unchecked")
 	@Override
 	public Class<T> getType() {
-		final Class<?> superTypeInterface = type.getInterfaces()[0];
+		Class<T> typeToCheck = type;
+		while (typeToCheck.getInterfaces().length == 0) {
+			typeToCheck = (Class<T>) typeToCheck.getSuperclass();
+		}
+		final Class<?> superTypeInterface = typeToCheck.getInterfaces()[0];
 		if (!GlobalViewModelService.class.equals(superTypeInterface)
 			&& !ViewModelService.class.equals(superTypeInterface)) {
 			return (Class<T>) superTypeInterface;

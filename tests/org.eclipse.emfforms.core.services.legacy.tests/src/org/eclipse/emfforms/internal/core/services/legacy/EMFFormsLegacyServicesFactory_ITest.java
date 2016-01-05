@@ -71,6 +71,10 @@ public class EMFFormsLegacyServicesFactory_ITest {
 		final Optional<ITestViewModelService> localImmediateService2 = serviceFactory
 			.createLocalImmediateService(ITestViewModelService.class);
 		assertTrue(localImmediateService2.isPresent());
+
+		final Optional<ITestViewModelService2> localImmediateService3 = serviceFactory
+			.createLocalImmediateService(ITestViewModelService2.class);
+		assertTrue(localImmediateService3.isPresent());
 	}
 
 }
