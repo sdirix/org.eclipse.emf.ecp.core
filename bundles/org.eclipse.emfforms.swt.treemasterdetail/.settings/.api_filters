@@ -16,6 +16,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emfforms.spi.swt.treemasterdetail.util.MasterDetailAction">
+        <filter comment="SPI change" id="305324134">
+            <message_arguments>
+                <message_argument value="org.eclipse.emfforms.spi.swt.treemasterdetail.util.MasterDetailAction"/>
+                <message_argument value="org.eclipse.emfforms.swt.treemasterdetail_1.8.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emfforms.spi.swt.treemasterdetail.util.TreeMasterDetailRenderer">
         <filter comment="SPI change 1.8.0" id="305324134">
             <message_arguments>

@@ -24,6 +24,7 @@ import org.eclipse.emfforms.spi.swt.treemasterdetail.actions.delegating.PasteMas
  * Helper class to dot-link the creation of {@link MasterDetailAction} collections.
  *
  * @author Stefan Dirix
+ * @since 1.8
  *
  */
 public class ActionCollector {

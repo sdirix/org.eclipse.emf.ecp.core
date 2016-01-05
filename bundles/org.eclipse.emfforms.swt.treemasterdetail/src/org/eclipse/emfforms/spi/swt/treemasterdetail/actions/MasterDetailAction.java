@@ -17,7 +17,7 @@ import org.eclipse.jface.viewers.TreeViewer;
 
 /**
  * @author Alexandra Buzila
- * @since 1.5
+ * @since 1.8
  *
  */
 public abstract class MasterDetailAction extends AbstractHandler {

@@ -21,6 +21,7 @@ import org.eclipse.swt.events.KeyEvent;
  * Delegates to {@link CopyAction}.
  *
  * @author Stefan Dirix
+ * @since 1.8
  *
  */
 public class CopyMasterDetailAction extends DelegatingMasterDetailAction {

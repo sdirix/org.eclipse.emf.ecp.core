@@ -22,6 +22,7 @@ import org.eclipse.swt.events.KeyListener;
  * Extended {@link MasterDetailAction} to help introduce keybindings.
  *
  * @author Stefan Dirix
+ * @since 1.8
  *
  */
 public abstract class KeybindedMasterDetailAction extends MasterDetailAction

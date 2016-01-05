@@ -25,6 +25,7 @@ import org.eclipse.ui.actions.BaseSelectionListenerAction;
  * Abstract implementation of a {@link KeybindedMasterDetailAction} forwarding to a {@link BaseSelectionListenerAction}.
  *
  * @author Stefan Dirix
+ * @since 1.8
  */
 public abstract class DelegatingMasterDetailAction extends KeybindedMasterDetailAction {
 

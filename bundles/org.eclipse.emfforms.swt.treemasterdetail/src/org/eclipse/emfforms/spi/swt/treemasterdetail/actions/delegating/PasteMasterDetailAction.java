@@ -21,6 +21,7 @@ import org.eclipse.swt.events.KeyEvent;
  * Delegates to {@link PasteAction}.
  *
  * @author Stefan Dirix
+ * @since 1.8
  *
  */
 public class PasteMasterDetailAction extends DelegatingMasterDetailAction {
