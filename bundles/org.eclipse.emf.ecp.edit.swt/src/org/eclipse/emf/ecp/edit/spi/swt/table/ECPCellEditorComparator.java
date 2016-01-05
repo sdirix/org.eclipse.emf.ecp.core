@@ -23,16 +23,21 @@ package org.eclipse.emf.ecp.edit.spi.swt.table;
 public interface ECPCellEditorComparator {
 
 	/**
+	 * This method is called in order to compare the two given objects. The results are used to show the elements in the
+	 * resulting order in the table.
 	 *
 	 * @param e1 the first object of the comparison
 	 * @param e2 the second object of the comparison
 	 * @param direction {@link org.eclipse.swt.SWT#NONE SWT.NONE}, {@link org.eclipse.swt.SWT#UP SWT.UP} or
 	 *            {@link org.eclipse.swt.SWT#DOWN SWT.DOWN} according to the indication displayed at
 	 *            the table column.
-	 * @return a negative number if the first element is less than the
+	 * @return a negative number if the first element is to be shown before the
 	 *         second element; the value <code>0</code> if the first element is
 	 *         equal to the second element; and a positive number if the first
-	 *         element is greater than the second element
+	 *         element is to be shown after the second element.
+	 *         <p>
+	 *         <b>NOTE</b> Keep in mind to take the given direction into account
+	 *         </p>
 	 */
 	int compare(Object e1, Object e2, int direction);
 
