@@ -11,6 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.edapt;
 
+import java.text.MessageFormat;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -26,7 +27,7 @@ import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 /**
- * Tree like datastructure representing EPackages and their depdendencies to each other. Offers an Iterator to
+ * Tree like datastructure representing EPackages and their dependencies to each other. Offers an Iterator to
  * navigate over the dependencies.
  *
  * @author jfaltermeier
@@ -78,23 +79,27 @@ public class PackageDependencyGraph {
 
 		/* resolve direct nsURIs */
 		final EPackage rootPackage = Registry.INSTANCE.getEPackage(node.getNSURI());
-		final TreeIterator<EObject> iterator = rootPackage.eAllContents();
-		while (iterator.hasNext()) {
-			final EObject next = iterator.next();
+		if (rootPackage == null) {
+			Activator.log(MessageFormat.format("No Package found for the ns-uri {0}", node.getNSURI())); //$NON-NLS-1$
+		} else {
+			final TreeIterator<EObject> iterator = rootPackage.eAllContents();
+			while (iterator.hasNext()) {
+				final EObject next = iterator.next();
 
-			/* check super types of contained classes */
-			if (EClass.class.isInstance(next)) {
-				final EClass eClass = (EClass) next;
-				for (final EClass superType : eClass.getESuperTypes()) {
-					nsURIs.add(superType.getEPackage().getNsURI());
+				/* check super types of contained classes */
+				if (EClass.class.isInstance(next)) {
+					final EClass eClass = (EClass) next;
+					for (final EClass superType : eClass.getESuperTypes()) {
+						nsURIs.add(superType.getEPackage().getNsURI());
+					}
 				}
-			}
 
-			/* check types of features */
-			else if (EStructuralFeature.class.isInstance(next)) {
-				final EStructuralFeature feature = (EStructuralFeature) next;
-				final EClassifier eType = feature.getEType();
-				nsURIs.add(eType.getEPackage().getNsURI());
+				/* check types of features */
+				else if (EStructuralFeature.class.isInstance(next)) {
+					final EStructuralFeature feature = (EStructuralFeature) next;
+					final EClassifier eType = feature.getEType();
+					nsURIs.add(eType.getEPackage().getNsURI());
+				}
 			}
 		}
 
