@@ -12,7 +12,7 @@
 package org.eclipse.emfforms.internal.swt.treemasterdetail.defaultprovider;
 
 import org.eclipse.emf.common.command.Command;
-import org.eclipse.emf.edit.command.RemoveCommand;
+import org.eclipse.emf.edit.command.DeleteCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.DeleteActionBuilder;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.TreeMasterDetailComposite;
@@ -31,17 +31,17 @@ public class DefaultDeleteActionBuilder implements DeleteActionBuilder {
 
 	@Override
 	public Action createDeleteAction(IStructuredSelection selection, final EditingDomain editingDomain) {
-		final Command removeCommand = RemoveCommand.create(editingDomain, selection.toList());
+		final Command deleteCommand = DeleteCommand.create(editingDomain, selection.toList());
 
 		final Action deleteAction = new Action() {
 			@Override
 			public void run() {
 				super.run();
-				editingDomain.getCommandStack().execute(removeCommand);
+				editingDomain.getCommandStack().execute(deleteCommand);
 			}
 		};
 
-		if (!removeCommand.canExecute()) {
+		if (!deleteCommand.canExecute()) {
 			deleteAction.setEnabled(false);
 		}
 
