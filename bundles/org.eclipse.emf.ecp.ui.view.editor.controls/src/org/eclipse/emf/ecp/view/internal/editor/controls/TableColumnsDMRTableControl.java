@@ -58,6 +58,7 @@ import org.eclipse.emf.edit.ui.dnd.EditingDomainViewerDropAdapter;
 import org.eclipse.emf.edit.ui.dnd.LocalTransfer;
 import org.eclipse.emf.edit.ui.dnd.ViewerDragAdapter;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
+import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
@@ -407,6 +408,11 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 			super.widgetSelected(e);
 			final VTableDomainModelReference tableDomainModelReference = VTableDomainModelReference.class
 				.cast(eObject);
+			if (tableDomainModelReference == null) {
+				Activator.getDefault().getReportService()
+					.report(new AbstractReport("Cannot add column. Table DMR is null.")); //$NON-NLS-1$
+				return;
+			}
 
 			IValueProperty valueProperty;
 			try {
