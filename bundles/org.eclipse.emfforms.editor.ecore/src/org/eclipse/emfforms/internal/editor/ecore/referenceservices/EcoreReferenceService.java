@@ -21,8 +21,9 @@ import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
-import org.eclipse.emf.ecp.edit.spi.ReferenceService;
+import org.eclipse.emf.ecp.ui.view.swt.DefaultReferenceService;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
@@ -38,13 +39,16 @@ import org.eclipse.ui.dialogs.ListDialog;
 /**
  * The ReferenceService provides all widgets with Ecore specific references.
  */
-public class EcoreReferenceService implements ReferenceService {
+public class EcoreReferenceService extends DefaultReferenceService {
 
 	private ViewModelContext context;
+	private EditingDomain editingDomain;
 
 	@Override
 	public void instantiate(ViewModelContext context) {
 		this.context = context;
+		editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(context.getDomainModel());
+		super.instantiate(context);
 	}
 
 	private EObject getExistingSuperTypeFor(EReference eReference) {
@@ -87,11 +91,10 @@ public class EcoreReferenceService implements ReferenceService {
 
 		dialog.setContentProvider(new ArrayContentProvider());
 
-		final ComposedAdapterFactory composedAdapterFactory =
-			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+		final ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(
+			ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 
-		final AdapterFactoryLabelProvider labelProvider =
-			new AdapterFactoryLabelProvider(composedAdapterFactory);
+		final AdapterFactoryLabelProvider labelProvider = new AdapterFactoryLabelProvider(composedAdapterFactory);
 
 		dialog.setLabelProvider(labelProvider);
 
@@ -161,11 +164,12 @@ public class EcoreReferenceService implements ReferenceService {
 
 	@Override
 	public void dispose() {
+		super.dispose();
 	}
 
 	@Override
 	public int getPriority() {
-		return 0;
+		return 3;
 	}
 
 	private void addModelElement(EObject eObject, EReference eReference) {
@@ -189,12 +193,10 @@ public class EcoreReferenceService implements ReferenceService {
 			if (editReference.getEReferenceType() == null) {
 				editingDomain.getCommandStack().execute(
 					SetCommand.create(editingDomain, editReference, EcorePackage.Literals.ETYPED_ELEMENT__ETYPE,
-						selectedReference.getEContainingClass())
-					);
+						selectedReference.getEContainingClass()));
 			}
 			editingDomain.getCommandStack().execute(
-				SetCommand.create(editingDomain, editReference, EcorePackage.Literals.EREFERENCE__EOPPOSITE, eObject)
-				);
+				SetCommand.create(editingDomain, editReference, EcorePackage.Literals.EREFERENCE__EOPPOSITE, eObject));
 
 			return;
 		}
@@ -214,12 +216,7 @@ public class EcoreReferenceService implements ReferenceService {
 
 	@Override
 	public void openInNewContext(EObject eObject) {
-
-	}
-
-	@Override
-	public void addNewModelElements(EObject eObject, EReference eReference) {
-		// NOOP, we always want to reference existing elements for now
+		// no op. stay inside editor
 	}
 
 	@Override
@@ -228,5 +225,38 @@ public class EcoreReferenceService implements ReferenceService {
 		if (selectedElement != null) {
 			addModelElement(selectedElement, eReference);
 		}
+	}
+
+	@Override
+	public void addNewModelElements(EObject eObject, EReference eReference) {
+		if (eReference == EcorePackage.eINSTANCE.getEReference_EOpposite()) {
+			handleEOpposite(eObject, eReference);
+			return;
+		}
+		super.addNewModelElements(eObject, eReference);
+	}
+
+	@SuppressWarnings("restriction")
+	private void handleEOpposite(EObject eObject, EReference eReference) {
+		/* get the container for the existing reference. this will be the type for the newly created reference */
+		final EReference existingReference = EReference.class.cast(eObject);
+		final EClass existingType = (EClass) existingReference.eContainer();
+
+		/* create the new reference */
+		final EReference newReference = EcoreFactory.eINSTANCE.createEReference();
+		newReference.setName("");
+		newReference.setEType(existingType);
+		newReference.setEOpposite(existingReference);
+
+		/* the reference type will contain the new reference */
+		final EClass containerType = existingReference.getEReferenceType();
+
+		/* add new reference to model */
+		org.eclipse.emf.ecp.internal.edit.ECPControlHelper.addModelElementInReference(containerType, newReference,
+			EcorePackage.eINSTANCE.getEClass_EStructuralFeatures(), editingDomain);
+
+		/* set eopposite */
+		org.eclipse.emf.ecp.internal.edit.ECPControlHelper.addModelElementInReference(eObject, newReference,
+			eReference, editingDomain);
 	}
 }
