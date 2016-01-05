@@ -220,7 +220,7 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider 
 
 	/**
 	 * Returns the context id set for this editor.
-	 * 
+	 *
 	 * @return the context id
 	 */
 	protected String getContextId() {
@@ -441,6 +441,10 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider 
 			final Collection<Resource> changedResources = new ArrayList<Resource>();
 			final Collection<Resource> removedResources = new ArrayList<Resource>();
 			final IResourceDelta delta = event.getDelta();
+
+			if (delta == null) {
+				return;
+			}
 
 			try {
 				delta.accept(new IResourceDeltaVisitor() {
