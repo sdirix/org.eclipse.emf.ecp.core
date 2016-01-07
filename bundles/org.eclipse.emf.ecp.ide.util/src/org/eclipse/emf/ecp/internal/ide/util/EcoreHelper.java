@@ -169,42 +169,70 @@ public final class EcoreHelper {
 	 * Determines the dependent EPackages present in the user's workspace for this ecore path.
 	 *
 	 * @param ecorePath
-	 * @return
 	 * @throws IOException
 	 */
-	private static URI determineWorkspaceDepedencies(String ecorePath) throws IOException {
-		final ResourceSet physicalResourceSet = new ResourceSetImpl();
-		initResourceSet(physicalResourceSet, false);
-		final URI uri = URI.createPlatformResourceURI(ecorePath, false);
-		final Resource tempResource = physicalResourceSet.createResource(uri);
-		tempResource.load(null);
-		// resolve the proxies
-		int tempSize = physicalResourceSet.getResources().size();
-		EcoreUtil.resolveAll(physicalResourceSet);
-		while (tempSize != physicalResourceSet.getResources().size()) {
-			EcoreUtil.resolveAll(physicalResourceSet);
-			tempSize = physicalResourceSet.getResources().size();
-		}
-		for (final Resource physicalResource : physicalResourceSet.getResources()) {
-			if (physicalResource.getContents().size() == 0) {
-				continue;
-			}
-			if (!physicalResource.getURI().isPlatformResource()) {
-				continue;
-			}
+	private static void determineWorkspaceDepedencies(String ecorePath) throws IOException {
+		for (final String relatedURI : getOtherRelatedWorkspacePaths(ecorePath)) {
 			if (ECOREPATH_TO_WORKSPACEURIS.get(ecorePath) == null) {
 				ECOREPATH_TO_WORKSPACEURIS.put(ecorePath, new HashSet<String>());
 			}
-			ECOREPATH_TO_WORKSPACEURIS.get(ecorePath).add(physicalResource.getURI().toString());
+			ECOREPATH_TO_WORKSPACEURIS.get(ecorePath).add(relatedURI);
 			Activator
 				.log(
 					IStatus.INFO,
 					String
 						.format(
 							"Resolved ecorePath %1$s to workspace path %2$s.", ecorePath, //$NON-NLS-1$
-							physicalResource.getURI().toString()));
+							relatedURI));
 		}
-		return uri;
+	}
+
+	/**
+	 * <p>
+	 * Returns the path for all ecores for which
+	 * <p>
+	 * <p>
+	 * a) the given ecore is dependent on.
+	 * </p>
+	 * <p>
+	 * b) the uri is a platform resource URI, meaning the ecore is available in the workspace.
+	 * </p>
+	 *
+	 * @param ecorePath the path
+	 * @return the ecore nsuris
+	 */
+	public static Set<String> getOtherRelatedWorkspacePaths(String ecorePath) {
+		final Set<String> result = new LinkedHashSet<String>();
+		if (ecorePath == null) {
+			return result;
+		}
+		try {
+			final ResourceSet physicalResourceSet = new ResourceSetImpl();
+			initResourceSet(physicalResourceSet, false);
+			final URI uri = URI.createPlatformResourceURI(ecorePath, false);
+			final Resource tempResource = physicalResourceSet.createResource(uri);
+			tempResource.load(null);
+			// resolve the proxies
+			int tempSize = physicalResourceSet.getResources().size();
+			EcoreUtil.resolveAll(physicalResourceSet);
+			while (tempSize != physicalResourceSet.getResources().size()) {
+				EcoreUtil.resolveAll(physicalResourceSet);
+				tempSize = physicalResourceSet.getResources().size();
+			}
+			for (final Resource physicalResource : physicalResourceSet.getResources()) {
+				if (physicalResource.getContents().size() == 0) {
+					continue;
+				}
+				if (!physicalResource.getURI().isPlatformResource()) {
+					continue;
+				}
+				result.add(physicalResource.getURI().toString());
+			}
+		} catch (final IOException ex) {
+			Activator.log(IStatus.INFO,
+				String.format("Error while loading %1$s.", ecorePath)); //$NON-NLS-1$
+		}
+		return result;
 	}
 
 	private static boolean isContainedInPackageRegistry(String nsURI) {
