@@ -71,7 +71,6 @@ import org.osgi.framework.FrameworkUtil;
  * @author Eugen
  *
  */
-@SuppressWarnings("restriction")
 public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 
 	private final EMFFormsLocaleProvider localeProvider;
