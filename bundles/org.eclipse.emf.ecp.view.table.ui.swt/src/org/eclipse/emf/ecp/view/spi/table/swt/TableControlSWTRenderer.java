@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -547,7 +547,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 * @since 1.6
 	 */
 	protected Image getImage(String path) {
-		return imageRegistryService.getImage(FrameworkUtil.getBundle(getClass()), path);
+		return imageRegistryService.getImage(FrameworkUtil.getBundle(TableControlSWTRenderer.class), path);
 	}
 
 	private VTTableValidationStyleProperty getTableValidationStyleProperty() {
@@ -563,7 +563,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		final VTTableValidationStyleProperty tableValidationProp = VTTableValidationFactory.eINSTANCE
 			.createTableValidationStyleProperty();
 		tableValidationProp.setColumnWidth(80);
-		tableValidationProp.setColumnName(LocalizationServiceHelper.getString(getClass(),
+		tableValidationProp.setColumnName(LocalizationServiceHelper.getString(TableControlSWTRenderer.class,
 			MessageKeys.TableControl_ValidationStatusColumn));
 		tableValidationProp.setImagePath(null);
 		return tableValidationProp;
@@ -649,7 +649,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		removeButton.setEnabled(false);
 		final String instanceName = clazz.getInstanceClass() == null ? "" : clazz.getInstanceClass().getSimpleName(); //$NON-NLS-1$
 		removeButton.setToolTipText(String.format(
-			LocalizationServiceHelper.getString(getClass(), MessageKeys.TableControl_RemoveSelected), instanceName));
+			LocalizationServiceHelper.getString(TableControlSWTRenderer.class, MessageKeys.TableControl_RemoveSelected),
+			instanceName));
 
 		final List<?> containments = (List<?>) eObject.eGet(structuralFeature, true);
 		if (containments.size() <= structuralFeature.getLowerBound()) {
@@ -665,7 +666,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		addButton.setImage(image);
 		final String instanceName = clazz.getInstanceClass() == null ? "" : clazz.getInstanceClass().getSimpleName(); //$NON-NLS-1$
 		addButton.setToolTipText(String.format(
-			LocalizationServiceHelper.getString(getClass(), MessageKeys.TableControl_AddInstanceOf), instanceName));
+			LocalizationServiceHelper.getString(TableControlSWTRenderer.class, MessageKeys.TableControl_AddInstanceOf),
+			instanceName));
 
 		final List<?> containments = (List<?>) eObject.eGet(structuralFeature, true);
 		if (structuralFeature.getUpperBound() != -1 && containments.size() >= structuralFeature.getUpperBound()) {
@@ -687,8 +689,9 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	protected void deleteRowUserConfirmDialog(final List<EObject> deletionList, final EObject eObject,
 		final EStructuralFeature structuralFeature, final Button addButton, final Button removeButton) {
 		final MessageDialog dialog = new MessageDialog(addButton.getShell(),
-			LocalizationServiceHelper.getString(getClass(), MessageKeys.TableControl_Delete), null,
-			LocalizationServiceHelper.getString(getClass(), MessageKeys.TableControl_DeleteAreYouSure),
+			LocalizationServiceHelper.getString(TableControlSWTRenderer.class, MessageKeys.TableControl_Delete), null,
+			LocalizationServiceHelper.getString(TableControlSWTRenderer.class,
+				MessageKeys.TableControl_DeleteAreYouSure),
 			MessageDialog.CONFIRM, new String[] {
 				JFaceResources.getString(IDialogLabelKeys.YES_LABEL_KEY),
 				JFaceResources.getString(IDialogLabelKeys.NO_LABEL_KEY) },
@@ -698,7 +701,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 			@Override
 			public void handleResult(int codeResult) {
-				if (codeResult == IDialogConstants.CANCEL_ID) {
+				if (codeResult == IDialogConstants.CANCEL_ID
+					|| codeResult == SWT.DEFAULT) { // SWT.DEFAULT is return by closing a message dialog
 					return;
 				}
 
