@@ -106,13 +106,13 @@ public class GenerateJavaCodeAction implements IToolbarAction {
 		public static final String EMFFORMS_EDITOR_NAME = "EMFForms Editor";
 		public static final String EMFFORMS_EDITOR_ID = "emfformseditor";
 
-		public CreateJavaCodeAction(String text, Object[] types, Object currentObject) {
+		CreateJavaCodeAction(String text, Object[] types, Object currentObject) {
 			super(text);
 			this.types = types;
 			this.currentObject = currentObject;
 		}
 
-		public CreateJavaCodeAction(Object currentObject) {
+		CreateJavaCodeAction(Object currentObject) {
 			super("Generate All", SWT.DROP_DOWN);
 
 			this.currentObject = currentObject;
@@ -158,7 +158,13 @@ public class GenerateJavaCodeAction implements IToolbarAction {
 			public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
 				monitor.beginTask("Generating Code", IProgressMonitor.UNKNOWN);
 				final ResourceSet resourceSet = (ResourceSet) currentObject;
-				final GenModel genmodel = (GenModel) resourceSet.getResources().get(0).getContents().get(0);
+				final Resource genmodelResource = resourceSet.getResources().get(0);
+				try {
+					genmodelResource.load(null);
+				} catch (final IOException ex) {
+					throw new InvocationTargetException(ex);
+				}
+				final GenModel genmodel = (GenModel) genmodelResource.getContents().get(0);
 
 				genmodel.reconcile();
 				genmodel.setCanGenerate(true);
@@ -200,8 +206,7 @@ public class GenerateJavaCodeAction implements IToolbarAction {
 				for (final URI uri : uris) {
 					if (isPluginXml(uri)) {
 						pluginXml = uri;
-					}
-					else if (isManifestMf(uri)) {
+					} else if (isManifestMf(uri)) {
 						manifestMf = uri;
 					}
 				}
@@ -306,9 +311,19 @@ public class GenerateJavaCodeAction implements IToolbarAction {
 				dispose();
 
 				dropDown = new Menu(parent);
-				final Action generateModel = new CreateJavaCodeAction("Generate Model + Edit",
+				final Action generateModelAndEdit = new CreateJavaCodeAction("Generate Model + Edit",
 					new Object[] {
 						GenBaseGeneratorAdapter.MODEL_PROJECT_TYPE,
+						GenBaseGeneratorAdapter.EDIT_PROJECT_TYPE
+					}, currentObject);
+
+				final Action generateModel = new CreateJavaCodeAction("Generate Model",
+					new Object[] {
+						GenBaseGeneratorAdapter.MODEL_PROJECT_TYPE
+					}, currentObject);
+
+				final Action generateEdit = new CreateJavaCodeAction("Generate Edit",
+					new Object[] {
 						GenBaseGeneratorAdapter.EDIT_PROJECT_TYPE
 					}, currentObject);
 
@@ -322,9 +337,11 @@ public class GenerateJavaCodeAction implements IToolbarAction {
 						GenBaseGeneratorAdapter.TESTS_PROJECT_TYPE
 					}, currentObject);
 
-				new ActionContributionItem(generateModel).fill(dropDown, 0);
-				new ActionContributionItem(generateEditor).fill(dropDown, 1);
-				new ActionContributionItem(generateTests).fill(dropDown, 2);
+				new ActionContributionItem(generateModelAndEdit).fill(dropDown, 0);
+				new ActionContributionItem(generateModel).fill(dropDown, 1);
+				new ActionContributionItem(generateEdit).fill(dropDown, 2);
+				new ActionContributionItem(generateEditor).fill(dropDown, 3);
+				new ActionContributionItem(generateTests).fill(dropDown, 4);
 
 				return dropDown;
 			}
