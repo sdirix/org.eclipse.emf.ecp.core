@@ -14,8 +14,11 @@ package org.eclipse.emf.ecp.view.ui.editor.test;
 import org.eclipse.core.databinding.observable.Realm;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
+import org.eclipse.emf.ecp.ui.view.swt.DefaultReferenceService;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
@@ -116,8 +119,9 @@ public abstract class ECPCommonSWTBotTest extends SWTBotTestCase {
 							final EObject domainObject = createDomainObject();
 							memBefore = usedMemory();
 
-							final ECPSWTView swtView = ECPSWTViewRenderer.INSTANCE.render(shell, domainObject,
-								createView());
+							final ViewModelContext viewContext = ViewModelContextFactory.INSTANCE
+								.createViewModelContext(createView(), domainObject, new DefaultReferenceService());
+							final ECPSWTView swtView = ECPSWTViewRenderer.INSTANCE.render(shell, viewContext);
 							swtViewCollectable = new GCCollectable(swtView);
 							final Composite composite = (Composite) swtView.getSWTControl();
 							final GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true);

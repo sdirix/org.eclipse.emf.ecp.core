@@ -67,7 +67,7 @@ public class LinkControlSWTRendererService implements EMFFormsDIRendererService<
 			return NOT_APPLICABLE;
 		}
 		if (EObject.class.isAssignableFrom(instanceClass)) {
-			return 1d;
+			return 2d;
 		}
 		return NOT_APPLICABLE;
 	}
