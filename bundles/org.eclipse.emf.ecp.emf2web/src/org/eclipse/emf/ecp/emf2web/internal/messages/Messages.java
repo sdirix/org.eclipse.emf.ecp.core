@@ -19,6 +19,9 @@ import org.eclipse.osgi.util.NLS;
  */
 public class Messages extends NLS {
 	private static final String BUNDLE_NAME = "org.eclipse.emf.ecp.emf2web.internal.messages.messages"; //$NON-NLS-1$
+	public static String FileGenerationExporter_OverwriteWarning;
+	public static String FileGenerationExporter_OverwriteWarningMessage;
+	public static String FileGenerationExporter_OverwriteWarningToggle;
 	public static String FileGenerationExporter_URI_Error;
 
 	static {

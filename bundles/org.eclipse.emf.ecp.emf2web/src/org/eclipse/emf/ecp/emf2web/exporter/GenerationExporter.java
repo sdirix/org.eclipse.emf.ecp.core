@@ -29,8 +29,11 @@ public interface GenerationExporter {
 	 *
 	 * @param generationInfos
 	 *            A collection of {@link GenerationInfo}s which shall be exported.
+	 * @param userInteraction
+	 *            Handles the communication with the user.
 	 * @throws IOException
 	 *             If something went wrong during export.
 	 */
-	void export(Collection<? extends GenerationInfo> generationInfos) throws IOException;
+	void export(Collection<? extends GenerationInfo> generationInfos, UserInteraction userInteraction)
+		throws IOException;
 }

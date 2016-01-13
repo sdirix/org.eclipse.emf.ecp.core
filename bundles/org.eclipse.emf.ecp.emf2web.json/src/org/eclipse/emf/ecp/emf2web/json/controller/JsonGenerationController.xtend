@@ -40,13 +40,13 @@ class JsonGenerationController implements GenerationController {
 
 			val schemaFile = modelGenerator.generate(eClass)
 			val schemaInfo = new GenerationInfo(GenerationInfo.MODEL_TYPE, eClass, null,
-				schemaIdentifier + "Model", new SeedWrapper())
+				schemaIdentifier + "Model.json", new SeedWrapper())
 			schemaInfo.generatedString = schemaFile
 			result.add(schemaInfo)
 
 			val controllerFile = formsGenerator.generate(view)
 			val controllerInfo = new GenerationInfo(GenerationInfo.VIEW_TYPE, null, view,
-				schemaIdentifier + "View", new SeedWrapper())
+				schemaIdentifier + "View.json", new SeedWrapper())
 			controllerInfo.generatedString = controllerFile
 			result.add(controllerInfo)
 		}

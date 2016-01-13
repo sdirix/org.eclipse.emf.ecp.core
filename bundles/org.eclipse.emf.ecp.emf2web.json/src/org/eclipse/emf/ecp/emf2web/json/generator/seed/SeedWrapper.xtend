@@ -6,7 +6,7 @@ import org.eclipse.emf.ecp.emf2web.exporter.SchemaWrapper
 class SeedWrapper implements SchemaWrapper {
 
 	override getName() {
-		return "JavaScript Example";
+		return "JSONForms Seed project";
 	}
 
 	override getFileExtension() {

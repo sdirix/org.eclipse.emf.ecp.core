@@ -44,6 +44,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
 /**
  * The handler responsible for exporting view models to JSONForms.
  */
+@SuppressWarnings("restriction")
 public class ExportJSONFormsHandler extends AbstractSchemaExportCommandHandler {
 
 	private final List<String> registeredEcores = new LinkedList<String>();

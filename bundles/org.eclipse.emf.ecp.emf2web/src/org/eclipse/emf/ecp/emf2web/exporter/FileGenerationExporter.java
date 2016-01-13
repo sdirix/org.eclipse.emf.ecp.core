@@ -21,7 +21,10 @@ import java.io.Writer;
 import java.text.MessageFormat;
 import java.util.Collection;
 
+import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IFolder;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
@@ -38,10 +41,19 @@ import org.eclipse.emf.ecp.emf2web.internal.messages.Messages;
  */
 public class FileGenerationExporter implements GenerationExporter {
 
+	private UserInteraction userInteraction;
+
+	private boolean doCancel;
+
 	@Override
-	public void export(Collection<? extends GenerationInfo> generationInfos) throws IOException {
+	public void export(Collection<? extends GenerationInfo> generationInfos, UserInteraction userInteraction)
+		throws IOException {
+		this.userInteraction = userInteraction;
+		doCancel = false;
 		for (final GenerationInfo generationInfo : generationInfos) {
-			export(generationInfo);
+			if (!doCancel) {
+				export(generationInfo);
+			}
 		}
 	}
 
@@ -86,19 +98,51 @@ public class FileGenerationExporter implements GenerationExporter {
 	 */
 	protected void export(String exportString, URI location) throws IOException {
 		if (location.isPlatform()) {
-			final IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-			final IFile file = root.getFile(new Path(location.toPlatformString(true)));
 			try {
-				file.setContents(new ByteArrayInputStream(exportString.getBytes()), 0, null);
+				handlePlatform(exportString, location);
 			} catch (final CoreException ex) {
 				throw new IOException(ex);
 			}
 		} else if (location.isFile()) {
-			final File file = new File(location.toFileString());
-			writeToFileSystemFile(exportString, file);
+			handleFileSystem(exportString, location);
 		} else {
 			throw new IOException(MessageFormat.format(Messages.FileGenerationExporter_URI_Error, location.toString()));
 		}
+	}
+
+	private void handlePlatform(String exportString, URI location) throws CoreException {
+		final IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+		final IFile file = root.getFile(new Path(location.toPlatformString(true)));
+
+		if (file.exists() && !askOverwriteAllowed(file.getLocationURI().toString())) {
+			return;
+		}
+
+		if (file.exists()) {
+			file.setContents(new ByteArrayInputStream(exportString.getBytes()), IResource.KEEP_HISTORY, null);
+		} else {
+			prepareStructure(file.getParent());
+			file.create(new ByteArrayInputStream(exportString.getBytes()), IResource.NONE, null);
+		}
+	}
+
+	private void prepareStructure(IContainer container) throws CoreException {
+		final IContainer parent = container.getParent();
+		if (parent instanceof IFolder) {
+			prepareStructure(parent);
+		}
+		if (IFolder.class.isInstance(container) && !container.exists()) {
+			final IFolder folder = IFolder.class.cast(container);
+			folder.create(false, true, null);
+		}
+	}
+
+	private void handleFileSystem(String exportString, URI location) throws IOException {
+		final File file = new File(location.toFileString());
+		if (file.exists() && !askOverwriteAllowed(file.getAbsolutePath())) {
+			return;
+		}
+		writeToFileSystemFile(exportString, file);
 	}
 
 	private void writeToFileSystemFile(String exportString, File file) throws IOException {
@@ -108,5 +152,32 @@ public class FileGenerationExporter implements GenerationExporter {
 		} finally {
 			writer.close();
 		}
+	}
+
+	/**
+	 * Ask the user if a file shall be overwritten.
+	 *
+	 * @param fileName
+	 *            The name of the file displayed to the user.
+	 * @return
+	 *         {@code true} if the file shall be overwritten, {@code false} otherwise.
+	 */
+	protected boolean askOverwriteAllowed(String fileName) {
+		final String title = Messages.FileGenerationExporter_OverwriteWarning;
+		final String question = MessageFormat.format(Messages.FileGenerationExporter_OverwriteWarningMessage,
+			fileName);
+		final String toggleQuestion = Messages.FileGenerationExporter_OverwriteWarningToggle;
+		final int result = userInteraction.askQuestion(title, question, toggleQuestion);
+		if (result == UserInteraction.CANCEL) {
+			doCancel = true;
+			return false;
+		} else if (result == UserInteraction.NO) {
+			return false;
+		} else if (result == UserInteraction.YES) {
+			return true;
+		}
+
+		// should not occur
+		return false;
 	}
 }

@@ -16,6 +16,8 @@ import org.eclipse.emf.ecp.view.spi.model.VView
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecp.emf2web.exporter.SchemaWrapper
+import java.beans.PropertyChangeSupport
+import java.beans.PropertyChangeListener
 
 /**
  * @author Stefan Dirix <sdirix@eclipsesource.com>
@@ -23,6 +25,11 @@ import org.eclipse.emf.ecp.emf2web.exporter.SchemaWrapper
  */
 @Accessors
 class GenerationInfo {
+	
+	val public static final String MODEL_TYPE = "Model"
+	val public static final String VIEW_TYPE = "View";
+	val public static final String MODEL_AND_VIEW_TYPE = "Model and View"
+	
 	@Accessors(PUBLIC_GETTER)val String type
 	@Accessors(PUBLIC_GETTER)val EClass eClass
 	@Accessors(PUBLIC_GETTER)val VView view
@@ -32,7 +39,29 @@ class GenerationInfo {
 	@Accessors var URI location
 	@Accessors var boolean wrap
 	
-	val public static final String MODEL_TYPE = "Model"
-	val public static final String VIEW_TYPE = "View";
-	val public static final String MODEL_AND_VIEW_TYPE = "Model and View"
+	val PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
+
+	def void addPropertyChangeListener(PropertyChangeListener listener) {
+		changeSupport.addPropertyChangeListener(listener);
+	}
+
+	def void removePropertyChangeListener(PropertyChangeListener listener) {
+		changeSupport.removePropertyChangeListener(listener);
+	}
+
+	protected def void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
+		changeSupport.firePropertyChange(propertyName, oldValue, newValue);
+	}
+	
+	def void setGeneratedString(String generatedString){
+		changeSupport.firePropertyChange("generatedString", this.generatedString, this.generatedString = generatedString)
+	}
+	
+	def void setLocation(URI location){
+		changeSupport.firePropertyChange("location", this.location, this.location = location)
+	}
+	
+	def void setWrap(boolean wrap){
+		changeSupport.firePropertyChange("wrap", this.wrap, this.wrap = wrap)
+	}
 }
