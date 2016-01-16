@@ -317,6 +317,9 @@
 		<module>../../bundles/org.eclipse.emf.ecp.emf2web.ui</module>
 		<module>../../bundles/org.eclipse.emf.ecp.emf2web.ui.json</module>
 
+		<!-- Helper -->
+		<module>../../bundles/org.eclipse.emfforms.setup.base</module>
+		
 	</modules>
 
 	<build>
