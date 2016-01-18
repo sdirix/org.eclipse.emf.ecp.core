@@ -106,9 +106,10 @@ public class CollapsableGroupSWTRenderer extends ContainerSWTRenderer<VGroup> {
 
 			@Override
 			public void itemCollapsed(ExpandEvent e) {
-				item0.setHeight(item0.getHeaderHeight());
+				final int headerHeight = item0.getHeaderHeight();
+				item0.setHeight(headerHeight);
 				final Object layoutData = bar.getLayoutData();
-				updateLayoutData(layoutData, item0.getHeaderHeight() + 2 * MARGIN);
+				updateLayoutData(layoutData, headerHeight + 2 * MARGIN);
 				EMFFormsSWTLayoutUtil.adjustParentSize(bar);
 				getVElement().setCollapsed(true);
 				postCollapsed();
