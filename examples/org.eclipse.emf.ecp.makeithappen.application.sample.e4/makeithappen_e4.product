@@ -3,7 +3,6 @@
 
 <product name="MakeItHappen Sample e4 Product" uid="org.eclipse.emf.ecp.makeithappen.sample.product.e4" id="org.eclipse.emf.ecp.makeithappen.application.sample.e4.product" application="org.eclipse.e4.ui.workbench.swt.E4Application" version="1.7.0" useFeatures="false" includeLaunchers="true">
 
-
    <configIni use="default">
    </configIni>
 
@@ -22,7 +21,6 @@
          <bmp/>
       </win>
    </launcher>
-
 
    <vm>
    </vm>
@@ -126,14 +124,23 @@
       <plugin id="org.eclipse.emfforms.common"/>
       <plugin id="org.eclipse.emfforms.core.services"/>
       <plugin id="org.eclipse.emfforms.core.services.databinding.featurepath"/>
+      <plugin id="org.eclipse.emfforms.core.services.domainexpander.default"/>
+      <plugin id="org.eclipse.emfforms.core.services.domainexpander.table"/>
       <plugin id="org.eclipse.emfforms.core.services.editsupport"/>
       <plugin id="org.eclipse.emfforms.core.services.emf"/>
       <plugin id="org.eclipse.emfforms.core.services.emfspecificservice"/>
+      <plugin id="org.eclipse.emfforms.core.services.legacy"/>
       <plugin id="org.eclipse.emfforms.core.services.locale.default"/>
+      <plugin id="org.eclipse.emfforms.core.services.mappingprovider.default"/>
+      <plugin id="org.eclipse.emfforms.core.services.mappingprovider.table"/>
+      <plugin id="org.eclipse.emfforms.core.services.structuralchange"/>
+      <plugin id="org.eclipse.emfforms.core.services.structuralchange.default"/>
+      <plugin id="org.eclipse.emfforms.core.services.structuralchange.table"/>
       <plugin id="org.eclipse.emfforms.localization"/>
       <plugin id="org.eclipse.emfforms.swt.core"/>
       <plugin id="org.eclipse.emfforms.swt.core.di"/>
       <plugin id="org.eclipse.emfforms.swt.core.plugin"/>
+      <plugin id="org.eclipse.emfforms.swt.table"/>
       <plugin id="org.eclipse.emfforms.view.model.localization"/>
       <plugin id="org.eclipse.equinox.app"/>
       <plugin id="org.eclipse.equinox.common"/>
