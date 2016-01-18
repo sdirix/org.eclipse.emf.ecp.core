@@ -60,7 +60,7 @@ public class TableValidationInitiator implements GlobalViewModelService {
 		 * @param control The {@link VTableControl}
 		 * @param context The {@link ViewModelContext}
 		 */
-		public TableContextMapping(VTableControl control, ViewModelContext context) {
+		TableContextMapping(VTableControl control, ViewModelContext context) {
 			this.control = control;
 			this.context = context;
 		}

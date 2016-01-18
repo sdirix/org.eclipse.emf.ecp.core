@@ -56,7 +56,7 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 		private final String featureName;
 		private final Bundle bundle;
 
-		public DescriptionKey(String eClassName, String featureName, Bundle bundle) {
+		DescriptionKey(String eClassName, String featureName, Bundle bundle) {
 			super();
 			this.eClassName = eClassName;
 			this.featureName = featureName;

@@ -311,7 +311,7 @@ public class UnsetService implements ViewModelService {
 		 * @param feature
 		 *            the feature to wrap
 		 */
-		public FeatureWrapper(EStructuralFeature feature) {
+		FeatureWrapper(EStructuralFeature feature) {
 			this.feature = feature;
 		}
 
