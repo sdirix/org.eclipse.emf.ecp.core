@@ -512,7 +512,9 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.8
+	 *        <!-- end-user-doc -->
 	 *
 	 * @generated
 	 */
@@ -523,7 +525,9 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.8
+	 *        <!-- end-user-doc -->
 	 *
 	 * @generated
 	 */
@@ -627,7 +631,9 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.8
+	 *        <!-- end-user-doc -->
 	 *
 	 * @generated
 	 */

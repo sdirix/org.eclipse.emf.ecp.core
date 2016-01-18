@@ -34,6 +34,7 @@ import org.eclipse.swt.widgets.Control;
  * </p>
  *
  * @author Stefan Dirix
+ * @since 1.8
  *
  */
 public interface EMFFormsControlProcessorService extends ViewModelService {

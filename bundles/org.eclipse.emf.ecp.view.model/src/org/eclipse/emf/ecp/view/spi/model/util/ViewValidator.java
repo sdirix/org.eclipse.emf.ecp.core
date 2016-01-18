@@ -487,7 +487,9 @@ public class ViewValidator extends EObjectValidator {
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.8
+	 *        <!-- end-user-doc -->
 	 *
 	 * @generated
 	 */
@@ -509,7 +511,9 @@ public class ViewValidator extends EObjectValidator {
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.8
+	 *        <!-- end-user-doc -->
 	 *
 	 * @generated
 	 */

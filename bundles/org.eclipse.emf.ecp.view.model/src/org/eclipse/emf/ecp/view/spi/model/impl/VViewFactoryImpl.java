@@ -198,7 +198,9 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.8
+	 *        <!-- end-user-doc -->
 	 *
 	 * @generated
 	 */
@@ -235,7 +237,9 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 *
+	 * @since 1.8
+	 *        <!-- end-user-doc -->
 	 *
 	 * @generated
 	 */
@@ -250,7 +254,9 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 *
+	 * @since 1.8
+	 *        <!-- end-user-doc -->
 	 *
 	 * @generated
 	 */

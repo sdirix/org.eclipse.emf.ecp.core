@@ -28,7 +28,9 @@ import org.eclipse.emf.ecp.view.template.model.VTTemplatePackage;
  * <li>each enum,</li>
  * <li>and each data type</li>
  * </ul>
- * <!-- end-user-doc -->
+ * 
+ * @since 1.8
+ *        <!-- end-user-doc -->
  *
  * @see org.eclipse.emf.ecp.view.template.style.tab.model.VTTabFactory
  * @model kind="package"

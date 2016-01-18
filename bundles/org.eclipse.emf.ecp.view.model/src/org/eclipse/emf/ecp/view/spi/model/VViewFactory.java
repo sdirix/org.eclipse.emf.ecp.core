@@ -19,7 +19,8 @@ import org.eclipse.emf.ecore.EFactory;
  * It provides a create method for each non-abstract class of the model.
  *
  * @since 1.2
- *        <!-- end-user-doc -->
+ * @noimplement This interface is not intended to be implemented by clients.
+ *              <!-- end-user-doc -->
  * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage
  * @generated
  */
@@ -77,7 +78,9 @@ public interface VViewFactory extends EFactory {
 	/**
 	 * Returns a new object of class '<em>Date Time Display Attachment</em>'.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 *
+	 * @since 1.8
+	 *        <!-- end-user-doc -->
 	 *
 	 * @return a new object of class '<em>Date Time Display Attachment</em>'.
 	 * @generated

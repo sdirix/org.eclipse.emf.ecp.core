@@ -31,6 +31,7 @@ import org.eclipse.emf.ecore.EReference;
  * </ul>
  *
  * @noimplement This interface is not intended to be implemented by clients.
+ * @noextend This interface is not intended to be extended by clients.
  * @since 1.2
  *        <!-- end-user-doc -->
  * @see org.eclipse.emf.ecp.view.spi.model.VViewFactory
@@ -981,7 +982,9 @@ public interface VViewPackage extends EPackage {
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.model.impl.VDateTimeDisplayAttachmentImpl
 	 * <em>Date Time Display Attachment</em>}' class.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 *
+	 * @since 1.8
+	 *        <!-- end-user-doc -->
 	 *
 	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VDateTimeDisplayAttachmentImpl
 	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getDateTimeDisplayAttachment()
@@ -992,7 +995,9 @@ public interface VViewPackage extends EPackage {
 	/**
 	 * The feature id for the '<em><b>Display Type</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 *
+	 * @since 1.8
+	 *        <!-- end-user-doc -->
 	 *
 	 * @generated
 	 * @ordered
@@ -1002,7 +1007,9 @@ public interface VViewPackage extends EPackage {
 	/**
 	 * The number of structural features of the '<em>Date Time Display Attachment</em>' class.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 *
+	 * @since 1.8
+	 *        <!-- end-user-doc -->
 	 *
 	 * @generated
 	 * @ordered
@@ -1025,7 +1032,9 @@ public interface VViewPackage extends EPackage {
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.model.DateTimeDisplayType
 	 * <em>Date Time Display Type</em>}' enum.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 *
+	 * @since 1.8
+	 *        <!-- end-user-doc -->
 	 *
 	 * @see org.eclipse.emf.ecp.view.spi.model.DateTimeDisplayType
 	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getDateTimeDisplayType()
@@ -1333,7 +1342,9 @@ public interface VViewPackage extends EPackage {
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.model.VDateTimeDisplayAttachment
 	 * <em>Date Time Display Attachment</em>}'.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 *
+	 * @since 1.8
+	 *        <!-- end-user-doc -->
 	 *
 	 * @return the meta object for class '<em>Date Time Display Attachment</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VDateTimeDisplayAttachment
@@ -1345,7 +1356,9 @@ public interface VViewPackage extends EPackage {
 	 * Returns the meta object for the attribute '
 	 * {@link org.eclipse.emf.ecp.view.spi.model.VDateTimeDisplayAttachment#getDisplayType <em>Display Type</em>}'.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 *
+	 * @since 1.8
+	 *        <!-- end-user-doc -->
 	 *
 	 * @return the meta object for the attribute '<em>Display Type</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VDateTimeDisplayAttachment#getDisplayType()
@@ -1460,7 +1473,9 @@ public interface VViewPackage extends EPackage {
 	 * Returns the meta object for enum '{@link org.eclipse.emf.ecp.view.spi.model.DateTimeDisplayType
 	 * <em>Date Time Display Type</em>}'.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 *
+	 * @since 1.8
+	 *        <!-- end-user-doc -->
 	 *
 	 * @return the meta object for enum '<em>Date Time Display Type</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.model.DateTimeDisplayType
@@ -1581,7 +1596,8 @@ public interface VViewPackage extends EPackage {
 	 * </ul>
 	 *
 	 * @noimplement This interface is not intended to be implemented by clients.
-	 *              <!-- end-user-doc -->
+	 * @noextend This interface is not intended to be extended by clients.
+	 *           <!-- end-user-doc -->
 	 * @generated
 	 */
 	interface Literals {
@@ -1819,7 +1835,9 @@ public interface VViewPackage extends EPackage {
 		 * {@link org.eclipse.emf.ecp.view.spi.model.impl.VDateTimeDisplayAttachmentImpl
 		 * <em>Date Time Display Attachment</em>}' class.
 		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 *
+		 * @since 1.8
+		 *        <!-- end-user-doc -->
 		 *
 		 * @see org.eclipse.emf.ecp.view.spi.model.impl.VDateTimeDisplayAttachmentImpl
 		 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getDateTimeDisplayAttachment()
@@ -1830,7 +1848,9 @@ public interface VViewPackage extends EPackage {
 		/**
 		 * The meta object literal for the '<em><b>Display Type</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 *
+		 * @since 1.8
+		 *        <!-- end-user-doc -->
 		 *
 		 * @generated
 		 */
@@ -1928,7 +1948,9 @@ public interface VViewPackage extends EPackage {
 		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.model.DateTimeDisplayType
 		 * <em>Date Time Display Type</em>}' enum.
 		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 *
+		 * @since 1.8
+		 *        <!-- end-user-doc -->
 		 *
 		 * @see org.eclipse.emf.ecp.view.spi.model.DateTimeDisplayType
 		 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getDateTimeDisplayType()

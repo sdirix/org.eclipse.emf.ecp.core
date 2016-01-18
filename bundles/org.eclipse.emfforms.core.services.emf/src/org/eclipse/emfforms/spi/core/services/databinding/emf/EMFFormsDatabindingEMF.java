@@ -27,6 +27,9 @@ import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
  *
  * @author Eugen Neufeld
  * @since 1.7
+ *
+ * @noimplement This interface is not intended to be implemented by clients.
+ * @noextend This interface is not intended to be extended by clients.
  */
 public interface EMFFormsDatabindingEMF extends EMFFormsDatabinding {
 

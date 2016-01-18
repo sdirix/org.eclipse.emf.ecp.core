@@ -56,4 +56,25 @@
          version="0.0.0"
          unpack="false"/>
 
+   <plugin
+         id="org.eclipse.emfforms.core.services.domainexpander.table"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emfforms.core.services.mappingprovider.table"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emfforms.core.services.structuralchange.table"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
 </feature>

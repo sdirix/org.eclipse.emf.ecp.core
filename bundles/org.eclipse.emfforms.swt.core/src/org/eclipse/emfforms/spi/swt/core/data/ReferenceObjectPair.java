@@ -18,6 +18,7 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
  * Data class to pair {@link VDomainModelReference}s with {@link EObject}s.
  *
  * @author Stefan Dirix
+ * @since 1.8
  *
  */
 public class ReferenceObjectPair {

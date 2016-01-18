@@ -27,7 +27,9 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
 /**
  * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.spi.model.VDateTimeDisplayAttachment} object.
  * <!-- begin-user-doc -->
- * <!-- end-user-doc -->
+ * 
+ * @since 1.8
+ *        <!-- end-user-doc -->
  *
  * @generated
  */

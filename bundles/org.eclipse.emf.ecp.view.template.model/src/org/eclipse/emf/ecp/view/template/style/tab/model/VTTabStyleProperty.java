@@ -16,14 +16,16 @@ import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Style Property</b></em>'.
- * <!-- end-user-doc -->
+ * 
+ * @since 1.8
+ *        <!-- end-user-doc -->
  *
- * <p>
- * The following features are supported:
- * </p>
- * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.template.style.tab.model.VTTabStyleProperty#getType <em>Type</em>}</li>
- * </ul>
+ *        <p>
+ *        The following features are supported:
+ *        </p>
+ *        <ul>
+ *        <li>{@link org.eclipse.emf.ecp.view.template.style.tab.model.VTTabStyleProperty#getType <em>Type</em>}</li>
+ *        </ul>
  *
  * @see org.eclipse.emf.ecp.view.template.style.tab.model.VTTabPackage#getTabStyleProperty()
  * @model
