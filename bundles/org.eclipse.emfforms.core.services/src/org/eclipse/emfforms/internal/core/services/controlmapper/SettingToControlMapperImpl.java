@@ -187,7 +187,7 @@ public class SettingToControlMapperImpl implements EMFFormsSettingToControlMappe
 		for (final VElement parentElement : childMappers.keySet()) {
 			for (final EMFFormsSettingToControlMapper childMapper : childMappers.get(parentElement)) {
 				final Set<VElement> controlsFor = childMapper.getControlsFor(setting);
-				// elements.addAll(controlsFor);
+				elements.addAll(controlsFor);
 				if (!controlsFor.isEmpty()) {
 					elements.add(parentElement);
 				}
