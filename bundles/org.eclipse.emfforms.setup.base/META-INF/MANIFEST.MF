@@ -29,4 +29,6 @@ Require-Bundle: org.eclipse.emfforms.common;bundle-version="[1.8.0,1.9.0)",
  org.eclipse.emfforms.swt.core.plugin;bundle-version="[1.8.0,1.9.0)",
  org.eclipse.emfforms.swt.table;bundle-version="[1.8.0,1.9.0)",
  org.eclipse.emfforms.swt.treemasterdetail;bundle-version="[1.8.0,1.9.0)",
- org.eclipse.emfforms.view.model.localization;bundle-version="[1.8.0,1.9.0)"
+ org.eclipse.emfforms.view.model.localization;bundle-version="[1.8.0,1.9.0)",
+ org.eclipse.emfforms.core.services.structuralchange.index;bundle-version="[1.8.0,1.9.0)",
+ org.eclipse.emfforms.core.services.structuralchange.mapping;bundle-version="[1.8.0,1.9.0)"
