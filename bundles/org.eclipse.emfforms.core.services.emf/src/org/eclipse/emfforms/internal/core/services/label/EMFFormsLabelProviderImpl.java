@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -27,7 +27,6 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emfforms.internal.core.services.label.BundleResolver.NoBundleFoundException;
 import org.eclipse.emfforms.spi.common.locale.EMFFormsLocaleChangeListener;
 import org.eclipse.emfforms.spi.common.locale.EMFFormsLocaleProvider;
-import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
@@ -215,8 +214,6 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 		try {
 			return getDisplayBundleKeyResultWrapper(structuralFeature).getResult();
 		} catch (final NoBundleFoundException ex) {
-			reportService.report(new AbstractReport(ex, 1));
-			reportService.report(new AbstractReport("Using fallback", 1)); //$NON-NLS-1$
 			return labelProviderDefault.getDisplayName(structuralFeature);
 		}
 	}
@@ -242,8 +239,6 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 		try {
 			bundleKeyResultWrapper = getDisplayBundleKeyResultWrapper(structuralFeature);
 		} catch (final NoBundleFoundException ex) {
-			reportService.report(new AbstractReport(ex, 1));
-			reportService.report(new AbstractReport("Using fallback", 1)); //$NON-NLS-1$
 			return labelProviderDefault.getDisplayName(domainModelReference);
 		}
 
@@ -276,8 +271,6 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 		try {
 			displayBundleKeyResultWrapper = getDisplayBundleKeyResultWrapper(structuralFeature);
 		} catch (final NoBundleFoundException ex) {
-			reportService.report(new AbstractReport(ex, 1));
-			reportService.report(new AbstractReport("Using fallback", 1)); //$NON-NLS-1$
 			return labelProviderDefault.getDisplayName(domainModelReference, rootObject);
 		}
 
@@ -308,8 +301,6 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 		try {
 			bundle = bundleResolver.getEditBundle(eContainingClass);
 		} catch (final NoBundleFoundException ex) {
-			reportService.report(new AbstractReport(ex, 1));
-			reportService.report(new AbstractReport("Using fallback", 1)); //$NON-NLS-1$
 			return labelProviderDefault.getDescription(domainModelReference);
 		}
 		final WritableValue writableValue = getObservableValue(getDescription(eContainingClass
@@ -343,8 +334,6 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 		try {
 			bundle = bundleResolver.getEditBundle(structuralFeature.getEContainingClass());
 		} catch (final NoBundleFoundException ex) {
-			reportService.report(new AbstractReport(ex, 1));
-			reportService.report(new AbstractReport("Using fallback", 1)); //$NON-NLS-1$
 			return labelProviderDefault.getDescription(domainModelReference, rootObject);
 		}
 		final WritableValue writableValue = getObservableValue(getDescription(structuralFeature.getEContainingClass()
