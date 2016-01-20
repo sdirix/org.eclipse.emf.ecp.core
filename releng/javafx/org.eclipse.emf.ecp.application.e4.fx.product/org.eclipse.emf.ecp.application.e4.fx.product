@@ -7,11 +7,23 @@
    </configIni>
 
    <launcherArgs>
-      <programArgs>-nosplash</programArgs>
-      <vmArgs>-Dosgi.framework.extensions=org.eclipse.fx.osgi</vmArgs>
+      <programArgs>-nosplash
+      </programArgs>
+      <vmArgs>-Dorg.osgi.framework.bundle.parent=ext
+      </vmArgs>
    </launcherArgs>
 
    <windowImages/>
+
+   <launcher>
+      <solaris/>
+      <win useIco="false">
+         <bmp/>
+      </win>
+   </launcher>
+
+   <vm>
+   </vm>
 
    <plugins>
    </plugins>
