@@ -11,17 +11,16 @@
  ******************************************************************************/
 package org.eclipse.emfforms.internal.core.services.structuralchange.table;
 
-import java.util.Iterator;
-
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.common.spi.asserts.Assert;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emfforms.internal.core.services.structuralchange.defaultheuristic.StructuralChangeTesterDefault;
+import org.eclipse.emfforms.spi.core.services.structuralchange.EMFFormsStructuralChangeTester;
 import org.eclipse.emfforms.spi.core.services.structuralchange.StructuralChangeTesterInternal;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Implementation of {@link StructuralChangeTesterInternal} for {@link VTableDomainModelReference
@@ -30,10 +29,20 @@ import org.osgi.service.component.annotations.Component;
  * @author Lucas Koehler
  *
  */
-// TODO: get rid of iterator usage
-@SuppressWarnings("deprecation")
 @Component(name = "StructuralChangeTesterTable")
 public class StructuralChangeTesterTable implements StructuralChangeTesterInternal {
+
+	private EMFFormsStructuralChangeTester emfFormsStructuralChangeTester;
+
+	/**
+	 * Sets the {@link EMFFormsStructuralChangeTester} service.
+	 *
+	 * @param emfFormsStructuralChangeTester The structural change tester
+	 */
+	@Reference
+	protected void setEMFFormsStructuralChangeTester(EMFFormsStructuralChangeTester emfFormsStructuralChangeTester) {
+		this.emfFormsStructuralChangeTester = emfFormsStructuralChangeTester;
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -62,6 +71,9 @@ public class StructuralChangeTesterTable implements StructuralChangeTesterIntern
 		Assert.create(reference).notNull();
 		Assert.create(notification).notNull();
 		Assert.create(reference).ofClass(VTableDomainModelReference.class);
+		if (notification.getRawNotification().isTouch()) {
+			return false;
+		}
 
 		final VTableDomainModelReference tableDMR = (VTableDomainModelReference) reference;
 
@@ -70,22 +82,10 @@ public class StructuralChangeTesterTable implements StructuralChangeTesterIntern
 			return featurePathTester.isStructureChanged(reference, domainRootObject, notification);
 		}
 
-		if (notification.getRawNotification().isTouch()) {
-			return false;
-		}
-
 		Assert.create(tableDMR.getDomainModelReference()).notNull();
 
-		final Iterator<EStructuralFeature> structuralFeatureIterator = tableDMR.getDomainModelReference()
-			.getEStructuralFeatureIterator();
-		while (structuralFeatureIterator.hasNext()) {
-			final EStructuralFeature feature = structuralFeatureIterator.next();
-			if (feature.equals(notification.getStructuralFeature())) {
-				return true;
-			}
-		}
-
-		return false;
+		return emfFormsStructuralChangeTester.isStructureChanged(tableDMR.getDomainModelReference(), domainRootObject,
+			notification);
 	}
 
 }
