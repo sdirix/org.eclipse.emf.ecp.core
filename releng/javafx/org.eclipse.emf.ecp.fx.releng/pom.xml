@@ -83,6 +83,8 @@
 				<artifactId>target-platform-configuration</artifactId>
 				<version>${tycho-version}</version>
 				<configuration>
+					<resolver>p2</resolver>
+					<pomDependencies>consider</pomDependencies>
 					<target>
 						<artifact>
 							<groupId>org.eclipse.emf.ecp.fx</groupId>
@@ -90,7 +92,6 @@
 							<version>${project.version}</version>
 						</artifact>
 					</target>
-					<!--
 					<environments>
 						<environment>
 							<os>noenv</os>
@@ -98,7 +99,7 @@
 							<arch>noenv</arch>
 						</environment>
 					</environments>
-					-->
+
 				</configuration>
 			</plugin>
 			<!-- <plugin> <groupId>org.eclipse.tycho</groupId> <artifactId>target-platform-configuration</artifactId> 
