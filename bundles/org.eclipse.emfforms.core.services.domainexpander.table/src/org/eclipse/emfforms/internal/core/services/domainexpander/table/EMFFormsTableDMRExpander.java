@@ -25,7 +25,11 @@ import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.domainexpander.EMFFormsDMRExpander;
 import org.eclipse.emfforms.spi.core.services.domainexpander.EMFFormsDomainExpander;
 import org.eclipse.emfforms.spi.core.services.domainexpander.EMFFormsExpandingFailedException;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -40,6 +44,8 @@ public class EMFFormsTableDMRExpander implements EMFFormsDMRExpander {
 	private ReportService reportService;
 	private EMFFormsDomainExpander domainExpander;
 	private EMFFormsDatabinding emfFormsDatabinding;
+	private BundleContext bundleContext;
+	private ServiceReference<EMFFormsDomainExpander> eMFFormsDomainExpanderServiceReference;
 
 	/**
 	 * Called by the framework to set the {@link ReportService}.
@@ -53,13 +59,46 @@ public class EMFFormsTableDMRExpander implements EMFFormsDMRExpander {
 	}
 
 	/**
-	 * Called by the framework to set the {@link EMFFormsDomainExpander}.
+	 * Called by the framework when the component gets activated.
 	 *
-	 * @param emfFormsDomainExpander The {@link EMFFormsDomainExpander}
+	 * @param bundleContext The {@link BundleContext}
 	 */
-	@Reference
-	protected void setEMFFormsDomainExpander(EMFFormsDomainExpander emfFormsDomainExpander) {
-		domainExpander = emfFormsDomainExpander;
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		this.bundleContext = bundleContext;
+	}
+
+	/**
+	 * Called by the framework when the component gets deactivated.
+	 *
+	 * @param bundleContext The {@link BundleContext}
+	 */
+	@Deactivate
+	protected void deactivate(BundleContext bundleContext) {
+		if (eMFFormsDomainExpanderServiceReference != null) {
+			bundleContext.ungetService(eMFFormsDomainExpanderServiceReference);
+			domainExpander = null;
+		}
+	}
+
+	private EMFFormsDomainExpander getEMFFormsDomainExpander() {
+		if (domainExpander == null) {
+			eMFFormsDomainExpanderServiceReference = bundleContext.getServiceReference(EMFFormsDomainExpander.class);
+			if (eMFFormsDomainExpanderServiceReference == null) {
+				throw new IllegalStateException("No EMFFormsDomainExpander available!"); //$NON-NLS-1$
+			}
+			domainExpander = bundleContext.getService(eMFFormsDomainExpanderServiceReference);
+		}
+		return domainExpander;
+	}
+
+	/**
+	 * Helper method for tests. This is quite ugly!
+	 *
+	 * @param domainExpander The EMFFormsDomainExpander to use
+	 */
+	void setEMFFormsDomainExpander(EMFFormsDomainExpander domainExpander) {
+		this.domainExpander = domainExpander;
 	}
 
 	/**
@@ -99,7 +138,7 @@ public class EMFFormsTableDMRExpander implements EMFFormsDMRExpander {
 		} else {
 			firstReference = tableDMR.getDomainModelReference();
 		}
-		domainExpander.prepareDomainObject(firstReference, domainObject);
+		getEMFFormsDomainExpander().prepareDomainObject(firstReference, domainObject);
 
 		IObservableList observableList;
 		try {
@@ -114,7 +153,7 @@ public class EMFFormsTableDMRExpander implements EMFFormsDMRExpander {
 		for (final VDomainModelReference columnDMR : tableDMR.getColumnDomainModelReferences()) {
 			for (final Object object : observableList) {
 				final EObject currentTableDomainObject = EObject.class.cast(object);
-				domainExpander.prepareDomainObject(columnDMR, currentTableDomainObject);
+				getEMFFormsDomainExpander().prepareDomainObject(columnDMR, currentTableDomainObject);
 			}
 		}
 	}

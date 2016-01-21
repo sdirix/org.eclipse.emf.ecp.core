@@ -19,8 +19,11 @@ import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emfforms.internal.core.services.structuralchange.defaultheuristic.StructuralChangeTesterDefault;
 import org.eclipse.emfforms.spi.core.services.structuralchange.EMFFormsStructuralChangeTester;
 import org.eclipse.emfforms.spi.core.services.structuralchange.StructuralChangeTesterInternal;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * Implementation of {@link StructuralChangeTesterInternal} for {@link VTableDomainModelReference
@@ -33,14 +36,50 @@ import org.osgi.service.component.annotations.Reference;
 public class StructuralChangeTesterTable implements StructuralChangeTesterInternal {
 
 	private EMFFormsStructuralChangeTester emfFormsStructuralChangeTester;
+	private BundleContext bundleContext;
+	private ServiceReference<EMFFormsStructuralChangeTester> emfFormsStructuralChangeTesterServiceReference;
 
 	/**
-	 * Sets the {@link EMFFormsStructuralChangeTester} service.
+	 * Called by the framework when the component gets activated.
 	 *
-	 * @param emfFormsStructuralChangeTester The structural change tester
+	 * @param bundleContext The {@link BundleContext}
 	 */
-	@Reference
-	protected void setEMFFormsStructuralChangeTester(EMFFormsStructuralChangeTester emfFormsStructuralChangeTester) {
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		this.bundleContext = bundleContext;
+	}
+
+	/**
+	 * Called by the framework when the component gets deactivated.
+	 *
+	 * @param bundleContext The {@link BundleContext}
+	 */
+	@Deactivate
+	protected void deactivate(BundleContext bundleContext) {
+		if (emfFormsStructuralChangeTesterServiceReference != null) {
+			bundleContext.ungetService(emfFormsStructuralChangeTesterServiceReference);
+			emfFormsStructuralChangeTester = null;
+		}
+	}
+
+	private EMFFormsStructuralChangeTester getEMFFormsStructuralChangeTester() {
+		if (emfFormsStructuralChangeTester == null) {
+			emfFormsStructuralChangeTesterServiceReference = bundleContext
+				.getServiceReference(EMFFormsStructuralChangeTester.class);
+			if (emfFormsStructuralChangeTesterServiceReference == null) {
+				throw new IllegalStateException("No EMFFormsDomainExpander available!"); //$NON-NLS-1$
+			}
+			emfFormsStructuralChangeTester = bundleContext.getService(emfFormsStructuralChangeTesterServiceReference);
+		}
+		return emfFormsStructuralChangeTester;
+	}
+
+	/**
+	 * Helper method for tests. This is quite ugly!
+	 *
+	 * @param emfFormsStructuralChangeTester The EMFFormsStructuralChangeTester to use
+	 */
+	void setEMFFormsStructuralChangeTester(EMFFormsStructuralChangeTester emfFormsStructuralChangeTester) {
 		this.emfFormsStructuralChangeTester = emfFormsStructuralChangeTester;
 	}
 
@@ -84,7 +123,8 @@ public class StructuralChangeTesterTable implements StructuralChangeTesterIntern
 
 		Assert.create(tableDMR.getDomainModelReference()).notNull();
 
-		return emfFormsStructuralChangeTester.isStructureChanged(tableDMR.getDomainModelReference(), domainRootObject,
+		return getEMFFormsStructuralChangeTester().isStructureChanged(tableDMR.getDomainModelReference(),
+			domainRootObject,
 			notification);
 	}
 
