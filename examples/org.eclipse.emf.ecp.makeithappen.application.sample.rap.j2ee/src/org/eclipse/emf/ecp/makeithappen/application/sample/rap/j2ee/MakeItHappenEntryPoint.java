@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -27,6 +27,8 @@ import org.eclipse.swt.widgets.Composite;
  * Entry Point for a standalone RAP Application.
  */
 public class MakeItHappenEntryPoint extends AbstractEntryPoint {
+
+	private static final long serialVersionUID = 1L;
 
 	private EObject getDummyEObject() {
 		// Replace this with your own model EClass to test the application with a custom model
