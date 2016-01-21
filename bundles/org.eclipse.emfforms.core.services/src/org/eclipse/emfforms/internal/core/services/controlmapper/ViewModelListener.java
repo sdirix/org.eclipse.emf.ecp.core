@@ -96,6 +96,8 @@ public class ViewModelListener implements ModelChangeListener {
 
 			final VDomainModelReference reference = control.getDomainModelReference();
 			if (structuralChangeTester.isStructureChanged(reference, viewModelContext.getDomainModel(), notification)) {
+				SettingToControlExpandHelper.resolveDomainReferences(control, viewModelContext.getDomainModel(),
+					viewModelContext);
 				settingToControlMapper.updateControlMapping(control);
 
 				// TODO move it somewhere eg to the controlMapper?

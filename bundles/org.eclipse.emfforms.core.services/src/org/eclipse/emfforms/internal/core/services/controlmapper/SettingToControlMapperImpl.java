@@ -17,7 +17,6 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.common.notify.Notifier;
-import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.common.spi.UniqueSetting;
@@ -26,11 +25,7 @@ import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
-import org.eclipse.emfforms.spi.common.report.AbstractReport;
-import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.controlmapper.EMFFormsSettingToControlMapper;
-import org.eclipse.emfforms.spi.core.services.domainexpander.EMFFormsDomainExpander;
-import org.eclipse.emfforms.spi.core.services.domainexpander.EMFFormsExpandingFailedException;
 import org.eclipse.emfforms.spi.core.services.mappingprovider.EMFFormsMappingProviderManager;
 import org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener;
 import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext;
@@ -65,52 +60,13 @@ public class SettingToControlMapperImpl implements EMFFormsSettingToControlMappe
 				final VDomainModelReference domainModelReference = VDomainModelReference.class.cast(notifier);
 
 				// FIXME remove
-				resolveDomainReferences(domainModelReference,
-					viewModelContext.getDomainModel());
+				SettingToControlExpandHelper.resolveDomainReferences(domainModelReference,
+					viewModelContext.getDomainModel(),
+					viewModelContext);
 
 				final VControl control = findControl(domainModelReference);
 				if (control != null) {
 					vControlAdded(control);
-				}
-			}
-		}
-
-		/**
-		 * Resolve all domain model references for a given resolvable and a given domain model root.
-		 *
-		 * @param resolvable The EObject to resolve all {@link VDomainModelReference domain model references} of.
-		 * @param domainModelRoot the domain model used for the resolving.
-		 * @throws EMFFormsExpandingFailedException If the domain expansion fails.
-		 */
-		private void resolveDomainReferences(EObject resolvable, EObject domainModelRoot) {
-			// Get domain expander service
-			final EMFFormsDomainExpander domainExpander = viewModelContext
-				.getService(EMFFormsDomainExpander.class);
-			if (domainExpander == null) {
-				return;
-			}
-			expandAndInitDMR(domainModelRoot, domainExpander, resolvable);
-			// Iterate over all domain model references of the given EObject.
-			final TreeIterator<EObject> eAllContents = resolvable.eAllContents();
-			while (eAllContents.hasNext()) {
-				final EObject eObject = eAllContents.next();
-				expandAndInitDMR(domainModelRoot, domainExpander, eObject);
-			}
-		}
-
-		@SuppressWarnings("deprecation")
-		private void expandAndInitDMR(EObject domainModelRoot, final EMFFormsDomainExpander domainExpander,
-			final EObject eObject) {
-			if (VDomainModelReference.class.isInstance(eObject)
-				&& !VDomainModelReference.class.isInstance(eObject.eContainer())) {
-				final VDomainModelReference domainModelReference = VDomainModelReference.class.cast(eObject);
-				// FIXME remove
-				domainModelReference.init(domainModelRoot);
-				try {
-					domainExpander.prepareDomainObject(domainModelReference, domainModelRoot);
-				} catch (final EMFFormsExpandingFailedException ex) {
-					viewModelContext.getService(ReportService.class)
-						.report(new AbstractReport(ex));
 				}
 			}
 		}
