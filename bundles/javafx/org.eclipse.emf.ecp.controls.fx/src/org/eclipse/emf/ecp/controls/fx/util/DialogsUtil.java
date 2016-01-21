@@ -62,13 +62,13 @@ public final class DialogsUtil {
 		final GridPane gridPane = new GridPane();
 		gridPane.getStyleClass().add("vertical"); //$NON-NLS-1$
 
-		final ObservableList<Object> listItems = FXCollections.observableArrayList(modelElements);
-		final ListView<Object> listView = new ListView<>(listItems);
+		final ObservableList<T> listItems = FXCollections.observableArrayList(modelElements);
+		final ListView<T> listView = new ListView<>(listItems);
 		final ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(
 			new AdapterFactory[] {
 				new ReflectiveItemProviderAdapterFactory(),
 				new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
-		listView.setCellFactory(new AdapterFactoryListCellFactory<Object>(composedAdapterFactory));
+		listView.setCellFactory(new AdapterFactoryListCellFactory<T>(composedAdapterFactory));
 		listView.setMaxHeight(Double.MAX_VALUE);
 		listView.setMaxWidth(Double.MAX_VALUE);
 
