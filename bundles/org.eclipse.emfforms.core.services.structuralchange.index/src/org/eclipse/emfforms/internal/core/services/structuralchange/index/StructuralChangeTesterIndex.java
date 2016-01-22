@@ -150,15 +150,15 @@ public class StructuralChangeTesterIndex implements StructuralChangeTesterIntern
 		} else {
 			relevantChange = getEMFFormsStructuralChangeTester().isStructureChanged(indexDMR.getPrefixDMR(),
 				domainRootObject, notification);
-		}
-		if (relevantChange) {
-			return true;
-		}
-		try {
-			lastResolvedEObject = ((EList<EObject>) emfFormsDatabinding
-				.getSetting(indexDMR.getPrefixDMR(), domainRootObject).get(true)).get(indexDMR.getIndex());
-		} catch (final DatabindingFailedException ex) {
-			throw new IllegalStateException(ex);
+			if (relevantChange) {
+				return true;
+			}
+			try {
+				lastResolvedEObject = ((EList<EObject>) emfFormsDatabinding
+					.getSetting(indexDMR.getPrefixDMR(), domainRootObject).get(true)).get(indexDMR.getIndex());
+			} catch (final DatabindingFailedException ex) {
+				throw new IllegalStateException(ex);
+			}
 		}
 
 		relevantChange = getEMFFormsStructuralChangeTester().isStructureChanged(indexDMR.getTargetDMR(),
