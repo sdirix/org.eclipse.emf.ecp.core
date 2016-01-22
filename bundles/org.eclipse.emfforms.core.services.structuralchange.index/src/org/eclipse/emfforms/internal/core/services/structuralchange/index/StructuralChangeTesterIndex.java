@@ -147,6 +147,11 @@ public class StructuralChangeTesterIndex implements StructuralChangeTesterIntern
 				}
 				lastResolvedEObject = (EObject) lastResolvedEObject.eGet(eReference);
 			}
+			relevantChange |= notification.getStructuralFeature().equals(indexDMR.getDomainModelEFeature())
+				&& lastResolvedEObject == notification.getNotifier();
+			if (relevantChange) {
+				return true;
+			}
 			lastResolvedEObject = ((EList<EObject>) lastResolvedEObject.eGet(indexDMR.getDomainModelEFeature()))
 				.get(indexDMR.getIndex());
 		} else {
