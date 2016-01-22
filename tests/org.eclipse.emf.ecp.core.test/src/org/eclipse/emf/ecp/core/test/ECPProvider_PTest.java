@@ -24,7 +24,6 @@ import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.junit.After;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -88,12 +87,10 @@ public class ECPProvider_PTest extends AbstractTest {
 	}
 
 	@Test(expected = RuntimeException.class)
-	@Ignore
-	// FIXME the provider is an emfstore provider, thus this test never success
 	public void ifNotUnsharedProjectSupportTest() {
 		final boolean hasUnsharedProjectSupport = getProvider().hasCreateProjectWithoutRepositorySupport();
 		if (hasUnsharedProjectSupport) {
-			return;
+			throw new RuntimeException();
 		}
 		try {
 			// try to create an offline project;
