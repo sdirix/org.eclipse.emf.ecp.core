@@ -147,6 +147,8 @@ public class StructuralChangeTesterIndex implements StructuralChangeTesterIntern
 				}
 				lastResolvedEObject = (EObject) lastResolvedEObject.eGet(eReference);
 			}
+			lastResolvedEObject = ((EList<EObject>) lastResolvedEObject.eGet(indexDMR.getDomainModelEFeature()))
+				.get(indexDMR.getIndex());
 		} else {
 			relevantChange = getEMFFormsStructuralChangeTester().isStructureChanged(indexDMR.getPrefixDMR(),
 				domainRootObject, notification);
