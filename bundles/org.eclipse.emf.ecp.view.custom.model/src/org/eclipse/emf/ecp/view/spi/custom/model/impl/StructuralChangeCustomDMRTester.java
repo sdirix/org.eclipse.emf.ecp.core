@@ -17,8 +17,11 @@ import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emfforms.spi.core.services.structuralchange.EMFFormsStructuralChangeTester;
 import org.eclipse.emfforms.spi.core.services.structuralchange.StructuralChangeTesterInternal;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * Tester for structural changes of CustomDMRs.
@@ -31,15 +34,50 @@ import org.osgi.service.component.annotations.Reference;
 public class StructuralChangeCustomDMRTester implements StructuralChangeTesterInternal {
 
 	private EMFFormsStructuralChangeTester emfFormsStructuralChangeTester;
+	private BundleContext bundleContext;
+	private ServiceReference<EMFFormsStructuralChangeTester> emfFormsStructuralChangeTesterServiceReference;
 
 	/**
-	 * Called by the framework to set the {@link EMFFormsStructuralChangeTester}.
+	 * Called by the framework when the component gets activated.
 	 *
-	 * @param emfFormsStructuralChangeTester The {@link EMFFormsStructuralChangeTester}
+	 * @param bundleContext The {@link BundleContext}
 	 */
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		this.bundleContext = bundleContext;
+	}
 
-	@Reference
-	protected void setEMFFormsStructuralChangeTester(EMFFormsStructuralChangeTester emfFormsStructuralChangeTester) {
+	/**
+	 * Called by the framework when the component gets deactivated.
+	 *
+	 * @param bundleContext The {@link BundleContext}
+	 */
+	@Deactivate
+	protected void deactivate(BundleContext bundleContext) {
+		if (emfFormsStructuralChangeTesterServiceReference != null) {
+			bundleContext.ungetService(emfFormsStructuralChangeTesterServiceReference);
+			emfFormsStructuralChangeTester = null;
+		}
+	}
+
+	private EMFFormsStructuralChangeTester getEMFFormsStructuralChangeTester() {
+		if (emfFormsStructuralChangeTester == null) {
+			emfFormsStructuralChangeTesterServiceReference = bundleContext
+				.getServiceReference(EMFFormsStructuralChangeTester.class);
+			if (emfFormsStructuralChangeTesterServiceReference == null) {
+				throw new IllegalStateException("No EMFFormsDomainExpander available!"); //$NON-NLS-1$
+			}
+			emfFormsStructuralChangeTester = bundleContext.getService(emfFormsStructuralChangeTesterServiceReference);
+		}
+		return emfFormsStructuralChangeTester;
+	}
+
+	/**
+	 * Helper method for tests. This is quite ugly!
+	 *
+	 * @param emfFormsStructuralChangeTester The EMFFormsStructuralChangeTester to use
+	 */
+	void setEMFFormsStructuralChangeTester(EMFFormsStructuralChangeTester emfFormsStructuralChangeTester) {
 		this.emfFormsStructuralChangeTester = emfFormsStructuralChangeTester;
 	}
 
@@ -71,7 +109,7 @@ public class StructuralChangeCustomDMRTester implements StructuralChangeTesterIn
 		}
 		boolean result = true;
 		for (final VDomainModelReference dmr : customDMR.getDomainModelReferences()) {
-			result &= emfFormsStructuralChangeTester.isStructureChanged(dmr, domainRootObject, notification);
+			result &= getEMFFormsStructuralChangeTester().isStructureChanged(dmr, domainRootObject, notification);
 		}
 		return result;
 	}

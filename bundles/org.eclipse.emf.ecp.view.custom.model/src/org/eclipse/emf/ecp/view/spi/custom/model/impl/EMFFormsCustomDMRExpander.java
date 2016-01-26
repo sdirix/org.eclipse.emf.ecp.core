@@ -25,8 +25,11 @@ import org.eclipse.emfforms.spi.core.services.domainexpander.EMFFormsDomainExpan
 import org.eclipse.emfforms.spi.core.services.domainexpander.EMFFormsExpandingFailedException;
 import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * DMR Expander for VCustomDMR implementation of {@link EMFFormsDMRExpander}.
@@ -35,18 +38,54 @@ import org.osgi.service.component.annotations.Reference;
  * @since 1.8
  *
  */
-@Component
+@Component(name = "EMFFormsCustomDMRExpander", service = EMFFormsDMRExpander.class)
 public class EMFFormsCustomDMRExpander implements EMFFormsDMRExpander {
+
 	private EMFFormsDomainExpander domainExpander;
+	private BundleContext bundleContext;
+	private ServiceReference<EMFFormsDomainExpander> eMFFormsDomainExpanderServiceReference;
 
 	/**
-	 * Called by the framework to set the {@link EMFFormsDomainExpander}.
+	 * Called by the framework when the component gets activated.
 	 *
-	 * @param emfFormsDomainExpander The {@link EMFFormsDomainExpander}
+	 * @param bundleContext The {@link BundleContext}
 	 */
-	@Reference
-	protected void setEMFFormsDomainExpander(EMFFormsDomainExpander emfFormsDomainExpander) {
-		domainExpander = emfFormsDomainExpander;
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		this.bundleContext = bundleContext;
+	}
+
+	/**
+	 * Called by the framework when the component gets deactivated.
+	 *
+	 * @param bundleContext The {@link BundleContext}
+	 */
+	@Deactivate
+	protected void deactivate(BundleContext bundleContext) {
+		if (eMFFormsDomainExpanderServiceReference != null) {
+			bundleContext.ungetService(eMFFormsDomainExpanderServiceReference);
+			domainExpander = null;
+		}
+	}
+
+	private EMFFormsDomainExpander getEMFFormsDomainExpander() {
+		if (domainExpander == null) {
+			eMFFormsDomainExpanderServiceReference = bundleContext.getServiceReference(EMFFormsDomainExpander.class);
+			if (eMFFormsDomainExpanderServiceReference == null) {
+				throw new IllegalStateException("No EMFFormsDomainExpander available!"); //$NON-NLS-1$
+			}
+			domainExpander = bundleContext.getService(eMFFormsDomainExpanderServiceReference);
+		}
+		return domainExpander;
+	}
+
+	/**
+	 * Helper method for tests. This is quite ugly!
+	 *
+	 * @param domainExpander The EMFFormsDomainExpander to use
+	 */
+	void setEMFFormsDomainExpander(EMFFormsDomainExpander domainExpander) {
+		this.domainExpander = domainExpander;
 	}
 
 	/**
@@ -86,7 +125,7 @@ public class EMFFormsCustomDMRExpander implements EMFFormsDMRExpander {
 		}
 		// resolve references from control
 		for (final VDomainModelReference dmr : customReference.getDomainModelReferences()) {
-			domainExpander.prepareDomainObject(dmr, domainObject);
+			getEMFFormsDomainExpander().prepareDomainObject(dmr, domainObject);
 		}
 	}
 
