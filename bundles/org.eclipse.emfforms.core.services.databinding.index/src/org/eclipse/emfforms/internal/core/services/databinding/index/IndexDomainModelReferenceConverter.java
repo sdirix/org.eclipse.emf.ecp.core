@@ -68,6 +68,10 @@ public class IndexDomainModelReferenceConverter implements DomainModelReferenceC
 	 */
 	protected final void activate(BundleContext bundleContext) {
 		databindingServiceReference = bundleContext.getServiceReference(EMFFormsDatabindingEMF.class);
+		if (databindingServiceReference == null) {
+			throw new IllegalStateException(
+				"The org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF Service is not available!"); //$NON-NLS-1$
+		}
 		setEMFFormsDatabinding(bundleContext.getService(databindingServiceReference));
 
 	}
