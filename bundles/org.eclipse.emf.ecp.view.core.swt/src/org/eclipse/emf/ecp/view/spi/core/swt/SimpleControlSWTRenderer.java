@@ -287,7 +287,7 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 		GridLayoutFactory.fillDefaults().numColumns(2).equalWidth(false).applyTo(composite);
 		final Composite controlComposite = new Composite(composite, SWT.NONE);
 		controlComposite.setBackground(parent.getBackground());
-		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, false).applyTo(controlComposite);
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, false).applyTo(controlComposite);
 		final StackLayout sl = new StackLayout();
 		controlComposite.setLayout(sl);
 		final Control baseControl = createControl(controlComposite);
@@ -314,10 +314,13 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 	}
 
 	private Control createUnsetLabel(Composite parent) {
-		final Label unsetLabel = new Label(parent, SWT.NONE);
+		final Composite composite = new Composite(parent, SWT.NONE);
+		GridLayoutFactory.fillDefaults().numColumns(1).equalWidth(true).applyTo(composite);
+		final Label unsetLabel = new Label(composite, SWT.NONE);
 		unsetLabel.setBackground(parent.getBackground());
 		unsetLabel.setText(getUnsetText());
-		return unsetLabel;
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, true).applyTo(unsetLabel);
+		return composite;
 	}
 
 	/**

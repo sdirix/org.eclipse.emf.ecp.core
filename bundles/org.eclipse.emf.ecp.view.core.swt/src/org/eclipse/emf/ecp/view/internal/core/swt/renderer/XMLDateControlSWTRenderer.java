@@ -302,7 +302,7 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 		main.setBackground(parent.getBackground());
 		GridLayoutFactory.fillDefaults().numColumns(2).applyTo(main);
 		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(main);
-		final Text text = (Text) super.createSWTControl(main);
+		final Control text = super.createSWTControl(main);
 		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.CENTER).applyTo(text);
 		final Button bDate = new Button(main, SWT.PUSH);
 		GridDataFactory.fillDefaults().grab(false, false).align(SWT.CENTER, SWT.CENTER).applyTo(bDate);
@@ -325,7 +325,7 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 	@Override
 	protected Binding[] createBindings(Control control) throws DatabindingFailedException {
 		final EStructuralFeature structuralFeature = (EStructuralFeature) getModelValue().getValueType();
-		final Text text = (Text) ((Composite) control).getChildren()[0];
+		final Text text = (Text) Composite.class.cast(Composite.class.cast(control).getChildren()[0]).getChildren()[0];
 		final Button button = (Button) ((Composite) control).getChildren()[1];
 		button.addSelectionListener(new SelectionAdapterExtension(text, button, getModelValue(),
 			getViewModelContext(),
@@ -389,7 +389,8 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 	protected void setControlEnabled(SWTGridCell gridCell, Control control, boolean enabled) {
 		if (getVElement().getLabelAlignment() == LabelAlignment.NONE && gridCell.getColumn() == 1
 			|| hasLeftLabelAlignment() && gridCell.getColumn() == 2) {
-			((Text) ((Composite) control).getChildren()[0]).setEditable(enabled);
+			((Text) Composite.class.cast(Composite.class.cast(control).getChildren()[0]).getChildren()[0])
+				.setEditable(enabled);
 			((Button) ((Composite) control).getChildren()[1]).setVisible(enabled);
 		} else {
 			super.setControlEnabled(gridCell, control, enabled);

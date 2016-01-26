@@ -27,6 +27,7 @@ import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.jface.databinding.swt.ISWTObservableValue;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
 /**
@@ -57,7 +58,8 @@ public class TextRenderer extends TextControlSWTRenderer {
 		UpdateValueStrategy targetToModel, UpdateValueStrategy modelToTarget) {
 
 		@SuppressWarnings("deprecation")
-		final ISWTObservableValue textValue = org.eclipse.jface.databinding.swt.SWTObservables.observeText(text,
+		final ISWTObservableValue textValue = org.eclipse.jface.databinding.swt.SWTObservables.observeText(
+			Composite.class.cast(text).getChildren()[0],
 			SWT.Modify);
 		@SuppressWarnings("deprecation")
 		final IObservableValue value = org.eclipse.jface.databinding.swt.SWTObservables.observeDelayedValue(600,

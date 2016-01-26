@@ -47,6 +47,8 @@ import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
 import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
@@ -103,7 +105,9 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 
 	@Override
 	protected Control createSWTControl(Composite parent) {
-		final Text text = new Text(parent, getTextWidgetStyle());
+		final Composite composite = new Composite(parent, SWT.NONE);
+		GridLayoutFactory.fillDefaults().numColumns(1).equalWidth(true).applyTo(composite);
+		final Text text = new Text(composite, getTextWidgetStyle());
 		text.setData(CUSTOM_VARIANT, getTextVariantID());
 		text.setMessage(getTextMessage());
 		text.addFocusListener(new FocusListener() {
@@ -116,7 +120,14 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 				text.selectAll();
 			}
 		});
-		return text;
+		final GridDataFactory gdf = GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER)
+			.grab(true, true).span(1, 1);
+		final EMFFormsEditSupport editSupport = getEMFFormsEditSupport();
+		if (editSupport.isMultiLine(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel())) {
+			gdf.hint(50, 200);// set x hint to enable wrapping
+		}
+		gdf.applyTo(text);
+		return composite;
 	}
 
 	/**
@@ -149,7 +160,8 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 	 */
 	protected Binding bindValue(Control text, IObservableValue modelValue, DataBindingContext dataBindingContext,
 		UpdateValueStrategy targetToModel, UpdateValueStrategy modelToTarget) {
-		final IObservableValue value = WidgetProperties.text(SWT.FocusOut).observe(text);
+		final IObservableValue value = WidgetProperties.text(SWT.FocusOut)
+			.observe(Composite.class.cast(text).getChildren()[0]);
 		final Binding binding = dataBindingContext.bindValue(value, modelValue, targetToModel, modelToTarget);
 		return binding;
 	}
@@ -235,11 +247,18 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 				// if (!setting.isSet()) {
 				// return;
 				// }
-				controlToUnset = Composite.class.cast(Composite.class.cast(control).getChildren()[0]).getChildren()[0];
+				controlToUnset = Composite.class
+					.cast(Composite.class.cast(Composite.class.cast(control).getChildren()[0]).getChildren()[0])
+					.getChildren()[0];
 			}
 			Text.class.cast(controlToUnset).setEditable(enabled);
 		} else {
-			super.setControlEnabled(gridCell, control, enabled);
+			if (getVElement().getLabelAlignment() == LabelAlignment.NONE && gridCell.getColumn() == 1
+				|| hasLeftLabelAlignment() && gridCell.getColumn() == 2) {
+				super.setControlEnabled(gridCell, Composite.class.cast(control).getChildren()[0], enabled);
+			} else {
+				super.setControlEnabled(gridCell, control, enabled);
+			}
 		}
 	}
 

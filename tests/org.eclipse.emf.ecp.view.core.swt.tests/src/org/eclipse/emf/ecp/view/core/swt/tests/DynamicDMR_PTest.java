@@ -271,7 +271,7 @@ public class DynamicDMR_PTest {
 	private Text getText() {
 		final Composite composite = (Composite) control;
 		final Control text = composite.getChildren()[2];
-		return (Text) text;
+		return (Text) Composite.class.cast(text).getChildren()[0];
 	}
 
 	private void assertText(String message, boolean enabled) {
