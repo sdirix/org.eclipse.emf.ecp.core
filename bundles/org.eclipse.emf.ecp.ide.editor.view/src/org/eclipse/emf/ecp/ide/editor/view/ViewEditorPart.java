@@ -629,7 +629,7 @@ public class ViewEditorPart extends EditorPart implements
 
 				if ((view.getEcorePath() == null
 					|| ResourcesPlugin.getWorkspace().getRoot().findMember(view.getEcorePath()) == null)
-					&& view.getRootEClass().eIsProxy()) {
+					&& view.getRootEClass() != null && view.getRootEClass().eIsProxy()) {
 
 					final String selectedECorePath = selectEcoreFromWorkspace();
 					if (selectedECorePath != null) {
