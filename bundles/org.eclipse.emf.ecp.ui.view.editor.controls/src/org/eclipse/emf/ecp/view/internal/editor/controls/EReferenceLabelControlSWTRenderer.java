@@ -11,14 +11,13 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.editor.controls;
 
-import java.net.URL;
-
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecp.edit.internal.swt.SWTImageHelper;
 import org.eclipse.emf.ecp.edit.spi.util.ECPModelElementChangeListener;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer;
@@ -160,7 +159,7 @@ public class EReferenceLabelControlSWTRenderer extends SimpleControlSWTControlSW
 	}
 
 	private Object getImage(Object value) {
-		return Activator.getImage((URL) adapterFactoryItemDelegator.getImage(value));
+		return SWTImageHelper.getImage(adapterFactoryItemDelegator.getImage(value));
 	}
 
 	private Object getText(Object value) {
@@ -212,7 +211,7 @@ public class EReferenceLabelControlSWTRenderer extends SimpleControlSWTControlSW
 		GridLayoutFactory.fillDefaults().numColumns(1).spacing(0, 0).equalWidth(false).applyTo(composite2);
 
 		labelComposite = new Composite(composite2, SWT.NONE);
-		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(labelComposite);
+		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(labelComposite);
 		GridLayoutFactory.fillDefaults().numColumns(2).equalWidth(false).applyTo(labelComposite);
 		labelComposite.setBackground(composite2.getBackground());
 
@@ -221,8 +220,8 @@ public class EReferenceLabelControlSWTRenderer extends SimpleControlSWTControlSW
 		imageLabel.setBackground(labelComposite.getBackground());
 		label = new Label(labelComposite, SWT.NONE);
 		label.setBackground(labelComposite.getBackground());
-		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(label);
-		GridDataFactory.fillDefaults().grab(false, false).align(SWT.FILL, SWT.BEGINNING).hint(20, 20)
+		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.CENTER).applyTo(label);
+		GridDataFactory.fillDefaults().grab(false, true).align(SWT.FILL, SWT.CENTER).hint(20, 20)
 			.applyTo(imageLabel);
 
 		composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
