@@ -25,10 +25,11 @@ import org.eclipse.emfforms.spi.swt.core.layout.EMFFormsSWTLayoutUtil;
 import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
+import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ExpandEvent;
 import org.eclipse.swt.events.ExpandListener;
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -88,17 +89,13 @@ public class CollapsableGroupSWTRenderer extends ContainerSWTRenderer<VGroup> {
 
 		// First item
 		final Composite composite = new Composite(bar, SWT.NONE);
-		final FillLayout fillLayout = new FillLayout();
-		fillLayout.marginHeight = MARGIN;
-		fillLayout.marginWidth = MARGIN;
-		composite.setLayout(fillLayout);
+		GridLayoutFactory.fillDefaults().margins(MARGIN, MARGIN).applyTo(composite);
 		final ExpandItem item0 = new ExpandItem(bar, SWT.NONE, 0);
-		String text = getVElement().getName();
-		if (text == null) {
-			text = ""; //$NON-NLS-1$
-		}
+		final String text = getVElement().getLabel() != null ? getVElement().getLabel() : ""; //$NON-NLS-1$
 		item0.setText(text);
-		super.renderControl(gridCell, composite);
+		final Control containerControl = super.renderControl(gridCell, composite);
+		GridDataFactory.fillDefaults().grab(true, false)
+			.minSize(containerControl.computeSize(SWT.DEFAULT, SWT.DEFAULT).x, SWT.DEFAULT).applyTo(containerControl);
 		final int height = computeHeight(composite);
 		item0.setHeight(height);
 		item0.setControl(composite);
