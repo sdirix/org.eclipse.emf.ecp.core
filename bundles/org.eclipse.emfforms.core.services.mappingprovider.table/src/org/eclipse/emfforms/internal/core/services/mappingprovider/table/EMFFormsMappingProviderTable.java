@@ -112,17 +112,17 @@ public class EMFFormsMappingProviderTable implements EMFFormsMappingProvider {
 		}
 
 		for (final EObject eObject : (List<EObject>) tableSetting.get(true)) {
-			if (tableControl.getDetailEditing() == DetailEditing.NONE) {
-				for (final VDomainModelReference domainModelReference : tableDMR.getColumnDomainModelReferences()) {
-					try {
-						final Setting columnSetting = emfFormsDatabinding.getSetting(domainModelReference, eObject);
-						settingsMap.add(UniqueSetting.createSetting(columnSetting));
-					} catch (final DatabindingFailedException ex) {
-						reportService.report(new DatabindingFailedReport(ex));
-					}
+
+			for (final VDomainModelReference domainModelReference : tableDMR.getColumnDomainModelReferences()) {
+				try {
+					final Setting columnSetting = emfFormsDatabinding.getSetting(domainModelReference, eObject);
+					settingsMap.add(UniqueSetting.createSetting(columnSetting));
+				} catch (final DatabindingFailedException ex) {
+					reportService.report(new DatabindingFailedReport(ex));
 				}
-			} else if (manager != null) {
-				// //getView for inner Eobject and get the Settings for all inner controls
+			}
+			if (manager != null && tableControl.getDetailEditing() != DetailEditing.NONE) {
+				// getView for inner Eobject and get the Settings for all inner controls
 				try {
 					final VView view = getView(tableControl, eObject);
 					final TreeIterator<EObject> eAllContents = view.eAllContents();
@@ -157,7 +157,7 @@ public class EMFFormsMappingProviderTable implements EMFFormsMappingProvider {
 
 	private VElement getViewModel(VTableControl tableControl) {
 		EObject container = tableControl;
-		if (container.eContainer() != null) {
+		while (container.eContainer() != null) {
 			container = container.eContainer();
 		}
 		return (VElement) container;
