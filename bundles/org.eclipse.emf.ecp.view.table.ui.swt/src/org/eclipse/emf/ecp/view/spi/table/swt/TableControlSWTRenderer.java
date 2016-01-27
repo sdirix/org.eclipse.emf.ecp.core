@@ -94,6 +94,7 @@ import org.eclipse.emfforms.spi.swt.table.ButtonBarBuilder;
 import org.eclipse.emfforms.spi.swt.table.CellLabelProviderFactory;
 import org.eclipse.emfforms.spi.swt.table.EditingSupportCreator;
 import org.eclipse.emfforms.spi.swt.table.TableViewerComposite;
+import org.eclipse.emfforms.spi.swt.table.TableViewerCompositeBuilder;
 import org.eclipse.emfforms.spi.swt.table.TableViewerCreator;
 import org.eclipse.emfforms.spi.swt.table.TableViewerFactory;
 import org.eclipse.emfforms.spi.swt.table.TableViewerSWTBuilder;
@@ -242,12 +243,13 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			final ECPTableViewerComparator comparator = new ECPTableViewerComparator();
 
 			/* render */
+			final TableViewerCompositeBuilder compositeBuilder = new TableControlSWTRendererCompositeBuilder();
 			final TableViewerSWTBuilder tableViewerSWTBuilder = TableViewerFactory
 				.fillDefaults(parent, SWT.NONE, list, labelText, labelTooltipText)
-				.customizeCompositeStructure(new TableControlSWTRendererCompositeBuilder())
+				.customizeTableViewerCreation(new TableControlSWTRendererTableViewerCreator())
+				.customizeCompositeStructure(compositeBuilder)
 				.customizeButtons(
 					new TableControlSWTRendererButtonBarBuilder(structuralFeature, clazz, eObject))
-				.customizeTableViewerCreation(new TableControlSWTRendererTableViewerCreator())
 				.customizeContentProvider(cp)
 				.customizeComparator(comparator);
 
@@ -260,53 +262,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 				createFixedValidationStatusColumn(tableViewerSWTBuilder);
 			}
 
-			InternalEObject tempInstance = null;
-			if (!clazz.isAbstract() && !clazz.isInterface()) {
-				tempInstance = getInstanceOf(clazz);
-			}
-
-			final VTableDomainModelReference tableDomainModelReference = VTableDomainModelReference.class
-				.cast(getVElement().getDomainModelReference());
-
-			/* regular columns */
-			for (final VDomainModelReference dmr : tableDomainModelReference.getColumnDomainModelReferences()) {
-				try {
-					if (dmr == null) {
-						continue;
-					}
-
-					final IObservableValue text = getLabelText(dmr, true);
-					final IObservableValue tooltip = getLabelTooltipText(dmr, true);
-
-					final IValueProperty valueProperty = getEMFFormsDatabinding().getValueProperty(dmr,
-						getViewModelContext().getDomainModel());
-					final EStructuralFeature eStructuralFeature = (EStructuralFeature) valueProperty.getValueType();
-
-					final IObservableMap observableMap = valueProperty.observeDetail(cp.getKnownElements());
-
-					final TableControlEditingSupportAndLabelProvider labelProvider = new TableControlEditingSupportAndLabelProvider(
-						tempInstance, eStructuralFeature, dmr, valueProperty, observableMap,
-						tableDomainModelReference.getColumnDomainModelReferences().indexOf(dmr));
-					final EditingSupportCreator editingSupportCreator = TableConfigurationHelper
-						.isReadOnly(getVElement(), dmr) ? null : labelProvider;
-
-					// TODO ugly: we need this temporary cell editor so early just to get size information
-					final CellEditor tempCellEditor = createCellEditor(tempInstance, eStructuralFeature,
-						new Table(new Shell(), SWT.NONE));
-
-					final int weight = ECPCellEditor.class.isInstance(tempCellEditor)
-						? ECPCellEditor.class.cast(tempCellEditor).getColumnWidthWeight() : 100;
-					final int minWidth = ECPCellEditor.class.isInstance(tempCellEditor)
-						? ECPCellEditor.class.cast(tempCellEditor).getMinWidth() : 0;
-
-					tableViewerSWTBuilder.addColumn(true, false, SWT.NONE, weight, minWidth, text, tooltip,
-						labelProvider, editingSupportCreator, null);
-
-				} catch (final DatabindingFailedException ex) {
-					getReportService().report(new RenderingFailedReport(ex));
-					continue;
-				}
-			}
+			addColumns(tableViewerSWTBuilder, clazz, cp);
 
 			final TableViewerComposite tableViewerComposite = tableViewerSWTBuilder.create();
 
@@ -326,6 +282,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 			setTableViewer(tableViewerComposite.getTableViewer());
 
+			setLayoutData(compositeBuilder.getViewerComposite());
+
 			return tableViewerComposite;
 
 		} catch (final DatabindingFailedException ex) {
@@ -334,6 +292,65 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			errorLabel.setText(ex.getMessage());
 			return errorLabel;
 		}
+	}
+
+	/**
+	 * Adds the table columns to the {@link TableViewerSWTBuilder}.
+	 *
+	 * @param tableViewerSWTBuilder the builder
+	 * @param clazz the {@EClass} of the rendered object
+	 * @param cp the content provider
+	 *
+	 */
+	private void addColumns(TableViewerSWTBuilder tableViewerSWTBuilder, EClass clazz,
+		ObservableListContentProvider cp) {
+		InternalEObject tempInstance = null;
+		if (!clazz.isAbstract() && !clazz.isInterface()) {
+			tempInstance = getInstanceOf(clazz);
+		}
+		final VTableDomainModelReference tableDomainModelReference = VTableDomainModelReference.class
+			.cast(getVElement().getDomainModelReference());
+
+		/* regular columns */
+		for (final VDomainModelReference dmr : tableDomainModelReference.getColumnDomainModelReferences()) {
+			try {
+				if (dmr == null) {
+					continue;
+				}
+
+				final IObservableValue text = getLabelText(dmr, true);
+				final IObservableValue tooltip = getLabelTooltipText(dmr, true);
+
+				final IValueProperty valueProperty = getEMFFormsDatabinding().getValueProperty(dmr,
+					getViewModelContext().getDomainModel());
+				final EStructuralFeature eStructuralFeature = (EStructuralFeature) valueProperty.getValueType();
+
+				final IObservableMap observableMap = valueProperty.observeDetail(cp.getKnownElements());
+
+				final TableControlEditingSupportAndLabelProvider labelProvider = new TableControlEditingSupportAndLabelProvider(
+					tempInstance, eStructuralFeature, dmr, valueProperty, observableMap,
+					tableDomainModelReference.getColumnDomainModelReferences().indexOf(dmr));
+				final EditingSupportCreator editingSupportCreator = TableConfigurationHelper
+					.isReadOnly(getVElement(), dmr) ? null : labelProvider;
+
+				// TODO ugly: we need this temporary cell editor so early just to get size information
+				final CellEditor tempCellEditor = createCellEditor(tempInstance, eStructuralFeature,
+					new Table(new Shell(), SWT.NONE));
+
+				final int weight = ECPCellEditor.class.isInstance(tempCellEditor)
+					? ECPCellEditor.class.cast(tempCellEditor).getColumnWidthWeight() : 100;
+				final int minWidth = ECPCellEditor.class.isInstance(tempCellEditor)
+					? ECPCellEditor.class.cast(tempCellEditor).getMinWidth() : 0;
+
+				tableViewerSWTBuilder.addColumn(true, false, SWT.NONE, weight, minWidth, text, tooltip,
+					labelProvider, editingSupportCreator, null);
+
+			} catch (final DatabindingFailedException ex) {
+				getReportService().report(new RenderingFailedReport(ex));
+				continue;
+			}
+		}
+
 	}
 
 	private void setupValidation(final TableViewerComposite tableViewerComposite) {
@@ -434,18 +451,26 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 */
 	protected Composite createControlComposite(Composite composite) {
 		final Composite controlComposite = new Composite(composite, SWT.NONE);
-		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).hint(1, getTableHeightHint())
-			.applyTo(controlComposite);
 		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(controlComposite);
 		return controlComposite;
 	}
 
 	/**
-	 * Returns the prefereed height for the table. This will be passed to the layoutdata.
+	 * Returns the preferred height for the table. This will be passed to the layoutdata.
 	 *
 	 * @return the height in px
 	 */
 	protected int getTableHeightHint() {
+		if (getVElement().isReadonly() && tableViewer != null && tableViewer.getTable() != null) {
+			final Table table = tableViewer.getTable();
+			final int itemHeight = table.getItemHeight();
+			// show one empty row if table does not contain any items
+			final int itemCount = Math.max(table.getItemCount(), 1);
+			final int headerHeight = table.getHeaderVisible() ? table.getHeaderHeight() : 0;
+			// 4px needed as a buffer to avoid scrollbars
+			final int tableHeight = itemHeight * itemCount + headerHeight + 4;
+			return Math.min(tableHeight, 200);
+		}
 		return 200;
 	}
 
@@ -465,6 +490,17 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 */
 	protected void setTableViewer(TableViewer tableViewer) {
 		this.tableViewer = tableViewer;
+	}
+
+	/**
+	 * Applies the layout data to the given composite.
+	 *
+	 * @param composite the composite to which the layout data is applied
+	 *
+	 */
+	private void setLayoutData(Composite composite) {
+		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).hint(1, getTableHeightHint())
+			.applyTo(composite);
 	}
 
 	/**
