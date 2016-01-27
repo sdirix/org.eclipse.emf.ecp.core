@@ -63,6 +63,7 @@
 							</resources>
 						</configuration>
 					</execution>
+					<!-- Enable when fx was tested
 					<execution>
 						<id>copy-fx</id>
 						<phase>validate</phase>
@@ -84,6 +85,7 @@
 							</resources>
 						</configuration>
 					</execution>
+					-->
 					<execution>
 						<id>copy-rap</id>
 						<phase>validate</phase>
