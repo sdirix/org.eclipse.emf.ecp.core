@@ -127,6 +127,7 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -246,10 +247,10 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			final TableViewerCompositeBuilder compositeBuilder = new TableControlSWTRendererCompositeBuilder();
 			final TableViewerSWTBuilder tableViewerSWTBuilder = TableViewerFactory
 				.fillDefaults(parent, SWT.NONE, list, labelText, labelTooltipText)
-				.customizeTableViewerCreation(new TableControlSWTRendererTableViewerCreator())
 				.customizeCompositeStructure(compositeBuilder)
 				.customizeButtons(
 					new TableControlSWTRendererButtonBarBuilder(structuralFeature, clazz, eObject))
+				.customizeTableViewerCreation(new TableControlSWTRendererTableViewerCreator())
 				.customizeContentProvider(cp)
 				.customizeComparator(comparator);
 
@@ -282,8 +283,10 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 			setTableViewer(tableViewerComposite.getTableViewer());
 
-			setLayoutData(compositeBuilder.getViewerComposite());
-
+			// FIXME doesn't work with table with panel
+			// setLayoutData(compositeBuilder.getViewerComposite());
+			GridData.class
+				.cast(compositeBuilder.getViewerComposite().getLayoutData()).heightHint = getTableHeightHint();
 			return tableViewerComposite;
 
 		} catch (final DatabindingFailedException ex) {
@@ -451,6 +454,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 */
 	protected Composite createControlComposite(Composite composite) {
 		final Composite controlComposite = new Composite(composite, SWT.NONE);
+		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).hint(1, getTableHeightHint())
+			.applyTo(controlComposite);
 		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(controlComposite);
 		return controlComposite;
 	}
@@ -492,16 +497,17 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		this.tableViewer = tableViewer;
 	}
 
-	/**
-	 * Applies the layout data to the given composite.
-	 *
-	 * @param composite the composite to which the layout data is applied
-	 *
-	 */
-	private void setLayoutData(Composite composite) {
-		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).hint(1, getTableHeightHint())
-			.applyTo(composite);
-	}
+	// FIXME needed?
+	// /**
+	// * Applies the layout data to the given composite.
+	// *
+	// * @param composite the composite to which the layout data is applied
+	// *
+	// */
+	// private void setLayoutData(Composite composite) {
+	// GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).hint(1, getTableHeightHint())
+	// .applyTo(composite);
+	// }
 
 	/**
 	 * This method gets called when the selection on the {@link TableViewer} (see {@link #getTableViewer()}) has
