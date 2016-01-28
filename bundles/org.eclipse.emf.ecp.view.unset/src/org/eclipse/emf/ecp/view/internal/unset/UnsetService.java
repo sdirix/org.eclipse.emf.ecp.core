@@ -18,6 +18,7 @@ import java.util.Set;
 
 import org.eclipse.core.databinding.observable.IObserving;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.EList;
@@ -152,7 +153,8 @@ public class UnsetService implements ViewModelService {
 	private void addControlToMap(VControl control) {
 		if (control.getDomainModelReference() == null) {
 			Activator.getDefault().getReportService().report(
-				new AbstractReport(String.format("The provided control [%1$s] has no defined DMR.", control), 1)); //$NON-NLS-1$
+				new AbstractReport(String.format("The provided control [%1$s] has no defined DMR.", control), //$NON-NLS-1$
+					IStatus.INFO));
 			return;
 		}
 		IObservableValue observableValue;
