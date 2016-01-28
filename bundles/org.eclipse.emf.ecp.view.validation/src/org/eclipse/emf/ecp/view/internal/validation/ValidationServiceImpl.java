@@ -291,7 +291,8 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 
 		domainChangeListener = new ValidationDomainModelChangeListener();
 		viewChangeListener = new ViewModelChangeListener();
-
+		context.registerDomainChangeListener(domainChangeListener);
+		context.registerViewChangeListener(viewChangeListener);
 		context.registerEMFFormsContextListener(this);
 		// validate(getAllEObjects(domainModel));
 	}
@@ -410,6 +411,9 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 	}
 
 	private void processValidationQueue() {
+		if (!initialized) {
+			return;
+		}
 		// prohibit reentry in recursion
 		if (validationRunning) {
 			return;
@@ -681,6 +685,7 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 	private final Set<ViewValidationListener> validationListeners = new LinkedHashSet<ViewValidationListener>();
 	private EMFFormsMappingProviderManager mappingProviderManager;
 	private EMFFormsSettingToControlMapper controlMapper;
+	private boolean initialized;
 
 	/**
 	 * {@inheritDoc}
@@ -755,14 +760,13 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 	 */
 	@Override
 	public void contextInitialised() {
-		context.registerDomainChangeListener(domainChangeListener);
-		context.registerViewChangeListener(viewChangeListener);
+		initialized = true;
 		validate(getAllEObjects(context.getDomainModel()));
 	}
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener#contextDispose()
 	 */
 	@Override
