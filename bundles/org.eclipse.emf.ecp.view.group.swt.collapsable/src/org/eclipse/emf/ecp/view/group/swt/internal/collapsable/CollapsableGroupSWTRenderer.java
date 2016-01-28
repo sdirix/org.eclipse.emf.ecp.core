@@ -30,6 +30,7 @@ import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ExpandEvent;
 import org.eclipse.swt.events.ExpandListener;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -84,7 +85,7 @@ public class CollapsableGroupSWTRenderer extends ContainerSWTRenderer<VGroup> {
 	@Override
 	protected Control renderControl(SWTGridCell gridCell, final Composite parent) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
-		final ExpandBar bar = new ExpandBar(parent, SWT.NONE);
+		final CollapsableGroupExpandBar bar = new CollapsableGroupExpandBar(parent, SWT.NONE);
 		bar.setBackground(parent.getBackground());
 
 		// First item
@@ -99,6 +100,7 @@ public class CollapsableGroupSWTRenderer extends ContainerSWTRenderer<VGroup> {
 		final int height = computeHeight(composite);
 		item0.setHeight(height);
 		item0.setControl(composite);
+		bar.setItemComposite(composite);
 		bar.addExpandListener(new ExpandListener() {
 
 			@Override
@@ -154,5 +156,50 @@ public class CollapsableGroupSWTRenderer extends ContainerSWTRenderer<VGroup> {
 	private int computeHeight(Composite composite) {
 		// XXX +1 because last pixel gets cut off on windows 7 64
 		return composite.computeSize(SWT.DEFAULT, SWT.DEFAULT).y + 1;
+	}
+
+	/**
+	 * {@link ExpandBar} which takes its item content size into account when computing the size.
+	 *
+	 * @author Johannes Faltermeier
+	 *
+	 */
+	private static final class CollapsableGroupExpandBar extends ExpandBar {
+
+		private Composite itemComposite;
+
+		CollapsableGroupExpandBar(Composite parent, int style) {
+			super(parent, style);
+		}
+
+		@Override
+		public Point computeSize(int wHint, int hHint, boolean changed) {
+			return computeSizeForBar(wHint, hHint, changed);
+		}
+
+		@Override
+		protected void checkSubclass() {
+			/*
+			 * we have to override expandbar because the size computation does not take the items control size into
+			 * account. For our use case we need this to enable parent scrolled composites to set the min size
+			 * correctely.
+			 */
+		}
+
+		void setItemComposite(Composite itemComposite) {
+			this.itemComposite = itemComposite;
+		}
+
+		private Point computeSizeForBar(int wHint, int hHint, boolean changed) {
+			final Point sizeComputedByBar = super.computeSize(wHint, hHint, changed);
+			if (itemComposite != null) {
+				final Point itemSize = itemComposite.computeSize(wHint, hHint, changed);
+				if (itemSize.x > sizeComputedByBar.x) {
+					/* else might be true if the expandbar has a really long group text */
+					sizeComputedByBar.x = itemSize.x;
+				}
+			}
+			return sizeComputedByBar;
+		}
 	}
 }
