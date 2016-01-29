@@ -11,8 +11,6 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.core.swt.renderer;
 
-import java.net.URL;
-
 import javax.inject.Inject;
 
 import org.eclipse.core.databinding.Binding;
@@ -304,12 +302,14 @@ public class LinkControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 		if (value == null) {
 			return null;
 		}
-		final URL imageURL = (URL) emfFormsEditSuppport.getImage(getVElement().getDomainModelReference(),
+		final Object imageDescription = emfFormsEditSuppport.getImage(getVElement().getDomainModelReference(),
 			getViewModelContext().getDomainModel(), value);
-		if (imageURL == null) {
+		if (imageDescription == null) {
 			return null;
 		}
-		return imageRegistryService.getImage(imageURL);
+		@SuppressWarnings("restriction")
+		final Image image = org.eclipse.emf.ecp.edit.internal.swt.SWTImageHelper.getImage(imageDescription);
+		return image;
 	}
 
 	private Image getNewReferenceButtonImage() {
