@@ -93,24 +93,20 @@ public class LoadEcoreAction extends Action {
 	 * The Load Resource dialog for selecting other Resources.
 	 * It was reused from the Sample Ecore Model Editor.
 	 */
-	private static class ExtendedLoadResourceDialog extends LoadResourceDialog
-	{
+	private static class ExtendedLoadResourceDialog extends LoadResourceDialog {
 		/**
 		 * @author cleme_000
 		 *
 		 */
 		private final class RegisteredPackageSelectionAdapter extends SelectionAdapter {
 			@Override
-			public void widgetSelected(SelectionEvent event)
-			{
+			public void widgetSelected(SelectionEvent event) {
 				final RegisteredPackageDialog registeredPackageDialog = new RegisteredPackageDialog(getShell());
 				registeredPackageDialog.open();
 				final Object[] result = registeredPackageDialog.getResult();
-				if (result != null)
-				{
+				if (result != null) {
 					final List<?> nsURIs = Arrays.asList(result);
-					if (registeredPackageDialog.isDevelopmentTimeVersion())
-					{
+					if (registeredPackageDialog.isDevelopmentTimeVersion()) {
 						final ResourceSet resourceSet = new ResourceSetImpl();
 						resourceSet.getURIConverter().getURIMap()
 							.putAll(EcorePlugin.computePlatformURIMap(false));
@@ -124,8 +120,7 @@ public class LoadEcoreAction extends Action {
 						final StringBuffer uris = new StringBuffer();
 						final Map<String, URI> ePackageNsURItoGenModelLocationMap = EcorePlugin
 							.getEPackageNsURIToGenModelLocationMap(false);
-						for (int i = 0, length = result.length; i < length; i++)
-						{
+						for (int i = 0, length = result.length; i < length; i++) {
 							final URI location = ePackageNsURItoGenModelLocationMap.get(result[i]);
 							final Resource resource = resourceSet.getResource(location, true);
 							EcoreUtil.resolveAll(resource);
@@ -134,12 +129,9 @@ public class LoadEcoreAction extends Action {
 						final EList<Resource> resources = resourceSet.getResources();
 						resources.remove(dummyResource);
 
-						for (final Resource resource : resources)
-						{
-							for (final EPackage ePackage : getAllPackages(resource))
-							{
-								if (nsURIs.contains(ePackage.getNsURI()))
-								{
+						for (final Resource resource : resources) {
+							for (final EPackage ePackage : getAllPackages(resource)) {
+								if (nsURIs.contains(ePackage.getNsURI())) {
 									uris.append(resource.getURI());
 									uris.append("  ");
 									break;
@@ -147,12 +139,9 @@ public class LoadEcoreAction extends Action {
 							}
 						}
 						uriField.setText((uriField.getText() + "  " + uris.toString()).trim());
-					}
-					else
-					{
+					} else {
 						final StringBuffer uris = new StringBuffer();
-						for (int i = 0, length = result.length; i < length; i++)
-						{
+						for (int i = 0, length = result.length; i < length; i++) {
 							uris.append(result[i]);
 							uris.append("  ");
 						}
@@ -168,14 +157,12 @@ public class LoadEcoreAction extends Action {
 		 */
 		private final class TargetPlatformSelectionAdapter extends SelectionAdapter {
 			@Override
-			public void widgetSelected(SelectionEvent event)
-			{
+			public void widgetSelected(SelectionEvent event) {
 				final TargetPlatformPackageDialog classpathPackageDialog = new TargetPlatformPackageDialog(
 					getShell());
 				classpathPackageDialog.open();
 				final Object[] result = classpathPackageDialog.getResult();
-				if (result != null)
-				{
+				if (result != null) {
 					final List<?> nsURIs = Arrays.asList(result);
 					final ResourceSet resourceSet = new ResourceSetImpl();
 					resourceSet.getURIConverter().getURIMap().putAll(EcorePlugin.computePlatformURIMap(true));
@@ -189,8 +176,7 @@ public class LoadEcoreAction extends Action {
 					final StringBuffer uris = new StringBuffer();
 					final Map<String, URI> ePackageNsURItoGenModelLocationMap = EcorePlugin
 						.getEPackageNsURIToGenModelLocationMap(true);
-					for (int i = 0, length = result.length; i < length; i++)
-					{
+					for (int i = 0, length = result.length; i < length; i++) {
 						final URI location = ePackageNsURItoGenModelLocationMap.get(result[i]);
 						final Resource resource = resourceSet.getResource(location, true);
 						EcoreUtil.resolveAll(resource);
@@ -199,12 +185,9 @@ public class LoadEcoreAction extends Action {
 					final EList<Resource> resources = resourceSet.getResources();
 					resources.remove(dummyResource);
 
-					for (final Resource resource : resources)
-					{
-						for (final EPackage ePackage : getAllPackages(resource))
-						{
-							if (nsURIs.contains(ePackage.getNsURI()))
-							{
+					for (final Resource resource : resources) {
+						for (final EPackage ePackage : getAllPackages(resource)) {
+							if (nsURIs.contains(ePackage.getNsURI())) {
 								uris.append(resource.getURI());
 								uris.append("  ");
 								break;
@@ -218,22 +201,18 @@ public class LoadEcoreAction extends Action {
 
 		private final Set<EPackage> registeredPackages = new LinkedHashSet<EPackage>();
 
-		public ExtendedLoadResourceDialog(Shell parent, EditingDomain domain)
-		{
+		ExtendedLoadResourceDialog(Shell parent, EditingDomain domain) {
 			super(parent, domain);
 		}
 
 		@Override
-		protected boolean processResource(Resource resource)
-		{
+		protected boolean processResource(Resource resource) {
 			// Put all static package in the package registry.
 			//
 			final ResourceSet resourceSet = domain.getResourceSet();
-			if (!resourceSet.getResources().contains(resource))
-			{
+			if (!resourceSet.getResources().contains(resource)) {
 				final Registry packageRegistry = resourceSet.getPackageRegistry();
-				for (final EPackage ePackage : getAllPackages(resource))
-				{
+				for (final EPackage ePackage : getAllPackages(resource)) {
 					packageRegistry.put(ePackage.getNsURI(), ePackage);
 					registeredPackages.add(ePackage);
 				}
@@ -241,27 +220,19 @@ public class LoadEcoreAction extends Action {
 			return true;
 		}
 
-		protected Collection<EPackage> getAllPackages(Resource resource)
-		{
+		protected Collection<EPackage> getAllPackages(Resource resource) {
 			final List<EPackage> result = new ArrayList<EPackage>();
-			for (final TreeIterator<?> j =
-				new EcoreUtil.ContentTreeIterator<Object>(resource.getContents())
-				{
-					private static final long serialVersionUID = 1L;
+			for (final TreeIterator<?> j = new EcoreUtil.ContentTreeIterator<Object>(resource.getContents()) {
+				private static final long serialVersionUID = 1L;
 
-					@Override
-					protected Iterator<? extends EObject> getEObjectChildren(EObject eObject)
-					{
-						return
-						eObject instanceof EPackage ?
-							((EPackage) eObject).getESubpackages().iterator() :
-							Collections.<EObject> emptyList().iterator();
-					}
-				}; j.hasNext();)
-			{
+				@Override
+				protected Iterator<? extends EObject> getEObjectChildren(EObject eObject) {
+					return eObject instanceof EPackage ? ((EPackage) eObject).getESubpackages().iterator()
+						: Collections.<EObject> emptyList().iterator();
+				}
+			};j.hasNext();) {
 				final Object content = j.next();
-				if (content instanceof EPackage)
-				{
+				if (content instanceof EPackage) {
 					result.add((EPackage) content);
 				}
 			}
@@ -269,8 +240,7 @@ public class LoadEcoreAction extends Action {
 		}
 
 		@Override
-		protected Control createDialogArea(Composite parent)
-		{
+		protected Control createDialogArea(Composite parent) {
 			final Composite composite = (Composite) super.createDialogArea(parent);
 			final Composite buttonComposite = (Composite) composite.getChildren()[0];
 
@@ -299,13 +269,11 @@ public class LoadEcoreAction extends Action {
 		/**
 		 * @since 2.9
 		 */
-		protected void prepareBrowseTargetPlatformPackagesButton(Button browseTargetPlatformPackagesButton)
-		{
+		protected void prepareBrowseTargetPlatformPackagesButton(Button browseTargetPlatformPackagesButton) {
 			browseTargetPlatformPackagesButton.addSelectionListener(new TargetPlatformSelectionAdapter());
 		}
 
-		protected void prepareBrowseRegisteredPackagesButton(Button browseRegisteredPackagesButton)
-		{
+		protected void prepareBrowseRegisteredPackagesButton(Button browseRegisteredPackagesButton) {
 			browseRegisteredPackagesButton.addSelectionListener(new RegisteredPackageSelectionAdapter());
 		}
 	}
@@ -313,16 +281,12 @@ public class LoadEcoreAction extends Action {
 	/**
 	 * @since 2.9
 	 */
-	private static class TargetPlatformPackageDialog extends ElementListSelectionDialog
-	{
-		public TargetPlatformPackageDialog(Shell parent)
-		{
+	private static class TargetPlatformPackageDialog extends ElementListSelectionDialog {
+		TargetPlatformPackageDialog(Shell parent) {
 			super(parent,
-				new LabelProvider()
-				{
+				new LabelProvider() {
 					@Override
-					public Image getImage(Object element)
-					{
+					public Image getImage(Object element) {
 						return ExtendedImageRegistry.getInstance().getImage(
 							EcoreEditPlugin.INSTANCE.getImage("full/obj16/EPackage"));
 					}
@@ -334,8 +298,7 @@ public class LoadEcoreAction extends Action {
 			setTitle("PackageSelection");
 		}
 
-		protected void updateElements()
-		{
+		protected void updateElements() {
 			final Map<String, URI> ePackageNsURItoGenModelLocationMap = EcorePlugin
 				.getEPackageNsURIToGenModelLocationMap(true);
 			final Object[] result = ePackageNsURItoGenModelLocationMap.keySet().toArray(
@@ -345,8 +308,7 @@ public class LoadEcoreAction extends Action {
 		}
 
 		@Override
-		protected Control createDialogArea(Composite parent)
-		{
+		protected Control createDialogArea(Composite parent) {
 			final Composite result = (Composite) super.createDialogArea(parent);
 			updateElements();
 			return result;
@@ -359,18 +321,14 @@ public class LoadEcoreAction extends Action {
 	 * It was reused from the Sample Ecore Model Editor.
 	 *
 	 */
-	private static class RegisteredPackageDialog extends ElementListSelectionDialog
-	{
+	private static class RegisteredPackageDialog extends ElementListSelectionDialog {
 		private boolean isDevelopmentTimeVersion = true;
 
-		public RegisteredPackageDialog(Shell parent)
-		{
+		RegisteredPackageDialog(Shell parent) {
 			super(parent,
-				new LabelProvider()
-				{
+				new LabelProvider() {
 					@Override
-					public Image getImage(Object element)
-					{
+					public Image getImage(Object element) {
 						return ExtendedImageRegistry.getInstance().getImage(
 							EcoreEditPlugin.INSTANCE.getImage("full/obj16/EPackage"));
 					}
@@ -382,24 +340,19 @@ public class LoadEcoreAction extends Action {
 			setTitle("Package Selection");
 		}
 
-		public boolean isDevelopmentTimeVersion()
-		{
+		public boolean isDevelopmentTimeVersion() {
 			return isDevelopmentTimeVersion;
 		}
 
-		protected void updateElements()
-		{
-			if (isDevelopmentTimeVersion)
-			{
+		protected void updateElements() {
+			if (isDevelopmentTimeVersion) {
 				final Map<String, URI> ePackageNsURItoGenModelLocationMap = EcorePlugin
 					.getEPackageNsURIToGenModelLocationMap(false);
 				final Object[] result = ePackageNsURItoGenModelLocationMap.keySet().toArray(
 					new Object[ePackageNsURItoGenModelLocationMap.size()]);
 				Arrays.sort(result);
 				setListElements(result);
-			}
-			else
-			{
+			} else {
 				final Object[] result = EPackage.Registry.INSTANCE.keySet().toArray(
 					new Object[EPackage.Registry.INSTANCE.size()]);
 				Arrays.sort(result);
@@ -408,24 +361,20 @@ public class LoadEcoreAction extends Action {
 		}
 
 		@Override
-		protected Control createDialogArea(Composite parent)
-		{
+		protected Control createDialogArea(Composite parent) {
 			final Composite result = (Composite) super.createDialogArea(parent);
 			final Composite buttonGroup = new Composite(result, SWT.NONE);
 			final GridLayout layout = new GridLayout();
 			layout.numColumns = 2;
 			buttonGroup.setLayout(layout);
 			final Button developmentTimeVersionButton = new Button(buttonGroup, SWT.RADIO);
-			developmentTimeVersionButton.addSelectionListener
-				(new SelectionAdapter()
-				{
-					@Override
-					public void widgetSelected(SelectionEvent event)
-					{
-						isDevelopmentTimeVersion = developmentTimeVersionButton.getSelection();
-						updateElements();
-					}
-				});
+			developmentTimeVersionButton.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent event) {
+					isDevelopmentTimeVersion = developmentTimeVersionButton.getSelection();
+					updateElements();
+				}
+			});
 			developmentTimeVersionButton.setText("Development Time Version");
 			final Button runtimeTimeVersionButton = new Button(buttonGroup, SWT.RADIO);
 			runtimeTimeVersionButton.setText("Runtime Version");
