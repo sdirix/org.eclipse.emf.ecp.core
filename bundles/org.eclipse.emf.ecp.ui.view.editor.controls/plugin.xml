@@ -1,33 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
+
    <extension
+         name=""
          point="org.eclipse.emf.ecp.edit.controls">
       <control
             class="org.eclipse.emf.ecp.view.internal.editor.controls.ControlTargetFeatureControl"
             id="org.eclipse.emf.ecp.view.editor.controls.feature">
          <staticTest
-               priority="2"
-               singleValue="true"
                supportedClassType="org.eclipse.emf.ecore.EStructuralFeature"
-               supportedEObject="org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference"
-               supportedFeature="domainModelEFeature">
+               supportedFeature="domainModelEFeature"
+               singleValue="true"
+               priority="2"
+               supportedEObject="org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference">
          </staticTest>
       </control>
-      <!--
-      <control
-            class="org.eclipse.emf.ecp.view.editor.controls.TreeCategoryTargetFeatureControl"
-            id="org.eclipse.emf.ecp.view.editor.controls.treecategory"
-            showLabel="true">
-         <staticTest
-               priority="2"
-               singleValue="true"
-               supportedClassType="org.eclipse.emf.ecore.EStructuralFeature"
-               supportedEObject="org.eclipse.emf.ecp.view.model.TreeCategory"
-               supportedFeature="targetFeature">
-         </staticTest>
-      </control>
-      -->
       <control
             class="org.eclipse.emf.ecp.view.internal.editor.controls.RuleFeaturePathControl"
             id="org.eclipse.emf.ecp.ui.view.editor.controls.referencePath.leafcondition">
@@ -44,15 +32,16 @@
       </control>
    </extension>
    <extension
+         name=""
          point="org.eclipse.ui.menus">
       <menuContribution
             allPopups="false"
             locationURI="popup:org.eclipse.emf.ecp.ui.ModelExplorerView">
          <command
                commandId="org.eclipse.emf.ecp.view.editor.controls.generateDefault"
-               icon="icons/generate.png"
                label="Generate Controls"
-               style="push">
+               style="push"
+               icon="icons/generate.png">
             <visibleWhen
                   checkEnabled="false">
                <with
@@ -72,9 +61,9 @@
          </command>
          <command
                commandId="org.eclipse.emf.ecp.view.editor.controls.generateDefaultOnView"
-               icon="icons/generate.png"
                label="Generate Controls"
-               style="push">
+               style="push"
+               icon="icons/generate.png">
             <visibleWhen
                   checkEnabled="false">
                <with
@@ -113,38 +102,15 @@
                </with>
             </visibleWhen>
          </command>
-         <!--
-         <command
-               commandId="org.eclipse.emf.ecp.view.editor.controls.migrate"
-               label="Migrate View model"
-               style="push">
-            <visibleWhen
-                  checkEnabled="false">
-               <with
-                     variable="activeMenuSelection">
-                  <and>
-                     <count
-                           value="1">
-                     </count>
-                     <iterate>
-                        <instanceof
-                              value="org.eclipse.emf.ecp.view.model.View">
-                        </instanceof>
-                     </iterate>
-                  </and>
-               </with>
-            </visibleWhen>
-         </command>
-         -->
       </menuContribution>
       <menuContribution
             allPopups="false"
             locationURI="popup:org.eclipse.emf.ecp.ide.editor.view.editor">
          <command
                commandId="org.eclipse.emf.ecp.view.editor.controls.generateDefault"
-               icon="icons/generate.png"
                label="Generate Controls"
-               style="push">
+               style="push"
+               icon="icons/generate.png">
             <visibleWhen
                   checkEnabled="false">
                <with
@@ -164,9 +130,9 @@
          </command>
          <command
                commandId="org.eclipse.emf.ecp.view.editor.controls.generateDefaultOnView"
-               icon="icons/generate.png"
                label="Generate Controls"
-               style="push">
+               style="push"
+               icon="icons/generate.png">
             <visibleWhen
                   checkEnabled="false">
                <with
@@ -187,56 +153,60 @@
       </menuContribution>
    </extension>
    <extension
+         name=""
          point="org.eclipse.ui.commands">
       <command
+            name="Generate Controls"
             defaultHandler="org.eclipse.emf.ecp.view.internal.editor.handler.GenerateControlsHandler"
-            id="org.eclipse.emf.ecp.view.editor.controls.generateDefault"
-            name="Generate Controls">
+            id="org.eclipse.emf.ecp.view.editor.controls.generateDefault">
       </command>
       <command
+            name="Migrate"
             defaultHandler="org.eclipse.emf.ecp.view.internal.editor.handler.MigrateHandler"
-            id="org.eclipse.emf.ecp.view.editor.controls.migrate"
-            name="Migrate">
+            id="org.eclipse.emf.ecp.view.editor.controls.migrate">
       </command>
       <command
+            name="Generate Controls"
             defaultHandler="org.eclipse.emf.ecp.view.internal.editor.handler.GenerateControlsHandler"
-            id="org.eclipse.emf.ecp.view.editor.controls.generateDefaultOnView"
-            name="Generate Controls">
+            id="org.eclipse.emf.ecp.view.editor.controls.generateDefaultOnView">
       </command>
       <command
+            name="Unset Root EClass"
             defaultHandler="org.eclipse.emf.ecp.view.internal.editor.handler.UnsetRootEClass"
-            id="org.eclipse.emf.ecp.ui.view.editor.controls.unsetRootEclass"
-            name="Unset Root EClass">
+            id="org.eclipse.emf.ecp.ui.view.editor.controls.unsetRootEclass">
       </command>
    </extension>
    <extension
+         name=""
          point="org.eclipse.emf.ecp.ui.dropAdapter">
       <ECPDropAdapter
             class="org.eclipse.emf.ecp.view.internal.editor.handler.ViewEditorDropAdapter">
       </ECPDropAdapter>
    </extension>
    <extension
+         name=""
          point="org.eclipse.emf.ecp.view.treemasterdetail.ui.swt.masterDetailActions">
       <MasterDetailAction
-            command="org.eclipse.emf.ecp.view.internal.editor.handler.GenerateControlsHandler"
             imagePath="icons/generate.png"
+            location="menu"
             label="Generate Controls"
-            location="menu">
+            command="org.eclipse.emf.ecp.view.internal.editor.handler.GenerateControlsHandler">
       </MasterDetailAction>
       <MasterDetailAction
-            command="org.eclipse.emf.ecp.view.internal.editor.handler.GenerateTableColumnsHandler"
             imagePath="icons/generateColumns.png"
+            location="menu"
             label="Generate Columns"
-            location="menu">
+            command="org.eclipse.emf.ecp.view.internal.editor.handler.GenerateTableColumnsHandler">
       </MasterDetailAction>
       <MasterDetailAction
-            command="org.eclipse.emf.ecp.view.internal.editor.handler.GenerateTableColumnsForSubclassesHandler"
             imagePath="icons/generateColumns.png"
+            location="menu"
             label="Generate Columns for Subclass"
-            location="menu">
+            command="org.eclipse.emf.ecp.view.internal.editor.handler.GenerateTableColumnsForSubclassesHandler">
       </MasterDetailAction>
    </extension>
    <extension
+         name=""
          point="org.eclipse.emf.ecp.ui.view.swt.renderers">
       <renderer
             renderer="org.eclipse.emf.ecp.view.internal.editor.controls.ControlRootEClassControl2SWTRenderer">
