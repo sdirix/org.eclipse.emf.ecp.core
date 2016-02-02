@@ -159,14 +159,28 @@ public class GenerateJavaCodeAction implements IToolbarAction {
 				monitor.beginTask("Generating Code", IProgressMonitor.UNKNOWN);
 				final ResourceSet resourceSet = (ResourceSet) currentObject;
 				final Resource genmodelResource = resourceSet.getResources().get(0);
-				try {
-					genmodelResource.load(null);
-				} catch (final IOException ex) {
-					throw new InvocationTargetException(ex);
-				}
 				final GenModel genmodel = (GenModel) genmodelResource.getContents().get(0);
 
-				genmodel.reconcile();
+				// XXX Begin
+				int tries = 0;
+				boolean exception = true;
+				Exception target = null;
+				while (tries < 5 && exception) {
+					try {
+						tries += 1;
+						genmodel.reconcile();
+						exception = false;
+					} // BEGIN SUPRESS CATCH EXCEPTION
+					catch (final RuntimeException ex) {// END SUPRESS CATCH EXCEPTION
+						/* fail silently */
+						target = ex;
+					}
+				}
+				if (exception) {
+					throw new InvocationTargetException(target);
+				}
+				// XXX End
+
 				genmodel.setCanGenerate(true);
 
 				final Generator generator = GenModelUtil
