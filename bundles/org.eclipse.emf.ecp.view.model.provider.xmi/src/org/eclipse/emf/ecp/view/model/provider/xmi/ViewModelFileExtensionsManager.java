@@ -356,16 +356,7 @@ public final class ViewModelFileExtensionsManager {
 
 	private Map<VView, ExtensionDescription> findBestFittingViews(EObject eObject,
 		final VViewModelProperties properties) {
-		final Map<VView, Set<ExtensionDescription>> viewMap = new LinkedHashMap<VView, Set<ExtensionDescription>>();
-		final Set<EClass> allEClass = new LinkedHashSet<EClass>();
-		allEClass.add(eObject.eClass());
-		allEClass.addAll(eObject.eClass().getEAllSuperTypes());
-		for (final EClass eClass : allEClass) {
-			final Map<VView, Set<ExtensionDescription>> classMap = map.get(eClass);
-			if (classMap != null) {
-				viewMap.putAll(classMap);
-			}
-		}
+		final Map<VView, Set<ExtensionDescription>> viewMap = getViewMap(eObject);
 
 		final Map<VView, ExtensionDescription> bestFitting = new LinkedHashMap<VView, ViewModelFileExtensionsManager.ExtensionDescription>();
 		int maxNumberFittingKeyValues = -1;
@@ -405,6 +396,47 @@ public final class ViewModelFileExtensionsManager {
 			}
 		}
 		return bestFitting;
+	}
+
+	private Map<VView, Set<ExtensionDescription>> getViewMap(EObject eObject) {
+		final Map<VView, Set<ExtensionDescription>> viewMap = new LinkedHashMap<VView, Set<ExtensionDescription>>();
+
+		final Set<EClass> checkedEClasses = new LinkedHashSet<EClass>();
+		Set<EClass> eClassesToGetViewModelsFor = new LinkedHashSet<EClass>();
+		eClassesToGetViewModelsFor.add(eObject.eClass());
+
+		while (!eClassesToGetViewModelsFor.isEmpty()) {
+			/* loop over all current eClasses and add view models for the current eClass to the map */
+			for (final EClass eClass : eClassesToGetViewModelsFor) {
+				final Map<VView, Set<ExtensionDescription>> classMap = map.get(eClass);
+				if (classMap != null) {
+					viewMap.putAll(classMap);
+				}
+				checkedEClasses.add(eClass);
+			}
+
+			/* if we found some views we are ready to return the map */
+			if (!viewMap.isEmpty()) {
+				eClassesToGetViewModelsFor.clear();
+				break;
+			}
+
+			/*
+			 * otherwise we will look at the direct super types of the eClasses we examined in this iteration. be
+			 * careful to avoid checking the same EClass multiple times
+			 */
+			final Set<EClass> superTypes = new LinkedHashSet<EClass>();
+			for (final EClass eClass : eClassesToGetViewModelsFor) {
+				for (final EClass superType : eClass.getESuperTypes()) {
+					if (checkedEClasses.contains(superType)) {
+						continue;
+					}
+					superTypes.add(superType);
+				}
+			}
+			eClassesToGetViewModelsFor = superTypes;
+		}
+		return viewMap;
 	}
 
 	/**
