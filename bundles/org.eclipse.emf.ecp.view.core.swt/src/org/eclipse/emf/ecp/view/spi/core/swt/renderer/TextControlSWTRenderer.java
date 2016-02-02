@@ -415,7 +415,7 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 	@Override
 	protected String getUnsetText() {
 		return LocalizationServiceHelper
-			.getString(getClass(), MessageKeys.StringControl_NoTextSetClickToSetText);
+			.getString(TextControlSWTRenderer.class, MessageKeys.StringControl_NoTextSetClickToSetText);
 	}
 
 	@Override
