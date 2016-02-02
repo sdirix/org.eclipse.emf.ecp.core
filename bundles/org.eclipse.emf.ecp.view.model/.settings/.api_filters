@@ -106,6 +106,13 @@
                 <message_argument value="7"/>
             </message_arguments>
         </filter>
+        <filter comment="SPI Change" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage"/>
+                <message_argument value="CONTAINED_CONTAINER_FEATURE_COUNT"/>
+                <message_argument value="8"/>
+            </message_arguments>
+        </filter>
         <filter comment="Added Label field in 1.6" id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage"/>
@@ -118,6 +125,13 @@
                 <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage"/>
                 <message_argument value="CONTAINED_CONTAINER__CHILDREN"/>
                 <message_argument value="6"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage"/>
+                <message_argument value="CONTAINED_CONTAINER__CHILDREN"/>
+                <message_argument value="7"/>
             </message_arguments>
         </filter>
         <filter comment="Added Label field in 1.6" id="388194388">
@@ -153,6 +167,13 @@
                 <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage"/>
                 <message_argument value="CONTAINED_ELEMENT_FEATURE_COUNT"/>
                 <message_argument value="6"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage"/>
+                <message_argument value="CONTAINED_ELEMENT_FEATURE_COUNT"/>
+                <message_argument value="7"/>
             </message_arguments>
         </filter>
         <filter comment="Added Label field in 1.6" id="388194388">
@@ -197,6 +218,13 @@
                 <message_argument value="7"/>
             </message_arguments>
         </filter>
+        <filter comment="SPI Change" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage"/>
+                <message_argument value="CONTAINER_FEATURE_COUNT"/>
+                <message_argument value="8"/>
+            </message_arguments>
+        </filter>
         <filter comment="Added Label field in 1.6" id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage"/>
@@ -209,6 +237,13 @@
                 <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage"/>
                 <message_argument value="CONTAINER__CHILDREN"/>
                 <message_argument value="6"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage"/>
+                <message_argument value="CONTAINER__CHILDREN"/>
+                <message_argument value="7"/>
             </message_arguments>
         </filter>
         <filter comment="Added Label field in 1.6" id="388194388">
@@ -253,6 +288,13 @@
                 <message_argument value="8"/>
             </message_arguments>
         </filter>
+        <filter comment="SPI Change" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage"/>
+                <message_argument value="CONTROL_FEATURE_COUNT"/>
+                <message_argument value="9"/>
+            </message_arguments>
+        </filter>
         <filter comment="Added Label field in 1.6" id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage"/>
@@ -274,6 +316,13 @@
                 <message_argument value="7"/>
             </message_arguments>
         </filter>
+        <filter comment="SPI Change" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage"/>
+                <message_argument value="CONTROL__DOMAIN_MODEL_REFERENCE"/>
+                <message_argument value="8"/>
+            </message_arguments>
+        </filter>
         <filter comment="Added Label field in 1.6" id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage"/>
@@ -286,6 +335,13 @@
                 <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage"/>
                 <message_argument value="CONTROL__LABEL_ALIGNMENT"/>
                 <message_argument value="6"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage"/>
+                <message_argument value="CONTROL__LABEL_ALIGNMENT"/>
+                <message_argument value="7"/>
             </message_arguments>
         </filter>
         <filter comment="Added Label field in 1.6" id="388194388">
@@ -335,6 +391,13 @@
                 <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage"/>
                 <message_argument value="ELEMENT_FEATURE_COUNT"/>
                 <message_argument value="6"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage"/>
+                <message_argument value="ELEMENT_FEATURE_COUNT"/>
+                <message_argument value="7"/>
             </message_arguments>
         </filter>
         <filter comment="Added Label field in 1.6" id="388194388">
@@ -421,6 +484,13 @@
                 <message_argument value="10"/>
             </message_arguments>
         </filter>
+        <filter comment="SPI Change" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage"/>
+                <message_argument value="VIEW_FEATURE_COUNT"/>
+                <message_argument value="11"/>
+            </message_arguments>
+        </filter>
         <filter comment="Internal Model Changes" id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage"/>
@@ -449,6 +519,13 @@
                 <message_argument value="7"/>
             </message_arguments>
         </filter>
+        <filter comment="SPI Change" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage"/>
+                <message_argument value="VIEW__CHILDREN"/>
+                <message_argument value="8"/>
+            </message_arguments>
+        </filter>
         <filter comment="Added Label field in 1.6" id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage"/>
@@ -463,11 +540,25 @@
                 <message_argument value="8"/>
             </message_arguments>
         </filter>
+        <filter comment="SPI Change" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage"/>
+                <message_argument value="VIEW__ECORE_PATH"/>
+                <message_argument value="9"/>
+            </message_arguments>
+        </filter>
         <filter comment="Added Label field in 1.6" id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage"/>
                 <message_argument value="VIEW__ENABLED"/>
                 <message_argument value="2"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage"/>
+                <message_argument value="VIEW__LOADING_PROPERTIES"/>
+                <message_argument value="10"/>
             </message_arguments>
         </filter>
         <filter comment="Added Label field in 1.6" id="388194388">
@@ -482,6 +573,13 @@
                 <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage"/>
                 <message_argument value="VIEW__ROOT_ECLASS"/>
                 <message_argument value="6"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage"/>
+                <message_argument value="VIEW__ROOT_ECLASS"/>
+                <message_argument value="7"/>
             </message_arguments>
         </filter>
         <filter comment="Added Label field in 1.6" id="388194388">
@@ -536,10 +634,22 @@
                 <message_argument value="DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER"/>
             </message_arguments>
         </filter>
+        <filter comment="SPI Change" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage.Literals"/>
+                <message_argument value="ELEMENT__ID"/>
+            </message_arguments>
+        </filter>
         <filter comment="Added Label field in 1.6" id="403767336">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage.Literals"/>
                 <message_argument value="ELEMENT__LABEL"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage.Literals"/>
+                <message_argument value="ELEMENT__UUID"/>
             </message_arguments>
         </filter>
         <filter comment="spi 170" id="403767336">
