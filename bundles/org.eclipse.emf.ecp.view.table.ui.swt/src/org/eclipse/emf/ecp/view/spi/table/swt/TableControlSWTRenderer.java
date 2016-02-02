@@ -87,6 +87,7 @@ import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
 import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
+import org.eclipse.emfforms.spi.swt.core.SWTDataElementIdHelper;
 import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
@@ -268,12 +269,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			final TableViewerComposite tableViewerComposite = tableViewerSWTBuilder.create();
 
 			/* setup selection changes listener */
-			tableViewerComposite.getTableViewer().addSelectionChangedListener(new ISelectionChangedListener() {
-				@Override
-				public void selectionChanged(SelectionChangedEvent event) {
-					viewerSelectionChanged(event);
-				}
-			});
+			tableViewerComposite.getTableViewer().addSelectionChangedListener(new ViewerSelectionChangedListener());
 
 			/* setup sorting via column selection */
 			setupSorting(comparator, regularColumnsStartIndex, tableViewerComposite);
@@ -282,6 +278,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			setupValidation(tableViewerComposite);
 
 			setTableViewer(tableViewerComposite.getTableViewer());
+
+			SWTDataElementIdHelper.setElementIdDataForVControl(tableViewerComposite, getVElement());
 
 			// FIXME doesn't work with table with panel
 			// setLayoutData(compositeBuilder.getViewerComposite());
@@ -968,6 +966,17 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			rc = -rc;
 		}
 		return rc;
+	}
+
+	/**
+	 * The Listener which is set on the table viewer to inform the renderer about selection changes.
+	 *
+	 */
+	private final class ViewerSelectionChangedListener implements ISelectionChangedListener {
+		@Override
+		public void selectionChanged(SelectionChangedEvent event) {
+			viewerSelectionChanged(event);
+		}
 	}
 
 	/**

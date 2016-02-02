@@ -39,6 +39,7 @@ import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedExcep
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
+import org.eclipse.emfforms.spi.swt.core.SWTDataElementIdHelper;
 import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
@@ -171,9 +172,8 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 		}
 	}
 
-	private static final String ICONS_UNSET_REFERENCE = "icons/unset_reference.png"; //$NON-NLS-1$
+	private static final String UNSET = "unset"; //$NON-NLS-1$
 	private static final String ICONS_UNSET_FEATURE = "icons/unset_feature.png"; //$NON-NLS-1$
-	private static final String ICONS_SET_REFERENCE = "icons/set_reference.png"; //$NON-NLS-1$
 	private static final String ICONS_SET_FEATURE = "icons/set_feature.png"; //$NON-NLS-1$
 
 	/**
@@ -252,7 +252,9 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 				if (isUnsettable()) {
 					return createUnsettableControl(parent);
 				}
-				return createControl(parent);
+				final Control control = createControl(parent);
+				setControlIdData(control);
+				return control;
 			} catch (final DatabindingFailedException ex) {
 				getReportService().report(new RenderingFailedReport(ex));
 				final Label errorLabel = new Label(parent, SWT.NONE);
@@ -291,7 +293,9 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 		final StackLayout sl = new StackLayout();
 		controlComposite.setLayout(sl);
 		final Control baseControl = createControl(controlComposite);
+		setControlIdData(baseControl);
 		final Control createUnsetLabel = createUnsetLabel(controlComposite);
+		SWTDataElementIdHelper.setElementIdDataWithSubId(createUnsetLabel, getVElement(), UNSET);
 		final Button unsetButton = new Button(composite, SWT.PUSH);
 		GridDataFactory.fillDefaults().align(SWT.CENTER, SWT.CENTER).grab(false, false).applyTo(unsetButton);
 		unsetButton.addSelectionListener(
@@ -420,6 +424,16 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 	 * @throws DatabindingFailedException if the databinding of the control fails
 	 */
 	protected abstract Control createControl(Composite parent) throws DatabindingFailedException;
+
+	/**
+	 * This method will set the element id data on the control created by {@link #createControl(Composite)}.
+	 *
+	 * @param control the control created by {@link #createControl(Composite)}
+	 * @since 1.9
+	 */
+	protected void setControlIdData(final Control control) {
+		SWTDataElementIdHelper.setElementIdDataForVControl(control, getVElement());
+	}
 
 	/**
 	 * {@inheritDoc}

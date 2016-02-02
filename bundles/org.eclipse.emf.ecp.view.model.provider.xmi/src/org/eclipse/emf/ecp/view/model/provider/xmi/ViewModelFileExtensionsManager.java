@@ -29,6 +29,7 @@ import java.util.Set;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -43,11 +44,13 @@ import org.eclipse.emf.ecp.view.migrator.ViewModelMigrationException;
 import org.eclipse.emf.ecp.view.migrator.ViewModelMigrator;
 import org.eclipse.emf.ecp.view.migrator.ViewModelMigratorUtil;
 import org.eclipse.emf.ecp.view.spi.model.LocalizationAdapter;
+import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.model.VViewModelProperties;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.model.util.VViewResourceFactoryImpl;
+import org.eclipse.emf.ecp.view.spi.model.util.VViewResourceImpl;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
@@ -89,7 +92,10 @@ public final class ViewModelFileExtensionsManager {
 	private void init() {
 		final Map<URI, List<ExtensionDescription>> extensionURIS = getExtensionURIS();
 		for (final URI uri : extensionURIS.keySet()) {
-			final Resource resource = loadResource(uri);
+			/* load resource */
+			final VViewResourceImpl resource = loadResource(uri);
+
+			/* check if content is a view model */
 			final EObject eObject = resource.getContents().get(0);
 			if (!(eObject instanceof VView)) {
 				final ReportService reportService = Activator.getReportService();
@@ -101,6 +107,7 @@ public final class ViewModelFileExtensionsManager {
 			}
 			final VView view = (VView) eObject;
 
+			/* check if view model is valid */
 			if (view.getRootEClass() == null) {
 				final ReportService reportService = Activator.getReportService();
 				if (reportService != null) {
@@ -109,11 +116,35 @@ public final class ViewModelFileExtensionsManager {
 				}
 				continue;
 			}
+
+			/* set uuid on view model */
+			setUUIDAsElementId(resource, view);
+
+			/* register view */
 			for (final ExtensionDescription extensionDescription : extensionURIS.get(uri)) {
 				registerView(view, extensionDescription);
 			}
 		}
 
+	}
+
+	/**
+	 * Sets the UUID mapping from the given resource as the {@link VElement#getUuid() element id} of all elements in the
+	 * given view model.
+	 *
+	 * @param resource the {@link VViewResourceImpl}-
+	 * @param view the view
+	 */
+	public static void setUUIDAsElementId(final VViewResourceImpl resource, final VView view) {
+		view.setUuid(resource.getID(view));
+		final TreeIterator<EObject> allContents = view.eAllContents();
+		while (allContents.hasNext()) {
+			final EObject next = allContents.next();
+			if (!VElement.class.isInstance(next)) {
+				continue;
+			}
+			VElement.class.cast(next).setUuid(resource.getID(next));
+		}
 	}
 
 	/**
@@ -140,7 +171,7 @@ public final class ViewModelFileExtensionsManager {
 	 * @param uri a URI containing the path to the file
 	 * @return the loaded resource
 	 */
-	public static Resource loadResource(URI uri) {
+	public static VViewResourceImpl loadResource(URI uri) {
 
 		final ViewModelMigrator viewModelMigrator = ViewModelMigratorUtil.getViewModelMigrator();
 		if (viewModelMigrator != null) {
@@ -154,7 +185,7 @@ public final class ViewModelFileExtensionsManager {
 			new VViewResourceFactoryImpl());
 		resourceSet.getPackageRegistry().put(VViewPackage.eNS_URI,
 			VViewPackage.eINSTANCE);
-		final Resource resource = resourceSet.createResource(uri);
+		final VViewResourceImpl resource = (VViewResourceImpl) resourceSet.createResource(uri);
 
 		final Map<Object, Object> loadOptions = new HashMap<Object, Object>();
 
