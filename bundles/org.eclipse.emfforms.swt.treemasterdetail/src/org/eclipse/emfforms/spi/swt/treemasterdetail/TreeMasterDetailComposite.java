@@ -29,6 +29,7 @@ import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.util.RootObject;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.resource.FontDescriptor;
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -307,8 +308,9 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 	 * Sets the selection.
 	 *
 	 * @param structuredSelection the new selection
+	 * @since 1.9
 	 */
-	public void setSelection(StructuredSelection structuredSelection) {
+	public void setSelection(ISelection structuredSelection) {
 		treeViewer.setSelection(structuredSelection);
 	}
 

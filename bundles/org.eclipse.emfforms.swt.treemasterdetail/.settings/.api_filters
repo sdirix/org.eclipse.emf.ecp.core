@@ -32,6 +32,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emfforms/spi/swt/treemasterdetail/TreeMasterDetailComposite.java" type="org.eclipse.emfforms.spi.swt.treemasterdetail.TreeMasterDetailComposite">
+        <filter comment="SPI Change" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emfforms.spi.swt.treemasterdetail.TreeMasterDetailComposite"/>
+                <message_argument value="setSelection(StructuredSelection)"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emfforms/spi/swt/treemasterdetail/TreeMasterDetailMenuListener.java" type="org.eclipse.emfforms.spi.swt.treemasterdetail.TreeMasterDetailMenuListener">
         <filter comment="SPI Change 1.8.0" id="338722907">
             <message_arguments>

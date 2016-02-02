@@ -47,6 +47,9 @@ import org.eclipse.jface.action.IMenuCreator;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.ISelectionProvider;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
@@ -65,11 +68,12 @@ public class GenerateJavaCodeAction implements IToolbarAction {
 	 *
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emfforms.spi.editor.IToolbarAction#getAction(java.lang.Object)
+	 * @see org.eclipse.emfforms.spi.editor.IToolbarAction#getAction(java.lang.Object,
+	 *      org.eclipse.jface.viewers.ISelectionProvider)
 	 */
 	@Override
-	public Action getAction(Object currentObject) {
-		return new CreateJavaCodeAction(currentObject);
+	public Action getAction(Object currentObject, ISelectionProvider selectionProvider) {
+		return new CreateJavaCodeAction(currentObject, selectionProvider);
 	}
 
 	@Override
@@ -95,6 +99,7 @@ public class GenerateJavaCodeAction implements IToolbarAction {
 	private static class CreateJavaCodeAction extends Action {
 		private final Object[] types;
 		private final Object currentObject;
+		private final ISelectionProvider selectionProvider;
 
 		public static final String FILE_NAME_PLUGIN_XML = "plugin.xml";
 		public static final String FILE_NAME_META_INF = "META-INF";
@@ -106,15 +111,16 @@ public class GenerateJavaCodeAction implements IToolbarAction {
 		public static final String EMFFORMS_EDITOR_NAME = "EMFForms Editor";
 		public static final String EMFFORMS_EDITOR_ID = "emfformseditor";
 
-		CreateJavaCodeAction(String text, Object[] types, Object currentObject) {
+		CreateJavaCodeAction(String text, Object[] types, Object currentObject, ISelectionProvider selectionProvider) {
 			super(text);
 			this.types = types;
 			this.currentObject = currentObject;
+			this.selectionProvider = selectionProvider;
 		}
 
-		CreateJavaCodeAction(Object currentObject) {
+		CreateJavaCodeAction(Object currentObject, ISelectionProvider selectionProvider) {
 			super("Generate All", SWT.DROP_DOWN);
-
+			this.selectionProvider = selectionProvider;
 			this.currentObject = currentObject;
 
 			types = new Object[] {
@@ -124,7 +130,7 @@ public class GenerateJavaCodeAction implements IToolbarAction {
 				GenBaseGeneratorAdapter.TESTS_PROJECT_TYPE
 			};
 
-			setMenuCreator(new GenmodelDropdownCreator());
+			setMenuCreator(new GenmodelDropdownCreator(selectionProvider));
 
 			setImageDescriptor(ImageDescriptor.createFromURL(FrameworkUtil.getBundle(
 				this.getClass()).getResource("icons/page_white_cup.png")));
@@ -137,7 +143,13 @@ public class GenerateJavaCodeAction implements IToolbarAction {
 		 */
 		@Override
 		public void run() {
-			final IRunnableWithProgress generateCodeRunnable = new GenerateJavaCodeRunnable();
+			final ResourceSet resourceSet = (ResourceSet) currentObject;
+			final GenModel genmodel = (GenModel) resourceSet.getResources().get(0).getContents().get(0);
+			final ISelection oldSelection = selectionProvider.getSelection();
+			selectionProvider.setSelection(new StructuredSelection(resourceSet));
+			genmodel.reconcile();
+			selectionProvider.setSelection(oldSelection);
+			final IRunnableWithProgress generateCodeRunnable = new GenerateJavaCodeRunnable(genmodel);
 
 			try {
 				new ProgressMonitorDialog(Display.getCurrent().getActiveShell()).run(true, false, generateCodeRunnable);
@@ -154,19 +166,17 @@ public class GenerateJavaCodeAction implements IToolbarAction {
 		 * {@link IRunnableWithProgress} to execute code generation.
 		 */
 		public class GenerateJavaCodeRunnable implements IRunnableWithProgress {
+
+			private final GenModel genmodel;
+
+			GenerateJavaCodeRunnable(GenModel genmodel) {
+				this.genmodel = genmodel;
+			}
+
 			@Override
 			public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
 				monitor.beginTask("Generating Code", IProgressMonitor.UNKNOWN);
-				final ResourceSet resourceSet = (ResourceSet) currentObject;
-				final Resource genmodelResource = resourceSet.getResources().get(0);
-				try {
-					genmodelResource.load(null);
-				} catch (final IOException ex) {
-					throw new InvocationTargetException(ex);
-				}
-				final GenModel genmodel = (GenModel) genmodelResource.getContents().get(0);
 
-				genmodel.reconcile();
 				genmodel.setCanGenerate(true);
 
 				final Generator generator = GenModelUtil
@@ -288,6 +298,11 @@ public class GenerateJavaCodeAction implements IToolbarAction {
 		 */
 		private class GenmodelDropdownCreator implements IMenuCreator {
 			private Menu dropDown;
+			private final ISelectionProvider selectionProvider;
+
+			GenmodelDropdownCreator(ISelectionProvider selectionProvider) {
+				this.selectionProvider = selectionProvider;
+			}
 
 			/**
 			 * {@inheritDoc}
@@ -315,27 +330,27 @@ public class GenerateJavaCodeAction implements IToolbarAction {
 					new Object[] {
 						GenBaseGeneratorAdapter.MODEL_PROJECT_TYPE,
 						GenBaseGeneratorAdapter.EDIT_PROJECT_TYPE
-					}, currentObject);
+					}, currentObject, selectionProvider);
 
 				final Action generateModel = new CreateJavaCodeAction("Generate Model",
 					new Object[] {
 						GenBaseGeneratorAdapter.MODEL_PROJECT_TYPE
-					}, currentObject);
+					}, currentObject, selectionProvider);
 
 				final Action generateEdit = new CreateJavaCodeAction("Generate Edit",
 					new Object[] {
 						GenBaseGeneratorAdapter.EDIT_PROJECT_TYPE
-					}, currentObject);
+					}, currentObject, selectionProvider);
 
 				final Action generateEditor = new CreateJavaCodeAction("Generate Editor",
 					new Object[] {
 						GenBaseGeneratorAdapter.EDITOR_PROJECT_TYPE
-					}, currentObject);
+					}, currentObject, selectionProvider);
 
 				final Action generateTests = new CreateJavaCodeAction("Generate Tests",
 					new Object[] {
 						GenBaseGeneratorAdapter.TESTS_PROJECT_TYPE
-					}, currentObject);
+					}, currentObject, selectionProvider);
 
 				new ActionContributionItem(generateModelAndEdit).fill(dropDown, 0);
 				new ActionContributionItem(generateModel).fill(dropDown, 1);

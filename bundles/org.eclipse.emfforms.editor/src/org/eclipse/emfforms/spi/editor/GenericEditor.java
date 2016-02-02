@@ -51,6 +51,10 @@ import org.eclipse.emfforms.spi.swt.treemasterdetail.TreeMasterDetailSWTFactory;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.util.CreateElementCallback;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.ISelectionProvider;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
@@ -406,6 +410,35 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider 
 	private List<Action> readToolbarActions() {
 		final List<Action> result = new LinkedList<Action>();
 
+		final ISelectionProvider selectionProvider = new ISelectionProvider() {
+
+			@Override
+			public void setSelection(ISelection selection) {
+				if (rootView == null) {
+					return;
+				}
+				rootView.getSelectionProvider().setSelection(selection);
+			}
+
+			@Override
+			public void removeSelectionChangedListener(ISelectionChangedListener listener) {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public ISelection getSelection() {
+				if (rootView == null) {
+					return new StructuredSelection();
+				}
+				return rootView.getSelectionProvider().getSelection();
+			}
+
+			@Override
+			public void addSelectionChangedListener(ISelectionChangedListener listener) {
+				throw new UnsupportedOperationException();
+			}
+		};
+
 		final IExtensionRegistry registry = Platform.getExtensionRegistry();
 		if (registry == null) {
 			return result;
@@ -421,7 +454,7 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider 
 						continue;
 					}
 
-					result.add(action.getAction(resourceSet));
+					result.add(action.getAction(resourceSet, selectionProvider));
 				}
 			}
 		} catch (final CoreException ex) {
