@@ -29,6 +29,7 @@ import java.util.Set;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -90,7 +91,13 @@ public final class ViewModelFileExtensionsManager {
 		final Map<URI, List<ExtensionDescription>> extensionURIS = getExtensionURIS();
 		for (final URI uri : extensionURIS.keySet()) {
 			final Resource resource = loadResource(uri);
-			final EObject eObject = resource.getContents().get(0);
+			final EList<EObject> contents = resource.getContents();
+
+			if (contents.size() == 0) {
+				continue;
+			}
+
+			final EObject eObject = contents.get(0);
 			if (!(eObject instanceof VView)) {
 				final ReportService reportService = Activator.getReportService();
 				if (reportService != null) {
