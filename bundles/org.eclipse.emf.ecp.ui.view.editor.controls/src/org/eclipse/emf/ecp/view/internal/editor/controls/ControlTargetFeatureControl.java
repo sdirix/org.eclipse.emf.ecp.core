@@ -52,8 +52,8 @@ public class ControlTargetFeatureControl extends LinkControl {
 	@Override
 	protected Object getLinkText(Object value) {
 
-		final VFeaturePathDomainModelReference modelReference =
-			(VFeaturePathDomainModelReference) getFirstSetting().getEObject();
+		final VFeaturePathDomainModelReference modelReference = (VFeaturePathDomainModelReference) getFirstSetting()
+			.getEObject();
 
 		String className = ""; //$NON-NLS-1$
 		final String attributeName = " -> " + getAdapterFactoryItemDelegator().getText(value); //$NON-NLS-1$
@@ -85,8 +85,8 @@ public class ControlTargetFeatureControl extends LinkControl {
 			@Override
 			public void run() {
 				super.run();
-				final VFeaturePathDomainModelReference modelReference =
-					(VFeaturePathDomainModelReference) setting.getEObject();
+				final VFeaturePathDomainModelReference modelReference = (VFeaturePathDomainModelReference) setting
+					.getEObject();
 				modelReference.getDomainModelEReferencePath().clear();
 				modelReference.setDomainModelEFeature(null);
 			}
@@ -112,7 +112,7 @@ public class ControlTargetFeatureControl extends LinkControl {
 	 */
 	private class FilteredReferenceAction extends AbstractFilteredReferenceAction {
 
-		public FilteredReferenceAction(EditingDomain editingDomain, Setting setting,
+		FilteredReferenceAction(EditingDomain editingDomain, Setting setting,
 			IItemPropertyDescriptor descriptor, Shell shell) {
 			super(editingDomain, setting, descriptor, shell);
 		}
@@ -136,7 +136,7 @@ public class ControlTargetFeatureControl extends LinkControl {
 	 */
 	private class FilteredReferenceCommand extends AbstractFilteredReferenceCommand<EStructuralFeature> {
 
-		public FilteredReferenceCommand(final Notifier notifier, ComposedAdapterFactory composedAdapterFactory,
+		FilteredReferenceCommand(final Notifier notifier, ComposedAdapterFactory composedAdapterFactory,
 			Shell shell) {
 
 			super(notifier, composedAdapterFactory, shell, Helper.getRootEClass((EObject) notifier),
