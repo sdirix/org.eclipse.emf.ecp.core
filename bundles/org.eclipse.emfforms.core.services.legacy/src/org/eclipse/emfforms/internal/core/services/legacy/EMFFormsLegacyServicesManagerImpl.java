@@ -47,6 +47,7 @@ public class EMFFormsLegacyServicesManagerImpl implements EMFFormsLegacyServices
 	private ReportService reportService;
 	private final Set<ServiceRegistration<EMFFormsViewServiceFactory>> registrations = new LinkedHashSet<ServiceRegistration<EMFFormsViewServiceFactory>>();
 	private BundleContext bundleContext;
+	private boolean instantiated;
 
 	/**
 	 * Called by OSGi to set the {@link ReportService}.
@@ -121,11 +122,15 @@ public class EMFFormsLegacyServicesManagerImpl implements EMFFormsLegacyServices
 	 */
 	@Override
 	public void instantiate() {
+		if (instantiated) {
+			return;
+		}
 		final Set<EMFFormsViewServiceFactory<? extends ViewModelService>> legacyServiceProviders = parseExtensions();
 		for (final EMFFormsViewServiceFactory<? extends ViewModelService> provider : legacyServiceProviders) {
 			final ServiceRegistration<EMFFormsViewServiceFactory> registerService = bundleContext
 				.registerService(EMFFormsViewServiceFactory.class, provider, null);
 			registrations.add(registerService);
 		}
+		instantiated = true;
 	}
 }
