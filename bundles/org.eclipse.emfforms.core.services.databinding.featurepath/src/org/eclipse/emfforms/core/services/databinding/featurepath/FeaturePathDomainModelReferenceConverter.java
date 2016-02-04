@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -146,6 +146,10 @@ public class FeaturePathDomainModelReferenceConverter implements DomainModelRefe
 			}
 		}
 		final EStructuralFeature structuralFeature = featurePathReference.getDomainModelEFeature();
+		if (structuralFeature.getEType() == null) {
+			throw new DatabindingFailedException(
+				String.format("The eType of the feature %1$s is null.", structuralFeature.getName())); //$NON-NLS-1$
+		}
 		if (currentObject.eClass().getEAllStructuralFeatures().contains(structuralFeature)) {
 			return InternalEObject.class.cast(currentObject).eSetting(structuralFeature);
 		}
