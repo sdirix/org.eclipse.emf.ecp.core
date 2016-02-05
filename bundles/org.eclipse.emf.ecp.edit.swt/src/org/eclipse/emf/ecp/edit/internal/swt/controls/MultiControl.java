@@ -350,7 +350,7 @@ public abstract class MultiControl extends SWTControl {
 
 		private SWTControl widget;
 
-		public WidgetWrapper(ECPObservableValue modelValue) {
+		WidgetWrapper(ECPObservableValue modelValue) {
 			this.modelValue = modelValue;
 		}
 
