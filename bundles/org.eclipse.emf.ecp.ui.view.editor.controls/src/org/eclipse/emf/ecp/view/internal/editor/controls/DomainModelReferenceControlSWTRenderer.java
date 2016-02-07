@@ -385,7 +385,7 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 
 		private final EStructuralFeature eStructuralFeature;
 
-		public SelectionAdapterExtension(Label label, IObservableValue modelValue, ViewModelContext viewModelContext,
+		SelectionAdapterExtension(Label label, IObservableValue modelValue, ViewModelContext viewModelContext,
 			DataBindingContext dataBindingContext,
 			EStructuralFeature eStructuralFeature) {
 			this.eStructuralFeature = eStructuralFeature;

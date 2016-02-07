@@ -79,7 +79,7 @@ public class ControlRootEClassControl extends LinkControl {
 
 	private class FilteredReferenceAction extends AbstractFilteredReferenceAction {
 
-		public FilteredReferenceAction(EditingDomain editingDomain, Setting setting,
+		FilteredReferenceAction(EditingDomain editingDomain, Setting setting,
 			IItemPropertyDescriptor descriptor, Shell shell) {
 			super(editingDomain, setting, descriptor, shell);
 		}
@@ -98,7 +98,7 @@ public class ControlRootEClassControl extends LinkControl {
 
 		private final Shell shell;
 
-		public FilteredReferenceCommand(Notifier notifier, Shell shell) {
+		FilteredReferenceCommand(Notifier notifier, Shell shell) {
 			super(notifier);
 			this.shell = shell;
 		}
@@ -120,7 +120,8 @@ public class ControlRootEClassControl extends LinkControl {
 						return Status.OK_STATUS;
 					}
 					return new Status(IStatus.ERROR,
-						org.eclipse.emf.ecp.view.internal.editor.controls.Activator.PLUGIN_ID, "This is not an EClass."); //$NON-NLS-1$
+						org.eclipse.emf.ecp.view.internal.editor.controls.Activator.PLUGIN_ID,
+						"This is not an EClass."); //$NON-NLS-1$
 				}
 			});
 			dialog.setInput(getInput());
@@ -143,8 +144,7 @@ public class ControlRootEClassControl extends LinkControl {
 					getViewModelRegistry().register(view.getRootEClass().eResource().getURI().toString(), view);
 
 					final ResourceSet resourceSet = new ResourceSetImpl();
-					final Map<String, Object> map =
-						resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap();
+					final Map<String, Object> map = resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap();
 					map.put("*", new XMIResourceFactoryImpl()); //$NON-NLS-1$
 
 					final ResourceSet rs = selectedFeature.eContainer().eResource().getResourceSet();

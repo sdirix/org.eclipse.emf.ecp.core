@@ -201,7 +201,7 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 	 */
 	private class DateModelToTargetUpdateStrategy extends ModelToTargetUpdateStrategy {
 
-		public DateModelToTargetUpdateStrategy(boolean tooltip) {
+		DateModelToTargetUpdateStrategy(boolean tooltip) {
 			super(tooltip);
 		}
 
