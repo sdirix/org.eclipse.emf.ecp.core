@@ -140,10 +140,13 @@ public class FeaturePathDomainModelReferenceConverter implements DomainModelRefe
 
 		EObject currentObject = object;
 		for (final EReference eReference : featurePathReference.getDomainModelEReferencePath()) {
-			currentObject = (EObject) currentObject.eGet(eReference);
-			if (currentObject == null) {
-				throw new DatabindingFailedException("The path is not fully resolved."); //$NON-NLS-1$
+			final EObject nextObject = (EObject) currentObject.eGet(eReference);
+			if (nextObject == null) {
+				throw new DatabindingFailedException(String.format(
+					"The path is not fully resolved. The DMR is %1$s. Last resolved EObject is %2$s. Reference beeing resolved is %3$s.", //$NON-NLS-1$
+					domainModelReference, currentObject, eReference));
 			}
+			currentObject = nextObject;
 		}
 		final EStructuralFeature structuralFeature = featurePathReference.getDomainModelEFeature();
 		if (structuralFeature.getEType() == null) {
