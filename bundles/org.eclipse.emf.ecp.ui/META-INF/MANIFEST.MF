@@ -5,7 +5,11 @@ Bundle-SymbolicName: org.eclipse.emf.ecp.ui;singleton:=true
 Bundle-Version: 1.9.0.qualifier
 Bundle-Activator: org.eclipse.emf.ecp.internal.ui.Activator
 Bundle-Vendor: Eclipse Modeling Project
-Export-Package: org.eclipse.emf.ecp.internal.ui;version="1.9.0";x-friends:="org.eclipse.emf.ecp.explorereditorbridge,org.eclipse.emf.ecp.edit.ecore.swt,org.eclipse.emf.ecp.emfstore.ui",
+Export-Package: org.eclipse.emf.ecp.internal.ui;version="1.9.0";
+  x-friends:="org.eclipse.emf.ecp.explorereditorbridge,
+   org.eclipse.emf.ecp.edit.ecore.swt,
+   org.eclipse.emf.ecp.emfstore.ui,
+   org.eclipse.emf.ecp.ui.rcp",
  org.eclipse.emf.ecp.internal.ui.composites;version="1.9.0";x-internal:=true,
  org.eclipse.emf.ecp.internal.ui.dialogs;version="1.9.0";x-friends:="org.eclipse.emf.ecp.explorereditorbridge",
  org.eclipse.emf.ecp.internal.ui.model;version="1.9.0";x-friends:="org.eclipse.emf.ecp.ui.e4,org.eclipse.emf.ecp.ui.e3,org.eclipse.emf.ecp.ui.transaction",
@@ -16,7 +20,8 @@ Export-Package: org.eclipse.emf.ecp.internal.ui;version="1.9.0";x-friends:="org.
    org.eclipse.emf.ecp.ui.e4,
    org.eclipse.emf.ecp.emfstore.ui.e3,
    org.eclipse.emf.ecp.validationvieweditorbridge,
-   org.eclipse.emf.ecp.emfstore.ui",
+   org.eclipse.emf.ecp.emfstore.ui,
+   org.eclipse.emf.ecp.ui.rcp",
  org.eclipse.emf.ecp.internal.wizards;version="1.9.0";
   x-friends:="org.eclipse.emf.ecp.edit.ecore.swt,
    org.eclipse.emf.ecp.explorereditorbridge,
