@@ -363,7 +363,16 @@ public final class ViewModelFileExtensionsManager {
 
 	private Map<VView, ExtensionDescription> findBestFittingViews(EObject eObject,
 		final VViewModelProperties properties) {
-		final Map<VView, Set<ExtensionDescription>> viewMap = getViewMap(eObject);
+		final Map<VView, Set<ExtensionDescription>> viewMap = new LinkedHashMap<VView, Set<ExtensionDescription>>();
+		final Set<EClass> allEClass = new LinkedHashSet<EClass>();
+		allEClass.add(eObject.eClass());
+		allEClass.addAll(eObject.eClass().getEAllSuperTypes());
+		for (final EClass eClass : allEClass) {
+			final Map<VView, Set<ExtensionDescription>> classMap = map.get(eClass);
+			if (classMap != null) {
+				viewMap.putAll(classMap);
+			}
+		}
 
 		final Map<VView, ExtensionDescription> bestFitting = new LinkedHashMap<VView, ViewModelFileExtensionsManager.ExtensionDescription>();
 		int maxNumberFittingKeyValues = -1;
@@ -402,23 +411,26 @@ public final class ViewModelFileExtensionsManager {
 				}
 			}
 		}
-		return bestFitting;
+		return getViewMap(bestFitting, eObject.eClass());
 	}
 
-	private Map<VView, Set<ExtensionDescription>> getViewMap(EObject eObject) {
-		final Map<VView, Set<ExtensionDescription>> viewMap = new LinkedHashMap<VView, Set<ExtensionDescription>>();
+	private Map<VView, ExtensionDescription> getViewMap(Map<VView, ExtensionDescription> fullMap, EClass viewModelFor) {
+		final Map<VView, ExtensionDescription> viewMap = new LinkedHashMap<VView, ExtensionDescription>();
 
 		final Set<EClass> checkedEClasses = new LinkedHashSet<EClass>();
 		Set<EClass> eClassesToGetViewModelsFor = new LinkedHashSet<EClass>();
-		eClassesToGetViewModelsFor.add(eObject.eClass());
+		eClassesToGetViewModelsFor.add(viewModelFor);
 
 		while (!eClassesToGetViewModelsFor.isEmpty()) {
 			/* loop over all current eClasses and add view models for the current eClass to the map */
 			for (final EClass eClass : eClassesToGetViewModelsFor) {
-				final Map<VView, Set<ExtensionDescription>> classMap = map.get(eClass);
-				if (classMap != null) {
-					viewMap.putAll(classMap);
+				final Map<VView, ExtensionDescription> classMap = new LinkedHashMap<VView, ExtensionDescription>();
+				for (final VView vView : fullMap.keySet()) {
+					if (eClass == vView.getRootEClass()) {
+						classMap.put(vView, fullMap.get(vView));
+					}
 				}
+				viewMap.putAll(classMap);
 				checkedEClasses.add(eClass);
 			}
 
