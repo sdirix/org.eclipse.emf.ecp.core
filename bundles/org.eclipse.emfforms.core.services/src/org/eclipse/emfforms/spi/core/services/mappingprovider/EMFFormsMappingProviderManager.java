@@ -15,7 +15,7 @@ import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.common.spi.UniqueSetting;
-import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 
 /**
  * A Manager for the {@link EMFFormsMappingProvider}.
@@ -27,11 +27,11 @@ import org.eclipse.emf.ecp.view.spi.model.VControl;
 public interface EMFFormsMappingProviderManager {
 
 	/**
-	 * Retrieve all settings for a given control and domain object.
-	 * 
-	 * @param control The {@link VControl} to retrieve the settings for
+	 * Retrieve all settings for a given domainModelReference and domain object.
+	 *
+	 * @param domainModelReference The {@link VDomainModelReference} to retrieve the settings for
 	 * @param domainObject The {@link EObject} to use for resolvement
 	 * @return the set of {@link UniqueSetting} of this control
 	 */
-	Set<UniqueSetting> getAllSettingsFor(VControl control, EObject domainObject);
+	Set<UniqueSetting> getAllSettingsFor(VDomainModelReference domainModelReference, EObject domainObject);
 }

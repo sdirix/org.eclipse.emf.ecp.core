@@ -17,7 +17,7 @@ import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.common.spi.UniqueSetting;
-import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.mappingprovider.EMFFormsMappingProvider;
@@ -70,16 +70,16 @@ public class EMFFormsMappingProviderManagerImpl implements EMFFormsMappingProvid
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emfforms.spi.core.services.mappingprovider.EMFFormsMappingProviderManager#getAllSettingsFor(org.eclipse.emf.ecp.view.spi.model.VControl,
+	 * @see org.eclipse.emfforms.spi.core.services.mappingprovider.EMFFormsMappingProviderManager#getAllSettingsFor(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference,
 	 *      org.eclipse.emf.ecore.EObject)
 	 */
 	@Override
-	public Set<UniqueSetting> getAllSettingsFor(VControl vControl, EObject domainObject) {
+	public Set<UniqueSetting> getAllSettingsFor(VDomainModelReference domainModelReference, EObject domainObject) {
 		EMFFormsMappingProvider bestMappingProvider = null;
 		double bestScore = EMFFormsMappingProvider.NOT_APPLICABLE;
 
 		for (final EMFFormsMappingProvider mappingProvider : mappingProviders) {
-			final double score = mappingProvider.isApplicable(vControl, domainObject);
+			final double score = mappingProvider.isApplicable(domainModelReference, domainObject);
 			if (score > bestScore) {
 				bestMappingProvider = mappingProvider;
 				bestScore = score;
@@ -89,6 +89,6 @@ public class EMFFormsMappingProviderManagerImpl implements EMFFormsMappingProvid
 			reportService.report(new AbstractReport("Warning: No applicable EMFFormsMappingProvider was found.")); //$NON-NLS-1$
 			return Collections.emptySet();
 		}
-		return bestMappingProvider.getMappingFor(vControl, domainObject);
+		return bestMappingProvider.getMappingFor(domainModelReference, domainObject);
 	}
 }

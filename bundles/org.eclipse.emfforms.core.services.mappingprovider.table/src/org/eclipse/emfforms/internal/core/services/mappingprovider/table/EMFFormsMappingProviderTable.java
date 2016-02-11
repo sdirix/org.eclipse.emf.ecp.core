@@ -20,9 +20,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.common.spi.UniqueSetting;
 import org.eclipse.emf.ecp.common.spi.asserts.Assert;
-import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
-import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
@@ -34,7 +32,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * An {@link EMFFormsMappingProvider} implementation for {@link VTableControl VTableControls}.
+ * An {@link EMFFormsMappingProvider} implementation for {@link VTableDomainModelReference}.
  *
  * @author Lucas Koehler
  *
@@ -68,20 +66,19 @@ public class EMFFormsMappingProviderTable implements EMFFormsMappingProvider {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emfforms.spi.core.services.mappingprovider.EMFFormsMappingProvider#getMappingFor(org.eclipse.emf.ecp.view.spi.model.VControl,
+	 * @see org.eclipse.emfforms.spi.core.services.mappingprovider.EMFFormsMappingProvider#getMappingFor(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference,
 	 *      org.eclipse.emf.ecore.EObject)
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public Set<UniqueSetting> getMappingFor(VControl vControl, EObject domainObject) {
-		Assert.create(vControl).notNull();
+	public Set<UniqueSetting> getMappingFor(VDomainModelReference domainModelReference, EObject domainObject) {
+		Assert.create(domainModelReference).notNull();
 		Assert.create(domainObject).notNull();
 
-		final VTableControl tableControl = (VTableControl) vControl;
-		final VTableDomainModelReference tableDMR = (VTableDomainModelReference) tableControl.getDomainModelReference();
+		final VTableDomainModelReference tableDMR = (VTableDomainModelReference) domainModelReference;
 		Setting tableSetting;
 		try {
-			tableSetting = emfFormsDatabinding.getSetting(tableControl.getDomainModelReference(), domainObject);
+			tableSetting = emfFormsDatabinding.getSetting(tableDMR, domainObject);
 		} catch (final DatabindingFailedException ex) {
 			reportService.report(new DatabindingFailedReport(ex));
 			return Collections.<UniqueSetting> emptySet();
@@ -92,9 +89,9 @@ public class EMFFormsMappingProviderTable implements EMFFormsMappingProvider {
 
 		for (final EObject eObject : (List<EObject>) tableSetting.get(true)) {
 
-			for (final VDomainModelReference domainModelReference : tableDMR.getColumnDomainModelReferences()) {
+			for (final VDomainModelReference columnDMR : tableDMR.getColumnDomainModelReferences()) {
 				try {
-					final Setting columnSetting = emfFormsDatabinding.getSetting(domainModelReference, eObject);
+					final Setting columnSetting = emfFormsDatabinding.getSetting(columnDMR, eObject);
 					settingsMap.add(UniqueSetting.createSetting(columnSetting));
 				} catch (final DatabindingFailedException ex) {
 					reportService.report(new DatabindingFailedReport(ex));
@@ -107,13 +104,13 @@ public class EMFFormsMappingProviderTable implements EMFFormsMappingProvider {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emfforms.spi.core.services.mappingprovider.EMFFormsMappingProvider#isApplicable(org.eclipse.emf.ecp.view.spi.model.VControl,
+	 * @see org.eclipse.emfforms.spi.core.services.mappingprovider.EMFFormsMappingProvider#isApplicable(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference,
 	 *      org.eclipse.emf.ecore.EObject)
 	 */
 	@Override
-	public double isApplicable(VControl vControl, EObject domainObject) {
-		if (vControl == null) {
-			reportService.report(new AbstractReport("Warning: The given VControl was null.")); //$NON-NLS-1$
+	public double isApplicable(VDomainModelReference domainModelReference, EObject domainObject) {
+		if (domainModelReference == null) {
+			reportService.report(new AbstractReport("Warning: The given VDomainModelReference was null.")); //$NON-NLS-1$
 			return NOT_APPLICABLE;
 		}
 		if (domainObject == null) {
@@ -121,8 +118,7 @@ public class EMFFormsMappingProviderTable implements EMFFormsMappingProvider {
 			return NOT_APPLICABLE;
 		}
 
-		if (VTableControl.class.isInstance(vControl)
-			&& VTableDomainModelReference.class.isInstance(vControl.getDomainModelReference())) {
+		if (VTableDomainModelReference.class.isInstance(domainModelReference)) {
 			return 5d;
 		}
 

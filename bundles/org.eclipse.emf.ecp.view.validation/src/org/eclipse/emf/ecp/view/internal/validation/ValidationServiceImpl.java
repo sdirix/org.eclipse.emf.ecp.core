@@ -153,8 +153,8 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 
 				final Set<EObject> eObjectsToValidate = new LinkedHashSet<EObject>();
 				if (VControl.class.isInstance(domainModelReference.eContainer())) {
-					final Set<UniqueSetting> settings = mappingProviderManager.getAllSettingsFor(
-						VControl.class.cast(domainModelReference.eContainer()), context.getDomainModel());
+					final Set<UniqueSetting> settings = mappingProviderManager.getAllSettingsFor(domainModelReference,
+						context.getDomainModel());
 					for (final UniqueSetting setting : settings) {
 						eObjectsToValidate.add(setting.getEObject());
 					}

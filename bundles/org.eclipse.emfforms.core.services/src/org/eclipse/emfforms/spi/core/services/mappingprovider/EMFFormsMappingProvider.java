@@ -15,10 +15,10 @@ import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.common.spi.UniqueSetting;
-import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 
 /**
- * A service to provide {@link UniqueSetting} to {@link VControl} mappings.
+ * A service to provide {@link UniqueSetting} to {@link VDomainModelReference} mappings.
  *
  * @author Lucas Koehler
  * @since 1.8
@@ -28,27 +28,29 @@ public interface EMFFormsMappingProvider {
 
 	/**
 	 * The constant defining the priority that a {@link EMFFormsMappingProvider} is not applicable for a
-	 * {@link VControl} and {@link EObject domain object}.
+	 * {@link VDomainModelReference} and {@link EObject domain object}.
 	 */
 	double NOT_APPLICABLE = Double.NEGATIVE_INFINITY;
 
 	/**
-	 * Returns the mapping of {@link UniqueSetting UniqueSettings} to their sets of {@link VControl VControls} for a
-	 * given {@link VControl} and {@link EObject domain object}.
+	 * Returns the mapping of {@link UniqueSetting UniqueSettings} to their sets of {@link VDomainModelReference
+	 * VDomainModelReference} for a
+	 * given {@link VDomainModelReference} and {@link EObject domain object}.
 	 *
-	 * @param vControl The {@link VControl}
+	 * @param domainModelReference The {@link VDomainModelReference}
 	 * @param domainObject The {@link EObject domain object}
-	 * @return The mapping from the {@link UniqueSetting UniqueSettings} to their sets of {@link VControl VControls}
+	 * @return The mapping from the {@link UniqueSetting UniqueSettings} to their sets of {@link VDomainModelReference
+	 *         VDomainModelReference}
 	 */
-	Set<UniqueSetting> getMappingFor(VControl vControl, EObject domainObject);
+	Set<UniqueSetting> getMappingFor(VDomainModelReference domainModelReference, EObject domainObject);
 
 	/**
 	 * Returns a double indicating if and how well this {@link EMFFormsMappingProvider} is applicable for the given
-	 * {@link VControl} and {@link EObject domain object}.
+	 * {@link VDomainModelReference} and {@link EObject domain object}.
 	 *
-	 * @param vControl The given {@link VControl}
+	 * @param domainModelReference The given {@link VDomainModelReference}
 	 * @param domainObject The {@link EObject domain object}
 	 * @return The floating point value indicating the applicability
 	 */
-	double isApplicable(VControl vControl, EObject domainObject);
+	double isApplicable(VDomainModelReference domainModelReference, EObject domainObject);
 }

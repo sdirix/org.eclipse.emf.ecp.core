@@ -165,7 +165,7 @@ public class SettingToControlMapperImpl implements EMFFormsSettingToControlMappe
 			settingToControlMap.get(setting).remove(vControl);
 		}
 		// update mapping
-		final Set<UniqueSetting> map = mappingManager.getAllSettingsFor(vControl,
+		final Set<UniqueSetting> map = mappingManager.getAllSettingsFor(vControl.getDomainModelReference(),
 			viewModelContext.getDomainModel());
 		for (final UniqueSetting setting : map) {
 			if (!settingToControlMap.containsKey(setting)) {
@@ -184,7 +184,7 @@ public class SettingToControlMapperImpl implements EMFFormsSettingToControlMappe
 			return;
 		}
 
-		final Set<UniqueSetting> map = mappingManager.getAllSettingsFor(vControl,
+		final Set<UniqueSetting> map = mappingManager.getAllSettingsFor(vControl.getDomainModelReference(),
 			viewModelContext.getDomainModel());
 		for (final UniqueSetting setting : map) {
 			if (settingToControlMap.containsKey(setting)) {
