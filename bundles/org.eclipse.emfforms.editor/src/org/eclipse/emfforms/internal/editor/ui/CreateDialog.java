@@ -16,6 +16,8 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
+import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
+import org.eclipse.emf.ecp.view.spi.model.VViewModelProperties;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
@@ -89,7 +91,9 @@ public class CreateDialog extends Dialog {
 		emfFormsParent.setLayout(new GridLayout());
 
 		try {
-			ECPSWTViewRenderer.INSTANCE.render(emfFormsParent, newObject);
+			final VViewModelProperties properties = VViewFactory.eINSTANCE.createViewModelLoadingProperties();
+			properties.addInheritableProperty("useOnModifyDatabinding", "true");
+			ECPSWTViewRenderer.INSTANCE.render(emfFormsParent, newObject, properties);
 		} catch (final ECPRendererException e) {
 		}
 

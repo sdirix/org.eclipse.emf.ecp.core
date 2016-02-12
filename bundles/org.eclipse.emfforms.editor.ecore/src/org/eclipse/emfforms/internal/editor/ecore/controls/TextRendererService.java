@@ -13,10 +13,12 @@ package org.eclipse.emfforms.internal.editor.ecore.controls;
 
 import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
@@ -65,6 +67,9 @@ public class TextRendererService implements EMFFormsDIRendererService<VControl> 
 	 * @see org.eclipse.emfforms.spi.swt.core.di.EMFFormsDIRendererService#isApplicable(org.eclipse.emf.ecp.view.spi.model.VElement,
 	 *      org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
+	// BEGIN COMPLEX CODE
+	// (path computation does not take the return inside the ifs into account and any refactoring makes it
+	// harder to read actually)
 	@Override
 	public double isApplicable(VElement vElement, ViewModelContext viewModelContext) {
 		if (!VControl.class.isInstance(vElement)) {
@@ -72,6 +77,9 @@ public class TextRendererService implements EMFFormsDIRendererService<VControl> 
 		}
 		final VControl control = (VControl) vElement;
 		if (control.getDomainModelReference() == null) {
+			return NOT_APPLICABLE;
+		}
+		if (!checkLoadingProperties(control)) {
 			return NOT_APPLICABLE;
 		}
 		IValueProperty valueProperty;
@@ -100,6 +108,19 @@ public class TextRendererService implements EMFFormsDIRendererService<VControl> 
 			return 2d;
 		}
 		return NOT_APPLICABLE;
+	}
+	// END COMPLEX CODE
+
+	private static boolean checkLoadingProperties(VControl control) {
+		EObject viewCandidate = control.eContainer();
+		while (viewCandidate != null && !VView.class.isInstance(viewCandidate)) {
+			viewCandidate = viewCandidate.eContainer();
+		}
+		if (!VView.class.isInstance(viewCandidate)) {
+			return false;
+		}
+		final VView view = VView.class.cast(viewCandidate);
+		return "true".equalsIgnoreCase((String) view.getLoadingProperties().get("useOnModifyDatabinding"));
 	}
 
 	/**
