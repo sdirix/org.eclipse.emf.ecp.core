@@ -19,6 +19,7 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emf.ecp.view.spi.model.VViewModelProperties;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
@@ -119,8 +120,11 @@ public class TextRendererService implements EMFFormsDIRendererService<VControl> 
 		if (!VView.class.isInstance(viewCandidate)) {
 			return false;
 		}
-		final VView view = VView.class.cast(viewCandidate);
-		return "true".equalsIgnoreCase((String) view.getLoadingProperties().get("useOnModifyDatabinding"));
+		final VViewModelProperties properties = VView.class.cast(viewCandidate).getLoadingProperties();
+		if (properties == null) {
+			return false;
+		}
+		return "true".equalsIgnoreCase((String) properties.get("useOnModifyDatabinding"));
 	}
 
 	/**
