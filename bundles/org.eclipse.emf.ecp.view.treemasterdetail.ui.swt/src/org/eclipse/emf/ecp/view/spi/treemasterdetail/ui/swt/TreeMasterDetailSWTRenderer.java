@@ -834,7 +834,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 		private Composite childComposite;
 		private ReferenceService referenceService;
 
-		public TreeMasterViewSelectionListener() {
+		TreeMasterViewSelectionListener() {
 			// TODO refactor
 			if (getViewModelContext().hasService(ReferenceService.class)) {
 				referenceService = getViewModelContext().getService(ReferenceService.class);
@@ -957,7 +957,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 	 */
 	private class TreeMasterDetailLabelProvider extends AdapterFactoryLabelProvider {
 
-		public TreeMasterDetailLabelProvider(AdapterFactory adapterFactory) {
+		TreeMasterDetailLabelProvider(AdapterFactory adapterFactory) {
 			super(adapterFactory);
 		}
 
@@ -1022,7 +1022,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 
 		private final ReferenceService delegate;
 
-		public TreeMasterDetailReferenceService(ReferenceService delegate) {
+		TreeMasterDetailReferenceService(ReferenceService delegate) {
 			this.delegate = delegate;
 		}
 
