@@ -20,6 +20,7 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.notify.AdapterFactory;
@@ -95,7 +96,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 	/** The view model content adapter. */
 	private EContentAdapter viewModelContentAdapter;
 
-	private final Set<EMFFormsContextListener> contextListeners = new LinkedHashSet<EMFFormsContextListener>();
+	private final Set<EMFFormsContextListener> contextListeners = new CopyOnWriteArraySet<EMFFormsContextListener>();
 
 	/** The view services. */
 	private final SortedSet<ViewModelService> viewServices = new TreeSet<ViewModelService>(
