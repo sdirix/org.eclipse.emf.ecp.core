@@ -29,6 +29,7 @@ import java.util.Set;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
@@ -94,9 +95,14 @@ public final class ViewModelFileExtensionsManager {
 		for (final URI uri : extensionURIS.keySet()) {
 			/* load resource */
 			final VViewResourceImpl resource = loadResource(uri);
+			final EList<EObject> contents = resource.getContents();
+
+			if (contents.size() == 0) {
+				continue;
+			}
 
 			/* check if content is a view model */
-			final EObject eObject = resource.getContents().get(0);
+			final EObject eObject = contents.get(0);
 			if (!(eObject instanceof VView)) {
 				final ReportService reportService = Activator.getReportService();
 				if (reportService != null) {
@@ -435,7 +441,51 @@ public final class ViewModelFileExtensionsManager {
 				}
 			}
 		}
-		return bestFitting;
+		return getViewMap(bestFitting, eObject.eClass());
+	}
+
+	private Map<VView, ExtensionDescription> getViewMap(Map<VView, ExtensionDescription> fullMap, EClass viewModelFor) {
+		final Map<VView, ExtensionDescription> viewMap = new LinkedHashMap<VView, ExtensionDescription>();
+
+		final Set<EClass> checkedEClasses = new LinkedHashSet<EClass>();
+		Set<EClass> eClassesToGetViewModelsFor = new LinkedHashSet<EClass>();
+		eClassesToGetViewModelsFor.add(viewModelFor);
+
+		while (!eClassesToGetViewModelsFor.isEmpty()) {
+			/* loop over all current eClasses and add view models for the current eClass to the map */
+			for (final EClass eClass : eClassesToGetViewModelsFor) {
+				final Map<VView, ExtensionDescription> classMap = new LinkedHashMap<VView, ExtensionDescription>();
+				for (final VView vView : fullMap.keySet()) {
+					if (eClass == vView.getRootEClass()) {
+						classMap.put(vView, fullMap.get(vView));
+					}
+				}
+				viewMap.putAll(classMap);
+				checkedEClasses.add(eClass);
+			}
+
+			/* if we found some views we are ready to return the map */
+			if (!viewMap.isEmpty()) {
+				eClassesToGetViewModelsFor.clear();
+				break;
+			}
+
+			/*
+			 * otherwise we will look at the direct super types of the eClasses we examined in this iteration. be
+			 * careful to avoid checking the same EClass multiple times
+			 */
+			final Set<EClass> superTypes = new LinkedHashSet<EClass>();
+			for (final EClass eClass : eClassesToGetViewModelsFor) {
+				for (final EClass superType : eClass.getESuperTypes()) {
+					if (checkedEClasses.contains(superType)) {
+						continue;
+					}
+					superTypes.add(superType);
+				}
+			}
+			eClassesToGetViewModelsFor = superTypes;
+		}
+		return viewMap;
 	}
 
 	/**

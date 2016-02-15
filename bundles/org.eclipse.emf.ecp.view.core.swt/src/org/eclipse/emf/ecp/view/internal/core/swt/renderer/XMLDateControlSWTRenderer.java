@@ -382,15 +382,14 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 	 */
 	@Override
 	protected void setValidationColor(Control control, Color validationColor) {
-		((Composite) control).getChildren()[0].setBackground(validationColor);
+		super.setValidationColor(Composite.class.cast(control).getChildren()[0], validationColor);
 	}
 
 	@Override
 	protected void setControlEnabled(SWTGridCell gridCell, Control control, boolean enabled) {
 		if (getVElement().getLabelAlignment() == LabelAlignment.NONE && gridCell.getColumn() == 1
 			|| hasLeftLabelAlignment() && gridCell.getColumn() == 2) {
-			((Text) Composite.class.cast(Composite.class.cast(control).getChildren()[0]).getChildren()[0])
-				.setEditable(enabled);
+			super.setControlEnabled(gridCell, Composite.class.cast(control).getChildren()[0], enabled);
 			((Button) ((Composite) control).getChildren()[1]).setVisible(enabled);
 		} else {
 			super.setControlEnabled(gridCell, control, enabled);

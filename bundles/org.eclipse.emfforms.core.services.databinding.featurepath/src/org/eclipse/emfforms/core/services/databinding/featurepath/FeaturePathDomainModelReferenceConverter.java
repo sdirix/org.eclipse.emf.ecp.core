@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -140,12 +140,19 @@ public class FeaturePathDomainModelReferenceConverter implements DomainModelRefe
 
 		EObject currentObject = object;
 		for (final EReference eReference : featurePathReference.getDomainModelEReferencePath()) {
-			currentObject = (EObject) currentObject.eGet(eReference);
-			if (currentObject == null) {
-				throw new DatabindingFailedException("The path is not fully resolved."); //$NON-NLS-1$
+			final EObject nextObject = (EObject) currentObject.eGet(eReference);
+			if (nextObject == null) {
+				throw new DatabindingFailedException(String.format(
+					"The path is not fully resolved. The DMR is %1$s. Last resolved EObject is %2$s. Reference beeing resolved is %3$s.", //$NON-NLS-1$
+					domainModelReference, currentObject, eReference));
 			}
+			currentObject = nextObject;
 		}
 		final EStructuralFeature structuralFeature = featurePathReference.getDomainModelEFeature();
+		if (structuralFeature.getEType() == null) {
+			throw new DatabindingFailedException(
+				String.format("The eType of the feature %1$s is null.", structuralFeature.getName())); //$NON-NLS-1$
+		}
 		if (currentObject.eClass().getEAllStructuralFeatures().contains(structuralFeature)) {
 			return InternalEObject.class.cast(currentObject).eSetting(structuralFeature);
 		}

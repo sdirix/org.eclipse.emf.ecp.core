@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -20,8 +20,10 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 import org.eclipse.emf.common.command.BasicCommandStack;
+import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.TreeIterator;
@@ -49,6 +51,7 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emfforms.common.Optional;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
@@ -93,7 +96,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 	/** The view model content adapter. */
 	private EContentAdapter viewModelContentAdapter;
 
-	private final Set<EMFFormsContextListener> contextListeners = new LinkedHashSet<EMFFormsContextListener>();
+	private final Set<EMFFormsContextListener> contextListeners = new CopyOnWriteArraySet<EMFFormsContextListener>();
 
 	/** The view services. */
 	private final SortedSet<ViewModelService> viewServices = new TreeSet<ViewModelService>(
@@ -333,8 +336,11 @@ public class ViewModelContextImpl implements ViewModelContext {
 		}
 		final EObject rootObject = EcoreUtil.getRootContainer(domainObject);
 		final ResourceSet rs = new ResourceSetImpl();
+		final ComposedAdapterFactory adapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
+			new ReflectiveItemProviderAdapterFactory(),
+			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
 		final AdapterFactoryEditingDomain domain = new AdapterFactoryEditingDomain(
-			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE),
+			adapterFactory,
 			new BasicCommandStack(), rs);
 		rs.eAdapters().add(new AdapterFactoryEditingDomain.EditingDomainProvider(domain));
 		resource = rs.createResource(URI.createURI("VIRTAUAL_URI")); //$NON-NLS-1$

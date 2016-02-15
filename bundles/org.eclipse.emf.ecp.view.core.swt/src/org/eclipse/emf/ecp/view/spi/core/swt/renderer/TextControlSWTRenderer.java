@@ -52,6 +52,7 @@ import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
@@ -414,7 +415,11 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 	@Override
 	protected String getUnsetText() {
 		return LocalizationServiceHelper
-			.getString(getClass(), MessageKeys.StringControl_NoTextSetClickToSetText);
+			.getString(TextControlSWTRenderer.class, MessageKeys.StringControl_NoTextSetClickToSetText);
 	}
 
+	@Override
+	protected void setValidationColor(Control control, Color validationColor) {
+		super.setValidationColor(Composite.class.cast(control).getChildren()[0], validationColor);
+	}
 }

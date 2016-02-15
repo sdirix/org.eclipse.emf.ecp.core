@@ -16,6 +16,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
+import java.text.MessageFormat;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.jar.Attributes;
@@ -30,6 +31,7 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.codegen.ecore.generator.Generator;
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
+import org.eclipse.emf.codegen.ecore.genmodel.GenPackage;
 import org.eclipse.emf.codegen.ecore.genmodel.generator.GenBaseGeneratorAdapter;
 import org.eclipse.emf.codegen.ecore.genmodel.util.GenModelUtil;
 import org.eclipse.emf.common.util.BasicMonitor;
@@ -281,11 +283,31 @@ public class GenerateJavaCodeAction implements IToolbarAction {
 
 			private void injectPluginXml(URI pluginXml, GenModel genmodel) {
 				final IResource resource = ResourceUtil.getResourceFromURI(pluginXml);
-				// TODO: icon is hardcoded
-				PluginXmlUtil.addEditorExtensionPoint((IFile) resource, EMFFORMS_EDITOR_CLASS_NAME, false,
+				final GenPackage genPackage = genmodel.getGenPackages().get(0);
+
+				PluginXmlUtil.addEditorExtensionPoint(
+					(IFile) resource,
+					EMFFORMS_EDITOR_CLASS_NAME,
+					false, /* default */
 					getFileExtension(genmodel),
-					"icons/full/obj16/MypackageModelFile.gif",
-					EMFFORMS_EDITOR_ID, EMFFORMS_EDITOR_NAME);
+					/**
+					 * Code from org.eclipse.emf.codegen.ecore.templates.editor.PluginXML
+					 * stringBuffer.append("icon=\"icons/full/obj16/");
+					 * stringBuffer.append(genPackage.getPrefix());
+					 * stringBuffer.append("ModelFile.gif\"");
+					 */
+					MessageFormat.format("icons/full/obj16/{0}ModelFile.gif", genPackage.getPrefix()),
+					/**
+					 * Default id is the fully qualified generated editor class appended by ID.
+					 * e.g.: org.eclipse.emf.ecp.makeithappen.model.task.presentation.TaskEditorID
+					 *
+					 * we will use the generated editor plugin id appended by the package prefix appended by
+					 * emfformseditor.
+					 * e.g.: org.eclipse.emf.ecp.makeithappen.model.editor.Task.emfformseditor
+					 */
+					MessageFormat.format("{0}.{1}.{2}", genmodel.getEditorPluginID(), genPackage.getPrefix(),
+						EMFFORMS_EDITOR_ID),
+					EMFFORMS_EDITOR_NAME);
 			}
 
 			private String getFileExtension(GenModel genmodel) {

@@ -95,6 +95,14 @@ public class ViewModelListener implements ModelChangeListener {
 			// TODO: table detail views might have a different root.
 
 			final VDomainModelReference reference = control.getDomainModelReference();
+			if (reference == null) {
+				/*
+				 * don't call structural change testers, because they have Asserts that the reference is not null ->
+				 * avoid IAE
+				 * TODO what is the expected behaviour here?
+				 */
+				continue;
+			}
 			if (structuralChangeTester.isStructureChanged(reference, viewModelContext.getDomainModel(), notification)) {
 				SettingToControlExpandHelper.resolveDomainReferences(control, viewModelContext.getDomainModel(),
 					viewModelContext);

@@ -11,6 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.validation;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -27,6 +28,7 @@ import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionRegistry;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
@@ -59,6 +61,7 @@ import org.eclipse.emf.ecp.view.spi.validation.ValidationService;
 import org.eclipse.emf.ecp.view.spi.validation.ViewValidationListener;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
+import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.core.services.controlmapper.EMFFormsSettingToControlMapper;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
@@ -150,8 +153,8 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 
 				final Set<EObject> eObjectsToValidate = new LinkedHashSet<EObject>();
 				if (VControl.class.isInstance(domainModelReference.eContainer())) {
-					final Set<UniqueSetting> settings = mappingProviderManager.getAllSettingsFor(
-						VControl.class.cast(domainModelReference.eContainer()), context.getDomainModel());
+					final Set<UniqueSetting> settings = mappingProviderManager.getAllSettingsFor(domainModelReference,
+						context.getDomainModel());
 					for (final UniqueSetting setting : settings) {
 						eObjectsToValidate.add(setting.getEObject());
 					}
@@ -558,6 +561,15 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 				&& EStructuralFeature.class.isInstance(diagnostic.getData().get(1))) {
 				final InternalEObject internalEObject = (InternalEObject) diagnostic.getData().get(0);
 				final EStructuralFeature eStructuralFeature = (EStructuralFeature) diagnostic.getData().get(1);
+				if (!internalEObject.eClass().getEAllStructuralFeatures().contains(eStructuralFeature)) {
+					Activator.getDefault().getReportService()
+						.report(new AbstractReport(
+							MessageFormat.format(
+								"No Setting can be created for Diagnostic {0} since the EObject's EClass does not contain the Feature.", //$NON-NLS-1$
+								diagnostic),
+							IStatus.INFO));
+					return;
+				}
 				final Setting setting = internalEObject.eSetting(eStructuralFeature);
 				final UniqueSetting uniqueSetting = UniqueSetting.createSetting(setting);
 				if (!currentUpdates.containsKey(uniqueSetting)) {

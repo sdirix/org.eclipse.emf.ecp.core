@@ -18,7 +18,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.common.spi.UniqueSetting;
 import org.eclipse.emf.ecp.common.spi.asserts.Assert;
-import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
@@ -63,17 +63,17 @@ public class EMFFormsMappingProviderDefaultHeuristic implements EMFFormsMappingP
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emfforms.spi.core.services.mappingprovider.EMFFormsMappingProvider#getMappingFor(org.eclipse.emf.ecp.view.spi.model.VControl,
+	 * @see org.eclipse.emfforms.spi.core.services.mappingprovider.EMFFormsMappingProvider#getMappingFor(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference,
 	 *      org.eclipse.emf.ecore.EObject)
 	 */
 	@Override
-	public Set<UniqueSetting> getMappingFor(VControl vControl, EObject domainObject) {
-		Assert.create(vControl).notNull();
+	public Set<UniqueSetting> getMappingFor(VDomainModelReference domainModelReference, EObject domainObject) {
+		Assert.create(domainModelReference).notNull();
 		Assert.create(domainObject).notNull();
 
 		Setting setting;
 		try {
-			setting = emfFormsDatabinding.getSetting(vControl.getDomainModelReference(), domainObject);
+			setting = emfFormsDatabinding.getSetting(domainModelReference, domainObject);
 		} catch (final DatabindingFailedException ex) {
 			reportService.report(new DatabindingFailedReport(ex));
 			return Collections.<UniqueSetting> emptySet();
@@ -87,13 +87,13 @@ public class EMFFormsMappingProviderDefaultHeuristic implements EMFFormsMappingP
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emfforms.spi.core.services.mappingprovider.EMFFormsMappingProvider#isApplicable(org.eclipse.emf.ecp.view.spi.model.VControl,
+	 * @see org.eclipse.emfforms.spi.core.services.mappingprovider.EMFFormsMappingProvider#isApplicable(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference,
 	 *      org.eclipse.emf.ecore.EObject)
 	 */
 	@Override
-	public double isApplicable(VControl vControl, EObject domainObject) {
-		if (vControl == null) {
-			reportService.report(new AbstractReport("Warning: The given VControl was null.")); //$NON-NLS-1$
+	public double isApplicable(VDomainModelReference domainModelReference, EObject domainObject) {
+		if (domainModelReference == null) {
+			reportService.report(new AbstractReport("Warning: The given VDomainModelReference was null.")); //$NON-NLS-1$
 			return NOT_APPLICABLE;
 		}
 		if (domainObject == null) {

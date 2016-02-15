@@ -13,6 +13,8 @@ package org.eclipse.emfforms.spi.editor;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
+import org.eclipse.emf.ecp.view.spi.model.VViewModelProperties;
 import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
 import org.eclipse.emfforms.internal.editor.ui.CreateDialog;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.util.CreateElementCallback;
@@ -40,7 +42,9 @@ public class InitializeChildCallback implements CreateElementCallback {
 			return true;
 		}
 
-		final VView view = ViewProviderHelper.getView((EObject) newElement, null);
+		final VViewModelProperties properties = VViewFactory.eINSTANCE.createViewModelLoadingProperties();
+		properties.addInheritableProperty("useOnModifyDatabinding", "true");
+		final VView view = ViewProviderHelper.getView((EObject) newElement, properties);
 		final boolean isViewEmpty = view == null ? true : view.getChildren().isEmpty();
 
 		int result = Window.OK;
