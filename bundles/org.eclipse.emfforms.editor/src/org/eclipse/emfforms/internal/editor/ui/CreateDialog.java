@@ -18,6 +18,7 @@ import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.model.VViewModelProperties;
+import org.eclipse.emfforms.swt.core.EMFFormsSWTConstants;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
@@ -92,7 +93,8 @@ public class CreateDialog extends Dialog {
 
 		try {
 			final VViewModelProperties properties = VViewFactory.eINSTANCE.createViewModelLoadingProperties();
-			properties.addInheritableProperty("useOnModifyDatabinding", "true");
+			properties.addInheritableProperty(EMFFormsSWTConstants.USE_ON_MODIFY_DATABINDING_KEY,
+				EMFFormsSWTConstants.USE_ON_MODIFY_DATABINDING_VALUE);
 			ECPSWTViewRenderer.INSTANCE.render(emfFormsParent, newObject, properties);
 		} catch (final ECPRendererException e) {
 		}
