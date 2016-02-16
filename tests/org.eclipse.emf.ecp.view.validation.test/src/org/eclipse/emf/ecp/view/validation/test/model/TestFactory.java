@@ -203,6 +203,16 @@ public interface TestFactory extends EFactory {
 	TableWithoutMultiplicityConcrete createTableWithoutMultiplicityConcrete();
 
 	/**
+	 * Returns a new object of class '<em>Referencer</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @return a new object of class '<em>Referencer</em>'.
+	 * @generated
+	 */
+	Referencer createReferencer();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

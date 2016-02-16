@@ -23,6 +23,7 @@ import org.eclipse.emf.ecp.view.validation.test.model.Librarian;
 import org.eclipse.emf.ecp.view.validation.test.model.Library;
 import org.eclipse.emf.ecp.view.validation.test.model.Mainboard;
 import org.eclipse.emf.ecp.view.validation.test.model.PowerBlock;
+import org.eclipse.emf.ecp.view.validation.test.model.Referencer;
 import org.eclipse.emf.ecp.view.validation.test.model.TableContentWithInnerChild;
 import org.eclipse.emf.ecp.view.validation.test.model.TableContentWithInnerChild2;
 import org.eclipse.emf.ecp.view.validation.test.model.TableContentWithValidation;
@@ -117,6 +118,8 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 			return createTableContentWithInnerChild();
 		case TestPackage.TABLE_WITHOUT_MULTIPLICITY_CONCRETE:
 			return createTableWithoutMultiplicityConcrete();
+		case TestPackage.REFERENCER:
+			return createReferencer();
 		default:
 			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -324,6 +327,18 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	public TableWithoutMultiplicityConcrete createTableWithoutMultiplicityConcrete() {
 		final TableWithoutMultiplicityConcreteImpl tableWithoutMultiplicityConcrete = new TableWithoutMultiplicityConcreteImpl();
 		return tableWithoutMultiplicityConcrete;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public Referencer createReferencer() {
+		final ReferencerImpl referencer = new ReferencerImpl();
+		return referencer;
 	}
 
 	/**

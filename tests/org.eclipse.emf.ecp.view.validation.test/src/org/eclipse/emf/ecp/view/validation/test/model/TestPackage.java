@@ -132,8 +132,8 @@ public interface TestPackage extends EPackage {
 	int LIBRARY_FEATURE_COUNT = 4;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.validation.test.model.impl.WriterImpl
-	 * <em>Writer</em>}' class.
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.validation.test.model.impl.WriterImpl <em>Writer</em>
+	 * }' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -812,8 +812,40 @@ public interface TestPackage extends EPackage {
 	int TABLE_WITHOUT_MULTIPLICITY_CONCRETE_FEATURE_COUNT = 1;
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.validation.test.model.Library
-	 * <em>Library</em>}'.
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.validation.test.model.impl.ReferencerImpl
+	 * <em>Referencer</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @see org.eclipse.emf.ecp.view.validation.test.model.impl.ReferencerImpl
+	 * @see org.eclipse.emf.ecp.view.validation.test.model.impl.TestPackageImpl#getReferencer()
+	 * @generated
+	 */
+	int REFERENCER = 18;
+
+	/**
+	 * The feature id for the '<em><b>Referenced Content</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int REFERENCER__REFERENCED_CONTENT = 0;
+
+	/**
+	 * The number of structural features of the '<em>Referencer</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int REFERENCER_FEATURE_COUNT = 1;
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.validation.test.model.Library <em>Library</em>
+	 * }'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -1079,8 +1111,8 @@ public interface TestPackage extends EPackage {
 	EReference getComputer_Mainboard();
 
 	/**
-	 * Returns the meta object for the attribute '
-	 * {@link org.eclipse.emf.ecp.view.validation.test.model.Computer#getName <em>Name</em>}'.
+	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecp.view.validation.test.model.Computer#getName
+	 * <em>Name</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -1180,8 +1212,8 @@ public interface TestPackage extends EPackage {
 	EReference getContainer_Contents();
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.validation.test.model.Content
-	 * <em>Content</em>}'.
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.validation.test.model.Content <em>Content</em>
+	 * }'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -1333,8 +1365,7 @@ public interface TestPackage extends EPackage {
 	EAttribute getTableContentWithValidation_Weight();
 
 	/**
-	 * Returns the meta object for class '
-	 * {@link org.eclipse.emf.ecp.view.validation.test.model.TableWithoutMultiplicity
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.validation.test.model.TableWithoutMultiplicity
 	 * <em>Table Without Multiplicity</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1476,6 +1507,32 @@ public interface TestPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getTableWithoutMultiplicityConcrete_Content();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.validation.test.model.Referencer
+	 * <em>Referencer</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the meta object for class '<em>Referencer</em>'.
+	 * @see org.eclipse.emf.ecp.view.validation.test.model.Referencer
+	 * @generated
+	 */
+	EClass getReferencer();
+
+	/**
+	 * Returns the meta object for the reference '
+	 * {@link org.eclipse.emf.ecp.view.validation.test.model.Referencer#getReferencedContent <em>Referenced Content</em>
+	 * }'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the meta object for the reference '<em>Referenced Content</em>'.
+	 * @see org.eclipse.emf.ecp.view.validation.test.model.Referencer#getReferencedContent()
+	 * @see #getReferencer()
+	 * @generated
+	 */
+	EReference getReferencer_ReferencedContent();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -2031,6 +2088,27 @@ public interface TestPackage extends EPackage {
 		 */
 		EReference TABLE_WITHOUT_MULTIPLICITY_CONCRETE__CONTENT = eINSTANCE
 			.getTableWithoutMultiplicityConcrete_Content();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.validation.test.model.impl.ReferencerImpl
+		 * <em>Referencer</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 *
+		 * @see org.eclipse.emf.ecp.view.validation.test.model.impl.ReferencerImpl
+		 * @see org.eclipse.emf.ecp.view.validation.test.model.impl.TestPackageImpl#getReferencer()
+		 * @generated
+		 */
+		EClass REFERENCER = eINSTANCE.getReferencer();
+
+		/**
+		 * The meta object literal for the '<em><b>Referenced Content</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 *
+		 * @generated
+		 */
+		EReference REFERENCER__REFERENCED_CONTENT = eINSTANCE.getReferencer_ReferencedContent();
 
 	}
 

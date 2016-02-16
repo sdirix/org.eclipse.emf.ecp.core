@@ -1,5 +1,5 @@
-/*******************************************************************************
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+/**
+ * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,51 +8,43 @@
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
- *******************************************************************************/
+ */
 package org.eclipse.emf.ecp.view.validation.test.model.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.eclipse.emf.ecp.view.validation.test.model.Mainboard;
+import org.eclipse.emf.ecp.view.validation.test.model.Computer;
+import org.eclipse.emf.ecp.view.validation.test.model.Referencer;
 import org.eclipse.emf.ecp.view.validation.test.model.TestPackage;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Mainboard</b></em>'.
+ * An implementation of the model object '<em><b>Referencer</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.MainboardImpl#getName <em>Name</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.ReferencerImpl#getReferencedContent
+ * <em>Referenced Content</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class MainboardImpl extends EObjectImpl implements Mainboard {
+public class ReferencerImpl extends EObjectImpl implements Referencer {
 	/**
-	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
+	 * The cached value of the '{@link #getReferencedContent() <em>Referenced Content</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
-	 * @see #getName()
+	 * @see #getReferencedContent()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String NAME_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @see #getName()
-	 * @generated
-	 * @ordered
-	 */
-	protected String name = NAME_EDEFAULT;
+	protected Computer referencedContent;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -60,7 +52,7 @@ public class MainboardImpl extends EObjectImpl implements Mainboard {
 	 *
 	 * @generated
 	 */
-	protected MainboardImpl() {
+	protected ReferencerImpl() {
 		super();
 	}
 
@@ -72,7 +64,7 @@ public class MainboardImpl extends EObjectImpl implements Mainboard {
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return TestPackage.Literals.MAINBOARD;
+		return TestPackage.Literals.REFERENCER;
 	}
 
 	/**
@@ -82,8 +74,28 @@ public class MainboardImpl extends EObjectImpl implements Mainboard {
 	 * @generated
 	 */
 	@Override
-	public String getName() {
-		return name;
+	public Computer getReferencedContent() {
+		if (referencedContent != null && referencedContent.eIsProxy()) {
+			final InternalEObject oldReferencedContent = (InternalEObject) referencedContent;
+			referencedContent = (Computer) eResolveProxy(oldReferencedContent);
+			if (referencedContent != oldReferencedContent) {
+				if (eNotificationRequired()) {
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE,
+						TestPackage.REFERENCER__REFERENCED_CONTENT, oldReferencedContent, referencedContent));
+				}
+			}
+		}
+		return referencedContent;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public Computer basicGetReferencedContent() {
+		return referencedContent;
 	}
 
 	/**
@@ -93,11 +105,12 @@ public class MainboardImpl extends EObjectImpl implements Mainboard {
 	 * @generated
 	 */
 	@Override
-	public void setName(String newName) {
-		final String oldName = name;
-		name = newName;
+	public void setReferencedContent(Computer newReferencedContent) {
+		final Computer oldReferencedContent = referencedContent;
+		referencedContent = newReferencedContent;
 		if (eNotificationRequired()) {
-			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.MAINBOARD__NAME, oldName, name));
+			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.REFERENCER__REFERENCED_CONTENT,
+				oldReferencedContent, referencedContent));
 		}
 	}
 
@@ -110,8 +123,11 @@ public class MainboardImpl extends EObjectImpl implements Mainboard {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-		case TestPackage.MAINBOARD__NAME:
-			return getName();
+		case TestPackage.REFERENCER__REFERENCED_CONTENT:
+			if (resolve) {
+				return getReferencedContent();
+			}
+			return basicGetReferencedContent();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -125,8 +141,8 @@ public class MainboardImpl extends EObjectImpl implements Mainboard {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-		case TestPackage.MAINBOARD__NAME:
-			setName((String) newValue);
+		case TestPackage.REFERENCER__REFERENCED_CONTENT:
+			setReferencedContent((Computer) newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);
@@ -141,8 +157,8 @@ public class MainboardImpl extends EObjectImpl implements Mainboard {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-		case TestPackage.MAINBOARD__NAME:
-			setName(NAME_EDEFAULT);
+		case TestPackage.REFERENCER__REFERENCED_CONTENT:
+			setReferencedContent((Computer) null);
 			return;
 		}
 		super.eUnset(featureID);
@@ -157,29 +173,10 @@ public class MainboardImpl extends EObjectImpl implements Mainboard {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-		case TestPackage.MAINBOARD__NAME:
-			return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+		case TestPackage.REFERENCER__REFERENCED_CONTENT:
+			return referencedContent != null;
 		}
 		return super.eIsSet(featureID);
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @generated
-	 */
-	@Override
-	public String toString() {
-		if (eIsProxy()) {
-			return super.toString();
-		}
-
-		final StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (name: ");
-		result.append(name);
-		result.append(')');
-		return result.toString();
-	}
-
-} // MainboardImpl
+} // ReferencerImpl

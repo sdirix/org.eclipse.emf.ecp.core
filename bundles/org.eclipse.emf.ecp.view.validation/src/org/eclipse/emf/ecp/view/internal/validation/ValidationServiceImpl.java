@@ -249,7 +249,7 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 		@Override
 		public void notifyAdd(Notifier notifier) {
 			if (notifier == context.getDomainModel()) {
-				validate(getAllEObjects(context.getDomainModel()));
+				validate(getAllEObjectsToValidate());
 			}
 		}
 
@@ -381,6 +381,14 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 		return result;
 	}
 
+	private Collection<EObject> getAllEObjectsToValidate() {
+		return getAllEObjectsToValidate(controlMapper);
+	}
+
+	private static Collection<EObject> getAllEObjectsToValidate(EMFFormsSettingToControlMapper controlMapper) {
+		return controlMapper.getEObjectsWithSettings();
+	}
+
 	/**
 	 * {@inheritDoc}
 	 *
@@ -496,12 +504,7 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 	}
 
 	private boolean isObjectStillValid(EObject diagnosticEobject) {
-		EObject toCheck = diagnosticEobject;
-		while (toCheck != null && toCheck != context.getDomainModel()) {
-			toCheck = toCheck.eContainer();
-		}
-
-		return toCheck == context.getDomainModel();
+		return controlMapper.hasControlsFor(diagnosticEobject);
 	}
 
 	private void updateAndPropagate(Map<VElement, VDiagnostic> controlDiagnosticMap) {
@@ -665,7 +668,7 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 	public void addValidationProvider(ValidationProvider validationProvider, boolean revalidate) {
 		validationProviders.add(validationProvider);
 		if (revalidate) {
-			validate(getAllEObjects(context.getDomainModel()));
+			validate(getAllEObjectsToValidate());
 		}
 	}
 
@@ -690,7 +693,7 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 	public void removeValidationProvider(ValidationProvider validationProvider, boolean revalidate) {
 		validationProviders.remove(validationProvider);
 		if (revalidate) {
-			validate(getAllEObjects(context.getDomainModel()));
+			validate(getAllEObjectsToValidate());
 		}
 	}
 
@@ -750,8 +753,7 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 	 */
 	@Override
 	public void childContextAdded(VElement parentElement, EMFFormsViewContext childContext) {
-		// TODO Auto-generated method stub
-
+		validate(getAllEObjectsToValidate());
 	}
 
 	/**
@@ -773,7 +775,7 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 	@Override
 	public void contextInitialised() {
 		initialized = true;
-		validate(getAllEObjects(context.getDomainModel()));
+		validate(getAllEObjectsToValidate());
 	}
 
 	/**

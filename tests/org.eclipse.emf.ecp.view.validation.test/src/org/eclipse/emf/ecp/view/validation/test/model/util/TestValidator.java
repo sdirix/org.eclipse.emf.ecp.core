@@ -35,6 +35,7 @@ import org.eclipse.emf.ecp.view.validation.test.model.Librarian;
 import org.eclipse.emf.ecp.view.validation.test.model.Library;
 import org.eclipse.emf.ecp.view.validation.test.model.Mainboard;
 import org.eclipse.emf.ecp.view.validation.test.model.PowerBlock;
+import org.eclipse.emf.ecp.view.validation.test.model.Referencer;
 import org.eclipse.emf.ecp.view.validation.test.model.TableContent;
 import org.eclipse.emf.ecp.view.validation.test.model.TableContentWithInnerChild;
 import org.eclipse.emf.ecp.view.validation.test.model.TableContentWithInnerChild2;
@@ -163,7 +164,8 @@ public class TestValidator extends EObjectValidator {
 	 * @generated
 	 */
 	@Override
-	protected boolean validate(int classifierID, Object value, DiagnosticChain diagnostics, Map<Object, Object> context) {
+	protected boolean validate(int classifierID, Object value, DiagnosticChain diagnostics,
+		Map<Object, Object> context) {
 		switch (classifierID) {
 		case TestPackage.LIBRARY:
 			return validateLibrary((Library) value, diagnostics, context);
@@ -202,6 +204,8 @@ public class TestValidator extends EObjectValidator {
 		case TestPackage.TABLE_WITHOUT_MULTIPLICITY_CONCRETE:
 			return validateTableWithoutMultiplicityConcrete((TableWithoutMultiplicityConcrete) value, diagnostics,
 				context);
+		case TestPackage.REFERENCER:
+			return validateReferencer((Referencer) value, diagnostics, context);
 		default:
 			return true;
 		}
@@ -496,7 +500,8 @@ public class TestValidator extends EObjectValidator {
 				diagnostics.add(createDiagnostic(severity, DIAGNOSTIC_SOURCE, 0,
 					"_UI_GenericConstraint_diagnostic",
 					new Object[] { message, getObjectLabel(duplicate, context) }, new Object[] { duplicate,
-						feature }, context));
+						feature },
+					context));
 			}
 		}
 	}
@@ -615,6 +620,16 @@ public class TestValidator extends EObjectValidator {
 		TableWithoutMultiplicityConcrete tableWithoutMultiplicityConcrete, DiagnosticChain diagnostics,
 		Map<Object, Object> context) {
 		return validate_EveryDefaultConstraint(tableWithoutMultiplicityConcrete, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public boolean validateReferencer(Referencer referencer, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(referencer, diagnostics, context);
 	}
 
 	private boolean validateUniqueness(TableWithUnique tableWithUnique, DiagnosticChain diagnostics,
