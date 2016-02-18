@@ -15,6 +15,7 @@ Export-Package: org.eclipse.emf.ecp.view.template.model.provider;version="1.9.0"
  org.eclipse.emf.ecp.view.template.style.fontProperties.model.provider;version="1.9.0";x-internal:=true,
  org.eclipse.emf.ecp.view.template.style.mandatory.model.provider;version="1.9.0";x-internal:=true,
  org.eclipse.emf.ecp.view.template.style.tab.model.provider;version="1.9.0";x-internal:=true,
+ org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.provider;version="1.9.0";x-internal:=true,
  org.eclipse.emf.ecp.view.template.style.tableValidation.model.provider;version="1.9.0";x-internal:=true,
  org.eclipse.emf.ecp.view.template.style.textControlEnablement.model.provider;version="1.9.0";x-internal:=true,
  org.eclipse.emf.ecp.view.template.style.validation.model.provider;version="1.9.0";x-internal:=true

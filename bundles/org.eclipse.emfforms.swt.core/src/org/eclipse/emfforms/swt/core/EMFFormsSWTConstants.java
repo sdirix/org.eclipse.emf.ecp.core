@@ -15,6 +15,7 @@ package org.eclipse.emfforms.swt.core;
  * Constants which may be used by SWT related renderers.
  *
  * @author Johannes Faltermeier
+ * @since 1.9
  *
  */
 public final class EMFFormsSWTConstants {
