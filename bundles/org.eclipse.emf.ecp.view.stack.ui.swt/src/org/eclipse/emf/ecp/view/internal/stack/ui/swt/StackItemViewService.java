@@ -246,7 +246,7 @@ public class StackItemViewService implements ViewModelService {
 		 * @param stack the affected {@link VStackLayout}.
 		 * @param oldSetting the current registered {@link Setting}.
 		 */
-		public StackItemDomainModelReferenceChangeListener(VStackLayout stack, Setting oldSetting) {
+		StackItemDomainModelReferenceChangeListener(VStackLayout stack, Setting oldSetting) {
 			this.stack = stack;
 			setting = oldSetting;
 		}
