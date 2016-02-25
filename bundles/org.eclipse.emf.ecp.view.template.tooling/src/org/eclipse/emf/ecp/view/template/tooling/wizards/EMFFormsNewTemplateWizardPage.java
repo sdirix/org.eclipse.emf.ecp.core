@@ -39,7 +39,7 @@ import org.eclipse.ui.dialogs.ContainerSelectionDialog;
  * OR with the extension that matches the expected one (template).
  */
 
-public class EMFFormsTemplateWizardPage extends WizardPage {
+public class EMFFormsNewTemplateWizardPage extends WizardPage {
 	private Text containerText;
 
 	private Text fileText;
@@ -51,7 +51,7 @@ public class EMFFormsTemplateWizardPage extends WizardPage {
 	 *
 	 * @param selection the current {@link ISelection}
 	 */
-	public EMFFormsTemplateWizardPage(ISelection selection) {
+	public EMFFormsNewTemplateWizardPage(ISelection selection) {
 		super("wizardPage"); //$NON-NLS-1$
 		setTitle(Messages.EMFFormsTemplateWizardPage_title);
 		setDescription(Messages.EMFFormsTemplateWizardPage_description);
