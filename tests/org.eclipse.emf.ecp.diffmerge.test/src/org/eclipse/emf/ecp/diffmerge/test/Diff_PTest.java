@@ -40,7 +40,7 @@ import org.junit.Test;
  * @author Eugen Neufeld
  *
  */
-public class Diff_Test {
+public class Diff_PTest {
 	private DefaultRealm realm;
 
 	@Before

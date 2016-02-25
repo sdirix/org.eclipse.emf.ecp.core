@@ -12,5 +12,8 @@ Require-Bundle: org.junit;bundle-version="[4.11.0,5.0.0)",
  org.eclipse.emf.ecp.view.horizontal.model;bundle-version="[1.9.0,2.0.0)",
  org.eclipse.emf.ecp.test.common;bundle-version="[1.9.0,2.0.0)",
  org.eclipse.emfforms.core.services.domainexpander.default;bundle-version="[1.9.0,2.0.0)",
- org.eclipse.emfforms.core.services.mappingprovider.default;bundle-version="[1.9.0,2.0.0)"
+ org.eclipse.emfforms.core.services.mappingprovider.default;bundle-version="[1.9.0,2.0.0)",
+ org.eclipse.emfforms.core.services.emf;bundle-version="[1.9.0,2.0.0)",
+ org.eclipse.emfforms.core.services.structuralchange;bundle-version="[1.9.0,2.0.0)",
+ org.eclipse.emfforms.core.services.structuralchange.default;bundle-version="[1.9.0,2.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
