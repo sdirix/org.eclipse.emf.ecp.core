@@ -27,7 +27,6 @@ import org.eclipse.emf.ecp.common.spi.UniqueSetting;
 import org.eclipse.emf.ecp.view.internal.rule.reporting.LeafConditionDMRResolutionFailedReport;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener;
-import org.eclipse.emf.ecp.view.spi.model.SettingPath;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.rule.model.AndCondition;
@@ -36,6 +35,10 @@ import org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition;
 import org.eclipse.emf.ecp.view.spi.rule.model.OrCondition;
 import org.eclipse.emf.ecp.view.spi.rule.model.Rule;
 import org.eclipse.emf.ecp.view.spi.rule.model.impl.LeafConditionSettingIterator;
+import org.eclipse.emfforms.spi.common.report.AbstractReport;
+import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
 
 /**
  * Rule registry that maintains which {@link VElement}s
@@ -137,21 +140,33 @@ public class RuleRegistry<T extends Rule> {
 	private Set<UniqueSetting> registerLegacySupport(VElement renderable, T rule,
 		final Set<UniqueSetting> registeredSettings, final LeafCondition leafCondition,
 		final VDomainModelReference domainModelReference) {
-		final Iterator<SettingPath> fullPathIterator = domainModelReference.getFullPathIterator();
-		while (fullPathIterator.hasNext()) {
-			final SettingPath path = fullPathIterator.next();
-			final Iterator<Setting> pathIterator = path.getPath();
-			final boolean validIterator = pathIterator.hasNext();
-			while (pathIterator.hasNext()) {
-				final Setting setting = pathIterator.next();
-				final UniqueSetting uniqueSetting = UniqueSetting.createSetting(setting);
-				mapSettingToRule(uniqueSetting, leafCondition, rule);
-				registeredSettings.add(uniqueSetting);
-			}
-			if (validIterator) {
-				rulesToRenderables.put(rule, renderable);
-			}
+
+		try {
+			final Setting setting = context.getService(EMFFormsDatabindingEMF.class)
+				.getSetting(leafCondition.getDomainModelReference(), context.getDomainModel());
+			final UniqueSetting uniqueSetting = UniqueSetting.createSetting(setting);
+			mapSettingToRule(uniqueSetting, leafCondition, rule);
+			registeredSettings.add(uniqueSetting);
+			rulesToRenderables.put(rule, renderable);
+		} catch (final DatabindingFailedException ex) {
+			context.getService(ReportService.class).report(new AbstractReport(ex));
 		}
+
+		// final Iterator<SettingPath> fullPathIterator = domainModelReference.getFullPathIterator();
+		// while (fullPathIterator.hasNext()) {
+		// final SettingPath path = fullPathIterator.next();
+		// final Iterator<Setting> pathIterator = path.getPath();
+		// final boolean validIterator = pathIterator.hasNext();
+		// while (pathIterator.hasNext()) {
+		// final Setting setting = pathIterator.next();
+		// final UniqueSetting uniqueSetting = UniqueSetting.createSetting(setting);
+		// mapSettingToRule(uniqueSetting, leafCondition, rule);
+		// registeredSettings.add(uniqueSetting);
+		// }
+		// if (validIterator) {
+		// rulesToRenderables.put(rule, renderable);
+		// }
+		// }
 		return registeredSettings;
 	}
 
