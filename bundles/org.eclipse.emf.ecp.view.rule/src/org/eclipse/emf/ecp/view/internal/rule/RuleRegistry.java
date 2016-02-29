@@ -312,7 +312,7 @@ public class RuleRegistry<T extends Rule> {
 
 		private final T rule;
 
-		public DMRChangeListener(T rule) {
+		DMRChangeListener(T rule) {
 			this.rule = rule;
 		}
 
