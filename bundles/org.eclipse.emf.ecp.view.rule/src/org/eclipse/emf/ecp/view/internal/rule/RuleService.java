@@ -84,7 +84,7 @@ public class RuleService implements ViewModelService, EMFFormsContextListener {
 		context.registerEMFFormsContextListener(this);
 	}
 
-	private static void resetToVisible(VElement renderable) {
+	private void resetToVisible(VElement renderable) {
 		if (renderable == null) {
 			return;
 		}
@@ -95,7 +95,7 @@ public class RuleService implements ViewModelService, EMFFormsContextListener {
 		}
 	}
 
-	private static void resetToEnabled(VElement renderable) {
+	private void resetToEnabled(VElement renderable) {
 		if (renderable == null) {
 			return;
 		}
@@ -117,7 +117,7 @@ public class RuleService implements ViewModelService, EMFFormsContextListener {
 		return null;
 	}
 
-	private static <T extends Rule> void updateStateMap(Map<VElement, Boolean> stateMap, VElement renderable,
+	private <T extends Rule> void updateStateMap(Map<VElement, Boolean> stateMap, VElement renderable,
 		boolean isOpposite, boolean evalResult, Class<T> ruleType) {
 
 		if (!stateMap.containsKey(renderable)) {
@@ -126,7 +126,7 @@ public class RuleService implements ViewModelService, EMFFormsContextListener {
 			if (rule != null && ruleApplies(rule, ruleType)) {
 				final Condition condition = rule.getCondition();
 				if (condition != null && canOverrideParent(evalResult, isOpposite)) {
-					final boolean evaluate = condition.evaluate();
+					final boolean evaluate = condition.evaluate(context.getDomainModel());
 					stateMap.put(renderable, isOpposite(rule) ? !evaluate : evaluate);
 					didUpdate = true;
 				}
@@ -177,7 +177,7 @@ public class RuleService implements ViewModelService, EMFFormsContextListener {
 		return false;
 	}
 
-	private static <T extends Rule> Map<VElement, Boolean> evalAffectedRenderables(RuleRegistry<T> registry,
+	private <T extends Rule> Map<VElement, Boolean> evalAffectedRenderables(RuleRegistry<T> registry,
 		Class<T> ruleType, UniqueSetting setting, boolean isDryRun, Map<Setting, Object> possibleValues) {
 
 		final Map<VElement, Boolean> map = new LinkedHashMap<VElement, Boolean>();
@@ -206,9 +206,9 @@ public class RuleService implements ViewModelService, EMFFormsContextListener {
 			if (rule.getCondition() == null) {
 				result = true;
 			} else if (isDryRun && hasChanged) {
-				result = rule.getCondition().evaluateChangedValues(possibleValues);
+				result = rule.getCondition().evaluateChangedValues(context.getDomainModel(), possibleValues);
 			} else if (!isDryRun) {
-				result = rule.getCondition().evaluate();
+				result = rule.getCondition().evaluate(context.getDomainModel());
 			} else {
 				updateMap = false;
 			}
@@ -280,12 +280,12 @@ public class RuleService implements ViewModelService, EMFFormsContextListener {
 		return hasChanged;
 	}
 
-	private static <T extends Rule> Map<VElement, Boolean> evalAffectedRenderables(RuleRegistry<T> registry,
+	private <T extends Rule> Map<VElement, Boolean> evalAffectedRenderables(RuleRegistry<T> registry,
 		Class<T> ruleType, UniqueSetting setting, Map<Setting, Object> possibleValues) {
 		return evalAffectedRenderables(registry, ruleType, setting, true, possibleValues);
 	}
 
-	private static <T extends Rule> Map<VElement, Boolean> evalAffectedRenderables(RuleRegistry<T> registry,
+	private <T extends Rule> Map<VElement, Boolean> evalAffectedRenderables(RuleRegistry<T> registry,
 		Class<T> ruleType, UniqueSetting setting) {
 		final Map<Setting, Object> changedValues = Collections.emptyMap();
 		return evalAffectedRenderables(registry, ruleType, setting, false, changedValues);

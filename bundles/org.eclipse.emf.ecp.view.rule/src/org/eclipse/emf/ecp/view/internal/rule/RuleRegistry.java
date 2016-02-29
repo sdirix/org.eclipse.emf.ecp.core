@@ -106,7 +106,8 @@ public class RuleRegistry<T extends Rule> {
 				return registerLegacySupport(renderable, rule, registeredSettings, leafCondition, domainModelReference);
 			}
 
-			final LeafConditionSettingIterator iterator = new LeafConditionSettingIterator(leafCondition, true);
+			final LeafConditionSettingIterator iterator = new LeafConditionSettingIterator(leafCondition,
+				context.getDomainModel(), true);
 			while (iterator.hasNext()) {
 				final Setting setting = iterator.next();
 				final UniqueSetting uniqueSetting = UniqueSetting.createSetting(setting);
@@ -115,6 +116,7 @@ public class RuleRegistry<T extends Rule> {
 			}
 			mapDomainToDMRs(rule, iterator.getUsedValueDomainModelReferences());
 			rulesToRenderables.put(rule, renderable);
+			iterator.dispose();
 
 		} else if (condition instanceof OrCondition) {
 			final OrCondition orCondition = (OrCondition) condition;

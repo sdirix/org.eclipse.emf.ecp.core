@@ -27,6 +27,8 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexdmrFactory;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition;
@@ -41,6 +43,7 @@ import org.eclipse.emf.emfstore.bowling.Player;
 import org.eclipse.emf.emfstore.bowling.Tournament;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -174,7 +177,7 @@ public class ConditionEvaluator_Test {
 		final LeafCondition leafCondition = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_IsProfessional(),
 			CORRECT_PLAYER_PROFESSIONAL, player);
 
-		assertTrue(leafCondition.evaluate());
+		assertTrue(leafCondition.evaluate(player));
 	}
 
 	@Test
@@ -183,7 +186,7 @@ public class ConditionEvaluator_Test {
 		final LeafCondition leafCondition = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_IsProfessional(),
 			!CORRECT_PLAYER_PROFESSIONAL, player);
 
-		assertFalse(leafCondition.evaluate());
+		assertFalse(leafCondition.evaluate(player));
 	}
 
 	@Test
@@ -193,7 +196,7 @@ public class ConditionEvaluator_Test {
 		final LeafCondition leafCondition = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_Name(),
 			null, player);
 
-		assertTrue(leafCondition.evaluate());
+		assertTrue(leafCondition.evaluate(player));
 	}
 
 	@Test
@@ -202,7 +205,7 @@ public class ConditionEvaluator_Test {
 		final LeafCondition leafCondition = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_Name(),
 			CORRECT_PLAYER_NAME, player);
 
-		assertTrue(leafCondition.evaluate());
+		assertTrue(leafCondition.evaluate(player));
 	}
 
 	@Test
@@ -211,7 +214,7 @@ public class ConditionEvaluator_Test {
 		final LeafCondition leafCondition = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_Name(),
 			CORRECT_PLAYER_NAME + "BLA", player);
 
-		assertFalse(leafCondition.evaluate());
+		assertFalse(leafCondition.evaluate(player));
 	}
 
 	@Test
@@ -220,7 +223,7 @@ public class ConditionEvaluator_Test {
 		final LeafCondition leafCondition = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_NumberOfVictories(),
 			CORRECT_PLAYER_VICTORIES, player);
 
-		assertTrue(leafCondition.evaluate());
+		assertTrue(leafCondition.evaluate(player));
 	}
 
 	@Test
@@ -229,7 +232,7 @@ public class ConditionEvaluator_Test {
 		final LeafCondition leafCondition = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_NumberOfVictories(),
 			CORRECT_PLAYER_VICTORIES + 1, player);
 
-		assertFalse(leafCondition.evaluate());
+		assertFalse(leafCondition.evaluate(player));
 	}
 
 	@Test
@@ -238,7 +241,7 @@ public class ConditionEvaluator_Test {
 		final LeafCondition leafCondition = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_Height(),
 			CORRECT_PLAYER_HEIGHT, player);
 
-		assertTrue(leafCondition.evaluate());
+		assertTrue(leafCondition.evaluate(player));
 	}
 
 	@Test
@@ -247,7 +250,7 @@ public class ConditionEvaluator_Test {
 		final LeafCondition leafCondition = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_Height(),
 			CORRECT_PLAYER_HEIGHT + 1, player);
 
-		assertFalse(leafCondition.evaluate());
+		assertFalse(leafCondition.evaluate(player));
 	}
 
 	@Test
@@ -256,7 +259,7 @@ public class ConditionEvaluator_Test {
 		final LeafCondition leafCondition = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_DateOfBirth(),
 			correctPlayerBirthDate, player);
 
-		assertTrue(leafCondition.evaluate());
+		assertTrue(leafCondition.evaluate(player));
 	}
 
 	@Test
@@ -265,7 +268,7 @@ public class ConditionEvaluator_Test {
 		final LeafCondition leafCondition = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_DateOfBirth(),
 			getDate("12.12.2012"), player);
 
-		assertFalse(leafCondition.evaluate());
+		assertFalse(leafCondition.evaluate(player));
 	}
 
 	@Test
@@ -274,7 +277,7 @@ public class ConditionEvaluator_Test {
 		final LeafCondition leafCondition = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_DateOfBirth(),
 			getDate("11.11.2011"), player);
 
-		assertTrue(leafCondition.evaluate());
+		assertTrue(leafCondition.evaluate(player));
 	}
 
 	@Test
@@ -283,7 +286,7 @@ public class ConditionEvaluator_Test {
 		final LeafCondition leafCondition = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_Gender(),
 			CORRECT_PLAYER_GENDER.getLiteral(), player);
 
-		assertTrue(leafCondition.evaluate());
+		assertTrue(leafCondition.evaluate(player));
 	}
 
 	@Test
@@ -292,7 +295,7 @@ public class ConditionEvaluator_Test {
 		final LeafCondition leafCondition = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_Gender(),
 			Gender.MALE.getLiteral(), player);
 
-		assertFalse(leafCondition.evaluate());
+		assertFalse(leafCondition.evaluate(player));
 	}
 
 	@Test
@@ -301,7 +304,7 @@ public class ConditionEvaluator_Test {
 		final LeafCondition leafCondition = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_WinLossRatio(),
 			CORRECT_PLAYER_RATION, player);
 
-		assertTrue(leafCondition.evaluate());
+		assertTrue(leafCondition.evaluate(player));
 	}
 
 	@Test
@@ -310,7 +313,7 @@ public class ConditionEvaluator_Test {
 		final LeafCondition leafCondition = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_WinLossRatio(),
 			new BigDecimal(42), player);
 
-		assertTrue(leafCondition.evaluate());
+		assertTrue(leafCondition.evaluate(player));
 	}
 
 	@Test
@@ -319,7 +322,7 @@ public class ConditionEvaluator_Test {
 		final LeafCondition leafCondition = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_WinLossRatio(),
 			new BigDecimal(1), player);
 
-		assertFalse(leafCondition.evaluate());
+		assertFalse(leafCondition.evaluate(player));
 	}
 
 	@Test
@@ -328,12 +331,12 @@ public class ConditionEvaluator_Test {
 		final LeafCondition leafCondition1 = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_EMails(),
 			CORRECT_PLAYER_EMAIL1, player);
 
-		assertTrue(leafCondition1.evaluate());
+		assertTrue(leafCondition1.evaluate(player));
 
 		final LeafCondition leafCondition2 = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_EMails(),
 			CORRECT_PLAYER_EMAIL2, player);
 
-		assertTrue(leafCondition2.evaluate());
+		assertTrue(leafCondition2.evaluate(player));
 	}
 
 	@Test
@@ -342,7 +345,7 @@ public class ConditionEvaluator_Test {
 		final LeafCondition leafCondition = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_EMails(),
 			"bla@bla.com", player);
 
-		assertFalse(leafCondition.evaluate());
+		assertFalse(leafCondition.evaluate(player));
 	}
 
 	@Test
@@ -353,7 +356,7 @@ public class ConditionEvaluator_Test {
 				BowlingPackage.eINSTANCE.getLeague_Players(), Collections.<EReference> emptyList(),
 				BowlingPackage.eINSTANCE.getPlayer_Name(), Collections.<EReference> emptyList());
 
-			assertTrue(leafCondition1.evaluate());
+			assertTrue(leafCondition1.evaluate(league));
 		}
 
 	}
@@ -365,12 +368,21 @@ public class ConditionEvaluator_Test {
 			BowlingPackage.eINSTANCE.getLeague_Players(), Collections.<EReference> emptyList(),
 			BowlingPackage.eINSTANCE.getPlayer_Name(), Collections.<EReference> emptyList());
 
-		assertFalse(leafCondition1.evaluate());
+		assertFalse(leafCondition1.evaluate(league));
 
 	}
 
-	@Test
+	@Ignore
 	public void testContainmentConditionEObjectDeep() {
+		/*
+		 * Currently ignore this test case because it relied on some "iterator magic" of the feature path dmr that
+		 * allowed to have a path with a list in the middle:
+		 * Like in this test case the dmr's for the leaf condition have the following scope:
+		 * Tournament -> List<Matchup> -> List<Game> -> List<Frame>
+		 * <---------------DMR---------------->
+		 * ...................................<----valueDMR---->
+		 * This was kind of a hack and does not work with the databinding service.
+		 */
 		final Tournament tournament = BowlingFactory.eINSTANCE.createTournament();
 		final Matchup m1 = BowlingFactory.eINSTANCE.createMatchup();
 		final Matchup m2 = BowlingFactory.eINSTANCE.createMatchup();
@@ -403,7 +415,56 @@ public class ConditionEvaluator_Test {
 			Arrays.asList(BowlingPackage.eINSTANCE.getTournament_Matchups()),
 			BowlingPackage.eINSTANCE.getGame_Frames(), Collections.<EReference> emptyList());
 
-		assertTrue(leafCondition1.evaluate());
+		assertTrue(leafCondition1.evaluate(tournament));
 
+	}
+
+	@Test
+	public void testContainmentConditionEObjectDeepIndexDMR() {
+		final Tournament tournament = BowlingFactory.eINSTANCE.createTournament();
+		final Matchup m1 = BowlingFactory.eINSTANCE.createMatchup();
+		final Matchup m2 = BowlingFactory.eINSTANCE.createMatchup();
+		tournament.getMatchups().add(m1);
+		tournament.getMatchups().add(m2);
+		final Game g1 = BowlingFactory.eINSTANCE.createGame();
+		final Game g2 = BowlingFactory.eINSTANCE.createGame();
+
+		g1.getFrames().add(2);
+		g1.getFrames().add(3);
+		g2.getFrames().add(5);
+		g2.getFrames().add(8);
+
+		m1.getGames().add(g1);
+		m1.getGames().add(g2);
+
+		final Game g3 = BowlingFactory.eINSTANCE.createGame();
+		final Game g4 = BowlingFactory.eINSTANCE.createGame();
+
+		g3.getFrames().add(13);
+		g3.getFrames().add(21);
+		g4.getFrames().add(34);
+		g4.getFrames().add(55);
+
+		m2.getGames().add(g3);
+		m2.getGames().add(g4);
+
+		final VIndexDomainModelReference indexDMR = VIndexdmrFactory.eINSTANCE.createIndexDomainModelReference();
+		indexDMR.setDomainModelEFeature(BowlingPackage.eINSTANCE.getTournament_Matchups());
+		indexDMR.setIndex(1);
+		final VFeaturePathDomainModelReference targetDMR = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
+		targetDMR.setDomainModelEFeature(BowlingPackage.eINSTANCE.getMatchup_Games());
+		indexDMR.setTargetDMR(targetDMR);
+
+		final VFeaturePathDomainModelReference valueDMR = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
+		valueDMR.setDomainModelEFeature(BowlingPackage.eINSTANCE.getGame_Frames());
+
+		final LeafCondition leafCondtion = RuleFactory.eINSTANCE.createLeafCondition();
+		leafCondtion.setDomainModelReference(indexDMR);
+		leafCondtion.setValueDomainModelReference(valueDMR);
+		leafCondtion.setExpectedValue(21);
+
+		assertTrue(leafCondtion.evaluate(tournament));
 	}
 }
