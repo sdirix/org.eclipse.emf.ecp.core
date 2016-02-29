@@ -14,6 +14,7 @@ package org.eclipse.emf.ecp.view.internal.rule;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -32,6 +33,7 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeAddRemoveListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
+import org.eclipse.emf.ecp.view.spi.model.SettingPath;
 import org.eclipse.emf.ecp.view.spi.model.VAttachment;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
@@ -42,10 +44,6 @@ import org.eclipse.emf.ecp.view.spi.rule.model.EnableRule;
 import org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition;
 import org.eclipse.emf.ecp.view.spi.rule.model.Rule;
 import org.eclipse.emf.ecp.view.spi.rule.model.ShowRule;
-import org.eclipse.emfforms.spi.common.report.AbstractReport;
-import org.eclipse.emfforms.spi.common.report.ReportService;
-import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
-import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
 import org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener;
 import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext;
 
@@ -544,13 +542,16 @@ public class RuleService implements ViewModelService, EMFFormsContextListener {
 		}
 
 		private void evalNewRules(LeafCondition leafCondition) {
-			try {
-				final Setting setting = context.getService(EMFFormsDatabindingEMF.class)
-					.getSetting(leafCondition.getDomainModelReference(), context.getDomainModel());
-				evalEnable(UniqueSetting.createSetting(setting));
-				evalShow(UniqueSetting.createSetting(setting));
-			} catch (final DatabindingFailedException ex) {
-				context.getService(ReportService.class).report(new AbstractReport(ex));
+			final Iterator<SettingPath> fullPathIterator = leafCondition.getDomainModelReference()
+				.getFullPathIterator();
+			while (fullPathIterator.hasNext()) {
+				final SettingPath settingPath = fullPathIterator.next();
+				final Iterator<Setting> settings = settingPath.getPath();
+				while (settings.hasNext()) {
+					final Setting setting = settings.next();
+					evalEnable(UniqueSetting.createSetting(setting));
+					evalShow(UniqueSetting.createSetting(setting));
+				}
 			}
 		}
 
