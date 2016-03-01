@@ -18,6 +18,7 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecp.view.spi.table.model.VTablePackage;
+import org.eclipse.emf.ecp.view.spi.table.model.VWidthConfiguration;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IChildCreationExtender;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
@@ -26,20 +27,25 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
+import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
+import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
- * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.spi.table.model.VReadOnlyColumnConfiguration}
- * object.
+ * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.spi.table.model.VWidthConfiguration} object.
  * <!-- begin-user-doc -->
- * <!-- end-user-doc -->
  *
+ * @since 1.9
+ *        <!-- end-user-doc -->
  * @generated
  */
-public class ReadOnlyColumnConfigurationItemProvider
+public class WidthConfigurationItemProvider
 	extends ItemProviderAdapter
 	implements
-	IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider,
+	IEditingDomainItemProvider,
+	IStructuredItemContentProvider,
+	ITreeItemContentProvider,
+	IItemLabelProvider,
 	IItemPropertySource {
 	/**
 	 * This constructs an instance from a factory and a notifier.
@@ -48,7 +54,7 @@ public class ReadOnlyColumnConfigurationItemProvider
 	 *
 	 * @generated
 	 */
-	public ReadOnlyColumnConfigurationItemProvider(AdapterFactory adapterFactory) {
+	public WidthConfigurationItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -64,27 +70,27 @@ public class ReadOnlyColumnConfigurationItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addColumnDomainReferencesPropertyDescriptor(object);
+			addColumnDomainReferencePropertyDescriptor(object);
+			addWeightPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
 
 	/**
-	 * This adds a property descriptor for the Column Domain References feature.
+	 * This adds a property descriptor for the Column Domain Reference feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
 	 * @generated
 	 */
-	protected void addColumnDomainReferencesPropertyDescriptor(Object object) {
+	protected void addColumnDomainReferencePropertyDescriptor(Object object) {
 		itemPropertyDescriptors
 			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
-				getString("_UI_ReadOnlyColumnConfiguration_columnDomainReferences_feature"), //$NON-NLS-1$
-				getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
-					"_UI_ReadOnlyColumnConfiguration_columnDomainReferences_feature", //$NON-NLS-1$
-					"_UI_ReadOnlyColumnConfiguration_type"), //$NON-NLS-1$
-				VTablePackage.Literals.READ_ONLY_COLUMN_CONFIGURATION__COLUMN_DOMAIN_REFERENCES,
+				getString("_UI_WidthConfiguration_columnDomainReference_feature"), //$NON-NLS-1$
+				getString("_UI_PropertyDescriptor_description", "_UI_WidthConfiguration_columnDomainReference_feature", //$NON-NLS-1$ //$NON-NLS-2$
+					"_UI_WidthConfiguration_type"), //$NON-NLS-1$
+				VTablePackage.Literals.WIDTH_CONFIGURATION__COLUMN_DOMAIN_REFERENCE,
 				true,
 				false,
 				true,
@@ -94,7 +100,30 @@ public class ReadOnlyColumnConfigurationItemProvider
 	}
 
 	/**
-	 * This returns ReadOnlyColumnConfiguration.gif.
+	 * This adds a property descriptor for the Weight feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	protected void addWeightPropertyDescriptor(Object object) {
+		itemPropertyDescriptors
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(),
+				getString("_UI_WidthConfiguration_weight_feature"), //$NON-NLS-1$
+				getString("_UI_PropertyDescriptor_description", "_UI_WidthConfiguration_weight_feature", //$NON-NLS-1$ //$NON-NLS-2$
+					"_UI_WidthConfiguration_type"), //$NON-NLS-1$
+				VTablePackage.Literals.WIDTH_CONFIGURATION__WEIGHT,
+				true,
+				false,
+				false,
+				ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE,
+				null,
+				null));
+	}
+
+	/**
+	 * This returns WidthConfiguration.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -102,7 +131,7 @@ public class ReadOnlyColumnConfigurationItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/ReadOnlyColumnConfiguration")); //$NON-NLS-1$
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/WidthConfiguration")); //$NON-NLS-1$
 	}
 
 	/**
@@ -114,7 +143,8 @@ public class ReadOnlyColumnConfigurationItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		return getString("_UI_ReadOnlyColumnConfiguration_type"); //$NON-NLS-1$
+		final VWidthConfiguration widthConfiguration = (VWidthConfiguration) object;
+		return getString("_UI_WidthConfiguration_type") + " " + widthConfiguration.getWeight(); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**
@@ -128,6 +158,12 @@ public class ReadOnlyColumnConfigurationItemProvider
 	@Override
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
+
+		switch (notification.getFeatureID(VWidthConfiguration.class)) {
+		case VTablePackage.WIDTH_CONFIGURATION__WEIGHT:
+			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+			return;
+		}
 		super.notifyChanged(notification);
 	}
 

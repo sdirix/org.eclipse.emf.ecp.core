@@ -43,6 +43,7 @@ import org.eclipse.emf.ecp.view.spi.table.model.VTableColumnConfiguration;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTablePackage;
+import org.eclipse.emf.ecp.view.spi.table.model.VWidthConfiguration;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
@@ -53,7 +54,6 @@ import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
  *
  * @since 1.5
  *        <!-- end-user-doc -->
- *
  * @see org.eclipse.emf.ecp.view.spi.table.model.VTablePackage
  * @generated
  */
@@ -172,6 +172,8 @@ public class TableValidator extends EObjectValidator {
 			return validateTableDomainModelReference((VTableDomainModelReference) value, diagnostics, context);
 		case VTablePackage.READ_ONLY_COLUMN_CONFIGURATION:
 			return validateReadOnlyColumnConfiguration((VReadOnlyColumnConfiguration) value, diagnostics, context);
+		case VTablePackage.WIDTH_CONFIGURATION:
+			return validateWidthConfiguration((VWidthConfiguration) value, diagnostics, context);
 		case VTablePackage.DETAIL_EDITING:
 			return validateDetailEditing((DetailEditing) value, diagnostics, context);
 		default:
@@ -423,6 +425,18 @@ public class TableValidator extends EObjectValidator {
 	public boolean validateReadOnlyColumnConfiguration(VReadOnlyColumnConfiguration readOnlyColumnConfiguration,
 		DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return validate_EveryDefaultConstraint(readOnlyColumnConfiguration, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.9
+	 *        <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateWidthConfiguration(VWidthConfiguration widthConfiguration, DiagnosticChain diagnostics,
+		Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(widthConfiguration, diagnostics, context);
 	}
 
 	/**
