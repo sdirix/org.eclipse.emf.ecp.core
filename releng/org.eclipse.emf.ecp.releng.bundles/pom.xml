@@ -165,6 +165,7 @@
 		<module>../../bundles/org.eclipse.emf.ecp.view.table.edapt</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.table.celleditor.rcp</module>
 		<module>../../bundles/org.eclipse.emfforms.swt.table</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.table.ui.swt.persistedstate</module>
 		
 		<!--  Stack Feature -->
 		<module>../../bundles/org.eclipse.emf.ecp.view.stack.model</module>

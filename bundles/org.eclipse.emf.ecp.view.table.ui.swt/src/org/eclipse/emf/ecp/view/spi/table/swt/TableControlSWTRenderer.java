@@ -134,6 +134,8 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ControlAdapter;
+import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
@@ -293,6 +295,9 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			/* get validation icon */
 			setupValidation(tableViewerComposite);
 
+			/* setup column width listener */
+			setupColumnWidthListeners(tableViewerComposite, regularColumnsStartIndex);
+
 			setTableViewer(tableViewerComposite.getTableViewer());
 
 			SWTDataElementIdHelper.setElementIdDataForVControl(tableViewerComposite, getVElement());
@@ -311,6 +316,25 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			final Label errorLabel = new Label(parent, SWT.NONE);
 			errorLabel.setText(ex.getMessage());
 			return errorLabel;
+		}
+	}
+
+	private void setupColumnWidthListeners(TableViewerComposite tableViewerComposite, int regularColumnsStartIndex) {
+		final VTableControl tableControl = getVElement();
+		final Table swtTable = tableViewerComposite.getTableViewer().getTable();
+		final TableColumn[] allColumns = swtTable.getColumns();
+		for (int i = regularColumnsStartIndex; i < allColumns.length; i++) {
+			final TableColumn tableColumn = allColumns[i];
+			final VDomainModelReference columnDMR = VTableDomainModelReference.class
+				.cast(tableControl.getDomainModelReference()).getColumnDomainModelReferences()
+				.get(i - regularColumnsStartIndex);
+			tableColumn.addControlListener(new ControlAdapter() {
+
+				@Override
+				public void controlResized(ControlEvent e) {
+					TableConfigurationHelper.updateWidthConfiguration(tableControl, columnDMR, swtTable, tableColumn);
+				}
+			});
 		}
 	}
 
@@ -384,20 +408,22 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 				final EditingSupportCreator editingSupportCreator = TableConfigurationHelper
 					.isReadOnly(getVElement(), dmr) ? null : labelProvider;
 
-				// TODO ugly: we need this temporary cell editor so early just to get size information
-				final CellEditor tempCellEditor = createCellEditor(tempInstance, eStructuralFeature,
-					new Table(new Shell(), SWT.NONE));
+				final Optional<Integer> widthConfig = TableConfigurationHelper.getColumnWidth(getVElement(), dmr);
 
-				final int weight = ECPCellEditor.class.isInstance(tempCellEditor)
-					? ECPCellEditor.class.cast(tempCellEditor).getColumnWidthWeight() : 100;
-				final int minWidth = ECPCellEditor.class.isInstance(tempCellEditor)
-					? ECPCellEditor.class.cast(tempCellEditor).getMinWidth() : 0;
-
-				// // TODO
-				// final int textWidth = FigureUtilities.getTextWidth((String) text.getValue(),
-				// Display.getDefault().getSystemFont()) + 2 * 6;
-				// tableViewerSWTBuilder.addColumn(true, false, SWT.NONE, 0, textWidth, text, tooltip,
-				// labelProvider, editingSupportCreator, null);
+				int weight;
+				int minWidth;
+				if (widthConfig.isPresent()) {
+					minWidth = 10;// with 0 it gets impossible to expand this again
+					weight = widthConfig.get();
+				} else {
+					// TODO ugly: we need this temporary cell editor so early just to get size information
+					final CellEditor tempCellEditor = createCellEditor(tempInstance, eStructuralFeature,
+						new Table(new Shell(), SWT.NONE));
+					weight = ECPCellEditor.class.isInstance(tempCellEditor)
+						? ECPCellEditor.class.cast(tempCellEditor).getColumnWidthWeight() : 100;
+					minWidth = ECPCellEditor.class.isInstance(tempCellEditor)
+						? ECPCellEditor.class.cast(tempCellEditor).getMinWidth() : 10;
+				}
 
 				tableViewerSWTBuilder.addColumn(true, false, SWT.NONE, weight, minWidth, text, tooltip,
 					labelProvider, editingSupportCreator, null);
