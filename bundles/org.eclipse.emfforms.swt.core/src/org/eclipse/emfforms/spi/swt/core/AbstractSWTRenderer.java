@@ -14,7 +14,9 @@ package org.eclipse.emfforms.spi.swt.core;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.emf.ecp.view.model.common.AbstractRenderer;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
@@ -25,6 +27,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.swt.core.layout.EMFFormsSWTLayoutUtil;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
 import org.eclipse.swt.events.DisposeEvent;
@@ -299,6 +302,8 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 	 */
 	protected void applyVisible() {
 		final boolean visible = getVElement().isVisible();
+		/* avoid multiple layout calls by saving the parents which need to be relayouted */
+		final Set<Composite> parents = new LinkedHashSet<Composite>();
 		for (final SWTGridCell gridCell : controls.keySet()) {
 			final Object layoutData = controls.get(gridCell).getLayoutData();
 			if (GridData.class.isInstance(layoutData)) {
@@ -308,7 +313,10 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 				}
 			}
 			controls.get(gridCell).setVisible(visible);
-			controls.get(gridCell).getParent().layout(false);
+			parents.add(controls.get(gridCell).getParent());
+		}
+		for (final Composite composite : parents) {
+			EMFFormsSWTLayoutUtil.adjustParentSize(composite.getChildren()[0]);
 		}
 	}
 
