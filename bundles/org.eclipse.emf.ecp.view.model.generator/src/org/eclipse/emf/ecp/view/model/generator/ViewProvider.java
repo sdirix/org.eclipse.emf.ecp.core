@@ -41,6 +41,7 @@ public class ViewProvider implements IViewProvider {
 	@Override
 	public VView provideViewModel(EObject eObject, VViewModelProperties properties) {
 		final VView view = VViewFactory.eINSTANCE.createView();
+		view.setUuid(generateId(eObject.eClass(), null));
 		final ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(
 			new AdapterFactory[] {
 				new ReflectiveItemProviderAdapterFactory(),
@@ -127,8 +128,10 @@ public class ViewProvider implements IViewProvider {
 		}
 		stringBuilder.append("#"); //$NON-NLS-1$
 		stringBuilder.append(eClass.getName());
-		stringBuilder.append("#"); //$NON-NLS-1$
-		stringBuilder.append(feature.getName());
+		if (feature != null) {
+			stringBuilder.append("#"); //$NON-NLS-1$
+			stringBuilder.append(feature.getName());
+		}
 		return String.valueOf(stringBuilder.toString().hashCode());
 	}
 
