@@ -91,7 +91,6 @@ public class StackItemViewService implements ViewModelService {
 			if (dmr == null) {
 				continue;
 			}
-			dmr.init(domain);
 			final Setting setting = addToRegistry(stack, dmr);
 			if (setting == null) {
 				// TODO JF how to handle?
