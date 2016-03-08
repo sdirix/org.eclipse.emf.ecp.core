@@ -24,7 +24,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.common.spi.BidirectionalMap;
 import org.eclipse.emf.ecp.common.spi.UniqueSetting;
-import org.eclipse.emf.ecp.view.internal.rule.reporting.LeafConditionDMRResolutionFailedReport;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
@@ -35,10 +34,6 @@ import org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition;
 import org.eclipse.emf.ecp.view.spi.rule.model.OrCondition;
 import org.eclipse.emf.ecp.view.spi.rule.model.Rule;
 import org.eclipse.emf.ecp.view.spi.rule.model.impl.LeafConditionSettingIterator;
-import org.eclipse.emfforms.spi.common.report.AbstractReport;
-import org.eclipse.emfforms.spi.common.report.ReportService;
-import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
-import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
 
 /**
  * Rule registry that maintains which {@link VElement}s
@@ -98,16 +93,7 @@ public class RuleRegistry<T extends Rule> {
 				return registeredSettings;
 			}
 
-			final boolean initSuccessful = domainModelReference.init(domainModel);
 			mapDomainToDMRs(rule, Collections.singleton(domainModelReference));
-			if (!initSuccessful) {
-				if (org.eclipse.emf.ecp.view.spi.model.impl.Activator.getDefault() != null) {
-					org.eclipse.emf.ecp.view.spi.model.impl.Activator.getDefault().getReportService()
-						.report(new LeafConditionDMRResolutionFailedReport(leafCondition, false));
-				}
-
-				return registerLegacySupport(renderable, rule, registeredSettings, leafCondition, domainModelReference);
-			}
 
 			final LeafConditionSettingIterator iterator = new LeafConditionSettingIterator(leafCondition,
 				context.getDomainModel(), true);
@@ -131,27 +117,6 @@ public class RuleRegistry<T extends Rule> {
 			for (final Condition cond : andCondition.getConditions()) {
 				registeredSettings.addAll(register(renderable, rule, cond, domainModel));
 			}
-		}
-
-		return registeredSettings;
-	}
-
-	/**
-	 * For legacy reasons leaf conditions with an unresolvable domain model reference will still be registered.
-	 */
-	private Set<UniqueSetting> registerLegacySupport(VElement renderable, T rule,
-		final Set<UniqueSetting> registeredSettings, final LeafCondition leafCondition,
-		final VDomainModelReference domainModelReference) {
-
-		try {
-			final Setting setting = context.getService(EMFFormsDatabindingEMF.class)
-				.getSetting(leafCondition.getDomainModelReference(), context.getDomainModel());
-			final UniqueSetting uniqueSetting = UniqueSetting.createSetting(setting);
-			mapSettingToRule(uniqueSetting, leafCondition, rule);
-			registeredSettings.add(uniqueSetting);
-			rulesToRenderables.put(rule, renderable);
-		} catch (final DatabindingFailedException ex) {
-			context.getService(ReportService.class).report(new AbstractReport(ex));
 		}
 
 		return registeredSettings;
