@@ -226,9 +226,8 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 			} else {
 				// No, everything is fine
 				try {
-					final VView view2 = ViewProviderHelper.getView(eObject, context);
-					final ViewModelContext modelContext = ViewModelContextFactory.INSTANCE.createViewModelContext(view2,
-						eObject, customization.getViewModelServices(view2, eObject));
+					final ViewModelContext modelContext = ViewModelContextFactory.INSTANCE.createViewModelContext(view,
+						eObject, customization.getViewModelServices(view, eObject));
 					ECPSWTViewRenderer.INSTANCE.render(detailPanel, modelContext);
 					detailPanel.layout(true, true);
 				} catch (final ECPRendererException e) {
