@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -14,18 +14,19 @@ package org.eclipse.emf.ecp.view.internal.rule;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.WeakHashMap;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.common.spi.BidirectionalMap;
 import org.eclipse.emf.ecp.common.spi.UniqueSetting;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener;
+import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
+import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.rule.model.AndCondition;
@@ -34,6 +35,7 @@ import org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition;
 import org.eclipse.emf.ecp.view.spi.rule.model.OrCondition;
 import org.eclipse.emf.ecp.view.spi.rule.model.Rule;
 import org.eclipse.emf.ecp.view.spi.rule.model.impl.LeafConditionSettingIterator;
+import org.eclipse.emfforms.spi.core.services.structuralchange.EMFFormsStructuralChangeTester;
 
 /**
  * Rule registry that maintains which {@link VElement}s
@@ -51,7 +53,8 @@ public class RuleRegistry<T extends Rule> {
 	private final BidirectionalMap<T, VElement> rulesToRenderables;
 	private final Map<Condition, Set<UniqueSetting>> conditionToSettings;
 	private final ViewModelContext context;
-	private final Map<Rule, Set<VDomainModelReference>> rulesToDMRs;
+	private final Map<VDomainModelReference, Set<T>> dmrsToRules;
+	private final DomainModelChangeListener domainModelChangeListener;
 
 	/**
 	 * Default constructor.
@@ -64,7 +67,9 @@ public class RuleRegistry<T extends Rule> {
 		settingToRules = new LinkedHashMap<UniqueSetting, BidirectionalMap<Condition, T>>();
 		rulesToRenderables = new BidirectionalMap<T, VElement>();
 		conditionToSettings = new LinkedHashMap<Condition, Set<UniqueSetting>>();
-		rulesToDMRs = new LinkedHashMap<Rule, Set<VDomainModelReference>>();
+		dmrsToRules = new WeakHashMap<VDomainModelReference, Set<T>>();
+		domainModelChangeListener = new DomainModelChangeListener();
+		context.registerDomainChangeListener(domainModelChangeListener);
 	}
 
 	/**
@@ -130,7 +135,7 @@ public class RuleRegistry<T extends Rule> {
 	 * @return the {@link VElement} that belonged to the removed rule
 	 */
 	public VElement removeRule(T rule) {
-		removeDMRListeners(rule);
+		removeDomainModelChangeListener(rule);
 
 		final Condition condition = rule.getCondition();
 		if (condition != null) {
@@ -150,18 +155,18 @@ public class RuleRegistry<T extends Rule> {
 
 	}
 
-	private void removeDMRListeners(T rule) {
-		final Set<VDomainModelReference> dmrs = rulesToDMRs.remove(rule);
-		if (dmrs != null) {
-			for (final VDomainModelReference dmr : dmrs) {
-				context.unregisterDomainChangeListener(dmr);
-				final Iterator<DomainModelReferenceChangeListener> iterator = dmr.getChangeListener().iterator();
-				while (iterator.hasNext()) {
-					final DomainModelReferenceChangeListener next = iterator.next();
-					if (DMRChangeListener.class.isInstance(next)) {
-						iterator.remove();
-					}
-				}
+	/**
+	 * Removes a rule from the dmrsToRules map. Consequently, the rule will no longer be re-registered when an
+	 * associated {@link VDomainModelReference}'s structure changes.
+	 *
+	 * @param rule The rule to remove.
+	 */
+	private void removeDomainModelChangeListener(T rule) {
+		final Set<VDomainModelReference> dmrs = new LinkedHashSet<VDomainModelReference>(dmrsToRules.keySet());
+		for (final VDomainModelReference dmr : dmrs) {
+			final Set<T> rules = dmrsToRules.get(dmr);
+			if (rules != null) {
+				rules.remove(rule);
 			}
 		}
 	}
@@ -174,7 +179,7 @@ public class RuleRegistry<T extends Rule> {
 	 */
 	public void removeRenderable(VElement renderable) {
 		final T rule = rulesToRenderables.removeByValue(renderable);
-		removeDMRListeners(rule);
+		removeDomainModelChangeListener(rule);
 	}
 
 	/**
@@ -207,7 +212,7 @@ public class RuleRegistry<T extends Rule> {
 		conditionToSettings.remove(condition);
 
 		if (rule != null) {
-			removeDMRListeners(rule);
+			removeDomainModelChangeListener(rule);
 			ret = rulesToRenderables.removeByKey(rule);
 		}
 		return ret;
@@ -258,54 +263,63 @@ public class RuleRegistry<T extends Rule> {
 	}
 
 	private void mapDomainToDMRs(T rule, Set<VDomainModelReference> references) {
-		if (!rulesToDMRs.containsKey(rule)) {
-			rulesToDMRs.put(rule, new LinkedHashSet<VDomainModelReference>());
-		}
-		rulesToDMRs.get(rule).addAll(references);
-
 		for (final VDomainModelReference reference : references) {
-			reference.getChangeListener().add(new DMRChangeListener(rule));
-			context.registerDomainChangeListener(reference);
+			if (!dmrsToRules.containsKey(reference)) {
+				dmrsToRules.put(reference, new LinkedHashSet<T>());
+			}
+			dmrsToRules.get(reference).add(rule);
 		}
 	}
 
 	/**
-	 * DMR change listener that will reregister the affected settings for the condition.
+	 * Disposes this {@link RuleRegistry}.
+	 */
+	public void dispose() {
+		context.unregisterDomainChangeListener(domainModelChangeListener);
+	}
+
+	/**
+	 * A model change listener that re-registers affected DMRs and rules when the domain model changes.
 	 *
-	 * @author jfaltermeier
+	 * @author Lucas Koehler
 	 *
 	 */
-	private class DMRChangeListener implements DomainModelReferenceChangeListener {
+	private class DomainModelChangeListener implements ModelChangeListener {
+		private final EMFFormsStructuralChangeTester structuralChangeTester;
 
-		private final T rule;
-
-		DMRChangeListener(T rule) {
-			this.rule = rule;
+		/**
+		 * Creates a new {@link DomainModelChangeListener}.
+		 */
+		DomainModelChangeListener() {
+			structuralChangeTester = context.getService(EMFFormsStructuralChangeTester.class);
 		}
 
 		/**
 		 * {@inheritDoc}
 		 *
-		 * @see org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener#notifyChange()
+		 * @see org.eclipse.emf.ecp.view.spi.model.ModelChangeListener#notifyChange(org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification)
 		 */
 		@Override
-		public void notifyChange() {
-			// dmr has changed register every associated with it
-			final Set<VDomainModelReference> dmrs = rulesToDMRs.remove(rule);
-			if (dmrs == null) {
-				return;
-			}
+		public void notifyChange(ModelChangeNotification notification) {
+			final Set<VDomainModelReference> dmrs = new LinkedHashSet<VDomainModelReference>(dmrsToRules.keySet());
 			for (final VDomainModelReference dmr : dmrs) {
-				context.unregisterDomainChangeListener(dmr);
-				dmr.getChangeListener().remove(this);
+				if (structuralChangeTester.isStructureChanged(dmr, context.getDomainModel(), notification)) {
+					// dmr has changed => re-register every rule associated with it
+					final Set<T> rules = dmrsToRules.remove(dmr);
+					if (rules == null) {
+						return;
+					}
+
+					for (final T rule : rules) {
+						final VElement element = removeRule(rule);
+						if (element == null) {
+							return;
+						}
+						register(element, rule, rule.getCondition(), context.getDomainModel());
+					}
+				}
 			}
-			final VElement element = removeRule(rule);
-			if (element == null) {
-				return;
-			}
-			register(element, rule, rule.getCondition(), context.getDomainModel());
 		}
 
 	}
-
 }

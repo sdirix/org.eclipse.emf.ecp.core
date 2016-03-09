@@ -414,6 +414,8 @@ public class RuleService implements ViewModelService, EMFFormsContextListener {
 		// dispose stuff
 		context.unregisterDomainChangeListener(domainChangeListener);
 		context.unregisterViewChangeListener(viewChangeListener);
+		enableRuleRegistry.dispose();
+		showRuleRegistry.dispose();
 	}
 
 	private static boolean isEnableRule(Rule rule) {
