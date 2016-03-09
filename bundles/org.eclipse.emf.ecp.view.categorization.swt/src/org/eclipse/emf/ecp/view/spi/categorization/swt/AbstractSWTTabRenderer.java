@@ -40,6 +40,7 @@ import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
@@ -102,12 +103,20 @@ public abstract class AbstractSWTTabRenderer<VELEMENT extends VElement> extends 
 	@Override
 	protected Control renderControl(SWTGridCell cell, Composite parent)
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		final boolean useScrolledContent = useScrolledContent();
+
 		final CTabFolder folder = new CTabFolder(parent, getTabFolderStyle());
 		folder.setBackground(parent.getBackground());
 		final EList<VAbstractCategorization> categorizations = getCategorizations();
 		for (final VAbstractCategorization categorization : categorizations) {
 			final CTabItem item = new CTabItem(folder, SWT.NULL);
-			final ScrolledComposite scrolledComposite = new ScrolledComposite(folder, SWT.V_SCROLL | SWT.H_SCROLL);
+			final Composite composite;
+			if (useScrolledContent) {
+				composite = new ScrolledComposite(folder, SWT.V_SCROLL | SWT.H_SCROLL);
+			} else {
+				composite = new Composite(folder, SWT.NONE);
+				GridLayoutFactory.fillDefaults().applyTo(composite);
+			}
 
 			final IObservableValue modelValue = EMFEditObservables.observeValue(
 				AdapterFactoryEditingDomain.getEditingDomainFor(categorization), categorization,
@@ -129,15 +138,17 @@ public abstract class AbstractSWTTabRenderer<VELEMENT extends VElement> extends 
 			final SWTGridDescription gridDescription = renderer.getGridDescription(GridDescriptionFactory.INSTANCE
 				.createEmptyGridDescription());
 			for (final SWTGridCell gridCell : gridDescription.getGrid()) {
-				final Control render = renderer.render(gridCell, scrolledComposite);
+				final Control render = renderer.render(gridCell, composite);
 				GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true)
 					.applyTo(render);
-				scrolledComposite.setExpandHorizontal(true);
-				scrolledComposite.setExpandVertical(true);
-				scrolledComposite.setContent(render);
-				scrolledComposite.setMinSize(render.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-
-				item.setControl(scrolledComposite);
+				if (useScrolledContent) {
+					final ScrolledComposite scrolledComposite = ScrolledComposite.class.cast(composite);
+					scrolledComposite.setExpandHorizontal(true);
+					scrolledComposite.setExpandVertical(true);
+					scrolledComposite.setContent(render);
+					scrolledComposite.setMinSize(render.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+				}
+				item.setControl(composite);
 			}
 
 		}
@@ -145,6 +156,16 @@ public abstract class AbstractSWTTabRenderer<VELEMENT extends VElement> extends 
 			folder.setSelection(0);
 		}
 		return folder;
+	}
+
+	/**
+	 * Whether a {@link ScrolledComposite} should be used as the item's content or not.
+	 *
+	 * @return <code>true</code> if pane should be scrollable, <code>false</code> otherwise
+	 * @since 1.9
+	 */
+	protected boolean useScrolledContent() {
+		return true;
 	}
 
 	private int getTabFolderStyle() {
