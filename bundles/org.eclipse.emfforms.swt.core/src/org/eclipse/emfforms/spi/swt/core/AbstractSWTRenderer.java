@@ -230,7 +230,10 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 			return;
 		}
 		renderingFinished = true;
-		applyVisible();
+		if (!getVElement().isVisible()) {
+			/* convention is to render visible, so only call apply if we are invisible */
+			applyVisible();
+		}
 		applyReadOnly();
 		if (!getVElement().isReadonly()) {
 			applyEnable();
