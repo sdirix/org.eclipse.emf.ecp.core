@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -12,9 +12,11 @@
  ******************************************************************************/
 package org.eclipse.emfforms.spi.swt.treemasterdetail;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
+import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
@@ -86,6 +88,12 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 
 	/** The detail panel. */
 	private Composite detailPanel;
+
+	/** The currently rendered dummy EObject. */
+	// private EObject renderedObject;
+
+	/** The currently rendered ECPSWTView. */
+	private ECPSWTView renderedView;
 
 	private final TreeMasterDetailSWTCustomization customization;
 
@@ -203,42 +211,68 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 	// selection modification required as well as adjusting the loading properties
 	private void updateDetailPanel() {
 		// Create a new detail panel in the scrollable composite. Disposes any old panels.
-		createDetailPanel();
+		// createDetailPanel();
+		// TODO create detail panel at the right location
 
 		// Get the selected object, if it is an EObject, render the details using EMF Forms
 		final Object selectedObject = treeViewer.getSelection() != null ? ((StructuredSelection) treeViewer
 			.getSelection()).getFirstElement() : null;
+
 		if (selectedObject instanceof EObject) {
 			final EObject eObject = EObject.class.cast(selectedObject);
-			// Check, if the selected object would be rendered using a TreeMasterDetail. If so, render the provided
-			// detail view.
-			final VView view = ViewProviderHelper.getView((EObject) selectedObject, context);
-			if (view.getChildren().size() > 0 && view.getChildren().get(0) instanceof VTreeMasterDetail) {
-				// Yes, we need to render this node differently
-				final VTreeMasterDetail vTreeMasterDetail = (VTreeMasterDetail) view.getChildren().get(0);
-				try {
-					ECPSWTViewRenderer.INSTANCE.render(detailPanel, (EObject) selectedObject,
-						vTreeMasterDetail.getDetailView());
-					detailPanel.layout(true, true);
-				} catch (final ECPRendererException e) {
-				}
 
-			} else {
-				// No, everything is fine
-				try {
-					final ViewModelContext modelContext = ViewModelContextFactory.INSTANCE.createViewModelContext(view,
-						eObject, customization.getViewModelServices(view, eObject));
-					ECPSWTViewRenderer.INSTANCE.render(detailPanel, modelContext);
-					detailPanel.layout(true, true);
-				} catch (final ECPRendererException e) {
-				}
+			EClass currentEClass = null;
+			if (renderedView != null) {
+				currentEClass = renderedView.getViewModelContext().getDomainModel().eClass();
 			}
-			// After rendering the Forms, compute the size of the form. So the scroll container knows when to scroll
-			if (ScrolledComposite.class.isInstance(detailComposite)) {
-				ScrolledComposite.class.cast(detailComposite)
-					.setMinSize(detailPanel.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+			if (currentEClass != null && currentEClass.equals(eObject.eClass())) {
+				// In this case, we don't want to render the eObject again but only change the databinding to the new
+				// EObject.
+				System.out.println("Reset features, dont rerender.");
+
+				renderedView.getViewModelContext().changeDomainModel(eObject);
+				// TODO remove
+				// final EList<EStructuralFeature> allFeatures = eObject.eClass().getEAllStructuralFeatures();
+				// for (final EStructuralFeature feature : allFeatures) {
+				// renderedObject.eSet(feature, eObject.eGet(feature));
+				// }
+			} else {
+				createDetailPanel();
+				// TODO remove sys out
+				System.out.println("Render " + eObject);
+
+				// Check, if the selected object would be rendered using a TreeMasterDetail. If so, render the provided
+				// detail view.
+				final VView view = ViewProviderHelper.getView((EObject) selectedObject, context);
+				if (view.getChildren().size() > 0 && view.getChildren().get(0) instanceof VTreeMasterDetail) {
+					// Yes, we need to render this node differently
+					final VTreeMasterDetail vTreeMasterDetail = (VTreeMasterDetail) view.getChildren().get(0);
+					try {
+						renderedView = ECPSWTViewRenderer.INSTANCE.render(detailPanel, (EObject) selectedObject,
+							vTreeMasterDetail.getDetailView());
+						detailPanel.layout(true, true);
+					} catch (final ECPRendererException e) {
+					}
+
+				} else {
+					// No, everything is fine
+					try {
+						final VView view2 = ViewProviderHelper.getView(eObject, context);
+						final ViewModelContext modelContext = ViewModelContextFactory.INSTANCE.createViewModelContext(
+							view2, eObject, customization.getViewModelServices(view2, eObject));
+						renderedView = ECPSWTViewRenderer.INSTANCE.render(detailPanel, modelContext);
+						detailPanel.layout(true, true);
+					} catch (final ECPRendererException e) {
+					}
+				}
+				// After rendering the Forms, compute the size of the form. So the scroll container knows when to scroll
+				if (ScrolledComposite.class.isInstance(detailComposite)) {
+					ScrolledComposite.class.cast(detailComposite)
+						.setMinSize(detailPanel.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+				}
 			}
 		} else {
+			createDetailPanel();
 			final Label hint = new Label(detailPanel, SWT.CENTER);
 			final FontDescriptor boldDescriptor = FontDescriptor.createFrom(hint.getFont()).setHeight(18)
 				.setStyle(SWT.BOLD);

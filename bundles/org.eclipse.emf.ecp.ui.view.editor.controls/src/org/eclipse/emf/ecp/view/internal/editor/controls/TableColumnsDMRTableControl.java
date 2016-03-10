@@ -137,6 +137,7 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 	private VTableControl tableControl;
 	private EStructuralFeature structuralFeature;
 	private EObject eObject;
+	private TableViewer viewer;
 
 	/**
 	 * {@inheritDoc}
@@ -186,7 +187,7 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 		final TableColumnLayout layout = new TableColumnLayout();
 		tableComposite.setLayout(layout);
 
-		final TableViewer viewer = new TableViewer(tableComposite);
+		viewer = new TableViewer(tableComposite);
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).applyTo(viewer.getControl());
 
 		viewer.getTable().setHeaderVisible(true);
@@ -488,6 +489,22 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 			editingDomain.getCommandStack().execute(
 				SetCommand.create(editingDomain, eObject, structuralFeature, list));
 		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.AbstractControlSWTRenderer#rootDomainModelChanged()
+	 */
+	@Override
+	protected void rootDomainModelChanged() throws DatabindingFailedException {
+		final IObservableList oldList = (IObservableList) viewer.getInput();
+		oldList.dispose();
+
+		final IObservableList list = getEMFFormsDatabinding().getObservableList(getVElement().getDomainModelReference(),
+			getViewModelContext().getDomainModel());
+		// addRelayoutListenerIfNeeded(list, composite);
+		viewer.setInput(list);
 	}
 
 }

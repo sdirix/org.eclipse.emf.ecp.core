@@ -95,6 +95,11 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	private final ImageRegistryService imageRegistryService;
 
 	/**
+	 * The {@link EObject} that contains the elements rendered in this multi reference.
+	 */
+	private EObject container;
+
+	/**
 	 * Default constructor.
 	 *
 	 * @param vElement the view model element to be rendered
@@ -119,6 +124,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	private ComposedAdapterFactory composedAdapterFactory;
 	private TableViewer tableViewer;
 	private final EMFDataBindingContext viewModelDBC;
+	private IObservableList tableViewerInputList;
 
 	/**
 	 * {@inheritDoc}
@@ -260,7 +266,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 
 		final IObservableValue observableValue = getEMFFormsDatabinding()
 			.getObservableValue(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
-		final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
+		container = (EObject) ((IObserving) observableValue).getObserved();
 		final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
 		observableValue.dispose();
 
@@ -279,7 +285,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				super.widgetSelected(e);
-				handleAddExisting(tableViewer, eObject, structuralFeature);
+				handleAddExisting(tableViewer, container, structuralFeature);
 			}
 
 		});
@@ -299,7 +305,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				super.widgetSelected(e);
-				handleAddNew(tableViewer, eObject, structuralFeature);
+				handleAddNew(tableViewer, container, structuralFeature);
 			}
 
 		});
@@ -319,7 +325,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				super.widgetSelected(e);
-				handleDelete(tableViewer, eObject, structuralFeature);
+				handleDelete(tableViewer, container, structuralFeature);
 			}
 
 		});
@@ -398,9 +404,9 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 
 		tableViewer.setLabelProvider(labelProvider);
 		tableViewer.setContentProvider(cp);
-		final IObservableList list = getEMFFormsDatabinding()
-			.getObservableList(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
-		tableViewer.setInput(list);
+		tableViewerInputList = getEMFFormsDatabinding().getObservableList(getVElement().getDomainModelReference(),
+			getViewModelContext().getDomainModel());
+		tableViewer.setInput(tableViewerInputList);
 
 		final TableColumnLayout layout = new TableColumnLayout();
 		composite.setLayout(layout);
@@ -524,7 +530,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 		private static final int NONE = 0;
 		private int direction = NONE;
 
-		public ECPTableViewerComparator() {
+		ECPTableViewerComparator() {
 			propertyIndex = 0;
 			direction = NONE;
 		}
@@ -581,5 +587,35 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 			}
 			return rc;
 		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.AbstractControlSWTRenderer#rootDomainModelChanged()
+	 */
+	@Override
+	protected void rootDomainModelChanged() throws DatabindingFailedException {
+		// TODO rebinding of text and tooltip needed? If yes, complete!
+		// if (textBinding != null) {
+		// textBinding.dispose();
+		// }
+		// if (tooltipBinding != null) {
+		// tooltipBinding.dispose();
+		// }
+
+		// Rebind table content to the new domain model
+		if (tableViewerInputList != null) {
+			tableViewerInputList.dispose();
+		}
+		tableViewerInputList = getEMFFormsDatabinding().getObservableList(getVElement().getDomainModelReference(),
+			getViewModelContext().getDomainModel());
+		tableViewer.setInput(tableViewerInputList);
+
+		// Update container to allow addition and removal of elements to/from the multi reference.
+		final IObservableValue observableValue = getEMFFormsDatabinding()
+			.getObservableValue(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
+		container = (EObject) ((IObserving) observableValue).getObserved();
+		observableValue.dispose();
 	}
 }

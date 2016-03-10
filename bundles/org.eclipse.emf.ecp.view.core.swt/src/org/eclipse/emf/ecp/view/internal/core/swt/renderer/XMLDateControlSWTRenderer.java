@@ -23,7 +23,6 @@ import javax.inject.Inject;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.eclipse.core.databinding.Binding;
-import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.internal.swt.util.DateUtil;
@@ -38,6 +37,7 @@ import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emfforms.spi.common.locale.EMFFormsLocaleChangeListener;
 import org.eclipse.emfforms.spi.common.locale.EMFFormsLocaleProvider;
+import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
@@ -113,28 +113,26 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 	 */
 	private final class SelectionAdapterExtension extends SelectionAdapter {
 		private final Control button;
-		private final IObservableValue modelValue;
-		private final ViewModelContext viewModelContext;
-		private final DataBindingContext dataBindingContext;
 		private final Text text;
-		private final EStructuralFeature eStructuralFeature;
 
-		private SelectionAdapterExtension(Text text, Button button, IObservableValue modelValue,
-			ViewModelContext viewModelContext,
-			DataBindingContext dataBindingContext, EStructuralFeature eStructuralFeature) {
+		private SelectionAdapterExtension(Text text, Button button) {
 			this.text = text;
 			this.button = button;
-			this.modelValue = modelValue;
-			this.viewModelContext = viewModelContext;
-			this.dataBindingContext = dataBindingContext;
-			this.eStructuralFeature = eStructuralFeature;
-
 		}
 
 		@Override
 		public void widgetSelected(SelectionEvent e) {
 			if (dialog != null && !dialog.isDisposed()) {
 				dialog.dispose();
+				return;
+			}
+			IObservableValue modelValue;
+			EStructuralFeature eStructuralFeature;
+			try {
+				modelValue = getModelValue();
+				eStructuralFeature = (EStructuralFeature) modelValue.getValueType();
+			} catch (final DatabindingFailedException ex) {
+				getReportService().report(new AbstractReport(ex));
 				return;
 			}
 			dialog = new Shell(button.getShell(), SWT.NONE);
@@ -149,9 +147,8 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 			calendar.setDate(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
 
 			final IObservableValue dateObserver = WidgetProperties.selection().observe(calendar);
-			final Binding binding = dataBindingContext.bindValue(dateObserver, modelValue,
-				new DateTargetToModelUpdateStrategy(eStructuralFeature, modelValue,
-					dataBindingContext, text),
+			final Binding binding = getDataBindingContext().bindValue(dateObserver, modelValue,
+				new DateTargetToModelUpdateStrategy(eStructuralFeature, text),
 				new DateModelToTargetUpdateStrategy(false));
 			binding.updateModelToTarget();
 
@@ -224,14 +221,10 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 
 		private final EStructuralFeature eStructuralFeature;
 		private final Text text;
-		private final IObservableValue modelValue;
 
-		DateTargetToModelUpdateStrategy(EStructuralFeature eStructuralFeature, IObservableValue modelValue,
-			DataBindingContext dataBindingContext,
-			Text text) {
+		DateTargetToModelUpdateStrategy(EStructuralFeature eStructuralFeature, Text text) {
 			super(eStructuralFeature.isUnsettable());
 			this.eStructuralFeature = eStructuralFeature;
-			this.modelValue = modelValue;
 			this.text = text;
 
 		}
@@ -268,7 +261,13 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 				return null;
 			}
 
-			final Object result = modelValue.getValue();
+			Object result;
+			try {
+				result = getModelValue().getValue();
+			} catch (final DatabindingFailedException ex) {
+				getReportService().report(new AbstractReport(ex));
+				return null;
+			}
 
 			final MessageDialog messageDialog = new MessageDialog(text.getShell(),
 				LocalizationServiceHelper.getString(getClass(), MessageKeys.XmlDateControlText_InvalidNumber), null,
@@ -302,13 +301,14 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 		main.setBackground(parent.getBackground());
 		GridLayoutFactory.fillDefaults().numColumns(2).applyTo(main);
 		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(main);
-		final Control text = super.createSWTControl(main);
-		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.CENTER).applyTo(text);
+		final Control control = super.createSWTControl(main);
+		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.CENTER).applyTo(control);
 		final Button bDate = new Button(main, SWT.PUSH);
 		GridDataFactory.fillDefaults().grab(false, false).align(SWT.CENTER, SWT.CENTER).applyTo(bDate);
 		bDate.setImage(imageRegistryService.getImage(FrameworkUtil.getBundle(getClass()), "icons/date.png")); //$NON-NLS-1$
 		bDate.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_xmldate"); //$NON-NLS-1$
-
+		final Text text = (Text) Composite.class.cast(control).getChildren()[0];
+		bDate.addSelectionListener(new SelectionAdapterExtension(text, bDate));
 		return main;
 	}
 
@@ -326,16 +326,11 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 	protected Binding[] createBindings(Control control) throws DatabindingFailedException {
 		final EStructuralFeature structuralFeature = (EStructuralFeature) getModelValue().getValueType();
 		final Text text = (Text) Composite.class.cast(Composite.class.cast(control).getChildren()[0]).getChildren()[0];
-		final Button button = (Button) ((Composite) control).getChildren()[1];
-		button.addSelectionListener(new SelectionAdapterExtension(text, button, getModelValue(),
-			getViewModelContext(),
-			getDataBindingContext(), structuralFeature));
 
 		final IObservableValue value = WidgetProperties.text(SWT.FocusOut).observe(text);
 
 		final DateTargetToModelUpdateStrategy targetToModelUpdateStrategy = new DateTargetToModelUpdateStrategy(
-			structuralFeature, getModelValue(), getDataBindingContext(),
-			text);
+			structuralFeature, text);
 
 		final DateModelToTargetUpdateStrategy modelToTargetUpdateStrategy = new DateModelToTargetUpdateStrategy(false);
 

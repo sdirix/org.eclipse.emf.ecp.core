@@ -181,6 +181,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 	private Optional<Integer> minimumHeight;
 	private Optional<Integer> maximumHeight;
+	private TableControlSWTRendererButtonBarBuilder tableControlSWTRendererButtonBarBuilder;
 
 	/**
 	 * Default constructor.
@@ -240,11 +241,6 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		try {
 			/* get the list-setting which is displayed */
 			final VDomainModelReference dmrToCheck = getDMRToMultiReference();
-			final Setting setting = getEMFFormsDatabinding().getSetting(dmrToCheck,
-				getViewModelContext().getDomainModel());
-			final EObject eObject = setting.getEObject();
-			final EStructuralFeature structuralFeature = setting.getEStructuralFeature();
-			final EClass clazz = ((EReference) structuralFeature).getEReferenceType();
 
 			/* get the observable list */
 			final IObservableList list = getEMFFormsDatabinding().getObservableList(dmrToCheck,
@@ -261,11 +257,11 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 			/* render */
 			final TableViewerCompositeBuilder compositeBuilder = new TableControlSWTRendererCompositeBuilder();
+			tableControlSWTRendererButtonBarBuilder = new TableControlSWTRendererButtonBarBuilder();
 			final TableViewerSWTBuilder tableViewerSWTBuilder = TableViewerFactory
 				.fillDefaults(parent, SWT.NONE, list, labelText, labelTooltipText)
 				.customizeCompositeStructure(compositeBuilder)
-				.customizeButtons(
-					new TableControlSWTRendererButtonBarBuilder(structuralFeature, clazz, eObject))
+				.customizeButtons(tableControlSWTRendererButtonBarBuilder)
 				.customizeTableViewerCreation(new TableControlSWTRendererTableViewerCreator())
 				.customizeContentProvider(cp)
 				.customizeComparator(comparator);
@@ -278,8 +274,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 				regularColumnsStartIndex++;
 				createFixedValidationStatusColumn(tableViewerSWTBuilder);
 			}
-
-			addColumns(tableViewerSWTBuilder, clazz, cp);
+			addColumns(tableViewerSWTBuilder, EReference.class.cast(list.getElementType()).getEReferenceType(), cp);
 
 			initCompositeHeight();
 
@@ -1309,15 +1304,24 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 *
 	 */
 	private final class TableControlSWTRendererButtonBarBuilder implements ButtonBarBuilder {
-		private final EStructuralFeature structuralFeature;
-		private final EClass clazz;
-		private final EObject eObject;
+		private EStructuralFeature structuralFeature;
+		private EClass clazz;
+		private EObject eObject;
 
-		private TableControlSWTRendererButtonBarBuilder(EStructuralFeature structuralFeature, EClass clazz,
-			EObject eObject) {
-			this.structuralFeature = structuralFeature;
-			this.clazz = clazz;
-			this.eObject = eObject;
+		private TableControlSWTRendererButtonBarBuilder() throws DatabindingFailedException {
+			setValues();
+		}
+
+		public void updateValues() throws DatabindingFailedException {
+			setValues();
+		}
+
+		private void setValues() throws DatabindingFailedException {
+			final Setting setting = getEMFFormsDatabinding().getSetting(getDMRToMultiReference(),
+				getViewModelContext().getDomainModel());
+			eObject = setting.getEObject();
+			structuralFeature = setting.getEStructuralFeature();
+			clazz = ((EReference) structuralFeature).getEReferenceType();
 		}
 
 		@Override
@@ -1807,5 +1811,25 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			final String message = DiagnosticMessageExtractor.getMessage(vDiagnostic.getDiagnostics((EObject) element));
 			return ECPTooltipModifierHelper.modifyString(message, null);
 		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.AbstractControlSWTRenderer#rootDomainModelChanged()
+	 */
+	@Override
+	protected void rootDomainModelChanged() throws DatabindingFailedException {
+		// TODO rebind tooltip and text?
+
+		final IObservableList oldList = (IObservableList) getTableViewer().getInput();
+		oldList.dispose();
+
+		final IObservableList list = getEMFFormsDatabinding().getObservableList(getDMRToMultiReference(),
+			getViewModelContext().getDomainModel());
+		// addRelayoutListenerIfNeeded(list, composite);
+		getTableViewer().setInput(list);
+
+		tableControlSWTRendererButtonBarBuilder.updateValues();
 	}
 }

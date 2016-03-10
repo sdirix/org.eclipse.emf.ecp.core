@@ -90,4 +90,26 @@ public interface EMFFormsViewContext {
 	 * @return the service
 	 */
 	<T> T getService(Class<T> serviceType);
+
+	/**
+	 * Changes the domain model of this view context to the given {@link EObject}.
+	 *
+	 * @see #getDomainModel()
+	 * @param newDomainModel The new domain model
+	 */
+	void changeDomainModel(EObject newDomainModel);
+
+	/**
+	 * Register a {@link RootDomainModelChangeListener}.
+	 *
+	 * @param rootDomainModelChangeListener The {@link RootDomainModelChangeListener} to register
+	 */
+	void registerRootDomainModelChangeListener(RootDomainModelChangeListener rootDomainModelChangeListener);
+
+	/**
+	 * Unregister a {@link RootDomainModelChangeListener}.
+	 *
+	 * @param rootDomainModelChangeListener The {@link RootDomainModelChangeListener} to unregister
+	 */
+	void unregisterRootDomainModelChangeListener(RootDomainModelChangeListener rootDomainModelChangeListener);
 }

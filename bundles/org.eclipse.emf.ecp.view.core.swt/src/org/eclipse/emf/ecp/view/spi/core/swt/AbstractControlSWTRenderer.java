@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -43,6 +43,7 @@ import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedRepor
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
+import org.eclipse.emfforms.spi.core.services.view.RootDomainModelChangeListener;
 import org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsControlProcessorService;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
@@ -62,7 +63,8 @@ import org.eclipse.swt.widgets.Label;
  * @author Eugen Neufeld
  *
  */
-public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> extends AbstractSWTRenderer<VCONTROL> {
+public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> extends AbstractSWTRenderer<VCONTROL>
+	implements RootDomainModelChangeListener {
 
 	private final EMFFormsDatabinding emfFormsDatabinding;
 	private final EMFFormsLabelProvider emfFormsLabelProvider;
@@ -89,6 +91,7 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 		this.emfFormsLabelProvider = emfFormsLabelProvider;
 		this.vtViewTemplateProvider = vtViewTemplateProvider;
 		viewModelDBC = new EMFDataBindingContext();
+		viewContext.registerRootDomainModelChangeListener(this);
 		isDisposed = false;
 	}
 
@@ -229,6 +232,8 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 		if (getVElement().getDomainModelReference() != null) {
 			getVElement().getDomainModelReference().getChangeListener().remove(domainModelReferenceChangeListener);
 		}
+
+		getViewModelContext().unregisterRootDomainModelChangeListener(this);
 
 		domainModelReferenceChangeListener = null;
 
@@ -443,4 +448,32 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 			}
 		}
 	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emfforms.spi.core.services.view.RootDomainModelChangeListener#notifyChange()
+	 */
+	@Override
+	public void notifyChange() {
+		// TODO correct? - works so far
+		if (modelValue != null) {
+			modelValue.dispose();
+			modelValue = null;
+		}
+
+		try {
+			rootDomainModelChanged();
+		} catch (final DatabindingFailedException ex) {
+			getReportService().report(new AbstractReport(ex, "Could not process the root domain model change.")); //$NON-NLS-1$
+		}
+
+	}
+
+	/**
+	 * This method is called in {@link #notifyChange()} when the root domain model of the view model context changes.
+	 *
+	 * @throws DatabindingFailedException If the databinding failed
+	 */
+	protected abstract void rootDomainModelChanged() throws DatabindingFailedException;
 }
