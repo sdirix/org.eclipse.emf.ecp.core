@@ -486,7 +486,7 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 		int rowId) {
 		try {
 			return cell.getStringCellValue();
-		} catch (final IllegalArgumentException ex) {
+		} catch (final IllegalStateException ex) {
 			errorReports.reportError(
 				Severity.ERROR, ex.getMessage(),
 				ErrorFactory.eINSTANCE.createEMFLocation(),
