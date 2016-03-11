@@ -50,7 +50,7 @@ import org.junit.Test;
  * @author Eugen Neufeld
  *
  */
-public class ConditionEvaluator_Test {
+public class ConditionEvaluator_PTest {
 
 	/**
 	 * @throws java.lang.Exception
