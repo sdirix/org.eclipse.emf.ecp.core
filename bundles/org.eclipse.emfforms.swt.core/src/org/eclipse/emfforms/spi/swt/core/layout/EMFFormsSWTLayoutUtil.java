@@ -56,13 +56,20 @@ public final class EMFFormsSWTLayoutUtil {
 				scrolledComposite.setMinSize(point);
 			} else if (ExpandBar.class.isInstance(parent)) {
 				final ExpandBar bar = ExpandBar.class.cast(parent);
-				final ExpandItem item = bar.getItem(0);
-				final Control itemControl = item.getControl();
-				if (itemControl != null) {
-					final int oldHeight = item.getHeight();
-					final int height = itemControl.computeSize(bar.getSize().x, SWT.DEFAULT, true).y;
-					updateLayoutData(bar.getLayoutData(), oldHeight, height);
-					item.setHeight(height);
+				int oldBarHeight = 0;
+				int barHeight = 0;
+				for (final ExpandItem item : bar.getItems()) {
+					final Control itemControl = item.getControl();
+					if (itemControl != null) {
+						oldBarHeight += item.getHeight();
+						final int height = itemControl.computeSize(bar.getSize().x, SWT.DEFAULT, true).y;
+						barHeight += height;
+						item.setHeight(height);
+					}
+				}
+				if (bar.getItemCount() > 0) {
+					/* only update layout data when there is at least one item */
+					updateLayoutData(bar.getLayoutData(), oldBarHeight, barHeight);
 				}
 			}
 
