@@ -102,6 +102,7 @@
 		<module>../../bundles/org.eclipse.emf.ecp.view.categorization.model</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.categorization.model.edit</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.categorization.swt</module>
+		<module>../../bundles/org.eclipse.emfforms.swt.categorization.expandbar</module>
 
 		<!-- Custom Control Feature -->
 		<module>../../bundles/org.eclipse.emf.ecp.view.custom.model</module>
