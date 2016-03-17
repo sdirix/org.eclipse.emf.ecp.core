@@ -453,6 +453,7 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 	 * {@inheritDoc}
 	 *
 	 * @see org.eclipse.emfforms.spi.core.services.view.RootDomainModelChangeListener#notifyChange()
+	 * @since 1.9
 	 */
 	@Override
 	public void notifyChange() {
@@ -474,6 +475,7 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 	 * This method is called in {@link #notifyChange()} when the root domain model of the view model context changes.
 	 *
 	 * @throws DatabindingFailedException If the databinding failed
+	 * @since 1.9
 	 */
 	protected abstract void rootDomainModelChanged() throws DatabindingFailedException;
 }

@@ -12,7 +12,6 @@
  ******************************************************************************/
 package org.eclipse.emfforms.spi.swt.treemasterdetail;
 
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
@@ -53,6 +52,7 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Sash;
+import org.eclipse.swt.widgets.Shell;
 
 /**
  * The Class MasterDetailRenderer.
@@ -89,13 +89,28 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 	/** The detail panel. */
 	private Composite detailPanel;
 
-	/** The currently rendered dummy EObject. */
-	// private EObject renderedObject;
-
 	/** The currently rendered ECPSWTView. */
 	private ECPSWTView renderedView;
+	private final Shell limbo;
 
 	private final TreeMasterDetailSWTCustomization customization;
+	private TreeMasterDetailCache cache = new TreeMasterDetailCache() {
+
+		@Override
+		public boolean isChached(EObject selection) {
+			return false;
+		}
+
+		@Override
+		public ECPSWTView getCachedView(EObject selection) {
+			return null;
+		}
+
+		@Override
+		public void cache(ECPSWTView ecpView) {
+			// intentionally left empty
+		}
+	};
 
 	/** The CreateElementCallback to allow modifications to the newly created element. */
 
@@ -129,6 +144,9 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 			editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(input);
 		}
 		this.customization = customization;
+		limbo = new Shell(Display.getCurrent(), SWT.NONE);
+		// Place the limbo shell 'off screen'
+		limbo.setLocation(0, 10000);
 		renderControl(customization);
 	}
 
@@ -220,27 +238,16 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 
 		if (selectedObject instanceof EObject) {
 			final EObject eObject = EObject.class.cast(selectedObject);
-
-			EClass currentEClass = null;
 			if (renderedView != null) {
-				currentEClass = renderedView.getViewModelContext().getDomainModel().eClass();
+				renderedView.getSWTControl().setParent(limbo);
+				cache.cache(renderedView);
 			}
-			if (currentEClass != null && currentEClass.equals(eObject.eClass())) {
-				// In this case, we don't want to render the eObject again but only change the databinding to the new
-				// EObject.
-				System.out.println("Reset features, dont rerender.");
-
+			createDetailPanel();
+			if (cache.isChached(eObject)) {
+				renderedView = cache.getCachedView(eObject);
+				renderedView.getSWTControl().setParent(detailPanel);
 				renderedView.getViewModelContext().changeDomainModel(eObject);
-				// TODO remove
-				// final EList<EStructuralFeature> allFeatures = eObject.eClass().getEAllStructuralFeatures();
-				// for (final EStructuralFeature feature : allFeatures) {
-				// renderedObject.eSet(feature, eObject.eGet(feature));
-				// }
 			} else {
-				createDetailPanel();
-				// TODO remove sys out
-				System.out.println("Render " + eObject);
-
 				// Check, if the selected object would be rendered using a TreeMasterDetail. If so, render the provided
 				// detail view.
 				final VView view = ViewProviderHelper.getView((EObject) selectedObject, context);
@@ -373,5 +380,17 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 	 */
 	public void setInput(Object input) {
 		treeViewer.setInput(input);
+	}
+
+	/**
+	 * Allows to override the default cache implementation by the provided one.
+	 *
+	 * @param cache The {@link TreeMasterDetailCache} to use.
+	 * @since 1.9
+	 */
+	public void setCache(TreeMasterDetailCache cache) {
+		if (cache != null) {
+			this.cache = cache;
+		}
 	}
 }

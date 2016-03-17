@@ -31,6 +31,7 @@ import org.eclipse.emf.ecp.view.spi.stack.model.VStackLayout;
 import org.eclipse.emf.ecp.view.spi.stack.model.VStackPackage;
 import org.eclipse.emf.ecp.view.spi.swt.layout.LayoutProviderHelper;
 import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.core.services.view.RootDomainModelChangeListener;
 import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsNoRendererException;
@@ -52,7 +53,7 @@ import org.osgi.framework.ServiceReference;
  * @author jfaltermeier
  *
  */
-public class SWTStackLayoutRenderer extends AbstractSWTRenderer<VStackLayout> {
+public class SWTStackLayoutRenderer extends AbstractSWTRenderer<VStackLayout> implements RootDomainModelChangeListener {
 
 	/**
 	 * Default constructor.
@@ -64,6 +65,7 @@ public class SWTStackLayoutRenderer extends AbstractSWTRenderer<VStackLayout> {
 	 */
 	public SWTStackLayoutRenderer(VStackLayout vElement, ViewModelContext viewContext, ReportService reportService) {
 		super(vElement, viewContext, reportService);
+		viewContext.registerRootDomainModelChangeListener(this);
 	}
 
 	private static final String CONTROL_STACK_COMPOSITE = "org_eclipse_emf_ecp_ui_layout_stack"; //$NON-NLS-1$
@@ -118,8 +120,10 @@ public class SWTStackLayoutRenderer extends AbstractSWTRenderer<VStackLayout> {
 				getReportService().report(new StatusReport(
 					new Status(IStatus.INFO, Activator.PLUGIN_ID, String.format(
 						LocalizationServiceHelper.getString(getClass(),
-							MessageKeys.SWTStackLayoutRenderer_NoRendererForItemCompositeFound), item.eClass()
-							.getName(), ex))));
+							MessageKeys.SWTStackLayoutRenderer_NoRendererForItemCompositeFound),
+						item.eClass()
+							.getName(),
+						ex))));
 				continue;
 			}
 			elementRendererMap.put(item, renderer);
@@ -235,4 +239,16 @@ public class SWTStackLayoutRenderer extends AbstractSWTRenderer<VStackLayout> {
 		bundleContext.ungetService(serviceReference);
 		return rendererFactory;
 	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emfforms.spi.core.services.view.RootDomainModelChangeListener#notifyChange()
+	 * @since 1.9
+	 */
+	@Override
+	public void notifyChange() {
+		setTopElement();
+	}
+
 }
