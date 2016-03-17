@@ -18,7 +18,6 @@ import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableFactory;
 import org.eclipse.emf.ecp.view.spi.table.model.VWidthConfiguration;
 import org.eclipse.emfforms.common.Optional;
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 
@@ -101,13 +100,18 @@ public final class TableConfigurationHelper {
 			widthConfiguration.setColumnDomainReference(domainModelReference);
 			tableControl.getColumnConfigurations().add(widthConfiguration);
 		}
-		final double columnCount = swtTable.getColumnCount();
-		final double tableWidth = swtTable.computeSize(SWT.DEFAULT, SWT.DEFAULT).x;
+
+		// TODO JF the column widths should normalized to a commin scale which is alliged with the default weight of the
+		// cell editors. however [0,100] in int values brings too much rounding errors
+
+		// final double columnCount = swtTable.getColumnCount();
+		// final double tableWidth = swtTable.computeSize(SWT.DEFAULT, SWT.DEFAULT).x;
 		final double columnWidth = tableColumn.getWidth();
 
-		final double widthPerColumn = tableWidth / columnCount;
-		final double normalizedWidthPerColumn = 100d / widthPerColumn;
+		// final double widthPerColumn = tableWidth / columnCount;
+		// final double normalizedWidthPerColumn = 100d / widthPerColumn;
 
-		widthConfiguration.setWeight(new Double(normalizedWidthPerColumn * columnWidth).intValue());
+		// widthConfiguration.setWeight(new Double(normalizedWidthPerColumn * columnWidth).intValue());
+		widthConfiguration.setWeight(new Double(columnWidth).intValue());
 	}
 }
