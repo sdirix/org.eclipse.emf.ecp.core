@@ -20,7 +20,7 @@ import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
 
 /**
  * A default implementation of the TreeMasterDetailCache which uses the EClass as the key.
- * 
+ *
  * @author Eugen Neufeld
  * @since 1.9
  *
@@ -48,7 +48,11 @@ public class DefaultTreeMasterDetailCache implements TreeMasterDetailCache {
 			// This method is called just after a new entry has been added
 			@Override
 			public boolean removeEldestEntry(Map.Entry<EClass, ECPSWTView> eldest) {
-				return size() > maxEntries;
+				final boolean result = size() > maxEntries;
+				if (result) {
+					eldest.getValue().dispose();
+				}
+				return result;
 			}
 		};
 	}
