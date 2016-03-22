@@ -279,6 +279,12 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 				}
 			}
 		} else {
+			if (renderedView != null) {
+				renderedView.getSWTControl().setParent(limbo);
+				cache.cache(renderedView);
+				/* set renderedView to null so that it is not offered to the cache further times */
+				renderedView = null;
+			}
 			createDetailPanel();
 			final Label hint = new Label(detailPanel, SWT.CENTER);
 			final FontDescriptor boldDescriptor = FontDescriptor.createFrom(hint.getFont()).setHeight(18)
