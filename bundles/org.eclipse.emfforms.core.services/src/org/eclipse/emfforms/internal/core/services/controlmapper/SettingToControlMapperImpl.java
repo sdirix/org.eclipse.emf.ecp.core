@@ -304,6 +304,7 @@ public class SettingToControlMapperImpl implements EMFFormsSettingToControlMappe
 	 */
 	@Override
 	public void contextDispose() {
+		viewModelContext.unregisterEMFFormsContextListener(this);
 		viewModelListener.dispose();
 		settingToControlMap.clear();
 		childMappers.clear();
