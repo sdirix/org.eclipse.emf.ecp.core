@@ -14,6 +14,8 @@ package org.eclipse.emfforms.internal.swt.treemasterdetail.defaultprovider;
 import java.util.Collection;
 import java.util.Collections;
 
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecp.common.spi.ChildrenDescriptorCollector;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.DeleteActionBuilder;
@@ -48,6 +50,11 @@ public final class DefaultMenuProvider implements MenuProvider {
 			@Override
 			public boolean beforeCreateElement(Object newElement) {
 				return true;
+			}
+
+			@Override
+			public void initElement(EObject parent, EReference reference, EObject newObject) {
+				/* no op */
 			}
 		};
 		deleteActionBuilder = new DefaultDeleteActionBuilder();
@@ -99,7 +106,7 @@ public final class DefaultMenuProvider implements MenuProvider {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param rightClickActions the {@link MasterDetailAction actions}
 	 */
 	public void setRightClickAction(Collection<MasterDetailAction> rightClickActions) {

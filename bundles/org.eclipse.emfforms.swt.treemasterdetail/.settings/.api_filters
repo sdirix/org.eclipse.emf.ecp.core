@@ -81,4 +81,12 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emfforms/spi/swt/treemasterdetail/util/CreateElementCallback.java" type="org.eclipse.emfforms.spi.swt.treemasterdetail.util.CreateElementCallback">
+        <filter comment="SPI Change 1.9.0" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emfforms.spi.swt.treemasterdetail.util.CreateElementCallback"/>
+                <message_argument value="initElement(EObject, EReference, EObject)"/>
+            </message_arguments>
+        </filter>
+    </resource>
 </component>
