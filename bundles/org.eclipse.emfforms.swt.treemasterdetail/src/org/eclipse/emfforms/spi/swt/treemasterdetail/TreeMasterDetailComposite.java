@@ -334,6 +334,7 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 
 	@Override
 	public void dispose() {
+		limbo.dispose();
 		customization.dispose();
 		super.dispose();
 	}
