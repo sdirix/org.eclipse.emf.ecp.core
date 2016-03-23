@@ -56,7 +56,7 @@ public class ECPValidationServiceLabelDecorator implements ILabelDecorator {
 
 	/**
 	 * Default constructor.
-	 * 
+	 *
 	 * @param viewer the {@link TreeViewer}
 	 * @param input the input notifier
 	 */
@@ -185,6 +185,9 @@ public class ECPValidationServiceLabelDecorator implements ILabelDecorator {
 		@Override
 		public void notifyChanged(Notification notification) {
 			super.notifyChanged(notification);
+			if (notification.isTouch()) {
+				return;
+			}
 			handleRemoveNotification(notification);
 			if (!EObject.class.isInstance(notification.getNotifier())) {
 				return;
