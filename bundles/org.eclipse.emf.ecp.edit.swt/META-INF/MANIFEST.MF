@@ -7,7 +7,11 @@ Bundle-Activator: org.eclipse.emf.ecp.edit.internal.swt.Activator
 Bundle-Vendor: %Bundle-Vendor
 Export-Package: org.eclipse.emf.ecp.edit.internal.swt;version="1.9.0";x-friends:="org.eclipse.emf.ecp.ui.view.editor.controls,org.eclipse.emf.ecp.view.treemasterdetail.ui.swt",
  org.eclipse.emf.ecp.edit.internal.swt.actions;version="1.9.0";x-friends:="org.eclipse.emf.ecp.ui.view.editor.controls,org.eclipse.emf.ecp.edit.ecore.swt",
- org.eclipse.emf.ecp.edit.internal.swt.controls;version="1.9.0";x-friends:="org.eclipse.emf.ecp.ui.view.swt,org.eclipse.emf.ecp.ui.view.editor.controls,org.eclipse.emf.ecp.view.table.ui.swt",
+ org.eclipse.emf.ecp.edit.internal.swt.controls;version="1.9.0";
+  x-friends:="org.eclipse.emf.ecp.ui.view.swt,
+   org.eclipse.emf.ecp.ui.view.editor.controls,
+   org.eclipse.emf.ecp.view.table.ui.swt,
+   org.eclipse.emf.ecp.view.core.swt",
  org.eclipse.emf.ecp.edit.internal.swt.reference;version="1.9.0";x-friends:="org.eclipse.emf.ecp.edit.ecore.swt,org.eclipse.emf.ecp.ui.view.editor.controls",
  org.eclipse.emf.ecp.edit.internal.swt.table;version="1.9.0";x-friends:="org.eclipse.emf.ecp.view.table.ui.swt,org.eclipse.emfforms.swt.control.multiattribute",
  org.eclipse.emf.ecp.edit.internal.swt.util;version="1.9.0";
