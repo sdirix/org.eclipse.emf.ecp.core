@@ -1596,18 +1596,19 @@ public class UnsetService_PTest {
 
 		/**
 		 * {@inheritDoc}
-		 * 
+		 *
 		 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext#registerEMFFormsContextListener(org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener)
 		 */
 		@Override
 		public void registerEMFFormsContextListener(EMFFormsContextListener contextListener) {
+			contextListener.contextInitialised();
 			// TODO Auto-generated method stub
 
 		}
 
 		/**
 		 * {@inheritDoc}
-		 * 
+		 *
 		 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext#unregisterEMFFormsContextListener(org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener)
 		 */
 		@Override
