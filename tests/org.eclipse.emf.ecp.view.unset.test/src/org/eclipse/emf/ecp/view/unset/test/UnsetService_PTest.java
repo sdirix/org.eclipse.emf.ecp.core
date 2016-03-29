@@ -1506,10 +1506,11 @@ public class UnsetService_PTest {
 		 * {@inheritDoc}
 		 *
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getControlsFor(org.eclipse.emf.ecore.EStructuralFeature.Setting)
+		 * @deprecated
 		 */
+		@Deprecated
 		@Override
 		public Set<VControl> getControlsFor(Setting setting) {
-			// TODO Auto-generated method stub
 			return null;
 		}
 
@@ -1517,10 +1518,11 @@ public class UnsetService_PTest {
 		 * {@inheritDoc}
 		 *
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getControlsFor(UniqueSetting)
+		 * @deprecated
 		 */
+		@Deprecated
 		@Override
 		public Set<VElement> getControlsFor(UniqueSetting setting) {
-			// TODO Auto-generated method stub
 			return null;
 		}
 
@@ -1531,7 +1533,6 @@ public class UnsetService_PTest {
 		 */
 		@Override
 		public Object getContextValue(String key) {
-			// TODO Auto-generated method stub
 			return null;
 		}
 
@@ -1543,8 +1544,6 @@ public class UnsetService_PTest {
 		 */
 		@Override
 		public void putContextValue(String key, Object value) {
-			// TODO Auto-generated method stub
-
 		}
 
 		/**
@@ -1554,8 +1553,6 @@ public class UnsetService_PTest {
 		 */
 		@Override
 		public void registerDisposeListener(ViewModelContextDisposeListener listener) {
-			// TODO Auto-generated method stub
-
 		}
 
 		/**
@@ -1565,8 +1562,6 @@ public class UnsetService_PTest {
 		 */
 		@Override
 		public void addContextUser(Object user) {
-			// TODO Auto-generated method stub
-
 		}
 
 		/**
@@ -1576,8 +1571,6 @@ public class UnsetService_PTest {
 		 */
 		@Override
 		public void removeContextUser(Object user) {
-			// TODO Auto-generated method stub
-
 		}
 
 		/**
@@ -1590,7 +1583,6 @@ public class UnsetService_PTest {
 		@Override
 		public ViewModelContext getChildContext(EObject eObject, VElement parent, VView vView,
 			ViewModelService... viewModelServices) {
-			// TODO Auto-generated method stub
 			return null;
 		}
 
@@ -1602,8 +1594,6 @@ public class UnsetService_PTest {
 		@Override
 		public void registerEMFFormsContextListener(EMFFormsContextListener contextListener) {
 			contextListener.contextInitialised();
-			// TODO Auto-generated method stub
-
 		}
 
 		/**
@@ -1613,8 +1603,6 @@ public class UnsetService_PTest {
 		 */
 		@Override
 		public void unregisterEMFFormsContextListener(EMFFormsContextListener contextListener) {
-			// TODO Auto-generated method stub
-
 		}
 
 	}
