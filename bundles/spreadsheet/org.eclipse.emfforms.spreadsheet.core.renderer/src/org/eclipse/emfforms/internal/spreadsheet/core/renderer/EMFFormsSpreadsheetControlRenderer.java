@@ -194,11 +194,6 @@ public class EMFFormsSpreadsheetControlRenderer extends EMFFormsAbstractSpreadsh
 		return 0;
 	}
 
-	@SuppressWarnings("deprecation")
-	private void resolveDMR(ViewModelContext viewModelContext, VDomainModelReference dmrToResolve) {
-		dmrToResolve.init(viewModelContext.getDomainModel());
-	}
-
 	private void writeValue(ViewModelContext viewModelContext, EMFFormsSpreadsheetRenderTarget renderTarget,
 		Sheet sheet, VDomainModelReference dmrToResolve) throws DatabindingFailedException, EMFFormsConverterException {
 		Row valueRow = sheet.getRow(renderTarget.getRow() + 3);
@@ -207,9 +202,6 @@ public class EMFFormsSpreadsheetControlRenderer extends EMFFormsAbstractSpreadsh
 		}
 		valueRow.getCell(0, Row.CREATE_NULL_AS_BLANK)
 			.setCellValue(idProvider.getId(viewModelContext.getDomainModel()));
-
-		/* init dmr */
-		resolveDMR(viewModelContext, dmrToResolve);
 
 		final Setting setting = emfformsDatabinding.getSetting(dmrToResolve, viewModelContext.getDomainModel());
 

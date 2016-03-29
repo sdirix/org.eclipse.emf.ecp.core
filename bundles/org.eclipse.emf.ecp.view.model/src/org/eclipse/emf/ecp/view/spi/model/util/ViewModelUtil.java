@@ -46,7 +46,9 @@ public final class ViewModelUtil {
 	 *            VDomainModelReferences}
 	 * @param domainModelRoot the domain model to use for resolving
 	 * @since 1.3
+	 * @deprecated Use the EMFFormsDomainExpander service to resolve DMRs.
 	 */
+	@Deprecated
 	public static void resolveDomainReferences(EObject renderable,
 		EObject domainModelRoot) {
 		checkAndResolve(renderable, domainModelRoot);

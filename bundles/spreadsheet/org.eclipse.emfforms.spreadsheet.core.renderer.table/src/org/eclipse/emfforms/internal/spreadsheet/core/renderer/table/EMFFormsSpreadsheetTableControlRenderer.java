@@ -124,8 +124,6 @@ public class EMFFormsSpreadsheetTableControlRenderer extends EMFFormsAbstractSpr
 
 				dmrToResolve = exportTableParent.getIndexDMRToResolve();
 			}
-			// TODO remove asap
-			dmrToResolve.init(viewModelContext.getDomainModel());
 
 			final Setting tableSetting = emfformsDatabinding.getSetting(
 				dmrToResolve, viewModelContext.getDomainModel());

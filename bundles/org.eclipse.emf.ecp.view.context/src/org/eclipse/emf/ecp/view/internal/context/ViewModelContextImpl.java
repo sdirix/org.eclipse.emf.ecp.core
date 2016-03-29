@@ -237,8 +237,6 @@ public class ViewModelContextImpl implements ViewModelContext {
 		if (VDomainModelReference.class.isInstance(eObject)
 			&& !VDomainModelReference.class.isInstance(eObject.eContainer())) {
 			final VDomainModelReference domainModelReference = VDomainModelReference.class.cast(eObject);
-			// FIXME remove
-			domainModelReference.init(domainModelRoot);
 			try {
 				domainExpander.prepareDomainObject(domainModelReference, domainModelRoot);
 			} catch (final EMFFormsExpandingFailedException ex) {

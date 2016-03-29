@@ -48,6 +48,8 @@ import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emfforms.internal.spreadsheet.core.transfer.EMFFormsSpreadsheetImporterImpl.MigrationInformation.State;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
+import org.eclipse.emfforms.spi.core.services.domainexpander.EMFFormsDomainExpander;
+import org.eclipse.emfforms.spi.core.services.domainexpander.EMFFormsExpandingFailedException;
 import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsIdProvider;
 import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsConverterException;
@@ -70,10 +72,22 @@ import org.osgi.framework.ServiceReference;
 public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImporter {
 
 	private static final String IGNORE_SHEET = "Ignore Sheet"; //$NON-NLS-1$
+	private EMFFormsDomainExpander domainExpander;
 
 	@Override
 	public SpreadsheetImportResult importSpreadsheet(Workbook workbook, EClass eClass) {
-		return readData(workbook, eClass);
+		final BundleContext bundleContext = FrameworkUtil.getBundle(EMFFormsSpreadsheetImporterImpl.class)
+			.getBundleContext();
+		final ServiceReference<EMFFormsDomainExpander> serviceReference = bundleContext
+			.getServiceReference(EMFFormsDomainExpander.class);
+		domainExpander = bundleContext.getService(serviceReference);
+
+		final SpreadsheetImportResult result = readData(workbook, eClass);
+
+		domainExpander = null;
+		bundleContext.ungetService(serviceReference);
+
+		return result;
 	}
 
 	private SpreadsheetImportResult readData(Workbook workbook, EClass eClass) {
@@ -128,8 +142,11 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 			if (dmr == null) {
 				continue;
 			}
+
 			/* resolve dmr */
-			if (!resolveDMR(dmr, eObject)) {
+			try {
+				resolveDMR(dmr, eObject);
+			} catch (final EMFFormsExpandingFailedException ex) {
 				errorReports.reportError(
 					Severity.ERROR, LocalizationServiceHelper.getString(getClass(), "ImportError_DMRResolvementFailed"), //$NON-NLS-1$
 					ErrorFactory.eINSTANCE.createEMFLocation(eObject,
@@ -342,9 +359,8 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 		return ErrorFactory.eINSTANCE.createSettingLocation(setting.getEObject(), setting.getEStructuralFeature());
 	}
 
-	@SuppressWarnings("deprecation")
-	private boolean resolveDMR(VDomainModelReference dmr, EObject eObject) {
-		return dmr.init(eObject);
+	private void resolveDMR(VDomainModelReference dmr, EObject eObject) throws EMFFormsExpandingFailedException {
+		domainExpander.prepareDomainObject(dmr, eObject);
 	}
 
 	/**

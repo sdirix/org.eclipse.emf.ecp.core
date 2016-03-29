@@ -143,10 +143,6 @@ public class ConditionEvaluator_PTest {
 		leafCondition.setDomainModelReference(modelReference);
 		leafCondition.setExpectedValue(expectedValue);
 		modelReference.getDomainModelEReferencePath().addAll(eReferences);
-		final boolean result = modelReference.init(resolveObject);
-		if (!result) {
-			throw new IllegalStateException("the ModelReference was not resolved.");
-		}
 		return leafCondition;
 	}
 
@@ -160,7 +156,6 @@ public class ConditionEvaluator_PTest {
 		modelDMR.getDomainModelEReferencePath().addAll(domainPath);
 		modelDMR.setDomainModelEFeature(domainRef);
 		leafCondition.setDomainModelReference(modelDMR);
-		modelDMR.init(domain);
 
 		final VFeaturePathDomainModelReference valueDMR = VViewFactory.eINSTANCE
 			.createFeaturePathDomainModelReference();
