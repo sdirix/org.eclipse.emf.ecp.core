@@ -1307,19 +1307,6 @@ public class UnsetService_PTest {
 		assertFalse(fan.eIsSet(fanNameFeature));
 	}
 
-	/**
-	 * Test if exception occurs when control has no setting.
-	 */
-	@Test
-	public void testControlWithoutSetting() {
-		final VFeaturePathDomainModelReference domainModelReference = VViewFactory.eINSTANCE
-			.createFeaturePathDomainModelReference();
-		domainModelReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getMerchandise_Name());
-		final VControl control = addControlToView(domainModelReference);
-		assertFalse(control.getDomainModelReference().getIterator().hasNext());
-		unsetService();
-	}
-
 	@Test
 	public void testTable() {
 		final Merchandise merc = BowlingFactory.eINSTANCE.createMerchandise();
