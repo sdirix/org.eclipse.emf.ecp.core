@@ -81,8 +81,9 @@ public class ECPValidationServiceLabelDecorator implements ILabelDecorator {
 			if (!EObject.class.isInstance(next)) {
 				continue;
 			}
-			updateCache(EObject.class.cast(next), cache);
+			updateCacheWithoutRefresh(EObject.class.cast(next), cache);
 		}
+		viewer.refresh();
 	}
 
 	@Override
@@ -126,6 +127,11 @@ public class ECPValidationServiceLabelDecorator implements ILabelDecorator {
 		for (final EObject eObject : update) {
 			viewer.refresh(eObject, true);
 		}
+	}
+
+	private void updateCacheWithoutRefresh(EObject element, DiagnosticCache cache) {
+		final Diagnostic diagnostic = getDiagnostic(element);
+		cache.update(element, diagnostic);
 	}
 
 	private static Diagnostic getDiagnostic(Object object) {

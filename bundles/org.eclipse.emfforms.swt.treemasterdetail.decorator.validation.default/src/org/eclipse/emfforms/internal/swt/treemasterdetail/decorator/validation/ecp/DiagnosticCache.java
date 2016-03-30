@@ -11,7 +11,10 @@
  ******************************************************************************/
 package org.eclipse.emfforms.internal.swt.treemasterdetail.decorator.validation.ecp;
 
-import java.util.Collection;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.Set;
+import java.util.TreeSet;
 
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecp.common.spi.cachetree.AbstractCachedTree;
@@ -51,31 +54,59 @@ public class DiagnosticCache extends AbstractCachedTree<Diagnostic> {
 
 	/**
 	 * Tree node for diagnostics.
-	 * 
+	 *
 	 * @author Johannes Faltermeier
 	 *
 	 */
 	private class DiagnosticTreeNode extends CachedTreeNode<Diagnostic> {
 
-		DiagnosticTreeNode(Diagnostic diagnostic) {
-			super(diagnostic);
+		private final Set<Diagnostic> diagnosticSet = new TreeSet<Diagnostic>(new Comparator<Diagnostic>() {
+
+			@Override
+			public int compare(Diagnostic o1, Diagnostic o2) {
+				if (o1.getSeverity() == o2.getSeverity()) {
+					if (o1 == o2) {
+						return 0;
+					}
+					return 1;
+				}
+				return -1 * Integer.class.cast(o1.getSeverity()).compareTo(o2.getSeverity());
+			}
+
+		});
+
+		DiagnosticTreeNode(Diagnostic initialValue) {
+			super(initialValue);
+		}
+
+		@Override
+		public void putIntoCache(Object key, Diagnostic value) {
+			boolean updateRequired = true;
+
+			if (getCache().containsKey(key)) {
+				final Diagnostic diagnostic = getCache().get(key);
+				if (diagnostic.getSeverity() == value.getSeverity()) {
+					updateRequired = false;
+				}
+				diagnosticSet.remove(diagnostic);
+			}
+			getCache().put(key, value);
+			diagnosticSet.add(value);
+
+			if (updateRequired) {
+				update();
+			}
 		}
 
 		@Override
 		public void update() {
-			final Collection<Diagnostic> severities = values();
-
-			if (severities.size() > 0) {
-				Diagnostic mostSevereDiagnostic = values().iterator().next();
-				for (final Diagnostic diagnostic : severities) {
-					if (diagnostic.getSeverity() > mostSevereDiagnostic.getSeverity()) {
-						mostSevereDiagnostic = diagnostic;
-					}
-				}
+			final Iterator<Diagnostic> iterator = diagnosticSet.iterator();
+			if (iterator.hasNext()) {
+				final Diagnostic mostSevereDiagnostic = iterator.next();
 				setChildValue(mostSevereDiagnostic);
-				return;
+			} else {
+				setChildValue(getDefaultValue());
 			}
-			setChildValue(getDefaultValue());
 		}
 
 		@Override
