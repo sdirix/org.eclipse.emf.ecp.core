@@ -481,17 +481,21 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	}
 
 	private IObservableValue getLabelTooltipText(VDomainModelReference dmrToCheck, boolean forColumn) {
+		final EMFFormsLabelProvider labelService = getEMFFormsLabelProvider();
+		try {
+			if (forColumn) {
+				return labelService.getDescription(dmrToCheck);
+			}
+		} catch (final NoLabelFoundException e) {
+			// FIXME Expectation?
+			getReportService().report(new RenderingFailedReport(e));
+			return Observables.constantObservableValue(e.toString(), String.class);
+		}
 		switch (getVElement().getLabelAlignment()) {
-
 		case NONE:
 			return Observables.constantObservableValue("", String.class); //$NON-NLS-1$
-
 		default:
-			final EMFFormsLabelProvider labelService = getEMFFormsLabelProvider();
 			try {
-				if (forColumn) {
-					return labelService.getDescription(dmrToCheck);
-				}
 				return labelService.getDescription(dmrToCheck, getViewModelContext().getDomainModel());
 			} catch (final NoLabelFoundException e) {
 				// FIXME Expectation?
