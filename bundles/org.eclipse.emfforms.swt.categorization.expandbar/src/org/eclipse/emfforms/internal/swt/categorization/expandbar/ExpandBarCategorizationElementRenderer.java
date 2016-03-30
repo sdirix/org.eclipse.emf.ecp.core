@@ -46,6 +46,7 @@ import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsNoRendererException;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
+import org.eclipse.emfforms.spi.swt.core.SWTDataElementIdHelper;
 import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
@@ -151,6 +152,7 @@ public class ExpandBarCategorizationElementRenderer extends AbstractSWTRenderer<
 			}
 			final Control render = renderer.render(cell, parent);
 			renderer.finalizeRendering(parent);
+			SWTDataElementIdHelper.setElementIdDataWithSubId(render, getVElement(), "vcategory"); //$NON-NLS-1$
 			return render;
 
 		}
@@ -170,6 +172,7 @@ public class ExpandBarCategorizationElementRenderer extends AbstractSWTRenderer<
 		}
 
 		final SashForm sashForm = new SashForm(parent, SWT.HORIZONTAL);
+		SWTDataElementIdHelper.setElementIdDataWithSubId(sashForm, getVElement(), "sash"); //$NON-NLS-1$
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(sashForm);
 
 		expandBar = createExpandBarMaster(sashForm);
@@ -223,9 +226,11 @@ public class ExpandBarCategorizationElementRenderer extends AbstractSWTRenderer<
 		};
 
 		final Composite expandBarComposite = new Composite(parent, SWT.BORDER);
+		SWTDataElementIdHelper.setElementIdDataWithSubId(expandBarComposite, getVElement(), "expandBarComposite"); //$NON-NLS-1$
 		expandBarComposite.setLayout(new GridLayout());
 
 		expandBar = new ExpandBar(expandBarComposite, SWT.V_SCROLL);
+		SWTDataElementIdHelper.setElementIdDataWithSubId(expandBar, getVElement(), "expandBar"); //$NON-NLS-1$
 		expandBar.setData(RWT.MARKUP_ENABLED, Boolean.TRUE);
 		int totalHeight = 0;
 		for (final VAbstractCategorization categorization : getVElement().getCategorizations()) {
@@ -250,6 +255,7 @@ public class ExpandBarCategorizationElementRenderer extends AbstractSWTRenderer<
 		final VAbstractCategorization categorization) {
 		final ExpandItem item = new ExpandItem(expandBar, SWT.NONE,
 			getVElement().getCategorizations().indexOf(categorization));
+		SWTDataElementIdHelper.setElementIdDataWithSubId(item, categorization, "expandItem"); //$NON-NLS-1$
 		item.setData(RWT.MARKUP_ENABLED, Boolean.TRUE);
 
 		final ISWTObservableValue target = WidgetProperties.text().observe(item);
@@ -278,6 +284,7 @@ public class ExpandBarCategorizationElementRenderer extends AbstractSWTRenderer<
 		tv.getTable().setData(RWT.MARKUP_ENABLED, Boolean.TRUE);
 		tv.getTable().setData(MarkupValidator.MARKUP_VALIDATION_DISABLED, Boolean.TRUE);
 		item.setControl(tv.getControl());
+		SWTDataElementIdHelper.setElementIdDataWithSubId(tv.getControl(), categorization, "expandItemContent"); //$NON-NLS-1$
 		item.setHeight(computeHeight(item.getControl()));
 		if (categorization.getDiagnostic() != null && categorization.getDiagnostic().getHighestSeverity() > 0) {
 			item.setData(RWT.CUSTOM_VARIANT, getValidationKey(categorization));
@@ -329,6 +336,7 @@ public class ExpandBarCategorizationElementRenderer extends AbstractSWTRenderer<
 		editorComposite.setExpandHorizontal(true);
 		editorComposite.setExpandVertical(true);
 		editorComposite.setShowFocusedControl(true);
+		SWTDataElementIdHelper.setElementIdDataWithSubId(editorComposite, getVElement(), "editorComposite"); //$NON-NLS-1$
 
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(editorComposite);
 

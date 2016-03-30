@@ -15,7 +15,7 @@ import java.text.MessageFormat;
 
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
-import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Widget;
 
 /**
  * Use this helper to ease setting the {@link VElement#getUuid() element} as the
@@ -40,23 +40,23 @@ public final class SWTDataElementIdHelper {
 	}
 
 	/**
-	 * Sets the element id with the control sub id on the given control.
+	 * Sets the element id with the control sub id on the given widget.
 	 *
-	 * @param control the control to set the data on
+	 * @param widget the widget to set the data on
 	 * @param element the element including the id
 	 */
-	public static void setElementIdDataForVControl(final Control control, VControl element) {
-		setElementIdDataWithSubId(control, element, CONTROL);
+	public static void setElementIdDataForVControl(final Widget widget, VControl element) {
+		setElementIdDataWithSubId(widget, element, CONTROL);
 	}
 
 	/**
-	 * Sets the element id with the given sub id on the given control.
+	 * Sets the element id with the given sub id on the given widget.
 	 *
-	 * @param control the control to set the data on
+	 * @param widget the widget to set the data on
 	 * @param element the element including the id
 	 * @param subId the sub id
 	 */
-	public static void setElementIdDataWithSubId(final Control control, VElement element, String subId) {
-		control.setData(ELEMENT_ID_KEY, MessageFormat.format(ID_PATTERN, element.getUuid(), subId));
+	public static void setElementIdDataWithSubId(final Widget widget, VElement element, String subId) {
+		widget.setData(ELEMENT_ID_KEY, MessageFormat.format(ID_PATTERN, element.getUuid(), subId));
 	}
 }
