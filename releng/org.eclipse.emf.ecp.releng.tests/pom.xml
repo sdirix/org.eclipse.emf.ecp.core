@@ -133,6 +133,7 @@
 		<!-- Core Services -->
 		<module>../../tests/org.eclipse.emfforms.core.services.databinding.featurepath.tests</module>
 		<module>../../tests/org.eclipse.emfforms.core.services.databinding.index.tests</module>
+		<module>../../tests/org.eclipse.emfforms.core.services.databinding.keyattribute.tests</module>
 		<module>../../tests/org.eclipse.emfforms.core.services.databinding.mapping.tests</module>
 		<module>../../tests/org.eclipse.emfforms.core.services.databinding.integrationtest</module>
 		<module>../../tests/org.eclipse.emfforms.core.services.databinding.testmodel</module>
