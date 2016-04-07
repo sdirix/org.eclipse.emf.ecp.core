@@ -18,6 +18,9 @@ import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableFactory;
 import org.eclipse.emf.ecp.view.spi.table.model.VWidthConfiguration;
 import org.eclipse.emfforms.common.Optional;
+import org.eclipse.emfforms.spi.swt.table.TableViewerSWTCustomization.ColumnDescription;
+import org.eclipse.jface.viewers.ColumnPixelData;
+import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 
@@ -28,6 +31,8 @@ import org.eclipse.swt.widgets.TableColumn;
  *
  */
 public final class TableConfigurationHelper {
+
+	private static final String LAYOUT_DATA = "org.eclipse.jface.LAYOUT_DATA"; //$NON-NLS-1$
 
 	private TableConfigurationHelper() {
 
@@ -69,6 +74,28 @@ public final class TableConfigurationHelper {
 			if (widthConfiguration.getColumnDomainReference() != domainModelReference) {
 				continue;
 			}
+			return Optional.ofNullable(widthConfiguration.getMinWidth());
+		}
+		return Optional.empty();
+	}
+
+	/**
+	 * Retrieve any column weight information available for the given column.
+	 *
+	 * @param tableControl the {@link VTableControl} containing the column configuration
+	 * @param domainModelReference the column {@link VDomainModelReference}
+	 * @return the weight information, if present
+	 */
+	public static Optional<Integer> getColumnWeight(VTableControl tableControl,
+		VDomainModelReference domainModelReference) {
+		for (final VTableColumnConfiguration configuration : tableControl.getColumnConfigurations()) {
+			if (!VWidthConfiguration.class.isInstance(configuration)) {
+				continue;
+			}
+			final VWidthConfiguration widthConfiguration = VWidthConfiguration.class.cast(configuration);
+			if (widthConfiguration.getColumnDomainReference() != domainModelReference) {
+				continue;
+			}
 			return Optional.ofNullable(widthConfiguration.getWeight());
 		}
 		return Optional.empty();
@@ -84,6 +111,11 @@ public final class TableConfigurationHelper {
 	 */
 	public static void updateWidthConfiguration(VTableControl tableControl, VDomainModelReference domainModelReference,
 		Table swtTable, TableColumn tableColumn) {
+		final Object layoutData = tableColumn.getData(LAYOUT_DATA);
+		if (!ColumnPixelData.class.isInstance(layoutData) && !ColumnWeightData.class.isInstance(layoutData)) {
+			return;
+		}
+
 		VWidthConfiguration widthConfiguration = null;
 		for (final VTableColumnConfiguration configuration : tableControl.getColumnConfigurations()) {
 			if (!VWidthConfiguration.class.isInstance(configuration)) {
@@ -101,17 +133,15 @@ public final class TableConfigurationHelper {
 			tableControl.getColumnConfigurations().add(widthConfiguration);
 		}
 
-		// TODO JF the column widths should normalized to a commin scale which is alliged with the default weight of the
-		// cell editors. however [0,100] in int values brings too much rounding errors
+		if (ColumnPixelData.class.isInstance(layoutData)) {
+			final ColumnPixelData columnPixelData = ColumnPixelData.class.cast(layoutData);
+			widthConfiguration.setMinWidth(columnPixelData.width);
+			widthConfiguration.setWeight(ColumnDescription.NO_WEIGHT);
+		} else {
+			final ColumnWeightData columnWeightData = ColumnWeightData.class.cast(layoutData);
+			widthConfiguration.setMinWidth(columnWeightData.minimumWidth);
+			widthConfiguration.setWeight(columnWeightData.weight);
+		}
 
-		// final double columnCount = swtTable.getColumnCount();
-		// final double tableWidth = swtTable.computeSize(SWT.DEFAULT, SWT.DEFAULT).x;
-		final double columnWidth = tableColumn.getWidth();
-
-		// final double widthPerColumn = tableWidth / columnCount;
-		// final double normalizedWidthPerColumn = 100d / widthPerColumn;
-
-		// widthConfiguration.setWeight(new Double(normalizedWidthPerColumn * columnWidth).intValue());
-		widthConfiguration.setWeight(new Double(columnWidth).intValue());
 	}
 }

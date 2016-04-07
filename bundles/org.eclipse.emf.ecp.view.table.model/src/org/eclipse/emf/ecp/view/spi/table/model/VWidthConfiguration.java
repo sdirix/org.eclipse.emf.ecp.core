@@ -27,6 +27,7 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
  *        <li>{@link org.eclipse.emf.ecp.view.spi.table.model.VWidthConfiguration#getColumnDomainReference
  *        <em>Column Domain Reference</em>}</li>
  *        <li>{@link org.eclipse.emf.ecp.view.spi.table.model.VWidthConfiguration#getWeight <em>Weight</em>}</li>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.table.model.VWidthConfiguration#getMinWidth <em>Min Width</em>}</li>
  *        </ul>
  *
  * @see org.eclipse.emf.ecp.view.spi.table.model.VTablePackage#getWidthConfiguration()
@@ -66,7 +67,6 @@ public interface VWidthConfiguration extends VTableColumnConfiguration {
 
 	/**
 	 * Returns the value of the '<em><b>Weight</b></em>' attribute.
-	 * The default value is <code>"100"</code>.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Weight</em>' attribute isn't clear,
@@ -77,7 +77,7 @@ public interface VWidthConfiguration extends VTableColumnConfiguration {
 	 * @return the value of the '<em>Weight</em>' attribute.
 	 * @see #setWeight(int)
 	 * @see org.eclipse.emf.ecp.view.spi.table.model.VTablePackage#getWidthConfiguration_Weight()
-	 * @model default="100" required="true"
+	 * @model required="true"
 	 * @generated
 	 */
 	int getWeight();
@@ -93,5 +93,34 @@ public interface VWidthConfiguration extends VTableColumnConfiguration {
 	 * @generated
 	 */
 	void setWeight(int value);
+
+	/**
+	 * Returns the value of the '<em><b>Min Width</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Min Width</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the value of the '<em>Min Width</em>' attribute.
+	 * @see #setMinWidth(int)
+	 * @see org.eclipse.emf.ecp.view.spi.table.model.VTablePackage#getWidthConfiguration_MinWidth()
+	 * @model required="true"
+	 * @generated
+	 */
+	int getMinWidth();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.spi.table.model.VWidthConfiguration#getMinWidth
+	 * <em>Min Width</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @param value the new value of the '<em>Min Width</em>' attribute.
+	 * @see #getMinWidth()
+	 * @generated
+	 */
+	void setMinWidth(int value);
 
 } // VWidthConfiguration

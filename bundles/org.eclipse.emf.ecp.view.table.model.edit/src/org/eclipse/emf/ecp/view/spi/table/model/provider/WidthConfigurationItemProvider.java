@@ -72,6 +72,7 @@ public class WidthConfigurationItemProvider
 
 			addColumnDomainReferencePropertyDescriptor(object);
 			addWeightPropertyDescriptor(object);
+			addMinWidthPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -123,6 +124,29 @@ public class WidthConfigurationItemProvider
 	}
 
 	/**
+	 * This adds a property descriptor for the Min Width feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	protected void addMinWidthPropertyDescriptor(Object object) {
+		itemPropertyDescriptors
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(),
+				getString("_UI_WidthConfiguration_minWidth_feature"), //$NON-NLS-1$
+				getString("_UI_PropertyDescriptor_description", "_UI_WidthConfiguration_minWidth_feature", //$NON-NLS-1$ //$NON-NLS-2$
+					"_UI_WidthConfiguration_type"), //$NON-NLS-1$
+				VTablePackage.Literals.WIDTH_CONFIGURATION__MIN_WIDTH,
+				true,
+				false,
+				false,
+				ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE,
+				null,
+				null));
+	}
+
+	/**
 	 * This returns WidthConfiguration.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -161,6 +185,7 @@ public class WidthConfigurationItemProvider
 
 		switch (notification.getFeatureID(VWidthConfiguration.class)) {
 		case VTablePackage.WIDTH_CONFIGURATION__WEIGHT:
+		case VTablePackage.WIDTH_CONFIGURATION__MIN_WIDTH:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 			return;
 		}

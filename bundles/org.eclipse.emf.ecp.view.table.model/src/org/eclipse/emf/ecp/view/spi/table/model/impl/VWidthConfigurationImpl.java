@@ -34,6 +34,8 @@ import org.eclipse.emf.ecp.view.spi.table.model.VWidthConfiguration;
  *        <em>Column Domain Reference</em>}</li>
  *        <li>{@link org.eclipse.emf.ecp.view.spi.table.model.impl.VWidthConfigurationImpl#getWeight <em>Weight</em>}
  *        </li>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.table.model.impl.VWidthConfigurationImpl#getMinWidth
+ *        <em>Min Width</em>}</li>
  *        </ul>
  *
  * @generated
@@ -59,7 +61,7 @@ public class VWidthConfigurationImpl extends EObjectImpl implements VWidthConfig
 	 * @generated
 	 * @ordered
 	 */
-	protected static final int WEIGHT_EDEFAULT = 100;
+	protected static final int WEIGHT_EDEFAULT = 0;
 
 	/**
 	 * The cached value of the '{@link #getWeight() <em>Weight</em>}' attribute.
@@ -71,6 +73,28 @@ public class VWidthConfigurationImpl extends EObjectImpl implements VWidthConfig
 	 * @ordered
 	 */
 	protected int weight = WEIGHT_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getMinWidth() <em>Min Width</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @see #getMinWidth()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final int MIN_WIDTH_EDEFAULT = 0;
+
+	/**
+	 * The cached value of the '{@link #getMinWidth() <em>Min Width</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @see #getMinWidth()
+	 * @generated
+	 * @ordered
+	 */
+	protected int minWidth = MIN_WIDTH_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -176,6 +200,33 @@ public class VWidthConfigurationImpl extends EObjectImpl implements VWidthConfig
 	 * @generated
 	 */
 	@Override
+	public int getMinWidth() {
+		return minWidth;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public void setMinWidth(int newMinWidth) {
+		final int oldMinWidth = minWidth;
+		minWidth = newMinWidth;
+		if (eNotificationRequired()) {
+			eNotify(new ENotificationImpl(this, Notification.SET, VTablePackage.WIDTH_CONFIGURATION__MIN_WIDTH,
+				oldMinWidth, minWidth));
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case VTablePackage.WIDTH_CONFIGURATION__COLUMN_DOMAIN_REFERENCE:
@@ -185,6 +236,8 @@ public class VWidthConfigurationImpl extends EObjectImpl implements VWidthConfig
 			return basicGetColumnDomainReference();
 		case VTablePackage.WIDTH_CONFIGURATION__WEIGHT:
 			return getWeight();
+		case VTablePackage.WIDTH_CONFIGURATION__MIN_WIDTH:
+			return getMinWidth();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -203,6 +256,9 @@ public class VWidthConfigurationImpl extends EObjectImpl implements VWidthConfig
 			return;
 		case VTablePackage.WIDTH_CONFIGURATION__WEIGHT:
 			setWeight((Integer) newValue);
+			return;
+		case VTablePackage.WIDTH_CONFIGURATION__MIN_WIDTH:
+			setMinWidth((Integer) newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);
@@ -223,6 +279,9 @@ public class VWidthConfigurationImpl extends EObjectImpl implements VWidthConfig
 		case VTablePackage.WIDTH_CONFIGURATION__WEIGHT:
 			setWeight(WEIGHT_EDEFAULT);
 			return;
+		case VTablePackage.WIDTH_CONFIGURATION__MIN_WIDTH:
+			setMinWidth(MIN_WIDTH_EDEFAULT);
+			return;
 		}
 		super.eUnset(featureID);
 	}
@@ -240,6 +299,8 @@ public class VWidthConfigurationImpl extends EObjectImpl implements VWidthConfig
 			return columnDomainReference != null;
 		case VTablePackage.WIDTH_CONFIGURATION__WEIGHT:
 			return weight != WEIGHT_EDEFAULT;
+		case VTablePackage.WIDTH_CONFIGURATION__MIN_WIDTH:
+			return minWidth != MIN_WIDTH_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -259,6 +320,8 @@ public class VWidthConfigurationImpl extends EObjectImpl implements VWidthConfig
 		final StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (weight: "); //$NON-NLS-1$
 		result.append(weight);
+		result.append(", minWidth: "); //$NON-NLS-1$
+		result.append(minWidth);
 		result.append(')');
 		return result.toString();
 	}

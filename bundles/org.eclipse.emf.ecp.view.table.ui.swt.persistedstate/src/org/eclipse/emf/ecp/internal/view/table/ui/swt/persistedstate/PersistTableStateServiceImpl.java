@@ -112,16 +112,21 @@ public class PersistTableStateServiceImpl implements PersistTableStateService {
 				}
 				/* get real width config for real dmr */
 				if (realColumnDMRToConfig.containsKey(realMatchingDMR)) {
-					realColumnDMRToConfig.get(realMatchingDMR).setWeight(entry.getValue().getWeight());
+					fillWidthConfig(realColumnDMRToConfig.get(realMatchingDMR), entry.getValue());
 				} else {
 					final VWidthConfiguration widthConfiguration = VTableFactory.eINSTANCE.createWidthConfiguration();
-					widthConfiguration.setWeight(entry.getValue().getWeight());
+					fillWidthConfig(widthConfiguration, entry.getValue());
 					widthConfiguration.setColumnDomainReference(realMatchingDMR);
 					realTable.getColumnConfigurations().add(widthConfiguration);
 				}
 			}
 		}
 
+	}
+
+	private static void fillWidthConfig(VWidthConfiguration toFill, VWidthConfiguration lookup) {
+		toFill.setWeight(lookup.getWeight());
+		toFill.setMinWidth(lookup.getMinWidth());
 	}
 
 	private static Map<VDomainModelReference, VWidthConfiguration> getDMRToConfig(VTableControl table) {

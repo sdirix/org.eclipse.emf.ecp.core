@@ -405,11 +405,20 @@ public interface VTablePackage extends EPackage {
 	 *
 	 * @since 1.9
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 * @ordered
 	 */
 	int WIDTH_CONFIGURATION__WEIGHT = TABLE_COLUMN_CONFIGURATION_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Min Width</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int WIDTH_CONFIGURATION__MIN_WIDTH = TABLE_COLUMN_CONFIGURATION_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of structural features of the '<em>Width Configuration</em>' class.
@@ -420,7 +429,7 @@ public interface VTablePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WIDTH_CONFIGURATION_FEATURE_COUNT = TABLE_COLUMN_CONFIGURATION_FEATURE_COUNT + 2;
+	int WIDTH_CONFIGURATION_FEATURE_COUNT = TABLE_COLUMN_CONFIGURATION_FEATURE_COUNT + 3;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.table.model.DetailEditing <em>Detail Editing</em>
@@ -627,13 +636,25 @@ public interface VTablePackage extends EPackage {
 	 *
 	 * @since 1.9
 	 *        <!-- end-user-doc -->
-	 *
 	 * @return the meta object for the attribute '<em>Weight</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.table.model.VWidthConfiguration#getWeight()
 	 * @see #getWidthConfiguration()
 	 * @generated
 	 */
 	EAttribute getWidthConfiguration_Weight();
+
+	/**
+	 * Returns the meta object for the attribute '
+	 * {@link org.eclipse.emf.ecp.view.spi.table.model.VWidthConfiguration#getMinWidth <em>Min Width</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the meta object for the attribute '<em>Min Width</em>'.
+	 * @see org.eclipse.emf.ecp.view.spi.table.model.VWidthConfiguration#getMinWidth()
+	 * @see #getWidthConfiguration()
+	 * @generated
+	 */
+	EAttribute getWidthConfiguration_MinWidth();
 
 	/**
 	 * Returns the meta object for enum '{@link org.eclipse.emf.ecp.view.spi.table.model.DetailEditing
@@ -828,10 +849,18 @@ public interface VTablePackage extends EPackage {
 		 *
 		 * @since 1.9
 		 *        <!-- end-user-doc -->
-		 *
 		 * @generated
 		 */
 		EAttribute WIDTH_CONFIGURATION__WEIGHT = eINSTANCE.getWidthConfiguration_Weight();
+
+		/**
+		 * The meta object literal for the '<em><b>Min Width</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 *
+		 * @generated
+		 */
+		EAttribute WIDTH_CONFIGURATION__MIN_WIDTH = eINSTANCE.getWidthConfiguration_MinWidth();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.table.model.DetailEditing

@@ -325,12 +325,22 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 	 *
 	 * @since 1.9
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	@Override
 	public EAttribute getWidthConfiguration_Weight() {
 		return (EAttribute) widthConfigurationEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EAttribute getWidthConfiguration_MinWidth() {
+		return (EAttribute) widthConfigurationEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -397,6 +407,7 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 		widthConfigurationEClass = createEClass(WIDTH_CONFIGURATION);
 		createEReference(widthConfigurationEClass, WIDTH_CONFIGURATION__COLUMN_DOMAIN_REFERENCE);
 		createEAttribute(widthConfigurationEClass, WIDTH_CONFIGURATION__WEIGHT);
+		createEAttribute(widthConfigurationEClass, WIDTH_CONFIGURATION__MIN_WIDTH);
 
 		// Create enums
 		detailEditingEEnum = createEEnum(DETAIL_EDITING);
@@ -486,7 +497,10 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 		initEReference(getWidthConfiguration_ColumnDomainReference(), theViewPackage.getDomainModelReference(), null,
 			"columnDomainReference", null, 1, 1, VWidthConfiguration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
 			!IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getWidthConfiguration_Weight(), ecorePackage.getEInt(), "weight", "100", 1, 1, //$NON-NLS-1$ //$NON-NLS-2$
+		initEAttribute(getWidthConfiguration_Weight(), ecorePackage.getEInt(), "weight", null, 1, 1, //$NON-NLS-1$
+			VWidthConfiguration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+			!IS_DERIVED, IS_ORDERED);
+		initEAttribute(getWidthConfiguration_MinWidth(), ecorePackage.getEInt(), "minWidth", null, 1, 1, //$NON-NLS-1$
 			VWidthConfiguration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
 			!IS_DERIVED, IS_ORDERED);
 

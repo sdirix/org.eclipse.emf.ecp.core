@@ -282,5 +282,8 @@
         </parameters>
       </operation>
     </changes>
+    <changes xsi:type="history:Set" element="table.ecore#//WidthConfiguration/weight"
+        featureName="eType" referenceValue="http://www.eclipse.org/emf/2002/Ecore#//EInt"
+        oldReferenceValue="http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
   </releases>
 </history:History>

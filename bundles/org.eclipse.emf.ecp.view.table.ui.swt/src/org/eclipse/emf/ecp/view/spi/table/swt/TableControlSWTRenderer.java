@@ -295,9 +295,6 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			/* get validation icon */
 			setupValidation(tableViewerComposite);
 
-			/* setup column width listener */
-			setupColumnWidthListeners(tableViewerComposite, regularColumnsStartIndex);
-
 			setTableViewer(tableViewerComposite.getTableViewer());
 
 			SWTDataElementIdHelper.setElementIdDataForVControl(tableViewerComposite, getVElement());
@@ -309,6 +306,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 			addRelayoutListenerIfNeeded(list, compositeBuilder.getViewerComposite());
 
+			addResizeListener(tableViewerComposite.getTableViewer().getTable(), regularColumnsStartIndex);
+
 			return tableViewerComposite;
 
 		} catch (final DatabindingFailedException ex) {
@@ -319,22 +318,29 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		}
 	}
 
-	private void setupColumnWidthListeners(TableViewerComposite tableViewerComposite, int regularColumnsStartIndex) {
+	private void addResizeListener(final Table table, final int regularColumnsStartIndex) {
+		final ControlAdapter controlAdapter = new ControlAdapter() {
+			@Override
+			public void controlResized(ControlEvent e) {
+				updateTableColumnWidths(table, regularColumnsStartIndex);
+			}
+		};
+		table.addControlListener(controlAdapter);
+		for (final TableColumn tableColumn : table.getColumns()) {
+			tableColumn.addControlListener(controlAdapter);
+		}
+	}
+
+	private void updateTableColumnWidths(Table table, int regularColumnsStartIndex) {
 		final VTableControl tableControl = getVElement();
-		final Table swtTable = tableViewerComposite.getTableViewer().getTable();
+		final Table swtTable = getTableViewer().getTable();
 		final TableColumn[] allColumns = swtTable.getColumns();
 		for (int i = regularColumnsStartIndex; i < allColumns.length; i++) {
 			final TableColumn tableColumn = allColumns[i];
 			final VDomainModelReference columnDMR = VTableDomainModelReference.class
 				.cast(tableControl.getDomainModelReference()).getColumnDomainModelReferences()
 				.get(i - regularColumnsStartIndex);
-			tableColumn.addControlListener(new ControlAdapter() {
-
-				@Override
-				public void controlResized(ControlEvent e) {
-					TableConfigurationHelper.updateWidthConfiguration(tableControl, columnDMR, swtTable, tableColumn);
-				}
-			});
+			TableConfigurationHelper.updateWidthConfiguration(tableControl, columnDMR, swtTable, tableColumn);
 		}
 	}
 
@@ -408,13 +414,14 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 				final EditingSupportCreator editingSupportCreator = TableConfigurationHelper
 					.isReadOnly(getVElement(), dmr) ? null : labelProvider;
 
+				final Optional<Integer> weightConfig = TableConfigurationHelper.getColumnWeight(getVElement(), dmr);
 				final Optional<Integer> widthConfig = TableConfigurationHelper.getColumnWidth(getVElement(), dmr);
 
 				int weight;
 				int minWidth;
-				if (widthConfig.isPresent()) {
-					minWidth = 10;// with 0 it gets impossible to expand this again
-					weight = widthConfig.get();
+				if (weightConfig.isPresent()) {
+					minWidth = widthConfig.get();
+					weight = weightConfig.get();
 				} else {
 					// TODO ugly: we need this temporary cell editor so early just to get size information
 					final CellEditor tempCellEditor = createCellEditor(tempInstance, eStructuralFeature,
@@ -1276,7 +1283,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 	/**
 	 * {@link TableViewerCreator} for the table control swt renderer. It will create a TableViewer with the expected
-	 * custum cariant data and the correct style properties as defined in the template model.
+	 * custom variant data and the correct style properties as defined in the template model.
 	 *
 	 */
 	private final class TableControlSWTRendererTableViewerCreator implements TableViewerCreator {
