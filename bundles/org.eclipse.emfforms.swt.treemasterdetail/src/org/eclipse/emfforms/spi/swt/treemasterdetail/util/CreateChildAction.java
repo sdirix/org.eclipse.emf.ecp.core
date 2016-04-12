@@ -103,6 +103,9 @@ public class CreateChildAction extends StaticSelectionCommandAction {
 				((Viewer) selectionProvider).refresh();
 			}
 			selectionProvider.setSelection(new StructuredSelection(newObject));
+			if (createElementCallback != null) {
+				createElementCallback.afterCreateElement(newObject);
+			}
 		} else {
 			// If the callback says "cancel" undo the addCommand.
 			addCommand.undo();

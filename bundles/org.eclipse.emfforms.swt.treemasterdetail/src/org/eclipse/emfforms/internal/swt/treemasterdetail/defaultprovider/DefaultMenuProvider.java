@@ -56,6 +56,11 @@ public final class DefaultMenuProvider implements MenuProvider {
 			public void initElement(EObject parent, EReference reference, EObject newObject) {
 				/* no op */
 			}
+
+			@Override
+			public void afterCreateElement(Object newElement) {
+				/* no op */
+			}
 		};
 		deleteActionBuilder = new DefaultDeleteActionBuilder();
 	}

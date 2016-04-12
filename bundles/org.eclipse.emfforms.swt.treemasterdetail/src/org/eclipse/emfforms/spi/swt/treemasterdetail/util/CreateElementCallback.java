@@ -42,4 +42,12 @@ public interface CreateElementCallback {
 	 *         be removed again
 	 */
 	boolean beforeCreateElement(Object newElement);
+
+	/**
+	 * Gets called after a new element was added to the domain model.
+	 * 
+	 * @param newElement the new Element.
+	 * @since 1.9
+	 */
+	void afterCreateElement(Object newElement);
 }

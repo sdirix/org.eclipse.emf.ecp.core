@@ -57,4 +57,9 @@ public class InitializeChildCallback implements CreateElementCallback {
 		return result == Window.OK;
 	}
 
+	@Override
+	public void afterCreateElement(Object newElement) {
+		/* no op */
+	}
+
 }
