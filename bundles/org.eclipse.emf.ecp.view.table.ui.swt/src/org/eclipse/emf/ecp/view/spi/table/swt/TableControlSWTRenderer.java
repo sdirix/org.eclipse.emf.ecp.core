@@ -297,7 +297,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 			setTableViewer(tableViewerComposite.getTableViewer());
 
-			SWTDataElementIdHelper.setElementIdDataForVControl(tableViewerComposite, getVElement());
+			SWTDataElementIdHelper.setElementIdDataForVControl(tableViewerComposite, getVElement(),
+				getViewModelContext());
 
 			// FIXME doesn't work with table with panel
 			// setLayoutData(compositeBuilder.getViewerComposite());
@@ -848,6 +849,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		if (containments.size() <= structuralFeature.getLowerBound()) {
 			removeButton.setEnabled(false);
 		}
+		SWTDataElementIdHelper.setElementIdDataWithSubId(removeButton, getVElement(), "table_remove", //$NON-NLS-1$
+			getViewModelContext());
 		return removeButton;
 	}
 
@@ -865,6 +868,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		if (structuralFeature.getUpperBound() != -1 && containments.size() >= structuralFeature.getUpperBound()) {
 			addButton.setEnabled(false);
 		}
+		SWTDataElementIdHelper.setElementIdDataWithSubId(addButton, getVElement(), "table_add", getViewModelContext()); //$NON-NLS-1$
 		return addButton;
 	}
 

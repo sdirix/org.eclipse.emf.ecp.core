@@ -143,6 +143,8 @@ public class ViewModelContextImpl implements ViewModelContext {
 
 	private ServiceListener serviceListener;
 
+	private VElement parentVElement;
+
 	/**
 	 * Instantiates a new view model context impl.
 	 *
@@ -169,6 +171,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 		this.view = view;
 		this.domainObject = domainObject;
 		parentContext = parent;
+		this.parentVElement = parentVElement;
 		instantiate();
 	}
 
@@ -207,6 +210,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 		for (final ViewModelService vms : modelServices) {
 			viewServices.add(vms);
 		}
+		this.parentVElement = parentVElement;
 		instantiate();
 	}
 
@@ -826,6 +830,16 @@ public class ViewModelContextImpl implements ViewModelContext {
 		});
 		addChildContext(parent, eObject, childContext);
 		return childContext;
+	}
+
+	@Override
+	public ViewModelContext getParentContext() {
+		return parentContext;
+	}
+
+	@Override
+	public VElement getParentVElement() {
+		return parentVElement;
 	}
 
 	/**

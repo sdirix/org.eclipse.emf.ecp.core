@@ -151,13 +151,14 @@ public abstract class AbstractSWTTabRenderer<VELEMENT extends VElement> extends 
 				}
 				item.setControl(composite);
 			}
-			SWTDataElementIdHelper.setElementIdDataWithSubId(item, categorization, "tabitem"); //$NON-NLS-1$
-			SWTDataElementIdHelper.setElementIdDataWithSubId(composite, categorization, "tabitem-composite"); //$NON-NLS-1$
+			SWTDataElementIdHelper.setElementIdDataWithSubId(item, categorization, "tabitem", getViewModelContext()); //$NON-NLS-1$
+			SWTDataElementIdHelper.setElementIdDataWithSubId(composite, categorization, "tabitem-composite", //$NON-NLS-1$
+				getViewModelContext());
 		}
 		if (folder.getItemCount() > 0) {
 			folder.setSelection(0);
 		}
-		SWTDataElementIdHelper.setElementIdDataWithSubId(folder, getVElement(), "tabfolder"); //$NON-NLS-1$
+		SWTDataElementIdHelper.setElementIdDataWithSubId(folder, getVElement(), "tabfolder", getViewModelContext()); //$NON-NLS-1$
 		return folder;
 	}
 

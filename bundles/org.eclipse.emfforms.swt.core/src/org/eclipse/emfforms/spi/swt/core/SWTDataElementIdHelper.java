@@ -13,9 +13,14 @@ package org.eclipse.emfforms.spi.swt.core;
 
 import java.text.MessageFormat;
 
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emfforms.spi.swt.core.data.EMFFormsSWTDataService;
 import org.eclipse.swt.widgets.Widget;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 
 /**
  * Use this helper to ease setting the {@link VElement#getUuid() element} as the
@@ -44,9 +49,10 @@ public final class SWTDataElementIdHelper {
 	 *
 	 * @param widget the widget to set the data on
 	 * @param element the element including the id
+	 * @param context the {@link ViewModelContext}
 	 */
-	public static void setElementIdDataForVControl(final Widget widget, VControl element) {
-		setElementIdDataWithSubId(widget, element, CONTROL);
+	public static void setElementIdDataForVControl(final Widget widget, VControl element, ViewModelContext context) {
+		setElementIdDataWithSubId(widget, element, CONTROL, context);
 	}
 
 	/**
@@ -55,8 +61,30 @@ public final class SWTDataElementIdHelper {
 	 * @param widget the widget to set the data on
 	 * @param element the element including the id
 	 * @param subId the sub id
+	 * @param context the {@link ViewModelContext}
 	 */
-	public static void setElementIdDataWithSubId(final Widget widget, VElement element, String subId) {
-		widget.setData(ELEMENT_ID_KEY, MessageFormat.format(ID_PATTERN, element.getUuid(), subId));
+	public static void setElementIdDataWithSubId(final Widget widget, VElement element, String subId,
+		ViewModelContext context) {
+		widget.setData(ELEMENT_ID_KEY, MessageFormat.format(ID_PATTERN, getId(element, context), subId));
 	}
+
+	private static String getId(VElement element, ViewModelContext context) {
+		final BundleContext bundleContext = FrameworkUtil.getBundle(SWTDataElementIdHelper.class).getBundleContext();
+		if (bundleContext == null) {
+			return element.getUuid();
+		}
+		final ServiceReference<EMFFormsSWTDataService> serviceReference = bundleContext
+			.getServiceReference(EMFFormsSWTDataService.class);
+		if (serviceReference == null) {
+			return element.getUuid();
+		}
+		final EMFFormsSWTDataService service = bundleContext.getService(serviceReference);
+		if (service == null) {
+			return element.getUuid();
+		}
+		final String id = service.getId(element, context);
+		bundleContext.ungetService(serviceReference);
+		return id;
+	}
+
 }

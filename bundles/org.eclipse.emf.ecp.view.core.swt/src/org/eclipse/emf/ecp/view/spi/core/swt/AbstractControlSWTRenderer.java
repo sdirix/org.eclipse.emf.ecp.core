@@ -47,6 +47,7 @@ import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
 import org.eclipse.emfforms.spi.core.services.structuralchange.EMFFormsStructuralChangeTester;
 import org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsControlProcessorService;
+import org.eclipse.emfforms.spi.swt.core.SWTDataElementIdHelper;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
@@ -346,6 +347,8 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 			final EMFFormsLabelProvider labelProvider = getEMFFormsLabelProvider();
 			label = new Label(parent, SWT.NONE);
 			label.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_label"); //$NON-NLS-1$
+			SWTDataElementIdHelper.setElementIdDataWithSubId(label, getVElement(), "control_label", //$NON-NLS-1$
+				getViewModelContext());
 			label.setBackground(parent.getBackground());
 
 			final EObject rootObject = getViewModelContext().getDomainModel();
@@ -424,6 +427,8 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 	 */
 	protected final Label createValidationIcon(Composite composite) {
 		final Label validationLabel = new Label(composite, SWT.NONE);
+		SWTDataElementIdHelper.setElementIdDataWithSubId(validationLabel, getVElement(), "control_validation", //$NON-NLS-1$
+			getViewModelContext());
 		validationLabel.setBackground(composite.getBackground());
 		return validationLabel;
 	}

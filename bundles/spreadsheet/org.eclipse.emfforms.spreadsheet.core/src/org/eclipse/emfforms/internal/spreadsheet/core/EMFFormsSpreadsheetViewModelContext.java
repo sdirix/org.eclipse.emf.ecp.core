@@ -262,7 +262,7 @@ public class EMFFormsSpreadsheetViewModelContext implements ViewModelContext {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext#registerEMFFormsContextListener(org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener)
 	 */
 	@Override
@@ -271,11 +271,21 @@ public class EMFFormsSpreadsheetViewModelContext implements ViewModelContext {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext#unregisterEMFFormsContextListener(org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener)
 	 */
 	@Override
 	public void unregisterEMFFormsContextListener(EMFFormsContextListener contextListener) {
+	}
+
+	@Override
+	public ViewModelContext getParentContext() {
+		return parentContext;
+	}
+
+	@Override
+	public VElement getParentVElement() {
+		throw new UnsupportedOperationException();
 	}
 
 }

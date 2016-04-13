@@ -278,7 +278,7 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 			}
 		});
 
-		SWTDataElementIdHelper.setElementIdDataForVControl(composite, getVElement());
+		SWTDataElementIdHelper.setElementIdDataForVControl(composite, getVElement(), getViewModelContext());
 
 		return composite;
 	}

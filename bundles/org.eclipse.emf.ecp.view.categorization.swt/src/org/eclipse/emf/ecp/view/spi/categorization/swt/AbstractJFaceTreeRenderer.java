@@ -153,7 +153,7 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 			}
 			final Control render = renderer.render(cell, parent);
 			renderer.finalizeRendering(parent);
-			SWTDataElementIdHelper.setElementIdDataWithSubId(render, getVElement(), "vcategory"); //$NON-NLS-1$
+			SWTDataElementIdHelper.setElementIdDataWithSubId(render, getVElement(), "vcategory", getViewModelContext()); //$NON-NLS-1$
 			return render;
 
 		}
@@ -168,7 +168,8 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 
 			initTreeViewer(treeViewer);
 			Composite.class.cast(detailPane).layout();
-			SWTDataElementIdHelper.setElementIdDataWithSubId(treeViewer.getControl(), getVElement(), "tree"); //$NON-NLS-1$
+			SWTDataElementIdHelper.setElementIdDataWithSubId(treeViewer.getControl(), getVElement(), "tree", //$NON-NLS-1$
+				getViewModelContext());
 			return treeViewer.getControl();
 		}
 
@@ -183,8 +184,9 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 
 		initTreeViewer(treeViewer);
 		sashForm.setWeights(new int[] { 1, 3 });
-		SWTDataElementIdHelper.setElementIdDataWithSubId(treeViewer.getControl(), getVElement(), "tree"); //$NON-NLS-1$
-		SWTDataElementIdHelper.setElementIdDataWithSubId(sashForm, getVElement(), "sash"); //$NON-NLS-1$
+		SWTDataElementIdHelper.setElementIdDataWithSubId(treeViewer.getControl(), getVElement(), "tree", //$NON-NLS-1$
+			getViewModelContext());
+		SWTDataElementIdHelper.setElementIdDataWithSubId(sashForm, getVElement(), "sash", getViewModelContext()); //$NON-NLS-1$
 		return sashForm;
 	}
 
@@ -578,7 +580,7 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 				return;
 			}
 			final VElement element = VElement.class.cast(object);
-			SWTDataElementIdHelper.setElementIdDataWithSubId(widget, element, "treeItem"); //$NON-NLS-1$
+			SWTDataElementIdHelper.setElementIdDataWithSubId(widget, element, "treeItem", getViewModelContext()); //$NON-NLS-1$
 		}
 
 		/**

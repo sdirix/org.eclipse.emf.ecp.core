@@ -1592,6 +1592,28 @@ public class UnsetService_PTest {
 		public void unregisterEMFFormsContextListener(EMFFormsContextListener contextListener) {
 		}
 
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getParentContext()
+		 */
+		@Override
+		public ViewModelContext getParentContext() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getParentVElement()
+		 */
+		@Override
+		public VElement getParentVElement() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
 	}
 
 }

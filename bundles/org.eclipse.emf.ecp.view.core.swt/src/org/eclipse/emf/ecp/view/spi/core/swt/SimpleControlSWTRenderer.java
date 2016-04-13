@@ -295,7 +295,7 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 		final Control baseControl = createControl(controlComposite);
 		setControlIdData(baseControl);
 		final Control createUnsetLabel = createUnsetLabel(controlComposite);
-		SWTDataElementIdHelper.setElementIdDataWithSubId(createUnsetLabel, getVElement(), UNSET);
+		SWTDataElementIdHelper.setElementIdDataWithSubId(createUnsetLabel, getVElement(), UNSET, getViewModelContext());
 		final Button unsetButton = new Button(composite, SWT.PUSH);
 		GridDataFactory.fillDefaults().align(SWT.CENTER, SWT.CENTER).grab(false, false).applyTo(unsetButton);
 		unsetButton.addSelectionListener(
@@ -432,7 +432,7 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 	 * @since 1.9
 	 */
 	protected void setControlIdData(final Control control) {
-		SWTDataElementIdHelper.setElementIdDataForVControl(control, getVElement());
+		SWTDataElementIdHelper.setElementIdDataForVControl(control, getVElement(), getViewModelContext());
 	}
 
 	/**

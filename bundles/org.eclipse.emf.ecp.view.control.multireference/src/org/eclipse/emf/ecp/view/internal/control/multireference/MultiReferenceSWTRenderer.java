@@ -164,7 +164,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 			return createErrorLabel(parent, ex);
 		}
 
-		SWTDataElementIdHelper.setElementIdDataForVControl(composite, getVElement());
+		SWTDataElementIdHelper.setElementIdDataForVControl(composite, getVElement(), getViewModelContext());
 
 		return composite;
 	}
