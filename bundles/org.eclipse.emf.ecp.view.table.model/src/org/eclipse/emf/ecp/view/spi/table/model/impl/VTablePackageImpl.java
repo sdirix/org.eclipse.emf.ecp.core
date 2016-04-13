@@ -337,6 +337,7 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 	 * <!-- end-user-doc -->
 	 *
 	 * @generated
+	 * @since 1.9
 	 */
 	@Override
 	public EAttribute getWidthConfiguration_MinWidth() {

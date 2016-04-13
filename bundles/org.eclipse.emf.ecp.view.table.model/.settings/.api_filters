@@ -271,6 +271,12 @@
                 <message_argument value="WIDTH_CONFIGURATION__COLUMN_DOMAIN_REFERENCE"/>
             </message_arguments>
         </filter>
+        <filter comment="SPI Change" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
+                <message_argument value="WIDTH_CONFIGURATION__MIN_WIDTH"/>
+            </message_arguments>
+        </filter>
         <filter comment="SPI Change 1.9.0" id="403767336">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
@@ -299,6 +305,12 @@
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
                 <message_argument value="getWidthConfiguration_ColumnDomainReference()"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
+                <message_argument value="getWidthConfiguration_MinWidth()"/>
             </message_arguments>
         </filter>
         <filter comment="SPI Change 1.9.0" id="403804204">
@@ -331,6 +343,12 @@
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage.Literals"/>
                 <message_argument value="WIDTH_CONFIGURATION__COLUMN_DOMAIN_REFERENCE"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage.Literals"/>
+                <message_argument value="WIDTH_CONFIGURATION__MIN_WIDTH"/>
             </message_arguments>
         </filter>
         <filter comment="SPI Change 1.9.0" id="403767336">

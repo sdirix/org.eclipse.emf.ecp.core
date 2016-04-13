@@ -417,6 +417,7 @@ public interface VTablePackage extends EPackage {
 	 *
 	 * @generated
 	 * @ordered
+	 * @since 1.9
 	 */
 	int WIDTH_CONFIGURATION__MIN_WIDTH = TABLE_COLUMN_CONFIGURATION_FEATURE_COUNT + 2;
 
@@ -653,6 +654,7 @@ public interface VTablePackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.spi.table.model.VWidthConfiguration#getMinWidth()
 	 * @see #getWidthConfiguration()
 	 * @generated
+	 * @since 1.9
 	 */
 	EAttribute getWidthConfiguration_MinWidth();
 
@@ -859,6 +861,7 @@ public interface VTablePackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 *
 		 * @generated
+		 * @since 1.9
 		 */
 		EAttribute WIDTH_CONFIGURATION__MIN_WIDTH = eINSTANCE.getWidthConfiguration_MinWidth();
 
