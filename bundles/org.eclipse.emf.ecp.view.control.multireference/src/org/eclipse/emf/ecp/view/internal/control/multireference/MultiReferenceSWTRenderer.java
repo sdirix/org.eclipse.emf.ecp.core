@@ -524,7 +524,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 		private static final int NONE = 0;
 		private int direction = NONE;
 
-		public ECPTableViewerComparator() {
+		ECPTableViewerComparator() {
 			propertyIndex = 0;
 			direction = NONE;
 		}
