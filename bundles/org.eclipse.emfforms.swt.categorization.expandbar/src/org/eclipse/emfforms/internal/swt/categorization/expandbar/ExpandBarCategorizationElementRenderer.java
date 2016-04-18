@@ -233,12 +233,10 @@ public class ExpandBarCategorizationElementRenderer extends AbstractSWTRenderer<
 		expandBar = new ExpandBar(expandBarComposite, SWT.V_SCROLL);
 		SWTDataElementIdHelper.setElementIdDataWithSubId(expandBar, getVElement(), "expandBar", getViewModelContext()); //$NON-NLS-1$
 		expandBar.setData(RWT.MARKUP_ENABLED, Boolean.TRUE);
-		int totalHeight = 0;
 		for (final VAbstractCategorization categorization : getVElement().getCategorizations()) {
 
 			final ExpandItem item = createExpandItem(adapterFactory, categorization);
 			item.setExpanded(true);
-			totalHeight += item.getHeight();
 
 			categorization.eAdapters().add(new CategorizationVisibilityAdapter(categorization, item));
 			if (!categorization.isVisible()) {
@@ -246,7 +244,8 @@ public class ExpandBarCategorizationElementRenderer extends AbstractSWTRenderer<
 			}
 		}
 
-		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).hint(SWT.DEFAULT, totalHeight)
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true)
+			.hint(SWT.DEFAULT, 5000) // arbitrary high height that won't be reached
 			.applyTo(expandBar);
 
 		return expandBarComposite;
