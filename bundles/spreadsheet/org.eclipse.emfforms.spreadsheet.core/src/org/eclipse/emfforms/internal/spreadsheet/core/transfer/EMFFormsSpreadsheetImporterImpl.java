@@ -242,8 +242,12 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 				}
 			}
 
-			/* set value */
-			setting.set(convertedValue);
+			if (convertedValue == null && feature.isUnsettable()) {
+				setting.unset();
+			} else {
+				/* set value */
+				setting.set(convertedValue);
+			}
 
 			errorReports.getSettingToSheetMap()
 				.add(ErrorFactory.eINSTANCE.createSettingToSheetMapping(
