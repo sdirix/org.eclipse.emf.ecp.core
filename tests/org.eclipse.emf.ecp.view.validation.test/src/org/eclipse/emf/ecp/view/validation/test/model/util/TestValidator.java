@@ -31,6 +31,8 @@ import org.eclipse.emf.ecp.view.validation.test.model.Book;
 import org.eclipse.emf.ecp.view.validation.test.model.Computer;
 import org.eclipse.emf.ecp.view.validation.test.model.Container;
 import org.eclipse.emf.ecp.view.validation.test.model.Content;
+import org.eclipse.emf.ecp.view.validation.test.model.CrossReferenceContainer;
+import org.eclipse.emf.ecp.view.validation.test.model.CrossReferenceContent;
 import org.eclipse.emf.ecp.view.validation.test.model.Librarian;
 import org.eclipse.emf.ecp.view.validation.test.model.Library;
 import org.eclipse.emf.ecp.view.validation.test.model.Mainboard;
@@ -206,6 +208,10 @@ public class TestValidator extends EObjectValidator {
 				context);
 		case TestPackage.REFERENCER:
 			return validateReferencer((Referencer) value, diagnostics, context);
+		case TestPackage.CROSS_REFERENCE_CONTAINER:
+			return validateCrossReferenceContainer((CrossReferenceContainer) value, diagnostics, context);
+		case TestPackage.CROSS_REFERENCE_CONTENT:
+			return validateCrossReferenceContent((CrossReferenceContent) value, diagnostics, context);
 		default:
 			return true;
 		}
@@ -630,6 +636,28 @@ public class TestValidator extends EObjectValidator {
 	 */
 	public boolean validateReferencer(Referencer referencer, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return validate_EveryDefaultConstraint(referencer, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public boolean validateCrossReferenceContainer(CrossReferenceContainer crossReferenceContainer,
+		DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(crossReferenceContainer, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public boolean validateCrossReferenceContent(CrossReferenceContent crossReferenceContent,
+		DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(crossReferenceContent, diagnostics, context);
 	}
 
 	private boolean validateUniqueness(TableWithUnique tableWithUnique, DiagnosticChain diagnostics,

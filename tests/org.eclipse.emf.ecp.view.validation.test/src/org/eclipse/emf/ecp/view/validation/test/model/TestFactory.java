@@ -213,6 +213,26 @@ public interface TestFactory extends EFactory {
 	Referencer createReferencer();
 
 	/**
+	 * Returns a new object of class '<em>Cross Reference Container</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @return a new object of class '<em>Cross Reference Container</em>'.
+	 * @generated
+	 */
+	CrossReferenceContainer createCrossReferenceContainer();
+
+	/**
+	 * Returns a new object of class '<em>Cross Reference Content</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @return a new object of class '<em>Cross Reference Content</em>'.
+	 * @generated
+	 */
+	CrossReferenceContent createCrossReferenceContent();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

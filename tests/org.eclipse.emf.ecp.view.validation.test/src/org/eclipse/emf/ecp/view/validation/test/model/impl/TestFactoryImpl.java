@@ -19,6 +19,8 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecp.view.validation.test.model.Book;
 import org.eclipse.emf.ecp.view.validation.test.model.Computer;
 import org.eclipse.emf.ecp.view.validation.test.model.Content;
+import org.eclipse.emf.ecp.view.validation.test.model.CrossReferenceContainer;
+import org.eclipse.emf.ecp.view.validation.test.model.CrossReferenceContent;
 import org.eclipse.emf.ecp.view.validation.test.model.Librarian;
 import org.eclipse.emf.ecp.view.validation.test.model.Library;
 import org.eclipse.emf.ecp.view.validation.test.model.Mainboard;
@@ -120,6 +122,10 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 			return createTableWithoutMultiplicityConcrete();
 		case TestPackage.REFERENCER:
 			return createReferencer();
+		case TestPackage.CROSS_REFERENCE_CONTAINER:
+			return createCrossReferenceContainer();
+		case TestPackage.CROSS_REFERENCE_CONTENT:
+			return createCrossReferenceContent();
 		default:
 			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -339,6 +345,30 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	public Referencer createReferencer() {
 		final ReferencerImpl referencer = new ReferencerImpl();
 		return referencer;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public CrossReferenceContainer createCrossReferenceContainer() {
+		final CrossReferenceContainerImpl crossReferenceContainer = new CrossReferenceContainerImpl();
+		return crossReferenceContainer;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public CrossReferenceContent createCrossReferenceContent() {
+		final CrossReferenceContentImpl crossReferenceContent = new CrossReferenceContentImpl();
+		return crossReferenceContent;
 	}
 
 	/**

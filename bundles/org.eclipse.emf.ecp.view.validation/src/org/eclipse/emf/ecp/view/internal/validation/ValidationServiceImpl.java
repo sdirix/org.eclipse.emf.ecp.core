@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -189,61 +189,106 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 	 */
 	private class ValidationDomainModelChangeListener implements ModelChangeAddRemoveListener {
 
-		@SuppressWarnings("unchecked")
 		@Override
 		public void notifyChange(ModelChangeNotification notification) {
 			if (ValidationNotification.class.isInstance(notification.getRawNotification())) {
 				validate(notification.getNotifier());
 				return;
 			}
-			final Notification rawNotification = notification.getRawNotification();
-			switch (rawNotification.getEventType()) {
-			// FIXME: move add, remove to add/remove instead of doing here
-			case Notification.ADD:
-				final Set<EObject> toValidate = new LinkedHashSet<EObject>();
-				toValidate.add(notification.getNotifier());
-				// in case of not containment references
-				if (EReference.class.isInstance(notification.getStructuralFeature())) {
-					toValidate.addAll(getAllEObjects((EObject) notification.getRawNotification().getNewValue()));
-				}
-				validate(toValidate);
-				break;
-			case Notification.ADD_MANY:
-				validate(notification.getNotifier());
-				// in case of not containment references
-				if (EReference.class.isInstance(notification.getStructuralFeature())) {
-					validate((Collection<EObject>) notification.getRawNotification().getNewValue());
-				}
-				break;
-			case Notification.REMOVE:
-				if (EReference.class.isInstance(rawNotification.getFeature())) {
-					cleanControlDiagnostics(EObject.class.cast(notification.getNotifier()),
-						EReference.class.cast(rawNotification.getFeature()),
-						EObject.class.cast(rawNotification.getOldValue()));
-				}
 
-				//$FALL-THROUGH$
-			case Notification.REMOVE_MANY:
-				// TODO JF since we now have an indexed dmr, this should clean diagnostics, too, doesn't it?
-				validate(getAllEObjects(notification.getNotifier()));
-				break;
-			case Notification.REMOVING_ADAPTER:
-				break;
-			default:
-				validate(notification.getNotifier());
-				if (EReference.class.isInstance(notification.getStructuralFeature())) {
-					if (notification.getRawNotification().getNewValue() != null) {
-						final Object newValue = notification.getRawNotification().getNewValue();
-						/*
-						 * unset on a list has a boolean as a new value. therefore we need to check if new value is an
-						 * EObject
-						 */
-						if (EObject.class.isInstance(newValue)) {
-							validate((EObject) newValue);
-						}
+			if (isIgnore(notification)) {
+				return;
+			}
+
+			final Notification rawNotification = notification.getRawNotification();
+			final int eventType = rawNotification.getEventType();
+
+			// Special cases
+			if (eventType == Notification.ADD || eventType == Notification.ADD_MANY) {
+				handleAdd(notification);
+				return;
+			} else if (eventType == Notification.REMOVE || eventType == Notification.REMOVE_MANY) {
+				handleRemove(notification);
+				return;
+			}
+
+			// Default case
+			validate(notification.getNotifier());
+			if (EReference.class.isInstance(notification.getStructuralFeature())) {
+				if (notification.getRawNotification().getNewValue() != null) {
+					final Object newValue = notification.getRawNotification().getNewValue();
+					/*
+					 * unset on a list has a boolean as a new value. therefore we need to check if new value is an
+					 * EObject
+					 */
+					if (EObject.class.isInstance(newValue)) {
+						validate((EObject) newValue);
 					}
 				}
 			}
+		}
+
+		/**
+		 * Indicates whether the given {@link ModelChangeNotification} should be ignored.
+		 *
+		 * @param notification the {@link ModelChangeNotification} to check.
+		 * @return {@code true} if the given notification should be ignored, {@code false} otherwise.
+		 */
+		private boolean isIgnore(ModelChangeNotification notification) {
+			final int eventType = notification.getRawNotification().getEventType();
+			if (eventType == Notification.REMOVING_ADAPTER) {
+				return true;
+			}
+			if (eventType == Notification.SET) {
+				if (EReference.class.isInstance(notification.getStructuralFeature())) {
+					final EReference eReference = EReference.class.cast(notification.getStructuralFeature());
+					if (eReference.isContainer() && notification.getRawNotification().getNewValue() == null) {
+						return true;
+					}
+				}
+			}
+			return false;
+		}
+
+		/**
+		 * Handles the case when the given {@link ModelChangeNotification} originates from an ADD.
+		 *
+		 * @param notification
+		 *            the {@link ModelChangeNotification} to handle.
+		 */
+		@SuppressWarnings("unchecked")
+		private void handleAdd(ModelChangeNotification notification) {
+			final Set<EObject> toValidate = new LinkedHashSet<EObject>();
+			toValidate.add(notification.getNotifier());
+
+			// in case of not containment references
+			if (EReference.class.isInstance(notification.getStructuralFeature())) {
+				if (Notification.ADD == notification.getRawNotification().getEventType()) {
+					toValidate.addAll(getAllEObjects((EObject) notification.getRawNotification().getNewValue()));
+				} else {
+					toValidate.addAll((Collection<EObject>) notification.getRawNotification().getNewValue());
+				}
+
+			}
+			validate(toValidate);
+		}
+
+		/**
+		 * Handles the case when the given {@link ModelChangeNotification} originates from a REMOVE.
+		 *
+		 * @param notification
+		 *            the {@link ModelChangeNotification} to handle.
+		 */
+		private void handleRemove(ModelChangeNotification notification) {
+			final Notification rawNotification = notification.getRawNotification();
+			if (rawNotification.getEventType() == Notification.REMOVE
+				&& EReference.class.isInstance(rawNotification.getFeature())) {
+				cleanControlDiagnostics(EObject.class.cast(notification.getNotifier()),
+					EReference.class.cast(rawNotification.getFeature()),
+					EObject.class.cast(rawNotification.getOldValue()));
+			}
+			// TODO JF since we now have an indexed dmr, this should clean diagnostics, too, doesn't it?
+			validate(getAllEObjects(notification.getNotifier()));
 		}
 
 		@Override

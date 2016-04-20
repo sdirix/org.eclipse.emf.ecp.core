@@ -19,6 +19,8 @@ import org.eclipse.emf.ecp.view.validation.test.model.Book;
 import org.eclipse.emf.ecp.view.validation.test.model.Computer;
 import org.eclipse.emf.ecp.view.validation.test.model.Container;
 import org.eclipse.emf.ecp.view.validation.test.model.Content;
+import org.eclipse.emf.ecp.view.validation.test.model.CrossReferenceContainer;
+import org.eclipse.emf.ecp.view.validation.test.model.CrossReferenceContent;
 import org.eclipse.emf.ecp.view.validation.test.model.Librarian;
 import org.eclipse.emf.ecp.view.validation.test.model.Library;
 import org.eclipse.emf.ecp.view.validation.test.model.Mainboard;
@@ -190,6 +192,16 @@ public class TestAdapterFactory extends AdapterFactoryImpl {
 		@Override
 		public Adapter caseReferencer(Referencer object) {
 			return createReferencerAdapter();
+		}
+
+		@Override
+		public Adapter caseCrossReferenceContainer(CrossReferenceContainer object) {
+			return createCrossReferenceContainerAdapter();
+		}
+
+		@Override
+		public Adapter caseCrossReferenceContent(CrossReferenceContent object) {
+			return createCrossReferenceContentAdapter();
 		}
 
 		@Override
@@ -519,6 +531,39 @@ public class TestAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createReferencerAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '
+	 * {@link org.eclipse.emf.ecp.view.validation.test.model.CrossReferenceContainer <em>Cross Reference Container</em>}
+	 * '.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.validation.test.model.CrossReferenceContainer
+	 * @generated
+	 */
+	public Adapter createCrossReferenceContainerAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '
+	 * {@link org.eclipse.emf.ecp.view.validation.test.model.CrossReferenceContent <em>Cross Reference Content</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.validation.test.model.CrossReferenceContent
+	 * @generated
+	 */
+	public Adapter createCrossReferenceContentAdapter() {
 		return null;
 	}
 
