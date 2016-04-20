@@ -31,8 +31,18 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="3.7.0",
  org.eclipse.core.databinding.property;bundle-version="[1.4.0,2.0.0)",
  org.eclipse.emfforms.localization;bundle-version="[1.9.0,2.0.0)",
  org.eclipse.emfforms.core.services;bundle-version="[1.9.0,2.0.0)",
- org.eclipse.emfforms.core.services.editsupport;bundle-version="[1.9.0,2.0.0)"
+ org.eclipse.emfforms.core.services.editsupport;bundle-version="[1.9.0,2.0.0)",
+ org.eclipse.emfforms.swt.core.di;bundle-version="[1.9.0,2.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Service-Component: OSGI-INF/ControlRootEClassControl2SWTRendererService.xml,
+ OSGI-INF/ControlRootEClassControlChangeableSWTRendererService.xml,
+ OSGI-INF/DomainModelReferenceControlSWTRendererService.xml,
+ OSGI-INF/LeafConditionControlRendererService.xml,
+ OSGI-INF/LinkFeatureControlRendererService.xml,
+ OSGI-INF/StackItemControlRendererService.xml,
+ OSGI-INF/TableColumnsDMRTableControlService.xml,
+ OSGI-INF/TableDetailViewControlSWTRendererService.xml
+Bundle-ActivationPolicy: lazy
 Import-Package: org.eclipse.emfforms.spi.common.report;version="[1.9.0,2.0.0)",
  org.eclipse.jface.databinding.swt;version="0.0.0",
  org.eclipse.jface.databinding.viewers;version="0.0.0",
@@ -40,5 +50,5 @@ Import-Package: org.eclipse.emfforms.spi.common.report;version="[1.9.0,2.0.0)",
  org.eclipse.swt;version="0.0.0",
  org.eclipse.swt.graphics;version="0.0.0",
  org.eclipse.swt.layout;version="0.0.0",
- org.eclipse.swt.widgets;version="0.0.0"
-Bundle-ActivationPolicy: lazy
+ org.eclipse.swt.widgets;version="0.0.0",
+ org.osgi.service.component.annotations;version="[1.2.0,2.0.0)";resolution:=optional

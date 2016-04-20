@@ -20,6 +20,8 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import org.eclipse.core.databinding.observable.IObserving;
 import org.eclipse.core.databinding.observable.Observables;
 import org.eclipse.core.databinding.observable.list.IObservableList;
@@ -87,9 +89,6 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.TableColumn;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceReference;
 
 /**
  * @author Eugen
@@ -97,24 +96,6 @@ import org.osgi.framework.ServiceReference;
  */
 @SuppressWarnings("restriction")
 public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
-
-	private static final EMFFormsDatabinding emfFormsDatabinding;
-	private static final EMFFormsLabelProvider emfFormsLabelProvider;
-	private static final VTViewTemplateProvider vtViewTemplateProvider;
-
-	static {
-		final BundleContext bundleContext = FrameworkUtil.getBundle(TableColumnsDMRTableControl.class)
-			.getBundleContext();
-		final ServiceReference<EMFFormsDatabinding> emfFormsDatabindingServiceReference = bundleContext
-			.getServiceReference(EMFFormsDatabinding.class);
-		emfFormsDatabinding = bundleContext.getService(emfFormsDatabindingServiceReference);
-		final ServiceReference<EMFFormsLabelProvider> emfFormsLabelProviderServiceReference = bundleContext
-			.getServiceReference(EMFFormsLabelProvider.class);
-		emfFormsLabelProvider = bundleContext.getService(emfFormsLabelProviderServiceReference);
-		final ServiceReference<VTViewTemplateProvider> vtViewTemplateProviderServiceReference = bundleContext
-			.getServiceReference(VTViewTemplateProvider.class);
-		vtViewTemplateProvider = bundleContext.getService(vtViewTemplateProviderServiceReference);
-	}
 
 	private final EMFDataBindingContext viewModelDBC;
 
@@ -124,9 +105,14 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 	 * @param vElement the view model element to be rendered
 	 * @param viewContext the view context
 	 * @param reportService The {@link ReportService}
+	 * @param emfFormsDatabinding The {@link EMFFormsDatabinding}
+	 * @param emfFormsLabelProvider The {@link EMFFormsLabelProvider}
+	 * @param vtViewTemplateProvider The {@link VTViewTemplateProvider}
 	 */
-	public TableColumnsDMRTableControl(VControl vElement, ViewModelContext viewContext,
-		ReportService reportService) {
+	@Inject
+	public TableColumnsDMRTableControl(VControl vElement, ViewModelContext viewContext, ReportService reportService,
+		EMFFormsDatabinding emfFormsDatabinding, EMFFormsLabelProvider emfFormsLabelProvider,
+		VTViewTemplateProvider vtViewTemplateProvider) {
 		super(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider);
 		viewModelDBC = new EMFDataBindingContext();
 	}

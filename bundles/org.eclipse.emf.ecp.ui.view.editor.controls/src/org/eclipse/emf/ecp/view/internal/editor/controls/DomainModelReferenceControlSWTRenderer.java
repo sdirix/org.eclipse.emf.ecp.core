@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -14,6 +14,8 @@ package org.eclipse.emf.ecp.view.internal.editor.controls;
 import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.HashSet;
+
+import javax.inject.Inject;
 
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.DataBindingContext;
@@ -77,9 +79,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceReference;
 
 /**
  * Renderer for DomainModelReferences.
@@ -91,27 +90,7 @@ import org.osgi.framework.ServiceReference;
 @SuppressWarnings("restriction")
 public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 
-	private static final EMFFormsDatabinding emfFormsDatabinding;
-	private static final EMFFormsLabelProvider emfFormsLabelProvider;
-	private static final VTViewTemplateProvider vtViewTemplateProvider;
-	private static EMFFormsEditSupport emfFormsEditSupport;
-
-	static {
-		final BundleContext bundleContext = FrameworkUtil.getBundle(EReferenceLabelControlSWTRenderer.class)
-			.getBundleContext();
-		final ServiceReference<EMFFormsDatabinding> emfFormsDatabindingServiceReference = bundleContext
-			.getServiceReference(EMFFormsDatabinding.class);
-		emfFormsDatabinding = bundleContext.getService(emfFormsDatabindingServiceReference);
-		final ServiceReference<EMFFormsEditSupport> emfFormsEditSupportServiceReference = bundleContext
-			.getServiceReference(EMFFormsEditSupport.class);
-		emfFormsEditSupport = bundleContext.getService(emfFormsEditSupportServiceReference);
-		final ServiceReference<EMFFormsLabelProvider> emfFormsLabelProviderServiceReference = bundleContext
-			.getServiceReference(EMFFormsLabelProvider.class);
-		emfFormsLabelProvider = bundleContext.getService(emfFormsLabelProviderServiceReference);
-		final ServiceReference<VTViewTemplateProvider> vtViewTemplateProviderServiceReference = bundleContext
-			.getServiceReference(VTViewTemplateProvider.class);
-		vtViewTemplateProvider = bundleContext.getService(vtViewTemplateProviderServiceReference);
-	}
+	private final EMFFormsEditSupport emfFormsEditSupport;
 
 	/**
 	 * Default constructor.
@@ -119,10 +98,18 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 	 * @param vElement the view model element to be rendered
 	 * @param viewContext the view context
 	 * @param reportService The {@link ReportService}
+	 * @param emfFormsDatabinding The {@link EMFFormsDatabinding}
+	 * @param emfFormsLabelProvider The {@link EMFFormsLabelProvider}
+	 * @param vtViewTemplateProvider The {@link VTViewTemplateProvider}
+	 * @param emfFormsEditSupport The {@link EMFFormsEditSupport}
 	 */
+	@Inject
 	public DomainModelReferenceControlSWTRenderer(VControl vElement, ViewModelContext viewContext,
-		ReportService reportService) {
+		ReportService reportService, EMFFormsDatabinding emfFormsDatabinding,
+		EMFFormsLabelProvider emfFormsLabelProvider, VTViewTemplateProvider vtViewTemplateProvider,
+		EMFFormsEditSupport emfFormsEditSupport) {
 		super(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider);
+		this.emfFormsEditSupport = emfFormsEditSupport;
 	}
 
 	private Composite mainComposite;
@@ -371,7 +358,7 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 		});
 
 		final Button setBtn = createButtonForAction(new NewReferenceAction(getEditingDomain(eObject), eObject,
-			structuralFeature, emfFormsEditSupport, emfFormsLabelProvider, null, getReportService(), getVElement()
+			structuralFeature, emfFormsEditSupport, getEMFFormsLabelProvider(), null, getReportService(), getVElement()
 				.getDomainModelReference(),
 			getViewModelContext().getDomainModel()), composite); // getViewModelContext().getService(ReferenceService.class)
 		setBtn.addSelectionListener(new SelectionAdapterExtension(setLabel, getModelValue(), getViewModelContext(),
