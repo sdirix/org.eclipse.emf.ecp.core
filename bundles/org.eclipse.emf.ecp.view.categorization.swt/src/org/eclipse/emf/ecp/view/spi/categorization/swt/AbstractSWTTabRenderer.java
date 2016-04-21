@@ -11,6 +11,8 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.categorization.swt;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.core.databinding.observable.value.IObservableValue;
@@ -46,6 +48,8 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
@@ -56,6 +60,10 @@ import org.eclipse.swt.widgets.Control;
  * @param <VELEMENT> the {@link VElement}
  */
 public abstract class AbstractSWTTabRenderer<VELEMENT extends VElement> extends AbstractSWTRenderer<VELEMENT> {
+
+	private final Map<CTabItem, VAbstractCategorization> itemToCategorizationMap = new LinkedHashMap<CTabItem, VAbstractCategorization>();
+	private final Map<CTabItem, Composite> itemToCompositeMap = new LinkedHashMap<CTabItem, Composite>();
+
 	private final EMFFormsRendererFactory emfFormsRendererFactory;
 	private final EMFDataBindingContext dataBindingContext;
 	private final VTViewTemplateProvider viewTemplateProvider;
@@ -107,6 +115,12 @@ public abstract class AbstractSWTTabRenderer<VELEMENT extends VElement> extends 
 		final boolean useScrolledContent = useScrolledContent();
 
 		final CTabFolder folder = new CTabFolder(parent, getTabFolderStyle());
+		folder.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				itemSelected(folder.getSelection());
+			}
+		});
 		folder.setBackground(parent.getBackground());
 		final EList<VAbstractCategorization> categorizations = getCategorizations();
 		for (final VAbstractCategorization categorization : categorizations) {
@@ -119,37 +133,17 @@ public abstract class AbstractSWTTabRenderer<VELEMENT extends VElement> extends 
 				GridLayoutFactory.fillDefaults().applyTo(composite);
 			}
 
+			itemToCategorizationMap.put(item, categorization);
+			itemToCompositeMap.put(item, composite);
+
 			final IObservableValue modelValue = EMFEditObservables.observeValue(
 				AdapterFactoryEditingDomain.getEditingDomainFor(categorization), categorization,
 				VViewPackage.eINSTANCE.getElement_Label());
 			final IObservableValue targetValue = WidgetProperties.text().observe(item);
 			dataBindingContext.bindValue(targetValue, modelValue);
 
-			AbstractSWTRenderer<VElement> renderer;
-			try {
-				renderer = getEMFFormsRendererFactory().getRendererInstance(categorization,
-					getViewModelContext());
-			} catch (final EMFFormsNoRendererException ex) {
-				getReportService().report(
-					new StatusReport(
-						new Status(IStatus.INFO, Activator.PLUGIN_ID, String.format(
-							"No Renderer for %s found.", categorization.eClass().getName(), ex)))); //$NON-NLS-1$
-				return null;
-			}
-			final SWTGridDescription gridDescription = renderer.getGridDescription(GridDescriptionFactory.INSTANCE
-				.createEmptyGridDescription());
-			for (final SWTGridCell gridCell : gridDescription.getGrid()) {
-				final Control render = renderer.render(gridCell, composite);
-				GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true)
-					.applyTo(render);
-				if (useScrolledContent) {
-					final ScrolledComposite scrolledComposite = ScrolledComposite.class.cast(composite);
-					scrolledComposite.setExpandHorizontal(true);
-					scrolledComposite.setExpandVertical(true);
-					scrolledComposite.setContent(render);
-					scrolledComposite.setMinSize(render.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-				}
-				item.setControl(composite);
+			if (!renderLazy()) {
+				renderItem(item);
 			}
 			SWTDataElementIdHelper.setElementIdDataWithSubId(item, categorization, "tabitem", getViewModelContext()); //$NON-NLS-1$
 			SWTDataElementIdHelper.setElementIdDataWithSubId(composite, categorization, "tabitem-composite", //$NON-NLS-1$
@@ -157,9 +151,71 @@ public abstract class AbstractSWTTabRenderer<VELEMENT extends VElement> extends 
 		}
 		if (folder.getItemCount() > 0) {
 			folder.setSelection(0);
+			itemSelected(folder.getSelection());
 		}
 		SWTDataElementIdHelper.setElementIdDataWithSubId(folder, getVElement(), "tabfolder", getViewModelContext()); //$NON-NLS-1$
 		return folder;
+	}
+
+	private void renderItem(final CTabItem item) throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		if (!itemToCategorizationMap.containsKey(item)) {
+			return;/* already rendered or invalid state */
+		}
+
+		/* remove from the maps on first rendering */
+		final VAbstractCategorization categorization = itemToCategorizationMap.remove(item);
+		final Composite composite = itemToCompositeMap.remove(item);
+		final boolean useScrolledContent = useScrolledContent();
+
+		AbstractSWTRenderer<VElement> renderer;
+		try {
+			renderer = getEMFFormsRendererFactory().getRendererInstance(categorization, getViewModelContext());
+		} catch (final EMFFormsNoRendererException ex) {
+			getReportService().report(
+				new StatusReport(
+					new Status(IStatus.INFO, Activator.PLUGIN_ID, String.format(
+						"No Renderer for %s found.", categorization.eClass().getName(), ex)))); //$NON-NLS-1$
+			return;
+		}
+		final SWTGridDescription gridDescription = renderer.getGridDescription(GridDescriptionFactory.INSTANCE
+			.createEmptyGridDescription());
+		for (final SWTGridCell gridCell : gridDescription.getGrid()) {
+			final Control render = renderer.render(gridCell, composite);
+			GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true)
+				.applyTo(render);
+			if (useScrolledContent) {
+				final ScrolledComposite scrolledComposite = ScrolledComposite.class.cast(composite);
+				scrolledComposite.setExpandHorizontal(true);
+				scrolledComposite.setExpandVertical(true);
+				scrolledComposite.setContent(render);
+				scrolledComposite.setMinSize(render.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+			}
+			item.setControl(composite);
+		}
+	}
+
+	/**
+	 * This method gets called when a tab item was selected. Subclasses may call this method when programmatic selection
+	 * changes have been made.
+	 *
+	 * @param selection the selected item
+	 *
+	 * @since 1.9
+	 */
+	protected final void itemSelected(CTabItem selection) {
+		try {
+			renderItem(selection);
+		} catch (final NoRendererFoundException ex) {
+			getReportService().report(
+				new StatusReport(
+					new Status(IStatus.INFO, Activator.PLUGIN_ID, String.format(
+						"No Renderer for %s found.", selection.getText(), ex)))); //$NON-NLS-1$
+		} catch (final NoPropertyDescriptorFoundExeption ex) {
+			getReportService().report(
+				new StatusReport(
+					new Status(IStatus.INFO, Activator.PLUGIN_ID, String.format(
+						"No Renderer for %s found.", selection.getText(), ex)))); //$NON-NLS-1$
+		}
 	}
 
 	/**
@@ -170,6 +226,17 @@ public abstract class AbstractSWTTabRenderer<VELEMENT extends VElement> extends 
 	 */
 	protected boolean useScrolledContent() {
 		return true;
+	}
+
+	/**
+	 * Whether to render all tab items immediately or on selection.
+	 *
+	 * @return <code>true</code> if the item UI will be rendered on first selection, <code>false</code> if all items
+	 *         will be rendered immediately
+	 * @since 1.9
+	 */
+	protected boolean renderLazy() {
+		return false;
 	}
 
 	private int getTabFolderStyle() {

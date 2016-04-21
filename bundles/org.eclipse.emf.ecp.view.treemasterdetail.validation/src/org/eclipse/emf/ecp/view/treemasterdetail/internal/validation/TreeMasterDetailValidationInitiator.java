@@ -167,6 +167,7 @@ public class TreeMasterDetailValidationInitiator implements
 	private ComposedAdapterFactory adapterFactory;
 
 	private AdapterFactoryContentProvider adapterFactoryContentProvider;
+	private ViewModelContext context;
 
 	/**
 	 * Constructor of the Initiator.
@@ -188,6 +189,7 @@ public class TreeMasterDetailValidationInitiator implements
 
 	@Override
 	public void instantiate(final ViewModelContext context) {
+		this.context = context;
 		context.registerDomainChangeListener(new TreeMasterDetailValidationInitiatorDomainChangeListener(context));
 		checkForTreeMasterDetail(context);
 		context.registerEMFFormsContextListener(this);
@@ -275,6 +277,7 @@ public class TreeMasterDetailValidationInitiator implements
 
 	@Override
 	public void dispose() {
+		context.unregisterEMFFormsContextListener(this);
 		adapterFactoryContentProvider.dispose();
 		adapterFactory.dispose();
 	}

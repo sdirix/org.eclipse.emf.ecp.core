@@ -256,7 +256,7 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider 
 	@Override
 	public void createPartControl(Composite parent) {
 		// Load the resource from the provided input and display the editor
-		loadResource();
+		resourceSet = loadResource(getEditorInput());
 		parent.setBackground(new Color(Display.getCurrent(), 255, 255, 255));
 		parent.setBackgroundMode(SWT.INHERIT_FORCE);
 
@@ -328,16 +328,16 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider 
 	}
 
 	/**
-	 * Loads the Resource from the EditorInput and sets the EcoreEditor.resource
-	 * field.
+	 * Creates a resource set and loads all required resources for the editor input.
+	 *
+	 * @param editorInput the editor input
+	 * @return the resource set
 	 */
-	private void loadResource() {
-		final FileEditorInput fei = (FileEditorInput) getEditorInput();
-
-		resourceSet = ResourceSetHelpers.loadResourceSetWithProxies(
+	protected ResourceSet loadResource(IEditorInput editorInput) {
+		final FileEditorInput fei = (FileEditorInput) editorInput;
+		return ResourceSetHelpers.loadResourceSetWithProxies(
 			URI.createPlatformResourceURI(fei.getFile().getFullPath().toOSString(), false),
 			commandStack);
-
 	}
 
 	/*
