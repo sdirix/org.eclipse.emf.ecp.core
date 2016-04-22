@@ -1018,6 +1018,13 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 		});
 	}
 
+	/**
+	 * reference service for the detail pane of a tree master detail view.
+	 * It delegates calls to a root reference service, but opens new element in the detail pane.
+	 *
+	 * @author Jonas
+	 *
+	 */
 	private class TreeMasterDetailReferenceService implements ReferenceService {
 
 		private final ReferenceService delegate;
