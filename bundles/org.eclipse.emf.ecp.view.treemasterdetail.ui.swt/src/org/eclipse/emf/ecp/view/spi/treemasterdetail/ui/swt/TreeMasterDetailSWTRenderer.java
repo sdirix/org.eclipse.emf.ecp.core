@@ -121,6 +121,7 @@ import org.osgi.framework.FrameworkUtil;
  * @since 1.5
  *
  */
+@SuppressWarnings("deprecation")
 public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMasterDetail> {
 
 	/**
