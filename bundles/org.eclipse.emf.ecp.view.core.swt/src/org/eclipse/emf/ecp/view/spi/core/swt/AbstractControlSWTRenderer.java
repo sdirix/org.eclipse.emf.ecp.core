@@ -490,5 +490,6 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 	 * @throws DatabindingFailedException If the databinding failed
 	 * @since 1.9
 	 */
-	protected abstract void rootDomainModelChanged() throws DatabindingFailedException;
+	protected void rootDomainModelChanged() throws DatabindingFailedException {
+	}
 }

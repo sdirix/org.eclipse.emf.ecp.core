@@ -35,6 +35,7 @@ public interface Condition extends EObject {
 	 *
 	 * @param domainModel The root domain object of this condition.
 	 * @return {@code true}, if the condition matches, {@code false} otherwise
+	 * @since 1.9
 	 */
 	boolean evaluate(EObject domainModel);
 
@@ -45,6 +46,7 @@ public interface Condition extends EObject {
 	 * @param possibleNewValues
 	 *            the new value that should be compared against the expected value of the condition
 	 * @return {@code true}, if the condition matches, {@code false} otherwise
+	 * @since 1.9
 	 */
 	boolean evaluateChangedValues(EObject domainModel, Map<Setting, Object> possibleNewValues);
 } // Condition

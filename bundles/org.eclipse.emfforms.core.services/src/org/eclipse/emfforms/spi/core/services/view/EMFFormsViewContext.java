@@ -96,6 +96,7 @@ public interface EMFFormsViewContext {
 	 *
 	 * @see #getDomainModel()
 	 * @param newDomainModel The new domain model
+	 * @since 1.9
 	 */
 	void changeDomainModel(EObject newDomainModel);
 
@@ -103,6 +104,7 @@ public interface EMFFormsViewContext {
 	 * Register a {@link RootDomainModelChangeListener}.
 	 *
 	 * @param rootDomainModelChangeListener The {@link RootDomainModelChangeListener} to register
+	 * @since 1.9
 	 */
 	void registerRootDomainModelChangeListener(RootDomainModelChangeListener rootDomainModelChangeListener);
 
@@ -110,6 +112,7 @@ public interface EMFFormsViewContext {
 	 * Unregister a {@link RootDomainModelChangeListener}.
 	 *
 	 * @param rootDomainModelChangeListener The {@link RootDomainModelChangeListener} to unregister
+	 * @since 1.9
 	 */
 	void unregisterRootDomainModelChangeListener(RootDomainModelChangeListener rootDomainModelChangeListener);
 }

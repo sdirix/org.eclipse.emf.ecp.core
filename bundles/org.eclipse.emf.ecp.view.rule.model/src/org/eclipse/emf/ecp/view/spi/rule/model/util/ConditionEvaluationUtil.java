@@ -41,6 +41,7 @@ public final class ConditionEvaluationUtil {
 	 * @param domainModel The root domain object of the given {@link LeafCondition}
 	 * @param possibleNewValues the new value map
 	 * @return <code>true</code> if setting part of condition, <code>false</code> otherwise
+	 * @since 1.9
 	 */
 	public static boolean isLeafConditionForSetting(LeafCondition condition, EObject domainModel,
 		Map<Setting, Object> possibleNewValues) {

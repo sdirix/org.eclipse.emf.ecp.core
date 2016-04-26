@@ -403,6 +403,7 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	 * {@inheritDoc}
 	 *
 	 * @see org.eclipse.emf.ecp.view.spi.rule.model.Condition#evaluate(org.eclipse.emf.ecore.EObject)
+	 * @since 1.9
 	 */
 	@Override
 	public boolean evaluate(EObject domainModel) {
@@ -456,6 +457,7 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	 *
 	 * @see org.eclipse.emf.ecp.view.spi.rule.model.Condition#evaluateChangedValues(org.eclipse.emf.ecore.EObject,
 	 *      java.util.Map)
+	 * @since 1.9
 	 */
 	@SuppressWarnings("unchecked")
 	@Override

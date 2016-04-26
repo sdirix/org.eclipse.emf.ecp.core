@@ -73,6 +73,7 @@ public class LeafConditionSettingIterator implements Iterator<Setting> {
 	 * @param condition the leaf condition
 	 * @param domainModel The root domain object of the given {@link LeafCondition}
 	 * @param includeNonValueRelatedSettings whether to include non value related settings
+	 * @since 1.9
 	 */
 	public LeafConditionSettingIterator(LeafCondition condition, EObject domainModel,
 		boolean includeNonValueRelatedSettings) {
@@ -283,6 +284,8 @@ public class LeafConditionSettingIterator implements Iterator<Setting> {
 
 	/**
 	 * Disposes this {@link LeafConditionSettingIterator}.
+	 * 
+	 * @since 1.9
 	 */
 	public void dispose() {
 		if (isDisposed) {
@@ -303,6 +306,7 @@ public class LeafConditionSettingIterator implements Iterator<Setting> {
 
 	/**
 	 * @return <code>true</code> if this {@link LeafConditionSettingIterator} is disposed, <code>false</code> otherwise
+	 * @since 1.9
 	 */
 	public boolean isDisposed() {
 		return isDisposed;
