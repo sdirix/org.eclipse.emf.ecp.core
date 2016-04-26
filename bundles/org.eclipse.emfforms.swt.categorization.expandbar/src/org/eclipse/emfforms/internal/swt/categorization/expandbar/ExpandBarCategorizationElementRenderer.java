@@ -233,14 +233,16 @@ public class ExpandBarCategorizationElementRenderer extends AbstractSWTRenderer<
 		expandBar = new ExpandBar(expandBarComposite, SWT.V_SCROLL);
 		SWTDataElementIdHelper.setElementIdDataWithSubId(expandBar, getVElement(), "expandBar", getViewModelContext()); //$NON-NLS-1$
 		expandBar.setData(RWT.MARKUP_ENABLED, Boolean.TRUE);
+		int destroyedItems = 0;
 		for (final VAbstractCategorization categorization : getVElement().getCategorizations()) {
 
-			final ExpandItem item = createExpandItem(adapterFactory, categorization);
+			final ExpandItem item = createExpandItem(adapterFactory, categorization, destroyedItems);
 			item.setExpanded(true);
 
 			categorization.eAdapters().add(new CategorizationVisibilityAdapter(categorization, item));
 			if (!categorization.isVisible()) {
 				item.dispose();
+				destroyedItems++;
 			}
 		}
 
@@ -252,9 +254,9 @@ public class ExpandBarCategorizationElementRenderer extends AbstractSWTRenderer<
 	}
 
 	private ExpandItem createExpandItem(final ComposedAdapterFactory adapterFactory,
-		final VAbstractCategorization categorization) {
+		final VAbstractCategorization categorization, int destroyedItems) {
 		final ExpandItem item = new ExpandItem(expandBar, SWT.NONE,
-			getVElement().getCategorizations().indexOf(categorization));
+			getVElement().getCategorizations().indexOf(categorization) - destroyedItems);
 		SWTDataElementIdHelper.setElementIdDataWithSubId(item, categorization, "expandItem", getViewModelContext()); //$NON-NLS-1$
 		item.setData(RWT.MARKUP_ENABLED, Boolean.TRUE);
 
@@ -398,7 +400,8 @@ public class ExpandBarCategorizationElementRenderer extends AbstractSWTRenderer<
 				}
 				catItem.dispose();
 			} else {
-				catItem = createExpandItem(adapterFactory, categorization);
+				int index=Math.min(expandBar.getChildren().length, getVElement().getCategorizations().indexOf(categorization));
+				catItem = createExpandItem(adapterFactory, categorization,index );
 			}
 		}
 	}
