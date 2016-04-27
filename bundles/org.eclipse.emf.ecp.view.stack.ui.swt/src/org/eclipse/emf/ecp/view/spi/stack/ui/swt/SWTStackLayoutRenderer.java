@@ -15,6 +15,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.inject.Inject;
+
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecp.view.internal.stack.ui.swt.Activator;
@@ -63,6 +65,7 @@ public class SWTStackLayoutRenderer extends AbstractSWTRenderer<VStackLayout> im
 	 * @param reportService the {@link ReportService}
 	 * @since 1.6
 	 */
+	@Inject
 	public SWTStackLayoutRenderer(VStackLayout vElement, ViewModelContext viewContext, ReportService reportService) {
 		super(vElement, viewContext, reportService);
 		viewContext.registerRootDomainModelChangeListener(this);
