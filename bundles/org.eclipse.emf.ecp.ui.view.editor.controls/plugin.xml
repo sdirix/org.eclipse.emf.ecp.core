@@ -4,35 +4,6 @@
 
    <extension
          name=""
-         point="org.eclipse.emf.ecp.edit.controls">
-      <control
-            class="org.eclipse.emf.ecp.view.internal.editor.controls.ControlTargetFeatureControl"
-            id="org.eclipse.emf.ecp.view.editor.controls.feature">
-         <staticTest
-               supportedClassType="org.eclipse.emf.ecore.EStructuralFeature"
-               supportedFeature="domainModelEFeature"
-               singleValue="true"
-               priority="2"
-               supportedEObject="org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference">
-         </staticTest>
-      </control>
-      <control
-            class="org.eclipse.emf.ecp.view.internal.editor.controls.RuleFeaturePathControl"
-            id="org.eclipse.emf.ecp.ui.view.editor.controls.referencePath.leafcondition">
-         <dynamicTest
-               testClass="org.eclipse.emf.ecp.view.internal.editor.controls.RuleFeaturePathTester">
-         </dynamicTest>
-      </control>
-      <control
-            class="org.eclipse.emf.ecp.view.internal.editor.controls.TableColumnDomainModelReferenceControl"
-            id="org.eclipse.emf.ecp.view.editor.controls.tableColumnDomainModelReference">
-         <dynamicTest
-               testClass="org.eclipse.emf.ecp.view.internal.editor.controls.TableDomainModelReferenceTester">
-         </dynamicTest>
-      </control>
-   </extension>
-   <extension
-         name=""
          point="org.eclipse.ui.menus">
       <menuContribution
             allPopups="false"

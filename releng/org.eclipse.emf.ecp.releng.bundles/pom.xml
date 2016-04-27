@@ -182,7 +182,6 @@
 
 		<!-- IDE -->
 		<module>../../bundles/org.eclipse.emf.ecp.ide.editor.view</module>
-		<module>../../bundles/org.eclipse.emf.ecp.ide.editor.view.control</module>
 		<module>../../bundles/org.eclipse.emf.ecp.ide.editor.viewmodel</module>
 		<module>../../bundles/org.eclipse.emf.ecp.ide.view.service</module>
 

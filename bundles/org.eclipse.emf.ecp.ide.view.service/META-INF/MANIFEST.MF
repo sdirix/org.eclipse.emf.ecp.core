@@ -8,7 +8,6 @@ Bundle-Vendor: Eclipse Modeling Project
 Export-Package: org.eclipse.emf.ecp.ide.view.internal.service;version="1.9.0";x-friends:="org.eclipse.emf.ecp.ui.view.editor.controls",
  org.eclipse.emf.ecp.ide.view.service;version="1.9.0";
   x-friends:="org.eclipse.emf.ecp.ide.editor.view,
-   org.eclipse.emf.ecp.ide.editor.view.control,
    org.eclipse.emf.ecp.ui.view.editor.controls,
    org.eclipse.emf.ecp.view.model.editor,
    org.eclipse.emf.ecp.view.model.project.installer"
