@@ -301,7 +301,7 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 			getReportService().report(new RenderingFailedReport(ex));
 			return false;
 		}
-		final EStructuralFeature feature = (EStructuralFeature) valueProperty;
+		final EStructuralFeature feature = (EStructuralFeature) valueProperty.getValueType();
 		final boolean unsettable = feature.isUnsettable();
 		return unsettable;
 	}
