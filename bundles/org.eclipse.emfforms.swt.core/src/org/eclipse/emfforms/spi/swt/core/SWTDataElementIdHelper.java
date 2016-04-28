@@ -18,6 +18,7 @@ import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emfforms.spi.swt.core.data.EMFFormsSWTDataService;
 import org.eclipse.swt.widgets.Widget;
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
@@ -69,7 +70,11 @@ public final class SWTDataElementIdHelper {
 	}
 
 	private static String getId(VElement element, ViewModelContext context) {
-		final BundleContext bundleContext = FrameworkUtil.getBundle(SWTDataElementIdHelper.class).getBundleContext();
+		final Bundle bundle = FrameworkUtil.getBundle(SWTDataElementIdHelper.class);
+		if (bundle == null) {
+			return element.getUuid();
+		}
+		final BundleContext bundleContext = bundle.getBundleContext();
 		if (bundleContext == null) {
 			return element.getUuid();
 		}
