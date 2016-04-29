@@ -111,6 +111,10 @@
          id="org.eclipse.emfforms.editor.feature.source"
          version="0.0.0"/>
 
+   <includes
+         id="org.eclipse.emf.ecp.view.viewproxy.feature.source"
+         version="0.0.0"/>
+
    <plugin
          id="org.eclipse.emfforms.setup.base"
          download-size="0"
