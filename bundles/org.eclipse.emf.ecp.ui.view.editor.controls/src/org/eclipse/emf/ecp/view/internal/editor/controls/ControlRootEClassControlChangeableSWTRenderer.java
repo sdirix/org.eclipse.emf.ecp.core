@@ -67,6 +67,71 @@ import org.osgi.framework.ServiceReference;
 public class ControlRootEClassControlChangeableSWTRenderer extends ControlRootEClassControl2SWTRenderer {
 
 	/**
+	 * @author jonas
+	 *
+	 */
+	private final class EClassContentProvider implements ITreeContentProvider {
+		@Override
+		public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void dispose() {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public boolean hasChildren(Object element) {
+			if (EPackage.class.isInstance(element)) {
+				return true;
+			}
+			if (Descriptor.class.isInstance(element)) {
+				final Descriptor descriptor = (Descriptor) element;
+				descriptor.getEPackage();
+				return true;
+			}
+			return false;
+		}
+
+		@Override
+		public Object getParent(Object element) {
+			if (EClass.class.isInstance(element)) {
+				return ((EClass) element).eContainer();
+			}
+			return null;
+		}
+
+		@Override
+		public Object[] getElements(Object inputElement) {
+			return getChildren(inputElement);
+		}
+
+		@Override
+		public Object[] getChildren(Object parentElement) {
+			if (EPackage.class.isInstance(parentElement)) {
+				final EPackage ePackage = (EPackage) parentElement;
+				final Set<EClass> result = new LinkedHashSet<EClass>();
+				for (final EClassifier classifier : ePackage.getEClassifiers()) {
+					if (EClass.class.isInstance(classifier)) {
+						result.add((EClass) classifier);
+					}
+				}
+				return result.toArray();
+			}
+			if (Descriptor.class.isInstance(parentElement)) {
+				return getChildren(((Descriptor) parentElement).getEPackage());
+			}
+			if (Registry.class.isInstance(parentElement)) {
+				return ((Registry) parentElement).values().toArray();
+			}
+			return null;
+		}
+	}
+
+	/**
 	 * Default constructor.
 	 *
 	 * @param vElement the view model element to be rendered
@@ -214,67 +279,7 @@ public class ControlRootEClassControlChangeableSWTRenderer extends ControlRootEC
 	}
 
 	private ITreeContentProvider getContentProvider() {
-		return new ITreeContentProvider() {
-
-			@Override
-			public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void dispose() {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public boolean hasChildren(Object element) {
-				if (EPackage.class.isInstance(element)) {
-					return true;
-				}
-				if (Descriptor.class.isInstance(element)) {
-					final Descriptor descriptor = (Descriptor) element;
-					descriptor.getEPackage();
-					return true;
-				}
-				return false;
-			}
-
-			@Override
-			public Object getParent(Object element) {
-				if (EClass.class.isInstance(element)) {
-					return ((EClass) element).eContainer();
-				}
-				return null;
-			}
-
-			@Override
-			public Object[] getElements(Object inputElement) {
-				return getChildren(inputElement);
-			}
-
-			@Override
-			public Object[] getChildren(Object parentElement) {
-				if (EPackage.class.isInstance(parentElement)) {
-					final EPackage ePackage = (EPackage) parentElement;
-					final Set<EClass> result = new LinkedHashSet<EClass>();
-					for (final EClassifier classifier : ePackage.getEClassifiers()) {
-						if (EClass.class.isInstance(classifier)) {
-							result.add((EClass) classifier);
-						}
-					}
-					return result.toArray();
-				}
-				if (Descriptor.class.isInstance(parentElement)) {
-					return getChildren(((Descriptor) parentElement).getEPackage());
-				}
-				if (Registry.class.isInstance(parentElement)) {
-					return ((Registry) parentElement).values().toArray();
-				}
-				return null;
-			}
-		};
+		return new EClassContentProvider();
 	}
 
 	/**
