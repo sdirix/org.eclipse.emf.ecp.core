@@ -403,7 +403,7 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 			}
 			for (int rowId = 3; rowId <= sheet.getLastRowNum(); rowId++) {
 				final Row row = sheet.getRow(rowId);
-				if (row == null) {
+				if (row == null || isRowEmpty(row)) {
 					errorReports.reportError(
 						Severity.INFO, LocalizationServiceHelper.getString(getClass(), "ImportError_EmptyRow"), //$NON-NLS-1$
 						ErrorFactory.eINSTANCE.createSheetLocation(workbook.getSheetName(sheetId), 0, rowId,
@@ -585,5 +585,15 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 			unknown
 		}
 
+	}
+
+	private static boolean isRowEmpty(Row row) {
+		for (int c = row.getFirstCellNum(); c < row.getLastCellNum(); c++) {
+			final Cell cell = row.getCell(c);
+			if (cell != null && cell.getCellType() != Cell.CELL_TYPE_BLANK) {
+				return false;
+			}
+		}
+		return true;
 	}
 }
