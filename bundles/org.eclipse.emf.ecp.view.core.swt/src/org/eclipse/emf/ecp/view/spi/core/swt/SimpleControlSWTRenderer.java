@@ -12,6 +12,8 @@
 package org.eclipse.emf.ecp.view.spi.core.swt;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.core.databinding.observable.IObserving;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
@@ -50,6 +52,7 @@ import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -176,6 +179,8 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 	private static final String ICONS_UNSET_FEATURE = "icons/unset_feature.png"; //$NON-NLS-1$
 	private static final String ICONS_SET_FEATURE = "icons/set_feature.png"; //$NON-NLS-1$
 
+	private static final Point VALIDATION_PREFERRED_SIZE = new Point(16, 17);
+
 	/**
 	 * Default constructor.
 	 *
@@ -204,29 +209,101 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 	@Override
 	public SWTGridDescription getGridDescription(SWTGridDescription gridDescription) {
 		if (rendererGridDescription == null) {
-			int columns;
-			switch (getVElement().getLabelAlignment()) {
-			case DEFAULT:
-			case LEFT:
-				columns = 3;
-				break;
-			case NONE:
-				columns = 2;
-				break;
-			default:
-				getReportService().report(new AbstractReport(MessageFormat.format(
-					"Label alignment {0} is not supported by renderer {1}. Label alignment set to default.", //$NON-NLS-1$
-					getVElement().getLabelAlignment().getLiteral(), getClass().getName()), IStatus.INFO));
-				getVElement().setLabelAlignment(LabelAlignment.DEFAULT);
-				columns = 3;
+			final int columns = showLabel() ? 3 : 2;
+
+			rendererGridDescription = GridDescriptionFactory.INSTANCE.createEmptyGridDescription();
+			rendererGridDescription.setRows(1);
+			rendererGridDescription.setColumns(columns);
+
+			final List<SWTGridCell> grid = new ArrayList<SWTGridCell>();
+
+			if (columns == 3) {
+				final SWTGridCell labelCell = createLabelCell(grid.size());
+				grid.add(labelCell);
 			}
-			rendererGridDescription = GridDescriptionFactory.INSTANCE.createSimpleGrid(1, columns, this);
-			for (int i = 0; i < rendererGridDescription.getGrid().size() - 1; i++) {
-				final SWTGridCell swtGridCell = rendererGridDescription.getGrid().get(i);
-				swtGridCell.setHorizontalGrab(false);
-			}
+
+			final SWTGridCell validationCell = createValidationCell(grid.size());
+			grid.add(validationCell);
+
+			final SWTGridCell controlCel = createControlCell(grid.size());
+			grid.add(controlCel);
+
+			rendererGridDescription.setGrid(grid);
 		}
 		return rendererGridDescription;
+	}
+
+	private boolean showLabel() {
+		switch (getVElement().getLabelAlignment()) {
+		case DEFAULT:
+		case LEFT:
+			return true;
+		case NONE:
+			return false;
+		default:
+			getReportService().report(new AbstractReport(MessageFormat.format(
+				"Label alignment {0} is not supported by renderer {1}. Label alignment set to default.", //$NON-NLS-1$
+				getVElement().getLabelAlignment().getLiteral(), getClass().getName()), IStatus.INFO));
+			getVElement().setLabelAlignment(LabelAlignment.DEFAULT);
+			return true;
+		}
+	}
+
+	/**
+	 * Creates the label cell if necessary.
+	 *
+	 * @param column column number within the grid row
+	 * @return created and configured label cell
+	 * @since 1.9
+	 */
+	protected SWTGridCell createLabelCell(int column) {
+		final SWTGridCell labelCell = new SWTGridCell(0, column, this);
+		labelCell.setHorizontalGrab(false);
+		labelCell.setVerticalGrab(false);
+		labelCell.setHorizontalFill(false);
+		labelCell.setHorizontalAlignment(SWTGridCell.Alignment.BEGINNING);
+		labelCell.setVerticalFill(false);
+		labelCell.setVerticalAlignment(SWTGridCell.Alignment.CENTER);
+		labelCell.setRenderer(this);
+		return labelCell;
+	}
+
+	/**
+	 * Creates the validation cell.
+	 *
+	 * @param column column number within the grid row
+	 * @return created and configured label cell
+	 * @since 1.9
+	 */
+	protected SWTGridCell createValidationCell(int column) {
+		final SWTGridCell validationCell = new SWTGridCell(0, column, this);
+		validationCell.setHorizontalGrab(false);
+		validationCell.setVerticalGrab(false);
+		validationCell.setHorizontalFill(false);
+		validationCell.setHorizontalAlignment(SWTGridCell.Alignment.CENTER);
+		validationCell.setVerticalFill(false);
+		validationCell.setVerticalAlignment(SWTGridCell.Alignment.CENTER);
+		validationCell.setRenderer(this);
+		validationCell.setPreferredSize(VALIDATION_PREFERRED_SIZE);
+		return validationCell;
+	}
+
+	/**
+	 * Creates the control cell.
+	 *
+	 * @param column column number within the grid row
+	 * @return created and configured label cell
+	 * @since 1.9
+	 */
+	protected SWTGridCell createControlCell(int column) {
+		final SWTGridCell controlCell = new SWTGridCell(0, column, this);
+		controlCell.setHorizontalGrab(true);
+		controlCell.setVerticalGrab(false);
+		controlCell.setHorizontalFill(true);
+		controlCell.setVerticalFill(false);
+		controlCell.setVerticalAlignment(SWTGridCell.Alignment.CENTER);
+		controlCell.setRenderer(this);
+		return controlCell;
 	}
 
 	/**

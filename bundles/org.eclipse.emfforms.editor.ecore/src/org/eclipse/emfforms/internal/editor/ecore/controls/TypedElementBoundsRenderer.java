@@ -12,6 +12,9 @@
  ******************************************************************************/
 package org.eclipse.emfforms.internal.editor.ecore.controls;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.eclipse.core.databinding.DataBindingContext;
@@ -79,10 +82,65 @@ public class TypedElementBoundsRenderer extends AbstractControlSWTRenderer<VCont
 	@Override
 	public final SWTGridDescription getGridDescription(SWTGridDescription gridDescription) {
 		if (rendererGridDescription == null) {
-			rendererGridDescription = GridDescriptionFactory.INSTANCE.createSimpleGrid(1,
-				getVElement().getLabelAlignment() == LabelAlignment.NONE ? 2 : 3, this);
+			final boolean showLabel = getVElement().getLabelAlignment() != LabelAlignment.NONE;
+			final int columns = showLabel ? 3 : 2;
+
+			rendererGridDescription = GridDescriptionFactory.INSTANCE.createEmptyGridDescription();
+			rendererGridDescription.setRows(1);
+			rendererGridDescription.setColumns(columns);
+
+			final List<SWTGridCell> grid = new ArrayList<SWTGridCell>();
+
+			if (columns == 3) {
+				final SWTGridCell labelCell = createLabelCell(grid.size());
+				grid.add(labelCell);
+			}
+
+			final SWTGridCell validationCell = createValidationCell(grid.size());
+			grid.add(validationCell);
+
+			final SWTGridCell controlCel = createControlCell(grid.size());
+			grid.add(controlCel);
+
+			rendererGridDescription.setGrid(grid);
 		}
 		return rendererGridDescription;
+	}
+
+	private SWTGridCell createLabelCell(int column) {
+		final SWTGridCell labelCell = new SWTGridCell(0, column, this);
+		labelCell.setHorizontalGrab(false);
+		labelCell.setVerticalGrab(false);
+		labelCell.setHorizontalFill(false);
+		labelCell.setHorizontalAlignment(SWTGridCell.Alignment.BEGINNING);
+		labelCell.setVerticalFill(false);
+		labelCell.setVerticalAlignment(SWTGridCell.Alignment.CENTER);
+		labelCell.setRenderer(this);
+		return labelCell;
+	}
+
+	private SWTGridCell createValidationCell(int column) {
+		final SWTGridCell validationCell = new SWTGridCell(0, column, this);
+		validationCell.setHorizontalGrab(false);
+		validationCell.setVerticalGrab(false);
+		validationCell.setHorizontalFill(false);
+		validationCell.setHorizontalAlignment(SWTGridCell.Alignment.CENTER);
+		validationCell.setVerticalFill(false);
+		validationCell.setVerticalAlignment(SWTGridCell.Alignment.CENTER);
+		validationCell.setRenderer(this);
+		validationCell.setPreferredSize(16, 17);
+		return validationCell;
+	}
+
+	private SWTGridCell createControlCell(int column) {
+		final SWTGridCell controlCell = new SWTGridCell(0, column, this);
+		controlCell.setHorizontalGrab(true);
+		controlCell.setVerticalGrab(false);
+		controlCell.setHorizontalFill(true);
+		controlCell.setVerticalFill(false);
+		controlCell.setVerticalAlignment(SWTGridCell.Alignment.CENTER);
+		controlCell.setRenderer(this);
+		return controlCell;
 	}
 
 	@Override
@@ -285,7 +343,7 @@ public class TypedElementBoundsRenderer extends AbstractControlSWTRenderer<VCont
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.core.swt.AbstractControlSWTRenderer#rootDomainModelChanged()
 	 */
 	@Override
