@@ -51,6 +51,7 @@ import org.eclipse.emf.ecp.edit.spi.DeleteService;
 import org.eclipse.emf.ecp.edit.spi.EMFDeleteServiceImpl;
 import org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor;
 import org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditorComparator;
+import org.eclipse.emf.ecp.edit.spi.swt.table.ECPElementAwareCellEditor;
 import org.eclipse.emf.ecp.edit.spi.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.ecp.view.internal.table.swt.CellReadOnlyTesterHelper;
 import org.eclipse.emf.ecp.view.internal.table.swt.MessageKeys;
@@ -1680,6 +1681,10 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		 */
 		@Override
 		protected void initializeCellEditorValue(CellEditor cellEditor, ViewerCell cell) {
+
+			if (ECPElementAwareCellEditor.class.isInstance(cellEditor)) {
+				ECPElementAwareCellEditor.class.cast(cellEditor).updateRowElement(cell.getElement());
+			}
 
 			final IObservableValue target = doCreateCellEditorObservable(cellEditor);
 			Assert.isNotNull(target, "doCreateCellEditorObservable(...) did not return an observable"); //$NON-NLS-1$
