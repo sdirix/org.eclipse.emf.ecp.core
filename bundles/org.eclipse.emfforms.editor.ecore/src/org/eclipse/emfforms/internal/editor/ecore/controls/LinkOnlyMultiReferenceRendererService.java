@@ -23,14 +23,17 @@ import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedRepor
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer;
 import org.eclipse.emfforms.spi.swt.core.di.EMFFormsDIRendererService;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
- * ESuperTypesControlService provides the {@link ESuperTypesRenderer}.
+ * ESuperTypesControlService provides the {@link LinkOnlyMultiReferenceRenderer}.
  *
  * @author Martin Fleck
  *
  */
-public class ESuperTypesControlService implements EMFFormsDIRendererService<VControl> {
+@Component
+public class LinkOnlyMultiReferenceRendererService implements EMFFormsDIRendererService<VControl> {
 
 	private EMFFormsDatabinding databindingService;
 	private ReportService reportService;
@@ -40,6 +43,7 @@ public class ESuperTypesControlService implements EMFFormsDIRendererService<VCon
 	 *
 	 * @param databindingService The EMFFormsDatabinding
 	 */
+	@Reference
 	protected void setEMFFormsDatabinding(EMFFormsDatabinding databindingService) {
 		this.databindingService = databindingService;
 	}
@@ -49,6 +53,7 @@ public class ESuperTypesControlService implements EMFFormsDIRendererService<VCon
 	 *
 	 * @param reportService The ReportService
 	 */
+	@Reference
 	protected void setReportService(ReportService reportService) {
 		this.reportService = reportService;
 	}
@@ -80,6 +85,9 @@ public class ESuperTypesControlService implements EMFFormsDIRendererService<VCon
 		if (feature.equals(EcorePackage.eINSTANCE.getEClass_ESuperTypes())) {
 			return 6;
 		}
+		if (feature.equals(EcorePackage.eINSTANCE.getEAnnotation_References())) {
+			return 6;
+		}
 
 		return NOT_APPLICABLE;
 	}
@@ -91,7 +99,7 @@ public class ESuperTypesControlService implements EMFFormsDIRendererService<VCon
 	 */
 	@Override
 	public Class<? extends AbstractSWTRenderer<VControl>> getRendererClass() {
-		return ESuperTypesRenderer.class;
+		return LinkOnlyMultiReferenceRenderer.class;
 	}
 
 }

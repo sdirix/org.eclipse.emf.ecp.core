@@ -29,7 +29,7 @@ import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
  *
  */
 @SuppressWarnings("restriction")
-public class ESuperTypesRenderer extends MultiReferenceSWTRenderer {
+public class LinkOnlyMultiReferenceRenderer extends MultiReferenceSWTRenderer {
 
 	/**
 	 * Default constructor.
@@ -43,7 +43,7 @@ public class ESuperTypesRenderer extends MultiReferenceSWTRenderer {
 	 * @param imageRegistryService The {@link ImageRegistryService}
 	 */
 	@Inject
-	public ESuperTypesRenderer(VControl vElement, ViewModelContext viewContext, ReportService reportService,
+	public LinkOnlyMultiReferenceRenderer(VControl vElement, ViewModelContext viewContext, ReportService reportService,
 		EMFFormsDatabinding emfFormsDatabinding, EMFFormsLabelProvider emfFormsLabelProvider,
 		VTViewTemplateProvider vtViewTemplateProvider, ImageRegistryService imageRegistryService) {
 		super(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider,

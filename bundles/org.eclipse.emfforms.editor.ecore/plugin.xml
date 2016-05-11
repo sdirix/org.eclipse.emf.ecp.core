@@ -25,6 +25,8 @@
 
 
 <extension  point="org.eclipse.emf.ecp.view.model.provider.xmi.file">
+<file filePath="viewmodels/EAnnotation.view"/>
+
 <file filePath="viewmodels/EOperation.view">
 	<filter key="detail" value="true">
 	</filter>

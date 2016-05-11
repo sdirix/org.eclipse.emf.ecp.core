@@ -39,6 +39,6 @@ Import-Package: javax.inject;version="1.0.0",
 Service-Component: OSGI-INF/InstanceTypeNameSWTRendererService.xml,
  OSGI-INF/dataTypeControlService.xml,
  OSGI-INF/eenumLiteralControlService.xml,
- OSGI-INF/esuperTypesControlService.xml,
+ OSGI-INF/org.eclipse.emfforms.internal.editor.ecore.controls.LinkOnlyMultiReferenceRendererService.xml,
  OSGI-INF/typedElementBoundsControlService.xml
 Bundle-ActivationPolicy: lazy
