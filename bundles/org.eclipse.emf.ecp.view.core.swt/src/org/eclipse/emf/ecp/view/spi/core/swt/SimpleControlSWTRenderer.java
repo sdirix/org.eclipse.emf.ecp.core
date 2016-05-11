@@ -432,7 +432,9 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 	 * @since 1.9
 	 */
 	protected void setControlIdData(final Control control) {
-		SWTDataElementIdHelper.setElementIdDataForVControl(control, getVElement(), getViewModelContext());
+		if (control != null) {
+			SWTDataElementIdHelper.setElementIdDataForVControl(control, getVElement(), getViewModelContext());
+		}
 	}
 
 	/**
