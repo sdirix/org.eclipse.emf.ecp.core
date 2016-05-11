@@ -11,12 +11,14 @@
  ******************************************************************************/
 package org.eclipse.emfforms.internal.editor.ecore;
 
-import java.util.Collections;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import org.eclipse.emf.ecp.common.spi.ChildrenDescriptorCollector;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
+import org.eclipse.emfforms.internal.editor.ecore.actions.CreateNewInstanceAction;
 import org.eclipse.emfforms.internal.editor.ecore.helpers.EcoreHelpers;
 import org.eclipse.emfforms.internal.swt.treemasterdetail.DefaultTreeMasterDetailCustomization;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.MenuProvider;
@@ -47,9 +49,11 @@ public class EcoreEditorTMDCustomization extends DefaultTreeMasterDetailCustomiz
 			@Override
 			public Menu getMenu(TreeViewer treeViewer, EditingDomain editingDomain) {
 				final MenuManager menuMgr = new MenuManager();
+				final Set<MasterDetailAction> masterDetailActions = new LinkedHashSet<MasterDetailAction>();
+				masterDetailActions.add(new CreateNewInstanceAction());
 				menuMgr.setRemoveAllWhenShown(true);
 				menuMgr.addMenuListener(new EcoreEditorMenuListener(new ChildrenDescriptorCollector(), menuMgr,
-					treeViewer, editingDomain, Collections.<MasterDetailAction> emptyList(), createElementCallback));
+					treeViewer, editingDomain, masterDetailActions, createElementCallback));
 				final Menu menu = menuMgr.createContextMenu(treeViewer.getControl());
 				return menu;
 			}
