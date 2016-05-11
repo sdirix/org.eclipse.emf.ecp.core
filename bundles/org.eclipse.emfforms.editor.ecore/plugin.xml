@@ -12,6 +12,12 @@
             id="EcoreEditor"
             name="Ecore Editor">
       </editor>
+      <editor
+            class="org.eclipse.emfforms.spi.editor.GenericEditor"
+            default="false"
+            id="org.eclipse.emfforms.editor.ecore.genericxmieditor"
+            name="Generic XMI Editor">
+      </editor>
    </extension>
    <extension
         point="org.eclipse.emf.ecp.view.context.viewServices">
