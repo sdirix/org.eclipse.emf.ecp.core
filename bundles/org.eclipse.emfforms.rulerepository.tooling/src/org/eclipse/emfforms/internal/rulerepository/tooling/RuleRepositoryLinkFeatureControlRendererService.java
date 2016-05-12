@@ -7,7 +7,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- * Lucas Koehler - initial API and implementation
+ * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
 package org.eclipse.emfforms.internal.rulerepository.tooling;
 

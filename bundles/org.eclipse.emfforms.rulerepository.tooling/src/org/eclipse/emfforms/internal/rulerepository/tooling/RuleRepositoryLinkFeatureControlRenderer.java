@@ -1,3 +1,14 @@
+/*******************************************************************************
+ * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ * Eugen Neufeld - initial API and implementation
+ ******************************************************************************/
 package org.eclipse.emfforms.internal.rulerepository.tooling;
 
 import javax.inject.Inject;
@@ -13,9 +24,23 @@ import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 
+/**
+ * A control renderer which is used for selecting a DMR. To retrieve the root EClass this renderer uses the resource to
+ * get the selected view model.
+ *
+ * @author Eugen
+ *
+ */
 @SuppressWarnings("restriction")
 public class RuleRepositoryLinkFeatureControlRenderer extends LinkFeatureControlRenderer {
 
+	/**
+	 * Default constructor.
+	 * 
+	 * @param vElement The {@link VControl} of this renderer
+	 * @param viewContext The {@link ViewModelContext} of this renderer
+	 * @param reportService The {@link ReportService} of this renderer
+	 */
 	@Inject
 	public RuleRepositoryLinkFeatureControlRenderer(VControl vElement, ViewModelContext viewContext,
 		ReportService reportService) {

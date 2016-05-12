@@ -13,7 +13,6 @@ package org.eclipse.emfforms.internal.rulerepository.tooling.merge;
 
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
-import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emfforms.spi.rulerepository.model.VRuleEntry;
 import org.eclipse.emfforms.spi.rulerepository.model.VRuleRepository;
 
@@ -23,10 +22,13 @@ import org.eclipse.emfforms.spi.rulerepository.model.VRuleRepository;
  * @author Eugen Neufeld
  *
  */
-public class MergeHelper {
+public final class MergeHelper {
+
+	private MergeHelper() {
+	}
 
 	/**
-	 * Merges the {@link VRuleRepository} into the linked {@link VView};
+	 * Merges the {@link VRuleRepository} into the linked {@link org.eclipse.emf.ecp.view.spi.model.VView VView}.
 	 *
 	 * @param ruleRepository The {@link VRuleRepository} to merge from
 	 */

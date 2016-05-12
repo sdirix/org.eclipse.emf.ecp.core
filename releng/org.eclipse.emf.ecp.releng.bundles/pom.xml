@@ -328,6 +328,11 @@
 		<!-- Helper -->
 		<module>../../bundles/org.eclipse.emfforms.setup.base</module>
 		
+		<!-- Rule Repository -->
+		<module>../../bundles/org.eclipse.emfforms.rulerepository.model</module>
+		<module>../../bundles/org.eclipse.emfforms.rulerepository.model.edit</module>
+		<module>../../bundles/org.eclipse.emfforms.rulerepository.tooling</module>
+		
 	</modules>
 
 	<build>
