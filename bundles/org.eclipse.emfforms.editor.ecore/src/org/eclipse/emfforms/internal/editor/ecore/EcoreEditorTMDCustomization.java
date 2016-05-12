@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -11,8 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emfforms.internal.editor.ecore;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.List;
 
 import org.eclipse.emf.ecp.common.spi.ChildrenDescriptorCollector;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -22,6 +21,7 @@ import org.eclipse.emfforms.internal.editor.ecore.actions.CreateNewInstanceActio
 import org.eclipse.emfforms.internal.editor.ecore.helpers.EcoreHelpers;
 import org.eclipse.emfforms.internal.swt.treemasterdetail.DefaultTreeMasterDetailCustomization;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.MenuProvider;
+import org.eclipse.emfforms.spi.swt.treemasterdetail.actions.ActionCollector;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.actions.MasterDetailAction;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.util.CreateElementCallback;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.util.RootObject;
@@ -49,8 +49,10 @@ public class EcoreEditorTMDCustomization extends DefaultTreeMasterDetailCustomiz
 			@Override
 			public Menu getMenu(TreeViewer treeViewer, EditingDomain editingDomain) {
 				final MenuManager menuMgr = new MenuManager();
-				final Set<MasterDetailAction> masterDetailActions = new LinkedHashSet<MasterDetailAction>();
-				masterDetailActions.add(new CreateNewInstanceAction());
+				final List<MasterDetailAction> masterDetailActions = ActionCollector.newList()
+					.addCutAction(editingDomain).addCopyAction(editingDomain).addPasteAction(editingDomain)
+					.add(new CreateNewInstanceAction()).getList();
+
 				menuMgr.setRemoveAllWhenShown(true);
 				menuMgr.addMenuListener(new EcoreEditorMenuListener(new ChildrenDescriptorCollector(), menuMgr,
 					treeViewer, editingDomain, masterDetailActions, createElementCallback));
