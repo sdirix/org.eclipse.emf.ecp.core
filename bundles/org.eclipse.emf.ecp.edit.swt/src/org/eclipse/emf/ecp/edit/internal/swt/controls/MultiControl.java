@@ -58,9 +58,10 @@ import org.eclipse.swt.widgets.Label;
  * This control provides the necessary common functionality to create a multicontrol that are needed for
  * {@link org.eclipse.emf.ecore.EStructuralFeature EStructuralFeature}s that have multiple values.
  *
+ * @deprecated Use the new MultiAttributeSWTRenderer and MultiReferenceSWTRenderer directly instead
  * @author Eugen Neufeld
- *
  */
+@Deprecated
 public abstract class MultiControl extends SWTControl {
 
 	private static final String ICONS_ARROW_DOWN_PNG = "icons/arrow_down.png";//$NON-NLS-1$
