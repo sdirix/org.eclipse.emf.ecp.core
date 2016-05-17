@@ -194,14 +194,14 @@ public class ECPValidationServiceLabelDecorator implements ILabelDecorator {
 			if (notification.isTouch()) {
 				return;
 			}
-			handleRemoveNotification(notification);
+			handleStructuralChangeNotification(notification);
 			if (!EObject.class.isInstance(notification.getNotifier())) {
 				return;
 			}
 			updateCache(EObject.class.cast(notification.getNotifier()), cache);
 		}
 
-		private void handleRemoveNotification(Notification notification) {
+		private void handleStructuralChangeNotification(Notification notification) {
 			switch (notification.getEventType()) {
 			case Notification.REMOVE: {
 				final Object oldValue = notification.getOldValue();
@@ -227,17 +227,26 @@ public class ECPValidationServiceLabelDecorator implements ILabelDecorator {
 				if (!EObject.class.isInstance(newValue)) {
 					break;
 				}
+				final TreeIterator<EObject> iterator = EcoreUtil.getAllContents(EObject.class.cast(newValue), false);
+				while (iterator.hasNext()) {
+					updateCacheWithoutRefresh(iterator.next(), cache);
+				}
 				updateCache(EObject.class.cast(newValue), cache);
 				break;
 			}
 			case Notification.ADD_MANY: {
 				@SuppressWarnings("unchecked")
-				final List<Object> deleted = (List<Object>) notification.getNewValue();
-				if (deleted.isEmpty() || !EObject.class.isInstance(deleted.get(0))) {
+				final List<Object> added = (List<Object>) notification.getNewValue();
+				if (added.isEmpty() || !EObject.class.isInstance(added.get(0))) {
 					break;
 				}
-				for (final Object oldValue : deleted) {
-					updateCache(EObject.class.cast(oldValue), cache);
+				for (final Object newValue : added) {
+					final TreeIterator<EObject> iterator = EcoreUtil.getAllContents(EObject.class.cast(newValue),
+						false);
+					while (iterator.hasNext()) {
+						updateCacheWithoutRefresh(iterator.next(), cache);
+					}
+					updateCache(EObject.class.cast(newValue), cache);
 				}
 				break;
 
