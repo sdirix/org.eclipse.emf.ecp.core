@@ -15,6 +15,7 @@ import org.eclipse.core.databinding.observable.IObserving;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
@@ -203,7 +204,9 @@ public class EMFFormsEditSupportImpl implements EMFFormsEditSupport {
 		Bundle bundle;
 		try {
 			bundle = bundleResolver.getEditBundle(eContainingClass);
-			final String key = String.format(LITERAL_NAME, feature.getEType().getName(), element);
+			final String key = String.format(LITERAL_NAME, feature.getEType().getName(),
+				EEnum.class.cast(feature.getEType()).getEEnumLiteralByLiteral(
+					Enum.class.cast(element).toString()).getName());
 			return emfFormsLocalizationService.getString(bundle, key);
 		} catch (final NoBundleFoundException ex) {
 			reportService.report(new AbstractReport(ex));
