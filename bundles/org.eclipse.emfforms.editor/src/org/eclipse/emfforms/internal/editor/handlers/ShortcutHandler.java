@@ -16,7 +16,7 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.edit.command.RemoveCommand;
+import org.eclipse.emf.edit.command.DeleteCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfforms.internal.editor.ui.CreateNewChildDialog;
@@ -66,7 +66,7 @@ public class ShortcutHandler extends AbstractHandler {
 
 			if (getDeleteCmdName().equals(commandName)) {
 				editingDomain.getCommandStack().execute(
-					RemoveCommand.create(editingDomain, currentSelection));
+					DeleteCommand.create(editingDomain, sSelection.toList()));
 			} else if (getNewChildCmdName().equals(commandName)) {
 				createNewElementDialog(editingDomain, eEditor.getEditorSite().getSelectionProvider(), currentSelection,
 					"Create Child").open();
