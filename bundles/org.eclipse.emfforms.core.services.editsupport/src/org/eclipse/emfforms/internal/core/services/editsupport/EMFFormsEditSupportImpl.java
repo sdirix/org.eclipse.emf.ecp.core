@@ -209,7 +209,7 @@ public class EMFFormsEditSupportImpl implements EMFFormsEditSupport {
 					Enum.class.cast(element).toString()).getName());
 			return emfFormsLocalizationService.getString(bundle, key);
 		} catch (final NoBundleFoundException ex) {
-			reportService.report(new AbstractReport(ex));
+			// do nothing - see bug 467498
 		}
 		return null;
 	}
