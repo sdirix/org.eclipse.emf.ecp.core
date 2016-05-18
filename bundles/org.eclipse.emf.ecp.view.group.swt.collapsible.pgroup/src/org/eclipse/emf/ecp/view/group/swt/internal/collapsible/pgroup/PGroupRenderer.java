@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -21,6 +21,8 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.group.model.VGroup;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
+import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
+import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.layout.LayoutProviderHelper;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
@@ -34,7 +36,9 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ExpandEvent;
 import org.eclipse.swt.events.ExpandListener;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Layout;
 
 /**
@@ -71,13 +75,26 @@ public class PGroupRenderer extends ContainerSWTRenderer<VGroup> {
 		return "PGroup"; //$NON-NLS-1$
 	}
 
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer#renderControl(org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell,
+	 *      org.eclipse.swt.widgets.Composite)
+	 */
 	@Override
-	protected Composite getComposite(final Composite parent) {
+	protected Control renderControl(SWTGridCell gridCell, Composite parent)
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+
 		parent.setBackgroundMode(SWT.INHERIT_FORCE);
+
 		final PGroup group = new PGroup(parent, SWT.SMOOTH);
+		group.setLayout(new FillLayout());
 		if (getVElement().getLabel() != null) {
 			group.setText(getVElement().getLabel());
 		}
+
+		super.renderControl(gridCell, group);
+
 		group.addExpandListener(new ExpandListener() {
 
 			@Override
@@ -93,6 +110,7 @@ public class PGroupRenderer extends ContainerSWTRenderer<VGroup> {
 			}
 
 		});
+
 		group.setExpanded(!getVElement().isCollapsed());
 		return group;
 	}
