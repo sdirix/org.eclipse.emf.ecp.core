@@ -13,6 +13,8 @@
 package org.eclipse.emfforms.spi.editor;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.EventObject;
@@ -26,6 +28,7 @@ import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.IResourceDeltaVisitor;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.IPath;
@@ -74,12 +77,12 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.IPartListener;
+import org.eclipse.ui.IURIEditorInput;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.contexts.IContextService;
 import org.eclipse.ui.dialogs.SaveAsDialog;
 import org.eclipse.ui.part.EditorPart;
-import org.eclipse.ui.part.FileEditorInput;
 
 /**
  * The Class GenericEditor it is the generic part for editing any EObject.
@@ -351,9 +354,8 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider 
 	 * @return the resource set
 	 */
 	protected ResourceSet loadResource(IEditorInput editorInput) {
-		final FileEditorInput fei = (FileEditorInput) editorInput;
-		return ResourceSetHelpers.loadResourceSetWithProxies(
-			URI.createPlatformResourceURI(fei.getFile().getFullPath().toOSString(), false),
+		final IURIEditorInput uei = (IURIEditorInput) editorInput;
+		return ResourceSetHelpers.loadResourceSetWithProxies(URI.createURI(uei.getURI().toString(), false),
 			commandStack);
 	}
 
@@ -498,14 +500,23 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider 
 
 			try {
 				delta.accept(new IResourceDeltaVisitor() {
-
 					@Override
 					public boolean visit(final IResourceDelta delta) {
 						if (delta.getResource().getType() == IResource.FILE
 							&& (delta.getKind() == IResourceDelta.REMOVED ||
 								delta.getKind() == IResourceDelta.CHANGED)) {
-							final Resource resource = resourceSet.getResource(
-								URI.createPlatformResourceURI(delta.getFullPath().toString(), true), false);
+							final URI uri = URI.createPlatformResourceURI(delta.getFullPath().toString(), true);
+							Resource resource = null;
+							try {
+								final URL fileURL = FileLocator.resolve(new URL(uri.toString()));
+								resource = resourceSet.getResource(URI.createFileURI(fileURL.getPath()), false);
+							} catch (final MalformedURLException ex) {
+								// TODO log properly
+								return false;
+							} catch (final IOException ex) {
+								// TODO log properly
+								return false;
+							}
 							if (resource != null) {
 								if (delta.getKind() == IResourceDelta.REMOVED) {
 									removedResources.add(resource);
@@ -515,7 +526,6 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider 
 							}
 							return false;
 						}
-
 						return true;
 					}
 				});
