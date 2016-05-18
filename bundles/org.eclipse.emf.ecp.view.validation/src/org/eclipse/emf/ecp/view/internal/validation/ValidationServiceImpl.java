@@ -288,7 +288,7 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 					EObject.class.cast(rawNotification.getOldValue()));
 			}
 			// TODO JF since we now have an indexed dmr, this should clean diagnostics, too, doesn't it?
-			validate(getAllEObjects(notification.getNotifier()));
+			validate(notification.getNotifier());
 		}
 
 		@Override
