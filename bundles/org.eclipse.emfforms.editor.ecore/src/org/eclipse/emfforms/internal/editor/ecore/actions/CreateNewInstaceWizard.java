@@ -101,6 +101,8 @@ public class CreateNewInstaceWizard extends Wizard {
 				// Save the contents of the resource to the file system.
 				final Map<Object, Object> options = new HashMap<Object, Object>();
 				options.put(XMLResource.OPTION_ENCODING, "UTF-8");
+				options.put(XMLResource.OPTION_SCHEMA_LOCATION, Boolean.TRUE);
+				options.put(XMLResource.OPTION_LINE_WIDTH, 80);
 				try {
 					resource.save(options);
 				} catch (final IOException exception) {
