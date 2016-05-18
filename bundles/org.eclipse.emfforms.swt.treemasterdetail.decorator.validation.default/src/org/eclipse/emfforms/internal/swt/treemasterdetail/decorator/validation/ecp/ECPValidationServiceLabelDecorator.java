@@ -198,7 +198,7 @@ public class ECPValidationServiceLabelDecorator implements ILabelDecorator {
 			if (!EObject.class.isInstance(notification.getNotifier())) {
 				return;
 			}
-			updateCache(EObject.class.cast(notification.getNotifier()), cache);
+			updateCacheWithoutRefresh(EObject.class.cast(notification.getNotifier()), cache);
 		}
 
 		private void handleStructuralChangeNotification(Notification notification) {
