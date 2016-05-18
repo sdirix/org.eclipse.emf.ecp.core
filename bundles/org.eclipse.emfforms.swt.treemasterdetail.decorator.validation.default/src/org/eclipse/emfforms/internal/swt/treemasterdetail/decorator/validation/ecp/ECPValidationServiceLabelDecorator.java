@@ -24,6 +24,7 @@ import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -204,11 +205,7 @@ public class ECPValidationServiceLabelDecorator implements ILabelDecorator {
 		private void handleStructuralChangeNotification(Notification notification) {
 			switch (notification.getEventType()) {
 			case Notification.REMOVE: {
-				final Object oldValue = notification.getOldValue();
-				if (!EObject.class.isInstance(oldValue)) {
-					break;
-				}
-				handleRemove(EObject.class.cast(oldValue), cache);
+				handleSingleRemove(notification);
 				break;
 			}
 			case Notification.REMOVE_MANY: {
@@ -223,15 +220,7 @@ public class ECPValidationServiceLabelDecorator implements ILabelDecorator {
 				break;
 			}
 			case Notification.ADD: {
-				final Object newValue = notification.getNewValue();
-				if (!EObject.class.isInstance(newValue)) {
-					break;
-				}
-				final TreeIterator<EObject> iterator = EcoreUtil.getAllContents(EObject.class.cast(newValue), false);
-				while (iterator.hasNext()) {
-					updateCacheWithoutRefresh(iterator.next(), cache);
-				}
-				updateCache(EObject.class.cast(newValue), cache);
+				handleAdd(notification);
 				break;
 			}
 			case Notification.ADD_MANY: {
@@ -251,9 +240,38 @@ public class ECPValidationServiceLabelDecorator implements ILabelDecorator {
 				break;
 
 			}
+			case Notification.SET: {
+				if (!EReference.class.isInstance(notification.getFeature())
+					|| !EReference.class.cast(notification.getFeature()).isContainment()) {
+					break;
+				}
+				handleAdd(notification);
+
+				break;
+			}
 			default:
 				break;
 			}
+		}
+
+		private void handleSingleRemove(Notification notification) {
+			final Object oldValue = notification.getOldValue();
+			if (!EObject.class.isInstance(oldValue)) {
+				return;
+			}
+			handleRemove(EObject.class.cast(oldValue), cache);
+		}
+
+		private void handleAdd(Notification notification) {
+			final Object newValue = notification.getNewValue();
+			if (!EObject.class.isInstance(newValue)) {
+				return;
+			}
+			final TreeIterator<EObject> iterator = EcoreUtil.getAllContents(EObject.class.cast(newValue), false);
+			while (iterator.hasNext()) {
+				updateCacheWithoutRefresh(iterator.next(), cache);
+			}
+			updateCache(EObject.class.cast(newValue), cache);
 		}
 	}
 
