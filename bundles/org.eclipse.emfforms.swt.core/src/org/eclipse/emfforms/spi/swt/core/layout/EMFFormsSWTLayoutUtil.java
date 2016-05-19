@@ -11,6 +11,10 @@
  ******************************************************************************/
 package org.eclipse.emfforms.spi.swt.core.layout;
 
+import java.util.Collections;
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.graphics.Point;
@@ -32,6 +36,9 @@ public final class EMFFormsSWTLayoutUtil {
 
 	private EMFFormsSWTLayoutUtil() {
 	}
+
+	private static Set<Composite> requestedLayouts = Collections.synchronizedSet(new LinkedHashSet<Composite>());
+	private static Thread thread;
 
 	/**
 	 * This methods helps to update the size of a parent composite when the size of a child has changed. This is needed
@@ -74,16 +81,60 @@ public final class EMFFormsSWTLayoutUtil {
 			}
 
 			if (parent.getParent() == null) {
-				parent.layout(true, true);
+				layoutDelayed(parent);
 			}
 
 			if (Shell.class.isInstance(parent)) {
-				parent.layout(true, true);
+				layoutDelayed(parent);
 			}
 
 			parent = parent.getParent();
 		}
 
+	}
+
+	/**
+	 * <p>
+	 * This method will collect layoutrequest that happen in the same 200ms. When there are multiple layoutrequest for
+	 * the same composite in this time frame, the composite will only be layouted once.
+	 * </p>
+	 * <p>
+	 * This will help to improve performance as layout request are usually expensive. Also it might be quite common that
+	 * e.g. multiple hide rules are triggered by the same condition.
+	 * </p>
+	 *
+	 * @param parent the composite to layout
+	 */
+	private static synchronized void layoutDelayed(Composite parent) {
+		requestedLayouts.add(parent);
+		if (thread != null) {
+			return;
+		}
+		thread = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					Thread.sleep(200);
+				} catch (final InterruptedException ex) {
+					/* silent */
+				}
+				final Set<Composite> toLayout = requestedLayouts;
+				requestedLayouts = Collections.synchronizedSet(new LinkedHashSet<Composite>());
+				thread = null;
+				for (final Composite composite : toLayout) {
+					if (composite.isDisposed()) {
+						continue;
+					}
+					composite.getDisplay().asyncExec(new Runnable() {
+						@Override
+						public void run() {
+							composite.layout(true, true);
+						}
+					});
+				}
+			}
+		});
+		thread.start();
 	}
 
 	private static void updateLayoutData(final Object layoutData, int oldHeight, int newHeight) {
