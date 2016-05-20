@@ -33,23 +33,6 @@
 	</properties>
 
 	<profiles>
-		<!-- Profile for changing the used targets to mars p2 repositories -->
-		<profile>
-			<id>mars</id>
-			<activation>
-				<property>
-					<name>mars</name>
-				</property>
-			</activation>
-			<properties>
-				<target-rcp>ecpMars</target-rcp>
-				<target-rap>ecpRAPMars</target-rap>
-			</properties>
-			<modules>
-				<module>../../releng/org.eclipse.emf.ecp.target.rcp.mars</module>
-				<module>../../releng/org.eclipse.emf.ecp.target.rap.mars</module>
-			</modules>
-		</profile>
 		
 		<!-- Profile for adding aggregate sites to the built p2 repositry -->
 		<profile>
