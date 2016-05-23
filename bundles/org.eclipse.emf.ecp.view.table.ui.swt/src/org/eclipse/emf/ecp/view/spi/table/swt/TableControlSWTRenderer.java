@@ -275,6 +275,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 				regularColumnsStartIndex++;
 				createFixedValidationStatusColumn(tableViewerSWTBuilder);
 			}
+			regularColumnsStartIndex += addAdditionalColumns(tableViewerSWTBuilder);
 			addColumns(tableViewerSWTBuilder, EReference.class.cast(list.getElementType()).getEReferenceType(), cp);
 
 			initCompositeHeight();
@@ -313,6 +314,17 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			errorLabel.setText(ex.getMessage());
 			return errorLabel;
 		}
+	}
+
+	/**
+	 * Override this method to add additional static columns at the beginning of the table.
+	 *
+	 * @param tableViewerSWTBuilder the builder
+	 * @return the number of columns added
+	 * @since 1.9
+	 */
+	protected int addAdditionalColumns(TableViewerSWTBuilder tableViewerSWTBuilder) {
+		return 0;
 	}
 
 	private void addResizeListener(final Table table, final int regularColumnsStartIndex) {
