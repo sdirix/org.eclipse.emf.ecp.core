@@ -108,7 +108,7 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 
 		@Override
 		public void cache(ECPSWTView ecpView) {
-			// intentionally left empty
+			ecpView.dispose();
 		}
 	};
 
