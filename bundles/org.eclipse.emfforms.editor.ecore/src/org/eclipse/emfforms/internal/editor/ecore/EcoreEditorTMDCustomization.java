@@ -13,7 +13,10 @@ package org.eclipse.emfforms.internal.editor.ecore;
 
 import java.util.List;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.common.spi.ChildrenDescriptorCollector;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
+import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
@@ -21,6 +24,7 @@ import org.eclipse.emfforms.internal.editor.ecore.actions.CreateNewInstanceActio
 import org.eclipse.emfforms.internal.editor.ecore.helpers.EcoreHelpers;
 import org.eclipse.emfforms.internal.swt.treemasterdetail.DefaultTreeMasterDetailCustomization;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.MenuProvider;
+import org.eclipse.emfforms.spi.swt.treemasterdetail.ViewModelServiceProvider;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.actions.ActionCollector;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.actions.MasterDetailAction;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.util.CreateElementCallback;
@@ -58,6 +62,14 @@ public class EcoreEditorTMDCustomization extends DefaultTreeMasterDetailCustomiz
 					treeViewer, editingDomain, masterDetailActions, createElementCallback));
 				final Menu menu = menuMgr.createContextMenu(treeViewer.getControl());
 				return menu;
+			}
+		});
+
+		setViewModelServices(new ViewModelServiceProvider() {
+
+			@Override
+			public ViewModelService[] getViewModelServices(VView view, EObject eObject) {
+				return new ViewModelService[] { new GroupExpansionViewModelService() };
 			}
 		});
 	}
