@@ -20,6 +20,8 @@ import javax.inject.Inject;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EcorePackage;
@@ -215,40 +217,7 @@ public class TypedElementBoundsRenderer extends AbstractControlSWTRenderer<VCont
 		final ISWTObservableValue upperBoundSelectionTargetValue = WidgetProperties.selection().observe(upperBound);
 		dbc.bindValue(upperBoundSelectionTargetValue, upperBoundModelValue);
 
-		/*
-		 * Make sure that the upperBound cannot be lower than the lowerBound and that the lowerBound cannot be higher
-		 * than the upperBound.
-		 */
-		dbc.bindValue(upperBoundModelValue, lowerBoundModelValue,
-			new UpdateValueStrategy() {
-				@Override
-				public Object convert(Object value) {
-					// upper value to lower value
-					if (!Integer.class.isInstance(value)) {
-						return null;
-					}
-					final Integer upperValue = (Integer) value;
-					final int lowerValue = lowerBound.getSelection();
-					if (upperValue < lowerValue) {
-						return upperValue;
-					}
-					return lowerValue;
-				}
-			}, new UpdateValueStrategy() {
-				@Override
-				public Object convert(Object value) {
-					// lower value to upper value
-					if (!Integer.class.isInstance(value)) {
-						return null;
-					}
-					final Integer lowerValue = (Integer) value;
-					final int upperValue = upperBound.getSelection();
-					if (upperValue >= 0 && upperValue < lowerValue) {
-						return lowerValue;
-					}
-					return upperValue;
-				}
-			});
+		bindUpperAndLowerBounds(dbc, lowerBoundModelValue, upperBoundModelValue);
 
 		/* Disable the upperBound spinner when it's value is set to -1 */
 		final ISWTObservableValue upperBoundEnabledTargetValue = WidgetProperties.enabled().observe(upperBound);
@@ -273,7 +242,7 @@ public class TypedElementBoundsRenderer extends AbstractControlSWTRenderer<VCont
 					// target to model
 					final Boolean unbounded = (Boolean) value;
 					if (!unbounded) {
-						return lowerBound.getSelection();
+						return upperBoundModelValue.getValue();
 					}
 					return -1;
 				}
@@ -285,6 +254,60 @@ public class TypedElementBoundsRenderer extends AbstractControlSWTRenderer<VCont
 						return null;
 					}
 					return (Integer) value == -1;
+				}
+			});
+	}
+
+	/**
+	 * Make sure that the upperBound cannot be lower than the lowerBound and that the lowerBound cannot be higher
+	 * than the upperBound.
+	 */
+	private void bindUpperAndLowerBounds(final DataBindingContext dbc, final IObservableValue lowerBoundModelValue,
+		final IObservableValue upperBoundModelValue) {
+		dbc.bindValue(upperBoundModelValue, lowerBoundModelValue,
+			new UpdateValueStrategy() {
+				@Override
+				public Object convert(Object value) {
+					// upper value to lower value
+					if (!Integer.class.isInstance(value)) {
+						return null;
+					}
+					final Integer upperValue = (Integer) value;
+					final Integer lowerValue = (Integer) lowerBoundModelValue.getValue();
+					if (upperValue < lowerValue && upperValue != -1) {
+						return upperValue;
+					}
+					return lowerValue;
+				}
+
+				@Override
+				protected IStatus doSet(IObservableValue observableValue, Object value) {
+					if (observableValue.getValue().equals(value)) {
+						return Status.OK_STATUS;
+					}
+					return super.doSet(observableValue, value);
+				}
+			}, new UpdateValueStrategy() {
+				@Override
+				public Object convert(Object value) {
+					// lower value to upper value
+					if (!Integer.class.isInstance(value)) {
+						return null;
+					}
+					final Integer lowerValue = (Integer) value;
+					final Integer upperValue = (Integer) upperBoundModelValue.getValue();
+					if (upperValue >= 0 && upperValue < lowerValue) {
+						return lowerValue;
+					}
+					return upperValue;
+				}
+
+				@Override
+				protected IStatus doSet(IObservableValue observableValue, Object value) {
+					if (observableValue.getValue().equals(value)) {
+						return Status.OK_STATUS;
+					}
+					return super.doSet(observableValue, value);
 				}
 			});
 	}
