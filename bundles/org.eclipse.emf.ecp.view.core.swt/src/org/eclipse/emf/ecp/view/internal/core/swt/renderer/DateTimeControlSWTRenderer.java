@@ -22,6 +22,8 @@ import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.IObserving;
 import org.eclipse.core.databinding.observable.value.DateAndTimeObservableValue;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -74,6 +76,30 @@ import org.osgi.framework.FrameworkUtil;
  */
 public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 
+	/**
+	 * ModelToTarget Strategy that handles also null values of dates.
+	 *
+	 * @author Eugen Neufeld
+	 *
+	 */
+	private class DateModelToTargetUpdateStrategy extends UpdateValueStrategy {
+		DateModelToTargetUpdateStrategy() {
+			super();
+		}
+
+		DateModelToTargetUpdateStrategy(int policy) {
+			super(policy);
+		}
+
+		@Override
+		protected IStatus doSet(IObservableValue observableValue, Object value) {
+			if (value == null) {
+				return Status.OK_STATUS;
+			}
+			return super.doSet(observableValue, value);
+		}
+	};
+
 	private final EMFFormsLocalizationService localizationService;
 
 	private final ImageRegistryService imageRegistryService;
@@ -125,7 +151,8 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 		final ISWTObservableValue dateObserver = WidgetProperties.selection().observe(dateWidget);
 		final ISWTObservableValue timeObserver = WidgetProperties.selection().observe(timeWidget);
 		final IObservableValue target = new DateAndTimeObservableValue(dateObserver, timeObserver);
-		final Binding binding = getDataBindingContext().bindValue(target, getModelValue());
+		final Binding binding = getDataBindingContext().bindValue(target, getModelValue(), null,
+			new DateModelToTargetUpdateStrategy());
 
 		domainModelChangeListener = new ModelChangeListener() {
 			@Override
@@ -325,11 +352,14 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 			final DateTime calendar = new DateTime(dialog, SWT.CALENDAR | SWT.BORDER);
 			final IObservableValue calendarObserver = WidgetProperties.selection().observe(calendar);
 			final UpdateValueStrategy modelToTarget = new UpdateValueStrategy(UpdateValueStrategy.POLICY_UPDATE);
-			final UpdateValueStrategy targetToModel = new UpdateValueStrategy(UpdateValueStrategy.POLICY_UPDATE);
 
 			final Binding binding = getDataBindingContext().bindValue(calendarObserver, modelValue, modelToTarget,
-				targetToModel);
+				new DateModelToTargetUpdateStrategy(UpdateValueStrategy.POLICY_UPDATE));
 			final Calendar defaultCalendar = Calendar.getInstance(getLocale(getViewModelContext()));
+			final Date date = (Date) modelValue.getValue();
+			if (date != null) {
+				defaultCalendar.setTime(date);
+			}
 			calendar.setDate(defaultCalendar.get(Calendar.YEAR), defaultCalendar.get(Calendar.MONTH),
 				defaultCalendar.get(Calendar.DAY_OF_MONTH));
 
