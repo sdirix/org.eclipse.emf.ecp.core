@@ -227,8 +227,11 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 
 		@Override
 		protected IStatus doSet(IObservableValue observableValue, Object value) {
-			if (value == null) {
+			if (value == null && toDate) {
 				return Status.OK_STATUS;
+			}
+			if (value == null && !toDate) {
+				value = ""; //$NON-NLS-1$
 			}
 			return super.doSet(observableValue, value);
 		}
@@ -315,6 +318,7 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 
 	private Shell dialog;
 	private EMFFormsLocaleChangeListener emfFormsLocaleChangeListener;
+	private Text text;
 
 	@Override
 	protected Control createSWTControl(Composite parent) {
@@ -328,7 +332,7 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 		GridDataFactory.fillDefaults().grab(false, false).align(SWT.CENTER, SWT.CENTER).applyTo(bDate);
 		bDate.setImage(imageRegistryService.getImage(FrameworkUtil.getBundle(getClass()), "icons/date.png")); //$NON-NLS-1$
 		bDate.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_xmldate"); //$NON-NLS-1$
-		final Text text = (Text) Composite.class.cast(control).getChildren()[0];
+		text = (Text) Composite.class.cast(control).getChildren()[0];
 		bDate.addSelectionListener(new SelectionAdapterExtension(text, bDate));
 		return main;
 	}
