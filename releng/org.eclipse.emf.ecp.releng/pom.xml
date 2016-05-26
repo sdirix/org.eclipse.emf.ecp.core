@@ -205,7 +205,7 @@
 					<show>protected</show>
 					<nohelp>true</nohelp>
 					<failOnError>false</failOnError>
-					<excludePackageNames>org.eclipse.emfforms.*.test;org.eclipse.emfforms.*.tests;org.eclipse.emf.ecp.*.test;org.eclipse.emf.ecp.*.tests;org.eclipse.emf.edit.ui.*;org.eclipse.emf.ecp.makeithappen.*;car</excludePackageNames>
+					<excludePackageNames>*.test:*.tests:org.eclipse.emf.edit.ui.*:org.eclipse.emf.ecp.makeithappen.*:car</excludePackageNames>
 				</configuration>
 			</plugin>
 			<!-- to disable use -Dcheckstyle.skip -->
