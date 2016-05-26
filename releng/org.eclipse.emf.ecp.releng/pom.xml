@@ -11,7 +11,7 @@
 	<properties>
 		<tycho-version>0.25.0</tycho-version>
 		<tycho-extras-version>0.25.0</tycho-extras-version>
-		<javadoc-version>2.9</javadoc-version>
+		<javadoc-version>2.10.3</javadoc-version>
 		<ecp-version>1.9.0</ecp-version>
 		<javadoc-title>EMF Client Platform ${ecp-version} API</javadoc-title>
 		<maven.antrun.plugin.version>1.7</maven.antrun.plugin.version>
@@ -203,8 +203,9 @@
 				<configuration>
 					<doctitle>${javadoc-title}</doctitle>
 					<show>protected</show>
-					<show>public</show>
 					<nohelp>true</nohelp>
+					<failOnError>false</failOnError>
+					<excludePackageNames>org.eclipse.emfforms.*.test;org.eclipse.emfforms.*.tests;org.eclipse.emf.ecp.*.test;org.eclipse.emf.ecp.*.tests;org.eclipse.emf.edit.ui.*;org.eclipse.emf.ecp.makeithappen.*;car</excludePackageNames>
 				</configuration>
 			</plugin>
 			<!-- to disable use -Dcheckstyle.skip -->
