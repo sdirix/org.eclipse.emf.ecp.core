@@ -32,7 +32,7 @@ public class CreateNewInstanceAction extends MasterDetailAction {
 
 	// TODO proper icon
 	private static final String ICON_PATH = "icons/EcoreModelFile.gif";
-	private static final String ACTION_NAME = "Create New Instance";
+	private static final String ACTION_NAME = "Create New Dynamic Instance";
 
 	/**
 	 * Default constructor.
