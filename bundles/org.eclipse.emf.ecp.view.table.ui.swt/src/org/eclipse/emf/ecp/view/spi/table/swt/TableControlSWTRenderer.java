@@ -1008,6 +1008,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		}
 		editingDomain.getCommandStack().execute(
 			AddCommand.create(editingDomain, eObject, structuralFeature, instance));
+		tableViewer.setSelection(new StructuredSelection(eObjectToAdd.get()), true);
 	}
 
 	@Override
