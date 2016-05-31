@@ -35,6 +35,7 @@ import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemP
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.AbstractControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.spi.provider.ECPTooltipModifierHelper;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
@@ -80,6 +81,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.TableColumn;
 import org.osgi.framework.FrameworkUtil;
@@ -724,5 +726,27 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 			.getObservableValue(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
 		container = (EObject) ((IObserving) observableValue).getObserved();
 		observableValue.dispose();
+	}
+
+	@Override
+	protected void applyValidation() {
+		Display.getDefault().asyncExec(new Runnable() {
+
+			@Override
+			public void run() {
+				if (validationIcon == null) {
+					return;
+				}
+				if (validationIcon.isDisposed()) {
+					return;
+				}
+				if (getVElement().getDiagnostic() == null) {
+					return;
+				}
+				validationIcon.setImage(getValidationIcon(getVElement().getDiagnostic().getHighestSeverity()));
+				validationIcon.setToolTipText(ECPTooltipModifierHelper.modifyString(getVElement().getDiagnostic()
+					.getMessage(), null));
+			}
+		});
 	}
 }
