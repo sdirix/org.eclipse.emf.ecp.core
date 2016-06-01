@@ -242,7 +242,7 @@ public class TypedElementBoundsRenderer extends AbstractControlSWTRenderer<VCont
 					// target to model
 					final Boolean unbounded = (Boolean) value;
 					if (!unbounded) {
-						return upperBoundModelValue.getValue();
+						return Math.max(1, lowerBound.getSelection());
 					}
 					return -1;
 				}
