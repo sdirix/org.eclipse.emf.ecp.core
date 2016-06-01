@@ -31,9 +31,11 @@ public class GroupExpansionViewModelService implements ViewModelService {
 
 	private static final String STANDARD = "Standard";
 	private static final String ADVANCED = "Advanced";
+	private static final String ADVANCED_ANNOTATION = "Advanced (Use With Caution)";
 
 	private static boolean isStandardGroupCollapsed;
 	private static boolean isAdvancedGroupCollapsed = true;
+	private static boolean isAdvancedAnnotationGroupCollapsed = true;
 
 	private ModelChangeListener modelChangeListener;
 	private ViewModelContext viewModelContext;
@@ -64,6 +66,8 @@ public class GroupExpansionViewModelService implements ViewModelService {
 					group.setCollapsed(isStandardGroupCollapsed);
 				} else if (ADVANCED.equals(group.getName())) {
 					group.setCollapsed(isAdvancedGroupCollapsed);
+				} else if (ADVANCED_ANNOTATION.equals(group.getName())) {
+					group.setCollapsed(isAdvancedAnnotationGroupCollapsed);
 				}
 			}
 		}
@@ -79,6 +83,8 @@ public class GroupExpansionViewModelService implements ViewModelService {
 						isStandardGroupCollapsed = group.isCollapsed();
 					} else if (ADVANCED.equals(group.getName())) {
 						isAdvancedGroupCollapsed = group.isCollapsed();
+					} else if (ADVANCED_ANNOTATION.equals(group.getName())) {
+						isAdvancedAnnotationGroupCollapsed = group.isCollapsed();
 					}
 				}
 			}
