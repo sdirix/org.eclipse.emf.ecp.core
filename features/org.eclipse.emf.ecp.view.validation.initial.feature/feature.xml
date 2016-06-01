@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.eclipse.emf.ecp.view.validation.initial.feature"
-      label="Initialize Deep Validation Feature"
+      label="ECP Deep Validation Initial Feature"
       version="1.9.0.qualifier"
       provider-name="Eclipse Modeling Project"
       plugin="org.eclipse.emf.ecp.view.validation"
