@@ -102,6 +102,7 @@ public class CollapsableGroupSWTRenderer extends ContainerSWTRenderer<VGroup> {
 		final Composite composite = new Composite(bar, SWT.NONE);
 		GridLayoutFactory.fillDefaults().margins(MARGIN, MARGIN).applyTo(composite);
 		final ExpandItem item0 = new ExpandItem(bar, SWT.NONE, 0);
+		bar.setInitialHeaderHeight(item0.getHeaderHeight());
 
 		final ISWTObservableValue target = WidgetProperties.text().observe(item0);
 		final IObservableValue modelValue = EMFEditObservables.observeValue(
@@ -182,9 +183,17 @@ public class CollapsableGroupSWTRenderer extends ContainerSWTRenderer<VGroup> {
 	private static final class CollapsableGroupExpandBar extends ExpandBar {
 
 		private Composite itemComposite;
+		private int headerHeight;
 
 		CollapsableGroupExpandBar(Composite parent, int style) {
 			super(parent, style);
+		}
+
+		/**
+		 * @param headerHeight the header height
+		 */
+		void setInitialHeaderHeight(int headerHeight) {
+			this.headerHeight = headerHeight;
 		}
 
 		@Override
@@ -212,6 +221,12 @@ public class CollapsableGroupSWTRenderer extends ContainerSWTRenderer<VGroup> {
 				if (itemSize.x > sizeComputedByBar.x) {
 					/* else might be true if the expandbar has a really long group text */
 					sizeComputedByBar.x = itemSize.x;
+				}
+				/* workaround for SWT-Bug 430600 */
+				if (getItemCount() == 1 && getItem(0).getHeaderHeight() < 0) {
+					if (itemSize.y + headerHeight > sizeComputedByBar.y && getItem(0).getExpanded()) {
+						sizeComputedByBar.y = itemSize.y + headerHeight;
+					}
 				}
 			}
 			return sizeComputedByBar;
