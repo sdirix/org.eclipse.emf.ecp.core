@@ -136,6 +136,11 @@
                name="org.eclipse.emf.ecp.makeithappen.view.group.renderer"
                description="Make It Happen custom group renderer">
          </projectDescriptor>
+         <projectDescriptor
+               contentURI="examples/org.eclipse.emf.ecp.makeithappen.model.viewmodel/"
+               description="Make It Happen viewmodel"
+               name="org.eclipse.emf.ecp.makeithappen.model.viewmodel">
+         </projectDescriptor>
       </example>
       <example
             wizardID="org.eclipse.emf.ecp.makeithappen.wizards.ViewModelWizard"
