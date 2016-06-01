@@ -637,7 +637,8 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 	}
 
 	private EStructuralFeature getFirstEStructuralFeature(List<?> data) {
-		for (final Object object : data) {
+		// Exclude first object for cases when we validate an EStructuralFeature.
+		for (final Object object : data.subList(1, data.size())) {
 			if (EStructuralFeature.class.isInstance(object)) {
 				return EStructuralFeature.class.cast(object);
 			}
