@@ -6,6 +6,7 @@
          point="org.eclipse.ui.editors">
       <editor
             class="org.eclipse.emfforms.internal.editor.ecore.EcoreEditor"
+            contributorClass="org.eclipse.emfforms.spi.editor.EMFUndoRedoActionBarContributor"
             default="false"
             extensions="ecore"
             icon="icons/EcoreModelFile.gif"
@@ -14,6 +15,7 @@
       </editor>
       <editor
             class="org.eclipse.emfforms.spi.editor.GenericEditor"
+            contributorClass="org.eclipse.emfforms.spi.editor.EMFUndoRedoActionBarContributor"
             default="false"
             id="org.eclipse.emfforms.editor.ecore.genericxmieditor"
             name="Generic XMI Editor">
