@@ -13,6 +13,7 @@ package org.eclipse.emfforms.internal.editor.ecore;
 
 import java.util.List;
 
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.common.spi.ChildrenDescriptorCollector;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
@@ -47,8 +48,9 @@ public class EcoreEditorTMDCustomization extends DefaultTreeMasterDetailCustomiz
 	 * Constructs a new {@link EcoreEditorTMDCustomization}.
 	 *
 	 * @param createElementCallback the {@link CreateElementCallback}
+	 * @param notifier The Notifier to create the customization for
 	 */
-	public EcoreEditorTMDCustomization(final CreateElementCallback createElementCallback) {
+	public EcoreEditorTMDCustomization(final CreateElementCallback createElementCallback, Notifier notifier) {
 		setMenu(new MenuProvider() {
 			@Override
 			public Menu getMenu(TreeViewer treeViewer, EditingDomain editingDomain) {
@@ -72,6 +74,8 @@ public class EcoreEditorTMDCustomization extends DefaultTreeMasterDetailCustomiz
 				return new ViewModelService[] { new GroupExpansionViewModelService() };
 			}
 		});
+
+		setLabelDecorator(new EcoreValidationLabelDecoratorProvider(notifier));
 	}
 
 	@Override
