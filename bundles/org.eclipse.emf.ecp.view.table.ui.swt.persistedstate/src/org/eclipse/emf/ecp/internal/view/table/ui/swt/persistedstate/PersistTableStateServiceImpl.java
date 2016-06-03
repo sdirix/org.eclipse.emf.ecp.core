@@ -78,6 +78,11 @@ public class PersistTableStateServiceImpl implements PersistTableStateService {
 
 		final VElement viewModel = context.getViewModel();
 		viewID = viewModel.getUuid();
+		// TODO proper fix should be implemented with Bug 495113.
+		if (viewID == null) {
+			return;
+		}
+
 		tables = findTables(viewModel);
 		additionalControls = new LinkedHashSet<VControl>();
 

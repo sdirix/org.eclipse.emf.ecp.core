@@ -24,6 +24,8 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.internal.swt.util.DateUtil;
 import org.eclipse.emf.ecp.edit.spi.swt.util.ECPDialogExecutor;
@@ -149,7 +151,7 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 			final IObservableValue dateObserver = WidgetProperties.selection().observe(calendar);
 			final Binding binding = getDataBindingContext().bindValue(dateObserver, modelValue,
 				new DateTargetToModelUpdateStrategy(eStructuralFeature, text),
-				new DateModelToTargetUpdateStrategy(false));
+				new DateModelToTargetUpdateStrategy(false, true));
 			binding.updateModelToTarget();
 
 			final Button okButton = new Button(dialog, SWT.PUSH);
@@ -198,8 +200,15 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 	 */
 	private class DateModelToTargetUpdateStrategy extends ModelToTargetUpdateStrategy {
 
-		DateModelToTargetUpdateStrategy(boolean tooltip) {
+		private final boolean toDate;
+
+		DateModelToTargetUpdateStrategy(boolean tooltip, boolean toDate) {
 			super(tooltip);
+			this.toDate = toDate;
+		}
+
+		DateModelToTargetUpdateStrategy(boolean tooltip) {
+			this(tooltip, false);
 		}
 
 		@Override
@@ -210,8 +219,23 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 				return null;
 			}
 			final Date date = gregorianCalendar.toGregorianCalendar().getTime();
+			if (toDate) {
+				return date;
+			}
 			return format.format(date);
 		}
+
+		@Override
+		protected IStatus doSet(IObservableValue observableValue, Object value) {
+			if (value == null && toDate) {
+				return Status.OK_STATUS;
+			}
+			if (value == null && !toDate) {
+				value = ""; //$NON-NLS-1$
+			}
+			return super.doSet(observableValue, value);
+		}
+
 	}
 
 	/**
@@ -294,6 +318,7 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 
 	private Shell dialog;
 	private EMFFormsLocaleChangeListener emfFormsLocaleChangeListener;
+	private Text text;
 
 	@Override
 	protected Control createSWTControl(Composite parent) {
@@ -307,7 +332,7 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 		GridDataFactory.fillDefaults().grab(false, false).align(SWT.CENTER, SWT.CENTER).applyTo(bDate);
 		bDate.setImage(imageRegistryService.getImage(FrameworkUtil.getBundle(getClass()), "icons/date.png")); //$NON-NLS-1$
 		bDate.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_xmldate"); //$NON-NLS-1$
-		final Text text = (Text) Composite.class.cast(control).getChildren()[0];
+		text = (Text) Composite.class.cast(control).getChildren()[0];
 		bDate.addSelectionListener(new SelectionAdapterExtension(text, bDate));
 		return main;
 	}

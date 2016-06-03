@@ -364,7 +364,7 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 				if (diagnostic.getData().size() < 1) {
 					continue;
 				}
-				if (removedEObject.equals(diagnostic.getData().get(0))) {
+				if (removedEObject.equals(getFirstInternalEObject(diagnostic.getData()))) {
 					diagnosticsToRemove.add(diagnostic);
 				}
 			}
@@ -524,19 +524,20 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 
 				for (final Object diagnosticObject : control.getDiagnostic().getDiagnostics()) {
 					final Diagnostic diagnostic = Diagnostic.class.cast(diagnosticObject);
-					if (diagnostic.getData().size() < 2 || !EObject.class.isInstance(diagnostic.getData().get(0))
-						|| !EStructuralFeature.class.isInstance(diagnostic.getData().get(1))) {
+					if (diagnostic.getData().size() < 2) {
 						continue;
 					}
-					final EObject diagnosticEobject = EObject.class.cast(diagnostic.getData().get(0));
-
+					final EObject diagnosticEobject = getFirstInternalEObject(diagnostic.getData());
+					final EStructuralFeature eStructuralFeature = getFirstEStructuralFeature(diagnostic.getData());
+					if (diagnosticEobject == null || eStructuralFeature == null) {
+						continue;
+					}
 					// TODO performance
 					if (!isObjectStillValid(diagnosticEobject)) {
 						continue;
 					}
 					final UniqueSetting uniqueSetting2 = UniqueSetting.createSetting(
-						diagnosticEobject,
-						EStructuralFeature.class.cast(diagnostic.getData().get(1)));
+						diagnosticEobject, eStructuralFeature);
 					if (!currentUpdates.containsKey(uniqueSetting2)) {
 						controlDiagnosticMap.get(control).getDiagnostics().add(diagnosticObject);
 					}
@@ -606,32 +607,52 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 
 	private void analyzeDiagnostic(Diagnostic diagnostic) {
 		if (diagnostic.getData().size() > 1) {
-			if (InternalEObject.class.isInstance(diagnostic.getData().get(0))
-				&& EStructuralFeature.class.isInstance(diagnostic.getData().get(1))) {
-				final InternalEObject internalEObject = (InternalEObject) diagnostic.getData().get(0);
-				final EStructuralFeature eStructuralFeature = (EStructuralFeature) diagnostic.getData().get(1);
-				if (!internalEObject.eClass().getEAllStructuralFeatures().contains(eStructuralFeature)) {
-					Activator.getDefault().getReportService()
-						.report(new AbstractReport(
-							MessageFormat.format(
-								"No Setting can be created for Diagnostic {0} since the EObject's EClass does not contain the Feature.", //$NON-NLS-1$
-								diagnostic),
-							IStatus.INFO));
-					return;
-				}
-				final Setting setting = internalEObject.eSetting(eStructuralFeature);
-				final UniqueSetting uniqueSetting = UniqueSetting.createSetting(setting);
-				if (!currentUpdates.containsKey(uniqueSetting)) {
-					currentUpdates.put(uniqueSetting, VViewFactory.eINSTANCE.createDiagnostic());
-				}
-				currentUpdates.get(uniqueSetting).getDiagnostics().add(diagnostic);
+
+			final InternalEObject internalEObject = getFirstInternalEObject(diagnostic.getData());
+			final EStructuralFeature eStructuralFeature = getFirstEStructuralFeature(diagnostic.getData());
+			if (internalEObject == null || eStructuralFeature == null) {
+				return;
 			}
+			if (!internalEObject.eClass().getEAllStructuralFeatures().contains(eStructuralFeature)) {
+				Activator.getDefault().getReportService()
+					.report(new AbstractReport(
+						MessageFormat.format(
+							"No Setting can be created for Diagnostic {0} since the EObject's EClass does not contain the Feature.", //$NON-NLS-1$
+							diagnostic),
+						IStatus.INFO));
+				return;
+			}
+			final Setting setting = internalEObject.eSetting(eStructuralFeature);
+			final UniqueSetting uniqueSetting = UniqueSetting.createSetting(setting);
+			if (!currentUpdates.containsKey(uniqueSetting)) {
+				currentUpdates.put(uniqueSetting, VViewFactory.eINSTANCE.createDiagnostic());
+			}
+			currentUpdates.get(uniqueSetting).getDiagnostics().add(diagnostic);
 
 		} else {
 			for (final Diagnostic childDiagnostic : diagnostic.getChildren()) {
 				analyzeDiagnostic(childDiagnostic);
 			}
 		}
+	}
+
+	private EStructuralFeature getFirstEStructuralFeature(List<?> data) {
+		// Exclude first object for cases when we validate an EStructuralFeature.
+		for (final Object object : data.subList(1, data.size())) {
+			if (EStructuralFeature.class.isInstance(object)) {
+				return EStructuralFeature.class.cast(object);
+			}
+		}
+		return null;
+	}
+
+	private InternalEObject getFirstInternalEObject(List<?> data) {
+		for (final Object object : data) {
+			if (InternalEObject.class.isInstance(object)) {
+				return InternalEObject.class.cast(object);
+			}
+		}
+		return null;
 	}
 
 	/**
@@ -661,15 +682,15 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 		final Map<EStructuralFeature, DiagnosticChain> diagnosticMap = new LinkedHashMap<EStructuralFeature, DiagnosticChain>();
 		for (final Diagnostic child : diagnostics.getChildren()) {
 			if (DiagnosticChain.class.isInstance(child) && checkDiagnosticData(child)) {
-				diagnosticMap.put((EStructuralFeature) child.getData().get(1), (DiagnosticChain) child);
+				diagnosticMap.put(getFirstEStructuralFeature(child.getData()), (DiagnosticChain) child);
 			}
 		}
 
 		for (final ValidationProvider validationProvider : validationProviders) {
 			final List<Diagnostic> additionValidation = validationProvider.validate(object);
 			for (final Diagnostic additionDiagnostic : additionValidation) {
-				if (diagnosticMap.containsKey(additionDiagnostic.getData().get(1))) {
-					diagnosticMap.get(additionDiagnostic.getData().get(1)).add(additionDiagnostic);
+				if (diagnosticMap.containsKey(getFirstEStructuralFeature(additionDiagnostic.getData()))) {
+					diagnosticMap.get(getFirstEStructuralFeature(additionDiagnostic.getData())).add(additionDiagnostic);
 				} else {
 					diagnostics.add(additionDiagnostic);
 				}
@@ -684,10 +705,10 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 		if (data.size() < 2) {
 			return false;
 		}
-		if (!EObject.class.isInstance(data.get(0))) {
+		if (getFirstInternalEObject(data) == null) {
 			return false;
 		}
-		if (!EStructuralFeature.class.isInstance(data.get(1))) {
+		if (getFirstEStructuralFeature(data) == null) {
 			return false;
 		}
 		return true;

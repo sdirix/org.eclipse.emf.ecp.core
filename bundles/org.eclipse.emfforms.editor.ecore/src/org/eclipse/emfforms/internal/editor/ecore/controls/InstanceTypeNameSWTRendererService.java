@@ -82,6 +82,9 @@ public class InstanceTypeNameSWTRendererService implements EMFFormsDIRendererSer
 		if (eStructuralFeature.equals(EcorePackage.eINSTANCE.getEClassifier_InstanceTypeName())) {
 			return 10d;
 		}
+		if (eStructuralFeature.equals(EcorePackage.eINSTANCE.getEClassifier_InstanceClassName())) {
+			return 10d;
+		}
 		return NOT_APPLICABLE;
 	}
 

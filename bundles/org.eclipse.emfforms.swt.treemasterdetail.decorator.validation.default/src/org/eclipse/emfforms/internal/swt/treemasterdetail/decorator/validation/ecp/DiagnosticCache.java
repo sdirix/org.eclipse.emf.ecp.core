@@ -116,6 +116,20 @@ public class DiagnosticCache extends AbstractCachedTree<Diagnostic> {
 			}
 			return getOwnValue().getSeverity() > getChildValue().getSeverity() ? getOwnValue() : getChildValue();
 		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @see org.eclipse.emf.ecp.common.spi.cachetree.CachedTreeNode#removeFromCache(java.lang.Object)
+		 */
+		@Override
+		public void removeFromCache(Object key) {
+			final Diagnostic diagnostic = getCache().remove(key);
+			if (diagnostic != null) {
+				diagnosticSet.remove(diagnostic);
+			}
+			update();
+		}
 	}
 
 }

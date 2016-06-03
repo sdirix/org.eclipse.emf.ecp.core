@@ -122,7 +122,13 @@ public class ECPValidationServiceLabelDecorator implements ILabelDecorator {
 		}
 	}
 
-	private void updateCache(EObject element, DiagnosticCache cache) {
+	/**
+	 * Called in order to update the cache. This also triggers a viewer refresh.
+	 * 
+	 * @param element The element which changed
+	 * @param cache The cache to update
+	 */
+	protected void updateCache(EObject element, DiagnosticCache cache) {
 		final Diagnostic diagnostic = getDiagnostic(element);
 		final Set<EObject> update = cache.update(element, diagnostic);
 		for (final EObject eObject : update) {
@@ -130,9 +136,17 @@ public class ECPValidationServiceLabelDecorator implements ILabelDecorator {
 		}
 	}
 
-	private void updateCacheWithoutRefresh(EObject element, DiagnosticCache cache) {
+	/**
+	 * Called in order to update the cache. This also triggers a viewer update.
+	 * 
+	 * @param element The element which changed
+	 * @param cache The cache to update
+	 */
+	protected void updateCacheWithoutRefresh(EObject element, DiagnosticCache cache) {
 		final Diagnostic diagnostic = getDiagnostic(element);
-		cache.update(element, diagnostic);
+		final Set<EObject> update = cache.update(element, diagnostic);
+		viewer.update(update.toArray(), null);
+		viewer.update(element, null);
 	}
 
 	private static Diagnostic getDiagnostic(Object object) {
