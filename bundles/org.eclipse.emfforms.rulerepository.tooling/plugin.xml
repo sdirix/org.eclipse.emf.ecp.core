@@ -50,5 +50,15 @@
             name="Merge with View Model">
       </command>
    </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <wizard
+            category="org.eclipse.emf.ecp.view.ide"
+            class="org.eclipse.emfforms.internal.rulerepository.tooling.wizard.EMFFormsRuleRepositoryWizard"
+            icon="icons/RuleRepositoryEditor.png"
+            id="org.eclipse.emfforms.rulerepository.tooling.wizard"
+            name="RuleRepository Model">
+      </wizard>
+   </extension>
 
 </plugin>
