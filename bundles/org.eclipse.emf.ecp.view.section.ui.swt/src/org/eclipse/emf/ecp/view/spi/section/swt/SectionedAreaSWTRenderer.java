@@ -156,7 +156,7 @@ public class SectionedAreaSWTRenderer extends
 			Activator.getDefault().getReportService().report(new RenderingFailedReport(ex));
 			return columnComposite;
 		}
-
+		parent.layout(true);
 		return columnComposite;
 	}
 
