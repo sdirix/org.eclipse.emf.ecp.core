@@ -282,6 +282,21 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 	}
 
 	/**
+	 * Returns the foreground color for a control with the given validation severity.
+	 *
+	 * @param severity severity the severity of the {@link org.eclipse.emf.common.util.Diagnostic}
+	 * @return the color to be used as a foreground color
+	 * @since 1.10
+	 */
+	protected final Color getValidationForegroundColor(int severity) {
+		if (isDisposed) {
+			return null;
+		}
+		return SWTValidationHelper.INSTANCE
+			.getValidationForegroundColor(severity, getVElement(), getViewModelContext());
+	}
+
+	/**
 	 * Creates a new {@link DataBindingContext}.
 	 *
 	 * @return a new {@link DataBindingContext} each time this method is called

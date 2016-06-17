@@ -421,6 +421,17 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 		control.setBackground(validationColor);
 	}
 
+	/**
+	 * Set the provided validation color as the foreground for the provided control.
+	 *
+	 * @param control the control to set the color on
+	 * @param validationColor the validation color to set
+	 *@since 1.10
+	 */
+	protected void setValidationForegroundColor(Control control, Color validationColor) {
+		control.setForeground(validationColor);
+	}
+
 	@Override
 	protected void setControlEnabled(SWTGridCell gridCell, Control control, boolean enabled) {
 		int controlIndex = gridCell.getColumn();
@@ -484,6 +495,7 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 
 		validationIcon.setImage(getValidationIcon(highestSeverity));
 		setValidationColor(editControl, getValidationBackgroundColor(highestSeverity));
+		setValidationForegroundColor(editControl, getValidationForegroundColor(highestSeverity));
 		if (getVElement().getDiagnostic() == null) {
 			validationIcon.setToolTipText(null);
 		} else {

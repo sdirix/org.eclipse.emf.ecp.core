@@ -451,4 +451,9 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 	protected void setValidationColor(Control control, Color validationColor) {
 		super.setValidationColor(Composite.class.cast(control).getChildren()[0], validationColor);
 	}
+
+	@Override
+	protected void setValidationForegroundColor(Control control, Color validationColor) {
+		super.setValidationForegroundColor(Composite.class.cast(control).getChildren()[0], validationColor);
+	}
 }
