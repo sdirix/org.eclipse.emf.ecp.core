@@ -197,7 +197,7 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 	 * </p>
 	 *
 	 * @return
-	 *         {@code true} if the Control SWT renderer can handle the {@link EMFFormsControlProcessorService} itself,
+	 * 		{@code true} if the Control SWT renderer can handle the {@link EMFFormsControlProcessorService} itself,
 	 *         {@code false} otherwise.
 	 * @since 1.8
 	 */

@@ -334,6 +334,9 @@
 		<module>../../bundles/org.eclipse.emfforms.rulerepository.model.edit</module>
 		<module>../../bundles/org.eclipse.emfforms.rulerepository.tooling</module>
 		
+		<!-- Nebula Table -->
+		<module>../../bundles/org.eclipse.emf.ecp.view.table.ui.nebula.grid</module>
+		
 	</modules>
 
 	<build>

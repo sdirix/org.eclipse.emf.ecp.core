@@ -68,5 +68,9 @@
 <unit id="org.eclipse.emf.edapt.runtime.feature.source.feature.group" version="0.0.0"/>
 <repository location="http://download.eclipse.org/edapt/releases/12x"/>
 </location>
+<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.nebula.widgets.grid.feature.feature.group" version="0.0.0"/>
+<repository location="http://download.eclipse.org/nebula/releases/1.0.0"/>
+</location>
 </locations>
 </target>
