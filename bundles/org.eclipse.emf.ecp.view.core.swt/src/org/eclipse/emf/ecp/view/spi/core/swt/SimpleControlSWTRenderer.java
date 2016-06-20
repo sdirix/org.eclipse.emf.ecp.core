@@ -93,21 +93,45 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 
 		@Override
 		public void notifyChange(ModelChangeNotification notification) {
+			updateTopControl();
+		}
+
+		void updateTopControl() {
 			if (eObject.eIsSet(structuralFeature)) {
-				if (sl.topControl == baseControl) {
+				if (getStack().topControl == getBaseControl()) {
 					return;
 				}
-				sl.topControl = baseControl;
-				unsetButton.setImage(Activator.getImage(ICONS_UNSET_FEATURE));
-				controlComposite.layout(true);
+				getStack().topControl = getBaseControl();
+				getUnsetButton().setImage(Activator.getImage(ICONS_UNSET_FEATURE));
+				getControlComposite().layout(true);
 			} else {
-				if (sl.topControl == createUnsetLabel) {
+				if (getStack().topControl == getUnsetLabel()) {
 					return;
 				}
-				sl.topControl = createUnsetLabel;
-				unsetButton.setImage(Activator.getImage(ICONS_SET_FEATURE));
-				controlComposite.layout(true);
+				getStack().topControl = getUnsetLabel();
+				getUnsetButton().setImage(Activator.getImage(ICONS_SET_FEATURE));
+				getControlComposite().layout(true);
 			}
+		}
+
+		Composite getControlComposite() {
+			return controlComposite;
+		}
+
+		StackLayout getStack() {
+			return sl;
+		}
+
+		Control getBaseControl() {
+			return baseControl;
+		}
+
+		Control getUnsetLabel() {
+			return createUnsetLabel;
+		}
+
+		Button getUnsetButton() {
+			return unsetButton;
 		}
 	}
 
@@ -378,6 +402,14 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 		unsetButton.addSelectionListener(
 			new UnsetSelectionAdapter(sl, unsetButton, createUnsetLabel, baseControl, controlComposite));
 
+		unsetModelChangeListener = registerUnsetStateListener(controlComposite, sl, baseControl, createUnsetLabel,
+			unsetButton);
+		return composite;
+	}
+
+	private UnsetModelChangeListener registerUnsetStateListener(final Composite controlComposite, final StackLayout sl,
+		final Control baseControl, final Control createUnsetLabel, final Button unsetButton)
+		throws DatabindingFailedException {
 		final EStructuralFeature structuralFeature = (EStructuralFeature) getModelValue().getValueType();
 		final EObject eObject = (EObject) ((IObserving) getModelValue()).getObserved();
 		if (eObject.eIsSet(structuralFeature)) {
@@ -388,10 +420,10 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 			unsetButton.setImage(Activator.getImage(ICONS_SET_FEATURE));
 		}
 		/* There is no UNSET databinding trigger available */
-		unsetModelChangeListener = new UnsetModelChangeListener(eObject, unsetButton,
+		final UnsetModelChangeListener unsetModelChangeListener = new UnsetModelChangeListener(eObject, unsetButton,
 			structuralFeature, createUnsetLabel, controlComposite, sl, baseControl);
 		getViewModelContext().registerDomainChangeListener(unsetModelChangeListener);
-		return composite;
+		return unsetModelChangeListener;
 	}
 
 	private Control createUnsetLabel(Composite parent) {
@@ -426,7 +458,7 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 	 *
 	 * @param control the control to set the color on
 	 * @param validationColor the validation color to set
-	 *@since 1.10
+	 * @since 1.10
 	 */
 	protected void setValidationForegroundColor(Control control, Color validationColor) {
 		control.setForeground(validationColor);
@@ -539,5 +571,17 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 			unsetModelChangeListener = null;
 		}
 		super.dispose();
+	}
+
+	@Override
+	protected void rootDomainModelChanged() throws DatabindingFailedException {
+		getViewModelContext().unregisterDomainChangeListener(unsetModelChangeListener);
+		unsetModelChangeListener = registerUnsetStateListener(
+			unsetModelChangeListener.getControlComposite(),
+			unsetModelChangeListener.getStack(),
+			unsetModelChangeListener.getBaseControl(),
+			unsetModelChangeListener.getUnsetLabel(),
+			unsetModelChangeListener.getUnsetButton());
+		super.rootDomainModelChanged();
 	}
 }
