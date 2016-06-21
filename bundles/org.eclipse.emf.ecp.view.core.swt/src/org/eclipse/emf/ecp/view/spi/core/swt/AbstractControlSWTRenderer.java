@@ -348,7 +348,7 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 	 * @param parent the {@link Composite} to render onto
 	 * @return the created {@link Control} or null
 	 */
-	protected final Control createLabel(final Composite parent) {
+	protected Control createLabel(final Composite parent) {
 		Label label = null;
 		labelRender: if (hasLeftLabelAlignment()) {
 			final VDomainModelReference domainModelReference = getVElement().getDomainModelReference();
@@ -445,7 +445,7 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 	 * @param composite the {@link Composite} to create onto
 	 * @return the created Label
 	 */
-	protected final Label createValidationIcon(Composite composite) {
+	protected Label createValidationIcon(Composite composite) {
 		final Label validationLabel = new Label(composite, SWT.NONE);
 		SWTDataElementIdHelper.setElementIdDataWithSubId(validationLabel, getVElement(), "control_validation", //$NON-NLS-1$
 			getViewModelContext());
