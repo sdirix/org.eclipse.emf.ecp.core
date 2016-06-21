@@ -225,6 +225,9 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 	private SWTGridDescription rendererGridDescription;
 	private UnsetModelChangeListener unsetModelChangeListener;
 
+	private Label validationIcon;
+	private Control editControl;
+
 	/**
 	 * {@inheritDoc}
 	 *
@@ -347,27 +350,33 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 		case 0:
 			return createLabel(parent);
 		case 1:
-			return createValidationIcon(parent);
+			validationIcon = createValidationIcon(parent);
+			return validationIcon;
 		case 2:
-			try {
-				if (isUnsettable()) {
-					return createUnsettableControl(parent);
-				}
-				final Control control = createControl(parent);
-				setControlIdData(control);
-				return control;
-			} catch (final DatabindingFailedException ex) {
-				getReportService().report(new RenderingFailedReport(ex));
-				final Label errorLabel = new Label(parent, SWT.NONE);
-				errorLabel.setText(ex.getMessage());
-				return errorLabel;
-			}
+			editControl = createEditControl(parent);
+			return editControl;
 		default:
 			throw new IllegalArgumentException(
 				String
 					.format(
 						"The provided SWTGridCell (%1$s) cannot be used by this (%2$s) renderer.", gridCell.toString(), //$NON-NLS-1$
 						toString()));
+		}
+	}
+
+	private Control createEditControl(Composite parent) {
+		try {
+			if (isUnsettable()) {
+				return createUnsettableControl(parent);
+			}
+			final Control control = createControl(parent);
+			setControlIdData(control);
+			return control;
+		} catch (final DatabindingFailedException ex) {
+			getReportService().report(new RenderingFailedReport(ex));
+			final Label errorLabel = new Label(parent, SWT.NONE);
+			errorLabel.setText(ex.getMessage());
+			return errorLabel;
 		}
 	}
 
@@ -494,23 +503,6 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 	}
 
 	private void applyInnerValidation() {
-		Label validationIcon;
-		Control editControl;
-		switch (getControls().size()) {
-		case 2:
-			validationIcon = Label.class.cast(getControls().get(
-				new SWTGridCell(0, 0, SimpleControlSWTRenderer.this)));
-			editControl = getControls().get(new SWTGridCell(0, 1, SimpleControlSWTRenderer.this));
-			break;
-		case 3:
-			validationIcon = Label.class.cast(getControls().get(
-				new SWTGridCell(0, 1, SimpleControlSWTRenderer.this)));
-			editControl = getControls().get(new SWTGridCell(0, 2, SimpleControlSWTRenderer.this));
-			break;
-		default:
-			getReportService().report(new AbstractReport("Wrong number of controls!")); //$NON-NLS-1$
-			return;
-		}
 		// triggered due to another validation rule before this control is rendered
 		if (validationIcon == null || editControl == null) {
 			return;
@@ -570,6 +562,8 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 			getViewModelContext().unregisterDomainChangeListener(unsetModelChangeListener);
 			unsetModelChangeListener = null;
 		}
+		validationIcon = null;
+		editControl = null;
 		super.dispose();
 	}
 
