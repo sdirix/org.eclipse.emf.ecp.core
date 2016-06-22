@@ -575,6 +575,10 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 
 	@Override
 	protected void rootDomainModelChanged() throws DatabindingFailedException {
+		if (unsetModelChangeListener == null) {
+			super.rootDomainModelChanged();
+			return;
+		}
 		getViewModelContext().unregisterDomainChangeListener(unsetModelChangeListener);
 		unsetModelChangeListener = registerUnsetStateListener(
 			unsetModelChangeListener.getControlComposite(),
