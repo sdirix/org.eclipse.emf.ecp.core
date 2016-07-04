@@ -13,14 +13,16 @@
 package org.eclipse.emfforms.spi.editor;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.EventObject;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
@@ -30,21 +32,29 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.ICoreRunnable;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.command.CommandStackListener;
+import org.eclipse.emf.common.notify.Notifier;
+import org.eclipse.emf.common.ui.MarkerHelper;
+import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecp.common.spi.ChildrenDescriptorCollector;
 import org.eclipse.emf.ecp.view.spi.model.reporting.StatusReport;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
+import org.eclipse.emf.edit.ui.util.EditUIMarkerHelper;
+import org.eclipse.emfforms.common.Optional;
 import org.eclipse.emfforms.internal.editor.Activator;
 import org.eclipse.emfforms.internal.editor.toolbaractions.LoadEcoreAction;
 import org.eclipse.emfforms.internal.editor.ui.EditorToolBar;
@@ -56,6 +66,8 @@ import org.eclipse.emfforms.spi.swt.treemasterdetail.TreeMasterDetailMenuListene
 import org.eclipse.emfforms.spi.swt.treemasterdetail.TreeMasterDetailSWTFactory;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.actions.ActionCollector;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.actions.MasterDetailAction;
+import org.eclipse.emfforms.spi.swt.treemasterdetail.diagnostic.DiagnosticCache;
+import org.eclipse.emfforms.spi.swt.treemasterdetail.diagnostic.DiagnosticCache.ValidationListener;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.util.CreateElementCallback;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.MenuManager;
@@ -76,18 +88,24 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
+import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IURIEditorInput;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.contexts.IContextService;
 import org.eclipse.ui.dialogs.SaveAsDialog;
+import org.eclipse.ui.ide.IGotoMarker;
 import org.eclipse.ui.part.EditorPart;
 
 /**
  * The Class GenericEditor it is the generic part for editing any EObject.
  */
-public class GenericEditor extends EditorPart implements IEditingDomainProvider {
+public class GenericEditor extends EditorPart implements IEditingDomainProvider, IGotoMarker {
+
+	private static final String FRAGMENT_URI = "FRAGMENT_URI";
+
+	private static final String RESOURCE_URI = "RESOURCE_URI";
 
 	private static final String ITOOLBAR_ACTIONS_ID = "org.eclipse.emfforms.editor.toolbarActions";
 
@@ -104,40 +122,28 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider 
 	 * True, if there were changes in the filesystem while the editor was in the background and the changes could not be
 	 * applied to current view.
 	 */
+
 	private boolean filesChangedWithConflict;
 
-	private final IPartListener partListener = new IPartListener() {
-		@Override
-		public void partOpened(IWorkbenchPart part) {
-		}
-
-		@Override
-		public void partDeactivated(IWorkbenchPart part) {
-		}
-
-		@Override
-		public void partClosed(IWorkbenchPart part) {
-		}
-
-		@Override
-		public void partBroughtToTop(IWorkbenchPart part) {
-		}
-
-		@Override
-		public void partActivated(IWorkbenchPart part) {
-			if (part == GenericEditor.this && isDirty() && filesChangedWithConflict && discardChanges()) {
-				for (final Resource r : resourceSet.getResources()) {
-					r.unload();
-					try {
-						r.load(null);
-					} catch (final IOException e) {
-					}
-				}
-			}
-		}
-	};
+	private final IPartListener partListener = new GenericEditorActivationListener();
 
 	private final IResourceChangeListener resourceChangeListener = new EcoreResourceChangeListener();
+
+	private final MarkerHelper markerHelper = new GenericEditorMarkerHelper();
+
+	private final List<Job> markerJobs = new CopyOnWriteArrayList<Job>();
+
+	private DiagnosticCache cache;
+
+	private boolean reloading;
+
+	/**
+	 *
+	 * @return the {@link DiagnosticCache}. may be <code>null</code>
+	 */
+	protected DiagnosticCache getDiagnosticCache() {
+		return cache;
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -166,8 +172,8 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider 
 	 */
 	protected void handleResourceChange(Collection<Resource> changedResources, Collection<Resource> removedResources) {
 		if (!isDirty()) {
+			reloading = true;
 			resourceSet.getResources().removeAll(removedResources);
-
 			for (final Resource changed : changedResources) {
 				changed.unload();
 				try {
@@ -175,6 +181,8 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider 
 				} catch (final IOException ex) {
 				}
 			}
+			reloading = false;
+			initMarkers();
 		} else {
 			filesChangedWithConflict = true;
 		}
@@ -271,12 +279,84 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider 
 		parent.setBackground(new Color(Display.getCurrent(), 255, 255, 255));
 		parent.setBackgroundMode(SWT.INHERIT_FORCE);
 
-		rootView = createRootView(parent, getEditorTitle(), modifyEditorInput(resourceSet), getToolbarActions(),
+		final Object editorInput = modifyEditorInput(resourceSet);
+		if (enableValidation()) {
+			setupDiagnosticCache(editorInput);
+			getDiagnosticCache().registerValidationListener(new MarkerValidationListener());
+		}
+		rootView = createRootView(parent, getEditorTitle(), editorInput, getToolbarActions(),
 			getCreateElementCallback());
+
+		initMarkers();
 
 		// We need to set the selectionProvider for the editor, so that the EditingDomainActionBarContributor
 		// knows the currently selected object to copy/paste
 		getEditorSite().setSelectionProvider(rootView.getSelectionProvider());
+	}
+
+	private synchronized void initMarkers() {
+		if (getDiagnosticCache() == null || reloading) {
+			return;
+		}
+		if (markerJobs.size() > 1) {
+			/* we already enqueued an update job which is not running yet */
+			return;
+		}
+		final Job job = Job.create("Add GenericEditor validation markers.", new ICoreRunnable() {
+
+			@Override
+			public void run(IProgressMonitor monitor) throws CoreException {
+				adjustMarkers(monitor);
+				markerJobs.remove(0);
+			}
+		});
+		job.setPriority(Job.SHORT);
+		markerJobs.add(job);
+		job.schedule();
+	}
+
+	private synchronized void adjustMarkers(IProgressMonitor monitor) throws CoreException {
+		if (monitor.isCanceled() || reloading) {
+			return;
+		}
+		getFile().get().deleteMarkers("org.eclipse.core.resources.problemmarker", false,
+			IResource.DEPTH_ZERO);
+		for (final Object o : getDiagnosticCache().getObjects()) {
+			try {
+				if (monitor.isCanceled() || reloading) {
+					return;
+				}
+				final Diagnostic value = getDiagnosticCache().getOwnValue(o);
+				markerHelper.createMarkers(value);
+			} catch (final CoreException ex) {
+				/* silent */
+			}
+		}
+	}
+
+	private void setupDiagnosticCache(Object editorInput) {
+		if (!Notifier.class.isInstance(editorInput)) {
+			return;
+		}
+		final Notifier input = (Notifier) editorInput;
+		cache = createDiangosticCache(input);
+	}
+
+	/**
+	 * Creates the diagnostic cache.
+	 *
+	 * @param input the input
+	 * @return the cache
+	 */
+	protected DiagnosticCache createDiangosticCache(final Notifier input) {
+		return new DiagnosticCache(input);
+	}
+
+	/**
+	 * @return whether a diagnostic cache should be managed.
+	 */
+	protected boolean enableValidation() {
+		return false;
 	}
 
 	private TreeMasterDetailComposite createRootView(Composite parent, String editorTitle, Object editorInput,
@@ -484,6 +564,156 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider 
 	}
 
 	/**
+	 * Returns the ResouceSet of this Editor.
+	 *
+	 * @return The resource set
+	 */
+	public ResourceSet getResourceSet() {
+		return resourceSet;
+	}
+
+	@Override
+	public void dispose() {
+		if (getDiagnosticCache() != null) {
+			getDiagnosticCache().dispose();
+		}
+		super.dispose();
+	}
+
+	private Optional<IFile> getFile() {
+		final IEditorInput input = GenericEditor.this.getEditorInput();
+		if (IFileEditorInput.class.isInstance(input)) {
+			return Optional.of(IFileEditorInput.class.cast(input).getFile());
+		}
+		return Optional.empty();
+	}
+
+	@Override
+	public void gotoMarker(IMarker marker) {
+		try {
+			final String resourceURI = (String) marker.getAttribute(RESOURCE_URI);
+			final String fragmentURI = (String) marker.getAttribute(FRAGMENT_URI);
+			if (resourceURI == null || fragmentURI == null) {
+				return;
+			}
+			final Resource resource = getEditingDomain().getResourceSet().getResource(URI.createURI(resourceURI), true);
+			final EObject eObject = resource.getEObject(fragmentURI);
+			if (eObject == null) {
+				return;
+			}
+			reveal(eObject);
+		} catch (final CoreException ex) {
+			// silent
+		}
+	}
+
+	/**
+	 * The given element will be revealed in the tree of the editor.
+	 *
+	 * @param objectToReveal the object to reveal
+	 */
+	private void reveal(EObject objectToReveal) {
+		while (objectToReveal != null && rootView.getSelectionProvider().testFindItem(objectToReveal) == null) {
+			objectToReveal = objectToReveal.eContainer();
+		}
+		if (objectToReveal == null) {
+			return;
+		}
+		rootView.getSelectionProvider().refresh();
+		rootView.getSelectionProvider().reveal(objectToReveal);
+		rootView.setSelection(new StructuredSelection(objectToReveal));
+	}
+
+	/**
+	 * Listens to part events.
+	 *
+	 */
+	private final class GenericEditorActivationListener implements IPartListener {
+		@Override
+		public void partOpened(IWorkbenchPart part) {
+		}
+
+		@Override
+		public void partDeactivated(IWorkbenchPart part) {
+		}
+
+		@Override
+		public void partClosed(IWorkbenchPart part) {
+		}
+
+		@Override
+		public void partBroughtToTop(IWorkbenchPart part) {
+		}
+
+		@Override
+		public void partActivated(IWorkbenchPart part) {
+			if (part == GenericEditor.this && isDirty() && filesChangedWithConflict && discardChanges()) {
+				reloading = true;
+				for (final Resource r : resourceSet.getResources()) {
+					r.unload();
+					try {
+						r.load(null);
+					} catch (final IOException e) {
+					}
+				}
+				reloading = false;
+				initMarkers();
+			}
+		}
+	}
+
+	/**
+	 * Reacts to revalidation changes and creates/removes marker accordingly.
+	 *
+	 * @author Johannes Faltermeier
+	 *
+	 */
+	private final class MarkerValidationListener implements ValidationListener {
+		@Override
+		public void revalidationOccurred(final Collection<EObject> object, boolean potentialStructuralChange) {
+			initMarkers();
+		}
+	}
+
+	/**
+	 * {@link MarkerHelper} for this editor.
+	 *
+	 * @author Johannes Faltermeier
+	 *
+	 */
+	private final class GenericEditorMarkerHelper extends EditUIMarkerHelper {
+		@Override
+		public IFile getFile(Diagnostic diagnostic) {
+			final Optional<IFile> file = GenericEditor.this.getFile();
+			if (file.isPresent()) {
+				return file.get();
+			}
+			return super.getFile(diagnostic);
+		}
+
+		@Override
+		protected boolean adjustMarker(IMarker marker, Diagnostic diagnostic) throws CoreException {
+			final List<?> data = diagnostic.getData();
+			if (data.size() < 1) {
+				return false;
+			}
+			if (!EObject.class.isInstance(data.get(0))) {
+				return false;
+			}
+			final EObject eObject = EObject.class.cast(data.get(0));
+			if (eObject.eResource() == null) {
+				/* possible when job still running but getting closed */
+				return false;
+			}
+			final String uri = eObject.eResource().getURI().toString();
+			final String uriFragment = eObject.eResource().getURIFragment(eObject);
+			marker.setAttribute(RESOURCE_URI, uri);
+			marker.setAttribute(FRAGMENT_URI, uriFragment);
+			return true;
+		}
+	}
+
+	/**
 	 * The EcoreResourceChangeListener listens for changes in currently opened Ecore files and reports
 	 * them to the EcoreEditor.
 	 */
@@ -502,6 +732,9 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider 
 				delta.accept(new IResourceDeltaVisitor() {
 					@Override
 					public boolean visit(final IResourceDelta delta) {
+						if ((delta.getFlags() & IResourceDelta.MARKERS) != 0) {
+							return false;
+						}
 						if (delta.getResource().getType() == IResource.FILE
 							&& (delta.getKind() == IResourceDelta.REMOVED ||
 								delta.getKind() == IResourceDelta.CHANGED)) {
@@ -510,11 +743,7 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider 
 							try {
 								final URL fileURL = FileLocator.resolve(new URL(uri.toString()));
 								resource = resourceSet.getResource(URI.createFileURI(fileURL.getPath()), false);
-							} catch (final MalformedURLException ex) {
-								// TODO log properly
-								return false;
 							} catch (final IOException ex) {
-								// TODO log properly
 								return false;
 							}
 							if (resource != null) {
@@ -533,17 +762,10 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider 
 				Activator.getDefault().getReportService().report(
 					new StatusReport(new Status(IStatus.ERROR, Activator.PLUGIN_ID, ex.getMessage(), ex)));
 			}
-
+			if (changedResources.isEmpty() && removedResources.isEmpty()) {
+				return;
+			}
 			handleResourceChange(changedResources, removedResources);
 		}
-	}
-
-	/**
-	 * Returns the ResouceSet of this Editor.
-	 *
-	 * @return The resource set
-	 */
-	public ResourceSet getResourceSet() {
-		return resourceSet;
 	}
 }
