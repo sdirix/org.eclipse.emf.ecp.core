@@ -118,8 +118,10 @@ import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.CellLabelProvider;
 import org.eclipse.jface.viewers.ColumnViewer;
+import org.eclipse.jface.viewers.ColumnViewerEditor;
 import org.eclipse.jface.viewers.ColumnViewerEditorActivationEvent;
 import org.eclipse.jface.viewers.ColumnViewerEditorActivationListener;
+import org.eclipse.jface.viewers.ColumnViewerEditorActivationStrategy;
 import org.eclipse.jface.viewers.ColumnViewerEditorDeactivationEvent;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.EditingSupport;
@@ -131,6 +133,8 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.jface.viewers.TableViewerEditor;
+import org.eclipse.jface.viewers.TableViewerFocusCellManager;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.jface.viewers.ViewerComparator;
@@ -291,6 +295,9 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 			/* get validation icon */
 			setupValidation(tableViewerComposite);
+
+			/* create the table viewer editor */
+			createTableViewerEditor(tableViewerComposite.getTableViewer());
 
 			setTableViewer(tableViewerComposite.getTableViewer());
 
@@ -1864,5 +1871,31 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		getTableViewer().setInput(list);
 
 		tableControlSWTRendererButtonBarBuilder.updateValues();
+	}
+
+	/**
+	 * Creates a {@link TableViewerEditor} for the tableViewer.
+	 *
+	 * @param tableViewer the {@link TableViewer}
+	 * @since 1.10
+	 */
+	protected void createTableViewerEditor(TableViewer tableViewer) {
+		final TableViewerFocusCellManager focusCellManager = new TableViewerFocusCellManager(tableViewer,
+			new org.eclipse.emf.ecp.edit.internal.swt.controls.ECPFocusCellDrawHighlighter(tableViewer));
+		final ColumnViewerEditorActivationStrategy actSupport = new ColumnViewerEditorActivationStrategy(tableViewer) {
+			@Override
+			protected boolean isEditorActivationEvent(ColumnViewerEditorActivationEvent event) {
+				return event.eventType == ColumnViewerEditorActivationEvent.TRAVERSAL
+					|| event.eventType == ColumnViewerEditorActivationEvent.MOUSE_CLICK_SELECTION
+					|| event.eventType == ColumnViewerEditorActivationEvent.KEY_PRESSED && event.keyCode == SWT.CR
+					|| event.eventType == ColumnViewerEditorActivationEvent.PROGRAMMATIC;
+			}
+		};
+		TableViewerEditor.create(
+			tableViewer,
+			focusCellManager,
+			actSupport,
+			ColumnViewerEditor.TABBING_HORIZONTAL | ColumnViewerEditor.TABBING_MOVE_TO_ROW_NEIGHBOR
+				| ColumnViewerEditor.TABBING_VERTICAL | ColumnViewerEditor.KEYBOARD_ACTIVATION);
 	}
 }

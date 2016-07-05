@@ -21,18 +21,12 @@ import org.eclipse.emfforms.spi.swt.table.TableViewerSWTCustomization.ColumnDesc
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.viewers.ColumnPixelData;
-import org.eclipse.jface.viewers.ColumnViewerEditor;
-import org.eclipse.jface.viewers.ColumnViewerEditorActivationEvent;
-import org.eclipse.jface.viewers.ColumnViewerEditorActivationStrategy;
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.EditingSupport;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
-import org.eclipse.jface.viewers.TableViewerEditor;
-import org.eclipse.jface.viewers.TableViewerFocusCellManager;
 import org.eclipse.jface.viewers.ViewerComparator;
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
@@ -114,8 +108,6 @@ public class TableViewerComposite extends Composite {
 
 		enableTooltipSupport(tableViewer);
 
-		enableEditingSupport(tableViewer);
-
 		final Optional<ViewerComparator> comparator = customization.getComparator();
 		if (comparator.isPresent()) {
 			tableViewer.setComparator(comparator.get());
@@ -186,27 +178,6 @@ public class TableViewerComposite extends Composite {
 			}
 
 		}
-	}
-
-	private static void enableEditingSupport(final TableViewer tableViewer) {
-		@SuppressWarnings("restriction")
-		final TableViewerFocusCellManager focusCellManager = new TableViewerFocusCellManager(tableViewer,
-			new org.eclipse.emf.ecp.edit.internal.swt.controls.ECPFocusCellDrawHighlighter(tableViewer));
-		final ColumnViewerEditorActivationStrategy actSupport = new ColumnViewerEditorActivationStrategy(tableViewer) {
-			@Override
-			protected boolean isEditorActivationEvent(ColumnViewerEditorActivationEvent event) {
-				return event.eventType == ColumnViewerEditorActivationEvent.TRAVERSAL
-					|| event.eventType == ColumnViewerEditorActivationEvent.MOUSE_CLICK_SELECTION
-					|| event.eventType == ColumnViewerEditorActivationEvent.KEY_PRESSED && event.keyCode == SWT.CR
-					|| event.eventType == ColumnViewerEditorActivationEvent.PROGRAMMATIC;
-			}
-		};
-		TableViewerEditor.create(
-			tableViewer,
-			focusCellManager,
-			actSupport,
-			ColumnViewerEditor.TABBING_HORIZONTAL | ColumnViewerEditor.TABBING_MOVE_TO_ROW_NEIGHBOR
-				| ColumnViewerEditor.TABBING_VERTICAL | ColumnViewerEditor.KEYBOARD_ACTIVATION);
 	}
 
 	private static void enableTooltipSupport(final TableViewer tableViewer) {
