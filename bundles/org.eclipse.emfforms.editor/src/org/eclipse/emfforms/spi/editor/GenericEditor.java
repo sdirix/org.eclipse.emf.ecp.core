@@ -492,7 +492,7 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 	 *
 	 * @return A list of actions to show in the Editor's Toolbar
 	 */
-	private List<Action> getToolbarActions() {
+	protected List<Action> getToolbarActions() {
 		final List<Action> result = new LinkedList<Action>();
 
 		result.add(new LoadEcoreAction(resourceSet));
@@ -506,7 +506,7 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 	 *
 	 * @return the Actions registered via extension point
 	 */
-	private List<Action> readToolbarActions() {
+	protected List<Action> readToolbarActions() {
 		final List<Action> result = new LinkedList<Action>();
 
 		final ISelectionProvider selectionProvider = new ISelectionProvider() {

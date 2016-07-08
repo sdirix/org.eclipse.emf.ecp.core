@@ -4,7 +4,7 @@
    <extension
          point="org.eclipse.ui.editors">
       <editor
-            class="org.eclipse.emfforms.spi.editor.GenericEditor"
+            class="org.eclipse.emfforms.internal.rulerepository.tooling.RuleRepositoryEditor"
             default="false"
             extensions="rulerepository"
             icon="icons/RuleRepositoryEditor.png"
