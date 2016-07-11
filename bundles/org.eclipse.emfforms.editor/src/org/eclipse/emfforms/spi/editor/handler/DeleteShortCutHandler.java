@@ -18,6 +18,7 @@ import java.util.List;
  * {@link org.eclipse.emfforms.spi.editor.GenericEditor GenericEditor}.
  *
  * @author Johannes Faltermeier
+ * @since 1.10
  */
 public interface DeleteShortCutHandler {
 

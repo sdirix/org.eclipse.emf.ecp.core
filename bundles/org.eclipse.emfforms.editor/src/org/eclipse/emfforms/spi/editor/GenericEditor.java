@@ -8,6 +8,7 @@
  *
  * Contributors:
  * Clemens Elflein - initial API and implementation
+ * Johannes Faltermeier - initial API and implementation
  ******************************************************************************/
 
 package org.eclipse.emfforms.spi.editor;
@@ -32,13 +33,13 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.ICoreRunnable;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.IJobFunction;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.command.CommandStackListener;
@@ -127,7 +128,7 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 
 	private final IPartListener partListener = new GenericEditorActivationListener();
 
-	private final IResourceChangeListener resourceChangeListener = new EcoreResourceChangeListener();
+	private final IResourceChangeListener resourceChangeListener = new GenericEditorResourceChangeListener();
 
 	private final MarkerHelper markerHelper = new GenericEditorMarkerHelper();
 
@@ -138,29 +139,43 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 	private boolean reloading;
 
 	/**
-	 *
 	 * @return the {@link DiagnosticCache}. may be <code>null</code>
+	 * @since 1.10
 	 */
 	protected DiagnosticCache getDiagnosticCache() {
 		return cache;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.ui.part.EditorPart#doSave(org.eclipse.core.runtime.IProgressMonitor)
-	 */
 	@Override
 	public void doSave(IProgressMonitor monitor) {
 		// Remove the Listener, so that we won't get a changed notification for our own save operation
-		ResourcesPlugin.getWorkspace().removeResourceChangeListener(resourceChangeListener);
+		preSave();
 		if (ResourceSetHelpers.save(resourceSet)) {
 			// Tell the CommandStack, that we have saved the file successfully
 			// and inform the Workspace, that the Dirty property has changed.
-			commandStack.saveIsDone();
+			getCommandStack().saveIsDone();
 			firePropertyChange(PROP_DIRTY);
 			filesChangedWithConflict = false;
 		}
 		// Add the listener again, so that we get notifications for future changes
+		postSave();
+	}
+
+	/**
+	 * Executes the code which needs to be executed before a save, e.g. removing listeners.
+	 *
+	 * @since 1.10
+	 */
+	protected void preSave() {
+		ResourcesPlugin.getWorkspace().removeResourceChangeListener(resourceChangeListener);
+	}
+
+	/**
+	 * Executes the code which needs to be executed after a save, e.g. readding listeners.
+	 *
+	 * @since 1.10
+	 */
+	protected void postSave() {
 		ResourcesPlugin.getWorkspace().addResourceChangeListener(resourceChangeListener);
 	}
 
@@ -181,6 +196,7 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 				} catch (final IOException ex) {
 				}
 			}
+			rootView.getSelectionProvider().refresh();
 			reloading = false;
 			initMarkers();
 		} else {
@@ -193,10 +209,6 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 			"The currently opened files were changed. Do you want to discard the changes and reload the file?");
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.ui.part.EditorPart#doSaveAs()
-	 */
 	@Override
 	public void doSaveAs() {
 		final SaveAsDialog saveAsDialog = new SaveAsDialog(getSite().getShell());
@@ -210,10 +222,6 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.ui.part.EditorPart#init(org.eclipse.ui.IEditorSite, org.eclipse.ui.IEditorInput)
-	 */
 	@Override
 	public void init(IEditorSite site, IEditorInput input)
 		throws PartInitException {
@@ -225,7 +233,7 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 
 		// As soon as the resource changed, we inform the Workspace, that it is
 		// now dirty
-		commandStack.addCommandStackListener(new CommandStackListener() {
+		getCommandStack().addCommandStackListener(new CommandStackListener() {
 			@Override
 			public void commandStackChanged(EventObject event) {
 				GenericEditor.this.firePropertyChange(PROP_DIRTY);
@@ -250,28 +258,16 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 		return "org.eclipse.emfforms.editor.context";
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.ui.part.EditorPart#isDirty()
-	 */
 	@Override
 	public boolean isDirty() {
-		return commandStack.isSaveNeeded();
+		return getCommandStack().isSaveNeeded();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.ui.part.EditorPart#isSaveAsAllowed()
-	 */
 	@Override
 	public boolean isSaveAsAllowed() {
 		return true;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.ui.part.WorkbenchPart#createPartControl(org.eclipse.swt.widgets.Composite)
-	 */
 	@Override
 	public void createPartControl(Composite parent) {
 		// Load the resource from the provided input and display the editor
@@ -302,12 +298,18 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 			/* we already enqueued an update job which is not running yet */
 			return;
 		}
-		final Job job = Job.create("Add GenericEditor validation markers.", new ICoreRunnable() {
+		final Job job = Job.create("Add GenericEditor validation markers.", new IJobFunction() {
 
 			@Override
-			public void run(IProgressMonitor monitor) throws CoreException {
-				adjustMarkers(monitor);
-				markerJobs.remove(0);
+			public IStatus run(IProgressMonitor monitor) {
+				try {
+					adjustMarkers(monitor);
+					return Status.OK_STATUS;
+				} catch (final CoreException ex) {
+					return new Status(IStatus.ERROR, "org.eclipse.emfforms.editor", ex.getMessage(), ex);
+				} finally {
+					markerJobs.remove(0);
+				}
 			}
 		});
 		job.setPriority(Job.SHORT);
@@ -327,6 +329,9 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 					return;
 				}
 				final Diagnostic value = getDiagnosticCache().getOwnValue(o);
+				if (value.getSeverity() < Diagnostic.WARNING) {
+					continue;
+				}
 				markerHelper.createMarkers(value);
 			} catch (final CoreException ex) {
 				/* silent */
@@ -347,6 +352,7 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 	 *
 	 * @param input the input
 	 * @return the cache
+	 * @since 1.10
 	 */
 	protected DiagnosticCache createDiangosticCache(final Notifier input) {
 		return new DiagnosticCache(input);
@@ -354,6 +360,7 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 
 	/**
 	 * @return whether a diagnostic cache should be managed.
+	 * @since 1.10
 	 */
 	protected boolean enableValidation() {
 		return false;
@@ -392,8 +399,10 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 	 *
 	 * @return the {@link TreeMasterDetailComposite}
 	 */
-	protected TreeMasterDetailComposite createTreeMasterDetail(final Composite composite,
-		Object editorInput, final CreateElementCallback createElementCallback) {
+	protected TreeMasterDetailComposite createTreeMasterDetail(
+		final Composite composite,
+		Object editorInput,
+		final CreateElementCallback createElementCallback) {
 		final TreeMasterDetailComposite treeMasterDetail = TreeMasterDetailSWTFactory
 			.fillDefaults(composite, SWT.NONE, editorInput)
 			.customizeCildCreation(createElementCallback)
@@ -436,13 +445,9 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 	protected ResourceSet loadResource(IEditorInput editorInput) {
 		final IURIEditorInput uei = (IURIEditorInput) editorInput;
 		return ResourceSetHelpers.loadResourceSetWithProxies(URI.createURI(uei.getURI().toString(), false),
-			commandStack);
+			getCommandStack());
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.ui.part.WorkbenchPart#setFocus()
-	 */
 	@Override
 	public void setFocus() {
 		// NOOP
@@ -491,6 +496,7 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 	 * Returns the toolbar actions for this editor.
 	 *
 	 * @return A list of actions to show in the Editor's Toolbar
+	 * @since 1.10
 	 */
 	protected List<Action> getToolbarActions() {
 		final List<Action> result = new LinkedList<Action>();
@@ -505,6 +511,7 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 	 * Read toolbar actions from all extensions.
 	 *
 	 * @return the Actions registered via extension point
+	 * @since 1.10
 	 */
 	protected List<Action> readToolbarActions() {
 		final List<Action> result = new LinkedList<Action>();
@@ -588,6 +595,13 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 		return Optional.empty();
 	}
 
+	/**
+	 *
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.ui.ide.IGotoMarker#gotoMarker(org.eclipse.core.resources.IMarker)
+	 * @since 1.10
+	 */
 	@Override
 	public void gotoMarker(IMarker marker) {
 		try {
@@ -611,8 +625,9 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 	 * The given element will be revealed in the tree of the editor.
 	 *
 	 * @param objectToReveal the object to reveal
+	 * @since 1.10
 	 */
-	private void reveal(EObject objectToReveal) {
+	public void reveal(EObject objectToReveal) {
 		while (objectToReveal != null && rootView.getSelectionProvider().testFindItem(objectToReveal) == null) {
 			objectToReveal = objectToReveal.eContainer();
 		}
@@ -622,6 +637,15 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 		rootView.getSelectionProvider().refresh();
 		rootView.getSelectionProvider().reveal(objectToReveal);
 		rootView.setSelection(new StructuredSelection(objectToReveal));
+	}
+
+	/**
+	 * @return the commandStack the {@link
+	 * 		import org.eclipse.emf.common.command.CommandStack;}
+	 * @since 1.10
+	 */
+	protected BasicCommandStack getCommandStack() {
+		return commandStack;
 	}
 
 	/**
@@ -656,6 +680,7 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 					} catch (final IOException e) {
 					}
 				}
+				rootView.getSelectionProvider().refresh();
 				reloading = false;
 				initMarkers();
 			}
@@ -714,10 +739,11 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 	}
 
 	/**
-	 * The EcoreResourceChangeListener listens for changes in currently opened Ecore files and reports
+	 * The GenericEditorResourceChangeListener listens for changes in currently opened Ecore files and reports
 	 * them to the EcoreEditor.
 	 */
-	private final class EcoreResourceChangeListener implements IResourceChangeListener {
+	private final class GenericEditorResourceChangeListener implements IResourceChangeListener {
+
 		@Override
 		public void resourceChanged(IResourceChangeEvent event) {
 			final Collection<Resource> changedResources = new ArrayList<Resource>();
@@ -729,35 +755,7 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 			}
 
 			try {
-				delta.accept(new IResourceDeltaVisitor() {
-					@Override
-					public boolean visit(final IResourceDelta delta) {
-						if ((delta.getFlags() & IResourceDelta.MARKERS) != 0) {
-							return false;
-						}
-						if (delta.getResource().getType() == IResource.FILE
-							&& (delta.getKind() == IResourceDelta.REMOVED ||
-								delta.getKind() == IResourceDelta.CHANGED)) {
-							final URI uri = URI.createPlatformResourceURI(delta.getFullPath().toString(), true);
-							Resource resource = null;
-							try {
-								final URL fileURL = FileLocator.resolve(new URL(uri.toString()));
-								resource = resourceSet.getResource(URI.createFileURI(fileURL.getPath()), false);
-							} catch (final IOException ex) {
-								return false;
-							}
-							if (resource != null) {
-								if (delta.getKind() == IResourceDelta.REMOVED) {
-									removedResources.add(resource);
-								} else {
-									changedResources.add(resource);
-								}
-							}
-							return false;
-						}
-						return true;
-					}
-				});
+				delta.accept(new GenericEditorResourceDeltaVisitor(removedResources, changedResources));
 			} catch (final CoreException ex) {
 				Activator.getDefault().getReportService().report(
 					new StatusReport(new Status(IStatus.ERROR, Activator.PLUGIN_ID, ex.getMessage(), ex)));
@@ -766,6 +764,57 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 				return;
 			}
 			handleResourceChange(changedResources, removedResources);
+		}
+	}
+
+	/**
+	 * The delata visitor deciding if changes are relevant for reloading.
+	 */
+	private final class GenericEditorResourceDeltaVisitor implements IResourceDeltaVisitor {
+		private final Collection<Resource> removedResources;
+		private final Collection<Resource> changedResources;
+
+		GenericEditorResourceDeltaVisitor(Collection<Resource> removedResources,
+			Collection<Resource> changedResources) {
+			this.removedResources = removedResources;
+			this.changedResources = changedResources;
+		}
+
+		@Override
+		public boolean visit(final IResourceDelta delta) {
+			if ((delta.getFlags() & IResourceDelta.MARKERS) != 0) {
+				return false;
+			}
+			if (delta.getResource().getType() == IResource.FILE
+				&& (delta.getKind() == IResourceDelta.REMOVED ||
+					delta.getKind() == IResourceDelta.CHANGED)) {
+				final ResourceSet resourceSet = getResourceSet();
+				if (resourceSet == null) {
+					return false;
+				}
+				Resource resource = null;
+
+				final URI uri = URI.createPlatformResourceURI(delta.getFullPath().toString(), true);
+				resource = resourceSet.getResource(uri, false);
+				if (resource == null) {
+					try {
+						final URL fileURL = FileLocator.resolve(new URL(uri.toString()));
+						resource = resourceSet.getResource(URI.createFileURI(fileURL.getPath()), false);
+					} catch (final IOException ex) {
+						return false;
+					}
+				}
+
+				if (resource != null) {
+					if (delta.getKind() == IResourceDelta.REMOVED) {
+						removedResources.add(resource);
+					} else {
+						changedResources.add(resource);
+					}
+				}
+				return false;
+			}
+			return true;
 		}
 	}
 }
