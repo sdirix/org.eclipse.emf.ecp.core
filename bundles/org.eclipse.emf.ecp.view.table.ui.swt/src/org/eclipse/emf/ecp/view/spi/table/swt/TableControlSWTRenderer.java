@@ -51,6 +51,7 @@ import org.eclipse.emf.ecp.edit.spi.DeleteService;
 import org.eclipse.emf.ecp.edit.spi.EMFDeleteServiceImpl;
 import org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor;
 import org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditorComparator;
+import org.eclipse.emf.ecp.edit.spi.swt.table.ECPCustomUpdateCellEditor;
 import org.eclipse.emf.ecp.edit.spi.swt.table.ECPElementAwareCellEditor;
 import org.eclipse.emf.ecp.edit.spi.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.ecp.view.internal.table.swt.CellReadOnlyTesterHelper;
@@ -1570,8 +1571,9 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		public void update(ViewerCell cell) {
 			final EObject element = (EObject) cell.getElement();
 			final Object value = attributeMaps[0].get(element);
-
-			if (ECPCellEditor.class.isInstance(cellEditor)) {
+			if (ECPCustomUpdateCellEditor.class.isInstance(cellEditor)) {
+				((ECPCustomUpdateCellEditor) cellEditor).updateCell(cell, value);
+			} else if (ECPCellEditor.class.isInstance(cellEditor)) {
 				final ECPCellEditor ecpCellEditor = (ECPCellEditor) cellEditor;
 				final String text = ecpCellEditor.getFormatedString(value);
 				cell.setText(text == null ? "" : text); //$NON-NLS-1$
