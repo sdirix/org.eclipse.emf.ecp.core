@@ -14,9 +14,9 @@ package org.eclipse.emf.ecp.common.spi.cachetree;
 
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.eclipse.emf.ecore.EObject;
 
@@ -46,7 +46,7 @@ public abstract class AbstractCachedTree<T> {
 	 * @param callback the {@link IExcludedObjectsCallback} to use when checking when to stop
 	 */
 	public AbstractCachedTree(IExcludedObjectsCallback callback) {
-		nodes = new LinkedHashMap<Object, CachedTreeNode<T>>();
+		nodes = new ConcurrentHashMap<Object, CachedTreeNode<T>>();
 		rootValue = createdCachedTreeNode(getDefaultValue());
 		this.excludedCallback = callback;
 	}

@@ -108,7 +108,7 @@ public class DiagnosticCache extends AbstractCachedTree<Diagnostic> {
 	 * @return the objects with cached values.
 	 */
 	public Set<Object> getObjects() {
-		return Collections.unmodifiableSet(getNodes().keySet());
+		return Collections.unmodifiableSet(new LinkedHashSet<Object>(getNodes().keySet()));
 	}
 
 	/**
