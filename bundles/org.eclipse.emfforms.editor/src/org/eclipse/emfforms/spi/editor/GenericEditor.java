@@ -198,6 +198,7 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 			}
 			rootView.getSelectionProvider().refresh();
 			reloading = false;
+			getCommandStack().flush();
 			initMarkers();
 		} else {
 			filesChangedWithConflict = true;
@@ -321,8 +322,7 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 		if (monitor.isCanceled() || reloading) {
 			return;
 		}
-		getFile().get().deleteMarkers("org.eclipse.core.resources.problemmarker", false,
-			IResource.DEPTH_ZERO);
+		deleteMarkers();
 		for (final Object o : getDiagnosticCache().getObjects()) {
 			try {
 				if (monitor.isCanceled() || reloading) {
@@ -337,6 +337,17 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 				/* silent */
 			}
 		}
+	}
+
+	/**
+	 * Deletes the problem markers created by this Editor. <b>Please take care that this method should be called from a
+	 * {@link Job}</b> to avoid problems with a locked index.
+	 *
+	 * @throws CoreException if the method fails
+	 */
+	protected void deleteMarkers() throws CoreException {
+		getFile().get().deleteMarkers("org.eclipse.core.resources.problemmarker", false,
+			IResource.DEPTH_ZERO);
 	}
 
 	private void setupDiagnosticCache(Object editorInput) {
@@ -649,6 +660,34 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 	}
 
 	/**
+	 * Override this method to set additional attributes on the given {@link IMarker}, e.g. location information.
+	 *
+	 * @param marker the {@link IMarker} to adjust
+	 * @param diagnostic the {@link Diagnostic}
+	 * @return <code>true</code> if the marker was changed, <code>false</code> otherwise
+	 * @throws CoreException in case of an error
+	 */
+	protected boolean adjustErrorMarker(IMarker marker, Diagnostic diagnostic) throws CoreException {
+		final List<?> data = diagnostic.getData();
+		if (data.size() < 1) {
+			return false;
+		}
+		if (!EObject.class.isInstance(data.get(0))) {
+			return false;
+		}
+		final EObject eObject = EObject.class.cast(data.get(0));
+		if (eObject.eResource() == null) {
+			/* possible when job still running but getting closed */
+			return false;
+		}
+		final String uri = eObject.eResource().getURI().toString();
+		final String uriFragment = eObject.eResource().getURIFragment(eObject);
+		marker.setAttribute(RESOURCE_URI, uri);
+		marker.setAttribute(FRAGMENT_URI, uriFragment);
+		return true;
+	}
+
+	/**
 	 * Listens to part events.
 	 *
 	 */
@@ -682,7 +721,9 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 				}
 				rootView.getSelectionProvider().refresh();
 				reloading = false;
+				getCommandStack().flush();
 				initMarkers();
+				firePropertyChange(PROP_DIRTY);
 			}
 		}
 	}
@@ -718,23 +759,7 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 
 		@Override
 		protected boolean adjustMarker(IMarker marker, Diagnostic diagnostic) throws CoreException {
-			final List<?> data = diagnostic.getData();
-			if (data.size() < 1) {
-				return false;
-			}
-			if (!EObject.class.isInstance(data.get(0))) {
-				return false;
-			}
-			final EObject eObject = EObject.class.cast(data.get(0));
-			if (eObject.eResource() == null) {
-				/* possible when job still running but getting closed */
-				return false;
-			}
-			final String uri = eObject.eResource().getURI().toString();
-			final String uriFragment = eObject.eResource().getURIFragment(eObject);
-			marker.setAttribute(RESOURCE_URI, uri);
-			marker.setAttribute(FRAGMENT_URI, uriFragment);
-			return true;
+			return adjustErrorMarker(marker, diagnostic);
 		}
 	}
 
