@@ -116,6 +116,9 @@ public class DiagnosticCache extends AbstractCachedTree<Diagnostic> {
 	 * @return the objects diagnostic
 	 */
 	public Diagnostic getOwnValue(Object o) {
+		if (o == null) {
+			return getDefaultValue();
+		}
 		return getNodes().get(o).getOwnValue();
 	}
 
