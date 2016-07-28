@@ -724,6 +724,7 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 				getCommandStack().flush();
 				initMarkers();
 				firePropertyChange(PROP_DIRTY);
+				filesChangedWithConflict = false;
 			}
 		}
 	}
