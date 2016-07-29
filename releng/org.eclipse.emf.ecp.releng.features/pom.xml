@@ -85,6 +85,8 @@
 		
 		<module>../../features/org.eclipse.emfforms.swt.control.text.autocomplete.feature</module>
 		
+		<module>../../features/org.eclipse.emfforms.swt.control.text.richtext.feature</module>
+		
 		<module>../../features/org.eclipse.emfforms.view.annotation.feature</module>
 		
 		<module>../../features/org.eclipse.emf.ecp.view.group.swt.collapsible.pgroup.feature</module>

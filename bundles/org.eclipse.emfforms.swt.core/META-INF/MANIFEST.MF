@@ -8,6 +8,7 @@ Export-Package: org.eclipse.emfforms.internal.swt.core;version="1.10.0";x-intern
  org.eclipse.emfforms.spi.swt.core;version="1.10.0",
  org.eclipse.emfforms.spi.swt.core.data;version="1.10.0",
  org.eclipse.emfforms.spi.swt.core.layout;version="1.10.0",
+ org.eclipse.emfforms.spi.swt.core.util;version="1.10.0",
  org.eclipse.emfforms.swt.core;version="1.10.0"
 Require-Bundle: org.eclipse.emf.ecp.view.model;bundle-version="[1.10.0,2.0.0)",
  org.eclipse.emf.ecp.view.context;bundle-version="[1.10.0,2.0.0)",
@@ -18,6 +19,7 @@ Require-Bundle: org.eclipse.emf.ecp.view.model;bundle-version="[1.10.0,2.0.0)",
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: org.eclipse.emf.ecp.view.model.common;version="[1.10.0,2.0.0)",
  org.eclipse.emfforms.spi.common.report;version="[1.10.0,2.0.0)",
+ org.eclipse.jface.layout;version="0.0.0",
  org.eclipse.swt;version="0.0.0",
  org.eclipse.swt.custom;version="0.0.0",
  org.eclipse.swt.events;version="0.0.0",
