@@ -244,7 +244,7 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 		if (selectedObject instanceof EObject) {
 			lastRenderedObject = selectedObject;
 			final EObject eObject = EObject.class.cast(selectedObject);
-			if (renderedView != null) {
+			if (renderedView != null && !renderedView.getSWTControl().isDisposed()) {
 				renderedView.getSWTControl().setParent(limbo);
 				cache.cache(renderedView);
 			}
@@ -291,7 +291,7 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 
 	private void renderEmptyDetailPanel() {
 		lastRenderedObject = null;
-		if (renderedView != null) {
+		if (renderedView != null && !renderedView.getSWTControl().isDisposed()) {
 			renderedView.getSWTControl().setParent(limbo);
 			cache.cache(renderedView);
 			/* set renderedView to null so that it is not offered to the cache further times */
