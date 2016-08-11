@@ -87,6 +87,8 @@
 		
 		<module>../../features/org.eclipse.emfforms.swt.control.text.richtext.feature</module>
 		
+		<module>../../features/org.eclipse.emf.ecp.view.table.ui.nebula.grid.feature</module>
+		
 		<module>../../features/org.eclipse.emfforms.view.annotation.feature</module>
 		
 		<module>../../features/org.eclipse.emf.ecp.view.group.swt.collapsible.pgroup.feature</module>
