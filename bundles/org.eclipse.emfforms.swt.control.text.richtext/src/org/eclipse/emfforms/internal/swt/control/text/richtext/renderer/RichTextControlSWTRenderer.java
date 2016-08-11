@@ -26,6 +26,8 @@ import org.eclipse.emfforms.spi.swt.core.util.PopupWindow;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.ModifyEvent;
@@ -82,13 +84,19 @@ public class RichTextControlSWTRenderer extends TextControlSWTRenderer {
 			innerText.addFocusListener(new FocusListener() {
 				@Override
 				public void focusLost(FocusEvent e) {
-					text.setText(innerText.getText());
 					popupWindow.close();
 				}
 
 				@Override
 				public void focusGained(FocusEvent e) {
 					// do nothing
+				}
+			});
+			innerText.addDisposeListener(new DisposeListener() {
+
+				@Override
+				public void widgetDisposed(DisposeEvent e) {
+					text.setText(innerText.getText());
 				}
 			});
 			popupWindow.open();
@@ -132,16 +140,6 @@ public class RichTextControlSWTRenderer extends TextControlSWTRenderer {
 		text.setData(CUSTOM_VARIANT, getTextVariantID());
 		text.setEditable(false);
 		text.setMessage(getTextMessage());
-		text.addFocusListener(new FocusListener() {
-			@Override
-			public void focusLost(FocusEvent e) {
-			}
-
-			@Override
-			public void focusGained(FocusEvent e) {
-				// text.selectAll();
-			}
-		});
 		final GridDataFactory gdf = GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER)
 			.grab(true, true).span(1, 1);
 		final EMFFormsEditSupport editSupport = getEMFFormsEditSupport();
