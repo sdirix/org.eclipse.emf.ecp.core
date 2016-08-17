@@ -187,6 +187,9 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 	 */
 	protected void handleResourceChange(Collection<Resource> changedResources, Collection<Resource> removedResources) {
 		if (!isDirty()) {
+			if (resourceSet == null || rootView.isDisposed()) {
+				return;
+			}
 			reloading = true;
 			resourceSet.getResources().removeAll(removedResources);
 			for (final Resource changed : changedResources) {
@@ -344,6 +347,7 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 	 * {@link Job}</b> to avoid problems with a locked index.
 	 *
 	 * @throws CoreException if the method fails
+	 * @since 1.10
 	 */
 	protected void deleteMarkers() throws CoreException {
 		getFile().get().deleteMarkers("org.eclipse.core.resources.problemmarker", false,
@@ -595,6 +599,7 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 		if (getDiagnosticCache() != null) {
 			getDiagnosticCache().dispose();
 		}
+		ResourcesPlugin.getWorkspace().removeResourceChangeListener(resourceChangeListener);
 		super.dispose();
 	}
 
@@ -666,6 +671,7 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 	 * @param diagnostic the {@link Diagnostic}
 	 * @return <code>true</code> if the marker was changed, <code>false</code> otherwise
 	 * @throws CoreException in case of an error
+	 * @since 1.10
 	 */
 	protected boolean adjustErrorMarker(IMarker marker, Diagnostic diagnostic) throws CoreException {
 		final List<?> data = diagnostic.getData();
