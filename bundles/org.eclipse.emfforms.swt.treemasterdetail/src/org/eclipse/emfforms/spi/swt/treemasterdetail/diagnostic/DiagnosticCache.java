@@ -119,7 +119,12 @@ public class DiagnosticCache extends AbstractCachedTree<Diagnostic> {
 		if (o == null) {
 			return getDefaultValue();
 		}
-		return getNodes().get(o).getOwnValue();
+		final CachedTreeNode<Diagnostic> treeNode = getNodes().get(o);
+		if (treeNode == null) {
+			/* there is no entry in the cache */
+			return getDefaultValue();
+		}
+		return treeNode.getOwnValue();
 	}
 
 	/**
