@@ -25,17 +25,12 @@ import org.eclipse.emfforms.spi.swt.table.TableViewerSWTCustomization.ColumnDesc
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.layout.AbstractColumnLayout;
 import org.eclipse.jface.viewers.AbstractTableViewer;
-import org.eclipse.jface.viewers.ColumnViewerEditor;
-import org.eclipse.jface.viewers.ColumnViewerEditorActivationEvent;
-import org.eclipse.jface.viewers.ColumnViewerEditorActivationStrategy;
 import org.eclipse.jface.viewers.EditingSupport;
 import org.eclipse.jface.viewers.ViewerColumn;
 import org.eclipse.nebula.jface.gridviewer.GridColumnLayout;
 import org.eclipse.nebula.jface.gridviewer.GridTableViewer;
 import org.eclipse.nebula.jface.gridviewer.GridViewerColumn;
-import org.eclipse.nebula.jface.gridviewer.GridViewerEditor;
 import org.eclipse.nebula.widgets.grid.GridColumn;
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ControlListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -78,30 +73,6 @@ public class GridTableViewerComposite extends AbstractTableViewerComposite {
 		// TODO: Grid ugly cast
 		gridTableViewer = (GridTableViewer) customization.createTableViewer(viewerComposite);
 		return gridTableViewer;
-	}
-
-	@Override
-	protected void enableEditingSupport() {
-		// TODO Grid
-		// final TableViewerFocusCellManager focusCellManager = new TableViewerFocusCellManager(tableViewer,
-		// new org.eclipse.emf.ecp.edit.internal.swt.controls.ECPFocusCellDrawHighlighter(tableViewer));
-
-		final ColumnViewerEditorActivationStrategy actSupport = new ColumnViewerEditorActivationStrategy(
-			gridTableViewer) {
-			@Override
-			protected boolean isEditorActivationEvent(ColumnViewerEditorActivationEvent event) {
-				return event.eventType == ColumnViewerEditorActivationEvent.TRAVERSAL
-					|| event.eventType == ColumnViewerEditorActivationEvent.MOUSE_DOUBLE_CLICK_SELECTION
-					|| event.eventType == ColumnViewerEditorActivationEvent.KEY_PRESSED
-						&& (event.keyCode == SWT.CR || event.keyCode == 16777296)
-					|| event.eventType == ColumnViewerEditorActivationEvent.PROGRAMMATIC;
-			}
-		};
-		GridViewerEditor.create(
-			gridTableViewer,
-			actSupport,
-			ColumnViewerEditor.TABBING_HORIZONTAL | ColumnViewerEditor.TABBING_MOVE_TO_ROW_NEIGHBOR
-				| ColumnViewerEditor.TABBING_VERTICAL | ColumnViewerEditor.KEYBOARD_ACTIVATION);
 	}
 
 	@Override

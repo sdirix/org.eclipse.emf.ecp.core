@@ -106,8 +106,6 @@ public abstract class AbstractTableViewerComposite extends Composite {
 
 		enableTooltipSupport(tableViewer);
 
-		enableEditingSupport();
-
 		final Optional<ViewerComparator> comparator = customization.getComparator();
 		if (comparator.isPresent()) {
 			tableViewer.setComparator(comparator.get());
@@ -191,12 +189,6 @@ public abstract class AbstractTableViewerComposite extends Composite {
 	 */
 	protected abstract ViewerColumn createColumn(ColumnDescription columnDescription,
 		EMFDataBindingContext emfDataBindingContext, AbstractTableViewer tableViewer);
-
-	/**
-	 * Enables the editing support for the current table viewer, including the creation of a
-	 * {@link org.eclipse.jface.viewers.TableViewerFocusCellManager} and {@link ColumnViewerEditorActivationStrategy}.
-	 */
-	protected abstract void enableEditingSupport();
 
 	/**
 	 * Creates a new {@link ColumnViewerEditorActivationStrategy} for the given table viewer.

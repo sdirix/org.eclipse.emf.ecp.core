@@ -32,7 +32,11 @@ import org.eclipse.emfforms.spi.swt.table.TableViewerCompositeBuilder;
 import org.eclipse.emfforms.spi.swt.table.TableViewerCreator;
 import org.eclipse.emfforms.spi.swt.table.TableViewerSWTBuilder;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
+import org.eclipse.jface.viewers.ColumnViewerEditor;
+import org.eclipse.jface.viewers.ColumnViewerEditorActivationEvent;
+import org.eclipse.jface.viewers.ColumnViewerEditorActivationStrategy;
 import org.eclipse.nebula.jface.gridviewer.GridTableViewer;
+import org.eclipse.nebula.jface.gridviewer.GridViewerEditor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Item;
@@ -74,7 +78,7 @@ public class GridControlSWTRenderer extends TableControlSWTRenderer {
 	 * custom variant data and the correct style properties as defined in the template model.
 	 *
 	 */
-	private final class GridTableControlSWTRendererTableViewerCreator implements TableViewerCreator<GridTableViewer> {
+	protected final class GridTableControlSWTRendererTableViewerCreator implements TableViewerCreator<GridTableViewer> {
 
 		@Override
 		public GridTableViewer createTableViewer(Composite parent) {
@@ -103,7 +107,39 @@ public class GridControlSWTRenderer extends TableControlSWTRenderer {
 			}
 
 			tableViewer.getGrid().setData(FIXED_COLUMNS, new Integer(1));
+
+			/* manage editing support activation */
+			createTableViewerEditor(tableViewer);
+
 			return tableViewer;
+		}
+
+		/**
+		 * This method creates and initialises a {@link GridViewerEditor} for the given {@link GridTableViewer}.
+		 *
+		 * @param gridTableViewer the table viewer
+		 */
+		protected void createTableViewerEditor(final GridTableViewer gridTableViewer) {
+			// TODO Grid
+			// final TableViewerFocusCellManager focusCellManager = new TableViewerFocusCellManager(tableViewer,
+			// new org.eclipse.emf.ecp.edit.internal.swt.controls.ECPFocusCellDrawHighlighter(tableViewer));
+
+			final ColumnViewerEditorActivationStrategy actSupport = new ColumnViewerEditorActivationStrategy(
+				gridTableViewer) {
+				@Override
+				protected boolean isEditorActivationEvent(ColumnViewerEditorActivationEvent event) {
+					return event.eventType == ColumnViewerEditorActivationEvent.TRAVERSAL
+						|| event.eventType == ColumnViewerEditorActivationEvent.MOUSE_DOUBLE_CLICK_SELECTION
+						|| event.eventType == ColumnViewerEditorActivationEvent.KEY_PRESSED
+							&& (event.keyCode == SWT.CR || event.keyCode == 16777296)
+						|| event.eventType == ColumnViewerEditorActivationEvent.PROGRAMMATIC;
+				}
+			};
+			GridViewerEditor.create(
+				gridTableViewer,
+				actSupport,
+				ColumnViewerEditor.TABBING_HORIZONTAL | ColumnViewerEditor.TABBING_MOVE_TO_ROW_NEIGHBOR
+					| ColumnViewerEditor.TABBING_VERTICAL | ColumnViewerEditor.KEYBOARD_ACTIVATION);
 		}
 	}
 

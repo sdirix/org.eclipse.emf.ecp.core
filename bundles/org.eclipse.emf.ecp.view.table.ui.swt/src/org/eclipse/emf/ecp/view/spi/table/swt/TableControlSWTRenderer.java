@@ -121,8 +121,10 @@ import org.eclipse.jface.viewers.AbstractTableViewer;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.CellLabelProvider;
 import org.eclipse.jface.viewers.ColumnViewer;
+import org.eclipse.jface.viewers.ColumnViewerEditor;
 import org.eclipse.jface.viewers.ColumnViewerEditorActivationEvent;
 import org.eclipse.jface.viewers.ColumnViewerEditorActivationListener;
+import org.eclipse.jface.viewers.ColumnViewerEditorActivationStrategy;
 import org.eclipse.jface.viewers.ColumnViewerEditorDeactivationEvent;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.EditingSupport;
@@ -134,6 +136,8 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.jface.viewers.TableViewerEditor;
+import org.eclipse.jface.viewers.TableViewerFocusCellManager;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.jface.viewers.ViewerComparator;
@@ -1393,8 +1397,10 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 * {@link TableViewerCreator} for the table control swt renderer. It will create a GridTableViewer with the expected
 	 * custom variant data and the correct style properties as defined in the template model.
 	 *
+	 * @since 1.10
+	 *
 	 */
-	private final class TableControlSWTRendererTableViewerCreator implements TableViewerCreator<TableViewer> {
+	protected class TableControlSWTRendererTableViewerCreator implements TableViewerCreator<TableViewer> {
 
 		@Override
 		public TableViewer createTableViewer(Composite parent) {
@@ -1418,7 +1424,36 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			}
 
 			tableViewer.getTable().setData(FIXED_COLUMNS, new Integer(1));
+
+			/* manage editing support activation */
+			createTableViewerEditor(tableViewer);
 			return tableViewer;
+		}
+
+		/**
+		 * This method creates and initialises a {@link TableViewerEditor} for the given {@link TableViewer}.
+		 *
+		 * @param tableViewer the table viewer
+		 */
+		protected void createTableViewerEditor(final TableViewer tableViewer) {
+			final TableViewerFocusCellManager focusCellManager = new TableViewerFocusCellManager(tableViewer,
+				new org.eclipse.emf.ecp.edit.internal.swt.controls.ECPFocusCellDrawHighlighter(tableViewer));
+			final ColumnViewerEditorActivationStrategy actSupport = new ColumnViewerEditorActivationStrategy(
+				tableViewer) {
+				@Override
+				protected boolean isEditorActivationEvent(ColumnViewerEditorActivationEvent event) {
+					return event.eventType == ColumnViewerEditorActivationEvent.TRAVERSAL
+						|| event.eventType == ColumnViewerEditorActivationEvent.MOUSE_CLICK_SELECTION
+						|| event.eventType == ColumnViewerEditorActivationEvent.KEY_PRESSED && event.keyCode == SWT.CR
+						|| event.eventType == ColumnViewerEditorActivationEvent.PROGRAMMATIC;
+				}
+			};
+			TableViewerEditor.create(
+				tableViewer,
+				focusCellManager,
+				actSupport,
+				ColumnViewerEditor.TABBING_HORIZONTAL | ColumnViewerEditor.TABBING_MOVE_TO_ROW_NEIGHBOR
+					| ColumnViewerEditor.TABBING_VERTICAL | ColumnViewerEditor.KEYBOARD_ACTIVATION);
 		}
 	}
 
@@ -1892,10 +1927,9 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		 * cycle.
 		 */
 		class EditingState {
+
 			private final IObservableValue target;
-
 			private final IObservableValue model;
-
 			private final Binding binding;
 
 			EditingState(Binding binding, IObservableValue target, IObservableValue model) {
@@ -1954,16 +1988,12 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	@Override
 	protected void rootDomainModelChanged() throws DatabindingFailedException {
 		// TODO rebind tooltip and text?
-
 		final IObservableList oldList = (IObservableList) getTableViewer().getInput();
 		oldList.dispose();
-
 		final IObservableList list = getEMFFormsDatabinding().getObservableList(getDMRToMultiReference(),
 			getViewModelContext().getDomainModel());
 		// addRelayoutListenerIfNeeded(list, composite);
 		getTableViewer().setInput(list);
-
 		tableControlSWTRendererButtonBarBuilder.updateValues();
 	}
-
 }

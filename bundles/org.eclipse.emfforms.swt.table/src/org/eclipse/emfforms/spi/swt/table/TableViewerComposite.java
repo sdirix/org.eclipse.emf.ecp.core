@@ -22,13 +22,9 @@ import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.layout.AbstractColumnLayout;
 import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.viewers.AbstractTableViewer;
-import org.eclipse.jface.viewers.ColumnViewerEditor;
-import org.eclipse.jface.viewers.ColumnViewerEditorActivationStrategy;
 import org.eclipse.jface.viewers.EditingSupport;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
-import org.eclipse.jface.viewers.TableViewerEditor;
-import org.eclipse.jface.viewers.TableViewerFocusCellManager;
 import org.eclipse.jface.viewers.ViewerColumn;
 import org.eclipse.swt.events.ControlListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -58,7 +54,8 @@ public class TableViewerComposite extends AbstractTableViewerComposite {
 	 * @param title the title
 	 * @param tooltip the tooltip
 	 */
-	TableViewerComposite(Composite parent, int style, Object inputObject, TableViewerSWTCustomization customization,
+	TableViewerComposite(Composite parent, int style, Object inputObject,
+		TableViewerSWTCustomization customization,
 		IObservableValue title, IObservableValue tooltip) {
 		super(parent, style, inputObject, customization, title, tooltip);
 	}
@@ -82,23 +79,6 @@ public class TableViewerComposite extends AbstractTableViewerComposite {
 		Composite viewerComposite) {
 		tableViewer = (TableViewer) customization.createTableViewer(viewerComposite);
 		return tableViewer;
-	}
-
-	@Override
-	protected void enableEditingSupport() {
-		@SuppressWarnings("restriction")
-		final org.eclipse.emf.ecp.edit.internal.swt.controls.ECPFocusCellDrawHighlighter focusCellHighlighter = new org.eclipse.emf.ecp.edit.internal.swt.controls.ECPFocusCellDrawHighlighter(
-			tableViewer);
-		final TableViewerFocusCellManager focusCellManager = new TableViewerFocusCellManager(tableViewer,
-			focusCellHighlighter);
-		final ColumnViewerEditorActivationStrategy actSupport = createColumnViewerActivationStrategy(tableViewer);
-
-		TableViewerEditor.create(
-			tableViewer,
-			focusCellManager,
-			actSupport,
-			ColumnViewerEditor.TABBING_HORIZONTAL | ColumnViewerEditor.TABBING_MOVE_TO_ROW_NEIGHBOR
-				| ColumnViewerEditor.TABBING_VERTICAL | ColumnViewerEditor.KEYBOARD_ACTIVATION);
 	}
 
 	@Override
