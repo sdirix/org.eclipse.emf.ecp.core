@@ -200,6 +200,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	private TableControlSWTRendererButtonBarBuilder tableControlSWTRendererButtonBarBuilder;
 	private AbstractTableViewerComposite tableViewerComposite;
 	private int regularColumnsStartIndex;
+	private boolean isDisposing;
 
 	/**
 	 * Default constructor.
@@ -428,6 +429,9 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	}
 
 	private void updateTableColumnWidths(Control table, int regularColumnsStartIndex) {
+		if (isDisposing) {
+			return;
+		}
 		final VTableControl tableControl = getVElement();
 		final Widget[] allColumns = tableViewerComposite.getColumns();
 		for (int i = regularColumnsStartIndex; i < allColumns.length; i++) {
@@ -1171,6 +1175,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 */
 	@Override
 	protected void dispose() {
+		isDisposing = true;
 		rendererGridDescription = null;
 		viewModelDBC.dispose();
 		super.dispose();
@@ -1286,6 +1291,9 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	private final class ApplyValidationRunnable implements Runnable {
 		@Override
 		public void run() {
+			if (isDisposing) {
+				return;
+			}
 			// triggered due to another validation rule before this control is rendered
 			if (validationIcon == null) {
 				return;
