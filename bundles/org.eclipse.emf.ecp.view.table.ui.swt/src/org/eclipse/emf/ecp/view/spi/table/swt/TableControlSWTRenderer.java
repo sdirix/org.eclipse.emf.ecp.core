@@ -38,6 +38,7 @@ import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.ecore.EClass;
@@ -80,8 +81,12 @@ import org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableS
 import org.eclipse.emf.ecp.view.template.style.tableValidation.model.VTTableValidationFactory;
 import org.eclipse.emf.ecp.view.template.style.tableValidation.model.VTTableValidationStyleProperty;
 import org.eclipse.emf.edit.command.AddCommand;
+import org.eclipse.emf.edit.command.MoveCommand;
 import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emf.edit.ui.dnd.EditingDomainViewerDropAdapter;
+import org.eclipse.emf.edit.ui.dnd.LocalTransfer;
+import org.eclipse.emf.edit.ui.dnd.ViewerDragAdapter;
 import org.eclipse.emfforms.common.Optional;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
@@ -101,6 +106,7 @@ import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
 import org.eclipse.emfforms.spi.swt.table.AbstractTableViewerComposite;
 import org.eclipse.emfforms.spi.swt.table.ButtonBarBuilder;
 import org.eclipse.emfforms.spi.swt.table.CellLabelProviderFactory;
+import org.eclipse.emfforms.spi.swt.table.DNDProvider;
 import org.eclipse.emfforms.spi.swt.table.EditingSupportCreator;
 import org.eclipse.emfforms.spi.swt.table.TableControl;
 import org.eclipse.emfforms.spi.swt.table.TableViewerComparator;
@@ -142,6 +148,11 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.dnd.DND;
+import org.eclipse.swt.dnd.DragSourceListener;
+import org.eclipse.swt.dnd.DropTargetEvent;
+import org.eclipse.swt.dnd.DropTargetListener;
+import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.events.ControlAdapter;
 import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -350,7 +361,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			.customizeButtons(tableControlSWTRendererButtonBarBuilder)
 			.customizeTableViewerCreation(getTableViewerCreator())
 			.customizeContentProvider(cp)
-			.customizeComparator(comparator);
+			.customizeComparator(comparator)
+			.customizeDragAndDrop(new TableControlSWTRendererDragAndDrop());
 
 	}
 
@@ -451,7 +463,6 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			: Optional.<Integer> empty();
 	}
 
-	@SuppressWarnings("unchecked")
 	private void addRelayoutListenerIfNeeded(IObservableList list, final Composite composite) {
 		if (list == null) {
 			return;
@@ -616,8 +627,9 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 	/**
 	 * @return the {@link VDomainModelReference} which ends at the table setting
+	 * @since 1.10
 	 */
-	private VDomainModelReference getDMRToMultiReference() {
+	protected final VDomainModelReference getDMRToMultiReference() {
 		final VTableDomainModelReference tableDomainModelReference = (VTableDomainModelReference) getVElement()
 			.getDomainModelReference();
 		final VDomainModelReference dmrToCheck = tableDomainModelReference.getDomainModelReference() == null
@@ -1250,6 +1262,162 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			rc = -rc;
 		}
 		return rc;
+	}
+
+	@Override
+	protected void rootDomainModelChanged() throws DatabindingFailedException {
+		// TODO rebind tooltip and text?
+
+		final IObservableList oldList = (IObservableList) getTableViewer().getInput();
+		oldList.dispose();
+
+		final IObservableList list = getEMFFormsDatabinding().getObservableList(getDMRToMultiReference(),
+			getViewModelContext().getDomainModel());
+		// addRelayoutListenerIfNeeded(list, composite);
+		getTableViewer().setInput(list);
+
+		tableControlSWTRendererButtonBarBuilder.updateValues();
+	}
+
+	/**
+	 * The {@link DNDProvider} for this renderer.
+	 *
+	 * @author Johannes Faltermeier
+	 *
+	 */
+	private final class TableControlSWTRendererDragAndDrop implements DNDProvider {
+
+		/**
+		 * The drop adapter.
+		 */
+		private final class TableControlDropAdapter extends EditingDomainViewerDropAdapter {
+
+			private final AbstractTableViewer tableViewer;
+			private EObject eObject;
+			private EStructuralFeature eStructuralFeature;
+			private List<Object> list;
+
+			@SuppressWarnings("unchecked")
+			TableControlDropAdapter(EditingDomain domain, Viewer viewer, AbstractTableViewer tableViewer) {
+				super(domain, viewer);
+				this.tableViewer = tableViewer;
+				try {
+					final Setting setting = getEMFFormsDatabinding().getSetting(getDMRToMultiReference(),
+						getViewModelContext().getDomainModel());
+					eObject = setting.getEObject();
+					eStructuralFeature = setting.getEStructuralFeature();
+					list = (List<Object>) setting.get(true);
+				} catch (final DatabindingFailedException ex) {
+					getReportService().report(new AbstractReport(ex));
+				}
+			}
+
+			@Override
+			protected void helper(DropTargetEvent event) {
+				final Object target = extractDropTarget(event.item);
+				final Collection<?> dragSource = getDragSource(event);
+
+				if (target == null || dragSource.contains(target)) {
+					event.detail = DND.DROP_NONE;
+					return;
+				}
+
+				event.detail = DND.DROP_MOVE;
+			}
+
+			@Override
+			public void drop(DropTargetEvent event) {
+
+				final Collection<?> dragSource = getDragSource(event);
+				final Object target = extractDropTarget(event.item);
+				final float location = getLocation(event);
+
+				final List<Command> commands = new ArrayList<Command>();
+				final boolean insertAfter = location >= 0.5;
+
+				for (final Object toMove : dragSource) {
+					final int indexTarget = list.indexOf(target);
+					final int indexToMove = list.indexOf(toMove);
+
+					if (indexTarget == -1 || indexToMove == -1) {
+						return;
+					}
+
+					final boolean moveIsLocatedBeforeTarget = indexToMove < indexTarget;
+
+					int index;
+					if (insertAfter) {
+						if (moveIsLocatedBeforeTarget) {
+							index = indexTarget;
+						} else {
+							index = indexTarget + 1;
+						}
+					} else {
+						/* insert Before Target */
+						if (moveIsLocatedBeforeTarget) {
+							index = indexTarget - 1;
+						} else {
+							index = indexTarget;
+						}
+					}
+
+					commands.add(MoveCommand.create(domain, eObject, eStructuralFeature, toMove, index));
+				}
+
+				final Command command = new CompoundCommand(commands);
+
+				if (!command.canExecute()) {
+					return;
+				}
+				domain.getCommandStack().execute(command);
+
+				tableViewer.refresh();
+			}
+		}
+
+		@Override
+		public int getDragOperations() {
+			return getDNDOperations();
+		}
+
+		@Override
+		public Transfer[] getDragTransferTypes() {
+			return getDNDTransferTypes();
+		}
+
+		@Override
+		public DragSourceListener getDragListener(AbstractTableViewer tableViewer) {
+			return new ViewerDragAdapter(tableViewer);
+		}
+
+		@Override
+		public int getDropOperations() {
+			return getDNDOperations();
+		}
+
+		@Override
+		public Transfer[] getDropTransferTypes() {
+			return getDNDTransferTypes();
+		}
+
+		@Override
+		public DropTargetListener getDropListener(final AbstractTableViewer tableViewer) {
+			return new TableControlDropAdapter(getEditingDomain(getViewModelContext().getDomainModel()), tableViewer,
+				tableViewer);
+		}
+
+		private int getDNDOperations() {
+			return DND.DROP_COPY | DND.DROP_MOVE | DND.DROP_LINK;
+		}
+
+		private Transfer[] getDNDTransferTypes() {
+			return new Transfer[] { LocalTransfer.getInstance() };
+		}
+
+		@Override
+		public boolean hasDND() {
+			return true;
+		}
 	}
 
 	/**
@@ -1991,17 +2159,5 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			final String message = DiagnosticMessageExtractor.getMessage(vDiagnostic.getDiagnostics((EObject) element));
 			return ECPTooltipModifierHelper.modifyString(message, null);
 		}
-	}
-
-	@Override
-	protected void rootDomainModelChanged() throws DatabindingFailedException {
-		// TODO rebind tooltip and text?
-		final IObservableList oldList = (IObservableList) getTableViewer().getInput();
-		oldList.dispose();
-		final IObservableList list = getEMFFormsDatabinding().getObservableList(getDMRToMultiReference(),
-			getViewModelContext().getDomainModel());
-		// addRelayoutListenerIfNeeded(list, composite);
-		getTableViewer().setInput(list);
-		tableControlSWTRendererButtonBarBuilder.updateValues();
 	}
 }

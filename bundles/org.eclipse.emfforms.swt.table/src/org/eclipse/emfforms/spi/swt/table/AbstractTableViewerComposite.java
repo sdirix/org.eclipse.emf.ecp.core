@@ -115,6 +115,8 @@ public abstract class AbstractTableViewerComposite extends Composite {
 
 		addColumns(customization, tableViewer, emfDataBindingContext);
 
+		setupDragAndDrop(customization, tableViewer);
+
 		tableViewer.setInput(inputObject);
 
 		final AbstractColumnLayout layout = createLayout(viewerComposite);
@@ -130,6 +132,15 @@ public abstract class AbstractTableViewerComposite extends Composite {
 				layout.setColumnData(tableColumn,
 					new ColumnWeightData(storedWeight, storedMinWidth, storedIsResizable));
 			}
+		}
+	}
+
+	private void setupDragAndDrop(TableViewerSWTCustomization customization, final AbstractTableViewer tableViewer) {
+		if (customization.hasDND()) {
+			tableViewer.addDragSupport(customization.getDragOperations(), customization.getDragTransferTypes(),
+				customization.getDragListener(tableViewer));
+			tableViewer.addDropSupport(customization.getDropOperations(), customization.getDropTransferTypes(),
+				customization.getDropListener(tableViewer));
 		}
 	}
 
@@ -167,14 +178,6 @@ public abstract class AbstractTableViewerComposite extends Composite {
 			/* create column */
 			// TODO move TableViewerColumnBuilder?
 			createColumn(columnDescription, emfDataBindingContext, tableViewer);
-
-			/* setup drag&drop */
-			if (customization.hasDND()) {
-				tableViewer.addDragSupport(customization.getDragOperations(), customization.getDragTransferTypes(),
-					customization.getDragListener(tableViewer));
-				tableViewer.addDropSupport(customization.getDropOperations(), customization.getDropTransferTypes(),
-					customization.getDropListener(tableViewer));
-			}
 
 		}
 	}

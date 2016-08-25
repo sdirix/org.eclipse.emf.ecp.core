@@ -205,6 +205,22 @@ public class TableViewerSWTBuilder {
 		return this;
 	}
 
+	/**
+	 * <p>
+	 * Use this method to customize drag&drop.
+	 * </p>
+	 * <p>
+	 * The default behaviour disables drag&drop.
+	 * </p>
+	 *
+	 * @param provider the provider
+	 * @return self
+	 */
+	public TableViewerSWTBuilder customizeDragAndDrop(DNDProvider provider) {
+		customization.setDND(provider);
+		return this;
+	}
+
 	// BEGIN COMPLEX CODE
 	/**
 	 * Adds a column.

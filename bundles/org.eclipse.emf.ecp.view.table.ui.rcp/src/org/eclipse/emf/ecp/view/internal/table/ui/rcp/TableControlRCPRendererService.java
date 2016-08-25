@@ -7,20 +7,27 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- * Alexandra Buzila - initial API and implementation
+ * Johannes Faltermeier - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.spi.table.internal.nebula.grid;
+package org.eclipse.emf.ecp.view.internal.table.ui.rcp;
 
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.table.model.DetailEditing;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
-import org.eclipse.emf.ecp.view.spi.table.nebula.grid.GridControlSWTRenderer;
+import org.eclipse.emf.ecp.view.spi.table.ui.rcp.TableControlRCPRenderer;
 import org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer;
 import org.eclipse.emfforms.spi.swt.core.di.EMFFormsDIRendererService;
+import org.osgi.service.component.annotations.Component;
 
-/** Renderer service for the {@link GridControlSWTRenderer}. */
-public class GridControlSWTRendererService implements EMFFormsDIRendererService<VTableControl> {
+/**
+ * {@link EMFFormsDIRendererService} for the {@link TableControlRCPRenderer}.
+ *
+ * @author Johannes Faltermeier
+ *
+ */
+@Component(name = "TableControlRCPRendererService", service = EMFFormsDIRendererService.class)
+public class TableControlRCPRendererService implements EMFFormsDIRendererService<VTableControl> {
 
 	@Override
 	public double isApplicable(VElement vElement, ViewModelContext viewModelContext) {
@@ -28,14 +35,14 @@ public class GridControlSWTRendererService implements EMFFormsDIRendererService<
 			return NOT_APPLICABLE;
 		}
 		if (DetailEditing.NONE == VTableControl.class.cast(vElement).getDetailEditing()) {
-			return 12;
+			return 11;
 		}
 		return NOT_APPLICABLE;
 	}
 
 	@Override
 	public Class<? extends AbstractSWTRenderer<VTableControl>> getRendererClass() {
-		return GridControlSWTRenderer.class;
+		return TableControlRCPRenderer.class;
 	}
 
 }
