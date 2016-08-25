@@ -350,7 +350,11 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 	 * @since 1.10
 	 */
 	protected void deleteMarkers() throws CoreException {
-		getFile().get().deleteMarkers("org.eclipse.core.resources.problemmarker", false,
+		final Optional<IFile> file = getFile();
+		if (!file.isPresent()) {
+			return;
+		}
+		file.get().deleteMarkers("org.eclipse.core.resources.problemmarker", false,
 			IResource.DEPTH_ZERO);
 	}
 
