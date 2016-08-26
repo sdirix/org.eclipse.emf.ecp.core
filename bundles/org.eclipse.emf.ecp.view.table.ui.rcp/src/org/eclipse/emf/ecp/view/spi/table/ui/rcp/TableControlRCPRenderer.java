@@ -101,7 +101,7 @@ public class TableControlRCPRenderer extends TableControlSWTRenderer {
 
 	/**
 	 * Enables cut copy paste, if possible.
-	 * 
+	 *
 	 * @param tableViewer the {@link TableViewer}
 	 * @param editingDomain the {@link EditingDomain}
 	 * @param setting the {@link Setting} displayed in the table
@@ -111,7 +111,7 @@ public class TableControlRCPRenderer extends TableControlSWTRenderer {
 		if (!TableViewer.class.isInstance(tableViewer)) {
 			return;
 		}
-		new CutCopyPasteListener((TableViewer) tableViewer, editingDomain, setting.getEObject());
+		new CutCopyPasteListener((TableViewer) tableViewer, editingDomain, setting);
 	}
 
 }

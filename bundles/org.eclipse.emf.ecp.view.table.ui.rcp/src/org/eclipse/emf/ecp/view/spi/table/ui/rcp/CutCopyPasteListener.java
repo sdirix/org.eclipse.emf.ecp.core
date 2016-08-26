@@ -11,7 +11,15 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.table.ui.rcp;
 
+import java.util.Collection;
+
+import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.common.command.UnexecutableCommand;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.edit.command.CutToClipboardCommand;
+import org.eclipse.emf.edit.command.PasteFromClipboardCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.ui.action.CopyAction;
 import org.eclipse.emf.edit.ui.action.CutAction;
@@ -40,19 +48,34 @@ public class CutCopyPasteListener implements KeyListener, ISelectionChangedListe
 	private final PasteAction pasteAction;
 
 	private final EObject parent;
+	private final EStructuralFeature feature;
 
 	/**
 	 * Constructs this listener.
 	 *
 	 * @param tableViewer the {@link TableViewer}
 	 * @param editingDomain the {@link EditingDomain} (contains the used clipboard)
-	 * @param parent the parent EObject on which the paste will be performed
+	 * @param setting the parent EObject on which the paste will be performed
 	 */
-	public CutCopyPasteListener(TableViewer tableViewer, EditingDomain editingDomain, EObject parent) {
-		this.parent = parent;
-		cutAction = new CutAction(editingDomain);
+	public CutCopyPasteListener(TableViewer tableViewer, EditingDomain editingDomain, Setting setting) {
+		parent = setting.getEObject();
+		feature = setting.getEStructuralFeature();
+		cutAction = new CutAction(editingDomain) {
+			@Override
+			public Command createCommand(Collection<?> selection) {
+				return CutToClipboardCommand.create(domain, parent, feature, selection);
+			}
+		};
 		copyAction = new CopyAction(editingDomain);
-		pasteAction = new PasteAction(editingDomain);
+		pasteAction = new PasteAction(editingDomain) {
+			@Override
+			public Command createCommand(Collection<?> selection) {
+				if (selection.size() == 1) {
+					return PasteFromClipboardCommand.create(domain, parent, feature);
+				}
+				return UnexecutableCommand.INSTANCE;
+			}
+		};
 		tableViewer.getTable().addKeyListener(this);
 		tableViewer.addSelectionChangedListener(this);
 	}
