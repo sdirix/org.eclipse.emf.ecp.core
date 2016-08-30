@@ -1317,6 +1317,12 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 				final Object target = extractDropTarget(event.item);
 				final Collection<?> dragSource = getDragSource(event);
 
+				if (dragSource == null) {
+					/* possible on non-win32 platforms */
+					/* in this case we will just wait until the data is available without setting a detail */
+					return;
+				}
+
 				if (target == null || dragSource.contains(target)) {
 					event.detail = DND.DROP_NONE;
 					return;
