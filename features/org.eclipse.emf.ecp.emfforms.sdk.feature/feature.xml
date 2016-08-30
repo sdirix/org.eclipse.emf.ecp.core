@@ -108,6 +108,10 @@
          version="0.0.0"/>
 
    <includes
+         id="org.eclipse.emf.ecp.view.edapt.feature.source"
+         version="0.0.0"/>
+
+   <includes
          id="org.eclipse.emfforms.editor.feature.source"
          version="0.0.0"/>
 
