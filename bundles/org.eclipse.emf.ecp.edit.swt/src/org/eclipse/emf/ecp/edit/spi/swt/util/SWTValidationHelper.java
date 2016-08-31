@@ -618,6 +618,8 @@ public final class SWTValidationHelper {
 					.getResource("icons/validation_error.png").toExternalForm()); //$NON-NLS-1$
 				validationTemplate.setErrorOverlayURL(Activator.getDefault().getBundle()
 					.getResource("icons/error_decorate.png").toExternalForm()); //$NON-NLS-1$
+				validationTemplate.setWarningImageURL(Activator.getDefault().getBundle()
+					.getResource("icons/validation_warning.png").toExternalForm()); //$NON-NLS-1$
 				validationTemplate.setWarningOverlayURL(Activator.getDefault().getBundle()
 					.getResource("icons/warning_decorate.png").toExternalForm()); //$NON-NLS-1$
 				validationTemplate.setInfoOverlayURL(Activator.getDefault().getBundle()

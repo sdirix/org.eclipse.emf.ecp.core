@@ -339,7 +339,7 @@ public class TableDMRValidation_Test {
 		assertFalse(validate());
 		if (createChain) {
 			assertEquals(Diagnostic.WARNING, chain.getSeverity());
-			assertChain(controlDMRWarning(), tableColumns());
+			assertChain(tableColumns());
 		}
 	}
 
