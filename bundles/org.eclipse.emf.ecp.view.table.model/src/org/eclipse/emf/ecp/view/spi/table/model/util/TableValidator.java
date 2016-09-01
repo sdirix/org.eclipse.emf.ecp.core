@@ -348,9 +348,6 @@ public class TableValidator extends EObjectValidator {
 	// BEGIN COMPLEX CODE
 	public boolean validateTableDomainModelReference_resolveable(VTableDomainModelReference tableDomainModelReference,
 		DiagnosticChain diagnostics, Map<Object, Object> context) {
-		if (context.containsKey(VALIDATING_TABLE_CONTROL_KEY)) {
-			return true;
-		}
 		// validate path to table
 		VDomainModelReference pathToMultiRef = tableDomainModelReference.getDomainModelReference();
 		final EValidator validator;
@@ -397,7 +394,9 @@ public class TableValidator extends EObjectValidator {
 			}
 			return false;
 		}
-
+		if (context.containsKey(VALIDATING_TABLE_CONTROL_KEY)) {
+			return true;
+		}
 		// test if columns are resolveable
 		final EReference reference = EReference.class.cast(feature);
 		final EClass referenceType = reference.getEReferenceType();

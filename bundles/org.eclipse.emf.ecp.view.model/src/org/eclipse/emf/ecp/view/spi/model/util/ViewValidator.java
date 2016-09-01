@@ -261,6 +261,12 @@ public class ViewValidator extends EObjectValidator {
 		VFeaturePathDomainModelReference featurePathDomainModelReference, DiagnosticChain diagnostics,
 		Map<Object, Object> context) {
 
+		// Do not validate feature dmrs witch are contained in another dmr,
+		// as normally a specific logic is applied for them
+		if (VDomainModelReference.class.isInstance(featurePathDomainModelReference.eContainer())) {
+			return true;
+		}
+
 		if (featurePathDomainModelReference.getDomainModelEFeature() == null) {
 			if (featurePathDomainModelReference.eContainer() != null) {
 				diagnostics
@@ -493,10 +499,10 @@ public class ViewValidator extends EObjectValidator {
 	}
 
 	/**
-         * @generated
-	 * <!-- begin-user-doc -->
+	 * @generated
+	 * 			<!-- begin-user-doc -->
 	 * @since 1.7
-	 * <!-- end-user-doc -->
+	 *        <!-- end-user-doc -->
 	 */
 	public boolean validateViewModelLoadingProperties(VViewModelLoadingProperties viewModelLoadingProperties,
 		DiagnosticChain diagnostics, Map<Object, Object> context) {
