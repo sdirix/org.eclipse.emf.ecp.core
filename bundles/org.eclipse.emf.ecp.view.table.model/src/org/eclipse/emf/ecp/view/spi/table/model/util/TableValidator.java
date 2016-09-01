@@ -352,6 +352,7 @@ public class TableValidator extends EObjectValidator {
 		VDomainModelReference pathToMultiRef = tableDomainModelReference.getDomainModelReference();
 		final EValidator validator;
 		if (pathToMultiRef != null) {
+			context.put(ViewValidator.ECLASS_KEY, null);
 			validator = EValidator.Registry.INSTANCE.getEValidator(pathToMultiRef.eClass().getEPackage());
 		} else {
 			pathToMultiRef = tableDomainModelReference;

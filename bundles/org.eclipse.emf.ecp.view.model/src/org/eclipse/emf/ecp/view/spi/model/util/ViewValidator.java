@@ -261,12 +261,6 @@ public class ViewValidator extends EObjectValidator {
 		VFeaturePathDomainModelReference featurePathDomainModelReference, DiagnosticChain diagnostics,
 		Map<Object, Object> context) {
 
-		// Do not validate feature dmrs witch are contained in another dmr,
-		// as normally a specific logic is applied for them
-		if (VDomainModelReference.class.isInstance(featurePathDomainModelReference.eContainer())) {
-			return true;
-		}
-
 		if (featurePathDomainModelReference.getDomainModelEFeature() == null) {
 			if (featurePathDomainModelReference.eContainer() != null) {
 				diagnostics
@@ -277,12 +271,20 @@ public class ViewValidator extends EObjectValidator {
 			return false;
 		}
 
+		// Do not validate feature dmrs witch are contained in another dmr,
+		// as normally a specific logic is applied for them
+		if (VDomainModelReference.class.isInstance(featurePathDomainModelReference.eContainer())
+			&& !context.containsKey(ECLASS_KEY)) {
+			return true;
+		}
+
 		// identify root eclass
 		final VView parentView = getParentView(featurePathDomainModelReference);
 		EClass rootEClass = null;
 		if (context.containsKey(ECLASS_KEY)) {
 			rootEClass = (EClass) context.get(ECLASS_KEY);
-		} else if (parentView != null) {
+		}
+		if (rootEClass == null && parentView != null) {
 			rootEClass = parentView.getRootEClass();
 			if (rootEClass == null) {
 				if (diagnostics != null) {
