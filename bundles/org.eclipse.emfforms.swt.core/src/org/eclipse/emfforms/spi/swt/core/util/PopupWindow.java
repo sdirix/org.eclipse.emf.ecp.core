@@ -52,7 +52,21 @@ public class PopupWindow {
 	public PopupWindow(final Control control, int maxHeight, int style) {
 		Assert.isNotNull(control);
 		shell = new Shell(control.getShell(), style);
-		configurePopupWindow(control, maxHeight);
+		configurePopupWindow(control, maxHeight, false);
+	}
+
+	/**
+	 * Creates a new resizable popup window, with size and location relative to the reference control.
+	 *
+	 * @param control the reference control
+	 * @param maxHeight the maximum height of the window
+	 * @param style the style of the window
+	 * @param stretchUp If the window does not fit on screen vertically, it will stretch up to reach the maxHeight
+	 */
+	public PopupWindow(final Control control, int maxHeight, int style, boolean stretchUp) {
+		Assert.isNotNull(control);
+		shell = new Shell(control.getShell(), style);
+		configurePopupWindow(control, maxHeight, stretchUp);
 	}
 
 	/**
@@ -60,16 +74,27 @@ public class PopupWindow {
 	 *
 	 * @param control the reference control
 	 * @param maxHeight the maximum height of the window
+	 * @param stretchUp If the window does not fit on screen vertically, it will stretch up to reach the maxHeight
 	 */
-	protected void configurePopupWindow(final Control control, int maxHeight) {
+	protected void configurePopupWindow(final Control control, int maxHeight, boolean stretchUp) {
 		final Point location = control.toDisplay(0, 0);
 		final Shell parentShell = control.getShell();
 		final Rectangle clientArea = control.getShell().getClientArea();
 		final Point bottomRight = parentShell.toDisplay(clientArea.width, clientArea.height);
-		final int shellHeight = Math.min(300, bottomRight.y - location.y);
+		final int distanceToScreenBottom = bottomRight.y - location.y;
+		int verticalMoveUp = 0;
+		int shellHeight = maxHeight;
+		if (distanceToScreenBottom < maxHeight) {
+			if (!stretchUp) {
+				shellHeight = Math.min(maxHeight, distanceToScreenBottom);
+			} else {
+				verticalMoveUp = maxHeight - distanceToScreenBottom;
+			}
+
+		}
 		shell.setSize(control.getSize().x, shellHeight);
 		shell.setLayout(new FillLayout());
-		shell.setLocation(location.x - 4, location.y - 4);// compensate for shell's margins
+		shell.setLocation(location.x - 4, location.y - 4 - verticalMoveUp);// compensate for shell's margins
 	}
 
 	/**

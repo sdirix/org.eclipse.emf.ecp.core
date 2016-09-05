@@ -9,7 +9,7 @@
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emfforms.internal.swt.control.text.richtext.renderer;
+package org.eclipse.emfforms.spi.swt.control.text.richtext.renderer;
 
 import javax.inject.Inject;
 
@@ -69,14 +69,14 @@ public class RichTextControlSWTRenderer extends TextControlSWTRenderer {
 		@Override
 		public void mouseDown(MouseEvent e) {
 
-			final PopupWindow popupWindow = new PopupWindow(text, 300);
+			final PopupWindow popupWindow = createPopupWindow();
 
 			final Text innerText = new Text(popupWindow.getContent(),
 				SWT.MULTI | SWT.WRAP | SWT.V_SCROLL | SWT.H_SCROLL);
 			final GridData layoutData = new GridData(SWT.FILL, SWT.FILL, true, true);
-			layoutData.heightHint = 300;
+			layoutData.heightHint = getPreferrredPopupHeight();
 			innerText.setLayoutData(layoutData);
-			innerText.setSize(300, 300);
+			innerText.setSize(300, getPreferrredPopupHeight());
 			popupWindow.getContent().pack();
 			innerText.setText(text.getText());
 			innerText.setSelection(text.getCaretPosition());
@@ -107,6 +107,24 @@ public class RichTextControlSWTRenderer extends TextControlSWTRenderer {
 		public void mouseDoubleClick(MouseEvent e) {
 			// do nothing
 		}
+	}
+
+	/**
+	 * Specifies the preferred size of the popup window.
+	 *
+	 * @return the size in pixel
+	 */
+	protected int getPreferrredPopupHeight() {
+		return 450;
+	}
+
+	/**
+	 * creates the popup window.
+	 *
+	 * @return a new {@link PopupWindow}
+	 */
+	protected PopupWindow createPopupWindow() {
+		return new PopupWindow(text, getPreferrredPopupHeight(), SWT.RESIZE, true);
 	}
 
 	/**
