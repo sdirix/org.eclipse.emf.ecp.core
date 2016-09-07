@@ -44,6 +44,8 @@ import org.eclipse.swt.widgets.Control;
  */
 public class TableControlRCPRenderer extends TableControlSWTRenderer {
 
+	private static CutCopyPasteListener cutCopyPasteListener;
+
 	/**
 	 * Default constructor.
 	 *
@@ -111,7 +113,16 @@ public class TableControlRCPRenderer extends TableControlSWTRenderer {
 		if (!TableViewer.class.isInstance(tableViewer)) {
 			return;
 		}
-		new CutCopyPasteListener((TableViewer) tableViewer, editingDomain, setting);
+		cutCopyPasteListener = new CutCopyPasteListener((TableViewer) tableViewer, editingDomain, setting);
+	}
+
+	@Override
+	protected void rootDomainModelChanged() throws DatabindingFailedException {
+		super.rootDomainModelChanged();
+		final Setting setting = getEMFFormsDatabinding().getSetting(getDMRToMultiReference(),
+			getViewModelContext().getDomainModel());
+		cutCopyPasteListener.rootDomainModelChanged(setting);
+
 	}
 
 }
