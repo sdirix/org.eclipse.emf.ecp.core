@@ -299,6 +299,169 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/template/style/tab/model/VTTabPackage.java" type="org.eclipse.emf.ecp.view.template.style.tab.model.VTTabPackage">
+        <filter comment="SPI change 1.10.0" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tab.model.VTTabPackage"/>
+                <message_argument value="TAB_STYLE_PROPERTY_FEATURE_COUNT"/>
+                <message_argument value="1"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI change 1.10.0" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tab.model.VTTabPackage"/>
+                <message_argument value="TAB_STYLE_PROPERTY__CANCEL_IMAGE_URL"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI change 1.10.0" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tab.model.VTTabPackage"/>
+                <message_argument value="TAB_STYLE_PROPERTY__ERROR_IMAGE_URL"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI change 1.10.0" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tab.model.VTTabPackage"/>
+                <message_argument value="TAB_STYLE_PROPERTY__INFO_IMAGE_URL"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI change 1.10.0" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tab.model.VTTabPackage"/>
+                <message_argument value="TAB_STYLE_PROPERTY__OK_IMAGE_URL"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI change 1.10.0" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tab.model.VTTabPackage"/>
+                <message_argument value="TAB_STYLE_PROPERTY__WARNING_IMAGE_URL"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI change 1.10.0" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tab.model.VTTabPackage"/>
+                <message_argument value="getTabStyleProperty_CancelImageURL()"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI change 1.10.0" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tab.model.VTTabPackage"/>
+                <message_argument value="getTabStyleProperty_ErrorImageURL()"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI change 1.10.0" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tab.model.VTTabPackage"/>
+                <message_argument value="getTabStyleProperty_InfoImageURL()"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI change 1.10.0" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tab.model.VTTabPackage"/>
+                <message_argument value="getTabStyleProperty_OkImageURL()"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI change 1.10.0" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tab.model.VTTabPackage"/>
+                <message_argument value="getTabStyleProperty_WarningImageURL()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/template/style/tab/model/VTTabPackage.java" type="org.eclipse.emf.ecp.view.template.style.tab.model.VTTabPackage$Literals">
+        <filter comment="SPI change 1.10.0" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tab.model.VTTabPackage.Literals"/>
+                <message_argument value="TAB_STYLE_PROPERTY__CANCEL_IMAGE_URL"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI change 1.10.0" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tab.model.VTTabPackage.Literals"/>
+                <message_argument value="TAB_STYLE_PROPERTY__ERROR_IMAGE_URL"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI change 1.10.0" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tab.model.VTTabPackage.Literals"/>
+                <message_argument value="TAB_STYLE_PROPERTY__INFO_IMAGE_URL"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI change 1.10.0" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tab.model.VTTabPackage.Literals"/>
+                <message_argument value="TAB_STYLE_PROPERTY__OK_IMAGE_URL"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI change 1.10.0" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tab.model.VTTabPackage.Literals"/>
+                <message_argument value="TAB_STYLE_PROPERTY__WARNING_IMAGE_URL"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/template/style/tab/model/VTTabStyleProperty.java" type="org.eclipse.emf.ecp.view.template.style.tab.model.VTTabStyleProperty">
+        <filter comment="SPI Change 1.10.0" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tab.model.VTTabStyleProperty"/>
+                <message_argument value="getCancelImageURL()"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change 1.10.0" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tab.model.VTTabStyleProperty"/>
+                <message_argument value="getErrorImageURL()"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change 1.10.0" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tab.model.VTTabStyleProperty"/>
+                <message_argument value="getInfoImageURL()"/>
+            </message_arguments>
+        </filter>
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tab.model.VTTabStyleProperty"/>
+                <message_argument value="getOkImageURL()"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change 1.10.0" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tab.model.VTTabStyleProperty"/>
+                <message_argument value="getWarningImageURL()"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change 1.10.0" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tab.model.VTTabStyleProperty"/>
+                <message_argument value="setCancelImageURL(String)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change 1.10.0" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tab.model.VTTabStyleProperty"/>
+                <message_argument value="setErrorImageURL(String)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change 1.10.0" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tab.model.VTTabStyleProperty"/>
+                <message_argument value="setInfoImageURL(String)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change 1.10.0" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tab.model.VTTabStyleProperty"/>
+                <message_argument value="setOkImageURL(String)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change 1.10.0" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tab.model.VTTabStyleProperty"/>
+                <message_argument value="setWarningImageURL(String)"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/ecp/view/template/style/validation/model/VTValidationPackage.java" type="org.eclipse.emf.ecp.view.template.style.validation.model.VTValidationPackage">
         <filter comment="spi change" id="388194388">
             <message_arguments>
