@@ -17,13 +17,7 @@ import javax.inject.Inject;
 
 import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.view.internal.table.nebula.grid.GridCopyKeyListener;
-import org.eclipse.emf.ecp.view.internal.table.nebula.grid.GridNewLineKeyListener;
 import org.eclipse.emf.ecp.view.internal.table.nebula.grid.GridPasteKeyListener;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
@@ -34,7 +28,6 @@ import org.eclipse.emf.ecp.view.template.style.background.model.VTBackgroundStyl
 import org.eclipse.emf.ecp.view.template.style.fontProperties.model.VTFontPropertiesStyleProperty;
 import org.eclipse.emfforms.spi.common.converter.EStructuralFeatureValueConverterService;
 import org.eclipse.emfforms.spi.common.report.ReportService;
-import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
 import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
@@ -72,7 +65,8 @@ public class GridControlSWTRenderer extends TableControlSWTRenderer {
 	 * @param vtViewTemplateProvider The {@link VTViewTemplateProvider}
 	 * @param imageRegistryService The {@link ImageRegistryService}
 	 * @param emfFormsEditSupport The {@link EMFFormsEditSupport}
-	 * @since 1.
+	 * @param converterService the {@link EStructuralFeatureValueConverterService}
+	 * @since 1.11
 	 */
 	@Inject
 	// CHECKSTYLE.OFF: ParameterNumber
@@ -109,26 +103,27 @@ public class GridControlSWTRenderer extends TableControlSWTRenderer {
 			tableViewer.getGrid()
 				.addKeyListener(new GridPasteKeyListener(tableViewer.getGrid().getDisplay(), getEMFFormsDatabinding(),
 					converterService, true));
-			tableViewer.getGrid().addKeyListener(new GridNewLineKeyListener() {
-
-				@Override
-				public void appendNewRow() {
-
-					try {
-						final Setting setting = getEMFFormsDatabinding().getSetting(getDMRToMultiReference(),
-							getViewModelContext().getDomainModel());
-						final EObject eObject = setting.getEObject();
-						final EStructuralFeature structuralFeature = setting.getEStructuralFeature();
-						final EClass clazz = ((EReference) structuralFeature).getEReferenceType();
-
-						addRow(clazz, eObject, structuralFeature);
-					} catch (final DatabindingFailedException ex) {
-						// nothing to do
-					}
-
-				}
-
-			});
+			// TODO MS
+			// tableViewer.getGrid().addKeyListener(new GridNewLineKeyListener() {
+			//
+			// @Override
+			// public void appendNewRow() {
+			//
+			// try {
+			// final Setting setting = getEMFFormsDatabinding().getSetting(getDMRToMultiReference(),
+			// getViewModelContext().getDomainModel());
+			// final EObject eObject = setting.getEObject();
+			// final EStructuralFeature structuralFeature = setting.getEStructuralFeature();
+			// final EClass clazz = ((EReference) structuralFeature).getEReferenceType();
+			//
+			// addRow(clazz, eObject, structuralFeature);
+			// } catch (final DatabindingFailedException ex) {
+			// // nothing to do
+			// }
+			//
+			// }
+			//
+			// });
 
 			/* Set background color */
 			final VTBackgroundStyleProperty backgroundStyleProperty = getBackgroundStyleProperty();
@@ -168,6 +163,7 @@ public class GridControlSWTRenderer extends TableControlSWTRenderer {
 
 			final ColumnViewerEditorActivationStrategy actSupport = new ColumnViewerEditorActivationStrategy(
 				gridTableViewer) {
+				@SuppressWarnings("unchecked")
 				@Override
 				protected boolean isEditorActivationEvent(ColumnViewerEditorActivationEvent event) {
 

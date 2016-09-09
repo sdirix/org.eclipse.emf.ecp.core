@@ -2168,16 +2168,4 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			return ECPTooltipModifierHelper.modifyString(message, null);
 		}
 	}
-
-	@Override
-	protected void rootDomainModelChanged() throws DatabindingFailedException {
-		// TODO rebind tooltip and text?
-		final IObservableList oldList = (IObservableList) getTableViewer().getInput();
-		oldList.dispose();
-		final IObservableList list = getEMFFormsDatabinding().getObservableList(getDMRToMultiReference(),
-			getViewModelContext().getDomainModel());
-		// addRelayoutListenerIfNeeded(list, composite);
-		getTableViewer().setInput(list);
-		tableControlSWTRendererButtonBarBuilder.updateValues();
-	}
 }
