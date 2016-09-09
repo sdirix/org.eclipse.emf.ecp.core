@@ -1093,12 +1093,10 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 * @since 1.6
 	 */
 	protected void addRow(EClass clazz, EObject eObject, EStructuralFeature structuralFeature) {
-		final TableControlService tableService = getViewModelContext()
-			.getService(TableControlService.class);
 		Optional<EObject> eObjectToAdd;
 
 		/* no table service available, fall back to default */
-		if (tableService == null) {
+		if (!getViewModelContext().hasService(TableControlService.class)) {
 			if (clazz.isAbstract() || clazz.isInterface()) {
 				getReportService().report(new StatusReport(
 					new Status(IStatus.WARNING, "org.eclipse.emf.ecp.view.table.ui.swt", //$NON-NLS-1$
@@ -1110,6 +1108,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		}
 		/* table service available */
 		else {
+			final TableControlService tableService = getViewModelContext()
+				.getService(TableControlService.class);
 			eObjectToAdd = tableService.createNewElement(clazz, eObject, structuralFeature);
 		}
 
@@ -1435,15 +1435,15 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	private final class DoubleClickListener implements IDoubleClickListener {
 		@Override
 		public void doubleClick(DoubleClickEvent event) {
-			final TableControlService tableService = getViewModelContext()
-				.getService(TableControlService.class);
-			if (tableService == null) {
+			if (!getViewModelContext().hasService(TableControlService.class)) {
 				return;
 			}
 			final ISelection selection = event.getSelection();
 			if (!StructuredSelection.class.isInstance(selection)) {
 				return;
 			}
+			final TableControlService tableService = getViewModelContext()
+				.getService(TableControlService.class);
 			tableService.doubleClick(getVElement(),
 				(EObject) StructuredSelection.class.cast(selection).getFirstElement());
 		}

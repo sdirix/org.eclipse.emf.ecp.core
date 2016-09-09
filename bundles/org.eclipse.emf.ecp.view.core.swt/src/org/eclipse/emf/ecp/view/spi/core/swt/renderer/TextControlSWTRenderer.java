@@ -230,6 +230,7 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 	/**
 	 *
 	 * @return the {@link EMFFormsEditSupport}
+	 * @since 1.10
 	 */
 	protected EMFFormsEditSupport getEMFFormsEditSupport() {
 		return emfFormsEditSupport;

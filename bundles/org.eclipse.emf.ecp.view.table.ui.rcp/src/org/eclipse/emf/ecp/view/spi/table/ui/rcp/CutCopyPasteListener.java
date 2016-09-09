@@ -47,8 +47,8 @@ public class CutCopyPasteListener implements KeyListener, ISelectionChangedListe
 	private final CopyAction copyAction;
 	private final PasteAction pasteAction;
 
-	private final EObject parent;
-	private final EStructuralFeature feature;
+	private EObject parent;
+	private EStructuralFeature feature;
 
 	/**
 	 * Constructs this listener.
@@ -118,6 +118,16 @@ public class CutCopyPasteListener implements KeyListener, ISelectionChangedListe
 
 	private static boolean isActivated(KeyEvent event, int swtMask, char c) {
 		return (event.stateMask & swtMask) == swtMask && event.keyCode == c;
+	}
+
+	/**
+	 * Called to notify this listener that the domain model has changed.
+	 *
+	 * @param setting the new table setting
+	 */
+	public void rootDomainModelChanged(Setting setting) {
+		parent = setting.getEObject();
+		feature = setting.getEStructuralFeature();
 	}
 
 }
