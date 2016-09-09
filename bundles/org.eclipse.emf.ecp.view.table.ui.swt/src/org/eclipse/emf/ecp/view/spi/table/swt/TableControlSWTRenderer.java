@@ -543,6 +543,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 						? ECPCellEditor.class.cast(tempCellEditor).getMinWidth() : 10;
 				}
 
+				// TODO: rewrite builder (ms)
+				tableViewerSWTBuilder.setData(AbstractTableViewerComposite.DMR, dmr);
 				tableViewerSWTBuilder.addColumn(true, false, SWT.NONE, weight, minWidth, text, tooltip,
 					labelProvider, editingSupportCreator, null);
 
@@ -627,9 +629,9 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 	/**
 	 * @return the {@link VDomainModelReference} which ends at the table setting
-	 * @since 1.10
+	 * @since 1.11
 	 */
-	protected final VDomainModelReference getDMRToMultiReference() {
+	protected VDomainModelReference getDMRToMultiReference() {
 		final VTableDomainModelReference tableDomainModelReference = (VTableDomainModelReference) getVElement()
 			.getDomainModelReference();
 		final VDomainModelReference dmrToCheck = tableDomainModelReference.getDomainModelReference() == null
@@ -2165,5 +2167,17 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			final String message = DiagnosticMessageExtractor.getMessage(vDiagnostic.getDiagnostics((EObject) element));
 			return ECPTooltipModifierHelper.modifyString(message, null);
 		}
+	}
+
+	@Override
+	protected void rootDomainModelChanged() throws DatabindingFailedException {
+		// TODO rebind tooltip and text?
+		final IObservableList oldList = (IObservableList) getTableViewer().getInput();
+		oldList.dispose();
+		final IObservableList list = getEMFFormsDatabinding().getObservableList(getDMRToMultiReference(),
+			getViewModelContext().getDomainModel());
+		// addRelayoutListenerIfNeeded(list, composite);
+		getTableViewer().setInput(list);
+		tableControlSWTRendererButtonBarBuilder.updateValues();
 	}
 }

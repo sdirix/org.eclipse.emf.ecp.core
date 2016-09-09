@@ -11,20 +11,30 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.table.nebula.grid;
 
+import java.util.Arrays;
+
 import javax.inject.Inject;
 
 import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecp.view.internal.table.nebula.grid.GridCopyKeyListener;
+import org.eclipse.emf.ecp.view.internal.table.nebula.grid.GridNewLineKeyListener;
+import org.eclipse.emf.ecp.view.internal.table.nebula.grid.GridPasteKeyListener;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.spi.table.internal.nebula.grid.GridCopyKeyListener;
-import org.eclipse.emf.ecp.view.spi.table.internal.nebula.grid.GridPasteKeyListener;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.swt.TableControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.ecp.view.template.style.background.model.VTBackgroundStyleProperty;
 import org.eclipse.emf.ecp.view.template.style.fontProperties.model.VTFontPropertiesStyleProperty;
+import org.eclipse.emfforms.spi.common.converter.EStructuralFeatureValueConverterService;
 import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
 import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
@@ -49,6 +59,8 @@ import org.eclipse.swt.widgets.ScrollBar;
  */
 public class GridControlSWTRenderer extends TableControlSWTRenderer {
 
+	private final EStructuralFeatureValueConverterService converterService;
+
 	/**
 	 * Default constructor.
 	 *
@@ -67,10 +79,11 @@ public class GridControlSWTRenderer extends TableControlSWTRenderer {
 	public GridControlSWTRenderer(VTableControl vElement, ViewModelContext viewContext, ReportService reportService,
 		EMFFormsDatabindingEMF emfFormsDatabinding, EMFFormsLabelProvider emfFormsLabelProvider,
 		VTViewTemplateProvider vtViewTemplateProvider, ImageRegistryService imageRegistryService,
-		EMFFormsEditSupport emfFormsEditSupport) {
+		EMFFormsEditSupport emfFormsEditSupport, EStructuralFeatureValueConverterService converterService) {
 		// CHECKSTYLE.ON: ParameterNumber
 		super(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider,
 			imageRegistryService, emfFormsEditSupport);
+		this.converterService = converterService;
 	}
 
 	/**
@@ -82,16 +95,40 @@ public class GridControlSWTRenderer extends TableControlSWTRenderer {
 
 		@Override
 		public GridTableViewer createTableViewer(Composite parent) {
+
 			final GridTableViewer tableViewer = new GridTableViewer(parent,
-				SWT.MULTI | SWT.V_SCROLL | SWT.BORDER);
+				SWT.MULTI | SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.BORDER);
 			tableViewer.getGrid().setData(CUSTOM_VARIANT, TABLE_CUSTOM_VARIANT);
 			tableViewer.getGrid().setHeaderVisible(true);
 			tableViewer.getGrid().setLinesVisible(true);
 			tableViewer.getGrid().setCellSelectionEnabled(true);
 			tableViewer.getGrid().setFooterVisible(false);
 			tableViewer.getGrid().setRowHeaderVisible(true);
+
 			tableViewer.getGrid().addKeyListener(new GridCopyKeyListener(tableViewer.getGrid().getDisplay()));
-			tableViewer.getGrid().addKeyListener(new GridPasteKeyListener(tableViewer.getGrid().getDisplay()));
+			tableViewer.getGrid()
+				.addKeyListener(new GridPasteKeyListener(tableViewer.getGrid().getDisplay(), getEMFFormsDatabinding(),
+					converterService, true));
+			tableViewer.getGrid().addKeyListener(new GridNewLineKeyListener() {
+
+				@Override
+				public void appendNewRow() {
+
+					try {
+						final Setting setting = getEMFFormsDatabinding().getSetting(getDMRToMultiReference(),
+							getViewModelContext().getDomainModel());
+						final EObject eObject = setting.getEObject();
+						final EStructuralFeature structuralFeature = setting.getEStructuralFeature();
+						final EClass clazz = ((EReference) structuralFeature).getEReferenceType();
+
+						addRow(clazz, eObject, structuralFeature);
+					} catch (final DatabindingFailedException ex) {
+						// nothing to do
+					}
+
+				}
+
+			});
 
 			/* Set background color */
 			final VTBackgroundStyleProperty backgroundStyleProperty = getBackgroundStyleProperty();
@@ -124,17 +161,38 @@ public class GridControlSWTRenderer extends TableControlSWTRenderer {
 			// final TableViewerFocusCellManager focusCellManager = new TableViewerFocusCellManager(tableViewer,
 			// new org.eclipse.emf.ecp.edit.internal.swt.controls.ECPFocusCellDrawHighlighter(tableViewer));
 
+			// final TableViewer tableViewer = (TableViewer) getTableViewer();
+			// final TableViewerFocusCellManager focusCellManager = new TableViewerFocusCellManager(
+			// (TableViewer) gridTableViewer,
+			// new CustomFocusCellHighlighter(gridTableViewer);
+
 			final ColumnViewerEditorActivationStrategy actSupport = new ColumnViewerEditorActivationStrategy(
 				gridTableViewer) {
 				@Override
 				protected boolean isEditorActivationEvent(ColumnViewerEditorActivationEvent event) {
-					return event.eventType == ColumnViewerEditorActivationEvent.TRAVERSAL
+
+					if (event.eventType == ColumnViewerEditorActivationEvent.TRAVERSAL
 						|| event.eventType == ColumnViewerEditorActivationEvent.MOUSE_DOUBLE_CLICK_SELECTION
-						|| event.eventType == ColumnViewerEditorActivationEvent.KEY_PRESSED
-							&& (event.keyCode == SWT.CR || event.keyCode == 16777296)
-						|| event.eventType == ColumnViewerEditorActivationEvent.PROGRAMMATIC;
+						|| event.eventType == ColumnViewerEditorActivationEvent.PROGRAMMATIC) {
+						return true;
+					}
+
+					if (event.eventType == ColumnViewerEditorActivationEvent.KEY_PRESSED) {
+
+						for (final int keyCode : Arrays.asList(SWT.CTRL, SWT.ALT, SWT.SHIFT)) {
+							if ((event.keyCode & keyCode) != 0 || (event.stateMask & keyCode) != 0) {
+								return false;
+							}
+						}
+						return !Arrays
+							.asList(SWT.ARROW_UP, SWT.ARROW_DOWN, SWT.ARROW_LEFT, SWT.ARROW_RIGHT, SWT.TAB, SWT.CR)
+							.contains(event.keyCode);
+
+					}
+					return false;
 				}
 			};
+			actSupport.setEnableEditorActivationWithKeyboard(true);
 			GridViewerEditor.create(
 				gridTableViewer,
 				actSupport,
@@ -183,4 +241,5 @@ public class GridControlSWTRenderer extends TableControlSWTRenderer {
 	protected ScrollBar getVerticalBar() {
 		return ((GridTableViewer) getTableViewer()).getGrid().getVerticalBar();
 	}
+
 }

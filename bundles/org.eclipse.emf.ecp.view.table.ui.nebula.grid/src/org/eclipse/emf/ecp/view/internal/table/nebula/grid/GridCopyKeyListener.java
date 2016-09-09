@@ -9,7 +9,7 @@
  * Contributors:
  * Alexandra Buzila - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.spi.table.internal.nebula.grid;
+package org.eclipse.emf.ecp.view.internal.table.nebula.grid;
 
 import org.eclipse.nebula.widgets.grid.Grid;
 import org.eclipse.swt.SWT;
@@ -57,6 +57,10 @@ public class GridCopyKeyListener implements KeyListener {
 			final TextTransfer[] dataTypes = { TextTransfer.getInstance() };
 
 			clipboard.setContents(data, dataTypes);
+
+			// System.out.println("---");
+			// System.out.println(Arrays.toString(data));
+			// System.out.println("---");
 		}
 	}
 
