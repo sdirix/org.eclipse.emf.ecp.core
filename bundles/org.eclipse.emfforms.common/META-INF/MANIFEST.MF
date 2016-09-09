@@ -5,10 +5,15 @@ Bundle-SymbolicName: org.eclipse.emfforms.common
 Bundle-Version: 1.10.0.qualifier
 Bundle-Vendor: Eclipse Modeling Project
 Export-Package: org.eclipse.emfforms.common;version="1.10.0",
+ org.eclipse.emfforms.internal.common.converter;version="1.10.0";x-internal:=true,
  org.eclipse.emfforms.internal.common.report;version="1.10.0";x-internal:=true,
+ org.eclipse.emfforms.spi.common.converter;version="1.10.0",
  org.eclipse.emfforms.spi.common.locale;version="1.10.0",
  org.eclipse.emfforms.spi.common.report;version="1.10.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Service-Component: OSGI-INF/org.eclipse.emfforms.internal.common.report.ReportServiceImpl.xml
+Service-Component: OSGI-INF/org.eclipse.emfforms.internal.common.report.ReportServiceImpl.xml,
+ OSGI-INF/org.eclipse.emfforms.internal.common.converter.EStructuralFeatureValueConverterServiceImpl.xml,
+ OSGI-INF/org.eclipse.emfforms.internal.common.converter.DefaultEAttributeValueConverterImpl.xml
 Import-Package: org.osgi.service.component.annotations;version="[1.1.0,2.0.0)";resolution:=optional
 Bundle-ActivationPolicy: lazy
+Require-Bundle: org.eclipse.emf.ecore;bundle-version="[2.7.0,3.0.0)"
