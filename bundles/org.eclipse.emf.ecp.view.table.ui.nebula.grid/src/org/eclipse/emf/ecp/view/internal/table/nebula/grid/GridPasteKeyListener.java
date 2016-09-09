@@ -51,6 +51,9 @@ public class GridPasteKeyListener implements KeyListener {
 	 * Constructor.
 	 *
 	 * @param display the {@link Display} on which to allocate this command's {@link Clipboard}.
+	 * @param dataBinding {@link EMFFormsDatabindingEMF}
+	 * @param converterService {@link EStructuralFeatureValueConverterService}
+	 * @param selectPastedCells whether to select the pasted cells
 	 */
 	public GridPasteKeyListener(Display display, EMFFormsDatabindingEMF dataBinding,
 		EStructuralFeatureValueConverterService converterService, boolean selectPastedCells) {
@@ -111,6 +114,14 @@ public class GridPasteKeyListener implements KeyListener {
 
 	}
 
+	/**
+	 * Performs the paste operation.
+	 *
+	 * @param startItem the start uten
+	 * @param grid the grid
+	 * @param contents the pasted contents
+	 * @return the pasted cells
+	 */
 	public List<Point> pasteContents(Point startItem, Grid grid, String contents) {
 		final int startColumn = startItem.x;
 		final int startRow = startItem.y;
@@ -141,7 +152,6 @@ public class GridPasteKeyListener implements KeyListener {
 				final int insertionColumnIndex = startColumn + relativeColumn;
 				final int insertionRowIndex = startRow + relativeRow;
 
-				@SuppressWarnings("unchecked")
 				final VDomainModelReference dmr = (VDomainModelReference) grid.getColumn(insertionColumnIndex)
 					.getData(AbstractTableViewerComposite.DMR);
 
@@ -162,7 +172,9 @@ public class GridPasteKeyListener implements KeyListener {
 
 						pastedCells.add(new Point(insertionColumnIndex, insertionRowIndex));
 
-					} catch (final Exception ex) {
+					}
+					// BEGIN SUPRESS CATCH EXCEPTION
+					catch (final Exception ex) {// END SUPRESS CATCH EXCEPTION
 						// silently ignore this
 					} finally {
 						if (value != null) {

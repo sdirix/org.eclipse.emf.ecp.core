@@ -49,7 +49,9 @@ public abstract class AbstractTableViewerComposite extends Composite {
 	public static final String MIN_WIDTH = "min_width"; //$NON-NLS-1$
 	/** Data key for column id. */
 	public static final String COLUMN_ID = "column_id"; //$NON-NLS-1$
+	/** Data key for a domain model reference. */
 	public static final String DMR = "domain_model_reference"; //$NON-NLS-1$
+
 	private final EMFDataBindingContext emfDatabindingContext;
 	private Optional<List<Control>> validationControls;
 

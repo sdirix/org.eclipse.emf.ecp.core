@@ -89,7 +89,9 @@ public class DefaultEAttributeValueConverterImpl implements EStructuralFeatureVa
 				return objects;
 			}
 			return fromString(feature, literal);
-		} catch (final RuntimeException ex) {
+		}
+		// BEGIN SUPRESS CATCH EXCEPTION
+		catch (final RuntimeException ex) {// END SUPRESS CATCH EXCEPTION
 			// silently ignore this (conversion can fail for various reasons)
 			return null;
 		}

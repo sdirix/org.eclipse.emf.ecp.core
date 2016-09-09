@@ -16,7 +16,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.eclipse.emfforms.spi.swt.table.AbstractTableViewerComposite;
-import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.nebula.jface.gridviewer.GridTableViewer;
 import org.eclipse.nebula.jface.gridviewer.GridViewerColumn;
 import org.eclipse.nebula.widgets.grid.GridCellRenderer;
@@ -127,7 +126,7 @@ public class GridViewerColumnBuilder {
 	}
 
 	/**
-	 * Configures the application data entries to be set for the {@link TableViewerColumn}.
+	 * Configures the application data entries to be set for the {@link GridViewerColumn}.
 	 *
 	 * @param data the data entries to be added
 	 * @return the TableViewerColumnBuilder instance
@@ -174,8 +173,8 @@ public class GridViewerColumnBuilder {
 	/**
 	 * Overwrites the DefaultGridCellRenderer.
 	 *
-	 * @param cellRenderer
-	 * @return
+	 * @param cellRenderer the cell renderer
+	 * @return self
 	 */
 	public GridViewerColumnBuilder setCellRenderer(GridCellRenderer cellRenderer) {
 		this.cellRenderer = cellRenderer;

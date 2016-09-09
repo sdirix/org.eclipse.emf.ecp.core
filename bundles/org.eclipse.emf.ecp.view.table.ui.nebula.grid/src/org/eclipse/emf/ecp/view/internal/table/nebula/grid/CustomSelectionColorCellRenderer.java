@@ -48,6 +48,7 @@ import org.eclipse.swt.graphics.TextLayout;
  * Copy of the Nebula Grid DefaultCellRenderer (temporary fix to be able to set the selection colors)
  *
  */
+@SuppressWarnings({ "restriction", "nls" })
 public class CustomSelectionColorCellRenderer extends GridCellRenderer {
 
 	int leftMargin = 4;
@@ -516,26 +517,26 @@ public class CustomSelectionColorCellRenderer extends GridCellRenderer {
 			checkBounds.height = checkRenderer.getBounds().height;
 
 			return checkBounds.contains(point);
-		} else {
-			point = new Point(point.x, point.y);
-			point.x -= getBounds().x;
-			point.y -= getBounds().y;
-
-			int x = leftMargin;
-			if (isTree()) {
-				x += getToggleIndent(item);
-				x += toggleRenderer.getSize().x + insideMargin;
-			}
-
-			if (point.x >= x && point.x < x + checkRenderer.getSize().x) {
-				final int yStart = (getBounds().height - checkRenderer.getBounds().height) / 2;
-				if (point.y >= yStart && point.y < yStart + checkRenderer.getSize().y) {
-					return true;
-				}
-			}
-
-			return false;
 		}
+		point = new Point(point.x, point.y);
+		point.x -= getBounds().x;
+		point.y -= getBounds().y;
+
+		int x = leftMargin;
+		if (isTree()) {
+			x += getToggleIndent(item);
+			x += toggleRenderer.getSize().x + insideMargin;
+		}
+
+		if (point.x >= x && point.x < x + checkRenderer.getSize().x) {
+			final int yStart = (getBounds().height - checkRenderer.getBounds().height) / 2;
+			if (point.y >= yStart && point.y < yStart + checkRenderer.getSize().y) {
+				return true;
+			}
+		}
+
+		return false;
+
 	}
 
 	private int getToggleIndent(GridItem item) {
