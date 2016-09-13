@@ -112,6 +112,15 @@ public class EmbeddedGroupSWTRenderer extends AbstractSWTRenderer<VGroup> {
 			for (final SWTGridCell rendererGridCell : rendererGridDescription.getGrid()) {
 				final SWTGridCell gc = new SWTGridCell(row, rendererGridCell.getColumn(),
 					rendererGridCell.getRenderer());
+				gc.setHorizontalAlignment(rendererGridCell.getHorizontalAlignment());
+				gc.setHorizontalFill(rendererGridCell.isHorizontalFill());
+				gc.setHorizontalGrab(rendererGridCell.isHorizontalGrab());
+				gc.setHorizontalSpan(rendererGridCell.getHorizontalSpan());
+				gc.setVerticalAlignment(rendererGridCell.getVerticalAlignment());
+				gc.setVerticalFill(rendererGridCell.isVerticalFill());
+				gc.setVerticalGrab(rendererGridCell.isVerticalGrab());
+				gc.setPreferredSize(rendererGridCell.getPreferredSize());
+
 				currentGridDescription.getGrid().add(gc);
 				gridCellsPerRow.get(row).add(gc);
 			}
