@@ -748,6 +748,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 			.getObservableValue(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
 		container = (EObject) ((IObserving) observableValue).getObserved();
 		observableValue.dispose();
+		updateButtonEnabling();
 	}
 
 	@Override
