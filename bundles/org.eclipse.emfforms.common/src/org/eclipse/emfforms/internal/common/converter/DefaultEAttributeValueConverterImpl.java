@@ -12,6 +12,7 @@
 package org.eclipse.emfforms.internal.common.converter;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -66,8 +67,8 @@ public class DefaultEAttributeValueConverterImpl implements EStructuralFeatureVa
 	}
 
 	@Override
-	public double isApplicable(EObject eObject, EStructuralFeature feature, String literal) {
-		if (feature instanceof EReference) {
+	public double isApplicable(EObject eObject, EStructuralFeature feature, Object value, Direction direction) {
+		if (Direction.MODEL_TO_LITERAL.equals(direction) || feature instanceof EReference) {
 			return NOT_APPLICABLE;
 		}
 		return priority; // otherwise always applicable
@@ -98,6 +99,29 @@ public class DefaultEAttributeValueConverterImpl implements EStructuralFeatureVa
 
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public Object convertToLiteral(EObject eObject, EStructuralFeature feature, Object instance) {
+		try {
+			if (instance instanceof Collection) {
+				final StringBuilder stringBuilder = new StringBuilder();
+				for (final Object object : (Collection<Object>) instance) {
+					if (stringBuilder.length() > 0) {
+						stringBuilder.append(listSeparator);
+					}
+					stringBuilder.append(String.valueOf(toString(feature, object)));
+				}
+				return stringBuilder.toString();
+			}
+			return toString(feature, instance);
+		}
+		// BEGIN SUPRESS CATCH EXCEPTION
+		catch (final RuntimeException ex) {// END SUPRESS CATCH EXCEPTION
+			// silently ignore this (conversion can fail for various reasons)
+			return null;
+		}
+	}
+
 	/**
 	 * Convert literal to Object.
 	 *
@@ -107,6 +131,18 @@ public class DefaultEAttributeValueConverterImpl implements EStructuralFeatureVa
 	 */
 	protected Object fromString(EStructuralFeature feature, String literal) {
 		return EcoreUtil.createFromString(((EAttribute) feature).getEAttributeType(), literal);
+	}
+
+	/**
+	 * Basic conversion from model to string literal.
+	 *
+	 * @param feature the feauter
+	 * @param instance the model value
+	 * @return the string value
+	 */
+	protected Object toString(EStructuralFeature feature, Object instance) {
+		return String.valueOf(instance);
+
 	}
 
 }

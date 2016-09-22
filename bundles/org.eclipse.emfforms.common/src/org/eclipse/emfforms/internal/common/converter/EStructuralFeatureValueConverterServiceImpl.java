@@ -17,6 +17,7 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emfforms.spi.common.converter.EStructuralFeatureValueConverter;
+import org.eclipse.emfforms.spi.common.converter.EStructuralFeatureValueConverter.Direction;
 import org.eclipse.emfforms.spi.common.converter.EStructuralFeatureValueConverterService;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -43,14 +44,13 @@ public class EStructuralFeatureValueConverterServiceImpl implements EStructuralF
 		converters.remove(converter);
 	}
 
-	@Override
-	public Object convertToModelValue(EObject eObject, EStructuralFeature feature, String text) {
-
+	private EStructuralFeatureValueConverter getHighestRankingConverter(EObject eObject, EStructuralFeature feature,
+		Object value, Direction direction) {
 		double priority = EStructuralFeatureValueConverter.NOT_APPLICABLE;
 		EStructuralFeatureValueConverter highestRankingConverter = null;
 		for (final EStructuralFeatureValueConverter converter : converters) {
 
-			final double applicable = converter.isApplicable(eObject, feature, text);
+			final double applicable = converter.isApplicable(eObject, feature, value, direction);
 			if (applicable == EStructuralFeatureValueConverter.NOT_APPLICABLE || applicable <= priority) {
 				continue;
 			}
@@ -59,12 +59,27 @@ public class EStructuralFeatureValueConverterServiceImpl implements EStructuralF
 			priority = applicable;
 
 		}
+		return highestRankingConverter;
+	}
 
-		if (highestRankingConverter == null) {
+	@Override
+	public Object convertToModelValue(EObject eObject, EStructuralFeature feature, String literal) {
+		final EStructuralFeatureValueConverter converter = getHighestRankingConverter(eObject, feature, literal,
+			Direction.LITERAL_TO_MODEL);
+		if (converter == null) {
 			return null;
 		}
+		return converter.convertToModelValue(eObject, feature, literal);
+	}
 
-		return highestRankingConverter.convertToModelValue(eObject, feature, text);
+	@Override
+	public Object convertToLiteral(EObject eObject, EStructuralFeature feature, Object instance) {
+		final EStructuralFeatureValueConverter converter = getHighestRankingConverter(eObject, feature, instance,
+			Direction.MODEL_TO_LITERAL);
+		if (converter == null) {
+			return null;
+		}
+		return converter.convertToLiteral(eObject, feature, instance);
 	}
 
 }

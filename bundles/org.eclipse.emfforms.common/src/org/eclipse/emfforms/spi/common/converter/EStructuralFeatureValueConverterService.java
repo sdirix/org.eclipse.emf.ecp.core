@@ -16,7 +16,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 
 /**
  * @author Mathias Schaefer <mschaefer@eclipsesource.com>
- * @since 1.10
+ * @since 1.11
  *
  */
 public interface EStructuralFeatureValueConverterService {
@@ -45,4 +45,13 @@ public interface EStructuralFeatureValueConverterService {
 	 */
 	Object convertToModelValue(EObject eObject, EStructuralFeature feature, String literal);
 
+	/**
+	 * Convert value instance to literal.
+	 *
+	 * @param eObject (optional, can be null)
+	 * @param feature source feature
+	 * @param instance to convert
+	 * @return converted object (commonly a string literal, null if conversion failed)
+	 */
+	Object convertToLiteral(EObject eObject, EStructuralFeature feature, Object instance);
 }
