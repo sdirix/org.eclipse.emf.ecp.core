@@ -197,6 +197,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 		@Override
 		public void menuAboutToShow(IMenuManager manager) {
 			if (treeViewer.getSelection().isEmpty()) {
+				fillMenu(null, manager);
 				return;
 			}
 			final EObject root = ((RootObject) treeViewer.getInput()).getRoot();
@@ -222,24 +223,28 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 				if (selection.getFirstElement() != null && EObject.class.isInstance(selection.getFirstElement())) {
 					final EObject selectedObject = (EObject) selection.getFirstElement();
 
-					for (final MasterDetailAction menuAction : menuActions) {
-						if (menuAction.shouldShow(selectedObject)) {
-							final Action newAction = new Action() {
-								@Override
-								public void run() {
-									super.run();
-									menuAction.execute(selectedObject);
-								}
-							};
+					fillMenu(selectedObject, manager);
+				}
+			}
+		}
 
-							newAction.setImageDescriptor(ImageDescriptor.createFromURL(FrameworkUtil.getBundle(
-								menuAction.getClass())
-								.getResource(menuAction.getImagePath())));
-							newAction.setText(menuAction.getLabel());
-
-							manager.add(newAction);
+		private void fillMenu(final EObject selectedObject, IMenuManager manager) {
+			for (final MasterDetailAction menuAction : menuActions) {
+				if (menuAction.shouldShow(selectedObject)) {
+					final Action newAction = new Action() {
+						@Override
+						public void run() {
+							super.run();
+							menuAction.execute(selectedObject);
 						}
-					}
+					};
+
+					newAction.setImageDescriptor(ImageDescriptor.createFromURL(FrameworkUtil.getBundle(
+						menuAction.getClass())
+						.getResource(menuAction.getImagePath())));
+					newAction.setText(menuAction.getLabel());
+
+					manager.add(newAction);
 				}
 			}
 		}
