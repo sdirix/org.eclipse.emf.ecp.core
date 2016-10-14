@@ -91,13 +91,12 @@ public class GridControlSWTRenderer extends TableControlSWTRenderer {
 		public GridTableViewer createTableViewer(Composite parent) {
 
 			final GridTableViewer tableViewer = new GridTableViewer(parent,
-				SWT.MULTI | SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.BORDER);
+				SWT.MULTI | SWT.V_SCROLL | SWT.H_SCROLL | SWT.FULL_SELECTION | SWT.BORDER);
 			tableViewer.getGrid().setData(CUSTOM_VARIANT, TABLE_CUSTOM_VARIANT);
 			tableViewer.getGrid().setHeaderVisible(true);
 			tableViewer.getGrid().setLinesVisible(true);
 			tableViewer.getGrid().setCellSelectionEnabled(true);
 			tableViewer.getGrid().setFooterVisible(false);
-			tableViewer.getGrid().setRowHeaderVisible(true);
 
 			tableViewer.getGrid().addKeyListener(new GridCopyKeyListener(tableViewer.getGrid().getDisplay()));
 			tableViewer.getGrid()
@@ -171,6 +170,10 @@ public class GridControlSWTRenderer extends TableControlSWTRenderer {
 						|| event.eventType == ColumnViewerEditorActivationEvent.MOUSE_DOUBLE_CLICK_SELECTION
 						|| event.eventType == ColumnViewerEditorActivationEvent.PROGRAMMATIC) {
 						return true;
+					}
+					if (event.eventType == ColumnViewerEditorActivationEvent.MOUSE_CLICK_SELECTION
+						&& gridTableViewer.isCellEditorActive()) {
+						gridTableViewer.applyEditorValue();
 					}
 
 					if (event.eventType == ColumnViewerEditorActivationEvent.KEY_PRESSED) {
