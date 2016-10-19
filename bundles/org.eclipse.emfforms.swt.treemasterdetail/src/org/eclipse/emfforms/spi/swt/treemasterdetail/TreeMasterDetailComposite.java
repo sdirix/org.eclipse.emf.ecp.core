@@ -297,6 +297,11 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 			if (cache.isChached(eObject)) {
 				renderedView = cache.getCachedView(eObject);
 				renderedView.getSWTControl().setParent(detailPanel);
+				/*
+				 * layout detail, since the size of the window might have changed (e.g. made smaller). layout is
+				 * required to make sure that scrollbars, etc. are updated
+				 */
+				detailPanel.layout();
 				renderedView.getViewModelContext().changeDomainModel(eObject);
 			} else {
 				// Check, if the selected object would be rendered using a TreeMasterDetail. If so, render the provided
