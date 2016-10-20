@@ -1282,6 +1282,18 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	}
 
 	/**
+	 * Checks whether an element is editable or not.
+	 * 
+	 * @param element The list entry to be checked
+	 * @return True if the element can be edited, false otherwise
+	 *
+	 * @since 1.11
+	 */
+	protected boolean canEditObject(Object element) {
+		return true;
+	}
+
+	/**
 	 * The {@link DNDProvider} for this renderer.
 	 *
 	 * @author Johannes Faltermeier
@@ -1968,10 +1980,15 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		 */
 		@Override
 		protected boolean canEdit(Object element) {
-
+			final boolean isObjectEditable = canEditObject(element);
+			if (!isObjectEditable) {
+				return false;
+			}
 			boolean editable = tableControl.isEnabled()
 				&& !tableControl.isReadonly();
-
+			if (!editable) {
+				return false;
+			}
 			final IObservableValue observableValue = valueProperty.observe(element);
 			final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
 			final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
