@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
+import org.eclipse.emf.ecp.view.spi.common.callback.ViewModelPropertiesUpdateCallback;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.model.VView;
@@ -124,6 +125,8 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 
 	/** the delay between a selection change and the start of the rendering. */
 	private final int renderDelay;
+
+	private ViewModelPropertiesUpdateCallback viewModelPropertiesUpdateCallback;
 
 	/** The CreateElementCallback to allow modifications to the newly created element. */
 
@@ -277,7 +280,14 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 
 	// TODO JF this needs to be refactored, when used as the replacement for the treemasterdetail renderer.
 	// selection modification required as well as adjusting the loading properties
-	private void updateDetailPanel(final boolean setFocusToDetail) {
+	/**
+	 * Updates the detail panel of the tree master detail.
+	 *
+	 * @param setFocusToDetail <code>true</code> if the focus should be moved to the detail panel
+	 *
+	 * @since 1.11
+	 */
+	public void updateDetailPanel(final boolean setFocusToDetail) {
 		// Create a new detail panel in the scrollable composite. Disposes any old panels.
 		// createDetailPanel();
 		// TODO create detail panel at the right location
@@ -304,6 +314,9 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 				detailPanel.layout();
 				renderedView.getViewModelContext().changeDomainModel(eObject);
 			} else {
+				if (viewModelPropertiesUpdateCallback != null) {
+					viewModelPropertiesUpdateCallback.updateViewModelProperties(context);
+				}
 				// Check, if the selected object would be rendered using a TreeMasterDetail. If so, render the provided
 				// detail view.
 				final VView view = ViewProviderHelper.getView((EObject) selectedObject, context);
@@ -508,5 +521,16 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 			} catch (final ECPRendererException e) {
 			}
 		}
+	}
+
+	/**
+	 * Adds a {@link ViewModelPropertiesUpdateCallback}.
+	 *
+	 * @param viewModelPropertiesUpdateCallback the callback
+	 * @since 1.11
+	 */
+	public void addViewModelPropertiesUpdateCallback(
+		ViewModelPropertiesUpdateCallback viewModelPropertiesUpdateCallback) {
+		this.viewModelPropertiesUpdateCallback = viewModelPropertiesUpdateCallback;
 	}
 }
