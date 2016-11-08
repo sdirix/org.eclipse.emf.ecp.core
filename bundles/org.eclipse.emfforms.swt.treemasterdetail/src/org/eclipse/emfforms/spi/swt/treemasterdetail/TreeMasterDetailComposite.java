@@ -503,6 +503,9 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 		@Override
 		public void run() {
 			try {
+				if (viewModelPropertiesUpdateCallback != null) {
+					viewModelPropertiesUpdateCallback.updateViewModelProperties(context);
+				}
 				final VView view = ViewProviderHelper.getView(eObject, context);
 				final ViewModelContext modelContext = ViewModelContextFactory.INSTANCE
 					.createViewModelContext(
