@@ -48,20 +48,24 @@ public class GridCopyKeyListener implements KeyListener {
 	public void keyReleased(KeyEvent e) {
 		if ((e.stateMask & SWT.CTRL) != 0 && e.keyCode == 'c') {
 			final Grid grid = (Grid) e.widget;
-
-			final String selectionText = getSelectionAsText(grid);
-			if (selectionText == null || selectionText.isEmpty()) {
-				return;
-			}
-			final String[] data = { selectionText };
-			final TextTransfer[] dataTypes = { TextTransfer.getInstance() };
-
-			clipboard.setContents(data, dataTypes);
-
-			// System.out.println("---");
-			// System.out.println(Arrays.toString(data));
-			// System.out.println("---");
+			copySelectionToClipboard(grid);
 		}
+	}
+
+	/**
+	 * Copies the table selection of the {@link Grid} as a formatted string (if a selection exists).
+	 *
+	 * @param grid the {@link Grid} control.
+	 */
+	public void copySelectionToClipboard(Grid grid) {
+		final String selectionText = getSelectionAsText(grid);
+		if (selectionText == null || selectionText.isEmpty()) {
+			return;
+		}
+		final String[] data = { selectionText };
+		final TextTransfer[] dataTypes = { TextTransfer.getInstance() };
+
+		clipboard.setContents(data, dataTypes);
 	}
 
 	/**

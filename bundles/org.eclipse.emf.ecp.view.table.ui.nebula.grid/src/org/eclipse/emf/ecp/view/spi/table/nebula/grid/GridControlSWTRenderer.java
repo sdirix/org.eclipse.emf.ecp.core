@@ -17,7 +17,9 @@ import javax.inject.Inject;
 
 import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.emf.ecp.view.internal.table.nebula.grid.GridClearKeyListener;
 import org.eclipse.emf.ecp.view.internal.table.nebula.grid.GridCopyKeyListener;
+import org.eclipse.emf.ecp.view.internal.table.nebula.grid.GridCutKeyListener;
 import org.eclipse.emf.ecp.view.internal.table.nebula.grid.GridPasteKeyListener;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
@@ -102,6 +104,9 @@ public class GridControlSWTRenderer extends TableControlSWTRenderer {
 			tableViewer.getGrid()
 				.addKeyListener(new GridPasteKeyListener(tableViewer.getGrid().getDisplay(), getVElement(),
 					getEMFFormsDatabinding(), converterService, true));
+			tableViewer.getGrid().addKeyListener(new GridClearKeyListener(getVElement(), getEMFFormsDatabinding()));
+			tableViewer.getGrid().addKeyListener(
+				new GridCutKeyListener(tableViewer.getGrid().getDisplay(), getVElement(), getEMFFormsDatabinding()));
 			// TODO MS
 			// tableViewer.getGrid().addKeyListener(new GridNewLineKeyListener() {
 			//
@@ -160,37 +165,8 @@ public class GridControlSWTRenderer extends TableControlSWTRenderer {
 			// (TableViewer) gridTableViewer,
 			// new CustomFocusCellHighlighter(gridTableViewer);
 
-			final ColumnViewerEditorActivationStrategy actSupport = new ColumnViewerEditorActivationStrategy(
-				gridTableViewer) {
-				@SuppressWarnings("unchecked")
-				@Override
-				protected boolean isEditorActivationEvent(ColumnViewerEditorActivationEvent event) {
-
-					if (event.eventType == ColumnViewerEditorActivationEvent.TRAVERSAL
-						|| event.eventType == ColumnViewerEditorActivationEvent.MOUSE_DOUBLE_CLICK_SELECTION
-						|| event.eventType == ColumnViewerEditorActivationEvent.PROGRAMMATIC) {
-						return true;
-					}
-					if (event.eventType == ColumnViewerEditorActivationEvent.MOUSE_CLICK_SELECTION
-						&& gridTableViewer.isCellEditorActive()) {
-						gridTableViewer.applyEditorValue();
-					}
-
-					if (event.eventType == ColumnViewerEditorActivationEvent.KEY_PRESSED) {
-
-						for (final int keyCode : Arrays.asList(SWT.CTRL, SWT.ALT, SWT.SHIFT)) {
-							if ((event.keyCode & keyCode) != 0 || (event.stateMask & keyCode) != 0) {
-								return false;
-							}
-						}
-						return !Arrays
-							.asList(SWT.ARROW_UP, SWT.ARROW_DOWN, SWT.ARROW_LEFT, SWT.ARROW_RIGHT, SWT.TAB, SWT.CR)
-							.contains(event.keyCode);
-
-					}
-					return false;
-				}
-			};
+			final ColumnViewerEditorActivationStrategy actSupport = new GridColumnViewerEditorActivationStrategy(
+				gridTableViewer);
 			actSupport.setEnableEditorActivationWithKeyboard(true);
 			GridViewerEditor.create(
 				gridTableViewer,
@@ -239,6 +215,56 @@ public class GridControlSWTRenderer extends TableControlSWTRenderer {
 	@Override
 	protected ScrollBar getVerticalBar() {
 		return ((GridTableViewer) getTableViewer()).getGrid().getVerticalBar();
+	}
+
+	/**
+	 * EditorActivationStrategy for GridColumns.
+	 *
+	 * @author Stefan Dirix
+	 */
+	private class GridColumnViewerEditorActivationStrategy extends ColumnViewerEditorActivationStrategy {
+
+		private final GridTableViewer gridTableViewer;
+
+		/**
+		 * Constructor.
+		 *
+		 * @param viewer the {@link GridTableViewer}.
+		 */
+		GridColumnViewerEditorActivationStrategy(GridTableViewer gridTableViewer) {
+			super(gridTableViewer);
+			this.gridTableViewer = gridTableViewer;
+		}
+
+		@Override
+		protected boolean isEditorActivationEvent(ColumnViewerEditorActivationEvent event) {
+			if (event.eventType == ColumnViewerEditorActivationEvent.TRAVERSAL
+				|| event.eventType == ColumnViewerEditorActivationEvent.MOUSE_DOUBLE_CLICK_SELECTION
+				|| event.eventType == ColumnViewerEditorActivationEvent.PROGRAMMATIC) {
+				return true;
+			}
+			if (event.eventType == ColumnViewerEditorActivationEvent.MOUSE_CLICK_SELECTION
+				&& gridTableViewer.isCellEditorActive()) {
+				gridTableViewer.applyEditorValue();
+			}
+			if (event.eventType == ColumnViewerEditorActivationEvent.KEY_PRESSED) {
+				for (final int keyCode : Arrays.asList(SWT.CTRL, SWT.ALT, SWT.SHIFT)) {
+					if ((event.keyCode & keyCode) != 0 || (event.stateMask & keyCode) != 0) {
+						return false;
+					}
+				}
+				return !isDoNotEnterEditorCode(event.keyCode);
+			}
+			return false;
+		}
+
+		private boolean isDoNotEnterEditorCode(int keyCode) {
+			// BEGIN COMPLEX CODE
+			return keyCode == SWT.ARROW_UP || keyCode == SWT.ARROW_DOWN
+				|| keyCode == SWT.ARROW_LEFT || keyCode == SWT.ARROW_RIGHT
+				|| keyCode == SWT.TAB || keyCode == SWT.DEL;
+			// END COMPLEX CODE
+		}
 	}
 
 }
