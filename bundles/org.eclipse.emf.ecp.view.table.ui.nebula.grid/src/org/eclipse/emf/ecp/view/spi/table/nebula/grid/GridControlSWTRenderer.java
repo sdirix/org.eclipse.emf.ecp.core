@@ -100,8 +100,8 @@ public class GridControlSWTRenderer extends TableControlSWTRenderer {
 
 			tableViewer.getGrid().addKeyListener(new GridCopyKeyListener(tableViewer.getGrid().getDisplay()));
 			tableViewer.getGrid()
-				.addKeyListener(new GridPasteKeyListener(tableViewer.getGrid().getDisplay(), getEMFFormsDatabinding(),
-					converterService, true));
+				.addKeyListener(new GridPasteKeyListener(tableViewer.getGrid().getDisplay(), getVElement(),
+					getEMFFormsDatabinding(), converterService, true));
 			// TODO MS
 			// tableViewer.getGrid().addKeyListener(new GridNewLineKeyListener() {
 			//
