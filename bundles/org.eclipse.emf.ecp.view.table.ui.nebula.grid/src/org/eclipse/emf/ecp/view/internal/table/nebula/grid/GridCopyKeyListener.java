@@ -11,7 +11,11 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.table.nebula.grid;
 
+import java.util.Map;
+
+import org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor;
 import org.eclipse.nebula.widgets.grid.Grid;
+import org.eclipse.nebula.widgets.grid.GridItem;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.dnd.TextTransfer;
@@ -125,9 +129,21 @@ public class GridCopyKeyListener implements KeyListener {
 		for (int i = 0; i < cellSelection.length; i++) {
 			final int column = cellSelection[i].x;
 			final int row = cellSelection[i].y;
-			final String text = grid.getItem(row).getText(column);
+			final String text = getText(grid, column, row);
 			tableSelection[column - minColumn][row - minRow] = text;
 		}
 		return tableSelection;
+	}
+
+	private String getText(Grid grid, int column, int row) {
+		final GridItem item = grid.getItem(row);
+		@SuppressWarnings("unchecked")
+		final Map<Integer, String> copyAlternative = (Map<Integer, String>) item
+			.getData(ECPCellEditor.COPY_STRING_ALTERNATIVE);
+		if (copyAlternative != null && copyAlternative.containsKey(column)) {
+			return copyAlternative.get(column);
+		}
+		final String text = item.getText(column);
+		return text;
 	}
 }

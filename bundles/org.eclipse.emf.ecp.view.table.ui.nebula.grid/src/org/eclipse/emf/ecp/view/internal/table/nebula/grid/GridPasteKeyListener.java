@@ -133,36 +133,30 @@ public class GridPasteKeyListener implements KeyListener {
 
 		final List<Point> pastedCells = new ArrayList<Point>();
 		final List<Object> pastedValues = new ArrayList<Object>();
-
 		int relativeRow = 0;
-		final StringTokenizer rowTokenizer = new StringTokenizer(contents, "\n", true); //$NON-NLS-1$
-		while (rowTokenizer.hasMoreTokens()) {
+		final String[] rows = contents.split("\r\n|\n", -1); //$NON-NLS-1$
 
-			final String columnValue = rowTokenizer.nextToken();
-			if (columnValue.equals("\n")) { //$NON-NLS-1$
-				relativeRow++;
-				continue;
-			}
+		for (final String row : rows) {
 
 			int relativeColumn = 0;
-			final StringTokenizer columnTokenizer = new StringTokenizer(columnValue, "\t", true); //$NON-NLS-1$
-			while (columnTokenizer.hasMoreTokens()) {
 
-				final String cellValue = columnTokenizer.nextToken();
-				if (cellValue.equals("\t")) { //$NON-NLS-1$
-					relativeColumn++;
-					continue;
-				}
+			for (final String cellValue : row.split("\t", -1)) { //$NON-NLS-1$
 
 				final int insertionColumnIndex = startColumn + relativeColumn;
 				final int insertionRowIndex = startRow + relativeRow;
 
+				if (insertionColumnIndex >= grid.getColumnCount()) {
+					relativeColumn++;
+					continue;
+				}
+
 				final VDomainModelReference dmr = (VDomainModelReference) grid.getColumn(insertionColumnIndex)
 					.getData(AbstractTableViewerComposite.DMR);
 
-				if (vControl instanceof VTableControl
+				if (dmr == null || vControl instanceof VTableControl
 					&& org.eclipse.emf.ecp.view.internal.table.swt.TableConfigurationHelper
 						.isReadOnly((VTableControl) vControl, dmr)) {
+					relativeColumn++;
 					continue;
 				}
 
@@ -194,9 +188,10 @@ public class GridPasteKeyListener implements KeyListener {
 					}
 
 				}
+				relativeColumn++;
 			}
+			relativeRow++;
 		}
-
 		return pastedCells;
 	}
 
