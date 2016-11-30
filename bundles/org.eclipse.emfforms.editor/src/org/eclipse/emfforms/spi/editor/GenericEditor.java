@@ -463,7 +463,8 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 	 */
 	protected ResourceSet loadResource(IEditorInput editorInput) {
 		final IURIEditorInput uei = (IURIEditorInput) editorInput;
-		return ResourceSetHelpers.loadResourceSetWithProxies(URI.createURI(uei.getURI().toString(), false),
+		final String uriString = URI.decode(uei.getURI().toString());
+		return ResourceSetHelpers.loadResourceSetWithProxies(URI.createURI(uriString, false),
 			getCommandStack());
 	}
 
