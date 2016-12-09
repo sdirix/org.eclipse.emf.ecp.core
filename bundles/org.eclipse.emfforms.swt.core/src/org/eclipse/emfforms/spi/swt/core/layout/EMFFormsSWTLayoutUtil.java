@@ -11,7 +11,6 @@
  ******************************************************************************/
 package org.eclipse.emfforms.spi.swt.core.layout;
 
-import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -21,6 +20,7 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.ExpandBar;
 import org.eclipse.swt.widgets.ExpandItem;
 import org.eclipse.swt.widgets.Shell;
@@ -37,7 +37,7 @@ public final class EMFFormsSWTLayoutUtil {
 	private EMFFormsSWTLayoutUtil() {
 	}
 
-	private static Set<Composite> requestedLayouts = Collections.synchronizedSet(new LinkedHashSet<Composite>());
+	private static Set<Composite> requestedLayouts = new LinkedHashSet<Composite>();
 	private static Thread thread;
 
 	/**
@@ -84,7 +84,7 @@ public final class EMFFormsSWTLayoutUtil {
 				layoutDelayed(parent);
 			}
 
-			if (Shell.class.isInstance(parent)) {
+			else if (Shell.class.isInstance(parent)) {
 				layoutDelayed(parent);
 			}
 
@@ -106,8 +106,12 @@ public final class EMFFormsSWTLayoutUtil {
 	 * @param parent the composite to layout
 	 */
 	private static synchronized void layoutDelayed(Composite parent) {
-		requestedLayouts.add(parent);
-		if (thread != null) {
+		getRequestedLayouts().add(parent);
+		layoutDelayed();
+	}
+
+	private static synchronized void layoutDelayed() {
+		if (thread != null || getRequestedLayouts().isEmpty()) {
 			return;
 		}
 		thread = new Thread(new Runnable() {
@@ -118,20 +122,23 @@ public final class EMFFormsSWTLayoutUtil {
 				} catch (final InterruptedException ex) {
 					/* silent */
 				}
-				final Set<Composite> toLayout = requestedLayouts;
-				requestedLayouts = Collections.synchronizedSet(new LinkedHashSet<Composite>());
-				thread = null;
-				for (final Composite composite : toLayout) {
-					if (composite.isDisposed()) {
-						continue;
-					}
-					composite.getDisplay().asyncExec(new Runnable() {
-						@Override
-						public void run() {
+				final Set<Composite> toLayout = exchangeRequestedLayouts();
+
+				Display.getDefault().asyncExec(new Runnable() {
+
+					@Override
+					public void run() {
+						for (final Composite composite : toLayout) {
+							if (composite.isDisposed()) {
+								continue;
+							}
 							composite.layout(true, true);
 						}
-					});
-				}
+						thread = null;
+						layoutDelayed();
+					}
+				});
+
 			}
 		});
 		thread.start();
@@ -147,6 +154,20 @@ public final class EMFFormsSWTLayoutUtil {
 			gridData.heightHint = heightHint;
 
 		}
+	}
+
+	private static synchronized Set<Composite> getRequestedLayouts() {
+		return requestedLayouts;
+	}
+
+	private static synchronized void setRequestedLayouts(Set<Composite> requestedLayouts) {
+		EMFFormsSWTLayoutUtil.requestedLayouts = requestedLayouts;
+	}
+
+	private static synchronized Set<Composite> exchangeRequestedLayouts() {
+		final Set<Composite> toLayout = new LinkedHashSet<Composite>(getRequestedLayouts());
+		setRequestedLayouts(new LinkedHashSet<Composite>());
+		return toLayout;
 	}
 
 }
