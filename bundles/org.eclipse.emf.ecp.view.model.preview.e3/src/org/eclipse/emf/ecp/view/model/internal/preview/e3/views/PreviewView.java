@@ -392,9 +392,11 @@ public class PreviewView extends ViewPart implements ISelectionListener {
 		titleFont = new Font(title.getDisplay(), getDefaultFontName(title), 12, SWT.BOLD);
 		title.setFont(titleFont);
 		title.setForeground(getTitleColor());
+		final int titleHeight = title.computeSize(SWT.DEFAULT, SWT.DEFAULT).y;
 		final FormData titleData = new FormData();
-		title.setLayoutData(titleData);
 		titleData.left = new FormAttachment(titleImage, 5, SWT.DEFAULT);
+		titleData.top = new FormAttachment(50, -titleHeight / 2);
+		title.setLayoutData(titleData);
 
 		return header;
 	}

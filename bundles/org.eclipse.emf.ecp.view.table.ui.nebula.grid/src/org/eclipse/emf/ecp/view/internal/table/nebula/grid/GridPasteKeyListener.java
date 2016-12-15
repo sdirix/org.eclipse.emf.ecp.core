@@ -18,7 +18,9 @@ import java.util.StringTokenizer;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emfforms.spi.common.converter.EStructuralFeatureValueConverterService;
 import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
 import org.eclipse.emfforms.spi.swt.table.AbstractTableViewerComposite;
@@ -44,6 +46,7 @@ public class GridPasteKeyListener implements KeyListener {
 	private final Clipboard clipboard;
 	private final EMFFormsDatabindingEMF dataBinding;
 	private final EStructuralFeatureValueConverterService converterService;
+	private final VControl vControl;
 
 	private boolean selectPastedCells = true;
 
@@ -51,13 +54,15 @@ public class GridPasteKeyListener implements KeyListener {
 	 * Constructor.
 	 *
 	 * @param display the {@link Display} on which to allocate this command's {@link Clipboard}.
+	 * @param vControl the {@link VTableControl}.
 	 * @param dataBinding {@link EMFFormsDatabindingEMF}
 	 * @param converterService {@link EStructuralFeatureValueConverterService}
 	 * @param selectPastedCells whether to select the pasted cells
 	 */
-	public GridPasteKeyListener(Display display, EMFFormsDatabindingEMF dataBinding,
+	public GridPasteKeyListener(Display display, VControl vControl, EMFFormsDatabindingEMF dataBinding,
 		EStructuralFeatureValueConverterService converterService, boolean selectPastedCells) {
 		clipboard = new Clipboard(display);
+		this.vControl = vControl;
 		this.dataBinding = dataBinding;
 		this.converterService = converterService;
 		this.selectPastedCells = selectPastedCells;
@@ -87,8 +92,7 @@ public class GridPasteKeyListener implements KeyListener {
 	 */
 	public void pasteSelection(Grid grid, String contents) {
 
-		// ignore if no selection
-		if (grid.getCellSelection().length == 0) {
+		if (grid.getCellSelection().length == 0 || !vControl.isEnabled() || vControl.isReadonly()) {
 			return;
 		}
 
@@ -122,38 +126,39 @@ public class GridPasteKeyListener implements KeyListener {
 	 * @param contents the pasted contents
 	 * @return the pasted cells
 	 */
+	@SuppressWarnings("restriction")
 	public List<Point> pasteContents(Point startItem, Grid grid, String contents) {
 		final int startColumn = startItem.x;
 		final int startRow = startItem.y;
 
 		final List<Point> pastedCells = new ArrayList<Point>();
 		final List<Object> pastedValues = new ArrayList<Object>();
-
 		int relativeRow = 0;
-		final StringTokenizer rowTokenizer = new StringTokenizer(contents, "\n", true); //$NON-NLS-1$
-		while (rowTokenizer.hasMoreTokens()) {
+		final String[] rows = contents.split("\r\n|\n", -1); //$NON-NLS-1$
 
-			final String columnValue = rowTokenizer.nextToken();
-			if (columnValue.equals("\n")) { //$NON-NLS-1$
-				relativeRow++;
-				continue;
-			}
+		for (final String row : rows) {
 
 			int relativeColumn = 0;
-			final StringTokenizer columnTokenizer = new StringTokenizer(columnValue, "\t", true); //$NON-NLS-1$
-			while (columnTokenizer.hasMoreTokens()) {
 
-				final String cellValue = columnTokenizer.nextToken();
-				if (cellValue.equals("\t")) { //$NON-NLS-1$
-					relativeColumn++;
-					continue;
-				}
+			for (final String cellValue : row.split("\t", -1)) { //$NON-NLS-1$
 
 				final int insertionColumnIndex = startColumn + relativeColumn;
 				final int insertionRowIndex = startRow + relativeRow;
 
+				if (insertionColumnIndex >= grid.getColumnCount()) {
+					relativeColumn++;
+					continue;
+				}
+
 				final VDomainModelReference dmr = (VDomainModelReference) grid.getColumn(insertionColumnIndex)
 					.getData(AbstractTableViewerComposite.DMR);
+
+				if (dmr == null || vControl instanceof VTableControl
+					&& org.eclipse.emf.ecp.view.internal.table.swt.TableConfigurationHelper
+						.isReadOnly((VTableControl) vControl, dmr)) {
+					relativeColumn++;
+					continue;
+				}
 
 				if (insertionRowIndex < grid.getItemCount()) {
 
@@ -183,9 +188,10 @@ public class GridPasteKeyListener implements KeyListener {
 					}
 
 				}
+				relativeColumn++;
 			}
+			relativeRow++;
 		}
-
 		return pastedCells;
 	}
 
