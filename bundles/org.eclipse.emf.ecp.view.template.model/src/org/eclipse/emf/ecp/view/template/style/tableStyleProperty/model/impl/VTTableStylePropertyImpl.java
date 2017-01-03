@@ -27,12 +27,12 @@ import org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableS
  * The following features are implemented:
  * </p>
  * <ul>
- * <li>
- * {@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.impl.VTTableStylePropertyImpl#getMinimumHeight
+ * <li>{@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.impl.VTTableStylePropertyImpl#getMinimumHeight
  * <em>Minimum Height</em>}</li>
- * <li>
- * {@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.impl.VTTableStylePropertyImpl#getMaximumHeight
+ * <li>{@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.impl.VTTableStylePropertyImpl#getMaximumHeight
  * <em>Maximum Height</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.impl.VTTableStylePropertyImpl#isShowValidationSummaryTooltip
+ * <em>Show Validation Summary Tooltip</em>}</li>
  * </ul>
  *
  * @generated
@@ -101,6 +101,30 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 	 * @ordered
 	 */
 	protected boolean maximumHeightESet;
+
+	/**
+	 * The default value of the '{@link #isShowValidationSummaryTooltip() <em>Show Validation Summary Tooltip</em>}'
+	 * attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @see #isShowValidationSummaryTooltip()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean SHOW_VALIDATION_SUMMARY_TOOLTIP_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isShowValidationSummaryTooltip() <em>Show Validation Summary Tooltip</em>}'
+	 * attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @see #isShowValidationSummaryTooltip()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean showValidationSummaryTooltip = SHOW_VALIDATION_SUMMARY_TOOLTIP_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -250,12 +274,42 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 	 * @generated
 	 */
 	@Override
+	public boolean isShowValidationSummaryTooltip() {
+		return showValidationSummaryTooltip;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public void setShowValidationSummaryTooltip(boolean newShowValidationSummaryTooltip) {
+		final boolean oldShowValidationSummaryTooltip = showValidationSummaryTooltip;
+		showValidationSummaryTooltip = newShowValidationSummaryTooltip;
+		if (eNotificationRequired()) {
+			eNotify(new ENotificationImpl(this, Notification.SET,
+				VTTableStylePropertyPackage.TABLE_STYLE_PROPERTY__SHOW_VALIDATION_SUMMARY_TOOLTIP,
+				oldShowValidationSummaryTooltip, showValidationSummaryTooltip));
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case VTTableStylePropertyPackage.TABLE_STYLE_PROPERTY__MINIMUM_HEIGHT:
 			return getMinimumHeight();
 		case VTTableStylePropertyPackage.TABLE_STYLE_PROPERTY__MAXIMUM_HEIGHT:
 			return getMaximumHeight();
+		case VTTableStylePropertyPackage.TABLE_STYLE_PROPERTY__SHOW_VALIDATION_SUMMARY_TOOLTIP:
+			return isShowValidationSummaryTooltip();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -274,6 +328,9 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 			return;
 		case VTTableStylePropertyPackage.TABLE_STYLE_PROPERTY__MAXIMUM_HEIGHT:
 			setMaximumHeight((Integer) newValue);
+			return;
+		case VTTableStylePropertyPackage.TABLE_STYLE_PROPERTY__SHOW_VALIDATION_SUMMARY_TOOLTIP:
+			setShowValidationSummaryTooltip((Boolean) newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);
@@ -294,6 +351,9 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 		case VTTableStylePropertyPackage.TABLE_STYLE_PROPERTY__MAXIMUM_HEIGHT:
 			unsetMaximumHeight();
 			return;
+		case VTTableStylePropertyPackage.TABLE_STYLE_PROPERTY__SHOW_VALIDATION_SUMMARY_TOOLTIP:
+			setShowValidationSummaryTooltip(SHOW_VALIDATION_SUMMARY_TOOLTIP_EDEFAULT);
+			return;
 		}
 		super.eUnset(featureID);
 	}
@@ -311,6 +371,8 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 			return isSetMinimumHeight();
 		case VTTableStylePropertyPackage.TABLE_STYLE_PROPERTY__MAXIMUM_HEIGHT:
 			return isSetMaximumHeight();
+		case VTTableStylePropertyPackage.TABLE_STYLE_PROPERTY__SHOW_VALIDATION_SUMMARY_TOOLTIP:
+			return showValidationSummaryTooltip != SHOW_VALIDATION_SUMMARY_TOOLTIP_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -340,6 +402,8 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 		} else {
 			result.append("<unset>"); //$NON-NLS-1$
 		}
+		result.append(", showValidationSummaryTooltip: "); //$NON-NLS-1$
+		result.append(showValidationSummaryTooltip);
 		result.append(')');
 		return result.toString();
 	}

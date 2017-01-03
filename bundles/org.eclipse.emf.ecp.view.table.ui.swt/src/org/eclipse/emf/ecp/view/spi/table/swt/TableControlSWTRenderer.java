@@ -203,6 +203,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	private AbstractTableViewer tableViewer;
 
 	private Label validationIcon;
+	private boolean showValidationSummaryTooltip;
 	private Button addButton;
 	private Button removeButton;
 
@@ -562,6 +563,9 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			if (validationControls.size() == 1 && Label.class.isInstance(validationControls.get(0))) {
 				validationIcon = (Label) validationControls.get(0);
 			}
+
+			final VTTableStyleProperty tableStyleProperty = getTableStyleProperty();
+			showValidationSummaryTooltip = tableStyleProperty.isShowValidationSummaryTooltip();
 		}
 	}
 
@@ -867,12 +871,12 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	private VTTableStyleProperty getTableStyleProperty() {
 		VTTableStyleProperty styleProperty = getStyleProperty(VTTableStyleProperty.class);
 		if (styleProperty == null) {
-			styleProperty = getDefaultTableStylProperty();
+			styleProperty = getDefaultTableStyleProperty();
 		}
 		return styleProperty;
 	}
 
-	private VTTableStyleProperty getDefaultTableStylProperty() {
+	private VTTableStyleProperty getDefaultTableStyleProperty() {
 		final VTTableStyleProperty tableStyleProperty = VTTableStylePropertyFactory.eINSTANCE
 			.createTableStyleProperty();
 		tableStyleProperty.setMaximumHeight(200);
@@ -1283,7 +1287,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 	/**
 	 * Checks whether an element is editable or not.
-	 * 
+	 *
 	 * @param element The list entry to be checked
 	 * @return True if the element can be edited, false otherwise
 	 *
@@ -1515,14 +1519,21 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			observableValue.dispose();
 
 			validationIcon.setImage(getValidationIcon(getVElement().getDiagnostic().getHighestSeverity()));
+			showValidationSummaryTooltip(showValidationSummaryTooltip);
 
-			validationIcon.setToolTipText(ECPTooltipModifierHelper.modifyString(getVElement().getDiagnostic()
-				.getMessage(), null));
 			final Collection<?> collection = (Collection<?>) eObject.eGet(structuralFeature, true);
 			if (!collection.isEmpty()) {
 				for (final Object object : collection) {
 					tableViewer.update(object, null);
 				}
+			}
+		}
+
+		// extracted in order to avoid checkstyle complexity warning
+		private void showValidationSummaryTooltip(boolean doShow) {
+			if (doShow) {
+				validationIcon.setToolTipText(ECPTooltipModifierHelper.modifyString(getVElement().getDiagnostic()
+					.getMessage(), null));
 			}
 		}
 	}

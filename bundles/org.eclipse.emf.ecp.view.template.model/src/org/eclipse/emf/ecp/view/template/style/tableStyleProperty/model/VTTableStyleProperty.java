@@ -20,17 +20,14 @@ import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
  * @since 1.9
  *        <!-- end-user-doc -->
  *
- *        <p>
- *        The following features are supported:
- *        </p>
- *        <ul>
- *        <li>
- *        {@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty#getMinimumHeight
- *        <em>Minimum Height</em>}</li>
- *        <li>
- *        {@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty#getMaximumHeight
- *        <em>Maximum Height</em>}</li>
- *        </ul>
+ * <p>
+ * The following features are supported:
+ * </p>
+ * <ul>
+ *   <li>{@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty#getMinimumHeight <em>Minimum Height</em>}</li>
+ *   <li>{@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty#getMaximumHeight <em>Maximum Height</em>}</li>
+ *   <li>{@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty#isShowValidationSummaryTooltip <em>Show Validation Summary Tooltip</em>}</li>
+ * </ul>
  *
  * @see org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStylePropertyPackage#getTableStyleProperty()
  * @model
@@ -45,7 +42,6 @@ public interface VTTableStyleProperty extends VTStyleProperty {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 *
 	 * @return the value of the '<em>Minimum Height</em>' attribute.
 	 * @see #isSetMinimumHeight()
 	 * @see #unsetMinimumHeight()
@@ -57,12 +53,9 @@ public interface VTTableStyleProperty extends VTStyleProperty {
 	int getMinimumHeight();
 
 	/**
-	 * Sets the value of the '
-	 * {@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty#getMinimumHeight
-	 * <em>Minimum Height</em>}' attribute.
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty#getMinimumHeight <em>Minimum Height</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
 	 * @param value the new value of the '<em>Minimum Height</em>' attribute.
 	 * @see #isSetMinimumHeight()
 	 * @see #unsetMinimumHeight()
@@ -72,12 +65,9 @@ public interface VTTableStyleProperty extends VTStyleProperty {
 	void setMinimumHeight(int value);
 
 	/**
-	 * Unsets the value of the '
-	 * {@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty#getMinimumHeight
-	 * <em>Minimum Height</em>}' attribute.
+	 * Unsets the value of the '{@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty#getMinimumHeight <em>Minimum Height</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
 	 * @see #isSetMinimumHeight()
 	 * @see #getMinimumHeight()
 	 * @see #setMinimumHeight(int)
@@ -86,12 +76,9 @@ public interface VTTableStyleProperty extends VTStyleProperty {
 	void unsetMinimumHeight();
 
 	/**
-	 * Returns whether the value of the '
-	 * {@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty#getMinimumHeight
-	 * <em>Minimum Height</em>}' attribute is set.
+	 * Returns whether the value of the '{@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty#getMinimumHeight <em>Minimum Height</em>}' attribute is set.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
 	 * @return whether the value of the '<em>Minimum Height</em>' attribute is set.
 	 * @see #unsetMinimumHeight()
 	 * @see #getMinimumHeight()
@@ -108,7 +95,6 @@ public interface VTTableStyleProperty extends VTStyleProperty {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 *
 	 * @return the value of the '<em>Maximum Height</em>' attribute.
 	 * @see #isSetMaximumHeight()
 	 * @see #unsetMaximumHeight()
@@ -120,12 +106,9 @@ public interface VTTableStyleProperty extends VTStyleProperty {
 	int getMaximumHeight();
 
 	/**
-	 * Sets the value of the '
-	 * {@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty#getMaximumHeight
-	 * <em>Maximum Height</em>}' attribute.
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty#getMaximumHeight <em>Maximum Height</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
 	 * @param value the new value of the '<em>Maximum Height</em>' attribute.
 	 * @see #isSetMaximumHeight()
 	 * @see #unsetMaximumHeight()
@@ -135,12 +118,9 @@ public interface VTTableStyleProperty extends VTStyleProperty {
 	void setMaximumHeight(int value);
 
 	/**
-	 * Unsets the value of the '
-	 * {@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty#getMaximumHeight
-	 * <em>Maximum Height</em>}' attribute.
+	 * Unsets the value of the '{@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty#getMaximumHeight <em>Maximum Height</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
 	 * @see #isSetMaximumHeight()
 	 * @see #getMaximumHeight()
 	 * @see #setMaximumHeight(int)
@@ -149,12 +129,9 @@ public interface VTTableStyleProperty extends VTStyleProperty {
 	void unsetMaximumHeight();
 
 	/**
-	 * Returns whether the value of the '
-	 * {@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty#getMaximumHeight
-	 * <em>Maximum Height</em>}' attribute is set.
+	 * Returns whether the value of the '{@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty#getMaximumHeight <em>Maximum Height</em>}' attribute is set.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
 	 * @return whether the value of the '<em>Maximum Height</em>' attribute is set.
 	 * @see #unsetMaximumHeight()
 	 * @see #getMaximumHeight()
@@ -162,5 +139,31 @@ public interface VTTableStyleProperty extends VTStyleProperty {
 	 * @generated
 	 */
 	boolean isSetMaximumHeight();
+
+	/**
+	 * Returns the value of the '<em><b>Show Validation Summary Tooltip</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Show Validation Summary Tooltip</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Show Validation Summary Tooltip</em>' attribute.
+	 * @see #setShowValidationSummaryTooltip(boolean)
+	 * @see org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStylePropertyPackage#getTableStyleProperty_ShowValidationSummaryTooltip()
+	 * @model
+	 * @generated
+	 */
+	boolean isShowValidationSummaryTooltip();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty#isShowValidationSummaryTooltip <em>Show Validation Summary Tooltip</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Show Validation Summary Tooltip</em>' attribute.
+	 * @see #isShowValidationSummaryTooltip()
+	 * @generated
+	 */
+	void setShowValidationSummaryTooltip(boolean value);
 
 } // VTTableStyleProperty
