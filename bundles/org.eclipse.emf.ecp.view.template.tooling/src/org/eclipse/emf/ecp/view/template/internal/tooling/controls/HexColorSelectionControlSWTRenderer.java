@@ -26,6 +26,7 @@ import org.eclipse.emf.ecp.view.template.internal.tooling.Messages;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emfforms.spi.common.converter.ITargetToModelConverter;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
@@ -55,22 +56,22 @@ import org.osgi.framework.ServiceReference;
  */
 public class HexColorSelectionControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 
-	private static final EMFFormsDatabinding emfFormsDatabinding;
-	private static final EMFFormsLabelProvider emfFormsLabelProvider;
-	private static final VTViewTemplateProvider vtViewTemplateProvider;
+	private static final EMFFormsDatabinding EMFFORMS_DATABINDING;
+	private static final EMFFormsLabelProvider EMFFORMS_LABELPROVIDER;
+	private static final VTViewTemplateProvider VIEW_TEMPLATEPROVIDER;
 
 	static {
 		final BundleContext bundleContext = FrameworkUtil.getBundle(HexColorSelectionControlSWTRenderer.class)
 			.getBundleContext();
 		final ServiceReference<EMFFormsDatabinding> emfFormsDatabindingServiceReference = bundleContext
 			.getServiceReference(EMFFormsDatabinding.class);
-		emfFormsDatabinding = bundleContext.getService(emfFormsDatabindingServiceReference);
+		EMFFORMS_DATABINDING = bundleContext.getService(emfFormsDatabindingServiceReference);
 		final ServiceReference<EMFFormsLabelProvider> emfFormsLabelProviderServiceReference = bundleContext
 			.getServiceReference(EMFFormsLabelProvider.class);
-		emfFormsLabelProvider = bundleContext.getService(emfFormsLabelProviderServiceReference);
+		EMFFORMS_LABELPROVIDER = bundleContext.getService(emfFormsLabelProviderServiceReference);
 		final ServiceReference<VTViewTemplateProvider> vtViewTemplateProviderServiceReference = bundleContext
 			.getServiceReference(VTViewTemplateProvider.class);
-		vtViewTemplateProvider = bundleContext.getService(vtViewTemplateProviderServiceReference);
+		VIEW_TEMPLATEPROVIDER = bundleContext.getService(vtViewTemplateProviderServiceReference);
 	}
 
 	/**
@@ -82,7 +83,7 @@ public class HexColorSelectionControlSWTRenderer extends SimpleControlSWTControl
 	 */
 	public HexColorSelectionControlSWTRenderer(VControl vElement, ViewModelContext viewContext,
 		ReportService reportService) {
-		super(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider);
+		super(vElement, viewContext, reportService, EMFFORMS_DATABINDING, EMFFORMS_LABELPROVIDER, VIEW_TEMPLATEPROVIDER);
 	}
 
 	/**
@@ -97,7 +98,7 @@ public class HexColorSelectionControlSWTRenderer extends SimpleControlSWTControl
 		final Control childControl = composite.getChildren()[0];
 		final IObservableValue value = WidgetProperties.background().observe(childControl);
 		final Binding binding = getDataBindingContext().bindValue(value, getModelValue(),
-			new UpdateValueStrategy() {
+			createTargetToModelUpdateStrategy(new ITargetToModelConverter() {
 				@Override
 				public Object convert(Object value) {
 					if (value == null) {
@@ -105,7 +106,8 @@ public class HexColorSelectionControlSWTRenderer extends SimpleControlSWTControl
 					}
 					return getString(Color.class.cast(value).getRGB());
 				}
-			}, new UpdateValueStrategy() {
+			}),
+			new UpdateValueStrategy() {
 				@Override
 				public Object convert(Object value) {
 					final String hexString = (String) value;

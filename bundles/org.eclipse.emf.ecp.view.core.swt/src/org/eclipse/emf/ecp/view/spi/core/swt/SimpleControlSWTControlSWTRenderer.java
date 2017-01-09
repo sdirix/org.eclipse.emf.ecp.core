@@ -13,9 +13,13 @@
 package org.eclipse.emf.ecp.view.spi.core.swt;
 
 import org.eclipse.core.databinding.Binding;
+import org.eclipse.core.databinding.property.value.IValueProperty;
+import org.eclipse.emf.databinding.EMFUpdateValueStrategy;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
+import org.eclipse.emfforms.spi.common.converter.ITargetToModelConverter;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
@@ -101,6 +105,54 @@ public abstract class SimpleControlSWTControlSWTRenderer extends SimpleControlSW
 				binding.dispose();
 			}
 		}
+	}
+
+	/**
+	 * Create a {@link CommonTargetToModelUpdateStrategy}.
+	 *
+	 * @return a {@link CommonTargetToModelUpdateStrategy}
+	 * @throws DatabindingFailedException in case the necessary feature can not be obtained
+	 */
+	protected EMFUpdateValueStrategy createTargetToModelUpdateStrategy() throws DatabindingFailedException {
+		return new CommonTargetToModelUpdateStrategy(getVElement(), getFeature());
+	}
+
+	/**
+	 * Create a {@link CommonTargetToModelUpdateStrategy} with a custom update policy.
+	 *
+	 * @param updatePolicy the update policy to be applied
+	 * @return a {@link CommonTargetToModelUpdateStrategy}
+	 * @throws DatabindingFailedException in case the necessary feature can not be obtained
+	 */
+	protected EMFUpdateValueStrategy createTargetToModelUpdateStrategy(int updatePolicy)
+		throws DatabindingFailedException {
+		return new CommonTargetToModelUpdateStrategy(getVElement(), getFeature(), updatePolicy);
+	}
+
+	/**
+	 * Create a {@link CommonTargetToModelUpdateStrategy} with a custom converter.
+	 *
+	 * @param converter the converter to be applied during the strategy
+	 * @return a {@link CommonTargetToModelUpdateStrategy}
+	 * @throws DatabindingFailedException in case the necessary feature can not be obtained
+	 */
+	protected EMFUpdateValueStrategy createTargetToModelUpdateStrategy(ITargetToModelConverter converter)
+		throws DatabindingFailedException {
+		return new CommonTargetToModelUpdateStrategy(getVElement(), getFeature(), converter);
+	}
+
+	/**
+	 * Retrieves the associated {@link EStructuralFeature} of this renderer.
+	 *
+	 * @return the feature
+	 * @throws DatabindingFailedException in case the necessary feature can not be obtained
+	 */
+	protected EStructuralFeature getFeature() throws DatabindingFailedException {
+		final EMFFormsDatabinding databindingService = getEMFFormsDatabinding();
+		final IValueProperty valueProperty = databindingService.getValueProperty(
+			getVElement().getDomainModelReference(),
+			getViewModelContext().getDomainModel());
+		return EStructuralFeature.class.cast(valueProperty.getValueType());
 	}
 
 	/**

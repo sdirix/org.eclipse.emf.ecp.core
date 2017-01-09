@@ -26,6 +26,7 @@ import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
+import org.eclipse.emfforms.spi.common.converter.ITargetToModelConverter;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
@@ -49,22 +50,22 @@ import org.osgi.framework.ServiceReference;
  */
 public class EReferenceLabelControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 
-	private static final EMFFormsDatabinding emfFormsDatabinding;
-	private static final EMFFormsLabelProvider emfFormsLabelProvider;
-	private static final VTViewTemplateProvider vtViewTemplateProvider;
+	private static final EMFFormsDatabinding EMFFORMS_DATABINDING;
+	private static final EMFFormsLabelProvider EMFFORMS_LABELPROVIDER;
+	private static final VTViewTemplateProvider EMFFORMS_TEMPLATEPROVIDER;
 
 	static {
 		final BundleContext bundleContext = FrameworkUtil.getBundle(EReferenceLabelControlSWTRenderer.class)
 			.getBundleContext();
 		final ServiceReference<EMFFormsDatabinding> emfFormsDatabindingServiceReference = bundleContext
 			.getServiceReference(EMFFormsDatabinding.class);
-		emfFormsDatabinding = bundleContext.getService(emfFormsDatabindingServiceReference);
+		EMFFORMS_DATABINDING = bundleContext.getService(emfFormsDatabindingServiceReference);
 		final ServiceReference<EMFFormsLabelProvider> emfFormsLabelProviderServiceReference = bundleContext
 			.getServiceReference(EMFFormsLabelProvider.class);
-		emfFormsLabelProvider = bundleContext.getService(emfFormsLabelProviderServiceReference);
+		EMFFORMS_LABELPROVIDER = bundleContext.getService(emfFormsLabelProviderServiceReference);
 		final ServiceReference<VTViewTemplateProvider> vtViewTemplateProviderServiceReference = bundleContext
 			.getServiceReference(VTViewTemplateProvider.class);
-		vtViewTemplateProvider = bundleContext.getService(vtViewTemplateProviderServiceReference);
+		EMFFORMS_TEMPLATEPROVIDER = bundleContext.getService(vtViewTemplateProviderServiceReference);
 	}
 
 	/**
@@ -76,7 +77,8 @@ public class EReferenceLabelControlSWTRenderer extends SimpleControlSWTControlSW
 	 */
 	public EReferenceLabelControlSWTRenderer(VControl vElement, ViewModelContext viewContext,
 		ReportService reportService) {
-		super(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider);
+		super(vElement, viewContext, reportService, EMFFORMS_DATABINDING, EMFFORMS_LABELPROVIDER,
+			EMFFORMS_TEMPLATEPROVIDER);
 	}
 
 	private Composite labelComposite;
@@ -97,29 +99,8 @@ public class EReferenceLabelControlSWTRenderer extends SimpleControlSWTControlSW
 
 		final Binding[] bindings = new Binding[3];
 		final IObservableValue value = WidgetProperties.text().observe(label);
-
-		bindings[0] = getDataBindingContext().bindValue(value, getModelValue(), new UpdateValueStrategy() {
-
-			@Override
-			public Object convert(Object value) {
-				try {
-					return getModelValue().getValue();
-				} catch (final DatabindingFailedException ex) {
-					Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
-					return null;
-				}
-			}
-		}, new UpdateValueStrategy() {
-			@Override
-			public Object convert(Object value) {
-				updateChangeListener((EObject) value);
-				return getText(value);
-			}
-		});
-		final IObservableValue tooltipValue = WidgetProperties.tooltipText().observe(label);
-		bindings[1] = getDataBindingContext().bindValue(tooltipValue, getModelValue(),
-			new UpdateValueStrategy() {
-
+		bindings[0] = getDataBindingContext().bindValue(value, getModelValue(),
+			createTargetToModelUpdateStrategy(new ITargetToModelConverter() {
 				@Override
 				public Object convert(Object value) {
 					try {
@@ -129,7 +110,28 @@ public class EReferenceLabelControlSWTRenderer extends SimpleControlSWTControlSW
 						return null;
 					}
 				}
-			}, new UpdateValueStrategy() {
+			}),
+			new UpdateValueStrategy() {
+				@Override
+				public Object convert(Object value) {
+					updateChangeListener((EObject) value);
+					return getText(value);
+				}
+			});
+		final IObservableValue tooltipValue = WidgetProperties.tooltipText().observe(label);
+		bindings[1] = getDataBindingContext().bindValue(tooltipValue, getModelValue(),
+			createTargetToModelUpdateStrategy(new ITargetToModelConverter() {
+				@Override
+				public Object convert(Object value) {
+					try {
+						return getModelValue().getValue();
+					} catch (final DatabindingFailedException ex) {
+						Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+						return null;
+					}
+				}
+			}),
+			new UpdateValueStrategy() {
 				@Override
 				public Object convert(Object value) {
 					return getText(value);
@@ -137,23 +139,24 @@ public class EReferenceLabelControlSWTRenderer extends SimpleControlSWTControlSW
 			});
 
 		final IObservableValue imageValue = WidgetProperties.image().observe(imageLabel);
-		bindings[2] = getDataBindingContext().bindValue(imageValue, getModelValue(), new UpdateValueStrategy() {
-
-			@Override
-			public Object convert(Object value) {
-				try {
-					return getModelValue().getValue();
-				} catch (final DatabindingFailedException ex) {
-					Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
-					return null;
+		bindings[2] = getDataBindingContext().bindValue(imageValue, getModelValue(),
+			createTargetToModelUpdateStrategy(new ITargetToModelConverter() {
+				@Override
+				public Object convert(Object value) {
+					try {
+						return getModelValue().getValue();
+					} catch (final DatabindingFailedException ex) {
+						Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+						return null;
+					}
 				}
-			}
-		}, new UpdateValueStrategy() {
-			@Override
-			public Object convert(Object value) {
-				return getImage(value);
-			}
-		});
+			}),
+			new UpdateValueStrategy() {
+				@Override
+				public Object convert(Object value) {
+					return getImage(value);
+				}
+			});
 
 		return bindings;
 	}

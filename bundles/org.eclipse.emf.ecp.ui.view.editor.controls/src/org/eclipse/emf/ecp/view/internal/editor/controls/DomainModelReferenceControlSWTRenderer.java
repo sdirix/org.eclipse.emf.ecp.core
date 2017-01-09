@@ -55,6 +55,7 @@ import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
+import org.eclipse.emfforms.spi.common.converter.ITargetToModelConverter;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
@@ -138,28 +139,29 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 		final Binding[] bindings = new Binding[3];
 		final IObservableValue value = WidgetProperties.text().observe(setLabel);
 
-		bindings[0] = getDataBindingContext().bindValue(value, getModelValue(), new UpdateValueStrategy() {
-
-			@Override
-			public Object convert(Object value) { // target to model
-				try {
-					return getModelValue().getValue();
-				} catch (final DatabindingFailedException ex) {
-					Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
-					return null;
+		bindings[0] = getDataBindingContext().bindValue(value, getModelValue(),
+			createTargetToModelUpdateStrategy(new ITargetToModelConverter() {
+				@Override
+				public Object convert(Object value) {
+					try {
+						return getModelValue().getValue();
+					} catch (final DatabindingFailedException ex) {
+						Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+						return null;
+					}
 				}
-			}
-		}, new UpdateValueStrategy() {// model to target
-			@Override
-			public Object convert(Object value) {
-				updateChangeListener((EObject) value);
-				return getText(value);
-			}
-		});
+			}),
+			new UpdateValueStrategy() {// model to target
+				@Override
+				public Object convert(Object value) {
+					updateChangeListener((EObject) value);
+					return getText(value);
+				}
+			});
 
 		final IObservableValue imageValue = WidgetProperties.image().observe(imageLabel);
 		bindings[1] = getDataBindingContext().bindValue(imageValue, getModelValue(),
-			new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER), new UpdateValueStrategy() {
+			createTargetToModelUpdateStrategy(UpdateValueStrategy.POLICY_NEVER), new UpdateValueStrategy() {
 				@Override
 				public Object convert(Object value) {
 					return getImage(value);
@@ -170,7 +172,7 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 		bindings[2] = getDataBindingContext().bindValue(
 			setLabelTooltip,
 			getModelValue(),
-			new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER),
+			createTargetToModelUpdateStrategy(UpdateValueStrategy.POLICY_NEVER),
 			new UpdateValueStrategy() {
 				@Override
 				public Object convert(Object value) {

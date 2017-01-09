@@ -32,6 +32,7 @@ import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emfforms.spi.common.converter.ITargetToModelConverter;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
@@ -135,7 +136,7 @@ public class LinkControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 
 		final IObservableValue imageValue = WidgetProperties.image().observe(imageHyperlink);
 		final Binding imageBinding = getDataBindingContext().bindValue(imageValue, getModelValue(),
-			new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER),
+			createTargetToModelUpdateStrategy(UpdateValueStrategy.POLICY_NEVER),
 			new UpdateValueStrategy() {
 				@Override
 				public Object convert(Object value) {
@@ -156,8 +157,8 @@ public class LinkControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 		return new Binding[] { binding, tooltipBinding, imageBinding, deleteBinding };
 	}
 
-	private UpdateValueStrategy createValueExtractingUpdateStrategy() {
-		return new UpdateValueStrategy() {
+	private UpdateValueStrategy createValueExtractingUpdateStrategy() throws DatabindingFailedException {
+		return createTargetToModelUpdateStrategy(new ITargetToModelConverter() {
 			@Override
 			public Object convert(Object value) {
 				try {
@@ -167,7 +168,7 @@ public class LinkControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 				}
 				return value;
 			}
-		};
+		});
 	}
 
 	@Override

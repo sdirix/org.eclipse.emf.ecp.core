@@ -28,8 +28,10 @@ import org.eclipse.emf.ecp.edit.spi.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.ecp.view.internal.core.swt.Activator;
 import org.eclipse.emf.ecp.view.internal.core.swt.MessageKeys;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.core.swt.CommonTargetToModelUpdateStrategy;
 import org.eclipse.emf.ecp.view.spi.core.swt.renderer.TextControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emfforms.spi.common.locale.EMFFormsLocaleChangeListener;
@@ -132,15 +134,15 @@ public class NumberControlSWTRenderer extends TextControlSWTRenderer {
 		final EStructuralFeature structuralFeature = (EStructuralFeature) getModelValue().getValueType();
 
 		final NumericalTargetToModelUpdateStrategy targetToModelStrategy = new NumericalTargetToModelUpdateStrategy(
-			structuralFeature, getViewModelContext(), getModelValue(), getDataBindingContext(),
+			getVElement(), structuralFeature, getModelValue(), getDataBindingContext(),
 			(Text) Composite.class.cast(control).getChildren()[0]);
 		final NumericalModelToTargetUpdateStrategy modelToTargetStrategy = new NumericalModelToTargetUpdateStrategy(
-			getInstanceClass(structuralFeature), getViewModelContext(), false);
+			getInstanceClass(structuralFeature), false);
 		final Binding binding = bindValue(control, getModelValue(), getDataBindingContext(),
 			targetToModelStrategy, modelToTargetStrategy);
 		final Binding tooltipBinding = createTooltipBinding(control, getModelValue(), getDataBindingContext(),
 			targetToModelStrategy,
-			new NumericalModelToTargetUpdateStrategy(getInstanceClass(structuralFeature), getViewModelContext(), true));
+			new NumericalModelToTargetUpdateStrategy(getInstanceClass(structuralFeature), true));
 
 		emfFormsLocaleChangeListener = new EMFFormsLocaleChangeListener() {
 
@@ -171,14 +173,10 @@ public class NumberControlSWTRenderer extends TextControlSWTRenderer {
 	private class NumericalModelToTargetUpdateStrategy extends ModelToTargetUpdateStrategy {
 
 		private final Class<?> instanceClass;
-		private final ViewModelContext viewModelContext;
 
-		NumericalModelToTargetUpdateStrategy(Class<?> instanceClass, ViewModelContext viewModelContext,
-			boolean tooltip) {
+		NumericalModelToTargetUpdateStrategy(Class<?> instanceClass, boolean tooltip) {
 			super(tooltip);
 			this.instanceClass = instanceClass;
-			this.viewModelContext = viewModelContext;
-
 		}
 
 		@Override
@@ -198,20 +196,18 @@ public class NumberControlSWTRenderer extends TextControlSWTRenderer {
 	 * for instance because of the current locale, the value is reset to
 	 * the last valid value found in the mode.
 	 */
-	private class NumericalTargetToModelUpdateStrategy extends TargetToModelUpdateStrategy {
+	private class NumericalTargetToModelUpdateStrategy extends CommonTargetToModelUpdateStrategy {
 
-		private final ViewModelContext viewModelContext;
 		private final Text text;
 		private final IObservableValue modelValue;
 		private final EStructuralFeature eStructuralFeature;
 		private final DataBindingContext dataBindingContext;
 
-		NumericalTargetToModelUpdateStrategy(EStructuralFeature eStructuralFeature,
-			ViewModelContext viewModelContext, IObservableValue modelValue, DataBindingContext dataBindingContext,
+		NumericalTargetToModelUpdateStrategy(VElement vElement, EStructuralFeature eStructuralFeature,
+			IObservableValue modelValue, DataBindingContext dataBindingContext,
 			Text text) {
-			super(eStructuralFeature.isUnsettable());
+			super(vElement, eStructuralFeature);
 			this.eStructuralFeature = eStructuralFeature;
-			this.viewModelContext = viewModelContext;
 			this.modelValue = modelValue;
 			this.dataBindingContext = dataBindingContext;
 			this.text = text;
@@ -223,7 +219,7 @@ public class NumberControlSWTRenderer extends TextControlSWTRenderer {
 		}
 
 		@Override
-		protected Object convertValue(final Object value) {
+		public Object convert(final Object value) {
 			final DecimalFormat format = getFormat();
 			try {
 				Number number = null;
