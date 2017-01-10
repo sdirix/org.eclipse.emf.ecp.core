@@ -1298,6 +1298,34 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	}
 
 	/**
+	 * Called by the {@link TableControlEditingSupportAndLabelProvider}.
+	 *
+	 * @param feature the feature of the column
+	 * @param cellEditor the cell editor for the column
+	 * @param attributeMap the attribute map displayed in the table
+	 * @param vTableControl the table view model element
+	 * @param dmr the domain model reference of the column
+	 * @param table the table control
+	 * @return the {@link CellLabelProvider} of the column
+	 * @since 1.12
+	 */
+	protected CellLabelProvider createCellLabelProvider(
+		EStructuralFeature feature,
+		CellEditor cellEditor,
+		IObservableMap attributeMap,
+		VTableControl vTableControl,
+		VDomainModelReference dmr,
+		Control table) {
+		return new ECPCellLabelProvider(
+			feature,
+			cellEditor,
+			attributeMap,
+			getVElement(),
+			dmr,
+			table);
+	}
+
+	/**
 	 * The {@link DNDProvider} for this renderer.
 	 *
 	 * @author Johannes Faltermeier
@@ -1546,7 +1574,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 * @author Johannes Faltermeier
 	 *
 	 */
-	private final class TableControlEditingSupportAndLabelProvider
+	protected final class TableControlEditingSupportAndLabelProvider
 		implements EditingSupportCreator, CellLabelProviderFactory {
 		private final InternalEObject tempInstance;
 		private final EStructuralFeature eStructuralFeature;
@@ -1595,7 +1623,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			if (!initialized) {
 				init(table);
 			}
-			return new ECPCellLabelProvider(eStructuralFeature, cellEditor, observableMap,
+			return TableControlSWTRenderer.this.createCellLabelProvider(eStructuralFeature, cellEditor, observableMap,
 				getVElement(), dmr, table.getControl());
 		}
 	}
