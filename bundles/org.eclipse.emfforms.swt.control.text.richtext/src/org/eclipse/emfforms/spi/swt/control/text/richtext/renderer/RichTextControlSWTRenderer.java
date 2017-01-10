@@ -31,6 +31,7 @@ import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.FocusEvent;
@@ -45,24 +46,24 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
 
 /**
- * The text control renderer allows to enter text while given autocompletion proposals. Moreover it is possible to
- * select a proposed value from a combo box.
+ * The text control renderer allows to enter text while given auto-completion proposals.
+ * Moreover it is possible to select a proposed value from a combo box.
  *
  * @author jfaltermeier
  *
  */
 public class RichTextControlSWTRenderer extends TextControlSWTRenderer {
 	private GridData textGridData;
-	private Text text;
+	private StyledText text;
 
 	/**
 	 * @author jonas
 	 *
 	 */
 	private final class OpenPopupHandler implements MouseListener {
-		private final Text text;
+		private final StyledText text;
 
-		private OpenPopupHandler(Text text) {
+		private OpenPopupHandler(StyledText text) {
 			this.text = text;
 		}
 
@@ -84,7 +85,7 @@ public class RichTextControlSWTRenderer extends TextControlSWTRenderer {
 			innerText.setSize(300, getPreferrredPopupHeight());
 			popupWindow.getContent().pack();
 			innerText.setText(text.getText());
-			innerText.setSelection(text.getCaretPosition());
+			innerText.setSelection(text.getCaretOffset());
 
 			innerText.addFocusListener(new FocusListener() {
 				@Override
@@ -178,15 +179,15 @@ public class RichTextControlSWTRenderer extends TextControlSWTRenderer {
 	protected Control createSWTControl(Composite parent) {
 		final Composite composite = new Composite(parent, SWT.NONE);
 		GridLayoutFactory.fillDefaults().numColumns(1).equalWidth(true).applyTo(composite);
-		text = new Text(composite, getTextWidgetStyle());
+		text = new StyledText(composite, getTextWidgetStyle());
 		text.setData(CUSTOM_VARIANT, getTextVariantID());
 		text.setEditable(false);
-		text.setMessage(getTextMessage());
+		text.setToolTipText(getTextMessage());
 		final GridDataFactory gdf = GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER)
 			.grab(true, true).span(1, 1);
 		final EMFFormsEditSupport editSupport = getEMFFormsEditSupport();
 		if (editSupport.isMultiLine(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel())) {
-			gdf.hint(50, getTextHeightHint());// set x hint to enable wrapping
+			gdf.hint(0, getTextHeightHint());// set x hint to enable wrapping
 		}
 		textGridData = gdf.create();
 		text.setLayoutData(textGridData);
@@ -198,8 +199,8 @@ public class RichTextControlSWTRenderer extends TextControlSWTRenderer {
 				textGridData.heightHint = getTextHeightHint();
 				text.setLayoutData(textGridData);
 				EMFFormsSWTLayoutUtil.adjustParentSize(text);
-
 			}
+
 		});
 		return composite;
 	}
@@ -227,6 +228,7 @@ public class RichTextControlSWTRenderer extends TextControlSWTRenderer {
 		}
 		final int lineCount = text.getLineCount();
 		int height = lineCount * text.getLineHeight();
+
 		final int maxHeight = getMaxTextHeight();
 		final int minHeight = getMinTextHeight();
 		if (height > maxHeight) {
@@ -246,6 +248,7 @@ public class RichTextControlSWTRenderer extends TextControlSWTRenderer {
 		if (text == null || text.isDisposed()) {
 			return -1;
 		}
+
 		return getMaxVisibleLines() * text.getLineHeight();
 	}
 
