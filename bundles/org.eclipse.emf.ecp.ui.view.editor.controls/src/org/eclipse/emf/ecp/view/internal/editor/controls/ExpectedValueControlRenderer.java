@@ -143,12 +143,13 @@ public abstract class ExpectedValueControlRenderer extends SimpleControlSWTContr
 	@Override
 	protected Binding[] createBindings(Control control) throws DatabindingFailedException {
 		final Label text = (Label) control;
+		final TargetToModelUpdateStrategy targetToModelUpdateStrategy = new TargetToModelUpdateStrategy();
 		final ModelToTargetUpdateStrategy modelToTargetUpdateStrategy = new ModelToTargetUpdateStrategy();
 
 		final IObservableValue value = org.eclipse.jface.databinding.swt.WidgetProperties.text().observe(text);
 
 		final Binding binding = getDataBindingContext().bindValue(value, getModelValue(),
-			createTargetToModelUpdateStrategy(), modelToTargetUpdateStrategy);
+			withPreSetValidation(targetToModelUpdateStrategy), modelToTargetUpdateStrategy);
 		return new Binding[] { binding };
 	}
 

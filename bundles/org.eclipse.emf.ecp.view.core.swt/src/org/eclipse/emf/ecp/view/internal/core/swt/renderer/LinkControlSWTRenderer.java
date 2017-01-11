@@ -32,7 +32,6 @@ import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.emfforms.spi.common.converter.ITargetToModelConverter;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
@@ -115,7 +114,7 @@ public class LinkControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 
 		final IObservableValue value = WidgetProperties.text().observe(hyperlink);
 		final Binding binding = getDataBindingContext().bindValue(value, getModelValue(),
-			createValueExtractingUpdateStrategy(),
+			withPreSetValidation(createValueExtractingUpdateStrategy()),
 			new UpdateValueStrategy() {
 				@Override
 				public Object convert(Object value) {
@@ -126,7 +125,7 @@ public class LinkControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 
 		final IObservableValue tooltipValue = WidgetProperties.tooltipText().observe(hyperlink);
 		final Binding tooltipBinding = getDataBindingContext().bindValue(tooltipValue, getModelValue(),
-			createValueExtractingUpdateStrategy(),
+			withPreSetValidation(createValueExtractingUpdateStrategy()),
 			new UpdateValueStrategy() {
 				@Override
 				public Object convert(Object value) {
@@ -136,7 +135,7 @@ public class LinkControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 
 		final IObservableValue imageValue = WidgetProperties.image().observe(imageHyperlink);
 		final Binding imageBinding = getDataBindingContext().bindValue(imageValue, getModelValue(),
-			createTargetToModelUpdateStrategy(UpdateValueStrategy.POLICY_NEVER),
+			withPreSetValidation(new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER)),
 			new UpdateValueStrategy() {
 				@Override
 				public Object convert(Object value) {
@@ -146,7 +145,7 @@ public class LinkControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 
 		final IObservableValue deleteButtonEnablement = WidgetProperties.enabled().observe(deleteReferenceButton);
 		final Binding deleteBinding = getDataBindingContext().bindValue(deleteButtonEnablement, getModelValue(),
-			createValueExtractingUpdateStrategy(),
+			withPreSetValidation(createValueExtractingUpdateStrategy()),
 			new UpdateValueStrategy() {
 				@Override
 				public Object convert(Object value) {
@@ -157,8 +156,8 @@ public class LinkControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 		return new Binding[] { binding, tooltipBinding, imageBinding, deleteBinding };
 	}
 
-	private UpdateValueStrategy createValueExtractingUpdateStrategy() throws DatabindingFailedException {
-		return createTargetToModelUpdateStrategy(new ITargetToModelConverter() {
+	private UpdateValueStrategy createValueExtractingUpdateStrategy() {
+		return new UpdateValueStrategy() {
 			@Override
 			public Object convert(Object value) {
 				try {
@@ -168,7 +167,7 @@ public class LinkControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 				}
 				return value;
 			}
-		});
+		};
 	}
 
 	@Override

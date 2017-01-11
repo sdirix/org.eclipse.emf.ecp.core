@@ -59,7 +59,7 @@ public class AttributeValueControlSWTRenderer extends SimpleControlSWTControlSWT
 
 	private static final EMFFormsDatabinding EMFFORMS_DATABINDING;
 	private static final EMFFormsLabelProvider EMFFORMS_LABELPROVIDER;
-	private static final VTViewTemplateProvider VIEW_TEMPLATEPROVIDER;
+	private static final VTViewTemplateProvider VT_VIEW_TEMPLATEPROVIDER;
 
 	static {
 		final BundleContext bundleContext = FrameworkUtil.getBundle(AttributeValueControlSWTRenderer.class)
@@ -72,7 +72,7 @@ public class AttributeValueControlSWTRenderer extends SimpleControlSWTControlSWT
 		EMFFORMS_LABELPROVIDER = bundleContext.getService(emfFormsLabelProviderServiceReference);
 		final ServiceReference<VTViewTemplateProvider> vtViewTemplateProviderServiceReference = bundleContext
 			.getServiceReference(VTViewTemplateProvider.class);
-		VIEW_TEMPLATEPROVIDER = bundleContext.getService(vtViewTemplateProviderServiceReference);
+		VT_VIEW_TEMPLATEPROVIDER = bundleContext.getService(vtViewTemplateProviderServiceReference);
 	}
 
 	/**
@@ -84,7 +84,7 @@ public class AttributeValueControlSWTRenderer extends SimpleControlSWTControlSWT
 	 */
 	public AttributeValueControlSWTRenderer(VControl vElement, ViewModelContext viewContext,
 		ReportService reportService) {
-		super(vElement, viewContext, reportService, EMFFORMS_DATABINDING, EMFFORMS_LABELPROVIDER, VIEW_TEMPLATEPROVIDER);
+		super(vElement, viewContext, reportService, EMFFORMS_DATABINDING, EMFFORMS_LABELPROVIDER, VT_VIEW_TEMPLATEPROVIDER);
 	}
 
 	/**
@@ -97,7 +97,7 @@ public class AttributeValueControlSWTRenderer extends SimpleControlSWTControlSWT
 	protected Binding[] createBindings(Control control) throws DatabindingFailedException {
 		final Label label = (Label) Composite.class.cast(control).getChildren()[0];
 		final Binding binding = getDataBindingContext().bindValue(WidgetProperties.text().observe(label),
-			getModelValue(), createTargetToModelUpdateStrategy(), new UpdateValueStrategy() {
+			getModelValue(), withPreSetValidation(new UpdateValueStrategy()), new UpdateValueStrategy() {
 
 				/**
 				 * {@inheritDoc}

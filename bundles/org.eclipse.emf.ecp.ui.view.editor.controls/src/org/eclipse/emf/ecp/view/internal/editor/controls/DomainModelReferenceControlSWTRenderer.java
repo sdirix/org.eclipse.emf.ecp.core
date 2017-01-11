@@ -55,7 +55,6 @@ import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
-import org.eclipse.emfforms.spi.common.converter.ITargetToModelConverter;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
@@ -140,9 +139,10 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 		final IObservableValue value = WidgetProperties.text().observe(setLabel);
 
 		bindings[0] = getDataBindingContext().bindValue(value, getModelValue(),
-			createTargetToModelUpdateStrategy(new ITargetToModelConverter() {
+			withPreSetValidation(new UpdateValueStrategy() {
+
 				@Override
-				public Object convert(Object value) {
+				public Object convert(Object value) { // target to model
 					try {
 						return getModelValue().getValue();
 					} catch (final DatabindingFailedException ex) {
@@ -150,8 +150,7 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 						return null;
 					}
 				}
-			}),
-			new UpdateValueStrategy() {// model to target
+			}), new UpdateValueStrategy() {// model to target
 				@Override
 				public Object convert(Object value) {
 					updateChangeListener((EObject) value);
@@ -161,7 +160,8 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 
 		final IObservableValue imageValue = WidgetProperties.image().observe(imageLabel);
 		bindings[1] = getDataBindingContext().bindValue(imageValue, getModelValue(),
-			createTargetToModelUpdateStrategy(UpdateValueStrategy.POLICY_NEVER), new UpdateValueStrategy() {
+			withPreSetValidation(new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER)),
+			new UpdateValueStrategy() {
 				@Override
 				public Object convert(Object value) {
 					return getImage(value);
@@ -172,7 +172,7 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 		bindings[2] = getDataBindingContext().bindValue(
 			setLabelTooltip,
 			getModelValue(),
-			createTargetToModelUpdateStrategy(UpdateValueStrategy.POLICY_NEVER),
+			withPreSetValidation(new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER)),
 			new UpdateValueStrategy() {
 				@Override
 				public Object convert(Object value) {

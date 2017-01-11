@@ -15,6 +15,7 @@ import java.io.File;
 import java.net.MalformedURLException;
 
 import org.eclipse.core.databinding.Binding;
+import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.IObserving;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.resources.IResource;
@@ -66,7 +67,7 @@ public class URLSelectionControlSWTRenderer extends SimpleControlSWTControlSWTRe
 
 	private static final EMFFormsDatabinding EMFFORMS_DATABINDING;
 	private static final EMFFormsLabelProvider EMFFORMS_LABELPROVIDER;
-	private static final VTViewTemplateProvider VIEW_TEMPLATEPROVIDER;
+	private static final VTViewTemplateProvider VT_VIEW_TEMPLATEPROVIDER;
 
 	static {
 		final BundleContext bundleContext = FrameworkUtil.getBundle(URLSelectionControlSWTRenderer.class)
@@ -79,7 +80,7 @@ public class URLSelectionControlSWTRenderer extends SimpleControlSWTControlSWTRe
 		EMFFORMS_LABELPROVIDER = bundleContext.getService(emfFormsLabelProviderServiceReference);
 		final ServiceReference<VTViewTemplateProvider> vtViewTemplateProviderServiceReference = bundleContext
 			.getServiceReference(VTViewTemplateProvider.class);
-		VIEW_TEMPLATEPROVIDER = bundleContext.getService(vtViewTemplateProviderServiceReference);
+		VT_VIEW_TEMPLATEPROVIDER = bundleContext.getService(vtViewTemplateProviderServiceReference);
 	}
 
 	/**
@@ -91,7 +92,8 @@ public class URLSelectionControlSWTRenderer extends SimpleControlSWTControlSWTRe
 	 */
 	public URLSelectionControlSWTRenderer(VControl vElement, ViewModelContext viewContext,
 		ReportService reportService) {
-		super(vElement, viewContext, reportService, EMFFORMS_DATABINDING, EMFFORMS_LABELPROVIDER, VIEW_TEMPLATEPROVIDER);
+		super(vElement, viewContext, reportService, EMFFORMS_DATABINDING, EMFFORMS_LABELPROVIDER,
+			VT_VIEW_TEMPLATEPROVIDER);
 	}
 
 	/**
@@ -106,10 +108,11 @@ public class URLSelectionControlSWTRenderer extends SimpleControlSWTControlSWTRe
 		final Control childControl = composite.getChildren()[0];
 		final IObservableValue value = WidgetProperties.text().observe(childControl);
 		final Binding binding = getDataBindingContext().bindValue(value, getModelValue(),
-			createTargetToModelUpdateStrategy(), null);
+			withPreSetValidation(new UpdateValueStrategy()), null);
 
 		final IObservableValue toolTip = WidgetProperties.tooltipText().observe(childControl);
-		final Binding tooltipBinding = getDataBindingContext().bindValue(toolTip, getModelValue());
+		final Binding tooltipBinding = getDataBindingContext().bindValue(toolTip, getModelValue(),
+			withPreSetValidation(new UpdateValueStrategy()), null);
 		return new Binding[] { binding, tooltipBinding };
 	}
 

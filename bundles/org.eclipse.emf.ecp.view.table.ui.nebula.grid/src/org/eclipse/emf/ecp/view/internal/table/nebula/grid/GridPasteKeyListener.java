@@ -16,12 +16,14 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emfforms.spi.common.converter.EStructuralFeatureValueConverterService;
+import org.eclipse.emfforms.spi.common.validation.PreSetValidationService;
 import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
 import org.eclipse.emfforms.spi.swt.table.AbstractTableViewerComposite;
 import org.eclipse.nebula.widgets.grid.Grid;
@@ -32,6 +34,9 @@ import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Display;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 
 /**
  * {@link KeyListener} for the paste action on a {@link Grid} control.
@@ -50,6 +55,7 @@ public class GridPasteKeyListener implements KeyListener {
 
 	private boolean selectPastedCells = true;
 	private boolean alreadyPasted;
+	private final PreSetValidationService preSetValidationService;
 
 	/**
 	 * Constructor.
@@ -67,6 +73,15 @@ public class GridPasteKeyListener implements KeyListener {
 		this.dataBinding = dataBinding;
 		this.converterService = converterService;
 		this.selectPastedCells = selectPastedCells;
+
+		final BundleContext bundleContext = FrameworkUtil
+			.getBundle(getClass())
+			.getBundleContext();
+
+		final ServiceReference<PreSetValidationService> serviceReference = bundleContext
+			.getServiceReference(PreSetValidationService.class);
+
+		preSetValidationService = serviceReference != null ? bundleContext.getService(serviceReference) : null;
 	}
 
 	@Override
@@ -175,7 +190,16 @@ public class GridPasteKeyListener implements KeyListener {
 						value = dataBinding.getObservableValue(dmr, eObject);
 						final Object convertedValue = converterService.convertToModelValue(eObject,
 							(EStructuralFeature) value.getValueType(), cellValue);
-						if (convertedValue != null) {
+
+						boolean valid = convertedValue != null;
+
+						if (preSetValidationService != null) {
+							final Diagnostic validate = preSetValidationService.validate(
+								(EStructuralFeature) value.getValueType(), convertedValue);
+							valid = validate.getSeverity() == Diagnostic.OK;
+						}
+
+						if (valid) {
 							value.setValue(convertedValue);
 							pastedValues.add(value);
 						}

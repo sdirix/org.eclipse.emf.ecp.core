@@ -24,9 +24,9 @@ import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.databinding.EMFUpdateValueStrategy;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecp.edit.internal.swt.util.PreSetValidationVerifyListener;
 import org.eclipse.emf.ecp.view.internal.core.swt.MessageKeys;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.spi.core.swt.CommonTargetToModelUpdateStrategy;
 import org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
@@ -97,8 +97,8 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 	@Override
 	protected Binding[] createBindings(Control control) throws DatabindingFailedException {
 		final EStructuralFeature structuralFeature = (EStructuralFeature) getModelValue().getValueType();
-		final TargetToModelUpdateStrategy targetToModelUpdateStrategy = new TargetToModelUpdateStrategy(
-			getVElement(), structuralFeature);
+		final UpdateValueStrategy targetToModelUpdateStrategy = withPreSetValidation(
+			new TargetToModelUpdateStrategy(structuralFeature.isUnsettable()));
 		final ModelToTargetUpdateStrategy modelToTargetUpdateStrategy = new ModelToTargetUpdateStrategy(false);
 		final Binding binding = bindValue(control, getModelValue(), getDataBindingContext(),
 			targetToModelUpdateStrategy,
@@ -126,6 +126,12 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 				text.selectAll();
 			}
 		});
+		try {
+			PreSetValidationVerifyListener.create().attachTo(text, getFeature());
+		} catch (final DatabindingFailedException ex) {
+			// ignore
+		}
+
 		final GridDataFactory gdf = GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER)
 			.grab(true, true).span(1, 1);
 		final EMFFormsEditSupport editSupport = getEMFFormsEditSupport();
@@ -409,16 +415,18 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 	 * @author Eugen
 	 *
 	 */
-	protected class TargetToModelUpdateStrategy extends CommonTargetToModelUpdateStrategy {
+	protected class TargetToModelUpdateStrategy extends EMFUpdateConvertValueStrategy {
+
+		private final boolean unsetable;
 
 		/**
-		 * Constructor.
+		 * Constructor for indicating whether a value is unsettable.
 		 *
-		 * @param vElement the {@link VElement}
-		 * @param eStructuralFeature an {@link EStructuralFeature} that defines any validation constraints
+		 * @param unsettable true if value is unsettable, false otherwise
 		 */
-		public TargetToModelUpdateStrategy(VElement vElement, EStructuralFeature eStructuralFeature) {
-			super(vElement, eStructuralFeature);
+		public TargetToModelUpdateStrategy(boolean unsettable) {
+			unsetable = unsettable;
+
 		}
 
 		/**
@@ -430,11 +438,11 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 				if ("".equals(value)) { //$NON-NLS-1$
 					value = null;
 				}
-				if (value == null && getStructuralFeature().isUnsettable()) {
+				if (value == null && unsetable) {
 					return SetCommand.UNSET_VALUE;
 				}
 
-				return super.convert(value);
+				return convertValue(value);
 
 			} catch (final IllegalArgumentException e) {
 				throw e;

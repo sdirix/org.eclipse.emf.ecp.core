@@ -19,6 +19,7 @@ import javax.inject.Inject;
 
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.core.runtime.IStatus;
@@ -28,10 +29,8 @@ import org.eclipse.emf.ecp.edit.spi.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.ecp.view.internal.core.swt.Activator;
 import org.eclipse.emf.ecp.view.internal.core.swt.MessageKeys;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.spi.core.swt.CommonTargetToModelUpdateStrategy;
 import org.eclipse.emf.ecp.view.spi.core.swt.renderer.TextControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
-import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emfforms.spi.common.locale.EMFFormsLocaleChangeListener;
@@ -133,9 +132,9 @@ public class NumberControlSWTRenderer extends TextControlSWTRenderer {
 	protected Binding[] createBindings(final Control control) throws DatabindingFailedException {
 		final EStructuralFeature structuralFeature = (EStructuralFeature) getModelValue().getValueType();
 
-		final NumericalTargetToModelUpdateStrategy targetToModelStrategy = new NumericalTargetToModelUpdateStrategy(
-			getVElement(), structuralFeature, getModelValue(), getDataBindingContext(),
-			(Text) Composite.class.cast(control).getChildren()[0]);
+		final UpdateValueStrategy targetToModelStrategy = withPreSetValidation(new NumericalTargetToModelUpdateStrategy(
+			structuralFeature, getModelValue(), getDataBindingContext(),
+			(Text) Composite.class.cast(control).getChildren()[0]));
 		final NumericalModelToTargetUpdateStrategy modelToTargetStrategy = new NumericalModelToTargetUpdateStrategy(
 			getInstanceClass(structuralFeature), false);
 		final Binding binding = bindValue(control, getModelValue(), getDataBindingContext(),
@@ -196,17 +195,16 @@ public class NumberControlSWTRenderer extends TextControlSWTRenderer {
 	 * for instance because of the current locale, the value is reset to
 	 * the last valid value found in the mode.
 	 */
-	private class NumericalTargetToModelUpdateStrategy extends CommonTargetToModelUpdateStrategy {
+	private class NumericalTargetToModelUpdateStrategy extends TargetToModelUpdateStrategy {
 
 		private final Text text;
 		private final IObservableValue modelValue;
 		private final EStructuralFeature eStructuralFeature;
 		private final DataBindingContext dataBindingContext;
 
-		NumericalTargetToModelUpdateStrategy(VElement vElement, EStructuralFeature eStructuralFeature,
-			IObservableValue modelValue, DataBindingContext dataBindingContext,
-			Text text) {
-			super(vElement, eStructuralFeature);
+		NumericalTargetToModelUpdateStrategy(EStructuralFeature eStructuralFeature,
+			IObservableValue modelValue, DataBindingContext dataBindingContext, Text text) {
+			super(eStructuralFeature.isUnsettable());
 			this.eStructuralFeature = eStructuralFeature;
 			this.modelValue = modelValue;
 			this.dataBindingContext = dataBindingContext;
@@ -219,7 +217,7 @@ public class NumberControlSWTRenderer extends TextControlSWTRenderer {
 		}
 
 		@Override
-		public Object convert(final Object value) {
+		protected Object convertValue(final Object value) {
 			final DecimalFormat format = getFormat();
 			try {
 				Number number = null;

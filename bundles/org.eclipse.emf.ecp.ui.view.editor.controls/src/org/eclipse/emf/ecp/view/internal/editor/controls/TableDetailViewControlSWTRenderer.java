@@ -40,7 +40,6 @@ import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
-import org.eclipse.emfforms.spi.common.converter.ITargetToModelConverter;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
@@ -171,7 +170,8 @@ public class TableDetailViewControlSWTRenderer extends SimpleControlSWTControlSW
 		final IObservableValue value = WidgetProperties.text().observe(label);
 
 		bindings[0] = getDataBindingContext().bindValue(value, getModelValue(),
-			createTargetToModelUpdateStrategy(new ITargetToModelConverter() {
+			withPreSetValidation(new UpdateValueStrategy() {
+
 				@Override
 				public Object convert(Object value) {
 					try {
@@ -181,8 +181,7 @@ public class TableDetailViewControlSWTRenderer extends SimpleControlSWTControlSW
 						return null;
 					}
 				}
-			}),
-			new UpdateValueStrategy() {
+			}), new UpdateValueStrategy() {
 				@Override
 				public Object convert(Object value) {
 					return getText(value);
@@ -191,7 +190,8 @@ public class TableDetailViewControlSWTRenderer extends SimpleControlSWTControlSW
 
 		final IObservableValue tooltipValue = WidgetProperties.tooltipText().observe(label);
 		bindings[1] = getDataBindingContext().bindValue(tooltipValue, getModelValue(),
-			createTargetToModelUpdateStrategy(new ITargetToModelConverter() {
+			withPreSetValidation(new UpdateValueStrategy() {
+
 				@Override
 				public Object convert(Object value) {
 					try {
@@ -210,7 +210,8 @@ public class TableDetailViewControlSWTRenderer extends SimpleControlSWTControlSW
 
 		final IObservableValue imageValue = WidgetProperties.image().observe(imageLabel);
 		bindings[2] = getDataBindingContext().bindValue(imageValue, getModelValue(),
-			createTargetToModelUpdateStrategy(new ITargetToModelConverter() {
+			withPreSetValidation(new UpdateValueStrategy() {
+
 				@Override
 				public Object convert(Object value) {
 					try {

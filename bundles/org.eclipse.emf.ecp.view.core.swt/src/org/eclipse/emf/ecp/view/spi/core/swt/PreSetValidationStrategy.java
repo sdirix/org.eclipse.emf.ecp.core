@@ -11,6 +11,9 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.core.swt;
 
+import org.eclipse.core.databinding.UpdateValueStrategy;
+import org.eclipse.core.databinding.conversion.IConverter;
+import org.eclipse.core.databinding.validation.IValidator;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.BasicDiagnostic;
@@ -20,7 +23,6 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
-import org.eclipse.emfforms.spi.common.converter.ITargetToModelConverter;
 import org.eclipse.emfforms.spi.common.validation.PreSetValidationService;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
@@ -31,11 +33,12 @@ import org.osgi.framework.ServiceReference;
  *
  * @since 1.12
  */
-public class CommonTargetToModelUpdateStrategy extends EMFUpdateValueStrategy {
+public class PreSetValidationStrategy extends UpdateValueStrategy {
 
 	private final EStructuralFeature eStructuralFeature;
 	private final VElement vElement;
-	private ITargetToModelConverter conversion;
+	// private ITargetToModelConverter conversion;
+	private final UpdateValueStrategy strategy;
 
 	/**
 	 * Constructor.
@@ -43,55 +46,11 @@ public class CommonTargetToModelUpdateStrategy extends EMFUpdateValueStrategy {
 	 * @param vElement the {@link VElement}
 	 * @param eStructuralFeature an {@link EStructuralFeature} that defines any validation constraints
 	 */
-	public CommonTargetToModelUpdateStrategy(VElement vElement, EStructuralFeature eStructuralFeature) {
-		super(POLICY_UPDATE);
+	public PreSetValidationStrategy(VElement vElement, EStructuralFeature eStructuralFeature,
+		UpdateValueStrategy delegate) {
 		this.vElement = vElement;
 		this.eStructuralFeature = eStructuralFeature;
-	}
-
-	/**
-	 * Constructor.
-	 *
-	 * @param vElement the {@link VElement}
-	 * @param eStructuralFeature an {@link EStructuralFeature} that defines any validation constraints
-	 * @param updatePolicy the update policy
-	 */
-	public CommonTargetToModelUpdateStrategy(VElement vElement, EStructuralFeature eStructuralFeature,
-		int updatePolicy) {
-		super(updatePolicy);
-		this.vElement = vElement;
-		this.eStructuralFeature = eStructuralFeature;
-	}
-
-	/**
-	 * Constructor.
-	 *
-	 * @param vElement the {@link VElement}
-	 * @param eStructuralFeature an {@link EStructuralFeature} that defines any validation constraints
-	 * @param conversion a conversion that should take place during the target to model phase
-	 */
-	public CommonTargetToModelUpdateStrategy(VElement vElement, EStructuralFeature eStructuralFeature,
-		ITargetToModelConverter conversion) {
-		super(POLICY_UPDATE);
-		this.vElement = vElement;
-		this.eStructuralFeature = eStructuralFeature;
-		this.conversion = conversion;
-	}
-
-	/**
-	 * Constructor.
-	 *
-	 * @param vElement the {@link VElement}
-	 * @param eStructuralFeature an {@link EStructuralFeature} that defines any validation constraints
-	 * @param conversion a conversion that should take place during the target to model phase
-	 * @param updatePolicy the update policy
-	 */
-	public CommonTargetToModelUpdateStrategy(VElement vElement, EStructuralFeature eStructuralFeature,
-		ITargetToModelConverter conversion, int updatePolicy) {
-		super(updatePolicy);
-		this.vElement = vElement;
-		this.eStructuralFeature = eStructuralFeature;
-		this.conversion = conversion;
+		strategy = delegate;
 	}
 
 	/**
@@ -108,7 +67,7 @@ public class CommonTargetToModelUpdateStrategy extends EMFUpdateValueStrategy {
 			.getServiceReference(PreSetValidationService.class);
 
 		if (serviceReference == null) {
-			return super.validateBeforeSet(value);
+			return strategy.validateBeforeSet(value);
 		}
 
 		try {
@@ -116,7 +75,7 @@ public class CommonTargetToModelUpdateStrategy extends EMFUpdateValueStrategy {
 			final PreSetValidationService service = bundleContext.getService(serviceReference);
 
 			if (service == null) {
-				return super.validateBeforeSet(value);
+				return strategy.validateBeforeSet(value);
 			}
 
 			final Diagnostic result = service.validate(eStructuralFeature, value);
@@ -141,10 +100,77 @@ public class CommonTargetToModelUpdateStrategy extends EMFUpdateValueStrategy {
 	 */
 	@Override
 	public Object convert(Object value) {
-		if (conversion != null) {
-			return conversion.convert(value);
-		}
-		return super.convert(value);
+		return strategy.convert(value);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.core.databinding.UpdateValueStrategy#getUpdatePolicy()
+	 */
+	@Override
+	public int getUpdatePolicy() {
+		return strategy.getUpdatePolicy();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.core.databinding.UpdateValueStrategy#setAfterConvertValidator(org.eclipse.core.databinding.validation.IValidator)
+	 */
+	@Override
+	public UpdateValueStrategy setAfterConvertValidator(IValidator validator) {
+		return strategy.setAfterConvertValidator(validator);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.core.databinding.UpdateValueStrategy#setBeforeSetValidator(org.eclipse.core.databinding.validation.IValidator)
+	 */
+	@Override
+	public UpdateValueStrategy setBeforeSetValidator(IValidator validator) {
+		return strategy.setBeforeSetValidator(validator);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.core.databinding.UpdateValueStrategy#setAfterGetValidator(org.eclipse.core.databinding.validation.IValidator)
+	 */
+	@Override
+	public UpdateValueStrategy setAfterGetValidator(IValidator validator) {
+		return strategy.setAfterGetValidator(validator);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.core.databinding.UpdateValueStrategy#setConverter(org.eclipse.core.databinding.conversion.IConverter)
+	 */
+	@Override
+	public UpdateValueStrategy setConverter(IConverter converter) {
+		return strategy.setConverter(converter);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.core.databinding.UpdateValueStrategy#validateAfterConvert(java.lang.Object)
+	 */
+	@Override
+	public IStatus validateAfterConvert(Object value) {
+		return strategy.validateAfterConvert(value);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.core.databinding.UpdateValueStrategy#validateAfterGet(java.lang.Object)
+	 */
+	@Override
+	public IStatus validateAfterGet(Object value) {
+		return strategy.validateAfterGet(value);
 	}
 
 	/**
