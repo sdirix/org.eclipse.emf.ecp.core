@@ -15,8 +15,6 @@ import static org.eclipse.emf.ecp.view.validation.test.model.TestPackage.CONTAIN
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EDataType;
-import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EGenericType;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
@@ -28,11 +26,9 @@ import org.eclipse.emf.ecp.view.validation.test.model.Computer;
 import org.eclipse.emf.ecp.view.validation.test.model.Content;
 import org.eclipse.emf.ecp.view.validation.test.model.CrossReferenceContainer;
 import org.eclipse.emf.ecp.view.validation.test.model.CrossReferenceContent;
-import org.eclipse.emf.ecp.view.validation.test.model.Gender;
 import org.eclipse.emf.ecp.view.validation.test.model.Librarian;
 import org.eclipse.emf.ecp.view.validation.test.model.Library;
 import org.eclipse.emf.ecp.view.validation.test.model.Mainboard;
-import org.eclipse.emf.ecp.view.validation.test.model.Person;
 import org.eclipse.emf.ecp.view.validation.test.model.PowerBlock;
 import org.eclipse.emf.ecp.view.validation.test.model.Referencer;
 import org.eclipse.emf.ecp.view.validation.test.model.TableContent;
@@ -224,46 +220,6 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * @generated
 	 */
 	private EClass crossReferenceContentEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @generated
-	 */
-	private EClass personEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @generated
-	 */
-	private EEnum genderEEnum = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @generated
-	 */
-	private EDataType stringWithMaxLength8EDataType = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @generated
-	 */
-	private EDataType onlyCapitalsEDataType = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @generated
-	 */
-	private EDataType customDataTypeEDataType = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with {@link org.eclipse.emf.ecore.EPackage.Registry
@@ -1006,105 +962,6 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * @generated
 	 */
 	@Override
-	public EClass getPerson() {
-		return personEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @generated
-	 */
-	@Override
-	public EAttribute getPerson_FirstName() {
-		return (EAttribute) personEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @generated
-	 */
-	@Override
-	public EAttribute getPerson_Gender() {
-		return (EAttribute) personEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @generated
-	 */
-	@Override
-	public EAttribute getPerson_LastName() {
-		return (EAttribute) personEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @generated
-	 */
-	@Override
-	public EAttribute getPerson_Custom() {
-		return (EAttribute) personEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @generated
-	 */
-	@Override
-	public EDataType getStringWithMaxLength8() {
-		return stringWithMaxLength8EDataType;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @generated
-	 */
-	@Override
-	public EDataType getOnlyCapitals() {
-		return onlyCapitalsEDataType;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @generated
-	 */
-	@Override
-	public EDataType getCustomDataType() {
-		return customDataTypeEDataType;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @generated
-	 */
-	@Override
-	public EEnum getGender() {
-		return genderEEnum;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @generated
-	 */
-	@Override
 	public TestFactory getTestFactory() {
 		return (TestFactory) getEFactoryInstance();
 	}
@@ -1212,20 +1069,6 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 		crossReferenceContentEClass = createEClass(CROSS_REFERENCE_CONTENT);
 		createEReference(crossReferenceContentEClass, CROSS_REFERENCE_CONTENT__PARENT);
 		createEReference(crossReferenceContentEClass, CROSS_REFERENCE_CONTENT__SINGLE_PARENT);
-
-		personEClass = createEClass(PERSON);
-		createEAttribute(personEClass, PERSON__FIRST_NAME);
-		createEAttribute(personEClass, PERSON__GENDER);
-		createEAttribute(personEClass, PERSON__LAST_NAME);
-		createEAttribute(personEClass, PERSON__CUSTOM);
-
-		// Create enums
-		genderEEnum = createEEnum(GENDER);
-
-		// Create data types
-		stringWithMaxLength8EDataType = createEDataType(STRING_WITH_MAX_LENGTH8);
-		onlyCapitalsEDataType = createEDataType(ONLY_CAPITALS);
-		customDataTypeEDataType = createEDataType(CUSTOM_DATA_TYPE);
 	}
 
 	/**
@@ -1269,9 +1112,9 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 		initEClass(libraryEClass, Library.class, "Library", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getLibrary_Name(), ecorePackage.getEString(), "name", null, 0, 1, Library.class, !IS_TRANSIENT,
 			!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getLibrary_Writers(), getWriter(), getWriter_Library(), "writers", null, 1, -1,
-			Library.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
-			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getLibrary_Writers(), getWriter(), getWriter_Library(), "writers", null, 1, -1, Library.class,
+			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+			!IS_DERIVED, IS_ORDERED);
 		initEReference(getLibrary_Books(), getBook(), null, "books", null, 0, -1, Library.class, !IS_TRANSIENT,
 			!IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
 			IS_ORDERED);
@@ -1303,9 +1146,9 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 			!IS_DERIVED, IS_ORDERED);
 		initEAttribute(getWriter_Pseudonym(), ecorePackage.getEBoolean(), "Pseudonym", "false", 0, 1, Writer.class,
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getWriter_Library(), getLibrary(), getLibrary_Writers(), "library", null, 0, 1,
-			Writer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES,
-			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getWriter_Library(), getLibrary(), getLibrary_Writers(), "library", null, 0, 1, Writer.class,
+			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+			!IS_DERIVED, IS_ORDERED);
 
 		op = addEOperation(writerEClass, ecorePackage.getEBoolean(), "validate", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEDiagnosticChain(), "diagnostic", 0, 1, IS_UNIQUE, IS_ORDERED);
@@ -1424,14 +1267,14 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 
 		initEClass(tableContentWithInnerChild2EClass, TableContentWithInnerChild2.class, "TableContentWithInnerChild2",
 			!IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getTableContentWithInnerChild2_InnerChild(), getTableContent(), null, "innerChild", null, 0,
-			1, TableContentWithInnerChild2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+		initEReference(getTableContentWithInnerChild2_InnerChild(), getTableContent(), null, "innerChild", null, 0, 1,
+			TableContentWithInnerChild2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
 			!IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(tableContentWithInnerChildEClass, TableContentWithInnerChild.class, "TableContentWithInnerChild",
 			!IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getTableContentWithInnerChild_InnerChild(), getTableContent(), null, "innerChild", null, 0,
-			1, TableContentWithInnerChild.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+		initEReference(getTableContentWithInnerChild_InnerChild(), getTableContent(), null, "innerChild", null, 0, 1,
+			TableContentWithInnerChild.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
 			!IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTableContentWithInnerChild_Stuff(), ecorePackage.getEString(), "stuff", null, 0, 1,
 			TableContentWithInnerChild.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID,
@@ -1439,8 +1282,8 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 
 		initEClass(tableWithoutMultiplicityConcreteEClass, TableWithoutMultiplicityConcrete.class,
 			"TableWithoutMultiplicityConcrete", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getTableWithoutMultiplicityConcrete_Content(), getTableContentWithInnerChild(), null,
-			"content", null, 0, -1, TableWithoutMultiplicityConcrete.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+		initEReference(getTableWithoutMultiplicityConcrete_Content(), getTableContentWithInnerChild(), null, "content",
+			null, 0, -1, TableWithoutMultiplicityConcrete.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
 			IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(referencerEClass, Referencer.class, "Referencer", !IS_ABSTRACT, !IS_INTERFACE,
@@ -1452,9 +1295,9 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 		initEClass(crossReferenceContainerEClass, CrossReferenceContainer.class, "CrossReferenceContainer",
 			!IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getCrossReferenceContainer_Contents(), getCrossReferenceContent(),
-			getCrossReferenceContent_Parent(), "contents", null, 0, -1, CrossReferenceContainer.class,
-			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
-			!IS_DERIVED, IS_ORDERED);
+			getCrossReferenceContent_Parent(), "contents", null, 0, -1, CrossReferenceContainer.class, !IS_TRANSIENT,
+			!IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
+			IS_ORDERED);
 		initEReference(getCrossReferenceContainer_SingleContent(), getCrossReferenceContent(),
 			getCrossReferenceContent_SingleParent(), "singleContent", null, 0, 1, CrossReferenceContainer.class,
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
@@ -1463,65 +1306,16 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 		initEClass(crossReferenceContentEClass, CrossReferenceContent.class, "CrossReferenceContent", !IS_ABSTRACT,
 			!IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getCrossReferenceContent_Parent(), getCrossReferenceContainer(),
-			getCrossReferenceContainer_Contents(), "parent", null, 0, 1, CrossReferenceContent.class,
-			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
-			!IS_DERIVED, IS_ORDERED);
+			getCrossReferenceContainer_Contents(), "parent", null, 0, 1, CrossReferenceContent.class, !IS_TRANSIENT,
+			!IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
+			IS_ORDERED);
 		initEReference(getCrossReferenceContent_SingleParent(), getCrossReferenceContainer(),
 			getCrossReferenceContainer_SingleContent(), "singleParent", null, 0, 1, CrossReferenceContent.class,
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
 			!IS_DERIVED, IS_ORDERED);
 
-		initEClass(personEClass, Person.class, "Person", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getPerson_FirstName(), getStringWithMaxLength8(), "firstName", null, 0, 1, Person.class,
-			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getPerson_Gender(), getGender(), "gender", null, 0, 1, Person.class, !IS_TRANSIENT,
-			!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getPerson_LastName(), getOnlyCapitals(), "lastName", null, 0, 1, Person.class,
-			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getPerson_Custom(), getCustomDataType(), "custom", null, 0, 1, Person.class, !IS_TRANSIENT,
-			!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		// Initialize enums and add enum literals
-		initEEnum(genderEEnum, Gender.class, "Gender");
-		addEEnumLiteral(genderEEnum, Gender.MALE);
-		addEEnumLiteral(genderEEnum, Gender.FEMALE);
-		addEEnumLiteral(genderEEnum, Gender.BOTH);
-
-		// Initialize data types
-		initEDataType(stringWithMaxLength8EDataType, String.class, "StringWithMaxLength8", IS_SERIALIZABLE,
-			!IS_GENERATED_INSTANCE_CLASS);
-		initEDataType(onlyCapitalsEDataType, String.class, "OnlyCapitals", IS_SERIALIZABLE,
-			!IS_GENERATED_INSTANCE_CLASS);
-		initEDataType(customDataTypeEDataType, String.class, "CustomDataType", IS_SERIALIZABLE,
-			!IS_GENERATED_INSTANCE_CLASS);
-
 		// Create resource
 		createResource(eNS_URI);
-
-		// Create annotations
-		// http:///org/eclipse/emf/ecore/util/ExtendedMetaData
-		createExtendedMetaDataAnnotations();
-	}
-
-	/**
-	 * Initializes the annotations for <b>http:///org/eclipse/emf/ecore/util/ExtendedMetaData</b>.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @generated
-	 */
-	protected void createExtendedMetaDataAnnotations() {
-		final String source = "http:///org/eclipse/emf/ecore/util/ExtendedMetaData";
-		addAnnotation(stringWithMaxLength8EDataType,
-			source,
-			new String[] {
-				"maxLength", "8"
-			});
-		addAnnotation(onlyCapitalsEDataType,
-			source,
-			new String[] {
-				"pattern", "[A-Z]+"
-			});
 	}
 
 } // TestPackageImpl

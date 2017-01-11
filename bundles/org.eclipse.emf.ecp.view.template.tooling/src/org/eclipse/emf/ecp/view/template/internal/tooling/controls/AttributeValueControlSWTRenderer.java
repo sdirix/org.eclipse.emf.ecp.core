@@ -57,22 +57,22 @@ import org.osgi.framework.ServiceReference;
  */
 public class AttributeValueControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 
-	private static final EMFFormsDatabinding EMFFORMS_DATABINDING;
-	private static final EMFFormsLabelProvider EMFFORMS_LABELPROVIDER;
-	private static final VTViewTemplateProvider VIEW_TEMPLATEPROVIDER;
+	private static final EMFFormsDatabinding emfFormsDatabinding;
+	private static final EMFFormsLabelProvider emfFormsLabelProvider;
+	private static final VTViewTemplateProvider vtViewTemplateProvider;
 
 	static {
 		final BundleContext bundleContext = FrameworkUtil.getBundle(AttributeValueControlSWTRenderer.class)
 			.getBundleContext();
 		final ServiceReference<EMFFormsDatabinding> emfFormsDatabindingServiceReference = bundleContext
 			.getServiceReference(EMFFormsDatabinding.class);
-		EMFFORMS_DATABINDING = bundleContext.getService(emfFormsDatabindingServiceReference);
+		emfFormsDatabinding = bundleContext.getService(emfFormsDatabindingServiceReference);
 		final ServiceReference<EMFFormsLabelProvider> emfFormsLabelProviderServiceReference = bundleContext
 			.getServiceReference(EMFFormsLabelProvider.class);
-		EMFFORMS_LABELPROVIDER = bundleContext.getService(emfFormsLabelProviderServiceReference);
+		emfFormsLabelProvider = bundleContext.getService(emfFormsLabelProviderServiceReference);
 		final ServiceReference<VTViewTemplateProvider> vtViewTemplateProviderServiceReference = bundleContext
 			.getServiceReference(VTViewTemplateProvider.class);
-		VIEW_TEMPLATEPROVIDER = bundleContext.getService(vtViewTemplateProviderServiceReference);
+		vtViewTemplateProvider = bundleContext.getService(vtViewTemplateProviderServiceReference);
 	}
 
 	/**
@@ -84,7 +84,7 @@ public class AttributeValueControlSWTRenderer extends SimpleControlSWTControlSWT
 	 */
 	public AttributeValueControlSWTRenderer(VControl vElement, ViewModelContext viewContext,
 		ReportService reportService) {
-		super(vElement, viewContext, reportService, EMFFORMS_DATABINDING, EMFFORMS_LABELPROVIDER, VIEW_TEMPLATEPROVIDER);
+		super(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider);
 	}
 
 	/**
@@ -97,7 +97,7 @@ public class AttributeValueControlSWTRenderer extends SimpleControlSWTControlSWT
 	protected Binding[] createBindings(Control control) throws DatabindingFailedException {
 		final Label label = (Label) Composite.class.cast(control).getChildren()[0];
 		final Binding binding = getDataBindingContext().bindValue(WidgetProperties.text().observe(label),
-			getModelValue(), createTargetToModelUpdateStrategy(), new UpdateValueStrategy() {
+			getModelValue(), new UpdateValueStrategy(), new UpdateValueStrategy() {
 
 				/**
 				 * {@inheritDoc}

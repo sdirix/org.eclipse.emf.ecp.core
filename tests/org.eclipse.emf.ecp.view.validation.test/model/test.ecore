@@ -139,26 +139,4 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="singleParent" eType="#//CrossReferenceContainer"
         eOpposite="#//CrossReferenceContainer/singleContent"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Person">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="firstName" eType="#//StringWithMaxLength8"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="gender" eType="#//Gender"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="lastName" eType="#//OnlyCapitals"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="custom" eType="#//CustomDataType"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EDataType" name="StringWithMaxLength8" instanceClassName="java.lang.String">
-    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
-      <details key="maxLength" value="8"/>
-    </eAnnotations>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EEnum" name="Gender">
-    <eLiterals name="Male"/>
-    <eLiterals name="Female" value="1" literal="Female"/>
-    <eLiterals name="Both" value="2" literal="Both"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EDataType" name="OnlyCapitals" instanceClassName="java.lang.String">
-    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
-      <details key="pattern" value="[A-Z]+"/>
-    </eAnnotations>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EDataType" name="CustomDataType" instanceClassName="java.lang.String"/>
 </ecore:EPackage>

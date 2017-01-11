@@ -31,11 +31,9 @@ import org.eclipse.emf.ecp.edit.internal.swt.util.DateUtil;
 import org.eclipse.emf.ecp.edit.spi.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.ecp.view.internal.core.swt.MessageKeys;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.spi.core.swt.CommonTargetToModelUpdateStrategy;
 import org.eclipse.emf.ecp.view.spi.core.swt.renderer.TextControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
-import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.edit.command.SetCommand;
@@ -152,7 +150,7 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 
 			final IObservableValue dateObserver = WidgetProperties.selection().observe(calendar);
 			final Binding binding = getDataBindingContext().bindValue(dateObserver, modelValue,
-				new DateTargetToModelUpdateStrategy(getVElement(), eStructuralFeature, text),
+				new DateTargetToModelUpdateStrategy(eStructuralFeature, text),
 				new DateModelToTargetUpdateStrategy(false, true));
 			binding.updateModelToTarget();
 
@@ -243,18 +241,20 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 	/**
 	 * Target to model strategy.
 	 */
-	private class DateTargetToModelUpdateStrategy extends CommonTargetToModelUpdateStrategy {
+	private class DateTargetToModelUpdateStrategy extends TargetToModelUpdateStrategy {
 
+		private final EStructuralFeature eStructuralFeature;
 		private final Text text;
 
-		DateTargetToModelUpdateStrategy(VElement vElement, EStructuralFeature eStructuralFeature, Text text) {
-			super(vElement, eStructuralFeature);
+		DateTargetToModelUpdateStrategy(EStructuralFeature eStructuralFeature, Text text) {
+			super(eStructuralFeature.isUnsettable());
+			this.eStructuralFeature = eStructuralFeature;
 			this.text = text;
 
 		}
 
 		@Override
-		public Object convert(final Object value) {
+		protected Object convertValue(final Object value) {
 			try {
 				Date date = null;
 				if (String.class.isInstance(value)) {
@@ -281,7 +281,7 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 
 		private Object revertToOldValue(final Object value) {
 
-			if (getStructuralFeature().getDefaultValue() == null && (value == null || value.equals(""))) { //$NON-NLS-1$
+			if (eStructuralFeature.getDefaultValue() == null && (value == null || value.equals(""))) { //$NON-NLS-1$
 				return null;
 			}
 
@@ -309,7 +309,7 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 
 			getDataBindingContext().updateTargets();
 
-			if (getStructuralFeature().isUnsettable() && result == null) {
+			if (eStructuralFeature.isUnsettable() && result == null) {
 				return SetCommand.UNSET_VALUE;
 			}
 			return result;
@@ -355,7 +355,7 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 		final IObservableValue value = WidgetProperties.text(SWT.FocusOut).observe(text);
 
 		final DateTargetToModelUpdateStrategy targetToModelUpdateStrategy = new DateTargetToModelUpdateStrategy(
-			getVElement(), structuralFeature, text);
+			structuralFeature, text);
 
 		final DateModelToTargetUpdateStrategy modelToTargetUpdateStrategy = new DateModelToTargetUpdateStrategy(false);
 

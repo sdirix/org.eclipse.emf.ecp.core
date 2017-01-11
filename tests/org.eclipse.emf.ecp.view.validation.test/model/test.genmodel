@@ -7,14 +7,6 @@
   <foreignModel>test.ecore</foreignModel>
   <genPackages prefix="Test" basePackage="org.eclipse.emf.ecp.view.validation.test"
       disposableProviderFactory="true" ecorePackage="test.ecore#/">
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="test.ecore#//Gender">
-      <genEnumLiterals ecoreEnumLiteral="test.ecore#//Gender/Male"/>
-      <genEnumLiterals ecoreEnumLiteral="test.ecore#//Gender/Female"/>
-      <genEnumLiterals ecoreEnumLiteral="test.ecore#//Gender/Both"/>
-    </genEnums>
-    <genDataTypes ecoreDataType="test.ecore#//StringWithMaxLength8"/>
-    <genDataTypes ecoreDataType="test.ecore#//OnlyCapitals"/>
-    <genDataTypes ecoreDataType="test.ecore#//OnlyFemales"/>
     <genClasses ecoreClass="test.ecore#//Library">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute test.ecore#//Library/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference test.ecore#//Library/writers"/>
@@ -102,20 +94,6 @@
     </genClasses>
     <genClasses ecoreClass="test.ecore#//Referencer">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference test.ecore#//Referencer/referencedContent"/>
-    </genClasses>
-    <genClasses ecoreClass="test.ecore#//CrossReferenceContainer">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference test.ecore#//CrossReferenceContainer/contents"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference test.ecore#//CrossReferenceContainer/singleContent"/>
-    </genClasses>
-    <genClasses ecoreClass="test.ecore#//CrossReferenceContent">
-      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference test.ecore#//CrossReferenceContent/parent"/>
-      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference test.ecore#//CrossReferenceContent/singleParent"/>
-    </genClasses>
-    <genClasses ecoreClass="test.ecore#//Person">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute test.ecore#//Person/firstName"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute test.ecore#//Person/gender"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute test.ecore#//Person/lastName"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute test.ecore#//Person/female"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

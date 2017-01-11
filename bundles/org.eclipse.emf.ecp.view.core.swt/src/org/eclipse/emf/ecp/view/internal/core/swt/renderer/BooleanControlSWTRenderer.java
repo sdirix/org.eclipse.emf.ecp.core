@@ -71,7 +71,7 @@ public class BooleanControlSWTRenderer extends SimpleControlSWTControlSWTRendere
 	@Override
 	protected Binding[] createBindings(Control control) throws DatabindingFailedException {
 		final Binding binding = getDataBindingContext().bindValue(WidgetProperties.selection().observe(control),
-			getModelValue(), createTargetToModelUpdateStrategy(), null);
+			getModelValue());
 		return new Binding[] { binding };
 	}
 
