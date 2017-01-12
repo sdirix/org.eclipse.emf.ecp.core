@@ -720,7 +720,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		}
 		final int itemHeight = table.getItemHeight();
 		// show one empty row if table does not contain any items
-		final int itemCount = Math.max(table.getItemHeight(), 1);
+		final int itemCount = Math.max(table.getItemCount(), 1);
 		final int headerHeight = table.getHeaderVisible() ? table.getHeaderHeight() : 0;
 		// 4px needed as a buffer to avoid scrollbars
 		final int tableHeight = itemHeight * itemCount + headerHeight + 4;
