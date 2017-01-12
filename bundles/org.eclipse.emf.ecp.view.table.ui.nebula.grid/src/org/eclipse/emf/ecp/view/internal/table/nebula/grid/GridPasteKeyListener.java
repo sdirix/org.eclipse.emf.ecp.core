@@ -25,7 +25,9 @@ import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emfforms.spi.common.converter.EStructuralFeatureValueConverterService;
 import org.eclipse.emfforms.spi.common.validation.PreSetValidationService;
 import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
+import org.eclipse.emfforms.spi.localization.EMFFormsLocalizationService;
 import org.eclipse.emfforms.spi.swt.table.AbstractTableViewerComposite;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.nebula.widgets.grid.Grid;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.Clipboard;
@@ -34,6 +36,7 @@ import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
@@ -56,6 +59,8 @@ public class GridPasteKeyListener implements KeyListener {
 	private boolean selectPastedCells = true;
 	private boolean alreadyPasted;
 	private final PreSetValidationService preSetValidationService;
+	private final Display display;
+	private final EMFFormsLocalizationService localizationService;
 
 	/**
 	 * Constructor.
@@ -64,10 +69,14 @@ public class GridPasteKeyListener implements KeyListener {
 	 * @param vControl the {@link VTableControl}.
 	 * @param dataBinding {@link EMFFormsDatabindingEMF}
 	 * @param converterService {@link EStructuralFeatureValueConverterService}
+	 * @param localizationService {@link EMFFormsLocalizationService}
 	 * @param selectPastedCells whether to select the pasted cells
 	 */
 	public GridPasteKeyListener(Display display, VControl vControl, EMFFormsDatabindingEMF dataBinding,
-		EStructuralFeatureValueConverterService converterService, boolean selectPastedCells) {
+		EStructuralFeatureValueConverterService converterService, EMFFormsLocalizationService localizationService,
+		boolean selectPastedCells) {
+		this.display = display;
+		this.localizationService = localizationService;
 		clipboard = new Clipboard(display);
 		this.vControl = vControl;
 		this.dataBinding = dataBinding;
@@ -155,6 +164,7 @@ public class GridPasteKeyListener implements KeyListener {
 		final List<Object> pastedValues = new ArrayList<Object>();
 		int relativeRow = 0;
 		final String[] rows = contents.split("\r\n|\n", -1); //$NON-NLS-1$
+		final List<Diagnostic> diags = new ArrayList<Diagnostic>();
 
 		for (final String row : rows) {
 
@@ -194,9 +204,12 @@ public class GridPasteKeyListener implements KeyListener {
 						boolean valid = convertedValue != null;
 
 						if (preSetValidationService != null) {
-							final Diagnostic validate = preSetValidationService.validate(
+							final Diagnostic diag = preSetValidationService.validate(
 								(EStructuralFeature) value.getValueType(), convertedValue);
-							valid = validate.getSeverity() == Diagnostic.OK;
+							valid = diag.getSeverity() == Diagnostic.OK;
+							if (!valid) {
+								diags.add(diag);
+							}
 						}
 
 						if (valid) {
@@ -221,7 +234,26 @@ public class GridPasteKeyListener implements KeyListener {
 			}
 			relativeRow++;
 		}
+
+		if (!diags.isEmpty()) {
+			showDiagnostics(
+				display.getActiveShell(),
+				localizationService.getString(FrameworkUtil.getBundle(getClass()), "InvalidPaste.Title"), //$NON-NLS-1$
+				localizationService.getString(FrameworkUtil.getBundle(getClass()), "InvalidPaste.Message"), //$NON-NLS-1$
+				diags);
+		}
+
 		return pastedCells;
 	}
 
+	private static void showDiagnostics(Shell shell, String title, String msg, List<Diagnostic> diags) {
+		final StringBuilder builder = new StringBuilder();
+		builder.append(msg);
+		for (final Diagnostic diag : diags) {
+			builder.append("- " + diag.getChildren().get(0).getMessage()) //$NON-NLS-1$
+				.append("\n"); //$NON-NLS-1$
+		}
+
+		MessageDialog.openWarning(shell, title, builder.toString());
+	}
 }

@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EValidator;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emfforms.spi.common.validation.IFeatureConstraint;
 import org.eclipse.emfforms.spi.common.validation.PreSetValidationService;
@@ -57,6 +58,11 @@ public class PreSetValidationServiceImpl implements PreSetValidationService {
 		}
 
 		final EDataType eDataType = EDataType.class.cast(eType);
+
+		if (eDataType.getEPackage() == EcorePackage.eINSTANCE) {
+			return new BasicDiagnostic();
+		}
+
 		final EValidator validator = EValidator.Registry.INSTANCE.getEValidator(eDataType.getEPackage());
 		final BasicDiagnostic diagnostics = Diagnostician.INSTANCE.createDefaultDiagnostic(eDataType, value);
 

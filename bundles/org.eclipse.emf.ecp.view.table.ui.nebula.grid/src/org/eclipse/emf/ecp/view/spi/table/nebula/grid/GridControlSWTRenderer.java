@@ -33,6 +33,7 @@ import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
 import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
+import org.eclipse.emfforms.spi.localization.EMFFormsLocalizationService;
 import org.eclipse.emfforms.spi.swt.table.TableViewerCompositeBuilder;
 import org.eclipse.emfforms.spi.swt.table.TableViewerCreator;
 import org.eclipse.emfforms.spi.swt.table.TableViewerSWTBuilder;
@@ -55,6 +56,7 @@ import org.eclipse.swt.widgets.ScrollBar;
 public class GridControlSWTRenderer extends TableControlSWTRenderer {
 
 	private final EStructuralFeatureValueConverterService converterService;
+	private final EMFFormsLocalizationService localizationService;
 
 	/**
 	 * Default constructor.
@@ -68,6 +70,7 @@ public class GridControlSWTRenderer extends TableControlSWTRenderer {
 	 * @param imageRegistryService The {@link ImageRegistryService}
 	 * @param emfFormsEditSupport The {@link EMFFormsEditSupport}
 	 * @param converterService the {@link EStructuralFeatureValueConverterService}
+	 * @param localizationService the {@link EMFFormsLocalizationService}
 	 * @since 1.11
 	 */
 	@Inject
@@ -75,11 +78,13 @@ public class GridControlSWTRenderer extends TableControlSWTRenderer {
 	public GridControlSWTRenderer(VTableControl vElement, ViewModelContext viewContext, ReportService reportService,
 		EMFFormsDatabindingEMF emfFormsDatabinding, EMFFormsLabelProvider emfFormsLabelProvider,
 		VTViewTemplateProvider vtViewTemplateProvider, ImageRegistryService imageRegistryService,
-		EMFFormsEditSupport emfFormsEditSupport, EStructuralFeatureValueConverterService converterService) {
+		EMFFormsEditSupport emfFormsEditSupport, EStructuralFeatureValueConverterService converterService,
+		EMFFormsLocalizationService localizationService) {
 		// CHECKSTYLE.ON: ParameterNumber
 		super(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider,
 			imageRegistryService, emfFormsEditSupport);
 		this.converterService = converterService;
+		this.localizationService = localizationService;
 	}
 
 	/**
@@ -103,7 +108,7 @@ public class GridControlSWTRenderer extends TableControlSWTRenderer {
 			tableViewer.getGrid().addKeyListener(new GridCopyKeyListener(tableViewer.getGrid().getDisplay()));
 			tableViewer.getGrid()
 				.addKeyListener(new GridPasteKeyListener(tableViewer.getGrid().getDisplay(), getVElement(),
-					getEMFFormsDatabinding(), converterService, true));
+					getEMFFormsDatabinding(), converterService, localizationService, true));
 			tableViewer.getGrid().addKeyListener(new GridClearKeyListener(getVElement(), getEMFFormsDatabinding()));
 			tableViewer.getGrid().addKeyListener(
 				new GridCutKeyListener(tableViewer.getGrid().getDisplay(), getVElement(), getEMFFormsDatabinding()));
