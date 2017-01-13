@@ -126,6 +126,8 @@ public abstract class SimpleControlSWTControlSWTRenderer extends SimpleControlSW
 	 *
 	 * @return the feature
 	 * @throws DatabindingFailedException in case the necessary feature can not be obtained
+	 *
+	 * @since 1.12
 	 */
 	protected EStructuralFeature getFeature() throws DatabindingFailedException {
 		final EMFFormsDatabinding databindingService = getEMFFormsDatabinding();

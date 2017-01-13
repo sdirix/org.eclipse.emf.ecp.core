@@ -65,7 +65,18 @@ public class PreSetValidationService_Test {
 		final Diagnostic result = service.validate(
 			TestPackage.eINSTANCE.getPerson_LastName(), "invalid");
 		assertEquals(result.getSeverity(), Diagnostic.ERROR);
+	}
 
+	@Test
+	public void validEnum() {
+		final Diagnostic result = service.validate(TestPackage.eINSTANCE.getPerson_Gender(), "Male");
+		assertEquals(result.getSeverity(), Diagnostic.OK);
+	}
+
+	@Test
+	public void invalidEnum() {
+		final Diagnostic result = service.validate(TestPackage.eINSTANCE.getPerson_Gender(), "Mal");
+		assertEquals(result.getSeverity(), Diagnostic.ERROR);
 	}
 
 	@Test

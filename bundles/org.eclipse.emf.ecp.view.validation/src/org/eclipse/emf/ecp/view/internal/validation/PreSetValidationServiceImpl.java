@@ -20,6 +20,8 @@ import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EDataType;
+import org.eclipse.emf.ecore.EEnum;
+import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.EcorePackage;
@@ -65,6 +67,15 @@ public class PreSetValidationServiceImpl implements PreSetValidationService {
 
 		final EValidator validator = EValidator.Registry.INSTANCE.getEValidator(eDataType.getEPackage());
 		final BasicDiagnostic diagnostics = Diagnostician.INSTANCE.createDefaultDiagnostic(eDataType, value);
+
+		// try to validate given value as enum literal
+		if (eDataType instanceof EEnum && value instanceof String) {
+			final EEnum eEnum = (EEnum) eDataType;
+			final EEnumLiteral literal = eEnum.getEEnumLiteral((String) value);
+			if (literal != null) {
+				return new BasicDiagnostic();
+			}
+		}
 
 		if (validator != null) {
 			final Map<Object, Object> context = new LinkedHashMap<Object, Object>();

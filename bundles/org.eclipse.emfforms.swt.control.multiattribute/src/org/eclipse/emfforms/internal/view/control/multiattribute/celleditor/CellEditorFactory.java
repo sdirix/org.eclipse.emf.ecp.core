@@ -23,7 +23,7 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.edit.internal.swt.util.PreSetValidationVerifyListener;
+import org.eclipse.emf.ecp.edit.internal.swt.util.PreSetValidationListeners;
 import org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
@@ -127,7 +127,7 @@ public final class CellEditorFactory {
 		}
 
 		if (Text.class.isInstance(result.getControl())) {
-			PreSetValidationVerifyListener.create().attachTo((Text) result.getControl(), multiAttribute);
+			PreSetValidationListeners.create().verify((Text) result.getControl(), multiAttribute);
 		}
 
 		return result;

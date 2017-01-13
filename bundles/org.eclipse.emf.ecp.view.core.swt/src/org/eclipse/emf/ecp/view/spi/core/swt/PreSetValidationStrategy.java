@@ -84,6 +84,7 @@ public class PreSetValidationStrategy extends UpdateValueStrategy {
 				return Status.OK_STATUS;
 			}
 
+			// TODO: existing diagnostics?
 			final VDiagnostic vDiagnostic = VViewFactory.eINSTANCE.createDiagnostic();
 			vDiagnostic.getDiagnostics().add(result);
 			vElement.setDiagnostic(vDiagnostic);

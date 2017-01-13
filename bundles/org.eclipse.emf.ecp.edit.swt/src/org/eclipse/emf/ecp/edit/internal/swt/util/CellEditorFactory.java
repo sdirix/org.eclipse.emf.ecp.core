@@ -122,7 +122,7 @@ public final class CellEditorFactory {
 		}
 
 		if (Text.class.isInstance(result.getControl())) {
-			PreSetValidationVerifyListener.create().attachTo(
+			PreSetValidationListeners.create().verify(
 				Text.class.cast(result.getControl()),
 				eStructuralFeature);
 		}

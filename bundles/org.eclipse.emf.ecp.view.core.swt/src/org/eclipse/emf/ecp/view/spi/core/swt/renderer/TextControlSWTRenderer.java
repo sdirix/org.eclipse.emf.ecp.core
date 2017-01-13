@@ -24,7 +24,7 @@ import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.databinding.EMFUpdateValueStrategy;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecp.edit.internal.swt.util.PreSetValidationVerifyListener;
+import org.eclipse.emf.ecp.edit.internal.swt.util.PreSetValidationListeners;
 import org.eclipse.emf.ecp.view.internal.core.swt.MessageKeys;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer;
@@ -55,8 +55,6 @@ import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.FocusEvent;
-import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -116,18 +114,24 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 		final Text text = new Text(composite, getTextWidgetStyle());
 		text.setData(CUSTOM_VARIANT, getTextVariantID());
 		text.setMessage(getTextMessage());
-		text.addFocusListener(new FocusListener() {
-			@Override
-			public void focusLost(FocusEvent e) {
-			}
 
-			@Override
-			public void focusGained(FocusEvent e) {
-				text.selectAll();
-			}
-		});
 		try {
-			PreSetValidationVerifyListener.create().attachTo(text, getFeature());
+			PreSetValidationListeners.create().verify(text, getFeature());
+			PreSetValidationListeners.create().focus(text, getFeature(),
+				new Runnable() {
+					@Override
+					public void run() {
+						// revert
+						getVElement().setDiagnostic(null);
+						getDataBindingContext().updateTargets();
+					}
+				},
+				new Runnable() {
+					@Override
+					public void run() {
+						text.selectAll();
+					}
+				});
 		} catch (final DatabindingFailedException ex) {
 			// ignore
 		}
