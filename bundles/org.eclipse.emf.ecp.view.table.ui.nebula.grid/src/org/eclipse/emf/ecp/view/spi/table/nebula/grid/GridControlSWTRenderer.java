@@ -92,7 +92,7 @@ public class GridControlSWTRenderer extends TableControlSWTRenderer {
 	 * custom variant data and the correct style properties as defined in the template model.
 	 *
 	 */
-	protected final class GridTableControlSWTRendererTableViewerCreator implements TableViewerCreator<GridTableViewer> {
+	protected class GridTableControlSWTRendererTableViewerCreator implements TableViewerCreator<GridTableViewer> {
 
 		@Override
 		public GridTableViewer createTableViewer(Composite parent) {
@@ -105,13 +105,7 @@ public class GridControlSWTRenderer extends TableControlSWTRenderer {
 			tableViewer.getGrid().setCellSelectionEnabled(true);
 			tableViewer.getGrid().setFooterVisible(false);
 
-			tableViewer.getGrid().addKeyListener(new GridCopyKeyListener(tableViewer.getGrid().getDisplay()));
-			tableViewer.getGrid()
-				.addKeyListener(new GridPasteKeyListener(tableViewer.getGrid().getDisplay(), getVElement(),
-					getEMFFormsDatabinding(), converterService, localizationService, true));
-			tableViewer.getGrid().addKeyListener(new GridClearKeyListener(getVElement(), getEMFFormsDatabinding()));
-			tableViewer.getGrid().addKeyListener(
-				new GridCutKeyListener(tableViewer.getGrid().getDisplay(), getVElement(), getEMFFormsDatabinding()));
+			addKeyListener(tableViewer);
 			// TODO MS
 			// tableViewer.getGrid().addKeyListener(new GridNewLineKeyListener() {
 			//
@@ -153,6 +147,21 @@ public class GridControlSWTRenderer extends TableControlSWTRenderer {
 			createTableViewerEditor(tableViewer);
 
 			return tableViewer;
+		}
+
+		/**
+		 * Add key listener.
+		 *
+		 * @param tableViewer the viewer to add the listeners to
+		 */
+		protected void addKeyListener(final GridTableViewer tableViewer) {
+			tableViewer.getGrid().addKeyListener(new GridCopyKeyListener(tableViewer.getGrid().getDisplay()));
+			tableViewer.getGrid()
+				.addKeyListener(new GridPasteKeyListener(tableViewer.getGrid().getDisplay(), getVElement(),
+					getEMFFormsDatabinding(), getConverterService(), getLocalizationService(), true));
+			tableViewer.getGrid().addKeyListener(new GridClearKeyListener(getVElement(), getEMFFormsDatabinding()));
+			tableViewer.getGrid().addKeyListener(
+				new GridCutKeyListener(tableViewer.getGrid().getDisplay(), getVElement(), getEMFFormsDatabinding()));
 		}
 
 		/**
@@ -220,6 +229,22 @@ public class GridControlSWTRenderer extends TableControlSWTRenderer {
 	@Override
 	protected ScrollBar getVerticalBar() {
 		return ((GridTableViewer) getTableViewer()).getGrid().getVerticalBar();
+	}
+
+	/**
+	 *
+	 * @return the {@link EStructuralFeatureValueConverterService}
+	 */
+	protected EStructuralFeatureValueConverterService getConverterService() {
+		return converterService;
+	}
+
+	/**
+	 *
+	 * @return the {@link EMFFormsLocalizationService}
+	 */
+	protected EMFFormsLocalizationService getLocalizationService() {
+		return localizationService;
 	}
 
 	/**

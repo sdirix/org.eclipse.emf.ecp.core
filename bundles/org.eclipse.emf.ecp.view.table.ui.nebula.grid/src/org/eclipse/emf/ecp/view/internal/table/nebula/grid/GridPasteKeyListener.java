@@ -198,7 +198,7 @@ public class GridPasteKeyListener implements KeyListener {
 					try {
 
 						value = dataBinding.getObservableValue(dmr, eObject);
-						final Object convertedValue = converterService.convertToModelValue(eObject,
+						final Object convertedValue = getConverterService().convertToModelValue(eObject,
 							(EStructuralFeature) value.getValueType(), cellValue);
 
 						boolean valid = convertedValue != null;
@@ -213,7 +213,7 @@ public class GridPasteKeyListener implements KeyListener {
 						}
 
 						if (valid) {
-							value.setValue(convertedValue);
+							setValue(value, convertedValue);
 							pastedValues.add(value);
 						}
 
@@ -246,6 +246,16 @@ public class GridPasteKeyListener implements KeyListener {
 		return pastedCells;
 	}
 
+	/**
+	 * Sets the given converted value on the observable value.
+	 *
+	 * @param value the observable value
+	 * @param convertedValue the converted value
+	 */
+	protected void setValue(IObservableValue value, final Object convertedValue) {
+		value.setValue(convertedValue);
+	}
+
 	private static void showDiagnostics(Shell shell, String title, String msg, List<Diagnostic> diags) {
 		final StringBuilder builder = new StringBuilder();
 		builder.append(msg);
@@ -255,5 +265,13 @@ public class GridPasteKeyListener implements KeyListener {
 		}
 
 		MessageDialog.openWarning(shell, title, builder.toString());
+	}
+
+	/**
+	 *
+	 * @return the {@link EStructuralFeatureValueConverterService}
+	 */
+	protected EStructuralFeatureValueConverterService getConverterService() {
+		return converterService;
 	}
 }
