@@ -153,6 +153,12 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 			return createOnlyCapitalsFromString(eDataType, initialValue);
 		case TestPackage.CUSTOM_DATA_TYPE:
 			return createCustomDataTypeFromString(eDataType, initialValue);
+		case TestPackage.PHONE_NUMBER:
+			return createPhoneNumberFromString(eDataType, initialValue);
+		case TestPackage.MIN_LENGTH_OF3:
+			return createMinLengthOf3FromString(eDataType, initialValue);
+		case TestPackage.STRICT_MIN_LENGTH_OF3:
+			return createStrictMinLengthOf3FromString(eDataType, initialValue);
 		default:
 			throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
@@ -175,6 +181,12 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 			return convertOnlyCapitalsToString(eDataType, instanceValue);
 		case TestPackage.CUSTOM_DATA_TYPE:
 			return convertCustomDataTypeToString(eDataType, instanceValue);
+		case TestPackage.PHONE_NUMBER:
+			return convertPhoneNumberToString(eDataType, instanceValue);
+		case TestPackage.MIN_LENGTH_OF3:
+			return convertMinLengthOf3ToString(eDataType, instanceValue);
+		case TestPackage.STRICT_MIN_LENGTH_OF3:
+			return convertStrictMinLengthOf3ToString(eDataType, instanceValue);
 		default:
 			throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
@@ -489,6 +501,66 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	 * @generated
 	 */
 	public String convertCustomDataTypeToString(EDataType eDataType, Object instanceValue) {
+		return super.convertToString(eDataType, instanceValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public String createPhoneNumberFromString(EDataType eDataType, String initialValue) {
+		return (String) super.createFromString(eDataType, initialValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public String convertPhoneNumberToString(EDataType eDataType, Object instanceValue) {
+		return super.convertToString(eDataType, instanceValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public String createMinLengthOf3FromString(EDataType eDataType, String initialValue) {
+		return (String) super.createFromString(eDataType, initialValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public String convertMinLengthOf3ToString(EDataType eDataType, Object instanceValue) {
+		return super.convertToString(eDataType, instanceValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public String createStrictMinLengthOf3FromString(EDataType eDataType, String initialValue) {
+		return (String) super.createFromString(eDataType, initialValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public String convertStrictMinLengthOf3ToString(EDataType eDataType, Object instanceValue) {
 		return super.convertToString(eDataType, instanceValue);
 	}
 

@@ -57,7 +57,7 @@ import org.eclipse.emf.ecp.view.validation.test.model.Writer;
  * <!-- begin-user-doc -->
  * The <b>Validator</b> for the model.
  * <!-- end-user-doc -->
- *
+ * 
  * @see org.eclipse.emf.ecp.view.validation.test.model.TestPackage
  * @generated
  */
@@ -66,7 +66,7 @@ public class TestValidator extends EObjectValidator {
 	 * The cached model package
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public static final TestValidator INSTANCE = new TestValidator();
@@ -76,7 +76,7 @@ public class TestValidator extends EObjectValidator {
 	 * {@link org.eclipse.emf.common.util.Diagnostic#getCode() codes} from this package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see org.eclipse.emf.common.util.Diagnostic#getSource()
 	 * @see org.eclipse.emf.common.util.Diagnostic#getCode()
 	 * @generated
@@ -87,7 +87,7 @@ public class TestValidator extends EObjectValidator {
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate' of 'Library'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public static final int LIBRARY__VALIDATE = 1;
@@ -96,7 +96,7 @@ public class TestValidator extends EObjectValidator {
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate' of 'Writer'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public static final int WRITER__VALIDATE = 2;
@@ -105,7 +105,7 @@ public class TestValidator extends EObjectValidator {
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate' of 'Book'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public static final int BOOK__VALIDATE = 3;
@@ -114,7 +114,7 @@ public class TestValidator extends EObjectValidator {
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate' of 'Librarian'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public static final int LIBRARIAN__VALIDATE = 4;
@@ -123,7 +123,7 @@ public class TestValidator extends EObjectValidator {
 	 * A constant with a fixed name that can be used as the base value for additional hand written constants.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	private static final int GENERATED_DIAGNOSTIC_CODE_COUNT = 4;
@@ -133,7 +133,7 @@ public class TestValidator extends EObjectValidator {
 	 * derived class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected static final int DIAGNOSTIC_CODE_COUNT = GENERATED_DIAGNOSTIC_CODE_COUNT;
@@ -142,7 +142,7 @@ public class TestValidator extends EObjectValidator {
 	 * Creates an instance of the switch.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public TestValidator() {
@@ -153,7 +153,7 @@ public class TestValidator extends EObjectValidator {
 	 * Returns the package of this validator switch.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -165,7 +165,7 @@ public class TestValidator extends EObjectValidator {
 	 * Calls <code>validateXXX</code> for the corresponding classifier of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -225,6 +225,12 @@ public class TestValidator extends EObjectValidator {
 			return validateOnlyCapitals((String) value, diagnostics, context);
 		case TestPackage.CUSTOM_DATA_TYPE:
 			return validateCustomDataType((String) value, diagnostics, context);
+		case TestPackage.PHONE_NUMBER:
+			return validatePhoneNumber((String) value, diagnostics, context);
+		case TestPackage.MIN_LENGTH_OF3:
+			return validateMinLengthOf3((String) value, diagnostics, context);
+		case TestPackage.STRICT_MIN_LENGTH_OF3:
+			return validateStrictMinLengthOf3((String) value, diagnostics, context);
 		default:
 			return true;
 		}
@@ -233,38 +239,29 @@ public class TestValidator extends EObjectValidator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public boolean validateLibrary(Library library, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		if (!validate_NoCircularContainment(library, diagnostics, context)) {
+		if (!validate_NoCircularContainment(library, diagnostics, context))
 			return false;
-		}
 		boolean result = validate_EveryMultiplicityConforms(library, diagnostics, context);
-		if (result || diagnostics != null) {
+		if (result || diagnostics != null)
 			result &= validate_EveryDataValueConforms(library, diagnostics, context);
-		}
-		if (result || diagnostics != null) {
+		if (result || diagnostics != null)
 			result &= validate_EveryReferenceIsContained(library, diagnostics, context);
-		}
-		if (result || diagnostics != null) {
+		if (result || diagnostics != null)
 			result &= validate_EveryBidirectionalReferenceIsPaired(library, diagnostics, context);
-		}
-		if (result || diagnostics != null) {
+		if (result || diagnostics != null)
 			result &= validate_EveryProxyResolves(library, diagnostics, context);
-		}
-		if (result || diagnostics != null) {
+		if (result || diagnostics != null)
 			result &= validate_UniqueID(library, diagnostics, context);
-		}
-		if (result || diagnostics != null) {
+		if (result || diagnostics != null)
 			result &= validate_EveryKeyUnique(library, diagnostics, context);
-		}
-		if (result || diagnostics != null) {
+		if (result || diagnostics != null)
 			result &= validate_EveryMapEntryUnique(library, diagnostics, context);
-		}
-		if (result || diagnostics != null) {
+		if (result || diagnostics != null)
 			result &= validateLibrary_validate(library, diagnostics, context);
-		}
 		return result;
 	}
 
@@ -272,7 +269,7 @@ public class TestValidator extends EObjectValidator {
 	 * Validates the validate constraint of '<em>Library</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public boolean validateLibrary_validate(Library library, DiagnosticChain diagnostics, Map<Object, Object> context) {
@@ -282,38 +279,29 @@ public class TestValidator extends EObjectValidator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public boolean validateWriter(Writer writer, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		if (!validate_NoCircularContainment(writer, diagnostics, context)) {
+		if (!validate_NoCircularContainment(writer, diagnostics, context))
 			return false;
-		}
 		boolean result = validate_EveryMultiplicityConforms(writer, diagnostics, context);
-		if (result || diagnostics != null) {
+		if (result || diagnostics != null)
 			result &= validate_EveryDataValueConforms(writer, diagnostics, context);
-		}
-		if (result || diagnostics != null) {
+		if (result || diagnostics != null)
 			result &= validate_EveryReferenceIsContained(writer, diagnostics, context);
-		}
-		if (result || diagnostics != null) {
+		if (result || diagnostics != null)
 			result &= validate_EveryBidirectionalReferenceIsPaired(writer, diagnostics, context);
-		}
-		if (result || diagnostics != null) {
+		if (result || diagnostics != null)
 			result &= validate_EveryProxyResolves(writer, diagnostics, context);
-		}
-		if (result || diagnostics != null) {
+		if (result || diagnostics != null)
 			result &= validate_UniqueID(writer, diagnostics, context);
-		}
-		if (result || diagnostics != null) {
+		if (result || diagnostics != null)
 			result &= validate_EveryKeyUnique(writer, diagnostics, context);
-		}
-		if (result || diagnostics != null) {
+		if (result || diagnostics != null)
 			result &= validate_EveryMapEntryUnique(writer, diagnostics, context);
-		}
-		if (result || diagnostics != null) {
+		if (result || diagnostics != null)
 			result &= validateWriter_validate(writer, diagnostics, context);
-		}
 		return result;
 	}
 
@@ -321,7 +309,7 @@ public class TestValidator extends EObjectValidator {
 	 * Validates the validate constraint of '<em>Writer</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public boolean validateWriter_validate(Writer writer, DiagnosticChain diagnostics, Map<Object, Object> context) {
@@ -331,38 +319,29 @@ public class TestValidator extends EObjectValidator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public boolean validateBook(Book book, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		if (!validate_NoCircularContainment(book, diagnostics, context)) {
+		if (!validate_NoCircularContainment(book, diagnostics, context))
 			return false;
-		}
 		boolean result = validate_EveryMultiplicityConforms(book, diagnostics, context);
-		if (result || diagnostics != null) {
+		if (result || diagnostics != null)
 			result &= validate_EveryDataValueConforms(book, diagnostics, context);
-		}
-		if (result || diagnostics != null) {
+		if (result || diagnostics != null)
 			result &= validate_EveryReferenceIsContained(book, diagnostics, context);
-		}
-		if (result || diagnostics != null) {
+		if (result || diagnostics != null)
 			result &= validate_EveryBidirectionalReferenceIsPaired(book, diagnostics, context);
-		}
-		if (result || diagnostics != null) {
+		if (result || diagnostics != null)
 			result &= validate_EveryProxyResolves(book, diagnostics, context);
-		}
-		if (result || diagnostics != null) {
+		if (result || diagnostics != null)
 			result &= validate_UniqueID(book, diagnostics, context);
-		}
-		if (result || diagnostics != null) {
+		if (result || diagnostics != null)
 			result &= validate_EveryKeyUnique(book, diagnostics, context);
-		}
-		if (result || diagnostics != null) {
+		if (result || diagnostics != null)
 			result &= validate_EveryMapEntryUnique(book, diagnostics, context);
-		}
-		if (result || diagnostics != null) {
+		if (result || diagnostics != null)
 			result &= validateBook_validate(book, diagnostics, context);
-		}
 		return result;
 	}
 
@@ -370,7 +349,7 @@ public class TestValidator extends EObjectValidator {
 	 * Validates the validate constraint of '<em>Book</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public boolean validateBook_validate(Book book, DiagnosticChain diagnostics, Map<Object, Object> context) {
@@ -380,38 +359,29 @@ public class TestValidator extends EObjectValidator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public boolean validateLibrarian(Librarian librarian, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		if (!validate_NoCircularContainment(librarian, diagnostics, context)) {
+		if (!validate_NoCircularContainment(librarian, diagnostics, context))
 			return false;
-		}
 		boolean result = validate_EveryMultiplicityConforms(librarian, diagnostics, context);
-		if (result || diagnostics != null) {
+		if (result || diagnostics != null)
 			result &= validate_EveryDataValueConforms(librarian, diagnostics, context);
-		}
-		if (result || diagnostics != null) {
+		if (result || diagnostics != null)
 			result &= validate_EveryReferenceIsContained(librarian, diagnostics, context);
-		}
-		if (result || diagnostics != null) {
+		if (result || diagnostics != null)
 			result &= validate_EveryBidirectionalReferenceIsPaired(librarian, diagnostics, context);
-		}
-		if (result || diagnostics != null) {
+		if (result || diagnostics != null)
 			result &= validate_EveryProxyResolves(librarian, diagnostics, context);
-		}
-		if (result || diagnostics != null) {
+		if (result || diagnostics != null)
 			result &= validate_UniqueID(librarian, diagnostics, context);
-		}
-		if (result || diagnostics != null) {
+		if (result || diagnostics != null)
 			result &= validate_EveryKeyUnique(librarian, diagnostics, context);
-		}
-		if (result || diagnostics != null) {
+		if (result || diagnostics != null)
 			result &= validate_EveryMapEntryUnique(librarian, diagnostics, context);
-		}
-		if (result || diagnostics != null) {
+		if (result || diagnostics != null)
 			result &= validateLibrarian_validate(librarian, diagnostics, context);
-		}
 		return result;
 	}
 
@@ -419,7 +389,7 @@ public class TestValidator extends EObjectValidator {
 	 * Validates the validate constraint of '<em>Librarian</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public boolean validateLibrarian_validate(Librarian librarian, DiagnosticChain diagnostics,
@@ -430,7 +400,7 @@ public class TestValidator extends EObjectValidator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public boolean validateComputer(Computer computer, DiagnosticChain diagnostics, Map<Object, Object> context) {
@@ -440,7 +410,7 @@ public class TestValidator extends EObjectValidator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public boolean validateMainboard(Mainboard mainboard, DiagnosticChain diagnostics, Map<Object, Object> context) {
@@ -450,7 +420,7 @@ public class TestValidator extends EObjectValidator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public boolean validatePowerBlock(PowerBlock powerBlock, DiagnosticChain diagnostics, Map<Object, Object> context) {
@@ -541,7 +511,7 @@ public class TestValidator extends EObjectValidator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public boolean validateTableWithMultiplicity(TableWithMultiplicity tableWithMultiplicity,
@@ -552,7 +522,7 @@ public class TestValidator extends EObjectValidator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public boolean validateTableContent(TableContent tableContent, DiagnosticChain diagnostics,
@@ -587,7 +557,7 @@ public class TestValidator extends EObjectValidator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public boolean validateTableWithoutMultiplicity(TableWithoutMultiplicity tableWithoutMultiplicity,
@@ -610,7 +580,7 @@ public class TestValidator extends EObjectValidator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public boolean validateTableContentWithInnerChild2(TableContentWithInnerChild2 tableContentWithInnerChild2,
@@ -621,7 +591,7 @@ public class TestValidator extends EObjectValidator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public boolean validateTableContentWithInnerChild(TableContentWithInnerChild tableContentWithInnerChild,
@@ -632,7 +602,7 @@ public class TestValidator extends EObjectValidator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public boolean validateTableWithoutMultiplicityConcrete(
@@ -644,7 +614,7 @@ public class TestValidator extends EObjectValidator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public boolean validateReferencer(Referencer referencer, DiagnosticChain diagnostics, Map<Object, Object> context) {
@@ -654,7 +624,7 @@ public class TestValidator extends EObjectValidator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public boolean validateCrossReferenceContainer(CrossReferenceContainer crossReferenceContainer,
@@ -665,7 +635,7 @@ public class TestValidator extends EObjectValidator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public boolean validateCrossReferenceContent(CrossReferenceContent crossReferenceContent,
@@ -676,7 +646,7 @@ public class TestValidator extends EObjectValidator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public boolean validatePerson(Person person, DiagnosticChain diagnostics, Map<Object, Object> context) {
@@ -686,7 +656,7 @@ public class TestValidator extends EObjectValidator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public boolean validateGender(Gender gender, DiagnosticChain diagnostics, Map<Object, Object> context) {
@@ -696,12 +666,12 @@ public class TestValidator extends EObjectValidator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public boolean validateStringWithMaxLength8(String stringWithMaxLength8, DiagnosticChain diagnostics,
 		Map<Object, Object> context) {
-		final boolean result = validateStringWithMaxLength8_MaxLength(stringWithMaxLength8, diagnostics, context);
+		boolean result = validateStringWithMaxLength8_MaxLength(stringWithMaxLength8, diagnostics, context);
 		return result;
 	}
 
@@ -709,35 +679,34 @@ public class TestValidator extends EObjectValidator {
 	 * Validates the MaxLength constraint of '<em>String With Max Length8</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public boolean validateStringWithMaxLength8_MaxLength(String stringWithMaxLength8, DiagnosticChain diagnostics,
 		Map<Object, Object> context) {
-		final int length = stringWithMaxLength8.length();
-		final boolean result = length <= 8;
-		if (!result && diagnostics != null) {
+		int length = stringWithMaxLength8.length();
+		boolean result = length <= 8;
+		if (!result && diagnostics != null)
 			reportMaxLengthViolation(TestPackage.Literals.STRING_WITH_MAX_LENGTH8, stringWithMaxLength8, length, 8,
 				diagnostics, context);
-		}
 		return result;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public boolean validateOnlyCapitals(String onlyCapitals, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		final boolean result = validateOnlyCapitals_Pattern(onlyCapitals, diagnostics, context);
+		boolean result = validateOnlyCapitals_Pattern(onlyCapitals, diagnostics, context);
 		return result;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @see #validateOnlyCapitals_Pattern
 	 */
@@ -751,7 +720,7 @@ public class TestValidator extends EObjectValidator {
 	 * Validates the Pattern constraint of '<em>Only Capitals</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public boolean validateOnlyCapitals_Pattern(String onlyCapitals, DiagnosticChain diagnostics,
@@ -763,12 +732,106 @@ public class TestValidator extends EObjectValidator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public boolean validateCustomDataType(String customDataType, DiagnosticChain diagnostics,
 		Map<Object, Object> context) {
 		return true;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public boolean validatePhoneNumber(String phoneNumber, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		boolean result = validatePhoneNumber_Pattern(phoneNumber, diagnostics, context);
+		return result;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @see #validatePhoneNumber_Pattern
+	 */
+	public static final PatternMatcher[][] PHONE_NUMBER__PATTERN__VALUES = new PatternMatcher[][] {
+		new PatternMatcher[] {
+			XMLTypeUtil.createPatternMatcher("((\\+)?[a-c0-9*#]{1,20}){0,1}")
+		}
+	};
+
+	/**
+	 * Validates the Pattern constraint of '<em>Phone Number</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public boolean validatePhoneNumber_Pattern(String phoneNumber, DiagnosticChain diagnostics,
+		Map<Object, Object> context) {
+		return validatePattern(TestPackage.Literals.PHONE_NUMBER, phoneNumber, PHONE_NUMBER__PATTERN__VALUES,
+			diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public boolean validateMinLengthOf3(String minLengthOf3, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		boolean result = validateMinLengthOf3_MinLength(minLengthOf3, diagnostics, context);
+		return result;
+	}
+
+	/**
+	 * Validates the MinLength constraint of '<em>Min Length Of3</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public boolean validateMinLengthOf3_MinLength(String minLengthOf3, DiagnosticChain diagnostics,
+		Map<Object, Object> context) {
+		int length = minLengthOf3.length();
+		boolean result = length >= 3;
+		if (!result && diagnostics != null)
+			reportMinLengthViolation(TestPackage.Literals.MIN_LENGTH_OF3, minLengthOf3, length, 3, diagnostics,
+				context);
+		return result;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public boolean validateStrictMinLengthOf3(String strictMinLengthOf3, DiagnosticChain diagnostics,
+		Map<Object, Object> context) {
+		boolean result = validateStrictMinLengthOf3_MinLength(strictMinLengthOf3, diagnostics, context);
+		return result;
+	}
+
+	/**
+	 * Validates the MinLength constraint of '<em>Strict Min Length Of3</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public boolean validateStrictMinLengthOf3_MinLength(String strictMinLengthOf3, DiagnosticChain diagnostics,
+		Map<Object, Object> context) {
+		int length = strictMinLengthOf3.length();
+		boolean result = length >= 3;
+		if (!result && diagnostics != null)
+			reportMinLengthViolation(TestPackage.Literals.STRICT_MIN_LENGTH_OF3, strictMinLengthOf3, length, 3,
+				diagnostics, context);
+		return result;
 	}
 
 	private boolean validateUniqueness(TableWithUnique tableWithUnique, DiagnosticChain diagnostics,
@@ -819,7 +882,7 @@ public class TestValidator extends EObjectValidator {
 	 * Returns the resource locator that will be used to fetch messages for this validator's diagnostics.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override

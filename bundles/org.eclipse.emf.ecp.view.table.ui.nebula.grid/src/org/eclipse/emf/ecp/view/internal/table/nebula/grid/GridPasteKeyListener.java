@@ -205,7 +205,7 @@ public class GridPasteKeyListener implements KeyListener {
 
 						if (preSetValidationService != null) {
 							final Diagnostic diag = preSetValidationService.validate(
-								(EStructuralFeature) value.getValueType(), convertedValue);
+								(EStructuralFeature) value.getValueType(), cellValue);
 							valid = diag.getSeverity() == Diagnostic.OK;
 							if (!valid) {
 								diags.add(diag);

@@ -122,4 +122,40 @@ public class PreSetValidationService_Test {
 			TestPackage.eINSTANCE.getPerson_Custom(), "BAR");
 		assertEquals(result.getSeverity(), Diagnostic.ERROR);
 	}
+
+	@Test
+	public void loosePhoneNumberPattern() {
+		final Diagnostic result = service.validateLoose(TestPackage.eINSTANCE.getLibrary_PhoneNumber(), "+");
+		assertEquals(result.getSeverity(), Diagnostic.OK);
+	}
+
+	@Test
+	public void strictPhoneNumberPattern() {
+		final Diagnostic invalid = service.validate(TestPackage.eINSTANCE.getLibrary_PhoneNumber(), "+");
+		final Diagnostic valid = service.validate(TestPackage.eINSTANCE.getLibrary_PhoneNumber(), "+123");
+		assertEquals(invalid.getSeverity(), Diagnostic.ERROR);
+		assertEquals(valid.getSeverity(), Diagnostic.OK);
+	}
+
+	@Test
+	public void looseMinLength() {
+		final Diagnostic result = service.validateLoose(TestPackage.eINSTANCE.getWriter_Initials(), "");
+		assertEquals(result.getSeverity(), Diagnostic.OK);
+	}
+
+	@Test
+	public void strictMinLength() {
+		// min length of three
+		final Diagnostic invalid = service.validate(TestPackage.eINSTANCE.getWriter_Initials(), "");
+		final Diagnostic valid = service.validate(TestPackage.eINSTANCE.getWriter_Initials(), "foo");
+		assertEquals(invalid.getSeverity(), Diagnostic.ERROR);
+		assertEquals(valid.getSeverity(), Diagnostic.OK);
+	}
+
+	@Test
+	public void looseMinLengthFallsBackToStrict() {
+		// title has no looseMinLength set
+		final Diagnostic invalid = service.validateLoose(TestPackage.eINSTANCE.getWriter_Title(), "");
+		assertEquals(invalid.getSeverity(), Diagnostic.ERROR);
+	}
 }

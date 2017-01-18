@@ -124,6 +124,16 @@ public interface TestPackage extends EPackage {
 	int LIBRARY__LIBRARIAN = 3;
 
 	/**
+	 * The feature id for the '<em><b>Phone Number</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int LIBRARY__PHONE_NUMBER = 4;
+
+	/**
 	 * The number of structural features of the '<em>Library</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -131,7 +141,7 @@ public interface TestPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int LIBRARY_FEATURE_COUNT = 4;
+	int LIBRARY_FEATURE_COUNT = 5;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.validation.test.model.impl.WriterImpl
@@ -216,6 +226,26 @@ public interface TestPackage extends EPackage {
 	int WRITER__LIBRARY = 6;
 
 	/**
+	 * The feature id for the '<em><b>Initials</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int WRITER__INITIALS = 7;
+
+	/**
+	 * The feature id for the '<em><b>Title</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int WRITER__TITLE = 8;
+
+	/**
 	 * The number of structural features of the '<em>Writer</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -223,7 +253,7 @@ public interface TestPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WRITER_FEATURE_COUNT = 7;
+	int WRITER_FEATURE_COUNT = 9;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.validation.test.model.impl.BookImpl <em>Book</em>}'
@@ -1026,6 +1056,39 @@ public interface TestPackage extends EPackage {
 	int CUSTOM_DATA_TYPE = 25;
 
 	/**
+	 * The meta object id for the '<em>Phone Number</em>' data type.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see java.lang.String
+	 * @see org.eclipse.emf.ecp.view.validation.test.model.impl.TestPackageImpl#getPhoneNumber()
+	 * @generated
+	 */
+	int PHONE_NUMBER = 26;
+
+	/**
+	 * The meta object id for the '<em>Min Length Of3</em>' data type.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see java.lang.String
+	 * @see org.eclipse.emf.ecp.view.validation.test.model.impl.TestPackageImpl#getMinLengthOf3()
+	 * @generated
+	 */
+	int MIN_LENGTH_OF3 = 27;
+
+	/**
+	 * The meta object id for the '<em>Strict Min Length Of3</em>' data type.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see java.lang.String
+	 * @see org.eclipse.emf.ecp.view.validation.test.model.impl.TestPackageImpl#getStrictMinLengthOf3()
+	 * @generated
+	 */
+	int STRICT_MIN_LENGTH_OF3 = 28;
+
+	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.validation.test.model.Gender <em>Gender</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1099,6 +1162,19 @@ public interface TestPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getLibrary_Librarian();
+
+	/**
+	 * Returns the meta object for the attribute
+	 * '{@link org.eclipse.emf.ecp.view.validation.test.model.Library#getPhoneNumber <em>Phone Number</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for the attribute '<em>Phone Number</em>'.
+	 * @see org.eclipse.emf.ecp.view.validation.test.model.Library#getPhoneNumber()
+	 * @see #getLibrary()
+	 * @generated
+	 */
+	EAttribute getLibrary_PhoneNumber();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.validation.test.model.Writer
@@ -1202,6 +1278,32 @@ public interface TestPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getWriter_Library();
+
+	/**
+	 * Returns the meta object for the attribute
+	 * '{@link org.eclipse.emf.ecp.view.validation.test.model.Writer#getInitials <em>Initials</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for the attribute '<em>Initials</em>'.
+	 * @see org.eclipse.emf.ecp.view.validation.test.model.Writer#getInitials()
+	 * @see #getWriter()
+	 * @generated
+	 */
+	EAttribute getWriter_Initials();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecp.view.validation.test.model.Writer#getTitle
+	 * <em>Title</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for the attribute '<em>Title</em>'.
+	 * @see org.eclipse.emf.ecp.view.validation.test.model.Writer#getTitle()
+	 * @see #getWriter()
+	 * @generated
+	 */
+	EAttribute getWriter_Title();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.validation.test.model.Book <em>Book</em>}'.
@@ -1908,6 +2010,45 @@ public interface TestPackage extends EPackage {
 	EDataType getCustomDataType();
 
 	/**
+	 * Returns the meta object for data type '{@link java.lang.String <em>Phone Number</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for data type '<em>Phone Number</em>'.
+	 * @see java.lang.String
+	 * @model instanceClass="java.lang.String"
+	 *        extendedMetaData="pattern='((\\+)?[a-c0-9*#]{1,20}){0,1}' loosePattern='[+0-9]+'"
+	 * @generated
+	 */
+	EDataType getPhoneNumber();
+
+	/**
+	 * Returns the meta object for data type '{@link java.lang.String <em>Min Length Of3</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for data type '<em>Min Length Of3</em>'.
+	 * @see java.lang.String
+	 * @model instanceClass="java.lang.String"
+	 *        extendedMetaData="minLength='3' looseMinLength='0'"
+	 * @generated
+	 */
+	EDataType getMinLengthOf3();
+
+	/**
+	 * Returns the meta object for data type '{@link java.lang.String <em>Strict Min Length Of3</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for data type '<em>Strict Min Length Of3</em>'.
+	 * @see java.lang.String
+	 * @model instanceClass="java.lang.String"
+	 *        extendedMetaData="minLength='3'"
+	 * @generated
+	 */
+	EDataType getStrictMinLengthOf3();
+
+	/**
 	 * Returns the meta object for enum '{@link org.eclipse.emf.ecp.view.validation.test.model.Gender <em>Gender</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1991,6 +2132,15 @@ public interface TestPackage extends EPackage {
 		EReference LIBRARY__LIBRARIAN = eINSTANCE.getLibrary_Librarian();
 
 		/**
+		 * The meta object literal for the '<em><b>Phone Number</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @generated
+		 */
+		EAttribute LIBRARY__PHONE_NUMBER = eINSTANCE.getLibrary_PhoneNumber();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.validation.test.model.impl.WriterImpl
 		 * <em>Writer</em>}' class.
 		 * <!-- begin-user-doc -->
@@ -2064,6 +2214,24 @@ public interface TestPackage extends EPackage {
 		 * @generated
 		 */
 		EReference WRITER__LIBRARY = eINSTANCE.getWriter_Library();
+
+		/**
+		 * The meta object literal for the '<em><b>Initials</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @generated
+		 */
+		EAttribute WRITER__INITIALS = eINSTANCE.getWriter_Initials();
+
+		/**
+		 * The meta object literal for the '<em><b>Title</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @generated
+		 */
+		EAttribute WRITER__TITLE = eINSTANCE.getWriter_Title();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.validation.test.model.impl.BookImpl
@@ -2636,6 +2804,39 @@ public interface TestPackage extends EPackage {
 		 * @generated
 		 */
 		EDataType CUSTOM_DATA_TYPE = eINSTANCE.getCustomDataType();
+
+		/**
+		 * The meta object literal for the '<em>Phone Number</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @see java.lang.String
+		 * @see org.eclipse.emf.ecp.view.validation.test.model.impl.TestPackageImpl#getPhoneNumber()
+		 * @generated
+		 */
+		EDataType PHONE_NUMBER = eINSTANCE.getPhoneNumber();
+
+		/**
+		 * The meta object literal for the '<em>Min Length Of3</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @see java.lang.String
+		 * @see org.eclipse.emf.ecp.view.validation.test.model.impl.TestPackageImpl#getMinLengthOf3()
+		 * @generated
+		 */
+		EDataType MIN_LENGTH_OF3 = eINSTANCE.getMinLengthOf3();
+
+		/**
+		 * The meta object literal for the '<em>Strict Min Length Of3</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @see java.lang.String
+		 * @see org.eclipse.emf.ecp.view.validation.test.model.impl.TestPackageImpl#getStrictMinLengthOf3()
+		 * @generated
+		 */
+		EDataType STRICT_MIN_LENGTH_OF3 = eINSTANCE.getStrictMinLengthOf3();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.validation.test.model.Gender

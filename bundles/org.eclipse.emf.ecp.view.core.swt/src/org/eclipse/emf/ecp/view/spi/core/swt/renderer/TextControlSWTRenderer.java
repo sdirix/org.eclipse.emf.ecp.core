@@ -21,6 +21,7 @@ import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.IObserving;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.property.value.IValueProperty;
+import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.databinding.EMFUpdateValueStrategy;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -42,6 +43,8 @@ import org.eclipse.emf.ecp.view.template.style.alignment.model.VTAlignmentStyleP
 import org.eclipse.emf.ecp.view.template.style.textControlEnablement.model.VTTextControlEnablementStyleProperty;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.common.validation.PreSetValidationService;
+import org.eclipse.emfforms.spi.common.validation.PreSetValidationServiceRunnable;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
@@ -116,14 +119,25 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 		text.setMessage(getTextMessage());
 
 		try {
-			PreSetValidationListeners.create().verify(text, getFeature());
+			PreSetValidationListeners.create().verify(text, getFeature(), getVElement());
 			PreSetValidationListeners.create().focus(text, getFeature(),
-				new Runnable() {
+				new PreSetValidationServiceRunnable() {
 					@Override
-					public void run() {
-						// revert
-						getVElement().setDiagnostic(null);
-						getDataBindingContext().updateTargets();
+					public void run(PreSetValidationService service) {
+						try {
+							final Diagnostic textDiag = service.validate(getFeature(), text.getText());
+							final Diagnostic boundDiag = service.validate(getFeature(), getModelValue().getValue());
+							final boolean isEnteredValueValid = textDiag.getSeverity() == Diagnostic.OK;
+							final boolean isBoundValueValid = boundDiag.getSeverity() == Diagnostic.OK;
+
+							if (getModelValue().getValue() != null && !isEnteredValueValid && isBoundValueValid) {
+								// revert
+								getVElement().setDiagnostic(null);
+								getDataBindingContext().updateTargets();
+							}
+						} catch (final DatabindingFailedException e) {
+							// can we can do something reasonable here?
+						}
 					}
 				},
 				new Runnable() {

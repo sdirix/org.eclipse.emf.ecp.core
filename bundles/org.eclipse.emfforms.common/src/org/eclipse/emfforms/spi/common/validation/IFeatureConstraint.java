@@ -23,7 +23,8 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 public interface IFeatureConstraint {
 
 	/**
-	 * Validate a given value against constraints defined by the {@link EStructuralFeature}.
+	 * Validate a given value against constraints defined by the {@link org.eclipse.emf.ecore.EDataType EDataType}
+	 * of the {@link EStructuralFeature}.
 	 *
 	 * @param eStructuralFeature the feature that defines any constraints
 	 * @param value the value to be validated

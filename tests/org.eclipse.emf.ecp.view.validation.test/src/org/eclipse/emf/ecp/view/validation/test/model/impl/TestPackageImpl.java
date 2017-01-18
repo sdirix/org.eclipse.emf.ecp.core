@@ -266,6 +266,30 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	private EDataType customDataTypeEDataType = null;
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	private EDataType phoneNumberEDataType = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	private EDataType minLengthOf3EDataType = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	private EDataType strictMinLengthOf3EDataType = null;
+
+	/**
 	 * Creates an instance of the model <b>Package</b>, registered with {@link org.eclipse.emf.ecore.EPackage.Registry
 	 * EPackage.Registry} by the package
 	 * package URI value.
@@ -401,6 +425,17 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * @generated
 	 */
 	@Override
+	public EAttribute getLibrary_PhoneNumber() {
+		return (EAttribute) libraryEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
 	public EClass getWriter() {
 		return writerEClass;
 	}
@@ -480,6 +515,28 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	@Override
 	public EReference getWriter_Library() {
 		return (EReference) writerEClass.getEStructuralFeatures().get(6);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EAttribute getWriter_Initials() {
+		return (EAttribute) writerEClass.getEStructuralFeatures().get(7);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EAttribute getWriter_Title() {
+		return (EAttribute) writerEClass.getEStructuralFeatures().get(8);
 	}
 
 	/**
@@ -1094,6 +1151,39 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * @generated
 	 */
 	@Override
+	public EDataType getPhoneNumber() {
+		return phoneNumberEDataType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EDataType getMinLengthOf3() {
+		return minLengthOf3EDataType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EDataType getStrictMinLengthOf3() {
+		return strictMinLengthOf3EDataType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
 	public EEnum getGender() {
 		return genderEEnum;
 	}
@@ -1137,6 +1227,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 		createEReference(libraryEClass, LIBRARY__WRITERS);
 		createEReference(libraryEClass, LIBRARY__BOOKS);
 		createEReference(libraryEClass, LIBRARY__LIBRARIAN);
+		createEAttribute(libraryEClass, LIBRARY__PHONE_NUMBER);
 
 		writerEClass = createEClass(WRITER);
 		createEAttribute(writerEClass, WRITER__FIRST_NAME);
@@ -1146,6 +1237,8 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 		createEReference(writerEClass, WRITER__BOOKS);
 		createEAttribute(writerEClass, WRITER__PSEUDONYM);
 		createEReference(writerEClass, WRITER__LIBRARY);
+		createEAttribute(writerEClass, WRITER__INITIALS);
+		createEAttribute(writerEClass, WRITER__TITLE);
 
 		bookEClass = createEClass(BOOK);
 		createEAttribute(bookEClass, BOOK__TITLE);
@@ -1226,6 +1319,9 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 		stringWithMaxLength8EDataType = createEDataType(STRING_WITH_MAX_LENGTH8);
 		onlyCapitalsEDataType = createEDataType(ONLY_CAPITALS);
 		customDataTypeEDataType = createEDataType(CUSTOM_DATA_TYPE);
+		phoneNumberEDataType = createEDataType(PHONE_NUMBER);
+		minLengthOf3EDataType = createEDataType(MIN_LENGTH_OF3);
+		strictMinLengthOf3EDataType = createEDataType(STRICT_MIN_LENGTH_OF3);
 	}
 
 	/**
@@ -1278,6 +1374,8 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 		initEReference(getLibrary_Librarian(), getLibrarian(), null, "librarian", null, 0, 1, Library.class,
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
 			!IS_DERIVED, IS_ORDERED);
+		initEAttribute(getLibrary_PhoneNumber(), getPhoneNumber(), "phoneNumber", null, 0, 1, Library.class,
+			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		EOperation op = addEOperation(libraryEClass, ecorePackage.getEBoolean(), "validate", 0, 1, IS_UNIQUE,
 			IS_ORDERED);
@@ -1306,6 +1404,10 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 		initEReference(getWriter_Library(), getLibrary(), getLibrary_Writers(), "library", null, 0, 1,
 			Writer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES,
 			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getWriter_Initials(), getMinLengthOf3(), "initials", null, 0, 1, Writer.class,
+			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getWriter_Title(), getStrictMinLengthOf3(), "title", null, 0, 1, Writer.class,
+			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		op = addEOperation(writerEClass, ecorePackage.getEBoolean(), "validate", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEDiagnosticChain(), "diagnostic", 0, 1, IS_UNIQUE, IS_ORDERED);
@@ -1494,6 +1596,11 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 			!IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(customDataTypeEDataType, String.class, "CustomDataType", IS_SERIALIZABLE,
 			!IS_GENERATED_INSTANCE_CLASS);
+		initEDataType(phoneNumberEDataType, String.class, "PhoneNumber", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
+		initEDataType(minLengthOf3EDataType, String.class, "MinLengthOf3", IS_SERIALIZABLE,
+			!IS_GENERATED_INSTANCE_CLASS);
+		initEDataType(strictMinLengthOf3EDataType, String.class, "StrictMinLengthOf3", IS_SERIALIZABLE,
+			!IS_GENERATED_INSTANCE_CLASS);
 
 		// Create resource
 		createResource(eNS_URI);
@@ -1521,6 +1628,23 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 			source,
 			new String[] {
 				"pattern", "[A-Z]+"
+			});
+		addAnnotation(phoneNumberEDataType,
+			source,
+			new String[] {
+				"pattern", "((\\+)?[a-c0-9*#]{1,20}){0,1}",
+				"loosePattern", "[+0-9]+"
+			});
+		addAnnotation(minLengthOf3EDataType,
+			source,
+			new String[] {
+				"minLength", "3",
+				"looseMinLength", "0"
+			});
+		addAnnotation(strictMinLengthOf3EDataType,
+			source,
+			new String[] {
+				"minLength", "3"
 			});
 	}
 
