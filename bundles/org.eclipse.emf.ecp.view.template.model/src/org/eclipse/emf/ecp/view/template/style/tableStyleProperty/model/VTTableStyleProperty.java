@@ -147,6 +147,7 @@ public interface VTTableStyleProperty extends VTStyleProperty {
 	 * If the meaning of the '<em>Show Validation Summary Tooltip</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
+	 * @since 1.12
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Show Validation Summary Tooltip</em>' attribute.
 	 * @see #setShowValidationSummaryTooltip(boolean)
@@ -159,6 +160,7 @@ public interface VTTableStyleProperty extends VTStyleProperty {
 	/**
 	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty#isShowValidationSummaryTooltip <em>Show Validation Summary Tooltip</em>}' attribute.
 	 * <!-- begin-user-doc -->
+	 * @since 1.12
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Show Validation Summary Tooltip</em>' attribute.
 	 * @see #isShowValidationSummaryTooltip()

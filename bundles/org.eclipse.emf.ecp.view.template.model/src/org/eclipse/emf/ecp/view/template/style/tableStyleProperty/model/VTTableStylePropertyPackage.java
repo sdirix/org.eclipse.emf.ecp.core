@@ -98,6 +98,7 @@ public interface VTTableStylePropertyPackage extends EPackage {
 	/**
 	 * The feature id for the '<em><b>Show Validation Summary Tooltip</b></em>' attribute.
 	 * <!-- begin-user-doc -->
+	 * @since 1.12
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
@@ -107,6 +108,7 @@ public interface VTTableStylePropertyPackage extends EPackage {
 	/**
 	 * The number of structural features of the '<em>Table Style Property</em>' class.
 	 * <!-- begin-user-doc -->
+	 * @since 1.12
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
@@ -157,6 +159,7 @@ public interface VTTableStylePropertyPackage extends EPackage {
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty#isShowValidationSummaryTooltip <em>Show Validation Summary Tooltip</em>}'.
 	 * <!-- begin-user-doc -->
+	 * @since 1.12
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Show Validation Summary Tooltip</em>'.
 	 * @see org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty#isShowValidationSummaryTooltip()
@@ -217,6 +220,7 @@ public interface VTTableStylePropertyPackage extends EPackage {
 		/**
 		 * The meta object literal for the '<em><b>Show Validation Summary Tooltip</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
+		 * @since 1.12
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
