@@ -150,7 +150,9 @@ public class Activator extends Plugin {
 	public LayoutProvider getLayoutProvider() {
 		final ServiceReference<LayoutProvider> serviceReference = plugin.getBundle().getBundleContext()
 			.getServiceReference(LayoutProvider.class);
-
+		if (serviceReference == null) {
+			return null;
+		}
 		final LayoutProvider service = plugin.getBundle().getBundleContext()
 			.getService(serviceReference);
 		plugin.getBundle().getBundleContext().ungetService(serviceReference);
