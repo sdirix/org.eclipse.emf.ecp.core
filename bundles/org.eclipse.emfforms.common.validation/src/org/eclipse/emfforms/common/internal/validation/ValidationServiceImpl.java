@@ -144,8 +144,14 @@ public class ValidationServiceImpl implements ValidationService {
 		}
 	}
 
-	protected EValidator getEValidatorForEObject(EObject object) {
-		final EValidator eValidator = EValidator.Registry.INSTANCE.getEValidator(object.eClass().getEPackage());
+	/**
+	 * Returns a {@link EValidator} for the given {@link EObject}.
+	 *
+	 * @param eObject the {@link EObject} to retrieve a {@link EValidator} for
+	 * @return the {@link EValidator}
+	 */
+	protected EValidator getEValidatorForEObject(EObject eObject) {
+		final EValidator eValidator = EValidator.Registry.INSTANCE.getEValidator(eObject.eClass().getEPackage());
 
 		if (eValidator == null) {
 			return new EObjectValidator();
@@ -156,20 +162,20 @@ public class ValidationServiceImpl implements ValidationService {
 	/**
 	 * Computes the {@link Diagnostic} for the given eObject.
 	 *
-	 * @param object the eObject to validate
-	 * @return the diagnostic
+	 * @param eObject the {@link EObject} to validate
+	 * @return the {@link Diagnostic}
 	 */
-	protected Diagnostic getDiagnosticForEObject(EObject object) {
+	protected Diagnostic getDiagnosticForEObject(EObject eObject) {
 
-		final EValidator eValidator = getEValidatorForEObject(object);
-		final BasicDiagnostic diagnostic = Diagnostician.INSTANCE.createDefaultDiagnostic(object);
+		final EValidator eValidator = getEValidatorForEObject(eObject);
+		final BasicDiagnostic diagnostic = Diagnostician.INSTANCE.createDefaultDiagnostic(eObject);
 		final Map<Object, Object> context = new LinkedHashMap<Object, Object>();
 		context.put(EValidator.class, eValidator);
 		if (substitutionLabelProvider != null) {
 			context.put(EValidator.SubstitutionLabelProvider.class, substitutionLabelProvider);
 		}
 
-		eValidator.validate(object, diagnostic, context);
+		eValidator.validate(eObject, diagnostic, context);
 
 		final Map<EStructuralFeature, DiagnosticChain> diagnosticMap = new LinkedHashMap<EStructuralFeature, DiagnosticChain>();
 		for (final Diagnostic child : diagnostic.getChildren()) {
@@ -180,7 +186,7 @@ public class ValidationServiceImpl implements ValidationService {
 		}
 
 		for (final Validator validator : validators) {
-			final List<Diagnostic> additionValidation = validator.validate(object);
+			final List<Diagnostic> additionValidation = validator.validate(eObject);
 			if (additionValidation == null) {
 				continue;
 			}
