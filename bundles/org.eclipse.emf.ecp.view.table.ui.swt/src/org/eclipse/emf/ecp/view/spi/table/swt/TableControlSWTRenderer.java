@@ -1946,7 +1946,11 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			if (value == null) {
 				return null;
 			}
-			return ECPTooltipModifierHelper.modifyString(String.valueOf(value), setting);
+			final String tooltip = ECPTooltipModifierHelper.modifyString(String.valueOf(value), setting);
+			if (tooltip == null || tooltip.isEmpty()) {
+				return null;
+			}
+			return tooltip;
 		}
 
 		@Override
