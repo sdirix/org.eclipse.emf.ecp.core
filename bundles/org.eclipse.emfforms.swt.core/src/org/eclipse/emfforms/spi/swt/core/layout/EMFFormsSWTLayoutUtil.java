@@ -114,6 +114,7 @@ public final class EMFFormsSWTLayoutUtil {
 		if (thread != null || getRequestedLayouts().isEmpty()) {
 			return;
 		}
+		final Display defaultDisplay = Display.getDefault();
 		thread = new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -124,7 +125,7 @@ public final class EMFFormsSWTLayoutUtil {
 				}
 				final Set<Composite> toLayout = exchangeRequestedLayouts();
 
-				Display.getDefault().asyncExec(new Runnable() {
+				defaultDisplay.asyncExec(new Runnable() {
 
 					@Override
 					public void run() {
