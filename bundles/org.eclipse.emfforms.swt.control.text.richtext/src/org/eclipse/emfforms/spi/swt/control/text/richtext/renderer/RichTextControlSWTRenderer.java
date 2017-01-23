@@ -7,7 +7,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- * Johannes Faltermeier - initial API and implementation
+ * Jonas Helming - initial API and implementation
  ******************************************************************************/
 package org.eclipse.emfforms.spi.swt.control.text.richtext.renderer;
 
@@ -40,16 +40,18 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
+import org.eclipse.swt.events.VerifyEvent;
+import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
 
 /**
- * The text control renderer allows to enter text while given auto-completion proposals.
- * Moreover it is possible to select a proposed value from a combo box.
+ * The multi line text control renderer displays the text in a read only fashion. Once the control gains focus a
+ * popupcontrol is displayed allowing the user to edit the contents.
  *
- * @author jfaltermeier
+ * @author Jonas Helming
  *
  */
 public class RichTextControlSWTRenderer extends TextControlSWTRenderer {
@@ -57,10 +59,12 @@ public class RichTextControlSWTRenderer extends TextControlSWTRenderer {
 	private StyledText text;
 
 	/**
-	 * @author jonas
+	 * @author Jonas Helming
 	 *
 	 */
 	private final class OpenPopupHandler implements MouseListener {
+		private static final String RETURN_PATTERN = "[\n]"; //$NON-NLS-1$
+		private static final String CARRIAGE_PATTERN = "[\r]"; //$NON-NLS-1$
 		private final StyledText text;
 
 		private OpenPopupHandler(StyledText text) {
@@ -87,6 +91,15 @@ public class RichTextControlSWTRenderer extends TextControlSWTRenderer {
 			innerText.setText(text.getText());
 			innerText.setSelection(text.getCaretOffset());
 
+			innerText.addVerifyListener(new VerifyListener() {
+
+				@Override
+				public void verifyText(VerifyEvent e) {
+					if (e.text != null) {
+						e.text = e.text.replaceAll(CARRIAGE_PATTERN, "").replaceAll(RETURN_PATTERN, Text.DELIMITER); //$NON-NLS-1$
+					}
+				}
+			});
 			innerText.addFocusListener(new FocusListener() {
 				@Override
 				public void focusLost(FocusEvent e) {
