@@ -45,6 +45,7 @@ public class PreSetValidationStrategy extends UpdateValueStrategy {
 	 *
 	 * @param vElement the {@link VElement}
 	 * @param eStructuralFeature an {@link EStructuralFeature} that defines any validation constraints
+	 * @param delegate the strategy to delegate to
 	 */
 	public PreSetValidationStrategy(VElement vElement, EStructuralFeature eStructuralFeature,
 		UpdateValueStrategy delegate) {
@@ -87,7 +88,9 @@ public class PreSetValidationStrategy extends UpdateValueStrategy {
 			// TODO: existing diagnostics?
 			final VDiagnostic vDiagnostic = VViewFactory.eINSTANCE.createDiagnostic();
 			vDiagnostic.getDiagnostics().add(result);
-			vElement.setDiagnostic(vDiagnostic);
+			if (vElement != null) {
+				vElement.setDiagnostic(vDiagnostic);
+			}
 			return BasicDiagnostic.toIStatus(result);
 		} finally {
 			bundleContext.ungetService(serviceReference);

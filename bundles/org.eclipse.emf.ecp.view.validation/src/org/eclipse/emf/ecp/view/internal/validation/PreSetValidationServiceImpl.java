@@ -32,6 +32,7 @@ import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eclipse.emf.ecore.util.EObjectValidator.DynamicEDataTypeValidator;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.util.ExtendedMetaData;
 import org.eclipse.emfforms.common.Optional;
 import org.eclipse.emfforms.spi.common.validation.IFeatureConstraint;
 import org.eclipse.emfforms.spi.common.validation.PreSetValidationService;
@@ -51,7 +52,6 @@ public class PreSetValidationServiceImpl implements PreSetValidationService {
 
 	private static final String LOOSE_PATTERN_KEY = "loosePattern"; //$NON-NLS-1$
 	private static final String LOOSE_MIN_LENGTH = "looseMinLength"; //$NON-NLS-1$
-	private static final String EXTENDED_METADATA = "http:///org/eclipse/emf/ecore/util/ExtendedMetaData"; //$NON-NLS-1$
 	private static final String MULTI_LITERAL_SEP = "|"; //$NON-NLS-1$
 	private static final String ESCAPED_MULTI_LITERAL_SEP = "\\|"; //$NON-NLS-1$
 	private Map<EDataType, Set<IFeatureConstraint>> extensions = new LinkedHashMap<EDataType, Set<IFeatureConstraint>>();
@@ -149,7 +149,8 @@ public class PreSetValidationServiceImpl implements PreSetValidationService {
 	}
 
 	private static Optional<String> findLooseConstraint(EDataType eDataType, String looseConstrainKey) {
-		return Optional.ofNullable(EcoreUtil.getAnnotation(eDataType, EXTENDED_METADATA, looseConstrainKey));
+		return Optional
+			.ofNullable(EcoreUtil.getAnnotation(eDataType, ExtendedMetaData.ANNOTATION_URI, looseConstrainKey));
 	}
 
 	private static boolean validateLiteral(EEnum eEnum, String literal) {
