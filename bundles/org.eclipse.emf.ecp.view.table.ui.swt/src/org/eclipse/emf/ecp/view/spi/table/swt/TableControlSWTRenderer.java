@@ -1298,6 +1298,23 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	}
 
 	/**
+	 * Defined whether a cell editor should be created or not.
+	 *
+	 * @param element The table entry to be checked
+	 * @return True if a CellEditor should be created, false otherwise
+	 * @since 1.12
+	 */
+	protected boolean shouldCreateCellEditor(Object element) {
+		final boolean isObjectEditable = canEditObject(element);
+		if (!isObjectEditable) {
+			return false;
+		}
+		final boolean editable = getVElement().isEnabled()
+			&& !getVElement().isReadonly();
+		return editable;
+	}
+
+	/**
 	 * Called by the {@link TableControlEditingSupportAndLabelProvider}.
 	 *
 	 * @param feature the feature of the column
@@ -1613,8 +1630,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			if (ECPCellEditorComparator.class.isInstance(cellEditor)) {
 				columnIndexToComparatorMap.put(indexOfColumn, ECPCellEditorComparator.class.cast(cellEditor));
 			}
-			observableSupport = new ECPTableEditingSupport(tableViewer, cellEditor,
-				getVElement(), dmr, valueProperty);
+			observableSupport = new ECPTableEditingSupport(tableViewer, cellEditor, dmr, valueProperty);
 			initialized = true;
 		}
 
@@ -1990,8 +2006,6 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 		private final CellEditor cellEditor;
 
-		private final VTableControl tableControl;
-
 		private final IValueProperty valueProperty;
 
 		private final VDomainModelReference domainModelReference;
@@ -1999,11 +2013,10 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		/**
 		 * @param viewer
 		 */
-		ECPTableEditingSupport(ColumnViewer viewer, CellEditor cellEditor,
-			VTableControl tableControl, VDomainModelReference domainModelReference, IValueProperty valueProperty) {
+		ECPTableEditingSupport(ColumnViewer viewer, CellEditor cellEditor, VDomainModelReference domainModelReference,
+			IValueProperty valueProperty) {
 			super(viewer);
 			this.cellEditor = cellEditor;
-			this.tableControl = tableControl;
 			this.valueProperty = valueProperty;
 			this.domainModelReference = domainModelReference;
 		}
@@ -2019,13 +2032,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		 */
 		@Override
 		protected boolean canEdit(Object element) {
-			final boolean isObjectEditable = canEditObject(element);
-			if (!isObjectEditable) {
-				return false;
-			}
-			boolean editable = tableControl.isEnabled()
-				&& !tableControl.isReadonly();
-			if (!editable) {
+			if (!shouldCreateCellEditor(element)) {
 				return false;
 			}
 			final IObservableValue observableValue = valueProperty.observe(element);
@@ -2033,7 +2040,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
 			final Setting setting = ((InternalEObject) eObject).eSetting(structuralFeature);
 
-			editable &= emfFormsEditSupport.canSetProperty(domainModelReference, (EObject) element);
+			boolean editable = emfFormsEditSupport.canSetProperty(domainModelReference, (EObject) element);
 			editable &= !CellReadOnlyTesterHelper.getInstance().isReadOnly(getVElement(), setting);
 
 			if (ECPCellEditor.class.isInstance(cellEditor)) {

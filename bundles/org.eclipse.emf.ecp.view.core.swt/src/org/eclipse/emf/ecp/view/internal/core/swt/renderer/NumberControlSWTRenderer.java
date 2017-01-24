@@ -212,8 +212,7 @@ public class NumberControlSWTRenderer extends TextControlSWTRenderer {
 		}
 
 		private DecimalFormat getFormat() {
-			return NumericalHelper.setupFormat(localeProvider.getLocale(),
-				getInstanceClass(eStructuralFeature));
+			return NumericalHelper.setupFormat(localeProvider.getLocale(), getInstanceClass(eStructuralFeature));
 		}
 
 		@Override
