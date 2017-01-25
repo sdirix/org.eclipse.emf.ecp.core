@@ -69,6 +69,7 @@ public class TableStylePropertyItemProvider
 			addMinimumHeightPropertyDescriptor(object);
 			addMaximumHeightPropertyDescriptor(object);
 			addShowValidationSummaryTooltipPropertyDescriptor(object);
+			addEnableSortingPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -140,6 +141,28 @@ public class TableStylePropertyItemProvider
 	}
 
 	/**
+	 * This adds a property descriptor for the Enable Sorting feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addEnableSortingPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_TableStyleProperty_enableSorting_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_TableStyleProperty_enableSorting_feature", "_UI_TableStyleProperty_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				 VTTableStylePropertyPackage.Literals.TABLE_STYLE_PROPERTY__ENABLE_SORTING,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
 	 * This returns TableStyleProperty.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -177,6 +200,7 @@ public class TableStylePropertyItemProvider
 			case VTTableStylePropertyPackage.TABLE_STYLE_PROPERTY__MINIMUM_HEIGHT:
 			case VTTableStylePropertyPackage.TABLE_STYLE_PROPERTY__MAXIMUM_HEIGHT:
 			case VTTableStylePropertyPackage.TABLE_STYLE_PROPERTY__SHOW_VALIDATION_SUMMARY_TOOLTIP:
+			case VTTableStylePropertyPackage.TABLE_STYLE_PROPERTY__ENABLE_SORTING:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 		}

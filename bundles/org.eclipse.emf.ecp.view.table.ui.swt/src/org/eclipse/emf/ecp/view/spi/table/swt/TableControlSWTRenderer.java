@@ -571,6 +571,11 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 	private void setupSorting(final ECPTableViewerComparator comparator, int regularColumnsStartIndex,
 		final AbstractTableViewerComposite tableViewerComposite) {
+
+		final VTTableStyleProperty tableStyleProperty = getTableStyleProperty();
+		if (!tableStyleProperty.isEnableSorting()) {
+			return;
+		}
 		final int length = tableViewerComposite.getColumns().length;
 		final List<Integer> sortableColumns = new ArrayList<Integer>();
 		for (int i = 0; i < length; i++) {
