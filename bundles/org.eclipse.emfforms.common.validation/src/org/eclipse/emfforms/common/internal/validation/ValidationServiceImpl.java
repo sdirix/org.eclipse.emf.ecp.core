@@ -21,17 +21,22 @@ import java.util.Set;
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.DiagnosticChain;
+import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.EValidator.SubstitutionLabelProvider;
 import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecore.util.EObjectValidator;
-import org.eclipse.emfforms.common.spi.validation.ValidationFilter;
+import org.eclipse.emfforms.common.Optional;
 import org.eclipse.emfforms.common.spi.validation.ValidationResultListener;
 import org.eclipse.emfforms.common.spi.validation.ValidationService;
 import org.eclipse.emfforms.common.spi.validation.Validator;
 import org.eclipse.emfforms.common.spi.validation.exception.ValidationCanceledException;
+import org.eclipse.emfforms.common.spi.validation.filter.DiagnosticFilter;
+import org.eclipse.emfforms.common.spi.validation.filter.ObjectFilter;
+import org.eclipse.emfforms.common.spi.validation.filter.SubTreeFilter;
+import org.eclipse.emfforms.common.spi.validation.filter.ValidationFilter;
 
 /**
  * The implementation of {@link ValidationService}.
@@ -41,7 +46,11 @@ import org.eclipse.emfforms.common.spi.validation.exception.ValidationCanceledEx
 public class ValidationServiceImpl implements ValidationService {
 
 	private final Set<Validator> validators = new LinkedHashSet<Validator>();
-	private final Set<ValidationFilter> validationFilters = new LinkedHashSet<ValidationFilter>();
+
+	private final Set<ObjectFilter> objectFilter = new LinkedHashSet<ObjectFilter>();
+	private final Set<SubTreeFilter> subTreeFilters = new LinkedHashSet<SubTreeFilter>();
+	private final Set<DiagnosticFilter> diagnosticFilters = new LinkedHashSet<DiagnosticFilter>();
+
 	private final Set<ValidationResultListener> validationResultListeners = new LinkedHashSet<ValidationResultListener>();
 
 	private SubstitutionLabelProvider substitutionLabelProvider;
@@ -55,24 +64,36 @@ public class ValidationServiceImpl implements ValidationService {
 	public ValidationServiceImpl() {
 	}
 
-	private boolean isFiltered(EObject eObject) {
-		if (validationFilters.isEmpty()) {
+	private boolean isFiltered(EObject object) {
+		if (objectFilter.isEmpty()) {
 			return false;
 		}
-		for (final ValidationFilter filter : validationFilters) {
-			if (filter.skipValidation(eObject)) {
+		for (final ObjectFilter filter : objectFilter) {
+			if (filter.skipValidation(object)) {
 				return true;
 			}
 		}
 		return false;
 	}
 
-	private boolean isIgnored(EObject eObject, Diagnostic diagnostic) {
-		if (validationFilters.isEmpty()) {
+	private boolean isSkipSubtree(EObject object, Optional<Diagnostic> diagnostic) {
+		if (subTreeFilters.isEmpty()) {
 			return false;
 		}
-		for (final ValidationFilter filter : validationFilters) {
-			if (filter.ignoreDiagnostic(eObject, diagnostic)) {
+		for (final SubTreeFilter filter : subTreeFilters) {
+			if (filter.skipSubtree(object, diagnostic)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean isIgnored(EObject object, Diagnostic diagnostic) {
+		if (diagnosticFilters.isEmpty()) {
+			return false;
+		}
+		for (final DiagnosticFilter filter : diagnosticFilters) {
+			if (filter.ignoreDiagnostic(object, diagnostic)) {
 				return true;
 			}
 		}
@@ -88,7 +109,7 @@ public class ValidationServiceImpl implements ValidationService {
 			return diagnostic;
 
 		} finally {
-			invokeValidationResultListeners(eObject, diagnostic);
+			invokeValidationResultListeners(eObject, diagnostic, false);
 		}
 
 	}
@@ -102,7 +123,7 @@ public class ValidationServiceImpl implements ValidationService {
 	}
 
 	@Override
-	public Set<Diagnostic> validate(Iterator<EObject> eObjects) throws ValidationCanceledException {
+	public Set<Diagnostic> validate(Iterator<EObject> eObjectsIterator) throws ValidationCanceledException {
 
 		final Set<Diagnostic> diagnostics = new LinkedHashSet<Diagnostic>();
 		if (validationRunning) {
@@ -111,18 +132,34 @@ public class ValidationServiceImpl implements ValidationService {
 
 		validationRunning = true;
 		try {
-			while (!cancelationRequested && eObjects.hasNext()) {
 
-				final EObject eObject = eObjects.next();
+			final boolean isTreeIterator = eObjectsIterator instanceof TreeIterator<?>;
+			while (!cancelationRequested && eObjectsIterator.hasNext()) {
+
+				final EObject eObject = eObjectsIterator.next();
+				Diagnostic diagnostic = null;
+
+				boolean isSubtreePruned = false;
+				if (isTreeIterator && isSkipSubtree(eObject, Optional.ofNullable(diagnostic))) {
+					((TreeIterator<?>) eObjectsIterator).prune();
+					isSubtreePruned = true;
+				}
 				if (isFiltered(eObject)) {
 					continue;
 				}
 
-				final Diagnostic diagnostic = doValidate(eObject);
+				diagnostic = doValidate(eObject);
 
+				if (isTreeIterator && !isSubtreePruned && isSkipSubtree(eObject, Optional.of(diagnostic))) {
+					((TreeIterator<?>) eObjectsIterator).prune();
+				}
 				if (isIgnored(eObject, diagnostic)) {
 					continue;
 				}
+
+				diagnostics.add(diagnostic);
+				invokeValidationResultListeners(eObject, diagnostic, true);
+
 			}
 		} finally {
 			validationRunning = false;
@@ -134,13 +171,17 @@ public class ValidationServiceImpl implements ValidationService {
 		return diagnostics;
 	}
 
-	private void invokeValidationResultListeners(EObject eObject, Diagnostic diagnostic) {
+	private void invokeValidationResultListeners(EObject eObject, Diagnostic diagnostic, boolean passed) {
 		if (validationResultListeners.isEmpty()) {
 			return;
 		}
 
 		for (final ValidationResultListener listener : validationResultListeners) {
-			listener.onValidate(eObject, diagnostic);
+			if (passed) {
+				listener.afterValidate(eObject, diagnostic);
+			} else {
+				listener.onValidate(eObject, diagnostic);
+			}
 		}
 	}
 
@@ -162,20 +203,20 @@ public class ValidationServiceImpl implements ValidationService {
 	/**
 	 * Computes the {@link Diagnostic} for the given eObject.
 	 *
-	 * @param eObject the {@link EObject} to validate
+	 * @param object the {@link EObject} to validate
 	 * @return the {@link Diagnostic}
 	 */
-	protected Diagnostic getDiagnosticForEObject(EObject eObject) {
+	protected Diagnostic getDiagnosticForEObject(EObject object) {
 
-		final EValidator eValidator = getEValidatorForEObject(eObject);
-		final BasicDiagnostic diagnostic = Diagnostician.INSTANCE.createDefaultDiagnostic(eObject);
+		final EValidator eValidator = getEValidatorForEObject(object);
+		final BasicDiagnostic diagnostic = Diagnostician.INSTANCE.createDefaultDiagnostic(object);
 		final Map<Object, Object> context = new LinkedHashMap<Object, Object>();
 		context.put(EValidator.class, eValidator);
 		if (substitutionLabelProvider != null) {
 			context.put(EValidator.SubstitutionLabelProvider.class, substitutionLabelProvider);
 		}
 
-		eValidator.validate(eObject, diagnostic, context);
+		eValidator.validate(object, diagnostic, context);
 
 		final Map<EStructuralFeature, DiagnosticChain> diagnosticMap = new LinkedHashMap<EStructuralFeature, DiagnosticChain>();
 		for (final Diagnostic child : diagnostic.getChildren()) {
@@ -186,7 +227,7 @@ public class ValidationServiceImpl implements ValidationService {
 		}
 
 		for (final Validator validator : validators) {
-			final List<Diagnostic> additionValidation = validator.validate(eObject);
+			final List<Diagnostic> additionValidation = validator.validate(object);
 			if (additionValidation == null) {
 				continue;
 			}
@@ -216,12 +257,22 @@ public class ValidationServiceImpl implements ValidationService {
 
 	@Override
 	public void registerValidationFilter(ValidationFilter filter) {
-		validationFilters.add(filter);
+		if (filter instanceof ObjectFilter) {
+			objectFilter.add((ObjectFilter) filter);
+		}
+		if (filter instanceof SubTreeFilter) {
+			subTreeFilters.add((SubTreeFilter) filter);
+		}
+		if (filter instanceof DiagnosticFilter) {
+			diagnosticFilters.add((DiagnosticFilter) filter);
+		}
 	}
 
 	@Override
 	public void unregisterValidationFilter(ValidationFilter filter) {
-		validationFilters.remove(filter);
+		objectFilter.remove(filter);
+		subTreeFilters.remove(filter);
+		diagnosticFilters.remove(filter);
 	}
 
 	@Override

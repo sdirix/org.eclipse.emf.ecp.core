@@ -25,11 +25,7 @@ import java.util.Set;
 
 import org.eclipse.core.databinding.observable.IObserving;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.Diagnostic;
@@ -54,8 +50,8 @@ import org.eclipse.emf.ecp.view.spi.validation.ValidationProvider;
 import org.eclipse.emf.ecp.view.spi.validation.ValidationService;
 import org.eclipse.emf.ecp.view.spi.validation.ViewValidationListener;
 import org.eclipse.emfforms.common.internal.validation.DiagnosticHelper;
-import org.eclipse.emfforms.common.spi.validation.ValidationFilter;
 import org.eclipse.emfforms.common.spi.validation.ValidationResultListener;
+import org.eclipse.emfforms.common.spi.validation.filter.AbstractSimpleFilter;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.core.services.controlmapper.EMFFormsSettingToControlMapper;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
@@ -350,7 +346,7 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 		}
 
 		validationService = new org.eclipse.emfforms.common.internal.validation.ValidationServiceImpl();
-		validationService.registerValidationFilter(new ValidationFilter() {
+		validationService.registerValidationFilter(new AbstractSimpleFilter() {
 			@Override
 			public boolean skipValidation(EObject eObject) {
 				return validated.contains(eObject);
@@ -366,9 +362,14 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 			public void onValidate(EObject eObject, Diagnostic diagnostic) {
 				validated.add(eObject);
 			}
+
+			@Override
+			public void afterValidate(EObject eObject, Diagnostic diagnostic) {
+				// nothing to do here
+			}
 		});
 
-		readValidationProvider();
+		registerValidationProviders();
 
 		domainChangeListener = new ValidationDomainModelChangeListener();
 		viewChangeListener = new ViewModelChangeListener();
@@ -404,20 +405,9 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 		}
 	}
 
-	private void readValidationProvider() {
-		final IExtensionRegistry extensionRegistry = Platform.getExtensionRegistry();
-		if (extensionRegistry == null) {
-			return;
-		}
-		final IConfigurationElement[] controls = extensionRegistry
-			.getConfigurationElementsFor("org.eclipse.emf.ecp.view.validation.validationProvider"); //$NON-NLS-1$
-		for (final IConfigurationElement e : controls) {
-			try {
-				final ValidationProvider validationProvider = (ValidationProvider) e.createExecutableExtension("class"); //$NON-NLS-1$
-				validationService.addValidator(validationProvider);
-			} catch (final CoreException e1) {
-				Activator.logException(e1);
-			}
+	private void registerValidationProviders() {
+		for (final ValidationProvider provider : ValidationProviderHelper.fetchValidationProviders()) {
+			validationService.addValidator(provider);
 		}
 	}
 

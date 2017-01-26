@@ -18,6 +18,7 @@ import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EValidator.SubstitutionLabelProvider;
 import org.eclipse.emfforms.common.spi.validation.exception.ValidationCanceledException;
+import org.eclipse.emfforms.common.spi.validation.filter.ValidationFilter;
 
 /**
  * Generic EMF validation service which allows validation of a collection of {@link EObject}s
@@ -45,16 +46,18 @@ public interface ValidationService {
 	/**
 	 * Registers a validation filter.
 	 *
+	 * @param <Filter> an {@link ValidationFilter} implementation
 	 * @param filter the {@link ValidationFilter} to register
 	 */
-	void registerValidationFilter(ValidationFilter filter);
+	<Filter extends ValidationFilter> void registerValidationFilter(Filter filter);
 
 	/**
 	 * Unregisters a validation filter.
 	 *
+	 * @param <Filter> an {@link ValidationFilter} implementation
 	 * @param filter the {@link ValidationFilter} to unregister
 	 */
-	void unregisterValidationFilter(ValidationFilter filter);
+	<Filter extends ValidationFilter> void unregisterValidationFilter(Filter filter);
 
 	/**
 	 * Registers a {@link ValidationResultListener}.
@@ -88,7 +91,7 @@ public interface ValidationService {
 	Diagnostic validate(EObject eObject);
 
 	/**
-	 * Validates the given eObject list.
+	 * Uses the given iterator to validate all eObjects in a collection.
 	 *
 	 * @param eObjects the list to validate
 	 * @return the resulting set of {@link Diagnostic}s

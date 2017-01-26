@@ -22,11 +22,22 @@ import org.eclipse.emf.ecore.EObject;
 public interface ValidationResultListener {
 
 	/**
-	 * Callback which is invoked for every new validation result.
+	 * Callback which is invoked for every validation result.
 	 *
 	 * @param eObject the eObject which has been validated
 	 * @param diagnostic the {@link Diagnostic} result of the validation
 	 */
 	void onValidate(EObject eObject, Diagnostic diagnostic);
+
+	/**
+	 * Callback which is invoked for every validation result which passed filtering.
+	 * Validation result has been added to the validator output at this point.
+	 *
+	 * Note: this method is not triggered by {@link ValidationService#validate(EObject)}.
+	 *
+	 * @param eObject the eObject which has been validated
+	 * @param diagnostic the {@link Diagnostic} result of the validation
+	 */
+	void afterValidate(EObject eObject, Diagnostic diagnostic);
 
 }
