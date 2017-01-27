@@ -65,7 +65,7 @@
 		            </runner>
 					<aut>
 						
-						<explicit>${aut-path}/aut/${eclipse-name}_${eclipse-sr}.tar.gz.tar.gz</explicit>
+						<explicit>${aut-path}/aut/${eclipse-name}_${eclipse-sr}.tar.gz</explicit>
 						
 						<injections>
 							<injection>
