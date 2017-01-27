@@ -45,7 +45,8 @@ public interface EMFFormsDatabinding {
 	 * the given {@link EObject}.
 	 *
 	 * @param domainModelReference The domain model reference pointing to the desired list
-	 * @param object The object containing the values of the reference
+	 * @param object The root object of the rendered form. If the {@link VDomainModelReference} contains a path, the
+	 *            object is the first node of the path.
 	 * @return The resulting {@link IObservableList}, does not return <code>null</code>
 	 * @throws DatabindingFailedException if the databinding could not be executed successfully.
 	 */
