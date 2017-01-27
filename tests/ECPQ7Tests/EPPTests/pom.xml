@@ -101,7 +101,10 @@
 					<projects>
 						<project>${project.basedir}/../project</project>
 					</projects>
-
+					<testOptions>
+					    <execTimeout>10800</execTimeout>
+					    <testExecTimeout>600</testExecTimeout>
+					</testOptions>
 				</configuration>
 			</plugin>
 		</plugins>
