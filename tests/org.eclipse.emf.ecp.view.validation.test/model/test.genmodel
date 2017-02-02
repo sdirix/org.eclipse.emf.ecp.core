@@ -12,12 +12,18 @@
       <genEnumLiterals ecoreEnumLiteral="test.ecore#//Gender/Female"/>
       <genEnumLiterals ecoreEnumLiteral="test.ecore#//Gender/Both"/>
     </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="test.ecore#//Color">
+      <genEnumLiterals ecoreEnumLiteral="test.ecore#//Color/Red"/>
+      <genEnumLiterals ecoreEnumLiteral="test.ecore#//Color/Green"/>
+      <genEnumLiterals ecoreEnumLiteral="test.ecore#//Color/Blue"/>
+    </genEnums>
     <genDataTypes ecoreDataType="test.ecore#//StringWithMaxLength8"/>
     <genDataTypes ecoreDataType="test.ecore#//OnlyCapitals"/>
     <genDataTypes ecoreDataType="test.ecore#//CustomDataType"/>
     <genDataTypes ecoreDataType="test.ecore#//PhoneNumber"/>
     <genDataTypes ecoreDataType="test.ecore#//MinLengthOf3"/>
     <genDataTypes ecoreDataType="test.ecore#//StrictMinLengthOf3"/>
+    <genDataTypes ecoreDataType="test.ecore#//Age"/>
     <genClasses ecoreClass="test.ecore#//Library">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute test.ecore#//Library/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference test.ecore#//Library/writers"/>
@@ -64,6 +70,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference test.ecore#//Computer/mainboard"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute test.ecore#//Computer/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference test.ecore#//Computer/powerBlock"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute test.ecore#//Computer/colors"/>
     </genClasses>
     <genClasses ecoreClass="test.ecore#//Mainboard">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute test.ecore#//Mainboard/name"/>
@@ -122,6 +129,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute test.ecore#//Person/gender"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute test.ecore#//Person/lastName"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute test.ecore#//Person/custom"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute test.ecore#//Person/age"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

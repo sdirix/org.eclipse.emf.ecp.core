@@ -12,7 +12,10 @@
 package org.eclipse.emf.ecp.edit.internal.swt.util;
 
 import org.eclipse.emf.common.util.Diagnostic;
+import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
@@ -88,35 +91,101 @@ public final class PreSetValidationListeners {
 	 * @param vElement the {@link VElement} an {@link Diagnostic} may be attached to
 	 */
 	public void verify(Text text, final EStructuralFeature feature, final VElement vElement) {
+
+		if (!EAttribute.class.isInstance(feature)) {
+			// this shouldn't happen as we expect only EDataTypes
+			return;
+		}
+
+		final EAttribute attribute = (EAttribute) feature;
+
 		if (preSetValidationService != null) {
-			final VerifyListener verifyListener = new VerifyListener() {
-				@Override
-				public void verifyText(VerifyEvent e) {
-					final String currentText = Text.class.cast(e.widget).getText();
-					final String changedText = currentText.substring(0, e.start) + e.text
-						+ currentText.substring(e.end);
-
-					final Diagnostic diag = preSetValidationService.validateLoose(feature, changedText);
-
-					if (vElement != null) {
-						final Diagnostic strictDiag = preSetValidationService.validate(feature, changedText);
-						final VDiagnostic vDiagnostic = VViewFactory.eINSTANCE.createDiagnostic();
-						vDiagnostic.getDiagnostics().add(strictDiag);
-
-						if (strictDiag.getSeverity() != Diagnostic.OK) {
-							vElement.setDiagnostic(vDiagnostic);
-						}
-					}
-
-					if (diag.getSeverity() == Diagnostic.OK) {
-						return;
-					}
-
-					e.doit = false;
-				}
-			};
-
+			final VerifyListener verifyListener = new PreSetVerifyListener(vElement, attribute);
 			text.addVerifyListener(verifyListener);
+		}
+	}
+
+	private VDiagnostic validateStrict(EStructuralFeature feature, Object value) {
+		final Diagnostic strictDiag = preSetValidationService.validate(feature, value);
+		final VDiagnostic vDiagnostic = VViewFactory.eINSTANCE.createDiagnostic();
+		vDiagnostic.getDiagnostics().add(strictDiag);
+		if (strictDiag.getSeverity() != Diagnostic.OK) {
+			return vDiagnostic;
+		}
+		return null;
+	}
+
+	/**
+	 * Pre-set verify listener.
+	 *
+	 */
+	class PreSetVerifyListener implements VerifyListener {
+
+		private final EAttribute attribute;
+		private final VElement vElement;
+
+		/**
+		 * Constructor.
+		 *
+		 * @param vElement the {@link VElement} any {@link VDiagnostic} will be attached to
+		 * @param attribute the {@link EAttribute} to be validated
+		 */
+		PreSetVerifyListener(VElement vElement, EAttribute attribute) {
+			this.vElement = vElement;
+			this.attribute = attribute;
+		}
+
+		@Override
+		public void verifyText(VerifyEvent e) {
+			final String changedText = obtainText(e);
+
+			Object changedValue;
+			try {
+				changedValue = EcoreUtil.createFromString(attribute.getEAttributeType(), changedText);
+			} catch (final IllegalArgumentException formatException) {
+				if (isInteger(attribute.getEType()) && changedText.isEmpty()) {
+					// TODO: corner case, let change propagate in case of integer
+					return;
+				}
+
+				e.doit = false;
+				return;
+			}
+
+			final VDiagnostic prevDiagnostic = vElement == null ? null : vElement.getDiagnostic();
+			if (vElement != null) {
+				vElement.setDiagnostic(validateStrict(attribute, changedValue));
+			}
+
+			final Diagnostic looseDiag = preSetValidationService.validateLoose(attribute, changedValue);
+			if (looseDiag.getSeverity() == Diagnostic.OK) {
+				// loose validation successfully, but keep nevertheless keep validation diagnostic
+				return;
+			}
+
+			// loose validation not successfully, revert and restore previous diagnostic, if any
+			// TODO: revert only for strings because of un-intuitive behavior for integers
+			if (isString(attribute.getEType())) {
+				// remove diagnostic once again, since we revert the change
+				e.doit = false;
+				vElement.setDiagnostic(prevDiagnostic);
+
+			}
+		}
+
+		private String obtainText(VerifyEvent event) {
+			final String currentText = Text.class.cast(event.widget).getText();
+			final String changedText = currentText.substring(0, event.start) + event.text
+				+ currentText.substring(event.end);
+			return changedText;
+		}
+
+		private boolean isInteger(EClassifier classifier) {
+			return classifier.getInstanceTypeName().equals(Integer.class.getCanonicalName());
+		}
+
+		private boolean isString(EClassifier classifier) {
+			return classifier.getInstanceTypeName().equals(String.class.getCanonicalName());
 		}
 	}
 

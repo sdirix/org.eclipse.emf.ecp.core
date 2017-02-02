@@ -13,6 +13,8 @@ package org.eclipse.emf.ecp.view.validation.test;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Arrays;
+
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.BasicDiagnostic;
@@ -20,6 +22,7 @@ import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.internal.validation.PreSetValidationServiceImpl;
+import org.eclipse.emf.ecp.view.validation.test.model.Color;
 import org.eclipse.emf.ecp.view.validation.test.model.Gender;
 import org.eclipse.emf.ecp.view.validation.test.model.TestPackage;
 import org.eclipse.emfforms.spi.common.validation.IFeatureConstraint;
@@ -157,5 +160,34 @@ public class PreSetValidationService_Test {
 		// title has no looseMinLength set
 		final Diagnostic invalid = service.validateLoose(TestPackage.eINSTANCE.getWriter_Title(), "");
 		assertEquals(invalid.getSeverity(), Diagnostic.ERROR);
+	}
+
+	@Test
+	public void strictMinInclusive() {
+		// min length of three
+		final Diagnostic invalid = service.validate(TestPackage.eINSTANCE.getPerson_Age(), Integer.valueOf(-1));
+		final Diagnostic minValid = service.validate(TestPackage.eINSTANCE.getPerson_Age(), Integer.valueOf(0));
+		final Diagnostic maxValid = service.validate(TestPackage.eINSTANCE.getPerson_Age(), Integer.valueOf(100));
+		assertEquals(invalid.getSeverity(), Diagnostic.ERROR);
+		assertEquals(minValid.getSeverity(), Diagnostic.OK);
+		assertEquals(maxValid.getSeverity(), Diagnostic.OK);
+	}
+
+	@Test
+	public void looseMinInclusive() {
+		// min length of three
+		final Diagnostic invalid = service.validateLoose(TestPackage.eINSTANCE.getPerson_Age(), Integer.valueOf(-1));
+		final Diagnostic minValid = service.validateLoose(TestPackage.eINSTANCE.getPerson_Age(), Integer.valueOf(0));
+		final Diagnostic maxValid = service.validateLoose(TestPackage.eINSTANCE.getPerson_Age(), Integer.valueOf(100));
+		assertEquals(invalid.getSeverity(), Diagnostic.ERROR);
+		assertEquals(minValid.getSeverity(), Diagnostic.OK);
+		assertEquals(maxValid.getSeverity(), Diagnostic.OK);
+	}
+
+	@Test
+	public void multiEnum() {
+		final Diagnostic valid = service.validate(TestPackage.eINSTANCE.getComputer_Colors(),
+			Arrays.asList(Color.GREEN, Color.BLUE));
+		assertEquals(valid.getSeverity(), Diagnostic.OK);
 	}
 }

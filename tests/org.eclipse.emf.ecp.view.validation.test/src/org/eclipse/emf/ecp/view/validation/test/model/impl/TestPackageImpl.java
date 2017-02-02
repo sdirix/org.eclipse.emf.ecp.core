@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecp.view.validation.test.model.Book;
+import org.eclipse.emf.ecp.view.validation.test.model.Color;
 import org.eclipse.emf.ecp.view.validation.test.model.Computer;
 import org.eclipse.emf.ecp.view.validation.test.model.Content;
 import org.eclipse.emf.ecp.view.validation.test.model.CrossReferenceContainer;
@@ -247,6 +248,14 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 *
 	 * @generated
 	 */
+	private EEnum colorEEnum = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
 	private EDataType stringWithMaxLength8EDataType = null;
 
 	/**
@@ -288,6 +297,14 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * @generated
 	 */
 	private EDataType strictMinLengthOf3EDataType = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	private EDataType ageEDataType = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with {@link org.eclipse.emf.ecore.EPackage.Registry
@@ -647,6 +664,17 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	@Override
 	public EReference getComputer_PowerBlock() {
 		return (EReference) computerEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EAttribute getComputer_Colors() {
+		return (EAttribute) computerEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -1118,6 +1146,17 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * @generated
 	 */
 	@Override
+	public EAttribute getPerson_Age() {
+		return (EAttribute) personEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
 	public EDataType getStringWithMaxLength8() {
 		return stringWithMaxLength8EDataType;
 	}
@@ -1184,8 +1223,30 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * @generated
 	 */
 	@Override
+	public EDataType getAge() {
+		return ageEDataType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
 	public EEnum getGender() {
 		return genderEEnum;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EEnum getColor() {
+		return colorEEnum;
 	}
 
 	/**
@@ -1252,6 +1313,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 		createEReference(computerEClass, COMPUTER__MAINBOARD);
 		createEAttribute(computerEClass, COMPUTER__NAME);
 		createEReference(computerEClass, COMPUTER__POWER_BLOCK);
+		createEAttribute(computerEClass, COMPUTER__COLORS);
 
 		mainboardEClass = createEClass(MAINBOARD);
 		createEAttribute(mainboardEClass, MAINBOARD__NAME);
@@ -1311,9 +1373,11 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 		createEAttribute(personEClass, PERSON__GENDER);
 		createEAttribute(personEClass, PERSON__LAST_NAME);
 		createEAttribute(personEClass, PERSON__CUSTOM);
+		createEAttribute(personEClass, PERSON__AGE);
 
 		// Create enums
 		genderEEnum = createEEnum(GENDER);
+		colorEEnum = createEEnum(COLOR);
 
 		// Create data types
 		stringWithMaxLength8EDataType = createEDataType(STRING_WITH_MAX_LENGTH8);
@@ -1322,6 +1386,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 		phoneNumberEDataType = createEDataType(PHONE_NUMBER);
 		minLengthOf3EDataType = createEDataType(MIN_LENGTH_OF3);
 		strictMinLengthOf3EDataType = createEDataType(STRICT_MIN_LENGTH_OF3);
+		ageEDataType = createEDataType(AGE);
 	}
 
 	/**
@@ -1460,6 +1525,8 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 		initEReference(getComputer_PowerBlock(), getPowerBlock(), null, "powerBlock", null, 0, 1, Computer.class,
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
 			!IS_DERIVED, IS_ORDERED);
+		initEAttribute(getComputer_Colors(), getColor(), "colors", null, 0, -1, Computer.class, !IS_TRANSIENT,
+			!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(mainboardEClass, Mainboard.class, "Mainboard", !IS_ABSTRACT, !IS_INTERFACE,
 			IS_GENERATED_INSTANCE_CLASS);
@@ -1582,12 +1649,19 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getPerson_Custom(), getCustomDataType(), "custom", null, 0, 1, Person.class, !IS_TRANSIENT,
 			!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getPerson_Age(), getAge(), "age", null, 0, 1, Person.class, !IS_TRANSIENT, !IS_VOLATILE,
+			IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(genderEEnum, Gender.class, "Gender");
 		addEEnumLiteral(genderEEnum, Gender.MALE);
 		addEEnumLiteral(genderEEnum, Gender.FEMALE);
 		addEEnumLiteral(genderEEnum, Gender.BOTH);
+
+		initEEnum(colorEEnum, Color.class, "Color");
+		addEEnumLiteral(colorEEnum, Color.RED);
+		addEEnumLiteral(colorEEnum, Color.GREEN);
+		addEEnumLiteral(colorEEnum, Color.BLUE);
 
 		// Initialize data types
 		initEDataType(stringWithMaxLength8EDataType, String.class, "StringWithMaxLength8", IS_SERIALIZABLE,
@@ -1601,6 +1675,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 			!IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(strictMinLengthOf3EDataType, String.class, "StrictMinLengthOf3", IS_SERIALIZABLE,
 			!IS_GENERATED_INSTANCE_CLASS);
+		initEDataType(ageEDataType, Integer.class, "Age", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 
 		// Create resource
 		createResource(eNS_URI);
@@ -1645,6 +1720,12 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 			source,
 			new String[] {
 				"minLength", "3"
+			});
+		addAnnotation(ageEDataType,
+			source,
+			new String[] {
+				"minInclusive", "0",
+				"maxInclusive", "100"
 			});
 	}
 

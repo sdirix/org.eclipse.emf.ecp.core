@@ -23,8 +23,10 @@ import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.databinding.EMFUpdateValueStrategy;
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.edit.internal.swt.util.PreSetValidationListeners;
 import org.eclipse.emf.ecp.view.internal.core.swt.MessageKeys;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
@@ -124,8 +126,13 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 				new PreSetValidationServiceRunnable() {
 					@Override
 					public void run(PreSetValidationService service) {
+
 						try {
-							final Diagnostic textDiag = service.validate(getFeature(), text.getText());
+							final Object changedValue = EcoreUtil.createFromString(
+								((EAttribute) getFeature()).getEAttributeType(),
+								text.getText());
+
+							final Diagnostic textDiag = service.validate(getFeature(), changedValue);
 							final Diagnostic boundDiag = service.validate(getFeature(), getModelValue().getValue());
 							final boolean isEnteredValueValid = textDiag.getSeverity() == Diagnostic.OK;
 							final boolean isBoundValueValid = boundDiag.getSeverity() == Diagnostic.OK;
@@ -137,6 +144,12 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 							}
 						} catch (final DatabindingFailedException e) {
 							// can we can do something reasonable here?
+						} catch (final IllegalArgumentException ex) {
+							// TODO: can the previously stored value be invalid?
+							// restore previous value and clear diagnostics
+							getVElement().setDiagnostic(null);
+							getDataBindingContext().updateTargets();
+							return;
 						}
 					}
 				},

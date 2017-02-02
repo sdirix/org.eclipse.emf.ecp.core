@@ -37,7 +37,6 @@ public class PreSetValidationStrategy extends UpdateValueStrategy {
 
 	private final EStructuralFeature eStructuralFeature;
 	private final VElement vElement;
-	// private ITargetToModelConverter conversion;
 	private final UpdateValueStrategy strategy;
 
 	/**

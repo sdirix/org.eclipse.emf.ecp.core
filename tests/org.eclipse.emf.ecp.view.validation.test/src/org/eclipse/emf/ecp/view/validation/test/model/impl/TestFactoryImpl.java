@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecp.view.validation.test.model.Book;
+import org.eclipse.emf.ecp.view.validation.test.model.Color;
 import org.eclipse.emf.ecp.view.validation.test.model.Computer;
 import org.eclipse.emf.ecp.view.validation.test.model.Content;
 import org.eclipse.emf.ecp.view.validation.test.model.CrossReferenceContainer;
@@ -147,6 +148,8 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 		switch (eDataType.getClassifierID()) {
 		case TestPackage.GENDER:
 			return createGenderFromString(eDataType, initialValue);
+		case TestPackage.COLOR:
+			return createColorFromString(eDataType, initialValue);
 		case TestPackage.STRING_WITH_MAX_LENGTH8:
 			return createStringWithMaxLength8FromString(eDataType, initialValue);
 		case TestPackage.ONLY_CAPITALS:
@@ -159,6 +162,8 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 			return createMinLengthOf3FromString(eDataType, initialValue);
 		case TestPackage.STRICT_MIN_LENGTH_OF3:
 			return createStrictMinLengthOf3FromString(eDataType, initialValue);
+		case TestPackage.AGE:
+			return createAgeFromString(eDataType, initialValue);
 		default:
 			throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
@@ -175,6 +180,8 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 		switch (eDataType.getClassifierID()) {
 		case TestPackage.GENDER:
 			return convertGenderToString(eDataType, instanceValue);
+		case TestPackage.COLOR:
+			return convertColorToString(eDataType, instanceValue);
 		case TestPackage.STRING_WITH_MAX_LENGTH8:
 			return convertStringWithMaxLength8ToString(eDataType, instanceValue);
 		case TestPackage.ONLY_CAPITALS:
@@ -187,6 +194,8 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 			return convertMinLengthOf3ToString(eDataType, instanceValue);
 		case TestPackage.STRICT_MIN_LENGTH_OF3:
 			return convertStrictMinLengthOf3ToString(eDataType, instanceValue);
+		case TestPackage.AGE:
+			return convertAgeToString(eDataType, instanceValue);
 		default:
 			throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
@@ -570,6 +579,26 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	 *
 	 * @generated
 	 */
+	public Integer createAgeFromString(EDataType eDataType, String initialValue) {
+		return (Integer) super.createFromString(eDataType, initialValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public String convertAgeToString(EDataType eDataType, Object instanceValue) {
+		return super.convertToString(eDataType, instanceValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
 	public Gender createGenderFromString(EDataType eDataType, String initialValue) {
 		final Gender result = Gender.get(initialValue);
 		if (result == null) {
@@ -586,6 +615,31 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	 * @generated
 	 */
 	public String convertGenderToString(EDataType eDataType, Object instanceValue) {
+		return instanceValue == null ? null : instanceValue.toString();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public Color createColorFromString(EDataType eDataType, String initialValue) {
+		final Color result = Color.get(initialValue);
+		if (result == null) {
+			throw new IllegalArgumentException(
+				"The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+		}
+		return result;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public String convertColorToString(EDataType eDataType, Object instanceValue) {
 		return instanceValue == null ? null : instanceValue.toString();
 	}
 

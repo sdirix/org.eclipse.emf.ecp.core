@@ -31,6 +31,7 @@ import org.eclipse.emf.ecp.view.validation.test.model.TestPackage;
  * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.PersonImpl#getGender <em>Gender</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.PersonImpl#getLastName <em>Last Name</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.PersonImpl#getCustom <em>Custom</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.PersonImpl#getAge <em>Age</em>}</li>
  * </ul>
  *
  * @generated
@@ -40,7 +41,7 @@ public class PersonImpl extends EObjectImpl implements Person {
 	 * The default value of the '{@link #getFirstName() <em>First Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getFirstName()
 	 * @generated
 	 * @ordered
@@ -50,7 +51,7 @@ public class PersonImpl extends EObjectImpl implements Person {
 	 * The cached value of the '{@link #getFirstName() <em>First Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getFirstName()
 	 * @generated
 	 * @ordered
@@ -61,7 +62,7 @@ public class PersonImpl extends EObjectImpl implements Person {
 	 * The default value of the '{@link #getGender() <em>Gender</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getGender()
 	 * @generated
 	 * @ordered
@@ -71,7 +72,7 @@ public class PersonImpl extends EObjectImpl implements Person {
 	 * The cached value of the '{@link #getGender() <em>Gender</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getGender()
 	 * @generated
 	 * @ordered
@@ -82,7 +83,7 @@ public class PersonImpl extends EObjectImpl implements Person {
 	 * The default value of the '{@link #getLastName() <em>Last Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getLastName()
 	 * @generated
 	 * @ordered
@@ -92,7 +93,7 @@ public class PersonImpl extends EObjectImpl implements Person {
 	 * The cached value of the '{@link #getLastName() <em>Last Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getLastName()
 	 * @generated
 	 * @ordered
@@ -103,7 +104,7 @@ public class PersonImpl extends EObjectImpl implements Person {
 	 * The default value of the '{@link #getCustom() <em>Custom</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getCustom()
 	 * @generated
 	 * @ordered
@@ -113,17 +114,37 @@ public class PersonImpl extends EObjectImpl implements Person {
 	 * The cached value of the '{@link #getCustom() <em>Custom</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getCustom()
 	 * @generated
 	 * @ordered
 	 */
 	protected String custom = CUSTOM_EDEFAULT;
+	/**
+	 * The default value of the '{@link #getAge() <em>Age</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @see #getAge()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final Integer AGE_EDEFAULT = null;
+	/**
+	 * The cached value of the '{@link #getAge() <em>Age</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @see #getAge()
+	 * @generated
+	 * @ordered
+	 */
+	protected Integer age = AGE_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected PersonImpl() {
@@ -133,7 +154,7 @@ public class PersonImpl extends EObjectImpl implements Person {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -144,7 +165,7 @@ public class PersonImpl extends EObjectImpl implements Person {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -155,7 +176,7 @@ public class PersonImpl extends EObjectImpl implements Person {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -171,7 +192,7 @@ public class PersonImpl extends EObjectImpl implements Person {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -182,7 +203,7 @@ public class PersonImpl extends EObjectImpl implements Person {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -197,7 +218,7 @@ public class PersonImpl extends EObjectImpl implements Person {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -208,7 +229,7 @@ public class PersonImpl extends EObjectImpl implements Person {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -224,7 +245,7 @@ public class PersonImpl extends EObjectImpl implements Person {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -235,7 +256,7 @@ public class PersonImpl extends EObjectImpl implements Person {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -250,7 +271,33 @@ public class PersonImpl extends EObjectImpl implements Person {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
+	 * @generated
+	 */
+	@Override
+	public Integer getAge() {
+		return age;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public void setAge(Integer newAge) {
+		final Integer oldAge = age;
+		age = newAge;
+		if (eNotificationRequired()) {
+			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.PERSON__AGE, oldAge, age));
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	@Override
@@ -264,6 +311,8 @@ public class PersonImpl extends EObjectImpl implements Person {
 			return getLastName();
 		case TestPackage.PERSON__CUSTOM:
 			return getCustom();
+		case TestPackage.PERSON__AGE:
+			return getAge();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -271,7 +320,7 @@ public class PersonImpl extends EObjectImpl implements Person {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -289,6 +338,9 @@ public class PersonImpl extends EObjectImpl implements Person {
 		case TestPackage.PERSON__CUSTOM:
 			setCustom((String) newValue);
 			return;
+		case TestPackage.PERSON__AGE:
+			setAge((Integer) newValue);
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -296,7 +348,7 @@ public class PersonImpl extends EObjectImpl implements Person {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -314,6 +366,9 @@ public class PersonImpl extends EObjectImpl implements Person {
 		case TestPackage.PERSON__CUSTOM:
 			setCustom(CUSTOM_EDEFAULT);
 			return;
+		case TestPackage.PERSON__AGE:
+			setAge(AGE_EDEFAULT);
+			return;
 		}
 		super.eUnset(featureID);
 	}
@@ -321,7 +376,7 @@ public class PersonImpl extends EObjectImpl implements Person {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -335,6 +390,8 @@ public class PersonImpl extends EObjectImpl implements Person {
 			return LAST_NAME_EDEFAULT == null ? lastName != null : !LAST_NAME_EDEFAULT.equals(lastName);
 		case TestPackage.PERSON__CUSTOM:
 			return CUSTOM_EDEFAULT == null ? custom != null : !CUSTOM_EDEFAULT.equals(custom);
+		case TestPackage.PERSON__AGE:
+			return AGE_EDEFAULT == null ? age != null : !AGE_EDEFAULT.equals(age);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -342,7 +399,7 @@ public class PersonImpl extends EObjectImpl implements Person {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -360,6 +417,8 @@ public class PersonImpl extends EObjectImpl implements Person {
 		result.append(lastName);
 		result.append(", custom: ");
 		result.append(custom);
+		result.append(", age: ");
+		result.append(age);
 		result.append(')');
 		return result.toString();
 	}

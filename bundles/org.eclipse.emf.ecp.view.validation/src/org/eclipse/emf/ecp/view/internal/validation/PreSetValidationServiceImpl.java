@@ -13,6 +13,7 @@ package org.eclipse.emf.ecp.view.internal.validation;
 
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -21,6 +22,7 @@ import java.util.regex.Pattern;
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.DiagnosticChain;
+import org.eclipse.emf.common.util.Enumerator;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EEnum;
@@ -99,6 +101,7 @@ public class PreSetValidationServiceImpl implements PreSetValidationService {
 			value);
 	}
 
+	@SuppressWarnings("unchecked")
 	private Diagnostic validate(PreSetValidator validator, EStructuralFeature eStructuralFeature, Object value) {
 		final EClassifier eType = eStructuralFeature.getEType();
 
@@ -114,6 +117,14 @@ public class PreSetValidationServiceImpl implements PreSetValidationService {
 		if (eDataType instanceof EEnum && value instanceof String) {
 			if (validateEEnum((EEnum) eDataType, (String) value)) {
 				return new BasicDiagnostic();
+			}
+		} else if (eDataType instanceof EEnum && value instanceof List<?>) {
+			try {
+				if (validateEEnum((EEnum) eDataType, (List<Enumerator>) value)) {
+					return new BasicDiagnostic();
+				}
+			} catch (final ClassCastException ex) {
+				// ignore and continue with regular validation
 			}
 		}
 
@@ -146,6 +157,14 @@ public class PreSetValidationServiceImpl implements PreSetValidationService {
 			return isValid;
 		}
 		return validateLiteral(eEnum, valueString);
+	}
+
+	private static boolean validateEEnum(final EEnum eEnum, final List<Enumerator> enumerators) {
+		boolean isValid = true;
+		for (final Enumerator enumerator : enumerators) {
+			isValid &= validateLiteral(eEnum, enumerator.getLiteral());
+		}
+		return isValid;
 	}
 
 	private static Optional<String> findLooseConstraint(EDataType eDataType, String looseConstrainKey) {

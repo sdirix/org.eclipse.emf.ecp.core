@@ -382,6 +382,16 @@ public interface TestPackage extends EPackage {
 	int COMPUTER__POWER_BLOCK = 2;
 
 	/**
+	 * The feature id for the '<em><b>Colors</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int COMPUTER__COLORS = 3;
+
+	/**
 	 * The number of structural features of the '<em>Computer</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -389,7 +399,7 @@ public interface TestPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COMPUTER_FEATURE_COUNT = 3;
+	int COMPUTER_FEATURE_COUNT = 4;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.validation.test.model.impl.MainboardImpl
@@ -1013,6 +1023,16 @@ public interface TestPackage extends EPackage {
 	int PERSON__CUSTOM = 3;
 
 	/**
+	 * The feature id for the '<em><b>Age</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int PERSON__AGE = 4;
+
+	/**
 	 * The number of structural features of the '<em>Person</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1020,7 +1040,7 @@ public interface TestPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PERSON_FEATURE_COUNT = 4;
+	int PERSON_FEATURE_COUNT = 5;
 
 	/**
 	 * The meta object id for the '<em>String With Max Length8</em>' data type.
@@ -1031,7 +1051,7 @@ public interface TestPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.validation.test.model.impl.TestPackageImpl#getStringWithMaxLength8()
 	 * @generated
 	 */
-	int STRING_WITH_MAX_LENGTH8 = 23;
+	int STRING_WITH_MAX_LENGTH8 = 24;
 
 	/**
 	 * The meta object id for the '<em>Only Capitals</em>' data type.
@@ -1042,7 +1062,7 @@ public interface TestPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.validation.test.model.impl.TestPackageImpl#getOnlyCapitals()
 	 * @generated
 	 */
-	int ONLY_CAPITALS = 24;
+	int ONLY_CAPITALS = 25;
 
 	/**
 	 * The meta object id for the '<em>Custom Data Type</em>' data type.
@@ -1053,7 +1073,7 @@ public interface TestPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.validation.test.model.impl.TestPackageImpl#getCustomDataType()
 	 * @generated
 	 */
-	int CUSTOM_DATA_TYPE = 25;
+	int CUSTOM_DATA_TYPE = 26;
 
 	/**
 	 * The meta object id for the '<em>Phone Number</em>' data type.
@@ -1064,7 +1084,7 @@ public interface TestPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.validation.test.model.impl.TestPackageImpl#getPhoneNumber()
 	 * @generated
 	 */
-	int PHONE_NUMBER = 26;
+	int PHONE_NUMBER = 27;
 
 	/**
 	 * The meta object id for the '<em>Min Length Of3</em>' data type.
@@ -1075,7 +1095,7 @@ public interface TestPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.validation.test.model.impl.TestPackageImpl#getMinLengthOf3()
 	 * @generated
 	 */
-	int MIN_LENGTH_OF3 = 27;
+	int MIN_LENGTH_OF3 = 28;
 
 	/**
 	 * The meta object id for the '<em>Strict Min Length Of3</em>' data type.
@@ -1086,7 +1106,18 @@ public interface TestPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.validation.test.model.impl.TestPackageImpl#getStrictMinLengthOf3()
 	 * @generated
 	 */
-	int STRICT_MIN_LENGTH_OF3 = 28;
+	int STRICT_MIN_LENGTH_OF3 = 29;
+
+	/**
+	 * The meta object id for the '<em>Age</em>' data type.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see java.lang.Integer
+	 * @see org.eclipse.emf.ecp.view.validation.test.model.impl.TestPackageImpl#getAge()
+	 * @generated
+	 */
+	int AGE = 30;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.validation.test.model.Gender <em>Gender</em>}' enum.
@@ -1098,6 +1129,17 @@ public interface TestPackage extends EPackage {
 	 * @generated
 	 */
 	int GENDER = 22;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.validation.test.model.Color <em>Color</em>}' enum.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see org.eclipse.emf.ecp.view.validation.test.model.Color
+	 * @see org.eclipse.emf.ecp.view.validation.test.model.impl.TestPackageImpl#getColor()
+	 * @generated
+	 */
+	int COLOR = 23;
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.validation.test.model.Library
@@ -1430,6 +1472,19 @@ public interface TestPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getComputer_PowerBlock();
+
+	/**
+	 * Returns the meta object for the attribute list
+	 * '{@link org.eclipse.emf.ecp.view.validation.test.model.Computer#getColors <em>Colors</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for the attribute list '<em>Colors</em>'.
+	 * @see org.eclipse.emf.ecp.view.validation.test.model.Computer#getColors()
+	 * @see #getComputer()
+	 * @generated
+	 */
+	EAttribute getComputer_Colors();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.validation.test.model.Mainboard
@@ -1972,6 +2027,19 @@ public interface TestPackage extends EPackage {
 	EAttribute getPerson_Custom();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecp.view.validation.test.model.Person#getAge
+	 * <em>Age</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for the attribute '<em>Age</em>'.
+	 * @see org.eclipse.emf.ecp.view.validation.test.model.Person#getAge()
+	 * @see #getPerson()
+	 * @generated
+	 */
+	EAttribute getPerson_Age();
+
+	/**
 	 * Returns the meta object for data type '{@link java.lang.String <em>String With Max Length8</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2049,6 +2117,19 @@ public interface TestPackage extends EPackage {
 	EDataType getStrictMinLengthOf3();
 
 	/**
+	 * Returns the meta object for data type '{@link java.lang.Integer <em>Age</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for data type '<em>Age</em>'.
+	 * @see java.lang.Integer
+	 * @model instanceClass="java.lang.Integer"
+	 *        extendedMetaData="minInclusive='0' maxInclusive='100'"
+	 * @generated
+	 */
+	EDataType getAge();
+
+	/**
 	 * Returns the meta object for enum '{@link org.eclipse.emf.ecp.view.validation.test.model.Gender <em>Gender</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2058,6 +2139,17 @@ public interface TestPackage extends EPackage {
 	 * @generated
 	 */
 	EEnum getGender();
+
+	/**
+	 * Returns the meta object for enum '{@link org.eclipse.emf.ecp.view.validation.test.model.Color <em>Color</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for enum '<em>Color</em>'.
+	 * @see org.eclipse.emf.ecp.view.validation.test.model.Color
+	 * @generated
+	 */
+	EEnum getColor();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -2331,6 +2423,15 @@ public interface TestPackage extends EPackage {
 		 * @generated
 		 */
 		EReference COMPUTER__POWER_BLOCK = eINSTANCE.getComputer_PowerBlock();
+
+		/**
+		 * The meta object literal for the '<em><b>Colors</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @generated
+		 */
+		EAttribute COMPUTER__COLORS = eINSTANCE.getComputer_Colors();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.validation.test.model.impl.MainboardImpl
@@ -2773,6 +2874,15 @@ public interface TestPackage extends EPackage {
 		EAttribute PERSON__CUSTOM = eINSTANCE.getPerson_Custom();
 
 		/**
+		 * The meta object literal for the '<em><b>Age</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @generated
+		 */
+		EAttribute PERSON__AGE = eINSTANCE.getPerson_Age();
+
+		/**
 		 * The meta object literal for the '<em>String With Max Length8</em>' data type.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2839,6 +2949,17 @@ public interface TestPackage extends EPackage {
 		EDataType STRICT_MIN_LENGTH_OF3 = eINSTANCE.getStrictMinLengthOf3();
 
 		/**
+		 * The meta object literal for the '<em>Age</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @see java.lang.Integer
+		 * @see org.eclipse.emf.ecp.view.validation.test.model.impl.TestPackageImpl#getAge()
+		 * @generated
+		 */
+		EDataType AGE = eINSTANCE.getAge();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.validation.test.model.Gender
 		 * <em>Gender</em>}' enum.
 		 * <!-- begin-user-doc -->
@@ -2849,6 +2970,18 @@ public interface TestPackage extends EPackage {
 		 * @generated
 		 */
 		EEnum GENDER = eINSTANCE.getGender();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.validation.test.model.Color <em>Color</em>}'
+		 * enum.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @see org.eclipse.emf.ecp.view.validation.test.model.Color
+		 * @see org.eclipse.emf.ecp.view.validation.test.model.impl.TestPackageImpl#getColor()
+		 * @generated
+		 */
+		EEnum COLOR = eINSTANCE.getColor();
 
 	}
 

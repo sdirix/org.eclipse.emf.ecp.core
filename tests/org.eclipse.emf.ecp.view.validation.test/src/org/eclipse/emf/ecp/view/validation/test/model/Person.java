@@ -26,6 +26,7 @@ import org.eclipse.emf.ecore.EObject;
  * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.Person#getGender <em>Gender</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.Person#getLastName <em>Last Name</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.Person#getCustom <em>Custom</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.Person#getAge <em>Age</em>}</li>
  * </ul>
  *
  * @see org.eclipse.emf.ecp.view.validation.test.model.TestPackage#getPerson()
@@ -42,7 +43,7 @@ public interface Person extends EObject {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the value of the '<em>First Name</em>' attribute.
 	 * @see #setFirstName(String)
 	 * @see org.eclipse.emf.ecp.view.validation.test.model.TestPackage#getPerson_FirstName()
@@ -56,7 +57,7 @@ public interface Person extends EObject {
 	 * Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @param value the new value of the '<em>First Name</em>' attribute.
 	 * @see #getFirstName()
 	 * @generated
@@ -72,7 +73,7 @@ public interface Person extends EObject {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the value of the '<em>Gender</em>' attribute.
 	 * @see org.eclipse.emf.ecp.view.validation.test.model.Gender
 	 * @see #setGender(Gender)
@@ -87,7 +88,7 @@ public interface Person extends EObject {
 	 * attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @param value the new value of the '<em>Gender</em>' attribute.
 	 * @see org.eclipse.emf.ecp.view.validation.test.model.Gender
 	 * @see #getGender()
@@ -103,7 +104,7 @@ public interface Person extends EObject {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the value of the '<em>Last Name</em>' attribute.
 	 * @see #setLastName(String)
 	 * @see org.eclipse.emf.ecp.view.validation.test.model.TestPackage#getPerson_LastName()
@@ -117,7 +118,7 @@ public interface Person extends EObject {
 	 * Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @param value the new value of the '<em>Last Name</em>' attribute.
 	 * @see #getLastName()
 	 * @generated
@@ -132,7 +133,7 @@ public interface Person extends EObject {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the value of the '<em>Custom</em>' attribute.
 	 * @see #setCustom(String)
 	 * @see org.eclipse.emf.ecp.view.validation.test.model.TestPackage#getPerson_Custom()
@@ -146,10 +147,39 @@ public interface Person extends EObject {
 	 * attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @param value the new value of the '<em>Custom</em>' attribute.
 	 * @see #getCustom()
 	 * @generated
 	 */
 	void setCustom(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Age</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Age</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the value of the '<em>Age</em>' attribute.
+	 * @see #setAge(Integer)
+	 * @see org.eclipse.emf.ecp.view.validation.test.model.TestPackage#getPerson_Age()
+	 * @model dataType="org.eclipse.emf.ecp.view.validation.test.model.Age"
+	 * @generated
+	 */
+	Integer getAge();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.validation.test.model.Person#getAge <em>Age</em>}'
+	 * attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @param value the new value of the '<em>Age</em>' attribute.
+	 * @see #getAge()
+	 * @generated
+	 */
+	void setAge(Integer value);
 } // Person
