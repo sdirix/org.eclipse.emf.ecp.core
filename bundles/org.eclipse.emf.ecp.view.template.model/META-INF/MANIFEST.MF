@@ -55,7 +55,6 @@ Export-Package: org.eclipse.emf.ecp.internal.view.template.model;version="1.12.0
   x-friends:="org.eclipse.emf.ecp.view.template.model.edit"
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.7.0,4.0.0)",
  org.eclipse.emf.ecore;bundle-version="[2.7.0,3.0.0)";visibility:=reexport,
- org.eclipse.emf.ecp.view.template.model;visibility:=reexport,
  org.eclipse.emf.ecp.view.model;bundle-version="[1.12.0,1.13.0)";visibility:=reexport,
  org.eclipse.emf.ecp.view.context;bundle-version="[1.12.0,1.13.0)",
  org.eclipse.emfforms.core.services;bundle-version="[1.12.0,1.13.0)"
