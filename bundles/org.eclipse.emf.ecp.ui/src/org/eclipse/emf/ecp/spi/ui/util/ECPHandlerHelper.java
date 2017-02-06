@@ -334,7 +334,8 @@ public final class ECPHandlerHelper {
 				addRepositoryComposite.getProvider(), addRepositoryComposite.getRepositoryName(),
 				addRepositoryComposite.getRepositoryLabel() == null ? "" : addRepositoryComposite.getRepositoryLabel(), //$NON-NLS-1$
 				addRepositoryComposite.getRepositoryDescription() == null ? "" : addRepositoryComposite //$NON-NLS-1$
-					.getRepositoryDescription(), addRepositoryComposite.getProperties());
+					.getRepositoryDescription(),
+				addRepositoryComposite.getProperties());
 			return ecpRepository;
 		}
 		return null;
@@ -384,18 +385,18 @@ public final class ECPHandlerHelper {
 	}
 
 	/**
-	 * This opens the model element.
+	 * Resolve the a {@link ECPModelElementOpener} for the given model element.
 	 *
-	 * @param me
-	 *            ModelElement to open
-	 *            the view that requested the open model element
-	 * @param ecpProject the {@link ECPProject} of the model element
+	 * @param modelElement the element to find a opener for
+	 * @return a {@link ECPModelElementOpener} or null if no opener has been found
+	 *
+	 * @since 1.12
 	 */
-	public static void openModelElement(final Object me, ECPProject ecpProject) {
-		if (me == null) {
+	public static ECPModelElementOpener resolveElementOpener(final Object modelElement) {
+		if (modelElement == null) {
 			MessageDialog.openError(Display.getCurrent().getActiveShell(),
 				Messages.ActionHelper_ErrorTitle_ElementDeleted, Messages.ActionHelper_ErrorMessage_ElementDeleted);
-			return;
+			return null;
 		}
 		IConfigurationElement[] modelelementopener = Platform.getExtensionRegistry().getConfigurationElementsFor(
 			"org.eclipse.emf.ecp.ui.modelElementOpener"); //$NON-NLS-1$
@@ -414,7 +415,7 @@ public final class ECPHandlerHelper {
 							final Class<?> supportedClassType = HandlerHelperUtil.loadClass(testerElement
 								.getContributor().getName(),
 								type);
-							if (supportedClassType.isInstance(me)) {
+							if (supportedClassType.isInstance(modelElement)) {
 								if (priority > bestValue) {
 									bestCandidate = modelelementOpener;
 									bestValue = priority;
@@ -427,7 +428,7 @@ public final class ECPHandlerHelper {
 					} else if ("dynamicTester".equals(testerElement.getName())) {//$NON-NLS-1$
 						final ECPModelElementOpenTester tester = (ECPModelElementOpenTester) testerElement
 							.createExecutableExtension("tester"); //$NON-NLS-1$
-						final int value = tester.isApplicable(me);
+						final int value = tester.isApplicable(modelElement);
 						if (value > bestValue) {
 							bestCandidate = modelelementOpener;
 							bestValue = value;
@@ -440,14 +441,29 @@ public final class ECPHandlerHelper {
 				Activator.log(e);
 			}
 		}
+		return bestCandidate;
+	}
+
+	/**
+	 * Open a view for the given model element.
+	 *
+	 * @param modelElement
+	 *            ModelElement to open
+	 *            the view that requested the open model element
+	 * @param ecpProject the {@link ECPProject} of the model element
+	 */
+	public static void openModelElement(final Object modelElement, ECPProject ecpProject) {
+
+		final ECPModelElementOpener opener = resolveElementOpener(modelElement);
+
 		// TODO: find solution
 		// ECPWorkspaceManager.getObserverBus().notify(ModelElementOpenObserver.class).onOpen(me, sourceView, name);
 		// BEGIN SUPRESS CATCH EXCEPTION
-		if (bestCandidate == null) {
+		if (opener == null) {
 			return;
 		}
 		try {
-			bestCandidate.openModelElement(me, ecpProject);
+			opener.openModelElement(modelElement, ecpProject);
 		} catch (final RuntimeException e) {
 			Activator.log(e);
 		}
