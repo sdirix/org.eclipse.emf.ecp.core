@@ -81,7 +81,6 @@ public interface VViewFactory extends EFactory {
 	 *
 	 * @since 1.8
 	 *        <!-- end-user-doc -->
-	 *
 	 * @return a new object of class '<em>Date Time Display Attachment</em>'.
 	 * @generated
 	 */

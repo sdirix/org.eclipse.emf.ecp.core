@@ -50,8 +50,8 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * The following features are implemented:
  * </p>
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VFeaturePathDomainModelReferenceImpl#getChangeListener
- * <em>Change Listener</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VFeaturePathDomainModelReferenceImpl#getChangeListener <em>Change
+ * Listener</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VFeaturePathDomainModelReferenceImpl#getDomainModelEFeature
  * <em>Domain Model EFeature</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VFeaturePathDomainModelReferenceImpl#getDomainModelEReferencePath

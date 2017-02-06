@@ -34,6 +34,12 @@ import org.eclipse.emf.ecore.EObject;
  *              <li>{@link org.eclipse.emf.ecp.view.spi.model.VElement#getDiagnostic <em>Diagnostic</em>}</li>
  *              <li>{@link org.eclipse.emf.ecp.view.spi.model.VElement#getAttachments <em>Attachments</em>}</li>
  *              <li>{@link org.eclipse.emf.ecp.view.spi.model.VElement#getUuid <em>Uuid</em>}</li>
+ *              <li>{@link org.eclipse.emf.ecp.view.spi.model.VElement#isEffectivelyVisible <em>Effectively
+ *              Visible</em>}</li>
+ *              <li>{@link org.eclipse.emf.ecp.view.spi.model.VElement#isEffectivelyEnabled <em>Effectively
+ *              Enabled</em>}</li>
+ *              <li>{@link org.eclipse.emf.ecp.view.spi.model.VElement#isEffectivelyReadonly <em>Effectively
+ *              Readonly</em>}</li>
  *              </ul>
  *
  * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getElement()
@@ -243,7 +249,6 @@ public interface VElement extends EObject {
 	 *
 	 * @since 1.9
 	 *        <!-- end-user-doc -->
-	 *
 	 * @return the value of the '<em>Uuid</em>' attribute.
 	 * @see #setUuid(String)
 	 * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getElement_Uuid()
@@ -258,10 +263,63 @@ public interface VElement extends EObject {
 	 *
 	 * @since 1.9
 	 *        <!-- end-user-doc -->
-	 *
 	 * @param value the new value of the '<em>Uuid</em>' attribute.
 	 * @see #getUuid()
 	 * @generated
 	 */
 	void setUuid(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Effectively Visible</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Effectively Visible</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 *
+	 * @since 1.12
+	 *        <!-- end-user-doc -->
+	 *
+	 * @return the value of the '<em>Effectively Visible</em>' attribute.
+	 * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getElement_EffectivelyVisible()
+	 * @model transient="true" changeable="false" volatile="true" derived="true"
+	 * @generated
+	 */
+	boolean isEffectivelyVisible();
+
+	/**
+	 * Returns the value of the '<em><b>Effectively Enabled</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Effectively Enabled</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 *
+	 * @since 1.12
+	 *        <!-- end-user-doc -->
+	 *
+	 * @return the value of the '<em>Effectively Enabled</em>' attribute.
+	 * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getElement_EffectivelyEnabled()
+	 * @model transient="true" changeable="false" volatile="true" derived="true"
+	 * @generated
+	 */
+	boolean isEffectivelyEnabled();
+
+	/**
+	 * Returns the value of the '<em><b>Effectively Readonly</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Effectively Readonly</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 *
+	 * @since 1.12
+	 *        <!-- end-user-doc -->
+	 *
+	 * @return the value of the '<em>Effectively Readonly</em>' attribute.
+	 * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getElement_EffectivelyReadonly()
+	 * @model transient="true" changeable="false" volatile="true" derived="true"
+	 * @generated
+	 */
+	boolean isEffectivelyReadonly();
 } // Renderable

@@ -501,10 +501,11 @@ public class ViewValidator extends EObjectValidator {
 	}
 
 	/**
-	 * @generated
-	 * 			<!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
+	 *
 	 * @since 1.7
 	 *        <!-- end-user-doc -->
+	 * @generated
 	 */
 	public boolean validateViewModelLoadingProperties(VViewModelLoadingProperties viewModelLoadingProperties,
 		DiagnosticChain diagnostics, Map<Object, Object> context) {
@@ -540,7 +541,6 @@ public class ViewValidator extends EObjectValidator {
 	 *
 	 * @since 1.8
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	public boolean validateDateTimeDisplayAttachment(VDateTimeDisplayAttachment dateTimeDisplayAttachment,
@@ -564,7 +564,6 @@ public class ViewValidator extends EObjectValidator {
 	 *
 	 * @since 1.8
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	public boolean validateDateTimeDisplayType(DateTimeDisplayType dateTimeDisplayType, DiagnosticChain diagnostics,

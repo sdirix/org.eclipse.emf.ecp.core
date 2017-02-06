@@ -26,9 +26,9 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
 /**
  * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.spi.model.VContainer} object.
  * <!-- begin-user-doc -->
- * @since 1.2
- * <!-- end-user-doc -->
  *
+ * @since 1.2
+ *        <!-- end-user-doc -->
  * @generated
  */
 public class ContainerItemProvider extends ElementItemProvider {
@@ -101,8 +101,8 @@ public class ContainerItemProvider extends ElementItemProvider {
 	@Override
 	public String getText(Object object) {
 		final String label = ((VContainer) object).getName();
-		return label == null || label.length() == 0 ? getString("_UI_Container_type") //$NON-NLS-1$
-			: getString("_UI_Container_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
+		return label == null || label.length() == 0 ? getString("_UI_Container_type") : //$NON-NLS-1$
+			getString("_UI_Container_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

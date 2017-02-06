@@ -27,14 +27,15 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Composite Collection</b></em>'.
+ *
  * @since 1.4
- * <!-- end-user-doc -->
- * <p>
- * The following features are implemented:
- * </p>
- * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VContainedContainerImpl#getChildren <em>Children</em>}</li>
- * </ul>
+ *        <!-- end-user-doc -->
+ *        <p>
+ *        The following features are implemented:
+ *        </p>
+ *        <ul>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VContainedContainerImpl#getChildren <em>Children</em>}</li>
+ *        </ul>
  *
  * @generated
  */

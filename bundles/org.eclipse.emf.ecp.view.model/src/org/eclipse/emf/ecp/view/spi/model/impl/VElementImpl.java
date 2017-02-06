@@ -17,6 +17,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
@@ -45,6 +46,12 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  *        <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VElementImpl#getDiagnostic <em>Diagnostic</em>}</li>
  *        <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VElementImpl#getAttachments <em>Attachments</em>}</li>
  *        <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VElementImpl#getUuid <em>Uuid</em>}</li>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VElementImpl#isEffectivelyVisible <em>Effectively
+ *        Visible</em>}</li>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VElementImpl#isEffectivelyEnabled <em>Effectively
+ *        Enabled</em>}</li>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VElementImpl#isEffectivelyReadonly <em>Effectively
+ *        Readonly</em>}</li>
  *        </ul>
  *
  * @generated
@@ -190,7 +197,6 @@ public abstract class VElementImpl extends EObjectImpl implements VElement {
 	 *
 	 * @since 1.9
 	 *        <!-- end-user-doc -->
-	 *
 	 * @see #getUuid()
 	 * @generated
 	 * @ordered
@@ -203,12 +209,50 @@ public abstract class VElementImpl extends EObjectImpl implements VElement {
 	 *
 	 * @since 1.9
 	 *        <!-- end-user-doc -->
-	 *
 	 * @see #getUuid()
 	 * @generated
 	 * @ordered
 	 */
 	protected String uuid = UUID_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #isEffectivelyVisible() <em>Effectively Visible</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.12
+	 *        <!-- end-user-doc -->
+	 *
+	 * @see #isEffectivelyVisible()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean EFFECTIVELY_VISIBLE_EDEFAULT = false;
+
+	/**
+	 * The default value of the '{@link #isEffectivelyEnabled() <em>Effectively Enabled</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.12
+	 *        <!-- end-user-doc -->
+	 *
+	 * @see #isEffectivelyEnabled()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean EFFECTIVELY_ENABLED_EDEFAULT = false;
+
+	/**
+	 * The default value of the '{@link #isEffectivelyReadonly() <em>Effectively Readonly</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.12
+	 *        <!-- end-user-doc -->
+	 *
+	 * @see #isEffectivelyReadonly()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean EFFECTIVELY_READONLY_EDEFAULT = false;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -444,7 +488,6 @@ public abstract class VElementImpl extends EObjectImpl implements VElement {
 	 *
 	 * @since 1.9
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	@Override
@@ -457,7 +500,6 @@ public abstract class VElementImpl extends EObjectImpl implements VElement {
 	 *
 	 * @since 1.9
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	@Override
@@ -467,6 +509,60 @@ public abstract class VElementImpl extends EObjectImpl implements VElement {
 		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, VViewPackage.ELEMENT__UUID, oldUuid, uuid));
 		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.12
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public boolean isEffectivelyVisible() {
+		boolean result = isVisible();
+		final EObject parent = eContainer();
+		if (parent != null) {
+			result &= VElement.class.cast(parent).isVisible();
+		}
+		return result;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.12
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public boolean isEffectivelyEnabled() {
+		boolean result = isEnabled();
+		final EObject parent = eContainer();
+		if (parent != null) {
+			result &= VElement.class.cast(parent).isEnabled();
+		}
+		return result;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.12
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public boolean isEffectivelyReadonly() {
+		boolean result = isReadonly();
+		final EObject parent = eContainer();
+		if (parent != null) {
+			result &= VElement.class.cast(parent).isReadonly();
+		}
+		return result;
 	}
 
 	/**
@@ -511,6 +607,12 @@ public abstract class VElementImpl extends EObjectImpl implements VElement {
 			return getAttachments();
 		case VViewPackage.ELEMENT__UUID:
 			return getUuid();
+		case VViewPackage.ELEMENT__EFFECTIVELY_VISIBLE:
+			return isEffectivelyVisible();
+		case VViewPackage.ELEMENT__EFFECTIVELY_ENABLED:
+			return isEffectivelyEnabled();
+		case VViewPackage.ELEMENT__EFFECTIVELY_READONLY:
+			return isEffectivelyReadonly();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -616,6 +718,12 @@ public abstract class VElementImpl extends EObjectImpl implements VElement {
 			return attachments != null && !attachments.isEmpty();
 		case VViewPackage.ELEMENT__UUID:
 			return UUID_EDEFAULT == null ? uuid != null : !UUID_EDEFAULT.equals(uuid);
+		case VViewPackage.ELEMENT__EFFECTIVELY_VISIBLE:
+			return isEffectivelyVisible() != EFFECTIVELY_VISIBLE_EDEFAULT;
+		case VViewPackage.ELEMENT__EFFECTIVELY_ENABLED:
+			return isEffectivelyEnabled() != EFFECTIVELY_ENABLED_EDEFAULT;
+		case VViewPackage.ELEMENT__EFFECTIVELY_READONLY:
+			return isEffectivelyReadonly() != EFFECTIVELY_READONLY_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}

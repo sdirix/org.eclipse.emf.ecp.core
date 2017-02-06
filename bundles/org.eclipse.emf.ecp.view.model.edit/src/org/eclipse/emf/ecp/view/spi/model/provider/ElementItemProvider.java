@@ -76,6 +76,9 @@ public class ElementItemProvider
 			addEnabledPropertyDescriptor(object);
 			addReadonlyPropertyDescriptor(object);
 			addUuidPropertyDescriptor(object);
+			addEffectivelyVisiblePropertyDescriptor(object);
+			addEffectivelyEnabledPropertyDescriptor(object);
+			addEffectivelyReadonlyPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -197,7 +200,6 @@ public class ElementItemProvider
 	 *
 	 * @since 1.9
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	protected void addUuidPropertyDescriptor(Object object) {
@@ -211,6 +213,81 @@ public class ElementItemProvider
 				false,
 				false,
 				ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				null,
+				null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Effectively Visible feature.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.12
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	protected void addEffectivelyVisiblePropertyDescriptor(Object object) {
+		itemPropertyDescriptors
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(),
+				getString("_UI_Element_effectivelyVisible_feature"), //$NON-NLS-1$
+				getString("_UI_PropertyDescriptor_description", "_UI_Element_effectivelyVisible_feature", //$NON-NLS-1$ //$NON-NLS-2$
+					"_UI_Element_type"), //$NON-NLS-1$
+				VViewPackage.Literals.ELEMENT__EFFECTIVELY_VISIBLE,
+				false,
+				false,
+				false,
+				ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
+				null,
+				null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Effectively Enabled feature.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.12
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	protected void addEffectivelyEnabledPropertyDescriptor(Object object) {
+		itemPropertyDescriptors
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(),
+				getString("_UI_Element_effectivelyEnabled_feature"), //$NON-NLS-1$
+				getString("_UI_PropertyDescriptor_description", "_UI_Element_effectivelyEnabled_feature", //$NON-NLS-1$ //$NON-NLS-2$
+					"_UI_Element_type"), //$NON-NLS-1$
+				VViewPackage.Literals.ELEMENT__EFFECTIVELY_ENABLED,
+				false,
+				false,
+				false,
+				ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
+				null,
+				null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Effectively Readonly feature.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.12
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	protected void addEffectivelyReadonlyPropertyDescriptor(Object object) {
+		itemPropertyDescriptors
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(),
+				getString("_UI_Element_effectivelyReadonly_feature"), //$NON-NLS-1$
+				getString("_UI_PropertyDescriptor_description", "_UI_Element_effectivelyReadonly_feature", //$NON-NLS-1$ //$NON-NLS-2$
+					"_UI_Element_type"), //$NON-NLS-1$
+				VViewPackage.Literals.ELEMENT__EFFECTIVELY_READONLY,
+				false,
+				false,
+				false,
+				ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
 				null,
 				null));
 	}
@@ -257,8 +334,8 @@ public class ElementItemProvider
 	@Override
 	public String getText(Object object) {
 		final String label = ((VElement) object).getName();
-		return label == null || label.length() == 0 ? getString("_UI_Element_type") //$NON-NLS-1$
-			: getString("_UI_Element_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
+		return label == null || label.length() == 0 ? getString("_UI_Element_type") : //$NON-NLS-1$
+			getString("_UI_Element_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

@@ -14,7 +14,7 @@ package org.eclipse.emf.ecp.view.spi.model;
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Date Time Display Attachment</b></em>'.
- * 
+ *
  * @since 1.8
  *        <!-- end-user-doc -->
  *
@@ -22,8 +22,8 @@ package org.eclipse.emf.ecp.view.spi.model;
  *        The following features are supported:
  *        </p>
  *        <ul>
- *        <li>{@link org.eclipse.emf.ecp.view.spi.model.VDateTimeDisplayAttachment#getDisplayType <em>Display Type</em>}
- *        </li>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.model.VDateTimeDisplayAttachment#getDisplayType <em>Display
+ *        Type</em>}</li>
  *        </ul>
  *
  * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getDateTimeDisplayAttachment()
