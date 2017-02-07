@@ -16,7 +16,9 @@ package org.eclipse.emf.ecp.spi.ui.util;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.core.runtime.CoreException;
@@ -57,6 +59,7 @@ import org.eclipse.emf.ecp.ui.common.CreateProjectComposite;
 import org.eclipse.emf.ecp.ui.common.ECPCompositeFactory;
 import org.eclipse.emf.ecp.ui.util.ECPModelElementOpenTester;
 import org.eclipse.emf.ecp.ui.util.ECPModelElementOpener;
+import org.eclipse.emf.ecp.ui.util.ECPModelElementOpenerWithContext;
 import org.eclipse.emf.edit.command.ChangeCommand;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ArrayContentProvider;
@@ -453,6 +456,20 @@ public final class ECPHandlerHelper {
 	 * @param ecpProject the {@link ECPProject} of the model element
 	 */
 	public static void openModelElement(final Object modelElement, ECPProject ecpProject) {
+		openModelElement(modelElement, ecpProject, new LinkedHashMap<Object, Object>());
+	}
+
+	/**
+	 * Open a view for the given model element.
+	 *
+	 * @param modelElement
+	 *            ModelElement to open
+	 *            the view that requested the open model element
+	 * @param ecpProject the {@link ECPProject} of the model element
+	 * @param contextMap context map
+	 */
+	public static void openModelElement(final Object modelElement, ECPProject ecpProject,
+		Map<Object, Object> contextMap) {
 
 		final ECPModelElementOpener opener = resolveElementOpener(modelElement);
 
@@ -463,7 +480,11 @@ public final class ECPHandlerHelper {
 			return;
 		}
 		try {
-			opener.openModelElement(modelElement, ecpProject);
+			if (opener instanceof ECPModelElementOpenerWithContext) {
+				((ECPModelElementOpenerWithContext) opener).openModelElement(modelElement, ecpProject, contextMap);
+			} else {
+				opener.openModelElement(modelElement, ecpProject);
+			}
 		} catch (final RuntimeException e) {
 			Activator.log(e);
 		}
