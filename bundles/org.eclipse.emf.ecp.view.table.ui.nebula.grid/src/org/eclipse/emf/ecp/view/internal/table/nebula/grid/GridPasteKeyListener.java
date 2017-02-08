@@ -17,10 +17,14 @@ import java.util.StringTokenizer;
 
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.common.util.Diagnostic;
+import org.eclipse.emf.ecore.EEnum;
+import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emfforms.spi.common.converter.EStructuralFeatureValueConverterService;
 import org.eclipse.emfforms.spi.common.validation.PreSetValidationService;
@@ -51,6 +55,7 @@ import org.osgi.framework.ServiceReference;
  */
 public class GridPasteKeyListener implements KeyListener {
 
+	private static final String IS_INPUTTABLE = "isInputtable"; //$NON-NLS-1$
 	private final Clipboard clipboard;
 	private final EMFFormsDatabindingEMF dataBinding;
 	private final EStructuralFeatureValueConverterService converterService;
@@ -150,7 +155,7 @@ public class GridPasteKeyListener implements KeyListener {
 	/**
 	 * Performs the paste operation.
 	 *
-	 * @param startItem the start uten
+	 * @param startItem the start item
 	 * @param grid the grid
 	 * @param contents the pasted contents
 	 * @return the pasted cells
@@ -161,10 +166,9 @@ public class GridPasteKeyListener implements KeyListener {
 		final int startRow = startItem.y;
 
 		final List<Point> pastedCells = new ArrayList<Point>();
-		final List<Object> pastedValues = new ArrayList<Object>();
+		final List<String> invalidValues = new ArrayList<String>();
 		int relativeRow = 0;
 		final String[] rows = contents.split("\r\n|\n", -1); //$NON-NLS-1$
-		final List<Diagnostic> diags = new ArrayList<Diagnostic>();
 
 		for (final String row : rows) {
 
@@ -196,29 +200,28 @@ public class GridPasteKeyListener implements KeyListener {
 
 					IObservableValue value = null;
 					try {
-
 						value = dataBinding.getObservableValue(dmr, eObject);
+						final EStructuralFeature feature = (EStructuralFeature) value.getValueType();
 						final Object convertedValue = getConverterService().convertToModelValue(eObject,
-							(EStructuralFeature) value.getValueType(), cellValue);
+							feature, cellValue);
 
 						boolean valid = convertedValue != null;
 
 						if (preSetValidationService != null) {
 							final Diagnostic diag = preSetValidationService.validate(
-								(EStructuralFeature) value.getValueType(), cellValue);
+								feature, cellValue);
 							valid = diag.getSeverity() == Diagnostic.OK;
 							if (!valid) {
-								diags.add(diag);
+								invalidValues.add(extractDiagnosticMessage(diag));
 							}
 						}
 
-						if (valid) {
+						if (!canBePasted(feature, cellValue)) {
+							invalidValues.add(cellValue);
+						} else if (valid) {
 							setValue(value, convertedValue);
-							pastedValues.add(value);
+							pastedCells.add(new Point(insertionColumnIndex, insertionRowIndex));
 						}
-
-						pastedCells.add(new Point(insertionColumnIndex, insertionRowIndex));
-
 					}
 					// BEGIN SUPRESS CATCH EXCEPTION
 					catch (final Exception ex) {// END SUPRESS CATCH EXCEPTION
@@ -235,15 +238,38 @@ public class GridPasteKeyListener implements KeyListener {
 			relativeRow++;
 		}
 
-		if (!diags.isEmpty()) {
-			showDiagnostics(
+		showErrors(invalidValues);
+
+		return pastedCells;
+	}
+
+	private void showErrors(List<String> msgs) {
+		if (!msgs.isEmpty()) {
+			showDialog(
 				display.getActiveShell(),
 				localizationService.getString(FrameworkUtil.getBundle(getClass()), "InvalidPaste.Title"), //$NON-NLS-1$
 				localizationService.getString(FrameworkUtil.getBundle(getClass()), "InvalidPaste.Message"), //$NON-NLS-1$
-				diags);
+				msgs);
+		}
+	}
+
+	private boolean canBePasted(EStructuralFeature feature, String cellValue) {
+
+		if (!EEnum.class.isInstance(feature.getEType())) {
+			return false;
 		}
 
-		return pastedCells;
+		final EEnum eEnum = (EEnum) feature.getEType();
+		for (final EEnumLiteral literal : eEnum.getELiterals()) {
+			final String isInputtable = EcoreUtil.getAnnotation(literal, VViewPackage.eNS_URI,
+				IS_INPUTTABLE);
+
+			if (literal.getLiteral().equals(cellValue) && isInputtable != null) {
+				return Boolean.getBoolean(isInputtable);
+			}
+		}
+
+		return true;
 	}
 
 	/**
@@ -256,11 +282,15 @@ public class GridPasteKeyListener implements KeyListener {
 		value.setValue(convertedValue);
 	}
 
-	private static void showDiagnostics(Shell shell, String title, String msg, List<Diagnostic> diags) {
+	private static String extractDiagnosticMessage(Diagnostic diag) {
+		return diag.getChildren().get(0).getMessage();
+	}
+
+	private static void showDialog(Shell shell, String title, String msg, List<String> warnings) {
 		final StringBuilder builder = new StringBuilder();
 		builder.append(msg);
-		for (final Diagnostic diag : diags) {
-			builder.append("- " + diag.getChildren().get(0).getMessage()) //$NON-NLS-1$
+		for (final String warning : warnings) {
+			builder.append("- " + warning) //$NON-NLS-1$
 				.append("\n"); //$NON-NLS-1$
 		}
 
