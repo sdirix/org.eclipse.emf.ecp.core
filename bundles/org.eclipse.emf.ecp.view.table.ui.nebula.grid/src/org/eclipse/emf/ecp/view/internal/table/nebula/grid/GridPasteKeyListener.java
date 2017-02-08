@@ -256,7 +256,7 @@ public class GridPasteKeyListener implements KeyListener {
 	private boolean canBePasted(EStructuralFeature feature, String cellValue) {
 
 		if (!EEnum.class.isInstance(feature.getEType())) {
-			return false;
+			return true;
 		}
 
 		final EEnum eEnum = (EEnum) feature.getEType();
