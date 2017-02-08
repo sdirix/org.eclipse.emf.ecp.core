@@ -17,6 +17,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
@@ -647,6 +648,57 @@ public abstract class VElementImpl extends EObjectImpl implements VElement {
 		result.append(uuid);
 		result.append(')');
 		return result.toString();
+	}
+
+	/**
+	 *
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.model.VElement#isEffectivelyVisible()
+	 * @since 1.12
+	 */
+	@Override
+	public boolean isEffectivelyVisible() {
+		boolean result = isVisible();
+		final EObject parent = eContainer();
+		if (parent != null) {
+			result &= VElement.class.cast(parent).isEffectivelyVisible();
+		}
+		return result;
+	}
+
+	/**
+	 *
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.model.VElement#isEffectivelyEnabled()
+	 * @since 1.12
+	 */
+	@Override
+	public boolean isEffectivelyEnabled() {
+		boolean result = isEnabled();
+		final EObject parent = eContainer();
+		if (parent != null) {
+			result &= VElement.class.cast(parent).isEffectivelyEnabled();
+		}
+		return result;
+	}
+
+	/**
+	 *
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.model.VElement#isEffectivelyReadonly()
+	 * @since 1.12
+	 */
+	@Override
+	public boolean isEffectivelyReadonly() {
+		boolean result = isReadonly();
+		final EObject parent = eContainer();
+		if (parent != null) {
+			result &= VElement.class.cast(parent).isEffectivelyReadonly();
+		}
+		return result;
 	}
 
 } // RenderableImpl
