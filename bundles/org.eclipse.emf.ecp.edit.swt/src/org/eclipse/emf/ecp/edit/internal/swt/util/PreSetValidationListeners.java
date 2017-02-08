@@ -168,7 +168,9 @@ public final class PreSetValidationListeners {
 			if (isString(attribute.getEType())) {
 				// remove diagnostic once again, since we revert the change
 				e.doit = false;
-				vElement.setDiagnostic(prevDiagnostic);
+				if (vElement != null) {
+					vElement.setDiagnostic(prevDiagnostic);
+				}
 
 			}
 		}
