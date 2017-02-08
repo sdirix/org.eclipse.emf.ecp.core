@@ -149,15 +149,15 @@ public class VViewModelLoadingPropertiesImpl extends EObjectImpl implements VVie
 		case VViewPackage.VIEW_MODEL_LOADING_PROPERTIES__INHERITABLE_PROPERTIES:
 			if (coreType) {
 				return getInheritableProperties();
-			} else {
-				return getInheritableProperties().map();
 			}
+			return getInheritableProperties().map();
+
 		case VViewPackage.VIEW_MODEL_LOADING_PROPERTIES__NON_INHERITABLE_PROPERTIES:
 			if (coreType) {
 				return getNonInheritableProperties();
-			} else {
-				return getNonInheritableProperties().map();
 			}
+			return getNonInheritableProperties().map();
+
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}

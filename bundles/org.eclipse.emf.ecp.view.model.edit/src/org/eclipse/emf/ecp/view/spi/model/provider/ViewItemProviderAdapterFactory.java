@@ -235,9 +235,10 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 * This keeps track of the one adapter used for all
 	 * {@link org.eclipse.emf.ecp.view.spi.model.VDateTimeDisplayAttachment} instances.
 	 * <!-- begin-user-doc -->
-	 *
+	 * 
 	 * @since 1.8
 	 *        <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	protected DateTimeDisplayAttachmentItemProvider dateTimeDisplayAttachmentItemProvider;

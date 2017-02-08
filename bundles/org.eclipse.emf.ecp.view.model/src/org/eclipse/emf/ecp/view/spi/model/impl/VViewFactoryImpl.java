@@ -198,9 +198,10 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 
 	/**
 	 * <!-- begin-user-doc -->
-	 *
+	 * 
 	 * @since 1.8
 	 *        <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	@Override
@@ -239,6 +240,7 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 	 *
 	 * @since 1.8
 	 *        <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	public DateTimeDisplayType createDateTimeDisplayTypeFromString(EDataType eDataType, String initialValue) {
@@ -255,6 +257,7 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 	 *
 	 * @since 1.8
 	 *        <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	public String convertDateTimeDisplayTypeToString(EDataType eDataType, Object instanceValue) {

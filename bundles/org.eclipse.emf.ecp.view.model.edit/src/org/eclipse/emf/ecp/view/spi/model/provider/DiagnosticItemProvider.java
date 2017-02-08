@@ -34,9 +34,9 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
 /**
  * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.spi.model.VDiagnostic} object.
  * <!-- begin-user-doc -->
- *
  * @since 1.2
- *        <!-- end-user-doc -->
+ * <!-- end-user-doc -->
+ *
  * @generated
  */
 public class DiagnosticItemProvider

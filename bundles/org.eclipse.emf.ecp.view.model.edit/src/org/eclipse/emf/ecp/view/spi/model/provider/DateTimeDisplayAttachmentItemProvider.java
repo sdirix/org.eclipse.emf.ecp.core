@@ -27,9 +27,10 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
 /**
  * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.spi.model.VDateTimeDisplayAttachment} object.
  * <!-- begin-user-doc -->
- *
+ * 
  * @since 1.8
  *        <!-- end-user-doc -->
+ *
  * @generated
  */
 public class DateTimeDisplayAttachmentItemProvider extends AttachmentItemProvider {
@@ -107,8 +108,8 @@ public class DateTimeDisplayAttachmentItemProvider extends AttachmentItemProvide
 	public String getText(Object object) {
 		final DateTimeDisplayType labelValue = ((VDateTimeDisplayAttachment) object).getDisplayType();
 		final String label = labelValue == null ? null : labelValue.toString();
-		return label == null || label.length() == 0 ? getString("_UI_DateTimeDisplayAttachment_type") : //$NON-NLS-1$
-			getString("_UI_DateTimeDisplayAttachment_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
+		return label == null || label.length() == 0 ? getString("_UI_DateTimeDisplayAttachment_type") //$NON-NLS-1$
+			: getString("_UI_DateTimeDisplayAttachment_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

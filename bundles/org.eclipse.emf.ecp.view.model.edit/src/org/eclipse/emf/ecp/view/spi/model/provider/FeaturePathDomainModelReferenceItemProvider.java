@@ -109,7 +109,7 @@ public class FeaturePathDomainModelReferenceItemProvider
 
 	/**
 	 * This returns the label text for the adapted class.
-	 *
+	 * 
 	 * @param object the object instance for which the label is fetched
 	 *
 	 * @return the label

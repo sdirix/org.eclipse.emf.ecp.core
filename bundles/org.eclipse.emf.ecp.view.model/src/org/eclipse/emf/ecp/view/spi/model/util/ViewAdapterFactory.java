@@ -181,8 +181,8 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.spi.model.VElement
-	 * <em>Element</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.spi.model.VElement <em>Element</em>
+	 * }'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
@@ -260,8 +260,8 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class
-	 * '{@link org.eclipse.emf.ecp.view.spi.model.VViewModelLoadingProperties <em>Model Loading Properties</em>}'.
+	 * Creates a new adapter for an object of class '
+	 * {@link org.eclipse.emf.ecp.view.spi.model.VViewModelLoadingProperties <em>Model Loading Properties</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
@@ -294,14 +294,15 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class
-	 * '{@link org.eclipse.emf.ecp.view.spi.model.VDateTimeDisplayAttachment <em>Date Time Display Attachment</em>}'.
+	 * Creates a new adapter for an object of class '
+	 * {@link org.eclipse.emf.ecp.view.spi.model.VDateTimeDisplayAttachment <em>Date Time Display Attachment</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 *
+	 * 
 	 * @since 1.8
 	 *        <!-- end-user-doc -->
+	 *
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VDateTimeDisplayAttachment
 	 * @generated
@@ -376,9 +377,9 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class
-	 * '{@link org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference <em>Feature Path Domain Model
-	 * Reference</em>}'.
+	 * Creates a new adapter for an object of class '
+	 * {@link org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference
+	 * <em>Feature Path Domain Model Reference</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
