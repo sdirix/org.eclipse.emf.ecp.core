@@ -650,6 +650,17 @@ public abstract class VElementImpl extends EObjectImpl implements VElement {
 		return result.toString();
 	}
 
+	private VElement getVElementParent() {
+		EObject parent = eContainer();
+		while (parent != null) {
+			if (VElement.class.isInstance(parent)) {
+				return VElement.class.cast(parent);
+			}
+			parent = parent.eContainer();
+		}
+		return null;
+	}
+
 	/**
 	 *
 	 * {@inheritDoc}
@@ -660,9 +671,9 @@ public abstract class VElementImpl extends EObjectImpl implements VElement {
 	@Override
 	public boolean isEffectivelyVisible() {
 		boolean result = isVisible();
-		final EObject parent = eContainer();
+		final VElement parent = getVElementParent();
 		if (parent != null) {
-			result &= VElement.class.cast(parent).isEffectivelyVisible();
+			result &= parent.isEffectivelyVisible();
 		}
 		return result;
 	}
@@ -677,9 +688,9 @@ public abstract class VElementImpl extends EObjectImpl implements VElement {
 	@Override
 	public boolean isEffectivelyEnabled() {
 		boolean result = isEnabled();
-		final EObject parent = eContainer();
+		final VElement parent = getVElementParent();
 		if (parent != null) {
-			result &= VElement.class.cast(parent).isEffectivelyEnabled();
+			result &= parent.isEffectivelyEnabled();
 		}
 		return result;
 	}
@@ -694,9 +705,9 @@ public abstract class VElementImpl extends EObjectImpl implements VElement {
 	@Override
 	public boolean isEffectivelyReadonly() {
 		boolean result = isReadonly();
-		final EObject parent = eContainer();
+		final VElement parent = getVElementParent();
 		if (parent != null) {
-			result &= VElement.class.cast(parent).isEffectivelyReadonly();
+			result &= parent.isEffectivelyReadonly();
 		}
 		return result;
 	}
